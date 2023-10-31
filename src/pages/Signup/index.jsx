@@ -6,7 +6,7 @@ import Anchor from "../../components/Anchor";
 export default function Signup() {
   return (
     <div className="bg-blue dark:bg-darker h-screen w-full text-white flex">
-      <div className="h-screen w-fit flex items-center px-20">
+      <div className="h-screen w-fit flex items-center px-32">
         <img
           src="/assets/svgs/logo.svg"
           alt="logo"
@@ -26,7 +26,9 @@ export default function Signup() {
               with Facebook
             </Button>
           </div>
-          <Typography variant="textInfo">-OR-</Typography>
+          <Typography variant="textInfo" className="font-poppins">
+            -OR-
+          </Typography>
           <Form />
           <div className="w-full flex items-start mt-4 mb-10">
             <img src="/assets/svgs/recaptcha.svg" alt="recaptcha" />
@@ -44,7 +46,7 @@ export default function Signup() {
               <Anchor href="#">Notification Settings</Anchor>.
             </label>
           </div>
-          <Button size="large" color="blue">
+          <Button size="large" color="blue-200">
             Create Account
           </Button>
           <div className="flex gap-3 mt-[23px]">

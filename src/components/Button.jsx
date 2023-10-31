@@ -12,8 +12,11 @@ const Button = ({
   const buttonClasses = classNames(
     "inline-flex justify-center items-center py-0 rounded-[11.703px]",
     {
-      "bg-dark-blue dark:text-white text-black": color === "blue",
+      "bg-dark-blue text-white": color === "blue",
       "bg-white dark:bg-dark-gray text-black dark:text-white": color === "gray",
+      "bg-white dark:bg-gray-500 text-black dark:text-white":
+        color === "darkgray",
+      "bg-blue-200 dark:bg-gray-500": color === "blue-200",
       "text-primary bg-white hover:bg-gray-200 border-[1px] border-gray-300":
         color === "light",
       "disabled:bg-gray-300 disabled:cursor-not-allowed": disabled,
