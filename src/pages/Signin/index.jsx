@@ -1,6 +1,7 @@
-import Button from "../../components/Button";
-import Typography from "../../components/Typography";
-import Form from "./components/Form";
+import Button from '../../components/Button';
+import Typography from '../../components/Typography';
+import Form from './components/Form';
+import { Link } from 'react-router-dom';
 
 export default function Signin() {
   return (
@@ -38,12 +39,14 @@ export default function Signin() {
             >
               Already have an account?
             </Typography>
-            <Typography
-              variant="textBase"
-              className="text-blue dark:text-white"
-            >
-              Sign up
-            </Typography>
+            <Link to="/">
+              <Typography
+                variant="textBase"
+                className="text-blue dark:text-white"
+              >
+                Sign up
+              </Typography>
+            </Link>
           </div>
         </div>
       </div>

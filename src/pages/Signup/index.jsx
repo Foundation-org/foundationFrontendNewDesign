@@ -1,7 +1,8 @@
-import Typography from "../../components/Typography";
-import Button from "../../components/Button";
-import Form from "./components/Form";
-import Anchor from "../../components/Anchor";
+import { Link } from 'react-router-dom';
+import Typography from '../../components/Typography';
+import Button from '../../components/Button';
+import Form from './components/Form';
+import Anchor from '../../components/Anchor';
 
 export default function Signup() {
   return (
@@ -40,9 +41,9 @@ export default function Signup() {
               class="w-6 h-6 rounded-[1.43px] text-blue-600 focus:ring-blue-500 ring-blue-600 ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"
             />
             <label class="ml-4 text-gray-100 dark:text-white">
-              Creating an account means you’re okay with our{" "}
-              <Anchor href="#">Terms of Service</Anchor>,{" "}
-              <Anchor href="#">Privacy Policy</Anchor>, and out default{" "}
+              Creating an account means you’re okay with our{' '}
+              <Anchor href="#">Terms of Service</Anchor>,{' '}
+              <Anchor href="#">Privacy Policy</Anchor>, and out default{' '}
               <Anchor href="#">Notification Settings</Anchor>.
             </label>
           </div>
@@ -56,12 +57,14 @@ export default function Signup() {
             >
               Already have an account?
             </Typography>
-            <Typography
-              variant="textBase"
-              className="text-blue dark:text-white"
-            >
-              Log in
-            </Typography>
+            <Link to="/signin">
+              <Typography
+                variant="textBase"
+                className="text-blue dark:text-white"
+              >
+                Log in
+              </Typography>
+            </Link>
           </div>
         </div>
       </div>
