@@ -1,9 +1,8 @@
 import Dropdown from '../../../components/Dropdown';
-import Button from '../../../components/Button';
 
 const SidebarLeft = () => {
   return (
-    <div className="w-[18.25rem] min-w-[18.25rem] bg-[#131417] text-white h-[calc(100vh-96px)] pl-[2.18rem] pt-[4.563rem]">
+    <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)] w-[18.25rem] min-w-[18.25rem] bg-white dark:bg-[#131417] text-[#535353] dark:text-white h-[calc(100vh-96px)] pl-[2.18rem] pt-[4.563rem]">
       <div className="form-control w-full max-w-[13.25rem]">
         <label className="text-[22px] font-[400] leading-normal pb-[9px] ml-[5px]">
           Search
@@ -12,7 +11,7 @@ const SidebarLeft = () => {
           <input
             type="text"
             placeholder="Search here...."
-            className="input border-[1px] border-[#989898] w-full rounded-[18px] bg-[#0F1014] text-[#E8E8E8] focus:outline-none h-[54px]"
+            className="input border-[1px] dark:border-[#989898] w-full rounded-[18px] bg-[#F6F6F6] dark:bg-[#0F1014] text-gray-400 dark:text-[#E8E8E8] focus:outline-none h-[54px]"
           />
           <img
             src="/assets/svgs/dashboard/search.svg"
@@ -21,7 +20,12 @@ const SidebarLeft = () => {
           />
         </div>
       </div>
-      <h1 className="text-[22px] font-[500] leading-normal pt-[33px] pb-[31px] ml-[5px]">
+      <h1 className="text-[22px] font-[500] leading-normal text-[#888] dark:text-white pt-[33px] pb-[31px] ml-[5px] flex items-center gap-2">
+        <img
+          src="/assets/svgs/dashboard/filter.svg"
+          alt="filter"
+          className="w-[1.188rem] h-[1.188rem]"
+        />
         Filters
       </h1>
       <div className="flex flex-col gap-5">
@@ -46,7 +50,13 @@ const SidebarLeft = () => {
           items={['Item 1', 'Item 2']}
         />
       </div>
-      <button className="bg-[#494C52] shadow-inner inset-0 rounded-[15px] py-2 px-5 text-[#EAEAEA] text-[20px] font-semibold leading-normal mt-12 ml-[18px]">
+      <button
+        className={`${
+          window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'bg-[#494C52]'
+            : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+        }  shadow-inner inset-0 rounded-[0.938rem] py-2 px-5 text-white dark:text-[#EAEAEA] text-[1.25rem] font-semibold leading-normal mt-12 ml-[1.125rem]`}
+      >
         Clear Filters
       </button>
     </div>

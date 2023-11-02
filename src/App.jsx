@@ -20,11 +20,7 @@ function App() {
     }
   }, [theme]);
 
-  return (
-    // <div className="h-screen bg-white dark:bg-black flex justify-center items-center">
-    <Router />
-    // </div>
-  );
+  return <Router />;
 }
 
 export default App;

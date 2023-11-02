@@ -3,6 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .bg-blue-gradiant {
+    @apply bg-gradient-to-r from-[#6BA5CF] to-[#389CE3];
+  }
+}
+
 body {
   font-family: 'Inter', sans-serif;
 }

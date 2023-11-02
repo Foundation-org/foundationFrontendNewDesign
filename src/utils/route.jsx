@@ -10,7 +10,7 @@ export function Router() {
         {/* public routes */}
         <Route path="/" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/*" element={<Dashboard />} />
         {/* 404 page */}
         <Route
           path="*"
