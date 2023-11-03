@@ -21,9 +21,15 @@ const Topbar = () => {
               location.pathname === '/dashboard' ? 'text-white' : ''
             }`}
           >
-            {location.pathname === '/dashboard' && (
-              <img src="/assets/svgs/dashboard/home.svg" alt="home" />
-            )}
+            {location.pathname === '/dashboard' &&
+              (window.matchMedia('(prefers-color-scheme: dark)').matches ? (
+                <img src="/assets/svgs/dashboard/home.svg" alt="home" />
+              ) : (
+                <img
+                  src="/assets/svgs/dashboard/home-white.svg"
+                  alt="home-white"
+                />
+              ))}
             Home
           </Link>
         </li>

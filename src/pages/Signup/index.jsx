@@ -34,13 +34,13 @@ export default function Signup() {
           <div className="w-full flex items-start mt-4 mb-10">
             <img src="/assets/svgs/recaptcha.svg" alt="recaptcha" />
           </div>
-          <div class="flex items-start mb-12">
+          <div className="flex items-start mb-12">
             <input
               type="checkbox"
               value=""
-              class="w-6 h-6 rounded-[1.43px] text-blue-600 focus:ring-blue-500 ring-blue-600 ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"
+              className="w-6 h-6 rounded-[1.43px] text-blue-600 focus:ring-blue-500 ring-blue-600 ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"
             />
-            <label class="ml-4 text-gray-100 dark:text-white">
+            <label className="ml-4 text-gray-100 dark:text-white">
               Creating an account means you’re okay with our{' '}
               <Anchor href="#">Terms of Service</Anchor>,{' '}
               <Anchor href="#">Privacy Policy</Anchor>, and out default{' '}

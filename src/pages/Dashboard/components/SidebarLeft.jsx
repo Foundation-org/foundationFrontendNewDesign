@@ -2,7 +2,7 @@ import Dropdown from '../../../components/Dropdown';
 
 const SidebarLeft = () => {
   return (
-    <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)] w-[18.25rem] min-w-[18.25rem] bg-white dark:bg-[#131417] text-[#535353] dark:text-white h-[calc(100vh-96px)] pl-[2.18rem] pt-[4.563rem]">
+    <div className="bg-white dark:bg-[#131417] h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] pl-[2.18rem] pt-[4.563rem] text-[#535353] dark:text-white ">
       <div className="form-control w-full max-w-[13.25rem]">
         <label className="text-[22px] font-[400] leading-normal pb-[9px] ml-[5px]">
           Search

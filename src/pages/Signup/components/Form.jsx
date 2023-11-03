@@ -25,11 +25,11 @@ const Form = () => {
             className="absolute right-2 -top-2"
           />
         </div>
-        <div class="w-full bg-gray-200 rounded-full h-[3px] flex gap-2">
-          <div class="bg-green h-[3px] w-[25%]"></div>
-          <div class="bg-green h-[3px] w-[25%]"></div>
-          <div class="bg-green h-[3px] w-[25%]"></div>
-          <div class="bg-gray-200 dark:bg-white h-[3px] w-[25%]"></div>
+        <div className="w-full bg-gray-200 rounded-full h-[3px] flex gap-2">
+          <div className="bg-green h-[3px] w-[25%]"></div>
+          <div className="bg-green h-[3px] w-[25%]"></div>
+          <div className="bg-green h-[3px] w-[25%]"></div>
+          <div className="bg-gray-200 dark:bg-white h-[3px] w-[25%]"></div>
         </div>
         <p className="text-end text-green-200 text-[12px] mt-2 leading-[18px] tracking-[0.048px]">
           Good
@@ -50,11 +50,11 @@ const Form = () => {
             className="absolute right-2 -top-2"
           />
         </div>
-        <div class="w-full bg-gray-200 rounded-full h-[3px] flex gap-2">
-          <div class="bg-green h-[3px] w-[25%]"></div>
-          <div class="bg-green h-[3px] w-[25%]"></div>
-          <div class="bg-green h-[3px] w-[25%]"></div>
-          <div class="bg-gray-200 dark:bg-white h-[3px] w-[25%]"></div>
+        <div className="w-full bg-gray-200 rounded-full h-[3px] flex gap-2">
+          <div className="bg-green h-[3px] w-[25%]"></div>
+          <div className="bg-green h-[3px] w-[25%]"></div>
+          <div className="bg-green h-[3px] w-[25%]"></div>
+          <div className="bg-gray-200 dark:bg-white h-[3px] w-[25%]"></div>
         </div>
         <p className="text-end text-green-200 text-[12px] mt-2 leading-[18px] tracking-[0.048px]">
           Good

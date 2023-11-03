@@ -5,6 +5,7 @@ const SidebarRight = () => {
     {
       id: 1,
       icon: '/assets/svgs/dashboard/icon1.svg',
+      iconLight: '/assets/svgs/dashboard/icon11.svg',
       alt: 'icon1',
       title: 'Quests Created',
       value: 2,
@@ -12,6 +13,7 @@ const SidebarRight = () => {
     {
       id: 2,
       icon: '/assets/svgs/dashboard/icon2.svg',
+      iconLight: '/assets/svgs/dashboard/icon12.svg',
       alt: 'icon1',
       title: 'Quests Answered',
       value: 16,
@@ -19,6 +21,7 @@ const SidebarRight = () => {
     {
       id: 3,
       icon: '/assets/svgs/dashboard/icon3.svg',
+      iconLight: '/assets/svgs/dashboard/icon13.svg',
       alt: 'icon1',
       title: 'Correct Anwsers',
       value: 6,
@@ -26,6 +29,7 @@ const SidebarRight = () => {
     {
       id: 4,
       icon: '/assets/svgs/dashboard/icon4.svg',
+      iconLight: '/assets/svgs/dashboard/icon14.svg',
       alt: 'icon1',
       title: 'Wrong Answers',
       value: 54,
@@ -33,6 +37,7 @@ const SidebarRight = () => {
     {
       id: 5,
       icon: '/assets/svgs/dashboard/icon5.svg',
+      iconLight: '/assets/svgs/dashboard/icon15.svg',
       alt: 'icon1',
       title: 'Answers Changed',
       value: 87,
@@ -40,6 +45,7 @@ const SidebarRight = () => {
     {
       id: 6,
       icon: '/assets/svgs/dashboard/icon6.svg',
+      iconLight: '/assets/svgs/dashboard/icon16.svg',
       alt: 'icon1',
       title: 'Answers Added',
       value: 2,
@@ -47,6 +53,7 @@ const SidebarRight = () => {
     {
       id: 7,
       icon: '/assets/svgs/dashboard/icon10.svg',
+      iconLight: '/assets/svgs/dashboard/icon17.svg',
       alt: 'icon1',
       title: 'Agreement Received',
       value: 3,
@@ -54,6 +61,7 @@ const SidebarRight = () => {
     {
       id: 8,
       icon: '/assets/svgs/dashboard/icon7.svg',
+      iconLight: '/assets/svgs/dashboard/icon18.svg',
       alt: 'icon1',
       title: 'Contentions Received',
       value: 56,
@@ -61,6 +69,7 @@ const SidebarRight = () => {
     {
       id: 9,
       icon: '/assets/svgs/dashboard/icon8.svg',
+      iconLight: '/assets/svgs/dashboard/icon19.svg',
       alt: 'icon1',
       title: 'Contentions Given',
       value: 12,
@@ -68,6 +77,7 @@ const SidebarRight = () => {
     {
       id: 10,
       icon: '/assets/svgs/dashboard/icon9.svg',
+      iconLight: '/assets/svgs/dashboard/icon20.svg',
       alt: 'icon1',
       title: 'Code of Conduct Fails',
       value: 2,
@@ -102,7 +112,12 @@ const SidebarRight = () => {
       </div>
       {sidebarList.map((item) => (
         <div className="flex gap-4 items-center mb-4" key={item.id}>
-          <img src={item.icon} alt={item.alt} />
+          {window.matchMedia('(prefers-color-scheme: dark)').matches ? (
+            <img src={item.icon} alt={item.alt} />
+          ) : (
+            <img src={item.iconLight} alt={item.alt} />
+          )}
+
           <div className="w-full flex items-center justify-between text-[18px] text-[#7C7C7C] dark:text-[#D2D2D2] font-semibold leading-normal">
             <h5>{item.title}</h5>
             <h5>{item.value}</h5>
