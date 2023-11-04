@@ -5,7 +5,7 @@ function App() {
   const [theme, setTheme] = useState(null);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (import.meta.env.VITE_THEME_SWITCH === 'dark') {
       setTheme('dark');
     } else {
       setTheme('light');

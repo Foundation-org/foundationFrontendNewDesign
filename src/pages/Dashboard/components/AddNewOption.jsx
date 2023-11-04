@@ -13,13 +13,13 @@ const AddNewOption = () => {
           </div>
           <input
             type="text"
-            className="ml-8 text-[#435059] text-[19px] font-normal leading-normal focus:outline-none"
+            className="bg-white w-full ml-8 text-[#435059] text-[19px] font-normal leading-normal focus:outline-none"
           />
         </div>
       </div>
       <button
         className={` ${
-          window.matchMedia('(prefers-color-scheme: dark)').matches
+          import.meta.env.VITE_THEME_SWITCH === 'dark'
             ? 'bg-[#494C52]'
             : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
         } shadow-inner inset-0  rounded-[10px] py-2 px-5 text-[#EAEAEA] text-[20px] font-semibold leading-normal w-full`}

@@ -32,7 +32,7 @@ const QuestionCard = ({
         <h1 className="text-[22px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF]">
           {title}
         </h1>
-        {window.matchMedia('(prefers-color-scheme: dark)').matches ? (
+        {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
           <img
             src="/assets/svgs/dashboard/save.svg"
             alt="save icon"
@@ -79,7 +79,7 @@ const QuestionCard = ({
             <div>
               <button
                 className={` ${
-                  window.matchMedia('(prefers-color-scheme: dark)').matches
+                  import.meta.env.VITE_THEME_SWITCH === 'dark'
                     ? 'bg-[#494C52]'
                     : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                 } shadow-inner inset-0  rounded-[15px] py-2 px-5 text-[#EAEAEA] text-[20px] font-semibold leading-normal mr-[30px] w-[173px]`}
@@ -87,14 +87,14 @@ const QuestionCard = ({
                 Submit
               </button>
               <div className="flex justify-end gap-2 mr-[22px] mt-[38px] mb-[23px]">
-                <h4 className="text-[#438BBF] text-[16px] font-medium leading-normal">
-                  Full Screen
-                </h4>
                 <img
                   src="/assets/svgs/dashboard/zoom.svg"
                   alt="zoom"
                   className="h-[22px] w-[22px]"
                 />
+                <h4 className="text-[#438BBF] text-[16px] font-medium leading-normal">
+                  Full Screen
+                </h4>
               </div>
             </div>
           </div>
@@ -110,7 +110,7 @@ const QuestionCard = ({
             <div className="w-full flex gap-[42px] justify-end mr-[30px] mb-1">
               <button
                 className={` ${
-                  window.matchMedia('(prefers-color-scheme: dark)').matches
+                  import.meta.env.VITE_THEME_SWITCH === 'dark'
                     ? 'bg-[#494C52]'
                     : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                 } shadow-inner inset-0  rounded-[15px] py-2 px-5 text-[#EAEAEA] text-[20px] font-semibold leading-normal mt-10 w-[173px]`}

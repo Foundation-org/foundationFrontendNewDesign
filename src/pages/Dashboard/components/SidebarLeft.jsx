@@ -52,7 +52,7 @@ const SidebarLeft = () => {
       </div>
       <button
         className={`${
-          window.matchMedia('(prefers-color-scheme: dark)').matches
+          import.meta.env.VITE_THEME_SWITCH === 'dark'
             ? 'bg-[#494C52]'
             : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
         }  shadow-inner inset-0 rounded-[0.938rem] py-2 px-5 text-white dark:text-[#EAEAEA] text-[1.25rem] font-semibold leading-normal mt-12 ml-[1.125rem]`}

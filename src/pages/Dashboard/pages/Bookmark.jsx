@@ -1,9 +1,9 @@
-import React from "react";
-import QuestionCard from "../../../components/QuestionCard";
+import React from 'react';
+import QuestionCard from '../../../components/QuestionCard';
 
 const Bookmark = () => {
   return (
-    <div className="bg-[##FCFCFD] dark:bg-[#121213] w-full py-[25px] px-6 flex flex-col gap-16 h-[calc(100vh-96px)] overflow-y-auto no-scrollbar">
+    <div className="bg-[#FCFCFD] dark:bg-[#121213] w-full py-[27px] px-6 flex flex-col gap-[27px] h-[calc(100vh-96px)] overflow-y-auto no-scrollbar shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
       <QuestionCard
         img="/assets/svgs/dashboard/badge.svg"
         alt="badge"

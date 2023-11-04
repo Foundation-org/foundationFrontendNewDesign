@@ -7,7 +7,7 @@ const Topbar = () => {
   return (
     <div
       className={`${
-        window.matchMedia('(prefers-color-scheme: dark)').matches
+        import.meta.env.VITE_THEME_SWITCH === 'dark'
           ? 'bg-gray-600'
           : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
       } w-full h-24 pb-4 flex items-end justify-around`}
@@ -22,7 +22,7 @@ const Topbar = () => {
             }`}
           >
             {location.pathname === '/dashboard' &&
-              (window.matchMedia('(prefers-color-scheme: dark)').matches ? (
+              (import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
                 <img src="/assets/svgs/dashboard/home.svg" alt="home" />
               ) : (
                 <img
