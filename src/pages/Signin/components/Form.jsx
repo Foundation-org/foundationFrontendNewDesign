@@ -1,6 +1,6 @@
-import React from "react";
-import Typography from "../../../components/Typography";
-import Anchor from "../../../components/Anchor";
+import React from 'react';
+import Typography from '../../../components/Typography';
+import Anchor from '../../../components/Anchor';
 
 const Form = () => {
   return (

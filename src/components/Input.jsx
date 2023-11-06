@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const Input = ({
   type,
@@ -30,7 +30,7 @@ const Input = ({
       />
       <label
         htmlFor={id}
-        className="text-[20px] text-gray-300 dark:text-white-200 absolute left-0 top-1 cursor-text peer-focus:text-xs peer-focus:-top-4 peer-focus:text-gray-300 transition-all"
+        className="text-[20px] text-gray-300 dark:text-white-200 absolute left-0 -top-4 cursor-text peer-focus:text-xs peer-focus:-top-4 peer-focus:text-gray-300 transition-all"
       >
         {label}
       </label>

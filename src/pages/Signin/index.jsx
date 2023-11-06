@@ -1,9 +1,16 @@
+import { useState } from 'react';
 import Button from '../../components/Button';
+import SocialLogins from '../../components/SocialLogins';
 import Typography from '../../components/Typography';
 import Form from './components/Form';
 import { Link } from 'react-router-dom';
 
 export default function Signin() {
+  const [provider, setProvider] = useState('');
+  const [profile, setProfile] = useState(null);
+
+  console.log(provider, profile);
+
   return (
     <div className="bg-blue dark:bg-darker h-screen w-full text-white flex">
       <div className="w-full h-screen bg-white dark:bg-gray-400 rounded-r-[65px] flex flex-col justify-center items-center">
@@ -12,16 +19,7 @@ export default function Signin() {
           <Typography variant="textSmall">
             Please fill your detail to access your account.
           </Typography>
-          <div className="flex gap-[42px] mt-[37.8px] mb-6">
-            <Button size="medium" color="gray">
-              <img src="/assets/svgs/google.svg" className="mr-4" /> Sign up
-              with Google
-            </Button>
-            <Button size="medium" color="gray">
-              <img src="/assets/svgs/facebook.svg" className="mr-4" /> Sign up
-              with Facebook
-            </Button>
-          </div>
+          <SocialLogins setProvider={setProvider} setProfile={setProfile} />
           <div className="w-full flex justify-center">
             <Typography variant="textInfo">-OR-</Typography>
           </div>

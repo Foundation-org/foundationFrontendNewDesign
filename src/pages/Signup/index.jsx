@@ -1,10 +1,17 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Typography from '../../components/Typography';
 import Button from '../../components/Button';
 import Form from './components/Form';
 import Anchor from '../../components/Anchor';
+import SocialLogins from '../../components/SocialLogins';
 
 export default function Signup() {
+  const [provider, setProvider] = useState('');
+  const [profile, setProfile] = useState(null);
+
+  console.log(provider, profile);
+
   return (
     <div className="bg-blue dark:bg-darker h-screen w-full text-white flex">
       <div className="h-screen w-fit flex items-center px-32">
@@ -17,16 +24,7 @@ export default function Signup() {
       <div className="w-full h-screen bg-white dark:bg-dark rounded-[65px] flex flex-col justify-center items-center">
         <div className="max-w-[600px] flex flex-col justify-center items-center">
           <Typography variant="textTitle">Create Account</Typography>
-          <div className="flex gap-[42px] mt-[37.8px] mb-6">
-            <Button size="medium" color="gray">
-              <img src="/assets/svgs/google.svg" className="mr-4" /> Sign up
-              with Google
-            </Button>
-            <Button size="medium" color="gray">
-              <img src="/assets/svgs/facebook.svg" className="mr-4" /> Sign up
-              with Facebook
-            </Button>
-          </div>
+          <SocialLogins setProvider={setProvider} setProfile={setProfile} />
           <Typography variant="textInfo" className="font-poppins">
             -OR-
           </Typography>
