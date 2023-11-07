@@ -21,7 +21,7 @@ const QuestionCard = ({
   const handleStartTest = (testId) => setStartTest(testId);
 
   return (
-    <div className="bg-[#F3F3F3] dark:bg-[#212224] border-[1px] border-[#E4E9FF] rounded-[26px]">
+    <div className="bg-[#F3F3F3] dark:bg-[#141618] border-[1px] border-[#858585] rounded-[26px]">
       <div className="flex items-center justify-between px-[22px] py-[17px]">
         <div className="w-fit h-fit relative">
           <img src={img} alt={alt} className="w-[48px] h-[60px]" />
@@ -46,7 +46,7 @@ const QuestionCard = ({
           />
         )}
       </div>
-      <h1 className="text-[#7C7C7C] dark:text-[#969899] text-[25px] font-semibold leading-normal ml-[52.65px] mt-[5px]">
+      <h1 className="text-[#7C7C7C] dark:text-[#B8B8B8] text-[25px] font-semibold leading-normal ml-[52.65px] mt-[5px]">
         {question}
       </h1>
       {/* question answers options */}
@@ -62,13 +62,21 @@ const QuestionCard = ({
             />
             <button
               onClick={handleOpen}
-              className="ml-[135px] mt-3 flex items-center gap-[11.37px] py-[10px] px-[21px] w-fit rounded-[10px] bg-[#D9D9D9] text-[#435059] text-[18px] font-normal leading-normal"
+              className="ml-[135px] mt-3 flex items-center gap-[11.37px] py-[10px] px-[21px] w-fit rounded-[10px] bg-[#D9D9D9] text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] text-[18px] font-normal leading-normal"
             >
-              <img
-                src="/assets/svgs/dashboard/add.svg"
-                alt="add"
-                className="w-[15.6px] h-[15.6px]"
-              />{' '}
+              {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+                <img
+                  src="/assets/svgs/dashboard/add-dark.svg"
+                  alt="add"
+                  className="w-[15.6px] h-[15.6px]"
+                />
+              ) : (
+                <img
+                  src="/assets/svgs/dashboard/add.svg"
+                  alt="add"
+                  className="w-[15.6px] h-[15.6px]"
+                />
+              )}
               Add Option
             </button>
             <BasicModal open={open} handleClose={handleClose}>
@@ -80,19 +88,27 @@ const QuestionCard = ({
               <button
                 className={` ${
                   import.meta.env.VITE_THEME_SWITCH === 'dark'
-                    ? 'bg-[#494C52]'
+                    ? 'bg-[#333B46]'
                     : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                } shadow-inner inset-0  rounded-[15px] py-2 px-5 text-[#EAEAEA] text-[20px] font-semibold leading-normal mr-[30px] w-[173px]`}
+                } shadow-inner inset-0  rounded-[15px] py-2 px-5 text-[#EAEAEA] dark:text-[#B6B6B6] text-[20px] font-semibold leading-normal mr-[30px] w-[173px]`}
               >
                 Submit
               </button>
               <div className="flex justify-end gap-2 mr-[22px] mt-[38px] mb-[23px]">
-                <img
-                  src="/assets/svgs/dashboard/zoom.svg"
-                  alt="zoom"
-                  className="h-[22px] w-[22px]"
-                />
-                <h4 className="text-[#438BBF] text-[16px] font-medium leading-normal">
+                {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+                  <img
+                    src="/assets/svgs/dashboard/zoom-dark.svg"
+                    alt="zoom"
+                    className="h-[22px] w-[22px]"
+                  />
+                ) : (
+                  <img
+                    src="/assets/svgs/dashboard/zoom.svg"
+                    alt="zoom"
+                    className="h-[22px] w-[22px]"
+                  />
+                )}
+                <h4 className="text-[#438BBF] dark:text-[#B6B6B6] text-[16px] font-medium leading-normal">
                   Full Screen
                 </h4>
               </div>
@@ -111,9 +127,9 @@ const QuestionCard = ({
               <button
                 className={` ${
                   import.meta.env.VITE_THEME_SWITCH === 'dark'
-                    ? 'bg-[#494C52]'
+                    ? 'bg-[#333B46]'
                     : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                } shadow-inner inset-0  rounded-[15px] py-2 px-5 text-[#EAEAEA] text-[20px] font-semibold leading-normal mt-10 w-[173px]`}
+                } shadow-inner inset-0  rounded-[15px] py-2 px-5 text-[#D6D6D6] text-[20px] font-semibold mt-10 w-[173px]`}
                 onClick={() => handleStartTest(id)}
               >
                 Start
@@ -123,7 +139,7 @@ const QuestionCard = ({
               </button>
             </div>
           </div>
-          <div className="bg-white dark:bg-[#282828] rounded-[10px] w-[114px] h-[26px] flex gap-1 items-center justify-center ml-[26px] mb-[23px]">
+          <div className="bg-white dark:bg-[#090A0D] rounded-[10px] w-[114px] h-[26px] flex gap-1 items-center justify-center ml-[26px] mb-[23px]">
             <img
               src="/assets/svgs/dashboard/clock-outline.svg"
               alt="clock"

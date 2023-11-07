@@ -3,7 +3,7 @@ import QuestionCard from '../../../components/QuestionCard';
 
 const Main = () => {
   return (
-    <div className="bg-[#FCFCFD] dark:bg-[#121213] w-full py-[27px] pl-6 pr-[23px] flex flex-col gap-[27px] h-[calc(100vh-96px)] overflow-y-auto no-scrollbar shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+    <div className="bg-[#FCFCFD] dark:bg-[#06070a] custom-shadow w-full py-[27px] pl-6 pr-[23px] flex flex-col gap-[27px] h-[calc(100vh-96px)] overflow-y-auto no-scrollbar shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
       <QuestionCard
         id={1}
         img="/assets/svgs/dashboard/badge.svg"

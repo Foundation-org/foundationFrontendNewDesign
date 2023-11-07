@@ -5,11 +5,12 @@ export default {
   theme: {
     colors: {
       black: '#000',
+      'black-200': '#0A0A0C',
       darker: '#0D0E10;',
-      dark: '#131417;',
+      dark: '#141618;',
       'dark-gray': '#313131',
       gray: '#BDBDBD',
-      'gray-600': '#303742',
+      'gray-600': '#202329',
       'gray-500': '#4B4B4B',
       'gray-400': '#2E2E2E',
       'gray-300': '#7C7C7C',

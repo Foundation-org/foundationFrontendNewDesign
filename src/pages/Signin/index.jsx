@@ -12,8 +12,8 @@ export default function Signin() {
   console.log(provider, profile);
 
   return (
-    <div className="bg-blue dark:bg-darker h-screen w-full text-white flex">
-      <div className="w-full h-screen bg-white dark:bg-gray-400 rounded-r-[65px] flex flex-col justify-center items-center">
+    <div className="bg-blue dark:bg-black-200 h-screen w-full text-white flex">
+      <div className="w-full h-screen bg-white dark:bg-dark rounded-r-[65px] flex flex-col justify-center items-center">
         <div className="max-w-[600px] flex flex-col justify-center">
           <Typography variant="textTitle-2">Login</Typography>
           <Typography variant="textSmall">

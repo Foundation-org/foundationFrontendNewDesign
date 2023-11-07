@@ -13,7 +13,7 @@ export default function Signup() {
   console.log(provider, profile);
 
   return (
-    <div className="bg-blue dark:bg-darker h-screen w-full text-white flex">
+    <div className="bg-blue dark:bg-black-200 h-screen w-full text-white flex">
       <div className="h-screen w-fit flex items-center px-32">
         <img
           src="/assets/svgs/logo.svg"
@@ -33,11 +33,15 @@ export default function Signup() {
             <img src="/assets/svgs/recaptcha.svg" alt="recaptcha" />
           </div>
           <div className="flex items-start mb-12">
-            <input
-              type="checkbox"
-              value=""
-              className="w-6 h-6 rounded-[1.43px] text-blue-600 focus:ring-blue-500 ring-blue-600 ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"
-            />
+            <div className="form-control">
+              <label className="label cursor-pointer flex gap-[11.5px] p-0">
+                <input
+                  type="checkbox"
+                  checked=""
+                  className="checkbox border-[1.437px] border-[#D6D6D6] h-[23px] w-[23px] "
+                />
+              </label>
+            </div>
             <label className="ml-4 text-gray-100 dark:text-white">
               Creating an account means you’re okay with our{' '}
               <Anchor href="#">Terms of Service</Anchor>,{' '}
@@ -51,7 +55,7 @@ export default function Signup() {
           <div className="flex gap-3 mt-[23px]">
             <Typography
               variant="textBase"
-              className="text-gray-100 dark:text-gray"
+              className="text-gray-100 dark:text-gray "
             >
               Already have an account?
             </Typography>

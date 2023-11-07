@@ -85,7 +85,7 @@ const SidebarRight = () => {
   ];
 
   return (
-    <div className="bg-white dark:bg-[#131417] h-[calc(100vh-96px)] min-w-[25rem] w-[25rem] pt-20 pl-[1.3rem] pr-[2.1rem] shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+    <div className="bg-white dark:bg-[#0A0A0C] h-[calc(100vh-96px)] min-w-[25rem] w-[25rem] pt-20 pl-[1.3rem] pr-[2.1rem] shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
       <div className="flex gap-6 mb-11">
         <div className="w-fit h-fit relative">
           <img src="/assets/svgs/dashboard/badge.svg" alt="badge" />
@@ -118,7 +118,7 @@ const SidebarRight = () => {
             <img src={item.iconLight} alt={item.alt} />
           )}
 
-          <div className="w-full flex items-center justify-between text-[18px] text-[#7C7C7C] dark:text-[#D2D2D2] font-semibold leading-normal">
+          <div className="w-full flex items-center justify-between text-[18px] text-[#7C7C7C] dark:text-[#878787] font-semibold leading-normal">
             <h5>{item.title}</h5>
             <h5>{item.value}</h5>
           </div>

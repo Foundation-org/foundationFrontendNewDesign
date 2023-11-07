@@ -6,6 +6,18 @@ const Form = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [reTypePassword, setReTypePassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCnfmPassword, setShowCnfmPassword] = useState(false);
+  const inputType = showPassword ? 'text' : 'password';
+  const cnfmPassInputType = showCnfmPassword ? 'text' : 'password';
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleCnfmPasswordVisibility = () => {
+    setShowCnfmPassword(!showCnfmPassword);
+  };
 
   const onEmailChange = (e) => {
     setEmail(e.target.value);
@@ -32,18 +44,28 @@ const Form = () => {
       <div>
         <div className="relative">
           <Input
-            type="password"
+            type={inputType}
             id="password"
             label="Password"
             className="border-b py-1 focus:outline-none dark:focus:border-white focus:border-[#C0C0C0] focus:border-b-2 transition-colors peer bg-white dark:bg-dark w-full border-white"
             autoComplete="off"
             onChange={onPassChange}
           />
-          <img
-            src="/assets/svgs/blind.svg"
-            alt="blind"
-            className="absolute right-2 -top-2"
-          />
+          {!showPassword ? (
+            <img
+              src="/assets/svgs/blind.svg"
+              alt="blind"
+              className="absolute right-2 -top-2 cursor-pointer"
+              onClick={togglePasswordVisibility}
+            />
+          ) : (
+            <img
+              src="/assets/svgs/eye.svg"
+              alt="blind"
+              className="absolute right-2 -top-2 cursor-pointer"
+              onClick={togglePasswordVisibility}
+            />
+          )}
         </div>
         <div className="-mt-1">
           <PasswordStrengthBar password={password} />
@@ -52,18 +74,28 @@ const Form = () => {
       <div>
         <div className="relative">
           <Input
-            type="password"
+            type={cnfmPassInputType}
             id="retype-password"
             label="Re-Type Password"
             className="border-b py-1 focus:outline-none focus:border-white focus:border-b-2 transition-colors peer bg-white dark:bg-dark w-full border-white"
             autoComplete="off"
             onChange={onReTypePassChange}
           />
-          <img
-            src="/assets/svgs/blind.svg"
-            alt="blind"
-            className="absolute right-2 -top-2"
-          />
+          {!showCnfmPassword ? (
+            <img
+              src="/assets/svgs/blind.svg"
+              alt="blind"
+              className="absolute right-2 -top-2 cursor-pointer"
+              onClick={toggleCnfmPasswordVisibility}
+            />
+          ) : (
+            <img
+              src="/assets/svgs/eye.svg"
+              alt="blind"
+              className="absolute right-2 -top-2 cursor-pointer"
+              onClick={toggleCnfmPasswordVisibility}
+            />
+          )}
         </div>
         <div className="-mt-1">
           <PasswordStrengthBar password={reTypePassword} />
