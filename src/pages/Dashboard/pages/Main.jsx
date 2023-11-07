@@ -1,5 +1,5 @@
-import React from 'react';
-import QuestionCard from '../../../components/QuestionCard';
+import React from "react";
+import QuestionCard from "../../../components/QuestionCard";
 
 const Main = () => {
   return (
@@ -11,6 +11,8 @@ const Main = () => {
         badgeCount="5"
         title="Ranked Choice"
         question="Q. Technology is highly diverse and versatile?"
+        btnColor={"bg-[#BB9D02]"}
+        btnText={"Change"}
       />
       <QuestionCard
         id={2}
@@ -20,6 +22,8 @@ const Main = () => {
         title="Multiple Choice"
         question="Q. Technology is highly diverse and versatile?"
         correctAnswers={true}
+        btnColor={"bg-[#148339]"}
+        btnText={"Correct"}
       />
       <QuestionCard
         id={3}
@@ -28,6 +32,8 @@ const Main = () => {
         badgeCount="5"
         title="Agree/Disagree"
         question="Q. Technology is highly diverse and versatile?"
+        btnColor={"bg-[#C13232]"}
+        btnText={"Incorrect"}
       />
     </div>
   );

@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import Button from '../../components/Button';
-import SocialLogins from '../../components/SocialLogins';
-import Typography from '../../components/Typography';
-import Form from './components/Form';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import Button from "../../components/Button";
+import SocialLogins from "../../components/SocialLogins";
+import Typography from "../../components/Typography";
+import Form from "./components/Form";
+import { Link } from "react-router-dom";
 
 export default function Signin() {
-  const [provider, setProvider] = useState('');
+  const [provider, setProvider] = useState("");
   const [profile, setProfile] = useState(null);
 
   console.log(provider, profile);
@@ -25,7 +25,11 @@ export default function Signin() {
           </div>
           <Form />
           <div className="w-full flex items-start mt-12 mb-14">
-            <img src="/assets/svgs/recaptcha.svg" alt="recaptcha" />
+            {import.meta.env.VITE_THEME_SWITCH === "dark" ? (
+              <img src="/assets/svgs/recaptcha.svg" alt="recaptcha" />
+            ) : (
+              <img src="/assets/svgs/recaptcha-light.svg" alt="recaptcha" />
+            )}
           </div>
           <Button size="large" color="blue-200">
             <Typography variant="textBase"> Sign in</Typography>

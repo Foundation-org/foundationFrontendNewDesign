@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Typography from '../../components/Typography';
-import Button from '../../components/Button';
-import Form from './components/Form';
-import Anchor from '../../components/Anchor';
-import SocialLogins from '../../components/SocialLogins';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Typography from "../../components/Typography";
+import Button from "../../components/Button";
+import Form from "./components/Form";
+import Anchor from "../../components/Anchor";
+import SocialLogins from "../../components/SocialLogins";
 
 export default function Signup() {
-  const [provider, setProvider] = useState('');
+  const [provider, setProvider] = useState("");
   const [profile, setProfile] = useState(null);
 
   console.log(provider, profile);
@@ -30,7 +30,11 @@ export default function Signup() {
           </Typography>
           <Form />
           <div className="w-full flex items-start mt-4 mb-10">
-            <img src="/assets/svgs/recaptcha.svg" alt="recaptcha" />
+            {import.meta.env.VITE_THEME_SWITCH === "dark" ? (
+              <img src="/assets/svgs/recaptcha.svg" alt="recaptcha" />
+            ) : (
+              <img src="/assets/svgs/recaptcha-light.svg" alt="recaptcha" />
+            )}
           </div>
           <div className="flex items-start mb-12">
             <div className="form-control">
@@ -43,9 +47,9 @@ export default function Signup() {
               </label>
             </div>
             <label className="ml-4 text-gray-100 dark:text-white">
-              Creating an account means you’re okay with our{' '}
-              <Anchor href="#">Terms of Service</Anchor>,{' '}
-              <Anchor href="#">Privacy Policy</Anchor>, and out default{' '}
+              Creating an account means you’re okay with our{" "}
+              <Anchor href="#">Terms of Service</Anchor>,{" "}
+              <Anchor href="#">Privacy Policy</Anchor>, and out default{" "}
               <Anchor href="#">Notification Settings</Anchor>.
             </label>
           </div>
