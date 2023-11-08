@@ -37,7 +37,7 @@ const Form = () => {
         type="email"
         id="email"
         label="Email Address"
-        className="border-b py-1 focus:outline-none dark:focus:border-white focus:border-[#C0C0C0] focus:border-b-2 transition-colors peer bg-white dark:bg-dark w-full border-[#C0C0C0] dark:border-white"
+        className="border-b-[1px] py-1 focus:outline-none dark:focus:border-white focus:border-[#C0C0C0] focus:border-b-2 transition-colors peer bg-white dark:bg-dark w-full border-[#C0C0C0] dark:border-white"
         autoComplete="off"
         onChange={onEmailChange}
       />
@@ -47,28 +47,45 @@ const Form = () => {
             type={inputType}
             id="password"
             label="Password"
-            className="border-b py-1 focus:outline-none dark:focus:border-white focus:border-[#C0C0C0] focus:border-b-2 transition-colors peer bg-white dark:bg-dark w-full border-white"
+            className="border-b-[1px] py-1 focus:outline-none dark:focus:border-white focus:border-[#C0C0C0] focus:border-b-2 transition-colors peer bg-white dark:bg-dark w-full border-[#C0C0C0] dark:border-white"
             autoComplete="off"
             onChange={onPassChange}
           />
           {!showPassword ? (
-            <img
-              src="/assets/svgs/blind.svg"
-              alt="blind"
-              className="absolute right-2 -top-2 cursor-pointer"
-              onClick={togglePasswordVisibility}
-            />
-          ) : (
+            import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+              <img
+                src="/assets/svgs/blind.svg"
+                alt="blind"
+                className="absolute right-2 -top-2 cursor-pointer"
+                onClick={togglePasswordVisibility}
+              />
+            ) : (
+              <img
+                src="/assets/svgs/eye-white.svg"
+                alt="blind"
+                className="absolute right-2 -top-2 cursor-pointer"
+                onClick={togglePasswordVisibility}
+              />
+            )
+          ) : import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
             <img
               src="/assets/svgs/eye.svg"
               alt="blind"
               className="absolute right-2 -top-2 cursor-pointer"
               onClick={togglePasswordVisibility}
             />
+          ) : (
+            <img
+              src="/assets/svgs/eye-white.svg"
+              alt="blind"
+              className="absolute right-2 -top-2 cursor-pointer"
+              onClick={togglePasswordVisibility}
+            />
           )}
         </div>
+
         <div className="-mt-1">
-          <PasswordStrengthBar password={password} />
+          {password && <PasswordStrengthBar password={password} />}
         </div>
       </div>
       <div>
@@ -77,28 +94,44 @@ const Form = () => {
             type={cnfmPassInputType}
             id="retype-password"
             label="Re-Type Password"
-            className="border-b py-1 focus:outline-none focus:border-white focus:border-b-2 transition-colors peer bg-white dark:bg-dark w-full border-white"
+            className="border-b-[1px] py-1 focus:outline-none dark:focus:border-white focus:border-[#C0C0C0] focus:border-b-2 transition-colors peer bg-white dark:bg-dark w-full border-[#C0C0C0] dark:border-white"
             autoComplete="off"
             onChange={onReTypePassChange}
           />
-          {!showCnfmPassword ? (
-            <img
-              src="/assets/svgs/blind.svg"
-              alt="blind"
-              className="absolute right-2 -top-2 cursor-pointer"
-              onClick={toggleCnfmPasswordVisibility}
-            />
-          ) : (
+          {!showPassword ? (
+            import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+              <img
+                src="/assets/svgs/blind.svg"
+                alt="blind"
+                className="absolute right-2 -top-2 cursor-pointer"
+                onClick={togglePasswordVisibility}
+              />
+            ) : (
+              <img
+                src="/assets/svgs/eye-white.svg"
+                alt="blind"
+                className="absolute right-2 -top-2 cursor-pointer"
+                onClick={togglePasswordVisibility}
+              />
+            )
+          ) : import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
             <img
               src="/assets/svgs/eye.svg"
               alt="blind"
               className="absolute right-2 -top-2 cursor-pointer"
-              onClick={toggleCnfmPasswordVisibility}
+              onClick={togglePasswordVisibility}
+            />
+          ) : (
+            <img
+              src="/assets/svgs/eye-white.svg"
+              alt="blind"
+              className="absolute right-2 -top-2 cursor-pointer"
+              onClick={togglePasswordVisibility}
             />
           )}
         </div>
         <div className="-mt-1">
-          <PasswordStrengthBar password={reTypePassword} />
+          {reTypePassword && <PasswordStrengthBar password={reTypePassword} />}
         </div>
       </div>
     </form>

@@ -42,8 +42,12 @@ const SocialLogins = ({ setProvider, setProfile }) => {
         }}
       >
         <Button size="medium" color="gray">
-          <img src="/assets/svgs/facebook.svg" className="mr-4" /> Sign up with
-          Facebook
+          {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+            <img src="/assets/svgs/facebook.svg" className="mr-4" />
+          ) : (
+            <img src="/assets/svgs/facebook-white.svg" className="mr-4" />
+          )}{' '}
+          Sign up with Facebook
         </Button>
       </LoginSocialFacebook>
     </div>

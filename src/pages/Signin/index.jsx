@@ -1,15 +1,21 @@
-import { useState } from "react";
-import Button from "../../components/Button";
-import SocialLogins from "../../components/SocialLogins";
-import Typography from "../../components/Typography";
-import Form from "./components/Form";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import Button from '../../components/Button';
+import SocialLogins from '../../components/SocialLogins';
+import Typography from '../../components/Typography';
+import Form from './components/Form';
+import { Link } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
+import '../../index.css';
 
 export default function Signin() {
-  const [provider, setProvider] = useState("");
+  const [provider, setProvider] = useState('');
   const [profile, setProfile] = useState(null);
 
   console.log(provider, profile);
+
+  function onChange(value) {
+    console.log('Captcha value:', value);
+  }
 
   return (
     <div className="bg-blue dark:bg-black-200 h-screen w-full text-white flex">
@@ -24,13 +30,22 @@ export default function Signin() {
             <Typography variant="textInfo">-OR-</Typography>
           </div>
           <Form />
-          <div className="w-full flex items-start mt-12 mb-14">
-            {import.meta.env.VITE_THEME_SWITCH === "dark" ? (
-              <img src="/assets/svgs/recaptcha.svg" alt="recaptcha" />
+          <div className="w-fit flex items-start mt-12 mb-14">
+            {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+              <ReCAPTCHA
+                sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
+                onChange={onChange}
+                theme="dark"
+              />
             ) : (
-              <img src="/assets/svgs/recaptcha-light.svg" alt="recaptcha" />
+              <ReCAPTCHA
+                sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
+                onChange={onChange}
+                theme="light"
+              />
             )}
           </div>
+
           <Button size="large" color="blue-200">
             <Typography variant="textBase"> Sign in</Typography>
           </Button>

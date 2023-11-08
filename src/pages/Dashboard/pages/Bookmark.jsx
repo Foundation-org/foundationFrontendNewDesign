@@ -10,6 +10,8 @@ const Bookmark = () => {
         badgeCount="5"
         title="Ranked Choice"
         question="Q. Technology is highly diverse and versatile?"
+        isBookmarked={true}
+        btnText={'Change'}
       />
       <QuestionCard
         img="/assets/svgs/dashboard/badge-g.svg"
@@ -18,6 +20,8 @@ const Bookmark = () => {
         title="Multiple Choice"
         question="Q. Technology is highly diverse and versatile?"
         correctAnswers={true}
+        isBookmarked={true}
+        btnText={'Change'}
       />
       <QuestionCard
         img="/assets/svgs/dashboard/badge.svg"
@@ -25,6 +29,8 @@ const Bookmark = () => {
         badgeCount="5"
         title="Agree/Disagree"
         question="Q. Technology is highly diverse and versatile?"
+        isBookmarked={true}
+        btnText={'Change'}
       />
     </div>
   );

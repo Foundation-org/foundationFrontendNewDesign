@@ -28,3 +28,8 @@ body {
   background: #06070a;
   box-shadow: 0px 0px 9px 0px rgba(255, 255, 255, 0.15) inset;
 }
+
+.grecaptcha-iframe {
+  width: 302px !important;
+  height: 76px !important;
+}

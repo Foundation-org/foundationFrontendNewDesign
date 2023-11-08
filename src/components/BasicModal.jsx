@@ -7,9 +7,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 'fit-content',
-  bgcolor: 'background.paper',
   boxShadow: 5,
-  p: 4,
 };
 
 const BasicModal = ({ open, handleClose, children }) => {
