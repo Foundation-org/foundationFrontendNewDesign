@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import Topbar from './components/Topbar';
-import SidebarRight from './components/SidebarRight';
-import SidebarLeft from './components/SidebarLeft';
+// import SidebarRight from './components/SidebarRight';
+// import SidebarLeft from './components/SidebarLeft';
 import Main from './pages/Main';
-import Quest from './pages/Quest';
+import Quest from './pages/Quest/Quest';
 import Bookmark from './pages/Bookmark';
 
 const Dashboard = () => {
@@ -11,13 +11,13 @@ const Dashboard = () => {
     <>
       <Topbar />
       <div className="flex justify-between">
-        <SidebarLeft />
+        {/* <SidebarLeft /> */}
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/quest" element={<Quest />} />
           <Route path="/bookmark" element={<Bookmark />} />
         </Routes>
-        <SidebarRight />
+        {/* <SidebarRight /> */}
       </div>
     </>
   );

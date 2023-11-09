@@ -17,7 +17,7 @@ const Topbar = () => {
         <li>
           <Link
             to={'/dashboard'}
-            className={`flex gap-6 items-center ${
+            className={`flex gap-[10px] items-center ${
               location.pathname === '/dashboard' ? 'text-white' : ''
             }`}
           >
@@ -34,14 +34,24 @@ const Topbar = () => {
           </Link>
         </li>
         <li>
-          <Link to={'/dashboard/quest'} className="focus:text-white">
+          <Link
+            to={'/dashboard/quest'}
+            className={`flex gap-[10px] items-center ${
+              location.pathname === '/dashboard/quest' ? 'text-white' : ''
+            }`}
+          >
+            {location.pathname === '/dashboard/quest' && (
+              <img src="/assets/svgs/dashboard/quest.svg" alt="quest" />
+            )}
             Quests
           </Link>
         </li>
         <li>
           <Link
             to={'/dashboard/bookmark'}
-            className="flex gap-6 items-center focus:text-white"
+            className={`flex gap-[10px] items-center ${
+              location.pathname === '/dashboard/bookmark' ? 'text-white' : ''
+            }`}
           >
             {location.pathname === '/dashboard/bookmark' && (
               <img
