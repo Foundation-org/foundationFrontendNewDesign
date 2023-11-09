@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const SingleAnswer = ({ number, answer }) => {
   return (
@@ -9,7 +9,7 @@ const SingleAnswer = ({ number, answer }) => {
       <div className="bg-white dark:bg-[#0D1012] rounded-[10px] w-full flex justify-between">
         <div className="flex items-center">
           <div className="rounded-l-[10px] h-full w-fit bg-[#DEE6F7] dark:bg-[#9E9E9E] px-[7px] pt-[14px] pb-[13px]">
-            {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+            {import.meta.env.VITE_THEME_SWITCH === "dark" ? (
               <img
                 src="/assets/svgs/dashboard/six-dots-dark.svg"
                 alt="six dots"

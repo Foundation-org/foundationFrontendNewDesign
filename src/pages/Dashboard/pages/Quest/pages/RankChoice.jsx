@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Switch } from '@headlessui/react';
-import Options from '../components/Options';
+import { useState } from "react";
+import { Switch } from "@headlessui/react";
+import Options from "../components/Options";
 
 const RankChoice = () => {
   const [enabled, setEnabled] = useState(false);
@@ -24,8 +24,16 @@ const RankChoice = () => {
           </h3>
         </div>
         <div className="mt-10 flex flex-col gap-[30px]">
-          <Options answer={'Technology is versatile'} label={'Option 1 #'} />
-          <Options answer={'Technology is versatile'} label={'Option 2 #'} />
+          <Options
+            answer={"Technology is versatile"}
+            label={"Option 1 #"}
+            dragable={true}
+          />
+          <Options
+            answer={"Technology is versatile"}
+            label={"Option 2 #"}
+            dragable={true}
+          />
           <button className="text-[#7C7C7C] text-[31px] font-semibold leading-normal bg-[#C9C9C9] rounded-[23.6px] py-3 px-6 w-fit ml-[50px] mt-5">
             Add Option
           </button>
@@ -44,7 +52,7 @@ const RankChoice = () => {
             <Switch
               checked={enabled}
               onChange={setEnabled}
-              className={`${enabled ? 'bg-[#7EEAAF]' : 'bg-[#D9D9D9]'}
+              className={`${enabled ? "bg-[#7EEAAF]" : "bg-[#D9D9D9]"}
       relative inline-flex items-center h-[20px] w-[50px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
             >
               <span className="sr-only">Use setting</span>
@@ -52,8 +60,8 @@ const RankChoice = () => {
                 aria-hidden="true"
                 className={`${
                   enabled
-                    ? 'translate-x-6 bg-[#0DA65D]'
-                    : '-translate-x-[7px] bg-[#707070]'
+                    ? "translate-x-6 bg-[#0DA65D]"
+                    : "-translate-x-[7px] bg-[#707070]"
                 }
         pointer-events-none inline-block h-[30px] w-[30px] transform rounded-full  shadow-lg ring-0 transition duration-200 ease-in-out`}
               />
@@ -66,7 +74,7 @@ const RankChoice = () => {
             <Switch
               checked={enabled}
               onChange={setEnabled}
-              className={`${enabled ? 'bg-[#7EEAAF]' : 'bg-[#D9D9D9]'}
+              className={`${enabled ? "bg-[#7EEAAF]" : "bg-[#D9D9D9]"}
       relative inline-flex items-center h-[20px] w-[50px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
             >
               <span className="sr-only">Use setting</span>
@@ -74,8 +82,8 @@ const RankChoice = () => {
                 aria-hidden="true"
                 className={`${
                   enabled
-                    ? 'translate-x-6 bg-[#0DA65D]'
-                    : '-translate-x-[7px] bg-[#707070]'
+                    ? "translate-x-6 bg-[#0DA65D]"
+                    : "-translate-x-[7px] bg-[#707070]"
                 }
         pointer-events-none inline-block h-[30px] w-[30px] transform rounded-full  shadow-lg ring-0 transition duration-200 ease-in-out`}
               />
