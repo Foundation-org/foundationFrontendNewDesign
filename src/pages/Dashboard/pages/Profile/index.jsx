@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Topbar from '../../components/Topbar';
 import Button from './components/Button';
+import { Switch } from '@headlessui/react';
 
 const Profile = () => {
+  const [enabled, setEnabled] = useState(false);
+
   const list = [
     {
       id: 1,
@@ -103,16 +106,23 @@ const Profile = () => {
             </h4>
             <div className="flex gap-[13px]">
               <p>Light</p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="48"
-                height="26"
-                viewBox="0 0 48 26"
-                fill="none"
+              <Switch
+                checked={enabled}
+                onChange={setEnabled}
+                className={`${enabled ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'}
+      relative inline-flex items-center h-[25px] w-[48px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
               >
-                <rect width="48" height="25.2203" rx="12.6102" fill="#BEDEF4" />
-                <circle cx="14.2374" cy="12.6102" r="10.1695" fill="#4A8DBD" />
-              </svg>
+                <span className="sr-only">Use setting</span>
+                <span
+                  aria-hidden="true"
+                  className={`${
+                    enabled
+                      ? 'translate-x-6 bg-[#4A8DBD]'
+                      : 'translate-x-[1px] bg-[#4A8DBD]'
+                  }
+        pointer-events-none inline-block h-[20px] w-[20px] transform rounded-full  shadow-lg ring-0 transition duration-200 ease-in-out`}
+                />
+              </Switch>
               <p>Dark</p>
             </div>
           </div>
