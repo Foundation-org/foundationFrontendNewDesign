@@ -1,7 +1,8 @@
-import { Routes, Route } from 'react-router-dom';
-import Signin from '../pages/Signin';
-import Signup from '../pages/Signup';
-import Dashboard from '../pages/Dashboard';
+import { Routes, Route } from "react-router-dom";
+import Signin from "../pages/Signin";
+import Signup from "../pages/Signup";
+import Dashboard from "../pages/Dashboard";
+import Profile from "../pages/Dashboard/pages/Profile";
 
 export function Router() {
   return (
@@ -11,6 +12,7 @@ export function Router() {
         <Route path="/" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
         {/* 404 page */}
         <Route
           path="*"

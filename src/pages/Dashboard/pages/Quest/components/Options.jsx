@@ -44,12 +44,14 @@ const Options = ({ number, answer, options, label, trash, dragable }) => {
             </h1>
             <div className="flex gap-[55px]">
               {options && (
-                <input
-                  id="default-checkbox"
-                  type="checkbox"
-                  value=""
-                  class="w-10 h-[38px] text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 "
-                />
+                <div id="green-checkbox">
+                  <input
+                    id="default-checkbox"
+                    type="checkbox"
+                    class="w-10 h-10 rounded
+                    "
+                  />
+                </div>
               )}
               {trash && (
                 <img src="/assets/svgs/dashboard/trash2.svg" alt="trash" />

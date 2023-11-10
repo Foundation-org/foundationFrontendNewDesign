@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import Anchor from '../../../components/Anchor';
 
 const SidebarRight = () => {
+  const navigate = useNavigate();
   const sidebarList = [
     {
       id: 1,
@@ -97,9 +99,15 @@ const SidebarRight = () => {
           <h4 className="text-[30px] font-semibold leading-normal text-[#616161] dark:text-[#D2D2D2]">
             My Profile
           </h4>
-          <Anchor className="text-[#4A8DBD] dark:text-[#BAE2FF]">
-            Edit Profile
-          </Anchor>
+          <div
+            onClick={() => {
+              navigate('/profile');
+            }}
+          >
+            <Anchor className="text-[#4A8DBD] dark:text-[#BAE2FF] cursor-pointer">
+              Edit Profile
+            </Anchor>
+          </div>
           <div className="flex gap-2 mt-3">
             <div className="h-[9px] w-6 bg-[#4A8DBD] rounded-md"></div>
             <div className="h-[9px] w-6 bg-[#D9D9D9] dark:bg-[#323232] rounded-md"></div>
