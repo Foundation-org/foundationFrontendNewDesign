@@ -1,21 +1,57 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Typography from "../../components/Typography";
 import Button from "../../components/Button";
 import Form from "./components/Form";
 import Anchor from "../../components/Anchor";
 import SocialLogins from "../../components/SocialLogins";
 import ReCAPTCHA from "react-google-recaptcha";
+import axios from "axios";
+import api from "../../api/Axios";
 
 export default function Signup() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [reTypePassword, setReTypePassword] = useState("");
   const [provider, setProvider] = useState("");
   const [profile, setProfile] = useState(null);
+  const navigate = useNavigate();
 
   console.log(provider, profile);
 
   function onChange(value) {
     console.log("Captcha value:", value);
   }
+
+  const onEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const onPassChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const onReTypePassChange = (e) => {
+    setReTypePassword(e.target.value);
+  };
+
+  const createAccount = async () => {
+    if (email && password) {
+      try {
+        const response = await api
+          .post("/user/signUpUser", {
+            userEmail: email,
+            userPassword: password,
+          })
+          .then(() => {
+            console.log("Response:", response);
+            navigate("/signin");
+          });
+      } catch (error) {
+        console.error("Error creating account:", error);
+      }
+    }
+  };
 
   return (
     <div className="bg-blue dark:bg-black-200 h-screen w-full text-white flex">
@@ -33,7 +69,11 @@ export default function Signup() {
           <Typography variant="textInfo" className="font-poppins">
             -OR-
           </Typography>
-          <Form />
+          <Form
+            onEmailChange={onEmailChange}
+            onPassChange={onPassChange}
+            onReTypePassChange={onReTypePassChange}
+          />
           <div className="w-full flex items-start mt-4 mb-10">
             {import.meta.env.VITE_THEME_SWITCH === "dark" ? (
               <ReCAPTCHA
@@ -66,7 +106,7 @@ export default function Signup() {
               <Anchor href="#">Notification Settings</Anchor>.
             </label>
           </div>
-          <Button size="large" color="blue-200">
+          <Button size="large" color="blue-200" onClick={createAccount}>
             Create Account
           </Button>
           <div className="flex gap-3 mt-[23px]">

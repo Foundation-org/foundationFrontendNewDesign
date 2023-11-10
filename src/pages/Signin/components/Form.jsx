@@ -1,29 +1,29 @@
-import { useState } from 'react';
-import Typography from '../../../components/Typography';
-import Anchor from '../../../components/Anchor';
+import { useState } from "react";
+import Typography from "../../../components/Typography";
+import Anchor from "../../../components/Anchor";
 
-const Form = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Form = ({ onEmailChange, onPassChange, onReTypePassChange }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const inputType = showPassword ? 'text' : 'password';
+  const inputType = showPassword ? "text" : "password";
   const [remeberMe, setRememberMe] = useState(false);
 
   const clearEmail = () => {
-    setEmail('');
+    setEmail("");
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const onEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  // const onEmailChange = (e) => {
+  //   setEmail(e.target.value);
+  // };
 
-  const onPassChange = (e) => {
-    setPassword(e.target.value);
-  };
+  // const onPassChange = (e) => {
+  //   setPassword(e.target.value);
+  // };
 
   const handleRememberMe = (e) => {
     setRememberMe(e.target.checked);
@@ -40,7 +40,7 @@ const Form = () => {
             type="text"
             placeholder="Enter your email"
             className="input border-[1.473px] border-[#D0D5DD] dark:border-[#D9D9D9] focus:outline-none w-full bg-white dark:bg-gray-400 text-gray-400 dark:text-white"
-            value={email}
+            // value={email}
             onChange={onEmailChange}
           />
           {email && (
