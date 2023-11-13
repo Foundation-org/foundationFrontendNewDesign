@@ -1,8 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import Anchor from '../../../components/Anchor';
+import { useMutation } from '@tanstack/react-query';
+import { userInfo } from '../../../api/userAuth';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser } from '../../../features/auth/authSlice';
 
 const SidebarRight = () => {
+  const dispath = useDispatch();
   const navigate = useNavigate();
+  const [response, setResponse] = useState();
+
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  // console.log({ persistedUserInfo });
+
   const sidebarList = [
     {
       id: 1,
@@ -10,7 +23,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon11.svg',
       alt: 'icon1',
       title: 'Quests Created',
-      value: 2,
+      value: (response && response?.createdQuests.length) || 0,
     },
     {
       id: 2,
@@ -18,7 +31,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon12.svg',
       alt: 'icon1',
       title: 'Quests Answered',
-      value: 16,
+      value: (response && response?.addedAnswers) || 0,
     },
     {
       id: 3,
@@ -42,7 +55,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon15.svg',
       alt: 'icon1',
       title: 'Answers Changed',
-      value: 87,
+      value: (response && response?.changedAnswers) || 0,
     },
     {
       id: 6,
@@ -50,7 +63,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon16.svg',
       alt: 'icon1',
       title: 'Answers Added',
-      value: 2,
+      value: (response && response?.addedAnswers) || 0,
     },
     {
       id: 7,
@@ -74,7 +87,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon19.svg',
       alt: 'icon1',
       title: 'Contentions Given',
-      value: 12,
+      value: (response && response?.contentionsGiven) || 0,
     },
     {
       id: 10,
@@ -85,6 +98,29 @@ const SidebarRight = () => {
       value: 2,
     },
   ];
+
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+  });
+
+  const handleUserInfo = async (id) => {
+    try {
+      const resp = await getUserInfo(id);
+
+      if (resp.status === 200) {
+        dispath(addUser(resp.data));
+      }
+
+      // console.log(resp);
+      setResponse(resp.data);
+    } catch (e) {
+      toast.error(e.response.data);
+    }
+  };
+
+  useEffect(() => {
+    handleUserInfo(localStorage.getItem('uId'));
+  }, []);
 
   return (
     <div className="bg-white dark:bg-[#0A0A0C] h-[calc(100vh-96px)] min-w-[25rem] w-[25rem] pt-20 pl-[1.3rem] pr-[2.1rem] shadow-[0_3px_10px_rgb(0,0,0,0.2)]">

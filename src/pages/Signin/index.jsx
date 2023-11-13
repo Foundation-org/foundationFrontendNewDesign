@@ -1,25 +1,27 @@
-import { useState } from "react";
-import Button from "../../components/Button";
-import SocialLogins from "../../components/SocialLogins";
-import Typography from "../../components/Typography";
-import Form from "./components/Form";
-import { Link, useNavigate } from "react-router-dom";
-import ReCAPTCHA from "react-google-recaptcha";
-import "../../index.css";
-import api from "../../api/Axios";
+import { useState } from 'react';
+import Button from '../../components/Button';
+import SocialLogins from '../../components/SocialLogins';
+import Typography from '../../components/Typography';
+import Form from './components/Form';
+import { Link, useNavigate } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
+import '../../index.css';
+import { useMutation } from '@tanstack/react-query';
+import { signIn } from '../../api/userAuth';
+import { toast } from 'sonner';
 
 export default function Signin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [reTypePassword, setReTypePassword] = useState("");
-  const [provider, setProvider] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [reTypePassword, setReTypePassword] = useState('');
+  const [provider, setProvider] = useState('');
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
 
-  console.log(provider, profile);
+  // console.log(provider, profile);
 
   function onChange(value) {
-    console.log("Captcha value:", value);
+    console.log('Captcha value:', value);
   }
 
   const onEmailChange = (e) => {
@@ -34,21 +36,25 @@ export default function Signin() {
     setReTypePassword(e.target.value);
   };
 
-  const signin = async () => {
-    if (email && password) {
-      try {
-        const response = await api
-          .post("/user/signInUser", {
-            email: email,
-            password: password,
-          })
-          .then(() => {
-            console.log("Response:", response);
-            navigate("/dashboard");
-          });
-      } catch (error) {
-        console.error("Error creating account:", error);
+  const { mutateAsync: userSignin } = useMutation({
+    mutationFn: signIn,
+  });
+
+  const handleSignin = async () => {
+    try {
+      const resp = await userSignin({ email, password });
+
+      if (resp.status === 200) {
+        localStorage.setItem('uId', resp.data.uuid);
+        toast.success('User signin successfully');
+        setEmail('');
+        setPassword('');
+        navigate('/dashboard');
       }
+
+      console.log(resp);
+    } catch (e) {
+      toast.error(e.response.data);
     }
   };
 
@@ -70,7 +76,7 @@ export default function Signin() {
             onReTypePassChange={onReTypePassChange}
           />
           <div className="w-fit flex items-start mt-12 mb-14">
-            {import.meta.env.VITE_THEME_SWITCH === "dark" ? (
+            {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
                 onChange={onChange}
@@ -85,7 +91,7 @@ export default function Signin() {
             )}
           </div>
 
-          <Button size="large" color="blue-200" onClick={signin}>
+          <Button size="large" color="blue-200" onClick={handleSignin}>
             <Typography variant="textBase"> Sign in</Typography>
           </Button>
           <div className="flex justify-center gap-3 mt-[23px]">

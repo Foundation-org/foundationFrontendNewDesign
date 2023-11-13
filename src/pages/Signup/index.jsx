@@ -1,26 +1,27 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Typography from "../../components/Typography";
-import Button from "../../components/Button";
-import Form from "./components/Form";
-import Anchor from "../../components/Anchor";
-import SocialLogins from "../../components/SocialLogins";
-import ReCAPTCHA from "react-google-recaptcha";
-import axios from "axios";
-import api from "../../api/Axios";
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { Link, useNavigate } from 'react-router-dom';
+import Typography from '../../components/Typography';
+import Button from '../../components/Button';
+import Form from './components/Form';
+import Anchor from '../../components/Anchor';
+import SocialLogins from '../../components/SocialLogins';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useMutation } from '@tanstack/react-query';
+import { signUp } from '../../api/userAuth';
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [reTypePassword, setReTypePassword] = useState("");
-  const [provider, setProvider] = useState("");
-  const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [reTypePassword, setReTypePassword] = useState('');
+  const [provider, setProvider] = useState('');
+  const [profile, setProfile] = useState(null);
 
-  console.log(provider, profile);
+  // console.log(provider, profile);
 
   function onChange(value) {
-    console.log("Captcha value:", value);
+    console.log('Captcha value:', value);
   }
 
   const onEmailChange = (e) => {
@@ -35,21 +36,24 @@ export default function Signup() {
     setReTypePassword(e.target.value);
   };
 
-  const createAccount = async () => {
-    if (email && password) {
-      try {
-        const response = await api
-          .post("/user/signUpUser", {
-            userEmail: email,
-            userPassword: password,
-          })
-          .then(() => {
-            console.log("Response:", response);
-            navigate("/signin");
-          });
-      } catch (error) {
-        console.error("Error creating account:", error);
+  const { mutateAsync: userSignup } = useMutation({
+    mutationFn: signUp,
+  });
+
+  const handleSignup = async () => {
+    try {
+      const resp = await userSignup({ email, password });
+
+      if (resp.status === 200) {
+        toast.success('User registered successfully');
+        setEmail('');
+        setPassword('');
+        navigate('/verify-email');
       }
+
+      console.log(resp);
+    } catch (e) {
+      toast.error(e.response.data);
     }
   };
 
@@ -75,7 +79,7 @@ export default function Signup() {
             onReTypePassChange={onReTypePassChange}
           />
           <div className="w-full flex items-start mt-4 mb-10">
-            {import.meta.env.VITE_THEME_SWITCH === "dark" ? (
+            {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
                 onChange={onChange}
@@ -100,13 +104,13 @@ export default function Signup() {
               </label>
             </div>
             <label className="ml-4 text-gray-100 dark:text-white">
-              Creating an account means you’re okay with our{" "}
-              <Anchor href="#">Terms of Service</Anchor>,{" "}
-              <Anchor href="#">Privacy Policy</Anchor>, and out default{" "}
+              Creating an account means you’re okay with our{' '}
+              <Anchor href="#">Terms of Service</Anchor>,{' '}
+              <Anchor href="#">Privacy Policy</Anchor>, and out default{' '}
               <Anchor href="#">Notification Settings</Anchor>.
             </label>
           </div>
-          <Button size="large" color="blue-200" onClick={createAccount}>
+          <Button size="large" color="blue-200" onClick={handleSignup}>
             Create Account
           </Button>
           <div className="flex gap-3 mt-[23px]">

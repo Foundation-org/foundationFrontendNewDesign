@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Router } from './utils/route';
+import { Toaster } from 'sonner';
 
 function App() {
   const [theme, setTheme] = useState(null);
 
   useEffect(() => {
-    if (import.meta.env.VITE_THEME_SWITCH === 'dark') {
+    if (localStorage.getItem('theme') === 'true') {
       setTheme('dark');
     } else {
       setTheme('light');
@@ -20,7 +21,12 @@ function App() {
     }
   }, [theme]);
 
-  return <Router />;
+  return (
+    <>
+      <Router />
+      <Toaster position="top-right" expand={true} richColors />
+    </>
+  );
 }
 
 export default App;

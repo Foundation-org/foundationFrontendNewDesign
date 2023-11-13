@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Topbar from '../../components/Topbar';
 import Button from './components/Button';
 import { Switch } from '@headlessui/react';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const Profile = () => {
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(localStorage.getItem('theme'));
+  const [checkState, setCheckState] = useState(false);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const list = [
     {
@@ -13,7 +17,8 @@ const Profile = () => {
       iconLight: '/assets/svgs/dashboard/icon11.svg',
       alt: 'icon1',
       title: 'Quests Created',
-      value: 2,
+      value:
+        (persistedUserInfo && persistedUserInfo?.createdQuests.length) || 0,
     },
     {
       id: 2,
@@ -21,7 +26,7 @@ const Profile = () => {
       iconLight: '/assets/svgs/dashboard/icon12.svg',
       alt: 'icon1',
       title: 'Quests Answered',
-      value: 16,
+      value: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0,
     },
     {
       id: 3,
@@ -45,7 +50,7 @@ const Profile = () => {
       iconLight: '/assets/svgs/dashboard/icon15.svg',
       alt: 'icon1',
       title: 'Answers Changed',
-      value: 87,
+      value: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0,
     },
     {
       id: 6,
@@ -53,7 +58,7 @@ const Profile = () => {
       iconLight: '/assets/svgs/dashboard/icon16.svg',
       alt: 'icon1',
       title: 'Answers Added',
-      value: 2,
+      value: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0,
     },
     {
       id: 7,
@@ -77,7 +82,7 @@ const Profile = () => {
       iconLight: '/assets/svgs/dashboard/icon19.svg',
       alt: 'icon1',
       title: 'Contentions Given',
-      value: 12,
+      value: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0,
     },
     {
       id: 10,
@@ -88,6 +93,18 @@ const Profile = () => {
       value: 2,
     },
   ];
+
+  const handleTheme = () => {
+    localStorage.setItem('theme', String(enabled));
+
+    if (String(enabled) === 'true') {
+      setCheckState(true);
+    } else setCheckState(false);
+  };
+
+  useEffect(() => {
+    handleTheme();
+  }, [enabled]);
 
   return (
     <div>
@@ -107,16 +124,16 @@ const Profile = () => {
             <div className="flex gap-[13px]">
               <p>Light</p>
               <Switch
-                checked={enabled}
+                checked={checkState}
                 onChange={setEnabled}
-                className={`${enabled ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'}
+                className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'}
       relative inline-flex items-center h-[25px] w-[48px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
               >
                 <span className="sr-only">Use setting</span>
                 <span
                   aria-hidden="true"
                   className={`${
-                    enabled
+                    checkState
                       ? 'translate-x-6 bg-[#4A8DBD]'
                       : 'translate-x-[1px] bg-[#4A8DBD]'
                   }
@@ -147,7 +164,7 @@ const Profile = () => {
                     {item.title.split(' ')[1]}
                   </h4>
                   <h1 className="text-[#7C7C7C] text-[35px] font-semibold leading-[14px] text-center">
-                    16
+                    {item.value}
                   </h1>
                 </div>
               </div>

@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-export const url = "http://localhost:7354";
+export const url = import.meta.env.VITE_API_URL;
 
 const BASE_URL = url;
 
