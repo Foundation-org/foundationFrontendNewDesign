@@ -96,7 +96,7 @@ const Contributions = () => {
       <div className="mx-[106px] rounded-[45px] shadow-inside h-[183px] relative">
         <div className="flex gap-[35px] absolute -top-7 left-[50%] transform -translate-x-[50%]">
           {list?.map((item) => (
-            <div className="w-[70px]" key={item.id}>
+            <div className="ml-[51px] w-[70px]" key={item.id}>
               <div className="flex flex-col items-center justify-center">
                 <img
                   src={item.icon}
