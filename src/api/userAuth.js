@@ -19,6 +19,11 @@ export const getAllQuestsWithDefaultStatus = async (params) => {
   return await api.post('/infoquestions/getAllQuestsWithDefaultStatus', params);
 };
 
+export const getAllLedgerData = async () => {
+   const dataFetched= await api.post('/ledger');
+   return dataFetched.data;
+  
+};
 // export const getTodos = async () => {
 //     const response = await todosApi.get("/todos")
 //     return response.data
