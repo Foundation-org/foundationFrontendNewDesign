@@ -1,13 +1,14 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
 const Topbar = () => {
   const location = useLocation();
+  const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
     <div
       className={`${
-        import.meta.env.VITE_THEME_SWITCH === 'dark'
+        persistedTheme === 'dark'
           ? 'bg-gray-600'
           : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
       } w-full h-24 pb-4 flex items-end justify-around`}
@@ -22,7 +23,7 @@ const Topbar = () => {
             }`}
           >
             {location.pathname === '/dashboard' &&
-              (import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+              (persistedTheme === 'dark' ? (
                 <img src="/assets/svgs/dashboard/home.svg" alt="home" />
               ) : (
                 <img

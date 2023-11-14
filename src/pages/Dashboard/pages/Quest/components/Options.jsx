@@ -1,12 +1,15 @@
-import React from "react";
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Options = ({ number, answer, options, label, trash, dragable }) => {
+  const persistedTheme = useSelector((state) => state.utils.theme);
+
   return (
     <div
       className={`${
         label
-          ? "flex flex-col gap-[13px]"
-          : "flex flex-row  items-center gap-[25px]"
+          ? 'flex flex-col gap-[13px]'
+          : 'flex flex-row  items-center gap-[25px]'
       } ml-[51px] mr-[71px] `}
     >
       {label && (
@@ -23,7 +26,7 @@ const Options = ({ number, answer, options, label, trash, dragable }) => {
         <div className="flex items-center w-full">
           <div className="rounded-l-[10px] h-full w-[38px] bg-[#DEE6F7] dark:bg-[#9E9E9E] px-[7px] pt-[14px] pb-[13px] flex items-center justify-center">
             {dragable ? (
-              import.meta.env.VITE_THEME_SWITCH === "dark" ? (
+              persistedTheme === 'dark' ? (
                 <img
                   src="/assets/svgs/dashboard/six-dots-dark.svg"
                   alt="six dots"

@@ -9,15 +9,16 @@ import '../../index.css';
 import { useMutation } from '@tanstack/react-query';
 import { signIn } from '../../api/userAuth';
 import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
 
 export default function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [reTypePassword, setReTypePassword] = useState('');
   const [provider, setProvider] = useState('');
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
 
+  const persistedTheme = useSelector((state) => state.utils.theme);
   // console.log(provider, profile);
 
   function onChange(value) {
@@ -30,10 +31,6 @@ export default function Signin() {
 
   const onPassChange = (e) => {
     setPassword(e.target.value);
-  };
-
-  const onReTypePassChange = (e) => {
-    setReTypePassword(e.target.value);
   };
 
   const { mutateAsync: userSignin } = useMutation({
@@ -52,7 +49,7 @@ export default function Signin() {
         navigate('/dashboard');
       }
 
-      console.log(resp);
+      // console.log(resp);
     } catch (e) {
       toast.error(e.response.data);
     }
@@ -70,13 +67,9 @@ export default function Signin() {
           <div className="w-full flex justify-center">
             <Typography variant="textInfo">-OR-</Typography>
           </div>
-          <Form
-            onEmailChange={onEmailChange}
-            onPassChange={onPassChange}
-            onReTypePassChange={onReTypePassChange}
-          />
+          <Form onEmailChange={onEmailChange} onPassChange={onPassChange} />
           <div className="w-fit flex items-start mt-12 mb-14">
-            {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+            {persistedTheme === 'dark' ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
                 onChange={onChange}

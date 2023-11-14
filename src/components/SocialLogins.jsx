@@ -1,10 +1,13 @@
 import { useCallback } from 'react';
 import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
 import Button from './Button';
+import { useSelector } from 'react-redux';
 
 const REDIRECT_URI = window.location.href;
 
 const SocialLogins = ({ setProvider, setProfile }) => {
+  const persistedTheme = useSelector((state) => state.utils.theme);
+
   const onLogoutSuccess = useCallback(() => {
     setProfile(null);
     setProvider('');
@@ -42,7 +45,7 @@ const SocialLogins = ({ setProvider, setProfile }) => {
         }}
       >
         <Button size="medium" color="gray">
-          {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+          {persistedTheme === 'dark' ? (
             <img src="/assets/svgs/facebook.svg" className="mr-4" />
           ) : (
             <img src="/assets/svgs/facebook-white.svg" className="mr-4" />

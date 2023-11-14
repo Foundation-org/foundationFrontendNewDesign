@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import { Switch } from '@headlessui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { changeTheme } from '../../../../features/utils/utilsSlice';
 import Topbar from '../../components/Topbar';
 import Button from './components/Button';
-import { Switch } from '@headlessui/react';
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 
 const Profile = () => {
-  const [enabled, setEnabled] = useState(localStorage.getItem('theme'));
+  const dispatch = useDispatch();
   const [checkState, setCheckState] = useState(false);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedTheme = useSelector((state) => state.utils.theme);
 
   const list = [
     {
@@ -94,17 +96,18 @@ const Profile = () => {
     },
   ];
 
-  const handleTheme = () => {
-    localStorage.setItem('theme', String(enabled));
-
-    if (String(enabled) === 'true') {
-      setCheckState(true);
-    } else setCheckState(false);
-  };
-
   useEffect(() => {
-    handleTheme();
-  }, [enabled]);
+    if (persistedTheme === 'light') {
+      setCheckState(false);
+    } else {
+      setCheckState(true);
+    }
+  }, [persistedTheme]);
+
+  const handleTheme = () => {
+    dispatch(changeTheme());
+    setCheckState((prevCheckState) => !prevCheckState);
+  };
 
   return (
     <div>
@@ -125,7 +128,7 @@ const Profile = () => {
               <p>Light</p>
               <Switch
                 checked={checkState}
-                onChange={setEnabled}
+                onChange={handleTheme}
                 className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'}
       relative inline-flex items-center h-[25px] w-[48px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
               >
@@ -150,7 +153,7 @@ const Profile = () => {
         <div className="mx-[106px] rounded-[45px] shadow-inside h-[183px] relative">
           <div className="flex gap-[35px] absolute -top-7 left-[50%] transform -translate-x-[50%]">
             {list?.map((item) => (
-              <div className="ml-[51px] w-[70px]">
+              <div className="ml-[51px] w-[70px]" key={item.id}>
                 <div className="flex flex-col items-center justify-center">
                   <img
                     src={item.icon}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import SingleAnswer from '../pages/Dashboard/components/SingleAnswer';
 import BasicModal from './BasicModal';
 import AddNewOption from '../pages/Dashboard/components/AddNewOption';
+import { useSelector } from 'react-redux';
 
 const QuestionCard = ({
   id,
@@ -17,6 +18,7 @@ const QuestionCard = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [startTest, setStartTest] = useState();
+  const persistedTheme = useSelector((state) => state.utils.theme);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -35,7 +37,7 @@ const QuestionCard = ({
         <h1 className="text-[22px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF]">
           {title}
         </h1>
-        {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+        {persistedTheme === 'dark' ? (
           isBookmarked ? (
             <img
               src="/assets/svgs/dashboard/bookmark-white.svg"
@@ -75,7 +77,7 @@ const QuestionCard = ({
               onClick={handleOpen}
               className="ml-[135px] mt-3 flex items-center gap-[11.37px] py-[10px] px-[21px] w-fit rounded-[10px] bg-[#D9D9D9] text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] text-[18px] font-normal leading-normal"
             >
-              {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+              {persistedTheme === 'dark' ? (
                 <img
                   src="/assets/svgs/dashboard/add-dark.svg"
                   alt="add"
@@ -98,7 +100,7 @@ const QuestionCard = ({
             <div>
               <button
                 className={` ${
-                  import.meta.env.VITE_THEME_SWITCH === 'dark'
+                  persistedTheme === 'dark'
                     ? 'bg-[#333B46]'
                     : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                 } shadow-inner inset-0  rounded-[15px] py-2 px-5 text-[#EAEAEA] dark:text-[#B6B6B6] text-[20px] font-semibold leading-normal mr-[30px] w-[173px]`}
@@ -106,7 +108,7 @@ const QuestionCard = ({
                 Submit
               </button>
               <div className="flex justify-end gap-2 mr-[22px] mt-[38px] mb-[23px]">
-                {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+                {persistedTheme === 'dark' ? (
                   <img
                     src="/assets/svgs/dashboard/zoom-dark.svg"
                     alt="zoom"
@@ -137,7 +139,7 @@ const QuestionCard = ({
             <div className="w-full flex gap-[42px] justify-end mr-[30px] mb-1">
               <button
                 className={` ${
-                  import.meta.env.VITE_THEME_SWITCH === 'dark'
+                  persistedTheme === 'dark'
                     ? btnColor
                     : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                 } rounded-[15px] py-2 px-5 text-white text-[20px] font-semibold mt-12 w-[173px] leading-normal`}

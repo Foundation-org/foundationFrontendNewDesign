@@ -1,35 +1,21 @@
-import { useState } from "react";
-import Input from "../../../components/Input";
-import PasswordStrengthBar from "react-password-strength-bar";
+import { useSelector } from 'react-redux';
+import Input from '../../../components/Input';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
-const Form = ({ onEmailChange, onPassChange, onReTypePassChange }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [reTypePassword, setReTypePassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showCnfmPassword, setShowCnfmPassword] = useState(false);
-  const inputType = showPassword ? "text" : "password";
-  const cnfmPassInputType = showCnfmPassword ? "text" : "password";
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleCnfmPasswordVisibility = () => {
-    setShowCnfmPassword(!showCnfmPassword);
-  };
-
-  // const onEmailChange = (e) => {
-  //   setEmail(e.target.value);
-  // };
-
-  // const onPassChange = (e) => {
-  //   setPassword(e.target.value);
-  // };
-
-  // const onReTypePassChange = (e) => {
-  //   setReTypePassword(e.target.value);
-  // };
+const Form = ({
+  password,
+  reTypePassword,
+  showPassword,
+  showCnfmPassword,
+  togglePasswordVisibility,
+  toggleCnfmPasswordVisibility,
+  onEmailChange,
+  onPassChange,
+  onReTypePassChange,
+}) => {
+  const inputType = showPassword ? 'text' : 'password';
+  const cnfmPassInputType = showCnfmPassword ? 'text' : 'password';
+  const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
     <form className="w-full flex flex-col gap-11 my-6 dark:text-white text-gray-600">
@@ -52,7 +38,7 @@ const Form = ({ onEmailChange, onPassChange, onReTypePassChange }) => {
             onChange={onPassChange}
           />
           {!showPassword ? (
-            import.meta.env.VITE_THEME_SWITCH === "dark" ? (
+            persistedTheme === 'dark' ? (
               <img
                 src="/assets/svgs/blind.svg"
                 alt="blind"
@@ -67,7 +53,7 @@ const Form = ({ onEmailChange, onPassChange, onReTypePassChange }) => {
                 onClick={togglePasswordVisibility}
               />
             )
-          ) : import.meta.env.VITE_THEME_SWITCH === "dark" ? (
+          ) : persistedTheme === 'dark' ? (
             <img
               src="/assets/svgs/eye.svg"
               alt="blind"
@@ -99,34 +85,34 @@ const Form = ({ onEmailChange, onPassChange, onReTypePassChange }) => {
             onChange={onReTypePassChange}
           />
           {!showPassword ? (
-            import.meta.env.VITE_THEME_SWITCH === "dark" ? (
+            persistedTheme === 'dark' ? (
               <img
                 src="/assets/svgs/blind.svg"
                 alt="blind"
                 className="absolute right-2 -top-2 cursor-pointer"
-                onClick={togglePasswordVisibility}
+                onClick={toggleCnfmPasswordVisibility}
               />
             ) : (
               <img
                 src="/assets/svgs/eye-white.svg"
                 alt="blind"
                 className="absolute right-2 -top-2 cursor-pointer"
-                onClick={togglePasswordVisibility}
+                onClick={toggleCnfmPasswordVisibility}
               />
             )
-          ) : import.meta.env.VITE_THEME_SWITCH === "dark" ? (
+          ) : persistedTheme === 'dark' ? (
             <img
               src="/assets/svgs/eye.svg"
               alt="blind"
               className="absolute right-2 -top-2 cursor-pointer"
-              onClick={togglePasswordVisibility}
+              onClick={toggleCnfmPasswordVisibility}
             />
           ) : (
             <img
               src="/assets/svgs/eye-white.svg"
               alt="blind"
               className="absolute right-2 -top-2 cursor-pointer"
-              onClick={togglePasswordVisibility}
+              onClick={toggleCnfmPasswordVisibility}
             />
           )}
         </div>

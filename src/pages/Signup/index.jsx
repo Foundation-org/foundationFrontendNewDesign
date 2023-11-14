@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { signUp } from '../../api/userAuth';
 import Typography from '../../components/Typography';
 import Button from '../../components/Button';
 import Form from './components/Form';
 import Anchor from '../../components/Anchor';
 import SocialLogins from '../../components/SocialLogins';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { useMutation } from '@tanstack/react-query';
-import { signUp } from '../../api/userAuth';
+import { useSelector } from 'react-redux';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -17,7 +18,10 @@ export default function Signup() {
   const [reTypePassword, setReTypePassword] = useState('');
   const [provider, setProvider] = useState('');
   const [profile, setProfile] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCnfmPassword, setShowCnfmPassword] = useState(false);
 
+  const persistedTheme = useSelector((state) => state.utils.theme);
   // console.log(provider, profile);
 
   function onChange(value) {
@@ -34,6 +38,14 @@ export default function Signup() {
 
   const onReTypePassChange = (e) => {
     setReTypePassword(e.target.value);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleCnfmPasswordVisibility = () => {
+    setShowCnfmPassword(!showCnfmPassword);
   };
 
   const { mutateAsync: userSignup } = useMutation({
@@ -74,12 +86,18 @@ export default function Signup() {
             -OR-
           </Typography>
           <Form
+            password={password}
+            reTypePassword={reTypePassword}
+            showPassword={showPassword}
+            showCnfmPassword={showCnfmPassword}
             onEmailChange={onEmailChange}
             onPassChange={onPassChange}
             onReTypePassChange={onReTypePassChange}
+            togglePasswordVisibility={togglePasswordVisibility}
+            toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}
           />
           <div className="w-full flex items-start mt-4 mb-10">
-            {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+            {persistedTheme === 'dark' ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
                 onChange={onChange}

@@ -6,16 +6,18 @@ import storage from 'redux-persist/lib/storage';
 
 // reducers
 import todoReducer from '../features/todo/todoSlice';
+import utilsReducer from '../features/utils/utilsSlice';
 import authReducer from '../features/auth/authSlice';
 
 const persistConfig = {
   key: 'persist-store',
   version: 1,
   storage,
-  whitelist: ['auth'],
+  whitelist: ['utils', 'auth'],
 };
 
 const reducer = combineReducers({
+  utils: utilsReducer,
   auth: authReducer,
   todo: todoReducer,
 });

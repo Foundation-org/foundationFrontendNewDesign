@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Router } from './utils/route';
 import { Toaster } from 'sonner';
+import { useSelector } from 'react-redux';
 
 function App() {
   const [theme, setTheme] = useState(null);
+  const persistedTheme = useSelector((state) => state.utils.theme);
 
   useEffect(() => {
-    if (localStorage.getItem('theme') === 'true') {
+    if (persistedTheme === 'dark') {
       setTheme('dark');
     } else {
       setTheme('light');
     }
-  }, []);
+  }, [persistedTheme]);
 
   useEffect(() => {
     if (theme === 'dark') {

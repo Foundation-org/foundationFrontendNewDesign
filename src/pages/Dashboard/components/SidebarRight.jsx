@@ -13,6 +13,7 @@ const SidebarRight = () => {
   const navigate = useNavigate();
   const [response, setResponse] = useState();
 
+  const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   // console.log({ persistedUserInfo });
 
@@ -156,7 +157,7 @@ const SidebarRight = () => {
       </div>
       {sidebarList.map((item) => (
         <div className="flex gap-4 items-center mb-4" key={item.id}>
-          {import.meta.env.VITE_THEME_SWITCH === 'dark' ? (
+          {persistedTheme === 'dark' ? (
             <img src={item.icon} alt={item.alt} />
           ) : (
             <img src={item.iconLight} alt={item.alt} />

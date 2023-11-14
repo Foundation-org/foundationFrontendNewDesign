@@ -1,16 +1,16 @@
-import { useState } from "react";
-import Typography from "../../../components/Typography";
-import Anchor from "../../../components/Anchor";
+import { useState } from 'react';
+import Typography from '../../../components/Typography';
+import Anchor from '../../../components/Anchor';
 
-const Form = ({ onEmailChange, onPassChange, onReTypePassChange }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Form = ({ onEmailChange, onPassChange }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const inputType = showPassword ? "text" : "password";
+  const inputType = showPassword ? 'text' : 'password';
   const [remeberMe, setRememberMe] = useState(false);
 
   const clearEmail = () => {
-    setEmail("");
+    setEmail('');
   };
 
   const togglePasswordVisibility = () => {
