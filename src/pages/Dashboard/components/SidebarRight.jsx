@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import Anchor from '../../../components/Anchor';
 import { useMutation } from '@tanstack/react-query';
 import { userInfo } from '../../../api/userAuth';
 import { useEffect } from 'react';
@@ -7,6 +6,7 @@ import { toast } from 'sonner';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../../features/auth/authSlice';
+import Anchor from '../../../components/Anchor';
 
 const SidebarRight = () => {
   const dispath = useDispatch();
@@ -15,7 +15,7 @@ const SidebarRight = () => {
 
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  // console.log({ persistedUserInfo });
+  console.log({ persistedUserInfo });
 
   const sidebarList = [
     {
@@ -24,7 +24,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon11.svg',
       alt: 'icon1',
       title: 'Quests Created',
-      value: (response && response?.createdQuests.length) || 0,
+      value: (response && response?.questsCreated) || 0,
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon13.svg',
       alt: 'icon1',
       title: 'Correct Anwsers',
-      value: 6,
+      value: 222,
     },
     {
       id: 4,
@@ -48,7 +48,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon14.svg',
       alt: 'icon1',
       title: 'Wrong Answers',
-      value: 54,
+      value: 222,
     },
     {
       id: 5,
@@ -72,7 +72,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon17.svg',
       alt: 'icon1',
       title: 'Agreement Received',
-      value: 3,
+      value: (response && response?.selectionsOnAddedAns) || 0,
     },
     {
       id: 8,
@@ -80,7 +80,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon18.svg',
       alt: 'icon1',
       title: 'Contentions Received',
-      value: 56,
+      value: (response && response?.contentionsOnAddedAns) || 0,
     },
     {
       id: 9,
@@ -96,7 +96,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon20.svg',
       alt: 'icon1',
       title: 'Code of Conduct Fails',
-      value: 2,
+      value: (response && response?.violationCounter) || 0,
     },
   ];
 
