@@ -1,117 +1,85 @@
-import { Menu } from '@headlessui/react';
-import { useEffect } from 'react';
-import { useMemo } from 'react';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getAllLedgerData } from '../../../../../api/userAuth';
+import { columns, tableCustomStyles } from '../components/LedgerUtils';
+import { Pagination } from '@mui/material';
 import DataTable from 'react-data-table-component';
 
 const Ledger = () => {
+  const itemsPerPage = 10;
   const [filterText, setFilterText] = useState('');
   const [selectedOption, setSelectedOption] = useState(false);
+  const [selectedVal, setSelectedVal] = useState('newest');
+  const [filteredData, setFilteredData] = useState();
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [updatedLedgerData, setUpdateLedgerData] = useState();
 
-  const columns = [
-    {
-      name: 'txUserAction',
-      selector: (row) => row.txUserAction,
-    },
-    {
-      name: 'txID',
-      selector: (row) => row.txID,
-    },
-    {
-      name: 'txAuth',
-      selector: (row) => row.txAuth,
-    },
-    {
-      name: 'txFrom',
-      selector: (row) => row.txFrom,
-    },
-    {
-      name: 'txTo',
-      selector: (row) => row.txTo,
-    },
-    {
-      name: 'txAmount',
-      selector: (row) => row.txAmount,
-    },
-    {
-      name: 'txFrom',
-      selector: (row) => row.txFrom1,
-    },
-    {
-      name: 'txTo',
-      selector: (row) => row.txTo1,
-    },
-    {
-      name: 'txAmount',
-      selector: (row) => row.txAmount1,
-    },
-  ];
+  const { data: ledgerData } = useQuery({
+    queryFn: () => getAllLedgerData(),
+    queryKey: ['LedgerData'],
+  });
 
-  const data = [
-    {
-      id: 1,
-      txUserAction: 'Jane Cooper',
-      txID: 'Microsoft',
-      txAuth: '(225) 555-0118',
-      txFrom: 'jane@microsoft.com',
-      txTo: 'United Statest',
-      txAmount: 'Microsoft',
-      txFrom1: '(225) 555-0118',
-      txTo1: 'jane@microsoft.com',
-      txAmount1: 'United States',
-    },
-    {
-      id: 2,
-      txUserAction: 'Maxvell',
-      txID: 'Microsoft',
-      txAuth: '(225) 555-0118',
-      txFrom: 'jane@microsoft.com',
-      txTo: 'United Statest',
-      txAmount: 'Microsoft',
-      txFrom1: '(225) 555-0118',
-      txTo1: 'jane@microsoft.com',
-      txAmount1: 'United States',
-    },
-  ];
+  useEffect(() => {
+    const newLedgerData = ledgerData?.data.data.map((item, index) => ({
+      ...item,
+      id: index + 1,
+    }));
 
-  const tableCustomStyles = {
-    headRow: {
-      style: {
-        color: '#B5B7C0',
-        fontSize: '16.128px',
-        fontStyle: 'normal',
-        fontWeight: '500',
-        lineHeight: 'normal',
-        letterSpacing: '-0.161px',
-        border: '1px solid #EEE',
-      },
-    },
-    rows: {
-      style: {
-        color: '#292D32',
-        fontSize: '13.824px',
-        fontStyle: 'normal',
-        fontWeight: '500',
-        lineHeight: 'normal',
-        letterSpacing: '-0.138px',
-      },
-    },
+    const noOfPages = Math.ceil(ledgerData?.data.data.length / itemsPerPage);
+    setTotalPages(noOfPages);
+
+    if (selectedVal === 'newest') {
+      newLedgerData?.sort(
+        (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+      );
+    } else {
+      newLedgerData?.sort(
+        (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt)
+      );
+    }
+
+    setUpdateLedgerData(newLedgerData);
+  }, [ledgerData, selectedVal]);
+
+  function paginateData(data, currentPage, itemsPerPage) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return data.slice(startIndex, endIndex);
+  }
+
+  useEffect(() => {
+    if (updatedLedgerData) {
+      const paginatedItems = paginateData(
+        updatedLedgerData,
+        currentPage,
+        itemsPerPage
+      );
+
+      if (paginatedItems) {
+        const filteredItems = paginatedItems.filter(
+          (item) =>
+            item.txUserAction &&
+            item.txUserAction.toLowerCase().includes(filterText.toLowerCase())
+        );
+
+        setFilteredData(filteredItems);
+      }
+    }
+  }, [currentPage, filterText, updatedLedgerData]);
+
+  const handleChange = (event, page) => {
+    setCurrentPage(page * 1);
   };
 
-  const filteredItems = data.filter(
-    (item) =>
-      item.txUserAction &&
-      item.txUserAction.toLowerCase().includes(filterText.toLowerCase())
-  );
+  const handleDropdown = () => {
+    setSelectedOption(!selectedOption);
+  };
 
-  const items = [
-    { label: 'Account' },
-    { label: 'Support' },
-    { label: 'License' },
-    { label: 'Sign out' },
-  ];
-
-  console.log(selectedOption);
+  const handleOptionClick = (option) => {
+    setSelectedVal(option);
+    setSelectedOption(false);
+  };
 
   const subHeaderComponentMemo = useMemo(() => {
     return (
@@ -169,33 +137,38 @@ const Ledger = () => {
             />
           </div>
           {/* sort */}
-          <div
-            className="flex gap-1"
-            onClick={() => {
-              setSelectedOption(!selectedOption);
-            }}
-          >
-            <h1 className="text-[#7E7E7E] text-[13.82px] font-normal leading-noremal -tracking-[0.138px]">
-              Sort by :
-            </h1>
-            <h1 className="text-[#3D3C42] text-[13.82px] font-semibold leading-noremal -tracking-[0.138px]">
-              Newest
-            </h1>
+          <div className="relative">
+            <button onClick={handleDropdown} className="flex gap-1">
+              <h1 className="text-[#7E7E7E] text-[13.82px] font-normal leading-noremal -tracking-[0.138px]">
+                Sort by :
+              </h1>
+              <h1 className="text-[#3D3C42] text-[13.82px] font-semibold leading-noremal -tracking-[0.138px]">
+                {selectedVal}
+              </h1>
+            </button>
+            <div
+              className={`${
+                selectedOption ? 'flex duration-200 ease-in-out' : 'hidden'
+              } bg-gray text-black px-1 py-2 flex-col gap-2 absolute w-32 text-left rounded-md mt-2 z-50`}
+            >
+              <p
+                className="hover:bg-white duration-200 ease-in-out cursor-pointer rounded-md px-2"
+                onClick={() => handleOptionClick('newest')}
+              >
+                Newest
+              </p>
+              <p
+                className="hover:bg-white duration-200 ease-in-out cursor-pointer rounded-md px-2"
+                onClick={() => handleOptionClick('oldest')}
+              >
+                Oldest
+              </p>
+            </div>
           </div>
-          {/* <div
-            className={`${
-              selectedOption ? 'flex' : 'hidden'
-            } bg-black text-white p-4 flex-col gap-2`}
-          >
-            <p>dasdasd</p>
-            <p>dasdasd</p>
-            <p>dasdasd</p>
-            <p>dasdasd</p>
-          </div> */}
         </div>
       </div>
     );
-  }, [filterText]);
+  }, [filterText, selectedOption]);
 
   return (
     <div>
@@ -205,15 +178,25 @@ const Ledger = () => {
       <div className="mx-[106px] rounded-[45px] shadow-inside pt-[53px] pb-[56.6px] px-[60px] flex flex-col gap-[23px] my-[54px]">
         <DataTable
           columns={columns}
-          data={filteredItems}
+          data={filteredData}
           customStyles={tableCustomStyles}
           subHeader
           subHeaderComponent={subHeaderComponentMemo}
         />
         <div className="flex justify-between">
-          <h1 className="text-[#B5B7C0] text-[11.14px] font-medium leading-normal -tracking-[0.111px]">
-            Showing data 1 to 8 of 256K entries
-          </h1>
+          {filteredData && (
+            <h1 className="text-[#B5B7C0] text-[11.14px] font-medium leading-normal -tracking-[0.111px]">
+              Showing data {filteredData[0].id} to{' '}
+              {filteredData[filteredData.length - 1].id} of{' '}
+              {ledgerData?.data.data.length} entries
+            </h1>
+          )}
+          <Pagination
+            count={totalPages}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChange}
+          />
         </div>
       </div>
     </div>

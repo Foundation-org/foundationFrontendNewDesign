@@ -79,3 +79,23 @@ iframe {
   display: flex !important;
   justify-content: space-between !important;
 }
+
+.custom-inset-shadow {
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.red-button {
+  border-radius: 25px;
+  background: linear-gradient(90deg, #d61d1d 0%, #e90d0d 100%);
+  color: #fff;
+  font-size: 35px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 23px 49px;
+}
+
+.css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+  background-color: #4a8dbd !important;
+  border: 2px solid #5932ea !important;
+}

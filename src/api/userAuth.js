@@ -20,18 +20,8 @@ export const getAllQuestsWithDefaultStatus = async (params) => {
 };
 
 export const getAllLedgerData = async () => {
-   const dataFetched= await api.post('/ledger');
-   return dataFetched.data;
-  
+  return await api.get('/ledger');
 };
-// export const getTodos = async () => {
-//     const response = await todosApi.get("/todos")
-//     return response.data
-// }
-
-// export const addTodo = async (todo) => {
-//     return await todosApi.post("/todos", todo)
-// }
 
 // export const updateTodo = async (todo) => {
 //     return await todosApi.patch(`/todos/${todo.id}`, todo)

@@ -10,12 +10,14 @@ import { useMutation } from '@tanstack/react-query';
 import { signIn } from '../../api/userAuth';
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 export default function Signin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [provider, setProvider] = useState('');
   const [profile, setProfile] = useState(null);
+  const [capthaToken, setCaptchaToken] = useState('');
   const navigate = useNavigate();
 
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -23,6 +25,7 @@ export default function Signin() {
 
   function onChange(value) {
     console.log('Captcha value:', value);
+    setCaptchaToken(value);
   }
 
   const onEmailChange = (e) => {
@@ -39,6 +42,14 @@ export default function Signin() {
 
   const handleSignin = async () => {
     try {
+      // const recaptchaResp = await axios({
+      //   url: `https://www.google.com/recaptcha/api/siteverify?secret=${
+      //     import.meta.env.VITE_GOOGLE_RECAPTCH_SECRET_KEY
+      //   }&response=${capthaToken}`,
+      //   method: 'POST',
+      // });
+
+      // if (recaptchaResp.success) {
       const resp = await userSignin({ email, password });
 
       if (resp.status === 200) {
@@ -48,6 +59,9 @@ export default function Signin() {
         setPassword('');
         navigate('/dashboard');
       }
+      // } else {
+      //   toast.error('Google recaptcha failed');
+      // }
 
       // console.log(resp);
     } catch (e) {

@@ -54,16 +54,20 @@ export default function Signup() {
 
   const handleSignup = async () => {
     try {
-      const resp = await userSignup({ email, password });
+      if (password === reTypePassword) {
+        const resp = await userSignup({ email, password });
 
-      if (resp.status === 200) {
-        toast.success('User registered successfully');
-        setEmail('');
-        setPassword('');
-        navigate('/verify-email');
+        if (resp.status === 200) {
+          toast.success('User registered successfully');
+          setEmail('');
+          setPassword('');
+          navigate('/verify-email');
+        }
+
+        console.log(resp);
+      } else {
+        toast.warning('Password does not match');
       }
-
-      console.log(resp);
     } catch (e) {
       toast.error(e.response.data);
     }

@@ -205,7 +205,6 @@ const VerificationBadges = () => {
           <Button color="blue">Add</Button>
           <Button color="red">Remove</Button>
         </div>
-
       </div>
     </div>
   );
