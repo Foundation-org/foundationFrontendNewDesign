@@ -24,16 +24,16 @@ export const columns = [
     selector: (row) => row.txAmount,
   },
   {
-    name: 'txFrom',
-    selector: (row) => row.txFrom,
+    name: 'txData',
+    selector: (row) => row.txData,
   },
   {
-    name: 'txTo',
-    selector: (row) => row.txTo,
+    name: 'txDate',
+    selector: (row) => row.txDate,
   },
   {
-    name: 'txAmount',
-    selector: (row) => row.txAmount,
+    name: 'txDescription',
+    selector: (row) => row.txDescription,
   },
 ];
 

@@ -14,6 +14,9 @@ export const signIn = async (data) => {
 export const userInfo = async (uuid) => {
   return await api.post('/user/userInfo', { uuid });
 };
+export const changePassword = async (params) => {
+  return await api.put('/user/changePassword', params);
+};
 
 export const getAllQuestsWithDefaultStatus = async (params) => {
   return await api.post('/infoquestions/getAllQuestsWithDefaultStatus', params);

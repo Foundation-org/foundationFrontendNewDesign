@@ -49,22 +49,44 @@ const Ledger = () => {
   }
 
   useEffect(() => {
-    if (updatedLedgerData) {
-      const paginatedItems = paginateData(
-        updatedLedgerData,
-        currentPage,
-        itemsPerPage
-      );
 
-      if (paginatedItems) {
-        const filteredItems = paginatedItems.filter(
+
+    if (updatedLedgerData) {
+      if (filterText === "") {
+        const noOfPages = Math.ceil(updatedLedgerData?.length / itemsPerPage);
+        setTotalPages(noOfPages);
+        const paginatedItems = paginateData(
+          updatedLedgerData,
+          currentPage,
+          itemsPerPage
+        );
+
+        if (paginatedItems) {
+
+
+          setFilteredData(paginatedItems);
+        }
+
+      }
+      else {
+        const filteredItems = updatedLedgerData.filter(
           (item) =>
             item.txUserAction &&
             item.txUserAction.toLowerCase().includes(filterText.toLowerCase())
         );
+        const noOfPages = Math.ceil(filteredItems?.length / itemsPerPage);
+        setTotalPages(noOfPages);
+        const paginatedItems = paginateData(
+          filteredItems,
+          currentPage,
+          itemsPerPage
+        );
+        if (paginatedItems) {
+          setFilteredData(paginatedItems)
+        }
 
-        setFilteredData(filteredItems);
       }
+
     }
   }, [currentPage, filterText, updatedLedgerData]);
 
@@ -147,9 +169,8 @@ const Ledger = () => {
               </h1>
             </button>
             <div
-              className={`${
-                selectedOption ? 'flex duration-200 ease-in-out' : 'hidden'
-              } bg-gray text-black px-1 py-2 flex-col gap-2 absolute w-32 text-left rounded-md mt-2 z-50`}
+              className={`${selectedOption ? 'flex duration-200 ease-in-out' : 'hidden'
+                } bg-gray text-black px-1 py-2 flex-col gap-2 absolute w-32 text-left rounded-md mt-2 z-50`}
             >
               <p
                 className="hover:bg-white duration-200 ease-in-out cursor-pointer rounded-md px-2"
@@ -175,7 +196,7 @@ const Ledger = () => {
       <h1 className="text-[#4A8DBD] text-[32px] font-semibold leading-normal mt-14 ml-[156px]">
         Ledger
       </h1>
-      <div className="mx-[106px] rounded-[45px] shadow-inside pt-[53px] pb-[56.6px] px-[60px] flex flex-col gap-[23px] my-[54px]">
+      <div className="mx-[106px] rounded-[45px] shadow-inside pt-[53px] pb-[56.6px] px-[70px] flex flex-col gap-[23px] my-[54px]">
         <DataTable
           columns={columns}
           data={filteredData}
@@ -186,8 +207,8 @@ const Ledger = () => {
         <div className="flex justify-between">
           {filteredData && (
             <h1 className="text-[#B5B7C0] text-[11.14px] font-medium leading-normal -tracking-[0.111px]">
-              Showing data {filteredData[0].id} to{' '}
-              {filteredData[filteredData.length - 1].id} of{' '}
+              Showing data {filteredData[0]?.id} to{' '}
+              {filteredData[filteredData.length - 1]?.id} of{' '}
               {ledgerData?.data.data.length} entries
             </h1>
           )}
