@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getAllLedgerData } from '../../../../../api/userAuth';
+import { getAllLedgerData, searchLedger } from '../../../../../api/userAuth';
 import { columns, tableCustomStyles } from '../components/LedgerUtils';
 import { Pagination } from '@mui/material';
 import DataTable from 'react-data-table-component';
@@ -9,101 +9,25 @@ const Ledger = () => {
   const itemsPerPage = 10;
   const [filterText, setFilterText] = useState('');
   const [selectedOption, setSelectedOption] = useState(false);
-  const [selectedVal, setSelectedVal] = useState('newest');
-  const [filteredData, setFilteredData] = useState();
-  // const [totalPages, setTotalPages] = useState(1);
+  const [sort, setsort] = useState('newest');
   const [currentPage, setCurrentPage] = useState(1);
-  const [updatedLedgerData, setUpdateLedgerData] = useState();
+
+  const debouncedSearch = useDebounce(filterText, 1000);
 
   const { data: ledgerData } = useQuery({
-    queryFn: () => getAllLedgerData(currentPage, itemsPerPage),
-    queryKey: ['LedgerData', currentPage],
+    queryFn: () => {
+      if (debouncedSearch === '') {
+        return getAllLedgerData(currentPage, itemsPerPage, sort);
+      } else {
+        return searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
+      }
+    },
+    queryKey: ['ledgerData', currentPage, sort, debouncedSearch],
   });
 
-  // console.log({ ledgerData });
-
   useEffect(() => {
-    // const noOfPages = Math.ceil(ledgerData?.data.data.length / itemsPerPage);
-    // setTotalPages(noOfPages);
-
-    let ledgerDataBeforeSort = ledgerData?.data.data;
-
-    if (selectedVal === 'newest') {
-      ledgerDataBeforeSort?.sort(
-        (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
-      );
-    } else {
-      ledgerDataBeforeSort?.sort(
-        (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt)
-      );
-    }
-
-    const newLedgerData = ledgerDataBeforeSort?.map((item, index) => ({
-      ...item,
-      id: index + 1,
-    }));
-
-    setUpdateLedgerData(newLedgerData);
-  }, [ledgerData, selectedVal]);
-
-  console.log({ updatedLedgerData });
-
-  // function paginateData(data, currentPage, itemsPerPage) {
-  //   const startIndex = (currentPage - 1) * itemsPerPage;
-  //   const endIndex = startIndex + itemsPerPage;
-  //   return data.slice(startIndex, endIndex);
-  // }
-
-  useEffect(() => {
-    if (updatedLedgerData) {
-      if (filterText === '') {
-        // const noOfPages = Math.ceil(updatedLedgerData?.length / itemsPerPage);
-        // setTotalPages(noOfPages);
-        // const paginatedItems = paginateData(
-        //   updatedLedgerData,
-        //   currentPage,
-        //   itemsPerPage
-        // );
-
-        // if (paginatedItems) {
-        //   setFilteredData(paginatedItems);
-        // }
-
-        setFilteredData(updatedLedgerData);
-      } else {
-        // old
-        // const filteredItems = updatedLedgerData.filter(
-        //   (item) =>
-        //     item.txUserAction &&
-        //     item.txUserAction.toLowerCase().includes(filterText.toLowerCase())
-        // );
-        // new
-        const filteredItems = updatedLedgerData.filter(
-          (item) =>
-            (item.txUserAction &&
-              item.txUserAction
-                .toLowerCase()
-                .includes(filterText.toLowerCase())) ||
-            (item.txID &&
-              item.txID.toLowerCase().includes(filterText.toLowerCase())) ||
-            (item.txData &&
-              item.txData.toLowerCase().includes(filterText.toLowerCase()))
-        );
-
-        // const noOfPages = Math.ceil(filteredItems?.length / itemsPerPage);
-        // setTotalPages(noOfPages);
-        // const paginatedItems = paginateData(
-        //   filteredItems,
-        //   currentPage,
-        //   itemsPerPage
-        // );
-        // if (paginatedItems) {
-        //   setFilteredData(paginatedItems);
-        // }
-        setFilteredData(filteredItems);
-      }
-    }
-  }, [currentPage, filterText, updatedLedgerData, ledgerData]);
+    setCurrentPage(1); // Reset current page when filter or sort changes
+  }, [debouncedSearch, sort]);
 
   const handleChange = (event, page) => {
     setCurrentPage(page * 1);
@@ -114,7 +38,7 @@ const Ledger = () => {
   };
 
   const handleOptionClick = (option) => {
-    setSelectedVal(option);
+    setsort(option);
     setSelectedOption(false);
   };
 
@@ -183,7 +107,7 @@ const Ledger = () => {
                 Sort by :
               </h1>
               <h1 className="text-[#3D3C42] text-[20.021px] font-semibold leading-noremal -tracking-[0.2px] capitalize">
-                {selectedVal}
+                {sort}
               </h1>
             </button>
             <div
@@ -218,13 +142,13 @@ const Ledger = () => {
       <div className="mx-[106px] rounded-[45px] shadow-inside pt-[31px] pb-6 pl-5 pr-[43.25px] flex flex-col gap-[23px] my-[54px]">
         <DataTable
           columns={columns}
-          data={filteredData}
+          data={ledgerData?.data.data}
           customStyles={tableCustomStyles}
           subHeader
           subHeaderComponent={subHeaderComponentMemo}
         />
         <div className="flex justify-between">
-          {currentPage === 1 ? (
+          { currentPage === 1 ? (
             <h1>
               Showing data 1 to {ledgerData?.data.data.length} of{' '}
               {ledgerData?.data.totalCount} entries
@@ -252,3 +176,20 @@ const Ledger = () => {
 };
 
 export default Ledger;
+
+// Custom hook for debounce
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
