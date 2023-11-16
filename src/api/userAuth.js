@@ -22,14 +22,10 @@ export const getAllQuestsWithDefaultStatus = async (params) => {
   return await api.post('/infoquestions/getAllQuestsWithDefaultStatus', params);
 };
 
-export const getAllLedgerData = async () => {
-  return await api.get('/ledger');
+export const getAllLedgerData = async (page, limit) => {
+  return await api.get('/ledger', { params: { page, limit } });
 };
 
-// export const updateTodo = async (todo) => {
-//     return await todosApi.patch(`/todos/${todo.id}`, todo)
-// }
-
-// export const deleteTodo = async ({ id }) => {
-//     return await todosApi.delete(`/todos/${id}`, id)
-// }
+export const deleteAccount = async (uuid) => {
+  return await api.delete(`/delete/${uuid}`);
+};
