@@ -15,7 +15,6 @@ const SidebarRight = () => {
 
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  console.log({ persistedUserInfo });
 
   const sidebarList = [
     {

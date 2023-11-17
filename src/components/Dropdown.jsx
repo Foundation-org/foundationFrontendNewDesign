@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Dropdown = ({ label, title, items }) => {
+const Dropdown = ({ label, title, items, handleSelect }) => {
   return (
     <div>
       <p className="text-[18px] font-[500] leading-normal pb-[9px] ml-[17px]">
@@ -24,7 +24,7 @@ const Dropdown = ({ label, title, items }) => {
           className="dropdown-content z-[1] menu p-2 shadow text-white bg-[#ACACAC] rounded-box w-52"
         >
           {items.map((item, index) => (
-            <li key={index}>
+            <li key={index + 1} onClick={() => handleSelect(item)}>
               <a>{item}</a>
             </li>
           ))}

@@ -50,14 +50,20 @@ export default function Signin() {
       // });
 
       // if (recaptchaResp.success) {
-      const resp = await userSignin({ email, password });
+      if (capthaToken !== '') {
+        const resp = await userSignin({ email, password });
 
-      if (resp.status === 200) {
-        localStorage.setItem('uId', resp.data.uuid);
-        toast.success('User signin successfully');
-        setEmail('');
-        setPassword('');
-        navigate('/dashboard');
+        if (resp.status === 200) {
+          localStorage.setItem('uId', resp.data.uuid);
+          toast.success('User signin successfully');
+          setEmail('');
+          setPassword('');
+          navigate('/dashboard');
+        }
+      } else {
+        toast.warning(
+          'please complete the reCAPTCHA challenge before proceeding.'
+        );
       }
       // } else {
       //   toast.error('Google recaptcha failed');

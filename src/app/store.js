@@ -8,6 +8,7 @@ import storage from 'redux-persist/lib/storage';
 import todoReducer from '../features/todo/todoSlice';
 import utilsReducer from '../features/utils/utilsSlice';
 import authReducer from '../features/auth/authSlice';
+import filterReducer from '../features/filters/filtersSlice';
 
 const persistConfig = {
   key: 'persist-store',
@@ -19,6 +20,7 @@ const persistConfig = {
 const reducer = combineReducers({
   utils: utilsReducer,
   auth: authReducer,
+  filters: filterReducer,
   todo: todoReducer,
 });
 

@@ -1,7 +1,18 @@
-import { useSelector } from 'react-redux';
 import Dropdown from '../../../components/Dropdown';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getFilters,
+  resetFilters,
+  setFilterByScope,
+  setFilterBySort,
+  setFilterByStatus,
+  setFilterByType,
+  setSearch,
+} from '../../../features/filters/filtersSlice';
 
 const SidebarLeft = () => {
+  const dispatch = useDispatch();
+  const filterStates = useSelector(getFilters);
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
@@ -15,6 +26,8 @@ const SidebarLeft = () => {
             type="text"
             placeholder="Search here...."
             className="input border-[1px] dark:border-[#989898] w-full rounded-[18px] bg-[#F6F6F6] dark:bg-[#000] text-gray-400 dark:text-[#E8E8E8] focus:outline-none h-[54px]"
+            value={filterStates.search}
+            onChange={(e) => dispatch(setSearch(e.target.value))}
           />
           <img
             src="/assets/svgs/dashboard/search.svg"
@@ -34,23 +47,61 @@ const SidebarLeft = () => {
       <div className="flex flex-col gap-5">
         <Dropdown
           label={'Status'}
-          title={'Search'}
-          items={['Item 1', 'Item 2']}
+          title={
+            filterStates.filterByStatus ? filterStates.filterByStatus : 'Search'
+          }
+          items={[
+            'All',
+            'Unanswered',
+            'Answered',
+            'Correct',
+            'Incorrect',
+            'Changeable',
+          ]}
+          handleSelect={(item) => {
+            dispatch(setFilterByStatus(item));
+          }}
         />
         <Dropdown
           label={'Type'}
-          title={'Search'}
-          items={['Item 1', 'Item 2']}
+          title={
+            filterStates.filterByType ? filterStates.filterByType : 'Search'
+          }
+          items={[
+            'All',
+            'Yes/No',
+            'Agree/Disagree',
+            'Multiple Choice',
+            'Ranked Choice',
+          ]}
+          handleSelect={(item) => {
+            dispatch(setFilterByType(item));
+          }}
         />
         <Dropdown
           label={'Scope'}
-          title={'Search'}
-          items={['Item 1', 'Item 2']}
+          title={
+            filterStates.filterByScope ? filterStates.filterByScope : 'Search'
+          }
+          items={['All', 'Me']}
+          handleSelect={(item) => {
+            dispatch(setFilterByScope(item));
+          }}
         />
         <Dropdown
           label={'Sort'}
-          title={'Search'}
-          items={['Item 1', 'Item 2']}
+          title={
+            filterStates.filterBySort ? filterStates.filterBySort : 'Search'
+          }
+          items={[
+            'Most Popular',
+            'Last Updated',
+            'Oldest First',
+            'Newest First',
+          ]}
+          handleSelect={(item) => {
+            dispatch(setFilterBySort(item));
+          }}
         />
       </div>
       <button
@@ -59,6 +110,7 @@ const SidebarLeft = () => {
             ? 'bg-[#333B46]'
             : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
         }  shadow-inner inset-0 rounded-[0.938rem] py-2 px-5 text-white dark:text-[#EAEAEA] text-[1.25rem] font-semibold leading-normal mt-12 ml-[1.125rem]`}
+        onClick={() => dispatch(resetFilters())}
       >
         Clear Filters
       </button>

@@ -26,7 +26,12 @@ function App() {
   return (
     <>
       <Router />
-      <Toaster position="top-right" expand={true} richColors />
+      <Toaster
+        position="top-right"
+        expand={true}
+        theme={persistedTheme === 'dark' ? 'dark' : 'light'}
+        richColors
+      />
     </>
   );
 }

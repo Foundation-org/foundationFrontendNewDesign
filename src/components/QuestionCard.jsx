@@ -59,10 +59,15 @@ const QuestionCard = ({
           />
         )}
       </div>
-      <h1 className="text-[#7C7C7C] dark:text-[#B8B8B8] text-[25px] font-semibold leading-normal ml-[52.65px] mt-[5px]">
-        {question}
-      </h1>
-      {/* question answers options */}
+      {question.endsWith('?') ? (
+        <h1 className="text-[#7C7C7C] dark:text-[#B8B8B8] text-[25px] font-semibold leading-normal ml-[52.65px] mt-[5px]">
+          Q. {question}
+        </h1>
+      ) : (
+        <h1 className="text-[#7C7C7C] dark:text-[#B8B8B8] text-[25px] font-semibold leading-normal ml-[52.65px] mt-[5px]">
+          S. {question}
+        </h1>
+      )}
       {startTest ? (
         <>
           <div className="mt-[26px] flex flex-col gap-[10px]">
