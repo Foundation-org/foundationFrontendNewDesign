@@ -2,6 +2,7 @@ export const columns = [
   {
     name: 'txUserAction',
     selector: (row) => row.txUserAction,
+    
   },
   {
     name: 'txID',
@@ -10,6 +11,7 @@ export const columns = [
   {
     name: 'txAuth',
     selector: (row) => row.txAuth,
+    width:"110px"
   },
   {
     name: 'txFrom',
@@ -17,23 +19,13 @@ export const columns = [
   },
   {
     name: 'txTo',
-    selector: (row) => row.txTo,
+    selector: (row) => capitalize(row.txTo),
+    width:"110px"
   },
   {
     name: 'txAmount',
     selector: (row) => row.txAmount,
-  },
-  {
-    name: 'txData',
-    selector: (row) => {
-      const txData = row.txData;
-
-      if (typeof txData === 'string') {
-        return txData;
-      } else {
-        return 'Wrong data type';
-      }
-    },
+    width:"250px"
   },
   {
     name: 'txDate',
@@ -42,8 +34,16 @@ export const columns = [
   {
     name: 'txDescription',
     selector: (row) => row.txDescription,
+    width:"450px"
   },
 ];
+function capitalize(str) {
+  // Check if the input is a string
+  if (typeof str !== 'string') {
+    return str;
+  }
+  return str.toUpperCase() ;
+}
 
 export const tableCustomStyles = {
   headRow: {
