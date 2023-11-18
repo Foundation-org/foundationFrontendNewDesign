@@ -71,8 +71,8 @@ const SidebarLeft = () => {
             'All',
             'Yes/No',
             'Agree/Disagree',
-            'Multiple Choice',
-            'Ranked Choice',
+            'Multiple Choise',
+            'Ranked Choise',
           ]}
           handleSelect={(item) => {
             dispatch(setFilterByType(item));

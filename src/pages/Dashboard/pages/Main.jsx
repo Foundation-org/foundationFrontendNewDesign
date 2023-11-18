@@ -12,7 +12,8 @@ import { searchQuestions } from '../../../api/homepageApis';
 const Main = () => {
   const page = 1;
   const filterStates = useSelector(getFilters);
-  const [pageLimit, setPageLimit] = useState(5);
+  const [userId, setUserId] = useState('');
+  const [pageLimit, setPageLimit] = useState(40);
   const [sliceStart, setSliceStart] = useState(0);
   const [sliceEnd, setSliceEnd] = useState(pageLimit);
   const [response, setResponse] = useState([]);
@@ -41,19 +42,32 @@ const Main = () => {
 
   useEffect(() => {
     let params = {
-      uuid: localStorage.getItem('uId'),
       _page: page,
       _limit: pageLimit,
       start: sliceStart,
       end: sliceEnd,
     };
 
+    // filter by sort
     if (filterStates.filterBySort !== '') {
       params = { ...params, filter: true, sort: filterStates.filterBySort };
     }
 
-    if (filterStates.filterByType !== '') {
-      params = { ...params, filter: true, type: filterStates.filterByType };
+    // filter by type
+    if (
+      filterStates.filterByType !== '' &&
+      filterStates.filterByType !== 'All'
+    ) {
+      params = {
+        ...params,
+        filter: true,
+        type: filterStates.filterByType.toLowerCase(),
+      };
+    }
+
+    // filter by scope
+    if (filterStates.filterByScope === 'Me') {
+      params = { ...params, filter: true, uuid: localStorage.getItem('uId') };
     }
 
     handleQuestdefStatus(params);
