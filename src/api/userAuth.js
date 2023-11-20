@@ -18,12 +18,17 @@ export const changePassword = async (params) => {
   return await api.put('/user/changePassword', params);
 };
 
-export const getAllLedgerData = async (page, limit,sort) => {
-  return await api.get('/ledger/getAllLedger', { params: { page, limit,sort } });
+export const getAllLedgerData = async (page, limit, sort, uuid) => {
+  return await api.get('/ledger/ledgerById', {
+    params: { page, limit, sort, uuid },
+  });
 };
 
-export const searchLedger = async (page, limit,sort,term) => {
-  return await api.post('/ledger/searchLedger', { params: { page, limit,sort,term } });}
+export const searchLedger = async (page, limit, sort, term) => {
+  return await api.post('/ledger/searchLedger', {
+    params: { page, limit, sort, term },
+  });
+};
 
 export const deleteAccount = async (uuid) => {
   return await api.delete(`/delete/${uuid}`);

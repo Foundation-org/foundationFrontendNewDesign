@@ -17,7 +17,12 @@ const Ledger = () => {
   const { data: ledgerData } = useQuery({
     queryFn: () => {
       if (debouncedSearch === '') {
-        return getAllLedgerData(currentPage, itemsPerPage, sort);
+        return getAllLedgerData(
+          currentPage,
+          itemsPerPage,
+          sort,
+          localStorage.getItem('uId')
+        );
       } else {
         return searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
       }
@@ -148,7 +153,7 @@ const Ledger = () => {
           subHeaderComponent={subHeaderComponentMemo}
         />
         <div className="flex justify-between">
-          { currentPage === 1 ? (
+          {currentPage === 1 ? (
             <h1>
               Showing data 1 to {ledgerData?.data.data.length} of{' '}
               {ledgerData?.data.totalCount} entries
