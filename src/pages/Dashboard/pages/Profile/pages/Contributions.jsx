@@ -25,7 +25,7 @@ const Contributions = () => {
       icon: "/assets/svgs/dashboard/icon3.svg",
       iconLight: "/assets/svgs/dashboard/icon13.svg",
       alt: "icon1",
-      title: "Correct Anwsers",
+      title: "Correct Answers",
       value: 222,
     },
     {

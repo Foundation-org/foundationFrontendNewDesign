@@ -19,9 +19,11 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 const Main = () => {
   const pageLimit = 10;
   const filterStates = useSelector(getFilters);
-  const [page, setPage] = useState(1);
-  const [sliceStart, setSliceStart] = useState(0);
-  const [sliceEnd, setSliceEnd] = useState(pageLimit);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    sliceStart: 0,
+    sliceEnd: pageLimit,
+  });
   const [allData, setAllData] = useState([]);
 
   const applyFilters = (params, filterStates) => {
@@ -29,10 +31,7 @@ const Main = () => {
       params = { ...params, sort: filterStates.filterBySort };
     }
 
-    if (
-      filterStates.filterByType !== '' &&
-      filterStates.filterByType !== 'All'
-    ) {
+    if (filterStates.filterByType !== '' || filterStates.filterByType !== 'All') {
       params = { ...params, type: filterStates.filterByType.toLowerCase() };
     }
 
@@ -63,18 +62,14 @@ const Main = () => {
   const { data: feedData } = useQuery({
     queryFn: async () => {
       let params = {
-        _page: page,
+        _page: pagination.page,
         _limit: pageLimit,
-        start: sliceStart,
-        end: sliceEnd,
+        start: pagination.sliceStart,
+        end: pagination.sliceEnd,
         uuid: localStorage.getItem('uId'),
       };
 
       params = applyFilters(params, filterStates);
-
-      if (page === 1) {
-        setAllData([]);
-      }
 
       if (filterStates.search === '') {
         return (await fetchDataByStatus(params, filterStates))?.data || {};
@@ -82,69 +77,77 @@ const Main = () => {
         return await searchQuestions(filterStates.search);
       }
     },
-    queryKey: ['FeedData', filterStates, page],
+    queryKey: ['FeedData', filterStates, pagination.page],
     staleTime: 300000,
   });
 
   useEffect(() => {
+    if (pagination.page === 1) {
+      setAllData([]);
+    }
     if (feedData && feedData.data) {
       setAllData((prevData) => [...prevData, ...(feedData.data || [])]);
     }
   }, [feedData]);
 
   useEffect(() => {
-    setPage(1);
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      sliceStart: 0,
+      sliceEnd: pageLimit,
+      page: 1,
+    }));
   }, [filterStates]);
 
   useEffect(() => {
-    setSliceStart(sliceEnd);
-    setSliceEnd(sliceEnd + pageLimit);
-  }, [page]);
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      sliceStart: prevPagination.sliceEnd,
+      sliceEnd: prevPagination.sliceEnd + pageLimit,
+    }));
+  }, [pagination.page]);
 
   const fetchMoreData = () => {
-    setPage((prevPage) => prevPage + 1);
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      page: prevPagination.page + 1,
+    }));
   };
-
-  console.log(page);
-  // console.log(sliceStart);
-  // console.log(sliceEnd);
 
   return (
     <>
       <SidebarLeft />
       <div className="bg-[#FCFCFD] dark:bg-[#06070a] shadow-inner-md w-full py-[27px] pl-6 pr-[23px] flex flex-col gap-[27px] h-[calc(100vh-96px)] overflow-y-auto no-scrollbar shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-        {feedData && allData && (
-          <InfiniteScroll
-            dataLength={allData.length}
-            next={fetchMoreData}
-            hasMore={feedData.hasNextPage}
-            loader={
-              allData.length === 0 ? (
-                <h4>No data found...</h4>
-              ) : (
-                <h4>Loading...</h4>
-              )
-            }
-            height={'100vh'}
-            className="flex flex-col gap-[27px] no-scrollbar"
-          >
-            {allData.map((item, index) => (
-              <div key={index + 1}>
-                <QuestionCard
-                  id={item._id}
-                  img="/assets/svgs/dashboard/badge.svg"
-                  alt="badge"
-                  badgeCount="5"
-                  title={item?.whichTypeQuestion}
-                  question={item?.Question}
-                  btnColor={'bg-[#BB9D02]'}
-                  btnText={'Change'}
-                  isBookmarked={false}
-                />
-              </div>
-            ))}
-          </InfiniteScroll>
-        )}
+        <InfiniteScroll
+          dataLength={allData?.length}
+          next={fetchMoreData}
+          hasMore={feedData?.hasNextPage}
+          loader={
+            allData && allData.length === 0 ? (
+              <h4>{feedData && feedData.hasNextPage ? 'Loading...' : 'No records found.'}</h4>
+            ) : (
+              <h4>No more data to display.</h4>
+            )
+          }
+          height={'100vh'}
+          className="flex flex-col gap-[27px] no-scrollbar"
+        >
+          {allData?.map((item, index) => (
+            <div key={index + 1}>
+              <QuestionCard
+                id={item._id}
+                img="/assets/svgs/dashboard/badge.svg"
+                alt="badge"
+                badgeCount="5"
+                title={item?.whichTypeQuestion==='agree/disagree'?'Agree/Disagree':item?.whichTypeQuestion==='multiple choise'?'Multiple Choice':item?.whichTypeQuestion==='ranked choise'?'Ranked Choice':'Yes/No'}
+                question={item?.Question}
+                btnColor={'bg-[#BB9D02]'}
+                btnText={'Change'}
+                isBookmarked={false}
+              />
+            </div>
+          ))}
+        </InfiniteScroll>
       </div>
       <SidebarRight />
     </>

@@ -48,7 +48,7 @@ const SidebarLeft = () => {
         <Dropdown
           label={'Status'}
           title={
-            filterStates.filterByStatus ? filterStates.filterByStatus : 'Search'
+            filterStates.filterByStatus ? filterStates.filterByStatus : 'All'
           }
           items={[
             'All',
@@ -65,7 +65,7 @@ const SidebarLeft = () => {
         <Dropdown
           label={'Type'}
           title={
-            filterStates.filterByType ? filterStates.filterByType : 'Search'
+            filterStates.filterByType ? filterStates.filterByType : 'All'
           }
           items={[
             'All',
@@ -81,7 +81,7 @@ const SidebarLeft = () => {
         <Dropdown
           label={'Scope'}
           title={
-            filterStates.filterByScope ? filterStates.filterByScope : 'Search'
+            filterStates.filterByScope ? filterStates.filterByScope : 'All'
           }
           items={['All', 'Me']}
           handleSelect={(item) => {
@@ -91,7 +91,7 @@ const SidebarLeft = () => {
         <Dropdown
           label={'Sort'}
           title={
-            filterStates.filterBySort ? filterStates.filterBySort : 'Search'
+            filterStates.filterBySort ? filterStates.filterBySort : 'Newest First'
           }
           items={[
             'Most Popular',

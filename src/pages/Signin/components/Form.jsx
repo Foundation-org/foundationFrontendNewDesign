@@ -81,7 +81,7 @@ const Form = ({ onEmailChange, onPassChange }) => {
           )}
         </div>
       </div>
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <div className="form-control">
           <label className="label cursor-pointer flex gap-[11.5px]">
             <input
@@ -96,7 +96,7 @@ const Form = ({ onEmailChange, onPassChange }) => {
         <Anchor className="dark:text-white cursor-pointer">
           Forgot Password?
         </Anchor>
-      </div>
+      </div> */}
     </div>
   );
 };

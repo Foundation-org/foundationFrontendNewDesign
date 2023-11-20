@@ -9,7 +9,7 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
       <div className="dropdown">
         <label
           tabIndex={0}
-          className="flex items-center gap-[5.43rem] pr-5 pl-[1.063rem] pt-[11px] pb-[9px] w-full max-w-[13.25rem] bg-[#F6F6F6] dark:bg-[#000] rounded-[18px] dark:border-[1px] dark:border-[#989898] text-[22px] font-[400] leading-normal text-[#787878] dark:text-[#E6E6E6] cursor-pointer h-[47px]"
+          className="flex items-center gap-[5.43rem] pr-5 pl-[1.063rem] pt-[11px] pb-[9px] w-full max-w-[13.25rem] bg-[#F6F6F6] dark:bg-[#000] rounded-[18px] dark:border-[1px] dark:border-[#989898] text-[15px] font-[400] leading-normal text-[#787878] dark:text-[#E6E6E6] cursor-pointer h-[47px]"
         >
           {title}
           <img
