@@ -82,7 +82,8 @@ const Main = () => {
         const result = await fetchDataByStatus(params, filterStates);
         return result.data;
       } else {
-        return (result = await searchQuestions(searchData));
+        const result = await searchQuestions(searchData);
+        return result;
       }
     },
     queryKey: ['FeedData', filterStates, searchData, pagination, clearFilter],
@@ -166,9 +167,10 @@ const Main = () => {
                     ? 'Ranked Choice'
                     : 'Yes/No'
                 }
+                answers={item?.QuestAnswers}
                 question={item?.Question}
-                btnColor={'bg-[#BB9D02]'}
-                btnText={'Change'}
+                btnColor={item?.startStatus==='correct'?'bg-[#4ABD71]':item?.startStatus==='incorrect'?'bg-[#F84A4A]':item?.startStatus==='change answer'?'bg-[#FDD503]':'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'}
+                btnText={item?.startStatus}
                 isBookmarked={false}
               />
             </div>
