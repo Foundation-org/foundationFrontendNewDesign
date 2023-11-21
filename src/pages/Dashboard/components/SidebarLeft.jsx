@@ -10,7 +10,12 @@ import {
   setSearch,
 } from '../../../features/filters/filtersSlice';
 
-const SidebarLeft = () => {
+const SidebarLeft = ({
+  handleSearch,
+  searchData,
+  clearFilter,
+  setClearFilter,
+}) => {
   const dispatch = useDispatch();
   const filterStates = useSelector(getFilters);
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -26,8 +31,10 @@ const SidebarLeft = () => {
             type="text"
             placeholder="Search here...."
             className="input border-[1px] dark:border-[#989898] w-full rounded-[18px] bg-[#F6F6F6] dark:bg-[#000] text-gray-400 dark:text-[#E8E8E8] focus:outline-none h-[54px]"
-            value={filterStates.search}
-            onChange={(e) => dispatch(setSearch(e.target.value))}
+            // value={filterStates.search}
+            value={searchData}
+            // onChange={(e) => dispatch(setSearch(e.target.value))}
+            onChange={handleSearch}
           />
           <img
             src="/assets/svgs/dashboard/search.svg"
@@ -64,9 +71,7 @@ const SidebarLeft = () => {
         />
         <Dropdown
           label={'Type'}
-          title={
-            filterStates.filterByType ? filterStates.filterByType : 'All'
-          }
+          title={filterStates.filterByType ? filterStates.filterByType : 'All'}
           items={[
             'All',
             'Yes/No',
@@ -91,7 +96,9 @@ const SidebarLeft = () => {
         <Dropdown
           label={'Sort'}
           title={
-            filterStates.filterBySort ? filterStates.filterBySort : 'Newest First'
+            filterStates.filterBySort
+              ? filterStates.filterBySort
+              : 'Newest First'
           }
           items={[
             'Most Popular',
@@ -110,7 +117,10 @@ const SidebarLeft = () => {
             ? 'bg-[#333B46]'
             : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
         }  shadow-inner inset-0 rounded-[0.938rem] py-2 px-5 text-white dark:text-[#EAEAEA] text-[1.25rem] font-semibold leading-normal mt-12 ml-[1.125rem]`}
-        onClick={() => dispatch(resetFilters())}
+        onClick={() => {
+          dispatch(resetFilters());
+          setClearFilter(!clearFilter);
+        }}
       >
         Clear Filters
       </button>

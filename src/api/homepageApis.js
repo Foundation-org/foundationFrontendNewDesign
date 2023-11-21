@@ -46,6 +46,7 @@ export const getAllInCorrect = async (params) => {
 
 // For Changable
 export const getAllChangable = async (params) => {
+  console.log('params in api', params);
   return await api.post(
     `/infoquestions/getAllQuestsWithChangeAnsStatus`,
     params
