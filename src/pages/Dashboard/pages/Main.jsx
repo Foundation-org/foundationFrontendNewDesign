@@ -82,6 +82,7 @@ const Main = () => {
         const result = await fetchDataByStatus(params, filterStates);
         return result?.data || {};
       } else {
+        // setAllData([]);
         const result = await searchQuestions(searchData);
         return result;
       }
@@ -107,7 +108,7 @@ const Main = () => {
       page: 1,
     }));
     // setAllData([]);
-  }, [filterStates]);
+  }, [filterStates, searchData]);
 
   useEffect(() => {
     setPagination((prevPagination) => ({
