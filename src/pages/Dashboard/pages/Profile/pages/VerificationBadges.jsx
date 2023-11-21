@@ -1,4 +1,4 @@
-import Button from "../components/Button";
+import Button from '../components/Button';
 
 const VerificationBadges = () => {
   return (
@@ -7,13 +7,13 @@ const VerificationBadges = () => {
         My Verification Badges
       </h1>
       <div className="mx-[106px] rounded-[45px] shadow-inside pt-[104px] pb-[66.8px] px-[60px] flex flex-col gap-[23px] my-[54px] relative">
-        <div className="flex gap-[21px] absolute -top-1 left-[50%] transform -translate-x-[50%]">
-          <div className="bg-[#4A8DBD] h-[11.1px] w-[175.1px] rounded-[100px]" />
-          <div className="bg-[#D9D9D9] h-[11.1px] w-[175.1px] rounded-[100px]" />
-          <div className="bg-[#D9D9D9] h-[11.1px] w-[175.1px] rounded-[100px]" />
-          <div className="bg-[#D9D9D9] h-[11.1px] w-[175.1px] rounded-[100px]" />
-          <div className="bg-[#D9D9D9] h-[11.1px] w-[175.1px] rounded-[100px]" />
-          <div className="bg-[#D9D9D9] h-[11.1px] w-[175.1px] rounded-[100px]" />
+        <div className="flex justify-center gap-[21px] absolute -top-1 left-[50%] transform -translate-x-[50%] w-[95%] mx-auto">
+          <div className="bg-[#4A8DBD] h-[11.1px] w-full rounded-[100px]" />
+          <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
+          <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
+          <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
+          <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
+          <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
         </div>
         <div className="flex">
           <img src="/assets/svgs/dashboard/mail1.svg" alt="mail1" />

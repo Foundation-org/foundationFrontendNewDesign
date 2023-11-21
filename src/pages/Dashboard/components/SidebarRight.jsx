@@ -123,7 +123,18 @@ const SidebarRight = () => {
   }, []);
 
   return (
-    <div className="bg-white dark:bg-[#0A0A0C] h-[calc(100vh-96px)] min-w-[25rem] w-[25rem] pt-20 pl-[1.3rem] pr-[2.1rem] shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+    <div className="bg-white dark:bg-[#0A0A0C] h-[calc(100vh-96px)] min-w-[25rem] w-[25rem] pt-20 pl-[1.3rem] pr-[2.1rem] shadow-[0_3px_10px_rgb(0,0,0,0.2)] overflow-y-auto no-scrollbar">
+      <div className="flex gap-6 mb-11">
+        <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" />
+        <div>
+          <h4 className="text-[30px] font-semibold leading-normal text-[#616161] dark:text-[#D2D2D2]">
+            Treasury
+          </h4>
+          <p className="text-[#616161] dark:text-[#D4D5D7] text-[20px] font-medium">
+            Balance <span>1,357,432.20</span>
+          </p>
+        </div>
+      </div>
       <div className="flex gap-6 mb-11">
         <div className="w-fit h-fit relative">
           <img src="/assets/svgs/dashboard/badge.svg" alt="badge" />

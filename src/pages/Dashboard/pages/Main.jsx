@@ -80,11 +80,9 @@ const Main = () => {
 
       if (searchData === '') {
         const result = await fetchDataByStatus(params, filterStates);
-        return result?.data || {};
+        return result.data;
       } else {
-        // setAllData([]);
-        const result = await searchQuestions(searchData);
-        return result;
+        return (result = await searchQuestions(searchData));
       }
     },
     queryKey: ['FeedData', filterStates, searchData, pagination, clearFilter],

@@ -5,7 +5,7 @@ const initialState = {
   filterByStatus: '',
   filterByType: '',
   filterByScope: '',
-  filterBySort: '',
+  filterBySort: 'Newest First',
 };
 
 export const filtersSlice = createSlice({
