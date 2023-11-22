@@ -9,12 +9,14 @@ import {
   setFilterByType,
   setSearch,
 } from '../../../features/filters/filtersSlice';
+import { GrClose } from 'react-icons/gr';
 
 const SidebarLeft = ({
   handleSearch,
   searchData,
   clearFilter,
   setClearFilter,
+  setSearchData,
 }) => {
   const dispatch = useDispatch();
   const filterStates = useSelector(getFilters);
@@ -30,18 +32,18 @@ const SidebarLeft = ({
           <input
             type="text"
             placeholder="Search here...."
-            className="input border-[1px] dark:border-[#989898] w-full rounded-[18px] bg-[#F6F6F6] dark:bg-[#000] text-gray-400 dark:text-[#E8E8E8] focus:outline-none h-[54px] "
+            className="input border-[1px] dark:border-[#989898] w-full rounded-[18px] bg-[#F6F6F6] dark:bg-[#000] text-gray-400 dark:text-[#E8E8E8] focus:outline-none h-[54px] pr-10"
             value={searchData}
             onChange={handleSearch}
           />
           {searchData && (
             <button
-              className="absolute top-5 right-3 "
+              className="absolute top-4 right-3"
               onClick={() => {
-                dispatch(setSearch("")); 
+                setSearchData('');
               }}
             >
-              <img src="/assets/svgs/dashboard/remove.svg" alt="remove" className="w-3 h-3" />
+              <GrClose className="w-6 h-6 text-black dark:text-white" />
             </button>
           )}
           {!searchData && (
@@ -52,7 +54,6 @@ const SidebarLeft = ({
             />
           )}
         </div>
-
       </div>
       <h1 className="text-[22px] font-[500] leading-normal text-[#888] dark:text-white pt-[33px] pb-[31px] ml-[5px] flex items-center gap-2">
         <img
@@ -123,10 +124,11 @@ const SidebarLeft = ({
         />
       </div>
       <button
-        className={`${persistedTheme === 'dark'
+        className={`${
+          persistedTheme === 'dark'
             ? 'bg-[#333B46]'
             : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-          }  shadow-inner inset-0 rounded-[0.938rem] py-2 px-5 text-white dark:text-[#EAEAEA] text-[1.25rem] font-semibold leading-normal mt-12 ml-[1.125rem]`}
+        }  shadow-inner inset-0 rounded-[0.938rem] py-2 px-5 text-white dark:text-[#EAEAEA] text-[1.25rem] font-semibold leading-normal mt-12 ml-[1.125rem]`}
         onClick={() => {
           dispatch(resetFilters());
           setClearFilter(!clearFilter);

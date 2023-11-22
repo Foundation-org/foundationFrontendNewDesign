@@ -1,21 +1,21 @@
-import { useCallback } from 'react';
+// import { useCallback } from 'react';
 import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
-import Button from './Button';
 import { useSelector } from 'react-redux';
+import Button from './Button';
 
 const REDIRECT_URI = window.location.href;
 
 const SocialLogins = ({ setProvider, setProfile }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
-  const onLogoutSuccess = useCallback(() => {
-    setProfile(null);
-    setProvider('');
-    alert('logout success');
-  }, []);
+  // const onLogoutSuccess = useCallback(() => {
+  //   setProfile(null);
+  //   setProvider('');
+  //   alert('logout success');
+  // }, []);
 
   return (
-    <div className="flex gap-[42px] mt-[37.8px] mb-6">
+    <div className="flex gap-[42px] mt-[37.8px] mb-6 5xl:mb-9">
       <LoginSocialGoogle
         isOnlyGetToken
         client_id={import.meta.env.VITE_GG_APP_ID}

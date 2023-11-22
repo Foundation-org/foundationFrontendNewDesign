@@ -109,7 +109,7 @@ const Contributions = () => {
                 <h4 className="mb-6 text-[18px] text-[#7C7C7C] font-semibold leading-normal text-center">
                   {item.title.split(' ')[1]}
                 </h4>
-                <h1 className="text-[#7C7C7C] text-[35px] font-semibold leading-[14px] text-center">
+                <h1 className="text-[#7C7C7C] text-[24px] 2xl:text-[35px] font-semibold leading-[14px] text-center">
                   {item.value}
                 </h1>
               </div>

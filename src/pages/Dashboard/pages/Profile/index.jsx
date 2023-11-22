@@ -43,9 +43,7 @@ const Profile = () => {
             </p>
           </div>
           <div>
-            <h4 className="text-[30px] font-semibold leading-normal text-[#616161] dark:text-[#D2D2D2]">
-              My Profile
-            </h4>
+            <h4 className="heading">My Profile</h4>
             <div className="flex gap-[13px]">
               <p>Light</p>
               <Switch

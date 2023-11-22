@@ -14,7 +14,7 @@ const Topbar = () => {
       } w-full h-24 pb-4 flex items-end justify-around`}
     >
       <img src="/assets/svgs/logo.svg" alt="logo" className="w-[5.75rem]" />
-      <ul className="text-[#DADADA] text-[30px] font-semibold leading-normal flex items-end gap-28">
+      <ul className="text-[#DADADA] text-[28px] 2xl:text-[30px] font-semibold leading-normal flex items-end gap-28">
         <li>
           <Link
             to={'/dashboard'}
@@ -64,7 +64,7 @@ const Topbar = () => {
           </Link>
         </li>
       </ul>
-      <div className="flex gap-6 items-center text-white text-[30px] font-semibold leading-normal cursor-pointer">
+      <div className="flex gap-6 items-center text-white text-[28px] 2xl:text-[30px] font-semibold leading-normal cursor-pointer">
         <img
           src="/assets/svgs/dashboard/arrow-right-outline.svg"
           alt="arrow-right"

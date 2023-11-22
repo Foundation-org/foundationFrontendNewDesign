@@ -1,6 +1,123 @@
 import Button from '../components/Button';
 
 const VerificationBadges = () => {
+  const items = [
+    {
+      image: '/assets/svgs/dashboard/mail1.svg',
+      title: 'Personal Email',
+      addButtonColor: 'gray',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/mail1.svg',
+      title: 'Work Email',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/mail1.svg',
+      title: 'Education Email',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/mail2.svg',
+      title: 'Personal Email',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/mail2.svg',
+      title: 'Work Gmail',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/mail2.svg',
+      title: 'Education Gmail',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/eth.svg',
+      title: 'Etherium Wallet',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/linkedin.svg',
+      title: 'LinkedIn',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/github.svg',
+      title: 'Github',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/fb.svg',
+      title: 'Facebook',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/Twitter.svg',
+      title: 'Twitter',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/insta.svg',
+      title: 'Instagram',
+      addButtonColor: 'gray',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/geo.svg',
+      title: 'Geolocation',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/phone.svg',
+      title: 'Personal Phone',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/workphone.svg',
+      title: 'Work Phone',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/webAuth.svg',
+      title: 'WebAuth Desktop',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/webAuth.svg',
+      title: 'WebAuth Mobile',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/identity.svg',
+      title: 'Identity',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+    {
+      image: '/assets/svgs/dashboard/multiAuth.svg',
+      title: 'Multi-Factor Authentication',
+      addButtonColor: 'blue',
+      removeButtonColor: 'red',
+    },
+  ];
+
   return (
     <div>
       <h1 className="text-[#4A8DBD] text-[32px] font-semibold leading-normal mt-[56px] ml-[156px]">
@@ -15,196 +132,18 @@ const VerificationBadges = () => {
           <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
           <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
         </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/mail1.svg" alt="mail1" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal pl-[50px]">
-              Personal Email
-            </h1>
+        {items.map((item, index) => (
+          <div className="flex" key={index}>
+            <img src={item.image} alt={item.title} />
+            <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
+              <h1 className="text-[#000] text-[24px] font-medium leading-normal pl-[50px]">
+                {item.title}
+              </h1>
+            </div>
+            <Button color={item.addButtonColor}>Add</Button>
+            <Button color={item.removeButtonColor}>Remove</Button>
           </div>
-          <Button color="gray">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/mail1.svg" alt="mail1" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Work Email
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/mail1.svg" alt="mail1" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Education Email
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/mail2.svg" alt="mail1" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Personal Email
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/mail2.svg" alt="mail1" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Work Gmail
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/mail2.svg" alt="mail1" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Education Gmail
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/eth.svg" alt="Eth" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Etherium Wallet
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/linkedin.svg" alt="LinkedIn" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              LinkedIn
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/github.svg" alt="Github" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Github
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/fb.svg" alt="Facebook" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Facebook
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/Twitter.svg" alt="Twitter" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal pl-[50px]">
-              Twitter
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/insta.svg" alt="Instagram" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Instagram
-            </h1>
-          </div>
-          <Button color="gray">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/geo.svg" alt="Geolocation" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Geolocation
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/phone.svg" alt="Personal Phone" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Personal Phone
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/phone.svg" alt="Work Phone" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Work Phone
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/webAuth.svg" alt="webAuth" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              WebAuth Desktop
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/webAuth.svg" alt="webAuth" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              WebAuth Mobile
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/identity.svg" alt="identity" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal  pl-[50px]">
-              Identity
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
-        <div className="flex">
-          <img src="/assets/svgs/dashboard/multiAuth.svg" alt="MFA" />
-          <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-            <h1 className="text-[#000] text-[24px] font-medium leading-normal pl-[50px]">
-              Multi-Factor Authentication
-            </h1>
-          </div>
-          <Button color="blue">Add</Button>
-          <Button color="red">Remove</Button>
-        </div>
+        ))}
       </div>
     </div>
   );

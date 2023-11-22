@@ -1,10 +1,12 @@
 import { useSelector } from 'react-redux';
+import { FaCheck } from 'react-icons/fa';
+import { FaExclamation } from 'react-icons/fa6';
 
-const SingleAnswer = ({ number, answer }) => {
+const SingleAnswer = ({ number, answer, checkInfo }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
-    <div className="mx-[85px] flex items-center gap-[25px]">
+    <div className="mx-[72px] 2xl:mx-[85px] flex items-center gap-[25px]">
       <h1 className="text-[#435059] dark:text-[#D3D3D3] text-[20px] font-[500] leading-normal">
         {number}
       </h1>
@@ -24,18 +26,29 @@ const SingleAnswer = ({ number, answer }) => {
             {answer}
           </h1>
         </div>
-        <div className="flex items-center gap-[37px] mr-[20.63px]">
-          <img
-            src="/assets/svgs/dashboard/edit.svg"
-            alt="edit"
-            className="w-[16px] h-[19.942px]"
-          />
-          <img
-            src="/assets/svgs/dashboard/trash.svg"
-            alt="trash"
-            className="w-[16px] h-[19.942px]"
-          />
-        </div>
+        {!checkInfo ? (
+          <div className="flex items-center gap-[37px] mr-[20.63px]">
+            <img
+              src="/assets/svgs/dashboard/edit.svg"
+              alt="edit"
+              className="w-[16px] h-[19.942px]"
+            />
+            <img
+              src="/assets/svgs/dashboard/trash.svg"
+              alt="trash"
+              className="w-[16px] h-[19.942px]"
+            />
+          </div>
+        ) : (
+          <div className="flex items-center gap-[37px] mr-[20.63px] ">
+            <div className="bg-[#0DD76A] w-[30px] h-[30px] flex items-center justify-center rounded-full">
+              <FaCheck className="w-[20px] h-[19.942px] text-white" />
+            </div>
+            <div className="bg-[#FFD600] w-[30px] h-[30px] flex items-center justify-center rounded-full">
+              <FaExclamation className="w-[16px] h-[19.942px] text-white" />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

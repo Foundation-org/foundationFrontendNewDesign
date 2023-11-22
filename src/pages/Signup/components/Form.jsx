@@ -18,7 +18,7 @@ const Form = ({
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
-    <form className="w-full flex flex-col gap-11 my-6 dark:text-white text-gray-600">
+    <form className="w-full flex flex-col gap-11 5xl:gap-14 my-6 dark:text-white text-gray-600">
       <Input
         type="email"
         id="email"

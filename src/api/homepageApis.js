@@ -52,3 +52,11 @@ export const getAllChangable = async (params) => {
     params
   );
 };
+
+// ================= Bookmark
+// Get Bookmarks
+export const getAllBookmarkedQuests = async (uuid) => {
+  return await api.post(`/bookmarkQuest/getAllBookmarkQuests`, {
+    uuid,
+  });
+};

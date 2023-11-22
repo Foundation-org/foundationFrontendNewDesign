@@ -7,10 +7,12 @@ import {
   getAllUnanswered,
   getAllChangable,
   searchQuestions,
+  getAllBookmarkedQuests,
 } from '../../../api/homepageApis';
 import { getFilters } from '../../../features/filters/filtersSlice';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
+import { useDebounce } from '../../../utils/useDebounce';
 import QuestionCard from '../../../components/QuestionCard';
 import SidebarLeft from '../components/SidebarLeft';
 import SidebarRight from '../components/SidebarRight';
@@ -34,6 +36,15 @@ const Main = () => {
   };
   const [searchData, setSearchData] = useState('');
   const [clearFilter, setClearFilter] = useState(false);
+  const debouncedSearch = useDebounce(searchData, 1000);
+
+  const { data: bookmarkedData } = useQuery({
+    queryFn: () => getAllBookmarkedQuests(localStorage.getItem('uId')),
+    queryKey: ['getBookmarked'],
+  });
+
+  console.log(bookmarkedData?.data);
+  console.log(allData);
 
   const handleSearch = (e) => {
     setSearchData(e.target.value);
@@ -78,26 +89,23 @@ const Main = () => {
     queryFn: async () => {
       params = applyFilters(params, filterStates);
 
-      if (searchData === '') {
+      if (debouncedSearch === '') {
         const result = await fetchDataByStatus(params, filterStates);
         return result.data;
       } else {
-        const result = await searchQuestions(searchData);
+        const result = await searchQuestions(debouncedSearch);
         return result;
       }
     },
-    queryKey: ['FeedData', filterStates, searchData, pagination, clearFilter],
-    staleTime: 300000,
+    queryKey: [
+      'FeedData',
+      filterStates,
+      debouncedSearch,
+      pagination,
+      clearFilter,
+    ],
+    staleTime: 0,
   });
-
-  useEffect(() => {
-    if (pagination.page === 1) {
-      setAllData([]);
-    }
-    if (feedData && feedData.data) {
-      setAllData((prevData) => [...prevData, ...(feedData.data || [])]);
-    }
-  }, [feedData]);
 
   useEffect(() => {
     setPagination((prevPagination) => ({
@@ -106,8 +114,21 @@ const Main = () => {
       sliceEnd: pageLimit,
       page: 1,
     }));
-    // setAllData([]);
+    setAllData([]);
   }, [filterStates, searchData]);
+
+  useEffect(() => {
+    if (pagination.page === 1) {
+      setAllData([]);
+    }
+    if (feedData && feedData.data) {
+      if (allData.length === 0) {
+        setAllData(feedData.data);
+      } else {
+        setAllData((prevData) => [...prevData, ...(feedData.data || [])]);
+      }
+    }
+  }, [feedData, filterStates]);
 
   useEffect(() => {
     setPagination((prevPagination) => ({
@@ -131,6 +152,7 @@ const Main = () => {
         searchData={searchData}
         clearFilter={clearFilter}
         setClearFilter={setClearFilter}
+        setSearchData={setSearchData}
       />
       <div className="bg-[#FCFCFD] dark:bg-[#06070a] shadow-inner-md w-full py-[27px] pl-6 pr-[23px] flex flex-col gap-[27px] h-[calc(100vh-96px)] overflow-y-auto no-scrollbar shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
         <InfiniteScroll
@@ -148,7 +170,7 @@ const Main = () => {
               <h4>No more data to display.</h4>
             )
           }
-          height={'100vh'}
+          height={'86vh'}
           className="flex flex-col gap-[27px] no-scrollbar"
         >
           {allData?.map((item, index) => (
@@ -169,9 +191,23 @@ const Main = () => {
                 }
                 answers={item?.QuestAnswers}
                 question={item?.Question}
-                btnColor={item?.startStatus==='correct'?'bg-[#4ABD71]':item?.startStatus==='incorrect'?'bg-[#F84A4A]':item?.startStatus==='change answer'?'bg-[#FDD503]':'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'}
+                btnColor={
+                  item?.startStatus === 'correct'
+                    ? 'bg-[#4ABD71]'
+                    : item?.startStatus === 'incorrect'
+                    ? 'bg-[#F84A4A]'
+                    : item?.startStatus === 'change answer'
+                    ? 'bg-[#FDD503]'
+                    : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                }
                 btnText={item?.startStatus}
-                isBookmarked={false}
+                isBookmarked={
+                  bookmarkedData?.data.some((bookmark) => {
+                    bookmark._id === item._id;
+                  })
+                    ? true
+                    : false
+                }
               />
             </div>
           ))}

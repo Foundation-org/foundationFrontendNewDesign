@@ -23,7 +23,7 @@ const Button = ({
     },
     {
       'text-[13px] font-[500] px-[10px] h-[30px] gap-[15px]': size === 'small',
-      'text-[17.554px] font-[500] text-center h-[67.2px] w-[280px] border-[1px] border-gray-200 dark:border-white':
+      'text-[17.554px] font-[500] text-center h-[67.2px] w-[280px] 5xl:w-[320px] border-[1px] border-gray-200 dark:border-white':
         size === 'medium',
       'text-[29.257px] font-[500] text-center py-3 h-[67.2px] w-full':
         size === 'large',

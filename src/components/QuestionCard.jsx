@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import SingleAnswer from '../pages/Dashboard/components/SingleAnswer';
 import BasicModal from './BasicModal';
 import AddNewOption from '../pages/Dashboard/components/AddNewOption';
-import { useSelector } from 'react-redux';
 
 const QuestionCard = ({
   id,
@@ -38,27 +38,33 @@ const QuestionCard = ({
         <h1 className="text-[22px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF]">
           {title}
         </h1>
-        {persistedTheme === 'dark' ? (
-          isBookmarked ? (
-            <img
-              src="/assets/svgs/dashboard/bookmark-white.svg"
-              alt="save icon"
-              className="w-9 h-7 cursor-pointer"
-            />
-          ) : (
-            <img
-              src="/assets/svgs/dashboard/save.svg"
-              alt="save icon"
-              className="w-9 h-7 cursor-pointer"
-            />
-          )
+        {isBookmarked ? (
+          <img
+            src="/assets/svgs/dashboard/bookmark-white.svg"
+            alt="save icon"
+            className="w-9 h-7 cursor-pointer"
+          />
         ) : (
+          <img
+            src="/assets/svgs/dashboard/save.svg"
+            alt="save icon"
+            className="w-9 h-7 cursor-pointer"
+          />
+        )}
+
+        {/* isBookmarked ? (
           <img
             src="/assets/svgs/dashboard/bookmark-blue.svg"
             alt="save icon"
             className="w-9 h-7 cursor-pointer"
           />
-        )}
+        ) : (
+          <img
+            src="/assets/svgs/dashboard/bookmark-white.svg"
+            alt="save icon"
+            className="w-9 h-7 cursor-pointer"
+          />
+        ) */}
       </div>
       {question.endsWith('?') ? (
         <h1 className="text-[#7C7C7C] dark:text-[#B8B8B8] text-[25px] font-semibold leading-normal ml-[52.65px] mt-[5px]">
@@ -72,39 +78,40 @@ const QuestionCard = ({
       {startTest ? (
         <>
           <div className="mt-[26px] flex flex-col gap-[10px]">
-            
-            { title==='Yes/No' || title==='Agree/Disagree'?
-            <>
-            <SingleAnswer number={'#1'} answer={"Yes"} />
-            <SingleAnswer number={'#2'} answer={"No"} />
-            </>
-
-            :
-            
-            answers.map((item,index)=>
-              <SingleAnswer number={'#'+index} answer={item.question} />
-
+            {title === 'Yes/No' || title === 'Agree/Disagree' ? (
+              <>
+                <SingleAnswer number={'#1'} answer={'Yes'} checkInfo={true} />
+                <SingleAnswer number={'#2'} answer={'No'} />
+              </>
+            ) : (
+              answers.map((item, index) => (
+                <SingleAnswer number={'#' + index} answer={item.question} />
+              ))
             )}
-           
-            {title==='Yes/No' || title==='Agree/Disagree'?<></>:<button
-              onClick={handleOpen}
-              className="ml-[135px] mt-3 flex items-center gap-[11.37px] py-[10px] px-[21px] w-fit rounded-[10px] bg-[#D9D9D9] text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] text-[18px] font-normal leading-normal"
-            >
-              {persistedTheme === 'dark' ? (
-                <img
-                  src="/assets/svgs/dashboard/add-dark.svg"
-                  alt="add"
-                  className="w-[15.6px] h-[15.6px]"
-                />
-              ) : (
-                <img
-                  src="/assets/svgs/dashboard/add.svg"
-                  alt="add"
-                  className="w-[15.6px] h-[15.6px]"
-                />
-              )}
-              Add Option
-            </button>}
+
+            {title === 'Yes/No' || title === 'Agree/Disagree' ? (
+              <></>
+            ) : (
+              <button
+                onClick={handleOpen}
+                className="ml-[135px] mt-3 flex items-center gap-[11.37px] py-[10px] px-[21px] w-fit rounded-[10px] bg-[#D9D9D9] text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] text-[18px] font-normal leading-normal"
+              >
+                {persistedTheme === 'dark' ? (
+                  <img
+                    src="/assets/svgs/dashboard/add-dark.svg"
+                    alt="add"
+                    className="w-[15.6px] h-[15.6px]"
+                  />
+                ) : (
+                  <img
+                    src="/assets/svgs/dashboard/add.svg"
+                    alt="add"
+                    className="w-[15.6px] h-[15.6px]"
+                  />
+                )}
+                Add Option
+              </button>
+            )}
             <BasicModal open={open} handleClose={handleClose}>
               <AddNewOption />
             </BasicModal>
@@ -153,13 +160,25 @@ const QuestionCard = ({
               <button
                 className={` ${
                   persistedTheme === 'dark'
-                    ? btnText==='correct'?'bg-[#148339]':btnText==='incorrect'?'bg-[#C13232]':btnText==='change answer'?'bg-[#BB9D02]':'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                    ? btnText === 'correct'
+                      ? 'bg-[#148339]'
+                      : btnText === 'incorrect'
+                      ? 'bg-[#C13232]'
+                      : btnText === 'change answer'
+                      ? 'bg-[#BB9D02]'
+                      : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                     : btnColor
                 } rounded-[15px] py-2 px-5 text-white text-[20px] font-semibold mt-12 w-[173px] leading-normal`}
                 onClick={() => handleStartTest(id)}
                 disabled={btnText === 'correct' || btnText === 'incorrect'}
               >
-                {btnText==='correct'?'Correct':btnText==='incorrect'?'Incorrect':btnText==='change answer'?'Change':'Start'}
+                {btnText === 'correct'
+                  ? 'Correct'
+                  : btnText === 'incorrect'
+                  ? 'Incorrect'
+                  : btnText === 'change answer'
+                  ? 'Change'
+                  : 'Start'}
               </button>
               <button className="rounded-[15px] py-2 px-5 text-[#20D47E] dark:text-[#C9C8C8] text-[20px] font-semibold leading-normal mt-12 w-[173px] border-[3px] border-[#20D47E] dark:border-[#7C7C7C]">
                 Result

@@ -8,6 +8,7 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 'fit-content',
   boxShadow: 5,
+  borderRadius: '26px',
 };
 
 const BasicModal = ({ open, handleClose, children }) => {
