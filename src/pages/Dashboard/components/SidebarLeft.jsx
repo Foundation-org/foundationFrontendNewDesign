@@ -23,8 +23,8 @@ const SidebarLeft = ({
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
-    <div className="bg-white dark:bg-[#0A0A0C] h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] pl-[2.18rem] pt-[4.563rem] text-[#535353] dark:text-white overflow-y-auto no-scrollbar">
-      <div className="form-control w-full max-w-[13.25rem]">
+    <div className="bg-white dark:bg-[#0A0A0C] h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] 5xl:w-[23rem] 5xl:min-w-[23rem] pl-[2.18rem] 5xl:pr-[2.18rem] pt-[4.563rem] text-[#535353] dark:text-white overflow-y-auto no-scrollbar">
+      <div className="form-control w-full max-w-[13.25rem] 5xl:max-w-full">
         <label className="text-[22px] font-[400] leading-normal pb-[9px] ml-[5px]">
           Search
         </label>

@@ -10,7 +10,8 @@ const Typography = ({
   const variants = {
     textTitle:
       'text-[40px] 5xl:text-[52px] font-[700] text-black dark:text-white',
-    'textTitle-2': 'text-[40px] font-[700] text-[#344054] dark:text-white',
+    'textTitle-2':
+      'text-[40px] 5xl:text-[52px] font-[700] text-[#344054] dark:text-white',
     textInfo:
       'text-[26.331px] 5xl:text-[30px] font-normal tacking-[2.633px] text-gray-300 dark:text-white',
     textBase: 'text-[22px] font-[500]',

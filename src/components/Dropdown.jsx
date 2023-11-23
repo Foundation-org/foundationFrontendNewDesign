@@ -12,10 +12,10 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
       <p className="text-[18px] font-[500] leading-normal pb-[9px] ml-[17px]">
         {label}
       </p>
-      <div className="dropdown">
+      <div className="dropdown 5xl:w-full">
         <label
           tabIndex={0}
-          className="min-w-[212px] flex items-center justify-between pr-5 pl-[1.063rem] pt-[11px] pb-[9px] w-full max-w-[13.25rem] bg-[#F6F6F6] dark:bg-[#000] rounded-[18px] dark:border-[1px] dark:border-[#989898] text-[15px] font-[400] leading-normal text-[#787878] dark:text-[#E6E6E6] cursor-pointer h-[47px]"
+          className="min-w-[212px] flex items-center justify-between pr-5 pl-[1.063rem] pt-[11px] pb-[9px] w-full max-w-[13.25rem] 5xl:max-w-full bg-[#F6F6F6] dark:bg-[#000] rounded-[18px] dark:border-[1px] dark:border-[#989898] text-[15px] font-[400] leading-normal text-[#787878] dark:text-[#E6E6E6] cursor-pointer h-[47px]"
           onClick={toggleDropdown}
         >
           {title}

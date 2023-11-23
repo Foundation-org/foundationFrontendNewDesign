@@ -78,7 +78,7 @@ export default function Signin() {
   return (
     <div className="bg-blue dark:bg-black-200 h-screen w-full text-white flex">
       <div className="w-full h-screen bg-white dark:bg-dark rounded-r-[65px] flex flex-col justify-center items-center">
-        <div className="max-w-[600px] flex flex-col justify-center">
+        <div className="max-w-[800px] w-[600px] 5xl:w-[800px] flex flex-col justify-center">
           <Typography variant="textTitle-2">Login</Typography>
           <Typography variant="textSmall">
             Please fill your detail to access your account.

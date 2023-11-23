@@ -43,9 +43,6 @@ const Main = () => {
     queryKey: ['getBookmarked'],
   });
 
-  console.log(bookmarkedData?.data);
-  console.log(allData);
-
   const handleSearch = (e) => {
     setSearchData(e.target.value);
   };
@@ -131,11 +128,19 @@ const Main = () => {
   }, [feedData, filterStates]);
 
   useEffect(() => {
-    setPagination((prevPagination) => ({
-      ...prevPagination,
-      sliceStart: prevPagination.sliceEnd,
-      sliceEnd: prevPagination.sliceEnd + pageLimit,
-    }));
+    if (pagination.page === 1) {
+      setPagination((prevPagination) => ({
+        ...prevPagination,
+        sliceStart: 0,
+        sliceEnd: pageLimit,
+      }));
+    } else {
+      setPagination((prevPagination) => ({
+        ...prevPagination,
+        sliceStart: prevPagination.sliceEnd,
+        sliceEnd: prevPagination.sliceEnd + pageLimit,
+      }));
+    }
   }, [pagination.page]);
 
   const fetchMoreData = () => {
@@ -170,7 +175,7 @@ const Main = () => {
               <h4>No more data to display.</h4>
             )
           }
-          height={'86vh'}
+          height={'88vh'}
           className="flex flex-col gap-[27px] no-scrollbar"
         >
           {allData?.map((item, index) => (
