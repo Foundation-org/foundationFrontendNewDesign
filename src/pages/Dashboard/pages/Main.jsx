@@ -210,8 +210,6 @@ const Main = () => {
                   bookmarkedData?.data.some((bookmark) => {
                     return bookmark.questForeignKey === item._id;
                   })
-                    ? true
-                    : false
                 }
               />
             </div>

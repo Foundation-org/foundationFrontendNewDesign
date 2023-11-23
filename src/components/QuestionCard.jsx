@@ -39,11 +39,19 @@ const QuestionCard = ({
           {title}
         </h1>
         {isBookmarked ? (
-          <img
-            src="/assets/svgs/dashboard/bookmark-white.svg"
-            alt="save icon"
-            className="w-9 h-7 cursor-pointer"
-          />
+          persistedTheme !== 'dark' ? (
+            <img
+              src="/assets/svgs/dashboard/bookmark-blue.svg"
+              alt="save icon"
+              className="w-9 h-7 cursor-pointer"
+            />
+          ) : (
+            <img
+              src="/assets/svgs/dashboard/bookmark-white.svg"
+              alt="save icon"
+              className="w-9 h-7 cursor-pointer"
+            />
+          )
         ) : (
           <img
             src="/assets/svgs/dashboard/save.svg"
@@ -51,6 +59,7 @@ const QuestionCard = ({
             className="w-9 h-7 cursor-pointer"
           />
         )}
+
 
         {/* isBookmarked ? (
           <img
@@ -119,11 +128,10 @@ const QuestionCard = ({
           <div className="mt-8 w-full flex justify-end">
             <div>
               <button
-                className={` ${
-                  persistedTheme === 'dark'
+                className={` ${persistedTheme === 'dark'
                     ? 'bg-[#333B46]'
                     : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                } shadow-inner inset-0  rounded-[15px] py-2 px-5 text-[#EAEAEA] dark:text-[#B6B6B6] text-[20px] font-semibold leading-normal mr-[30px] w-[173px]`}
+                  } shadow-inner inset-0  rounded-[15px] py-2 px-5 text-[#EAEAEA] dark:text-[#B6B6B6] text-[20px] font-semibold leading-normal mr-[30px] w-[173px]`}
               >
                 Submit
               </button>
@@ -158,27 +166,26 @@ const QuestionCard = ({
             )}
             <div className="w-full flex gap-[42px] justify-end mr-[30px] mb-1">
               <button
-                className={` ${
-                  persistedTheme === 'dark'
+                className={` ${persistedTheme === 'dark'
                     ? btnText === 'correct'
                       ? 'bg-[#148339]'
                       : btnText === 'incorrect'
-                      ? 'bg-[#C13232]'
-                      : btnText === 'change answer'
-                      ? 'bg-[#BB9D02]'
-                      : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                        ? 'bg-[#C13232]'
+                        : btnText === 'change answer'
+                          ? 'bg-[#BB9D02]'
+                          : "rounded-[15px] bg-[#333B46] shadow-inner inset-0 border-[1px] border-[#333B46]"
                     : btnColor
-                } rounded-[15px] py-2 px-5 text-white text-[20px] font-semibold mt-12 w-[173px] leading-normal`}
+                  } rounded-[15px] py-2 px-5 text-white text-[20px] font-semibold mt-12 w-[173px] leading-normal`}
                 onClick={() => handleStartTest(id)}
                 disabled={btnText === 'correct' || btnText === 'incorrect'}
               >
                 {btnText === 'correct'
                   ? 'Correct'
                   : btnText === 'incorrect'
-                  ? 'Incorrect'
-                  : btnText === 'change answer'
-                  ? 'Change'
-                  : 'Start'}
+                    ? 'Incorrect'
+                    : btnText === 'change answer'
+                      ? 'Change'
+                      : 'Start'}
               </button>
               <button className="rounded-[15px] py-2 px-5 text-[#20D47E] dark:text-[#C9C8C8] text-[20px] font-semibold leading-normal mt-12 w-[173px] border-[3px] border-[#20D47E] dark:border-[#7C7C7C]">
                 Result
