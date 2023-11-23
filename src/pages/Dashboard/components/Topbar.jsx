@@ -11,9 +11,11 @@ const Topbar = () => {
         persistedTheme === 'dark'
           ? 'bg-gray-600'
           : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-      } w-full h-24 pb-4 flex items-end justify-around`}
+      } w-full h-24 pb-4 flex items-end justify-between`}
     >
-      <img src="/assets/svgs/logo.svg" alt="logo" className="w-[5.75rem]" />
+      <div className="w-[18.25rem] min-w-[18.25rem] 5xl:w-[23rem] 5xl:min-w-[23rem] flex justify-center">
+        <img src="/assets/svgs/logo.svg" alt="logo" className="w-[5.75rem]" />
+      </div>
       <ul className="text-[#DADADA] text-[28px] 2xl:text-[30px] font-semibold leading-normal flex items-end gap-28">
         <li>
           <Link
@@ -64,7 +66,7 @@ const Topbar = () => {
           </Link>
         </li>
       </ul>
-      <div className="flex gap-6 items-center text-white text-[28px] 2xl:text-[30px] font-semibold leading-normal cursor-pointer">
+      <div className="flex gap-6 items-center justify-center text-white text-[28px] 2xl:text-[30px] font-semibold leading-normal cursor-pointer min-w-[23rem] w-[23rem] 2xl:w-[25rem]">
         <img
           src="/assets/svgs/dashboard/arrow-right-outline.svg"
           alt="arrow-right"

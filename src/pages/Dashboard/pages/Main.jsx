@@ -208,7 +208,7 @@ const Main = () => {
                 btnText={item?.startStatus}
                 isBookmarked={
                   bookmarkedData?.data.some((bookmark) => {
-                    bookmark._id === item._id;
+                    return bookmark.questForeignKey === item._id;
                   })
                     ? true
                     : false
