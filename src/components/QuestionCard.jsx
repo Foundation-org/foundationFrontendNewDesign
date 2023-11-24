@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getQuests, toggleCheck } from '../features/quest/questsSlice';
+import { useMutation } from '@tanstack/react-query';
+import { createInfoQuest } from '../api/questsApi';
+import { toast } from 'sonner';
 import SingleAnswer from '../pages/Dashboard/components/SingleAnswer';
-import BasicModal from './BasicModal';
 import AddNewOption from '../pages/Dashboard/components/AddNewOption';
+import BasicModal from './BasicModal';
 
 const QuestionCard = ({
   id,
@@ -12,19 +16,43 @@ const QuestionCard = ({
   title,
   answers,
   question,
+  whichTypeQuestion,
   correctAnswers,
   btnText,
   btnColor,
   isBookmarked,
+  handleStartTest,
+  startTest,
 }) => {
+  const dispatch = useDispatch();
+  const quests = useSelector(getQuests);
   const [open, setOpen] = useState(false);
-  const [startTest, setStartTest] = useState();
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleStartTest = (testId) => setStartTest(testId);
+  const handleToggleCheck = (option, check, content) => {
+    const actionPayload = {
+      option,
+      check,
+      content,
+    };
+
+    dispatch(toggleCheck(actionPayload));
+  };
+
+  const { mutateAsync: postQuestInfo } = useMutation({
+    mutationFn: createInfoQuest,
+    onSuccess: (resp) => {
+      // console.log('resp', resp);
+      toast.success('success');
+    },
+    onError: (err) => {
+      // console.log('error', err);
+      toast.error(err.response.data);
+    },
+  });
 
   return (
     <div className="bg-[#F3F3F3] dark:bg-[#141618] border-[1px] border-[#F3F3F3] dark:border-[#858585] rounded-[26px]">
@@ -60,7 +88,6 @@ const QuestionCard = ({
           />
         )}
 
-
         {/* isBookmarked ? (
           <img
             src="/assets/svgs/dashboard/bookmark-blue.svg"
@@ -84,13 +111,49 @@ const QuestionCard = ({
           S. {question}
         </h1>
       )}
-      {startTest ? (
+      {startTest === id ? (
         <>
           <div className="mt-[26px] flex flex-col gap-[10px]">
             {title === 'Yes/No' || title === 'Agree/Disagree' ? (
               <>
-                <SingleAnswer number={'#1'} answer={'Yes'} checkInfo={true} />
-                <SingleAnswer number={'#2'} answer={'No'} />
+                {quests.yes.check ? (
+                  <SingleAnswer
+                    number={'#1'}
+                    answer={'Yes'}
+                    checkInfo={true}
+                    check={quests.yes.check}
+                    content={quests.yes.content}
+                    handleToggleCheck={handleToggleCheck}
+                  />
+                ) : (
+                  <SingleAnswer
+                    number={'#1'}
+                    answer={'Yes'}
+                    checkInfo={true}
+                    check={quests.yes.check}
+                    content={quests.yes.content}
+                    handleToggleCheck={handleToggleCheck}
+                  />
+                )}
+                {quests.no.content ? (
+                  <SingleAnswer
+                    number={'#2'}
+                    answer={'No'}
+                    checkInfo={true}
+                    check={quests.no.check}
+                    content={quests.no.content}
+                    handleToggleCheck={handleToggleCheck}
+                  />
+                ) : (
+                  <SingleAnswer
+                    number={'#2'}
+                    answer={'No'}
+                    checkInfo={true}
+                    check={quests.no.check}
+                    content={quests.no.content}
+                    handleToggleCheck={handleToggleCheck}
+                  />
+                )}
               </>
             ) : (
               answers.map((item, index) => (
@@ -128,10 +191,21 @@ const QuestionCard = ({
           <div className="mt-8 w-full flex justify-end">
             <div>
               <button
-                className={` ${persistedTheme === 'dark'
+                className={` ${
+                  persistedTheme === 'dark'
                     ? 'bg-[#333B46]'
                     : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                  } shadow-inner inset-0  rounded-[15px] py-2 px-5 text-[#EAEAEA] dark:text-[#B6B6B6] text-[20px] font-semibold leading-normal mr-[30px] w-[173px]`}
+                } shadow-inner inset-0  rounded-[15px] py-2 px-5 text-[#EAEAEA] dark:text-[#B6B6B6] text-[20px] font-semibold leading-normal mr-[30px] w-[173px]`}
+                onClick={() =>
+                  postQuestInfo({
+                    Question: question,
+                    whichTypeQuestion,
+                    // it is pending
+                    // usersChangeTheirAns: data.usersChangeTheirAns,
+                    // QuestionCorrect: data.QuestionCorrect, // dataFromReduxSaveData.correctAns === true ? yesSelected === true ? "yes" : "no" : "Not Selected",
+                    uuid: localStorage.getItem('uId'),
+                  })
+                }
               >
                 Submit
               </button>
@@ -166,26 +240,27 @@ const QuestionCard = ({
             )}
             <div className="w-full flex gap-[42px] justify-end mr-[30px] mb-1">
               <button
-                className={` ${persistedTheme === 'dark'
+                className={` ${
+                  persistedTheme === 'dark'
                     ? btnText === 'correct'
                       ? 'bg-[#148339]'
                       : btnText === 'incorrect'
-                        ? 'bg-[#C13232]'
-                        : btnText === 'change answer'
-                          ? 'bg-[#BB9D02]'
-                          : "rounded-[15px] bg-[#333B46] shadow-inner inset-0 border-[1px] border-[#333B46]"
+                      ? 'bg-[#C13232]'
+                      : btnText === 'change answer'
+                      ? 'bg-[#BB9D02]'
+                      : 'rounded-[15px] bg-[#333B46] shadow-inner inset-0 border-[1px] border-[#333B46]'
                     : btnColor
-                  } rounded-[15px] py-2 px-5 text-white text-[20px] font-semibold mt-12 w-[173px] leading-normal`}
+                } rounded-[15px] py-2 px-5 text-white text-[20px] font-semibold mt-12 w-[173px] leading-normal`}
                 onClick={() => handleStartTest(id)}
                 disabled={btnText === 'correct' || btnText === 'incorrect'}
               >
                 {btnText === 'correct'
                   ? 'Correct'
                   : btnText === 'incorrect'
-                    ? 'Incorrect'
-                    : btnText === 'change answer'
-                      ? 'Change'
-                      : 'Start'}
+                  ? 'Incorrect'
+                  : btnText === 'change answer'
+                  ? 'Change'
+                  : 'Start'}
               </button>
               <button className="rounded-[15px] py-2 px-5 text-[#20D47E] dark:text-[#C9C8C8] text-[20px] font-semibold leading-normal mt-12 w-[173px] border-[3px] border-[#20D47E] dark:border-[#7C7C7C]">
                 Result

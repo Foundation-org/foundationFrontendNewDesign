@@ -9,6 +9,7 @@ import todoReducer from '../features/todo/todoSlice';
 import utilsReducer from '../features/utils/utilsSlice';
 import authReducer from '../features/auth/authSlice';
 import filterReducer from '../features/filters/filtersSlice';
+import questsReducer from '../features/quest/questsSlice';
 
 const persistConfig = {
   key: 'persist-store',
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   utils: utilsReducer,
   auth: authReducer,
   filters: filterReducer,
+  quests: questsReducer,
   todo: todoReducer,
 });
 
