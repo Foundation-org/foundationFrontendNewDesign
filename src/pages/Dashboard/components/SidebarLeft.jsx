@@ -1,5 +1,5 @@
-import Dropdown from '../../../components/Dropdown';
-import { useDispatch, useSelector } from 'react-redux';
+import Dropdown from "../../../components/Dropdown";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getFilters,
   resetFilters,
@@ -8,8 +8,8 @@ import {
   setFilterByStatus,
   setFilterByType,
   setSearch,
-} from '../../../features/filters/filtersSlice';
-import { GrClose } from 'react-icons/gr';
+} from "../../../features/filters/filtersSlice";
+import { GrClose } from "react-icons/gr";
 
 const SidebarLeft = ({
   handleSearch,
@@ -40,7 +40,7 @@ const SidebarLeft = ({
             <button
               className="absolute top-4 right-3"
               onClick={() => {
-                setSearchData('');
+                setSearchData("");
               }}
             >
               <GrClose className="w-6 h-6 text-black dark:text-white" />
@@ -65,58 +65,58 @@ const SidebarLeft = ({
       </h1>
       <div className="flex flex-col gap-5">
         <Dropdown
-          label={'Status'}
+          label={"Status"}
           title={
-            filterStates.filterByStatus ? filterStates.filterByStatus : 'All'
+            filterStates.filterByStatus ? filterStates.filterByStatus : "All"
           }
           items={[
-            'All',
-            'Unanswered',
-            'Answered',
-            'Correct',
-            'Incorrect',
-            'Changeable',
+            "All",
+            "Unanswered",
+            "Answered",
+            "Correct",
+            "Incorrect",
+            "Changeable",
           ]}
           handleSelect={(item) => {
             dispatch(setFilterByStatus(item));
           }}
         />
         <Dropdown
-          label={'Type'}
-          title={filterStates.filterByType ? filterStates.filterByType : 'All'}
+          label={"Type"}
+          title={filterStates.filterByType ? filterStates.filterByType : "All"}
           items={[
-            'All',
-            'Yes/No',
-            'Agree/Disagree',
-            'Multiple Choise',
-            'Ranked Choise',
+            "All",
+            "Yes/No",
+            "Agree/Disagree",
+            "Multiple Choise",
+            "Ranked Choise",
           ]}
           handleSelect={(item) => {
             dispatch(setFilterByType(item));
           }}
         />
         <Dropdown
-          label={'Scope'}
+          label={"Scope"}
           title={
-            filterStates.filterByScope ? filterStates.filterByScope : 'All'
+            filterStates.filterByScope ? filterStates.filterByScope : "All"
           }
-          items={['All', 'Me']}
+          items={["All", "Me"]}
           handleSelect={(item) => {
             dispatch(setFilterByScope(item));
           }}
         />
         <Dropdown
-          label={'Sort'}
+          label={"Sort"}
           title={
             filterStates.filterBySort
               ? filterStates.filterBySort
-              : 'Newest First'
+              : "Newest First"
           }
           items={[
-            'Most Popular',
-            'Last Updated',
-            'Oldest First',
-            'Newest First',
+            "Most Popular",
+            "Last Updated",
+            "Oldest First",
+            "Newest First",
           ]}
           handleSelect={(item) => {
             dispatch(setFilterBySort(item));
@@ -125,9 +125,9 @@ const SidebarLeft = ({
       </div>
       <button
         className={`${
-          persistedTheme === 'dark'
-            ? 'bg-[#333B46]'
-            : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+          persistedTheme === "dark"
+            ? "bg-[#333B46]"
+            : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
         }  shadow-inner inset-0 rounded-[0.938rem] py-2 px-5 text-white dark:text-[#EAEAEA] text-[1.25rem] font-semibold leading-normal mt-12 ml-[1.125rem]`}
         onClick={() => {
           dispatch(resetFilters());

@@ -1,30 +1,30 @@
-import { useState } from 'react';
-import Button from '../../components/Button';
-import SocialLogins from '../../components/SocialLogins';
-import Typography from '../../components/Typography';
-import Form from './components/Form';
-import { Link, useNavigate } from 'react-router-dom';
-import ReCAPTCHA from 'react-google-recaptcha';
-import '../../index.css';
-import { useMutation } from '@tanstack/react-query';
-import { signIn } from '../../api/userAuth';
-import { toast } from 'sonner';
-import { useSelector } from 'react-redux';
+import { useState } from "react";
+import Button from "../../components/Button";
+import SocialLogins from "../../components/SocialLogins";
+import Typography from "../../components/Typography";
+import Form from "./components/Form";
+import { Link, useNavigate } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
+import "../../index.css";
+import { useMutation } from "@tanstack/react-query";
+import { signIn } from "../../api/userAuth";
+import { toast } from "sonner";
+import { useSelector } from "react-redux";
 // import axios from 'axios';
 
 export default function Signin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [provider, setProvider] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [provider, setProvider] = useState("");
   const [profile, setProfile] = useState(null);
-  const [capthaToken, setCaptchaToken] = useState('');
+  const [capthaToken, setCaptchaToken] = useState("");
   const navigate = useNavigate();
 
   const persistedTheme = useSelector((state) => state.utils.theme);
   // console.log(provider, profile);
 
   function onChange(value) {
-    console.log('Captcha value:', value);
+    console.log("Captcha value:", value);
     setCaptchaToken(value);
   }
 
@@ -50,19 +50,19 @@ export default function Signin() {
       // });
 
       // if (recaptchaResp.success) {
-      if (capthaToken !== '') {
+      if (capthaToken !== "") {
         const resp = await userSignin({ email, password });
 
         if (resp.status === 200) {
-          localStorage.setItem('uId', resp.data.uuid);
-          toast.success('User signin successfully');
-          setEmail('');
-          setPassword('');
-          navigate('/dashboard');
+          localStorage.setItem("uId", resp.data.uuid);
+          toast.success("User signin successfully");
+          setEmail("");
+          setPassword("");
+          navigate("/dashboard");
         }
       } else {
         toast.warning(
-          'please complete the reCAPTCHA challenge before proceeding.'
+          "please complete the reCAPTCHA challenge before proceeding.",
         );
       }
       // } else {
@@ -89,7 +89,7 @@ export default function Signin() {
           </div>
           <Form onEmailChange={onEmailChange} onPassChange={onPassChange} />
           <div className="w-fit flex items-start mt-12 mb-14">
-            {persistedTheme === 'dark' ? (
+            {persistedTheme === "dark" ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
                 onChange={onChange}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Dropdown = ({ label, title, items, handleSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,8 +24,8 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
             alt="down-arrow"
             className={`w-[14px] h-[6px] ${
               isOpen
-                ? 'transform rotate-180 transition-all duration-300'
-                : 'transition-all duration-300'
+                ? "transform rotate-180 transition-all duration-300"
+                : "transition-all duration-300"
             }`}
           />
         </label>

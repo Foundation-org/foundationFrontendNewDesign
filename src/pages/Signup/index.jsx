@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import { toast } from 'sonner';
-import { Link, useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { signUp } from '../../api/userAuth';
-import Typography from '../../components/Typography';
-import Button from '../../components/Button';
-import Form from './components/Form';
-import Anchor from '../../components/Anchor';
-import SocialLogins from '../../components/SocialLogins';
-import ReCAPTCHA from 'react-google-recaptcha';
-import { useSelector } from 'react-redux';
+import { useState } from "react";
+import { toast } from "sonner";
+import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { signUp } from "../../api/userAuth";
+import Typography from "../../components/Typography";
+import Button from "../../components/Button";
+import Form from "./components/Form";
+import Anchor from "../../components/Anchor";
+import SocialLogins from "../../components/SocialLogins";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useSelector } from "react-redux";
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [reTypePassword, setReTypePassword] = useState('');
-  const [provider, setProvider] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [reTypePassword, setReTypePassword] = useState("");
+  const [provider, setProvider] = useState("");
   const [profile, setProfile] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showCnfmPassword, setShowCnfmPassword] = useState(false);
@@ -25,7 +25,7 @@ export default function Signup() {
   // console.log(provider, profile);
 
   function onChange(value) {
-    console.log('Captcha value:', value);
+    console.log("Captcha value:", value);
   }
 
   const onEmailChange = (e) => {
@@ -58,15 +58,15 @@ export default function Signup() {
         const resp = await userSignup({ email, password });
 
         if (resp.status === 200) {
-          toast.success('User registered successfully');
-          setEmail('');
-          setPassword('');
-          navigate('/verify-email');
+          toast.success("User registered successfully");
+          setEmail("");
+          setPassword("");
+          navigate("/verify-email");
         }
 
         console.log(resp);
       } else {
-        toast.warning('Password does not match');
+        toast.warning("Password does not match");
       }
     } catch (e) {
       toast.error(e.response.data);
@@ -101,7 +101,7 @@ export default function Signup() {
             toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}
           />
           <div className="w-full flex items-start mt-4 mb-10">
-            {persistedTheme === 'dark' ? (
+            {persistedTheme === "dark" ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
                 onChange={onChange}
@@ -126,9 +126,9 @@ export default function Signup() {
               </label>
             </div>
             <label className="ml-4 text-gray-100 dark:text-white 5xl:text-[22px]">
-              Creating an account means you’re okay with our{' '}
-              <Anchor href="#">Terms of Service</Anchor>,{' '}
-              <Anchor href="#">Privacy Policy</Anchor>, and out default{' '}
+              Creating an account means you’re okay with our{" "}
+              <Anchor href="#">Terms of Service</Anchor>,{" "}
+              <Anchor href="#">Privacy Policy</Anchor>, and out default{" "}
               <Anchor href="#">Notification Settings</Anchor>.
             </label>
           </div>

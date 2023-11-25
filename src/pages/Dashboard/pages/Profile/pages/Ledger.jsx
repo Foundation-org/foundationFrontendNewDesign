@@ -1,33 +1,33 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getAllLedgerData, searchLedger } from '../../../../../api/userAuth';
-import { columns, tableCustomStyles } from '../components/LedgerUtils';
-import { Pagination } from '@mui/material';
-import DataTable from 'react-data-table-component';
+import { useState, useEffect, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getAllLedgerData, searchLedger } from "../../../../../api/userAuth";
+import { columns, tableCustomStyles } from "../components/LedgerUtils";
+import { Pagination } from "@mui/material";
+import DataTable from "react-data-table-component";
 
 const Ledger = () => {
   const itemsPerPage = 10;
-  const [filterText, setFilterText] = useState('');
+  const [filterText, setFilterText] = useState("");
   const [selectedOption, setSelectedOption] = useState(false);
-  const [sort, setsort] = useState('newest');
+  const [sort, setsort] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
 
   const debouncedSearch = useDebounce(filterText, 1000);
 
   const { data: ledgerData } = useQuery({
     queryFn: () => {
-      if (debouncedSearch === '') {
+      if (debouncedSearch === "") {
         return getAllLedgerData(
           currentPage,
           itemsPerPage,
           sort,
-          localStorage.getItem('uId')
+          localStorage.getItem("uId"),
         );
       } else {
         return searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
       }
     },
-    queryKey: ['ledgerData', currentPage, sort, debouncedSearch],
+    queryKey: ["ledgerData", currentPage, sort, debouncedSearch],
   });
 
   useEffect(() => {
@@ -117,18 +117,18 @@ const Ledger = () => {
             </button>
             <div
               className={`${
-                selectedOption ? 'flex duration-200 ease-in-out' : 'hidden'
+                selectedOption ? "flex duration-200 ease-in-out" : "hidden"
               } bg-gray text-black px-1 py-2 flex-col gap-2 absolute w-32 text-left rounded-md mt-2 z-50`}
             >
               <p
                 className="hover:bg-white duration-200 ease-in-out cursor-pointer rounded-md px-2"
-                onClick={() => handleOptionClick('newest')}
+                onClick={() => handleOptionClick("newest")}
               >
                 Newest
               </p>
               <p
                 className="hover:bg-white duration-200 ease-in-out cursor-pointer rounded-md px-2"
-                onClick={() => handleOptionClick('oldest')}
+                onClick={() => handleOptionClick("oldest")}
               >
                 Oldest
               </p>
@@ -155,16 +155,16 @@ const Ledger = () => {
         <div className="flex justify-between">
           {currentPage === 1 ? (
             <h1>
-              Showing data 1 to {ledgerData?.data.data.length} of{' '}
+              Showing data 1 to {ledgerData?.data.data.length} of{" "}
               {ledgerData?.data.totalCount} entries
             </h1>
           ) : (
             <h1>
-              Showing data {(currentPage - 1) * itemsPerPage + 1} to{' '}
+              Showing data {(currentPage - 1) * itemsPerPage + 1} to{" "}
               {Math.min(
                 currentPage * itemsPerPage,
-                ledgerData?.data.totalCount
-              )}{' '}
+                ledgerData?.data.totalCount,
+              )}{" "}
               of {ledgerData?.data.totalCount} entries
             </h1>
           )}

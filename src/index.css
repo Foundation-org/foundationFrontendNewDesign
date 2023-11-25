@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,11 +10,23 @@
 }
 
 .heading {
-  @apply text-[24px] 2xl:text-[30px] font-semibold leading-normal text-[#616161] dark:text-[#D2D2D2];
+  @apply text-[24px] font-semibold leading-normal text-[#616161] dark:text-[#D2D2D2] 2xl:text-[30px];
+}
+
+.green-select {
+  @apply relative inline-flex h-[20px] w-[50px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75;
+}
+
+.green-select-shape {
+  @apply pointer-events-none inline-block h-[30px] w-[30px] transform rounded-full  shadow-lg ring-0 transition duration-200 ease-in-out;
+}
+
+.blue-submit-button {
+  @apply mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .transform-center {
@@ -39,7 +51,7 @@ iframe {
   border-radius: 4px;
 }
 
-#green-checkbox input[type='checkbox'] {
+#green-checkbox input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
   width: 40px;
@@ -54,12 +66,12 @@ iframe {
   border: 1px solid #0fb063;
 }
 
-#green-checkbox input[type='checkbox']:focus-within {
+#green-checkbox input[type="checkbox"]:focus-within {
   outline: none;
 }
 
-#green-checkbox input[type='checkbox']::after {
-  content: url('/public/assets/svgs/checkmark.svg');
+#green-checkbox input[type="checkbox"]::after {
+  content: url("/public/assets/svgs/checkmark.svg");
   left: 0px;
   top: 0px;
   position: absolute;
@@ -68,7 +80,7 @@ iframe {
   height: 100%;
 }
 
-#green-checkbox input[type='checkbox']:checked::after {
+#green-checkbox input[type="checkbox"]:checked::after {
   display: flex;
   align-items: center;
   justify-content: center;

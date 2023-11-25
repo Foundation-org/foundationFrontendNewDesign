@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { useSelector } from "react-redux";
 
 const AddNewOption = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -12,7 +12,7 @@ const AddNewOption = () => {
       <div className="bg-white dark:bg-[#0D1012] rounded-[10px] min-w-[30rem] w-full">
         <div className="flex items-center">
           <div className="rounded-l-[10px] h-full w-fit bg-[#DEE6F7] dark:bg-[#9E9E9E] px-[7px] pt-[14px] pb-[13px]">
-            {persistedTheme === 'dark' ? (
+            {persistedTheme === "dark" ? (
               <img
                 src="/assets/svgs/dashboard/six-dots-dark.svg"
                 alt="six dots"
@@ -29,9 +29,9 @@ const AddNewOption = () => {
       </div>
       <button
         className={` ${
-          persistedTheme === 'dark'
-            ? 'bg-[#333B46]'
-            : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+          persistedTheme === "dark"
+            ? "bg-[#333B46]"
+            : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
         } shadow-inner inset-0  rounded-[10px] py-2 px-5 text-[#EAEAEA] text-[20px] font-semibold leading-normal w-full`}
       >
         Submit

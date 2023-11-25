@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
-import { Router } from './utils/route';
-import { Toaster } from 'sonner';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { Router } from "./utils/route";
+import { Toaster } from "sonner";
+import { useSelector } from "react-redux";
 
 function App() {
   const [theme, setTheme] = useState(null);
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   useEffect(() => {
-    if (persistedTheme === 'dark') {
-      setTheme('dark');
+    if (persistedTheme === "dark") {
+      setTheme("dark");
     } else {
-      setTheme('light');
+      setTheme("light");
     }
   }, [persistedTheme]);
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [theme]);
 
@@ -29,7 +29,7 @@ function App() {
       <Toaster
         position="top-right"
         expand={true}
-        theme={persistedTheme === 'dark' ? 'dark' : 'light'}
+        theme={persistedTheme === "dark" ? "dark" : "light"}
         richColors
       />
     </>

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   yesNo: {
@@ -14,33 +14,33 @@ const initialState = {
 };
 
 export const questsSlice = createSlice({
-  name: 'quests',
+  name: "quests",
   initialState,
   reducers: {
     toggleCheck: (state, action) => {
       const { option, check, content } = action.payload;
 
-      if (option === 'Yes') {
+      if (option === "Yes") {
         if (check) {
-          state['yesNo']['yes'].check = true;
-          state['yesNo']['yes'].content = false;
-          state['yesNo']['no'].check = false;
+          state["yesNo"]["yes"].check = true;
+          state["yesNo"]["yes"].content = false;
+          state["yesNo"]["no"].check = false;
         } else if (content) {
-          state['yesNo']['yes'].check = false;
-          state['yesNo']['yes'].content = true;
-          state['yesNo']['no'].content = false;
+          state["yesNo"]["yes"].check = false;
+          state["yesNo"]["yes"].content = true;
+          state["yesNo"]["no"].content = false;
         }
       }
 
-      if (option === 'No') {
+      if (option === "No") {
         if (check) {
-          state['yesNo']['no'].check = true;
-          state['yesNo']['no'].content = false;
-          state['yesNo']['yes'].check = false;
+          state["yesNo"]["no"].check = true;
+          state["yesNo"]["no"].content = false;
+          state["yesNo"]["yes"].check = false;
         } else if (content) {
-          state['yesNo']['no'].check = false;
-          state['yesNo']['no'].content = true;
-          state['yesNo']['yes'].content = false;
+          state["yesNo"]["no"].check = false;
+          state["yesNo"]["no"].content = true;
+          state["yesNo"]["yes"].content = false;
         }
       }
     },

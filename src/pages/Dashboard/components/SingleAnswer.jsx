@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
-import { FaCheck } from 'react-icons/fa';
-import { FaExclamation } from 'react-icons/fa6';
+import { useSelector } from "react-redux";
+import { FaCheck } from "react-icons/fa";
+import { FaExclamation } from "react-icons/fa6";
 
 const SingleAnswer = ({
   number,
@@ -21,7 +21,7 @@ const SingleAnswer = ({
         <div className="flex items-center">
           {!checkInfo && (
             <div className="rounded-l-[10px] h-full w-fit bg-[#DEE6F7] dark:bg-[#9E9E9E] px-[7px] pt-[14px] pb-[13px]">
-              {persistedTheme === 'dark' ? (
+              {persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/dashboard/six-dots-dark.svg"
                   alt="six dots"

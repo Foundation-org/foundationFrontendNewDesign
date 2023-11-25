@@ -1,7 +1,7 @@
-import { useMutation } from '@tanstack/react-query';
-import { changePassword } from '../../../../../api/userAuth';
-import { toast } from 'sonner';
-import Button from '../components/Button';
+import { useMutation } from "@tanstack/react-query";
+import { changePassword } from "../../../../../api/userAuth";
+import { toast } from "sonner";
+import Button from "../components/Button";
 
 const ChangePassword = () => {
   const mutation = useMutation({ mutationFn: changePassword });
@@ -18,7 +18,7 @@ const ChangePassword = () => {
         const resp = await mutation.mutateAsync({
           currentPassword,
           newPassword,
-          uuid: localStorage.getItem('uId'),
+          uuid: localStorage.getItem("uId"),
         });
 
         if (resp.status === 200) {
@@ -29,7 +29,7 @@ const ChangePassword = () => {
       }
     } else {
       toast.warning(
-        'Passwords do not match. Please make sure the new password and retype password match.'
+        "Passwords do not match. Please make sure the new password and retype password match.",
       );
     }
   };

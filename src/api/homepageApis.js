@@ -1,8 +1,8 @@
-import api from './Axios';
+import api from "./Axios";
 
 // For Search in Feed
 export const searchQuestions = async (term) => {
-  if (term !== '') {
+  if (term !== "") {
     const response = await api.post(`/search/easySearch?term=${term}`);
     return response.data;
   }
@@ -12,14 +12,14 @@ export const searchQuestions = async (term) => {
 
 // For Default
 export const getAllQuestsWithDefaultStatus = async (params) => {
-  return await api.post('/infoquestions/getAllQuestsWithDefaultStatus', params);
+  return await api.post("/infoquestions/getAllQuestsWithDefaultStatus", params);
 };
 
 // For Unanswered
 export const getAllUnanswered = async (params) => {
   return await api.post(
     `/infoquestions/getAllQuestsWithOpenInfoQuestStatus`,
-    params
+    params,
   );
 };
 
@@ -27,7 +27,7 @@ export const getAllUnanswered = async (params) => {
 export const getAllAnswered = async (params) => {
   return await api.post(
     `/infoquestions/getAllQuestsWithAnsweredStatus`,
-    params
+    params,
   );
 };
 
@@ -40,16 +40,16 @@ export const getAllCorrect = async (params) => {
 export const getAllInCorrect = async (params) => {
   return await api.post(
     `/infoquestions/getAllQuestsWithIncorrectStatus`,
-    params
+    params,
   );
 };
 
 // For Changable
 export const getAllChangable = async (params) => {
-  console.log('params in api', params);
+  console.log("params in api", params);
   return await api.post(
     `/infoquestions/getAllQuestsWithChangeAnsStatus`,
-    params
+    params,
   );
 };
 
@@ -62,7 +62,7 @@ export const getAllBookmarkedQuests = async (uuid) => {
 };
 
 export const searchBookmarks = async (term) => {
-  if (term !== '') {
+  if (term !== "") {
     const response = await api.post(`/search/searchBookmarks?term=${term}`);
     return response.data;
   }

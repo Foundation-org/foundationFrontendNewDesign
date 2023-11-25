@@ -1,9 +1,9 @@
-import { Routes, Route } from 'react-router-dom';
-import Signin from '../pages/Signin';
-import Signup from '../pages/Signup';
-import Dashboard from '../pages/Dashboard';
-import Profile from '../pages/Dashboard/pages/Profile';
-import VerifyEmail from '../pages/Signup/VerifyEmail';
+import { Routes, Route } from "react-router-dom";
+import Signin from "../pages/Signin";
+import Signup from "../pages/Signup";
+import Dashboard from "../pages/Dashboard";
+import Profile from "../pages/Dashboard/pages/Profile";
+import VerifyEmail from "../pages/Signup/VerifyEmail";
 
 export function Router() {
   return (

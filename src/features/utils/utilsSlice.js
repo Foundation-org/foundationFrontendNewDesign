@@ -1,15 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  theme: 'light',
+  theme: "light",
 };
 
 export const utilsSlice = createSlice({
-  name: 'utils',
+  name: "utils",
   initialState,
   reducers: {
     changeTheme: (state) => {
-      state.theme = state.theme === 'light' ? 'dark' : 'light';
+      state.theme = state.theme === "light" ? "dark" : "light";
     },
   },
 });

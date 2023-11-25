@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 
 const Topbar = () => {
   const location = useLocation();
@@ -8,9 +8,9 @@ const Topbar = () => {
   return (
     <div
       className={`${
-        persistedTheme === 'dark'
-          ? 'bg-gray-600'
-          : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+        persistedTheme === "dark"
+          ? "bg-gray-600"
+          : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
       } w-full h-24 pb-4 flex items-end justify-between`}
     >
       <div className="w-[18.25rem] min-w-[18.25rem] 5xl:w-[23rem] 5xl:min-w-[23rem] flex justify-center">
@@ -19,13 +19,13 @@ const Topbar = () => {
       <ul className="text-[#DADADA] text-[28px] 2xl:text-[30px] font-semibold leading-normal flex items-end gap-28">
         <li>
           <Link
-            to={'/dashboard'}
+            to={"/dashboard"}
             className={`flex gap-[10px] items-center ${
-              location.pathname === '/dashboard' ? 'text-white' : ''
+              location.pathname === "/dashboard" ? "text-white" : ""
             }`}
           >
-            {location.pathname === '/dashboard' &&
-              (persistedTheme === 'dark' ? (
+            {location.pathname === "/dashboard" &&
+              (persistedTheme === "dark" ? (
                 <img src="/assets/svgs/dashboard/home.svg" alt="home" />
               ) : (
                 <img
@@ -38,12 +38,12 @@ const Topbar = () => {
         </li>
         <li>
           <Link
-            to={'/dashboard/quest'}
+            to={"/dashboard/quest"}
             className={`flex gap-[10px] items-center ${
-              location.pathname === '/dashboard/quest' ? 'text-white' : ''
+              location.pathname === "/dashboard/quest" ? "text-white" : ""
             }`}
           >
-            {location.pathname === '/dashboard/quest' && (
+            {location.pathname === "/dashboard/quest" && (
               <img src="/assets/svgs/dashboard/quest.svg" alt="quest" />
             )}
             Quests
@@ -51,12 +51,12 @@ const Topbar = () => {
         </li>
         <li>
           <Link
-            to={'/dashboard/bookmark'}
+            to={"/dashboard/bookmark"}
             className={`flex gap-[10px] items-center ${
-              location.pathname === '/dashboard/bookmark' ? 'text-white' : ''
+              location.pathname === "/dashboard/bookmark" ? "text-white" : ""
             }`}
           >
-            {location.pathname === '/dashboard/bookmark' && (
+            {location.pathname === "/dashboard/bookmark" && (
               <img
                 src="/assets/svgs/dashboard/bookmark-white.svg"
                 alt="bookmark"

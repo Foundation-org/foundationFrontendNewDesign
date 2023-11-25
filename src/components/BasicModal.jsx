@@ -1,14 +1,14 @@
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 'fit-content',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "fit-content",
   boxShadow: 5,
-  borderRadius: '26px',
+  borderRadius: "26px",
 };
 
 const BasicModal = ({ open, handleClose, children }) => {

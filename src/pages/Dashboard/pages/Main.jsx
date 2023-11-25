@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   getAllQuestsWithDefaultStatus,
   getAllAnswered,
@@ -8,15 +8,15 @@ import {
   getAllChangable,
   searchQuestions,
   getAllBookmarkedQuests,
-} from '../../../api/homepageApis';
-import { getFilters } from '../../../features/filters/filtersSlice';
-import { useSelector } from 'react-redux';
-import { useQuery } from '@tanstack/react-query';
-import { useDebounce } from '../../../utils/useDebounce';
-import QuestionCard from '../../../components/QuestionCard';
-import SidebarLeft from '../components/SidebarLeft';
-import SidebarRight from '../components/SidebarRight';
-import InfiniteScroll from 'react-infinite-scroll-component';
+} from "../../../api/homepageApis";
+import { getFilters } from "../../../features/filters/filtersSlice";
+import { useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import { useDebounce } from "../../../utils/useDebounce";
+import QuestionCard from "../../../components/QuestionCard";
+import SidebarLeft from "../components/SidebarLeft";
+import SidebarRight from "../components/SidebarRight";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Main = () => {
   const pageLimit = 10;
@@ -32,16 +32,16 @@ const Main = () => {
     _limit: pageLimit,
     start: pagination.sliceStart,
     end: pagination.sliceEnd,
-    uuid: localStorage.getItem('uId'),
+    uuid: localStorage.getItem("uId"),
   };
-  const [searchData, setSearchData] = useState('');
+  const [searchData, setSearchData] = useState("");
   const [clearFilter, setClearFilter] = useState(false);
   const debouncedSearch = useDebounce(searchData, 1000);
   const [startTest, setStartTest] = useState(null);
 
   const { data: bookmarkedData } = useQuery({
-    queryFn: () => getAllBookmarkedQuests(localStorage.getItem('uId')),
-    queryKey: ['getBookmarked'],
+    queryFn: () => getAllBookmarkedQuests(localStorage.getItem("uId")),
+    queryKey: ["getBookmarked"],
   });
 
   const handleSearch = (e) => {
@@ -49,17 +49,17 @@ const Main = () => {
   };
 
   const applyFilters = (params, filterStates) => {
-    if (filterStates.filterBySort !== '') {
+    if (filterStates.filterBySort !== "") {
       params = { ...params, sort: filterStates.filterBySort };
     }
 
-    if (filterStates.filterByType && filterStates.filterByType !== 'All') {
+    if (filterStates.filterByType && filterStates.filterByType !== "All") {
       params = { ...params, type: filterStates.filterByType.toLowerCase() };
     } else {
-      params = { ...params, type: '' };
+      params = { ...params, type: "" };
     }
 
-    if (filterStates.filterByScope === 'Me') {
+    if (filterStates.filterByScope === "Me") {
       params = { ...params, filter: true };
     }
 
@@ -68,15 +68,15 @@ const Main = () => {
 
   const fetchDataByStatus = async (params, filterStates) => {
     switch (filterStates.filterByStatus) {
-      case 'Unanswered':
+      case "Unanswered":
         return await getAllUnanswered(params);
-      case 'Answered':
+      case "Answered":
         return await getAllAnswered(params);
-      case 'Correct':
+      case "Correct":
         return await getAllCorrect(params);
-      case 'Incorrect':
+      case "Incorrect":
         return await getAllInCorrect(params);
-      case 'Changeable':
+      case "Changeable":
         return await getAllChangable(params);
       default:
         return await getAllQuestsWithDefaultStatus(params);
@@ -87,7 +87,7 @@ const Main = () => {
     queryFn: async () => {
       params = applyFilters(params, filterStates);
 
-      if (debouncedSearch === '') {
+      if (debouncedSearch === "") {
         const result = await fetchDataByStatus(params, filterStates);
         return result.data;
       } else {
@@ -96,7 +96,7 @@ const Main = () => {
       }
     },
     queryKey: [
-      'FeedData',
+      "FeedData",
       filterStates,
       debouncedSearch,
       pagination,
@@ -173,14 +173,14 @@ const Main = () => {
             allData && allData.length === 0 ? (
               <h4>
                 {feedData && feedData.hasNextPage
-                  ? 'Loading...'
-                  : 'No records found.'}
+                  ? "Loading..."
+                  : "No records found."}
               </h4>
             ) : (
               <h4>No more data to display.</h4>
             )
           }
-          height={'88vh'}
+          height={"88vh"}
           className="flex flex-col gap-[27px] no-scrollbar"
         >
           {allData?.map((item, index) => (
@@ -191,13 +191,13 @@ const Main = () => {
                 alt="badge"
                 badgeCount="5"
                 title={
-                  item?.whichTypeQuestion === 'agree/disagree'
-                    ? 'Agree/Disagree'
-                    : item?.whichTypeQuestion === 'multiple choise'
-                    ? 'Multiple Choice'
-                    : item?.whichTypeQuestion === 'ranked choise'
-                    ? 'Ranked Choice'
-                    : 'Yes/No'
+                  item?.whichTypeQuestion === "agree/disagree"
+                    ? "Agree/Disagree"
+                    : item?.whichTypeQuestion === "multiple choise"
+                      ? "Multiple Choice"
+                      : item?.whichTypeQuestion === "ranked choise"
+                        ? "Ranked Choice"
+                        : "Yes/No"
                 }
                 answers={item?.QuestAnswers}
                 question={item?.Question}
@@ -205,13 +205,13 @@ const Main = () => {
                 startTest={startTest}
                 handleStartTest={handleStartTest}
                 btnColor={
-                  item?.startStatus === 'correct'
-                    ? 'bg-[#4ABD71]'
-                    : item?.startStatus === 'incorrect'
-                    ? 'bg-[#F84A4A]'
-                    : item?.startStatus === 'change answer'
-                    ? 'bg-[#FDD503]'
-                    : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                  item?.startStatus === "correct"
+                    ? "bg-[#4ABD71]"
+                    : item?.startStatus === "incorrect"
+                      ? "bg-[#F84A4A]"
+                      : item?.startStatus === "change answer"
+                        ? "bg-[#FDD503]"
+                        : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
                 }
                 btnText={item?.startStatus}
                 isBookmarked={bookmarkedData?.data.some((bookmark) => {

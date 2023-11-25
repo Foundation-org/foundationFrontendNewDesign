@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
-import Input from '../../../components/Input';
-import PasswordStrengthBar from 'react-password-strength-bar';
+import { useSelector } from "react-redux";
+import Input from "../../../components/Input";
+import PasswordStrengthBar from "react-password-strength-bar";
 
 const Form = ({
   password,
@@ -13,8 +13,8 @@ const Form = ({
   onPassChange,
   onReTypePassChange,
 }) => {
-  const inputType = showPassword ? 'text' : 'password';
-  const cnfmPassInputType = showCnfmPassword ? 'text' : 'password';
+  const inputType = showPassword ? "text" : "password";
+  const cnfmPassInputType = showCnfmPassword ? "text" : "password";
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
@@ -38,7 +38,7 @@ const Form = ({
             onChange={onPassChange}
           />
           {!showPassword ? (
-            persistedTheme === 'dark' ? (
+            persistedTheme === "dark" ? (
               <img
                 src="/assets/svgs/blind.svg"
                 alt="blind"
@@ -53,7 +53,7 @@ const Form = ({
                 onClick={togglePasswordVisibility}
               />
             )
-          ) : persistedTheme === 'dark' ? (
+          ) : persistedTheme === "dark" ? (
             <img
               src="/assets/svgs/eye.svg"
               alt="blind"
@@ -85,7 +85,7 @@ const Form = ({
             onChange={onReTypePassChange}
           />
           {!showPassword ? (
-            persistedTheme === 'dark' ? (
+            persistedTheme === "dark" ? (
               <img
                 src="/assets/svgs/blind.svg"
                 alt="blind"
@@ -100,7 +100,7 @@ const Form = ({
                 onClick={toggleCnfmPasswordVisibility}
               />
             )
-          ) : persistedTheme === 'dark' ? (
+          ) : persistedTheme === "dark" ? (
             <img
               src="/assets/svgs/eye.svg"
               alt="blind"

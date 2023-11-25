@@ -1,7 +1,7 @@
 // import { useCallback } from 'react';
-import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
-import { useSelector } from 'react-redux';
-import Button from './Button';
+import { LoginSocialGoogle, LoginSocialFacebook } from "reactjs-social-login";
+import { useSelector } from "react-redux";
+import Button from "./Button";
 
 const REDIRECT_URI = window.location.href;
 
@@ -45,11 +45,11 @@ const SocialLogins = ({ setProvider, setProfile }) => {
         }}
       >
         <Button size="medium" color="gray">
-          {persistedTheme === 'dark' ? (
+          {persistedTheme === "dark" ? (
             <img src="/assets/svgs/facebook.svg" className="mr-4" />
           ) : (
             <img src="/assets/svgs/facebook-white.svg" className="mr-4" />
-          )}{' '}
+          )}{" "}
           Sign up with Facebook
         </Button>
       </LoginSocialFacebook>
