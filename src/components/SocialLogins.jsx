@@ -29,7 +29,7 @@ const SocialLogins = ({ setProvider, setProfile }) => {
         }}
       >
         <Button size="medium" color="gray">
-          <img src="/assets/svgs/google.svg" className="mr-4" /> Sign up with
+          <img src="/assets/svgs/google.svg" className="mr-4" /> Sign in with
           Google
         </Button>
       </LoginSocialGoogle>
@@ -50,7 +50,7 @@ const SocialLogins = ({ setProvider, setProfile }) => {
           ) : (
             <img src="/assets/svgs/facebook-white.svg" className="mr-4" />
           )}{" "}
-          Sign up with Facebook
+          Sign in with Facebook
         </Button>
       </LoginSocialFacebook>
     </div>

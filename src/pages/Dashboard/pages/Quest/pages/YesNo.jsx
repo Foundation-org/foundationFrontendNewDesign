@@ -1,26 +1,90 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import { changeOptions } from "../../../../../utils/options";
+import { createInfoQuest } from "../../../../../api/questsApi";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const YesNo = () => {
   const [question, setQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedOptions, setSelectedOptions] = useState("");
+  const [changedOption, setChangedOption] = useState("");
   const [correctState, setCorrectState] = useState(false);
   const [changeState, setChangeState] = useState(false);
+  const navigate = useNavigate();
+
+  const { mutateAsync: createQuest } = useMutation({
+    mutationFn: createInfoQuest,
+    onSuccess: (resp) => {
+      // console.log('resp', resp);
+      toast.success("Successfully Created Quest");
+      setTimeout(() => {
+        navigate("/dashboard")
+      }, 2000);
+    },
+    onError: (err) => {
+      // console.log('error', err);
+      toast.error(err.response.data);
+    },
+  });
+
+  useEffect(() => {
+    if (correctState) {
+      setChangeState(false);
+      setChangedOption("")
+    }
+    else{
+      setSelectedOption('');
+    } 
+    
+  }, [correctState]);
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
   };
-
   console.log({
     question: question,
     selectedOption,
     correctState,
     changeState,
-    selectedOptions,
+    changedOption,
   });
+
+  const handleSubmit = () => {
+
+    if(changeState && changedOption===""){
+ 
+      toast.warning("Looks like you missed selecting the answer change frequency",)
+      return;
+    }
+    if(question==='')
+    {
+      toast.warning("Write some Question Before Submitting",)
+      return;
+    }
+    if(correctState && selectedOption===''){
+      toast.warning("You have to select one correct option to finish",)
+      return;
+    }
+    
+  
+    const params={
+      "Question": question,
+      "whichTypeQuestion": "yes/no",
+      "usersChangeTheirAns": changedOption,
+      "QuestionCorrect": correctState === true ? selectedOption === "Yes" ? "yes" : "no" : "Not Selected",
+      "uuid": localStorage.getItem("uId"),
+    }
+    console.log(params);
+
+    createQuest(params);
+   
+
+  }
+
+
 
   return (
     <div>
@@ -49,14 +113,14 @@ const YesNo = () => {
           <Options
             number={"#1"}
             answer={"Yes"}
-            options={true}
+            options={correctState?true:false}
             handleOptionChange={() => handleOptionChange("Yes")}
             isYes={selectedOption === "Yes"}
           />
           <Options
             number={"#2"}
             answer={"No"}
-            options={true}
+            options={correctState?true:false}
             handleOptionChange={() => handleOptionChange("No")}
             isYes={selectedOption === "No"}
           />
@@ -91,12 +155,12 @@ const YesNo = () => {
                     <button
                       key={item.id}
                       className={`${
-                        selectedOptions === item.title
+                        changedOption === item.title
                           ? "bg-[#389CE3]"
                           : "bg-[#7C7C7C]"
                       } rounded-md px-4 py-2 text-[#F4F4F4]`}
                       onClick={() => {
-                        setSelectedOptions(item.title);
+                        setChangedOption(item.title);
                       }}
                     >
                       {item.title}
@@ -108,7 +172,7 @@ const YesNo = () => {
           ) : null}
         </div>
         <div className="flex w-full justify-end">
-          <button className="blue-submit-button">Submit</button>
+          <button className="blue-submit-button"  onClick={() => handleSubmit()}>Submit</button>
         </div>
       </div>
     </div>

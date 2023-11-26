@@ -1,26 +1,89 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { changeOptions } from "../../../../../utils/options";
 import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
+import { createInfoQuest } from "../../../../../api/questsApi";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const AgreeDisagree = () => {
   const [question, setQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedOptions, setSelectedOptions] = useState("");
+  const [changedOption, setChangedOption] = useState("");
   const [correctState, setCorrectState] = useState(false);
   const [changeState, setChangeState] = useState(false);
+  const navigate = useNavigate();
+
+  const { mutateAsync: createQuest } = useMutation({
+    mutationFn: createInfoQuest,
+    onSuccess: (resp) => {
+      // console.log('resp', resp);
+      toast.success("Successfully Created Quest");
+      setTimeout(() => {
+        navigate("/dashboard")
+      }, 2000);
+    },
+    onError: (err) => {
+      // console.log('error', err);
+      toast.error(err.response.data);
+    },
+  });
+
+  useEffect(() => {
+    if (correctState) {
+      setChangeState(false);
+      setChangedOption("")
+    }
+    else{
+      setSelectedOption('');
+    } 
+    
+  }, [correctState]);
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
   };
-
   console.log({
     question: question,
     selectedOption,
     correctState,
     changeState,
-    selectedOptions,
+    changedOption,
   });
+
+  const handleSubmit = () => {
+
+    if(changeState && changedOption===""){
+ 
+      toast.warning("Looks like you missed selecting the answer change frequency",)
+      return;
+    }
+    if(question==='')
+    {
+      toast.warning("Write some Question Before Submitting",)
+      return;
+    }
+    if(correctState && selectedOption===''){
+      toast.warning("You have to select one correct option to finish",)
+      return;
+    }
+    
+  
+    const params={
+      "Question": question,
+      "whichTypeQuestion": "agree/disagree",
+      "usersChangeTheirAns": changedOption,
+      "QuestionCorrect": correctState === true ? selectedOption === "Agree" ? "agree" : "disagree" : "Not Selected",
+      "uuid": localStorage.getItem("uId"),
+    }
+    console.log(params);
+
+    createQuest(params);
+   
+
+  }
+
 
   return (
     <div>
@@ -49,14 +112,14 @@ const AgreeDisagree = () => {
           <Options
             number={"#1"}
             answer={"Agree"}
-            options={true}
+            options={correctState?true:false}
             handleOptionChange={() => handleOptionChange("Agree")}
             isYes={selectedOption === "Agree"}
           />
           <Options
             number={"#2"}
             answer={"Disagree"}
-            options={true}
+            options={correctState?true:false}
             handleOptionChange={() => handleOptionChange("Disagree")}
             isYes={selectedOption === "Disagree"}
           />
@@ -91,12 +154,12 @@ const AgreeDisagree = () => {
                     <button
                       key={item.id}
                       className={`${
-                        selectedOptions === item.title
+                        changedOption === item.title
                           ? "bg-[#389CE3]"
                           : "bg-[#7C7C7C]"
                       } rounded-md px-4 py-2 text-[#F4F4F4]`}
                       onClick={() => {
-                        setSelectedOptions(item.title);
+                        setChangedOption(item.title);
                       }}
                     >
                       {item.title}
@@ -108,7 +171,7 @@ const AgreeDisagree = () => {
           ) : null}
         </div>
         <div className="flex w-full justify-end">
-          <button className="blue-submit-button">Submit</button>
+        <button className="blue-submit-button"  onClick={() => handleSubmit()}>Submit</button>
         </div>
       </div>
     </div>

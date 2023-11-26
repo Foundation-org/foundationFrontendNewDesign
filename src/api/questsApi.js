@@ -4,8 +4,8 @@ import api from "./Axios";
 export const updateChangeAnsStartQuest = async (data) => {
   return await api.post("/startQuest/updateChangeAnsStartQuest", {
     questId: data.questId,
-    changeAnswerAddedObj: data.changeAnswerAddedObj,
-    addedAnswer: "",
+    changeAnswerAddedObj: data.answer,
+    addedAnswer: data.addedAnswer,
     uuid: data.uuid,
   });
 };
@@ -13,9 +13,9 @@ export const updateChangeAnsStartQuest = async (data) => {
 // start submit button
 export const createStartQuest = async (data) => {
   return await api.post("/startQuest/createStartQuest", {
-    questForeignKey: data.Question,
-    data: data.whichTypeQuestion,
-    addedAnswer: "",
+    questForeignKey: data.questId,
+    data: data.answer,
+    addedAnswer: data.addedAnswer,
     uuid: data.uuid,
   });
 };
@@ -24,9 +24,9 @@ export const createStartQuest = async (data) => {
 export const createInfoQuest = async (data) => {
   return await api.post("/infoquestions/createInfoQuestQuest", {
     Question: data.Question,
-    whichTypeQuestion: data.whichTypeQuestion, // yes/no
-    usersChangeTheirAns: data.usersChangeTheirAns, // screenshot
-    QuestionCorrect: data.QuestionCorrect, // dataFromReduxSaveData.correctAns === true ? yesSelected === true ? "yes" : "no" : "Not Selected",
+    whichTypeQuestion: data.whichTypeQuestion,
+    usersChangeTheirAns: data.usersChangeTheirAns, 
+    QuestionCorrect: data.QuestionCorrect, 
     uuid: data.uuid,
   });
 };

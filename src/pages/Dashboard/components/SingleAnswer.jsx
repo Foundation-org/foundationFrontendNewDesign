@@ -8,7 +8,7 @@ const SingleAnswer = ({
   checkInfo,
   handleToggleCheck,
   check,
-  content,
+  contend,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -62,7 +62,7 @@ const SingleAnswer = ({
               className="bg-[#FFD600] w-[30px] h-[30px] flex items-center justify-center rounded-full cursor-pointer"
               onClick={() => handleToggleCheck(answer, false, true)}
             >
-              {content ? (
+              {contend ? (
                 <FaExclamation className="w-[16px] h-[19.942px] text-white" />
               ) : null}
             </div>
