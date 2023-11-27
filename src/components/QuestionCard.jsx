@@ -98,7 +98,7 @@ const QuestionCard = ({
 
   const handleSubmit = () => {
 
-    const { selected, contended } = extractSelectedAndContended(quests.agreeDisagree);
+    const { selected, contended } = extractSelectedAndContended(whichTypeQuestion==="Agree/Disagree"?quests.agreeDisagree:quests.yesNo);
     console.log({ selected, contended });
 
     let ans = {
@@ -212,7 +212,8 @@ const QuestionCard = ({
                       check={quests.yesNo.no.check}
                       contend={quests.yesNo.no.contend}
                       handleToggleCheck={handleToggleCheck}
-                    /></> :
+                    />
+                  </> :
                   <>
                     <SingleAnswer
                       number={"#1"}

@@ -91,7 +91,7 @@ const Bookmark = () => {
         const result = await fetchDataByStatus(params, filterStates);
         return result.data;
       } else {
-        const result = await searchBookmarks(debouncedSearch);
+        const result = await searchBookmarks(debouncedSearch,localStorage.getItem('uId'));
         return result;
       }
     },

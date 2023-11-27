@@ -91,7 +91,7 @@ const Main = () => {
         const result = await fetchDataByStatus(params, filterStates);
         return result.data;
       } else {
-        const result = await searchQuestions(debouncedSearch);
+        const result = await searchQuestions(debouncedSearch,localStorage.getItem('uId'));
         return result;
       }
     },

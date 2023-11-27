@@ -1,9 +1,9 @@
 import api from "./Axios";
 
 // For Search in Feed
-export const searchQuestions = async (term) => {
+export const searchQuestions = async (term,uuid) => {
   if (term !== "") {
-    const response = await api.post(`/search/easySearch?term=${term}`);
+    const response = await api.post(`/search/easySearch?term=${term}&uuid=${uuid}`);
     return response.data;
   }
 };
@@ -61,9 +61,10 @@ export const getAllBookmarkedQuests = async (uuid) => {
   });
 };
 
-export const searchBookmarks = async (term) => {
+export const searchBookmarks = async (term,uuid) => {
   if (term !== "") {
-    const response = await api.post(`/search/searchBookmarks?term=${term}`);
+    console.log(uuid);
+    const response = await api.post(`/search/searchBookmarks?term=${term}&uuid=${uuid}`);
     return response.data;
   }
 };
