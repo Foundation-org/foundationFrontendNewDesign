@@ -1,14 +1,5 @@
 import Dropdown from "../../../components/Dropdown";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getFilters,
-  resetFilters,
-  setFilterByScope,
-  setFilterBySort,
-  setFilterByStatus,
-  setFilterByType,
-  setSearch,
-} from "../../../features/filters/filtersSlice";
 import { GrClose } from "react-icons/gr";
 
 const SidebarLeft = ({
@@ -17,49 +8,54 @@ const SidebarLeft = ({
   clearFilter,
   setClearFilter,
   setSearchData,
+  filterStates,
+  resetFilters,
+  setFilterByScope,
+  setFilterBySort,
+  setFilterByStatus,
+  setFilterByType,
 }) => {
   const dispatch = useDispatch();
-  const filterStates = useSelector(getFilters);
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
-    <div className="bg-white dark:bg-[#0A0A0C] h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] 5xl:w-[23rem] 5xl:min-w-[23rem] pl-[2.18rem] 5xl:pr-[2.18rem] pt-[4.563rem] text-[#535353] dark:text-white overflow-y-auto no-scrollbar">
+    <div className="no-scrollbar h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] overflow-y-auto bg-white pl-[2.18rem] pt-[4.563rem] text-[#535353] dark:bg-[#0A0A0C] dark:text-white 5xl:w-[23rem] 5xl:min-w-[23rem] 5xl:pr-[2.18rem]">
       <div className="form-control w-full max-w-[13.25rem] 5xl:max-w-full">
-        <label className="text-[22px] font-[400] leading-normal pb-[9px] ml-[5px]">
+        <label className="ml-[5px] pb-[9px] text-[22px] font-[400] leading-normal">
           Search
         </label>
         <div className="relative">
           <input
             type="text"
             placeholder="Search here...."
-            className="input border-[1px] dark:border-[#989898] w-full rounded-[18px] bg-[#F6F6F6] dark:bg-[#000] text-gray-400 dark:text-[#E8E8E8] focus:outline-none h-[54px] pr-10"
+            className="input h-[54px] w-full rounded-[18px] border-[1px] bg-[#F6F6F6] pr-10 text-gray-400 focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
             value={searchData}
             onChange={handleSearch}
           />
           {searchData && (
             <button
-              className="absolute top-4 right-3"
+              className="absolute right-3 top-4"
               onClick={() => {
                 setSearchData("");
               }}
             >
-              <GrClose className="w-6 h-6 text-black dark:text-white" />
+              <GrClose className="h-6 w-6 text-black dark:text-white" />
             </button>
           )}
           {!searchData && (
             <img
               src="/assets/svgs/dashboard/search.svg"
               alt="search"
-              className="w-6 h-6 absolute top-4 right-3"
+              className="absolute right-3 top-4 h-6 w-6"
             />
           )}
         </div>
       </div>
-      <h1 className="text-[22px] font-[500] leading-normal text-[#888] dark:text-white pt-[33px] pb-[31px] ml-[5px] flex items-center gap-2">
+      <h1 className="ml-[5px] flex items-center gap-2 pb-[31px] pt-[33px] text-[22px] font-[500] leading-normal text-[#888] dark:text-white">
         <img
           src="/assets/svgs/dashboard/filter.svg"
           alt="filter"
-          className="w-[1.188rem] h-[1.188rem]"
+          className="h-[1.188rem] w-[1.188rem]"
         />
         Filters
       </h1>
@@ -128,7 +124,7 @@ const SidebarLeft = ({
           persistedTheme === "dark"
             ? "bg-[#333B46]"
             : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-        }  shadow-inner inset-0 rounded-[0.938rem] py-2 px-5 text-white dark:text-[#EAEAEA] text-[1.25rem] font-semibold leading-normal mt-12 ml-[1.125rem]`}
+        }  inset-0 ml-[1.125rem] mt-12 rounded-[0.938rem] px-5 py-2 text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#EAEAEA]`}
         onClick={() => {
           dispatch(resetFilters());
           setClearFilter(!clearFilter);

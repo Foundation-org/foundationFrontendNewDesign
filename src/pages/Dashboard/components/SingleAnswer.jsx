@@ -2,25 +2,18 @@ import { useSelector } from "react-redux";
 import { FaCheck } from "react-icons/fa";
 import { FaExclamation } from "react-icons/fa6";
 
-const SingleAnswer = ({
-  number,
-  answer,
-  checkInfo,
-  handleToggleCheck,
-  check,
-  contend,
-}) => {
+const SingleAnswer = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
-    <div className="mx-[72px] 2xl:mx-[85px] flex items-center gap-[25px]">
-      <h1 className="text-[#435059] dark:text-[#D3D3D3] text-[20px] font-[500] leading-normal w-[26px] min-w-[26px]">
-        {number}
+    <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
+      <h1 className="w-[26px] min-w-[26px] text-[20px] font-[500] leading-normal text-[#435059] dark:text-[#D3D3D3]">
+        {props.number}
       </h1>
-      <div className="bg-white dark:bg-[#0D1012] rounded-[10px] w-full flex justify-between">
+      <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
         <div className="flex items-center">
-          {!checkInfo && (
-            <div className="rounded-l-[10px] h-full w-fit bg-[#DEE6F7] dark:bg-[#9E9E9E] px-[7px] pt-[14px] pb-[13px]">
+          {!props.checkInfo && (
+            <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
               {persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/dashboard/six-dots-dark.svg"
@@ -31,39 +24,39 @@ const SingleAnswer = ({
               )}
             </div>
           )}
-          <h1 className="ml-8 text-[#435059] dark:text-[#D3D3D3] text-[19px] font-normal leading-normal pt-[12px] pb-[10px] ">
-            {answer}
+          <h1 className="ml-8 pb-[10px] pt-[12px] text-[19px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] ">
+            {props.answer}
           </h1>
         </div>
-        {!checkInfo ? (
-          <div className="flex items-center gap-[37px] mr-[20.63px]">
+        {!props.checkInfo ? (
+          <div className="mr-[20.63px] flex items-center gap-[37px]">
             <img
               src="/assets/svgs/dashboard/edit.svg"
               alt="edit"
-              className="w-[16px] h-[19.942px]"
+              className="h-[19.942px] w-[16px]"
             />
             <img
               src="/assets/svgs/dashboard/trash.svg"
               alt="trash"
-              className="w-[16px] h-[19.942px]"
+              className="h-[19.942px] w-[16px]"
             />
           </div>
         ) : (
-          <div className="flex items-center gap-[22px] mr-[20.63px] ">
+          <div className="mr-[20.63px] flex items-center gap-[22px] ">
             <div
-              className="bg-[#0DD76A] w-[30px] h-[30px] flex items-center justify-center rounded-full cursor-pointer"
-              onClick={() => handleToggleCheck(answer, true, false)}
+              className="flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full bg-[#0DD76A]"
+              onClick={() => props.handleToggleCheck(props.answer, true, false)}
             >
-              {check ? (
-                <FaCheck className="w-[20px] h-[19.942px] text-white" />
+              {props.check ? (
+                <FaCheck className="h-[19.942px] w-[20px] text-white" />
               ) : null}
             </div>
             <div
-              className="bg-[#FFD600] w-[30px] h-[30px] flex items-center justify-center rounded-full cursor-pointer"
-              onClick={() => handleToggleCheck(answer, false, true)}
+              className="flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full bg-[#FFD600]"
+              onClick={() => props.handleToggleCheck(props.answer, false, true)}
             >
-              {contend ? (
-                <FaExclamation className="w-[16px] h-[19.942px] text-white" />
+              {props.contend ? (
+                <FaExclamation className="h-[19.942px] w-[16px] text-white" />
               ) : null}
             </div>
           </div>

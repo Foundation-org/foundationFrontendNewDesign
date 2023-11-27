@@ -9,7 +9,14 @@ import {
   searchQuestions,
   getAllBookmarkedQuests,
 } from "../../../api/homepageApis";
-import { getFilters } from "../../../features/filters/filtersSlice";
+import {
+  getFilters,
+  resetFilters,
+  setFilterByScope,
+  setFilterBySort,
+  setFilterByStatus,
+  setFilterByType,
+} from "../../../features/filters/filtersSlice";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "../../../utils/useDebounce";
@@ -155,6 +162,8 @@ const Main = () => {
     setStartTest((prev) => (prev === testId ? null : testId));
   };
 
+  console.log(allData);
+
   return (
     <>
       <SidebarLeft
@@ -163,8 +172,14 @@ const Main = () => {
         clearFilter={clearFilter}
         setClearFilter={setClearFilter}
         setSearchData={setSearchData}
+        filterStates={filterStates}
+        resetFilters={resetFilters}
+        setFilterByScope={setFilterByScope}
+        setFilterBySort={setFilterBySort}
+        setFilterByStatus={setFilterByStatus}
+        setFilterByType={setFilterByType}
       />
-      <div className="bg-[#FCFCFD] dark:bg-[#06070a] shadow-inner-md w-full py-[27px] pl-6 pr-[23px] flex flex-col gap-[27px] h-[calc(100vh-96px)] overflow-y-auto no-scrollbar shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+      <div className="shadow-inner-md no-scrollbar flex h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] py-[27px] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#06070a]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -181,7 +196,7 @@ const Main = () => {
             )
           }
           height={"88vh"}
-          className="flex flex-col gap-[27px] no-scrollbar"
+          className="no-scrollbar flex flex-col gap-[27px]"
         >
           {allData?.map((item, index) => (
             <div key={index + 1}>

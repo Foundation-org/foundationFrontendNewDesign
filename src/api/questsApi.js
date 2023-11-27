@@ -25,14 +25,23 @@ export const createInfoQuest = async (data) => {
   return await api.post("/infoquestions/createInfoQuestQuest", {
     Question: data.Question,
     whichTypeQuestion: data.whichTypeQuestion,
-    usersChangeTheirAns: data.usersChangeTheirAns, 
-    QuestionCorrect: data.QuestionCorrect, 
+    usersChangeTheirAns: data.usersChangeTheirAns,
+    QuestionCorrect: data.QuestionCorrect,
     uuid: data.uuid,
   });
 };
 
+// change
 // to get selected results
-// /startQuest/getStartQuestInfo
+export const getStartQuestInfo = async (data) => {
+  return await api.post("/startQuest/getStartQuestInfo", data);
+};
 
-// to show percent
-// getQuestPercent
+// result
+// to get Start quest percent
+export const getStartQuestPercent = async (questForeignKey, uuid) => {
+  return await api.post("/startQuest/getStartQuestPercent", {
+    questForeignKey,
+    uuid,
+  });
+};
