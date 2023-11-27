@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuests, toggleCheck } from "../features/quest/questsSlice";
-import { useMutation } from "@tanstack/react-query";
-import { createStartQuest,updateChangeAnsStartQuest } from "../api/questsApi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  createStartQuest,
+  getStartQuestInfo,
+  updateChangeAnsStartQuest,
+} from "../api/questsApi";
 import { toast } from "sonner";
 import SingleAnswer from "../pages/Dashboard/components/SingleAnswer";
 import AddNewOption from "../pages/Dashboard/components/AddNewOption";
@@ -23,8 +27,11 @@ const QuestionCard = ({
   isBookmarked,
   handleStartTest,
   startTest,
+  viewResult,
+  handleViewResults,
 }) => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
   const [open, setOpen] = useState(false);
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -45,12 +52,12 @@ const QuestionCard = ({
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: createStartQuest,
     onSuccess: (resp) => {
-      if(resp.data.message==="Start Quest Created Successfully"){
+      if (resp.data.message === "Start Quest Created Successfully") {
         toast.success("Successfully Answered Quest");
+        queryClient.invalidateQueries("FeedData");
       }
     },
     onError: (err) => {
-
       toast.error(err.response.data);
     },
   });
@@ -58,25 +65,26 @@ const QuestionCard = ({
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: updateChangeAnsStartQuest,
     onSuccess: (resp) => {
-      if(resp.data.message==="Answer has not changed"){
-        toast.warning("You have selected the same option as last time. Your option was not changed.");
-
+      if (resp.data.message === "Answer has not changed") {
+        toast.warning(
+          "You have selected the same option as last time. Your option was not changed.",
+        );
       }
-      if(resp.data.message==="You can change your answer once every 1 hour"){
+      if (
+        resp.data.message === "You can change your answer once every 1 hour"
+      ) {
         toast.warning("You can change your option once every 1 hour.");
-
       }
-      if(resp.data.message==="Start Quest Updated Successfully"){
-
+      if (resp.data.message === "Start Quest Updated Successfully") {
         toast.success("Successfully Changed Quest");
       }
-      
     },
     onError: (err) => {
       // console.log('error', err);
       toast.error(err.response.data);
     },
   });
+
   const extractSelectedAndContended = (quests) => {
     let selected = null;
     let contended = null;
@@ -102,35 +110,84 @@ const QuestionCard = ({
     console.log({ selected, contended });
 
     let ans = {
-      created:new Date(),
+      created: new Date(),
+    };
+    if (selected) {
+      ans.selected = selected;
     }
-    if(selected){
-      ans.selected=selected;
+    if (contended) {
+      ans.contended = contended;
     }
-    if(contended)
-    {
-      ans.contended=contended;
-    }
-    const params={
-      "questId": id,
-      "answer": ans,
-      "addedAnswer": '',
-      "uuid": localStorage.getItem("uId"),
-    }
-    console.log("params",params);
-    
-    if(btnText=== "change answer"){
+    const params = {
+      questId: id,
+      answer: ans,
+      addedAnswer: "",
+      uuid: localStorage.getItem("uId"),
+    };
+    // console.log("params", params);
+
+    if (btnText === "change answer") {
       console.log("changed");
       changeAnswer(params);
-    
+    } else {
+      console.log("start");
+      startQuest(params);
     }
-      else{
-        console.log("start");
-       startQuest(params);
-      }
 
+    handleStartTest(null);
+  };
+
+  // to get selected answers
+  const { mutateAsync: getStartQuestDetail } = useMutation({
+    mutationFn: getStartQuestInfo,
+    onSuccess: (resp) => {
+      console.log({ resp });
+    },
+    onError: (err) => {
+      toast.error(err.response.data);
+    },
+  });
+
+  const handleStartChange = () => {
+    if (btnText === "") {
+      handleStartTest(id);
+    }
+    if (btnText === "change answer") {
+      const data = { id, uuid: localStorage.getItem("uId") };
+      handleStartTest(id);
+      getStartQuestDetail(data);
+    }
+  };
+
+  function getButtonText(btnText) {
+    switch (btnText) {
+      case "correct":
+        return "Correct";
+      case "incorrect":
+        return "Incorrect";
+      case "change answer":
+        return "Change";
+      default:
+        return "Start";
+    }
   }
 
+  function getButtonClassName(persistedTheme, btnText, btnColor) {
+    if (persistedTheme === "dark") {
+      switch (btnText) {
+        case "correct":
+          return "bg-[#148339]";
+        case "incorrect":
+          return "bg-[#C13232]";
+        case "change answer":
+          return "bg-[#BB9D02]";
+        default:
+          return "inset-0 rounded-[15px] border-[1px] border-[#333B46] bg-[#333B46] shadow-inner";
+      }
+    } else {
+      return btnColor;
+    }
+  }
 
   return (
     <div className="rounded-[26px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618]">
@@ -194,7 +251,7 @@ const QuestionCard = ({
           <div className="mt-[26px] flex flex-col gap-[10px]">
             {title === "Yes/No" || title === "Agree/Disagree" ? (
               <>
-                {title === "Yes/No" ?
+                {title === "Yes/No" ? (
                   <>
                     <SingleAnswer
                       number={"#1"}
@@ -204,7 +261,6 @@ const QuestionCard = ({
                       contend={quests.yesNo.yes.contend}
                       handleToggleCheck={handleToggleCheck}
                     />
-
                     <SingleAnswer
                       number={"#2"}
                       answer={"No"}
@@ -212,8 +268,7 @@ const QuestionCard = ({
                       check={quests.yesNo.no.check}
                       contend={quests.yesNo.no.contend}
                       handleToggleCheck={handleToggleCheck}
-                    />
-                  </> :
+                    /></> :
                   <>
                     <SingleAnswer
                       number={"#1"}
@@ -223,7 +278,6 @@ const QuestionCard = ({
                       contend={quests.agreeDisagree.agree.contend}
                       handleToggleCheck={handleToggleCheck}
                     />
-
                     <SingleAnswer
                       number={"#2"}
                       answer={"Disagree"}
@@ -233,12 +287,14 @@ const QuestionCard = ({
                       handleToggleCheck={handleToggleCheck}
                     />
                   </>
-                }
-
+                )}
               </>
             ) : (
               answers.map((item, index) => (
-                <SingleAnswer number={"#" + (index + 1)} answer={item.question} />
+                <SingleAnswer
+                  number={"#" + (index + 1)}
+                  answer={item.question}
+                />
               ))
             )}
 
@@ -272,10 +328,11 @@ const QuestionCard = ({
           <div className="mt-8 flex w-full justify-end">
             <div>
               <button
-                className={` ${persistedTheme === "dark"
+                className={` ${
+                  persistedTheme === "dark"
                     ? "bg-[#333B46]"
                     : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-                  } inset-0 mr-[30px]  w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]`}
+                } inset-0 mr-[30px]  w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]`}
                 onClick={() => handleSubmit()}
               >
                 Submit
@@ -311,28 +368,21 @@ const QuestionCard = ({
             )}
             <div className="mb-1 mr-[30px] flex w-full justify-end gap-[42px]">
               <button
-                className={` ${persistedTheme === "dark"
-                    ? btnText === "correct"
-                      ? "bg-[#148339]"
-                      : btnText === "incorrect"
-                        ? "bg-[#C13232]"
-                        : btnText === "change answer"
-                          ? "bg-[#BB9D02]"
-                          : "inset-0 rounded-[15px] border-[1px] border-[#333B46] bg-[#333B46] shadow-inner"
-                    : btnColor
-                  } mt-12 w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-white`}
-                onClick={() => handleStartTest(id)}
+                className={` ${getButtonClassName(
+                  persistedTheme,
+                  btnText,
+                  btnColor,
+                )} mt-12 w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-white`}
+                onClick={handleStartChange}
                 disabled={btnText === "correct" || btnText === "incorrect"}
               >
-                {btnText === "correct"
-                  ? "Correct"
-                  : btnText === "incorrect"
-                    ? "Incorrect"
-                    : btnText === "change answer"
-                      ? "Change"
-                      : "Start"}
+                {getButtonText(btnText)}
               </button>
-              <button className="mt-12 w-[173px] rounded-[15px] border-[3px] border-[#20D47E] px-5 py-2 text-[20px] font-semibold leading-normal text-[#20D47E] dark:border-[#7C7C7C] dark:text-[#C9C8C8]">
+
+              <button
+                className="mt-12 w-[173px] rounded-[15px] border-[3px] border-[#20D47E] px-5 py-2 text-[20px] font-semibold leading-normal text-[#20D47E] dark:border-[#7C7C7C] dark:text-[#C9C8C8]"
+                onClick={handleViewResults}
+              >
                 Result
               </button>
             </div>
