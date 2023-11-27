@@ -251,7 +251,7 @@ const QuestionCard = ({
           <div className="mt-[26px] flex flex-col gap-[10px]">
             {title === "Yes/No" || title === "Agree/Disagree" ? (
               <>
-                {title === "Yes/No" ? (
+                {title === "Yes/No" ? 
                   <>
                     <SingleAnswer
                       number={"#1"}
@@ -287,7 +287,7 @@ const QuestionCard = ({
                       handleToggleCheck={handleToggleCheck}
                     />
                   </>
-                )}
+                }
               </>
             ) : (
               answers.map((item, index) => (
