@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuests, toggleCheck } from "../features/quest/questsSlice";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   createStartQuest,
   getStartQuestInfo,
@@ -27,8 +27,11 @@ const QuestionCard = ({
   isBookmarked,
   handleStartTest,
   startTest,
+  viewResult,
+  handleViewResults,
 }) => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
   const [open, setOpen] = useState(false);
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -51,6 +54,7 @@ const QuestionCard = ({
     onSuccess: (resp) => {
       if (resp.data.message === "Start Quest Created Successfully") {
         toast.success("Successfully Answered Quest");
+        queryClient.invalidateQueries("FeedData");
       }
     },
     onError: (err) => {
@@ -125,7 +129,7 @@ const QuestionCard = ({
       addedAnswer: "",
       uuid: localStorage.getItem("uId"),
     };
-    console.log("params", params);
+    // console.log("params", params);
 
     if (btnText === "change answer") {
       console.log("changed");
@@ -134,6 +138,8 @@ const QuestionCard = ({
       console.log("start");
       startQuest(params);
     }
+
+    handleStartTest(null);
   };
 
   // to get selected answers
@@ -157,6 +163,36 @@ const QuestionCard = ({
       getStartQuestDetail(data);
     }
   };
+
+  function getButtonText(btnText) {
+    switch (btnText) {
+      case "correct":
+        return "Correct";
+      case "incorrect":
+        return "Incorrect";
+      case "change answer":
+        return "Change";
+      default:
+        return "Start";
+    }
+  }
+
+  function getButtonClassName(persistedTheme, btnText, btnColor) {
+    if (persistedTheme === "dark") {
+      switch (btnText) {
+        case "correct":
+          return "bg-[#148339]";
+        case "incorrect":
+          return "bg-[#C13232]";
+        case "change answer":
+          return "bg-[#BB9D02]";
+        default:
+          return "inset-0 rounded-[15px] border-[1px] border-[#333B46] bg-[#333B46] shadow-inner";
+      }
+    } else {
+      return btnColor;
+    }
+  }
 
   return (
     <div className="rounded-[26px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618]">
@@ -230,7 +266,6 @@ const QuestionCard = ({
                       contend={quests.yesNo.yes.contend}
                       handleToggleCheck={handleToggleCheck}
                     />
-
                     <SingleAnswer
                       number={"#2"}
                       answer={"No"}
@@ -250,7 +285,6 @@ const QuestionCard = ({
                       contend={quests.agreeDisagree.agree.contend}
                       handleToggleCheck={handleToggleCheck}
                     />
-
                     <SingleAnswer
                       number={"#2"}
                       answer={"Disagree"}
@@ -341,30 +375,21 @@ const QuestionCard = ({
             )}
             <div className="mb-1 mr-[30px] flex w-full justify-end gap-[42px]">
               <button
-                className={` ${
-                  persistedTheme === "dark"
-                    ? btnText === "correct"
-                      ? "bg-[#148339]"
-                      : btnText === "incorrect"
-                        ? "bg-[#C13232]"
-                        : btnText === "change answer"
-                          ? "bg-[#BB9D02]"
-                          : "inset-0 rounded-[15px] border-[1px] border-[#333B46] bg-[#333B46] shadow-inner"
-                    : btnColor
-                } mt-12 w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-white`}
+                className={` ${getButtonClassName(
+                  persistedTheme,
+                  btnText,
+                  btnColor,
+                )} mt-12 w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-white`}
                 onClick={handleStartChange}
                 disabled={btnText === "correct" || btnText === "incorrect"}
               >
-                {btnText === "correct"
-                  ? "Correct"
-                  : btnText === "incorrect"
-                    ? "Incorrect"
-                    : btnText === "change answer"
-                      ? "Change"
-                      : "Start"}
+                {getButtonText(btnText)}
               </button>
 
-              <button className="mt-12 w-[173px] rounded-[15px] border-[3px] border-[#20D47E] px-5 py-2 text-[20px] font-semibold leading-normal text-[#20D47E] dark:border-[#7C7C7C] dark:text-[#C9C8C8]">
+              <button
+                className="mt-12 w-[173px] rounded-[15px] border-[3px] border-[#20D47E] px-5 py-2 text-[20px] font-semibold leading-normal text-[#20D47E] dark:border-[#7C7C7C] dark:text-[#C9C8C8]"
+                onClick={handleViewResults}
+              >
                 Result
               </button>
             </div>

@@ -45,6 +45,7 @@ const Main = () => {
   const [clearFilter, setClearFilter] = useState(false);
   const debouncedSearch = useDebounce(searchData, 1000);
   const [startTest, setStartTest] = useState(null);
+  const [viewResult, setViewResult] = useState(null);
 
   const { data: bookmarkedData } = useQuery({
     queryFn: () => getAllBookmarkedQuests(localStorage.getItem("uId")),
@@ -162,7 +163,9 @@ const Main = () => {
     setStartTest((prev) => (prev === testId ? null : testId));
   };
 
-  console.log(allData);
+  const handleViewResults = (testId) => {
+    setViewResult((prev) => (prev === testId ? null : testId));
+  };
 
   return (
     <>
@@ -218,6 +221,8 @@ const Main = () => {
                 question={item?.Question}
                 whichTypeQuestion={item?.whichTypeQuestion}
                 startTest={startTest}
+                viewResult={viewResult}
+                handleViewResults={handleViewResults}
                 handleStartTest={handleStartTest}
                 btnColor={
                   item?.startStatus === "correct"
