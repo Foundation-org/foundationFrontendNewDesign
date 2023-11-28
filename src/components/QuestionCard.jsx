@@ -29,12 +29,15 @@ const QuestionCard = ({
   startTest,
   viewResult,
   handleViewResults,
+  lastInteractedAt,
+  usersChangeTheirAns
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
   const [open, setOpen] = useState(false);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const [howManyTimesAnsChanged,setHowManyTimesAnsChanged]=useState(0);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -80,7 +83,6 @@ const QuestionCard = ({
       }
     },
     onError: (err) => {
-      // console.log('error', err);
       toast.error(err.response.data);
     },
   });
@@ -113,10 +115,10 @@ const QuestionCard = ({
       created: new Date(),
     };
     if (selected) {
-      ans.selected = selected;
+      ans.selected = selected.charAt(0).toUpperCase() + selected.slice(1);
     }
     if (contended) {
-      ans.contended = contended;
+      ans.contended = contended.charAt(0).toUpperCase() + contended.slice(1);
     }
     const params = {
       questId: id,
@@ -127,8 +129,41 @@ const QuestionCard = ({
     // console.log("params", params);
 
     if (btnText === "change answer") {
+      console.log(howManyTimesAnsChanged);
+      const currentDate = new Date();
+
+      // Define the time interval (in milliseconds) based on usersChangeTheirAns value
+      let timeInterval = 0;
+      if (usersChangeTheirAns === 'Daily') {
+          timeInterval = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+      } else if (usersChangeTheirAns === 'Weekly') {
+          timeInterval = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+      } else if (usersChangeTheirAns === 'Monthly') {
+          // Assuming 30 days in a month for simplicity
+          timeInterval = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+      } else if (usersChangeTheirAns === 'Yearly') {
+          // Assuming 365 days in a year for simplicity
+          timeInterval = 365 * 24 * 60 * 60 * 1000; // 365 days in milliseconds
+        } else if (usersChangeTheirAns === 'TwoYears') {
+          // Assuming 2 years
+          timeInterval = 2 * 365 * 24 * 60 * 60 * 1000; // 2 years in milliseconds
+        } else if (usersChangeTheirAns === 'FourYears') {
+          // Assuming 4 years
+          timeInterval = 4 * 365 * 24 * 60 * 60 * 1000; // 4 years in milliseconds
+        }
+
+      // Check if enough time has passed
+      if (howManyTimesAnsChanged>1 && currentDate - new Date(lastInteractedAt) < timeInterval) {
+          // Alert the user if the time condition is not met
+          toast.error(`You can only finish after ${usersChangeTheirAns} interval has passed.`, {
+              position: 'top-right'
+          })  
+      } else {
+
       console.log("changed");
+
       changeAnswer(params);
+    }
     } else {
       console.log("start");
       startQuest(params);
@@ -140,8 +175,34 @@ const QuestionCard = ({
   // to get selected answers
   const { mutateAsync: getStartQuestDetail } = useMutation({
     mutationFn: getStartQuestInfo,
-    onSuccess: (resp) => {
-      console.log({ resp });
+    onSuccess: (res) => {
+      console.log( res.data.data );
+      setHowManyTimesAnsChanged(res.data.data.length)
+      if(whichTypeQuestion==="agree/disagree" || whichTypeQuestion==="yes/no"){
+        if(res.data.data[res.data.data.length - 1].selected === "Agree" || res.data.data[res.data.data.length - 1].selected === "Yes"){
+          console.log("ran 1");
+          handleToggleCheck(res.data.data[res.data.data.length - 1].selected,true,false)
+        }
+        if(res.data.data[res.data.data.length - 1].contended === "Agree" || res.data.data[res.data.data.length - 1].contended === "Yes"){
+          console.log("ran 2");
+          
+          handleToggleCheck(res.data.data[res.data.data.length - 1].contended,true,false)
+        }
+        if(res.data.data[res.data.data.length - 1].contended === "Disagree" || res.data.data[res.data.data.length - 1].contended === "No"){
+          console.log("ran 3");
+          
+          handleToggleCheck(res.data.data[res.data.data.length - 1].contended,false,true)
+        }
+        if(res.data.data[res.data.data.length - 1].selected === "Disagree" || res.data.data[res.data.data.length - 1].selected === "No"){
+          console.log("ran 4");
+          
+          handleToggleCheck(res.data.data[res.data.data.length - 1].selected,false,true)
+        }
+        
+    
+        
+      }
+      
     },
     onError: (err) => {
       toast.error(err.response.data);
@@ -153,9 +214,9 @@ const QuestionCard = ({
       handleStartTest(id);
     }
     if (btnText === "change answer") {
-      const data = { id, uuid: localStorage.getItem("uId") };
-      handleStartTest(id);
+      const data = { questForeignKey:id, uuid: localStorage.getItem("uId") };
       getStartQuestDetail(data);
+      handleStartTest(id);
     }
   };
 

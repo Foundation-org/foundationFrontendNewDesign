@@ -237,6 +237,8 @@ const Main = () => {
                 isBookmarked={bookmarkedData?.data.some((bookmark) => {
                   return bookmark.questForeignKey === item._id;
                 })}
+                lastInteractedAt={item.lastInteractedAt}
+                usersChangeTheirAns={item.usersChangeTheirAns}
               />
             </div>
           ))}
