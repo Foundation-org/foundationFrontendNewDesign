@@ -20,7 +20,7 @@ import {
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "../../../utils/useDebounce";
-import QuestionCard from "../../../components/QuestionCard";
+import QuestionCard from "./Main/components/QuestionCard";
 import SidebarLeft from "../components/SidebarLeft";
 import SidebarRight from "../components/SidebarRight";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -98,7 +98,10 @@ const Bookmark = () => {
         const result = await fetchDataByStatus(params, filterStates);
         return result.data;
       } else {
-        const result = await searchBookmarks(debouncedSearch,localStorage.getItem('uId'));
+        const result = await searchBookmarks(
+          debouncedSearch,
+          localStorage.getItem("uId"),
+        );
         return result;
       }
     },

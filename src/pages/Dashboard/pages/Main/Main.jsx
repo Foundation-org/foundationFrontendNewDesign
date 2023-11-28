@@ -8,7 +8,7 @@ import {
   getAllChangable,
   searchQuestions,
   getAllBookmarkedQuests,
-} from "../../../api/homepageApis";
+} from "../../../../api/homepageApis";
 import {
   getFilters,
   resetFilters,
@@ -16,13 +16,13 @@ import {
   setFilterBySort,
   setFilterByStatus,
   setFilterByType,
-} from "../../../features/filters/filtersSlice";
+} from "../../../../features/filters/filtersSlice";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { useDebounce } from "../../../utils/useDebounce";
-import QuestionCard from "../../../components/QuestionCard";
-import SidebarLeft from "../components/SidebarLeft";
-import SidebarRight from "../components/SidebarRight";
+import { useDebounce } from "../../../../utils/useDebounce";
+import QuestionCard from "./components/QuestionCard";
+import SidebarLeft from "../../components/SidebarLeft";
+import SidebarRight from "../../components/SidebarRight";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const Main = () => {
@@ -99,7 +99,10 @@ const Main = () => {
         const result = await fetchDataByStatus(params, filterStates);
         return result.data;
       } else {
-        const result = await searchQuestions(debouncedSearch,localStorage.getItem('uId'));
+        const result = await searchQuestions(
+          debouncedSearch,
+          localStorage.getItem("uId"),
+        );
         return result;
       }
     },

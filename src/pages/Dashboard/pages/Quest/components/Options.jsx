@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 
 const Options = ({
@@ -10,6 +9,9 @@ const Options = ({
   dragable,
   handleOptionChange,
   isYes,
+  allowInput,
+  handleChange,
+  typedValue,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -22,18 +24,61 @@ const Options = ({
       } ml-[51px] mr-[71px] `}
     >
       {label && (
-        <h1 className="text-[#C5C5C5] text-[25px] font-normal leading-normal ml-[53px]">
+        <h1 className="ml-[53px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
           {label}
         </h1>
       )}
       {number && (
-        <h1 className="text-[#435059] dark:text-[#D3D3D3] text-[33px] font-[500] leading-normal">
+        <h1 className="text-[33px] font-[500] leading-normal text-[#435059] dark:text-[#D3D3D3]">
           {number}
         </h1>
       )}
-      <div className="bg-white dark:bg-[#0D1012] rounded-[10px] w-full flex justify-between">
-        <div className="flex items-center w-full">
-          <div className="rounded-l-[10px] h-full w-[38px] bg-[#DEE6F7] dark:bg-[#9E9E9E] px-[7px] pt-[14px] pb-[13px] flex items-center justify-center">
+      {!allowInput ? (
+        <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
+          <div className="flex w-full items-center">
+            <div className="flex h-full w-[38px] items-center justify-center rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
+              {dragable ? (
+                persistedTheme === "dark" ? (
+                  <img
+                    src="/assets/svgs/dashboard/six-dots-dark.svg"
+                    alt="six dots"
+                    className="h-7"
+                  />
+                ) : (
+                  <img
+                    src="/assets/svgs/dashboard/six-dots.svg"
+                    alt="six dots"
+                    className="h-7"
+                  />
+                )
+              ) : null}
+            </div>
+            <div className="flex w-full items-center justify-between pr-[45px]">
+              <h1 className="py-[18px] pl-[45px] text-[30px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] ">
+                {answer}
+              </h1>
+              <div className="flex gap-[55px]">
+                {options && (
+                  <div id="green-checkbox">
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      className="h-10 w-10 rounded"
+                      onChange={handleOptionChange}
+                      checked={isYes}
+                    />
+                  </div>
+                )}
+                {trash && (
+                  <img src="/assets/svgs/dashboard/trash2.svg" alt="trash" />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="flex">
+          <div className="flex h-[74px] w-[38px] items-center justify-center rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
             {dragable ? (
               persistedTheme === "dark" ? (
                 <img
@@ -50,29 +95,40 @@ const Options = ({
               )
             ) : null}
           </div>
-          <div className="flex justify-between items-center w-full pr-[45px]">
-            <h1 className="text-[#435059] dark:text-[#D3D3D3] text-[30px] font-normal leading-normal py-[18px] pl-[45px] ">
-              {answer}
-            </h1>
-            <div className="flex gap-[55px]">
+          <div className="relative w-full">
+            <input
+              type="text"
+              placeholder="option"
+              className="w-full max-w-[838px] rounded-r-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
+              onChange={(e) => handleChange(e.target.value)}
+              value={typedValue}
+            />
+            <div className="absolute right-0 top-1/2 flex -translate-y-1/2 transform items-center">
               {options && (
-                <div id="green-checkbox">
+                <div id="green-checkbox" className="-mb-[7px] mr-6">
                   <input
                     id="default-checkbox"
                     type="checkbox"
-                    className="w-10 h-10 rounded"
+                    className="h-10 w-[38px] rounded"
                     onChange={handleOptionChange}
                     checked={isYes}
                   />
                 </div>
               )}
               {trash && (
-                <img src="/assets/svgs/dashboard/trash2.svg" alt="trash" />
+                <img
+                  src="/assets/svgs/dashboard/trash2.svg"
+                  alt="trash"
+                  className="h-[36px]"
+                />
               )}
+              <h1 className="leading-0 ml-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
+                OK
+              </h1>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

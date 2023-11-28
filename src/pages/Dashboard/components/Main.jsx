@@ -1,9 +1,9 @@
 import React from "react";
-import QuestionCard from "../../../components/QuestionCard";
+import QuestionCard from "../pages/Main/components/QuestionCard";
 
 const Main = () => {
   return (
-    <div className="bg-[#06070A] w-full py-[25px] px-6 flex flex-col gap-16 h-[calc(100vh-96px)] overflow-y-auto no-scrollbar">
+    <div className="no-scrollbar flex h-[calc(100vh-96px)] w-full flex-col gap-16 overflow-y-auto bg-[#06070A] px-6 py-[25px]">
       <QuestionCard
         img="/assets/svgs/dashboard/badge.svg"
         alt="badge"

@@ -1,97 +1,118 @@
 import { useState } from "react";
-import { Switch } from "@headlessui/react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { changeOptions } from "../../../../../utils/options";
 import Options from "../components/Options";
+import CustomSwitch from "../../../../../components/CustomSwitch";
 
 const RankChoice = () => {
-  const [enabled, setEnabled] = useState(false);
+  const navigate = useNavigate();
+  const persistedTheme = useSelector((state) => state.utils.theme);
+  const [question, setQuestion] = useState("");
+  const [optionsCount, setOptionsCount] = useState(1);
+  const [typedValues, setTypedValues] = useState(Array(optionsCount).fill(""));
+  const [addOption, setAddOption] = useState(false);
+  const [changeOption, setChangeOption] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleAddOption = () => {
+    setOptionsCount((prevCount) => prevCount + 1);
+  };
+
+  const handleChange = (index, value) => {
+    const newTypedValues = [...typedValues];
+    newTypedValues[index] = value;
+    setTypedValues(newTypedValues);
+  };
 
   return (
     <div>
-      <h4 className="text-[#ACACAC] text-[25px] font-medium leading-normal text-center mt-[47px]">
+      <h4 className="mt-[47px] text-center text-[25px] font-medium leading-normal text-[#ACACAC]">
         Create a selection of choices that can be arranged in order of
         preference.
       </h4>
-      <div className="bg-[#F3F3F3] rounded-[26px] py-[42px] max-w-[979px] mx-auto my-10">
-        <h1 className="text-[#7C7C7C] text-[32px] font-semibold leading-normal text-center">
+      <div className="mx-auto my-10 max-w-[979px] rounded-[26px] bg-[#F3F3F3] py-[42px]">
+        <h1 className="text-center text-[32px] font-semibold leading-normal text-[#7C7C7C]">
           Create Quest
         </h1>
-        <h3 className="text-[#C5C5C5] text-[25px] font-normal leading-normal mt-[38px] ml-[104px]">
+        <h3 className="ml-[104px] mt-[38px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
           Make a statement or pose a question
         </h3>
-        <div className="bg-[#FCFCFC] rounded-2xl py-[18px] pl-[30px] max-w-[838px] mx-auto mt-[22px]">
-          <h3 className="text-[#7C7C7C] text-[30px] font-semibold leading-normal">
-            Technology is highly diverse and versatile?
-          </h3>
+        {/* write question */}
+        <div className="relative flex w-full justify-center">
+          <input
+            type="text"
+            className="w-full max-w-[857px] rounded-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
+            onChange={(e) => setQuestion(e.target.value)}
+          />
+          <h1 className="leading-0 absolute right-[72px] top-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
+            OK
+          </h1>
         </div>
+        {/* options */}
         <div className="mt-10 flex flex-col gap-[30px]">
-          <Options
-            answer={"Technology is versatile"}
-            label={"Option 1 #"}
-            dragable={true}
-          />
-          <Options
-            answer={"Technology is versatile"}
-            label={"Option 2 #"}
-            dragable={true}
-          />
-          <button className="text-[#7C7C7C] text-[31px] font-semibold leading-normal bg-[#C9C9C9] rounded-[23.6px] py-3 px-6 w-fit ml-[50px] mt-5">
+          {[...Array(optionsCount)].map((_, index) => (
+            <Options
+              key={index}
+              allowInput={true}
+              label={`Option ${index + 1} #`}
+              options={true}
+              trash={true}
+              dragable={true}
+              handleChange={(value) => handleChange(index, value)}
+              typedValue={typedValues[index]}
+            />
+          ))}
+          <button
+            className="ml-[50px] mt-5 w-fit rounded-[23.6px] bg-[#C9C9C9] px-6 py-3 text-[31px] font-semibold leading-normal text-[#7C7C7C]"
+            onClick={handleAddOption}
+          >
             Add Option
           </button>
         </div>
-        <h3 className="text-[#C5C5C5] text-[25px] font-normal leading-normal mt-[50px] mb-[32px] ml-[104px]">
+        <h3 className="mb-[32px] ml-[104px] mt-[50px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
           Customize your Quest
         </h3>
-        <div className="bg-[#FCFCFC] rounded-[16px] max-w-[838px] mx-auto py-[35px] flex flex-col gap-7">
-          <h5 className="text-[#435059] text-[30px] font-medium leading-normal text-center">
+        {/* settings */}
+        <div className="mx-auto flex max-w-[838px] flex-col gap-7 rounded-[16px] bg-[#FCFCFC] py-[35px]">
+          <h5 className="text-center text-[30px] font-medium leading-normal text-[#435059]">
             Settings
           </h5>
-          <div className="bg-[#F4F4F4] rounded-[16px] mx-[51px] py-[34px] px-7 flex justify-between items-center">
-            <h5 className="text-[#7C7C7C] text-[28px] font-normal leading-normal">
+          <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
+            <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
               Participant can add their own options.
             </h5>
-            <Switch
-              checked={enabled}
-              onChange={setEnabled}
-              className={`${enabled ? "bg-[#7EEAAF]" : "bg-[#D9D9D9]"}
-      relative inline-flex items-center h-[20px] w-[50px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
-            >
-              <span className="sr-only">Use setting</span>
-              <span
-                aria-hidden="true"
-                className={`${
-                  enabled
-                    ? "translate-x-6 bg-[#0DA65D]"
-                    : "-translate-x-[7px] bg-[#707070]"
-                }
-        pointer-events-none inline-block h-[30px] w-[30px] transform rounded-full  shadow-lg ring-0 transition duration-200 ease-in-out`}
-              />
-            </Switch>
+            <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
-          <div className="bg-[#F4F4F4] rounded-[16px] mx-[51px] py-[34px] px-7 flex justify-between items-center">
-            <h5 className="text-[#7C7C7C] text-[28px] font-normal leading-normal">
+          <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
+            <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
               Participants can change their choice at a later time.
             </h5>
-            <Switch
-              checked={enabled}
-              onChange={setEnabled}
-              className={`${enabled ? "bg-[#7EEAAF]" : "bg-[#D9D9D9]"}
-      relative inline-flex items-center h-[20px] w-[50px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
-            >
-              <span className="sr-only">Use setting</span>
-              <span
-                aria-hidden="true"
-                className={`${
-                  enabled
-                    ? "translate-x-6 bg-[#0DA65D]"
-                    : "-translate-x-[7px] bg-[#707070]"
-                }
-        pointer-events-none inline-block h-[30px] w-[30px] transform rounded-full  shadow-lg ring-0 transition duration-200 ease-in-out`}
-              />
-            </Switch>
+            <CustomSwitch enabled={changeOption} setEnabled={setChangeOption} />
           </div>
+          {changeOption ? (
+            <div className="flex justify-center gap-4">
+              {changeOptions.map((item) => (
+                <button
+                  key={item.id}
+                  className={`${
+                    selectedOption === item.title
+                      ? "bg-[#389CE3]"
+                      : "bg-[#7C7C7C]"
+                  } rounded-md px-4 py-2 text-[#F4F4F4]`}
+                  onClick={() => {
+                    setSelectedOption(item.title);
+                  }}
+                >
+                  {item.title}
+                </button>
+              ))}
+            </div>
+          ) : null}
         </div>
-        <div className="w-full flex justify-end">
-          <button className="mt-[60px] mr-[70px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] w-fit py-3 px-[60px] text-white text-[31.5px] font-semibold leading-normal rounded-[23.6px]">
+        {/* submit button */}
+        <div className="flex w-full justify-end">
+          <button className="mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white">
             Submit
           </button>
         </div>

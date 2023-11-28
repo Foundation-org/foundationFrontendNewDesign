@@ -17,19 +17,19 @@ const initialState = {
       contend: false,
     },
     disagree: {
-      check: false, 
+      check: false,
       contend: false,
     },
   },
+  multipleChoice: [{ label: "Choice 1", check: false, contend: false }],
 };
-
 
 export const questsSlice = createSlice({
   name: "quests",
   initialState,
   reducers: {
     toggleCheck: (state, action) => {
-      const { option, check, contend } = action.payload;
+      const { option, index, check, contend } = action.payload;
 
       if (option === "Yes") {
         if (check) {
@@ -42,7 +42,6 @@ export const questsSlice = createSlice({
           state["yesNo"]["no"].contend = false;
         }
       }
-
       if (option === "No") {
         if (check) {
           state["yesNo"]["no"].check = true;
@@ -76,12 +75,30 @@ export const questsSlice = createSlice({
           state["agreeDisagree"]["agree"].contend = false;
         }
       }
+      if (option === "Multiple Choice") {
+        const selectedChoice = state.multipleChoice[index];
+        if (check !== undefined) {
+          selectedChoice.check = check;
+        }
+        if (contend !== undefined) {
+          selectedChoice.contend = contend;
+        }
+      }
+    },
+    addChoice: (state, action) => {
+      state.multipleChoice.push({
+        label: `Choice ${state.multipleChoice.length + 1}`,
+        check: false,
+        contend: false,
+      });
+    },
+    resetQuests: (state) => {
+      return initialState;
     },
   },
 });
-    
 
-export const { toggleCheck, togglecontend } = questsSlice.actions;
+export const { toggleCheck, resetQuests } = questsSlice.actions;
 
 export default questsSlice.reducer;
 

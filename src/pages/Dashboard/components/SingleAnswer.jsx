@@ -1,9 +1,13 @@
 import { useSelector } from "react-redux";
 import { FaCheck } from "react-icons/fa";
 import { FaExclamation } from "react-icons/fa6";
+import { getQuests } from "../../../features/quest/questsSlice";
 
 const SingleAnswer = (props) => {
+  const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
+
+  console.log(quests.multipleChoice);
 
   return (
     <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
@@ -28,6 +32,7 @@ const SingleAnswer = (props) => {
             {props.answer}
           </h1>
         </div>
+        {/* to show ranked and multiple choice options */}
         {!props.checkInfo ? (
           <div className="mr-[20.63px] flex items-center gap-[37px]">
             <img
