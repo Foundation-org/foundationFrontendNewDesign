@@ -21,7 +21,7 @@ const initialState = {
       contend: false,
     },
   },
-  multipleChoice: [{ label: "Choice 1", check: false, contend: false }],
+  multipleChoice: [],
 };
 
 export const questsSlice = createSlice({
@@ -29,7 +29,7 @@ export const questsSlice = createSlice({
   initialState,
   reducers: {
     toggleCheck: (state, action) => {
-      const { option, index, check, contend } = action.payload;
+      const { option, check, contend, label } = action.payload;
 
       if (option === "Yes") {
         if (check) {
@@ -76,21 +76,30 @@ export const questsSlice = createSlice({
         }
       }
       if (option === "Multiple Choice") {
-        const selectedChoice = state.multipleChoice[index];
-        if (check !== undefined) {
-          selectedChoice.check = check;
-        }
-        if (contend !== undefined) {
-          selectedChoice.contend = contend;
+        const foundItem = state.multipleChoice.find(
+          (item) => item.label === label,
+        );
+
+        if (foundItem) {
+          foundItem.check = check;
+          foundItem.contend = contend;
         }
       }
     },
     addChoice: (state, action) => {
-      state.multipleChoice.push({
-        label: `Choice ${state.multipleChoice.length + 1}`,
-        check: false,
-        contend: false,
-      });
+      const { label } = action.payload;
+
+      const labelExists = state.multipleChoice.some(
+        (item) => item.label === label,
+      );
+
+      if (!labelExists) {
+        state.multipleChoice.push({
+          label: label,
+          check: false,
+          contend: false,
+        });
+      }
     },
     resetQuests: (state) => {
       return initialState;
@@ -98,7 +107,7 @@ export const questsSlice = createSlice({
   },
 });
 
-export const { toggleCheck, resetQuests } = questsSlice.actions;
+export const { toggleCheck, addChoice, resetQuests } = questsSlice.actions;
 
 export default questsSlice.reducer;
 

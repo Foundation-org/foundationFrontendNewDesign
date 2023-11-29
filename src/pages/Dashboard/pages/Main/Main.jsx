@@ -170,6 +170,8 @@ const Main = () => {
     setViewResult((prev) => (prev === testId ? null : testId));
   };
 
+  console.log({ allData });
+
   return (
     <>
       <SidebarLeft

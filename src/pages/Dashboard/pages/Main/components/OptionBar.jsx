@@ -13,7 +13,7 @@ const OptionBar = ({
   id,
   setHowManyTimesAnsChanged,
   whichTypeQuestion,
-  handleToggleCheck
+  handleToggleCheck,
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -21,16 +21,18 @@ const OptionBar = ({
   const { mutateAsync: getStartQuestDetail } = useMutation({
     mutationFn: getStartQuestInfo,
     onSuccess: (res) => {
-      console.log(res.data.data);
-      console.log(whichTypeQuestion);
+      console.log("resp", res.data.data);
+      console.log({ whichTypeQuestion });
       setHowManyTimesAnsChanged(res.data.data.length);
       if (
         whichTypeQuestion === "agree/disagree" ||
         whichTypeQuestion === "yes/no"
       ) {
         if (
-          res.data.data[res.data.data.length - 1].selected === "Agree" ||
-          res.data.data[res.data.data.length - 1].selected === "Yes"
+          res.data.data[res.data.data.length - 1].selected.toLowerCase() ===
+            "agree" ||
+          res.data.data[res.data.data.length - 1].selected.toLowerCase() ===
+            "yes"
         ) {
           console.log("ran 1");
           handleToggleCheck(
@@ -40,20 +42,26 @@ const OptionBar = ({
           );
         }
         if (
-          res.data.data[res.data.data.length - 1].contended === "Agree" ||
-          res.data.data[res.data.data.length - 1].contended === "Yes"
+          res.data.data[res.data.data.length - 1].contended.toLowerCase() ===
+            "agree" ||
+          res.data.data[res.data.data.length - 1].contended.toLowerCase() ===
+            "yes"
         ) {
           console.log("ran 2");
 
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].contended,
-            true,
             false,
+            true,
+            // true,
+            // false,
           );
         }
         if (
-          res.data.data[res.data.data.length - 1].contended === "Disagree" ||
-          res.data.data[res.data.data.length - 1].contended === "No"
+          res.data.data[res.data.data.length - 1].contended.toLowerCase() ===
+            "disagree" ||
+          res.data.data[res.data.data.length - 1].contended.toLowerCase() ===
+            "no"
         ) {
           console.log("ran 3");
 
@@ -64,22 +72,26 @@ const OptionBar = ({
           );
         }
         if (
-          res.data.data[res.data.data.length - 1].selected === "Disagree" ||
-          res.data.data[res.data.data.length - 1].selected === "No"
+          res.data.data[res.data.data.length - 1].selected.toLowerCase() ===
+            "disagree" ||
+          res.data.data[res.data.data.length - 1].selected.toLowerCase() ===
+            "no"
         ) {
           console.log("ran 4");
 
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].selected,
-            false,
             true,
+            false,
+            // false,
+            // true,
           );
         }
       }
     },
     onError: (err) => {
       toast.error(err.response?.data);
-      console.log("Mutation Error",err);
+      console.log("Mutation Error", err);
     },
   });
 

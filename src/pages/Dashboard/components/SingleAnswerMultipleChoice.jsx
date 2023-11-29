@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
 import { FaCheck } from "react-icons/fa";
 import { FaExclamation } from "react-icons/fa6";
-import { getQuests } from "../../../features/quest/questsSlice";
 
-const SingleAnswer = (props) => {
-  const quests = useSelector(getQuests);
+const SingleAnswerMultipleChoice = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
+  //   console.log({ props });
 
   return (
     <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
@@ -51,7 +50,13 @@ const SingleAnswer = (props) => {
               onClick={
                 props.btnText === "Results"
                   ? null // or use an empty function: () => {}
-                  : () => props.handleToggleCheck(props.answer, true, false)
+                  : () =>
+                      props.handleMultipleChoiceCC(
+                        "Multiple Choice",
+                        true,
+                        false,
+                        props.answer,
+                      )
               }
             >
               {props.check ? (
@@ -75,7 +80,13 @@ const SingleAnswer = (props) => {
               onClick={
                 props.btnText === "Results"
                   ? null // or use an empty function: () => {}
-                  : () => props.handleToggleCheck(props.answer, false, true)
+                  : () =>
+                      props.handleMultipleChoiceCC(
+                        "Multiple Choice",
+                        false,
+                        true,
+                        props.answer,
+                      )
               }
             >
               {props.contend ? (
@@ -101,4 +112,4 @@ const SingleAnswer = (props) => {
   );
 };
 
-export default SingleAnswer;
+export default SingleAnswerMultipleChoice;

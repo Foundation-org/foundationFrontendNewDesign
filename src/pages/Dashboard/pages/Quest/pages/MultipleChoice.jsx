@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { changeOptions } from "../../../../../utils/options";
 import Options from "../components/Options";
 import { useMutation } from "@tanstack/react-query";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import { createInfoQuest } from "../../../../../api/questsApi";
-import {
-  getQuests,
-  toggleCheck,
-} from "../../../../../features/quest/questsSlice";
+// import {
+//   getQuests,
+//   toggleCheck,
+// } from "../../../../../features/quest/questsSlice";
 import { toast } from "sonner";
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
-  const persistedTheme = useSelector((state) => state.utils.theme);
+  // const persistedTheme = useSelector((state) => state.utils.theme);
   const [question, setQuestion] = useState("");
   const [correctOption, setCorrectOption] = useState(false);
   const [multipleOption, setMultipleOption] = useState(false);
@@ -23,17 +23,17 @@ const MultipleChoice = () => {
   const [changedOption, setchangedOption] = useState("");
   const [optionsCount, setOptionsCount] = useState(1);
   const [typedValues, setTypedValues] = useState(
-    Array(optionsCount).fill({ question: "", selected: false })
+    Array(optionsCount).fill({ question: "", selected: false }),
   );
   const [selectedValues, setSelectedValues] = useState([]);
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
-      console.log('resp', resp);
+      console.log("resp", resp);
       toast.success("Successfully Created Quest");
       setTimeout(() => {
-        navigate("/dashboard")
+        navigate("/dashboard");
       }, 2000);
     },
     onError: (err) => {
@@ -43,40 +43,35 @@ const MultipleChoice = () => {
   });
 
   const handleSubmit = () => {
+    if (changeState && changedOption === "") {
+      toast.warning(
+        "Looks like you missed selecting the answer change frequency",
+      );
+      return;
+    }
+    if (question === "") {
+      toast.warning("Write some Question Before Submitting");
+      return;
+    }
+    if (correctOption && selectedValues === null) {
+      toast.warning("You have to select one correct option to finish");
+      return;
+    }
 
-    if(changeState && changedOption===""){
- 
-      toast.warning("Looks like you missed selecting the answer change frequency",)
-      return;
-    }
-    if(question==='')
-    {
-      toast.warning("Write some Question Before Submitting",)
-      return;
-    }
-    if(correctOption && selectedValues ===null){
-      toast.warning("You have to select one correct option to finish",)
-      return;
-    }
-    
-  
-    const params={
-      "Question": question,
-      "whichTypeQuestion": "multiple choise",
-      "QuestionCorrect": correctOption === true ? "Selected" : "Not Selected",
-      "QuestAnswers": typedValues,   
-      "usersAddTheirAns":addOption, 
-      "usersChangeTheirAns": changeState,
-      "QuestAnswersSelected": correctOption === true ? selectedValues:[],
-      "uuid": localStorage.getItem("uId"),
-    }
-    console.log(params);
+    const params = {
+      Question: question,
+      whichTypeQuestion: "multiple choise",
+      QuestionCorrect: correctOption === true ? "Selected" : "Not Selected",
+      QuestAnswers: typedValues,
+      usersAddTheirAns: addOption,
+      usersChangeTheirAns: changeState,
+      QuestAnswersSelected: correctOption === true ? selectedValues : [],
+      uuid: localStorage.getItem("uId"),
+    };
+    // console.log(params);
 
     createQuest(params);
-   
-
-  }
-
+  };
 
   const handleAddOption = () => {
     setOptionsCount((prevCount) => prevCount + 1);
@@ -97,34 +92,30 @@ const MultipleChoice = () => {
     newTypedValues[index].selected = !newTypedValues[index].selected;
     setTypedValues(newTypedValues);
 
-    // Add to selectedValues if selected
-    if (newTypedValues[index].selected) {
-      setSelectedValues((prevValues) => [
-        ...prevValues,
-        { answers: newTypedValues[index].question },
-      ]);
+    if (!multipleOption) {
+      newTypedValues.forEach((item, i) => {
+        if (i !== index) {
+          item.selected = false;
+        }
+      });
+      setTypedValues(newTypedValues);
+
+      const selectedOption = newTypedValues[index].selected
+        ? [{ answers: newTypedValues[index].question }]
+        : [];
+      setSelectedValues(selectedOption);
     } else {
-      // Remove from selectedValues if deselected
-      setSelectedValues((prevValues) =>
-        prevValues.filter(
-          (item) => item.answers !== newTypedValues[index].question
-        )
-      );
+      const selectedOption = { answers: newTypedValues[index].question };
+
+      if (newTypedValues[index].selected) {
+        setSelectedValues((prevValues) => [...prevValues, selectedOption]);
+      } else {
+        setSelectedValues((prevValues) =>
+          prevValues.filter((item) => item.answers !== selectedOption.answers),
+        );
+      }
     }
   };
-
-  // console.log({
-  //   question,
-  //   correctOption,
-  //   multipleOption,
-  //   addOption,
-  //   changeState,
-  //   changedOption,
-  //   typedValues,
-  //   selectedValues,
-  // });
-
-  
 
   return (
     <div>
@@ -240,7 +231,10 @@ const MultipleChoice = () => {
         </div>
         {/* submit button */}
         <div className="flex w-full justify-end">
-          <button className="mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white" onClick={() => handleSubmit()}>
+          <button
+            className="mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white"
+            onClick={() => handleSubmit()}
+          >
             Submit
           </button>
         </div>

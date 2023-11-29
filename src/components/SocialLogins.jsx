@@ -15,7 +15,7 @@ const SocialLogins = ({ setProvider, setProfile }) => {
   // }, []);
 
   return (
-    <div className="flex gap-[42px] mt-[37.8px] mb-6 5xl:mb-9">
+    <div className="mb-6 mt-[37.8px] flex gap-[42px] 5xl:mb-9">
       <LoginSocialGoogle
         isOnlyGetToken
         client_id={import.meta.env.VITE_GG_APP_ID}
@@ -44,14 +44,14 @@ const SocialLogins = ({ setProvider, setProfile }) => {
           console.log(err);
         }}
       >
-        <Button size="medium" color="gray">
+        <button className="flex h-[67.2px] w-[302px] items-center whitespace-nowrap rounded-[11.073px] border-[1px] border-gray-200 bg-white px-4 text-center text-[17.554px] font-[500] text-black dark:border-white dark:bg-dark-gray dark:text-white 5xl:w-[320px]">
           {persistedTheme === "dark" ? (
             <img src="/assets/svgs/facebook.svg" className="mr-4" />
           ) : (
             <img src="/assets/svgs/facebook-white.svg" className="mr-4" />
-          )}{" "}
+          )}
           Continue with Facebook
-        </Button>
+        </button>
       </LoginSocialFacebook>
     </div>
   );

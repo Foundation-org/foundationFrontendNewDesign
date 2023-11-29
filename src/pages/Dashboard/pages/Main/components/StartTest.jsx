@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import AddNewOption from "../../../components/AddNewOption";
 import BasicModal from "../../../../../components/BasicModal";
-import { useEffect } from "react";
+import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
+// import { useEffect } from "react";
 
 const StartTest = ({
   title,
@@ -9,6 +10,7 @@ const StartTest = ({
   SingleAnswer,
   quests,
   handleToggleCheck,
+  handleMultipleChoiceCC,
   handleSubmit,
   handleOpen,
   handleClose,
@@ -20,6 +22,26 @@ const StartTest = ({
   // useEffect(() => {
   //   dispatch()
   // }, [answers])
+
+  // console.log("array", quests.multipleChoice);
+
+  function findLabelChecked(array, labelToFind) {
+    const labelFound = array.filter((item) => item.label === labelToFind);
+    if (labelFound[0]?.check === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function findLabelContend(array, labelToFind) {
+    const labelFound = array.filter((item) => item.label === labelToFind);
+    if (labelFound[0]?.contend === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <>
@@ -68,11 +90,14 @@ const StartTest = ({
           </>
         ) : title === "Multiple Choice" ? (
           answers.map((item, index) => (
-            <SingleAnswer
+            <SingleAnswerMultipleChoice
               number={"#" + (index + 1)}
               answer={item.question}
               title={title}
               checkInfo={true}
+              handleMultipleChoiceCC={handleMultipleChoiceCC}
+              check={findLabelChecked(quests.multipleChoice, item.question)}
+              contend={findLabelContend(quests.multipleChoice, item.question)}
             />
           ))
         ) : (
@@ -81,6 +106,7 @@ const StartTest = ({
               number={"#" + (index + 1)}
               answer={item.question}
               title={title}
+              handleMultipleChoiceCC={handleMultipleChoiceCC}
             />
           ))
         )}

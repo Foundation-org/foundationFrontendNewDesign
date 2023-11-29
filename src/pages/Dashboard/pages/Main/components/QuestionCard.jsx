@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  addChoice,
   getQuests,
   toggleCheck,
 } from "../../../../../features/quest/questsSlice";
@@ -45,12 +46,33 @@ const QuestionCard = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const capitalizeFirstLetter = (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
+
   const handleToggleCheck = (option, check, contend) => {
+    const capitalizedOption = capitalizeFirstLetter(option);
+
+    const actionPayload = {
+      option: capitalizedOption,
+      check,
+      contend,
+    };
+
+    console.log({ actionPayload });
+
+    dispatch(toggleCheck(actionPayload));
+  };
+
+  const handleMultipleChoiceCC = (option, check, contend, label) => {
     const actionPayload = {
       option,
       check,
       contend,
+      label,
     };
+
+    dispatch(addChoice(actionPayload));
 
     dispatch(toggleCheck(actionPayload));
   };
@@ -195,6 +217,7 @@ const QuestionCard = ({
             SingleAnswer={SingleAnswer}
             quests={quests}
             handleToggleCheck={handleToggleCheck}
+            handleMultipleChoiceCC={handleMultipleChoiceCC}
             handleSubmit={handleSubmit}
             handleOpen={handleOpen}
             handleClose={handleClose}
@@ -223,7 +246,6 @@ const QuestionCard = ({
           btnText={btnText}
           whichTypeQuestion={whichTypeQuestion}
           setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-          
         />
       )}
     </div>
