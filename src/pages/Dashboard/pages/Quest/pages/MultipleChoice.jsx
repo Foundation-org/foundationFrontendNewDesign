@@ -1,9 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { changeOptions } from "../../../../../utils/options";
 import Options from "../components/Options";
+import { useMutation } from "@tanstack/react-query";
 import CustomSwitch from "../../../../../components/CustomSwitch";
+import { createInfoQuest } from "../../../../../api/questsApi";
+import {
+  getQuests,
+  toggleCheck,
+} from "../../../../../features/quest/questsSlice";
+import { toast } from "sonner";
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -12,30 +19,112 @@ const MultipleChoice = () => {
   const [correctOption, setCorrectOption] = useState(false);
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(false);
-  const [changeOption, setChangeOption] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [changeState, setChangeState] = useState(false);
+  const [changedOption, setchangedOption] = useState("");
   const [optionsCount, setOptionsCount] = useState(1);
-  const [typedValues, setTypedValues] = useState(Array(optionsCount).fill(""));
+  const [typedValues, setTypedValues] = useState(
+    Array(optionsCount).fill({ question: "", selected: false })
+  );
+  const [selectedValues, setSelectedValues] = useState([]);
+
+  const { mutateAsync: createQuest } = useMutation({
+    mutationFn: createInfoQuest,
+    onSuccess: (resp) => {
+      console.log('resp', resp);
+      toast.success("Successfully Created Quest");
+      setTimeout(() => {
+        navigate("/dashboard")
+      }, 2000);
+    },
+    onError: (err) => {
+      // console.log('error', err);
+      toast.error(err.response.data);
+    },
+  });
+
+  const handleSubmit = () => {
+
+    if(changeState && changedOption===""){
+ 
+      toast.warning("Looks like you missed selecting the answer change frequency",)
+      return;
+    }
+    if(question==='')
+    {
+      toast.warning("Write some Question Before Submitting",)
+      return;
+    }
+    if(correctOption && selectedValues ===null){
+      toast.warning("You have to select one correct option to finish",)
+      return;
+    }
+    
+  
+    const params={
+      "Question": question,
+      "whichTypeQuestion": "multiple choise",
+      "QuestionCorrect": correctOption === true ? "Selected" : "Not Selected",
+      "QuestAnswers": typedValues,   
+      "usersAddTheirAns":addOption, 
+      "usersChangeTheirAns": changeState,
+      "QuestAnswersSelected": correctOption === true ? selectedValues:[],
+      "uuid": localStorage.getItem("uId"),
+    }
+    console.log(params);
+
+    createQuest(params);
+   
+
+  }
+
 
   const handleAddOption = () => {
     setOptionsCount((prevCount) => prevCount + 1);
+    setTypedValues((prevValues) => [
+      ...prevValues,
+      { question: "", selected: false },
+    ]);
   };
 
   const handleChange = (index, value) => {
     const newTypedValues = [...typedValues];
-    newTypedValues[index] = value;
+    newTypedValues[index].question = value;
     setTypedValues(newTypedValues);
   };
 
-  console.log({
-    question,
-    correctOption,
-    multipleOption,
-    addOption,
-    changeOption,
-    selectedOption,
-    typedValues,
-  });
+  const handleOptionSelect = (index) => {
+    const newTypedValues = [...typedValues];
+    newTypedValues[index].selected = !newTypedValues[index].selected;
+    setTypedValues(newTypedValues);
+
+    // Add to selectedValues if selected
+    if (newTypedValues[index].selected) {
+      setSelectedValues((prevValues) => [
+        ...prevValues,
+        { answers: newTypedValues[index].question },
+      ]);
+    } else {
+      // Remove from selectedValues if deselected
+      setSelectedValues((prevValues) =>
+        prevValues.filter(
+          (item) => item.answers !== newTypedValues[index].question
+        )
+      );
+    }
+  };
+
+  // console.log({
+  //   question,
+  //   correctOption,
+  //   multipleOption,
+  //   addOption,
+  //   changeState,
+  //   changedOption,
+  //   typedValues,
+  //   selectedValues,
+  // });
+
+  
 
   return (
     <div>
@@ -72,7 +161,9 @@ const MultipleChoice = () => {
               trash={true}
               dragable={true}
               handleChange={(value) => handleChange(index, value)}
-              typedValue={typedValues[index]}
+              handleOptionSelect={() => handleOptionSelect(index)}
+              typedValue={typedValues[index].question}
+              isSelected={typedValues[index].selected}
             />
           ))}
           <button
@@ -112,7 +203,7 @@ const MultipleChoice = () => {
             <>
               <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
                 <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
-                  Participants can select multiple options.
+                  Participants can add options.
                 </h5>
                 <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
               </div>
@@ -121,22 +212,22 @@ const MultipleChoice = () => {
                   Participants can change their choice at a later time.
                 </h5>
                 <CustomSwitch
-                  enabled={changeOption}
-                  setEnabled={setChangeOption}
+                  enabled={changeState}
+                  setEnabled={setChangeState}
                 />
               </div>
-              {changeOption ? (
+              {changeState ? (
                 <div className="flex justify-center gap-4">
                   {changeOptions.map((item) => (
                     <button
                       key={item.id}
                       className={`${
-                        selectedOption === item.title
+                        changedOption === item.title
                           ? "bg-[#389CE3]"
                           : "bg-[#7C7C7C]"
                       } rounded-md px-4 py-2 text-[#F4F4F4]`}
                       onClick={() => {
-                        setSelectedOption(item.title);
+                        setchangedOption(item.title);
                       }}
                     >
                       {item.title}
@@ -149,7 +240,7 @@ const MultipleChoice = () => {
         </div>
         {/* submit button */}
         <div className="flex w-full justify-end">
-          <button className="mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white">
+          <button className="mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white" onClick={() => handleSubmit()}>
             Submit
           </button>
         </div>

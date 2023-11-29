@@ -209,13 +209,21 @@ const QuestionCard = ({
             handleStartTest={handleStartTest}
             handleViewResults={handleViewResults}
             setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+            whichTypeQuestion={whichTypeQuestion}
+            handleToggleCheck={handleToggleCheck}
           />
         )
       ) : (
         <Result
+          id={id}
           title={title}
           handleToggleCheck={handleToggleCheck}
           handleClose={handleClose}
+          answers={answers}
+          btnText={btnText}
+          whichTypeQuestion={whichTypeQuestion}
+          setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+          
         />
       )}
     </div>

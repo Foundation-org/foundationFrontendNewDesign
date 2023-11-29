@@ -7,7 +7,7 @@ const SingleAnswer = (props) => {
   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
 
-  console.log(quests.multipleChoice);
+  // console.log(quests.multipleChoice);
 
   return (
     <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
@@ -50,20 +50,35 @@ const SingleAnswer = (props) => {
           <div className="mr-[20.63px] flex items-center gap-[22px] ">
             <div
               className="flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full bg-[#0DD76A]"
-              onClick={() => props.handleToggleCheck(props.answer, true, false)}
+              onClick={
+                props.btnText === "Results"
+                  ? null // or use an empty function: () => {}
+                  : () => props.handleToggleCheck(props.answer, true, false)
+              }
             >
               {props.check ? (
+                <>
                 <FaCheck className="h-[19.942px] w-[20px] text-white" />
+                </>
               ) : null}
             </div>
+           { props.btnText==="Results"?<>{ props.percentages?.selectedPercentage[props.answer] ===undefined? "0%":props.percentages?.selectedPercentage[props.answer]+'%' }</>:<></>}
             <div
               className="flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full bg-[#FFD600]"
-              onClick={() => props.handleToggleCheck(props.answer, false, true)}
-            >
+              onClick={
+                props.btnText === "Results"
+                  ? null // or use an empty function: () => {}
+                  : () => props.handleToggleCheck(props.answer, false, true)
+              }
+              >
               {props.contend ? (
+                <>
                 <FaExclamation className="h-[19.942px] w-[16px] text-white" />
+                
+                </>
               ) : null}
             </div>
+            { props.btnText==="Results" ? <>{props.percentages?.contendedPercentage[props.answer] ===undefined? "0%":props.percentages?.contendedPercentage[props.answer]+'%'}</>:<></>}
           </div>
         )}
       </div>

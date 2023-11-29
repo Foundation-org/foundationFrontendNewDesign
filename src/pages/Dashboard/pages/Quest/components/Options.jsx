@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector } from "react-redux";
 
 const Options = ({
@@ -8,10 +9,12 @@ const Options = ({
   trash,
   dragable,
   handleOptionChange,
+  handleOptionSelect,
   isYes,
   allowInput,
   handleChange,
   typedValue,
+  isSelected,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -64,8 +67,8 @@ const Options = ({
                       id="default-checkbox"
                       type="checkbox"
                       className="h-10 w-10 rounded"
-                      onChange={handleOptionChange}
-                      checked={isYes}
+                      onChange={handleOptionSelect}
+                      checked={isSelected}
                     />
                   </div>
                 )}
@@ -110,8 +113,8 @@ const Options = ({
                     id="default-checkbox"
                     type="checkbox"
                     className="h-10 w-[38px] rounded"
-                    onChange={handleOptionChange}
-                    checked={isYes}
+                    onChange={handleOptionSelect}
+                    checked={isSelected}
                   />
                 </div>
               )}

@@ -34,14 +34,15 @@ export const createInfoQuest = async (data) => {
 // change
 // to get selected results
 export const getStartQuestInfo = async (data) => {
-  return await api.post("/startQuest/getStartQuestInfo", data);
+  return await api.post("/startQuest/getStartQuestInfo", {questForeignKey:data.questForeignKey,
+    uuid:data.uuid,
+  });
 };
 
 // result
 // to get Start quest percent
-export const getStartQuestPercent = async (questForeignKey, uuid) => {
-  return await api.post("/startQuest/getStartQuestPercent", {
-    questForeignKey,
-    uuid,
+export const getStartQuestPercent = async (data) => {
+  return await api.post("/startQuest/getStartQuestPercent", {questForeignKey:data.questForeignKey,
+    uuid:data.uuid,
   });
 };

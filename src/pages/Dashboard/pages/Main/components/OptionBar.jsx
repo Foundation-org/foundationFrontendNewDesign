@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { getStartQuestInfo } from "../../../../../api/questsApi";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
+import { toast } from "sonner";
 
 const OptionBar = ({
   correctAnswers,
@@ -11,6 +12,8 @@ const OptionBar = ({
   handleViewResults,
   id,
   setHowManyTimesAnsChanged,
+  whichTypeQuestion,
+  handleToggleCheck
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -19,6 +22,7 @@ const OptionBar = ({
     mutationFn: getStartQuestInfo,
     onSuccess: (res) => {
       console.log(res.data.data);
+      console.log(whichTypeQuestion);
       setHowManyTimesAnsChanged(res.data.data.length);
       if (
         whichTypeQuestion === "agree/disagree" ||
@@ -74,7 +78,8 @@ const OptionBar = ({
       }
     },
     onError: (err) => {
-      toast.error(err.response.data);
+      toast.error(err.response?.data);
+      console.log("Mutation Error",err);
     },
   });
 
