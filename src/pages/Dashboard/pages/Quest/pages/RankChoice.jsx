@@ -1,36 +1,88 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { changeOptions } from "../../../../../utils/options";
 import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
+import Title from "../components/Title";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const RankChoice = () => {
   const navigate = useNavigate();
-  const persistedTheme = useSelector((state) => state.utils.theme);
+  // const persistedTheme = useSelector((state) => state.utils.theme);
   const [question, setQuestion] = useState("");
-  const [optionsCount, setOptionsCount] = useState(1);
-  const [typedValues, setTypedValues] = useState(Array(optionsCount).fill(""));
   const [addOption, setAddOption] = useState(false);
   const [changeOption, setChangeOption] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
+  const [optionsCount, setOptionsCount] = useState(2);
+  const [typedValues, setTypedValues] = useState(() =>
+    Array.from({ length: optionsCount }, (_, index) => ({
+      id: `index-${index}`,
+      question: "",
+      selected: false,
+    })),
+  );
 
   const handleAddOption = () => {
     setOptionsCount((prevCount) => prevCount + 1);
+    setTypedValues((prevValues) => [
+      ...prevValues,
+      { id: `index-${optionsCount}`, question: "", selected: false },
+    ]);
   };
+
+  console.log(typedValues);
 
   const handleChange = (index, value) => {
     const newTypedValues = [...typedValues];
-    newTypedValues[index] = value;
+    newTypedValues[index] = { ...newTypedValues[index], question: value };
     setTypedValues(newTypedValues);
+  };
+
+  // need to be updated
+  const handleOptionSelect = (index) => {
+    const newTypedValues = [...typedValues];
+    newTypedValues[index].selected = !newTypedValues[index].selected;
+    setTypedValues(newTypedValues);
+
+    if (!multipleOption) {
+      newTypedValues.forEach((item, i) => {
+        if (i !== index) {
+          item.selected = false;
+        }
+      });
+      setTypedValues(newTypedValues);
+
+      const selectedOption = newTypedValues[index].selected
+        ? [{ answers: newTypedValues[index].question }]
+        : [];
+      setSelectedValues(selectedOption);
+    } else {
+      const selectedOption = { answers: newTypedValues[index].question };
+
+      if (newTypedValues[index].selected) {
+        setSelectedValues((prevValues) => [...prevValues, selectedOption]);
+      } else {
+        setSelectedValues((prevValues) =>
+          prevValues.filter((item) => item.answers !== selectedOption.answers),
+        );
+      }
+    }
+  };
+
+  const removeOption = (indexToRemove) => {
+    const newOptionsCount = Math.max(optionsCount - 1, 2);
+    console.log({ newOptionsCount });
+    setTypedValues((prevTypedValues) =>
+      prevTypedValues.filter((_, index) => index !== indexToRemove),
+    );
+
+    setOptionsCount(newOptionsCount);
   };
 
   return (
     <div>
-      <h4 className="mt-[47px] text-center text-[25px] font-medium leading-normal text-[#ACACAC]">
-        Create a selection of choices that can be arranged in order of
-        preference.
-      </h4>
+      <Title />
       <div className="mx-auto my-10 max-w-[979px] rounded-[26px] bg-[#F3F3F3] py-[42px]">
         <h1 className="text-center text-[32px] font-semibold leading-normal text-[#7C7C7C]">
           Create Quest
@@ -50,26 +102,56 @@ const RankChoice = () => {
           </h1>
         </div>
         {/* options */}
-        <div className="mt-10 flex flex-col gap-[30px]">
-          {[...Array(optionsCount)].map((_, index) => (
-            <Options
-              key={index}
-              allowInput={true}
-              label={`Option ${index + 1} #`}
-              options={true}
-              trash={true}
-              dragable={true}
-              handleChange={(value) => handleChange(index, value)}
-              typedValue={typedValues[index]}
-            />
-          ))}
-          <button
-            className="ml-[50px] mt-5 w-fit rounded-[23.6px] bg-[#C9C9C9] px-6 py-3 text-[31px] font-semibold leading-normal text-[#7C7C7C]"
-            onClick={handleAddOption}
-          >
-            Add Option
-          </button>
-        </div>
+        <DragDropContext>
+          <Droppable droppableId={`typedValues-${Date.now()}`}>
+            {(provided) => (
+              <div
+                className="mt-10 flex flex-col gap-[30px]"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {typedValues.map((typedValue, index) => (
+                  <Draggable
+                    key={typedValue.id}
+                    draggableId={typedValue.id}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                      >
+                        <Options
+                          key={index}
+                          title="RankChoice"
+                          allowInput={true}
+                          label={`Option ${index + 1} #`}
+                          // options={true}
+                          trash={true}
+                          dragable={true}
+                          handleChange={(value) => handleChange(index, value)}
+                          handleOptionSelect={() => handleOptionSelect(index)}
+                          typedValue={typedValue.question}
+                          isSelected={typedValue.selected}
+                          optionsCount={optionsCount}
+                          removeOption={() => removeOption(index)}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+        <button
+          className="ml-[50px] mt-5 w-fit rounded-[23.6px] bg-[#C9C9C9] px-6 py-3 text-[31px] font-semibold leading-normal text-[#7C7C7C]"
+          onClick={handleAddOption}
+        >
+          Add Option
+        </button>
         <h3 className="mb-[32px] ml-[104px] mt-[50px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
           Customize your Quest
         </h3>

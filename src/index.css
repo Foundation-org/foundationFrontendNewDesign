@@ -166,7 +166,7 @@ iframe {
 }
 
 #custom-yello-checkbox .checkbox::after {
-  content: url("/public/assets/svgs/checkmark-small.svg");
+  content: url("/public/assets/svgs/exclamation-mark.svg");
   left: 0;
   top: 0;
   position: absolute;

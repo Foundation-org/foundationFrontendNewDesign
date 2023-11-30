@@ -11,6 +11,7 @@ import { createInfoQuest } from "../../../../../api/questsApi";
 //   toggleCheck,
 // } from "../../../../../features/quest/questsSlice";
 import { toast } from "sonner";
+import Title from "../components/Title";
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -134,10 +135,7 @@ const MultipleChoice = () => {
 
   return (
     <div>
-      <h4 className="mt-[47px] text-center text-[25px] font-medium leading-normal text-[#ACACAC]">
-        Create a selection of choices that can be arranged in order of
-        preference.
-      </h4>
+      <Title />
       <div className="mx-auto my-10 max-w-[979px] rounded-[26px] bg-[#F3F3F3] py-[42px]">
         <h1 className="text-center text-[32px] font-semibold leading-normal text-[#7C7C7C]">
           Create Quest
@@ -161,6 +159,7 @@ const MultipleChoice = () => {
           {[...Array(optionsCount)].map((_, index) => (
             <Options
               key={index}
+              title="MultipleChoice"
               allowInput={true}
               label={`Option ${index + 1} #`}
               options={correctOption ? true : false}

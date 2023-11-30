@@ -1,10 +1,17 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { FaCheck } from "react-icons/fa";
-import { FaExclamation } from "react-icons/fa6";
+// import { FaCheck } from "react-icons/fa";
+// import { FaExclamation } from "react-icons/fa6";
 
 const SingleAnswerMultipleChoice = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
-  //   console.log({ props });
+  const [checkState, setCheckState] = useState(props.check);
+  const [contendState, setContendState] = useState(props.contend);
+
+  useEffect(() => {
+    setCheckState(props.check);
+    setContendState(props.contend);
+  }, [props.check, props.contend]);
 
   return (
     <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
@@ -50,6 +57,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 id="small-checkbox"
                 type="checkbox"
                 className="checkbox rounded-[2px]"
+                checked={checkState}
               />
             </div>
 
@@ -88,6 +96,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 id="small-yello-checkbox"
                 type="checkbox"
                 className="checkbox rounded-[2px]"
+                checked={contendState}
               />
             </div>
             {/* <div

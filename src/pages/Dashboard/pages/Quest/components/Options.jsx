@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 const Options = ({
   number,
+  title,
   answer,
   options,
   label,
@@ -120,6 +121,39 @@ const Options = ({
                   />
                 </div>
               )}
+              {/* {title === "RankChoice" && trash ? (
+                <>
+                  {optionsCount > 1 && (
+                    <div
+                      onClick={() => {
+                        removeOption(number);
+                      }}
+                    >
+                      <img
+                        src="/assets/svgs/dashboard/trash2.svg"
+                        alt="trash"
+                        className="h-[36px] cursor-pointer"
+                      />
+                    </div>
+                  )}
+                </>
+              ) : title === "MultipleChoice" && trash ? (
+                <>
+                  {optionsCount > 2 && (
+                    <div
+                      onClick={() => {
+                        removeOption(number);
+                      }}
+                    >
+                      <img
+                        src="/assets/svgs/dashboard/trash2.svg"
+                        alt="trash"
+                        className="h-[36px] cursor-pointer"
+                      />
+                    </div>
+                  )}
+                </>
+              ) : null} */}
               {trash && optionsCount > 2 && (
                 <div
                   onClick={() => {
