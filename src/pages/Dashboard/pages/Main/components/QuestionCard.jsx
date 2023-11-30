@@ -36,6 +36,7 @@ const QuestionCard = ({
   handleViewResults,
   lastInteractedAt,
   usersChangeTheirAns,
+  usersAddTheirAns,
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -138,30 +139,31 @@ const QuestionCard = ({
     // Define the time interval (in milliseconds) based on usersChangeTheirAns value
     let timeInterval = 0;
     if (usersChangeTheirAns === "Daily") {
-      return timeInterval = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+      return (timeInterval = 24 * 60 * 60 * 1000); // 24 hours in milliseconds
     } else if (usersChangeTheirAns === "Weekly") {
-      return timeInterval = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+      return (timeInterval = 7 * 24 * 60 * 60 * 1000); // 7 days in milliseconds
     } else if (usersChangeTheirAns === "Monthly") {
       // Assuming 30 days in a month for simplicity
-      return timeInterval = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+      return (timeInterval = 30 * 24 * 60 * 60 * 1000); // 30 days in milliseconds
     } else if (usersChangeTheirAns === "Yearly") {
       // Assuming 365 days in a year for simplicity
-      return timeInterval = 365 * 24 * 60 * 60 * 1000; // 365 days in milliseconds
+      return (timeInterval = 365 * 24 * 60 * 60 * 1000); // 365 days in milliseconds
     } else if (usersChangeTheirAns === "TwoYears") {
       // Assuming 2 years
-      return timeInterval = 2 * 365 * 24 * 60 * 60 * 1000; // 2 years in milliseconds
+      return (timeInterval = 2 * 365 * 24 * 60 * 60 * 1000); // 2 years in milliseconds
     } else if (usersChangeTheirAns === "FourYears") {
       // Assuming 4 years
-      return timeInterval = 4 * 365 * 24 * 60 * 60 * 1000; // 4 years in milliseconds
+      return (timeInterval = 4 * 365 * 24 * 60 * 60 * 1000); // 4 years in milliseconds
     }
-
-  }
+  };
 
   const handleSubmit = () => {
-    if (whichTypeQuestion === "agree/disagree" || whichTypeQuestion === "yes/no") {
-      console.log("inside yes/agree");
+    if (
+      whichTypeQuestion === "agree/disagree" ||
+      whichTypeQuestion === "yes/no"
+    ) {
       const { selected, contended } = extractSelectedAndContended(
-        whichTypeQuestion === "Agree/Disagree"
+        whichTypeQuestion === "agree/disagree"
           ? quests.agreeDisagree
           : quests.yesNo,
       );
@@ -186,7 +188,6 @@ const QuestionCard = ({
         console.log(howManyTimesAnsChanged);
         const currentDate = new Date();
 
-
         const timeInterval = validateInterval();
         // Check if enough time has passed
         if (
@@ -203,22 +204,22 @@ const QuestionCard = ({
       } else {
         startQuest(params);
       }
-    }
-    else if (whichTypeQuestion === "multiple choise") {
+    } else if (whichTypeQuestion === "multiple choise") {
       console.log("inside multiple");
       let answerSelected = [];
       let answerContended = [];
-      let addedAnswer = '';
+      let addedAnswer = "";
 
       for (let i = 0; i < quests.multipleChoice.length; i++) {
         if (quests.multipleChoice[i].check) {
-          if (addedAnswerByUser)        // If user Add his own option
-          {
-            answerSelected.push({ question: quests.multipleChoice[i].label, addedAnswerByUser: true });
+          if (addedAnswerByUser) {
+            // If user Add his own option
+            answerSelected.push({
+              question: quests.multipleChoice[i].label,
+              addedAnswerByUser: true,
+            });
             addedAnswer = quests.multipleChoice[i].label;
-          }
-          else {
-
+          } else {
             answerSelected.push({ question: quests.multipleChoice[i].label });
           }
         }
@@ -232,7 +233,7 @@ const QuestionCard = ({
         selected: answerSelected,
         contended: answerContended,
         created: new Date(),
-      }
+      };
 
       if (btnText === "change answer") {
         const timeInterval = validateInterval();
@@ -247,25 +248,23 @@ const QuestionCard = ({
           );
         } else {
           const params = {
-            "questId": id,
-            "changeAnswerAddedObj": dataToSend,
-            "uuid": localStorage.getItem("uId"),
-          }
+            questId: id,
+            changeAnswerAddedObj: dataToSend,
+            uuid: localStorage.getItem("uId"),
+          };
           console.log("params", params);
           changeAnswer(params);
         }
-
       } else {
         const params = {
-          "questForeignKey": id,
-          "data": dataToSend,
-          "addedAnswer": addedAnswer,
-          "uuid": localStorage.getItem("uId"),
-        }
+          questForeignKey: id,
+          data: dataToSend,
+          addedAnswer: addedAnswer,
+          uuid: localStorage.getItem("uId"),
+        };
         console.log("params", params);
         startQuest(params);
       }
-
     }
   };
 
@@ -296,6 +295,7 @@ const QuestionCard = ({
             handleClose={handleClose}
             open={open}
             btnText={btnText}
+            usersAddTheirAns={usersAddTheirAns}
           />
         ) : (
           <OptionBar

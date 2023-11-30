@@ -25,8 +25,12 @@ export const createInfoQuest = async (data) => {
   return await api.post("/infoquestions/createInfoQuestQuest", {
     Question: data.Question,
     whichTypeQuestion: data.whichTypeQuestion,
-    usersChangeTheirAns: data.usersChangeTheirAns,
     QuestionCorrect: data.QuestionCorrect,
+    QuestAnswers: data.QuestAnswers,
+    usersAddTheirAns: data.usersAddTheirAns,
+    usersChangeTheirAns: data.usersChangeTheirAns,
+    userCanSelectMultiple: data.userCanSelectMultiple,
+    QuestAnswersSelected: data.QuestAnswersSelected,
     uuid: data.uuid,
   });
 };
@@ -34,15 +38,17 @@ export const createInfoQuest = async (data) => {
 // change
 // to get selected results
 export const getStartQuestInfo = async (data) => {
-  return await api.post("/startQuest/getStartQuestInfo", {questForeignKey:data.questForeignKey,
-    uuid:data.uuid,
+  return await api.post("/startQuest/getStartQuestInfo", {
+    questForeignKey: data.questForeignKey,
+    uuid: data.uuid,
   });
 };
 
 // result
 // to get Start quest percent
 export const getStartQuestPercent = async (data) => {
-  return await api.post("/startQuest/getStartQuestPercent", {questForeignKey:data.questForeignKey,
-    uuid:data.uuid,
+  return await api.post("/startQuest/getStartQuestPercent", {
+    questForeignKey: data.questForeignKey,
+    uuid: data.uuid,
   });
 };

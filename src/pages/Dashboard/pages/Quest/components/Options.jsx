@@ -15,7 +15,8 @@ const Options = ({
   handleChange,
   typedValue,
   isSelected,
-  optionsCount
+  optionsCount,
+  removeOption,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -119,13 +120,20 @@ const Options = ({
                   />
                 </div>
               )}
-              {trash && optionsCount>2 && (
-                <img
-                  src="/assets/svgs/dashboard/trash2.svg"
-                  alt="trash"
-                  className="h-[36px]"
-                />
+              {trash && optionsCount > 2 && (
+                <div
+                  onClick={() => {
+                    removeOption(number);
+                  }}
+                >
+                  <img
+                    src="/assets/svgs/dashboard/trash2.svg"
+                    alt="trash"
+                    className="h-[36px] cursor-pointer"
+                  />
+                </div>
               )}
+
               <h1 className="leading-0 ml-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
                 OK
               </h1>

@@ -17,6 +17,7 @@ const StartTest = ({
   handleClose,
   btnText,
   open,
+  usersAddTheirAns,
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -26,7 +27,6 @@ const StartTest = ({
   // }, [answers])
 
   console.log("array", quests.multipleChoice);
-
 
   function findLabelChecked(array, labelToFind) {
     const labelFound = array.filter((item) => item.label === labelToFind);
@@ -115,29 +115,34 @@ const StartTest = ({
           ))
         )}
 
-        {title === "Yes/No" || title === "Agree/Disagree" ? null : btnText !=="change answer"?  (
-          <button
-            onClick={handleOpen}
-            className="ml-[135px] mt-3 flex w-fit items-center gap-[11.37px] rounded-[10px] bg-[#D9D9D9] px-[21px] py-[10px] text-[18px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC]"
-          >
-            {persistedTheme === "dark" ? (
-              <img
-                src="/assets/svgs/dashboard/add-dark.svg"
-                alt="add"
-                className="h-[15.6px] w-[15.6px]"
-              />
-            ) : (
-              <img
-                src="/assets/svgs/dashboard/add.svg"
-                alt="add"
-                className="h-[15.6px] w-[15.6px]"
-              />
-            )}
-            Add Option
-          </button>
-        ):null}
+        {usersAddTheirAns ? (
+          <div>
+            {title === "Yes/No" ||
+            title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
+              <button
+                onClick={handleOpen}
+                className="ml-[135px] mt-3 flex w-fit items-center gap-[11.37px] rounded-[10px] bg-[#D9D9D9] px-[21px] py-[10px] text-[18px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC]"
+              >
+                {persistedTheme === "dark" ? (
+                  <img
+                    src="/assets/svgs/dashboard/add-dark.svg"
+                    alt="add"
+                    className="h-[15.6px] w-[15.6px]"
+                  />
+                ) : (
+                  <img
+                    src="/assets/svgs/dashboard/add.svg"
+                    alt="add"
+                    className="h-[15.6px] w-[15.6px]"
+                  />
+                )}
+                Add Option
+              </button>
+            ) : null}
+          </div>
+        ) : null}
         <BasicModal open={open} handleClose={handleClose}>
-          <AddNewOption/>
+          <AddNewOption />
         </BasicModal>
       </div>
       <div className="mt-8 flex w-full justify-end">

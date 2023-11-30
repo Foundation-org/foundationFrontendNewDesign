@@ -7,6 +7,26 @@ const SingleAnswer = (props) => {
   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
 
+  const selectedPercentageValue =
+    props.percentages?.selectedPercentage[
+      props.answer === "Agree" ? "Yes" : "No"
+    ];
+
+  const contenedPercentageValue =
+    props.percentages?.contendedPercentage[
+      props.answer === "Disagree" ? "Yes" : "No"
+    ];
+  console.log(
+    "hamza",
+    props.answer,
+    props.answer === "Yes" || props.answer === "Agree"
+      ? props.percentages?.selectedPercentage.Yes
+      : undefined,
+    props.answer === "No" || props.answer === "Disagree"
+      ? props.percentages?.selectedPercentage.No
+      : undefined,
+  );
+
   return (
     <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
       <h1 className="w-[26px] min-w-[26px] text-[20px] font-[500] leading-normal text-[#435059] dark:text-[#D3D3D3]">
@@ -62,10 +82,9 @@ const SingleAnswer = (props) => {
             </div>
             {props.btnText === "Results" ? (
               <>
-                {props.percentages?.selectedPercentage[props.answer] ===
-                undefined
-                  ? "0%"
-                  : props.percentages?.selectedPercentage[props.answer] + "%"}
+                {props.answer === "Yes" || props.answer === "Agree"
+                  ? props.percentages?.selectedPercentage.Yes + "%"
+                  : "0%"}
               </>
             ) : (
               <></>
@@ -86,10 +105,9 @@ const SingleAnswer = (props) => {
             </div>
             {props.btnText === "Results" ? (
               <>
-                {props.percentages?.contendedPercentage[props.answer] ===
-                undefined
-                  ? "0%"
-                  : props.percentages?.contendedPercentage[props.answer] + "%"}
+                {props.answer === "No" || props.answer === "Disagree"
+                  ? props.percentages?.contendedPercentage.No + "%"
+                  : "0%"}
               </>
             ) : (
               <></>

@@ -14,7 +14,7 @@ const OptionBar = ({
   setHowManyTimesAnsChanged,
   whichTypeQuestion,
   handleToggleCheck,
-  handleMultipleChoiceCC
+  handleMultipleChoiceCC,
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -89,28 +89,29 @@ const OptionBar = ({
       }
       if (whichTypeQuestion === "multiple choise") {
         if (res?.data.data[res.data.data.length - 1].selected) {
-          res?.data.data[res.data.data.length - 1].selected.map((item, index) => {
-            handleMultipleChoiceCC(
-              "Multiple Choice",
-              true,
-              false,
-              item.question,
-            )
-          })
-
+          res?.data.data[res.data.data.length - 1].selected.map(
+            (item, index) => {
+              handleMultipleChoiceCC(
+                "Multiple Choice",
+                true,
+                false,
+                item.question,
+              );
+            },
+          );
         }
         if (res?.data.data[res.data.data.length - 1].contended) {
-          res?.data.data[res.data.data.length - 1].contended.map((item, index) => {
-            handleMultipleChoiceCC(
-              "Multiple Choice",
-              false,
-              true,
-              item.question,
-            )
-          })
-
+          res?.data.data[res.data.data.length - 1].contended.map(
+            (item, index) => {
+              handleMultipleChoiceCC(
+                "Multiple Choice",
+                false,
+                true,
+                item.question,
+              );
+            },
+          );
         }
-
       }
     },
     onError: (err) => {
@@ -185,7 +186,11 @@ const OptionBar = ({
           <button
             className="mt-12 w-[173px] rounded-[15px] border-[3px] border-[#20D47E] px-5 py-2 text-[20px] font-semibold leading-normal text-[#20D47E] dark:border-[#7C7C7C] dark:text-[#C9C8C8]"
             onClick={() => {
-              handleViewResults(id);
+              if (btnText !== "") {
+                handleViewResults(id);
+              } else {
+                toast.error("First Start this question to see Results");
+              }
             }}
           >
             Result

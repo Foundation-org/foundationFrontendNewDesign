@@ -227,6 +227,7 @@ const Main = () => {
                 whichTypeQuestion={item?.whichTypeQuestion}
                 startTest={startTest}
                 viewResult={viewResult}
+                usersAddTheirAns={item?.usersAddTheirAns}
                 handleViewResults={handleViewResults}
                 handleStartTest={handleStartTest}
                 btnColor={

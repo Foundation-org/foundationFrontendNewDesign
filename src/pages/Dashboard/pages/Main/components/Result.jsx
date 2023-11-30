@@ -27,8 +27,6 @@ const Result = (props) => {
       // console.log(res?.data?.data);
       // console.log(props.whichTypeQuestion);
       if (res.data) {
-
-
         if (
           props.whichTypeQuestion === "agree/disagree" ||
           props.whichTypeQuestion === "yes/no"
@@ -85,30 +83,30 @@ const Result = (props) => {
 
         if (props.whichTypeQuestion === "multiple choise") {
           if (res?.data.data[res.data.data.length - 1].selected) {
-            res?.data.data[res.data.data.length - 1].selected.map((item, index) => {
-              props.handleMultipleChoiceCC(
-                "Multiple Choice",
-                true,
-                false,
-                item.question,
-              )
-            })
-
+            res?.data.data[res.data.data.length - 1].selected.map(
+              (item, index) => {
+                props.handleMultipleChoiceCC(
+                  "Multiple Choice",
+                  true,
+                  false,
+                  item.question,
+                );
+              },
+            );
           }
           if (res?.data.data[res.data.data.length - 1].contended) {
-            res?.data.data[res.data.data.length - 1].contended.map((item, index) => {
-              props.handleMultipleChoiceCC(
-                "Multiple Choice",
-                false,
-                true,
-                item.question,
-              )
-            })
-
+            res?.data.data[res.data.data.length - 1].contended.map(
+              (item, index) => {
+                props.handleMultipleChoiceCC(
+                  "Multiple Choice",
+                  false,
+                  true,
+                  item.question,
+                );
+              },
+            );
           }
-
         }
-
       }
     },
     onError: (err) => {
@@ -146,7 +144,6 @@ const Result = (props) => {
     }
   }
 
-
   return (
     <div className="mt-[26px] flex flex-col gap-[10px]">
       {props.title === "Yes/No" || props.title === "Agree/Disagree" ? (
@@ -175,9 +172,8 @@ const Result = (props) => {
                 btnText={"Results"}
               />
             </>
-          ) : (
+          ) : props.title === "Agree/Disagree" ? (
             <>
-              {console.log({ ResultsData })}
               <SingleAnswer
                 number={"#1"}
                 answer={"Agree"}
@@ -199,7 +195,7 @@ const Result = (props) => {
                 btnText={"Results"}
               />
             </>
-          )}
+          ) : null}
         </>
       ) : (
         props.answers?.map((item, index) => (
@@ -218,10 +214,11 @@ const Result = (props) => {
       )}
       <div className="my-8 flex w-full justify-center">
         <button
-          className={`${persistedTheme === "dark"
-            ? "bg-[#333B46]"
-            : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            } inset-0 mr-[30px] w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]`}
+          className={`${
+            persistedTheme === "dark"
+              ? "bg-[#333B46]"
+              : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+          } inset-0 mr-[30px] w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]`}
           onClick={() => handleSubmit()}
         >
           Finish

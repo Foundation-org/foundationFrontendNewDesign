@@ -44,9 +44,17 @@ const SingleAnswerMultipleChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="mr-[20.63px] flex items-center gap-[22px] ">
-            <div
-              className="flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full bg-[#0DD76A]"
+          <div className="mr-[20.63px] flex items-center gap-[19px] ">
+            <div id="custom-checkbox" className="-mb-[7px] ">
+              <input
+                id="small-checkbox"
+                type="checkbox"
+                className="checkbox rounded-[2px]"
+              />
+            </div>
+
+            {/* <div
+              className="flex h-[20px] w-[20px] cursor-pointer items-center justify-center rounded-[2px]  bg-[#0DD76A]"
               onClick={
                 props.btnText === "Results"
                   ? null // or use an empty function: () => {}
@@ -64,7 +72,7 @@ const SingleAnswerMultipleChoice = (props) => {
                   <FaCheck className="h-[19.942px] w-[20px] text-white" />
                 </>
               ) : null}
-            </div>
+            </div> */}
             {props.btnText === "Results" ? (
               <>
                 {props.percentages?.selectedPercentage[props.answer] ===
@@ -75,7 +83,14 @@ const SingleAnswerMultipleChoice = (props) => {
             ) : (
               <></>
             )}
-            <div
+            <div id="custom-yello-checkbox" className="-mb-[7px] ">
+              <input
+                id="small-yello-checkbox"
+                type="checkbox"
+                className="checkbox rounded-[2px]"
+              />
+            </div>
+            {/* <div
               className="flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-full bg-[#FFD600]"
               onClick={
                 props.btnText === "Results"
@@ -94,7 +109,7 @@ const SingleAnswerMultipleChoice = (props) => {
                   <FaExclamation className="h-[19.942px] w-[16px] text-white" />
                 </>
               ) : null}
-            </div>
+            </div> */}
             {props.btnText === "Results" ? (
               <>
                 {props.percentages?.contendedPercentage[props.answer] ===

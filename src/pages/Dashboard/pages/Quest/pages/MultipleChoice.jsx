@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { changeOptions } from "../../../../../utils/options";
@@ -21,11 +21,14 @@ const MultipleChoice = () => {
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
   const [changedOption, setchangedOption] = useState("");
-  const [optionsCount, setOptionsCount] = useState(2);
-  const [typedValues, setTypedValues] = useState(
-    Array(optionsCount).fill({ question: "", selected: false }),
-  );
   const [selectedValues, setSelectedValues] = useState([]);
+  const [optionsCount, setOptionsCount] = useState(2);
+  const [typedValues, setTypedValues] = useState(() =>
+    Array.from({ length: optionsCount }, (_, index) => ({
+      question: "",
+      selected: false,
+    })),
+  );
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -53,7 +56,7 @@ const MultipleChoice = () => {
       toast.warning("Write some Question Before Submitting");
       return;
     }
-    if (correctOption && selectedValues.length===0) {
+    if (correctOption && selectedValues.length === 0) {
       toast.warning("You have to select one correct option to finish");
       return;
     }
@@ -69,9 +72,10 @@ const MultipleChoice = () => {
       QuestAnswersSelected: correctOption === true ? selectedValues : [],
       uuid: localStorage.getItem("uId"),
     };
-    console.log(params);
 
-    // createQuest(params);
+    console.log({ params });
+
+    createQuest(params);
   };
 
   const handleAddOption = () => {
@@ -84,7 +88,7 @@ const MultipleChoice = () => {
 
   const handleChange = (index, value) => {
     const newTypedValues = [...typedValues];
-    newTypedValues[index].question = value;
+    newTypedValues[index] = { ...newTypedValues[index], question: value };
     setTypedValues(newTypedValues);
   };
 
@@ -118,6 +122,16 @@ const MultipleChoice = () => {
     }
   };
 
+  const removeOption = (indexToRemove) => {
+    const newOptionsCount = Math.max(optionsCount - 1, 2);
+
+    setTypedValues((prevTypedValues) =>
+      prevTypedValues.filter((_, index) => index !== indexToRemove),
+    );
+
+    setOptionsCount(newOptionsCount);
+  };
+
   return (
     <div>
       <h4 className="mt-[47px] text-center text-[25px] font-medium leading-normal text-[#ACACAC]">
@@ -149,7 +163,7 @@ const MultipleChoice = () => {
               key={index}
               allowInput={true}
               label={`Option ${index + 1} #`}
-              options={correctOption?true:false}
+              options={correctOption ? true : false}
               trash={true}
               dragable={true}
               handleChange={(value) => handleChange(index, value)}
@@ -157,6 +171,7 @@ const MultipleChoice = () => {
               typedValue={typedValues[index].question}
               isSelected={typedValues[index].selected}
               optionsCount={optionsCount}
+              removeOption={() => removeOption(index)}
             />
           ))}
           <button
