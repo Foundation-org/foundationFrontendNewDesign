@@ -14,6 +14,7 @@ const OptionBar = ({
   setHowManyTimesAnsChanged,
   whichTypeQuestion,
   handleToggleCheck,
+  handleMultipleChoiceCC
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -53,8 +54,6 @@ const OptionBar = ({
             res.data.data[res.data.data.length - 1].contended,
             false,
             true,
-            // true,
-            // false,
           );
         }
         if (
@@ -87,6 +86,31 @@ const OptionBar = ({
             // true,
           );
         }
+      }
+      if (whichTypeQuestion === "multiple choise") {
+        if (res?.data.data[res.data.data.length - 1].selected) {
+          res?.data.data[res.data.data.length - 1].selected.map((item, index) => {
+            handleMultipleChoiceCC(
+              "Multiple Choice",
+              true,
+              false,
+              item.question,
+            )
+          })
+
+        }
+        if (res?.data.data[res.data.data.length - 1].contended) {
+          res?.data.data[res.data.data.length - 1].contended.map((item, index) => {
+            handleMultipleChoiceCC(
+              "Multiple Choice",
+              false,
+              true,
+              item.question,
+            )
+          })
+
+        }
+
       }
     },
     onError: (err) => {

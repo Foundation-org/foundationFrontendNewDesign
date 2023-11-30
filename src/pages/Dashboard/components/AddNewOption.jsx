@@ -1,8 +1,23 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { toast } from "sonner";
+import { useState } from "react";
 
-const AddNewOption = () => {
+const AddNewOption = ({ onSubmit }) => {
+  const [newOption, setNewOption] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
+
+  const handleInputChange = (e) => {
+    setNewOption(e.target.value);
+  };
+
+  const handleAddOption = () => {
+    if (newOption.trim() !== "") {
+      onSubmit(newOption);
+      setNewOption("");
+    }
+  }
+
 
   return (
     <div className="flex flex-col gap-4 items-center bg-[#232628] p-6 rounded-[26px]">
@@ -22,17 +37,18 @@ const AddNewOption = () => {
             )}
           </div>
           <input
+            value={newOption}
+            onChange={handleInputChange}
             type="text"
             className="bg-white dark:bg-[#0D1012] w-full ml-8 text-[#435059] dark:text-[#D3D3D3] text-[19px] font-normal leading-normal focus:outline-none"
           />
         </div>
       </div>
       <button
-        className={` ${
-          persistedTheme === "dark"
+        className={` ${persistedTheme === "dark"
             ? "bg-[#333B46]"
             : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-        } shadow-inner inset-0  rounded-[10px] py-2 px-5 text-[#EAEAEA] text-[20px] font-semibold leading-normal w-full`}
+          } shadow-inner inset-0  rounded-[10px] py-2 px-5 text-[#EAEAEA] text-[20px] font-semibold leading-normal w-full`} onClick={handleAddOption}
       >
         Submit
       </button>

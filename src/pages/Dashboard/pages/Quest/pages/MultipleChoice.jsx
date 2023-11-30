@@ -21,7 +21,7 @@ const MultipleChoice = () => {
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
   const [changedOption, setchangedOption] = useState("");
-  const [optionsCount, setOptionsCount] = useState(1);
+  const [optionsCount, setOptionsCount] = useState(2);
   const [typedValues, setTypedValues] = useState(
     Array(optionsCount).fill({ question: "", selected: false }),
   );
@@ -53,7 +53,7 @@ const MultipleChoice = () => {
       toast.warning("Write some Question Before Submitting");
       return;
     }
-    if (correctOption && selectedValues === null) {
+    if (correctOption && selectedValues.length===0) {
       toast.warning("You have to select one correct option to finish");
       return;
     }
@@ -64,13 +64,14 @@ const MultipleChoice = () => {
       QuestionCorrect: correctOption === true ? "Selected" : "Not Selected",
       QuestAnswers: typedValues,
       usersAddTheirAns: addOption,
-      usersChangeTheirAns: changeState,
+      usersChangeTheirAns: changedOption,
+      userCanSelectMultiple: multipleOption,
       QuestAnswersSelected: correctOption === true ? selectedValues : [],
       uuid: localStorage.getItem("uId"),
     };
-    // console.log(params);
+    console.log(params);
 
-    createQuest(params);
+    // createQuest(params);
   };
 
   const handleAddOption = () => {
@@ -148,13 +149,14 @@ const MultipleChoice = () => {
               key={index}
               allowInput={true}
               label={`Option ${index + 1} #`}
-              options={true}
+              options={correctOption?true:false}
               trash={true}
               dragable={true}
               handleChange={(value) => handleChange(index, value)}
               handleOptionSelect={() => handleOptionSelect(index)}
               typedValue={typedValues[index].question}
               isSelected={typedValues[index].selected}
+              optionsCount={optionsCount}
             />
           ))}
           <button

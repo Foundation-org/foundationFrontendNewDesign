@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import SingleAnswer from "../../../components/SingleAnswer";
+import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 
 const Result = (props) => {
   const quests = useSelector(getQuests);
@@ -23,110 +24,91 @@ const Result = (props) => {
   const { mutateAsync: getStartQuestDetail } = useMutation({
     mutationFn: getStartQuestInfo,
     onSuccess: (res) => {
-      console.log(res.data.data);
-      console.log(props.whichTypeQuestion);
-      props.setHowManyTimesAnsChanged(res.data.data.length);
-      if (
-        props.whichTypeQuestion === "agree/disagree" ||
-        props.whichTypeQuestion === "yes/no"
-      ) {
-        if (
-          res.data.data[res.data.data.length - 1].selected === "Agree" ||
-          res.data.data[res.data.data.length - 1].selected === "Yes"
-        ) {
-          console.log("ran 1");
-          props.handleToggleCheck(
-            res.data.data[res.data.data.length - 1].selected,
-            true,
-            false,
-          );
-        }
-        if (
-          res.data.data[res.data.data.length - 1].contended === "Agree" ||
-          res.data.data[res.data.data.length - 1].contended === "Yes"
-        ) {
-          console.log("ran 2");
+      // console.log(res?.data?.data);
+      // console.log(props.whichTypeQuestion);
+      if (res.data) {
 
-          props.handleToggleCheck(
-            res.data.data[res.data.data.length - 1].contended,
-            true,
-            false,
-          );
-        }
-        if (
-          res.data.data[res.data.data.length - 1].contended === "Disagree" ||
-          res.data.data[res.data.data.length - 1].contended === "No"
-        ) {
-          console.log("ran 3");
 
-          props.handleToggleCheck(
-            res.data.data[res.data.data.length - 1].contended,
-            false,
-            true,
-          );
-        }
         if (
-          res.data.data[res.data.data.length - 1].selected === "Disagree" ||
-          res.data.data[res.data.data.length - 1].selected === "No"
+          props.whichTypeQuestion === "agree/disagree" ||
+          props.whichTypeQuestion === "yes/no"
         ) {
-          console.log("ran 4");
+          props.setHowManyTimesAnsChanged(res?.data.data.length);
+          if (
+            res?.data.data[res.data.data.length - 1].selected === "Agree" ||
+            res?.data.data[res.data.data.length - 1].selected === "Yes"
+          ) {
+            console.log("ran 1");
+            props.handleToggleCheck(
+              res.data.data[res.data.data.length - 1].selected,
+              true,
+              false,
+            );
+          }
+          if (
+            res?.data.data[res.data.data.length - 1].contended === "Agree" ||
+            res?.data.data[res.data.data.length - 1].contended === "Yes"
+          ) {
+            console.log("ran 2");
 
-          props.handleToggleCheck(
-            res.data.data[res.data.data.length - 1].selected,
-            false,
-            true,
-          );
-        }
-      }
+            props.handleToggleCheck(
+              res.data.data[res.data.data.length - 1].contended,
+              true,
+              false,
+            );
+          }
+          if (
+            res?.data.data[res.data.data.length - 1].contended === "Disagree" ||
+            res?.data.data[res.data.data.length - 1].contended === "No"
+          ) {
+            console.log("ran 3");
 
-      if (props.whichTypeQuestion === "multiple choise") {
-        if (
-          res.data.data[res.data.data.length - 1].selected === "Agree" ||
-          res.data.data[res.data.data.length - 1].selected === "Yes"
-        ) {
-          console.log("ran 1");
-          props.handleToggleCheck(
-            res.data.data[res.data.data.length - 1].selected,
-            true,
-            false,
-          );
-        }
-        if (
-          res.data.data[res.data.data.length - 1].contended === "Agree" ||
-          res.data.data[res.data.data.length - 1].contended === "Yes"
-        ) {
-          console.log("ran 2");
+            props.handleToggleCheck(
+              res.data.data[res.data.data.length - 1].contended,
+              false,
+              true,
+            );
+          }
+          if (
+            res?.data.data[res.data.data.length - 1].selected === "Disagree" ||
+            res?.data.data[res.data.data.length - 1].selected === "No"
+          ) {
+            console.log("ran 4");
 
-          props.handleToggleCheck(
-            res.data.data[res.data.data.length - 1].contended,
-            true,
-            false,
-          );
+            props.handleToggleCheck(
+              res.data.data[res.data.data.length - 1].selected,
+              false,
+              true,
+            );
+          }
         }
-        if (
-          res.data.data[res.data.data.length - 1].contended === "Disagree" ||
-          res.data.data[res.data.data.length - 1].contended === "No"
-        ) {
-          console.log("ran 3");
 
-          props.handleToggleCheck(
-            res.data.data[res.data.data.length - 1].contended,
-            false,
-            true,
-          );
-        }
-        if (
-          res.data.data[res.data.data.length - 1].selected === "Disagree" ||
-          res.data.data[res.data.data.length - 1].selected === "No"
-        ) {
-          console.log("ran 4");
+        if (props.whichTypeQuestion === "multiple choise") {
+          if (res?.data.data[res.data.data.length - 1].selected) {
+            res?.data.data[res.data.data.length - 1].selected.map((item, index) => {
+              props.handleMultipleChoiceCC(
+                "Multiple Choice",
+                true,
+                false,
+                item.question,
+              )
+            })
 
-          props.handleToggleCheck(
-            res.data.data[res.data.data.length - 1].selected,
-            false,
-            true,
-          );
+          }
+          if (res?.data.data[res.data.data.length - 1].contended) {
+            res?.data.data[res.data.data.length - 1].contended.map((item, index) => {
+              props.handleMultipleChoiceCC(
+                "Multiple Choice",
+                false,
+                true,
+                item.question,
+              )
+            })
+
+          }
+
         }
+
       }
     },
     onError: (err) => {
@@ -145,6 +127,25 @@ const Result = (props) => {
     },
     queryKey: ["ResultsData"],
   });
+
+  function findLabelChecked(array, labelToFind) {
+    const labelFound = array.filter((item) => item.label === labelToFind);
+    if (labelFound[0]?.check === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function findLabelContend(array, labelToFind) {
+    const labelFound = array.filter((item) => item.label === labelToFind);
+    if (labelFound[0]?.contend === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
   return (
     <div className="mt-[26px] flex flex-col gap-[10px]">
@@ -202,16 +203,25 @@ const Result = (props) => {
         </>
       ) : (
         props.answers?.map((item, index) => (
-          <SingleAnswer number={"#" + (index + 1)} answer={item.question} />
+          <SingleAnswerMultipleChoice
+            number={"#" + (index + 1)}
+            answer={item.question}
+            title={props.title}
+            checkInfo={true}
+            percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+            check={findLabelChecked(quests.multipleChoice, item.question)}
+            contend={findLabelContend(quests.multipleChoice, item.question)}
+            handleMultipleChoiceCC={props.handleMultipleChoiceCC}
+            btnText={"Results"}
+          />
         ))
       )}
       <div className="my-8 flex w-full justify-center">
         <button
-          className={`${
-            persistedTheme === "dark"
-              ? "bg-[#333B46]"
-              : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-          } inset-0 mr-[30px] w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]`}
+          className={`${persistedTheme === "dark"
+            ? "bg-[#333B46]"
+            : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+            } inset-0 mr-[30px] w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]`}
           onClick={() => handleSubmit()}
         >
           Finish

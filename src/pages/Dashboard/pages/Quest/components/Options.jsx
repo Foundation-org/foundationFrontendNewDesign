@@ -15,6 +15,7 @@ const Options = ({
   handleChange,
   typedValue,
   isSelected,
+  optionsCount
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -118,7 +119,7 @@ const Options = ({
                   />
                 </div>
               )}
-              {trash && (
+              {trash && optionsCount>2 && (
                 <img
                   src="/assets/svgs/dashboard/trash2.svg"
                   alt="trash"
