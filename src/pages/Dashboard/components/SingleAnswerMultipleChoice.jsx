@@ -13,6 +13,29 @@ const SingleAnswerMultipleChoice = (props) => {
     setContendState(props.contend);
   }, [props.check, props.contend]);
 
+  const handleCheckChange = () => {
+    setCheckState((prevState) => {
+      if (contendState) {
+        setContendState(false);
+        props.handleContendChange(false);
+      }
+
+      props.handleCheckChange(!prevState);
+      return !prevState;
+    });
+  };
+
+  const handleContendChange = () => {
+    setContendState((prevState) => {
+      if (checkState) {
+        handleCheckChange(false);
+        props.handleCheckChange(false);
+      }
+
+      props.handleContendChange(!prevState);
+      return !prevState;
+    });
+  };
   return (
     <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
       <h1 className="w-[26px] min-w-[26px] text-[20px] font-[500] leading-normal text-[#435059] dark:text-[#D3D3D3]">
@@ -58,6 +81,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 type="checkbox"
                 className="checkbox rounded-[2px]"
                 checked={checkState}
+                onChange={handleCheckChange}
               />
             </div>
 
@@ -97,6 +121,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 type="checkbox"
                 className="checkbox rounded-[2px]"
                 checked={contendState}
+                onChange={handleContendChange}
               />
             </div>
             {/* <div

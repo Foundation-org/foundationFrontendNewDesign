@@ -121,9 +121,9 @@ const Options = ({
                   />
                 </div>
               )}
-              {/* {title === "RankChoice" && trash ? (
+              {title === "RankChoice" && trash ? (
                 <>
-                  {optionsCount > 1 && (
+                  {optionsCount > 0 && (
                     <div
                       onClick={() => {
                         removeOption(number);
@@ -153,8 +153,8 @@ const Options = ({
                     </div>
                   )}
                 </>
-              ) : null} */}
-              {trash && optionsCount > 2 && (
+              ) : null}
+              {/* {trash && optionsCount > 2 && (
                 <div
                   onClick={() => {
                     removeOption(number);
@@ -166,7 +166,7 @@ const Options = ({
                     className="h-[36px] cursor-pointer"
                   />
                 </div>
-              )}
+              )} */}
 
               <h1 className="leading-0 ml-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
                 OK

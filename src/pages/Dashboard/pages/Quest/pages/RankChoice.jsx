@@ -14,7 +14,7 @@ const RankChoice = () => {
   const [addOption, setAddOption] = useState(false);
   const [changeOption, setChangeOption] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [optionsCount, setOptionsCount] = useState(2);
+  const [optionsCount, setOptionsCount] = useState(0);
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       id: `index-${index}`,
@@ -71,7 +71,7 @@ const RankChoice = () => {
   };
 
   const removeOption = (indexToRemove) => {
-    const newOptionsCount = Math.max(optionsCount - 1, 2);
+    const newOptionsCount = Math.max(optionsCount - 1, 0);
     console.log({ newOptionsCount });
     setTypedValues((prevTypedValues) =>
       prevTypedValues.filter((_, index) => index !== indexToRemove),

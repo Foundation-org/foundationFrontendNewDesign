@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddNewOption from "../../../components/AddNewOption";
 import BasicModal from "../../../../../components/BasicModal";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
-// import { useEffect } from "react";
+import { useState } from "react";
 
 const StartTest = ({
   title,
@@ -19,14 +19,32 @@ const StartTest = ({
   open,
   usersAddTheirAns,
 }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const [answersSelection, setAnswerSelection] = useState(
+    answers.map(() => ({ check: false, contend: false })),
+  );
 
+  const handleCheckChange = (index, check) => {
+    setAnswerSelection((prevAnswers) =>
+      prevAnswers.map((answer, i) =>
+        i === index ? { ...answer, check } : answer,
+      ),
+    );
+  };
+
+  const handleContendChange = (index, contend) => {
+    setAnswerSelection((prevAnswers) =>
+      prevAnswers.map((answer, i) =>
+        i === index ? { ...answer, contend } : answer,
+      ),
+    );
+  };
+
+  console.log({ answersSelection });
   // useEffect(() => {
   //   dispatch()
   // }, [answers])
-
-  console.log("array", quests.multipleChoice);
 
   function findLabelChecked(array, labelToFind) {
     const labelFound = array.filter((item) => item.label === labelToFind);
@@ -102,6 +120,10 @@ const StartTest = ({
               check={findLabelChecked(quests.multipleChoice, item.question)}
               contend={findLabelContend(quests.multipleChoice, item.question)}
               whichTypeQuestion={whichTypeQuestion}
+              handleCheckChange={(check) => handleCheckChange(index, check)}
+              handleContendChange={(contend) =>
+                handleContendChange(index, contend)
+              }
             />
           ))
         ) : (
