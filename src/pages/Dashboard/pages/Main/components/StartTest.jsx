@@ -22,6 +22,9 @@ const StartTest = ({
   usersAddTheirAns,
   setAnswerSelection,
   answersSelection,
+  isCorrect,
+  correctCount,
+  multipleOption
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [rankedAnswers, setRankedAnswers] = useState(
@@ -127,6 +130,10 @@ const StartTest = ({
               number={"#" + (index + 1)}
               answer={item.question}
               title={title}
+              multipleOption={multipleOption}
+              answersSelection={answersSelection}
+              isCorrect={isCorrect}
+              correctCount={correctCount}
               checkInfo={true}
               handleMultipleChoiceCC={handleMultipleChoiceCC}
               check={findLabelChecked(answersSelection, item.question)}

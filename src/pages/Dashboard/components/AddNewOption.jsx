@@ -3,19 +3,20 @@ import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import { useState } from "react";
 
-const AddNewOption = ({ onSubmit }) => {
-  const [newOption, setNewOption] = useState("");
+const AddNewOption = ({ setAddNewOption}) => {
+  
+  const [temp,setTemp]=useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const handleInputChange = (e) => {
-    setNewOption(e.target.value);
+    setTemp(e.target.value);
   };
 
   const handleAddOption = () => {
-    if (newOption.trim() !== "") {
-      onSubmit(newOption);
-      setNewOption("");
+    if (temp.trim() !== "") {
+        setAddNewOption(temp);
     }
+    
   }
 
 
@@ -37,7 +38,7 @@ const AddNewOption = ({ onSubmit }) => {
             )}
           </div>
           <input
-            value={newOption}
+            value={temp}
             onChange={handleInputChange}
             type="text"
             className="bg-white dark:bg-[#0D1012] w-full ml-8 text-[#435059] dark:text-[#D3D3D3] text-[19px] font-normal leading-normal focus:outline-none"

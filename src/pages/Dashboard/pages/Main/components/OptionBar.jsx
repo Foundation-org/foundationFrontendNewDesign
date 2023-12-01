@@ -3,14 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStartQuestInfo } from "../../../../../api/questsApi";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
 import { toast } from "sonner";
+import { useState,useEffect} from "react";
 
 const OptionBar = ({
-  correctAnswers,
   btnText,
   btnColor,
   handleStartTest,
   handleViewResults,
   id,
+  isCorrect,
+  correctCount,
+  time,
   setHowManyTimesAnsChanged,
   whichTypeQuestion,
   handleToggleCheck,
@@ -139,6 +142,33 @@ const OptionBar = ({
     },
   });
 
+  const [timeAgo, setTimeAgo] = useState('');
+
+  useEffect(() => {
+    const calculateTimeAgo = () => {
+      const currentDate = new Date();
+      const createdAtDate = new Date(time);
+
+      const timeDifference = currentDate - createdAtDate;
+      const seconds = Math.floor(timeDifference / 1000);
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
+
+      if (days > 0) {
+        setTimeAgo(`${days} ${days === 1 ? 'day' : 'days'} ago`);
+      } else if (hours > 0) {
+        setTimeAgo(`${hours} ${hours === 1 ? 'hour' : 'hours'} ago`);
+      } else if (minutes > 0) {
+        setTimeAgo(`${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`);
+      } else {
+        setTimeAgo(`${seconds} ${seconds === 1 ? 'second' : 'seconds'} ago`);
+      }
+    };
+
+    calculateTimeAgo();
+  }, [time]);
+
   const handleStartChange = () => {
     if (btnText === "") {
       dispatch(resetQuests());
@@ -184,9 +214,9 @@ const OptionBar = ({
   return (
     <>
       <div className="mb-1 flex items-center">
-        {correctAnswers && (
+        {isCorrect==="Selected" && (
           <p className="ml-6 mt-12 w-fit min-w-[12rem] rounded-[15px] bg-white px-[14px] pb-[7px] pt-2 text-[18px] font-semibold leading-normal text-[#28A954] dark:bg-[#303030] dark:text-[#737373]">
-            2 Correct Answers
+            {correctCount} Correct Answers
           </p>
         )}
         <div className="mb-1 mr-[30px] flex w-full justify-end gap-[42px]">
@@ -222,8 +252,8 @@ const OptionBar = ({
           alt="clock"
           className="h-4 w-4"
         />
-        <p className="text-[18px] font-[400] leading-normal text-[#9C9C9C]">
-          5 min ago
+        <p className="text-[10px] font-[400] leading-normal text-[#9C9C9C]">
+          {timeAgo}
         </p>
       </div>
     </>

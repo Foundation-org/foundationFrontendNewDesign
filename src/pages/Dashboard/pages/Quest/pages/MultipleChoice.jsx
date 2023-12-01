@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { changeOptions } from "../../../../../utils/options";
 import Options from "../components/Options";
 import { useMutation } from "@tanstack/react-query";
-import CustomSwitch from "../../../../../components/CustomSwitch";
 import { createInfoQuest } from "../../../../../api/questsApi";
+import CustomSwitch from "../../../../../components/CustomSwitch";
 // import {
 //   getQuests,
 //   toggleCheck,

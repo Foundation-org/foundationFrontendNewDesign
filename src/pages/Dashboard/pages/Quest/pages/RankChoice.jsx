@@ -6,14 +6,17 @@ import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import Title from "../components/Title";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useMutation } from "@tanstack/react-query";
+import { createInfoQuest } from "../../../../../api/questsApi";
+import { toast } from "sonner";
 
 const RankChoice = () => {
   const navigate = useNavigate();
   // const persistedTheme = useSelector((state) => state.utils.theme);
   const [question, setQuestion] = useState("");
   const [addOption, setAddOption] = useState(false);
-  const [changeOption, setChangeOption] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [changeState, setChangeState] = useState(false);
+  const [changedOption, setChangedOption] = useState("");
   const [optionsCount, setOptionsCount] = useState(0);
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
@@ -22,6 +25,47 @@ const RankChoice = () => {
       selected: false,
     })),
   );
+  const { mutateAsync: createQuest } = useMutation({
+    mutationFn: createInfoQuest,
+    onSuccess: (resp) => {
+      console.log("resp", resp);
+      toast.success("Successfully Created Quest");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+    },
+    onError: (err) => {
+      console.log('error', err);
+
+    },
+  });
+
+  const handleSubmit = () => {
+    if (changeState && changedOption === "") {
+      toast.warning(
+        "Looks like you missed selecting the answer change frequency",
+      );
+      return;
+    }
+    if (question === "") {
+      toast.warning("Write some Question Before Submitting");
+      return;
+    }
+
+    const params = {
+      Question: question,
+      whichTypeQuestion: "ranked choise",
+      QuestionCorrect: "No option",
+      QuestAnswers: typedValues,
+      usersAddTheirAns: addOption,
+      usersChangeTheirAns: changedOption,
+      uuid: localStorage.getItem("uId"),
+    };
+
+    console.log({ params });
+
+    createQuest(params);
+  };
 
   const handleAddOption = () => {
     setOptionsCount((prevCount) => prevCount + 1);
@@ -53,18 +97,18 @@ const RankChoice = () => {
       });
       setTypedValues(newTypedValues);
 
-      const selectedOption = newTypedValues[index].selected
+      const ChangedOption = newTypedValues[index].selected
         ? [{ answers: newTypedValues[index].question }]
         : [];
-      setSelectedValues(selectedOption);
+      setSelectedValues(ChangedOption);
     } else {
-      const selectedOption = { answers: newTypedValues[index].question };
+      const ChangedOption = { answers: newTypedValues[index].question };
 
       if (newTypedValues[index].selected) {
-        setSelectedValues((prevValues) => [...prevValues, selectedOption]);
+        setSelectedValues((prevValues) => [...prevValues, ChangedOption]);
       } else {
         setSelectedValues((prevValues) =>
-          prevValues.filter((item) => item.answers !== selectedOption.answers),
+          prevValues.filter((item) => item.answers !== ChangedOption.answers),
         );
       }
     }
@@ -179,20 +223,19 @@ const RankChoice = () => {
             <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
               Participants can change their choice at a later time.
             </h5>
-            <CustomSwitch enabled={changeOption} setEnabled={setChangeOption} />
+            <CustomSwitch enabled={changeState} setEnabled={setChangeState} />
           </div>
-          {changeOption ? (
+          {changeState ? (
             <div className="flex justify-center gap-4">
               {changeOptions.map((item) => (
                 <button
                   key={item.id}
-                  className={`${
-                    selectedOption === item.title
+                  className={`${ChangedOption === item.title
                       ? "bg-[#389CE3]"
                       : "bg-[#7C7C7C]"
-                  } rounded-md px-4 py-2 text-[#F4F4F4]`}
+                    } rounded-md px-4 py-2 text-[#F4F4F4]`}
                   onClick={() => {
-                    setSelectedOption(item.title);
+                    setChangedOption(item.title);
                   }}
                 >
                   {item.title}
@@ -203,9 +246,10 @@ const RankChoice = () => {
         </div>
         {/* submit button */}
         <div className="flex w-full justify-end">
-          <button className="mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white">
+          <button className="mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white" 
+            onClick={() => handleSubmit()}>
             Submit
-          </button>
+          </button >
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "sonner";
 // import { FaCheck } from "react-icons/fa";
 // import { FaExclamation } from "react-icons/fa6";
 
@@ -14,16 +15,36 @@ const SingleAnswerMultipleChoice = (props) => {
   }, [props.check, props.contend]);
 
   const handleCheckChange = () => {
+    const checkedCount = props.answersSelection.filter((answer) => answer.check).length;
+  
+    // if (!props.multipleOption && checkedCount ===1) {
+    //   // If multipleOption is off, unselect all other options
+    //   props.answersSelection.forEach((answer) => {
+    //     if (answer.label !== props.answer) {
+    //       console.log("answer"+answer.label +"not equals"+"answer"+props.answer);
+    //       props.handleCheckChange(answer.label, false);
+    //     }
+    //   });
+    // }
+  
+    if (props.correctCount <= checkedCount) {
+      if (props.isCorrect === "Selected" && !checkState) {
+        toast.warning("You cannot select more than the correct answers");
+        return;
+      }
+    }
+  
     setCheckState((prevState) => {
       if (contendState) {
         setContendState(false);
         props.handleContendChange(false);
       }
-
+  
       props.handleCheckChange(!prevState);
       return !prevState;
     });
   };
+  
 
   const handleContendChange = () => {
     setContendState((prevState) => {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -27,7 +27,9 @@ const QuestionCard = ({
   answers,
   question,
   whichTypeQuestion,
-  correctAnswers,
+  isCorrect,
+  correctCount,
+  time,
   btnText,
   btnColor,
   isBookmarked,
@@ -38,6 +40,7 @@ const QuestionCard = ({
   lastInteractedAt,
   usersChangeTheirAns,
   usersAddTheirAns,
+  multipleOption
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -378,6 +381,8 @@ const QuestionCard = ({
           <StartTest
             title={title}
             answers={answers}
+            multipleOption={multipleOption}
+            correctCount={correctCount}
             SingleAnswer={SingleAnswer}
             quests={quests}
             whichTypeQuestion={whichTypeQuestion}
@@ -395,7 +400,9 @@ const QuestionCard = ({
         ) : (
           <OptionBar
             id={id}
-            correctAnswers={correctAnswers}
+            isCorrect={isCorrect}
+            correctCount={correctCount}
+            time={time}
             btnText={btnText}
             btnColor={btnColor}
             handleStartTest={handleStartTest}
