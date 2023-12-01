@@ -34,22 +34,6 @@ const SidebarRight = () => {
       value: (response && response?.addedAnswers) || 0,
     },
     {
-      id: 3,
-      icon: "/assets/svgs/dashboard/icon3.svg",
-      iconLight: "/assets/svgs/dashboard/icon13.svg",
-      alt: "icon1",
-      title: "Correct Answers",
-      value: 222,
-    },
-    {
-      id: 4,
-      icon: "/assets/svgs/dashboard/icon4.svg",
-      iconLight: "/assets/svgs/dashboard/icon14.svg",
-      alt: "icon1",
-      title: "Wrong Answers",
-      value: 222,
-    },
-    {
       id: 5,
       icon: "/assets/svgs/dashboard/icon5.svg",
       iconLight: "/assets/svgs/dashboard/icon15.svg",
