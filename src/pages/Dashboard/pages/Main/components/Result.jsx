@@ -205,8 +205,8 @@ const Result = (props) => {
             title={props.title}
             checkInfo={true}
             percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-            check={findLabelChecked(quests.multipleChoice, item.question)}
-            contend={findLabelContend(quests.multipleChoice, item.question)}
+            check={findLabelChecked(props.answersSelection, item.question)}
+            contend={findLabelContend(props.answersSelection, item.question)}
             handleMultipleChoiceCC={props.handleMultipleChoiceCC}
             btnText={"Results"}
           />

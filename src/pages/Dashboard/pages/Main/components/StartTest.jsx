@@ -18,12 +18,15 @@ const StartTest = ({
   btnText,
   open,
   usersAddTheirAns,
+  setAnswerSelection,
+  answersSelection,
 }) => {
+  console.log({ answers });
   // const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const [answersSelection, setAnswerSelection] = useState(
-    answers.map(() => ({ check: false, contend: false })),
-  );
+  // const [answersSelection, setAnswerSelection] = useState(
+  //   answers.map(() => ({ check: false, contend: false })),
+  // );
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) =>
@@ -41,7 +44,7 @@ const StartTest = ({
     );
   };
 
-  console.log({ answersSelection });
+  // console.log({ answersSelection });
   // useEffect(() => {
   //   dispatch()
   // }, [answers])
@@ -117,8 +120,8 @@ const StartTest = ({
               title={title}
               checkInfo={true}
               handleMultipleChoiceCC={handleMultipleChoiceCC}
-              check={findLabelChecked(quests.multipleChoice, item.question)}
-              contend={findLabelContend(quests.multipleChoice, item.question)}
+              check={findLabelChecked(answersSelection, item.question)}
+              contend={findLabelContend(answersSelection, item.question)}
               whichTypeQuestion={whichTypeQuestion}
               handleCheckChange={(check) => handleCheckChange(index, check)}
               handleContendChange={(contend) =>

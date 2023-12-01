@@ -45,6 +45,13 @@ const QuestionCard = ({
   const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addedAnswerByUser, SetAddedAnswerByUser] = useState(false);
+  const [answersSelection, setAnswerSelection] = useState(
+    answers.map((answer) => ({
+      label: answer.question,
+      check: false,
+      contend: false,
+    })),
+  );
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -56,20 +63,20 @@ const QuestionCard = ({
   const { mutateAsync: AddBookmark } = useMutation({
     mutationFn: createBookmark,
     onSuccess: (resp) => {
-        toast.success("Successfully Bookmarked Quest")
-        queryClient.invalidateQueries("FeedData");
+      toast.success("Successfully Bookmarked Quest");
+      queryClient.invalidateQueries("FeedData");
       handleStartTest(null);
     },
     onError: (err) => {
       toast.error(err.response.data);
     },
   });
-  
+
   const { mutateAsync: DelBookmark } = useMutation({
     mutationFn: deleteBookmarkById,
     onSuccess: (resp) => {
-        toast.success("Successfully Removed Bookmark")
-        queryClient.invalidateQueries("FeedData");
+      toast.success("Successfully Removed Bookmark");
+      queryClient.invalidateQueries("FeedData");
       handleStartTest(null);
     },
     onError: (err) => {
@@ -77,25 +84,23 @@ const QuestionCard = ({
     },
   });
 
-
-  const handleBookmark=(status)=>{
-    if(status){
-      const params={
+  const handleBookmark = (status) => {
+    if (status) {
+      const params = {
         questForeignKey: id,
-        uuid: localStorage.getItem('uId')
-      }
+        uuid: localStorage.getItem("uId"),
+      };
       DelBookmark(params);
-    }
-    else{
-      const params={
+    } else {
+      const params = {
         questForeignKey: id,
-        uuid: localStorage.getItem('uId'),
-        Question:question,
-        whichTypeQuestion:whichTypeQuestion
-      }
+        uuid: localStorage.getItem("uId"),
+        Question: question,
+        whichTypeQuestion: whichTypeQuestion,
+      };
       AddBookmark(params);
     }
-  }
+  };
 
   const handleToggleCheck = (option, check, contend) => {
     const capitalizedOption = capitalizeFirstLetter(option);
@@ -111,6 +116,14 @@ const QuestionCard = ({
     dispatch(toggleCheck(actionPayload));
   };
 
+  const updateAnswersSelection = (currentAnswers, actionPayload) => {
+    const { label, check, contend } = actionPayload;
+
+    return currentAnswers.map((answer) =>
+      answer.label === label ? { ...answer, check, contend } : answer,
+    );
+  };
+
   const handleMultipleChoiceCC = (option, check, contend, label) => {
     const actionPayload = {
       option,
@@ -119,9 +132,9 @@ const QuestionCard = ({
       label,
     };
 
-    dispatch(addChoice(actionPayload));
-
-    dispatch(toggleCheck(actionPayload));
+    setAnswerSelection((prevAnswers) =>
+      updateAnswersSelection(prevAnswers, actionPayload),
+    );
   };
 
   const { mutateAsync: startQuest } = useMutation({
@@ -255,22 +268,22 @@ const QuestionCard = ({
       let answerContended = [];
       let addedAnswer = "";
 
-      for (let i = 0; i < quests.multipleChoice.length; i++) {
-        if (quests.multipleChoice[i].check) {
+      for (let i = 0; i < answersSelection.length; i++) {
+        if (answersSelection[i].check) {
           if (addedAnswerByUser) {
             // If user Add his own option
             answerSelected.push({
-              question: quests.multipleChoice[i].label,
+              question: answersSelection[i].label,
               addedAnswerByUser: true,
             });
-            addedAnswer = quests.multipleChoice[i].label;
+            addedAnswer = answersSelection[i].label;
           } else {
-            answerSelected.push({ question: quests.multipleChoice[i].label });
+            answerSelected.push({ question: answersSelection[i].label });
           }
         }
 
-        if (quests.multipleChoice[i].contend) {
-          answerContended.push({ question: quests.multipleChoice[i].label });
+        if (answersSelection[i].contend) {
+          answerContended.push({ question: answersSelection[i].label });
         }
       }
 
@@ -298,7 +311,7 @@ const QuestionCard = ({
             uuid: localStorage.getItem("uId"),
           };
           console.log("params", params);
-          changeAnswer(params);
+          // changeAnswer(params);
         }
       } else {
         const params = {
@@ -312,6 +325,8 @@ const QuestionCard = ({
       }
     }
   };
+
+  console.log({ answersSelection });
 
   return (
     <div className="rounded-[26px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618]">
@@ -342,6 +357,8 @@ const QuestionCard = ({
             open={open}
             btnText={btnText}
             usersAddTheirAns={usersAddTheirAns}
+            setAnswerSelection={setAnswerSelection}
+            answersSelection={answersSelection}
           />
         ) : (
           <OptionBar
@@ -368,6 +385,7 @@ const QuestionCard = ({
           whichTypeQuestion={whichTypeQuestion}
           setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
           handleMultipleChoiceCC={handleMultipleChoiceCC}
+          answersSelection={answersSelection}
         />
       )}
     </div>
