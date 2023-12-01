@@ -61,6 +61,25 @@ export const getAllBookmarkedQuests = async (uuid) => {
   });
 };
 
+// Add Bookmarks 
+export const createBookmark = async (data) => {
+  return await api.post(`/bookmarkQuest/createBookmarkQuest`, {
+    uuid:data.uuid,
+    questForeignKey:data.questForeignKey,
+    whichTypeQuestion:data.whichTypeQuestion,
+    Question:data.Question
+  });
+};
+
+// Delete Bookmarks 
+export const deleteBookmarkById = async (data) => {
+  return await api.post(`/bookmarkQuest/deleteBookmarkQuest`, {
+    uuid:data.uuid,
+    questForeignKey:data.questForeignKey
+  });
+};
+
+
 export const searchBookmarks = async (term,uuid) => {
   if (term !== "") {
     console.log(uuid);

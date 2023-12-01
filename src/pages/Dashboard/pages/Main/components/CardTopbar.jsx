@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-const CardTopbar = ({ title, img, alt, badgeCount, isBookmarked }) => {
+const CardTopbar = ({ title, img, alt, badgeCount, isBookmarked ,handleClickBookmark }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
@@ -14,27 +14,30 @@ const CardTopbar = ({ title, img, alt, badgeCount, isBookmarked }) => {
       <h1 className="text-[22px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF]">
         {title}
       </h1>
-      {isBookmarked ? (
-        persistedTheme !== "dark" ? (
-          <img
-            src="/assets/svgs/dashboard/bookmark-blue.svg"
-            alt="save icon"
-            className="h-7 w-9 cursor-pointer"
-          />
+      <div onClick={()=>handleClickBookmark(isBookmarked)}>
+
+        {isBookmarked ? (
+          persistedTheme !== "dark" ? (
+            <img
+              src="/assets/svgs/dashboard/bookmark-blue.svg"
+              alt="save icon"
+              className="h-7 w-9 cursor-pointer"
+            />
+          ) : (
+            <img
+              src="/assets/svgs/dashboard/bookmark-white.svg"
+              alt="save icon"
+              className="h-7 w-9 cursor-pointer"
+            />
+          )
         ) : (
           <img
-            src="/assets/svgs/dashboard/bookmark-white.svg"
+            src="/assets/svgs/dashboard/save.svg"
             alt="save icon"
             className="h-7 w-9 cursor-pointer"
           />
-        )
-      ) : (
-        <img
-          src="/assets/svgs/dashboard/save.svg"
-          alt="save icon"
-          className="h-7 w-9 cursor-pointer"
-        />
-      )}
+        )}
+      </div>
     </div>
   );
 };

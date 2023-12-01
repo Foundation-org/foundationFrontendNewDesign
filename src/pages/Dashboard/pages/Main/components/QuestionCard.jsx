@@ -16,7 +16,8 @@ import Result from "./Result";
 import OptionBar from "./OptionBar";
 import CardTopbar from "./CardTopbar";
 import StartTest from "./StartTest";
-
+import { createBookmark } from "../../../../../api/homepageApis";
+import { deleteBookmarkById } from "../../../../../api/homepageApis";
 const QuestionCard = ({
   id,
   img,
@@ -51,6 +52,50 @@ const QuestionCard = ({
   const capitalizeFirstLetter = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
+
+  const { mutateAsync: AddBookmark } = useMutation({
+    mutationFn: createBookmark,
+    onSuccess: (resp) => {
+        toast.success("Successfully Bookmarked Quest")
+        queryClient.invalidateQueries("FeedData");
+      handleStartTest(null);
+    },
+    onError: (err) => {
+      toast.error(err.response.data);
+    },
+  });
+  
+  const { mutateAsync: DelBookmark } = useMutation({
+    mutationFn: deleteBookmarkById,
+    onSuccess: (resp) => {
+        toast.success("Successfully Removed Bookmark")
+        queryClient.invalidateQueries("FeedData");
+      handleStartTest(null);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+
+  const handleBookmark=(status)=>{
+    if(status){
+      const params={
+        questForeignKey: id,
+        uuid: localStorage.getItem('uId')
+      }
+      DelBookmark(params);
+    }
+    else{
+      const params={
+        questForeignKey: id,
+        uuid: localStorage.getItem('uId'),
+        Question:question,
+        whichTypeQuestion:whichTypeQuestion
+      }
+      AddBookmark(params);
+    }
+  }
 
   const handleToggleCheck = (option, check, contend) => {
     const capitalizedOption = capitalizeFirstLetter(option);
@@ -249,7 +294,7 @@ const QuestionCard = ({
         } else {
           const params = {
             questId: id,
-            changeAnswerAddedObj: dataToSend,
+            answer: dataToSend,
             uuid: localStorage.getItem("uId"),
           };
           console.log("params", params);
@@ -257,8 +302,8 @@ const QuestionCard = ({
         }
       } else {
         const params = {
-          questForeignKey: id,
-          data: dataToSend,
+          questId: id,
+          answer: dataToSend,
           addedAnswer: addedAnswer,
           uuid: localStorage.getItem("uId"),
         };
@@ -276,6 +321,7 @@ const QuestionCard = ({
         alt={alt}
         badgeCount={badgeCount}
         isBookmarked={isBookmarked}
+        handleClickBookmark={handleBookmark}
       />
       <h1 className="ml-[52.65px] mt-[5px] text-[25px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8]">
         {question.endsWith("?") ? "Q." : "S."} {question}
