@@ -5,7 +5,7 @@ export const updateChangeAnsStartQuest = async (data) => {
   return await api.post("/startQuest/updateChangeAnsStartQuest", {
     questId: data.questId,
     changeAnswerAddedObj: data.answer,
-    addedAnswer: data.addedAnswer ||"",
+    addedAnswer: data.addedAnswer || "",
     uuid: data.uuid,
   });
 };
@@ -15,7 +15,7 @@ export const createStartQuest = async (data) => {
   return await api.post("/startQuest/createStartQuest", {
     questForeignKey: data.questId,
     data: data.answer,
-    addedAnswer: data.addedAnswer||"",
+    addedAnswer: data.addedAnswer || "",
     uuid: data.uuid,
   });
 };
@@ -50,5 +50,13 @@ export const getStartQuestPercent = async (data) => {
   return await api.post("/startQuest/getStartQuestPercent", {
     questForeignKey: data.questForeignKey,
     uuid: data.uuid,
+  });
+};
+
+// to get Ranked quest percent
+export const getRankedQuestPercent = async (data) => {
+  return await api.post("/startQuest/getRankedQuestPercent", {
+    questForeignKey: data.questForeignKey,
+    // uuid: data.uuid,
   });
 };

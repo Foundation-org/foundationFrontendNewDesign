@@ -15,6 +15,7 @@ const OptionBar = ({
   whichTypeQuestion,
   handleToggleCheck,
   handleMultipleChoiceCC,
+  handleRankedChoice,
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -111,6 +112,24 @@ const OptionBar = ({
               );
             },
           );
+        }
+      }
+      if (whichTypeQuestion === "ranked choise") {
+        if (res?.data.data[res.data.data.length - 1].selected) {
+          handleRankedChoice(
+            "Ranked Choice",
+            res?.data.data[res.data.data.length - 1].selected,
+          );
+          // res?.data.data[res.data.data.length - 1].selected.map(
+          //   (item, index) => {
+          //     handleMultipleChoiceCC(
+          //       "Ranked Choice",
+          //       false,
+          //       false,
+          //       item.question,
+          //     );
+          //   },
+          // );
         }
       }
     },

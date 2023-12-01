@@ -56,6 +56,8 @@ const QuestionCard = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // move add optioon state here
+
   const capitalizeFirstLetter = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
@@ -132,8 +134,38 @@ const QuestionCard = ({
       label,
     };
 
+    console.log({ actionPayload });
+
     setAnswerSelection((prevAnswers) =>
       updateAnswersSelection(prevAnswers, actionPayload),
+    );
+  };
+
+  const updateAnswersSelectionForRanked = (prevAnswers, actionPayload) => {
+    const { option, label } = actionPayload;
+
+    const updatedAnswers = prevAnswers.map((answer) => {
+      // Check if the label matches the question
+      if (label.some((item) => item.question === answer.label)) {
+        return { ...answer, check: true }; // Set check to true for matching question
+      } else {
+        return answer;
+      }
+    });
+
+    return updatedAnswers;
+  };
+
+  const handleRankedChoice = (option, label) => {
+    const actionPayload = {
+      option,
+      label,
+    };
+
+    console.log({ actionPayload });
+
+    setAnswerSelection((prevAnswers) =>
+      updateAnswersSelectionForRanked(prevAnswers, actionPayload),
     );
   };
 
@@ -310,8 +342,8 @@ const QuestionCard = ({
             answer: dataToSend,
             uuid: localStorage.getItem("uId"),
           };
-          console.log("params", params);
-          // changeAnswer(params);
+          // console.log("params", params);
+          changeAnswer(params);
         }
       } else {
         const params = {
@@ -372,6 +404,7 @@ const QuestionCard = ({
             whichTypeQuestion={whichTypeQuestion}
             handleToggleCheck={handleToggleCheck}
             handleMultipleChoiceCC={handleMultipleChoiceCC}
+            handleRankedChoice={handleRankedChoice}
           />
         )
       ) : (

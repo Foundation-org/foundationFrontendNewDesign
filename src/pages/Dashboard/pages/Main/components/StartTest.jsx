@@ -1,8 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import AddNewOption from "../../../components/AddNewOption";
 import BasicModal from "../../../../../components/BasicModal";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 import { useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
 
 const StartTest = ({
   title,
@@ -21,12 +23,13 @@ const StartTest = ({
   setAnswerSelection,
   answersSelection,
 }) => {
-  console.log({ answers });
-  // const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
-  // const [answersSelection, setAnswerSelection] = useState(
-  //   answers.map(() => ({ check: false, contend: false })),
-  // );
+  const [rankedAnswers, setRankedAnswers] = useState(
+    answers.map((item, index) => ({
+      id: `unique-${index}`,
+      ...item,
+    })),
+  );
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) =>
@@ -43,11 +46,6 @@ const StartTest = ({
       ),
     );
   };
-
-  // console.log({ answersSelection });
-  // useEffect(() => {
-  //   dispatch()
-  // }, [answers])
 
   function findLabelChecked(array, labelToFind) {
     const labelFound = array.filter((item) => item.label === labelToFind);
@@ -66,6 +64,17 @@ const StartTest = ({
       return false;
     }
   }
+
+  const handleOnDragEnd = (res) => {
+    if (!res.destination) return;
+    const items = Array.from(rankedAnswers);
+    const [reorderedItem] = items.splice(res.source.index, 1);
+    items.splice(res.destination.index, 0, reorderedItem);
+
+    setRankedAnswers(items);
+  };
+
+  console.log("hamza", rankedAnswers);
 
   return (
     <>
@@ -130,14 +139,48 @@ const StartTest = ({
             />
           ))
         ) : (
-          answers.map((item, index) => (
-            <SingleAnswer
-              number={"#" + (index + 1)}
-              answer={item.question}
-              title={title}
-              handleMultipleChoiceCC={handleMultipleChoiceCC}
-            />
-          ))
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
+              {(provided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className="flex flex-col gap-[11px]"
+                >
+                  {rankedAnswers.map((item, index) => (
+                    <Draggable
+                      key={item.id}
+                      draggableId={item.id}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <div
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                        >
+                          <SingleAnswerRankedChoice
+                            number={"#" + (index + 1)}
+                            answer={item.question}
+                            title={title}
+                            handleMultipleChoiceCC={handleMultipleChoiceCC}
+                            checkInfo={true}
+                            check={findLabelChecked(
+                              answersSelection,
+                              item.question,
+                            )}
+                            handleCheckChange={(check) =>
+                              handleCheckChange(index, check)
+                            }
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         )}
 
         {usersAddTheirAns ? (

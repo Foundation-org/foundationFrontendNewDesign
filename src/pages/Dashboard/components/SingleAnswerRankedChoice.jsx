@@ -1,43 +1,35 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-// import { FaCheck } from "react-icons/fa";
-// import { FaExclamation } from "react-icons/fa6";
+import { FaCheck } from "react-icons/fa";
+import { FaExclamation } from "react-icons/fa6";
+import { useEffect } from "react";
+import { useState } from "react";
+// import { getQuests } from "../../../features/quest/questsSlice";
 
-const SingleAnswerMultipleChoice = (props) => {
+const SingleAnswerRankedChoice = (props) => {
+  //   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [checkState, setCheckState] = useState(props.check);
-  const [contendState, setContendState] = useState(props.contend);
 
   useEffect(() => {
     setCheckState(props.check);
-    setContendState(props.contend);
-  }, [props.check, props.contend]);
+  }, [props.check]);
 
   const handleCheckChange = () => {
     setCheckState((prevState) => {
-      if (contendState) {
-        setContendState(false);
-        props.handleContendChange(false);
-      }
-
       props.handleCheckChange(!prevState);
       return !prevState;
     });
   };
 
-  const handleContendChange = () => {
-    setContendState((prevState) => {
-      if (checkState) {
-        handleCheckChange(false);
-        props.handleCheckChange(false);
-      }
+  //   const selectedPercentageValue =
+  //     props.percentages?.selectedPercentage[
+  //       props.answer === "Agree" ? "Yes" : "No"
+  //     ];
 
-      props.handleContendChange(!prevState);
-      return !prevState;
-    });
-  };
-
-  console.log("first", props.title);
+  //   const contenedPercentageValue =
+  //     props.percentages?.contendedPercentage[
+  //       props.answer === "Disagree" ? "Yes" : "No"
+  //     ];
 
   return (
     <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
@@ -78,52 +70,21 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         ) : (
           <div className="mr-[20.63px] flex items-center gap-[19px] ">
-            {props.title === "Multiple Choice" ? (
-              <div id="custom-checkbox" className="-mb-[7px] ">
-                <input
-                  id="small-checkbox"
-                  type="checkbox"
-                  className="checkbox rounded-[2px]"
-                  checked={checkState}
-                  onChange={handleCheckChange}
-                />
-              </div>
-            ) : null}
-
+            {/* <div id="custom-checkbox" className="-mb-[7px] ">
+              <input
+                id="small-checkbox"
+                type="checkbox"
+                className="checkbox rounded-[2px]"
+                checked={checkState}
+                onChange={handleCheckChange}
+              />
+            </div> */}
             {props.btnText === "Results" ? (
               <>
                 {props.percentages?.selectedPercentage[props.answer] ===
                 undefined
                   ? "0%"
                   : props.percentages?.selectedPercentage[props.answer] + "%"}
-              </>
-            ) : (
-              <></>
-            )}
-
-            {props.title === "Multiple Choice" ? (
-              <>
-                <div id="custom-yello-checkbox" className="-mb-[7px] ">
-                  <input
-                    id="small-yello-checkbox"
-                    type="checkbox"
-                    className="checkbox rounded-[2px]"
-                    checked={contendState}
-                    onChange={handleContendChange}
-                  />
-                </div>
-
-                {props.btnText === "Results" ? (
-                  <>
-                    {props.percentages?.contendedPercentage[props.answer] ===
-                    undefined
-                      ? "0%"
-                      : props.percentages?.contendedPercentage[props.answer] +
-                        "%"}
-                  </>
-                ) : (
-                  <></>
-                )}
               </>
             ) : null}
           </div>
@@ -133,4 +94,4 @@ const SingleAnswerMultipleChoice = (props) => {
   );
 };
 
-export default SingleAnswerMultipleChoice;
+export default SingleAnswerRankedChoice;

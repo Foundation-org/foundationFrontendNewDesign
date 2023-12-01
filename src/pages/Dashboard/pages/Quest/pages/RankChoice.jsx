@@ -80,6 +80,15 @@ const RankChoice = () => {
     setOptionsCount(newOptionsCount);
   };
 
+  const handleOnDragEnd = (res) => {
+    if (!res.destination) return;
+    const items = Array.from(typedValues);
+    const [reorderedItem] = items.splice(res.source.index, 1);
+    items.splice(res.destination.index, 0, reorderedItem);
+
+    setTypedValues(items);
+  };
+
   return (
     <div>
       <Title />
@@ -102,7 +111,7 @@ const RankChoice = () => {
           </h1>
         </div>
         {/* options */}
-        <DragDropContext>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId={`typedValues-${Date.now()}`}>
             {(provided) => (
               <div

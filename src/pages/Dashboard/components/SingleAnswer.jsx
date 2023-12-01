@@ -16,16 +16,6 @@ const SingleAnswer = (props) => {
     props.percentages?.contendedPercentage[
       props.answer === "Disagree" ? "Yes" : "No"
     ];
-  console.log(
-    "hamza",
-    props.answer,
-    props.answer === "Yes" || props.answer === "Agree"
-      ? props.percentages?.selectedPercentage.Yes
-      : undefined,
-    props.answer === "No" || props.answer === "Disagree"
-      ? props.percentages?.selectedPercentage.No
-      : undefined,
-  );
 
   return (
     <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
