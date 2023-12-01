@@ -70,7 +70,7 @@ const Options = ({
                       id="default-checkbox"
                       type="checkbox"
                       className="h-10 w-10 rounded"
-                      onChange={handleOptionSelect}
+                      onChange={handleOptionChange}
                       checked={isSelected}
                     />
                   </div>

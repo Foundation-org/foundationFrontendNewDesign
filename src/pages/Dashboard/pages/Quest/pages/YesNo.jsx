@@ -102,14 +102,14 @@ const YesNo = () => {
             answer={"Yes"}
             options={correctState ? true : false}
             handleOptionChange={() => handleOptionChange("Yes")}
-            isYes={selectedOption === "Yes"}
+            isSelected={selectedOption === "Yes"}
           />
           <Options
             number={"#2"}
             answer={"No"}
             options={correctState ? true : false}
             handleOptionChange={() => handleOptionChange("No")}
-            isYes={selectedOption === "No"}
+            isSelected={selectedOption === "No"}
           />
         </div>
         <h3 className="mb-[32px] ml-[104px] mt-[50px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
