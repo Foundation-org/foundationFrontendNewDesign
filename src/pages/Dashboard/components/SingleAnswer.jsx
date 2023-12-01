@@ -74,6 +74,8 @@ const SingleAnswer = (props) => {
               <>
                 {props.answer === "Yes" || props.answer === "Agree"
                   ? props.percentages?.selectedPercentage.Yes + "%"
+                  : props.answer === "No" || props.answer === "Disagree"
+                  ? props.percentages?.selectedPercentage.No + "%"
                   : "0%"}
               </>
             ) : (
@@ -95,7 +97,9 @@ const SingleAnswer = (props) => {
             </div>
             {props.btnText === "Results" ? (
               <>
-                {props.answer === "No" || props.answer === "Disagree"
+                {props.answer === "Yes" || props.answer === "Agree"
+                  ? props.percentages?.contendedPercentage.Yes + "%"
+                  : props.answer === "No" || props.answer === "Disagree"
                   ? props.percentages?.contendedPercentage.No + "%"
                   : "0%"}
               </>

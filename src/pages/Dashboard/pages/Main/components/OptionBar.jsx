@@ -34,9 +34,9 @@ const OptionBar = ({
         whichTypeQuestion === "yes/no"
       ) {
         if (
-          res.data.data[res.data.data.length - 1].selected.toLowerCase() ===
+          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
             "agree" ||
-          res.data.data[res.data.data.length - 1].selected.toLowerCase() ===
+          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
             "yes"
         ) {
           console.log("ran 1");
@@ -47,9 +47,9 @@ const OptionBar = ({
           );
         }
         if (
-          res.data.data[res.data.data.length - 1].contended.toLowerCase() ===
+          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
             "agree" ||
-          res.data.data[res.data.data.length - 1].contended.toLowerCase() ===
+          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
             "yes"
         ) {
           console.log("ran 2");
@@ -61,9 +61,9 @@ const OptionBar = ({
           );
         }
         if (
-          res.data.data[res.data.data.length - 1].contended.toLowerCase() ===
+          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
             "disagree" ||
-          res.data.data[res.data.data.length - 1].contended.toLowerCase() ===
+          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
             "no"
         ) {
           console.log("ran 3");
@@ -75,9 +75,9 @@ const OptionBar = ({
           );
         }
         if (
-          res.data.data[res.data.data.length - 1].selected.toLowerCase() ===
+          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
             "disagree" ||
-          res.data.data[res.data.data.length - 1].selected.toLowerCase() ===
+          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
             "no"
         ) {
           console.log("ran 4");
