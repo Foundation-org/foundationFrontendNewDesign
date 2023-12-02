@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import AddNewOption from "../../../components/AddNewOption";
 import BasicModal from "../../../../../components/BasicModal";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
-import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
 
@@ -24,9 +24,10 @@ const StartTest = ({
   answersSelection,
   isCorrect,
   correctCount,
-  multipleOption
+  multipleOption,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const [addOptionLimit, setAddOptionLimit] = useState(0);
   const [rankedAnswers, setRankedAnswers] = useState(
     answers.map((item, index) => ({
       id: `unique-${index}`,
@@ -46,6 +47,26 @@ const StartTest = ({
     setAnswerSelection((prevAnswers) =>
       prevAnswers.map((answer, i) =>
         i === index ? { ...answer, contend } : answer,
+      ),
+    );
+  };
+
+  const handleCheckChangeSingle = (index) => {
+    setAnswerSelection((prevAnswers) =>
+      prevAnswers.map((answer, i) =>
+        i === index
+          ? { ...answer, check: true, contend: false }
+          : { ...answer, check: false },
+      ),
+    );
+  };
+
+  const handleContendChangeSingle = (index) => {
+    setAnswerSelection((prevAnswers) =>
+      prevAnswers.map((answer, i) =>
+        i === index
+          ? { ...answer, contend: true, check: false }
+          : { ...answer, contend: false },
       ),
     );
   };
@@ -76,8 +97,6 @@ const StartTest = ({
 
     setRankedAnswers(items);
   };
-
-  console.log("hamza", rankedAnswers);
 
   return (
     <>
@@ -125,23 +144,33 @@ const StartTest = ({
             )}
           </>
         ) : title === "Multiple Choice" ? (
-          answers.map((item, index) => (
+          answersSelection.map((item, index) => (
             <SingleAnswerMultipleChoice
               number={"#" + (index + 1)}
-              answer={item.question}
+              answer={item.label}
+              editable={item.edit}
+              deleteable={item.delete}
               title={title}
               multipleOption={multipleOption}
+              setAddOptionLimit={setAddOptionLimit}
               answersSelection={answersSelection}
+              setAnswerSelection={setAnswerSelection}
               isCorrect={isCorrect}
               correctCount={correctCount}
               checkInfo={true}
               handleMultipleChoiceCC={handleMultipleChoiceCC}
-              check={findLabelChecked(answersSelection, item.question)}
-              contend={findLabelContend(answersSelection, item.question)}
+              check={findLabelChecked(answersSelection, item.label)}
+              contend={findLabelContend(answersSelection, item.label)}
               whichTypeQuestion={whichTypeQuestion}
-              handleCheckChange={(check) => handleCheckChange(index, check)}
-              handleContendChange={(contend) =>
-                handleContendChange(index, contend)
+              handleCheckChange={
+                multipleOption === true
+                  ? (check) => handleCheckChange(index, check)
+                  : (check) => handleCheckChangeSingle(index, check)
+              }
+              handleContendChange={
+                multipleOption === true
+                  ? (contend) => handleContendChange(index, contend)
+                  : (contend) => handleContendChangeSingle(index, contend)
               }
             />
           ))
@@ -190,7 +219,7 @@ const StartTest = ({
           </DragDropContext>
         )}
 
-        {usersAddTheirAns ? (
+        {usersAddTheirAns && addOptionLimit === 0 ? (
           <div>
             {title === "Yes/No" ||
             title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
@@ -217,7 +246,12 @@ const StartTest = ({
           </div>
         ) : null}
         <BasicModal open={open} handleClose={handleClose}>
-          <AddNewOption />
+          <AddNewOption
+            setAnswerSelection={setAnswerSelection}
+            answersSelection={answersSelection}
+            handleClose={handleClose}
+            setAddOptionLimit={setAddOptionLimit}
+          />
         </BasicModal>
       </div>
       <div className="mt-8 flex w-full justify-end">

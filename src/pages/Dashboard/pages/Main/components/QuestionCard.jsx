@@ -40,7 +40,7 @@ const QuestionCard = ({
   lastInteractedAt,
   usersChangeTheirAns,
   usersAddTheirAns,
-  multipleOption
+  multipleOption,
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -301,17 +301,19 @@ const QuestionCard = ({
       console.log("inside multiple");
       let answerSelected = [];
       let answerContended = [];
-      let addedAnswer = "";
+      let addedAnswerValue = "";
 
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
-          if (addedAnswerByUser) {
+          if (answersSelection[i].addedOptionByUser) {
             // If user Add his own option
+            console.log("added answer ran");
             answerSelected.push({
               question: answersSelection[i].label,
               addedAnswerByUser: true,
             });
-            addedAnswer = answersSelection[i].label;
+            addedAnswerValue = answersSelection[i].label;
+            console.log("added ans value"+addedAnswerValue);
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
@@ -345,14 +347,14 @@ const QuestionCard = ({
             answer: dataToSend,
             uuid: localStorage.getItem("uId"),
           };
-          // console.log("params", params);
+          console.log("params", params);
           changeAnswer(params);
         }
       } else {
         const params = {
           questId: id,
           answer: dataToSend,
-          addedAnswer: addedAnswer,
+          addedAnswer: addedAnswerValue,
           uuid: localStorage.getItem("uId"),
         };
         console.log("params", params);
@@ -361,7 +363,7 @@ const QuestionCard = ({
     }
   };
 
-  console.log({ answersSelection });
+  console.log("answersSelection", answersSelection);
 
   return (
     <div className="rounded-[26px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618]">
