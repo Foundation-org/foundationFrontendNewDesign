@@ -1,6 +1,14 @@
 import { useSelector } from "react-redux";
 
-const CardTopbar = ({ title, img, alt, badgeCount, isBookmarked ,handleClickBookmark }) => {
+const CardTopbar = ({
+  title,
+  img,
+  alt,
+  badgeCount,
+  isBookmarked,
+  handleClickBookmark,
+  bookmarkStatus,
+}) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
@@ -14,9 +22,8 @@ const CardTopbar = ({ title, img, alt, badgeCount, isBookmarked ,handleClickBook
       <h1 className="text-[22px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF]">
         {title}
       </h1>
-      <div onClick={()=>handleClickBookmark(isBookmarked)}>
-
-        {isBookmarked ? (
+      <div onClick={() => handleClickBookmark(isBookmarked)}>
+        {bookmarkStatus ? (
           persistedTheme !== "dark" ? (
             <img
               src="/assets/svgs/dashboard/bookmark-blue.svg"

@@ -18,6 +18,7 @@ import CardTopbar from "./CardTopbar";
 import StartTest from "./StartTest";
 import { createBookmark } from "../../../../../api/homepageApis";
 import { deleteBookmarkById } from "../../../../../api/homepageApis";
+
 const QuestionCard = ({
   id,
   img,
@@ -46,6 +47,7 @@ const QuestionCard = ({
   const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
   const [open, setOpen] = useState(false);
+  const [bookmarkStatus, setbookmarkStatus] = useState(isBookmarked);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addedAnswerByUser, SetAddedAnswerByUser] = useState(false);
   const [answersSelection, setAnswerSelection] = useState(
@@ -90,6 +92,7 @@ const QuestionCard = ({
   });
 
   const handleBookmark = (status) => {
+    setbookmarkStatus((prevIsBookmarked) => !prevIsBookmarked);
     if (status) {
       const params = {
         questForeignKey: id,
@@ -313,7 +316,7 @@ const QuestionCard = ({
               addedAnswerByUser: true,
             });
             addedAnswerValue = answersSelection[i].label;
-            console.log("added ans value"+addedAnswerValue);
+            console.log("added ans value" + addedAnswerValue);
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
@@ -374,6 +377,7 @@ const QuestionCard = ({
         badgeCount={badgeCount}
         isBookmarked={isBookmarked}
         handleClickBookmark={handleBookmark}
+        bookmarkStatus={bookmarkStatus}
       />
       <h1 className="ml-[52.65px] mt-[5px] text-[25px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8]">
         {question.endsWith("?") ? "Q." : "S."} {question}

@@ -31,7 +31,7 @@ const Form = ({ onEmailChange, onPassChange }) => {
 
   return (
     <div className="flex flex-col gap-[21.7px]">
-      <div className="form-control w-full gap-[11.5px]">
+      <div className="form-control w-full gap-[6px] md:gap-[11.5px]">
         <label className="label p-0">
           <Typography variant="p">Email</Typography>
         </label>
@@ -39,7 +39,7 @@ const Form = ({ onEmailChange, onPassChange }) => {
           <input
             type="text"
             placeholder="Enter your email"
-            className="input border-[1.473px] border-[#D0D5DD] dark:border-[#D9D9D9] focus:outline-none w-full bg-white dark:bg-gray-400 text-gray-400 dark:text-white"
+            className="input h-[33px] w-full rounded-[6px] border-[1.473px] border-[#D0D5DD] bg-white text-gray-400 focus:outline-none dark:border-[#D9D9D9] dark:bg-gray-400 dark:text-white md:h-12"
             // value={email}
             onChange={onEmailChange}
           />
@@ -47,13 +47,13 @@ const Form = ({ onEmailChange, onPassChange }) => {
             <img
               src="/assets/svgs/XIcon.svg"
               alt="x-icon"
-              className="h-[1.625rem] w-[1.625rem] absolute right-2 top-3 cursor-pointer"
+              className="absolute right-2 top-3 h-[1.625rem] w-[1.625rem] cursor-pointer"
               onClick={clearEmail}
             />
           )}
         </div>
       </div>
-      <div className="form-control w-full gap-[11.5px]">
+      <div className="form-control w-full gap-[6px] md:gap-[11.5px]">
         <label className="label p-0">
           <Typography variant="p">Password</Typography>
         </label>
@@ -61,21 +61,21 @@ const Form = ({ onEmailChange, onPassChange }) => {
           <input
             type={inputType}
             placeholder="Enter your password"
-            className="input border-[1.473px] border-[#D0D5DD] dark:border-[#D9D9D9] focus:outline-none w-full bg-white dark:bg-gray-400 text-gray-400 dark:text-white"
+            className="input h-[33px] w-full rounded-[6px] border-[1.473px] border-[#D0D5DD] bg-white text-gray-400 focus:outline-none dark:border-[#D9D9D9] dark:bg-gray-400 dark:text-white md:h-12"
             onChange={onPassChange}
           />
           {!showPassword ? (
             <img
               src="/assets/svgs/blind-outline.svg"
               alt="blind"
-              className="h-[1.625rem] w-[1.625rem] absolute right-2 top-3 cursor-pointer"
+              className="absolute right-2 top-1 h-[1.625rem] w-[1.625rem] cursor-pointer md:top-3"
               onClick={togglePasswordVisibility}
             />
           ) : (
             <img
               src="/assets/svgs/eye-outline.svg"
               alt="eye"
-              className="h-[1.625rem] w-[1.625rem] absolute right-2 top-3 cursor-pointer"
+              className="absolute right-2 top-1 h-[1.625rem] w-[1.625rem] cursor-pointer md:top-3"
               onClick={togglePasswordVisibility}
             />
           )}
@@ -93,7 +93,7 @@ const Form = ({ onEmailChange, onPassChange }) => {
             <span className="label-text">Remember me</span>
           </label>
         </div> */}
-        <Anchor className="dark:text-white cursor-pointer">
+        <Anchor className="cursor-pointer dark:text-white">
           Forgot Password?
         </Anchor>
       </div>

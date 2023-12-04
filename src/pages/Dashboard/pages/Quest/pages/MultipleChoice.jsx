@@ -188,7 +188,7 @@ const MultipleChoice = () => {
           <h5 className="text-center text-[30px] font-medium leading-normal text-[#435059]">
             Settings
           </h5>
-          <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
+          {/* <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
             <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
               This Quest has a Correct Option.
             </h5>
@@ -196,7 +196,7 @@ const MultipleChoice = () => {
               enabled={correctOption}
               setEnabled={setCorrectOption}
             />
-          </div>
+          </div> */}
           <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
             <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
               Participants can select multiple options.

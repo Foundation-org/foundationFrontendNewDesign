@@ -6,6 +6,7 @@ export const columns = [
   {
     name: "txID",
     selector: (row) => row.txID,
+    width: "240px",
   },
   {
     name: "txAuth",
@@ -15,6 +16,7 @@ export const columns = [
   {
     name: "txFrom",
     selector: (row) => row.txFrom,
+    width: "240px",
   },
   {
     name: "txTo",
@@ -24,17 +26,17 @@ export const columns = [
   {
     name: "txAmount",
     selector: (row) => row.txAmount,
-    width: "250px",
+    width: "150px",
   },
   {
     name: "txDate",
     selector: (row) => row.txDate,
   },
-  {
-    name: "txDescription",
-    selector: (row) => row.txDescription,
-    width: "450px",
-  },
+  // {
+  //   name: "txDescription",
+  //   selector: (row) => row.txDescription,
+  //   width: "450px",
+  // },
 ];
 function capitalize(str) {
   // Check if the input is a string

@@ -21,7 +21,7 @@ const AgreeDisagree = () => {
       // console.log('resp', resp);
       toast.success("Successfully Created Quest");
       setTimeout(() => {
-        navigate("/dashboard")
+        navigate("/dashboard");
       }, 2000);
     },
     onError: (err) => {
@@ -33,12 +33,10 @@ const AgreeDisagree = () => {
   useEffect(() => {
     if (correctState) {
       setChangeState(false);
-      setChangedOption("")
+      setChangedOption("");
+    } else {
+      setSelectedOption("");
     }
-    else{
-      setSelectedOption('');
-    } 
-    
   }, [correctState]);
 
   const handleOptionChange = (option) => {
@@ -53,37 +51,37 @@ const AgreeDisagree = () => {
   });
 
   const handleSubmit = () => {
+    if (changeState && changedOption === "") {
+      toast.warning(
+        "Looks like you missed selecting the answer change frequency",
+      );
+      return;
+    }
+    if (question === "") {
+      toast.warning("Write some Question Before Submitting");
+      return;
+    }
+    if (correctState && selectedOption === "") {
+      toast.warning("You have to select one correct option to finish");
+      return;
+    }
 
-    if(changeState && changedOption===""){
- 
-      toast.warning("Looks like you missed selecting the answer change frequency",)
-      return;
-    }
-    if(question==='')
-    {
-      toast.warning("Write some Question Before Submitting",)
-      return;
-    }
-    if(correctState && selectedOption===''){
-      toast.warning("You have to select one correct option to finish",)
-      return;
-    }
-    
-  
-    const params={
-      "Question": question,
-      "whichTypeQuestion": "agree/disagree",
-      "usersChangeTheirAns": changedOption,
-      "QuestionCorrect": correctState === true ? selectedOption === "Agree" ? "agree" : "disagree" : "Not Selected",
-      "uuid": localStorage.getItem("uId"),
-    }
+    const params = {
+      Question: question,
+      whichTypeQuestion: "agree/disagree",
+      usersChangeTheirAns: changedOption,
+      QuestionCorrect:
+        correctState === true
+          ? selectedOption === "Agree"
+            ? "agree"
+            : "disagree"
+          : "Not Selected",
+      uuid: localStorage.getItem("uId"),
+    };
     console.log(params);
 
     createQuest(params);
-   
-
-  }
-
+  };
 
   return (
     <div>
@@ -112,14 +110,14 @@ const AgreeDisagree = () => {
           <Options
             number={"#1"}
             answer={"Agree"}
-            options={correctState?true:false}
+            options={correctState ? true : false}
             handleOptionChange={() => handleOptionChange("Agree")}
             isSelected={selectedOption === "Agree"}
           />
           <Options
             number={"#2"}
             answer={"Disagree"}
-            options={correctState?true:false}
+            options={correctState ? true : false}
             handleOptionChange={() => handleOptionChange("Disagree")}
             isSelected={selectedOption === "Disagree"}
           />
@@ -131,12 +129,12 @@ const AgreeDisagree = () => {
           <h5 className="text-center text-[30px] font-medium leading-normal text-[#435059]">
             Settings
           </h5>
-          <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
+          {/* <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
             <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
               This Quest has a Correct Option.
             </h5>
             <CustomSwitch enabled={correctState} setEnabled={setCorrectState} />
-          </div>
+          </div> */}
           {!correctState ? (
             <>
               <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
@@ -171,7 +169,9 @@ const AgreeDisagree = () => {
           ) : null}
         </div>
         <div className="flex w-full justify-end">
-        <button className="blue-submit-button"  onClick={() => handleSubmit()}>Submit</button>
+          <button className="blue-submit-button" onClick={() => handleSubmit()}>
+            Submit
+          </button>
         </div>
       </div>
     </div>

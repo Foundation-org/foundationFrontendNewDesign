@@ -18,12 +18,12 @@ const Form = ({
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
-    <form className="w-full flex flex-col gap-11 5xl:gap-14 my-6 dark:text-white text-gray-600">
+    <form className="my-6 flex w-full flex-col gap-11 text-gray-600 dark:text-white 5xl:gap-14">
       <Input
         type="email"
         id="email"
         label="Email Address"
-        className="border-b-[1px] py-1 focus:outline-none dark:focus:border-white focus:border-[#C0C0C0] focus:border-b-2 transition-colors peer bg-white dark:bg-dark w-full border-[#C0C0C0] dark:border-white"
+        className="peer w-full border-b-[1px] border-[#C0C0C0] bg-white py-1 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px]"
         autoComplete="off"
         onChange={onEmailChange}
       />
@@ -33,7 +33,7 @@ const Form = ({
             type={inputType}
             id="password"
             label="Password"
-            className="border-b-[1px] py-1 focus:outline-none dark:focus:border-white focus:border-[#C0C0C0] focus:border-b-2 transition-colors peer bg-white dark:bg-dark w-full border-[#C0C0C0] dark:border-white"
+            className="peer w-full border-b-[1px] border-[#C0C0C0]  bg-white py-1 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px]"
             autoComplete="off"
             onChange={onPassChange}
           />
@@ -42,14 +42,14 @@ const Form = ({
               <img
                 src="/assets/svgs/blind.svg"
                 alt="blind"
-                className="absolute right-2 -top-2 cursor-pointer"
+                className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
                 onClick={togglePasswordVisibility}
               />
             ) : (
               <img
                 src="/assets/svgs/eye-white.svg"
                 alt="blind"
-                className="absolute right-2 -top-2 cursor-pointer"
+                className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
                 onClick={togglePasswordVisibility}
               />
             )
@@ -57,14 +57,14 @@ const Form = ({
             <img
               src="/assets/svgs/eye.svg"
               alt="blind"
-              className="absolute right-2 -top-2 cursor-pointer"
+              className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
               onClick={togglePasswordVisibility}
             />
           ) : (
             <img
               src="/assets/svgs/eye-white.svg"
               alt="blind"
-              className="absolute right-2 -top-2 cursor-pointer"
+              className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
               onClick={togglePasswordVisibility}
             />
           )}
@@ -80,7 +80,7 @@ const Form = ({
             type={cnfmPassInputType}
             id="retype-password"
             label="Re-Type Password"
-            className="border-b-[1px] py-1 focus:outline-none dark:focus:border-white focus:border-[#C0C0C0] focus:border-b-2 transition-colors peer bg-white dark:bg-dark w-full border-[#C0C0C0] dark:border-white"
+            className="peer w-full border-b-[1px] border-[#C0C0C0]  bg-white py-1 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px]"
             autoComplete="off"
             onChange={onReTypePassChange}
           />
@@ -89,14 +89,14 @@ const Form = ({
               <img
                 src="/assets/svgs/blind.svg"
                 alt="blind"
-                className="absolute right-2 -top-2 cursor-pointer"
+                className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
                 onClick={toggleCnfmPasswordVisibility}
               />
             ) : (
               <img
                 src="/assets/svgs/eye-white.svg"
                 alt="blind"
-                className="absolute right-2 -top-2 cursor-pointer"
+                className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
                 onClick={toggleCnfmPasswordVisibility}
               />
             )
@@ -104,14 +104,14 @@ const Form = ({
             <img
               src="/assets/svgs/eye.svg"
               alt="blind"
-              className="absolute right-2 -top-2 cursor-pointer"
+              className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
               onClick={toggleCnfmPasswordVisibility}
             />
           ) : (
             <img
               src="/assets/svgs/eye-white.svg"
               alt="blind"
-              className="absolute right-2 -top-2 cursor-pointer"
+              className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
               onClick={toggleCnfmPasswordVisibility}
             />
           )}

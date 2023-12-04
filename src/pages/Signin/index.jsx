@@ -76,19 +76,26 @@ export default function Signin() {
   };
 
   return (
-    <div className="bg-blue dark:bg-black-200 h-screen w-full text-white flex">
-      <div className="w-full h-screen bg-white dark:bg-dark rounded-r-[65px] flex flex-col justify-center items-center">
-        <div className="max-w-[800px] w-[600px] 5xl:w-[800px] flex flex-col justify-center">
+    <div className="flex h-screen w-full flex-col bg-blue text-white dark:bg-black-200 lg:flex-row">
+      <div className="flex h-[65px] w-full items-center justify-center bg-[#202329] px-32 lg:hidden">
+        <img
+          src="/assets/svgs/logo.svg"
+          alt="logo"
+          className="h-[45px] w-[58px]"
+        />
+      </div>
+      <div className=" flex h-screen w-full flex-col items-center bg-white dark:bg-dark  md:justify-center lg:rounded-r-[65px]">
+        <div className="mt-6 flex max-w-[800px] flex-col justify-center md:mt-0 lg:w-[500px] 2xl:w-[600px] 5xl:w-[800px]">
           <Typography variant="textTitle-2">Login</Typography>
           <Typography variant="textSmall">
             Please fill your detail to access your account.
           </Typography>
           <SocialLogins setProvider={setProvider} setProfile={setProfile} />
-          <div className="w-full flex justify-center">
+          <div className="flex w-full justify-center">
             <Typography variant="textInfo">-OR-</Typography>
           </div>
           <Form onEmailChange={onEmailChange} onPassChange={onPassChange} />
-          <div className="w-fit flex items-start mt-12 mb-14">
+          <div className="my-8 flex w-fit items-start md:mb-14 md:mt-12">
             {persistedTheme === "dark" ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
@@ -107,7 +114,7 @@ export default function Signin() {
           <Button size="large" color="blue-200" onClick={handleSignin}>
             <Typography variant="textBase"> Sign in</Typography>
           </Button>
-          <div className="flex justify-center gap-3 mt-[23px]">
+          <div className="mt-[23px] flex justify-center gap-3">
             <Typography
               variant="textBase"
               className="text-gray-100 dark:text-gray"
@@ -125,7 +132,7 @@ export default function Signin() {
           </div>
         </div>
       </div>
-      <div className="h-screen w-fit flex items-center px-32">
+      <div className="hidden h-screen w-fit items-center px-32 lg:flex">
         <img
           src="/assets/svgs/logo.svg"
           alt="logo"

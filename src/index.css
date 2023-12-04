@@ -111,7 +111,7 @@ iframe {
   width: 20px;
   height: 20px;
   background: white;
-  border-radius: 3.5px;
+  /* border-radius: 3.5px; */
   border: 1px solid #0fb063;
   cursor: pointer;
   margin: 0;

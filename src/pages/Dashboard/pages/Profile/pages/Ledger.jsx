@@ -49,7 +49,7 @@ const Ledger = () => {
 
   const subHeaderComponentMemo = useMemo(() => {
     return (
-      <div className="flex justify-between w-full">
+      <div className="flex w-full justify-between">
         <div className="flex gap-[63px]">
           {/* profile */}
           <div className="flex gap-[13px]">
@@ -59,10 +59,10 @@ const Ledger = () => {
               className="h-[44.2px] w-[44.2px]"
             />
             <div>
-              <h1 className="text-[#ACACAC] text-[20.7px] font-semibold leading-normal -tracking-[0.207px]">
+              <h1 className="text-[20.7px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC]">
                 My Profile
               </h1>
-              <div className="text-[#616161] text-[13.824px] font-normal leading-normal flex gap-1">
+              <div className="flex gap-1 text-[13.824px] font-normal leading-normal text-[#616161]">
                 <p>Balance</p>
                 <p>0.98</p>
               </div>
@@ -76,58 +76,58 @@ const Ledger = () => {
               className="h-[44.2px] w-[44.2px]"
             />
             <div>
-              <h1 className="text-[#ACACAC] text-[20.7px] font-semibold leading-normal -tracking-[0.207px]">
+              <h1 className="text-[20.7px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC]">
                 Treasury
               </h1>
-              <div className="text-[#616161] text-[13.824px] font-normal leading-normal flex gap-1">
+              <div className="flex gap-1 text-[13.824px] font-normal leading-normal text-[#616161]">
                 <p>Balance</p>
                 <p>1,357,432.20</p>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex gap-[23.5px] items-center">
+        <div className="flex items-center gap-[23.5px]">
           {/* search */}
           <div className="relative flex h-[43px]">
             <img
               src="/assets/svgs/dashboard/search2.svg"
               alt="search icon"
-              className="w-[27px] h-[27px] absolute left-[9.22px] top-1/2 transform -translate-y-[50%]"
+              className="absolute left-[9.22px] top-1/2 h-[27px] w-[27px] -translate-y-[50%] transform"
             />
             <input
               type="text"
               onChange={(e) => setFilterText(e.target.value)}
               value={filterText}
               placeholder="Search"
-              className="w-[248px] py-[8.07px] pl-[46px] bg-white rounded-[11.526px] border-[1.153px] border-[#C1C1C1] text-[#B5B7C0] text-[20px] font-normal leading-normal -tracking-[0.2px]"
+              className="w-[248px] rounded-[11.526px] border-[1.153px] border-[#C1C1C1] bg-white py-[8.07px] pl-[46px] text-[20px] font-normal leading-normal -tracking-[0.2px] text-[#B5B7C0]"
             />
           </div>
           {/* sort */}
-          <div className="relative h-[43.3px] w-[186px] border-[1.153px] border-[#C1C1C1] bg-white rounded-[11.526px]">
+          <div className="relative h-[43.3px] w-[186px] rounded-[11.526px] border-[1.153px] border-[#C1C1C1] bg-white">
             <button
               onClick={handleDropdown}
-              className="flex items-center gap-1 w-full h-full pl-[17px]"
+              className="flex h-full w-full items-center gap-1 pl-[17px]"
             >
-              <h1 className="text-[#7E7E7E] text-[20.021px] font-normal leading-noremal -tracking-[0.2px]">
+              <h1 className="leading-noremal text-[20.021px] font-normal -tracking-[0.2px] text-[#7E7E7E]">
                 Sort by :
               </h1>
-              <h1 className="text-[#3D3C42] text-[20.021px] font-semibold leading-noremal -tracking-[0.2px] capitalize">
+              <h1 className="leading-noremal text-[20.021px] font-semibold capitalize -tracking-[0.2px] text-[#3D3C42]">
                 {sort}
               </h1>
             </button>
             <div
               className={`${
                 selectedOption ? "flex duration-200 ease-in-out" : "hidden"
-              } bg-gray text-black px-1 py-2 flex-col gap-2 absolute w-32 text-left rounded-md mt-2 z-50`}
+              } absolute z-50 mt-2 w-32 flex-col gap-2 rounded-md bg-gray px-1 py-2 text-left text-black`}
             >
               <p
-                className="hover:bg-white duration-200 ease-in-out cursor-pointer rounded-md px-2"
+                className="cursor-pointer rounded-md px-2 duration-200 ease-in-out hover:bg-white"
                 onClick={() => handleOptionClick("newest")}
               >
                 Newest
               </p>
               <p
-                className="hover:bg-white duration-200 ease-in-out cursor-pointer rounded-md px-2"
+                className="cursor-pointer rounded-md px-2 duration-200 ease-in-out hover:bg-white"
                 onClick={() => handleOptionClick("oldest")}
               >
                 Oldest
@@ -141,10 +141,10 @@ const Ledger = () => {
 
   return (
     <div>
-      <h1 className="text-[#4A8DBD] text-[32px] font-semibold leading-normal mt-14 ml-[156px]">
+      <h1 className="ml-[156px] mt-14 text-[32px] font-semibold leading-normal text-[#4A8DBD]">
         Ledger
       </h1>
-      <div className="mx-[106px] rounded-[45px] shadow-inside pt-[31px] pb-6 pl-5 pr-[43.25px] flex flex-col gap-[23px] my-[54px]">
+      <div className="shadow-inside mx-[106px] my-[54px] flex flex-col gap-[23px] rounded-[45px] pb-6 pl-5 pr-[43.25px] pt-[31px]">
         <DataTable
           columns={columns}
           data={ledgerData?.data.data}

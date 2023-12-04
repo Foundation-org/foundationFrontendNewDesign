@@ -27,10 +27,11 @@ const Input = ({
         autoComplete={autoComplete}
         value={inputValue}
         onChange={handleChange}
+        name={type}
       />
       <label
         htmlFor={id}
-        className="text-[20px] text-gray-300 dark:text-white-200 absolute left-0 -top-4 cursor-text peer-focus:text-xs peer-focus:-top-4 peer-focus:text-gray-300 transition-all"
+        className="absolute -top-4 left-0 cursor-text text-[10.2px] leading-none text-gray-300 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-gray-300 dark:text-white-200 md:text-[20px]"
       >
         {label}
       </label>
