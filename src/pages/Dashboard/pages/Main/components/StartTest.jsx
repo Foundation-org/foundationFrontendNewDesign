@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import AddNewOption from "../../../components/AddNewOption";
 import BasicModal from "../../../../../components/BasicModal";
+import { SortableList, SortableItem } from "@thaddeusjiang/react-sortable-list";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
 
 const StartTest = ({
@@ -34,6 +34,10 @@ const StartTest = ({
       ...item,
     })),
   );
+
+  useEffect(() => {
+    console.log("data",rankedAnswers);
+  }, [rankedAnswers]);
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) =>
@@ -73,29 +77,17 @@ const StartTest = ({
 
   function findLabelChecked(array, labelToFind) {
     const labelFound = array.filter((item) => item.label === labelToFind);
-    if (labelFound[0]?.check === true) {
-      return true;
-    } else {
-      return false;
-    }
+    return labelFound[0]?.check === true;
   }
 
   function findLabelContend(array, labelToFind) {
     const labelFound = array.filter((item) => item.label === labelToFind);
-    if (labelFound[0]?.contend === true) {
-      return true;
-    } else {
-      return false;
-    }
+    return labelFound[0]?.contend === true;
   }
 
-  const handleOnDragEnd = (res) => {
-    if (!res.destination) return;
-    const items = Array.from(rankedAnswers);
-    const [reorderedItem] = items.splice(res.source.index, 1);
-    items.splice(res.destination.index, 0, reorderedItem);
-
-    setRankedAnswers(items);
+  const handleOnSortEnd = (sortedItems) => {
+    setRankedAnswers(sortedItems.items);
+    
   };
 
   return (
@@ -103,49 +95,50 @@ const StartTest = ({
       <div className="mt-[26px] flex flex-col gap-[10px]">
         {title === "Yes/No" || title === "Agree/Disagree" ? (
           <>
-            {title === "Yes/No" ? (
-              <>
-                <SingleAnswer
-                  number={"#1"}
-                  answer={"Yes"}
-                  checkInfo={true}
-                  check={quests.yesNo.yes.check}
-                  contend={quests.yesNo.yes.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-                <SingleAnswer
-                  number={"#2"}
-                  answer={"No"}
-                  checkInfo={true}
-                  check={quests.yesNo.no.check}
-                  contend={quests.yesNo.no.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-              </>
-            ) : (
-              <>
-                <SingleAnswer
-                  number={"#1"}
-                  answer={"Agree"}
-                  checkInfo={true}
-                  check={quests.agreeDisagree.agree.check}
-                  contend={quests.agreeDisagree.agree.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-                <SingleAnswer
-                  number={"#2"}
-                  answer={"Disagree"}
-                  checkInfo={true}
-                  check={quests.agreeDisagree.disagree.check}
-                  contend={quests.agreeDisagree.disagree.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-              </>
-            )}
-          </>
+          {title === "Yes/No" ? (
+            <>
+              <SingleAnswer
+                number={"#1"}
+                answer={"Yes"}
+                checkInfo={true}
+                check={quests.yesNo.yes.check}
+                contend={quests.yesNo.yes.contend}
+                handleToggleCheck={handleToggleCheck}
+              />
+              <SingleAnswer
+                number={"#2"}
+                answer={"No"}
+                checkInfo={true}
+                check={quests.yesNo.no.check}
+                contend={quests.yesNo.no.contend}
+                handleToggleCheck={handleToggleCheck}
+              />
+            </>
+          ) : (
+            <>
+              <SingleAnswer
+                number={"#1"}
+                answer={"Agree"}
+                checkInfo={true}
+                check={quests.agreeDisagree.agree.check}
+                contend={quests.agreeDisagree.agree.contend}
+                handleToggleCheck={handleToggleCheck}
+              />
+              <SingleAnswer
+                number={"#2"}
+                answer={"Disagree"}
+                checkInfo={true}
+                check={quests.agreeDisagree.disagree.check}
+                contend={quests.agreeDisagree.disagree.contend}
+                handleToggleCheck={handleToggleCheck}
+              />
+            </>
+          )}
+        </>
         ) : title === "Multiple Choice" ? (
           answersSelection.map((item, index) => (
             <SingleAnswerMultipleChoice
+              key={index}
               number={"#" + (index + 1)}
               answer={item.label}
               editable={item.edit}
@@ -175,48 +168,27 @@ const StartTest = ({
             />
           ))
         ) : (
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
-              {(provided) => (
-                <div
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                  className="flex flex-col gap-[11px]"
-                >
-                  {rankedAnswers.map((item, index) => (
-                    <Draggable
-                      key={item.id}
-                      draggableId={item.id}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <div
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                        >
-                          <SingleAnswerRankedChoice
-                            number={"#" + (index + 1)}
-                            answer={item.question}
-                            title={title}
-                            handleMultipleChoiceCC={handleMultipleChoiceCC}
-                            checkInfo={true}
-                            check={findLabelChecked(
-                              answersSelection,
-                              item.question,
-                            )}
-                            handleCheckChange={(check) =>
-                              handleCheckChange(index, check)
-                            }
-                          />
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+          <SortableList items={rankedAnswers}  setItems={setRankedAnswers} onSortEnd={handleOnSortEnd}>
+            {({ items }) => (
+              <div className="flex flex-col gap-[11px]">
+                {items.map((item, index) => (
+                  <SortableItem key={item.id} id={item.id}>
+                    <SingleAnswerRankedChoice
+                      number={"#" + (index + 1)}
+                      answer={item.question}
+                      title={title}
+                      handleMultipleChoiceCC={handleMultipleChoiceCC}
+                      checkInfo={true}
+                      check={findLabelChecked(answersSelection, item.question)}
+                      handleCheckChange={(check) =>
+                        handleCheckChange(index, check)
+                      }
+                    />
+                  </SortableItem>
+                ))}
+              </div>
+            )}
+          </SortableList>
         )}
 
         {usersAddTheirAns && addOptionLimit === 0 ? (

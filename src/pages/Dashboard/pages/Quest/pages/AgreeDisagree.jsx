@@ -108,14 +108,12 @@ const AgreeDisagree = () => {
         </div>
         <div className="mt-10 flex flex-col gap-[30px]">
           <Options
-            number={"#1"}
             answer={"Agree"}
             options={correctState ? true : false}
             handleOptionChange={() => handleOptionChange("Agree")}
             isSelected={selectedOption === "Agree"}
           />
           <Options
-            number={"#2"}
             answer={"Disagree"}
             options={correctState ? true : false}
             handleOptionChange={() => handleOptionChange("Disagree")}

@@ -30,7 +30,7 @@ export const columns = [
   },
   {
     name: "txDate",
-    selector: (row) => row.txDate,
+    selector: (row) => formatDate(row.txDate),
   },
   // {
   //   name: "txDescription",
@@ -45,6 +45,12 @@ function capitalize(str) {
   }
   return str.toUpperCase();
 }
+function formatDate(dateString) {
+  const options = { year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "numeric"};
+  const formattedDate = new Date(dateString).toLocaleString(undefined, options);
+  return formattedDate;
+}
+
 
 export const tableCustomStyles = {
   headRow: {
