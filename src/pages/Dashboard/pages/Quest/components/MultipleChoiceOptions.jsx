@@ -1,6 +1,7 @@
+import React from "react";
 import { useSelector } from "react-redux";
 
-const Options = ({
+const MultipleChoiceOptions = ({
   title,
   answer,
   options,
@@ -8,6 +9,8 @@ const Options = ({
   trash,
   dragable,
   handleOptionChange,
+  handleOptionSelect,
+  isYes,
   allowInput,
   handleChange,
   typedValue,
@@ -24,8 +27,18 @@ const Options = ({
         label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row  items-center gap-[25px]"
-      } absolute left-[56px] top-[-74px] w-[88%]`}
+      } ml-[51px] mr-[71px] `}
     >
+      {/* {label && (
+        <h1 className="ml-[53px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
+          {label}
+        </h1>
+      )} */}
+      {/* {number && (
+        <h1 className="text-[33px] font-[500] leading-normal text-[#435059] dark:text-[#D3D3D3]">
+          {number}
+        </h1>
+      )} */}
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
           <div className="flex w-full items-center">
@@ -88,29 +101,33 @@ const Options = ({
               )
             ) : null}
           </div>
-          <div className="relative h-[75px] w-full">
+          <div className="relative w-full">
             <input
               type="text"
               placeholder="option"
-              className="w-full max-w-[838px] rounded-r-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-44 text-[30px] font-normal leading-[0px] text-[#435059] focus-visible:outline-none"
+              className="w-full max-w-[838px] rounded-r-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
               onChange={(e) => handleChange(e.target.value)}
               value={typedValue}
             />
-            <div
-              className={`${
-                optionsCount > 2
-                  ? "absolute left-[42rem]"
-                  : "absolute left-[44rem]"
-              } -top-[74px] flex w-fit items-center`}
-            >
+            <div className="absolute right-0 top-1/2 flex -translate-y-1/2 transform items-center">
+              {options && (
+                <div id="green-checkbox" className="-mb-[7px] mr-6">
+                  <input
+                    id="default-checkbox"
+                    type="checkbox"
+                    className="h-10 w-[38px] rounded"
+                    onChange={handleOptionSelect}
+                    checked={isSelected}
+                  />
+                </div>
+              )}
               {title === "RankChoice" && trash ? (
                 <>
-                  {optionsCount > 2 && (
+                  {optionsCount > 0 && (
                     <div
                       onClick={() => {
                         removeOption(number);
                       }}
-                      className="flex items-center"
                     >
                       <img
                         src="/assets/svgs/dashboard/trash2.svg"
@@ -137,6 +154,20 @@ const Options = ({
                   )}
                 </>
               ) : null}
+              {/* {trash && optionsCount > 2 && (
+                <div
+                  onClick={() => {
+                    removeOption(number);
+                  }}
+                >
+                  <img
+                    src="/assets/svgs/dashboard/trash2.svg"
+                    alt="trash"
+                    className="h-[36px] cursor-pointer"
+                  />
+                </div>
+              )} */}
+
               <h1 className="leading-0 ml-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
                 OK
               </h1>
@@ -148,4 +179,4 @@ const Options = ({
   );
 };
 
-export default Options;
+export default MultipleChoiceOptions;

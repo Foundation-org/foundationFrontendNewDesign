@@ -5,6 +5,7 @@ import BasicModal from "../../../../../components/BasicModal";
 import { SortableList, SortableItem } from "@thaddeusjiang/react-sortable-list";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
+import { STDropHandler } from "../../../../../utils/STDropHandler";
 
 const StartTest = ({
   title,
@@ -29,15 +30,20 @@ const StartTest = ({
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
   const [rankedAnswers, setRankedAnswers] = useState(
-    answers.map((item, index) => ({
+    answersSelection.map((item, index) => ({
       id: `unique-${index}`,
       ...item,
     })),
   );
 
   useEffect(() => {
-    console.log("data",rankedAnswers);
-  }, [rankedAnswers]);
+    setRankedAnswers(
+      answersSelection.map((item, index) => ({
+        id: `unique-${index}`,
+        ...item,
+      })),
+    );
+  }, [answersSelection]);
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) =>
@@ -87,7 +93,6 @@ const StartTest = ({
 
   const handleOnSortEnd = (sortedItems) => {
     setRankedAnswers(sortedItems.items);
-    
   };
 
   return (
@@ -95,46 +100,46 @@ const StartTest = ({
       <div className="mt-[26px] flex flex-col gap-[10px]">
         {title === "Yes/No" || title === "Agree/Disagree" ? (
           <>
-          {title === "Yes/No" ? (
-            <>
-              <SingleAnswer
-                number={"#1"}
-                answer={"Yes"}
-                checkInfo={true}
-                check={quests.yesNo.yes.check}
-                contend={quests.yesNo.yes.contend}
-                handleToggleCheck={handleToggleCheck}
-              />
-              <SingleAnswer
-                number={"#2"}
-                answer={"No"}
-                checkInfo={true}
-                check={quests.yesNo.no.check}
-                contend={quests.yesNo.no.contend}
-                handleToggleCheck={handleToggleCheck}
-              />
-            </>
-          ) : (
-            <>
-              <SingleAnswer
-                number={"#1"}
-                answer={"Agree"}
-                checkInfo={true}
-                check={quests.agreeDisagree.agree.check}
-                contend={quests.agreeDisagree.agree.contend}
-                handleToggleCheck={handleToggleCheck}
-              />
-              <SingleAnswer
-                number={"#2"}
-                answer={"Disagree"}
-                checkInfo={true}
-                check={quests.agreeDisagree.disagree.check}
-                contend={quests.agreeDisagree.disagree.contend}
-                handleToggleCheck={handleToggleCheck}
-              />
-            </>
-          )}
-        </>
+            {title === "Yes/No" ? (
+              <>
+                <SingleAnswer
+                  number={"#1"}
+                  answer={"Yes"}
+                  checkInfo={true}
+                  check={quests.yesNo.yes.check}
+                  contend={quests.yesNo.yes.contend}
+                  handleToggleCheck={handleToggleCheck}
+                />
+                <SingleAnswer
+                  number={"#2"}
+                  answer={"No"}
+                  checkInfo={true}
+                  check={quests.yesNo.no.check}
+                  contend={quests.yesNo.no.contend}
+                  handleToggleCheck={handleToggleCheck}
+                />
+              </>
+            ) : (
+              <>
+                <SingleAnswer
+                  number={"#1"}
+                  answer={"Agree"}
+                  checkInfo={true}
+                  check={quests.agreeDisagree.agree.check}
+                  contend={quests.agreeDisagree.agree.contend}
+                  handleToggleCheck={handleToggleCheck}
+                />
+                <SingleAnswer
+                  number={"#2"}
+                  answer={"Disagree"}
+                  checkInfo={true}
+                  check={quests.agreeDisagree.disagree.check}
+                  contend={quests.agreeDisagree.disagree.contend}
+                  handleToggleCheck={handleToggleCheck}
+                />
+              </>
+            )}
+          </>
         ) : title === "Multiple Choice" ? (
           answersSelection.map((item, index) => (
             <SingleAnswerMultipleChoice
@@ -168,21 +173,34 @@ const StartTest = ({
             />
           ))
         ) : (
-          <SortableList items={rankedAnswers}  setItems={setRankedAnswers} onSortEnd={handleOnSortEnd}>
+          <SortableList
+            items={rankedAnswers}
+            setItems={setRankedAnswers}
+            onSortEnd={handleOnSortEnd}
+          >
             {({ items }) => (
-              <div className="flex flex-col gap-[11px]">
+              <div id="dragIcon2" className="flex flex-col gap-[11px]">
                 {items.map((item, index) => (
-                  <SortableItem key={item.id} id={item.id}>
+                  <SortableItem
+                    key={item.id}
+                    id={item.id}
+                    DragHandler={STDropHandler}
+                  >
                     <SingleAnswerRankedChoice
                       number={"#" + (index + 1)}
-                      answer={item.question}
+                      editable={item.edit}
+                      deleteable={item.delete}
+                      answer={item.label}
+                      answersSelection={answersSelection}
                       title={title}
                       handleMultipleChoiceCC={handleMultipleChoiceCC}
-                      checkInfo={true}
-                      check={findLabelChecked(answersSelection, item.question)}
+                      checkInfo={false}
+                      check={findLabelChecked(answersSelection, item.label)}
                       handleCheckChange={(check) =>
                         handleCheckChange(index, check)
                       }
+                      setAnswerSelection={setAnswerSelection}
+                      setAddOptionLimit={setAddOptionLimit}
                     />
                   </SortableItem>
                 ))}

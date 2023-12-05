@@ -5,19 +5,46 @@ import { changeOptions } from "../../../../../utils/options";
 import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import Title from "../components/Title";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+// import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useMutation } from "@tanstack/react-query";
 import { createInfoQuest } from "../../../../../api/questsApi";
 import { toast } from "sonner";
+import { SortableItem, SortableList } from "@thaddeusjiang/react-sortable-list";
+import { useSelector } from "react-redux";
+
+const DragHandler = (props) => {
+  const persistedTheme = useSelector((state) => state.utils.theme);
+  return (
+    <div
+      {...props}
+      className="z-10 ml-14 flex h-[74px] w-[38px] items-center justify-center rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]"
+    >
+      <div title="drag handler" className="flex items-center">
+        {persistedTheme === "dark" ? (
+          <img
+            src="/assets/svgs/dashboard/six-dots-dark.svg"
+            alt="six dots"
+            className="h-7"
+          />
+        ) : (
+          <img
+            src="/assets/svgs/dashboard/six-dots.svg"
+            alt="six dots"
+            className="h-7"
+          />
+        )}
+      </div>
+    </div>
+  );
+};
 
 const RankChoice = () => {
   const navigate = useNavigate();
-  // const persistedTheme = useSelector((state) => state.utils.theme);
   const [question, setQuestion] = useState("");
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
   const [changedOption, setChangedOption] = useState("");
-  const [optionsCount, setOptionsCount] = useState(0);
+  const [optionsCount, setOptionsCount] = useState(2);
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       id: `index-${index}`,
@@ -25,6 +52,7 @@ const RankChoice = () => {
       selected: false,
     })),
   );
+
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
@@ -35,8 +63,7 @@ const RankChoice = () => {
       }, 2000);
     },
     onError: (err) => {
-      console.log('error', err);
-
+      console.log("error", err);
     },
   });
 
@@ -75,15 +102,12 @@ const RankChoice = () => {
     ]);
   };
 
-  console.log(typedValues);
-
   const handleChange = (index, value) => {
     const newTypedValues = [...typedValues];
     newTypedValues[index] = { ...newTypedValues[index], question: value };
     setTypedValues(newTypedValues);
   };
 
-  // need to be updated
   const handleOptionSelect = (index) => {
     const newTypedValues = [...typedValues];
     newTypedValues[index].selected = !newTypedValues[index].selected;
@@ -115,22 +139,21 @@ const RankChoice = () => {
   };
 
   const removeOption = (indexToRemove) => {
-    const newOptionsCount = Math.max(optionsCount - 1, 0);
-    console.log({ newOptionsCount });
-    setTypedValues((prevTypedValues) =>
-      prevTypedValues.filter((_, index) => index !== indexToRemove),
-    );
+    if (optionsCount > 2) {
+      const newOptionsCount = Math.max(optionsCount - 1, 2);
 
-    setOptionsCount(newOptionsCount);
+      setTypedValues((prevTypedValues) =>
+        prevTypedValues.filter((_, index) => index !== indexToRemove),
+      );
+
+      setOptionsCount(newOptionsCount);
+    } else {
+      console.warn("Cannot remove the last two options.");
+    }
   };
 
-  const handleOnDragEnd = (res) => {
-    if (!res.destination) return;
-    const items = Array.from(typedValues);
-    const [reorderedItem] = items.splice(res.source.index, 1);
-    items.splice(res.destination.index, 0, reorderedItem);
-
-    setTypedValues(items);
+  const handleOnSortEnd = (sortedItems) => {
+    setTypedValues(sortedItems.items);
   };
 
   return (
@@ -155,50 +178,39 @@ const RankChoice = () => {
           </h1>
         </div>
         {/* options */}
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId={`typedValues-${Date.now()}`}>
-            {(provided) => (
-              <div
-                className="mt-10 flex flex-col gap-[30px]"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {typedValues.map((typedValue, index) => (
-                  <Draggable
-                    key={typedValue.id}
-                    draggableId={typedValue.id}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                      >
-                        <Options
-                          key={index}
-                          title="RankChoice"
-                          allowInput={true}
-                          label={`Option ${index + 1} #`}
-                          // options={true}
-                          trash={true}
-                          dragable={true}
-                          handleChange={(value) => handleChange(index, value)}
-                          handleOptionSelect={() => handleOptionSelect(index)}
-                          typedValue={typedValue.question}
-                          isSelected={typedValue.selected}
-                          optionsCount={optionsCount}
-                          removeOption={() => removeOption(index)}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <SortableList
+          items={typedValues}
+          setItems={setTypedValues}
+          onSortEnd={handleOnSortEnd}
+        >
+          {({ items }) => (
+            <div id="dragIcon" className="mt-10 flex flex-col gap-[30px]">
+              {items.map((item, index) => (
+                <SortableItem
+                  key={item.id}
+                  id={item.id}
+                  DragHandler={DragHandler}
+                >
+                  <Options
+                    key={index}
+                    title="RankChoice"
+                    allowInput={true}
+                    label={`Option ${index + 1} #`}
+                    trash={true}
+                    dragable={true}
+                    handleChange={(value) => handleChange(index, value)}
+                    handleOptionSelect={() => handleOptionSelect(index)}
+                    typedValue={item.question}
+                    isSelected={item.selected}
+                    optionsCount={optionsCount}
+                    removeOption={() => removeOption(index)}
+                    number={index}
+                  />
+                </SortableItem>
+              ))}
+            </div>
+          )}
+        </SortableList>
         <button
           className="ml-[50px] mt-5 w-fit rounded-[23.6px] bg-[#C9C9C9] px-6 py-3 text-[31px] font-semibold leading-normal text-[#7C7C7C]"
           onClick={handleAddOption}
@@ -227,13 +239,14 @@ const RankChoice = () => {
           </div>
           {changeState ? (
             <div className="flex justify-center gap-4">
-              {changeOptions.map((item) => (
+              {changeOptions?.map((item) => (
                 <button
                   key={item.id}
-                  className={`${ChangedOption === item.title
+                  className={`${
+                    changedOption === item.title
                       ? "bg-[#389CE3]"
                       : "bg-[#7C7C7C]"
-                    } rounded-md px-4 py-2 text-[#F4F4F4]`}
+                  } rounded-md px-4 py-2 text-[#F4F4F4]`}
                   onClick={() => {
                     setChangedOption(item.title);
                   }}
@@ -246,10 +259,12 @@ const RankChoice = () => {
         </div>
         {/* submit button */}
         <div className="flex w-full justify-end">
-          <button className="mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white" 
-            onClick={() => handleSubmit()}>
+          <button
+            className="mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white"
+            onClick={() => handleSubmit()}
+          >
             Submit
-          </button >
+          </button>
         </div>
       </div>
     </div>

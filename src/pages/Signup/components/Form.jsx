@@ -23,7 +23,7 @@ const Form = ({
         type="email"
         id="email"
         label="Email Address"
-        className="peer w-full border-b-[1px] border-[#C0C0C0] bg-white py-1 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px]"
+        className="peer w-full border-b-[1px] border-[#C0C0C0] bg-white py-1 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white sm:text-[16px] md:text-[22.9px]"
         autoComplete="off"
         onChange={onEmailChange}
       />

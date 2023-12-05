@@ -25,7 +25,7 @@ const AddNewOption = ({
       label: temp.trim(),
       check: true,
       contend: false,
-      addedOptionByUser:true,
+      addedOptionByUser: true,
       edit: true,
       delete: true,
     };

@@ -10,9 +10,8 @@ const DeleteOption = (props) => {
     );
 
     props.setAnswerSelection(newArr);
-
-    toast.success("Item deleted");
     props.setAddOptionLimit(0);
+    toast.success("Item deleted");
     props.handleEditClose();
   };
 

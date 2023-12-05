@@ -61,8 +61,6 @@ const QuestionCard = ({
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // move add optioon state here
-
   const capitalizeFirstLetter = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   };

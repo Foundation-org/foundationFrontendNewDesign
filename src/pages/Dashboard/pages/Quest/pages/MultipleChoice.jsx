@@ -12,6 +12,7 @@ import CustomSwitch from "../../../../../components/CustomSwitch";
 // } from "../../../../../features/quest/questsSlice";
 import { toast } from "sonner";
 import Title from "../components/Title";
+import MultipleChoiceOptions from "../components/MultipleChoiceOptions";
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -157,7 +158,7 @@ const MultipleChoice = () => {
         {/* options */}
         <div className="mt-10 flex flex-col gap-[30px]">
           {[...Array(optionsCount)].map((_, index) => (
-            <Options
+            <MultipleChoiceOptions
               key={index}
               title="MultipleChoice"
               allowInput={true}
@@ -171,6 +172,7 @@ const MultipleChoice = () => {
               isSelected={typedValues[index].selected}
               optionsCount={optionsCount}
               removeOption={() => removeOption(index)}
+              number={index}
             />
           ))}
           <button

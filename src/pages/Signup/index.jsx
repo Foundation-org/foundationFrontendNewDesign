@@ -89,7 +89,7 @@ export default function Signup() {
         />
       </div>
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-[65px]">
-        <div className="mt-10 flex w-[306px] flex-col items-center justify-center md:mt-0 md:w-[500px] 2xl:w-[600px] 2xl:max-w-[800px] 5xl:w-[800px]">
+        <div className="mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0 xl:max-w-[60%]">
           <Typography variant="textTitle">Create Account</Typography>
           <SocialLogins setProvider={setProvider} setProfile={setProfile} />
           <Typography variant="textInfo" className="font-poppins">
@@ -131,7 +131,7 @@ export default function Signup() {
                 />
               </label>
             </div>
-            <label className="ml-4 text-[8.158px] text-gray-100 dark:text-white md:text-base 5xl:text-[22px]">
+            <label className="ml-4 text-[10.2px] text-gray-100 dark:text-white sm:text-base 5xl:text-[22px]">
               Creating an account means you’re okay with our{" "}
               <Anchor href="#">Terms of Service</Anchor>,{" "}
               <Anchor href="#">Privacy Policy</Anchor>, and out default{" "}

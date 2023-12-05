@@ -180,3 +180,13 @@ iframe {
   align-items: center;
   justify-content: center;
 }
+
+#dragIcon div {
+  position: relative;
+  height: 74px;
+}
+
+#dragIcon2 div {
+  position: relative;
+  height: 45px;
+}

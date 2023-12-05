@@ -46,8 +46,6 @@ const SingleAnswerMultipleChoice = (props) => {
     });
   };
 
-  console.log({ props });
-
   return (
     <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
       <h1 className="w-[26px] min-w-[26px] text-[20px] font-[500] leading-normal text-[#435059] dark:text-[#D3D3D3]">
@@ -136,11 +134,14 @@ const SingleAnswerMultipleChoice = (props) => {
             ) : null}
 
             {props.btnText === "Results" ? (
-              <>{console.log(props.percentages?.selectedPercentage[props.answer])}
-                {props.percentages?.selectedPercentage[props.answer.trim()] ?
-                  props.percentages?.selectedPercentage[props.answer.trim()] + "%"
+              <>
+                {console.log(
+                  props.percentages?.selectedPercentage[props.answer],
+                )}
+                {props.percentages?.selectedPercentage[props.answer.trim()]
+                  ? props.percentages?.selectedPercentage[props.answer.trim()] +
+                    "%"
                   : "0%"}
-
               </>
             ) : (
               <></>
@@ -159,17 +160,16 @@ const SingleAnswerMultipleChoice = (props) => {
 
               {props.btnText === "Results" ? (
                 <>
-                  {props.percentages?.contendedPercentage[props.answer.trim()] ?
-                    props.percentages?.contendedPercentage[props.answer.trim()] +
-                    "%"
-
+                  {props.percentages?.contendedPercentage[props.answer.trim()]
+                    ? props.percentages?.contendedPercentage[
+                        props.answer.trim()
+                      ] + "%"
                     : "0%"}
                 </>
               ) : (
                 <></>
               )}
             </>
-
           </div>
         )}
       </div>
