@@ -4,7 +4,7 @@ import { createInfoQuest } from "../../../../../api/questsApi";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import Options from "../components/Options";
+import YesNoOptions from "../components/YesNoOptions";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 
 const YesNo = () => {
@@ -97,14 +97,14 @@ const YesNo = () => {
           </h1>
         </div>
         <div className="mt-10 flex flex-col gap-[30px]">
-          <Options
+          <YesNoOptions
             number={"#1"}
             answer={"Yes"}
             options={correctState ? true : false}
             handleOptionChange={() => handleOptionChange("Yes")}
             isSelected={selectedOption === "Yes"}
           />
-          <Options
+          <YesNoOptions
             number={"#2"}
             answer={"No"}
             options={correctState ? true : false}

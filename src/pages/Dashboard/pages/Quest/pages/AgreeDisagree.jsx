@@ -1,12 +1,13 @@
+import { toast } from "sonner";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { changeOptions } from "../../../../../utils/options";
-import Options from "../components/Options";
-import CustomSwitch from "../../../../../components/CustomSwitch";
 import { createInfoQuest } from "../../../../../api/questsApi";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-
+import Options from "../components/Options";
+import CustomSwitch from "../../../../../components/CustomSwitch";
+import Title from "../../../pages/Quest/components/Title";
+import AgreeDisagreeOptions from "../components/AgreeDisagreeOptions";
 const AgreeDisagree = () => {
   const [question, setQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
@@ -18,14 +19,12 @@ const AgreeDisagree = () => {
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
-      // console.log('resp', resp);
       toast.success("Successfully Created Quest");
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);
     },
     onError: (err) => {
-      // console.log('error', err);
       toast.error(err.response.data);
     },
   });
@@ -42,13 +41,6 @@ const AgreeDisagree = () => {
   const handleOptionChange = (option) => {
     setSelectedOption(option);
   };
-  console.log({
-    question: question,
-    selectedOption,
-    correctState,
-    changeState,
-    changedOption,
-  });
 
   const handleSubmit = () => {
     if (changeState && changedOption === "") {
@@ -85,10 +77,7 @@ const AgreeDisagree = () => {
 
   return (
     <div>
-      <h4 className="mt-[47px] text-center text-[25px] font-medium leading-normal text-[#ACACAC]">
-        Create a selection of choices that can be arranged in order of
-        preference.
-      </h4>
+      <Title />
       <div className="mx-auto my-10 max-w-[979px] rounded-[26px] bg-[#F3F3F3] py-[42px]">
         <h1 className="text-center text-[32px] font-semibold leading-normal text-[#7C7C7C]">
           Create Quest
@@ -107,13 +96,13 @@ const AgreeDisagree = () => {
           </h1>
         </div>
         <div className="mt-10 flex flex-col gap-[30px]">
-          <Options
+          <AgreeDisagreeOptions
             answer={"Agree"}
             options={correctState ? true : false}
             handleOptionChange={() => handleOptionChange("Agree")}
             isSelected={selectedOption === "Agree"}
           />
-          <Options
+          <AgreeDisagreeOptions
             answer={"Disagree"}
             options={correctState ? true : false}
             handleOptionChange={() => handleOptionChange("Disagree")}
