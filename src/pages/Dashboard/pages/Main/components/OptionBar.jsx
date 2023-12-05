@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStartQuestInfo } from "../../../../../api/questsApi";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
 import { toast } from "sonner";
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 
 const OptionBar = ({
   btnText,
@@ -19,6 +19,8 @@ const OptionBar = ({
   handleToggleCheck,
   handleMultipleChoiceCC,
   handleRankedChoice,
+  rankedAnswers,
+  setRankedAnswers
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -35,9 +37,9 @@ const OptionBar = ({
       ) {
         if (
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "agree" ||
+          "agree" ||
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "yes"
+          "yes"
         ) {
           console.log("ran 1");
           handleToggleCheck(
@@ -48,9 +50,9 @@ const OptionBar = ({
         }
         if (
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "agree" ||
+          "agree" ||
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "yes"
+          "yes"
         ) {
           console.log("ran 2");
 
@@ -62,9 +64,9 @@ const OptionBar = ({
         }
         if (
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "disagree" ||
+          "disagree" ||
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "no"
+          "no"
         ) {
           console.log("ran 3");
 
@@ -76,9 +78,9 @@ const OptionBar = ({
         }
         if (
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "disagree" ||
+          "disagree" ||
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "no"
+          "no"
         ) {
           console.log("ran 4");
 
@@ -86,8 +88,7 @@ const OptionBar = ({
             res.data.data[res.data.data.length - 1].selected,
             true,
             false,
-            // false,
-            // true,
+
           );
         }
       }
@@ -118,22 +119,30 @@ const OptionBar = ({
         }
       }
       if (whichTypeQuestion === "ranked choise") {
-        if (res?.data.data[res.data.data.length - 1].selected) {
-          handleRankedChoice(
-            "Ranked Choice",
-            res?.data.data[res.data.data.length - 1].selected,
+        console.log("ranked response" + res?.data.data[res.data.data.length - 1].selected);
+
+        const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
+          const correspondingRankedAnswer = rankedAnswers.find(
+            (rankedItem) => rankedItem.label === item.question
           );
-          // res?.data.data[res.data.data.length - 1].selected.map(
-          //   (item, index) => {
-          //     handleMultipleChoiceCC(
-          //       "Ranked Choice",
-          //       false,
-          //       false,
-          //       item.question,
-          //     );
-          //   },
-          // );
-        }
+
+          if (correspondingRankedAnswer) {
+            return {
+              id: correspondingRankedAnswer.id,
+              label: correspondingRankedAnswer.label,
+              check: false,
+              contend: false,
+            };
+          }
+
+          return null;
+        });
+        // Filter out any null values (items not found in rankedAnswers)
+        const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
+
+        // Update the state with the new array
+        setRankedAnswers(filteredRankedAnswers);
+
       }
     },
     onError: (err) => {
@@ -214,7 +223,7 @@ const OptionBar = ({
   return (
     <>
       <div className="mb-1 flex items-center">
-        {isCorrect==="Selected" && (
+        {isCorrect === "Selected" && (
           <p className="ml-6 mt-12 w-fit min-w-[12rem] rounded-[15px] bg-white px-[14px] pb-[7px] pt-2 text-[18px] font-semibold leading-normal text-[#28A954] dark:bg-[#303030] dark:text-[#737373]">
             {correctCount} Correct Answers
           </p>

@@ -3,11 +3,14 @@ import { getQuests } from "../../../../../features/quest/questsSlice";
 import { useQuery } from "@tanstack/react-query";
 import { getStartQuestPercent } from "../../../../../api/questsApi";
 import { getStartQuestInfo } from "../../../../../api/questsApi";
+import { getRankedQuestPercent } from "../../../../../api/questsApi";
 import { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import SingleAnswer from "../../../components/SingleAnswer";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
+import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
+
 
 const Result = (props) => {
   const quests = useSelector(getQuests);
@@ -107,6 +110,32 @@ const Result = (props) => {
             );
           }
         }
+        if (props.whichTypeQuestion === "ranked choise") {
+          console.log("ranked response" + res?.data.data[res.data.data.length - 1].selected);
+  
+          const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
+            const correspondingRankedAnswer = props.rankedAnswers.find(
+              (rankedItem) => rankedItem.label === item.question
+            );
+  
+            if (correspondingRankedAnswer) {
+              return {
+                id: correspondingRankedAnswer.id,
+                label: correspondingRankedAnswer.label,
+                check: false,
+                contend: false,
+              };
+            }
+  
+            return null;
+          });
+          // Filter out any null values (items not found in rankedAnswers)
+          const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
+  
+          // Update the state with the new array
+          props.setRankedAnswers(filteredRankedAnswers);
+  
+        }
       }
     },
     onError: (err) => {
@@ -124,6 +153,15 @@ const Result = (props) => {
       return await getStartQuestPercent(params);
     },
     queryKey: ["ResultsData"],
+  });
+  const { data: rankedResultsData } = useQuery({
+    queryFn: async () => {
+      const params = {
+        questForeignKey: props.id
+      };
+      return await getRankedQuestPercent(params);
+    },
+    queryKey: ["rankedResultsData"],
   });
 
   function findLabelChecked(array, labelToFind) {
@@ -197,7 +235,7 @@ const Result = (props) => {
             </>
           ) : null}
         </>
-      ) : (
+      ): props.title === "multiple choise" ? (
         props.answers?.map((item, index) => (
           <SingleAnswerMultipleChoice
             number={"#" + (index + 1)}
@@ -211,7 +249,21 @@ const Result = (props) => {
             btnText={"Results"}
           />
         ))
-      )}
+      ):(
+        props.rankedAnswers?.map((item, index) => (
+            <SingleAnswerRankedChoice
+              number={"#" + (index + 1)}
+              answer={item.label}
+              answersSelection={props.answersSelection}
+              setAnswerSelection={props.setAnswerSelection}
+              title={props.title}
+              handleMultipleChoiceCC={props.handleMultipleChoiceCC}
+              percentages={rankedResultsData?.data[rankedResultsData?.data.length - 1]}
+              checkInfo={false}
+              setAddOptionLimit={props.setAddOptionLimit}
+              btnText={"Results"}
+            />
+        )))}
       <div className="my-8 flex w-full justify-center">
         <button
           className={`${

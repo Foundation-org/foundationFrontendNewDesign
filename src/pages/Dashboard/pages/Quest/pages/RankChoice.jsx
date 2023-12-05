@@ -163,7 +163,7 @@ const RankChoice = () => {
         <h1 className="text-center text-[32px] font-semibold leading-normal text-[#7C7C7C]">
           Create Quest
         </h1>
-        <h3 className="ml-[104px] mt-[38px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
+        <h3 className="mb-[22px] ml-[104px] mt-[38px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
           Make a statement or pose a question
         </h3>
         {/* write question */}
@@ -184,7 +184,7 @@ const RankChoice = () => {
           onSortEnd={handleOnSortEnd}
         >
           {({ items }) => (
-            <div id="dragIcon" className="mt-10 flex flex-col gap-[30px]">
+            <div id="dragIcon" className="mt-10 mb-8 flex flex-col gap-[30px]">
               {items.map((item, index) => (
                 <SortableItem
                   key={item.id}
@@ -212,8 +212,8 @@ const RankChoice = () => {
           )}
         </SortableList>
         <button
-          className="ml-[50px] mt-5 w-fit rounded-[23.6px] bg-[#C9C9C9] px-6 py-3 text-[31px] font-semibold leading-normal text-[#7C7C7C]"
-          onClick={handleAddOption}
+            className="ml-[50px] mt-5 w-fit rounded-[23.6px] bg-[#C9C9C9] px-6 py-3 text-[31px] font-semibold leading-normal text-[#7C7C7C]"
+            onClick={handleAddOption}
         >
           Add Option
         </button>
@@ -242,11 +242,10 @@ const RankChoice = () => {
               {changeOptions?.map((item) => (
                 <button
                   key={item.id}
-                  className={`${
-                    changedOption === item.title
+                  className={`${changedOption === item.title
                       ? "bg-[#389CE3]"
                       : "bg-[#7C7C7C]"
-                  } rounded-md px-4 py-2 text-[#F4F4F4]`}
+                    } rounded-md px-4 py-2 text-[#F4F4F4]`}
                   onClick={() => {
                     setChangedOption(item.title);
                   }}

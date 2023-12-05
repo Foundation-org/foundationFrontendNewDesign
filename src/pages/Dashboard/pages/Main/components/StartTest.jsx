@@ -26,15 +26,12 @@ const StartTest = ({
   isCorrect,
   correctCount,
   multipleOption,
+  rankedAnswers,
+  setRankedAnswers,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
-  const [rankedAnswers, setRankedAnswers] = useState(
-    answersSelection.map((item, index) => ({
-      id: `unique-${index}`,
-      ...item,
-    })),
-  );
+  
 
   useEffect(() => {
     setRankedAnswers(
@@ -192,6 +189,7 @@ const StartTest = ({
                       deleteable={item.delete}
                       answer={item.label}
                       answersSelection={answersSelection}
+                      setAnswerSelection={setAnswerSelection}
                       title={title}
                       handleMultipleChoiceCC={handleMultipleChoiceCC}
                       checkInfo={false}
@@ -199,7 +197,6 @@ const StartTest = ({
                       handleCheckChange={(check) =>
                         handleCheckChange(index, check)
                       }
-                      setAnswerSelection={setAnswerSelection}
                       setAddOptionLimit={setAddOptionLimit}
                     />
                   </SortableItem>

@@ -165,7 +165,7 @@ const MultipleChoice = () => {
               label={`Option ${index + 1} #`}
               options={correctOption ? true : false}
               trash={true}
-              dragable={true}
+              dragable={false}
               handleChange={(value) => handleChange(index, value)}
               handleOptionSelect={() => handleOptionSelect(index)}
               typedValue={typedValues[index].question}

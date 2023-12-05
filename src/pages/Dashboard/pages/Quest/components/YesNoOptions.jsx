@@ -29,7 +29,7 @@ const YesNoOptions = ({
           : "flex flex-row  items-center gap-[25px]"
       } ml-[51px] mr-[71px] `}
     >
-      {label && (
+      {/* {label && (
         <h1 className="ml-[53px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
           {label}
         </h1>
@@ -38,7 +38,7 @@ const YesNoOptions = ({
         <h1 className="text-[33px] font-[500] leading-normal text-[#435059] dark:text-[#D3D3D3]">
           {number}
         </h1>
-      )}
+      )} */}
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
           <div className="flex w-full items-center">

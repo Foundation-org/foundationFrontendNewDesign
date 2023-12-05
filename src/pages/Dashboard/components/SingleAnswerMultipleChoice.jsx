@@ -48,9 +48,6 @@ const SingleAnswerMultipleChoice = (props) => {
 
   return (
     <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
-      <h1 className="w-[26px] min-w-[26px] text-[20px] font-[500] leading-normal text-[#435059] dark:text-[#D3D3D3]">
-        {props.number}
-      </h1>
       <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
         <div className="flex w-full items-center">
           {!props.checkInfo && (

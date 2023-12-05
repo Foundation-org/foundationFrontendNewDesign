@@ -34,7 +34,7 @@ const Form = ({
             id="password"
             label="Password"
             className="peer w-full border-b-[1px] border-[#C0C0C0]  bg-white py-1 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px]"
-            autoComplete="off"
+            autoComplete="new-password"
             onChange={onPassChange}
           />
           {!showPassword ? (
@@ -70,18 +70,18 @@ const Form = ({
           )}
         </div>
 
-        <div className="-mt-1">
+        <div className="-mt-1 h-[30px]">
           {password && <PasswordStrengthBar password={password} />}
         </div>
       </div>
       <div>
-        <div className="relative">
+        <div className="relative ">
           <Input
             type={cnfmPassInputType}
             id="retype-password"
             label="Re-Type Password"
             className="peer w-full border-b-[1px] border-[#C0C0C0]  bg-white py-1 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px]"
-            autoComplete="off"
+            autoComplete="new-password"
             onChange={onReTypePassChange}
           />
           {!showPassword ? (
@@ -116,7 +116,7 @@ const Form = ({
             />
           )}
         </div>
-        <div className="-mt-1">
+        <div className="-mt-1 h-[30px]">
           {reTypePassword && <PasswordStrengthBar password={reTypePassword} />}
         </div>
       </div>

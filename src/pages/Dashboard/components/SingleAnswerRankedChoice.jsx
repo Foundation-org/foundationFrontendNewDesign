@@ -22,6 +22,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   useEffect(() => {
     setCheckState(props.check);
+    console.log("ranked percentages",props.percentages);
   }, [props.check]);
 
   const handleCheckChange = () => {
@@ -46,12 +47,9 @@ const SingleAnswerRankedChoice = (props) => {
       className="absolute left-[3rem] top-0 mx-auto flex w-[80%] items-center gap-[25px] xl:w-[90%]"
       style={{ position: "absolute" }}
     >
-      <h1 className="w-[26px] min-w-[26px] text-[20px] font-[500] leading-normal text-[#435059] dark:text-[#D3D3D3]">
-        {props.number}
-      </h1>
       <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
         <div className="flex w-full items-center">
-          {!props.checkInfo && (
+          {props.btnText!=="Results" && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
               {persistedTheme === "dark" ? (
                 <img
@@ -104,18 +102,17 @@ const SingleAnswerRankedChoice = (props) => {
           </div>
         </div>
         {/* to show ranked and multiple choice options */}
-        {!props.checkInfo ? null : (
           <div className="mr-[20.63px] flex items-center gap-[19px] ">
             {props.btnText === "Results" ? (
               <>
-                {props.percentages?.selectedPercentage[props.answer] ===
+                {props.percentages?.[props.answer.trim()] ===
                 undefined
                   ? "0%"
-                  : props.percentages?.selectedPercentage[props.answer] + "%"}
+                  : props.percentages?.[props.answer.trim()] + "%"}
               </>
             ) : null}
           </div>
-        )}
+
       </div>
     </div>
   );

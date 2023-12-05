@@ -27,7 +27,7 @@ const MultipleChoiceOptions = ({
         label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row  items-center gap-[25px]"
-      } ml-[51px] mr-[71px] `}
+      } ml-[51px] mr-[63px] `}
     >
       {/* {label && (
         <h1 className="ml-[53px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
