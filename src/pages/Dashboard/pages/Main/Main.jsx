@@ -173,7 +173,7 @@ const Main = () => {
   console.log({ allData });
 
   return (
-    <div className="tablet:flex-row flex w-full flex-col">
+    <div className="flex w-full flex-col xl:flex-row">
       <SidebarLeft
         handleSearch={handleSearch}
         searchData={searchData}
@@ -220,8 +220,9 @@ const Main = () => {
                       ? "Multiple Choice"
                       : item?.whichTypeQuestion === "ranked choise"
                         ? "Ranked Choice"
-                        : item?.whichTypeQuestion === "yes/no"?
-                        "Yes/No":null
+                        : item?.whichTypeQuestion === "yes/no"
+                          ? "Yes/No"
+                          : null
                 }
                 answers={item?.QuestAnswers}
                 isCorrect={item.QuestionCorrect}

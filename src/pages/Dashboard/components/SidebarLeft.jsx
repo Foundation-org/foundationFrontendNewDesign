@@ -20,7 +20,7 @@ const SidebarLeft = ({
 
   return (
     <>
-      <div className="no-scrollbar tablet:block hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] overflow-y-auto bg-white pl-[2.18rem] pt-[4.563rem] text-[#535353] dark:bg-[#0A0A0C] dark:text-white 5xl:w-[23rem] 5xl:min-w-[23rem] 5xl:pr-[2.18rem]">
+      <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] overflow-y-auto bg-white pl-[2.18rem] pt-[4.563rem] text-[#535353] dark:bg-[#0A0A0C] dark:text-white xl:block 5xl:w-[23rem] 5xl:min-w-[23rem] 5xl:pr-[2.18rem]">
         <div className="form-control w-full max-w-[13.25rem] 5xl:max-w-full">
           <label className="ml-[5px] pb-[9px] text-[22px] font-[400] leading-normal">
             Search
@@ -137,13 +137,13 @@ const SidebarLeft = ({
         </button>
       </div>
       {/* sidebar mobile */}
-      <div className="tablet:hidden block bg-[#0A0A0C] px-[15px] py-[10px]">
+      <div className="tablet:py-[26px] block bg-[#0A0A0C] px-[15px] py-[10px] xl:hidden">
         <div className="flex items-center justify-between gap-[13px]">
           <div className="relative w-full">
             <input
               type="text"
               placeholder="Search here...."
-              className="h-[25px] w-full min-w-[224px] rounded-[18px] border-[1px] bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
+              className="tablet:h-[50.7px] tablet:text-[17.13px] h-[25px] w-full min-w-[224px] rounded-[18px] border-[1px] bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
               value={searchData}
               onChange={handleSearch}
             />
@@ -161,7 +161,7 @@ const SidebarLeft = ({
               <img
                 src="/assets/svgs/dashboard/search.svg"
                 alt="search"
-                className="absolute right-3 top-[9px] h-3 w-3"
+                className="tablet:w-[24.3px] tablet:h-[26.4px] absolute right-3 top-[9px] h-3 w-3"
               />
             )}
           </div>
@@ -169,19 +169,19 @@ const SidebarLeft = ({
             <img
               src="/assets/svgs/dashboard/treasure.svg"
               alt="badge"
-              className="h-[23px] w-[23px]"
+              className="tablet:h-[46.8px] tablet:w-[46.8px] h-[23px] w-[23px]"
             />
             <div>
-              <h4 className="text-[9.3px] font-semibold text-[#EDEDED]">
+              <h4 className="tablet:text-[18.9px] text-[9.3px] font-semibold text-[#EDEDED]">
                 Treasury
               </h4>
-              <p className="text-[6.227px] text-[#616161] dark:text-[#BDBCBC]">
+              <p className="tablet:text-[12.651px] text-[6.227px] text-[#616161] dark:text-[#BDBCBC]">
                 Balance <span>1,357,432.20</span>
               </p>
             </div>
           </div>
         </div>
-        <div className="tablet:mt-0 mt-[10px] flex justify-around gap-[6px]">
+        <div className="tablet:mt-[21px] mt-[10px] flex justify-around gap-[6px]">
           <Dropdown
             label={"Status"}
             title={

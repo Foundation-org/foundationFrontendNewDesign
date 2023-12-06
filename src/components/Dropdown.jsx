@@ -15,7 +15,7 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
       <div className="dropdown 5xl:w-full">
         <label
           tabIndex={0}
-          className="tablet:h-[47px] tablet:min-w-[212px] tablet:pb-[9px] tablet:pl-[1.063rem] tablet:pr-5 tablet:pt-[11px] tablet:text-[15px] flex h-[18px] w-full min-w-[73.8px] max-w-[13.25rem] cursor-pointer items-center justify-between rounded-[18px] bg-[#F6F6F6] pb-1 pl-[5.9px] pr-[8.2px] pt-[5px] text-[7.66px] font-[400] leading-normal text-[#787878] dark:border-[1px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E6E6E6] 5xl:max-w-full"
+          className="tablet:h-[36.5px] tablet:pb-[9px] tablet:pl-[1.063rem] tablet:pr-5 tablet:pt-[11px] tablet:text-[15px] tablet:min-w-[150px] flex h-[18px] w-full min-w-[73.8px] max-w-[13.25rem] cursor-pointer items-center justify-between rounded-[18px] bg-[#F6F6F6] pb-1 pl-[5.9px] pr-[8.2px] pt-[5px] text-[7.66px] font-[400] leading-normal text-[#787878] dark:border-[1px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E6E6E6] xl:h-[47px] xl:min-w-[212px] 5xl:max-w-full"
           onClick={toggleDropdown}
         >
           {title}
