@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { changeOptions } from "../../../../../utils/options";
-import { createInfoQuest } from "../../../../../api/questsApi";
+import { checkUniqueQuestion, createInfoQuest, questionValidation } from "../../../../../api/questsApi";
 import { useMutation } from "@tanstack/react-query";
 import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
@@ -11,9 +11,11 @@ import AgreeDisagreeOptions from "../components/AgreeDisagreeOptions";
 const AgreeDisagree = () => {
   const [question, setQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
-  const [changedOption, setChangedOption] = useState("");
+  const [changedOption, setChangedOption] = useState("Daily");
   const [correctState, setCorrectState] = useState(false);
   const [changeState, setChangeState] = useState(false);
+  const [checkQuestionStatus, setCheckQuestionStatus] = useState({ name: "OK", color: "text-[#0FB063]" });
+
   const navigate = useNavigate();
 
   const { mutateAsync: createQuest } = useMutation({
@@ -42,21 +44,15 @@ const AgreeDisagree = () => {
     setSelectedOption(option);
   };
 
-  const handleSubmit = () => {
-    if (changeState && changedOption === "") {
-      toast.warning(
-        "Looks like you missed selecting the answer change frequency",
-      );
-      return;
-    }
-    if (question === "") {
-      toast.warning("Write some Question Before Submitting");
-      return;
-    }
-    if (correctState && selectedOption === "") {
-      toast.warning("You have to select one correct option to finish");
-      return;
-    }
+  const handleSubmit = async() => {
+    // Validation
+    if (question === "") return toast.warning("Write something Before Submitting");
+    if (checkQuestionStatus.color === "text-[#b0a00f]") return toast.warning("Please wait!");
+    if (checkQuestionStatus.name === "FAIL") return toast.error("Please review your question");
+    
+    // To check uniqueness of the question
+    const constraintResponse = await checkUniqueQuestion(question)
+    if(!constraintResponse.data.isUnique) return toast.warning("This quest is not unique. A similar quest already exists.");
 
     const params = {
       Question: question,
@@ -71,9 +67,19 @@ const AgreeDisagree = () => {
       uuid: localStorage.getItem("uId"),
     };
     console.log(params);
-
+    // Create Quest API
     createQuest(params);
   };
+
+  const questionVerification = async(value) => {
+    // Question Validation
+    const { validatedQuestion, errorMessage } = await questionValidation({ question: value, queryType: 'yes/no' })
+    // If any error captured
+    if (errorMessage) { return setCheckQuestionStatus({name: "FAIL", color: "text-[#b00f0f]"})};
+    // Question is validated and status is OK
+    setQuestion(validatedQuestion)
+    setCheckQuestionStatus({name: "OK", color: "text-[#0FB063]"})
+  }
 
   return (
     <div>
@@ -88,11 +94,13 @@ const AgreeDisagree = () => {
         <div className="relative flex w-full justify-center">
           <input
             type="text"
+            value={question}
             className="w-full max-w-[857px] rounded-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
-            onChange={(e) => setQuestion(e.target.value)}
+            onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus({name: "OK", color: e.target.value.trim() === "" ? "text-[#0FB063]" : "text-[#b0a00f]"})}}
+            onBlur={(e) => e.target.value.trim() !== "" && questionVerification(e.target.value.trim())}
           />
-          <h1 className="leading-0 absolute right-[72px] top-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
-            OK
+          <h1 className={`leading-0 absolute right-[72px] top-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold ${checkQuestionStatus.color}`}>
+            {checkQuestionStatus.name}
           </h1>
         </div>
         <div className="mt-10 flex flex-col gap-[30px]">
@@ -130,7 +138,7 @@ const AgreeDisagree = () => {
                 </h5>
                 <CustomSwitch
                   enabled={changeState}
-                  setEnabled={setChangeState}
+                  setEnabled={() => { setChangeState(prev => !prev); setChangedOption("Daily"); }}
                 />
               </div>
               {changeState ? (
@@ -139,12 +147,12 @@ const AgreeDisagree = () => {
                     <button
                       key={item.id}
                       className={`${
-                        changedOption === item.title
+                        changedOption === item.value
                           ? "bg-[#389CE3]"
                           : "bg-[#7C7C7C]"
                       } rounded-md px-4 py-2 text-[#F4F4F4]`}
                       onClick={() => {
-                        setChangedOption(item.title);
+                        setChangedOption(item.value);
                       }}
                     >
                       {item.title}
