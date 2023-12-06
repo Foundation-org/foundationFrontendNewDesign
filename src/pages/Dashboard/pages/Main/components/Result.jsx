@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import SingleAnswer from "../../../components/SingleAnswer";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
-
+import RankedResult from "../../../components/RankedResult";
 
 const Result = (props) => {
   const quests = useSelector(getQuests);
@@ -111,13 +111,18 @@ const Result = (props) => {
           }
         }
         if (props.whichTypeQuestion === "ranked choise") {
-          console.log("ranked response" + res?.data.data[res.data.data.length - 1].selected);
-  
-          const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
+          console.log(
+            "ranked response" +
+              res?.data.data[res.data.data.length - 1].selected,
+          );
+
+          const updatedRankedAnswers = res?.data.data[
+            res.data.data.length - 1
+          ].selected.map((item) => {
             const correspondingRankedAnswer = props.rankedAnswers.find(
-              (rankedItem) => rankedItem.label === item.question
+              (rankedItem) => rankedItem.label === item.question,
             );
-  
+
             if (correspondingRankedAnswer) {
               return {
                 id: correspondingRankedAnswer.id,
@@ -126,15 +131,14 @@ const Result = (props) => {
                 contend: false,
               };
             }
-  
+
             return null;
           });
           // Filter out any null values (items not found in rankedAnswers)
           const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
-  
+
           // Update the state with the new array
           props.setRankedAnswers(filteredRankedAnswers);
-  
         }
       }
     },
@@ -154,10 +158,11 @@ const Result = (props) => {
     },
     queryKey: ["ResultsData"],
   });
+
   const { data: rankedResultsData } = useQuery({
     queryFn: async () => {
       const params = {
-        questForeignKey: props.id
+        questForeignKey: props.id,
       };
       return await getRankedQuestPercent(params);
     },
@@ -235,7 +240,7 @@ const Result = (props) => {
             </>
           ) : null}
         </>
-      ): props.title === "multiple choise" ? (
+      ) : props.title === "multiple choise" ? (
         props.answers?.map((item, index) => (
           <SingleAnswerMultipleChoice
             number={"#" + (index + 1)}
@@ -249,21 +254,24 @@ const Result = (props) => {
             btnText={"Results"}
           />
         ))
-      ):(
+      ) : (
         props.rankedAnswers?.map((item, index) => (
-            <SingleAnswerRankedChoice
-              number={"#" + (index + 1)}
-              answer={item.label}
-              answersSelection={props.answersSelection}
-              setAnswerSelection={props.setAnswerSelection}
-              title={props.title}
-              handleMultipleChoiceCC={props.handleMultipleChoiceCC}
-              percentages={rankedResultsData?.data[rankedResultsData?.data.length - 1]}
-              checkInfo={false}
-              setAddOptionLimit={props.setAddOptionLimit}
-              btnText={"Results"}
-            />
-        )))}
+          <RankedResult
+            number={"#" + (index + 1)}
+            answer={item.label}
+            answersSelection={props.answersSelection}
+            setAnswerSelection={props.setAnswerSelection}
+            title={props.title}
+            handleMultipleChoiceCC={props.handleMultipleChoiceCC}
+            percentages={
+              rankedResultsData?.data[rankedResultsData?.data.length - 1]
+            }
+            checkInfo={false}
+            setAddOptionLimit={props.setAddOptionLimit}
+            btnText={"Results"}
+          />
+        ))
+      )}
       <div className="my-8 flex w-full justify-center">
         <button
           className={`${

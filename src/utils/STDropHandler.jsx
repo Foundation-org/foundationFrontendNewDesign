@@ -5,7 +5,7 @@ export const STDropHandler = (props) => {
   return (
     <div
       {...props}
-      className="left-[6rem] z-10 flex h-full w-fit items-center justify-center rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]"
+      className="left-[3rem] z-10 flex h-full w-fit items-center justify-center rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]"
       style={{ position: "absolute" }}
     >
       {persistedTheme === "dark" ? (

@@ -8,7 +8,7 @@ import EditNewOption from "./EditNewOption";
 import DeleteOption from "./DeleteOption";
 // import { getQuests } from "../../../features/quest/questsSlice";
 
-const SingleAnswerRankedChoice = (props) => {
+const RankedResult = (props) => {
   //   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [checkState, setCheckState] = useState(props.check);
@@ -32,21 +32,8 @@ const SingleAnswerRankedChoice = (props) => {
     });
   };
 
-  //   const selectedPercentageValue =
-  //     props.percentages?.selectedPercentage[
-  //       props.answer === "Agree" ? "Yes" : "No"
-  //     ];
-
-  //   const contenedPercentageValue =
-  //     props.percentages?.contendedPercentage[
-  //       props.answer === "Disagree" ? "Yes" : "No"
-  //     ];
-
   return (
-    <div
-      className="absolute left-[3rem] top-0 mx-auto flex w-[80%] items-center gap-[25px] xl:w-[90%]"
-      style={{ position: "absolute" }}
-    >
+    <div className="left-[3rem] top-0 mx-auto flex w-[80%] items-center gap-[25px] xl:w-[90%]">
       <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
         <div className="flex w-full items-center">
           {props.btnText !== "Results" && (
@@ -105,9 +92,11 @@ const SingleAnswerRankedChoice = (props) => {
         <div className="mr-[20.63px] flex items-center gap-[19px] ">
           {props.btnText === "Results" ? (
             <>
-              {props.percentages?.[props.answer.trim()] === undefined
+              {props.percentages?.rankedPercentage?.[props.answer.trim()] ===
+              undefined
                 ? "0%"
-                : props.percentages?.[props.answer.trim()] + "%"}
+                : props.percentages?.rankedPercentage?.[props.answer.trim()] +
+                  "%"}
             </>
           ) : null}
         </div>
@@ -116,4 +105,4 @@ const SingleAnswerRankedChoice = (props) => {
   );
 };
 
-export default SingleAnswerRankedChoice;
+export default RankedResult;
