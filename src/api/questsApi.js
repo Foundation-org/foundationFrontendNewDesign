@@ -60,3 +60,23 @@ export const getRankedQuestPercent = async (data) => {
     // uuid: data.uuid,
   });
 };
+
+// Question Validation by GPT-Server
+export const questionValidation = async({question, queryType}) => {
+  try {
+      var response = await api.get(`/ai-validation/1?userMessage=${question}&queryType=${queryType}`)
+      if(response.data.status === "VIOLATION") {return { validatedQuestion: null, errorMessage: "VIOLATION" }}
+      if(response.data.status === "FAIL") {return { validatedQuestion: null, errorMessage: "FAIL" }}
+      if(response.data.status === "ERROR") {return { validatedQuestion: null, errorMessage: "ERROR" }}
+      return { validatedQuestion: response.data.message, errorMessage: null}
+  } catch (error) {
+      return { validatedQuestion: null, errorMessage: "ERROR" }
+  }
+}
+
+// To check uniqueness of the question
+export const checkUniqueQuestion = async(question) => {
+  return await api.get(`/infoquestions/constraintForUniqueQuestion`, {
+    params: { question },
+  });
+}
