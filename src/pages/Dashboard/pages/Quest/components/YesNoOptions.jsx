@@ -59,8 +59,8 @@ const YesNoOptions = ({
                 )
               ) : null}
             </div>
-            <div className="flex w-full items-center justify-between pr-[45px]">
-              <h1 className="py-[18px] pl-[45px] text-[30px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] ">
+            <div className="flex w-full items-center justify-between h-[75px] rounded-r-2xl border-t-[1px] border-r-[1px] border-b-[1px] border-[#ACACAC] ">
+              <h1 className=" pl-[45px] w-full  text-[30px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] ">
                 {answer}
               </h1>
               <div className="flex gap-[55px]">

@@ -220,7 +220,8 @@ const Main = () => {
                       ? "Multiple Choice"
                       : item?.whichTypeQuestion === "ranked choise"
                         ? "Ranked Choice"
-                        : "Yes/No"
+                        : item?.whichTypeQuestion === "yes/no"?
+                        "Yes/No":null
                 }
                 answers={item?.QuestAnswers}
                 isCorrect={item.QuestionCorrect}

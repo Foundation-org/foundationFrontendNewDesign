@@ -37,6 +37,7 @@ const Form = ({
             autoComplete="new-password"
             onChange={onPassChange}
           />
+          
           {!showPassword ? (
             persistedTheme === "dark" ? (
               <img
@@ -68,12 +69,13 @@ const Form = ({
               onClick={togglePasswordVisibility}
             />
           )}
+          
         </div>
-
-        <div className="mt-1 h-[25px] relative -top-1">
-          {/* <div className="-mt-1 h-[30px]"> */}
+        <div className="mt-1.5  h-[25px] relative -top-1">
           {password && <PasswordStrengthBar password={password} />}
         </div>
+
+       
       </div>
       <div>
         <div className="relative ">
@@ -117,8 +119,7 @@ const Form = ({
             />
           )}
         </div>
-        <div className="mt-1 h-[25px] relative -top-1">
-          {/* <div className="-mt-1 h-[30px]"> */}
+        <div className="mt-1.5 h-[25px] relative -top-1">
           {reTypePassword && <PasswordStrengthBar password={reTypePassword} />}
         </div>
       </div>

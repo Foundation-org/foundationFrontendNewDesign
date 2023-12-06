@@ -189,6 +189,7 @@ const Result = (props) => {
 
   return (
     <div className="mt-[26px] flex flex-col gap-[10px]">
+      {console.log(props.title)}
       {props.title === "Yes/No" || props.title === "Agree/Disagree" ? (
         <>
           {props.title === "Yes/No" ? (
@@ -240,7 +241,7 @@ const Result = (props) => {
             </>
           ) : null}
         </>
-      ) : props.title === "multiple choise" ? (
+      ) : props.title === "Multiple Choice" ? (
         props.answers?.map((item, index) => (
           <SingleAnswerMultipleChoice
             number={"#" + (index + 1)}
@@ -254,7 +255,7 @@ const Result = (props) => {
             btnText={"Results"}
           />
         ))
-      ) : (
+      ) : props.title==="Ranked Choice"?(
         props.rankedAnswers?.map((item, index) => (
           <RankedResult
             number={"#" + (index + 1)}
@@ -271,7 +272,7 @@ const Result = (props) => {
             btnText={"Results"}
           />
         ))
-      )}
+      ):<></>}
       <div className="my-8 flex w-full justify-center">
         <button
           className={`${

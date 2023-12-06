@@ -24,7 +24,7 @@ const Options = ({
         label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row  items-center gap-[25px]"
-      } absolute left-[56px] top-[-74px] w-[88%]`}
+      } absolute left-[57px] top-[-74px] w-[88%]`}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
@@ -137,7 +137,7 @@ const Options = ({
                   )}
                 </>
               ) : null}
-              <h1 className="leading-0 ml-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
+              <h1 className="leading-0 ml-4 border-l-2 border-[#F3F3F3] pr-9 pl-6 text-[30px] font-semibold text-[#0FB063]">
                 OK
               </h1>
             </div>
