@@ -35,6 +35,11 @@ export default {
         "4xl": "1920px",
         "5xl": "2560px",
       },
+      spacing:{
+        '8.6': '2.2rem',
+        '6.1': '1.7rem',
+        '5.3': '1.35rem',
+      }
     },
   },
   plugins: ["prettier-plugin-tailwindcss", require("daisyui")],

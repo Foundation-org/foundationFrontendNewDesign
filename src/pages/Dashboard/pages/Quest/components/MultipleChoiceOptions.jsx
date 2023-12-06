@@ -8,7 +8,7 @@ const MultipleChoiceOptions = ({
   label,
   trash,
   dragable,
-  handleOptionChange,
+  handleOptionChange, 
   handleOptionSelect,
   isYes,
   allowInput,
@@ -27,7 +27,7 @@ const MultipleChoiceOptions = ({
         label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row  items-center gap-[25px]"
-      } ml-[51px] mr-[63px] `}
+      } ml-[56px] mr-[61px] `}
     >
       {/* {label && (
         <h1 className="ml-[53px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
@@ -84,7 +84,7 @@ const MultipleChoiceOptions = ({
         </div>
       ) : (
         <div className="flex">
-          <div className="flex h-[74px] w-[38px] items-center justify-center rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
+          <div className="flex h-[74px] w-[40px] items-center justify-center rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
             {dragable ? (
               persistedTheme === "dark" ? (
                 <img
@@ -105,7 +105,7 @@ const MultipleChoiceOptions = ({
             <input
               type="text"
               placeholder="option"
-              className="w-full max-w-[838px] rounded-r-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
+              className="w-full max-w-[838px] rounded-r-2xl border-t-[1px] border-r-[1px] border-b-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
               onChange={(e) => handleChange(e.target.value)}
               value={typedValue}
             />
@@ -168,7 +168,7 @@ const MultipleChoiceOptions = ({
                 </div>
               )} */}
 
-              <h1 className="leading-0 ml-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
+              <h1 className="leading-0 ml-4 border-l-2 border-[#F3F3F3] pr-9 pl-6 text-[30px] font-semibold text-[#0FB063]">
                 OK
               </h1>
             </div>

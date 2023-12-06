@@ -70,7 +70,8 @@ const Form = ({
           )}
         </div>
 
-        <div className="-mt-1 h-[30px]">
+        <div className="mt-1 h-[25px] relative -top-1">
+          {/* <div className="-mt-1 h-[30px]"> */}
           {password && <PasswordStrengthBar password={password} />}
         </div>
       </div>
@@ -116,7 +117,8 @@ const Form = ({
             />
           )}
         </div>
-        <div className="-mt-1 h-[30px]">
+        <div className="mt-1 h-[25px] relative -top-1">
+          {/* <div className="-mt-1 h-[30px]"> */}
           {reTypePassword && <PasswordStrengthBar password={reTypePassword} />}
         </div>
       </div>

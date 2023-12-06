@@ -176,7 +176,7 @@ const MultipleChoice = () => {
             />
           ))}
           <button
-            className="ml-[50px] mt-5 w-fit rounded-[23.6px] bg-[#C9C9C9] px-6 py-3 text-[31px] font-semibold leading-normal text-[#7C7C7C]"
+            className="ml-[50px] mt-5.3 w-fit rounded-[23.6px] bg-[#C9C9C9] px-6 py-3 text-[31px] font-semibold leading-normal text-[#7C7C7C]"
             onClick={handleAddOption}
           >
             Add Option

@@ -89,7 +89,7 @@ const YesNo = () => {
         <div className="relative flex w-full justify-center">
           <input
             type="text"
-            className="w-full max-w-[838px] rounded-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
+            className="w-full max-w-[857px] rounded-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
             onChange={(e) => setQuestion(e.target.value)}
           />
           <h1 className="leading-0 absolute right-[72px] top-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
