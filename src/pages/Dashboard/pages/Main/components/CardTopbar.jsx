@@ -12,14 +12,18 @@ const CardTopbar = ({
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
-    <div className="flex items-center justify-between px-[22px] py-[17px]">
+    <div className="tablet:px-[22px] tablet:py-[17px] flex items-center justify-between px-[10.4px] py-2">
       <div className="relative h-fit w-fit">
-        <img src={img} alt={alt} className="h-[60px] w-[48px]" />
-        <p className="transform-center absolute z-50 pb-5 text-[17px] font-[400] leading-normal text-[#F6F6F6]">
+        <img
+          src={img}
+          alt={alt}
+          className="tablet:h-[60px] tablet:w-[48px] h-[28.379px] w-[22.722px]"
+        />
+        <p className="transform-center tablet:pb-5 tablet:text-[17px] absolute z-50 text-[11.3px] font-[400] leading-normal text-[#F6F6F6]">
           {badgeCount}
         </p>
       </div>
-      <h1 className="text-[22px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF]">
+      <h1 className="tablet:text-[22px] text-[10.414px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF]">
         {title}
       </h1>
       <div onClick={() => handleClickBookmark(isBookmarked)}>
@@ -28,20 +32,20 @@ const CardTopbar = ({
             <img
               src="/assets/svgs/dashboard/bookmark-blue.svg"
               alt="save icon"
-              className="h-7 w-9 cursor-pointer"
+              className="tablet:h-7 tablet:w-9 h-[17px] w-[12.7px] cursor-pointer"
             />
           ) : (
             <img
               src="/assets/svgs/dashboard/bookmark-white.svg"
               alt="save icon"
-              className="h-7 w-9 cursor-pointer"
+              className="tablet:h-7 tablet:w-9 h-[17px] w-[12.7px] cursor-pointer"
             />
           )
         ) : (
           <img
             src="/assets/svgs/dashboard/save.svg"
             alt="save icon"
-            className="h-7 w-9 cursor-pointer"
+            className="tablet:h-7 tablet:w-9 h-[17px] w-[12.7px] cursor-pointer"
           />
         )}
       </div>

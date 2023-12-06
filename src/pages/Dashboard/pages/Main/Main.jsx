@@ -173,7 +173,7 @@ const Main = () => {
   console.log({ allData });
 
   return (
-    <>
+    <div className="tablet:flex-row flex w-full flex-col">
       <SidebarLeft
         handleSearch={handleSearch}
         searchData={searchData}
@@ -256,7 +256,7 @@ const Main = () => {
         </InfiniteScroll>
       </div>
       <SidebarRight />
-    </>
+    </div>
   );
 };
 

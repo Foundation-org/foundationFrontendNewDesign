@@ -30,16 +30,17 @@ export default {
     },
     extend: {
       screens: {
+        tablet: "744px",
         "2xl": "1440px",
         "3xl": "1600px",
         "4xl": "1920px",
         "5xl": "2560px",
       },
-      spacing:{
-        '8.6': '2.2rem',
-        '6.1': '1.7rem',
-        '5.3': '1.35rem',
-      }
+      spacing: {
+        8.6: "2.2rem",
+        6.1: "1.7rem",
+        5.3: "1.35rem",
+      },
     },
   },
   plugins: ["prettier-plugin-tailwindcss", require("daisyui")],

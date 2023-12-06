@@ -107,20 +107,20 @@ const SidebarRight = () => {
   }, []);
 
   return (
-    <div className="bg-white dark:bg-[#0A0A0C] h-[calc(100vh-96px)] min-w-[23rem] w-[23rem] 2xl:w-[25rem] pt-10 pl-[1.3rem] pr-[2.1rem] shadow-[0_3px_10px_rgb(0,0,0,0.2)] overflow-y-auto no-scrollbar">
-      <div className="flex gap-6 mb-11">
+    <div className="no-scrollbar tablet:block hidden h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-10 shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#0A0A0C] 2xl:w-[25rem]">
+      <div className="mb-11 flex gap-6">
         <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" />
         <div>
           <h4 className="heading">Treasury</h4>
-          <p className="text-[#616161] dark:text-[#D4D5D7] text-[20px] font-medium">
+          <p className="text-[20px] font-medium text-[#616161] dark:text-[#D4D5D7]">
             Balance <span>1,357,432.20</span>
           </p>
         </div>
       </div>
-      <div className="flex gap-6 mb-11">
-        <div className="w-fit h-fit relative">
+      <div className="mb-11 flex gap-6">
+        <div className="relative h-fit w-fit">
           <img src="/assets/svgs/dashboard/badge.svg" alt="badge" />
-          <p className="absolute transform-center pb-5 z-50 font-bold text-white text-[35px] leading-normal">
+          <p className="transform-center absolute z-50 pb-5 text-[35px] font-bold leading-normal text-white">
             5
           </p>
         </div>
@@ -131,29 +131,29 @@ const SidebarRight = () => {
               navigate("/profile");
             }}
           >
-            <Anchor className="text-[#4A8DBD] dark:text-[#BAE2FF] cursor-pointer">
+            <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">
               Edit Profile
             </Anchor>
           </div>
-          <div className="flex gap-2 mt-3">
-            <div className="h-[9px] w-6 bg-[#4A8DBD] rounded-md"></div>
-            <div className="h-[9px] w-6 bg-[#D9D9D9] dark:bg-[#323232] rounded-md"></div>
-            <div className="h-[9px] w-6 bg-[#D9D9D9] dark:bg-[#323232] rounded-md"></div>
-            <div className="h-[9px] w-6 bg-[#D9D9D9] dark:bg-[#323232] rounded-md"></div>
-            <div className="h-[9px] w-6 bg-[#D9D9D9] dark:bg-[#323232] rounded-md"></div>
-            <div className="h-[9px] w-6 bg-[#D9D9D9] dark:bg-[#323232] rounded-md"></div>
+          <div className="mt-3 flex gap-2">
+            <div className="h-[9px] w-6 rounded-md bg-[#4A8DBD]"></div>
+            <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+            <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+            <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+            <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+            <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
           </div>
         </div>
       </div>
       {sidebarList.map((item) => (
-        <div className="flex gap-4 items-center mb-4" key={item.id}>
+        <div className="mb-4 flex items-center gap-4" key={item.id}>
           {persistedTheme === "dark" ? (
             <img src={item.icon} alt={item.alt} />
           ) : (
             <img src={item.iconLight} alt={item.alt} />
           )}
 
-          <div className="w-full flex items-center justify-between text-[18px] text-[#7C7C7C] dark:text-[#878787] font-semibold leading-normal">
+          <div className="flex w-full items-center justify-between text-[18px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#878787]">
             <h5>{item.title}</h5>
             <h5>{item.value}</h5>
           </div>
