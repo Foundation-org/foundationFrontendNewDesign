@@ -7,89 +7,57 @@ const SingleAnswer = (props) => {
   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
 
-  const fetchSelectedPercentage = () => {
-    if (props.answer === "Yes" || props.answer === "Agree") {
-      if (props.percentages?.selectedPercentage) {
-        const yesPercentage = props.percentages.selectedPercentage.Yes;
-        if (yesPercentage !== undefined) {
-          if (yesPercentage === 100) {
-            return "100%";
-          } else {
-            return (
-              yesPercentage.toFixed(Math.abs(yesPercentage) % 1 === 0 ? 2 : 1) +
-              "%"
-            );
-          }
-        } else {
-          return "0.00%";
-        }
+    const fetchSelectedPercentage = () => {
+      const percentageKey =
+        props.answer === "Yes" || props.answer === "Agree" ? "Yes" : "No";
+  
+      const selectedPercentage = props.percentages?.selectedPercentage?.[
+        percentageKey
+      ];
+  
+      if (selectedPercentage !== 0 && selectedPercentage!==undefined) {
+        return selectedPercentage === 100
+          ? <span className={`w-[4ch] whitespace-nowrap ${
+            persistedTheme === "dark" ? "text-white" : ""
+          }`}>100%</span>
+          : <span className={`w-[4ch] whitespace-nowrap ${
+            persistedTheme === "dark" ? "text-white" : ""
+          }`}>
+              {selectedPercentage + "%"}
+            </span>;
       } else {
-        return "0.00%";
+        return <span className={`w-[4ch] whitespace-nowrap ${
+          persistedTheme === "dark" ? "text-white" : ""
+        }`}>0%</span>;
       }
-    } else if (props.answer === "No" || props.answer === "Disagree") {
-      if (props.percentages?.selectedPercentage) {
-        const noPercentage = props.percentages.selectedPercentage.No;
-        if (noPercentage !== undefined) {
-          if (noPercentage === 100) {
-            return "100%";
-          } else {
-            return (
-              noPercentage.toFixed(Math.abs(noPercentage) % 1 === 0 ? 2 : 1) +
-              "%"
-            );
-          }
-        } else {
-          return "0.00%";
-        }
+    };
+  
+    const fetchContendedPercentage = () => {
+      const percentageKey =
+        props.answer === "Yes" || props.answer === "Agree" ? "Yes" : "No";
+    
+      const contendedPercentage = props.percentages?.contendedPercentage?.[
+        percentageKey
+      ];
+    
+      if (contendedPercentage !== 0 && contendedPercentage!==undefined) {
+        return contendedPercentage === 100 || contendedPercentage === 0
+          ? <span className={`w-[4ch] whitespace-nowrap ${
+            persistedTheme === "dark" ? "text-white" : ""
+          }`}>{contendedPercentage + "%"}</span>
+          : <span className={`w-[4ch] whitespace-nowrap ${
+            persistedTheme === "dark" ? "text-white" : ""
+          }`}>0%</span>;
       } else {
-        return "0.00%";
+        return <span className={`w-[4ch] whitespace-nowrap ${
+          persistedTheme === "dark" ? "text-white" : ""
+        }`}>0%</span>;
       }
-    } else {
-      return "0.00%";
-    }
-  };
+    };
+    
+  
 
-  const fetchContendedPercentage = () => {
-    if (props.answer === "Yes" || props.answer === "Agree") {
-      if (props.percentages?.contendedPercentage) {
-        const yesPercentage = props.percentages.contendedPercentage.Yes;
-        if (yesPercentage !== undefined) {
-          if (yesPercentage === 100) {
-            return "100%";
-          } else {
-            return (
-              yesPercentage.toFixed(Math.abs(yesPercentage) % 1 === 0 ? 2 : 1) +
-              "%"
-            );
-          }
-        } else {
-          return "0.00%";
-        }
-      } else {
-        return "0.00%";
-      }
-    } else if (props.answer === "No" || props.answer === "Disagree") {
-      if (props.percentages?.contendedPercentage) {
-        const noPercentage = props.percentages.contendedPercentage.No;
-        if (noPercentage !== undefined) {
-          if (noPercentage === 100) {
-            return "100%";
-          } else {
-            return (
-              noPercentage.toFixed(Math.abs(noPercentage) % 1 === 0 ? 2 : 1) +
-              "%"
-            );
-          }
-        } else {
-          return "0.00%";
-        }
-      } else {
-        return "0.00%";
-      }
-    } else {
-      return "0.00%";
-    }
-  };
+  
 
   return (
     <div className="ml-[30px] mr-[36px] flex items-center gap-[14px] tablet:mx-[72px] tablet:gap-[25px] 2xl:mx-[85px]">

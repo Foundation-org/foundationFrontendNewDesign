@@ -136,7 +136,7 @@ const SidebarLeft = ({
             <input
               type="text"
               placeholder="Search here...."
-              className="h-[25px] w-full min-w-[224px] rounded-[18px] border-[1px] bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8] tablet:h-[50.7px] tablet:text-[17.13px]"
+              className="h-[25px] w-full min-w-[224px] rounded-[18px] border-[1px] border-white bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8] tablet:h-[50.7px] tablet:text-[17.13px]"
               value={searchData}
               onChange={handleSearch}
             />
@@ -165,7 +165,7 @@ const SidebarLeft = ({
               className="h-[23px] w-[23px] tablet:h-[46.8px] tablet:w-[46.8px]"
             />
             <div>
-              <h4 className="text-[9.3px] font-semibold text-[#EDEDED] tablet:text-[18.9px]">
+              <h4 className="text-[9.3px] font-semibold tablet:text-[18.9px] text-[#616161] dark:text-[#D4D5D7]">
                 Treasury
               </h4>
               <p className="text-[6.227px] text-[#616161] dark:text-[#BDBCBC] tablet:text-[12.651px]">

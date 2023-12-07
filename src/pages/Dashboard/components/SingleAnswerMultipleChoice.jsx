@@ -132,41 +132,28 @@ const SingleAnswerMultipleChoice = (props) => {
 
             {props.btnText === "Results" ? (
               <>
-                {console.log(
-                  props.answer +
-                    parseInt(
-                      Math.abs(
-                        props.percentages?.selectedPercentage[
-                          props.answer.trim()
-                        ],
-                      ),
-                    )
-                      .toString()
-                      .trim().length,
-                )}
                 {props.percentages?.selectedPercentage &&
-                props.percentages?.selectedPercentage[props.answer.trim()]
-                  ? props.percentages?.selectedPercentage[
-                      props.answer.trim()
-                    ] === 100
-                    ? "100 %"
-                    : props.percentages?.selectedPercentage[
-                        props.answer.trim()
-                      ].toFixed(
-                        parseInt(
-                          Math.abs(
-                            props.percentages?.selectedPercentage[
-                              props.answer.trim()
-                            ],
-                          ),
-                        )
-                          .toString()
-                          .trim().length === 2
-                          ? 1
-                          : 2,
-                      ) + "%"
-                  : "0.00%"}
+                  props.percentages?.selectedPercentage[props.answer.trim()] ? (
+                  props.percentages?.selectedPercentage[props.answer.trim()] === 100 ? (
+                    <span className={`w-[4ch] whitespace-nowrap ${
+                      persistedTheme === "dark" ? "text-white" : ""
+                    }`}>100%</span>
+                  ) : (
+                    <span className={`w-[4ch] whitespace-nowrap ${
+                      persistedTheme === "dark" ? "text-white" : ""
+                    }`}>
+                      {props.percentages?.selectedPercentage[props.answer.trim()]
+                        + "%"}
+                    </span>
+                  )
+                ) : (
+                  <span className={`w-[4ch] whitespace-nowrap ${
+                    persistedTheme === "dark" ? "text-white" : ""
+                  }`}>0%</span>
+                )}
               </>
+
+
             ) : (
               <></>
             )}
@@ -185,21 +172,24 @@ const SingleAnswerMultipleChoice = (props) => {
               {props.btnText === "Results" ? (
                 <>
                   {props.percentages?.contendedPercentage &&
-                  props.percentages?.contendedPercentage[props.answer.trim()]
-                    ? props.percentages?.contendedPercentage[
-                        props.answer.trim()
-                      ] === 100
-                      ? "100%"
-                      : props.percentages?.contendedPercentage[
-                          props.answer.trim()
-                        ].toFixed(
-                          props.percentages?.contendedPercentage[
-                            props.answer.trim()
-                          ].length === 2
-                            ? 1
-                            : 2,
-                        ) + "%"
-                    : "0.00%"}
+                    props.percentages?.contendedPercentage[props.answer.trim()] ? (
+                    props.percentages?.contendedPercentage[props.answer.trim()] === 100 ? (
+                      <span className={`w-[4ch] whitespace-nowrap ${
+                        persistedTheme === "dark" ? "text-white" : ""
+                      }`}>100%</span>
+                    ) : (
+                      <span className={`w-[4ch] whitespace-nowrap ${
+                        persistedTheme === "dark" ? "text-white" : ""
+                      }`}>
+                        {props.percentages?.contendedPercentage[props.answer.trim()]+"%"}
+                      </span>
+                    )
+                  ) : (
+                    <span className={`w-[4ch] whitespace-nowrap ${
+                      persistedTheme === "dark" ? "text-white" : ""
+                    }`}>0%</span>
+                  )}
+
                 </>
               ) : (
                 <></>

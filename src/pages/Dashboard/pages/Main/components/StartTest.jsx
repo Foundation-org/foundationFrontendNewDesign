@@ -361,9 +361,7 @@ const StartTest = ({
                 className="h-[10.41px] w-[10.41px] tablet:h-[22px] tablet:w-[22px]"
               />
             )}
-            <h4 className="text-[8.521px] font-medium leading-normal text-[#438BBF] dark:text-[#B6B6B6] tablet:text-[16px]">
-              Full Screen
-            </h4>
+
           </div>
         </div>
       </div>

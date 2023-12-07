@@ -190,6 +190,9 @@ const OptionBar = ({
       getStartQuestDetail(data);
       handleStartTest(id);
     }
+    if(btnText==="completed"){
+      handleViewResults(id);
+    }
   };
 
   function getButtonText(btnText) {
@@ -229,7 +232,6 @@ const OptionBar = ({
               btnColor,
             )} tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] mt-[16.2px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white`}
             onClick={handleStartChange}
-            disabled={btnText === "completed"}
           >
             {getButtonText(btnText)}
           </button>
@@ -244,7 +246,7 @@ const OptionBar = ({
               }
             }}
           >
-            Result
+            Results
           </button>
         </div>
       </div>
