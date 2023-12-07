@@ -6,6 +6,7 @@ import { useState } from "react";
 import BasicModal from "../../../components/BasicModal";
 import EditNewOption from "./EditNewOption";
 import DeleteOption from "./DeleteOption";
+import { toast } from "sonner";
 // import { getQuests } from "../../../features/quest/questsSlice";
 
 const SingleAnswerRankedChoice = (props) => {
@@ -14,6 +15,7 @@ const SingleAnswerRankedChoice = (props) => {
   const [checkState, setCheckState] = useState(props.check);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [answer, setAnswer] = useState(props.answer);
 
   const handleEditOpen = () => setEditModal(true);
   const handleEditClose = () => setEditModal(false);
@@ -32,45 +34,70 @@ const SingleAnswerRankedChoice = (props) => {
     });
   };
 
-  //   const selectedPercentageValue =
-  //     props.percentages?.selectedPercentage[
-  //       props.answer === "Agree" ? "Yes" : "No"
-  //     ];
+  const handleInputChange = (e) => {
+    setAnswer(e.target.value);
+  };
 
-  //   const contenedPercentageValue =
-  //     props.percentages?.contendedPercentage[
-  //       props.answer === "Disagree" ? "Yes" : "No"
-  //     ];
+  useEffect(() => {
+    handleAddOption();
+  }, [answer]);
+
+  const handleAddOption = () => {
+    if (answer.trim() === "") {
+      toast.error("Option cannot be empty");
+      return;
+    }
+
+    const newArr = props.answersSelection.map((item) =>
+      item.label === props.answer ? { ...item, label: answer.trim() } : item,
+    );
+
+    props.setAnswerSelection(newArr);
+  };
 
   return (
     <div
-      className="absolute left-[3rem] top-0 mx-auto flex w-[80%] items-center gap-[25px] xl:w-[90%]"
+      className="absolute left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem] xl:w-[90%]"
       style={{ position: "absolute" }}
     >
-      <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
+      <div className="flex w-full justify-between rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
         <div className="flex w-full items-center">
           {props.btnText !== "Results" && (
-            <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
+            <div className="h-full w-fit rounded-l-[4.734px] bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] dark:bg-[#9E9E9E] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px]">
               {persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/dashboard/six-dots-dark.svg"
                   alt="six dots"
+                  className="h-[8.5px] w-[5.2px] tablet:h-auto tablet:w-auto"
                 />
               ) : (
-                <img src="/assets/svgs/dashboard/six-dots.svg" alt="six dots" />
+                <img
+                  src="/assets/svgs/dashboard/six-dots.svg"
+                  alt="six dots"
+                  className="h-[8.5px] w-[5.2px] tablet:h-auto tablet:w-auto"
+                />
               )}
             </div>
           )}
           <div className="mr-6 flex w-full justify-between">
-            <h1 className="ml-8 w-full pb-[10px] pt-[12px] text-[19px] font-normal leading-normal text-[#435059]  dark:text-[#D3D3D3]">
-              {props.answer}
-            </h1>
+            {props.editable ? (
+              <input
+                type="text"
+                className="w-full rounded-[4.73px] bg-[#0D1012] pb-[5.7px] pl-[32px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:pt-[12px] tablet:text-[19px]"
+                value={answer}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <h1 className="ml-[15.8px] w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px]">
+                {props.answer}
+              </h1>
+            )}
             <div className="flex items-center gap-[19px]">
               {props.editable ? (
                 <img
                   src="/assets/svgs/dashboard/edit.svg"
-                  className="h-[19px] w-4 cursor-pointer"
-                  onClick={handleEditOpen}
+                  className="h-[19px] w-4"
+                  // onClick={handleEditOpen}
                 />
               ) : null}
               {props.deleteable ? (
@@ -81,14 +108,14 @@ const SingleAnswerRankedChoice = (props) => {
                 />
               ) : null}
             </div>
-            <BasicModal open={editModal} handleClose={handleEditClose}>
+            {/* <BasicModal open={editModal} handleClose={handleEditClose}>
               <EditNewOption
                 answer={props.answer}
                 answersSelection={props.answersSelection}
                 setAnswerSelection={props.setAnswerSelection}
                 handleEditClose={handleEditClose}
               />
-            </BasicModal>
+            </BasicModal> */}
             <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
               <DeleteOption
                 answer={props.answer}
@@ -101,6 +128,15 @@ const SingleAnswerRankedChoice = (props) => {
             </BasicModal>
           </div>
         </div>
+        {/* edit newly added options */}
+        {/* <div className="w-full " style={{ position: "absolute" }}>
+          {props.editable ? (
+            <input
+              type="text"
+              className="w-full rounded-[4.73px] bg-[#0D1012] pb-[5.7px] pl-14 pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:pt-[12px] tablet:text-[19px]"
+            />
+          ) : null}
+        </div> */}
         {/* to show ranked and multiple choice options */}
         <div className="mr-[20.63px] flex items-center gap-[19px] ">
           {props.btnText === "Results" ? (

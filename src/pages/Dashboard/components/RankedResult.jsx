@@ -33,8 +33,8 @@ const RankedResult = (props) => {
   };
 
   return (
-    <div className="left-[3rem] top-0 mx-auto flex w-[80%] items-center gap-[25px] xl:w-[90%]">
-      <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
+    <div className="left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem] xl:w-[90%]">
+      <div className="flex w-full justify-between rounded-[4.73px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
         <div className="flex w-full items-center">
           {props.btnText !== "Results" && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
@@ -49,7 +49,7 @@ const RankedResult = (props) => {
             </div>
           )}
           <div className="mr-6 flex w-full justify-between">
-            <h1 className="ml-8 w-full pb-[10px] pt-[12px] text-[19px] font-normal leading-normal text-[#435059]  dark:text-[#D3D3D3]">
+            <h1 className="ml-8 w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pb-[10px] tablet:pt-[12px]  tablet:text-[19px]">
               {props.answer}
             </h1>
             <div className="flex items-center gap-[19px]">
@@ -89,15 +89,31 @@ const RankedResult = (props) => {
           </div>
         </div>
         {/* to show ranked and multiple choice options */}
-        <div className="mr-[20.63px] flex items-center gap-[19px] ">
+        <div className="mr-[20.63px] flex items-center gap-[19px] text-[9.238px] tablet:text-[16px] ">
           {props.btnText === "Results" ? (
-            <>{console.log(props.answer+parseInt(Math.abs(props.percentages?.rankedPercentage?.[props.answer.trim()])).toString().trim().length)}
-              {props.percentages?.rankedPercentage?.[props.answer.trim()] === undefined
+            <>
+              {props.percentages?.rankedPercentage &&
+              props.percentages?.rankedPercentage?.[props.answer.trim()] ===
+                undefined
                 ? "0.00%"
-                : props.percentages?.rankedPercentage?.[props.answer.trim()] === 100
+                : props.percentages?.rankedPercentage?.[props.answer.trim()] ===
+                    100
                   ? "100%"
-                  : props.percentages?.rankedPercentage?.[props.answer.trim()].toFixed(parseInt(Math.abs(props.percentages?.rankedPercentage?.[props.answer.trim()])).toString().trim().length === 2 ? 1 : 2) + "%"}
-
+                  : props.percentages?.rankedPercentage?.[
+                      props.answer.trim()
+                    ].toFixed(
+                      parseInt(
+                        Math.abs(
+                          props.percentages?.rankedPercentage?.[
+                            props.answer.trim()
+                          ],
+                        ),
+                      )
+                        .toString()
+                        .trim().length === 2
+                        ? 1
+                        : 2,
+                    ) + "%"}
             </>
           ) : null}
         </div>

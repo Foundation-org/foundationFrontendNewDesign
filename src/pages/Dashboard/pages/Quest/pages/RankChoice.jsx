@@ -159,21 +159,21 @@ const RankChoice = () => {
   return (
     <div>
       <Title />
-      <div className="mx-auto my-10 max-w-[979px] rounded-[26px] bg-[#F3F3F3] py-[42px]">
-        <h1 className="text-center text-[32px] font-semibold leading-normal text-[#7C7C7C]">
+      <div className="mx-auto my-10 max-w-[85%] rounded-[26px] bg-[#F3F3F3] py-[27px] xl:max-w-[979px] xl:py-[42px]">
+        <h1 className="text-center text-[22.81px] font-semibold leading-normal text-[#7C7C7C] xl:text-[32px]">
           Create Quest
         </h1>
-        <h3 className="mb-[22px] ml-[104px] mt-[38px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
+        <h3 className="mb-[13.54px] ml-[67px] mt-[20.38px] text-[16.58px] font-normal leading-normal text-[#C5C5C5] xl:mb-[22px] xl:ml-[104px] xl:mt-[38px] xl:text-[25px]">
           Make a statement or pose a question
         </h3>
         {/* write question */}
         <div className="relative flex w-full justify-center">
           <input
             type="text"
-            className="w-full max-w-[857px] rounded-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
+            className="w-full max-w-[85%] rounded-[10.364px] border-[1px] border-[#ACACAC] bg-white pb-[9.83px] pl-[19.35px] pr-28 pt-[11.61px] text-[20.73px] font-normal leading-[0px] text-[#435059] xl:max-w-[857px] xl:rounded-2xl xl:py-[18px] xl:pl-9 xl:text-[30px]"
             onChange={(e) => setQuestion(e.target.value)}
           />
-          <h1 className="leading-0 absolute right-[72px] top-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
+          <h1 className="leading-0 absolute right-11 top-3 border-l-2 border-[#F3F3F3] px-[18.6px] text-[17.546px] font-semibold text-[#0FB063] xl:right-[72px] xl:top-4 xl:px-6 xl:text-[30px]">
             OK
           </h1>
         </div>
@@ -184,7 +184,7 @@ const RankChoice = () => {
           onSortEnd={handleOnSortEnd}
         >
           {({ items }) => (
-            <div id="dragIcon" className="mt-10 mb-8 flex flex-col gap-[30px]">
+            <div id="dragIcon" className="mb-8 mt-10 flex flex-col gap-[30px]">
               {items.map((item, index) => (
                 <SortableItem
                   key={item.id}
@@ -212,21 +212,21 @@ const RankChoice = () => {
           )}
         </SortableList>
         <button
-            className="ml-[50px] mt-5 w-fit rounded-[23.6px] bg-[#C9C9C9] px-6 py-3 text-[31px] font-semibold leading-normal text-[#7C7C7C]"
-            onClick={handleAddOption}
+          className="ml-[50px] mt-5 w-fit rounded-[15.265px] bg-[#C9C9C9] px-[15.27px] py-[8.14px] text-[20.736px] font-semibold leading-normal text-[#7C7C7C] xl:rounded-[23.6px] xl:px-6 xl:py-3 xl:text-[31px]"
+          onClick={handleAddOption}
         >
           Add Option
         </button>
-        <h3 className="mb-[32px] ml-[104px] mt-[50px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
+        <h3 className="mb-[32px] ml-[61.28px] mt-[32px] text-[16.589px] font-normal leading-normal text-[#C5C5C5] xl:ml-[104px] xl:mt-[50px] xl:text-[25px]">
           Customize your Quest
         </h3>
         {/* settings */}
-        <div className="mx-auto flex max-w-[838px] flex-col gap-7 rounded-[16px] bg-[#FCFCFC] py-[35px]">
-          <h5 className="text-center text-[30px] font-medium leading-normal text-[#435059]">
+        <div className="mx-auto flex max-w-[85%] flex-col gap-7 rounded-[16px] bg-[#FCFCFC] py-[35px] xl:max-w-[838px]">
+          <h5 className="text-center text-[19.35px] font-medium leading-normal text-[#435059] xl:text-[30px]">
             Settings
           </h5>
-          <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
-            <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
+          <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[20.26px] pb-[13.72px] pt-[14.83px] xl:px-7 xl:py-[34px]">
+            <h5 className="text-[18.662px] font-normal leading-normal text-[#7C7C7C] xl:text-[28px]">
               Participant can add their own options.
             </h5>
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
@@ -242,10 +242,11 @@ const RankChoice = () => {
               {changeOptions?.map((item) => (
                 <button
                   key={item.id}
-                  className={`${changedOption === item.title
+                  className={`${
+                    changedOption === item.title
                       ? "bg-[#389CE3]"
                       : "bg-[#7C7C7C]"
-                    } rounded-md px-4 py-2 text-[#F4F4F4]`}
+                  } rounded-md px-4 py-2 text-[#F4F4F4]`}
                   onClick={() => {
                     setChangedOption(item.title);
                   }}

@@ -337,7 +337,7 @@ const QuestionCard = ({
         contended: answerContended,
         created: new Date(),
       };
-      const currentDate = new Date(); 
+      const currentDate = new Date();
 
       if (btnText === "change answer") {
         const timeInterval = validateInterval();
@@ -369,37 +369,31 @@ const QuestionCard = ({
         console.log("params", params);
         startQuest(params);
       }
-    }
-    else if(whichTypeQuestion === "ranked choise"){
-
+    } else if (whichTypeQuestion === "ranked choise") {
       let addedAnswerValue = "";
       let answerSelected = [];
 
       for (let i = 0; i < rankedAnswers.length; i++) {
-
-          if (rankedAnswers[i].addedOptionByUser) {
-            // If user Add his own option
-            console.log("added answer ran");
-            answerSelected.push({
-              question: rankedAnswers[i].label,
-              addedAnswerByUser: true,
-            });
-            addedAnswerValue = rankedAnswers[i].label;
-            console.log("added ans value" + addedAnswerValue);
-          } else {
-            answerSelected.push({ question: rankedAnswers[i].label });
-          }
-        
-
-
+        if (rankedAnswers[i].addedOptionByUser) {
+          // If user Add his own option
+          console.log("added answer ran");
+          answerSelected.push({
+            question: rankedAnswers[i].label,
+            addedAnswerByUser: true,
+          });
+          addedAnswerValue = rankedAnswers[i].label;
+          console.log("added ans value" + addedAnswerValue);
+        } else {
+          answerSelected.push({ question: rankedAnswers[i].label });
+        }
       }
 
       let dataToSend = {
         selected: answerSelected,
-        contended: '',
+        contended: "",
         created: new Date(),
       };
-      const currentDate = new Date(); 
+      const currentDate = new Date();
 
       if (btnText === "change answer") {
         const timeInterval = validateInterval();
@@ -431,17 +425,14 @@ const QuestionCard = ({
         console.log("params", params);
         startQuest(params);
       }
-
-
-
     }
   };
-  console.log("ranked answers",rankedAnswers);
+  console.log("ranked answers", rankedAnswers);
 
   console.log("answersSelection", answersSelection);
 
   return (
-    <div className="rounded-[26px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618]">
+    <div className="rounded-[12.3px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618] tablet:rounded-[26px]">
       <CardTopbar
         title={title}
         img={img}
@@ -451,7 +442,7 @@ const QuestionCard = ({
         handleClickBookmark={handleBookmark}
         bookmarkStatus={bookmarkStatus}
       />
-      <h1 className="ml-[52.65px] mt-[5px] text-[25px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8]">
+      <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:ml-[52.65px] tablet:text-[25px]">
         {question.endsWith("?") ? "Q." : "S."} {question}
       </h1>
       {viewResult !== id ? (
@@ -476,7 +467,6 @@ const QuestionCard = ({
             answersSelection={answersSelection}
             rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
-
           />
         ) : (
           <OptionBar

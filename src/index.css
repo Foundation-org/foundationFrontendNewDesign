@@ -25,6 +25,10 @@
   @apply mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white;
 }
 
+.quest-topbar {
+  @apply rounded-[4.619px] px-[6.77px] py-[4.311px] text-[9.237px] font-semibold leading-normal tablet:rounded-[9.675px] tablet:px-[14.19px] tablet:py-[9.03px] tablet:text-[19.35px] xl:rounded-[15px] xl:px-[22px] xl:py-[14px] xl:text-[30px];
+}
+
 body {
   font-family: "Inter", sans-serif;
 }
@@ -108,8 +112,8 @@ iframe {
 #custom-checkbox .checkbox {
   appearance: none;
   -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
+  /* width: 20px;
+  height: 20px; */
   background: white;
   /* border-radius: 3.5px; */
   border: 1px solid #0fb063;
@@ -146,8 +150,8 @@ iframe {
 #custom-yello-checkbox .checkbox {
   appearance: none;
   -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
+  /* width: 20px;
+  height: 20px; */
   background: white;
   border-radius: 3.5px;
   border: 1px solid #ffd600;
@@ -188,5 +192,12 @@ iframe {
 
 #dragIcon2 div {
   position: relative;
-  height: 45px;
+  height: 21px;
+}
+
+@media (min-width: 744px) {
+  #dragIcon2 div {
+    position: relative;
+    height: 45px;
+  }
 }

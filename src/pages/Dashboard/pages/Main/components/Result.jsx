@@ -154,18 +154,14 @@ const Result = (props) => {
         questForeignKey: props.id,
         uuid: localStorage.getItem("uId"),
       };
-      if(props.whichTypeQuestion==="ranked choise")
-      {
+      if (props.whichTypeQuestion === "ranked choise") {
         return await getRankedQuestPercent(params);
-      }
-      else{
-
+      } else {
         return await getStartQuestPercent(params);
       }
     },
     queryKey: ["ResultsData"],
   });
-
 
   function findLabelChecked(array, labelToFind) {
     const labelFound = array.filter((item) => item.label === labelToFind);
@@ -253,7 +249,7 @@ const Result = (props) => {
             btnText={"Results"}
           />
         ))
-      ) : props.title==="Ranked Choice"?(
+      ) : props.title === "Ranked Choice" ? (
         props.rankedAnswers?.map((item, index) => (
           <RankedResult
             number={"#" + (index + 1)}
@@ -262,22 +258,22 @@ const Result = (props) => {
             setAnswerSelection={props.setAnswerSelection}
             title={props.title}
             handleMultipleChoiceCC={props.handleMultipleChoiceCC}
-            percentages={
-              ResultsData?.data[ResultsData?.data.length - 1]
-            }
+            percentages={ResultsData?.data[ResultsData?.data.length - 1]}
             checkInfo={false}
             setAddOptionLimit={props.setAddOptionLimit}
             btnText={"Results"}
           />
         ))
-      ):<></>}
+      ) : (
+        <></>
+      )}
       <div className="my-8 flex w-full justify-center">
         <button
           className={`${
             persistedTheme === "dark"
               ? "bg-[#333B46]"
               : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-          } inset-0 mr-[30px] w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]`}
+          } inset-0 mr-[30px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
           onClick={() => handleSubmit()}
         >
           Finish
