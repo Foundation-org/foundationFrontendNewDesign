@@ -149,7 +149,7 @@ const SingleAnswerMultipleChoice = (props) => {
                   ? props.percentages?.selectedPercentage[
                       props.answer.trim()
                     ] === 100
-                    ? "100%"
+                    ? "100 %"
                     : props.percentages?.selectedPercentage[
                         props.answer.trim()
                       ].toFixed(

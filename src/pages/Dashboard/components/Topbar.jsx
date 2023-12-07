@@ -40,7 +40,7 @@ const Topbar = () => {
         </div>
       </div>
       {/* items */}
-      <ul className="flex w-full items-end justify-between gap-16 px-5 text-[28px] font-semibold leading-normal text-[#DADADA] tablet:px-[57px] xl:gap-28 xl:px-0 2xl:text-[30px]">
+      <ul className="flex w-full items-end justify-around gap-16 px-5 text-[28px] font-semibold leading-normal text-[#DADADA] tablet:px-[57px] xl:gap-28 xl:px-0 2xl:text-[30px]">
         <li>
           <Link
             to={"/dashboard"}
