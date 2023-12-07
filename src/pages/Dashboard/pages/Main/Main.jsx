@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import {
   getAllQuestsWithDefaultStatus,
   getAllAnswered,
-  getAllCorrect,
-  getAllInCorrect,
+  getAllCompleted,
   getAllUnanswered,
   getAllChangable,
   searchQuestions,
@@ -80,10 +79,8 @@ const Main = () => {
         return await getAllUnanswered(params);
       case "Answered":
         return await getAllAnswered(params);
-      case "Correct":
-        return await getAllCorrect(params);
-      case "Incorrect":
-        return await getAllInCorrect(params);
+      case "Completed":
+        return await getAllCompleted(params);
       case "Changeable":
         return await getAllChangable(params);
       default:
@@ -236,10 +233,8 @@ const Main = () => {
                 handleViewResults={handleViewResults}
                 handleStartTest={handleStartTest}
                 btnColor={
-                  item?.startStatus === "correct"
+                  item?.startStatus === "completed"
                     ? "bg-[#4ABD71]"
-                    : item?.startStatus === "incorrect"
-                      ? "bg-[#F84A4A]"
                       : item?.startStatus === "change answer"
                         ? "bg-[#FDD503]"
                         : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"

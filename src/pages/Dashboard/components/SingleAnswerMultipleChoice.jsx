@@ -131,14 +131,14 @@ const SingleAnswerMultipleChoice = (props) => {
             ) : null}
 
             {props.btnText === "Results" ? (
-              <>
-                {console.log(
-                  props.percentages?.selectedPercentage[props.answer],
-                )}
+              <>{console.log(props.answer+parseInt(Math.abs(props.percentages?.selectedPercentage[props.answer.trim()])).toString().trim().length)}
                 {props.percentages?.selectedPercentage[props.answer.trim()]
-                  ? props.percentages?.selectedPercentage[props.answer.trim()] +
-                    "%"
-                  : "0%"}
+                  ? props.percentages?.selectedPercentage[props.answer.trim()] === 100
+                    ? "100%"
+                    : props.percentages?.selectedPercentage[props.answer.trim()].toFixed(parseInt(Math.abs(props.percentages?.selectedPercentage[props.answer.trim()])).toString().trim().length === 2 ? 1 : 2) + "%"
+                  : "0.00%"
+                }
+
               </>
             ) : (
               <></>
@@ -158,10 +158,12 @@ const SingleAnswerMultipleChoice = (props) => {
               {props.btnText === "Results" ? (
                 <>
                   {props.percentages?.contendedPercentage[props.answer.trim()]
-                    ? props.percentages?.contendedPercentage[
-                        props.answer.trim()
-                      ] + "%"
-                    : "0%"}
+                    ? props.percentages?.contendedPercentage[props.answer.trim()] === 100
+                      ? "100%"
+                      : props.percentages?.contendedPercentage[props.answer.trim()].toFixed(props.percentages?.contendedPercentage[props.answer.trim()].length === 2 ? 1 : 2) + "%"
+                    : "0.00%"
+                  }
+
                 </>
               ) : (
                 <></>

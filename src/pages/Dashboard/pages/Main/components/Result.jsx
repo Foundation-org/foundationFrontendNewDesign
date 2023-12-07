@@ -154,20 +154,18 @@ const Result = (props) => {
         questForeignKey: props.id,
         uuid: localStorage.getItem("uId"),
       };
-      return await getStartQuestPercent(params);
+      if(props.whichTypeQuestion==="ranked choise")
+      {
+        return await getRankedQuestPercent(params);
+      }
+      else{
+
+        return await getStartQuestPercent(params);
+      }
     },
     queryKey: ["ResultsData"],
   });
 
-  const { data: rankedResultsData } = useQuery({
-    queryFn: async () => {
-      const params = {
-        questForeignKey: props.id,
-      };
-      return await getRankedQuestPercent(params);
-    },
-    queryKey: ["rankedResultsData"],
-  });
 
   function findLabelChecked(array, labelToFind) {
     const labelFound = array.filter((item) => item.label === labelToFind);
@@ -265,7 +263,7 @@ const Result = (props) => {
             title={props.title}
             handleMultipleChoiceCC={props.handleMultipleChoiceCC}
             percentages={
-              rankedResultsData?.data[rankedResultsData?.data.length - 1]
+              ResultsData?.data[ResultsData?.data.length - 1]
             }
             checkInfo={false}
             setAddOptionLimit={props.setAddOptionLimit}

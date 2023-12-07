@@ -9,13 +9,87 @@ const SingleAnswer = (props) => {
 
   const selectedPercentageValue =
     props.percentages?.selectedPercentage[
-      props.answer === "Agree" ? "Yes" : "No"
+    props.answer === "Agree" ? "Yes" : "No"
     ];
 
   const contenedPercentageValue =
     props.percentages?.contendedPercentage[
-      props.answer === "Disagree" ? "Yes" : "No"
+    props.answer === "Disagree" ? "Yes" : "No"
     ];
+
+    const fetchSelectedPercentage = () => {
+      if (props.answer === "Yes" || props.answer === "Agree") {
+        if (props.percentages?.selectedPercentage) {
+          const yesPercentage = props.percentages.selectedPercentage.Yes;
+          if (yesPercentage !== undefined) {
+            if (yesPercentage === 100) {
+              return "100%";
+            } else {
+              return yesPercentage.toFixed(Math.abs(yesPercentage) % 1 === 0 ? 2 : 1) + "%";
+            }
+          } else {
+            return "0.00%";
+          }
+        } else {
+          return "0.00%";
+        }
+      } else if (props.answer === "No" || props.answer === "Disagree") {
+        if (props.percentages?.selectedPercentage) {
+          const noPercentage = props.percentages.selectedPercentage.No;
+          if (noPercentage !== undefined) {
+            if (noPercentage === 100) {
+              return "100%";
+            } else {
+              return noPercentage.toFixed(Math.abs(noPercentage) % 1 === 0 ? 2 : 1) + "%";
+            }
+          } else {
+            return "0.00%";
+          }
+        } else {
+          return "0.00%";
+        }
+      } else {
+        return "0.00%";
+      }
+    };
+    
+    const fetchContendedPercentage = () => {
+      if (props.answer === "Yes" || props.answer === "Agree") {
+        if (props.percentages?.contendedPercentage) {
+          const yesPercentage = props.percentages.contendedPercentage.Yes;
+          if (yesPercentage !== undefined) {
+            if (yesPercentage === 100) {
+              return "100%";
+            } else {
+              return yesPercentage.toFixed(Math.abs(yesPercentage) % 1 === 0 ? 2 : 1) + "%";
+            }
+          } else {
+            return "0.00%";
+          }
+        } else {
+          return "0.00%";
+        }
+      } else if (props.answer === "No" || props.answer === "Disagree") {
+        if (props.percentages?.contendedPercentage) {
+          const noPercentage = props.percentages.contendedPercentage.No;
+          if (noPercentage !== undefined) {
+            if (noPercentage === 100) {
+              return "100%";
+            } else {
+              return noPercentage.toFixed(Math.abs(noPercentage) % 1 === 0 ? 2 : 1) + "%";
+            }
+          } else {
+            return "0.00%";
+          }
+        } else {
+          return "0.00%";
+        }
+      } else {
+        return "0.00%";
+      }
+    };
+    
+
 
   return (
     <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
@@ -72,11 +146,9 @@ const SingleAnswer = (props) => {
             </div>
             {props.btnText === "Results" ? (
               <>
-                {props.answer === "Yes" || props.answer === "Agree"
-                  ? props.percentages?.selectedPercentage.Yes + "%"
-                  : props.answer === "No" || props.answer === "Disagree"
-                  ? props.percentages?.selectedPercentage.No + "%"
-                  : "0%"}
+                {
+                  fetchSelectedPercentage()
+                }
               </>
             ) : (
               <></>
@@ -97,11 +169,7 @@ const SingleAnswer = (props) => {
             </div>
             {props.btnText === "Results" ? (
               <>
-                {props.answer === "Yes" || props.answer === "Agree"
-                  ? props.percentages?.contendedPercentage.Yes + "%"
-                  : props.answer === "No" || props.answer === "Disagree"
-                  ? props.percentages?.contendedPercentage.No + "%"
-                  : "0%"}
+                {fetchContendedPercentage()}
               </>
             ) : (
               <></>

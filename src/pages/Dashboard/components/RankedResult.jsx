@@ -91,12 +91,13 @@ const RankedResult = (props) => {
         {/* to show ranked and multiple choice options */}
         <div className="mr-[20.63px] flex items-center gap-[19px] ">
           {props.btnText === "Results" ? (
-            <>
-              {props.percentages?.rankedPercentage?.[props.answer.trim()] ===
-              undefined
-                ? "0%"
-                : props.percentages?.rankedPercentage?.[props.answer.trim()] +
-                  "%"}
+            <>{console.log(props.answer+parseInt(Math.abs(props.percentages?.rankedPercentage?.[props.answer.trim()])).toString().trim().length)}
+              {props.percentages?.rankedPercentage?.[props.answer.trim()] === undefined
+                ? "0.00%"
+                : props.percentages?.rankedPercentage?.[props.answer.trim()] === 100
+                  ? "100%"
+                  : props.percentages?.rankedPercentage?.[props.answer.trim()].toFixed(parseInt(Math.abs(props.percentages?.rankedPercentage?.[props.answer.trim()])).toString().trim().length === 2 ? 1 : 2) + "%"}
+
             </>
           ) : null}
         </div>

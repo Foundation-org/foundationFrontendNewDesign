@@ -70,8 +70,7 @@ const SidebarLeft = ({
               "All",
               "Unanswered",
               "Answered",
-              "Correct",
-              "Incorrect",
+              "Completed",
               "Changeable",
             ]}
             handleSelect={(item) => {
@@ -191,8 +190,7 @@ const SidebarLeft = ({
               "All",
               "Unanswered",
               "Answered",
-              "Correct",
-              "Incorrect",
+              "Completed",
               "Changeable",
             ]}
             handleSelect={(item) => {

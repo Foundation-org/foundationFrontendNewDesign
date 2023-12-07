@@ -194,10 +194,8 @@ const OptionBar = ({
 
   function getButtonText(btnText) {
     switch (btnText) {
-      case "correct":
-        return "Correct";
-      case "incorrect":
-        return "Incorrect";
+      case "completed":
+        return "Completed";
       case "change answer":
         return "Change";
       default:
@@ -208,10 +206,8 @@ const OptionBar = ({
   function getButtonClassName(persistedTheme, btnText, btnColor) {
     if (persistedTheme === "dark") {
       switch (btnText) {
-        case "correct":
+        case "completed":
           return "bg-[#148339]";
-        case "incorrect":
-          return "bg-[#C13232]";
         case "change answer":
           return "bg-[#BB9D02]";
         default:
@@ -225,11 +221,6 @@ const OptionBar = ({
   return (
     <>
       <div className="mb-1 flex items-center">
-        {isCorrect === "Selected" && (
-          <p className="ml-6 mt-12 w-fit min-w-[12rem] rounded-[15px] bg-white px-[14px] pb-[7px] pt-2 text-[18px] font-semibold leading-normal text-[#28A954] dark:bg-[#303030] dark:text-[#737373]">
-            {correctCount} Correct Answers
-          </p>
-        )}
         <div className="tablet:gap-[42px] mb-1 mr-[30px] flex w-full justify-end gap-[19.14px]">
           <button
             className={` ${getButtonClassName(
@@ -238,7 +229,7 @@ const OptionBar = ({
               btnColor,
             )} tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] mt-[16.2px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white`}
             onClick={handleStartChange}
-            disabled={btnText === "correct" || btnText === "incorrect"}
+            disabled={btnText === "completed"}
           >
             {getButtonText(btnText)}
           </button>
