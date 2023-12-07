@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { changeOptions } from "../../../../../utils/options";
 import Options from "../components/Options";
 import { useMutation } from "@tanstack/react-query";
-import { createInfoQuest } from "../../../../../api/questsApi";
+import { answerValidation, checkAnswerExist, checkUniqueQuestion, createInfoQuest, questionValidation } from "../../../../../api/questsApi";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 // import {
 //   getQuests,
@@ -22,15 +22,19 @@ const MultipleChoice = () => {
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
-  const [changedOption, setchangedOption] = useState("");
+  const [changedOption, setChangedOption] = useState("Daily");
   const [selectedValues, setSelectedValues] = useState([]);
   const [optionsCount, setOptionsCount] = useState(2);
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       question: "",
       selected: false,
+      optionStatus: { name: "OK", color: "text-[#0FB063]" }
     })),
   );
+  const [checkQuestionStatus, setCheckQuestionStatus] = useState({ name: "OK", color: "text-[#0FB063]" });
+  const [checkOptionStatus, setCheckOptionStatus] = useState({ name: "OK", color: "text-[#0FB063]" });
+
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -47,21 +51,21 @@ const MultipleChoice = () => {
     },
   });
 
-  const handleSubmit = () => {
-    if (changeState && changedOption === "") {
-      toast.warning(
-        "Looks like you missed selecting the answer change frequency",
-      );
-      return;
-    }
-    if (question === "") {
-      toast.warning("Write some Question Before Submitting");
-      return;
-    }
-    if (correctOption && selectedValues.length === 0) {
-      toast.warning("You have to select one correct option to finish");
-      return;
-    }
+  const handleSubmit = async() => {
+    // Validation
+    // Question
+    if (question === "") return toast.warning("Write something Before Submitting");
+    if (checkQuestionStatus.color === "text-[#b0a00f]") return toast.warning("Please wait!");
+    if (checkQuestionStatus.name === "FAIL") return toast.error("Please review your question!");
+    // Answer
+    if (typedValues.some(item => item.question === "")) return toast.warning("Option shouldn't be empty!");
+    if (typedValues.some(item => item.optionStatus.color === "text-[#b0a00f]")) return toast.warning("Please wait!");
+    if (typedValues.some(item => item.optionStatus.name === "FAIL")) return toast.error("Please review your Option!");
+
+    
+    // To check uniqueness of the question
+    const constraintResponse = await checkUniqueQuestion(question)
+    if(!constraintResponse.data.isUnique) return toast.warning("This quest is not unique. A similar quest already exists.");
 
     const params = {
       Question: question,
@@ -75,22 +79,55 @@ const MultipleChoice = () => {
       uuid: localStorage.getItem("uId"),
     };
 
-    console.log({ params });
-
     createQuest(params);
+  };
+
+  const questionVerification = async(value) => {
+    // Question Validation
+    const { validatedQuestion, errorMessage } = await questionValidation({ question: value, queryType: 'yes/no' })
+    // If any error captured
+    if (errorMessage) { return setCheckQuestionStatus({name: "FAIL", color: "text-[#b00f0f]"})};
+    // Question is validated and status is OK
+    setQuestion(validatedQuestion)
+    setCheckQuestionStatus({name: "OK", color: "text-[#0FB063]"})
+  }
+
+  const answerVerification = async(index, value) => {
+
+    // Answer Validation
+    const { validatedAnswer, errorMessage } = await answerValidation({ answer: value, queryType: 'yes/no' })
+    // If any error captured
+    if (errorMessage) {
+      const newTypedValues = [...typedValues];
+      newTypedValues[index] = { ...newTypedValues[index], optionStatus: {name: "FAIL", color: "text-[#b00f0f]"} };
+      return setTypedValues(newTypedValues);
+    }
+    // Answer is validated and status is OK
+    const newTypedValues = [...typedValues];
+    newTypedValues[index] = { ...newTypedValues[index], question: validatedAnswer, optionStatus: {name: "OK", color: "text-[#0FB063]"} };
+    setTypedValues(newTypedValues);
+
+    // Check Answer is unique
+    let answerExist = checkAnswerExist({ answersArray: typedValues, answer: validatedAnswer, index })
+    if (answerExist) {
+      const newTypedValues = [...typedValues];
+      newTypedValues[index] = { ...newTypedValues[index], question: "", optionStatus: {name: "OK", color: "text-[#0FB063]"} };
+      return setTypedValues(newTypedValues);
+    }
+
   };
 
   const handleAddOption = () => {
     setOptionsCount((prevCount) => prevCount + 1);
     setTypedValues((prevValues) => [
       ...prevValues,
-      { question: "", selected: false },
+      { question: "", selected: false, optionStatus: {name: "OK", color: "text-[#0FB063]"} },
     ]);
   };
 
   const handleChange = (index, value) => {
     const newTypedValues = [...typedValues];
-    newTypedValues[index] = { ...newTypedValues[index], question: value };
+    newTypedValues[index] = { ...newTypedValues[index], question: value, optionStatus: {name: "OK", color: value.trim() === "" ? "text-[#0FB063]" : "text-[#b0a00f]"} };
     setTypedValues(newTypedValues);
   };
 
@@ -147,12 +184,14 @@ const MultipleChoice = () => {
         {/* write question */}
         <div className="relative flex w-full justify-center">
           <input
+            value={question}
             type="text"
             className="w-full max-w-[857px] rounded-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
-            onChange={(e) => setQuestion(e.target.value)}
+            onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus({name: "OK", color: e.target.value.trim() === "" ? "text-[#0FB063]" : "text-[#b0a00f]"})}}
+            onBlur={(e) => e.target.value.trim() !== "" && questionVerification(e.target.value.trim())}
           />
-          <h1 className="leading-0 absolute right-[72px] top-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
-            OK
+          <h1 className={`leading-0 absolute right-[72px] top-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold ${checkQuestionStatus.color}`}>
+            {checkQuestionStatus.name}
           </h1>
         </div>
         {/* options */}
@@ -173,6 +212,8 @@ const MultipleChoice = () => {
               optionsCount={optionsCount}
               removeOption={() => removeOption(index)}
               number={index}
+              optionStatus={typedValues[index].optionStatus}
+              answerVerification={(value) => answerVerification(index, value)}
             />
           ))}
           <button
@@ -222,7 +263,7 @@ const MultipleChoice = () => {
                 </h5>
                 <CustomSwitch
                   enabled={changeState}
-                  setEnabled={setChangeState}
+                  setEnabled={() => { setChangeState(prev => !prev); setChangedOption("Daily"); }}
                 />
               </div>
               {changeState ? (
@@ -231,12 +272,12 @@ const MultipleChoice = () => {
                     <button
                       key={item.id}
                       className={`${
-                        changedOption === item.title
+                        changedOption === item.value
                           ? "bg-[#389CE3]"
                           : "bg-[#7C7C7C]"
                       } rounded-md px-4 py-2 text-[#F4F4F4]`}
                       onClick={() => {
-                        setchangedOption(item.title);
+                        setChangedOption(item.value);
                       }}
                     >
                       {item.title}

@@ -74,6 +74,22 @@ export const questionValidation = async({question, queryType}) => {
   }
 }
 
+export const answerValidation = async({answer, loading}) => {
+  try {
+      const response = await api.get(`/ai-validation/2?userMessage=${answer}`)
+      if(response.data.status === "VIOLATION") { return { validatedAnswer: null, errorMessage: 'VIOLATION' }}
+      if(response.data.status === "FAIL") { return { validatedAnswer: null, errorMessage: 'FAIL' }}
+      if(response.data.status === "ERROR") { return { validatedAnswer: null, errorMessage: "ERROR" }}
+      return { validatedAnswer: response.data.message }
+  } catch (error) {
+      return { validatedAnswer: null, errorMessage: "ERROR" }
+  }
+}
+
+export const checkAnswerExist = ({answersArray, answer, index} ) => {
+  return answersArray.some((item, i) => item.question.toLowerCase() === answer.toLowerCase() && i !== index );
+}
+
 // To check uniqueness of the question
 export const checkUniqueQuestion = async(question) => {
   return await api.get(`/infoquestions/constraintForUniqueQuestion`, {

@@ -18,6 +18,8 @@ const MultipleChoiceOptions = ({
   optionsCount,
   removeOption,
   number,
+  answerVerification,
+  optionStatus
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -107,6 +109,7 @@ const MultipleChoiceOptions = ({
               placeholder="option"
               className="w-full max-w-[838px] rounded-r-2xl border-t-[1px] border-r-[1px] border-b-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
               onChange={(e) => handleChange(e.target.value)}
+              onBlur={(e) => e.target.value.trim() !== "" && answerVerification(e.target.value.trim())}
               value={typedValue}
             />
             <div className="absolute right-0 top-1/2 flex -translate-y-1/2 transform items-center">
@@ -121,6 +124,7 @@ const MultipleChoiceOptions = ({
                   />
                 </div>
               )}
+
               {title === "RankChoice" && trash ? (
                 <>
                   {optionsCount > 0 && (
@@ -168,8 +172,8 @@ const MultipleChoiceOptions = ({
                 </div>
               )} */}
 
-              <h1 className="leading-0 ml-4 border-l-2 border-[#F3F3F3] pr-9 pl-6 text-[30px] font-semibold text-[#0FB063]">
-                OK
+              <h1 className={`leading-0 ml-4 border-l-2 border-[#F3F3F3] pr-9 pl-6 text-[30px] font-semibold ${optionStatus?.color}`}>
+                {optionStatus?.name}
               </h1>
             </div>
           </div>
