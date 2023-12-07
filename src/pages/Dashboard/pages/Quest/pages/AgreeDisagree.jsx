@@ -14,7 +14,7 @@ const AgreeDisagree = () => {
   const [changedOption, setChangedOption] = useState("");
   const [correctState, setCorrectState] = useState(false);
   const [changeState, setChangeState] = useState(false);
-  const [checkQuestionStatus, setCheckQuestionStatus] = useState({ name: "Ok", color: "text-[#389CE3]" });
+  const [checkQuestionStatus, setCheckQuestionStatus] = useState({ name: "Ok", color: "text-[#389CE3]",  tooltipName: "Please write something...", tooltipStyle: "tooltip-info"});
 
   const navigate = useNavigate();
 
@@ -45,11 +45,6 @@ const AgreeDisagree = () => {
   };
 
   const handleSubmit = async() => {
-    // Validation
-    if (question === "") return toast.warning("Write something Before Submitting");
-    if (checkQuestionStatus.color === "text-[#b0a00f]") return toast.warning("Please wait!");
-    if (checkQuestionStatus.name === "Fail") return toast.error("Please review your question");
-    
     // To check uniqueness of the question
     const constraintResponse = await checkUniqueQuestion(question)
     if(!constraintResponse.data.isUnique) return toast.warning("This quest is not unique. A similar quest already exists.");
@@ -72,13 +67,14 @@ const AgreeDisagree = () => {
   };
 
   const questionVerification = async(value) => {
+    setCheckQuestionStatus({name: "Checking", color: "text-[#0FB063]", tooltipName: "Verifying your question. Please wait...", tooltipStyle: "tooltip-success" })
     // Question Validation
-    const { validatedQuestion, errorMessage } = await questionValidation({ question: value, queryType: 'yes/no' })
+    const { validatedQuestion, errorMessage } = await questionValidation({ question: value, queryType: 'agree/disagree' })
     // If any error captured
-    if (errorMessage) { return setCheckQuestionStatus({name: "Fail", color: "text-[#b00f0f]"})};
+    if (errorMessage) { return setCheckQuestionStatus({name: "Fail", color: "text-[#b00f0f]", tooltipName: "Please review your text for proper grammar while keeping our code of conduct in mind.", tooltipStyle: "tooltip-error" })};
     // Question is validated and status is Ok
     setQuestion(validatedQuestion)
-    setCheckQuestionStatus({name: "Ok", color: "text-[#0FB063]"})
+    setCheckQuestionStatus({name: "Ok", color: "text-[#0FB063]", tooltipName: "Question is Verified", tooltipStyle: "tooltip-success", isVerifiedQuestion: true})
   }
 
   return (
@@ -99,9 +95,11 @@ const AgreeDisagree = () => {
             onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus({name: "Ok", color: e.target.value.trim() === "" ? "text-[#389CE3]" : "text-[#b0a00f]"})}}
             onBlur={(e) => e.target.value.trim() !== "" && questionVerification(e.target.value.trim())}
           />
-          <h1 className={`leading-0 absolute right-[72px] top-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold ${checkQuestionStatus.color}`}>
-            {checkQuestionStatus.name}
-          </h1>
+          <div className={`tooltip absolute right-[72px] top-4 ${checkQuestionStatus.tooltipStyle}`} data-tip={checkQuestionStatus.tooltipName}>
+            <h1 className={`leading-0 border-none cursor-pointer px-6 text-[30px] font-semibold ${checkQuestionStatus.color}`}>
+              {checkQuestionStatus.name}
+            </h1>
+          </div>
         </div>
         <div className="mt-10 flex flex-col gap-[30px]">
           <AgreeDisagreeOptions
@@ -164,7 +162,7 @@ const AgreeDisagree = () => {
           ) : null}
         </div>
         <div className="flex w-full justify-end">
-          <button className="blue-submit-button" onClick={() => handleSubmit()}>
+          <button disabled={checkQuestionStatus?.isVerifiedQuestion ? false : true} className={`blue-submit-button ${!checkQuestionStatus?.isVerifiedQuestion && "cursor-not-allowed"}`} onClick={() => handleSubmit()}>
             Submit
           </button>
         </div>
