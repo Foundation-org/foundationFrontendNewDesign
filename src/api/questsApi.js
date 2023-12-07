@@ -74,7 +74,7 @@ export const questionValidation = async({question, queryType}) => {
   }
 }
 
-export const answerValidation = async({answer, loading}) => {
+export const answerValidation = async({answer}) => {
   try {
       const response = await api.get(`/ai-validation/2?userMessage=${answer}`)
       if(response.data.status === "VIOLATION") { return { validatedAnswer: null, errorMessage: 'VIOLATION' }}

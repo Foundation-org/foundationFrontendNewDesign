@@ -29,11 +29,11 @@ const MultipleChoice = () => {
     Array.from({ length: optionsCount }, (_, index) => ({
       question: "",
       selected: false,
-      optionStatus: { name: "Ok", color: "text-[#389CE3]" }
+      optionStatus: { name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" }
     })),
   );
-  const [checkQuestionStatus, setCheckQuestionStatus] = useState({ name: "Ok", color: "text-[#389CE3]" });
-  const [checkOptionStatus, setCheckOptionStatus] = useState({ name: "Ok", color: "text-[#389CE3]" });
+  const [checkQuestionStatus, setCheckQuestionStatus] = useState({ name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" });
+  const [checkOptionStatus, setCheckOptionStatus] = useState({ name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" });
 
 
   const { mutateAsync: createQuest } = useMutation({
@@ -52,17 +52,6 @@ const MultipleChoice = () => {
   });
 
   const handleSubmit = async() => {
-    // Validation
-    // Question
-    if (question === "") return toast.warning("Write something Before Submitting");
-    if (checkQuestionStatus.color === "text-[#b0a00f]") return toast.warning("Please wait!");
-    if (checkQuestionStatus.name === "Fail") return toast.error("Please review your question!");
-    // Answer
-    if (typedValues.some(item => item.question === "")) return toast.warning("Option shouldn't be empty!");
-    if (typedValues.some(item => item.optionStatus.color === "text-[#b0a00f]")) return toast.warning("Please wait!");
-    if (typedValues.some(item => item.optionStatus.name === "Fail")) return toast.error("Please review your Option!");
-
-    
     // To check uniqueness of the question
     const constraintResponse = await checkUniqueQuestion(question)
     if(!constraintResponse.data.isUnique) return toast.warning("This quest is not unique. A similar quest already exists.");
@@ -83,35 +72,40 @@ const MultipleChoice = () => {
   };
 
   const questionVerification = async(value) => {
+    setCheckQuestionStatus({name: "Checking", color: "text-[#0FB063]", tooltipName: "Verifying your question. Please wait...", tooltipStyle: "tooltip-success" })
     // Question Validation
-    const { validatedQuestion, errorMessage } = await questionValidation({ question: value, queryType: 'yes/no' })
+    const { validatedQuestion, errorMessage } = await questionValidation({ question: value, queryType: 'multiple choice' })
     // If any error captured
-    if (errorMessage) { return setCheckQuestionStatus({name: "Fail", color: "text-[#b00f0f]"})};
+    if (errorMessage) { return setCheckQuestionStatus({name: "Fail", color: "text-[#b00f0f]", tooltipName: "Please review your text for proper grammar while keeping our code of conduct in mind.", tooltipStyle: "tooltip-error" })};
     // Question is validated and status is Ok
     setQuestion(validatedQuestion)
-    setCheckQuestionStatus({name: "Ok", color: "text-[#0FB063]"})
+    setCheckQuestionStatus({name: "Ok", color: "text-[#0FB063]", tooltipName: "Question is Verified", tooltipStyle: "tooltip-success", isVerifiedQuestion: true})
   }
 
   const answerVerification = async(index, value) => {
-
+    const newTypedValues = [...typedValues];
+    newTypedValues[index] = { ...newTypedValues[index], optionStatus: {name: "Checking", color: "text-[#0FB063]", tooltipName: "Verifying your answer. Please wait...", tooltipStyle: "tooltip-success" } };
+    setTypedValues(newTypedValues);
     // Answer Validation
-    const { validatedAnswer, errorMessage } = await answerValidation({ answer: value, queryType: 'yes/no' })
+    const { validatedAnswer, errorMessage } = await answerValidation({ answer: value})
     // If any error captured
     if (errorMessage) {
       const newTypedValues = [...typedValues];
-      newTypedValues[index] = { ...newTypedValues[index], optionStatus: {name: "Fail", color: "text-[#b00f0f]"} };
+      newTypedValues[index] = { ...newTypedValues[index], optionStatus: {name: "Fail", color: "text-[#b00f0f]", tooltipName: "Please review your text for proper grammar while keeping our code of conduct in mind.", tooltipStyle: "tooltip-error" }};
       return setTypedValues(newTypedValues);
     }
     // Answer is validated and status is Ok
-    const newTypedValues = [...typedValues];
-    newTypedValues[index] = { ...newTypedValues[index], question: validatedAnswer, optionStatus: {name: "Ok", color: "text-[#0FB063]"} };
-    setTypedValues(newTypedValues);
+    if(validatedAnswer) {
+      const newTypedValues = [...typedValues];
+      newTypedValues[index] = { ...newTypedValues[index], question: validatedAnswer, optionStatus: {name: "Ok", color: "text-[#0FB063]", tooltipName: "Answer is Verified", tooltipStyle: "tooltip-success", isVerifiedAnswer: true} };
+      setTypedValues(newTypedValues);
+    }
 
     // Check Answer is unique
     let answerExist = checkAnswerExist({ answersArray: typedValues, answer: validatedAnswer, index })
     if (answerExist) {
       const newTypedValues = [...typedValues];
-      newTypedValues[index] = { ...newTypedValues[index], question: "", optionStatus: {name: "Ok", color: "text-[#0FB063]"} };
+      newTypedValues[index] = { ...newTypedValues[index], question: "", optionStatus: {name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info"} };
       return setTypedValues(newTypedValues);
     }
 
@@ -121,13 +115,13 @@ const MultipleChoice = () => {
     setOptionsCount((prevCount) => prevCount + 1);
     setTypedValues((prevValues) => [
       ...prevValues,
-      { question: "", selected: false, optionStatus: {name: "Ok", color: "text-[#389CE3]"} },
+      { question: "", selected: false, optionStatus: {name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info"} },
     ]);
   };
 
   const handleChange = (index, value) => {
     const newTypedValues = [...typedValues];
-    newTypedValues[index] = { ...newTypedValues[index], question: value, optionStatus: {name: "Ok", color: value.trim() === "" ? "text-[#389CE3]" : "text-[#b0a00f]"} };
+    newTypedValues[index] = { ...newTypedValues[index], question: value, optionStatus: value.trim() === "" ? {name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info"} : {name: "Ok", color: "text-[#b0a00f]"}};
     setTypedValues(newTypedValues);
   };
 
@@ -187,12 +181,14 @@ const MultipleChoice = () => {
             value={question}
             type="text"
             className="w-full max-w-[857px] rounded-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
-            onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus({name: "Ok", color: e.target.value.trim() === "" ? "text-[# ]" : "text-[#b0a00f]"})}}
+            onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus(e.target.value.trim() === "" ? {name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info"} : {name: "Ok", color: "text-[#b0a00f]"})}}
             onBlur={(e) => e.target.value.trim() !== "" && questionVerification(e.target.value.trim())}
           />
-          <h1 className={`leading-0 absolute right-[72px] top-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold ${checkQuestionStatus.color}`}>
-            {checkQuestionStatus.name}
-          </h1>
+          <div className={`tooltip absolute right-[72px] top-4 ${checkQuestionStatus?.tooltipStyle}`} data-tip={checkQuestionStatus?.tooltipName}>
+            <h1 className={`leading-0 border-none cursor-pointer px-6 text-[30px] font-semibold ${checkQuestionStatus.color}`}>
+              {checkQuestionStatus.name}
+            </h1>
+          </div>
         </div>
         {/* options */}
         <div className="mt-10 flex flex-col gap-[30px]">
@@ -290,10 +286,7 @@ const MultipleChoice = () => {
         </div>
         {/* submit button */}
         <div className="flex w-full justify-end">
-          <button
-            className="mr-[70px] mt-[60px] w-fit rounded-[23.6px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[60px] py-3 text-[31.5px] font-semibold leading-normal text-white"
-            onClick={() => handleSubmit()}
-          >
+          <button disabled={checkQuestionStatus?.isVerifiedQuestion && typedValues.every(item => item.optionStatus.isVerifiedAnswer === true) ? false : true} className={`blue-submit-button ${!checkQuestionStatus?.isVerifiedQuestion || !typedValues.every(item => item.optionStatus.isVerifiedAnswer === true) && "cursor-not-allowed"}`} onClick={() => handleSubmit()}>
             Submit
           </button>
         </div>
