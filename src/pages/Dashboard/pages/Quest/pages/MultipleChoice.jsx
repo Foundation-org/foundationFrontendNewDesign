@@ -22,18 +22,18 @@ const MultipleChoice = () => {
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
-  const [changedOption, setChangedOption] = useState("Daily");
+  const [changedOption, setChangedOption] = useState("");
   const [selectedValues, setSelectedValues] = useState([]);
   const [optionsCount, setOptionsCount] = useState(2);
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       question: "",
       selected: false,
-      optionStatus: { name: "OK", color: "text-[#0FB063]" }
+      optionStatus: { name: "Ok", color: "text-[#389CE3]" }
     })),
   );
-  const [checkQuestionStatus, setCheckQuestionStatus] = useState({ name: "OK", color: "text-[#0FB063]" });
-  const [checkOptionStatus, setCheckOptionStatus] = useState({ name: "OK", color: "text-[#0FB063]" });
+  const [checkQuestionStatus, setCheckQuestionStatus] = useState({ name: "Ok", color: "text-[#389CE3]" });
+  const [checkOptionStatus, setCheckOptionStatus] = useState({ name: "Ok", color: "text-[#389CE3]" });
 
 
   const { mutateAsync: createQuest } = useMutation({
@@ -56,11 +56,11 @@ const MultipleChoice = () => {
     // Question
     if (question === "") return toast.warning("Write something Before Submitting");
     if (checkQuestionStatus.color === "text-[#b0a00f]") return toast.warning("Please wait!");
-    if (checkQuestionStatus.name === "FAIL") return toast.error("Please review your question!");
+    if (checkQuestionStatus.name === "Fail") return toast.error("Please review your question!");
     // Answer
     if (typedValues.some(item => item.question === "")) return toast.warning("Option shouldn't be empty!");
     if (typedValues.some(item => item.optionStatus.color === "text-[#b0a00f]")) return toast.warning("Please wait!");
-    if (typedValues.some(item => item.optionStatus.name === "FAIL")) return toast.error("Please review your Option!");
+    if (typedValues.some(item => item.optionStatus.name === "Fail")) return toast.error("Please review your Option!");
 
     
     // To check uniqueness of the question
@@ -86,10 +86,10 @@ const MultipleChoice = () => {
     // Question Validation
     const { validatedQuestion, errorMessage } = await questionValidation({ question: value, queryType: 'yes/no' })
     // If any error captured
-    if (errorMessage) { return setCheckQuestionStatus({name: "FAIL", color: "text-[#b00f0f]"})};
-    // Question is validated and status is OK
+    if (errorMessage) { return setCheckQuestionStatus({name: "Fail", color: "text-[#b00f0f]"})};
+    // Question is validated and status is Ok
     setQuestion(validatedQuestion)
-    setCheckQuestionStatus({name: "OK", color: "text-[#0FB063]"})
+    setCheckQuestionStatus({name: "Ok", color: "text-[#0FB063]"})
   }
 
   const answerVerification = async(index, value) => {
@@ -99,19 +99,19 @@ const MultipleChoice = () => {
     // If any error captured
     if (errorMessage) {
       const newTypedValues = [...typedValues];
-      newTypedValues[index] = { ...newTypedValues[index], optionStatus: {name: "FAIL", color: "text-[#b00f0f]"} };
+      newTypedValues[index] = { ...newTypedValues[index], optionStatus: {name: "Fail", color: "text-[#b00f0f]"} };
       return setTypedValues(newTypedValues);
     }
-    // Answer is validated and status is OK
+    // Answer is validated and status is Ok
     const newTypedValues = [...typedValues];
-    newTypedValues[index] = { ...newTypedValues[index], question: validatedAnswer, optionStatus: {name: "OK", color: "text-[#0FB063]"} };
+    newTypedValues[index] = { ...newTypedValues[index], question: validatedAnswer, optionStatus: {name: "Ok", color: "text-[#0FB063]"} };
     setTypedValues(newTypedValues);
 
     // Check Answer is unique
     let answerExist = checkAnswerExist({ answersArray: typedValues, answer: validatedAnswer, index })
     if (answerExist) {
       const newTypedValues = [...typedValues];
-      newTypedValues[index] = { ...newTypedValues[index], question: "", optionStatus: {name: "OK", color: "text-[#0FB063]"} };
+      newTypedValues[index] = { ...newTypedValues[index], question: "", optionStatus: {name: "Ok", color: "text-[#0FB063]"} };
       return setTypedValues(newTypedValues);
     }
 
@@ -121,13 +121,13 @@ const MultipleChoice = () => {
     setOptionsCount((prevCount) => prevCount + 1);
     setTypedValues((prevValues) => [
       ...prevValues,
-      { question: "", selected: false, optionStatus: {name: "OK", color: "text-[#0FB063]"} },
+      { question: "", selected: false, optionStatus: {name: "Ok", color: "text-[#389CE3]"} },
     ]);
   };
 
   const handleChange = (index, value) => {
     const newTypedValues = [...typedValues];
-    newTypedValues[index] = { ...newTypedValues[index], question: value, optionStatus: {name: "OK", color: value.trim() === "" ? "text-[#0FB063]" : "text-[#b0a00f]"} };
+    newTypedValues[index] = { ...newTypedValues[index], question: value, optionStatus: {name: "Ok", color: value.trim() === "" ? "text-[#389CE3]" : "text-[#b0a00f]"} };
     setTypedValues(newTypedValues);
   };
 
@@ -187,7 +187,7 @@ const MultipleChoice = () => {
             value={question}
             type="text"
             className="w-full max-w-[857px] rounded-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
-            onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus({name: "OK", color: e.target.value.trim() === "" ? "text-[#0FB063]" : "text-[#b0a00f]"})}}
+            onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus({name: "Ok", color: e.target.value.trim() === "" ? "text-[# ]" : "text-[#b0a00f]"})}}
             onBlur={(e) => e.target.value.trim() !== "" && questionVerification(e.target.value.trim())}
           />
           <h1 className={`leading-0 absolute right-[72px] top-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold ${checkQuestionStatus.color}`}>
@@ -263,7 +263,7 @@ const MultipleChoice = () => {
                 </h5>
                 <CustomSwitch
                   enabled={changeState}
-                  setEnabled={() => { setChangeState(prev => !prev); setChangedOption("Daily"); }}
+                  setEnabled={() => { setChangeState(prev => !prev); setChangedOption(""); }}
                 />
               </div>
               {changeState ? (
