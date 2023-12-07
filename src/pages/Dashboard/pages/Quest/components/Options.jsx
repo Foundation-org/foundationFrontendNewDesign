@@ -140,9 +140,14 @@ const Options = ({
                   )}
                 </>
               ) : null}
-              <h1 className={`leading-0 ml-4 border-l-2 border-[#F3F3F3] pr-9 pl-6 text-[30px] font-semibold ${optionStatus?.color}`}>
+              {/* <h1 className={`leading-0 ml-4 border-l-2 border-[#F3F3F3] pr-9 pl-6 text-[30px] font-semibold ${optionStatus?.color}`}>
                 {optionStatus?.name}
-              </h1>
+              </h1> */}
+              <div className={`tooltip mt-8 ${optionStatus.tooltipStyle}`} data-tip={optionStatus.tooltipName}>
+                <h1 className={`leading-0 border-none cursor-pointer ml-4 px-6 text-[30px] font-semibold ${optionStatus.color}`}>
+                  {optionStatus.name}
+                </h1>
+              </div>
             </div>
           </div>
         </div>
