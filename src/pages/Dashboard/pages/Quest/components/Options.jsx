@@ -15,6 +15,8 @@ const Options = ({
   optionsCount,
   removeOption,
   number,
+  answerVerification,
+  optionStatus
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -94,6 +96,7 @@ const Options = ({
               placeholder="option"
               className="w-full max-w-[838px] rounded-r-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-44 text-[30px] font-normal leading-[0px] text-[#435059] focus-visible:outline-none"
               onChange={(e) => handleChange(e.target.value)}
+              onBlur={(e) => e.target.value.trim() !== "" && answerVerification(e.target.value.trim())}
               value={typedValue}
             />
             <div
@@ -137,8 +140,8 @@ const Options = ({
                   )}
                 </>
               ) : null}
-              <h1 className="leading-0 ml-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
-                OK
+              <h1 className={`leading-0 ml-4 border-l-2 border-[#F3F3F3] pr-9 pl-6 text-[30px] font-semibold ${optionStatus?.color}`}>
+                {optionStatus?.name}
               </h1>
             </div>
           </div>
