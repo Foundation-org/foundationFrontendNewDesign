@@ -8,13 +8,17 @@ import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import Title from "../../../pages/Quest/components/Title";
 import AgreeDisagreeOptions from "../components/AgreeDisagreeOptions";
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
+
 const AgreeDisagree = () => {
   const [question, setQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [changedOption, setChangedOption] = useState("");
   const [correctState, setCorrectState] = useState(false);
   const [changeState, setChangeState] = useState(false);
-  const [checkQuestionStatus, setCheckQuestionStatus] = useState({ name: "Ok", color: "text-[#389CE3]",  tooltipName: "Please write something...", tooltipStyle: "tooltip-info"});
+  const reset = { name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" };
+  const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
 
   const navigate = useNavigate();
 
@@ -87,19 +91,23 @@ const AgreeDisagree = () => {
         <h3 className="mb-[22px] ml-[104px] mt-[38px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
           Make a statement or pose a question
         </h3>
-        <div className="relative flex w-full justify-center">
-          <input
-            type="text"
-            value={question}
-            className="w-full max-w-[857px] rounded-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
+        <div className="join w-full px-12">
+          <input 
+            className="input input-bordered input-lg w-full join-item bg-white text-black text-3xl h-24"
             onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus({name: "Ok", color: e.target.value.trim() === "" ? "text-[#389CE3]" : "text-[#b0a00f]"})}}
             onBlur={(e) => e.target.value.trim() !== "" && questionVerification(e.target.value.trim())}
           />
-          <div className={`tooltip absolute right-[72px] top-4 ${checkQuestionStatus.tooltipStyle}`} data-tip={checkQuestionStatus.tooltipName}>
-            <h1 className={`leading-0 border-none cursor-pointer px-6 text-[30px] font-semibold ${checkQuestionStatus.color}`}>
-              {checkQuestionStatus.name}
-            </h1>
-          </div>
+          <button id="test" data-tooltip-offset={-25} className={`btn-lg join-item bg-white text-3xl font-semibold h-24 ${checkQuestionStatus.color}`}>{checkQuestionStatus.name}</button>
+        </div>
+        <div className="indicator">
+          <Tooltip anchorSelect="#test" isOpen={checkQuestionStatus.name === "Fail" && true} border="1px solid red" style={{ backgroundColor: "#fbdfe4", color: "#222", border: "red", width: 'auto' }} place="top">
+            {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
+              <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </span>  */}
+            {checkQuestionStatus.tooltipName}
+          </Tooltip>
         </div>
         <div className="mt-10 flex flex-col gap-[30px]">
           <AgreeDisagreeOptions
