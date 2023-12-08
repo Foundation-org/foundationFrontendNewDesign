@@ -92,7 +92,7 @@ const Options = ({
             <input
               type="text"
               placeholder="option"
-              className="w-full max-w-[90%] rounded-r-[4.898px] border-[1px] border-l-0 border-[#ACACAC] bg-white py-[4.09px] pl-[15.4px] pr-[70px] text-[10px] font-normal leading-[0px] text-[#435059] focus-visible:outline-none tablet:rounded-r-[11.284px] tablet:pb-[9.8px] tablet:pl-9 tablet:pr-44 tablet:pt-[11.6px] tablet:text-[20.7px] xl:max-w-[838px] xl:rounded-r-2xl xl:py-[18px] xl:text-[30px]"
+              className="w-full max-w-[90%] rounded-r-[4.898px] border-[1px] border-l-0 border-[#ACACAC] bg-white py-[4.26px] pl-[15.4px] pr-[70px] text-[10px] font-normal leading-[0px] text-[#435059] focus-visible:outline-none tablet:rounded-r-[11.284px] tablet:pb-[9.8px] tablet:pl-9 tablet:pr-44 tablet:pt-[11.6px] tablet:text-[20.7px] xl:max-w-[838px] xl:rounded-r-2xl xl:py-[18px] xl:text-[30px]"
               onChange={(e) => handleChange(e.target.value)}
               value={typedValue}
             />

@@ -118,7 +118,7 @@ const AgreeDisagree = () => {
           {!correctState ? (
             <>
               <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] xl:mx-[51px] xl:px-7 xl:py-[34px]">
-                <h5 className="w-[300px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:text-[18.662px] xl:w-full xl:text-[28px]">
+                <h5 className="w-[150px] text-[9px]  font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] xl:w-full xl:text-[28px]">
                   This Quest has a Change Option.
                 </h5>
                 <CustomSwitch
@@ -127,7 +127,7 @@ const AgreeDisagree = () => {
                 />
               </div>
               {changeState ? (
-                <div className="flex justify-center gap-4">
+                <div className="flex flex-wrap justify-center gap-4">
                   {changeOptions.map((item) => (
                     <button
                       key={item.id}
@@ -135,7 +135,7 @@ const AgreeDisagree = () => {
                         changedOption === item.title
                           ? "bg-[#389CE3]"
                           : "bg-[#7C7C7C]"
-                      } rounded-md px-4 py-2 text-[#F4F4F4]`}
+                      } rounded-md px-4 py-1 text-[8px] text-[#F4F4F4] tablet:py-2 tablet:text-[16px]`}
                       onClick={() => {
                         setChangedOption(item.title);
                       }}

@@ -95,11 +95,11 @@ const MultipleChoiceOptions = ({
             <input
               type="text"
               placeholder="option"
-              className="tablet:pr-45 w-full max-w-[838px] rounded-r-[5.387px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] bg-white py-[4.41px] pl-[15.44px] pr-[55px] text-[10px] font-normal leading-[0px] text-[#435059] tablet:rounded-r-[11.284px] tablet:pb-[9.83px] tablet:pl-9 tablet:pt-[11.61px] tablet:text-[20.73px] xl:rounded-r-2xl xl:py-[18px] xl:text-[30px] "
+              className="tablet:pr-45 w-full max-w-[838px] rounded-r-[5.387px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] bg-white py-[4.56px] pl-[15.44px] pr-[55px] text-[10px] font-normal leading-[0px] text-[#435059] tablet:rounded-r-[11.284px] tablet:pb-[9.83px] tablet:pl-9 tablet:pt-[11.61px] tablet:text-[20.73px] xl:rounded-r-2xl xl:py-[18px] xl:text-[30px] "
               onChange={(e) => handleChange(e.target.value)}
               value={typedValue}
             />
-            <div className="absolute right-0 top-1/2 flex -translate-y-1/2 transform items-center">
+            <div className="absolute right-[2px] top-[14px] flex -translate-y-1/2 transform items-center tablet:right-0 tablet:top-1/2">
               {options && (
                 <div id="green-checkbox" className="-mb-[7px] mr-6">
                   <input
