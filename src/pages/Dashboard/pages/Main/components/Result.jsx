@@ -54,8 +54,8 @@ const Result = (props) => {
 
             props.handleToggleCheck(
               res.data.data[res.data.data.length - 1].contended,
-              true,
               false,
+              true,
             );
           }
           if (
@@ -78,8 +78,8 @@ const Result = (props) => {
 
             props.handleToggleCheck(
               res.data.data[res.data.data.length - 1].selected,
-              false,
               true,
+              false,
             );
           }
         }
@@ -113,7 +113,7 @@ const Result = (props) => {
         if (props.whichTypeQuestion === "ranked choise") {
           console.log(
             "ranked response" +
-              res?.data.data[res.data.data.length - 1].selected,
+            res?.data.data[res.data.data.length - 1].selected,
           );
 
           const updatedRankedAnswers = res?.data.data[
@@ -269,11 +269,10 @@ const Result = (props) => {
       )}
       <div className="my-8 flex w-full justify-center">
         <button
-          className={`${
-            persistedTheme === "dark"
-              ? "bg-[#333B46]"
-              : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-          } inset-0 mr-[30px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+          className={`${persistedTheme === "dark"
+            ? "bg-[#333B46]"
+            : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+            } inset-0 mr-[30px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
           onClick={() => handleSubmit()}
         >
           Finish
