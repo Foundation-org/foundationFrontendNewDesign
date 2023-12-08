@@ -187,7 +187,21 @@ iframe {
 
 #dragIcon div {
   position: relative;
-  height: 74px;
+  height: 22.16px;
+}
+
+@media (min-width: 744px) {
+  #dragIcon div {
+    position: relative;
+    height: 46.4px;
+  }
+}
+
+@media (min-width: 1280px) {
+  #dragIcon div {
+    position: relative;
+    height: 74px;
+  }
 }
 
 #dragIcon2 div {
