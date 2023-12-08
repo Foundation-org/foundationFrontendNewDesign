@@ -86,13 +86,23 @@ const YesNo = () => {
         <h3 className="mb-[13.54px] ml-[32px] mt-[11.71px] text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:ml-[67px] tablet:mt-[20.38px] tablet:text-[16.58px] xl:mb-[22px] xl:ml-[104px] xl:mt-[38px] xl:text-[25px]">
           Make a statement or pose a question
         </h3>
-        <div className="relative flex w-full justify-center">
+        {/* <div className="relative flex w-full justify-center">
           <input
             type="text"
             className="w-full max-w-[85%] rounded-[4.948px] border-[1px] border-[#ACACAC] bg-white pb-[4.63px] pl-[19.35px] pr-[43px] pt-[5.54px] text-[10px] font-normal leading-[0px] text-[#435059] tablet:rounded-[10.364px] tablet:pb-[9.83px] tablet:pr-28 tablet:pt-[11.61px] tablet:text-[20.73px] xl:max-w-[857px] xl:rounded-2xl xl:py-[18px] xl:pl-9 xl:text-[30px]"
             onChange={(e) => setQuestion(e.target.value)}
           />
           <h1 className="leading-0 absolute right-6 top-[6px] border-l-2 border-[#F3F3F3] px-[7px] text-[8.46px] font-semibold text-[#0FB063] tablet:right-11 tablet:top-3 tablet:px-[18.6px] tablet:text-[17.546px] xl:right-[72px] xl:top-4 xl:px-6 xl:text-[30px]">
+            OK
+          </h1>
+        </div> */}
+        <div className="relative mx-auto flex w-[90%] justify-center">
+          <input
+            type="text"
+            className="w-full rounded-[4.948px] border-[1px] border-[#ACACAC] bg-white pb-[4.63px] pl-[19.35px] pr-[43px] pt-[5.54px] text-[10px] font-normal leading-[0px] text-[#435059] tablet:rounded-[10.364px] tablet:pb-[9.83px] tablet:pr-28 tablet:pt-[11.61px] tablet:text-[20.73px] xl:max-w-[857px] xl:rounded-2xl xl:py-[18px] xl:pl-9 xl:text-[30px]"
+            onChange={(e) => setQuestion(e.target.value)}
+          />
+          <h1 className="leading-0 absolute right-0 top-[6px] border-l-2 border-[#F3F3F3] px-[7px] text-[8.46px] font-semibold text-[#0FB063] tablet:right-11 tablet:top-3 tablet:px-[18.6px] tablet:text-[17.546px] xl:right-[72px] xl:top-4 xl:px-6 xl:text-[30px]">
             OK
           </h1>
         </div>
