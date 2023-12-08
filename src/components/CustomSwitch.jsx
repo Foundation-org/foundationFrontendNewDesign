@@ -13,7 +13,7 @@ const CustomSwitch = ({ enabled, setEnabled }) => {
         aria-hidden="true"
         className={`${
           enabled
-            ? "translate-x-4 bg-[#0DA65D] tablet:translate-x-6"
+            ? "translate-x-3 bg-[#0DA65D] tablet:translate-x-6"
             : "-translate-x-[7px] bg-[#707070]"
         }
       green-select-shape`}

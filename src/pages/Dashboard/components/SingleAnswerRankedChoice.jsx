@@ -79,11 +79,11 @@ const SingleAnswerRankedChoice = (props) => {
               )}
             </div>
           )}
-          <div className="mr-6 flex w-full justify-between">
+          <div className="flex w-full justify-between tablet:mr-6">
             {props.editable ? (
               <input
                 type="text"
-                className="w-full rounded-[4.73px] bg-[#0D1012] pb-[5.7px] pl-[32px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:pt-[12px] tablet:text-[19px]"
+                className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px]"
                 value={answer}
                 onChange={handleInputChange}
               />
@@ -92,30 +92,21 @@ const SingleAnswerRankedChoice = (props) => {
                 {props.answer}
               </h1>
             )}
-            <div className="flex items-center gap-[19px]">
+            <div className="mr-1 flex items-center gap-3 tablet:gap-[19px]">
               {props.editable ? (
                 <img
                   src="/assets/svgs/dashboard/edit.svg"
-                  className="h-[19px] w-4"
-                  // onClick={handleEditOpen}
+                  className="h-3 w-4 tablet:h-[19px]"
                 />
               ) : null}
               {props.deleteable ? (
                 <img
                   src="/assets/svgs/dashboard/trash.svg"
-                  className="h-[19px] w-4 cursor-pointer"
+                  className="h-3 w-4 tablet:h-[19px]"
                   onClick={handleDeleteOpen}
                 />
               ) : null}
             </div>
-            {/* <BasicModal open={editModal} handleClose={handleEditClose}>
-              <EditNewOption
-                answer={props.answer}
-                answersSelection={props.answersSelection}
-                setAnswerSelection={props.setAnswerSelection}
-                handleEditClose={handleEditClose}
-              />
-            </BasicModal> */}
             <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
               <DeleteOption
                 answer={props.answer}
@@ -128,25 +119,13 @@ const SingleAnswerRankedChoice = (props) => {
             </BasicModal>
           </div>
         </div>
-        {/* edit newly added options */}
-        {/* <div className="w-full " style={{ position: "absolute" }}>
-          {props.editable ? (
-            <input
-              type="text"
-              className="w-full rounded-[4.73px] bg-[#0D1012] pb-[5.7px] pl-14 pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:pt-[12px] tablet:text-[19px]"
-            />
-          ) : null}
-        </div> */}
-        {/* to show ranked and multiple choice options */}
-        <div className="mr-[20.63px] flex items-center gap-[19px] ">
-          {props.btnText === "Results" ? (
-            <>
-              {props.percentages?.[props.answer.trim()] === undefined
-                ? "0%"
-                : props.percentages?.[props.answer.trim()] + "%"}
-            </>
-          ) : null}
-        </div>
+        {props.btnText === "Results" ? (
+          <div className="mr-[20.63px] flex items-center gap-[19px] ">
+            {props.percentages?.[props.answer.trim()] === undefined
+              ? "0%"
+              : props.percentages?.[props.answer.trim()] + "%"}
+          </div>
+        ) : null}
       </div>
     </div>
   );
