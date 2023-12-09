@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
-import "react-tooltip/dist/react-tooltip.css";
-import { Tooltip } from "react-tooltip";
+import { Tooltip } from "../../../../../utils/Tooltip";
+// import "react-tooltip/dist/react-tooltip.css";
+// import { Tooltip } from "react-tooltip";
 
 const Options = ({
   title,
@@ -102,9 +103,9 @@ const Options = ({
               onBlur={(e) => e.target.value.trim() !== "" && answerVerification(e.target.value.trim())}
               value={typedValue}
             /> */}
-            <div className="flex w-full">
+            <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[73px]">
               <input
-                className=" w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C]"
+                className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
                 // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) =>
@@ -115,13 +116,14 @@ const Options = ({
               />
               <button
                 id={`test${number}`}
-                data-tooltip-offset={-25}
-                className={` rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] text-[${optionStatus.color}]  py-[0.29rem]`}
+                // data-tooltip-offset={-25}
+                className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[1.875rem] text-[${optionStatus.color}] py-[0.29rem]`}
                 // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
               >
-                <div className="border-l-[0.7px] px-[1.25rem]">
+                <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
                   {optionStatus.name}
                 </div>
+                <Tooltip optionStatus={optionStatus} />
               </button>
             </div>
             <div
@@ -174,7 +176,7 @@ const Options = ({
                 </h1>
               </div> */}
             </div>
-            <Tooltip
+            {/* <Tooltip
               anchorSelect={`#test${number}`}
               isOpen={optionStatus.name === "Fail" && true}
               border="1px solid red"
@@ -186,14 +188,14 @@ const Options = ({
                 marginRight: "3rem",
               }}
               place="top"
-            >
-              {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
+            > */}
+            {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
               <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </span>  */}
-              {optionStatus.tooltipName}
-            </Tooltip>
+            {/* {optionStatus.tooltipName}
+            </Tooltip> */}
           </div>
         </div>
       )}

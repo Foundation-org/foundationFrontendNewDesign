@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 import { useState } from "react";
-import { Tooltip } from "react-tooltip";
+// import { Tooltip } from "react-tooltip";
 import { useNavigate } from "react-router-dom";
 import { changeOptions } from "../../../../../utils/options";
 import {
@@ -12,7 +12,8 @@ import { useMutation } from "@tanstack/react-query";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import Title from "../../../pages/Quest/components/Title";
 import AgreeDisagreeOptions from "../components/AgreeDisagreeOptions";
-import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "../../../../../utils/Tooltip";
+// import "react-tooltip/dist/react-tooltip.css";
 
 const AgreeDisagree = () => {
   const [question, setQuestion] = useState("");
@@ -110,9 +111,9 @@ const AgreeDisagree = () => {
           Make a statement or pose a question
         </h3>
         {/* <div className="join w-full px-12"> */}
-        <div className="w-[calc(100%-51.75px] mx-[21px] flex">
+        <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[73px]">
           <input
-            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C]  "
+            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
             // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
             onChange={(e) => {
               setQuestion(e.target.value);
@@ -129,19 +130,22 @@ const AgreeDisagree = () => {
               questionVerification(e.target.value.trim())
             }
           />
+          {/* <div> */}
           <button
             id="test"
-            data-tooltip-offset={-25}
-            className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] text-[${checkQuestionStatus.color}]  py-[0.29rem]`}
+            // data-tooltip-offset={-25}
+            className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[1.875rem] text-[${checkQuestionStatus.color}] py-[0.29rem]`}
             // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
           >
-            <div className="border-l-[0.7px] px-[1.25rem]">
+            <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
               {checkQuestionStatus.name}
             </div>
+            <Tooltip optionStatus={checkQuestionStatus} />
           </button>
+          {/* </div> */}
         </div>
-        <div className="indicator">
-          <Tooltip
+        {/* <div className="indicator"> */}
+        {/* <Tooltip
             anchorSelect="#test"
             isOpen={checkQuestionStatus.name === "Fail" && true}
             border="1px solid red"
@@ -153,14 +157,15 @@ const AgreeDisagree = () => {
             }}
             place="top"
           >
-            {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
+           
+            {checkQuestionStatus.tooltipName}
+          </Tooltip> */}
+        {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
               <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </span>  */}
-            {checkQuestionStatus.tooltipName}
-          </Tooltip>
-        </div>
+        {/* </div> */}
         <div className="mt-[1.46rem] flex flex-col gap-[9.24px] tablet:mt-10 tablet:gap-5 xl:gap-[30px]">
           <AgreeDisagreeOptions
             answer={"Agree"}

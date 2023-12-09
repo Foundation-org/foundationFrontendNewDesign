@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 import { useState } from "react";
-import { Tooltip } from "react-tooltip";
+// import { Tooltip } from "react-tooltip";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { changeOptions } from "../../../../../utils/options";
@@ -14,8 +14,9 @@ import {
 } from "../../../../../api/questsApi";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import MultipleChoiceOptions from "../components/MultipleChoiceOptions";
-import "react-tooltip/dist/react-tooltip.css";
+// import "react-tooltip/dist/react-tooltip.css";
 import Title from "../components/Title";
+import { Tooltip } from "../../../../../utils/Tooltip";
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -45,12 +46,12 @@ const MultipleChoice = () => {
     tooltipStyle: "tooltip-info",
   };
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
-  const [checkOptionStatus, setCheckOptionStatus] = useState({
-    name: "Ok",
-    color: "text-[#389CE3]",
-    tooltipName: "Please write something...",
-    tooltipStyle: "tooltip-info",
-  });
+  // const [checkOptionStatus, setCheckOptionStatus] = useState({
+  //   name: "Ok",
+  //   color: "text-[#389CE3]",
+  //   tooltipName: "Please write something...",
+  //   tooltipStyle: "tooltip-info",
+  // });
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -280,9 +281,9 @@ const MultipleChoice = () => {
         </h3>
         {/* write question */}
         {/* <div className="join w-full px-12"> */}
-        <div className="w-[calc(100%-51.75px] mx-[21px] flex">
+        <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[73px]">
           <input
-            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C]"
+            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
             // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
             onChange={(e) => {
               setQuestion(e.target.value);
@@ -303,13 +304,15 @@ const MultipleChoice = () => {
           <button
             id="new"
             // data-tooltip-offset={-25}
-            className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] text-[${checkQuestionStatus.color}] py-[0.29rem]`}
+            className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[1.875rem] text-[${checkQuestionStatus.color}] py-[0.29rem]`}
             // className={`test join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
           >
-            <div className="border-l-[0.7px] px-[1.25rem]">
+            <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
               {checkQuestionStatus.name}
             </div>
+            <Tooltip optionStatus={checkQuestionStatus} />
           </button>
+
           {/* </div> */}
         </div>
         {/* Tooltip */}

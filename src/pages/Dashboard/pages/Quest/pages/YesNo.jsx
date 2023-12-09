@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { Tooltip } from "react-tooltip";
+// import { Tooltip } from "react-tooltip";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -11,7 +11,8 @@ import {
 } from "../../../../../api/questsApi";
 import YesNoOptions from "../components/YesNoOptions";
 import CustomSwitch from "../../../../../components/CustomSwitch";
-import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "../../../../../utils/Tooltip";
+// import "react-tooltip/dist/react-tooltip.css";
 
 const YesNo = () => {
   const navigate = useNavigate();
@@ -109,9 +110,9 @@ const YesNo = () => {
         <h3 className="mb-[13.54px] ml-[32px] mt-[11.71px] text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:ml-[67px] tablet:mt-[20.38px] tablet:text-[16.58px] xl:mb-[22px] xl:ml-[104px] xl:mt-[38px] xl:text-[25px]">
           Make a statement or pose a question
         </h3>
-        <div className="w-[calc(100%-51.75px] mx-[21px] flex">
+        <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[73px]">
           <input
-            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C]"
+            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
             // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
             onChange={(e) => {
               setQuestion(e.target.value);
@@ -130,17 +131,18 @@ const YesNo = () => {
           />
           <button
             id="test"
-            data-tooltip-offset={-25}
-            className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] text-[${checkQuestionStatus.color}]  py-[0.29rem]`}
+            // data-tooltip-offset={-25}
+            className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[1.875rem] text-[${checkQuestionStatus.color}] py-[0.29rem]`}
             // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
           >
-            <div className="border-l-[0.7px] px-[1.25rem]">
+            <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
               {checkQuestionStatus.name}
             </div>
+            <Tooltip optionStatus={checkQuestionStatus} />
           </button>
         </div>
-        <div className="indicator">
-          <Tooltip
+        {/* <div className="indicator"> */}
+        {/* <Tooltip
             anchorSelect="#test"
             isOpen={checkQuestionStatus.name === "Fail" && true}
             border="1px solid red"
@@ -152,14 +154,15 @@ const YesNo = () => {
             }}
             place="top"
           >
-            {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
+         
+            {checkQuestionStatus.tooltipName}
+          </Tooltip> */}
+        {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
               <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </span>  */}
-            {checkQuestionStatus.tooltipName}
-          </Tooltip>
-        </div>
+        {/* </div> */}
         <div className="mt-[1.46rem] flex flex-col gap-[9.24px] tablet:mt-10 tablet:gap-5 xl:gap-[30px]">
           <YesNoOptions
             number={"#1"}
@@ -225,7 +228,7 @@ const YesNo = () => {
         {/* submit button */}
         <div className="flex w-full justify-end">
           <button
-            className="mr-[28px] mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] xl:rounded-[23.6px] xl:px-[60px] xl:py-3 xl:text-[31.5px]"
+            className="mr-7 mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] xl:rounded-[23.6px] xl:px-[60px] xl:py-3 xl:text-[31.5px]"
             onClick={() => handleSubmit()}
           >
             Submit

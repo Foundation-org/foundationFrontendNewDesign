@@ -1,6 +1,7 @@
 // import React from "react";
 import { useSelector } from "react-redux";
-import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "../../../../../utils/Tooltip";
+// import "react-tooltip/dist/react-tooltip.css";
 // import { Tooltip } from "react-tooltip";
 
 const MultipleChoiceOptions = ({
@@ -12,7 +13,7 @@ const MultipleChoiceOptions = ({
   dragable,
   handleOptionChange,
   handleOptionSelect,
-  isYes,
+  // isYes,
   allowInput,
   handleChange,
   typedValue,
@@ -106,7 +107,7 @@ const MultipleChoiceOptions = ({
             /> */}
             <div className="flex w-full">
               <input
-                className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C]"
+                className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
                 // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) =>
@@ -115,25 +116,46 @@ const MultipleChoiceOptions = ({
                 }
                 value={typedValue}
               />
-              <div className="relative">
-                <button
-                  id={`test${number}`}
-                  data-tooltip-offset={-25}
-                  className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] text-[${optionStatus.color}]  py-[0.29rem]`}
-                  // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
-                >
-                  <div className="border-l-[0.7px] px-[1.25rem]">
-                    {optionStatus.name}
-                  </div>
-                </button>
-                {/* tooltip */}
-                {optionStatus.name === "Fail" && (
-                  <div className="absolute -top-[22px] left-1/2 -translate-x-1/2 transform">
-                    <div class="relative mx-2">
-                      <div class="bottom-full right-0 w-[7.3rem] rounded bg-[#3C1A20] px-[0.35rem] py-[0.2rem] text-[0.3rem] font-normal text-[#DB6262]">
+              {/* <div className="relative"> */}
+              <button
+                id={`test${number}`}
+                // data-tooltip-offset={-25}
+                className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[1.875rem] text-[${optionStatus.color}] py-[0.29rem]`}
+                // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
+              >
+                <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
+                  {optionStatus.name}
+                </div>
+                <Tooltip optionStatus={optionStatus} />
+              </button>
+              {/* tooltip */}
+
+              {/* {optionStatus.name === "Fail" && (
+                  <div className="absolute -top-[36px] left-1/2 -translate-x-1/2 transform">
+                    <div class="relative mx-2 flex flex-col items-end">
+                      <svg
+                        className="h-2 w-2 "
+                        fill="#000000"
+                        version="1.1"
+                        id="Layer_1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 512 512"
+                        xml:space="preserve"
+                      >
+                        <g>
+                          <g>
+                            <polygon
+                              points="512,59.076 452.922,0 256,196.922 59.076,0 0,59.076 196.922,256 0,452.922 59.076,512 256,315.076 452.922,512 
+			512,452.922 315.076,256 		"
+                            />
+                          </g>
+                        </g>
+                      </svg>
+                      <div class="bottom-full right-0 w-[7.3rem] rounded border-[0.533px] bg-[#FEDEDE] px-[0.35rem] py-[0.2rem] text-[0.3rem] font-normal text-[#F34141] dark:bg-[#3C1A20] dark:text-[#DB6262]">
                         {optionStatus.tooltipName}
                         <svg
-                          class="absolute left-0 top-full h-2 w-full text-black"
+                          class="absolute left-0 top-full h-2 w-full text-[#FEDEDE] dark:text-[#3C1A20]"
                           x="0px"
                           y="0px"
                           viewBox="0 0 255 255"
@@ -142,13 +164,15 @@ const MultipleChoiceOptions = ({
                           <polygon
                             class="fill-current"
                             points="0,0 127.5,127.5 255,0"
+                            stroke="#F34141"
+                            stroke-width="16"
                           />
                         </svg>
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
+                )} */}
+              {/* </div> */}
             </div>
             <div className="absolute right-0 top-1/2 flex -translate-y-1/2 transform items-center">
               {options && (
