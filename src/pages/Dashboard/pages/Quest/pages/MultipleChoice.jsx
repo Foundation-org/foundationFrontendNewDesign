@@ -182,12 +182,13 @@ const MultipleChoice = () => {
       const newTypedValues = [...typedValues];
       newTypedValues[index] = {
         ...newTypedValues[index],
-        question: "",
+        // question: "",
         optionStatus: {
-          name: "Ok",
-          color: "text-[#389CE3]",
-          tooltipName: "Please write something...",
-          tooltipStyle: "tooltip-info",
+          name: "Fail",
+          color: "text-[#b00f0f]",
+          tooltipName: "Found Duplication!",
+          tooltipStyle: "tooltip-error",
+          duplication: true,
         },
       };
       return setTypedValues(newTypedValues);
@@ -299,12 +300,13 @@ const MultipleChoice = () => {
               e.target.value.trim() !== "" &&
               questionVerification(e.target.value.trim())
             }
+            value={question}
           />
           {/* <div className="relative"> */}
           <button
             id="new"
             // data-tooltip-offset={-25}
-            className={`rounded-r-[0.33rem relative bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] xl:rounded-r-2xl xl:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
+            className={`relative rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] xl:rounded-r-2xl xl:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
             // className={`test join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
           >
             <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
@@ -344,12 +346,12 @@ const MultipleChoice = () => {
               dragable={false}
               handleChange={(value) => handleChange(index, value)}
               handleOptionSelect={() => handleOptionSelect(index)}
-              typedValue={typedValues[index].question}
-              isSelected={typedValues[index].selected}
+              typedValue={typedValues[index]?.question}
+              isSelected={typedValues[index]?.selected}
               optionsCount={optionsCount}
               removeOption={() => removeOption(index)}
               number={index}
-              optionStatus={typedValues[index].optionStatus}
+              optionStatus={typedValues[index]?.optionStatus}
               answerVerification={(value) => answerVerification(index, value)}
             />
           ))}
@@ -425,6 +427,14 @@ const MultipleChoice = () => {
         </div> */}
         <div className="flex w-full justify-end">
           <button
+            disabled={
+              checkQuestionStatus?.isVerifiedQuestion &&
+              typedValues.every(
+                (item) => item.optionStatus.isVerifiedAnswer === true,
+              )
+                ? false
+                : true
+            }
             className="mr-[28px] mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] xl:rounded-[23.6px] xl:px-[60px] xl:py-3 xl:text-[31.5px]"
             onClick={() => handleSubmit()}
           >
