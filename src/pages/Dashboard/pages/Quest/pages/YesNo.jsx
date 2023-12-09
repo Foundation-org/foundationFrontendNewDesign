@@ -8,7 +8,6 @@ import YesNoOptions from "../components/YesNoOptions";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
-import YesNoOptions from "../components/YesNoOptions";
 
 const YesNo = () => {
   const navigate = useNavigate();
