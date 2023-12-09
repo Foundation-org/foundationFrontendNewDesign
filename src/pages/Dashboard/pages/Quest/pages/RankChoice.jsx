@@ -27,7 +27,7 @@ const DragHandler = (props) => {
     <div
       {...props}
       className="
-z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-[54px] tablet:h-[46.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[72px] xl:w-[38px]"
+z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-[54px] tablet:h-[46.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[74px] xl:w-[38px]"
     >
       <div title="drag handler" className="flex items-center">
         {persistedTheme === "dark" ? (

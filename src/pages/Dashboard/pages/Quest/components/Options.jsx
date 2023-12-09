@@ -25,11 +25,11 @@ const Options = ({
 
   return (
     <div
-      className={`${
-        label
+      className={`${label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row items-center gap-[25px]"
-      }  w-[95%] tablet:w-[88%] xl:w-[87%]`}
+        // }  w-[95%] tablet:w-[88%] xl:w-[87%]`}
+        }  mr-[0px] w-[95%] ml-[1px] tablet:mr-[70.4px] `}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
@@ -117,8 +117,8 @@ const Options = ({
               <button
                 id={`test${number}`}
                 // data-tooltip-offset={-25}
-                className={`rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] xl:text-[1.875rem] ${optionStatus.color}`}
-                // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
+                className={`relative rounded-r-[0.33rem] tablet:rounded-r-[10.3px] xl:rounded-r-2xl border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] xl:text-[1.875rem] ${optionStatus.color}`}
+              // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
               >
                 <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
                   <span>{optionStatus.name}</span>
@@ -127,11 +127,10 @@ const Options = ({
               </button>
             </div>
             <div
-              className={`${
-                optionsCount > 2
+              className={`${optionsCount > 2
                   ? "absolute left-[208px] tablet:left-[42rem]"
                   : "absolute left-[221px] tablet:left-[24rem] xl:left-[44rem]"
-              } -top-[22px] flex w-fit items-center tablet:-top-[46px] xl:-top-[74px]`}
+                } -top-[22px] flex w-fit items-center tablet:-top-[46px] xl:-top-[74px]`}
             >
               {title === "RankChoice" && trash ? (
                 <>

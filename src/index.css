@@ -194,7 +194,7 @@ iframe {
 @media (min-width: 744px) {
   #dragIcon > div {
     position: relative;
-    height: 72px;
+    height: 45px;
     display: flex;
   }
   .okayContainer {
