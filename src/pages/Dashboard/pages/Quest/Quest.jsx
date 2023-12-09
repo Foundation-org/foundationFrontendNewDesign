@@ -11,7 +11,7 @@ const Quest = () => {
   const handleTab = (id) => setTab(id);
 
   return (
-    <div className="h-[calc(100vh-96px)] w-full overflow-y-auto bg-white">
+    <div className="h-[calc(100vh-96px)] w-full overflow-y-auto bg-white tablet:h-[calc(100vh-116px)] xl:h-[calc(100vh-96px)]">
       <h1 className="mb-[13.3px] mt-[15px] text-center text-[0.75rem] font-semibold leading-normal text-[#616161] tablet:mb-[19px] tablet:mt-[31px] tablet:text-[24.83px] xl:mb-[40px] xl:mt-[50px] xl:text-[1.875rem]">
         Quest Type
       </h1>

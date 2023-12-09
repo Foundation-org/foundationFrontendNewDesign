@@ -11,6 +11,7 @@ const SingleAnswerMultipleChoice = (props) => {
   const [contendState, setContendState] = useState(props.contend);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [answer, setAnswer] = useState(props.answer);
 
   const handleEditOpen = () => setEditModal(true);
   const handleEditClose = () => setEditModal(false);
@@ -46,6 +47,27 @@ const SingleAnswerMultipleChoice = (props) => {
     });
   };
 
+  const handleInputChange = (e) => {
+    setAnswer(e.target.value);
+  };
+
+  useEffect(() => {
+    handleAddOption();
+  }, [answer]);
+
+  const handleAddOption = () => {
+    if (answer.trim() === "") {
+      toast.error("Option cannot be empty");
+      return;
+    }
+
+    const newArr = props.answersSelection.map((item) =>
+      item.label === props.answer ? { ...item, label: answer.trim() } : item,
+    );
+
+    props.setAnswerSelection(newArr);
+  };
+
   return (
     <div className="ml-[30px] mr-[36px] flex items-center gap-[25px] tablet:mx-[72px] 2xl:mx-[85px]">
       <div className="flex w-full justify-between rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
@@ -63,33 +85,45 @@ const SingleAnswerMultipleChoice = (props) => {
             </div>
           )}
           <div className="mr-6 flex w-full justify-between">
-            <h1 className="ml-8 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pb-[10px] tablet:pt-3 tablet:text-[19px] ">
+            {props.editable ? (
+              <input
+                type="text"
+                className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px]"
+                value={answer}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <h1 className="ml-[15.8px] w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px]">
+                {props.answer}
+              </h1>
+            )}
+            {/* <h1 className="ml-8 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pb-[10px] tablet:pt-3 tablet:text-[19px] ">
               {props.answer}
-            </h1>
+            </h1> */}
             <div className="flex items-center gap-[19px]">
               {props.editable ? (
                 <img
                   src="/assets/svgs/dashboard/edit.svg"
-                  className="h-[12px] cursor-pointer tablet:h-auto"
-                  onClick={handleEditOpen}
+                  className="h-3 tablet:h-auto"
+                  // onClick={handleEditOpen}
                 />
               ) : null}
               {props.deleteable ? (
                 <img
                   src="/assets/svgs/dashboard/trash.svg"
-                  className="h-[12px] cursor-pointer tablet:h-auto"
+                  className="h-3 cursor-pointer tablet:h-auto"
                   onClick={handleDeleteOpen}
                 />
               ) : null}
             </div>
-            <BasicModal open={editModal} handleClose={handleEditClose}>
+            {/* <BasicModal open={editModal} handleClose={handleEditClose}>
               <EditNewOption
                 answer={props.answer}
                 answersSelection={props.answersSelection}
                 setAnswerSelection={props.setAnswerSelection}
                 handleEditClose={handleEditClose}
               />
-            </BasicModal>
+            </BasicModal> */}
             <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
               <DeleteOption
                 answer={props.answer}

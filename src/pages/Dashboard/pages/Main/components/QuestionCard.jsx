@@ -62,6 +62,15 @@ const QuestionCard = ({
     })),
   );
 
+  useEffect(() => {
+    setRankedAnswers(
+      answersSelection.map((item, index) => ({
+        id: `unique-${index}`,
+        ...item,
+      })),
+    );
+  }, [answersSelection]);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 

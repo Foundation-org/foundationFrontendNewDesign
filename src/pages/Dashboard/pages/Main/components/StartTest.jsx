@@ -36,7 +36,7 @@ const StartTest = ({
       check: false,
       contend: false,
     }));
-    
+
     setAnswerSelection(updatedAnswersSelection);
     setRankedAnswers(
       updatedAnswersSelection.map((item, index) => ({
@@ -240,13 +240,20 @@ const StartTest = ({
           </SortableList>
         )}
 
-        <div>
+        <div
+          className={`${
+            title === "Multiple Choice"
+              ? "ml-[30px] mr-[36px] tablet:mx-[72px] 2xl:mx-[85px]"
+              : "relative"
+          } flex items-center gap-[25px] `}
+        >
           {open ? (
             <div
-              className={`${title === "Multiple Choice"
-                  ? "mx-auto w-[80%] tablet:ml-[72px] tablet:w-[86%]"
-                  : "ml-[34px] w-[80%] tablet:ml-[49px]"
-                }   xl:w-[90%]`}
+              className={`${
+                title === "Multiple Choice"
+                  ? "w-full"
+                  : "absolute left-12 top-[2px] w-[80%] xl:w-[90%]"
+              }`}
             >
               <div className="rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
                 {title !== "Multiple Choice" ? (
@@ -274,22 +281,21 @@ const StartTest = ({
                     />
                   </div>
                 ) : (
-                  <div className="flex items-center">
-                    <input
-                      value={temp}
-                      onChange={handleInputChange}
-                      type="text"
-                      className="ml-8 w-full rounded-[4.7px] bg-white py-[5.6px] pr-[7px] text-[8.52px] font-normal leading-normal text-[#435059] focus:outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10px] tablet:py-3 tablet:text-[19px]"
-                    />
-                  </div>
+                  <input
+                    value={temp}
+                    onChange={handleInputChange}
+                    type="text"
+                    className="w-full rounded-[4.7px] bg-white py-[5.6px] pl-8 pr-[7px] text-[8.52px] font-normal leading-normal text-[#435059] focus:outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10px] tablet:py-3 tablet:text-[19px]"
+                  />
                 )}
               </div>
               <div className="mt-4 flex justify-end gap-2 tablet:gap-4">
                 <button
-                  className={` ${persistedTheme === "dark"
+                  className={` ${
+                    persistedTheme === "dark"
                       ? "bg-[#333B46]"
                       : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-                    } inset-0 w-fit rounded-[4.47px] px-5 py-1 text-[8.52px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:rounded-[10px] tablet:py-2 tablet:text-[20px]`}
+                  } inset-0 w-fit rounded-[4.47px] px-5 py-1 text-[8.52px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:rounded-[10px] tablet:py-2 tablet:text-[20px]`}
                   onClick={handleAddOption}
                 >
                   Add
@@ -305,54 +311,53 @@ const StartTest = ({
         {usersAddTheirAns && addOptionLimit === 0 ? (
           <div>
             {title === "Yes/No" ||
-              title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
-                !open ? (
-                  <button
-                    onClick={handleOpen}
-                    className="ml-[55.38px] mt-[11.29px] flex w-fit items-center gap-[5.8px] rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-[135px] tablet:mt-3 tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px]"
-                  >
-                    {persistedTheme === "dark" ? (
-                      <img
-                        src="/assets/svgs/dashboard/add-dark.svg"
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
-                    ) : (
-                      <img
-                        src="/assets/svgs/dashboard/add.svg"
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
-                    )}
-                    Add Option
-                  </button>
-                ) : null
-              ) : null}
+            title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
+              !open ? (
+                <button
+                  onClick={handleOpen}
+                  className="ml-[55.38px] mt-[11.29px] flex w-fit items-center gap-[5.8px] rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-[135px] tablet:mt-3 tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px]"
+                >
+                  {persistedTheme === "dark" ? (
+                    <img
+                      src="/assets/svgs/dashboard/add-dark.svg"
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  ) : (
+                    <img
+                      src="/assets/svgs/dashboard/add.svg"
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  )}
+                  Add Option
+                </button>
+              ) : null
+            ) : null}
           </div>
         ) : null}
-        {/* <BasicModal open={open} handleClose={handleClose}>
-          <AddNewOption
-            setAnswerSelection={setAnswerSelection}
-            answersSelection={answersSelection}
-            handleClose={handleClose}
-            setAddOptionLimit={setAddOptionLimit}
-          />
-        </BasicModal> */}
       </div>
-      <div className="mt-8 flex w-full justify-end">
+      {/* Submit Button */}
+      <div
+        className={`${
+          title === "Multiple Choice"
+            ? "mt-8"
+            : addOptionLimit === 1
+              ? "mt-8"
+              : "mt-28"
+        } mb-8 flex w-full justify-end`}
+      >
         <div>
           <button
-            className={` ${persistedTheme === "dark"
+            className={` ${
+              persistedTheme === "dark"
                 ? "bg-[#333B46]"
                 : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-              } inset-0 mr-[14px] w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+            } inset-0 mr-[14px] w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
             onClick={() => handleSubmit()}
           >
             Submit
           </button>
-          <div className="mb-[23px] mr-[22px] mt-[17.5px] flex justify-end gap-2 tablet:mt-[38px]">
-       
-          </div>
         </div>
       </div>
     </>
