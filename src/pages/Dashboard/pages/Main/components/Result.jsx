@@ -10,11 +10,25 @@ import { toast } from "sonner";
 import SingleAnswer from "../../../components/SingleAnswer";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
-
+import RankedResult from "../../../components/RankedResult";
 
 const Result = (props) => {
   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
+
+  function updateAnswerSelection(apiResponse, ) {
+    props.answersSelection.forEach((item, index) => {
+      // Check in selected array
+      if (apiResponse.selected.some(selectedItem => selectedItem.question === item.label)) {
+        props.answersSelection[index].check = true;
+      }
+      
+      // Check in contended array
+      if (apiResponse.contended.some(contendedItem => contendedItem.question === item.label)) {
+        props.answersSelection[index].contend = true;
+      }
+    });
+  }
 
   useEffect(() => {
     const data = {
@@ -54,8 +68,8 @@ const Result = (props) => {
 
             props.handleToggleCheck(
               res.data.data[res.data.data.length - 1].contended,
-              true,
               false,
+              true,
             );
           }
           if (
@@ -78,46 +92,28 @@ const Result = (props) => {
 
             props.handleToggleCheck(
               res.data.data[res.data.data.length - 1].selected,
-              false,
               true,
+              false,
             );
           }
         }
-
+        
         if (props.whichTypeQuestion === "multiple choise") {
-          if (res?.data.data[res.data.data.length - 1].selected) {
-            res?.data.data[res.data.data.length - 1].selected.map(
-              (item, index) => {
-                props.handleMultipleChoiceCC(
-                  "Multiple Choice",
-                  true,
-                  false,
-                  item.question,
-                );
-              },
-            );
-          }
-          if (res?.data.data[res.data.data.length - 1].contended) {
-            res?.data.data[res.data.data.length - 1].contended.map(
-              (item, index) => {
-                props.handleMultipleChoiceCC(
-                  "Multiple Choice",
-                  false,
-                  true,
-                  item.question,
-                );
-              },
-            );
-          }
+          updateAnswerSelection(res?.data.data[res.data.data.length - 1]);
         }
         if (props.whichTypeQuestion === "ranked choise") {
-          console.log("ranked response" + res?.data.data[res.data.data.length - 1].selected);
-  
-          const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
+          console.log(
+            "ranked response" +
+              res?.data.data[res.data.data.length - 1].selected,
+          );
+
+          const updatedRankedAnswers = res?.data.data[
+            res.data.data.length - 1
+          ].selected.map((item) => {
             const correspondingRankedAnswer = props.rankedAnswers.find(
-              (rankedItem) => rankedItem.label === item.question
+              (rankedItem) => rankedItem.label === item.question,
             );
-  
+
             if (correspondingRankedAnswer) {
               return {
                 id: correspondingRankedAnswer.id,
@@ -126,15 +122,14 @@ const Result = (props) => {
                 contend: false,
               };
             }
-  
+
             return null;
           });
           // Filter out any null values (items not found in rankedAnswers)
           const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
-  
+
           // Update the state with the new array
           props.setRankedAnswers(filteredRankedAnswers);
-  
         }
       }
     },
@@ -150,18 +145,13 @@ const Result = (props) => {
         questForeignKey: props.id,
         uuid: localStorage.getItem("uId"),
       };
-      return await getStartQuestPercent(params);
+      if (props.whichTypeQuestion === "ranked choise") {
+        return await getRankedQuestPercent(params);
+      } else {
+        return await getStartQuestPercent(params);
+      }
     },
     queryKey: ["ResultsData"],
-  });
-  const { data: rankedResultsData } = useQuery({
-    queryFn: async () => {
-      const params = {
-        questForeignKey: props.id
-      };
-      return await getRankedQuestPercent(params);
-    },
-    queryKey: ["rankedResultsData"],
   });
 
   function findLabelChecked(array, labelToFind) {
@@ -184,6 +174,7 @@ const Result = (props) => {
 
   return (
     <div className="mt-[26px] flex flex-col gap-[10px]">
+      {console.log(props.title)}
       {props.title === "Yes/No" || props.title === "Agree/Disagree" ? (
         <>
           {props.title === "Yes/No" ? (
@@ -235,7 +226,7 @@ const Result = (props) => {
             </>
           ) : null}
         </>
-      ): props.title === "multiple choise" ? (
+      ) : props.title === "Multiple Choice" ? (
         props.answers?.map((item, index) => (
           <SingleAnswerMultipleChoice
             number={"#" + (index + 1)}
@@ -245,32 +236,33 @@ const Result = (props) => {
             percentages={ResultsData?.data[ResultsData?.data.length - 1]}
             check={findLabelChecked(props.answersSelection, item.question)}
             contend={findLabelContend(props.answersSelection, item.question)}
-            handleMultipleChoiceCC={props.handleMultipleChoiceCC}
             btnText={"Results"}
           />
         ))
-      ):(
+      ) : props.title === "Ranked Choice" ? (
         props.rankedAnswers?.map((item, index) => (
-            <SingleAnswerRankedChoice
-              number={"#" + (index + 1)}
-              answer={item.label}
-              answersSelection={props.answersSelection}
-              setAnswerSelection={props.setAnswerSelection}
-              title={props.title}
-              handleMultipleChoiceCC={props.handleMultipleChoiceCC}
-              percentages={rankedResultsData?.data[rankedResultsData?.data.length - 1]}
-              checkInfo={false}
-              setAddOptionLimit={props.setAddOptionLimit}
-              btnText={"Results"}
-            />
-        )))}
+          <RankedResult
+            number={"#" + (index + 1)}
+            answer={item.label}
+            answersSelection={props.answersSelection}
+            setAnswerSelection={props.setAnswerSelection}
+            title={props.title}
+            percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+            checkInfo={false}
+            setAddOptionLimit={props.setAddOptionLimit}
+            btnText={"Results"}
+          />
+        ))
+      ) : (
+        <></>
+      )}
       <div className="my-8 flex w-full justify-center">
         <button
           className={`${
             persistedTheme === "dark"
               ? "bg-[#333B46]"
               : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-          } inset-0 mr-[30px] w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]`}
+          } inset-0 mr-[30px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
           onClick={() => handleSubmit()}
         >
           Finish

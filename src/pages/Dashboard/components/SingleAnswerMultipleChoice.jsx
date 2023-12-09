@@ -47,8 +47,8 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   return (
-    <div className="mx-[72px] flex items-center gap-[25px] 2xl:mx-[85px]">
-      <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
+    <div className="ml-[30px] mr-[36px] flex items-center gap-[25px] tablet:mx-[72px] 2xl:mx-[85px]">
+      <div className="flex w-full justify-between rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
         <div className="flex w-full items-center">
           {!props.checkInfo && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
@@ -63,21 +63,21 @@ const SingleAnswerMultipleChoice = (props) => {
             </div>
           )}
           <div className="mr-6 flex w-full justify-between">
-            <h1 className="ml-8 pb-[10px] pt-3 text-[19px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] ">
+            <h1 className="ml-8 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pb-[10px] tablet:pt-3 tablet:text-[19px] ">
               {props.answer}
             </h1>
-            <div className="flex gap-[19px]">
+            <div className="flex items-center gap-[19px]">
               {props.editable ? (
                 <img
                   src="/assets/svgs/dashboard/edit.svg"
-                  className="cursor-pointer"
+                  className="h-[12px] cursor-pointer tablet:h-auto"
                   onClick={handleEditOpen}
                 />
               ) : null}
               {props.deleteable ? (
                 <img
                   src="/assets/svgs/dashboard/trash.svg"
-                  className="cursor-pointer"
+                  className="h-[12px] cursor-pointer tablet:h-auto"
                   onClick={handleDeleteOpen}
                 />
               ) : null}
@@ -117,13 +117,13 @@ const SingleAnswerMultipleChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="mr-[20.63px] flex items-center gap-[19px] ">
+          <div className="mr-[20.63px] flex items-center gap-[19px] text-[9.238px] tablet:text-[16px] ">
             {props.title === "Multiple Choice" ? (
-              <div id="custom-checkbox" className="-mb-[7px] ">
+              <div id="custom-checkbox" className="tablet:-mb-[7px] ">
                 <input
                   id="small-checkbox"
                   type="checkbox"
-                  className="checkbox rounded-[2px]"
+                  className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
                   checked={checkState}
                   onChange={handleCheckChange}
                 />
@@ -132,24 +132,48 @@ const SingleAnswerMultipleChoice = (props) => {
 
             {props.btnText === "Results" ? (
               <>
-                {console.log(
-                  props.percentages?.selectedPercentage[props.answer],
+                {props.percentages?.selectedPercentage &&
+                props.percentages?.selectedPercentage[props.answer.trim()] ? (
+                  props.percentages?.selectedPercentage[props.answer.trim()] ===
+                  100 ? (
+                    <span
+                      className={`w-[4ch] whitespace-nowrap ${
+                        persistedTheme === "dark" ? "text-white" : ""
+                      }`}
+                    >
+                      100%
+                    </span>
+                  ) : (
+                    <span
+                      className={`w-[4ch] whitespace-nowrap ${
+                        persistedTheme === "dark" ? "text-white" : ""
+                      }`}
+                    >
+                      {props.percentages?.selectedPercentage[
+                        props.answer.trim()
+                      ] + "%"}
+                    </span>
+                  )
+                ) : (
+                  <span
+                    className={`w-[4ch] whitespace-nowrap ${
+                      persistedTheme === "dark" ? "text-white" : ""
+                    }`}
+                  >
+                    0%
+                  </span>
                 )}
-                {props.percentages?.selectedPercentage[props.answer.trim()]
-                  ? props.percentages?.selectedPercentage[props.answer.trim()] +
-                    "%"
-                  : "0%"}
               </>
             ) : (
               <></>
             )}
 
             <>
-              <div id="custom-yello-checkbox" className="-mb-[7px] ">
+              <div id="custom-yello-checkbox" className="tablet:-mb-[7px]">
                 <input
                   id="small-yello-checkbox"
                   type="checkbox"
-                  className="checkbox rounded-[2px]"
+                  className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
                   checked={contendState}
                   onChange={handleContendChange}
                 />
@@ -157,11 +181,40 @@ const SingleAnswerMultipleChoice = (props) => {
 
               {props.btnText === "Results" ? (
                 <>
-                  {props.percentages?.contendedPercentage[props.answer.trim()]
-                    ? props.percentages?.contendedPercentage[
-                        props.answer.trim()
-                      ] + "%"
-                    : "0%"}
+                  {props.percentages?.contendedPercentage &&
+                  props.percentages?.contendedPercentage[
+                    props.answer.trim()
+                  ] ? (
+                    props.percentages?.contendedPercentage[
+                      props.answer.trim()
+                    ] === 100 ? (
+                      <span
+                        className={`w-[4ch] whitespace-nowrap ${
+                          persistedTheme === "dark" ? "text-white" : ""
+                        }`}
+                      >
+                        100%
+                      </span>
+                    ) : (
+                      <span
+                        className={`w-[4ch] whitespace-nowrap ${
+                          persistedTheme === "dark" ? "text-white" : ""
+                        }`}
+                      >
+                        {props.percentages?.contendedPercentage[
+                          props.answer.trim()
+                        ] + "%"}
+                      </span>
+                    )
+                  ) : (
+                    <span
+                      className={`w-[4ch] whitespace-nowrap ${
+                        persistedTheme === "dark" ? "text-white" : ""
+                      }`}
+                    >
+                      0%
+                    </span>
+                  )}
                 </>
               ) : (
                 <></>

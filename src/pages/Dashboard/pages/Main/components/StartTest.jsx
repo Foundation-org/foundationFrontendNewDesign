@@ -13,7 +13,6 @@ const StartTest = ({
   SingleAnswer,
   quests,
   handleToggleCheck,
-  handleMultipleChoiceCC,
   whichTypeQuestion,
   handleSubmit,
   handleOpen,
@@ -23,23 +22,32 @@ const StartTest = ({
   usersAddTheirAns,
   setAnswerSelection,
   answersSelection,
-  isCorrect,
-  correctCount,
   multipleOption,
   rankedAnswers,
   setRankedAnswers,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
-  
+  const [temp, setTemp] = useState("");
 
   useEffect(() => {
+    const updatedAnswersSelection = answers.map((questAnswer) => ({
+      label: questAnswer.question,
+      check: false,
+      contend: false,
+    }));
+    
+    setAnswerSelection(updatedAnswersSelection);
     setRankedAnswers(
-      answersSelection.map((item, index) => ({
+      updatedAnswersSelection.map((item, index) => ({
         id: `unique-${index}`,
         ...item,
       })),
     );
+  }, [answers]);
+
+  useEffect(() => {
+    // Trigger a re-render when answersSelection is updated
   }, [answersSelection]);
 
   const handleCheckChange = (index, check) => {
@@ -92,9 +100,36 @@ const StartTest = ({
     setRankedAnswers(sortedItems.items);
   };
 
+  // to add new option
+  const handleInputChange = (e) => {
+    setTemp(e.target.value);
+  };
+
+  const handleAddOption = () => {
+    if (temp.trim() === "") {
+      toast.error("Option cannot be empty");
+      return;
+    }
+
+    const newOption = {
+      label: temp.trim(),
+      check: true,
+      contend: false,
+      addedOptionByUser: true,
+      edit: true,
+      delete: true,
+    };
+
+    setAnswerSelection([...answersSelection, newOption]);
+
+    setTemp("");
+    setAddOptionLimit(1);
+    handleClose();
+  };
+
   return (
     <>
-      <div className="mt-[26px] flex flex-col gap-[10px]">
+      <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
         {title === "Yes/No" || title === "Agree/Disagree" ? (
           <>
             {title === "Yes/No" ? (
@@ -150,10 +185,7 @@ const StartTest = ({
               setAddOptionLimit={setAddOptionLimit}
               answersSelection={answersSelection}
               setAnswerSelection={setAnswerSelection}
-              isCorrect={isCorrect}
-              correctCount={correctCount}
               checkInfo={true}
-              handleMultipleChoiceCC={handleMultipleChoiceCC}
               check={findLabelChecked(answersSelection, item.label)}
               contend={findLabelContend(answersSelection, item.label)}
               whichTypeQuestion={whichTypeQuestion}
@@ -176,7 +208,10 @@ const StartTest = ({
             onSortEnd={handleOnSortEnd}
           >
             {({ items }) => (
-              <div id="dragIcon2" className="flex flex-col gap-[11px]">
+              <div
+                id="dragIcon2"
+                className="flex flex-col gap-[5.7px] tablet:gap-[11px]"
+              >
                 {items.map((item, index) => (
                   <SortableItem
                     key={item.id}
@@ -191,7 +226,6 @@ const StartTest = ({
                       answersSelection={answersSelection}
                       setAnswerSelection={setAnswerSelection}
                       title={title}
-                      handleMultipleChoiceCC={handleMultipleChoiceCC}
                       checkInfo={false}
                       check={findLabelChecked(answersSelection, item.label)}
                       handleCheckChange={(check) =>
@@ -206,70 +240,118 @@ const StartTest = ({
           </SortableList>
         )}
 
+        <div>
+          {open ? (
+            <div
+              className={`${title === "Multiple Choice"
+                  ? "mx-auto w-[80%] tablet:ml-[72px] tablet:w-[86%]"
+                  : "ml-[34px] w-[80%] tablet:ml-[49px]"
+                }   xl:w-[90%]`}
+            >
+              <div className="rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
+                {title !== "Multiple Choice" ? (
+                  <div className="flex items-center">
+                    <div className="h-full w-fit rounded-l-[4.7px] bg-[#DEE6F7] px-[3px] py-[6.15px] dark:bg-[#9E9E9E] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px]">
+                      {persistedTheme === "dark" ? (
+                        <img
+                          src="/assets/svgs/dashboard/six-dots-dark.svg"
+                          alt="six dots"
+                          className="h-[8.5px] w-[5.2px] tablet:h-auto tablet:w-auto"
+                        />
+                      ) : (
+                        <img
+                          src="/assets/svgs/dashboard/six-dots.svg"
+                          alt="six dots"
+                          className="h-[8.5px] w-[5.2px] tablet:h-auto tablet:w-auto"
+                        />
+                      )}
+                    </div>
+                    <input
+                      value={temp}
+                      onChange={handleInputChange}
+                      type="text"
+                      className="mx-4 w-full bg-white text-[8.52px] font-normal leading-normal text-[#435059] focus:outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:ml-8 tablet:text-[19px]"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex items-center">
+                    <input
+                      value={temp}
+                      onChange={handleInputChange}
+                      type="text"
+                      className="ml-8 w-full rounded-[4.7px] bg-white py-[5.6px] pr-[7px] text-[8.52px] font-normal leading-normal text-[#435059] focus:outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10px] tablet:py-3 tablet:text-[19px]"
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="mt-4 flex justify-end gap-2 tablet:gap-4">
+                <button
+                  className={` ${persistedTheme === "dark"
+                      ? "bg-[#333B46]"
+                      : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                    } inset-0 w-fit rounded-[4.47px] px-5 py-1 text-[8.52px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:rounded-[10px] tablet:py-2 tablet:text-[20px]`}
+                  onClick={handleAddOption}
+                >
+                  Add
+                </button>
+                <button className="rounded-[4.47px] bg-[#FF0000] px-4 py-1 text-[8.52px] font-semibold text-white tablet:rounded-[10px] tablet:py-2 tablet:text-[20px]">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </div>
+
         {usersAddTheirAns && addOptionLimit === 0 ? (
           <div>
             {title === "Yes/No" ||
-            title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
-              <button
-                onClick={handleOpen}
-                className="ml-[135px] mt-3 flex w-fit items-center gap-[11.37px] rounded-[10px] bg-[#D9D9D9] px-[21px] py-[10px] text-[18px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC]"
-              >
-                {persistedTheme === "dark" ? (
-                  <img
-                    src="/assets/svgs/dashboard/add-dark.svg"
-                    alt="add"
-                    className="h-[15.6px] w-[15.6px]"
-                  />
-                ) : (
-                  <img
-                    src="/assets/svgs/dashboard/add.svg"
-                    alt="add"
-                    className="h-[15.6px] w-[15.6px]"
-                  />
-                )}
-                Add Option
-              </button>
-            ) : null}
+              title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
+                !open ? (
+                  <button
+                    onClick={handleOpen}
+                    className="ml-[55.38px] mt-[11.29px] flex w-fit items-center gap-[5.8px] rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-[135px] tablet:mt-3 tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px]"
+                  >
+                    {persistedTheme === "dark" ? (
+                      <img
+                        src="/assets/svgs/dashboard/add-dark.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    ) : (
+                      <img
+                        src="/assets/svgs/dashboard/add.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    )}
+                    Add Option
+                  </button>
+                ) : null
+              ) : null}
           </div>
         ) : null}
-        <BasicModal open={open} handleClose={handleClose}>
+        {/* <BasicModal open={open} handleClose={handleClose}>
           <AddNewOption
             setAnswerSelection={setAnswerSelection}
             answersSelection={answersSelection}
             handleClose={handleClose}
             setAddOptionLimit={setAddOptionLimit}
           />
-        </BasicModal>
+        </BasicModal> */}
       </div>
       <div className="mt-8 flex w-full justify-end">
         <div>
           <button
-            className={` ${
-              persistedTheme === "dark"
+            className={` ${persistedTheme === "dark"
                 ? "bg-[#333B46]"
                 : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            } inset-0 mr-[30px]  w-[173px] rounded-[15px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]`}
+              } inset-0 mr-[14px] w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
             onClick={() => handleSubmit()}
           >
             Submit
           </button>
-          <div className="mb-[23px] mr-[22px] mt-[38px] flex justify-end gap-2">
-            {persistedTheme === "dark" ? (
-              <img
-                src="/assets/svgs/dashboard/zoom-dark.svg"
-                alt="zoom"
-                className="h-[22px] w-[22px]"
-              />
-            ) : (
-              <img
-                src="/assets/svgs/dashboard/zoom.svg"
-                alt="zoom"
-                className="h-[22px] w-[22px]"
-              />
-            )}
-            <h4 className="text-[16px] font-medium leading-normal text-[#438BBF] dark:text-[#B6B6B6]">
-              Full Screen
-            </h4>
+          <div className="mb-[23px] mr-[22px] mt-[17.5px] flex justify-end gap-2 tablet:mt-[38px]">
+       
           </div>
         </div>
       </div>

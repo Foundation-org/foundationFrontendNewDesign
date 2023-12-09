@@ -19,20 +19,20 @@ const DragHandler = (props) => {
   return (
     <div
       {...props}
-      className="z-10 ml-14 flex h-[74px] w-[38px] items-center justify-center rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]"
+      className="z-10 ml-[21px] flex h-[22.16px] w-[13.4px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[5.2px] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-14 tablet:h-[46.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[74px] xl:w-[38px]"
     >
       <div title="drag handler" className="flex items-center">
         {persistedTheme === "dark" ? (
           <img
             src="/assets/svgs/dashboard/six-dots-dark.svg"
             alt="six dots"
-            className="h-7"
+            className="h-[8.8px] tablet:h-7"
           />
         ) : (
           <img
             src="/assets/svgs/dashboard/six-dots.svg"
             alt="six dots"
-            className="h-7"
+            className="h-[8.8px] tablet:h-7"
           />
         )}
       </div>
@@ -201,11 +201,11 @@ const RankChoice = () => {
   return (
     <div>
       <Title />
-      <div className="mx-auto my-10 max-w-[979px] rounded-[26px] bg-[#F3F3F3] py-[42px]">
-        <h1 className="text-center text-[32px] font-semibold leading-normal text-[#7C7C7C]">
+      <div className="mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] xl:max-w-[979px] xl:py-[42px]">
+        <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] xl:text-[32px]">
           Create Quest
         </h1>
-        <h3 className="mb-[22px] ml-[104px] mt-[38px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
+        <h3 className="mb-[13.54px] ml-[32px] mt-[11.71px] text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:ml-[67px] tablet:mt-[20.38px] tablet:text-[16.58px] xl:mb-[22px] xl:ml-[104px] xl:mt-[38px] xl:text-[25px]">
           Make a statement or pose a question
         </h3>
         {/* write question */}
@@ -233,7 +233,10 @@ const RankChoice = () => {
           onSortEnd={handleOnSortEnd}
         >
           {({ items }) => (
-            <div id="dragIcon" className="mt-10 mb-8 flex flex-col gap-[30px]">
+            <div
+              id="dragIcon"
+              className="mt-[12.8px] flex flex-col gap-[9.24px] tablet:mb-8 tablet:mt-10 tablet:gap-5 xl:gap-[30px]"
+            >
               {items.map((item, index) => (
                 <SortableItem
                   key={item.id}
@@ -263,40 +266,40 @@ const RankChoice = () => {
           )}
         </SortableList>
         <button
-            className="ml-[50px] mt-5 w-fit rounded-[23.6px] bg-[#C9C9C9] px-6 py-3 text-[31px] font-semibold leading-normal text-[#7C7C7C]"
-            onClick={handleAddOption}
+          className="ml-[21.55px] mt-[16px] w-fit rounded-[7.287px] bg-[#C9C9C9] px-[7.29px] py-[3.89px] text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[50px] tablet:mt-5 tablet:rounded-[15.265px] tablet:px-[15.27px] tablet:py-[8.14px] tablet:text-[20.736px] xl:rounded-[23.6px] xl:px-6 xl:py-3 xl:text-[31px]"
+          onClick={handleAddOption}
         >
           Add Option
         </button>
-        <h3 className="mb-[32px] ml-[104px] mt-[50px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
+        <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
           Customize your Quest
         </h3>
         {/* settings */}
-        <div className="mx-auto flex max-w-[838px] flex-col gap-7 rounded-[16px] bg-[#FCFCFC] py-[35px]">
-          <h5 className="text-center text-[30px] font-medium leading-normal text-[#435059]">
+        <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[16px] bg-[#FCFCFC] py-[15px] tablet:gap-7 tablet:py-[35px] xl:max-w-[838px]">
+          <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] tablet:text-[19.35px] xl:text-[30px]">
             Settings
           </h5>
-          <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
-            <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
+          <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] xl:mx-[51px] xl:px-7 xl:py-[34px]">
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] xl:w-full xl:text-[28px]">
               Participant can add their own options.
             </h5>
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
-          <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
-            <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
+          <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] xl:mx-[51px] xl:px-7 xl:py-[34px]">
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] xl:w-full xl:text-[28px]">
               Participants can change their choice at a later time.
             </h5>
             <CustomSwitch enabled={changeState} setEnabled={() => { setChangeState(prev => !prev); setChangedOption(""); }} />
           </div>
           {changeState ? (
-            <div className="flex justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-4">
               {changeOptions?.map((item) => (
                 <button
                   key={item.id}
                   className={`${changedOption === item.value
                       ? "bg-[#389CE3]"
                       : "bg-[#7C7C7C]"
-                    } rounded-md px-4 py-2 text-[#F4F4F4]`}
+                  } rounded-md px-4 py-1 text-[8px] text-[#F4F4F4] tablet:py-2 tablet:text-[16px]`}
                   onClick={() => {
                     setChangedOption(item.value);
                   }}

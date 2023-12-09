@@ -1,20 +1,20 @@
+import { toast } from "sonner";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import { changeOptions } from "../../../../../utils/options";
 import { checkUniqueQuestion, createInfoQuest, questionValidation } from "../../../../../api/questsApi";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 import YesNoOptions from "../components/YesNoOptions";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
+import YesNoOptions from "../components/YesNoOptions";
 
 const YesNo = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [changedOption, setChangedOption] = useState("");
-  const [correctState, setCorrectState] = useState(false);
   const [changeState, setChangeState] = useState(false);
   const reset = { name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" };
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
@@ -32,14 +32,6 @@ const YesNo = () => {
     },
   });
 
-  useEffect(() => {
-    if (correctState) {
-      setChangeState(false);
-      setChangedOption("");
-    } else {
-      setSelectedOption("");
-    }
-  }, [correctState]);
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
@@ -54,12 +46,7 @@ const YesNo = () => {
       Question: question,
       whichTypeQuestion: "yes/no",
       usersChangeTheirAns: changedOption,
-      QuestionCorrect:
-        correctState === true
-          ? selectedOption === "Yes"
-            ? "yes"
-            : "no"
-          : "Not Selected",
+      QuestionCorrect: "Not Selected",
       uuid: localStorage.getItem("uId"),
     };
     // Create Quest API
@@ -79,15 +66,15 @@ const YesNo = () => {
 
   return (
     <>
-      <h4 className="mt-[47px] text-center text-[25px] font-medium leading-normal text-[#ACACAC]">
+      <h4 className="mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25.8px] tablet:text-[16.58px] xl:mt-[47px] xl:text-[25px]">
         Ask a question that allows for diverse responses and multiple answer
         options.
       </h4>
-      <div className=" mx-auto my-10 max-w-[979px] rounded-[26px] bg-[#F3F3F3] py-[42px]">
-        <h1 className="text-center text-[32px] font-semibold leading-normal text-[#7C7C7C]">
+      <div className="mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] xl:max-w-[979px] xl:py-[42px]">
+        <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] xl:text-[32px]">
           Create Quest
         </h1>
-        <h3 className="mb-[22px] ml-[104px] mt-[38px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
+        <h3 className="mb-[13.54px] ml-[32px] mt-[11.71px] text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:ml-[67px] tablet:mt-[20.38px] tablet:text-[16.58px] xl:mb-[22px] xl:ml-[104px] xl:mt-[38px] xl:text-[25px]">
           Make a statement or pose a question
         </h3>
         <div className="join w-full px-12">
@@ -108,39 +95,32 @@ const YesNo = () => {
             {checkQuestionStatus.tooltipName}
           </Tooltip>
         </div>
-        <div className="mt-10 flex flex-col gap-[30px]">
+        <div className="mt-[14.8px] flex flex-col gap-[9.24px] tablet:mt-10 tablet:gap-5 xl:gap-[30px]">
           <YesNoOptions
             number={"#1"}
             answer={"Yes"}
-            options={correctState ? true : false}
+            options={false}
             handleOptionChange={() => handleOptionChange("Yes")}
             isSelected={selectedOption === "Yes"}
           />
           <YesNoOptions
             number={"#2"}
             answer={"No"}
-            options={correctState ? true : false}
+            options={false}
             handleOptionChange={() => handleOptionChange("No")}
             isSelected={selectedOption === "No"}
           />
         </div>
-        <h3 className="mb-[32px] ml-[104px] mt-[50px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
+        <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
           Customize your Quest
         </h3>
-        <div className="mx-auto flex max-w-[838px] flex-col gap-7 rounded-[16px] bg-[#FCFCFC] py-[35px]">
-          <h5 className="text-center text-[30px] font-medium leading-normal text-[#435059]">
+        <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[16px] bg-[#FCFCFC] py-[15px] tablet:gap-7 tablet:py-[35px] xl:max-w-[838px]">
+          <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] tablet:text-[19.35px] xl:text-[30px]">
             Settings
           </h5>
-          {/* <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
-            <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
-              This Quest has a Correct Option.
-            </h5>
-            <CustomSwitch enabled={correctState} setEnabled={setCorrectState} />
-          </div> */}
-          {!correctState ? (
             <>
-              <div className="mx-[51px] flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-7 py-[34px]">
-                <h5 className="text-[28px] font-normal leading-normal text-[#7C7C7C]">
+              <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] xl:mx-[51px] xl:px-7 xl:py-[34px]">
+                <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] xl:w-full xl:text-[28px]">
                   This Quest has a Change Option.
                 </h5>
                 <CustomSwitch
@@ -149,7 +129,7 @@ const YesNo = () => {
                 />
               </div>
               {changeState ? (
-                <div className="flex justify-center gap-4">
+                <div className="flex flex-wrap justify-center gap-4">
                   {changeOptions.map((item) => (
                     <button
                       key={item.id}
@@ -157,7 +137,7 @@ const YesNo = () => {
                         changedOption === item.value
                           ? "bg-[#389CE3]"
                           : "bg-[#7C7C7C]"
-                      } rounded-md px-4 py-2 text-[#F4F4F4]`}
+                      } rounded-md px-4 py-1 text-[8px] text-[#F4F4F4] tablet:py-2 tablet:text-[16px]`}
                       onClick={() => {
                         setChangedOption(item.value);
                       }}
@@ -168,7 +148,6 @@ const YesNo = () => {
                 </div>
               ) : null}
             </>
-          ) : null}
         </div>
         <div className="flex w-full justify-end">
           <button disabled={checkQuestionStatus?.isVerifiedQuestion ? false : true} className={`blue-submit-button ${!checkQuestionStatus?.isVerifiedQuestion && "cursor-not-allowed"}`} onClick={() => handleSubmit()}>

@@ -11,8 +11,8 @@ const Quest = () => {
   const handleTab = (id) => setTab(id);
 
   return (
-    <div className="bg-white h-[calc(100vh-96px)] w-full overflow-y-auto">
-      <h1 className="text-[#616161] text-[30px] font-semibold leading-normal text-center mt-[50px] mb-[40px]">
+    <div className="h-[calc(100vh-96px)] w-full overflow-y-auto bg-white">
+      <h1 className="mb-[13.3px] mt-[15px] text-center text-[0.75rem] font-semibold leading-normal text-[#616161] tablet:mb-[19px] tablet:mt-[31px] tablet:text-[24.83px] xl:mb-[40px] xl:mt-[50px] xl:text-[1.875rem]">
         Quest Type
       </h1>
       <Navbar handleTab={handleTab} tab={tab} />

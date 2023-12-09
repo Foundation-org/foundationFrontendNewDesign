@@ -16,13 +16,13 @@ const DeleteOption = (props) => {
   };
 
   return (
-    <div className="flex min-w-[350px] flex-col items-center gap-4 rounded-[26px] bg-[#232628] p-6">
-      <h1 className="text-[22px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF]">
+    <div className="flex flex-col items-center gap-4 rounded-[4.7px] bg-[#232628] p-6 tablet:min-w-[350px] tablet:rounded-[26px]">
+      <h1 className="text-[8.72px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF] tablet:text-[22px]">
         Delete Option
       </h1>
-      <div className="flex gap-6">
+      <div className="flex gap-2 tablet:gap-6">
         <button
-          className="inset-0 w-full rounded-[10px] bg-[#d11a2a] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner"
+          className="inset-0 w-full rounded-[4.7px] bg-[#d11a2a] px-5 py-1 text-[8.52px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:rounded-[10px] tablet:py-2 tablet:text-[20px]"
           onClick={handleDeleteOption}
         >
           Yes
@@ -32,7 +32,7 @@ const DeleteOption = (props) => {
             persistedTheme === "dark"
               ? "bg-[#333B46]"
               : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-          } inset-0 w-full rounded-[10px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner`}
+          } inset-0 w-full rounded-[4.7px] px-5 py-1 text-[8.52px]  font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:rounded-[10px] tablet:py-2 tablet:text-[20px]`}
           onClick={() => {
             props.handleDeleteClose();
           }}

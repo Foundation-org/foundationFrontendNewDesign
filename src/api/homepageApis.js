@@ -31,15 +31,12 @@ export const getAllAnswered = async (params) => {
   );
 };
 
-// For Correct
-export const getAllCorrect = async (params) => {
-  return await api.post(`/infoquestions/getAllQuestsWithCorrectStatus`, params);
-};
+
 
 // For InCorrect
-export const getAllInCorrect = async (params) => {
+export const getAllCompleted = async (params) => {
   return await api.post(
-    `/infoquestions/getAllQuestsWithIncorrectStatus`,
+    `/infoquestions/getAllQuestsWithCompletedStatus`,
     params,
   );
 };

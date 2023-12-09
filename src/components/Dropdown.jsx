@@ -9,22 +9,22 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
 
   return (
     <div>
-      <p className="text-[18px] font-[500] leading-normal pb-[9px] ml-[17px]">
+      <p className="ml-[5.96px] text-[6.267px] font-[500] leading-normal tablet:ml-[17px] tablet:pb-[9px] tablet:text-[18px]">
         {label}
       </p>
       <div className="dropdown 5xl:w-full">
         <label
           tabIndex={0}
-          className="min-w-[212px] flex items-center justify-between pr-5 pl-[1.063rem] pt-[11px] pb-[9px] w-full max-w-[13.25rem] 5xl:max-w-full bg-[#F6F6F6] dark:bg-[#000] rounded-[18px] dark:border-[1px] dark:border-[#989898] text-[15px] font-[400] leading-normal text-[#787878] dark:text-[#E6E6E6] cursor-pointer h-[47px]"
+          className="flex h-[18px] w-full min-w-[73.8px] max-w-[13.25rem] cursor-pointer items-center justify-between rounded-[18px] bg-[#F6F6F6] pb-1 pl-[5.9px] pr-[8.2px] pt-[5px] text-[7.66px] font-[400] leading-normal text-[#787878] dark:border-[1px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E6E6E6] tablet:h-[36.5px] tablet:min-w-[150px] tablet:pb-[9px] tablet:pl-[1.063rem] tablet:pr-5 tablet:pt-[11px] tablet:text-[15px] xl:h-[47px] xl:min-w-[212px] 5xl:max-w-full"
           onClick={toggleDropdown}
         >
           {title}
           <img
             src="/assets/svgs/dashboard/down-arrow.svg"
             alt="down-arrow"
-            className={`w-[14px] h-[6px] ${
+            className={`h-[2px] w-[4.71px] tablet:h-[6px] tablet:w-[14px] ${
               isOpen
-                ? "transform rotate-180 transition-all duration-300"
+                ? "rotate-180 transform transition-all duration-300"
                 : "transition-all duration-300"
             }`}
           />
@@ -33,7 +33,7 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
         {isOpen && (
           <ul
             tabIndex={0}
-            className="dropdown-content z-[1] menu shadow text-white bg-[#ACACAC] rounded-box w-52 p-0"
+            className="menu dropdown-content z-[100] w-fit min-w-[5rem] rounded-[10px] bg-[#ACACAC] p-0 py-1 text-[0.5rem] leading-[2] text-white shadow tablet:rounded-box tablet:w-36 tablet:text-sm xl:w-52"
           >
             {items.map((item, index) => (
               <li
@@ -42,9 +42,9 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
                   handleSelect(item);
                   setIsOpen(!open);
                 }}
-                className="hover:bg-[#0A0A0C] text-white  "
+                className="text-white hover:bg-[#0A0A0C]  "
               >
-                <a>{item}</a>
+                <a className="px-2 py-0.5 tablet:px-4 tablet:py-2">{item}</a>
               </li>
             ))}
           </ul>

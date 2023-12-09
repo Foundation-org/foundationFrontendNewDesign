@@ -27,7 +27,7 @@ const AgreeDisagreeOptions = ({
         label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row  items-center gap-[25px]"
-      } ml-[51px] mr-[71px] `}
+      } mx-[21px] mr-[22.4px] tablet:ml-[51px] tablet:mr-[71px]`}
     >
       {label && (
         <h1 className="ml-[53px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
@@ -42,7 +42,7 @@ const AgreeDisagreeOptions = ({
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
           <div className="flex w-full items-center">
-            <div className="flex h-full w-[38px] items-center justify-center rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
+            <div className="flex h-full w-[14.7px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[7px] py-[6px] dark:bg-[#9E9E9E] tablet:w-[38px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px]">
               {dragable ? (
                 persistedTheme === "dark" ? (
                   <img
@@ -59,8 +59,8 @@ const AgreeDisagreeOptions = ({
                 )
               ) : null}
             </div>
-            <div className="flex w-full items-center justify-between pr-[45px]">
-              <h1 className="py-[18px] pl-[45px] text-[30px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] ">
+            <div className="flex h-[22.5px] w-full items-center justify-between rounded-r-[4.89px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] tablet:h-[46.4px] tablet:rounded-r-[11.284px] xl:h-[75px] xl:rounded-r-2xl ">
+              <h1 className=" w-full pl-[15.44px] text-[10px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pl-[45px] tablet:text-[20.7px] xl:text-[30px] ">
                 {answer}
               </h1>
               <div className="flex gap-[55px]">

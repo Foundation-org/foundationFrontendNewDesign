@@ -131,7 +131,7 @@ export default function Signup() {
                 />
               </label>
             </div>
-            <label className="ml-4 text-[10.2px] text-gray-100 dark:text-white sm:text-base 5xl:text-[22px]">
+            <label className="tablet:text-base ml-4 text-[10.2px] text-gray-100 dark:text-white 5xl:text-[22px]">
               Creating an account means you’re okay with our{" "}
               <Anchor href="#">Terms of Service</Anchor>,{" "}
               <Anchor href="#">Privacy Policy</Anchor>, and out default{" "}
