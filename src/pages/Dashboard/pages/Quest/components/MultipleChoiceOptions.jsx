@@ -31,7 +31,7 @@ const MultipleChoiceOptions = ({
       className={`${
         label
           ? "flex flex-col gap-[13px]"
-          : "flex flex-row  items-center gap-[25px]"
+          : "flex flex-row items-center gap-[25px]"
       } ml-[21px] mr-[22.4px] tablet:ml-[51px] tablet:mr-[71px]`}
     >
       {!allowInput ? (
@@ -117,35 +117,33 @@ const MultipleChoiceOptions = ({
                 value={typedValue}
               />
               {/* <div className="relative"> */}
-              {
-                  title === "MultipleChoice" && trash && (
-                    <button
-                      id={`test${number}`}
-                      // data-tooltip-offset={-25}
-                      className={`border-y-[1px] border-[#ACACAC]  bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] xl:text-[1.875rem] ${optionStatus?.color} py-[0.29rem]`}
-                      // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus?.color}`}
-                    >
-                      <div className="pr-[1.25rem] tablet:pr-[2.4rem]">
-                        <>
-                          {optionsCount > 2 && (
-                            <div
-                              onClick={() => {
-                                removeOption(number);
-                              }}
-                            >
-                              <img
-                                src="/assets/svgs/dashboard/trash2.svg"
-                                alt="trash"
-                                className="min-w-[.6rem] cursor-pointer tablet:min-w-[1.5rem]"
-                              />
-                            </div>
-                          )}
-                        </>
-                      </div>
-                    </button>
-                  ) 
-              }
-              
+              {title === "MultipleChoice" && trash && (
+                <button
+                  id={`test${number}`}
+                  // data-tooltip-offset={-25}
+                  className={`border-y-[1px] border-[#ACACAC]  bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] xl:text-[1.875rem] ${optionStatus?.color} py-[0.29rem]`}
+                  // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus?.color}`}
+                >
+                  <div className="pr-[1.25rem] tablet:pr-[2.4rem]">
+                    <>
+                      {optionsCount > 2 && (
+                        <div
+                          onClick={() => {
+                            removeOption(number);
+                          }}
+                        >
+                          <img
+                            src="/assets/svgs/dashboard/trash2.svg"
+                            alt="trash"
+                            className="min-w-[.6rem] cursor-pointer tablet:min-w-[1.5rem]"
+                          />
+                        </div>
+                      )}
+                    </>
+                  </div>
+                </button>
+              )}
+
               <button
                 id={`test${number}`}
                 // data-tooltip-offset={-25}

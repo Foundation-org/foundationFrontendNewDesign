@@ -25,10 +25,11 @@ const Options = ({
 
   return (
     <div
-      className={`${label
-        ? "flex flex-col gap-[13px]"
-        : "flex flex-row items-center gap-[25px]"
-        } absolute -top-6 left-[21px] w-[95%] tablet:left-[57px] tablet:top-[-90px] tablet:w-[88%] xl:top-[-75px] xl:w-[87%]`}
+      className={`${
+        label
+          ? "flex flex-col gap-[13px]"
+          : "flex flex-row items-center gap-[25px]"
+      }  w-[95%] tablet:w-[88%] xl:w-[87%]`}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
@@ -102,9 +103,9 @@ const Options = ({
               onBlur={(e) => e.target.value.trim() !== "" && answerVerification(e.target.value.trim())}
               value={typedValue}
             /> */}
-            <div className="w-[calc(100%-51.75px] mr-[26px] flex tablet:ml-0 tablet:mr-0 tablet:w-full">
+            <div className="w-[calc(100%-51.55px] mr-[22.4px] flex tablet:ml-0 tablet:mr-0 tablet:w-full">
               <input
-                className="w-full rounded-l-[0.33rem] bg-white py-[0.35rem] pl-6 pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
+                className="w-full border-y-[1px] border-[#ACACAC] bg-white py-[0.35rem] pl-6 pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] xl:py-[18px] xl:text-[1.875rem]"
                 // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) =>
@@ -116,20 +117,21 @@ const Options = ({
               <button
                 id={`test${number}`}
                 // data-tooltip-offset={-25}
-                className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[1.875rem] ${optionStatus.color}`}
-              // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
+                className={`rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] xl:text-[1.875rem] ${optionStatus.color}`}
+                // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
               >
-                <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem] okayContainer">
+                <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
                   <span>{optionStatus.name}</span>
                 </div>
                 <Tooltip optionStatus={optionStatus} />
               </button>
             </div>
             <div
-              className={`${optionsCount > 2
-                ? "absolute left-[208px] tablet:left-[42rem]"
-                : "absolute left-[221px] tablet:left-[24rem] xl:left-[44rem]"
-                } -top-[22px] flex w-fit items-center tablet:-top-[46px] xl:-top-[74px]`}
+              className={`${
+                optionsCount > 2
+                  ? "absolute left-[208px] tablet:left-[42rem]"
+                  : "absolute left-[221px] tablet:left-[24rem] xl:left-[44rem]"
+              } -top-[22px] flex w-fit items-center tablet:-top-[46px] xl:-top-[74px]`}
             >
               {title === "RankChoice" && trash ? (
                 <>

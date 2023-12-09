@@ -185,44 +185,47 @@ iframe {
   justify-content: center;
 }
 
-#dragIcon div {
+#dragIcon > div {
   position: relative;
   height: 23.19px;
+  display: flex;
 }
 
 @media (min-width: 744px) {
-  #dragIcon div {
+  #dragIcon > div {
     position: relative;
     height: 72px;
+    display: flex;
   }
   .okayContainer {
     height: 47px !important;
-    margin-top: 14px;
+    /* margin-top: 14px; */
   }
 }
 
 @media (min-width: 1280px) {
-  #dragIcon div {
+  #dragIcon > div {
     position: relative;
     height: 74px;
+    display: flex;
   }
-
 }
 
-#dragIcon2 div {
+#dragIcon2 > div {
   position: relative;
   height: 21px;
 }
 
 @media (min-width: 744px) {
-  #dragIcon2 div {
+  #dragIcon2 > div {
     position: relative;
     height: 45px;
   }
 }
 
-@media (min-width: 744px) and (max-width: 1279px) {
+/* @media (min-width: 744px) and (max-width: 1279px) {
   .sixDotsRankedCOntainer {
     position: relative;
-    top:-17.5px;}
-}
+    top:-17.5px;
+  }
+} */
