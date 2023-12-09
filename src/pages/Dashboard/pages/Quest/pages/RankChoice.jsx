@@ -339,7 +339,7 @@ const RankChoice = () => {
           <button
             id="new"
             data-tooltip-offset={-25}
-            className={`relative rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-2xl tablet:text-[1.875rem] text-[${checkQuestionStatus.color}] py-[0.29rem]`}
+            className={`relative rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-2xl tablet:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
             // className={`test join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
           >
             <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">

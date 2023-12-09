@@ -1,11 +1,20 @@
+import { useEffect, useState } from "react";
+
 export const Tooltip = ({ optionStatus }) => {
+
+  const [tooltipStatus, setTooltipStatusState] = useState(optionStatus);
+
+  useEffect(() => {
+    setTooltipStatusState(optionStatus)
+  }, [optionStatus])
+
   return (
     <div>
-      {optionStatus.name === "Fail" && (
+      {tooltipStatus.name === "Fail" && (
         <div className="absolute -top-[36px] left-1/2 -translate-x-1/2 transform tablet:-top-[82px]">
           <div class="relative mx-2 flex flex-col items-end">
             <svg
-              className="h-2 w-2 "
+              className="relative top-1 right-0 translate-x-1/2 tablet:h-3.5 tablet:w-3.5 h-2 w-2 border border-black rounded-full bg-white"
               fill="#000000"
               version="1.1"
               id="Layer_1"
@@ -13,6 +22,7 @@ export const Tooltip = ({ optionStatus }) => {
               xmlns:xlink="http://www.w3.org/1999/xlink"
               viewBox="0 0 512 512"
               xml:space="preserve"
+              onClick={() => {setTooltipStatusState("")}}
             >
               <g>
                 <g>
@@ -24,7 +34,7 @@ export const Tooltip = ({ optionStatus }) => {
               </g>
             </svg>
             <div class="bottom-full right-0 w-[7.3rem] rounded border-[0.533px] bg-[#FEDEDE] px-[0.35rem] py-[0.2rem] text-[0.3rem] font-normal text-[#F34141] dark:bg-[#3C1A20] dark:text-[#DB6262] tablet:w-[28rem] tablet:text-[1.25rem]">
-              {optionStatus.tooltipName}
+              {tooltipStatus.tooltipName}
               <svg
                 class="absolute left-0 top-full h-2 w-full text-[#FEDEDE] dark:text-[#3C1A20]"
                 x="0px"

@@ -117,7 +117,7 @@ const Options = ({
               <button
                 id={`test${number}`}
                 // data-tooltip-offset={-25}
-                className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[1.875rem] text-[${optionStatus.color}] py-[0.29rem]`}
+                className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[1.875rem] ${optionStatus.color} py-[0.29rem]`}
                 // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
               >
                 <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
