@@ -26,7 +26,7 @@ const DragHandler = (props) => {
   return (
     <div
       {...props}
-      className="z-10 mb-[0.5px] ml-[21px] flex h-[23.19px] w-[13.4px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[5.2px] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-14 tablet:h-[46.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[72px] xl:w-[38px]"
+      className="z-10 mb-[0.5px] ml-[21px] flex h-[23.19px] w-[13.4px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[5.2px] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-[54px] tablet:h-[46.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[72px] xl:w-[38px]"
     >
       <div title="drag handler" className="flex items-center">
         {persistedTheme === "dark" ? (
@@ -317,9 +317,9 @@ const RankChoice = () => {
         </h3>
         {/* write question */}
         {/* <div className="join w-full px-12"> */}
-        <div className="w-[calc(100%-51.75px] mx-[21px] flex">
+        <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[73px]">
           <input
-            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
+            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:rounded-l-2xl tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
             // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
             onChange={(e) => {
               setQuestion(e.target.value);
@@ -339,7 +339,7 @@ const RankChoice = () => {
           <button
             id="new"
             data-tooltip-offset={-25}
-            className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[1.875rem] text-[${checkQuestionStatus.color}] py-[0.29rem]`}
+            className={`relative rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-2xl tablet:text-[1.875rem] text-[${checkQuestionStatus.color}] py-[0.29rem]`}
             // className={`test join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
           >
             <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">

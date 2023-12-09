@@ -103,9 +103,9 @@ const Options = ({
               onBlur={(e) => e.target.value.trim() !== "" && answerVerification(e.target.value.trim())}
               value={typedValue}
             /> */}
-            <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[73px]">
+            <div className="w-[calc(100%-51.75px] mr-[26px] flex tablet:ml-0 tablet:mr-0 tablet:w-full">
               <input
-                className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
+                className="w-full rounded-l-[0.33rem] bg-white py-[0.35rem] pl-6 pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
                 // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) =>

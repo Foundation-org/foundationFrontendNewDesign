@@ -2,7 +2,7 @@ export const Tooltip = ({ optionStatus }) => {
   return (
     <div>
       {optionStatus.name === "Fail" && (
-        <div className="absolute -top-[36px] left-1/2 -translate-x-1/2 transform">
+        <div className="absolute -top-[36px] left-1/2 -translate-x-1/2 transform tablet:-top-[82px]">
           <div class="relative mx-2 flex flex-col items-end">
             <svg
               className="h-2 w-2 "
