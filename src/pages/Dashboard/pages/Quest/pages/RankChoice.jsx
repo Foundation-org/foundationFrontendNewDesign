@@ -311,8 +311,16 @@ const RankChoice = () => {
           ) : null}
         </div>
         {/* submit button */}
-        <div className="flex w-full justify-end">
+        {/* <div className="flex w-full justify-end">
           <button disabled={checkQuestionStatus?.isVerifiedQuestion && typedValues.every(item => item.optionStatus.isVerifiedAnswer === true) ? false : true} className={`blue-submit-button ${!checkQuestionStatus?.isVerifiedQuestion || !typedValues.every(item => item.optionStatus.isVerifiedAnswer === true) && "cursor-not-allowed"}`} onClick={() => handleSubmit()}>
+            Submit
+          </button>
+        </div> */}
+        <div className="flex w-full justify-end">
+          <button
+            className="mr-[28px] mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] xl:rounded-[23.6px] xl:px-[60px] xl:py-3 xl:text-[31.5px]"
+            onClick={() => handleSubmit()}
+          >
             Submit
           </button>
         </div>
