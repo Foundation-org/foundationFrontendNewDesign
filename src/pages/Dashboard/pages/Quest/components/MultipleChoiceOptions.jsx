@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import 'react-tooltip/dist/react-tooltip.css'
-import { Tooltip } from 'react-tooltip'
+import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "react-tooltip";
 
 const MultipleChoiceOptions = ({
   title,
@@ -21,7 +21,7 @@ const MultipleChoiceOptions = ({
   removeOption,
   number,
   answerVerification,
-  optionStatus
+  optionStatus,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -31,7 +31,7 @@ const MultipleChoiceOptions = ({
         label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row  items-center gap-[25px]"
-      } mx-[21px] mr-[22.4px] tablet:ml-[51px] tablet:mr-[71px]`}
+      } ml-[21px] mr-[22.4px] tablet:ml-[51px] tablet:mr-[71px]`}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
@@ -77,8 +77,8 @@ const MultipleChoiceOptions = ({
           </div>
         </div>
       ) : (
-        <div className="flex">
-          <div className="mt-[1px] flex h-[22.8px] w-[13.46px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[7px] dark:bg-[#9E9E9E] tablet:mt-0 tablet:h-[46.4px] tablet:w-[28.2px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[74px] xl:w-[40px]">
+        <div className="flex items-center">
+          <div className="flex h-[23.9px] w-[13.46px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[7px] dark:bg-[#9E9E9E] tablet:mt-0 tablet:h-[46.4px] tablet:w-[28.2px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[74px] xl:w-[40px]">
             {dragable ? (
               persistedTheme === "dark" ? (
                 <img
@@ -104,14 +104,27 @@ const MultipleChoiceOptions = ({
               onBlur={(e) => e.target.value.trim() !== "" && answerVerification(e.target.value.trim())}
               value={typedValue}
             /> */}
-            <div className="join w-full">
-              <input 
-                className="input input-bordered input-lg w-full join-item bg-white text-black text-3xl h-[4.7rem]"
+            <div className="flex w-full">
+              <input
+                className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C]"
+                // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
                 onChange={(e) => handleChange(e.target.value)}
-                onBlur={(e) => e.target.value.trim() !== "" && answerVerification(e.target.value.trim())}
+                onBlur={(e) =>
+                  e.target.value.trim() !== "" &&
+                  answerVerification(e.target.value.trim())
+                }
                 value={typedValue}
               />
-              <button id={`test${number}`} data-tooltip-offset={-25} className={`btn-lg join-item bg-white text-3xl font-semibold h-[4.7rem] ${optionStatus.color}`}>{optionStatus.name}</button>
+              <button
+                id={`test${number}`}
+                data-tooltip-offset={-25}
+                className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] text-[${optionStatus.color}]  py-[0.29rem]`}
+                // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
+              >
+                <div className="border-l-[0.7px] px-[1.25rem]">
+                  {optionStatus.name}
+                </div>
+              </button>
             </div>
             <div className="absolute right-0 top-1/2 flex -translate-y-1/2 transform items-center">
               {options && (
@@ -173,21 +186,32 @@ const MultipleChoiceOptions = ({
                 </div>
               )} */}
 
-          {/* <div className={`tooltip ${optionStatus.tooltipStyle}`} data-tip={optionStatus.tooltipName}>
+              {/* <div className={`tooltip ${optionStatus.tooltipStyle}`} data-tip={optionStatus.tooltipName}>
             <h1 className={`leading-0 border-none cursor-pointer px-6 text-[30px] font-semibold ${optionStatus.color}`}>
               {optionStatus.name}
             </h1>
           </div> */}
-        </div>
-          <Tooltip anchorSelect={`#test${number}`} isOpen={optionStatus.name === "Fail" && true} border="1px solid red" style={{ backgroundColor: "#fbdfe4", color: "#222", border: "red", width: 'auto', marginRight: "3rem" }} place="top">
-            {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
+            </div>
+            <Tooltip
+              anchorSelect={`#test${number}`}
+              isOpen={optionStatus.name === "Fail" && true}
+              border="1px solid red"
+              style={{
+                backgroundColor: "#fbdfe4",
+                color: "#222",
+                border: "red",
+                width: "auto",
+                marginRight: "3rem",
+              }}
+              place="top"
+            >
+              {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
               <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </span>  */}
-            {optionStatus.tooltipName}
-          </Tooltip>
-          
+              {optionStatus.tooltipName}
+            </Tooltip>
           </div>
         </div>
       )}

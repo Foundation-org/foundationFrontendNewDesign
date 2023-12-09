@@ -6,20 +6,26 @@ import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import Title from "../components/Title";
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { Tooltip } from "react-tooltip";
 import { useMutation } from "@tanstack/react-query";
-import { answerValidation, checkAnswerExist, checkUniqueQuestion, createInfoQuest, questionValidation } from "../../../../../api/questsApi";
+import {
+  answerValidation,
+  checkAnswerExist,
+  checkUniqueQuestion,
+  createInfoQuest,
+  questionValidation,
+} from "../../../../../api/questsApi";
 import { toast } from "sonner";
 import { SortableItem, SortableList } from "@thaddeusjiang/react-sortable-list";
 import { useSelector } from "react-redux";
-import 'react-tooltip/dist/react-tooltip.css'
-import { Tooltip } from 'react-tooltip'
+import "react-tooltip/dist/react-tooltip.css";
 
 const DragHandler = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   return (
     <div
       {...props}
-      className="z-10 ml-[21px] flex h-[22.16px] w-[13.4px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[5.2px] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-14 tablet:h-[46.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[74px] xl:w-[38px]"
+      className="z-10 mb-[0.5px] ml-[21px] flex h-[23.19px] w-[13.4px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[5.2px] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-14 tablet:h-[46.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[74px] xl:w-[38px]"
     >
       <div title="drag handler" className="flex items-center">
         {persistedTheme === "dark" ? (
@@ -52,13 +58,27 @@ const RankChoice = () => {
       id: `index-${index}`,
       question: "",
       selected: false,
-      optionStatus: { name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" }
+      optionStatus: {
+        name: "Ok",
+        color: "text-[#389CE3]",
+        tooltipName: "Please write something...",
+        tooltipStyle: "tooltip-info",
+      },
     })),
   );
-  const reset = { name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" };
+  const reset = {
+    name: "Ok",
+    color: "text-[#389CE3]",
+    tooltipName: "Please write something...",
+    tooltipStyle: "tooltip-info",
+  };
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
- const [checkOptionStatus, setCheckOptionStatus] = useState({ name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" });
-
+  const [checkOptionStatus, setCheckOptionStatus] = useState({
+    name: "Ok",
+    color: "text-[#389CE3]",
+    tooltipName: "Please write something...",
+    tooltipStyle: "tooltip-info",
+  });
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -74,11 +94,13 @@ const RankChoice = () => {
     },
   });
 
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     // To check uniqueness of the question
-    const constraintResponse = await checkUniqueQuestion(question)
-    if(!constraintResponse.data.isUnique) return toast.warning("This quest is not unique. A similar quest already exists.");
-
+    const constraintResponse = await checkUniqueQuestion(question);
+    if (!constraintResponse.data.isUnique)
+      return toast.warning(
+        "This quest is not unique. A similar quest already exists.",
+      );
 
     const params = {
       Question: question,
@@ -95,58 +117,142 @@ const RankChoice = () => {
     createQuest(params);
   };
 
-
-  const questionVerification = async(value) => {
-    setCheckQuestionStatus({name: "Checking", color: "text-[#0FB063]", tooltipName: "Verifying your question. Please wait...", tooltipStyle: "tooltip-success" })
+  const questionVerification = async (value) => {
+    setCheckQuestionStatus({
+      name: "Checking",
+      color: "text-[#0FB063]",
+      tooltipName: "Verifying your question. Please wait...",
+      tooltipStyle: "tooltip-success",
+    });
     // Question Validation
-    const { validatedQuestion, errorMessage } = await questionValidation({ question: value, queryType: 'rank choice' })
+    const { validatedQuestion, errorMessage } = await questionValidation({
+      question: value,
+      queryType: "rank choice",
+    });
     // If any error captured
-    if (errorMessage) { return setCheckQuestionStatus({name: "Fail", color: "text-[#b00f0f]", tooltipName: "Please review your text for proper grammar while keeping our code of conduct in mind.", tooltipStyle: "tooltip-error" })};
+    if (errorMessage) {
+      return setCheckQuestionStatus({
+        name: "Fail",
+        color: "text-[#b00f0f]",
+        tooltipName:
+          "Please review your text for proper grammar while keeping our code of conduct in mind.",
+        tooltipStyle: "tooltip-error",
+      });
+    }
     // Question is validated and status is Ok
-    setQuestion(validatedQuestion)
-    setCheckQuestionStatus({name: "Ok", color: "text-[#0FB063]", tooltipName: "Question is Verified", tooltipStyle: "tooltip-success", isVerifiedQuestion: true})
-  }
+    setQuestion(validatedQuestion);
+    setCheckQuestionStatus({
+      name: "Ok",
+      color: "text-[#0FB063]",
+      tooltipName: "Question is Verified",
+      tooltipStyle: "tooltip-success",
+      isVerifiedQuestion: true,
+    });
+  };
 
-  const answerVerification = async(index, value) => {
+  const answerVerification = async (index, value) => {
     const newTypedValues = [...typedValues];
-    newTypedValues[index] = { ...newTypedValues[index], optionStatus: {name: "Checking", color: "text-[#0FB063]", tooltipName: "Verifying your answer. Please wait...", tooltipStyle: "tooltip-success" } };
+    newTypedValues[index] = {
+      ...newTypedValues[index],
+      optionStatus: {
+        name: "Checking",
+        color: "text-[#0FB063]",
+        tooltipName: "Verifying your answer. Please wait...",
+        tooltipStyle: "tooltip-success",
+      },
+    };
     setTypedValues(newTypedValues);
     // Answer Validation
-    const { validatedAnswer, errorMessage } = await answerValidation({ answer: value})
+    const { validatedAnswer, errorMessage } = await answerValidation({
+      answer: value,
+    });
     // If any error captured
     if (errorMessage) {
       const newTypedValues = [...typedValues];
-      newTypedValues[index] = { ...newTypedValues[index], optionStatus: {name: "Fail", color: "text-[#b00f0f]", tooltipName: "Please review your text for proper grammar while keeping our code of conduct in mind.", tooltipStyle: "tooltip-error" }};
+      newTypedValues[index] = {
+        ...newTypedValues[index],
+        optionStatus: {
+          name: "Fail",
+          color: "text-[#b00f0f]",
+          tooltipName:
+            "Please review your text for proper grammar while keeping our code of conduct in mind.",
+          tooltipStyle: "tooltip-error",
+        },
+      };
       return setTypedValues(newTypedValues);
     }
     // Answer is validated and status is Ok
-    if(validatedAnswer) {
+    if (validatedAnswer) {
       const newTypedValues = [...typedValues];
-      newTypedValues[index] = { ...newTypedValues[index], question: validatedAnswer, optionStatus: {name: "Ok", color: "text-[#0FB063]", tooltipName: "Answer is Verified", tooltipStyle: "tooltip-success", isVerifiedAnswer: true} };
+      newTypedValues[index] = {
+        ...newTypedValues[index],
+        question: validatedAnswer,
+        optionStatus: {
+          name: "Ok",
+          color: "text-[#0FB063]",
+          tooltipName: "Answer is Verified",
+          tooltipStyle: "tooltip-success",
+          isVerifiedAnswer: true,
+        },
+      };
       setTypedValues(newTypedValues);
     }
 
     // Check Answer is unique
-    let answerExist = checkAnswerExist({ answersArray: typedValues, answer: validatedAnswer, index })
+    let answerExist = checkAnswerExist({
+      answersArray: typedValues,
+      answer: validatedAnswer,
+      index,
+    });
     if (answerExist) {
       const newTypedValues = [...typedValues];
-      newTypedValues[index] = { ...newTypedValues[index], question: "", optionStatus: {name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info"} };
+      newTypedValues[index] = {
+        ...newTypedValues[index],
+        question: "",
+        optionStatus: {
+          name: "Ok",
+          color: "text-[#389CE3]",
+          tooltipName: "Please write something...",
+          tooltipStyle: "tooltip-info",
+        },
+      };
       return setTypedValues(newTypedValues);
     }
-
   };
 
   const handleAddOption = () => {
     setOptionsCount((prevCount) => prevCount + 1);
     setTypedValues((prevValues) => [
       ...prevValues,
-      { id: `index-${optionsCount}`, question: "", selected: false, optionStatus: {name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info"} },
+      {
+        id: `index-${optionsCount}`,
+        question: "",
+        selected: false,
+        optionStatus: {
+          name: "Ok",
+          color: "text-[#389CE3]",
+          tooltipName: "Please write something...",
+          tooltipStyle: "tooltip-info",
+        },
+      },
     ]);
   };
 
   const handleChange = (index, value) => {
     const newTypedValues = [...typedValues];
-    newTypedValues[index] = { ...newTypedValues[index], question: value, optionStatus: value.trim() === "" ? {name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info"} : {name: "Ok", color: "text-[#b0a00f]"}};
+    newTypedValues[index] = {
+      ...newTypedValues[index],
+      question: value,
+      optionStatus:
+        value.trim() === ""
+          ? {
+              name: "Ok",
+              color: "text-[#389CE3]",
+              tooltipName: "Please write something...",
+              tooltipStyle: "tooltip-info",
+            }
+          : { name: "Ok", color: "text-[#b0a00f]" },
+    };
     setTypedValues(newTypedValues);
   };
 
@@ -209,16 +315,51 @@ const RankChoice = () => {
           Make a statement or pose a question
         </h3>
         {/* write question */}
-        <div className="join w-full px-12">
-          <input 
-            className="input input-bordered input-lg w-full join-item bg-white text-black text-3xl h-[4.7rem]"
-            onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus({name: "Ok", color: e.target.value.trim() === "" ? "text-[#389CE3]" : "text-[#b0a00f]"})}}
-            onBlur={(e) => e.target.value.trim() !== "" && questionVerification(e.target.value.trim())}
+        {/* <div className="join w-full px-12"> */}
+        <div className="w-[calc(100%-51.75px] mx-[21px] flex">
+          <input
+            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C]"
+            // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
+            onChange={(e) => {
+              setQuestion(e.target.value);
+              setCheckQuestionStatus({
+                name: "Ok",
+                color:
+                  e.target.value.trim() === ""
+                    ? "text-[#389CE3]"
+                    : "text-[#b0a00f]",
+              });
+            }}
+            onBlur={(e) =>
+              e.target.value.trim() !== "" &&
+              questionVerification(e.target.value.trim())
+            }
           />
-          <button id="new" data-tooltip-offset={-25} className={`test btn-lg join-item bg-white text-3xl font-semibold h-[4.7rem] ${checkQuestionStatus.color}`}>{checkQuestionStatus.name}</button>
+          <button
+            id="new"
+            data-tooltip-offset={-25}
+            className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] text-[${checkQuestionStatus.color}] py-[0.29rem]`}
+            // className={`test join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
+          >
+            <div className="border-l-[0.7px] px-[1.25rem]">
+              {checkQuestionStatus.name}
+            </div>
+          </button>
         </div>
         {/* Tooltip */}
-        <Tooltip anchorSelect="#new" isOpen={checkQuestionStatus.name === "Fail" && true} border="1px solid red" style={{ backgroundColor: "#fbdfe4", color: "#222", border: "red", width: 'auto', marginRight: "3rem" }} place="top">
+        <Tooltip
+          anchorSelect="#new"
+          isOpen={checkQuestionStatus.name === "Fail" && true}
+          border="1px solid red"
+          style={{
+            backgroundColor: "#fbdfe4",
+            color: "#222",
+            border: "red",
+            width: "auto",
+            marginRight: "3rem",
+          }}
+          place="top"
+        >
           {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
             <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -235,7 +376,7 @@ const RankChoice = () => {
           {({ items }) => (
             <div
               id="dragIcon"
-              className="mt-[12.8px] flex flex-col gap-[9.24px] tablet:mb-8 tablet:mt-10 tablet:gap-5 xl:gap-[30px]"
+              className="mt-[1.46rem] flex flex-col gap-[9.24px] tablet:mb-8 tablet:mt-10 tablet:gap-5 xl:gap-[30px]"
             >
               {items.map((item, index) => (
                 <SortableItem
@@ -258,7 +399,9 @@ const RankChoice = () => {
                     removeOption={() => removeOption(index)}
                     number={index}
                     optionStatus={typedValues[index].optionStatus}
-                    answerVerification={(value) => answerVerification(index, value)}
+                    answerVerification={(value) =>
+                      answerVerification(index, value)
+                    }
                   />
                 </SortableItem>
               ))}
@@ -289,14 +432,21 @@ const RankChoice = () => {
             <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] xl:w-full xl:text-[28px]">
               Participants can change their choice at a later time.
             </h5>
-            <CustomSwitch enabled={changeState} setEnabled={() => { setChangeState(prev => !prev); setChangedOption(""); }} />
+            <CustomSwitch
+              enabled={changeState}
+              setEnabled={() => {
+                setChangeState((prev) => !prev);
+                setChangedOption("");
+              }}
+            />
           </div>
           {changeState ? (
             <div className="flex flex-wrap justify-center gap-4">
               {changeOptions?.map((item) => (
                 <button
                   key={item.id}
-                  className={`${changedOption === item.value
+                  className={`${
+                    changedOption === item.value
                       ? "bg-[#389CE3]"
                       : "bg-[#7C7C7C]"
                   } rounded-md px-4 py-1 text-[8px] text-[#F4F4F4] tablet:py-2 tablet:text-[16px]`}

@@ -1,5 +1,6 @@
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
+import { Tooltip } from "react-tooltip";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { changeOptions } from "../../../../../utils/options";
@@ -11,7 +12,6 @@ import {
 import YesNoOptions from "../components/YesNoOptions";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import "react-tooltip/dist/react-tooltip.css";
-import { Tooltip } from "react-tooltip";
 
 const YesNo = () => {
   const navigate = useNavigate();
@@ -109,9 +109,10 @@ const YesNo = () => {
         <h3 className="mb-[13.54px] ml-[32px] mt-[11.71px] text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:ml-[67px] tablet:mt-[20.38px] tablet:text-[16.58px] xl:mb-[22px] xl:ml-[104px] xl:mt-[38px] xl:text-[25px]">
           Make a statement or pose a question
         </h3>
-        <div className="join w-full px-12">
+        <div className="w-[calc(100%-51.75px] mx-[21px] flex">
           <input
-            className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
+            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C]"
+            // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
             onChange={(e) => {
               setQuestion(e.target.value);
               setCheckQuestionStatus({
@@ -130,9 +131,12 @@ const YesNo = () => {
           <button
             id="test"
             data-tooltip-offset={-25}
-            className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
+            className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] text-[${checkQuestionStatus.color}]  py-[0.29rem]`}
+            // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
           >
-            {checkQuestionStatus.name}
+            <div className="border-l-[0.7px] px-[1.25rem]">
+              {checkQuestionStatus.name}
+            </div>
           </button>
         </div>
         <div className="indicator">
@@ -156,7 +160,7 @@ const YesNo = () => {
             {checkQuestionStatus.tooltipName}
           </Tooltip>
         </div>
-        <div className="mt-[14.8px] flex flex-col gap-[9.24px] tablet:mt-10 tablet:gap-5 xl:gap-[30px]">
+        <div className="mt-[1.46rem] flex flex-col gap-[9.24px] tablet:mt-10 tablet:gap-5 xl:gap-[30px]">
           <YesNoOptions
             number={"#1"}
             answer={"Yes"}
