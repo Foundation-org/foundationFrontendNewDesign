@@ -25,11 +25,10 @@ const Options = ({
 
   return (
     <div
-      className={`${
-        label
-          ? "flex flex-col gap-[13px]"
-          : "flex flex-row items-center gap-[25px]"
-      } absolute -top-6 left-[21px] w-[95%] tablet:left-[57px] tablet:top-[-74px] tablet:w-[88%]`}
+      className={`${label
+        ? "flex flex-col gap-[13px]"
+        : "flex flex-row items-center gap-[25px]"
+        } absolute -top-6 left-[21px] w-[95%] tablet:left-[57px] tablet:top-[-90px] tablet:w-[88%] xl:top-[-75px] xl:w-[87%]`}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
@@ -117,21 +116,20 @@ const Options = ({
               <button
                 id={`test${number}`}
                 // data-tooltip-offset={-25}
-                className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[1.875rem] ${optionStatus.color} py-[0.29rem]`}
-                // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
+                className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[1.875rem] ${optionStatus.color}`}
+              // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
               >
-                <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
-                  {optionStatus.name}
+                <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem] okayContainer">
+                  <span>{optionStatus.name}</span>
                 </div>
                 <Tooltip optionStatus={optionStatus} />
               </button>
             </div>
             <div
-              className={`${
-                optionsCount > 2
-                  ? "absolute left-[208px] tablet:left-[42rem]"
-                  : "absolute left-[221px] tablet:left-[24rem] xl:left-[44rem]"
-              } -top-[22px] flex w-fit items-center tablet:-top-[46px] xl:-top-[74px]`}
+              className={`${optionsCount > 2
+                ? "absolute left-[208px] tablet:left-[42rem]"
+                : "absolute left-[221px] tablet:left-[24rem] xl:left-[44rem]"
+                } -top-[22px] flex w-fit items-center tablet:-top-[46px] xl:-top-[74px]`}
             >
               {title === "RankChoice" && trash ? (
                 <>

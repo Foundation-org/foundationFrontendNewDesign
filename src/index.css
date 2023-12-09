@@ -14,7 +14,7 @@
 }
 
 .green-select {
-  @apply relative inline-flex h-[10px] w-[25px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 tablet:h-[20px]  tablet:w-[50px];
+  @apply relative inline-flex h-[10px] w-[25px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 tablet:h-[20px] tablet:w-[50px];
 }
 
 .green-select-shape {
@@ -193,7 +193,11 @@ iframe {
 @media (min-width: 744px) {
   #dragIcon div {
     position: relative;
-    height: 46.4px;
+    height: 72px;
+  }
+  .okayContainer {
+    height: 47px !important;
+    margin-top: 14px;
   }
 }
 
@@ -202,6 +206,7 @@ iframe {
     position: relative;
     height: 74px;
   }
+
 }
 
 #dragIcon2 div {
@@ -214,4 +219,10 @@ iframe {
     position: relative;
     height: 45px;
   }
+}
+
+@media (min-width: 744px) and (max-width: 1279px) {
+  .sixDotsRankedCOntainer {
+    position: relative;
+    top:-17.5px;}
 }
