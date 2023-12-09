@@ -182,12 +182,14 @@ const MultipleChoice = () => {
       const newTypedValues = [...typedValues];
       newTypedValues[index] = {
         ...newTypedValues[index],
-        question: "",
+        // question: "",
         optionStatus: {
-          name: "Ok",
-          color: "text-[#389CE3]",
-          tooltipName: "Please write something...",
-          tooltipStyle: "tooltip-info",
+          name: "Fail",
+          color: "text-[#b00f0f]",
+          tooltipName:
+            "Found Duplication!",
+          tooltipStyle: "tooltip-error",
+          duplication: true
         },
       };
       return setTypedValues(newTypedValues);
