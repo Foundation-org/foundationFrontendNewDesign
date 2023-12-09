@@ -79,7 +79,7 @@ const MultipleChoiceOptions = ({
         </div>
       ) : (
         <div className="flex items-center">
-          <div className="flex h-[23.9px] w-[13.46px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[7px] dark:bg-[#9E9E9E] tablet:mt-0 tablet:h-[72px] tablet:w-[28.2px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[74px] xl:w-[40px]">
+          <div className="flex h-[24.8px] w-[13.46px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[7px] dark:bg-[#9E9E9E] tablet:mt-0 tablet:h-[49.6px] tablet:w-[28.2px] tablet:rounded-l-[10.3px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[74px] xl:w-[40px]">
             {dragable ? (
               persistedTheme === "dark" ? (
                 <img
@@ -96,7 +96,7 @@ const MultipleChoiceOptions = ({
               )
             ) : null}
           </div>
-          <div className="w-full">
+          <div className="relative w-full">
             {/* <input
               type="text"
               placeholder="option"
@@ -107,7 +107,7 @@ const MultipleChoiceOptions = ({
             /> */}
             <div className="flex w-full">
               <input
-                className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] xl:rounded-l-2xl xl:py-[18px] xl:text-[1.875rem]"
+                className="w-full border-y-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] xl:py-[18px] xl:text-[1.875rem]"
                 // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) =>
@@ -120,7 +120,7 @@ const MultipleChoiceOptions = ({
               <button
                 id={`test${number}`}
                 // data-tooltip-offset={-25}
-                className={`relative rounded-r-[0.33rem]  bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] xl:rounded-r-2xl xl:text-[1.875rem] ${optionStatus.color} py-[0.29rem]`}
+                className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] xl:rounded-r-2xl xl:text-[1.875rem] ${optionStatus.color} py-[0.29rem]`}
                 // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
               >
                 <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
@@ -174,7 +174,7 @@ const MultipleChoiceOptions = ({
                 )} */}
               {/* </div> */}
             </div>
-            <div className="absolute right-0 top-1/2 flex -translate-y-1/2 transform items-center">
+            <div className="absolute right-[60px] top-1/2 flex -translate-y-1/2 transform items-center">
               {options && (
                 <div id="green-checkbox" className="-mb-[7px] mr-6">
                   <input
