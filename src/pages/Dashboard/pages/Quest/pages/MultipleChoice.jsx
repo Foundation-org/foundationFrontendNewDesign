@@ -4,7 +4,7 @@ import { Tooltip } from "react-tooltip";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { changeOptions } from "../../../../../utils/options";
-import Options from "../components/Options";
+// import Options from "../components/Options";
 import {
   answerValidation,
   checkAnswerExist,
@@ -299,9 +299,10 @@ const MultipleChoice = () => {
               questionVerification(e.target.value.trim())
             }
           />
+          {/* <div className="relative"> */}
           <button
             id="new"
-            data-tooltip-offset={-25}
+            // data-tooltip-offset={-25}
             className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] text-[${checkQuestionStatus.color}] py-[0.29rem]`}
             // className={`test join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
           >
@@ -309,9 +310,10 @@ const MultipleChoice = () => {
               {checkQuestionStatus.name}
             </div>
           </button>
+          {/* </div> */}
         </div>
         {/* Tooltip */}
-        <Tooltip
+        {/* <Tooltip
           anchorSelect="#new"
           isOpen={checkQuestionStatus.name === "Fail" && true}
           border="1px solid red"
@@ -324,13 +326,8 @@ const MultipleChoice = () => {
           }}
           place="top"
         >
-          {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
-            <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
-          </span>  */}
           {checkQuestionStatus.tooltipName}
-        </Tooltip>
+        </Tooltip> */}
         {/* options */}
         <div className="mt-[1.46rem] flex flex-col gap-[9.24px] tablet:mt-10 tablet:gap-5 xl:gap-[30px]">
           {[...Array(optionsCount)].map((_, index) => (

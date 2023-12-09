@@ -1,7 +1,7 @@
-import React from "react";
+// import React from "react";
 import { useSelector } from "react-redux";
 import "react-tooltip/dist/react-tooltip.css";
-import { Tooltip } from "react-tooltip";
+// import { Tooltip } from "react-tooltip";
 
 const MultipleChoiceOptions = ({
   title,
@@ -115,16 +115,40 @@ const MultipleChoiceOptions = ({
                 }
                 value={typedValue}
               />
-              <button
-                id={`test${number}`}
-                data-tooltip-offset={-25}
-                className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] text-[${optionStatus.color}]  py-[0.29rem]`}
-                // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
-              >
-                <div className="border-l-[0.7px] px-[1.25rem]">
-                  {optionStatus.name}
-                </div>
-              </button>
+              <div className="relative">
+                <button
+                  id={`test${number}`}
+                  data-tooltip-offset={-25}
+                  className={`rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] text-[${optionStatus.color}]  py-[0.29rem]`}
+                  // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
+                >
+                  <div className="border-l-[0.7px] px-[1.25rem]">
+                    {optionStatus.name}
+                  </div>
+                </button>
+                {/* tooltip */}
+                {optionStatus.name === "Fail" && (
+                  <div className="absolute -top-[22px] left-1/2 -translate-x-1/2 transform">
+                    <div class="relative mx-2">
+                      <div class="bottom-full right-0 w-[7.3rem] rounded bg-[#3C1A20] px-[0.35rem] py-[0.2rem] text-[0.3rem] font-normal text-[#DB6262]">
+                        {optionStatus.tooltipName}
+                        <svg
+                          class="absolute left-0 top-full h-2 w-full text-black"
+                          x="0px"
+                          y="0px"
+                          viewBox="0 0 255 255"
+                          xml:space="preserve"
+                        >
+                          <polygon
+                            class="fill-current"
+                            points="0,0 127.5,127.5 255,0"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="absolute right-0 top-1/2 flex -translate-y-1/2 transform items-center">
               {options && (
@@ -192,7 +216,7 @@ const MultipleChoiceOptions = ({
             </h1>
           </div> */}
             </div>
-            <Tooltip
+            {/* <Tooltip
               anchorSelect={`#test${number}`}
               isOpen={optionStatus.name === "Fail" && true}
               border="1px solid red"
@@ -205,13 +229,8 @@ const MultipleChoiceOptions = ({
               }}
               place="top"
             >
-              {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
-              <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-              </button>
-            </span>  */}
               {optionStatus.tooltipName}
-            </Tooltip>
+            </Tooltip> */}
           </div>
         </div>
       )}
