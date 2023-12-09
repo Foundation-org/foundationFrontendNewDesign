@@ -346,12 +346,12 @@ const MultipleChoice = () => {
               dragable={false}
               handleChange={(value) => handleChange(index, value)}
               handleOptionSelect={() => handleOptionSelect(index)}
-              typedValue={typedValues[index].question}
-              isSelected={typedValues[index].selected}
+              typedValue={typedValues[index]?.question}
+              isSelected={typedValues[index]?.selected}
               optionsCount={optionsCount}
               removeOption={() => removeOption(index)}
               number={index}
-              optionStatus={typedValues[index].optionStatus}
+              optionStatus={typedValues[index]?.optionStatus}
               answerVerification={(value) => answerVerification(index, value)}
             />
           ))}
