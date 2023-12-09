@@ -11,6 +11,8 @@ import { answerValidation, checkAnswerExist, checkUniqueQuestion, createInfoQues
 import { toast } from "sonner";
 import { SortableItem, SortableList } from "@thaddeusjiang/react-sortable-list";
 import { useSelector } from "react-redux";
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 
 const DragHandler = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -53,8 +55,9 @@ const RankChoice = () => {
       optionStatus: { name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" }
     })),
   );
-  const [checkQuestionStatus, setCheckQuestionStatus] = useState({ name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" });
-  const [checkOptionStatus, setCheckOptionStatus] = useState({ name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" });
+  const reset = { name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" };
+  const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
+ const [checkOptionStatus, setCheckOptionStatus] = useState({ name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info" });
 
 
   const { mutateAsync: createQuest } = useMutation({
@@ -206,20 +209,23 @@ const RankChoice = () => {
           Make a statement or pose a question
         </h3>
         {/* write question */}
-        <div className="relative flex w-full justify-center">
-          <input
-            value={question}
-            type="text"
-            className="w-full max-w-[857px] rounded-2xl border-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
-            onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus(e.target.value.trim() === "" ? {name: "Ok", color: "text-[#389CE3]", tooltipName: "Please write something...", tooltipStyle: "tooltip-info"} : {name: "Ok", color: "text-[#b0a00f]"})}}
+        <div className="join w-full px-12">
+          <input 
+            className="input input-bordered input-lg w-full join-item bg-white text-black text-3xl h-[4.7rem]"
+            onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus({name: "Ok", color: e.target.value.trim() === "" ? "text-[#389CE3]" : "text-[#b0a00f]"})}}
             onBlur={(e) => e.target.value.trim() !== "" && questionVerification(e.target.value.trim())}
           />
-          <div className={`tooltip absolute right-[72px] top-4 ${checkQuestionStatus?.tooltipStyle}`} data-tip={checkQuestionStatus?.tooltipName}>
-            <h1 className={`leading-0 border-none cursor-pointer px-6 text-[30px] font-semibold ${checkQuestionStatus.color}`}>
-              {checkQuestionStatus.name}
-            </h1>
-          </div>
+          <button id="new" data-tooltip-offset={-25} className={`test btn-lg join-item bg-white text-3xl font-semibold h-[4.7rem] ${checkQuestionStatus.color}`}>{checkQuestionStatus.name}</button>
         </div>
+        {/* Tooltip */}
+        <Tooltip anchorSelect="#new" isOpen={checkQuestionStatus.name === "Fail" && true} border="1px solid red" style={{ backgroundColor: "#fbdfe4", color: "#222", border: "red", width: 'auto', marginRight: "3rem" }} place="top">
+          {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
+            <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </span>  */}
+          {checkQuestionStatus.tooltipName}
+        </Tooltip>
         {/* options */}
         <SortableList
           items={typedValues}

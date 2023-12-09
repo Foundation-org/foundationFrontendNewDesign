@@ -92,11 +92,11 @@ const YesNo = () => {
         </h3>
         <div className="join w-full px-12">
           <input 
-            className="input input-bordered input-lg w-full join-item bg-white text-black text-3xl h-24"
+            className="input input-bordered input-lg w-full join-item bg-white text-black text-3xl h-[4.7rem]"
             onChange={(e) => { setQuestion(e.target.value); setCheckQuestionStatus({name: "Ok", color: e.target.value.trim() === "" ? "text-[#389CE3]" : "text-[#b0a00f]"})}}
             onBlur={(e) => e.target.value.trim() !== "" && questionVerification(e.target.value.trim())}
           />
-          <button id="test" data-tooltip-offset={-25} className={`btn-lg join-item bg-white text-3xl font-semibold h-24 ${checkQuestionStatus.color}`}>{checkQuestionStatus.name}</button>
+          <button id="test" data-tooltip-offset={-25} className={`btn-lg join-item bg-white text-3xl font-semibold h-[4.7rem] ${checkQuestionStatus.color}`}>{checkQuestionStatus.name}</button>
         </div>
         <div className="indicator">
           <Tooltip anchorSelect="#test" isOpen={checkQuestionStatus.name === "Fail" && true} border="1px solid red" style={{ backgroundColor: "#fbdfe4", color: "#222", border: "red", width: 'auto' }} place="top">

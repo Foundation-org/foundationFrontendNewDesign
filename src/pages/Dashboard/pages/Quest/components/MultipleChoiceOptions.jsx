@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 
 const MultipleChoiceOptions = ({
   title,
@@ -103,15 +105,24 @@ const MultipleChoiceOptions = ({
               )
             ) : null}
           </div>
-          <div className="relative w-full">
-            <input
+          <div className="w-full">
+            {/* <input
               type="text"
               placeholder="option"
               className="w-full max-w-[838px] rounded-r-2xl border-t-[1px] border-r-[1px] border-b-[1px] border-[#ACACAC] bg-white py-[18px] pl-9 pr-28 text-[30px] font-normal leading-[0px] text-[#435059]"
               onChange={(e) => handleChange(e.target.value)}
               onBlur={(e) => e.target.value.trim() !== "" && answerVerification(e.target.value.trim())}
               value={typedValue}
-            />
+            /> */}
+            <div className="join w-full">
+              <input 
+                className="input input-bordered input-lg w-full join-item bg-white text-black text-3xl h-[4.7rem]"
+                onChange={(e) => handleChange(e.target.value)}
+                onBlur={(e) => e.target.value.trim() !== "" && answerVerification(e.target.value.trim())}
+                value={typedValue}
+              />
+              <button id={`test${number}`} data-tooltip-offset={-25} className={`btn-lg join-item bg-white text-3xl font-semibold h-[4.7rem] ${optionStatus.color}`}>{optionStatus.name}</button>
+            </div>
             <div className="absolute right-0 top-1/2 flex -translate-y-1/2 transform items-center">
               {options && (
                 <div id="green-checkbox" className="-mb-[7px] mr-6">
@@ -172,12 +183,21 @@ const MultipleChoiceOptions = ({
                 </div>
               )} */}
 
-          <div className={`tooltip ${optionStatus.tooltipStyle}`} data-tip={optionStatus.tooltipName}>
+          {/* <div className={`tooltip ${optionStatus.tooltipStyle}`} data-tip={optionStatus.tooltipName}>
             <h1 className={`leading-0 border-none cursor-pointer px-6 text-[30px] font-semibold ${optionStatus.color}`}>
               {optionStatus.name}
             </h1>
-          </div>
-            </div>
+          </div> */}
+        </div>
+          <Tooltip anchorSelect={`#test${number}`} isOpen={optionStatus.name === "Fail" && true} border="1px solid red" style={{ backgroundColor: "#fbdfe4", color: "#222", border: "red", width: 'auto', marginRight: "3rem" }} place="top">
+            {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
+              <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </span>  */}
+            {optionStatus.tooltipName}
+          </Tooltip>
+          
           </div>
         </div>
       )}
