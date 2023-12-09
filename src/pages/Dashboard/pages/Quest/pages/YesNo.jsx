@@ -12,7 +12,6 @@ const YesNo = () => {
   const [question, setQuestion] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [changedOption, setChangedOption] = useState("");
-  const [correctState, setCorrectState] = useState(false);
   const [changeState, setChangeState] = useState(false);
 
   const { mutateAsync: createQuest } = useMutation({
@@ -28,14 +27,6 @@ const YesNo = () => {
     },
   });
 
-  useEffect(() => {
-    if (correctState) {
-      setChangeState(false);
-      setChangedOption("");
-    } else {
-      setSelectedOption("");
-    }
-  }, [correctState]);
 
   const handleOptionChange = (option) => {
     setSelectedOption(option);
@@ -52,21 +43,12 @@ const YesNo = () => {
       toast.warning("Write some Question Before Submitting");
       return;
     }
-    if (correctState && selectedOption === "") {
-      toast.warning("You have to select one correct option to finish");
-      return;
-    }
 
     const params = {
       Question: question,
       whichTypeQuestion: "yes/no",
       usersChangeTheirAns: changedOption,
-      QuestionCorrect:
-        correctState === true
-          ? selectedOption === "Yes"
-            ? "yes"
-            : "no"
-          : "Not Selected",
+      QuestionCorrect: "Not Selected",
       uuid: localStorage.getItem("uId"),
     };
 
@@ -110,14 +92,14 @@ const YesNo = () => {
           <YesNoOptions
             number={"#1"}
             answer={"Yes"}
-            options={correctState ? true : false}
+            options={false}
             handleOptionChange={() => handleOptionChange("Yes")}
             isSelected={selectedOption === "Yes"}
           />
           <YesNoOptions
             number={"#2"}
             answer={"No"}
-            options={correctState ? true : false}
+            options={false}
             handleOptionChange={() => handleOptionChange("No")}
             isSelected={selectedOption === "No"}
           />
@@ -129,7 +111,6 @@ const YesNo = () => {
           <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] tablet:text-[19.35px] xl:text-[30px]">
             Settings
           </h5>
-          {!correctState ? (
             <>
               <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] xl:mx-[51px] xl:px-7 xl:py-[34px]">
                 <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] xl:w-full xl:text-[28px]">
@@ -160,7 +141,6 @@ const YesNo = () => {
                 </div>
               ) : null}
             </>
-          ) : null}
         </div>
         <div className="flex w-full justify-end">
           <button

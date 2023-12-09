@@ -222,8 +222,6 @@ const Main = () => {
                           : null
                 }
                 answers={item?.QuestAnswers}
-                isCorrect={item.QuestionCorrect}
-                correctCount={item.QuestAnswersSelected.length}
                 time={item?.createdAt}
                 multipleOption={item?.userCanSelectMultiple}
                 question={item?.Question}

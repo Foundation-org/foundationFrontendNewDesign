@@ -11,7 +11,6 @@ import Title from "../components/Title";
 const MultipleChoice = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
-  const [correctOption, setCorrectOption] = useState(false);
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
@@ -51,20 +50,16 @@ const MultipleChoice = () => {
       toast.warning("Write some Question Before Submitting");
       return;
     }
-    if (correctOption && selectedValues.length === 0) {
-      toast.warning("You have to select one correct option to finish");
-      return;
-    }
 
     const params = {
       Question: question,
       whichTypeQuestion: "multiple choise",
-      QuestionCorrect: correctOption === true ? "Selected" : "Not Selected",
+      QuestionCorrect: "Not Selected",
       QuestAnswers: typedValues,
       usersAddTheirAns: addOption,
       usersChangeTheirAns: changedOption,
       userCanSelectMultiple: multipleOption,
-      QuestAnswersSelected: correctOption === true ? selectedValues : [],
+      QuestAnswersSelected: [],
       uuid: localStorage.getItem("uId"),
     };
 
@@ -166,7 +161,7 @@ const MultipleChoice = () => {
               title="MultipleChoice"
               allowInput={true}
               label={`Option ${index + 1} #`}
-              options={correctOption ? true : false}
+              options={false}
               trash={true}
               dragable={false}
               handleChange={(value) => handleChange(index, value)}
@@ -202,7 +197,6 @@ const MultipleChoice = () => {
               setEnabled={setMultipleOption}
             />
           </div>
-          {!correctOption && (
             <>
               <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] xl:mx-[51px] xl:px-7 xl:py-[34px]">
                 <h5 className="w-[150px] text-[9px]  font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] xl:w-full xl:text-[28px]">
@@ -239,7 +233,7 @@ const MultipleChoice = () => {
                 </div>
               ) : null}
             </>
-          )}
+
         </div>
         {/* submit button */}
         <div className="flex w-full justify-end">

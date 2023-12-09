@@ -28,8 +28,6 @@ const QuestionCard = ({
   answers,
   question,
   whichTypeQuestion,
-  isCorrect,
-  correctCount,
   time,
   btnText,
   btnColor,
@@ -49,7 +47,6 @@ const QuestionCard = ({
   const [open, setOpen] = useState(false);
   const [bookmarkStatus, setbookmarkStatus] = useState(isBookmarked);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
-  const [addedAnswerByUser, SetAddedAnswerByUser] = useState(false);
   const [answersSelection, setAnswerSelection] = useState(
     answers.map((answer) => ({
       label: answer.question,
@@ -129,29 +126,6 @@ const QuestionCard = ({
     dispatch(toggleCheck(actionPayload));
   };
 
-  const updateAnswersSelection = (currentAnswers, actionPayload) => {
-    const { label, check, contend } = actionPayload;
-
-    return currentAnswers.map((answer) =>
-      answer.label === label ? { ...answer, check, contend } : answer,
-    );
-  };
-
-  const handleMultipleChoiceCC = (option, check, contend, label) => {
-    const actionPayload = {
-      option,
-      check,
-      contend,
-      label,
-    };
-
-    console.log({ actionPayload });
-
-    setAnswerSelection((prevAnswers) =>
-      updateAnswersSelection(prevAnswers, actionPayload),
-    );
-  };
-
   const updateAnswersSelectionForRanked = (prevAnswers, actionPayload) => {
     const { option, label } = actionPayload;
 
@@ -209,8 +183,8 @@ const QuestionCard = ({
       }
       if (resp.data.message === "Start Quest Updated Successfully") {
         toast.success("Successfully Changed Quest");
+        handleStartTest(null);
       }
-      handleStartTest(null);
     },
     onError: (err) => {
       toast.error(err.response.data);
@@ -451,12 +425,10 @@ const QuestionCard = ({
             title={title}
             answers={answers}
             multipleOption={multipleOption}
-            correctCount={correctCount}
             SingleAnswer={SingleAnswer}
             quests={quests}
             whichTypeQuestion={whichTypeQuestion}
             handleToggleCheck={handleToggleCheck}
-            handleMultipleChoiceCC={handleMultipleChoiceCC}
             handleSubmit={handleSubmit}
             handleOpen={handleOpen}
             handleClose={handleClose}
@@ -471,8 +443,6 @@ const QuestionCard = ({
         ) : (
           <OptionBar
             id={id}
-            isCorrect={isCorrect}
-            correctCount={correctCount}
             time={time}
             btnText={btnText}
             btnColor={btnColor}
@@ -481,10 +451,10 @@ const QuestionCard = ({
             setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
             whichTypeQuestion={whichTypeQuestion}
             handleToggleCheck={handleToggleCheck}
-            handleMultipleChoiceCC={handleMultipleChoiceCC}
             handleRankedChoice={handleRankedChoice}
             rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
+            answersSelection={answersSelection}
           />
         )
       ) : (
@@ -497,7 +467,6 @@ const QuestionCard = ({
           btnText={btnText}
           whichTypeQuestion={whichTypeQuestion}
           setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-          handleMultipleChoiceCC={handleMultipleChoiceCC}
           answersSelection={answersSelection}
           rankedAnswers={rankedAnswers}
           setRankedAnswers={setRankedAnswers}

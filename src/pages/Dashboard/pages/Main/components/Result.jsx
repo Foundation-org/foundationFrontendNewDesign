@@ -16,6 +16,20 @@ const Result = (props) => {
   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
 
+  function updateAnswerSelection(apiResponse, ) {
+    props.answersSelection.forEach((item, index) => {
+      // Check in selected array
+      if (apiResponse.selected.some(selectedItem => selectedItem.question === item.label)) {
+        props.answersSelection[index].check = true;
+      }
+      
+      // Check in contended array
+      if (apiResponse.contended.some(contendedItem => contendedItem.question === item.label)) {
+        props.answersSelection[index].contend = true;
+      }
+    });
+  }
+
   useEffect(() => {
     const data = {
       questForeignKey: props.id,
@@ -83,32 +97,9 @@ const Result = (props) => {
             );
           }
         }
-
+        
         if (props.whichTypeQuestion === "multiple choise") {
-          if (res?.data.data[res.data.data.length - 1].selected) {
-            res?.data.data[res.data.data.length - 1].selected.map(
-              (item, index) => {
-                props.handleMultipleChoiceCC(
-                  "Multiple Choice",
-                  true,
-                  false,
-                  item.question,
-                );
-              },
-            );
-          }
-          if (res?.data.data[res.data.data.length - 1].contended) {
-            res?.data.data[res.data.data.length - 1].contended.map(
-              (item, index) => {
-                props.handleMultipleChoiceCC(
-                  "Multiple Choice",
-                  false,
-                  true,
-                  item.question,
-                );
-              },
-            );
-          }
+          updateAnswerSelection(res?.data.data[res.data.data.length - 1]);
         }
         if (props.whichTypeQuestion === "ranked choise") {
           console.log(
@@ -245,7 +236,6 @@ const Result = (props) => {
             percentages={ResultsData?.data[ResultsData?.data.length - 1]}
             check={findLabelChecked(props.answersSelection, item.question)}
             contend={findLabelContend(props.answersSelection, item.question)}
-            handleMultipleChoiceCC={props.handleMultipleChoiceCC}
             btnText={"Results"}
           />
         ))
@@ -257,7 +247,6 @@ const Result = (props) => {
             answersSelection={props.answersSelection}
             setAnswerSelection={props.setAnswerSelection}
             title={props.title}
-            handleMultipleChoiceCC={props.handleMultipleChoiceCC}
             percentages={ResultsData?.data[ResultsData?.data.length - 1]}
             checkInfo={false}
             setAddOptionLimit={props.setAddOptionLimit}

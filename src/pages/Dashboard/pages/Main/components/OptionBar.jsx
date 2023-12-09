@@ -11,19 +11,31 @@ const OptionBar = ({
   handleStartTest,
   handleViewResults,
   id,
-  isCorrect,
-  correctCount,
+  answersSelection,
   time,
   setHowManyTimesAnsChanged,
   whichTypeQuestion,
   handleToggleCheck,
-  handleMultipleChoiceCC,
-  handleRankedChoice,
+
   rankedAnswers,
   setRankedAnswers,
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
+
+  function updateAnswerSelection(apiResponse) {
+    answersSelection.forEach((item, index) => {
+      // Check in selected array
+      if (apiResponse.selected.some(selectedItem => selectedItem.question === item.label)) {
+        answersSelection[index].check = true;
+      }
+      
+      // Check in contended array
+      if (apiResponse.contended.some(contendedItem => contendedItem.question === item.label)) {
+        answersSelection[index].contend = true;
+      }
+    });
+  }
 
   const { mutateAsync: getStartQuestDetail } = useMutation({
     mutationFn: getStartQuestInfo,
@@ -41,7 +53,7 @@ const OptionBar = ({
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
             "yes"
         ) {
-          console.log("ran 1");
+
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].selected,
             true,
@@ -54,7 +66,6 @@ const OptionBar = ({
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
             "yes"
         ) {
-          console.log("ran 2");
 
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].contended,
@@ -68,7 +79,6 @@ const OptionBar = ({
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
             "no"
         ) {
-          console.log("ran 3");
 
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].contended,
@@ -82,7 +92,6 @@ const OptionBar = ({
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
             "no"
         ) {
-          console.log("ran 4");
 
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].selected,
@@ -92,30 +101,7 @@ const OptionBar = ({
         }
       }
       if (whichTypeQuestion === "multiple choise") {
-        if (res?.data.data[res.data.data.length - 1].selected) {
-          res?.data.data[res.data.data.length - 1].selected.map(
-            (item, index) => {
-              handleMultipleChoiceCC(
-                "Multiple Choice",
-                true,
-                false,
-                item.question,
-              );
-            },
-          );
-        }
-        if (res?.data.data[res.data.data.length - 1].contended) {
-          res?.data.data[res.data.data.length - 1].contended.map(
-            (item, index) => {
-              handleMultipleChoiceCC(
-                "Multiple Choice",
-                false,
-                true,
-                item.question,
-              );
-            },
-          );
-        }
+        updateAnswerSelection(res?.data.data[res.data.data.length - 1]);
       }
       if (whichTypeQuestion === "ranked choise") {
         console.log(
