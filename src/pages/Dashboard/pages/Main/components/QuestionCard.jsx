@@ -455,6 +455,7 @@ const QuestionCard = ({
             rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
             answersSelection={answersSelection}
+            setAnswerSelection={setAnswerSelection}
           />
         )
       ) : (
@@ -468,6 +469,7 @@ const QuestionCard = ({
           whichTypeQuestion={whichTypeQuestion}
           setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
           answersSelection={answersSelection}
+          setAnswerSelection={setAnswerSelection}
           rankedAnswers={rankedAnswers}
           setRankedAnswers={setRankedAnswers}
         />

@@ -16,18 +16,19 @@ const Result = (props) => {
   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
 
-  function updateAnswerSelection(apiResponse, ) {
-    props.answersSelection.forEach((item, index) => {
+  function updateAnswerSelection(apiResponse, answerSelectionArray) {
+    answerSelectionArray.forEach((item, index) => {
       // Check in selected array
       if (apiResponse.selected.some(selectedItem => selectedItem.question === item.label)) {
-        props.answersSelection[index].check = true;
+        answerSelectionArray[index].check = true;
       }
       
       // Check in contended array
       if (apiResponse.contended.some(contendedItem => contendedItem.question === item.label)) {
-        props.answersSelection[index].contend = true;
+        answerSelectionArray[index].contend = true;
       }
     });
+    props.setAnswerSelection(answerSelectionArray);
   }
 
   useEffect(() => {
@@ -99,7 +100,8 @@ const Result = (props) => {
         }
         
         if (props.whichTypeQuestion === "multiple choise") {
-          updateAnswerSelection(res?.data.data[res.data.data.length - 1]);
+          updateAnswerSelection(res?.data.data[res.data.data.length - 1], props.answersSelection);
+
         }
         if (props.whichTypeQuestion === "ranked choise") {
           console.log(

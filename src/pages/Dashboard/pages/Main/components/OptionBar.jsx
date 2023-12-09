@@ -16,25 +16,26 @@ const OptionBar = ({
   setHowManyTimesAnsChanged,
   whichTypeQuestion,
   handleToggleCheck,
-
+  setAnswerSelection,
   rankedAnswers,
   setRankedAnswers,
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
 
-  function updateAnswerSelection(apiResponse) {
-    answersSelection.forEach((item, index) => {
+  function updateAnswerSelection(apiResponse, answerSelectionArray) {
+    answerSelectionArray.forEach((item, index) => {
       // Check in selected array
       if (apiResponse.selected.some(selectedItem => selectedItem.question === item.label)) {
-        answersSelection[index].check = true;
+        answerSelectionArray[index].check = true;
       }
       
       // Check in contended array
       if (apiResponse.contended.some(contendedItem => contendedItem.question === item.label)) {
-        answersSelection[index].contend = true;
+        answerSelectionArray[index].contend = true;
       }
     });
+    setAnswerSelection(answerSelectionArray);
   }
 
   const { mutateAsync: getStartQuestDetail } = useMutation({
@@ -53,7 +54,7 @@ const OptionBar = ({
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
             "yes"
         ) {
-
+          console.log("ran 1");
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].selected,
             true,
@@ -101,7 +102,7 @@ const OptionBar = ({
         }
       }
       if (whichTypeQuestion === "multiple choise") {
-        updateAnswerSelection(res?.data.data[res.data.data.length - 1]);
+        updateAnswerSelection(res?.data.data[res.data.data.length - 1], answersSelection);
       }
       if (whichTypeQuestion === "ranked choise") {
         console.log(
