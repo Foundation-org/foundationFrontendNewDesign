@@ -19,12 +19,20 @@ const Result = (props) => {
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
       // Check in selected array
-      if (apiResponse.selected.some(selectedItem => selectedItem.question === item.label)) {
+      if (
+        apiResponse.selected.some(
+          (selectedItem) => selectedItem.question === item.label,
+        )
+      ) {
         answerSelectionArray[index].check = true;
       }
-      
+
       // Check in contended array
-      if (apiResponse.contended.some(contendedItem => contendedItem.question === item.label)) {
+      if (
+        apiResponse.contended.some(
+          (contendedItem) => contendedItem.question === item.label,
+        )
+      ) {
         answerSelectionArray[index].contend = true;
       }
     });
@@ -98,10 +106,12 @@ const Result = (props) => {
             );
           }
         }
-        
-        if (props.whichTypeQuestion === "multiple choise") {
-          updateAnswerSelection(res?.data.data[res.data.data.length - 1], props.answersSelection);
 
+        if (props.whichTypeQuestion === "multiple choise") {
+          updateAnswerSelection(
+            res?.data.data[res.data.data.length - 1],
+            props.answersSelection,
+          );
         }
         if (props.whichTypeQuestion === "ranked choise") {
           console.log(
@@ -174,6 +184,8 @@ const Result = (props) => {
     }
   }
 
+  console.log(props);
+
   return (
     <div className="mt-[26px] flex flex-col gap-[10px]">
       {console.log(props.title)}
@@ -181,7 +193,7 @@ const Result = (props) => {
         <>
           {props.title === "Yes/No" ? (
             <>
-              {console.log(ResultsData?.data[ResultsData?.data.length - 1])}
+              {/* {console.log(ResultsData?.data[ResultsData?.data.length - 1])} */}
               <SingleAnswer
                 number={"#1"}
                 answer={"Yes"}
@@ -239,6 +251,8 @@ const Result = (props) => {
             check={findLabelChecked(props.answersSelection, item.question)}
             contend={findLabelContend(props.answersSelection, item.question)}
             btnText={"Results"}
+            answersSelection={props.answersSelection}
+            setAnswerSelection={props.setAnswerSelection}
           />
         ))
       ) : props.title === "Ranked Choice" ? (
@@ -265,7 +279,9 @@ const Result = (props) => {
               ? "bg-[#333B46]"
               : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
           } inset-0 mr-[30px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
-          onClick={() => handleSubmit()}
+          onClick={() => {
+            props.handleViewResults(null);
+          }}
         >
           Finish
         </button>

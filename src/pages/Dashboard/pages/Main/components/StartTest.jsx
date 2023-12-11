@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import AddNewOption from "../../../components/AddNewOption";
-import BasicModal from "../../../../../components/BasicModal";
 import { SortableList, SortableItem } from "@thaddeusjiang/react-sortable-list";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
@@ -25,9 +23,12 @@ const StartTest = ({
   multipleOption,
   rankedAnswers,
   setRankedAnswers,
+  addOptionField,
+  setAddOptionField,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
+
   const [temp, setTemp] = useState("");
 
   useEffect(() => {
@@ -123,9 +124,12 @@ const StartTest = ({
     setAnswerSelection([...answersSelection, newOption]);
 
     setTemp("");
+    setAddOptionField(0);
     setAddOptionLimit(1);
     handleClose();
   };
+
+  console.log({ addOptionField });
 
   return (
     <>
@@ -212,7 +216,7 @@ const StartTest = ({
                 id="dragIcon2"
                 className="flex flex-col gap-[5.7px] tablet:gap-[11px]"
               >
-                {items.map((item, index) => (
+                {[...items].reverse().map((item, index) => (
                   <SortableItem
                     key={item.id}
                     id={item.id}
@@ -342,9 +346,9 @@ const StartTest = ({
         className={`${
           title === "Multiple Choice"
             ? "mt-8"
-            : addOptionLimit === 1
-              ? "mt-8"
-              : "mt-28"
+            : addOptionField === 1
+              ? "mt-[8rem]"
+              : "mt-4"
         } mb-8 flex w-full justify-end`}
       >
         <div>

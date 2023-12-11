@@ -1,12 +1,9 @@
 import { useState } from "react";
-// import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { changeOptions } from "../../../../../utils/options";
 import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import Title from "../components/Title";
-// import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-// import { Tooltip } from "react-tooltip";
 import { useMutation } from "@tanstack/react-query";
 import {
   answerValidation,
@@ -19,7 +16,12 @@ import { toast } from "sonner";
 import { SortableItem, SortableList } from "@thaddeusjiang/react-sortable-list";
 import { useSelector } from "react-redux";
 import { Tooltip } from "../../../../../utils/Tooltip";
-// import "react-tooltip/dist/react-tooltip.css";
+import {
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 
 const DragHandler = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -113,6 +115,11 @@ const RankChoice = () => {
       usersChangeTheirAns: changedOption,
       uuid: localStorage.getItem("uId"),
     };
+
+    if (params.Question === "") {
+      toast.warning("Question cannot be empty");
+      return;
+    }
 
     console.log({ params });
 
@@ -321,7 +328,7 @@ const RankChoice = () => {
         {/* <div className="join w-full px-12"> */}
         <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[73px]">
           <input
-            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] xl:rounded-l-2xl xl:py-[18px] xl:text-[1.875rem]"
+            className="w-full rounded-l-[0.33rem] border-y-[1px] border-l-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] xl:rounded-l-2xl xl:py-[18px] xl:text-[1.875rem]"
             // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
             onChange={(e) => {
               setQuestion(e.target.value);
@@ -342,8 +349,7 @@ const RankChoice = () => {
           <button
             id="new"
             data-tooltip-offset={-25}
-            className={`relative rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] xl:rounded-r-2xl xl:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
-            // className={`test join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
+            className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] xl:rounded-r-2xl xl:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
           >
             <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
               {checkQuestionStatus.name}
@@ -351,29 +357,6 @@ const RankChoice = () => {
             <Tooltip optionStatus={checkQuestionStatus} />
           </button>
         </div>
-        {/* Tooltip */}
-        {/* <Tooltip
-          anchorSelect="#new"
-          isOpen={checkQuestionStatus.name === "Fail" && true}
-          border="1px solid red"
-          style={{
-            backgroundColor: "#fbdfe4",
-            color: "#222",
-            border: "red",
-            width: "auto",
-            marginRight: "3rem",
-          }}
-          place="top"
-        >
-         
-          {checkQuestionStatus.tooltipName}
-        </Tooltip> */}
-        {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
-            <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
-          </span>  */}
-        {/* options */}
         <SortableList
           items={typedValues}
           setItems={setTypedValues}
@@ -447,31 +430,29 @@ const RankChoice = () => {
             />
           </div>
           {changeState ? (
-            <div className="flex flex-wrap justify-center gap-4">
-              {changeOptions?.map((item) => (
-                <button
-                  key={item.id}
-                  className={`${
-                    changedOption === item.value
-                      ? "bg-[#389CE3]"
-                      : "bg-[#7C7C7C]"
-                  } rounded-md px-4 py-1 text-[8px] text-[#F4F4F4] tablet:py-2 tablet:text-[16px]`}
-                  onClick={() => {
-                    setChangedOption(item.value);
-                  }}
-                >
-                  {item.title}
-                </button>
-              ))}
-            </div>
+            <FormControl>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue=""
+                name="radio-buttons-group"
+              >
+                <div className="flex flex-wrap justify-center gap-4">
+                  {changeOptions?.map((item) => (
+                    <FormControlLabel
+                      key={item.id}
+                      value={item.value}
+                      control={<Radio sx={{ color: "#0FB063" }} />}
+                      label={item.title}
+                      onChange={(e) => {
+                        setChangedOption(e.target.value);
+                      }}
+                    />
+                  ))}
+                </div>
+              </RadioGroup>
+            </FormControl>
           ) : null}
         </div>
-        {/* submit button */}
-        {/* <div className="flex w-full justify-end">
-          <button disabled={checkQuestionStatus?.isVerifiedQuestion && typedValues.every(item => item.optionStatus.isVerifiedAnswer === true) ? false : true} className={`blue-submit-button ${!checkQuestionStatus?.isVerifiedQuestion || !typedValues.every(item => item.optionStatus.isVerifiedAnswer === true) && "cursor-not-allowed"}`} onClick={() => handleSubmit()}>
-            Submit
-          </button>
-        </div> */}
         <div className="flex w-full justify-end">
           <button
             disabled={

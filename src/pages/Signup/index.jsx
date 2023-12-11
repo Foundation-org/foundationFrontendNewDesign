@@ -1,15 +1,15 @@
-import { useState } from "react";
 import { toast } from "sonner";
-import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { signUp } from "../../api/userAuth";
-import Typography from "../../components/Typography";
-import Button from "../../components/Button";
-import Form from "./components/Form";
-import Anchor from "../../components/Anchor";
-import SocialLogins from "../../components/SocialLogins";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import { signUp } from "../../api/userAuth";
+import { useMutation } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
+import Form from "./components/Form";
+import Button from "../../components/Button";
+import Anchor from "../../components/Anchor";
+import ReCAPTCHA from "react-google-recaptcha";
+import Typography from "../../components/Typography";
+import SocialLogins from "../../components/SocialLogins";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -106,7 +106,7 @@ export default function Signup() {
             togglePasswordVisibility={togglePasswordVisibility}
             toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}
           />
-          <div className="mb-4 mt-4 flex w-full items-start md:mb-10">
+          <div className="taller:mb-4 taller:mt-0 mb-4 mt-4 flex w-full items-start md:mb-10">
             {persistedTheme === "dark" ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
@@ -121,7 +121,7 @@ export default function Signup() {
               />
             )}
           </div>
-          <div className="mb-12 flex items-start">
+          <div className="taller:mb-7 mb-12 flex items-start">
             <div className="form-control mt-[7px] md:mt-0">
               <label className="label flex cursor-pointer gap-[11.5px] p-0">
                 <input
@@ -131,7 +131,7 @@ export default function Signup() {
                 />
               </label>
             </div>
-            <label className="tablet:text-base ml-4 text-[10.2px] text-gray-100 dark:text-white 5xl:text-[22px]">
+            <label className="short:text-[12px] ml-4 text-[10.2px] text-gray-100 dark:text-white tablet:text-base 5xl:text-[22px]">
               Creating an account means you’re okay with our{" "}
               <Anchor href="#">Terms of Service</Anchor>,{" "}
               <Anchor href="#">Privacy Policy</Anchor>, and out default{" "}

@@ -108,7 +108,6 @@ const MultipleChoiceOptions = ({
             <div className="flex w-full">
               <input
                 className="w-full border-y-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] xl:py-[18px] xl:text-[1.875rem]"
-                // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) =>
                   e.target.value.trim() !== "" &&
@@ -116,13 +115,10 @@ const MultipleChoiceOptions = ({
                 }
                 value={typedValue}
               />
-              {/* <div className="relative"> */}
               {title === "MultipleChoice" && trash && (
                 <button
                   id={`test${number}`}
-                  // data-tooltip-offset={-25}
                   className={`border-y-[1px] border-[#ACACAC]  bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] xl:text-[1.875rem] ${optionStatus?.color} py-[0.29rem]`}
-                  // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus?.color}`}
                 >
                   <div className="pr-[1.25rem] tablet:pr-[2.4rem]">
                     <>
@@ -146,16 +142,13 @@ const MultipleChoiceOptions = ({
 
               <button
                 id={`test${number}`}
-                // data-tooltip-offset={-25}
                 className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] xl:rounded-r-2xl xl:text-[1.875rem] ${optionStatus.color} py-[0.29rem]`}
-                // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus.color}`}
               >
                 <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
                   {optionStatus?.name}
                 </div>
                 <Tooltip optionStatus={optionStatus} />
               </button>
-              {/* tooltip */}
 
               {/* {optionStatus?.name === "Fail" && (
                   <div className="absolute -top-[36px] left-1/2 -translate-x-1/2 transform">

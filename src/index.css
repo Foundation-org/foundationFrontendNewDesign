@@ -229,3 +229,7 @@ iframe {
     top:-17.5px;
   }
 } */
+
+.Mui-checked {
+  color: #0fb063 !important;
+}

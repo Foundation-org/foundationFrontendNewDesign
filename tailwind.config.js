@@ -35,6 +35,10 @@ export default {
         "3xl": "1600px",
         "4xl": "1920px",
         "5xl": "2560px",
+        // media queries for height 
+        'short': { 'raw': '(max-height: 720px)' },
+        'tall': { 'raw': '(max-height: 768px)' },
+        'taller': { 'raw': '(max-height: 900px)' },
       },
       spacing: {
         8.6: "2.2rem",

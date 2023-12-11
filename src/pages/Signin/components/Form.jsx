@@ -39,7 +39,7 @@ const Form = ({ onEmailChange, onPassChange }) => {
           <input
             type="text"
             placeholder="Enter your email"
-            className="input h-[33px] w-full rounded-[6px] border-[1.473px] border-[#D0D5DD] bg-white text-gray-400 focus:outline-none dark:border-[#D9D9D9] dark:bg-gray-400 dark:text-white md:h-12"
+            className="tall:text-[16px] input h-[33px] w-full rounded-[6px] border-[1.473px] border-[#D0D5DD] bg-white text-gray-400 focus:outline-none dark:border-[#D9D9D9] dark:bg-gray-400 dark:text-white md:h-12"
             // value={email}
             onChange={onEmailChange}
           />
@@ -61,7 +61,7 @@ const Form = ({ onEmailChange, onPassChange }) => {
           <input
             type={inputType}
             placeholder="Enter your password"
-            className="input h-[33px] w-full rounded-[6px] border-[1.473px] border-[#D0D5DD] bg-white text-gray-400 focus:outline-none dark:border-[#D9D9D9] dark:bg-gray-400 dark:text-white md:h-12"
+            className="tall:text-[16px] input h-[33px] w-full rounded-[6px] border-[1.473px] border-[#D0D5DD] bg-white text-gray-400 focus:outline-none dark:border-[#D9D9D9] dark:bg-gray-400 dark:text-white md:h-12"
             onChange={onPassChange}
           />
           {!showPassword ? (

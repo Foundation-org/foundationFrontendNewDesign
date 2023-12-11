@@ -13,6 +13,12 @@ import CustomSwitch from "../../../../../components/CustomSwitch";
 import Title from "../../../pages/Quest/components/Title";
 import AgreeDisagreeOptions from "../components/AgreeDisagreeOptions";
 import { Tooltip } from "../../../../../utils/Tooltip";
+import {
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 // import "react-tooltip/dist/react-tooltip.css";
 
 const AgreeDisagree = () => {
@@ -113,7 +119,7 @@ const AgreeDisagree = () => {
         {/* <div className="join w-full px-12"> */}
         <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[73px]">
           <input
-            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:rounded-l-2xl tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
+            className="w-full rounded-l-[0.33rem] border-y-[1px] border-l-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:rounded-l-2xl tablet:px-11 tablet:py-[18px] tablet:text-[1.875rem]"
             // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
             onChange={(e) => {
               setQuestion(e.target.value);
@@ -135,7 +141,7 @@ const AgreeDisagree = () => {
           <button
             id="test"
             // data-tooltip-offset={-25}
-            className={`relative rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-2xl tablet:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
+            className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-2xl tablet:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
             // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
           >
             <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
@@ -143,30 +149,7 @@ const AgreeDisagree = () => {
             </div>
             <Tooltip optionStatus={checkQuestionStatus} />
           </button>
-          {/* </div> */}
         </div>
-        {/* <div className="indicator"> */}
-        {/* <Tooltip
-            anchorSelect="#test"
-            isOpen={checkQuestionStatus.name === "Fail" && true}
-            border="1px solid red"
-            style={{
-              backgroundColor: "#fbdfe4",
-              color: "#222",
-              border: "red",
-              width: "auto",
-            }}
-            place="top"
-          >
-           
-            {checkQuestionStatus.tooltipName}
-          </Tooltip> */}
-        {/* <span className="indicator-item cursor-pointer" onClick={() => setCheckQuestionStatus(reset)}>
-              <button className="btn btn-xs btn-circle" onClick={() => setCheckQuestionStatus(reset)}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-              </button>
-            </span>  */}
-        {/* </div> */}
         <div className="mt-[1.46rem] flex flex-col gap-[9.24px] tablet:mt-10 tablet:gap-5 xl:gap-[30px]">
           <AgreeDisagreeOptions
             answer={"Agree"}
@@ -202,31 +185,30 @@ const AgreeDisagree = () => {
               />
             </div>
             {changeState ? (
-              <div className="flex flex-wrap justify-center gap-4">
-                {changeOptions.map((item) => (
-                  <button
-                    key={item.id}
-                    className={`${
-                      changedOption === item.value
-                        ? "bg-[#389CE3]"
-                        : "bg-[#7C7C7C]"
-                    } rounded-md px-4 py-1 text-[8px] text-[#F4F4F4] tablet:py-2 tablet:text-[16px]`}
-                    onClick={() => {
-                      setChangedOption(item.value);
-                    }}
-                  >
-                    {item.title}
-                  </button>
-                ))}
-              </div>
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue=""
+                  name="radio-buttons-group"
+                >
+                  <div className="flex flex-wrap justify-center gap-4">
+                    {changeOptions?.map((item) => (
+                      <FormControlLabel
+                        key={item.id}
+                        value={item.value}
+                        control={<Radio sx={{ color: "#0FB063" }} />}
+                        label={item.title}
+                        onChange={(e) => {
+                          setChangedOption(e.target.value);
+                        }}
+                      />
+                    ))}
+                  </div>
+                </RadioGroup>
+              </FormControl>
             ) : null}
           </>
         </div>
-        {/* <div className="flex w-full justify-end">
-          <button disabled={checkQuestionStatus?.isVerifiedQuestion ? false : true} className={`blue-submit-button ${!checkQuestionStatus?.isVerifiedQuestion && "cursor-not-allowed"}`} onClick={() => handleSubmit()}>
-            Submit
-          </button>
-        </div> */}
         <div className="flex w-full justify-end">
           <button
             disabled={checkQuestionStatus?.isVerifiedQuestion ? false : true}

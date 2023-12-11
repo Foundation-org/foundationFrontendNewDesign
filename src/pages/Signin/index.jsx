@@ -10,7 +10,6 @@ import { useMutation } from "@tanstack/react-query";
 import { signIn } from "../../api/userAuth";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
-// import axios from 'axios';
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -95,7 +94,7 @@ export default function Signin() {
             <Typography variant="textInfo">-OR-</Typography>
           </div>
           <Form onEmailChange={onEmailChange} onPassChange={onPassChange} />
-          <div className="my-8 flex w-fit items-start md:mb-14 md:mt-12">
+          <div className="tall:mb-4 tall:mt-0 my-8 flex w-fit items-start md:mb-14 md:mt-12">
             {persistedTheme === "dark" ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}

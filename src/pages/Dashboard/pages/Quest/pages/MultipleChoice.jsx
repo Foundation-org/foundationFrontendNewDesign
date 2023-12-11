@@ -14,9 +14,14 @@ import {
 } from "../../../../../api/questsApi";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import MultipleChoiceOptions from "../components/MultipleChoiceOptions";
-// import "react-tooltip/dist/react-tooltip.css";
 import Title from "../components/Title";
 import { Tooltip } from "../../../../../utils/Tooltip";
+import {
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -284,7 +289,7 @@ const MultipleChoice = () => {
         {/* <div className="join w-full px-12"> */}
         <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[73px]">
           <input
-            className="w-full rounded-l-[0.33rem] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] xl:rounded-l-2xl xl:py-[18px] xl:text-[1.875rem]"
+            className="w-full rounded-l-[0.33rem] border-y-[1px] border-l-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] xl:rounded-l-2xl xl:py-[18px] xl:text-[1.875rem]"
             // className="input join-item input-bordered input-lg h-[4.7rem] w-full bg-white text-3xl text-black"
             onChange={(e) => {
               setQuestion(e.target.value);
@@ -306,7 +311,7 @@ const MultipleChoice = () => {
           <button
             id="new"
             // data-tooltip-offset={-25}
-            className={`relative rounded-r-[0.33rem] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] xl:rounded-r-2xl xl:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
+            className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] xl:rounded-r-2xl xl:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
             // className={`test join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
           >
             <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
@@ -399,23 +404,27 @@ const MultipleChoice = () => {
               />
             </div>
             {changeState ? (
-              <div className="flex flex-wrap justify-center gap-4">
-                {changeOptions.map((item) => (
-                  <button
-                    key={item.id}
-                    className={`${
-                      changedOption === item.value
-                        ? "bg-[#389CE3]"
-                        : "bg-[#7C7C7C]"
-                    } rounded-md px-4 py-1 text-[8px] text-[#F4F4F4] tablet:py-2 tablet:text-[16px]`}
-                    onClick={() => {
-                      setChangedOption(item.value);
-                    }}
-                  >
-                    {item.title}
-                  </button>
-                ))}
-              </div>
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue=""
+                  name="radio-buttons-group"
+                >
+                  <div className="flex flex-wrap justify-center gap-4">
+                    {changeOptions?.map((item) => (
+                      <FormControlLabel
+                        key={item.id}
+                        value={item.value}
+                        control={<Radio sx={{ color: "#0FB063" }} />}
+                        label={item.title}
+                        onChange={(e) => {
+                          setChangedOption(e.target.value);
+                        }}
+                      />
+                    ))}
+                  </div>
+                </RadioGroup>
+              </FormControl>
             ) : null}
           </>
         </div>

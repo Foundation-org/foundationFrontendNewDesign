@@ -47,6 +47,7 @@ const QuestionCard = ({
   const [open, setOpen] = useState(false);
   const [bookmarkStatus, setbookmarkStatus] = useState(isBookmarked);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
+  const [addOptionField, setAddOptionField] = useState(0);
   const [answersSelection, setAnswerSelection] = useState(
     answers.map((answer) => ({
       label: answer.question,
@@ -71,7 +72,10 @@ const QuestionCard = ({
     );
   }, [answersSelection]);
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setAddOptionField(1);
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
 
   const capitalizeFirstLetter = (text) => {
@@ -261,12 +265,20 @@ const QuestionCard = ({
       if (contended) {
         ans.contended = contended.charAt(0).toUpperCase() + contended.slice(1);
       }
+
       const params = {
         questId: id,
         answer: ans,
         addedAnswer: "",
         uuid: localStorage.getItem("uId"),
       };
+
+      if (!(params.answer.selected && params.answer.contended)) {
+        toast.warning(
+          "you cannot submit without answering both selected and contended",
+        );
+        return;
+      }
 
       if (btnText === "change answer") {
         console.log(howManyTimesAnsChanged);
@@ -289,7 +301,6 @@ const QuestionCard = ({
         startQuest(params);
       }
     } else if (whichTypeQuestion === "multiple choise") {
-      console.log("inside multiple");
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = "";
@@ -298,7 +309,7 @@ const QuestionCard = ({
         if (answersSelection[i].check) {
           if (answersSelection[i].addedOptionByUser) {
             // If user Add his own option
-            console.log("added answer ran");
+
             answerSelected.push({
               question: answersSelection[i].label,
               addedAnswerByUser: true,
@@ -349,6 +360,15 @@ const QuestionCard = ({
           addedAnswer: addedAnswerValue,
           uuid: localStorage.getItem("uId"),
         };
+
+        if (
+          params.answer.selected.length === 0 &&
+          params.answer.contended.length === 0
+        ) {
+          toast.warning("you cannot submit without answering");
+          return;
+        }
+
         console.log("params", params);
         startQuest(params);
       }
@@ -406,12 +426,13 @@ const QuestionCard = ({
           uuid: localStorage.getItem("uId"),
         };
         console.log("params", params);
+
         startQuest(params);
       }
     }
   };
-  console.log("ranked answers", rankedAnswers);
 
+  console.log("ranked answers", rankedAnswers);
   console.log("answersSelection", answersSelection);
 
   return (
@@ -448,6 +469,8 @@ const QuestionCard = ({
             answersSelection={answersSelection}
             rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
+            addOptionField={addOptionField}
+            setAddOptionField={setAddOptionField}
           />
         ) : (
           <OptionBar
@@ -481,6 +504,8 @@ const QuestionCard = ({
           setAnswerSelection={setAnswerSelection}
           rankedAnswers={rankedAnswers}
           setRankedAnswers={setRankedAnswers}
+          viewResult={viewResult}
+          handleViewResults={handleViewResults}
         />
       )}
     </div>
