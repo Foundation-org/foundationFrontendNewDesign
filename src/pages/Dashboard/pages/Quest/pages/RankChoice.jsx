@@ -56,6 +56,7 @@ const RankChoice = () => {
   const [changeState, setChangeState] = useState(false);
   const [changedOption, setChangedOption] = useState("");
   const [optionsCount, setOptionsCount] = useState(2);
+  const [prevValueArr, setPrevValueArr] = useState([])
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       id: `index-${index}`,
@@ -156,6 +157,12 @@ const RankChoice = () => {
   };
 
   const answerVerification = async (index, value) => {
+    if(prevValueArr[index]?.value === value) return
+    setPrevValueArr((prev) => {
+      const updatedArray = [...prev];
+      updatedArray[index] = { value };
+      return [...updatedArray];
+    })
     const newTypedValues = [...typedValues];
     newTypedValues[index] = {
       ...newTypedValues[index],
