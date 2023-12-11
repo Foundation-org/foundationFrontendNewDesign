@@ -65,11 +65,14 @@ export const getRankedQuestPercent = async (data) => {
 export const questionValidation = async({question, queryType}) => {
   try {
       var response = await api.get(`/ai-validation/1?userMessage=${question}&queryType=${queryType}`)
-      if(response.data.status === "VIOLATION") {return { validatedQuestion: null, errorMessage: "VIOLATION" }}
+      if(response.data.status === "VIOLATION") {await updateViolationCounterAPI(); return { validatedQuestion: null, errorMessage: "VIOLATION" }}
       if(response.data.status === "FAIL") {return { validatedQuestion: null, errorMessage: "FAIL" }}
       if(response.data.status === "ERROR") {return { validatedQuestion: null, errorMessage: "ERROR" }}
       return { validatedQuestion: response.data.message, errorMessage: null}
   } catch (error) {
+      if(error.response.data.status === "VIOLATION"){
+        await updateViolationCounterAPI();
+      }
       return { validatedQuestion: null, errorMessage: "ERROR" }
   }
 }
@@ -77,11 +80,14 @@ export const questionValidation = async({question, queryType}) => {
 export const answerValidation = async({answer}) => {
   try {
       const response = await api.get(`/ai-validation/2?userMessage=${answer}`)
-      if(response.data.status === "VIOLATION") { return { validatedAnswer: null, errorMessage: 'VIOLATION' }}
+      if(response.data.status === "VIOLATION") {await updateViolationCounterAPI(); return { validatedAnswer: null, errorMessage: 'VIOLATION' }}
       if(response.data.status === "FAIL") { return { validatedAnswer: null, errorMessage: 'FAIL' }}
       if(response.data.status === "ERROR") { return { validatedAnswer: null, errorMessage: "ERROR" }}
       return { validatedAnswer: response.data.message }
   } catch (error) {
+      if(error.response.data.status === "VIOLATION"){
+        await updateViolationCounterAPI();
+      }
       return { validatedAnswer: null, errorMessage: "ERROR" }
   }
 }
@@ -96,3 +102,10 @@ export const checkUniqueQuestion = async(question) => {
     params: { question },
   });
 }
+
+const updateViolationCounterAPI = async () => {
+  // Make an API call to update the violation counter
+  const response = await api.post("/startQuest/updateViolationCounter", { uuid: localStorage.getItem("uId") });
+  return response.data;
+}
+export default updateViolationCounterAPI;

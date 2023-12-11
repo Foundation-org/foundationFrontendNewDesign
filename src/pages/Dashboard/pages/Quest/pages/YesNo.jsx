@@ -21,6 +21,7 @@ import {
 const YesNo = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
+  const [prevValue, setPrevValue] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [changedOption, setChangedOption] = useState("");
   const [changeState, setChangeState] = useState(false);
@@ -69,6 +70,8 @@ const YesNo = () => {
   };
 
   const questionVerification = async (value) => {
+    if(prevValue === question) return
+    setPrevValue(value);
     setCheckQuestionStatus({
       name: "Checking",
       color: "text-[#0FB063]",
@@ -178,7 +181,7 @@ const YesNo = () => {
                 enabled={changeState}
                 setEnabled={() => {
                   setChangeState((prev) => !prev);
-                  setChangedOption("");
+                  setChangedOption("Daily");
                 }}
               />
             </div>

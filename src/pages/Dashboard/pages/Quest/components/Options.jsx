@@ -114,6 +114,32 @@ const Options = ({
                 }
                 value={typedValue}
               />
+              {title === "RankChoice" && trash && (
+                <button
+                  id={`test${number}`}
+                  // data-tooltip-offset={-25}
+                  className={`border-y-[1px] border-[#ACACAC]  bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] xl:text-[1.875rem] ${optionStatus?.color} py-[0.29rem]`}
+                  // className={`join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${optionStatus?.color}`}
+                >
+                  <div className="pr-[1.25rem] tablet:pr-[2.4rem]">
+                    <>
+                      {optionsCount > 2 && (
+                        <div
+                          onClick={() => {
+                            removeOption(number);
+                          }}
+                        >
+                          <img
+                            src="/assets/svgs/dashboard/trash2.svg"
+                            alt="trash"
+                            className="min-w-[.6rem] cursor-pointer tablet:min-w-[1.5rem]"
+                          />
+                        </div>
+                      )}
+                    </>
+                  </div>
+                </button>
+              )}
               <button
                 id={`test${number}`}
                 // data-tooltip-offset={-25}
@@ -132,24 +158,7 @@ const Options = ({
                   : "absolute left-[221px] tablet:left-[24rem] xl:left-[44rem]"
                 } -top-[22px] flex w-fit items-center tablet:-top-[46px] xl:-top-[74px]`}
             >
-              {title === "RankChoice" && trash ? (
-                <>
-                  {optionsCount > 2 && (
-                    <div
-                      onClick={() => {
-                        removeOption(number);
-                      }}
-                      className="flex items-center"
-                    >
-                      <img
-                        src="/assets/svgs/dashboard/trash2.svg"
-                        alt="trash"
-                        className="h-[13.2px] cursor-pointer tablet:h-[36px]"
-                      />
-                    </div>
-                  )}
-                </>
-              ) : title === "MultipleChoice" && trash ? (
+              {title === "MultipleChoice" && trash ? (
                 <>
                   {optionsCount > 2 && (
                     <div
