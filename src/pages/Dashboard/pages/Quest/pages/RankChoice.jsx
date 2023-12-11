@@ -53,10 +53,12 @@ laptop:h-[74px] laptop:w-[38px] z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14p
 const RankChoice = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
+  const [prevValue, setPrevValue] = useState("");
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
   const [changedOption, setChangedOption] = useState("");
   const [optionsCount, setOptionsCount] = useState(2);
+  const [prevValueArr, setPrevValueArr] = useState([])
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       id: `index-${index}`,
@@ -127,6 +129,8 @@ const RankChoice = () => {
   };
 
   const questionVerification = async (value) => {
+    if(prevValue === question) return
+    setPrevValue(value);
     setCheckQuestionStatus({
       name: "Checking",
       color: "text-[#0FB063]",
@@ -160,6 +164,12 @@ const RankChoice = () => {
   };
 
   const answerVerification = async (index, value) => {
+    if(prevValueArr[index]?.value === value) return
+    setPrevValueArr((prev) => {
+      const updatedArray = [...prev];
+      updatedArray[index] = { value };
+      return [...updatedArray];
+    })
     const newTypedValues = [...typedValues];
     newTypedValues[index] = {
       ...newTypedValues[index],
@@ -425,7 +435,7 @@ const RankChoice = () => {
               enabled={changeState}
               setEnabled={() => {
                 setChangeState((prev) => !prev);
-                setChangedOption("");
+                setChangedOption("Daily");
               }}
             />
           </div>

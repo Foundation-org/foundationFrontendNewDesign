@@ -26,12 +26,14 @@ import {
 const MultipleChoice = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
+  const [prevValue, setPrevValue] = useState("");
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
   const [changedOption, setChangedOption] = useState("");
   const [selectedValues, setSelectedValues] = useState([]);
   const [optionsCount, setOptionsCount] = useState(2);
+  const [prevValueArr, setPrevValueArr] = useState([])
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       question: "",
@@ -97,6 +99,8 @@ const MultipleChoice = () => {
   };
 
   const questionVerification = async (value) => {
+    if(prevValue === question) return
+    setPrevValue(value);
     setCheckQuestionStatus({
       name: "Checking",
       color: "text-[#0FB063]",
@@ -130,6 +134,12 @@ const MultipleChoice = () => {
   };
 
   const answerVerification = async (index, value) => {
+    if(prevValueArr[index]?.value === value) return
+    setPrevValueArr((prev) => {
+      const updatedArray = [...prev];
+      updatedArray[index] = { value };
+      return [...updatedArray];
+    })
     const newTypedValues = [...typedValues];
     newTypedValues[index] = {
       ...newTypedValues[index],
@@ -399,7 +409,7 @@ const MultipleChoice = () => {
                 enabled={changeState}
                 setEnabled={() => {
                   setChangeState((prev) => !prev);
-                  setChangedOption("");
+                  setChangedOption("Daily");
                 }}
               />
             </div>
