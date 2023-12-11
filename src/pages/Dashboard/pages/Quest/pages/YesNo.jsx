@@ -196,7 +196,7 @@ const YesNo = () => {
                 enabled={changeState}
                 setEnabled={() => {
                   setChangeState((prev) => !prev);
-                  setChangedOption("");
+                  setChangedOption("Daily");
                 }}
               />
             </div>

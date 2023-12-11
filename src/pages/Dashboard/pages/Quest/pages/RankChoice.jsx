@@ -442,7 +442,7 @@ const RankChoice = () => {
               enabled={changeState}
               setEnabled={() => {
                 setChangeState((prev) => !prev);
-                setChangedOption("");
+                setChangedOption("Daily");
               }}
             />
           </div>
