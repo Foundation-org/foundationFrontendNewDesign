@@ -26,7 +26,7 @@
 }
 
 .quest-topbar {
-  @apply rounded-[4.619px] px-[6.77px] py-[4.311px] text-[9.237px] font-semibold leading-normal tablet:rounded-[9.675px] tablet:px-[14.19px] tablet:py-[9.03px] tablet:text-[19.35px] xl:rounded-[15px] xl:px-[22px] xl:py-[14px] xl:text-[30px];
+  @apply laptop:rounded-[15px] laptop:px-[22px] laptop:py-[14px] laptop:text-[30px] rounded-[4.619px] px-[6.77px] py-[4.311px] text-[9.237px] font-semibold leading-normal tablet:rounded-[9.675px] tablet:px-[14.19px] tablet:py-[9.03px] tablet:text-[19.35px];
 }
 
 body {

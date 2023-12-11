@@ -89,7 +89,7 @@ export default function Signup() {
         />
       </div>
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-[65px]">
-        <div className="mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0 xl:max-w-[60%]">
+        <div className="laptop:max-w-[60%] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0">
           <Typography variant="textTitle">Create Account</Typography>
           <SocialLogins setProvider={setProvider} setProfile={setProfile} />
           <Typography variant="textInfo" className="font-poppins">
@@ -106,7 +106,7 @@ export default function Signup() {
             togglePasswordVisibility={togglePasswordVisibility}
             toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}
           />
-          <div className="taller:mb-4 taller:mt-0 mb-4 mt-4 flex w-full items-start md:mb-10">
+          <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-4 taller:mt-0">
             {persistedTheme === "dark" ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
@@ -121,7 +121,7 @@ export default function Signup() {
               />
             )}
           </div>
-          <div className="taller:mb-7 mb-12 flex items-start">
+          <div className="mb-12 flex items-start taller:mb-7">
             <div className="form-control mt-[7px] md:mt-0">
               <label className="label flex cursor-pointer gap-[11.5px] p-0">
                 <input
@@ -131,7 +131,7 @@ export default function Signup() {
                 />
               </label>
             </div>
-            <label className="short:text-[12px] ml-4 text-[10.2px] text-gray-100 dark:text-white tablet:text-base 5xl:text-[22px]">
+            <label className="ml-4 text-[10.2px] text-gray-100 dark:text-white tablet:text-base 5xl:text-[22px] short:text-[12px]">
               Creating an account means you’re okay with our{" "}
               <Anchor href="#">Terms of Service</Anchor>,{" "}
               <Anchor href="#">Privacy Policy</Anchor>, and out default{" "}

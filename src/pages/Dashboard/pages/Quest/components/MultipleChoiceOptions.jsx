@@ -54,8 +54,8 @@ const MultipleChoiceOptions = ({
                 )
               ) : null}
             </div>
-            <div className="flex h-[22.5px] w-full items-center justify-between rounded-r-[4.89px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] tablet:h-[46.4px] tablet:rounded-r-[11.284px] xl:h-[75px] xl:rounded-r-2xl ">
-              <h1 className=" w-full pl-[15.44px] text-[10px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pl-[45px] tablet:text-[20.7px] xl:text-[30px] ">
+            <div className="laptop:h-[75px] laptop:rounded-r-2xl flex h-[22.5px] w-full items-center justify-between rounded-r-[4.89px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] tablet:h-[46.4px] tablet:rounded-r-[11.284px] ">
+              <h1 className=" laptop:text-[30px] w-full pl-[15.44px] text-[10px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pl-[45px] tablet:text-[20.7px] ">
                 {answer}
               </h1>
               <div className="flex gap-[55px]">
@@ -79,7 +79,7 @@ const MultipleChoiceOptions = ({
         </div>
       ) : (
         <div className="flex items-center">
-          <div className="flex h-[24.8px] w-[13.46px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[7px] dark:bg-[#9E9E9E] tablet:mt-0 tablet:h-[49.6px] tablet:w-[28.2px] tablet:rounded-l-[10.3px] tablet:pb-[13px] tablet:pt-[14px] xl:h-[74px] xl:w-[40px]">
+          <div className="laptop:h-[74px] laptop:w-[40px] flex h-[24.8px] w-[13.46px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[7px] dark:bg-[#9E9E9E] tablet:mt-0 tablet:h-[49.6px] tablet:w-[28.2px] tablet:rounded-l-[10.3px] tablet:pb-[13px] tablet:pt-[14px]">
             {dragable ? (
               persistedTheme === "dark" ? (
                 <img
@@ -100,14 +100,14 @@ const MultipleChoiceOptions = ({
             {/* <input
               type="text"
               placeholder="option"
-              className="tablet:pr-45 w-full max-w-[838px] rounded-r-[5.387px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] bg-white py-[4.56px] pl-[15.44px] pr-[55px] text-[10px] font-normal leading-[0px] text-[#435059] tablet:rounded-r-[11.284px] tablet:pb-[9.83px] tablet:pl-9 tablet:pt-[11.61px] tablet:text-[20.73px] xl:rounded-r-2xl xl:py-[18px] xl:text-[30px] "
+              className="tablet:pr-45 w-full max-w-[838px] rounded-r-[5.387px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] bg-white py-[4.56px] pl-[15.44px] pr-[55px] text-[10px] font-normal leading-[0px] text-[#435059] tablet:rounded-r-[11.284px] tablet:pb-[9.83px] tablet:pl-9 tablet:pt-[11.61px] tablet:text-[20.73px] laptop:rounded-r-2xl laptop:py-[18px] laptop:text-[30px] "
               onChange={(e) => handleChange(e.target.value)}
               onBlur={(e) => e.target.value.trim() !== "" && answerVerification(e.target.value.trim())}
               value={typedValue}
             /> */}
             <div className="flex w-full">
               <input
-                className="w-full border-y-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] xl:py-[18px] xl:text-[1.875rem]"
+                className="laptop:py-[18px] laptop:text-[1.875rem] w-full border-y-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem]"
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) =>
                   e.target.value.trim() !== "" &&
@@ -118,7 +118,7 @@ const MultipleChoiceOptions = ({
               {title === "MultipleChoice" && trash && (
                 <button
                   id={`test${number}`}
-                  className={`border-y-[1px] border-[#ACACAC]  bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] xl:text-[1.875rem] ${optionStatus?.color} py-[0.29rem]`}
+                  className={`laptop:text-[1.875rem] border-y-[1px]  border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] ${optionStatus?.color} py-[0.29rem]`}
                 >
                   <div className="pr-[1.25rem] tablet:pr-[2.4rem]">
                     <>
@@ -142,7 +142,7 @@ const MultipleChoiceOptions = ({
 
               <button
                 id={`test${number}`}
-                className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] xl:rounded-r-2xl xl:text-[1.875rem] ${optionStatus.color} py-[0.29rem]`}
+                className={`laptop:rounded-r-2xl laptop:text-[1.875rem] relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] ${optionStatus.color} py-[0.29rem]`}
               >
                 <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
                   {optionStatus?.name}

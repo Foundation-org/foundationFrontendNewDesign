@@ -57,7 +57,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   return (
     <div
-      className="absolute left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem] xl:w-[90%]"
+      className="laptop:w-[90%] absolute left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem]"
       style={{ position: "absolute" }}
     >
       <div className="flex w-full justify-between rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">

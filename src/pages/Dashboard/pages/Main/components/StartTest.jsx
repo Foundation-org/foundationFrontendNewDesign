@@ -247,7 +247,7 @@ const StartTest = ({
         <div
           className={`${
             title === "Multiple Choice"
-              ? "ml-[30px] mr-[36px] tablet:mx-[72px] 2xl:mx-[85px]"
+              ? "ml-[30px] mr-[36px] 2xl:mx-[85px] tablet:mx-[72px]"
               : "relative"
           } flex items-center gap-[25px] `}
         >
@@ -256,7 +256,7 @@ const StartTest = ({
               className={`${
                 title === "Multiple Choice"
                   ? "w-full"
-                  : "absolute left-12 top-[2px] w-[80%] xl:w-[90%]"
+                  : "laptop:w-[90%] absolute left-12 top-[2px] w-[80%]"
               }`}
             >
               <div className="rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">

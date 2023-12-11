@@ -1,6 +1,6 @@
 const Navbar = ({ handleTab, tab }) => {
   return (
-    <div className="flex justify-center gap-[15.44px] tablet:gap-[32px] xl:gap-[50px]">
+    <div className="laptop:gap-[50px] flex justify-center gap-[15.44px] tablet:gap-[32px]">
       <button
         className={`${
           tab === 0 ? "bg-[#459EDE] text-white" : "bg-[#E6E6E6] text-[#ACACAC]"
