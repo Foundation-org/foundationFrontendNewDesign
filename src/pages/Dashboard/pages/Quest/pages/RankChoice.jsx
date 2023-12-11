@@ -51,6 +51,7 @@ z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14px] items-center justify-center r
 const RankChoice = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
+  const [prevValue, setPrevValue] = useState("");
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
   const [changedOption, setChangedOption] = useState("");
@@ -120,6 +121,8 @@ const RankChoice = () => {
   };
 
   const questionVerification = async (value) => {
+    if(prevValue === question) return
+    setPrevValue(value);
     setCheckQuestionStatus({
       name: "Checking",
       color: "text-[#0FB063]",

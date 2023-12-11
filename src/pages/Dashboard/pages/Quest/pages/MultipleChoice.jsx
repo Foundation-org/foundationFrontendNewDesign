@@ -21,6 +21,7 @@ import { Tooltip } from "../../../../../utils/Tooltip";
 const MultipleChoice = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
+  const [prevValue, setPrevValue] = useState("");
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
@@ -92,6 +93,8 @@ const MultipleChoice = () => {
   };
 
   const questionVerification = async (value) => {
+    if(prevValue === question) return
+    setPrevValue(value);
     setCheckQuestionStatus({
       name: "Checking",
       color: "text-[#0FB063]",
