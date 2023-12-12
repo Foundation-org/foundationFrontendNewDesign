@@ -92,7 +92,7 @@ export default function Signup() {
         <div className="laptop:max-w-[60%] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0">
           <Typography variant="textTitle">Create Account</Typography>
           <SocialLogins setProvider={setProvider} setProfile={setProfile} />
-          <Typography variant="textInfo" className="font-poppins">
+          <Typography variant="textInfo" className="font-poppins mb-[12px] tablet:mb-[2px]">
             -OR-
           </Typography>
           <Form

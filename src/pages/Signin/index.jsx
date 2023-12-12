@@ -85,16 +85,16 @@ export default function Signin() {
       </div>
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-[65px]">
         <div className="mt-10 flex w-[80%] flex-col justify-center md:mt-0 laptop:max-w-[60%]">
-          <Typography variant="textTitle">Login</Typography>
-          {/* <Typography variant="textSmall">
+          <Typography variant="textTitle" className="text-center tablet:text-left">Login</Typography>
+          <Typography variant="textSmall" className="hidden tablet:block">
               Please fill your detail to access your account.
-            </Typography> */}
+            </Typography>
           <SocialLogins setProvider={setProvider} setProfile={setProfile} />
-          <Typography variant="textInfo" className="font-poppins">
+          <Typography variant="textInfo" className="font-poppins -mb-[14px]">
             -OR-
           </Typography>
           <Form onEmailChange={onEmailChange} onPassChange={onPassChange} />
-          <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-[98px] taller:mt-[35px]">
+          <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-[110px] taller:mt-[35px]">
             {persistedTheme === "dark" ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
