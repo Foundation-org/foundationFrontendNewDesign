@@ -204,7 +204,7 @@ const Bookmark = () => {
           {allData?.map((item, index) => (
             <div key={index + 1}>
               <QuestionCard
-                id={item._id}
+                id={item?._id}
                 img="/assets/svgs/dashboard/badge.svg"
                 alt="badge"
                 badgeCount="5"
@@ -235,10 +235,10 @@ const Bookmark = () => {
                       : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
                 }
                 btnText={item?.startStatus}
-                lastInteractedAt={item.lastInteractedAt}
-                usersChangeTheirAns={item.usersChangeTheirAns}
+                lastInteractedAt={item?.lastInteractedAt}
+                usersChangeTheirAns={item?.usersChangeTheirAns}
                 isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                  return bookmark.questForeignKey === item._id;
+                  return bookmark.questForeignKey === item?._id;
                 })}
               />
             </div>
