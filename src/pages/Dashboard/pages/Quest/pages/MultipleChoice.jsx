@@ -126,7 +126,7 @@ const MultipleChoice = () => {
 
     console.log(params);
 
-    // createQuest(params);
+    createQuest(params);
   };
 
   const questionVerification = async (value) => {
