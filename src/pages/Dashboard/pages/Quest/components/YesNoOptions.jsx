@@ -48,7 +48,7 @@ const YesNoOptions = ({
                 )
               ) : null}
             </div>
-            <div className="flex h-[24.8px] w-full items-center justify-between rounded-r-[4.89px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] tablet:h-[49.6px] tablet:rounded-r-[11.284px] laptop:h-[75px] laptop:rounded-r-2xl ">
+            <div className="flex h-[24.8px] w-full items-center justify-between rounded-r-[4.89px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] tablet:h-[50px] tablet:rounded-r-[11.284px] laptop:h-[74px] laptop:rounded-r-2xl ">
               <h1 className=" w-full pl-[15.44px] text-[10px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pl-[45px] tablet:text-[20.7px] laptop:text-[30px] ">
                 {answer}
               </h1>
