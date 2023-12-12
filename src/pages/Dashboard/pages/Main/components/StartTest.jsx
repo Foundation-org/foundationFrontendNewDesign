@@ -214,7 +214,7 @@ const StartTest = ({
             {({ items }) => (
               <div
                 id="dragIcon2"
-                className="flex flex-col gap-[5.7px] tablet:gap-[11px]"
+                className="flex flex-col gap-[5.7px] tablet:gap-[16px]"
               >
                 {[...items].reverse().map((item, index) => (
                   <SortableItem
@@ -256,7 +256,7 @@ const StartTest = ({
               className={`${
                 title === "Multiple Choice"
                   ? "w-full"
-                  : "laptop:w-[90%] absolute left-12 top-[2px] w-[80%]"
+                  : "absolute left-12 top-[2px] w-[80%] laptop:w-[90%]"
               }`}
             >
               <div className="rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
@@ -348,7 +348,7 @@ const StartTest = ({
             ? "mt-8"
             : addOptionField === 1
               ? "mt-[8rem]"
-              : "mt-4"
+              : "mt-8"
         } mb-8 flex w-full justify-end`}
       >
         <div>

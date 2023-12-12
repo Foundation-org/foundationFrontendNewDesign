@@ -9,8 +9,12 @@
   }
 }
 
+.tab-button {
+  @apply rounded-[5px] border-[1px] px-[10px] py-1 text-[7.48px] font-semibold leading-normal 2xl:px-[24px] 2xl:text-[31.33px] tablet:rounded-[20.93px] tablet:px-8 tablet:py-3 tablet:text-[20px] laptop:px-[44.6px] laptop:py-[16.8px]
+}
+
 .heading {
-  @apply text-[24px] font-semibold leading-normal text-[#616161] dark:text-[#D2D2D2] 2xl:text-[30px];
+  @apply text-[12px] tablet:text-[24px] font-semibold leading-normal text-[#616161] dark:text-[#D2D2D2] 2xl:text-[30px];
 }
 
 .green-select {
@@ -112,10 +116,7 @@ iframe {
 #custom-checkbox .checkbox {
   appearance: none;
   -webkit-appearance: none;
-  /* width: 20px;
-  height: 20px; */
   background: white;
-  /* border-radius: 3.5px; */
   border: 1px solid #0fb063;
   cursor: pointer;
   margin: 0;
@@ -150,8 +151,6 @@ iframe {
 #custom-yello-checkbox .checkbox {
   appearance: none;
   -webkit-appearance: none;
-  /* width: 20px;
-  height: 20px; */
   background: white;
   border-radius: 3.5px;
   border: 1px solid #ffd600;
@@ -199,7 +198,6 @@ iframe {
   }
   .okayContainer {
     height: 47px !important;
-    /* margin-top: 14px; */
   }
 }
 
@@ -222,13 +220,6 @@ iframe {
     height: 45px;
   }
 }
-
-/* @media (min-width: 744px) and (max-width: 1279px) {
-  .sixDotsRankedCOntainer {
-    position: relative;
-    top:-17.5px;
-  }
-} */
 
 .Mui-checked {
   color: #0fb063 !important;

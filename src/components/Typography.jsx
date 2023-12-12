@@ -13,7 +13,7 @@ const Typography = ({
     "textTitle-2":
       "text-[21.023px] md:text-[40px] 5xl:text-[52px] font-[700] text-[#344054] dark:text-white",
     textInfo:
-      "short:text-[16px] tall:text-[20px] text-[13.426px] md:text-[26.331px] 5xl:text-[30px] font-normal tacking-[2.633px] text-gray-300 dark:text-white",
+      "short:text-[16px] tall:text-[20px] text-[13.426px] md:text-[26.331px] 5xl:text-[30px] font-normal tacking-[2.633px] text-gray-300 dark:text-white text-center",
     textBase: "text-[11.21px] md:text-[22px] font-[500]",
     textSmall:
       "text-[10.512px] md:text-[20px] font-[400] leading-[34.49px] text-[#667085] dark:text-white",

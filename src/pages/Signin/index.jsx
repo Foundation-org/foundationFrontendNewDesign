@@ -1,15 +1,15 @@
+import { toast } from "sonner";
 import { useState } from "react";
-import Button from "../../components/Button";
-import SocialLogins from "../../components/SocialLogins";
-import Typography from "../../components/Typography";
-import Form from "./components/Form";
+import { useSelector } from "react-redux";
+import { signIn } from "../../api/userAuth";
+import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
+import Typography from "../../components/Typography";
+import SocialLogins from "../../components/SocialLogins";
+import Form from "./components/Form";
 import ReCAPTCHA from "react-google-recaptcha";
 import "../../index.css";
-import { useMutation } from "@tanstack/react-query";
-import { signIn } from "../../api/userAuth";
-import { toast } from "sonner";
-import { useSelector } from "react-redux";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -84,14 +84,17 @@ export default function Signin() {
         />
       </div>
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-[65px]">
-        <div className="laptop:max-w-[60%] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0">
+        <div className="mt-10 flex w-[80%] flex-col justify-center md:mt-0 laptop:max-w-[60%]">
           <Typography variant="textTitle">Login</Typography>
+          {/* <Typography variant="textSmall">
+              Please fill your detail to access your account.
+            </Typography> */}
           <SocialLogins setProvider={setProvider} setProfile={setProfile} />
           <Typography variant="textInfo" className="font-poppins">
             -OR-
           </Typography>
           <Form onEmailChange={onEmailChange} onPassChange={onPassChange} />
-          <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-5 taller:mt-10">
+          <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-[98px] taller:mt-[35px]">
             {persistedTheme === "dark" ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
@@ -108,7 +111,7 @@ export default function Signin() {
           </div>
 
           <Button size="large" color="blue-200" onClick={handleSignin}>
-             Sign in
+            Sign in
           </Button>
           <div className="mt-[23px] flex justify-center gap-3">
             <Typography

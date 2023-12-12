@@ -158,7 +158,7 @@ const Bookmark = () => {
     }));
   };
   return (
-    <>
+    <div className="flex w-full flex-col laptop:flex-row">
       <SidebarLeft
         handleSearch={handleSearch}
         searchData={searchData}
@@ -212,9 +212,9 @@ const Bookmark = () => {
                 btnColor={
                   item?.startStatus === "completed"
                     ? "bg-[#4ABD71]"
-                      : item?.startStatus === "change answer"
-                        ? "bg-[#FDD503]"
-                        : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                    : item?.startStatus === "change answer"
+                      ? "bg-[#FDD503]"
+                      : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
                 }
                 btnText={item?.startStatus}
                 isBookmarked={bookmarkedData?.data.some((bookmark) => {
@@ -226,7 +226,7 @@ const Bookmark = () => {
         </InfiniteScroll>
       </div>
       <SidebarRight />
-    </>
+    </div>
   );
 };
 

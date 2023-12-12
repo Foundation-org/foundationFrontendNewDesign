@@ -1,16 +1,11 @@
 import { useSelector } from "react-redux";
-import { FaCheck } from "react-icons/fa";
-import { FaExclamation } from "react-icons/fa6";
 import { useEffect } from "react";
 import { useState } from "react";
 import BasicModal from "../../../components/BasicModal";
-import EditNewOption from "./EditNewOption";
 import DeleteOption from "./DeleteOption";
 import { toast } from "sonner";
-// import { getQuests } from "../../../features/quest/questsSlice";
 
 const SingleAnswerRankedChoice = (props) => {
-  //   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [checkState, setCheckState] = useState(props.check);
   const [editModal, setEditModal] = useState(false);
@@ -57,7 +52,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   return (
     <div
-      className="laptop:w-[90%] absolute left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem]"
+      className="absolute left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem] laptop:w-[90%]"
       style={{ position: "absolute" }}
     >
       <div className="flex w-full justify-between rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
@@ -96,13 +91,13 @@ const SingleAnswerRankedChoice = (props) => {
               {props.editable ? (
                 <img
                   src="/assets/svgs/dashboard/edit.svg"
-                  className="h-3 w-4 tablet:h-[19px]"
+                  className="h-3 w-4 cursor-pointer tablet:h-[19px]"
                 />
               ) : null}
               {props.deleteable ? (
                 <img
                   src="/assets/svgs/dashboard/trash.svg"
-                  className="h-3 w-4 tablet:h-[19px]"
+                  className="h-3 w-4 cursor-pointer tablet:h-[19px]"
                   onClick={handleDeleteOpen}
                 />
               ) : null}
