@@ -42,6 +42,8 @@ const Bookmark = () => {
     Page: "Bookmark",
   };
   const [searchData, setSearchData] = useState("");
+  const [viewResult, setViewResult] = useState(null);
+  const [startTest, setStartTest] = useState(null);
   const [clearFilter, setClearFilter] = useState(false);
   const debouncedSearch = useDebounce(searchData, 1000);
 
@@ -151,6 +153,14 @@ const Bookmark = () => {
     }
   }, [pagination.page]);
 
+
+  const handleStartTest = (testId) => {
+    setStartTest((prev) => (prev === testId ? null : testId));
+  };
+  const handleViewResults = (testId) => {
+    setViewResult((prev) => (prev === testId ? null : testId));
+  };
+
   const fetchMoreData = () => {
     setPagination((prevPagination) => ({
       ...prevPagination,
@@ -208,6 +218,14 @@ const Bookmark = () => {
                         : "Yes/No"
                 }
                 answers={item?.QuestAnswers}
+                time={item?.createdAt}
+                multipleOption={item?.userCanSelectMultiple}
+                viewResult={viewResult}
+                startTest={startTest}
+                handleViewResults={handleViewResults}
+                handleStartTest={handleStartTest}
+                whichTypeQuestion={item?.whichTypeQuestion}
+                usersAddTheirAns={item?.usersAddTheirAns}
                 question={item?.Question}
                 btnColor={
                   item?.startStatus === "completed"
@@ -217,6 +235,8 @@ const Bookmark = () => {
                       : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
                 }
                 btnText={item?.startStatus}
+                lastInteractedAt={item.lastInteractedAt}
+                usersChangeTheirAns={item.usersChangeTheirAns}
                 isBookmarked={bookmarkedData?.data.some((bookmark) => {
                   return bookmark.questForeignKey === item._id;
                 })}

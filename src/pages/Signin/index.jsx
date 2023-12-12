@@ -94,7 +94,7 @@ export default function Signin() {
             -OR-
           </Typography>
           <Form onEmailChange={onEmailChange} onPassChange={onPassChange} />
-          <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-[110px] taller:mt-[35px]">
+          <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-[30px] taller:mt-[35px]">
             {persistedTheme === "dark" ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
