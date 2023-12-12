@@ -4,7 +4,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { changeOptions } from "../../../../../utils/options";
-// import Options from "../components/Options";
+import { SortableItem, SortableList } from "@thaddeusjiang/react-sortable-list";
+import { useSelector } from "react-redux";
+import Options from "../components/Options";
 import {
   answerValidation,
   checkAnswerExist,
@@ -22,6 +24,32 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+const DragHandler = (props) => {
+  const persistedTheme = useSelector((state) => state.utils.theme);
+  return (
+    <div
+      {...props}
+      className="
+laptop:h-[74px] laptop:w-[38px] z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-[54px] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px]"
+    >
+      <div title="drag handler" className="flex items-center">
+        {persistedTheme === "dark" ? (
+          <img
+            src="/assets/svgs/dashboard/six-dots-dark.svg"
+            alt="six dots"
+            className="h-[8.8px] tablet:h-7"
+          />
+        ) : (
+          <img
+            src="/assets/svgs/dashboard/six-dots.svg"
+            alt="six dots"
+            className="h-[8.8px] tablet:h-7"
+          />
+        )}
+      </div>
+    </div>
+  );
+};
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -36,6 +64,7 @@ const MultipleChoice = () => {
   const [prevValueArr, setPrevValueArr] = useState([])
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
+      id: `index-${index}`,
       question: "",
       selected: false,
       optionStatus: {
@@ -95,7 +124,9 @@ const MultipleChoice = () => {
       uuid: localStorage.getItem("uId"),
     };
 
-    createQuest(params);
+    console.log(params);
+
+    // createQuest(params);
   };
 
   const questionVerification = async (value) => {
@@ -215,6 +246,7 @@ const MultipleChoice = () => {
     setTypedValues((prevValues) => [
       ...prevValues,
       {
+        id: `index-${optionsCount}`,
         question: "",
         selected: false,
         optionStatus: {
@@ -285,6 +317,11 @@ const MultipleChoice = () => {
     setOptionsCount(newOptionsCount);
   };
 
+  const handleOnSortEnd = (sortedItems) => {
+    setTypedValues(sortedItems.items);
+  };
+
+
   return (
     <div>
       <Title />
@@ -317,12 +354,10 @@ const MultipleChoice = () => {
             }
             value={question}
           />
-          {/* <div className="relative"> */}
           <button
             id="new"
             // data-tooltip-offset={-25}
             className={`laptop:rounded-r-2xl laptop:text-[1.875rem] relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] ${checkQuestionStatus.color} py-[0.29rem]`}
-            // className={`test join-item btn-lg h-[4.7rem] bg-white text-3xl font-semibold ${checkQuestionStatus.color}`}
           >
             <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
               {checkQuestionStatus.name}
@@ -330,25 +365,51 @@ const MultipleChoice = () => {
             <Tooltip optionStatus={checkQuestionStatus} />
           </button>
 
-          {/* </div> */}
         </div>
-        {/* Tooltip */}
-        {/* <Tooltip
-          anchorSelect="#new"
-          isOpen={checkQuestionStatus.name === "Fail" && true}
-          border="1px solid red"
-          style={{
-            backgroundColor: "#fbdfe4",
-            color: "#222",
-            border: "red",
-            width: "auto",
-            marginRight: "3rem",
-          }}
-          place="top"
+        <SortableList
+          items={typedValues}
+          setItems={setTypedValues}
+          onSortEnd={handleOnSortEnd}
+          
         >
-          {checkQuestionStatus.tooltipName}
-        </Tooltip> */}
-        {/* options */}
+          {({ items }) => (
+            <div
+              id="dragIcon"
+              className="laptop:gap-[30px] mt-[1.46rem] flex flex-col gap-[9.24px] tablet:mb-8 tablet:mt-10 tablet:gap-5"
+            >
+              {items.map((item, index) => (
+                <SortableItem
+                  key={item.id}
+                  id={item.id}
+                  DragHandler={DragHandler}
+                >
+                  <Options
+                    key={index}
+                    title="MultipleChoice"
+                    allowInput={true}
+                    label={`Option ${index + 1} #`}
+                    trash={true}
+                    options={false}
+                    dragable={true}
+                    handleChange={(value) => handleChange(index, value)}
+                    handleOptionSelect={() => handleOptionSelect(index)}
+                    typedValue={item.question}
+                    isSelected={item.selected}
+                    optionsCount={optionsCount}
+                    removeOption={() => removeOption(index)}
+                    number={index}
+                    optionStatus={typedValues[index].optionStatus}
+                    answerVerification={(value) =>
+                      answerVerification(index, value)
+                    }
+                  />
+                </SortableItem>
+              ))}
+            </div>
+          )}
+        </SortableList>
+
+        {/* options
         <div className="laptop:gap-[30px] mt-[1.46rem] flex flex-col gap-[9.24px] tablet:mt-10 tablet:gap-5">
           {[...Array(optionsCount)].map((_, index) => (
             <MultipleChoiceOptions
@@ -369,14 +430,13 @@ const MultipleChoice = () => {
               optionStatus={typedValues[index]?.optionStatus}
               answerVerification={(value) => answerVerification(index, value)}
             />
-          ))}
+          ))} */}
           <button
-            className="laptop:rounded-[23.6px] laptop:px-6 laptop:py-3 laptop:text-[31px] ml-[21.55px] mt-[6px] w-fit rounded-[7.287px] bg-[#C9C9C9] px-[7.29px] py-[3.89px] text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[50px] tablet:mt-5 tablet:rounded-[15.265px] tablet:px-[15.27px] tablet:py-[8.14px] tablet:text-[20.736px]"
-            onClick={handleAddOption}
-          >
-            + Add Option
-          </button>
-        </div>
+          className="laptop:rounded-[23.6px] laptop:px-6 laptop:py-3 laptop:text-[31px] ml-[21.55px] mt-[16px] w-fit rounded-[7.287px] bg-[#C9C9C9] px-[7.29px] py-[3.89px] text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[50px] tablet:mt-5 tablet:rounded-[15.265px] tablet:px-[15.27px] tablet:py-[8.14px] tablet:text-[20.736px]"
+          onClick={handleAddOption}
+        >
+          + Add Option
+        </button>
         <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
           Customize your Quest
         </h3>

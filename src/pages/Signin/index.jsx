@@ -83,18 +83,15 @@ export default function Signin() {
           className="h-[45px] w-[58px]"
         />
       </div>
-      <div className=" flex h-screen w-full flex-col items-center bg-white dark:bg-dark  md:justify-center lg:rounded-r-[65px]">
-        <div className="mt-6 flex max-w-[800px] flex-col justify-center md:mt-0 lg:w-[500px] 2xl:w-[600px] 5xl:w-[800px]">
-          <Typography variant="textTitle-2">Login</Typography>
-          <Typography variant="textSmall">
-            Please fill your detail to access your account.
-          </Typography>
+      <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-[65px]">
+        <div className="laptop:max-w-[60%] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0">
+          <Typography variant="textTitle">Login</Typography>
           <SocialLogins setProvider={setProvider} setProfile={setProfile} />
-          <div className="flex w-full justify-center">
-            <Typography variant="textInfo">-OR-</Typography>
-          </div>
+          <Typography variant="textInfo" className="font-poppins">
+            -OR-
+          </Typography>
           <Form onEmailChange={onEmailChange} onPassChange={onPassChange} />
-          <div className="tall:mb-4 tall:mt-0 my-8 flex w-fit items-start md:mb-14 md:mt-12">
+          <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-4 taller:mt-0">
             {persistedTheme === "dark" ? (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
@@ -111,14 +108,14 @@ export default function Signin() {
           </div>
 
           <Button size="large" color="blue-200" onClick={handleSignin}>
-            <Typography variant="textBase"> Sign in</Typography>
+             Sign in
           </Button>
           <div className="mt-[23px] flex justify-center gap-3">
             <Typography
               variant="textBase"
               className="text-gray-100 dark:text-gray"
             >
-              Already have an account?
+              Do not have an account?
             </Typography>
             <Link to="/">
               <Typography

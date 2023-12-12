@@ -115,7 +115,7 @@ const Options = ({
                 }
                 value={typedValue}
               />
-              {title === "RankChoice" && trash && (
+              {(title === "RankChoice" || title === "MultipleChoice" ) && trash && (
                 <button
                   id={`test${number}`}
                   // data-tooltip-offset={-25}
@@ -160,7 +160,7 @@ const Options = ({
                   : "laptop:left-[44rem] absolute left-[221px] tablet:left-[24rem]"
               } laptop:-top-[74px] -top-[22px] flex w-fit items-center tablet:-top-[46px]`}
             >
-              {title === "MultipleChoice" && trash ? (
+              {/* {title === "MultipleChoice" && trash ? (
                 <>
                   {optionsCount > 2 && (
                     <div
@@ -176,7 +176,7 @@ const Options = ({
                     </div>
                   )}
                 </>
-              ) : null}
+              ) : null} */}
               {/* <h1 className={`leading-0 ml-4 border-l-2 border-[#F3F3F3] pr-9 pl-6 text-[30px] font-semibold ${optionStatus?.color}`}>
                 {optionStatus?.name}
               </h1> */}
