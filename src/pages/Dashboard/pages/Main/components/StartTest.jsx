@@ -334,7 +334,7 @@ const StartTest = ({
                       className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                     />
                   )}
-                  + Add Option
+                   Add Option
                 </button>
               ) : null
             ) : null}

@@ -33,7 +33,7 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
         {isOpen && (
           <ul
             tabIndex={0}
-            className="menu dropdown-content z-[100] w-fit min-w-[5rem] rounded-[10px] bg-[#ACACAC] p-0 py-1 text-[0.5rem] leading-[2] text-white shadow tablet:rounded-box tablet:w-36 tablet:text-sm laptop:w-52"
+            className="menu dropdown-content z-[100] w-fit min-w-[5rem] rounded-[10px] bg-[#F4F6F6] dark:bg-dark-gray shadow-md p-0 py-1 text-[0.5rem] leading-[2] text-white shadow tablet:rounded-box tablet:w-36 tablet:text-sm laptop:w-52"
           >
             {items.map((item, index) => (
               <li
@@ -42,7 +42,7 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
                   handleSelect(item);
                   setIsOpen(!open);
                 }}
-                className="text-white hover:bg-[#0A0A0C]  "
+                className="text-[#9D9D9D] dark:text-white  hover:bg-gray rounded-[10px]  "
               >
                 <a className="px-2 py-0.5 tablet:px-4 tablet:py-2">{item}</a>
               </li>

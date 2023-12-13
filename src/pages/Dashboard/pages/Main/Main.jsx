@@ -231,6 +231,7 @@ const Main = () => {
                 usersAddTheirAns={item?.usersAddTheirAns}
                 handleViewResults={handleViewResults}
                 handleStartTest={handleStartTest}
+                startStatus={item?.startStatus}
                 btnColor={
                   item?.startStatus === "completed"
                     ? "bg-[#4ABD71]"

@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 
 const Contributions = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedTheme = useSelector((state) => state.utils.theme);
 
   const list = [
     {
@@ -86,7 +87,7 @@ const Contributions = () => {
             <div className="w-full" key={item.id}>
               <div className="flex flex-col items-center justify-center">
                 <img
-                  src={item.icon}
+                  src={persistedTheme === "dark" ?item.icon:item.iconLight}
                   alt={item.alt}
                   className="mb-[18px] h-[60px] w-[50px]"
                 />
@@ -111,7 +112,7 @@ const Contributions = () => {
               <div className="w-full" key={item.id}>
                 <div className="flex flex-col items-center justify-center">
                   <img
-                    src={item.icon}
+                    src={persistedTheme === "dark" ?item.icon:item.iconLight}
                     alt={item.alt}
                     className="mb-[7px] h-[30px] w-8 tablet:mb-[18px] tablet:h-[60px] tablet:w-[50px]"
                   />
@@ -135,7 +136,7 @@ const Contributions = () => {
               <div className="w-full" key={item.id}>
                 <div className="flex flex-col items-center justify-center">
                   <img
-                    src={item.icon}
+                    src={persistedTheme === "dark" ?item.icon:item.iconLight}
                     alt={item.alt}
                     className="mb-[7px] h-[30px] w-8 tablet:mb-[18px] tablet:h-[60px] tablet:w-[50px]"
                   />

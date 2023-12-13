@@ -83,7 +83,7 @@ export default function Signin() {
           className="h-[45px] w-[58px]"
         />
       </div>
-      <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-[65px]">
+      <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-tr-[65px] lg:rounded-br-[65px]">
         <div className="mt-10 flex w-[80%] flex-col justify-center md:mt-0 laptop:max-w-[60%]">
           <Typography variant="textTitle" className="text-center tablet:text-left">Login</Typography>
           <Typography variant="textSmall" className="hidden tablet:block">

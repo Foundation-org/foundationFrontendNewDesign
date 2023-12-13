@@ -429,41 +429,55 @@ const RankChoice = () => {
             </h5>
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
-          <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
-            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
-              Participants can change their choice at a later time.
-            </h5>
-            <CustomSwitch
-              enabled={changeState}
-              setEnabled={() => {
-                setChangeState((prev) => !prev);
-                setChangedOption("Daily");
-              }}
-            />
-          </div>
-          {changeState ? (
-            <FormControl>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue=""
-                name="radio-buttons-group"
-              >
-                <div className="flex flex-wrap justify-center gap-4">
-                  {changeOptions?.map((item) => (
-                    <FormControlLabel
-                      key={item.id}
-                      value={item.value}
-                      control={<Radio sx={{ color: "#0FB063" }} />}
-                      label={item.title}
-                      onChange={(e) => {
-                        setChangedOption(e.target.value);
-                      }}
-                    />
-                  ))}
-                </div>
-              </RadioGroup>
-            </FormControl>
-          ) : null}
+          <>
+            <div className="mx-5 flex flex-col items-center rounded-[0.30925rem] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:rounded-[16px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
+              <div className="flex items-center justify-between w-full mb-4">
+                <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
+                Participants can change their choice at a later time.
+                </h5>
+                <CustomSwitch
+                  enabled={changeState}
+                  setEnabled={() => {
+                    setChangeState((prev) => !prev);
+                    setChangedOption("Daily");
+                  }}
+                />
+              </div>
+
+              {changeState ? (
+                <FormControl>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue=""
+                    name="radio-buttons-group"
+                  >
+                    <div className="flex flex-wrap justify-center gap-4">
+                      {changeOptions?.map((item) => (
+                        <FormControlLabel
+                          key={item.id}
+                          value={item.value}
+                          control={<Radio
+                            sx={{
+                              color: "#7C7C7C",
+                              "&.Mui-checked": {
+                                color: "#0FB063",
+                                borderColor: "#0FB063", // Set the border color when checked
+                              },
+                            }}
+                          />}
+                          label={item.title}
+                          onChange={(e) => {
+                            setChangedOption(e.target.value);
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </RadioGroup>
+                </FormControl>
+              ) : null}
+            </div>
+
+          </>
         </div>
         <div className="flex w-full justify-end">
           <button

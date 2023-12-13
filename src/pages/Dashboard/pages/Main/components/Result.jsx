@@ -272,7 +272,7 @@ const Result = (props) => {
       ) : (
         <></>
       )}
-      <div className="my-8 flex w-full justify-center">
+      <div className="my-8 flex w-[98%] justify-end">
         <button
           className={`${
             persistedTheme === "dark"

@@ -40,6 +40,7 @@ const QuestionCard = ({
   usersChangeTheirAns,
   usersAddTheirAns,
   multipleOption,
+  startStatus,
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -488,6 +489,8 @@ const QuestionCard = ({
             setRankedAnswers={setRankedAnswers}
             answersSelection={answersSelection}
             setAnswerSelection={setAnswerSelection}
+            startStatus={startStatus}
+            
           />
         )
       ) : (
@@ -506,6 +509,7 @@ const QuestionCard = ({
           setRankedAnswers={setRankedAnswers}
           viewResult={viewResult}
           handleViewResults={handleViewResults}
+          startStatus={startStatus}
         />
       )}
     </div>
