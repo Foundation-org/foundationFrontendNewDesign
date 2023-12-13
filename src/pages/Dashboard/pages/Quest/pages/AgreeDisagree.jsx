@@ -113,13 +113,15 @@ const AgreeDisagree = () => {
 
   return (
     <div>
-      <Title />
+      <h4 className="laptop:mt-[47px] laptop:text-[25px] mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25.8px] tablet:text-[16.58px]">
+      Make a statement that anyone can "Agree" or "Disagree" with
+    </h4>
       <div className="mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]">
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[32px]">
           Create Quest
         </h1>
         <h3 className="mb-[13.54px] ml-[32px] mt-[11.71px] text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:ml-[67px] tablet:mt-[20.38px] tablet:text-[16.58px] laptop:mb-[22px] laptop:ml-[104px] laptop:mt-[38px] laptop:text-[25px]">
-          Make a statement or pose a question
+
         </h3>
         <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[73px]">
           <input
@@ -139,18 +141,19 @@ const AgreeDisagree = () => {
               questionVerification(e.target.value.trim())
             }
             value={question}
+            placeholder="Make a statement"
           />
           <button
             id="test"
             className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
           >
-            <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
+            <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.313rem]">
               {checkQuestionStatus.name}
             </div>
             <Tooltip optionStatus={checkQuestionStatus} />
           </button>
         </div>
-        <div className="mt-[1.46rem] flex flex-col gap-[7px] tablet:mt-10 tablet:gap-[15px] laptop:gap-[30px]">
+        <div className="mt-[1.46rem] flex flex-col gap-[7px] tablet:mt-10 tablet:gap-[14px] laptop:gap-[30px]">
           <AgreeDisagreeOptions
             answer={"Agree"}
             options={false}
