@@ -5,7 +5,7 @@ import Button from "./Button";
 
 const REDIRECT_URI = window.location.href;
 
-const SocialLogins = ({ setProvider, setProfile }) => {
+const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   // const onLogoutSuccess = useCallback(() => {
@@ -17,12 +17,13 @@ const SocialLogins = ({ setProvider, setProfile }) => {
   return (
     <div className="laptop:justify-between my-5 flex gap-2 md:mb-6 md:mt-[37.8px] 5xl:mb-9 tall:my-4 laptop:w-[35.2vw]">
       <LoginSocialGoogle
-        isOnlyGetToken
+        // isOnlyGetToken
         client_id={import.meta.env.VITE_GG_APP_ID}
         redirect_uri={REDIRECT_URI}
         onResolve={({ provider, data }) => {
           setProvider(provider);
           setProfile(data);
+          handleSignUpSocial(data);
         }}
         onReject={(err) => {
           console.log(err);
@@ -42,9 +43,10 @@ const SocialLogins = ({ setProvider, setProfile }) => {
         onResolve={({ provider, data }) => {
           setProvider(provider);
           setProfile(data);
+          // console.log(data.access_token);
         }}
         onReject={(err) => {
-          console.log(err);
+          // console.log(err);
         }}
       >
         <button className="flex h-[34.3px] w-fit items-center whitespace-nowrap rounded-[6.043px] border-[1px] border-gray-200 bg-white px-2 text-center text-[8.951px] font-[500] text-black dark:border-white dark:bg-dark-gray dark:text-white md:h-[67.2px] md:text-[15px] 2xl:rounded-[11.703px] 2xl:px-4 2xl:text-[17.554px] 5xl:w-[320px] taller:h-[52px]">
