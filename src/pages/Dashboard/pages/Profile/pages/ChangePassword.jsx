@@ -47,36 +47,37 @@ const ChangePassword = () => {
             persistedTheme === "dark" ? "dark-shadow-inside" : "shadow-inside"
           }  relative mx-6 h-full rounded-[11px] pb-[22.72px] pt-[12.9px] tablet:mx-6 tablet:rounded-[24.8px] tablet:pb-[88px] tablet:pt-[50px] laptop:mx-[106px] laptop:rounded-[45px]`}
         >
-          <div className="mx-[12.4px] flex gap-[25.82px] tablet:mx-6 tablet:gap-6 laptop:mx-12 laptop:gap-[100px]">
-            <div className="hidden w-full flex-col gap-3 2xl:gap-[21px] laptop:flex">
-              <label className="ml-[6.4px] text-[7.47px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#CBCBCB] 2xl:text-[24px] tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px]">
+          <div className="mx-5 flex flex-col gap-5 tablet:mx-6 tablet:flex-row tablet:gap-6 laptop:mx-12 laptop:gap-[100px]">
+            <div className="flex w-full flex-col gap-3 2xl:gap-[21px]">
+              <label className="ml-[6.4px] text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#CBCBCB] 2xl:text-[24px] tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px]">
                 Current Password
               </label>
               <input
                 type="password"
-                className="custom-inset-shadow h-[25.3px] w-full rounded-[29px] bg-[#FCFCFD] px-8 py-2 text-xl dark:bg-[#080A0C] 2xl:h-[98px] tablet:h-[74px]"
+                // className="custom-inset-shadow h-[5.8vh] w-full rounded-[7.48px] bg-[#FCFCFD] px-8 py-2 text-xl dark:bg-[#080A0C] 2xl:h-[98px] tablet:h-16 tablet:rounded-[10.11px] laptop:h-[74px] laptop:rounded-[29px]"
+                className="custom-inset-shadow h-[5.8vh] w-full rounded-[7.48px] bg-[#FCFCFD] px-8 py-2 text-xl dark:bg-[#080A0C]  tablet:rounded-[10.11px]  laptop:rounded-[29px]"
                 name="currentPassword"
                 required
               />
             </div>
             <div className="flex w-full flex-col gap-[5.72px] 2xl:gap-[21px] tablet:gap-3">
-              <label className="ml-[6.4px] text-[7.47px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#CBCBCB] 2xl:text-[24px] tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px]">
+              <label className="ml-[6.4px] text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#CBCBCB] 2xl:text-[24px] tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px]">
                 New Password
               </label>
               <input
                 type="password"
-                className="custom-inset-shadow h-[25.3px] w-full rounded-[7.48px] bg-[#FCFCFD] px-8 py-2 text-xl dark:bg-[#080A0C] 2xl:h-[98px] tablet:h-16 tablet:rounded-[10.11px] laptop:h-[74px] laptop:rounded-[29px]"
+                className="custom-inset-shadow h-[5.8vh] w-full rounded-[7.48px] bg-[#FCFCFD] px-8 py-2 text-xl dark:bg-[#080A0C] tablet:rounded-[10.11px]  laptop:rounded-[29px]"
                 name="newPassword"
                 required
               />
             </div>
-            <div className="flex w-full flex-col gap-[5.72px] 2xl:gap-[21px] tablet:gap-3">
-              <label className="ml-[6.4px] text-[7.47px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#CBCBCB] 2xl:text-[24px]  tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px]">
+            <div className="mb-[2.125rem] flex w-full flex-col gap-[5.72px] 2xl:gap-[21px] tablet:gap-3">
+              <label className="ml-[6.4px] text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#CBCBCB] 2xl:text-[24px]  tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px]">
                 Re-type New Password
               </label>
               <input
                 type="password"
-                className="custom-inset-shadow h-[25.3px] w-full rounded-[7.48px] bg-[#FCFCFD] px-8 py-2 text-xl dark:bg-[#080A0C] 2xl:h-[98px] tablet:h-16 tablet:rounded-[10.11px] laptop:h-[74px] laptop:rounded-[29px]"
+                className="custom-inset-shadow h-[5.8vh] w-full rounded-[7.48px] bg-[#FCFCFD] px-8 py-2 text-xl dark:bg-[#080A0C] tablet:rounded-[10.11px] laptop:rounded-[29px]"
                 name="retypePassword"
                 required
               />
