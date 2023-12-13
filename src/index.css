@@ -10,11 +10,11 @@
 }
 
 .tab-button {
-  @apply rounded-[5px] border-[1px] px-[10px] py-1 text-[7.48px] font-semibold leading-normal 2xl:px-[24px] 2xl:text-[31.33px] tablet:rounded-[20.93px] tablet:px-8 tablet:py-3 tablet:text-[20px] laptop:px-[44.6px] laptop:py-[16.8px]
+  @apply rounded-[5px] border-[1px] px-[10px] py-1 text-[7.48px] font-semibold leading-normal 2xl:px-[24px] tablet:rounded-[10.4px] tablet:px-[21px] tablet:py-2 tablet:text-[15.5px] laptop:rounded-[20.93px] laptop:px-8 laptop:py-3 laptop:text-[1.958rem];
 }
 
 .heading {
-  @apply text-[12px] tablet:text-[24px] font-semibold leading-normal text-[#616161] dark:text-[#D2D2D2] 2xl:text-[30px];
+  @apply text-[12px] font-semibold leading-normal text-[#616161] dark:text-[#D2D2D2] 2xl:text-[30px] tablet:text-[26.9px] laptop:text-[24px];
 }
 
 .green-select {
@@ -30,7 +30,12 @@
 }
 
 .quest-topbar {
-  @apply laptop:rounded-[15px] laptop:px-[22px] laptop:py-[14px] laptop:text-[30px] rounded-[4.619px] px-[6.77px] py-[4.311px] text-[9.237px] font-semibold leading-normal tablet:rounded-[9.675px] tablet:px-[14.19px] tablet:py-[9.03px] tablet:text-[19.35px];
+  @apply rounded-[4.619px] px-[6.77px] py-[4.311px] text-[9.237px] font-semibold leading-normal tablet:rounded-[9.675px] tablet:px-[14.19px] tablet:py-[9.03px] tablet:text-[19.35px] laptop:rounded-[15px] laptop:px-[22px] laptop:py-[14px] laptop:text-[30px];
+}
+
+.kqFNyH {
+  font-size: 14px !important;
+  line-height: 1.5;
 }
 
 body {
@@ -97,6 +102,30 @@ iframe {
 
 .shadow-inside {
   box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+}
+
+.dark-shadow-inside {
+  border-radius: 45px;
+  border: 2px solid #858585;
+  background: #141618;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.dark-shadow-input {
+  border-radius: 10.11px;
+  background: #0d1012;
+  box-shadow: 0px 0px 9.167px 0px rgba(0, 0, 0, 0.15) inset;
+}
+
+.dark-shadow-inside-tab {
+  border-radius: 11.728px;
+  background: #141618;
+  box-shadow: 0px 0px 1.564px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.dark-shadow-inside-custom {
+  background: #141618;
+  box-shadow: 0px 0px 1.564px 0px rgba(0, 0, 0, 0.25) inset;
 }
 
 .goZmTm {

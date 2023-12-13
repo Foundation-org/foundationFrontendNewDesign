@@ -2,6 +2,9 @@ export const columns = [
   {
     name: "txUserAction",
     selector: (row) => row.txUserAction,
+    style: {
+      fontSize: "16px"
+    }
   },
   {
     name: "txID",

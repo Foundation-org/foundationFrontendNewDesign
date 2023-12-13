@@ -26,12 +26,20 @@ const OptionBar = ({
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
       // Check in selected array
-      if (apiResponse.selected.some(selectedItem => selectedItem.question === item.label)) {
+      if (
+        apiResponse.selected.some(
+          (selectedItem) => selectedItem.question === item.label,
+        )
+      ) {
         answerSelectionArray[index].check = true;
       }
-      
+
       // Check in contended array
-      if (apiResponse.contended.some(contendedItem => contendedItem.question === item.label)) {
+      if (
+        apiResponse.contended.some(
+          (contendedItem) => contendedItem.question === item.label,
+        )
+      ) {
         answerSelectionArray[index].contend = true;
       }
     });
@@ -67,7 +75,6 @@ const OptionBar = ({
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
             "yes"
         ) {
-
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].contended,
             false,
@@ -80,7 +87,6 @@ const OptionBar = ({
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
             "no"
         ) {
-
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].contended,
             false,
@@ -93,7 +99,6 @@ const OptionBar = ({
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
             "no"
         ) {
-
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].selected,
             true,
@@ -102,7 +107,10 @@ const OptionBar = ({
         }
       }
       if (whichTypeQuestion === "multiple choise") {
-        updateAnswerSelection(res?.data.data[res.data.data.length - 1], answersSelection);
+        updateAnswerSelection(
+          res?.data.data[res.data.data.length - 1],
+          answersSelection,
+        );
       }
       if (whichTypeQuestion === "ranked choise") {
         console.log(
@@ -177,7 +185,7 @@ const OptionBar = ({
       getStartQuestDetail(data);
       handleStartTest(id);
     }
-    if(btnText==="completed"){
+    if (btnText === "completed") {
       handleViewResults(id);
     }
   };
@@ -211,20 +219,20 @@ const OptionBar = ({
   return (
     <>
       <div className="mb-1 flex items-center">
-        <div className="tablet:gap-[42px] mb-1 mr-[30px] flex w-full justify-end gap-[19.14px]">
+        <div className="mb-1 mr-[30px] flex w-full justify-end gap-[19.14px] tablet:gap-[42px]">
           <button
             className={` ${getButtonClassName(
               persistedTheme,
               btnText,
               btnColor,
-            )} tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] mt-[16.2px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white`}
+            )} mt-[16.2px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
             onClick={handleStartChange}
           >
             {getButtonText(btnText)}
           </button>
 
           <button
-            className="tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px] mt-[16.2px] w-[78px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[7.1px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#20D47E] dark:border-[#7C7C7C] dark:text-[#C9C8C8]"
+            className="mt-[16.2px] w-[78px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[7.1px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#20D47E] dark:border-[#7C7C7C] dark:text-[#C9C8C8] tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px]"
             onClick={() => {
               if (btnText !== "") {
                 handleViewResults(id);
@@ -237,13 +245,13 @@ const OptionBar = ({
           </button>
         </div>
       </div>
-      <div className="tablet:mb-[23px] tablet:ml-[26px] tablet:h-[26px] tablet:w-[114px] tablet:gap-1 tablet:rounded-[10px] mb-3 ml-[14.24px] flex h-3 w-[53.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D]">
+      <div className="mb-3 ml-[14.24px] flex h-3 w-[53.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:mb-[23px] tablet:ml-[26px] tablet:h-[26px] tablet:w-[114px] tablet:gap-1 tablet:rounded-[10px]">
         <img
           src="/assets/svgs/dashboard/clock-outline.svg"
           alt="clock"
-          className="tablet:h-4 tablet:w-4 h-[7.64px] w-[7.64px]"
+          className="h-[7.64px] w-[7.64px] tablet:h-4 tablet:w-4"
         />
-        <p className="tablet:text-[10px] text-[6px] font-[400] leading-normal text-[#9C9C9C]">
+        <p className="text-[6px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[10px]">
           {timeAgo}
         </p>
       </div>

@@ -107,7 +107,7 @@ const SidebarRight = () => {
   }, []);
 
   return (
-    <div className="no-scrollbar laptop:block hidden h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-10 shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#0A0A0C] 2xl:w-[25rem]">
+    <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-10 shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#0A0A0C] 2xl:w-[25rem] laptop:block">
       <div className="mb-11 flex gap-6">
         <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" />
         <div>

@@ -4,6 +4,7 @@ import { getAllLedgerData, searchLedger } from "../../../../../api/userAuth";
 import { columns, tableCustomStyles } from "../components/LedgerUtils";
 import { Pagination } from "@mui/material";
 import DataTable from "react-data-table-component";
+import { useSelector } from "react-redux";
 
 const Ledger = () => {
   const itemsPerPage = 10;
@@ -13,6 +14,7 @@ const Ledger = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const debouncedSearch = useDebounce(filterText, 1000);
+  const persistedTheme = useSelector((state) => state.utils.theme);
 
   const { data: ledgerData } = useQuery({
     queryFn: () => {
@@ -50,68 +52,68 @@ const Ledger = () => {
   const subHeaderComponentMemo = useMemo(() => {
     return (
       <div className="flex w-full justify-between">
-        <div className="flex gap-[63px]">
+        <div className="flex gap-[10.97px] tablet:gap-[63px]">
           {/* profile */}
-          <div className="flex gap-[13px]">
+          <div className="flex gap-[7px] tablet:gap-[13px]">
             <img
               src="/assets/svgs/dashboard/person.svg"
               alt="person icon"
-              className="h-[44.2px] w-[44.2px]"
+              className="h-[18.5px] w-[18.5px] tablet:h-[44.2px] tablet:w-[44.2px]"
             />
             <div>
-              <h1 className="text-[20.7px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC]">
+              <h1 className="text-[8.6px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC] tablet:text-[20.7px]">
                 My Profile
               </h1>
-              <div className="flex gap-1 text-[13.824px] font-normal leading-normal text-[#616161]">
+              <div className="flex gap-1 text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[13.824px]">
                 <p>Balance</p>
                 <p>0.98</p>
               </div>
             </div>
           </div>
           {/* treasury */}
-          <div className="flex gap-[13px]">
+          <div className="flex gap-[7px] tablet:gap-[13px]">
             <img
               src="/assets/svgs/dashboard/treasure.svg"
               alt="person icon"
-              className="h-[44.2px] w-[44.2px]"
+              className="h-[18.5px] w-[18.5px] tablet:h-[44.2px] tablet:w-[44.2px]"
             />
             <div>
-              <h1 className="text-[20.7px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC]">
+              <h1 className="text-[8.6px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC] tablet:text-[20.7px]">
                 Treasury
               </h1>
-              <div className="flex gap-1 text-[13.824px] font-normal leading-normal text-[#616161]">
+              <div className="flex gap-1 text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[13.824px]">
                 <p>Balance</p>
                 <p>1,357,432.20</p>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-[23.5px]">
+        <div className="flex items-center gap-[5.4px] tablet:gap-[23.5px]">
           {/* search */}
-          <div className="relative flex h-[43px]">
+          <div className="relative flex h-[12.6px] tablet:h-[43px]">
             <img
               src="/assets/svgs/dashboard/search2.svg"
               alt="search icon"
-              className="absolute left-[9.22px] top-1/2 h-[27px] w-[27px] -translate-y-[50%] transform"
+              className="absolute left-1 top-1/2 h-2 w-2 -translate-y-[50%] transform tablet:left-[9.22px] tablet:h-[27px] tablet:w-[27px]"
             />
             <input
               type="text"
               onChange={(e) => setFilterText(e.target.value)}
               value={filterText}
               placeholder="Search"
-              className="w-[248px] rounded-[11.526px] border-[1.153px] border-[#C1C1C1] bg-white py-[8.07px] pl-[46px] text-[20px] font-normal leading-normal -tracking-[0.2px] text-[#B5B7C0]"
+              className="w-full rounded-[3.34px] border-[1.153px] border-[#C1C1C1] bg-white py-[2.3px] pl-[13.34px] text-[5.79px] font-normal leading-normal -tracking-[0.2px] text-[#B5B7C0] tablet:w-[248px] tablet:rounded-[11.526px] tablet:py-[8.07px] tablet:pl-[46px] tablet:text-[20px]"
             />
           </div>
           {/* sort */}
-          <div className="relative h-[43.3px] w-[186px] rounded-[11.526px] border-[1.153px] border-[#C1C1C1] bg-white">
+          <div className="relative h-[12.6px] w-[40%] rounded-[3.34px] border-[1.153px] border-[#C1C1C1] bg-white tablet:h-[43.3px] tablet:w-[186px] tablet:rounded-[11.526px]">
             <button
               onClick={handleDropdown}
-              className="flex h-full w-full items-center gap-1 pl-[17px]"
+              className="flex  h-full w-full items-center gap-1 pl-[5px] tablet:pl-[17px]"
             >
-              <h1 className="leading-noremal text-[20.021px] font-normal -tracking-[0.2px] text-[#7E7E7E]">
+              <h1 className="leading-noremal text-[5.79px] font-normal -tracking-[0.2px] text-[#7E7E7E] tablet:text-[20.021px]">
                 Sort by :
               </h1>
-              <h1 className="leading-noremal text-[20.021px] font-semibold capitalize -tracking-[0.2px] text-[#3D3C42]">
+              <h1 className="leading-noremal text-[5.79px] font-semibold capitalize -tracking-[0.2px] text-[#3D3C42] tablet:text-[20.021px]">
                 {sort}
               </h1>
             </button>
@@ -141,10 +143,17 @@ const Ledger = () => {
 
   return (
     <div>
-      <h1 className="ml-[156px] mt-14 text-[32px] font-semibold leading-normal text-[#4A8DBD]">
+      <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px]">
         Ledger
       </h1>
-      <div className="shadow-inside mx-[106px] my-[54px] flex flex-col gap-[23px] rounded-[45px] pb-6 pl-5 pr-[43.25px] pt-[31px]">
+
+      <div
+        className={`${
+          persistedTheme === "dark"
+            ? "dark-shadow-inside-custom"
+            : "shadow-inside"
+        } tabet:rounded-[45px] mx-6 mb-[54px] mt-4 flex flex-col gap-[18.27px] rounded-[11.91px] px-[9px] py-3 tablet:mx-[106px] tablet:my-[54px] tablet:gap-[23px] tablet:pb-6 tablet:pl-5 tablet:pr-[43.25px] tablet:pt-[31px]`}
+      >
         <DataTable
           columns={columns}
           data={ledgerData?.data.data}
@@ -154,12 +163,12 @@ const Ledger = () => {
         />
         <div className="flex justify-between">
           {currentPage === 1 ? (
-            <h1>
+            <h1 className="text-[7.15px] font-medium text-[#B5B7C0] tablet:text-[16px]">
               Showing data 1 to {ledgerData?.data.data.length} of{" "}
               {ledgerData?.data.totalCount} entries
             </h1>
           ) : (
-            <h1>
+            <h1 className="text-[7.15px] font-medium text-[#B5B7C0] tablet:text-[16px]">
               Showing data {(currentPage - 1) * itemsPerPage + 1} to{" "}
               {Math.min(
                 currentPage * itemsPerPage,

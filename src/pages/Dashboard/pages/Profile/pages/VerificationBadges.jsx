@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import Button from "../components/Button";
 
 const VerificationBadges = () => {
+  const persistedTheme = useSelector((state) => state.utils.theme);
   const items = [
     {
       image: "/assets/svgs/dashboard/mail1.svg",
@@ -120,23 +122,40 @@ const VerificationBadges = () => {
 
   return (
     <div>
-      <h1 className="text-[#4A8DBD] text-[32px] font-semibold leading-normal mt-[56px] ml-[156px]">
+      <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] dark:text-[#B8B8B8] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px]">
         My Verification Badges
       </h1>
-      <div className="mx-[106px] rounded-[45px] shadow-inside pt-[104px] pb-[66.8px] px-[60px] flex flex-col gap-[23px] my-[54px] relative">
-        <div className="flex justify-center gap-[21px] absolute -top-1 left-[50%] transform -translate-x-[50%] w-[95%] mx-auto">
-          <div className="bg-[#4A8DBD] h-[11.1px] w-full rounded-[100px]" />
-          <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
-          <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
-          <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
-          <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
-          <div className="bg-[#D9D9D9] h-[11.1px] w-full rounded-[100px]" />
+      <div
+        className={`${
+          persistedTheme === "dark" ? "dark-shadow-inside" : "shadow-inside"
+        } relative mx-6 mb-[54px] mt-4 flex flex-col gap-[5.91px] rounded-[11.918px] px-[14.3px] pb-[17.57px] pt-[23px] tablet:mx-6 tablet:my-[54px] tablet:gap-[23px] tablet:rounded-[24.8px] tablet:px-[29.7px] tablet:py-[48.4px] laptop:mx-[106px] laptop:rounded-[45px] laptop:px-[60px] laptop:pb-[66.8px] laptop:pt-[104px]`}
+      >
+        <div className="absolute -top-[3px] left-[50%] mx-auto flex w-[90%] -translate-x-[50%] transform justify-center gap-[21px] tablet:-top-1 tablet:w-[90%] laptop:w-[95%]">
+          <div className="h-[2.94px] w-full rounded-[100px] bg-[#4A8DBD] tablet:h-[11.1px]" />
+          <div className="h-[2.94px]  w-full rounded-[100px] bg-[#D9D9D9] tablet:h-[11.1px]" />
+          <div className="h-[2.94px]  w-full rounded-[100px] bg-[#D9D9D9] tablet:h-[11.1px]" />
+          <div className="h-[2.94px]  w-full rounded-[100px] bg-[#D9D9D9] tablet:h-[11.1px]" />
+          <div className="h-[2.94px]  w-full rounded-[100px] bg-[#D9D9D9] tablet:h-[11.1px]" />
+          <div className="h-[2.94px]  w-full rounded-[100px] bg-[#D9D9D9] tablet:h-[11.1px]" />
         </div>
         {items.map((item, index) => (
-          <div className="flex" key={index}>
-            <img src={item.image} alt={item.title} />
-            <div className="mx-[30px] rounded-[18.335px] shadow-inside w-full flex items-center">
-              <h1 className="text-[#000] text-[24px] font-medium leading-normal pl-[50px]">
+          <div
+            className="flex items-center gap-[5px] tablet:gap-[10.59px]"
+            key={index}
+          >
+            <img
+              src={item.image}
+              alt={item.title}
+              className="h-[19.4px] w-[19.4px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
+            />
+            <div
+              className={`${
+                persistedTheme === "dark"
+                  ? "dark-shadow-input"
+                  : "shadow-inside"
+              } ml-2 flex w-full items-center rounded-[6px] tablet:mx-[2px] tablet:rounded-[10.11px] laptop:mx-[30px] laptop:rounded-[18.335px]`}
+            >
+              <h1 className="py-[6.8px] pl-[13.2px] text-[6.357px] font-medium leading-normal text-[#000] dark:text-[#CACACA] tablet:py-[14.3px] tablet:pl-7 tablet:text-[13.24px] laptop:pl-[50px] laptop:text-[24px]">
                 {item.title}
               </h1>
             </div>
