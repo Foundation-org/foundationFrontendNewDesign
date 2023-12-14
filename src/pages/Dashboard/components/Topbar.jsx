@@ -1,11 +1,25 @@
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import api from "../../../api/Axios";
+import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 const Topbar = () => {
   const location = useLocation();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const navigate = useNavigate();
+
+  const handleLogout = async() => {
+    try {
+      const res = await api.post(`user/logout/${localStorage.getItem("uId")}`);
+      if(res.status === 200) {
+        localStorage.clear();
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]); 
+    }
+  }
 
   return (
     <div
@@ -50,7 +64,7 @@ const Topbar = () => {
             className="w-[34.5px] tablet:w-[69.2px] laptop:w-[5.75rem]"
           />
         </Link>
-        <div className="flex w-fit cursor-pointer items-center justify-center gap-[6px] text-[11.8px] font-semibold leading-normal text-white tablet:gap-3 tablet:text-[21.4px] laptop:hidden">
+        <div className="flex w-fit cursor-pointer items-center justify-center gap-[6px] text-[11.8px] font-semibold leading-normal text-white tablet:gap-3 tablet:text-[21.4px] laptop:hidden" onClick={handleLogout}>
           <div className="relative">
             <img
               src="/assets/svgs/dashboard/notification_icon.svg"
@@ -142,7 +156,7 @@ const Topbar = () => {
         </li>
       </ul>
       {/* logout btn */}
-      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:gap-[72px]">
+      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:gap-[72px]" onClick={handleLogout}>
         <div className="relative">
           <img
             src="/assets/svgs/dashboard/notification_icon.svg"
