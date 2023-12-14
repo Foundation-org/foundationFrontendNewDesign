@@ -283,7 +283,7 @@ const Result = (props) => {
             props.handleViewResults(null);
           }}
         >
-          Finish
+          Ok
         </button>
       </div>
     </div>

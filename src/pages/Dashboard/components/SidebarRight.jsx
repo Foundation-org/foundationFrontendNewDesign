@@ -126,7 +126,7 @@ const SidebarRight = () => {
         </div>
         <div>
           <h4 className="heading">My Profile</h4>
-          <div className="flex gap-1 text-[10.79px] text-gray-600 font-inter text-base font-medium  mt-[-4px] text-[#616161] tablet:text-[20px] ">
+          <div className="flex gap-1 text-[10.79px] font-inter text-base font-medium  mt-[-4px] text-[#616161] tablet:text-[17px] dark:text-[#D2D2D2]">
                 <p>Balance</p>
                 <p>0.98</p>
               </div>

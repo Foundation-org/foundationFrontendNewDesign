@@ -29,18 +29,21 @@ const Topbar = () => {
             </p>
           </div>
           <div className="flex flex-col text-blue-100 ">
-            <h3 className="dark:text-white  text-blue-300 font-inter text-[#E9F6FF] font-medium" onClick={()=>{navigate("/profile")}}>My Profile</h3>
-            <h3 className="dark:text-white text-[#E9F6FF] font-inter text-[10.182px] font-small">Balance 0.5</h3>
+            <h3 className="dark:text-white text-blue-300 font-inter text-[#E9F6FF] font-medium text-[11px] tablet:text-[20px]" onClick={() => { navigate("/profile") }}>My Profile</h3>
+            <h3 className="dark:text-white text-[#E9F6FF] font-inter text-[7px] tablet:text-[12px] font-small">Balance 0.5</h3>
           </div>
 
 
         </div>
 
-        <img
-          src="/assets/svgs/logo.svg"
-          alt="logo"
-          className="laptop:w-[5.75rem] w-[34.5px] tablet:w-[69.2px]"
-        />
+        <Link
+          to={"/dashboard"}>
+          <img
+            src="/assets/svgs/logo.svg"
+            alt="logo"
+            className="laptop:w-[5.75rem] w-[34.5px] tablet:w-[69.2px]"
+          />
+        </Link>
         <div className="laptop:hidden flex w-fit cursor-pointer items-center justify-center gap-[6px] text-[11.8px] font-semibold leading-normal text-white tablet:text-[21.4px]">
           <img
             src="/assets/svgs/dashboard/arrow-right-outline.svg"

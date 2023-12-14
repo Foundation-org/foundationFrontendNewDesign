@@ -22,11 +22,10 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
           <img
             src="/assets/svgs/dashboard/down-arrow.svg"
             alt="down-arrow"
-            className={`h-[2px] w-[4.71px] tablet:h-[6px] tablet:w-[14px] ${
-              isOpen
+            className={`h-[2px] w-[4.71px] tablet:h-[6px] tablet:w-[14px] ${isOpen
                 ? "rotate-180 transform transition-all duration-300"
                 : "transition-all duration-300"
-            }`}
+              }`}
           />
         </label>
 
@@ -42,7 +41,7 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
                   handleSelect(item);
                   setIsOpen(!open);
                 }}
-                className="text-[#9D9D9D] dark:text-white  hover:bg-gray rounded-[10px]  "
+                className="text-[#9D9D9D] dark:text-white hover:bg-[#ecf0f0] dark:hover:bg-[black] rounded-[10px]  "
               >
                 <a className="px-2 py-0.5 tablet:px-4 tablet:py-2">{item}</a>
               </li>

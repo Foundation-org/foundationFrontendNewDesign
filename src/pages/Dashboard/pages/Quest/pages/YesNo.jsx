@@ -28,7 +28,7 @@ const YesNo = () => {
   const [changeState, setChangeState] = useState(false);
   const reset = {
     name: "Ok",
-    color: "text-[#389CE3] dark:text-[#0FB063]",
+    color: "text-[#389CE3]",
     tooltipName: "Please write something...",
     tooltipStyle: "tooltip-info",
   };
@@ -146,7 +146,7 @@ const YesNo = () => {
           />
           <button
             id="test"
-            className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
+            className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
           // className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-2xl tablet:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
           >
             <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.313rem]">
@@ -178,8 +178,8 @@ const YesNo = () => {
           <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[30px]">
             Settings
           </h5>
-          <div className="mx-5 flex flex-col items-center rounded-[0.30925rem] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:rounded-[16px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
-            <div className="flex items-center justify-between w-full mb-4">
+          <div className="mx-5 flex flex-col items-center rounded-[0.30925rem] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] dark:bg-[#080A0C] tablet:rounded-[16px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
+            <div className="flex items-center justify-between w-full">
               <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
                 This Quest has a Change Option.
               </h5>
@@ -199,7 +199,7 @@ const YesNo = () => {
                   defaultValue=""
                   name="radio-buttons-group"
                 >
-                  <div className="flex flex-wrap justify-center gap-4">
+                  <div className="flex flex-wrap justify-center gap-4 -mb-4 mt-2">
                     {changeOptions?.map((item) => (
                       <FormControlLabel
                         key={item.id}
