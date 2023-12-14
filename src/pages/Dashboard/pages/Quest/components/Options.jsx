@@ -87,7 +87,7 @@ const Options = ({
                   answerVerification(e.target.value.trim())
                 }
                 value={typedValue}
-                placeholder="Add you own option"
+                placeholder="Add your own option"
               />
               {(title === "RankChoice" || title === "MultipleChoice") &&
                 trash && (

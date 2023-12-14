@@ -65,7 +65,7 @@ const VerificationBadges = () => {
       removeButtonColor: "red",
     },
     {
-      image: "/assets/svgs/dashboard/Twitter.svg",
+      image: "/assets/svgs/dashboard/Twitter.png",
       title: "Twitter",
       addButtonColor: "blue",
       removeButtonColor: "red",

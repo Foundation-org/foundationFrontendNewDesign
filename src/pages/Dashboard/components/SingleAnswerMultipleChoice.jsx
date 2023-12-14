@@ -143,7 +143,7 @@ const SingleAnswerMultipleChoice = (props) => {
             {props.title === "Multiple Choice" ? (
               <div
                 id="custom-checkbox"
-                className="flex h-full items-center tablet:-mb-[7px] "
+                className="flex h-full items-center  "
               >
                 <input
                   id="small-checkbox"
@@ -196,7 +196,7 @@ const SingleAnswerMultipleChoice = (props) => {
             <>
               <div
                 id="custom-yello-checkbox"
-                className="flex h-full items-center tablet:-mb-[7px]"
+                className="flex h-full items-center "
               >
                 <input
                   id="small-yello-checkbox"

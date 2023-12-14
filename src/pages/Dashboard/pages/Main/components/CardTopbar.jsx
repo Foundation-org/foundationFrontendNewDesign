@@ -8,12 +8,24 @@ const CardTopbar = ({
   isBookmarked,
   handleClickBookmark,
   bookmarkStatus,
+  createdBy
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
     <div className="tablet:px-[22px] tablet:py-[17px] flex items-center justify-between px-[10.4px] py-2">
-      <div className="relative h-fit w-fit">
+      {createdBy===localStorage.getItem("uId")?
+       <div className="relative h-fit w-fit">
+        <img
+          src="/assets/svgs/dashboard/MeBadge.svg"
+          alt={alt}
+          className="tablet:h-[60px] tablet:w-[48px] h-[28.379px] w-[22.722px]"
+        />
+        <p className="transform-center tablet:pb-5 tablet:text-[17px] absolute z-50 text-[11.3px] font-[400] leading-normal text-[#F6F6F6]">
+          Me
+        </p>
+        </div>:
+        <div className="relative h-fit w-fit">
         <img
           src={img}
           alt={alt}
@@ -22,7 +34,7 @@ const CardTopbar = ({
         <p className="transform-center tablet:pb-5 tablet:text-[17px] absolute z-50 text-[11.3px] font-[400] leading-normal text-[#F6F6F6]">
           {badgeCount}
         </p>
-      </div>
+      </div>}
       <h1 className="tablet:text-[22px] text-[10.414px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF]">
         {title}
       </h1>
