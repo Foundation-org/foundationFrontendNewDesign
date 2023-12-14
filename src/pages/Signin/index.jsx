@@ -10,6 +10,8 @@ import SocialLogins from "../../components/SocialLogins";
 import Form from "./components/Form";
 import ReCAPTCHA from "react-google-recaptcha";
 import "../../index.css";
+import api from "../../api/Axios";
+// import axios from 'axios';
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -70,7 +72,22 @@ export default function Signin() {
 
       // console.log(resp);
     } catch (e) {
-      toast.error(e.response.data);
+      toast.error(e.response.data.message.split(':')[1]);
+    }
+  };
+
+  const handleSignInSocial = async (data) => {
+    try {
+      const res = await api.post(`/user/signInUser/social`, {
+        data
+      });
+      // if(res.data.required_action){
+      if(res.status === 200){
+        localStorage.setItem("uId", res.data.uuid);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]); 
     }
   };
 
@@ -93,7 +110,7 @@ export default function Signin() {
           >
             Login
           </Typography>
-          <SocialLogins setProvider={setProvider} setProfile={setProfile} />
+          <SocialLogins setProvider={setProvider} setProfile={setProfile} handleSignInSocial={handleSignInSocial} isLogin={true}  />
           <Form onEmailChange={onEmailChange} onPassChange={onPassChange} />
           <div className="mb-4 mt-4 flex w-full items-start md:mb-10 laptop:mb-[5.5rem] laptop:mt-[2.5rem] taller:mb-[30px] taller:mt-[35px]">
             {persistedTheme === "dark" ? (

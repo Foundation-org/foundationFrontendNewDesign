@@ -5,7 +5,7 @@ import Button from "./Button";
 
 const REDIRECT_URI = window.location.href;
 
-const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial }) => {
+const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial, handleSignInSocial, isLogin }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   // const onLogoutSuccess = useCallback(() => {
@@ -23,7 +23,7 @@ const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial }) => {
         onResolve={({ provider, data }) => {
           setProvider(provider);
           setProfile(data);
-          handleSignUpSocial(data);
+          isLogin ? handleSignInSocial(data) : handleSignUpSocial(data);
         }}
         onReject={(err) => {
           console.log(err);
