@@ -158,7 +158,7 @@ const SidebarLeft = ({
               />
             )}
           </div>
-          <div className="flex gap-[6px] -ml-2">
+          <div className="flex gap-[6px]">
             <img
               src="/assets/svgs/dashboard/treasure.svg"
               alt="badge"
@@ -169,7 +169,7 @@ const SidebarLeft = ({
                 Treasury
               </h4>
               <p className="whitespace-nowrap text-[6.227px] text-[#616161] dark:text-[#BDBCBC] tablet:text-[12.651px]">
-                Balance <span>152.2</span>
+                Balance <span>1,357,432.20</span>
               </p>
             </div>
           </div>
