@@ -81,7 +81,13 @@ const Contributions = () => {
       <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] dark:text-[#B8B8B8] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px]">
         My Contributions
       </h1>
-      <div className="shadow-inside relative mx-[106px] hidden h-[183px] rounded-[45px] laptop:block">
+      <div
+        className={`${
+          persistedTheme === "dark"
+            ? "dark-shadow-inside border-[2px] border-[#858585]"
+            : "shadow-inside"
+        } relative mx-[106px] hidden h-[183px] rounded-[45px] laptop:block`}
+      >
         <div className="absolute -top-7 left-[50%] flex w-full -translate-x-[50%] transform">
           {list?.map((item) => (
             <div className="w-full" key={item.id}>
@@ -106,7 +112,13 @@ const Contributions = () => {
         </div>
       </div>
       <div className="flex flex-col gap-[30px] tablet:gap-16 laptop:hidden">
-        <div className="shadow-inside relative mx-6 h-[82px] rounded-[11.4px] border-[#858585] tablet:mx-[106px] tablet:h-[183px] tablet:rounded-[45px] tablet:border-[2px]">
+        <div
+          className={`${
+            persistedTheme === "dark"
+              ? "dark-shadow-inside border-[1px] border-[#858585]"
+              : "shadow-inside"
+          } relative mx-6 h-[82px] rounded-[11.4px] border-[#858585] tablet:mx-[106px] tablet:h-[183px] tablet:rounded-[45px] tablet:border-[2px]`}
+        >
           <div className="absolute -top-4 left-[50%] flex w-full -translate-x-[50%] transform tablet:-top-7">
             {firstHalf?.map((item) => (
               <div className="w-full" key={item.id}>
@@ -130,7 +142,13 @@ const Contributions = () => {
             ))}
           </div>
         </div>
-        <div className="shadow-inside relative mx-6 h-[82px] rounded-[11.4px] border-[#858585] tablet:mx-[106px] tablet:h-[183px] tablet:rounded-[45px] tablet:border-[2px]">
+        <div
+          className={`${
+            persistedTheme === "dark"
+              ? "dark-shadow-inside border-[1px] border-[#858585]"
+              : "shadow-inside"
+          } relative mx-6 h-[82px] rounded-[11.4px] border-[#858585] tablet:mx-[106px] tablet:h-[183px] tablet:rounded-[45px] tablet:border-[2px]`}
+        >
           <div className="absolute -top-4 left-[50%] flex w-full -translate-x-[50%] transform tablet:-top-7">
             {secondHalf?.map((item) => (
               <div className="w-full" key={item.id}>

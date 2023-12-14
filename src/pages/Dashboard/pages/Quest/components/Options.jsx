@@ -80,7 +80,7 @@ const Options = ({
           <div className="w-full">
             <div className="w-[calc(100%-51.55px] mr-[22.4px] flex tablet:ml-0 tablet:mr-0 tablet:w-full">
               <input
-                className="w-full border-y-[1px] border-[#ACACAC] bg-white py-[0.35rem] pl-6 pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] laptop:py-[18px] laptop:text-[1.875rem]"
+                className="w-full border-y-[1px] border-[#ACACAC] bg-white py-[0.35rem] pl-6 pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] laptop:py-[18px] laptop:text-[1.875rem]"
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) =>
                   e.target.value.trim() !== "" &&
@@ -93,7 +93,7 @@ const Options = ({
                 trash && (
                   <button
                     id={`test${number}`}
-                    className={`border-y-[1px] border-[#ACACAC]  bg-white text-[0.5rem] font-semibold dark:border-[#222325] xl:text-[1.875rem] tablet:text-[17.54px] ${optionStatus?.color} py-[0.29rem]`}
+                    className={`border-y-[1px] border-[#ACACAC]  bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] xl:text-[1.875rem] tablet:text-[17.54px] ${optionStatus?.color} py-[0.29rem]`}
                   >
                     <div className="pr-[1.25rem] tablet:pr-[2.4rem]">
                       <>
@@ -116,7 +116,7 @@ const Options = ({
                 )}
               <button
                 id={`test${number}`}
-                className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${optionStatus.color}`}
+                className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${optionStatus.color}`}
               >
                 <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
                   <span>{optionStatus.name}</span>
