@@ -20,7 +20,7 @@ const SidebarLeft = ({
 
   return (
     <>
-      <div className="no-scrollbar laptop:block hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] overflow-y-auto bg-white pl-[2.18rem] pt-[4.563rem] text-[#535353] dark:bg-[#0A0A0C] dark:text-white 5xl:w-[23rem] 5xl:min-w-[23rem] 5xl:pr-[2.18rem]">
+      <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] overflow-y-auto bg-white pl-[2.18rem] pt-[4.563rem] text-[#535353] dark:bg-[#0A0A0C] dark:text-white laptop:block 5xl:w-[23rem] 5xl:min-w-[23rem] 5xl:pr-[2.18rem]">
         <div className="form-control w-full max-w-[13.25rem] 5xl:max-w-full">
           <label className="ml-[5px] pb-[9px] text-[22px] font-[400] leading-normal">
             Search
@@ -130,7 +130,7 @@ const SidebarLeft = ({
         </button>
       </div>
       {/* sidebar mobile */}
-      <div className="laptop:hidden block bg-white px-[15px] py-[10px] dark:bg-[#0A0A0C] tablet:py-[26px]">
+      <div className="block bg-white px-[15px] py-[10px] dark:bg-[#0A0A0C] tablet:px-[37px] tablet:py-[26px] laptop:hidden">
         <div className="flex items-center justify-between gap-[13px]">
           <div className="relative w-full">
             <input
@@ -168,7 +168,7 @@ const SidebarLeft = ({
               <h4 className="text-[9.3px] font-semibold text-[#616161] dark:text-[#D4D5D7] tablet:text-[18.9px]">
                 Treasury
               </h4>
-              <p className="text-[6.227px] text-[#616161] dark:text-[#BDBCBC] tablet:text-[12.651px]">
+              <p className="whitespace-nowrap text-[6.227px] text-[#616161] dark:text-[#BDBCBC] tablet:text-[12.651px]">
                 Balance <span>1,357,432.20</span>
               </p>
             </div>

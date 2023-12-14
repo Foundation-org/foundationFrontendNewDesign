@@ -106,18 +106,20 @@ const SidebarRight = () => {
     handleUserInfo(localStorage.getItem("uId"));
   }, []);
 
+  console.log({ response });
+
   return (
     <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-10 shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#0A0A0C] 2xl:w-[25rem] laptop:block">
-      <div className="mb-11 flex gap-6">
+      <div className="mb-[3.56rem] flex gap-6">
         <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" />
         <div>
           <h4 className="heading">Treasury</h4>
-          <p className="text-[20px] font-medium text-[#616161] dark:text-[#D4D5D7]">
-            Balance <span>1,357,432.20</span>
+          <p className="whitespace-nowrap text-[20px] font-medium text-[#616161] dark:text-[#D4D5D7]">
+            Balance <span>{response?.balance ? response?.balance : 0.5}</span>
           </p>
         </div>
       </div>
-      <div className="mb-11 flex gap-6">
+      <div className="mb-[3.56rem] flex items-center gap-6">
         <div className="relative h-fit w-fit">
           <img src="/assets/svgs/dashboard/badge.svg" alt="badge" />
           <p className="transform-center absolute z-50 pb-5 text-[35px] font-bold leading-normal text-white">
@@ -126,10 +128,10 @@ const SidebarRight = () => {
         </div>
         <div>
           <h4 className="heading">My Profile</h4>
-          <div className="flex gap-1 text-[10.79px] font-inter text-base font-medium  mt-[-4px] text-[#616161] tablet:text-[17px] dark:text-[#D2D2D2]">
-                <p>Balance</p>
-                <p>0.98</p>
-              </div>
+          <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
+            <p>Balance</p>
+            <p>0.98</p>
+          </div>
           <div
             onClick={() => {
               navigate("/profile");

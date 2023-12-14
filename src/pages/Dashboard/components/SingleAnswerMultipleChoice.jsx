@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
-import EditNewOption from "./EditNewOption";
 import BasicModal from "../../../components/BasicModal";
 import DeleteOption from "./DeleteOption";
 
@@ -69,7 +68,7 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   return (
-    <div className="ml-[30px] mr-[36px] flex items-center gap-[25px] tablet:mx-[72px] 2xl:mx-[85px]">
+    <div className="ml-[30px] mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[72px]">
       <div className="flex w-full justify-between rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
         <div className="flex w-full items-center">
           {!props.checkInfo && (
@@ -97,9 +96,6 @@ const SingleAnswerMultipleChoice = (props) => {
                 {props.answer}
               </h1>
             )}
-            {/* <h1 className="ml-8 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pb-[10px] tablet:pt-3 tablet:text-[19px] ">
-              {props.answer}
-            </h1> */}
             <div className="flex items-center gap-[19px]">
               {props.editable ? (
                 <img
@@ -116,14 +112,6 @@ const SingleAnswerMultipleChoice = (props) => {
                 />
               ) : null}
             </div>
-            {/* <BasicModal open={editModal} handleClose={handleEditClose}>
-              <EditNewOption
-                answer={props.answer}
-                answersSelection={props.answersSelection}
-                setAnswerSelection={props.setAnswerSelection}
-                handleEditClose={handleEditClose}
-              />
-            </BasicModal> */}
             <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
               <DeleteOption
                 answer={props.answer}
@@ -153,7 +141,10 @@ const SingleAnswerMultipleChoice = (props) => {
         ) : (
           <div className="mr-[20.63px] flex items-center gap-[19px] text-[9.238px] tablet:text-[16px] ">
             {props.title === "Multiple Choice" ? (
-              <div id="custom-checkbox" className="tablet:-mb-[7px] ">
+              <div
+                id="custom-checkbox"
+                className="flex h-full items-center tablet:-mb-[7px] "
+              >
                 <input
                   id="small-checkbox"
                   type="checkbox"
@@ -203,7 +194,10 @@ const SingleAnswerMultipleChoice = (props) => {
             )}
 
             <>
-              <div id="custom-yello-checkbox" className="tablet:-mb-[7px]">
+              <div
+                id="custom-yello-checkbox"
+                className="flex h-full items-center tablet:-mb-[7px]"
+              >
                 <input
                   id="small-yello-checkbox"
                   type="checkbox"
