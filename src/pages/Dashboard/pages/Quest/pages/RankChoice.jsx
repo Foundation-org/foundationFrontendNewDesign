@@ -434,7 +434,7 @@ const RankChoice = () => {
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
           <div className="mx-5 flex flex-col items-center rounded-[0.30925rem] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:rounded-[16px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
-            <div className="flex items-center justify-between w-full">
+            <div className="flex items-center justify-between w-full mb-4">
               <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
                 This Quest has a Change Option.
               </h5>
