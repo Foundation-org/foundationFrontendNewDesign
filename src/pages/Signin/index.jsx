@@ -33,6 +33,10 @@ export default function Signin() {
     setEmail(e.target.value);
   };
 
+  const handleCancel=()=>{
+    setEmail("");
+  }
+
   const onPassChange = (e) => {
     setPassword(e.target.value);
   };
@@ -111,7 +115,7 @@ export default function Signin() {
             Login
           </Typography>
           <SocialLogins setProvider={setProvider} setProfile={setProfile} handleSignInSocial={handleSignInSocial} isLogin={true}  />
-          <Form onEmailChange={onEmailChange} onPassChange={onPassChange} />
+          <Form onEmailChange={onEmailChange} onPassChange={onPassChange} handleCancel={handleCancel} email={email} />
           <div className="mb-4 mt-4 flex w-full items-start md:mb-10 laptop:mb-[5.5rem] laptop:mt-[2.5rem] taller:mb-[30px] taller:mt-[35px]">
             {persistedTheme === "dark" ? (
               <ReCAPTCHA

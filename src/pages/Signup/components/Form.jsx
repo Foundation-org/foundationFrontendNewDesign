@@ -12,10 +12,12 @@ const Form = ({
   onEmailChange,
   onPassChange,
   onReTypePassChange,
+  handleCancel,
 }) => {
   const inputType = showPassword ? "text" : "password";
   const cnfmPassInputType = showCnfmPassword ? "text" : "password";
   const persistedTheme = useSelector((state) => state.utils.theme);
+  
 
   return (
     <form className="short:gap-[38px] mt-6 flex w-full flex-col gap-11 text-gray-600 dark:text-white 5xl:gap-14">
@@ -64,7 +66,7 @@ const Form = ({
               />
             ) : (
               <img
-                src="/assets/svgs/eye-white.svg"
+                src="/assets/svgs/eyeLight.svg"
                 alt="blind"
                 className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
                 onClick={togglePasswordVisibility}
@@ -85,7 +87,7 @@ const Form = ({
               autoComplete="new-password"
               onChange={onReTypePassChange}
             />
-            {!showPassword ? (
+            {!showCnfmPassword ? (
               persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/blind.svg"
@@ -110,7 +112,7 @@ const Form = ({
               />
             ) : (
               <img
-                src="/assets/svgs/eye-white.svg"
+                src="/assets/svgs/eyeLight.svg"
                 alt="blind"
                 className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
                 onClick={toggleCnfmPasswordVisibility}
