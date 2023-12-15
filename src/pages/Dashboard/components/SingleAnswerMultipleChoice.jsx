@@ -71,6 +71,7 @@ const SingleAnswerMultipleChoice = (props) => {
     <div className="ml-[30px] mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[72px]">
       <div className="flex w-full justify-between rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
         <div className="flex w-full items-center">
+          <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
           {!props.checkInfo && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
               {persistedTheme === "dark" ? (
@@ -141,10 +142,7 @@ const SingleAnswerMultipleChoice = (props) => {
         ) : (
           <div className="mr-[20.63px] flex items-center gap-[19px] text-[9.238px] tablet:text-[16px] ">
             {props.title === "Multiple Choice" ? (
-              <div
-                id="custom-checkbox"
-                className="flex h-full items-center  "
-              >
+              <div id="custom-checkbox" className="flex h-full items-center  ">
                 <input
                   id="small-checkbox"
                   type="checkbox"

@@ -34,6 +34,22 @@ const SidebarRight = () => {
       value: (response && response?.addedAnswers) || 0,
     },
     {
+      id: 3,
+      icon: "/assets/svgs/dashboard/wronganswers.svg",
+      iconLight: "/assets/svgs/dashboard/correntans.svg",
+      alt: "icon1",
+      title: "Correct Answers",
+      value: (response && response?.correctAnswer) || 0,
+    },
+    {
+      id: 4,
+      icon: "/assets/svgs/dashboard/correctanswers.svg",
+      iconLight: "/assets/svgs/dashboard/wrongans.svg",
+      alt: "icon1",
+      title: "Wrong Answers",
+      value: (response && response?.wrongAnswers) || 0,
+    },
+    {
       id: 5,
       icon: "/assets/svgs/dashboard/icon5.svg",
       iconLight: "/assets/svgs/dashboard/icon15.svg",

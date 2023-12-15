@@ -136,7 +136,7 @@ const SidebarLeft = ({
             <input
               type="text"
               placeholder="Search here...."
-              className="h-[25px] w-[70vw] min-w-[224px] rounded-[18px] border-[1px] border-white bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8] tablet:h-[50.7px] tablet:text-[17.13px]"
+              className="h-[25px] w-[65vw] min-w-[224px] rounded-[18px] border-[1px] border-white bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8] tablet:h-[50.7px] tablet:text-[17.13px]"
               value={searchData}
               onChange={handleSearch}
             />
@@ -158,7 +158,7 @@ const SidebarLeft = ({
               />
             )}
           </div>
-          <div className="flex gap-[6px]">
+          <div className="flex w-[25vw] gap-[6px]">
             <img
               src="/assets/svgs/dashboard/treasure.svg"
               alt="badge"
@@ -174,7 +174,7 @@ const SidebarLeft = ({
             </div>
           </div>
         </div>
-        <div className="mt-[10px] flex justify-around gap-[6px] tablet:mt-[21px]">
+        <div className="mt-[10px] flex justify-between gap-[6px] tablet:mt-[21px]">
           <Dropdown
             label={"Status"}
             title={

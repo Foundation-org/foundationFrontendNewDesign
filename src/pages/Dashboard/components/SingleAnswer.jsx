@@ -11,21 +11,37 @@ const SingleAnswer = (props) => {
     const percentageKey =
       props.answer === "Yes" || props.answer === "Agree" ? "Yes" : "No";
 
-    const selectedPercentage = props.percentages?.selectedPercentage?.[
-      percentageKey
-    ];
+    const selectedPercentage =
+      props.percentages?.selectedPercentage?.[percentageKey];
 
     if (selectedPercentage !== 0 && selectedPercentage !== undefined) {
-      return selectedPercentage === 100
-        ? <span className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-          }`}>100%</span>
-        : <span className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-          }`}>
+      return selectedPercentage === 100 ? (
+        <span
+          className={`w-[4ch] whitespace-nowrap ${
+            persistedTheme === "dark" ? "text-white" : ""
+          }`}
+        >
+          100%
+        </span>
+      ) : (
+        <span
+          className={`w-[4ch] whitespace-nowrap ${
+            persistedTheme === "dark" ? "text-white" : ""
+          }`}
+        >
           {selectedPercentage + "%"}
-        </span>;
+        </span>
+      );
     } else {
-      return <span className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-        }`}>0%</span>;
+      return (
+        <span
+          className={`w-[4ch] whitespace-nowrap ${
+            persistedTheme === "dark" ? "text-white" : ""
+          }`}
+        >
+          0%
+        </span>
+      );
     }
   };
 
@@ -33,30 +49,45 @@ const SingleAnswer = (props) => {
     const percentageKey =
       props.answer === "Yes" || props.answer === "Agree" ? "Yes" : "No";
 
-    const contendedPercentage = props.percentages?.contendedPercentage?.[
-      percentageKey
-    ];
+    const contendedPercentage =
+      props.percentages?.contendedPercentage?.[percentageKey];
 
     if (contendedPercentage !== 0 && contendedPercentage !== undefined) {
-      return contendedPercentage === 100 || contendedPercentage === 0
-        ? <span className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-          }`}>{contendedPercentage + "%"}</span>
-        : <span className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-          }`}>0%</span>;
+      return contendedPercentage === 100 || contendedPercentage === 0 ? (
+        <span
+          className={`w-[4ch] whitespace-nowrap ${
+            persistedTheme === "dark" ? "text-white" : ""
+          }`}
+        >
+          {contendedPercentage + "%"}
+        </span>
+      ) : (
+        <span
+          className={`w-[4ch] whitespace-nowrap ${
+            persistedTheme === "dark" ? "text-white" : ""
+          }`}
+        >
+          0%
+        </span>
+      );
     } else {
-      return <span className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-        }`}>0%</span>;
+      return (
+        <span
+          className={`w-[4ch] whitespace-nowrap ${
+            persistedTheme === "dark" ? "text-white" : ""
+          }`}
+        >
+          0%
+        </span>
+      );
     }
   };
 
-
-
-
-
   return (
-    <div className="ml-[30px] mr-[36px] flex items-center gap-[14px] tablet:mx-[72px] tablet:gap-[25px] 2xl:mx-[85px]">
+    <div className="ml-[30px] mr-[36px] flex items-center gap-[14px] 2xl:mx-[85px] tablet:mx-[72px] tablet:gap-[25px]">
       <div className="flex w-full justify-between rounded-[4.73px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
         <div className="flex items-center">
+          <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
           {!props.checkInfo && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
               {persistedTheme === "dark" ? (
@@ -88,18 +119,22 @@ const SingleAnswer = (props) => {
             />
           </div>
         ) : (
-            <div className={`mr-[20.63px] flex items-center gap-[10.3px] text-[9.2px] tablet:gap-[22px] tablet:text-[16px] ${props.btnText === "Results" ? "pointer-events-none" : ""}`}>
-              <div id="custom-checkbox" className="flex h-full items-center">
-                <input
-                  id="small-checkbox"
-                  type="checkbox"
-                  className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
-                  checked={props.check}
-                  onChange={() => props.handleToggleCheck(props.answer, true, false)}
-                />
-              </div>
-           
-
+          <div
+            className={`mr-[20.63px] flex items-center gap-[10.3px] text-[9.2px] tablet:gap-[22px] tablet:text-[16px] ${
+              props.btnText === "Results" ? "pointer-events-none" : ""
+            }`}
+          >
+            <div id="custom-checkbox" className="flex h-full items-center">
+              <input
+                id="small-checkbox"
+                type="checkbox"
+                className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
+                checked={props.check}
+                onChange={() =>
+                  props.handleToggleCheck(props.answer, true, false)
+                }
+              />
+            </div>
 
             {props.btnText === "Results" ? (
               <>{fetchSelectedPercentage()}</>
@@ -115,7 +150,9 @@ const SingleAnswer = (props) => {
                 type="checkbox"
                 className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
                 checked={props.contend}
-                onChange={() => props.handleToggleCheck(props.answer, false, true)} // Wrap the function call in an arrow function
+                onChange={() =>
+                  props.handleToggleCheck(props.answer, false, true)
+                } // Wrap the function call in an arrow function
               />
             </div>
             {props.btnText === "Results" ? (
