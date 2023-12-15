@@ -136,7 +136,6 @@ export default function Signup() {
             showCnfmPassword={showCnfmPassword}
             onEmailChange={onEmailChange}
             onPassChange={onPassChange}
-            handleCancel={handleCancel}
             onReTypePassChange={onReTypePassChange}
             togglePasswordVisibility={togglePasswordVisibility}
             toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}

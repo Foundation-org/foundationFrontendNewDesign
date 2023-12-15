@@ -12,7 +12,7 @@ const Form = ({
   onEmailChange,
   onPassChange,
   onReTypePassChange,
-  handleCancel,
+
 }) => {
   const inputType = showPassword ? "text" : "password";
   const cnfmPassInputType = showCnfmPassword ? "text" : "password";
