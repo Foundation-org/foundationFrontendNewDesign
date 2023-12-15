@@ -10,7 +10,7 @@
 }
 
 .tab-button {
-  @apply rounded-[5px] border-[1px] px-[10px] py-1 text-[7.48px] font-semibold leading-normal 2xl:px-[24px] tablet:rounded-[10.4px] tablet:px-[21px] tablet:py-2 tablet:text-[15.5px] laptop:rounded-[20.93px] laptop:px-8 laptop:py-3 laptop:text-[1.958rem];
+  @apply rounded-[5px] border-[1px] px-[10px] py-1 text-[1.9vw] font-semibold leading-normal 2xl:px-[24px] tablet:rounded-[10.4px] tablet:px-[21px] tablet:py-2  laptop:rounded-[20.93px] laptop:px-8 laptop:py-3 ;
 }
 
 .heading {
@@ -227,38 +227,39 @@ iframe {
   margin-top: 1px;
 }
 
-#dragIcon > div {
+#dragIcon>div {
   position: relative;
   height: 23.19px;
   display: flex;
 }
 
 @media (min-width: 744px) {
-  #dragIcon > div {
+  #dragIcon>div {
     position: relative;
     height: 45px;
     display: flex;
   }
+
   .okayContainer {
     height: 47px !important;
   }
 }
 
 @media (min-width: 1280px) {
-  #dragIcon > div {
+  #dragIcon>div {
     position: relative;
     height: 74px;
     display: flex;
   }
 }
 
-#dragIcon2 > div {
+#dragIcon2>div {
   position: relative;
   height: 21px;
 }
 
 @media (min-width: 744px) {
-  #dragIcon2 > div {
+  #dragIcon2>div {
     position: relative;
     height: 45px;
   }

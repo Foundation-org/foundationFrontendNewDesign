@@ -21,7 +21,7 @@ const CardTopbar = ({
           alt={alt}
           className="tablet:h-[60px] tablet:w-[48px] h-[28.379px] w-[22.722px]"
         />
-        <p className="transform-center tablet:pb-5 tablet:text-[17px] absolute z-50 text-[11.3px] font-[400] leading-normal text-[#F6F6F6]">
+        <p className="transform-center tablet:pb-3 tablet:text-[17px] absolute z-50 text-[11.3px] font-[400] leading-normal text-[#F6F6F6]">
           Me
         </p>
         </div>:
@@ -31,7 +31,7 @@ const CardTopbar = ({
           alt={alt}
           className="tablet:h-[60px] tablet:w-[48px] h-[28.379px] w-[22.722px]"
         />
-        <p className="transform-center tablet:pb-5 tablet:text-[17px] absolute z-50 text-[11.3px] font-[400] leading-normal text-[#F6F6F6]">
+        <p className="transform-center tablet:pb-3 tablet:text-[17px] absolute z-50 text-[11.3px] font-[400] leading-normal text-[#F6F6F6]">
           {badgeCount}
         </p>
       </div>}
