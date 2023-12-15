@@ -50,14 +50,14 @@ const Form = ({ onEmailChange, onPassChange }) => {
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
-                  className="absolute top-1 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
+                  className="absolute top-[7px] short:-top-[2px] tall:top-[1.5px] taller:top-[2px] right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
                   onClick={togglePasswordVisibility}
                 />
               ) : (
                 <img
                   src="/assets/svgs/eye-white.svg"
                   alt="blind"
-                  className="absolute top-1 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
+                  className="absolute top-[7px] short:-top-[2px] tall:top-[1.5px] taller:top-[2px] right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
                   onClick={togglePasswordVisibility}
                 />
               )
@@ -65,14 +65,14 @@ const Form = ({ onEmailChange, onPassChange }) => {
               <img
                 src="/assets/svgs/eye.svg"
                 alt="blind"
-                className="absolute top-1 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
+                className="absolute top-[7px] short:-top-[2px] tall:top-[1.5px] taller:top-[2px] right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
                 onClick={togglePasswordVisibility}
               />
             ) : (
               <img
                 src="/assets/svgs/eye-white.svg"
                 alt="blind"
-                className="absolute top-1 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
+                className="absolute top-[7px] short:-top-[2px] tall:top-[1.5px] taller:top-[2px] right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
                 onClick={togglePasswordVisibility}
               />
             )}
