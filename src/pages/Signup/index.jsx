@@ -114,7 +114,7 @@ export default function Signup() {
         <img
           src="/assets/svgs/logo.svg"
           alt="logo"
-          className="h-[20vh] w-[23vw]"
+          className="h-[45px] w-[58px]"
         />
       </div>
       {/* <div className="hidden h-screen w-fit items-center px-32 lg:flex"> */}
