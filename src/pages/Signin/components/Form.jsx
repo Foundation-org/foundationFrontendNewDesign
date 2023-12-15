@@ -35,25 +35,26 @@ const Form = ({ onEmailChange, onPassChange,handleCancel,email}) => {
           className="peer w-full border-b-[1px] border-[#C0C0C0] bg-white py-1 pl-[10px] text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
           autoComplete="off"
           onChange={onEmailChange}
+          value={email}
 
         />
-        {/* {email ? (
+        {email ? (
           persistedTheme === "dark" ? (
             <img
               src="/assets/svgs/cancelDark.svg"
               alt="blind"
-              className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
+              className="absolute top-[10px] right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px] tablet:-top-2"
               onClick={handleCancel}
             />
           ) : (
             <img
               src="/assets/svgs/cancelLight.svg"
               alt="blind"
-              className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
+              className="absolute top-[10px] right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px] tablet:-top-2"
               onClick={handleCancel}
             />
           )
-        ) : null} */}
+        ) : null}
       </div>
 
       <div className="flex flex-col gap-5">
@@ -72,14 +73,14 @@ const Form = ({ onEmailChange, onPassChange,handleCancel,email}) => {
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
-                  className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
+                  className="absolute top-[10px] right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px] tablet:-top-2"
                   onClick={togglePasswordVisibility}
                 />
               ) : (
                 <img
                   src="/assets/svgs/eye-white.svg"
                   alt="blind"
-                  className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
+                  className="absolute top-[10px] right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px] tablet:-top-2"
                   onClick={togglePasswordVisibility}
                 />
               )
@@ -87,14 +88,14 @@ const Form = ({ onEmailChange, onPassChange,handleCancel,email}) => {
               <img
                 src="/assets/svgs/eye.svg"
                 alt="blind"
-                className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
+                className="absolute top-[10px] right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px] tablet:-top-2"
                 onClick={togglePasswordVisibility}
               />
             ) : (
               <img
                 src="/assets/svgs/eyeLight.svg"
                 alt="blind"
-                className="absolute -top-2 right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px]"
+                className="absolute top-[10px] right-2 h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px] tablet:-top-2"
                 onClick={togglePasswordVisibility}
               />
             )}

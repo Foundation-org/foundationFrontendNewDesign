@@ -54,6 +54,11 @@ export default function Signup() {
   const { mutateAsync: userSignup } = useMutation({
     mutationFn: signUp,
   });
+  
+  const handleCancel=()=>{
+    setEmail("");
+  }
+
 
   const handleSignup = async () => {
     try {
@@ -139,6 +144,8 @@ export default function Signup() {
             onReTypePassChange={onReTypePassChange}
             togglePasswordVisibility={togglePasswordVisibility}
             toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}
+            handleCancel={handleCancel} 
+            email={email}
           />
           <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-4 taller:mt-0">
             {persistedTheme === "dark" ? (
