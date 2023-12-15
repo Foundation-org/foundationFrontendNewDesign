@@ -22,8 +22,8 @@ export default function Signup() {
   const [profile, setProfile] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showCnfmPassword, setShowCnfmPassword] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [resData, setResData] = useState("");
+  const [modalVisible, setModalVisible] = useState(false)
+  const [resData, setResData] = useState("")
 
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -72,50 +72,43 @@ export default function Signup() {
         toast.warning("Password does not match");
       }
     } catch (e) {
-      toast.error(e.response.data.message.split(":")[1]);
+      toast.error(e.response.data.message.split(':')[1]);
     }
   };
 
   const handleSignUpSocial = async (data) => {
     try {
       const res = await api.post(`/user/signUpUser/social`, {
-        data,
+        data
       });
-      if (res.data.required_action) {
+      if(res.data.required_action){
         setModalVisible(true);
         setResData(res.data);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(":")[1]);
+      toast.error(error.response.data.message.split(':')[1]); 
     }
   };
 
   const handleEmailType = async (value) => {
     try {
-      if (!value) return toast.error("Please select the email type!");
+      if(!value) return toast.error("Please select the email type!")
       setModalVisible(false);
-      const res = await api.patch(
-        `/updateBadge/${resData.userId}/${resData.badgeId}`,
-        {
-          type: value,
-        },
-      );
-      if (res.status === 200) {
+      const res = await api.patch(`/updateBadge/${resData.userId}/${resData.badgeId}`, {
+        type: value
+      });
+      if(res.status === 200) {
         localStorage.setItem("uId", res.data.data.uuid);
         navigate("/dashboard");
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(":")[1]);
+      toast.error(error.response.data.message.split(':')[1]); 
     }
-  };
+  }
 
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white dark:bg-black-200 lg:flex-row">
-      <MyModal
-        modalShow={modalVisible}
-        email={profile?.email}
-        handleEmailType={handleEmailType}
-      />
+      <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div className="flex h-[65px] w-full items-center justify-center bg-[#202329] lg:hidden">
         <img
           src="/assets/svgs/logo.svg"
@@ -131,9 +124,9 @@ export default function Signup() {
           className="h-[20vh] w-[23vw]"
         />
       </div>
-      <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-bl-[65px] lg:rounded-tl-[65px]">
+      <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-tl-[65px] lg:rounded-bl-[65px]">
         {/* <div className="laptop:max-w-[60%] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0"> */}
-        <div className="mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
+        <div className="laptop:max-w-[35vw] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0">
           <Typography variant="textTitle">Create Account</Typography>
           <SocialLogins setProvider={setProvider} setProfile={setProfile} />
           <Form
@@ -143,6 +136,7 @@ export default function Signup() {
             showCnfmPassword={showCnfmPassword}
             onEmailChange={onEmailChange}
             onPassChange={onPassChange}
+            handleCancel={handleCancel}
             onReTypePassChange={onReTypePassChange}
             togglePasswordVisibility={togglePasswordVisibility}
             toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}
