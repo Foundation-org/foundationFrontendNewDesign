@@ -51,16 +51,16 @@ const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial, handleSignI
         }}
         className="container w-full"
       >
-        <button className="flex justify-center h-[36px] sm:h-[50px] lg:h-[60px] w-full items-center whitespace-nowrap rounded-[6.043px] border-[1px] border-gray-200 bg-white px-2 text-center text-[2.3vw] font-[500] text-black dark:border-white dark:bg-dark-gray dark:text-white sm:text-[2.1vw] lg:text-[1vw] 2xl:rounded-[11.703px] 2xl:px-4 5xl:w-[320px] ">
+        <button className="flex justify-center h-[36px] sm:h-[50px] lg:h-[60px] w-full items-center whitespace-nowrap rounded-[6.043px] border-[1px] border-gray-200 bg-white px-2 text-center text-[2.3vw] font-[500] text-black dark:border-white dark:bg-dark-gray dark:text-white sm:text-[2.1vw] lg:text-[.98vw] 2xl:rounded-[11.703px] 2xl:px-4 5xl:w-[320px] ">
           {persistedTheme === "dark" ? (
             <img
               src="/assets/svgs/facebook.svg"
-              className="mr-1 h-[22px] w-[22px] md:h-12 md:w-[32px] 2xl:mr-2"
+              className="mr-1 h-[22px] w-[22px] md:h-12 md:w-[32px] 2xl:mr-3"
             />
           ) : (
             <img
               src="/assets/svgs/facebook-white.svg"
-              className="mr-1 h-[22px] w-[22px] md:h-12 md:w-[32px] 2xl:mr-2"
+              className="mr-1 h-[22px] w-[22px] md:h-12 md:w-[32px] 2xl:mr-3"
             />
           )}
             <span className="inline-block align-middle">Continue with Facebook</span>
