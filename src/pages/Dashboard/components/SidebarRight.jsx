@@ -7,11 +7,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../../features/auth/authSlice";
 import Anchor from "../../../components/Anchor";
+import api from "../../../api/Axios";
 
 const SidebarRight = () => {
   const dispath = useDispatch();
   const navigate = useNavigate();
   const [response, setResponse] = useState();
+  const [treasuryAmount, setTreasuryAmount] = useState(0)
 
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -118,8 +120,21 @@ const SidebarRight = () => {
     }
   };
 
+  const getTreasuryAmount = async () => {
+    try {
+      const res = await api.get(`/treasury/get`);
+      if(res.status === 200){
+        localStorage.setItem("treasuryAmount", res.data.data)
+        setTreasuryAmount(res.data.data)
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]); 
+    }
+  };
+
   useEffect(() => {
     handleUserInfo(localStorage.getItem("uId"));
+    getTreasuryAmount()
   }, []);
 
   console.log({ response });
@@ -131,7 +146,7 @@ const SidebarRight = () => {
         <div>
           <h4 className="heading">Treasury</h4>
           <p className="whitespace-nowrap text-[20px] font-medium text-[#616161] dark:text-[#D4D5D7]">
-            Balance <span>{response?.balance ? response?.balance : 0.5}</span>
+            Balance <span>{treasuryAmount}</span>
           </p>
         </div>
       </div>
@@ -146,7 +161,7 @@ const SidebarRight = () => {
           <h4 className="heading">My Profile</h4>
           <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
             <p>Balance</p>
-            <p>0.98</p>
+            <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance : 0 }</p>
           </div>
           <div
             onClick={() => {

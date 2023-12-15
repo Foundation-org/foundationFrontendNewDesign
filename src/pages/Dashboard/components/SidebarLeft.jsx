@@ -169,7 +169,7 @@ const SidebarLeft = ({
                 Treasury
               </h4>
               <p className="whitespace-nowrap text-[6.227px] text-[#616161] dark:text-[#BDBCBC] tablet:text-[12.651px]">
-                Balance <span>1,357,432.20</span>
+                Balance <span>{localStorage.getItem("treasuryAmount")}</span>
               </p>
             </div>
           </div>

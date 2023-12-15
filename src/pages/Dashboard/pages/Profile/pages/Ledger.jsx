@@ -15,6 +15,7 @@ const Ledger = () => {
 
   const debouncedSearch = useDebounce(filterText, 1000);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const { data: ledgerData } = useQuery({
     queryFn: () => {
@@ -66,7 +67,7 @@ const Ledger = () => {
               </h1>
               <div className="flex gap-1 text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[13.824px]">
                 <p>Balance</p>
-                <p>0.98</p>
+                <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance : 0 }</p>
               </div>
             </div>
           </div>
@@ -83,7 +84,7 @@ const Ledger = () => {
               </h1>
               <div className="flex gap-1 text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[13.824px]">
                 <p>Balance</p>
-                <p>1,357,432.20</p>
+                <p>{localStorage.getItem("treasuryAmount")}</p>
               </div>
             </div>
           </div>
