@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 const Topbar = () => {
   const location = useLocation();
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const persistedUserInfo = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
   const handleLogout = async() => {
@@ -79,7 +78,7 @@ const Topbar = () => {
           <img
             src="/assets/svgs/dashboard/arrow-right-outline.svg"
             alt="arrow-right"
-            className="h-[12.6px] w-[12.6px] tablet:h-[22.94px] tablet:w-[22.94px]"
+            className="h-[18px] w-[16.2px] tablet:h-[36px] tablet:w-[28px] ml-[12px] tablet:ml-5"
           />
         </div>
       </div>
@@ -157,7 +156,7 @@ const Topbar = () => {
         </li>
       </ul>
       {/* logout btn */}
-      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:gap-[72px]" onClick={handleLogout}>
+      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:gap-[35px]" onClick={handleLogout}>
         <div className="relative">
           <img
             src="/assets/svgs/dashboard/notification_icon.svg"
