@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 
 const Input = ({
   type,
@@ -18,7 +19,12 @@ const Input = ({
     }
   };
 
+  useEffect(() => {
+    setInputValue(value); 
+  }, [value]);
+     console.log(inputValue);
   return (
+    
     <div className="relative">
       <input
         type={type}
