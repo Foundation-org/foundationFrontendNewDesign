@@ -468,7 +468,7 @@ const RankChoice = () => {
                       <FormControlLabel
                         key={item.id}
                         value={item.value}
-                        control={<Radio sx={{ color: "#0FB063" }} />}
+                        control={<Radio sx={{ color: "#9C9C9C" }} />}
                         label={item.title}
                         onChange={(e) => {
                           setChangedOption(e.target.value);

@@ -145,7 +145,7 @@ iframe {
 #custom-checkbox .checkbox {
   appearance: none;
   -webkit-appearance: none;
-  background: white;
+  background: transparent;
   border: 1px solid #0fb063;
   cursor: pointer;
   margin: 0;
@@ -187,7 +187,7 @@ iframe {
 #custom-yello-checkbox .checkbox {
   appearance: none;
   -webkit-appearance: none;
-  background: white;
+  background: transparent;
   border-radius: 3.5px;
   border: 1px solid #ffd600;
   cursor: pointer;
