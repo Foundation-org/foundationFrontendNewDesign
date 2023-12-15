@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Topbar = () => {
   const location = useLocation();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
   const handleLogout = async() => {
@@ -53,6 +54,8 @@ const Topbar = () => {
             </h3>
             <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
               Balance {persistedUserInfo?.balance ? persistedUserInfo?.balance : 0 }
+              {/* Balance 0.5 */}
+              
             </h3>
           </div>
         </div>
