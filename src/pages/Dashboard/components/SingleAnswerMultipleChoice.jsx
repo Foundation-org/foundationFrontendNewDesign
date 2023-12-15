@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { toast } from "sonner";
 import BasicModal from "../../../components/BasicModal";
 import DeleteOption from "./DeleteOption";
 
@@ -55,11 +54,6 @@ const SingleAnswerMultipleChoice = (props) => {
   }, [answer]);
 
   const handleAddOption = () => {
-    if (answer.trim() === "") {
-      toast.error("Option cannot be empty");
-      return;
-    }
-
     const newArr = props.answersSelection.map((item) =>
       item.label === props.answer ? { ...item, label: answer.trim() } : item,
     );
@@ -102,7 +96,6 @@ const SingleAnswerMultipleChoice = (props) => {
                 <img
                   src="/assets/svgs/dashboard/edit.svg"
                   className="h-3 tablet:h-auto"
-                  // onClick={handleEditOpen}
                 />
               ) : null}
               {props.deleteable ? (

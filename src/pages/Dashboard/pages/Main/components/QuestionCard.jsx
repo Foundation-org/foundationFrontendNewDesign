@@ -50,6 +50,7 @@ const QuestionCard = ({
   const [bookmarkStatus, setbookmarkStatus] = useState(isBookmarked);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addOptionField, setAddOptionField] = useState(0);
+  const [addOptionLimit, setAddOptionLimit] = useState(0);
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -76,9 +77,26 @@ const QuestionCard = ({
 
   const handleOpen = () => {
     setAddOptionField(1);
-    setOpen(true);
+    handleAddOption();
   };
+
   const handleClose = () => setOpen(false);
+
+  const handleAddOption = () => {
+    const newOption = {
+      label: "",
+      check: true,
+      contend: false,
+      addedOptionByUser: true,
+      edit: true,
+      delete: true,
+    };
+
+    setAnswerSelection([...answersSelection, newOption]);
+
+    setAddOptionField(0);
+    setAddOptionLimit(1);
+  };
 
   const capitalizeFirstLetter = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
@@ -474,6 +492,8 @@ const QuestionCard = ({
             setRankedAnswers={setRankedAnswers}
             addOptionField={addOptionField}
             setAddOptionField={setAddOptionField}
+            addOptionLimit={addOptionLimit}
+            setAddOptionLimit={setAddOptionLimit}
           />
         ) : (
           <OptionBar
@@ -492,7 +512,6 @@ const QuestionCard = ({
             answersSelection={answersSelection}
             setAnswerSelection={setAnswerSelection}
             startStatus={startStatus}
-            
           />
         )
       ) : (

@@ -38,11 +38,6 @@ const SingleAnswerRankedChoice = (props) => {
   }, [answer]);
 
   const handleAddOption = () => {
-    if (answer.trim() === "") {
-      toast.error("Option cannot be empty");
-      return;
-    }
-
     const newArr = props.answersSelection.map((item) =>
       item.label === props.answer ? { ...item, label: answer.trim() } : item,
     );
@@ -91,7 +86,7 @@ const SingleAnswerRankedChoice = (props) => {
               {props.editable ? (
                 <img
                   src="/assets/svgs/dashboard/edit.svg"
-                  className="h-3 w-4 cursor-pointer tablet:h-[19px]"
+                  className="h-3 w-4 tablet:h-[19px]"
                 />
               ) : null}
               {props.deleteable ? (

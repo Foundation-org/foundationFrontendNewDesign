@@ -10,17 +10,17 @@ const Topbar = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
 
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     try {
       const res = await api.post(`user/logout/${localStorage.getItem("uId")}`);
-      if(res.status === 200) {
+      if (res.status === 200) {
         localStorage.clear();
         navigate("/");
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]); 
+      toast.error(error.response.data.message.split(":")[1]);
     }
-  }
+  };
 
   return (
     <div
@@ -53,9 +53,9 @@ const Topbar = () => {
               My Profile
             </h3>
             <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
-              Balance {persistedUserInfo?.balance ? persistedUserInfo?.balance : 0 }
+              Balance{" "}
+              {persistedUserInfo?.balance ? persistedUserInfo?.balance : 0}
               {/* Balance 0.5 */}
-              
             </h3>
           </div>
         </div>
@@ -67,7 +67,10 @@ const Topbar = () => {
             className="w-[34.5px] tablet:w-[69.2px] laptop:w-[5.75rem]"
           />
         </Link>
-        <div className="flex w-fit cursor-pointer items-center justify-center gap-[6px] text-[11.8px] font-semibold leading-normal text-white tablet:gap-3 tablet:text-[21.4px] laptop:hidden" onClick={handleLogout}>
+        <div
+          className="flex w-fit cursor-pointer items-center justify-center gap-[78px] text-[11.8px] font-semibold leading-normal text-white tablet:text-[21.4px] laptop:hidden"
+          onClick={handleLogout}
+        >
           <div className="relative">
             <img
               src="/assets/svgs/dashboard/notification_icon.svg"
@@ -81,7 +84,7 @@ const Topbar = () => {
           <img
             src="/assets/svgs/dashboard/arrow-right-outline.svg"
             alt="arrow-right"
-            className="h-[18px] w-[16.2px] tablet:h-[36px] tablet:w-[28px] ml-[12px] tablet:ml-5"
+            className="h-[18px] w-[16.2px] tablet:h-[36px] tablet:w-[28px]"
           />
         </div>
       </div>
@@ -159,7 +162,10 @@ const Topbar = () => {
         </li>
       </ul>
       {/* logout btn */}
-      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:gap-[35px]" onClick={handleLogout}>
+      <div
+        className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:gap-[35px]"
+        onClick={handleLogout}
+      >
         <div className="relative">
           <img
             src="/assets/svgs/dashboard/notification_icon.svg"
