@@ -37,7 +37,7 @@ const Form = ({ onEmailChange, onPassChange,handleCancel,email}) => {
           onChange={onEmailChange}
 
         />
-        {email ? (
+        {/* {email ? (
           persistedTheme === "dark" ? (
             <img
               src="/assets/svgs/cancelDark.svg"
@@ -53,7 +53,7 @@ const Form = ({ onEmailChange, onPassChange,handleCancel,email}) => {
               onClick={handleCancel}
             />
           )
-        ) : null}
+        ) : null} */}
       </div>
 
       <div className="flex flex-col gap-5">
