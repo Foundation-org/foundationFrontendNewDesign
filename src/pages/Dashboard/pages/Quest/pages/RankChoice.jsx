@@ -7,6 +7,7 @@ import {
   checkAnswerExist,
   checkUniqueQuestion,
   createInfoQuest,
+  getTopicOfValidatedQuestion,
   questionValidation,
 } from "../../../../../api/questsApi";
 import { toast } from "sonner";
@@ -89,14 +90,12 @@ const RankChoice = () => {
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
-      console.log("resp", resp);
-      toast.success("Successfully Created Quest");
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 2000);
-    },
-    onError: (err) => {
-      console.log("error", err);
+      if(resp.status === 201) {
+        toast.success("Successfully Created Quest");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
+      }
     },
   });
 
@@ -111,6 +110,15 @@ const RankChoice = () => {
         "This quest is not unique. A similar quest already exists.",
       );
 
+    // getTopicOfValidatedQuestion
+    const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
+      validatedQuestion: question,
+    });
+    // If any error captured
+    if (errorMessage) {
+      return toast.error("Something Went Wrong")
+    }
+
     const params = {
       Question: question,
       whichTypeQuestion: "ranked choise",
@@ -119,6 +127,7 @@ const RankChoice = () => {
       usersAddTheirAns: addOption,
       usersChangeTheirAns: changedOption,
       uuid: localStorage.getItem("uId"),
+      QuestTopic: questTopic
     };
 
     const isEmptyAnswer = params.QuestAnswers.some(

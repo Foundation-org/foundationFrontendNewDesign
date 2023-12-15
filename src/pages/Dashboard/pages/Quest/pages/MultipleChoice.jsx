@@ -11,6 +11,7 @@ import {
   checkAnswerExist,
   checkUniqueQuestion,
   createInfoQuest,
+  getTopicOfValidatedQuestion,
   questionValidation,
 } from "../../../../../api/questsApi";
 import CustomSwitch from "../../../../../components/CustomSwitch";
@@ -86,11 +87,12 @@ const MultipleChoice = () => {
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
-      console.log("resp", resp);
-      toast.success("Successfully Created Quest");
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 2000);
+      if(resp.status === 201) {
+        toast.success("Successfully Created Quest");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
+      }
     },
     onError: (err) => {
       // console.log('error', err);
@@ -109,6 +111,16 @@ const MultipleChoice = () => {
         "This quest is not unique. A similar quest already exists.",
       );
 
+
+    // getTopicOfValidatedQuestion
+    const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
+      validatedQuestion: question,
+    });
+    // If any error captured
+    if (errorMessage) {
+      return toast.error("Something Went Wrong")
+    }
+
     const params = {
       Question: question,
       whichTypeQuestion: "multiple choise",
@@ -119,6 +131,7 @@ const MultipleChoice = () => {
       userCanSelectMultiple: multipleOption,
       QuestAnswersSelected: [],
       uuid: localStorage.getItem("uId"),
+      QuestTopic: questTopic
     };
 
     const isEmptyAnswer = params.QuestAnswers.some(

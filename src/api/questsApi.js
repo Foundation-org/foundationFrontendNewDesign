@@ -1,4 +1,5 @@
 import api from "./Axios";
+import { toast } from "sonner";
 
 // change ans submit
 export const updateChangeAnsStartQuest = async (data) => {
@@ -22,17 +23,22 @@ export const createStartQuest = async (data) => {
 
 // creation of a quest of all types
 export const createInfoQuest = async (data) => {
-  return await api.post("/infoquestions/createInfoQuestQuest", {
-    Question: data.Question,
-    whichTypeQuestion: data.whichTypeQuestion,
-    QuestionCorrect: data.QuestionCorrect,
-    QuestAnswers: data.QuestAnswers,
-    usersAddTheirAns: data.usersAddTheirAns,
-    usersChangeTheirAns: data.usersChangeTheirAns,
-    userCanSelectMultiple: data.userCanSelectMultiple,
-    QuestAnswersSelected: data.QuestAnswersSelected,
-    uuid: data.uuid,
-  });
+  try {
+    return await api.post("/infoquestions/createInfoQuestQuest", {
+      Question: data.Question,
+      whichTypeQuestion: data.whichTypeQuestion,
+      QuestionCorrect: data.QuestionCorrect,
+      QuestAnswers: data.QuestAnswers,
+      usersAddTheirAns: data.usersAddTheirAns,
+      usersChangeTheirAns: data.usersChangeTheirAns,
+      userCanSelectMultiple: data.userCanSelectMultiple,
+      QuestAnswersSelected: data.QuestAnswersSelected,
+      uuid: data.uuid,
+      QuestTopic: data.QuestTopic
+    });
+  } catch (error) {
+    toast.error(error.response.data.message.split(':')[1]); 
+  }
 };
 
 // change
@@ -60,6 +66,23 @@ export const getRankedQuestPercent = async (data) => {
     // uuid: data.uuid,
   });
 };
+
+
+// Question Validation by GPT-Server
+export const getTopicOfValidatedQuestion = async({validatedQuestion}) => {
+  try {
+      var response = await api.get(`/ai-validation/3?userMessage=${validatedQuestion}`)
+      if(response.data.status === "VIOLATION") {await updateViolationCounterAPI(); return { questTopic: null, errorMessage: "VIOLATION" }}
+      if(response.data.status === "FAIL") {return { questTopic: null, errorMessage: "FAIL" }}
+      if(response.data.status === "ERROR") {return { questTopic: null, errorMessage: "ERROR" }}
+      return { questTopic: response.data.message, errorMessage: null}
+  } catch (error) {
+      if(error.response.data.status === "VIOLATION"){
+        await updateViolationCounterAPI();
+      }
+      return { validatedQuestion: null, errorMessage: "ERROR" }
+  }
+}
 
 // Question Validation by GPT-Server
 export const questionValidation = async({question, queryType}) => {

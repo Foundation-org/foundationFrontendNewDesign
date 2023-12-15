@@ -6,6 +6,7 @@ import { changeOptions } from "../../../../../utils/options";
 import {
   checkUniqueQuestion,
   createInfoQuest,
+  getTopicOfValidatedQuestion,
   questionValidation,
 } from "../../../../../api/questsApi";
 import { useMutation } from "@tanstack/react-query";
@@ -41,10 +42,12 @@ const AgreeDisagree = () => {
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
-      toast.success("Successfully Created Quest");
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 2000);
+      if(resp.status === 201) {
+        toast.success("Successfully Created Quest");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
+      }
     },
     onError: (err) => {
       toast.error(err.response.data);
@@ -66,12 +69,24 @@ const AgreeDisagree = () => {
         "This quest is not unique. A similar quest already exists.",
       );
 
+
+    // getTopicOfValidatedQuestion
+    const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
+      validatedQuestion: question,
+    });
+    // If any error captured
+    if (errorMessage) {
+      return toast.error("Something Went Wrong")
+    }
+
+
     const params = {
       Question: question,
       whichTypeQuestion: "agree/disagree",
       usersChangeTheirAns: changedOption,
       QuestionCorrect: "Not Selected",
       uuid: localStorage.getItem("uId"),
+      QuestTopic: questTopic
     };
 
     createQuest(params);
