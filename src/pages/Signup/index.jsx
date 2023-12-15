@@ -78,18 +78,20 @@ export default function Signup() {
         <img
           src="/assets/svgs/logo.svg"
           alt="logo"
-          className="h-[45px] w-[58px]"
+          className="h-[20vh] w-[23vw]"
         />
       </div>
-      <div className="hidden h-screen w-fit items-center px-32 lg:flex">
+      {/* <div className="hidden h-screen w-fit items-center px-32 lg:flex"> */}
+      <div className="hidden h-screen w-fit items-center px-[9.15vw] lg:flex">
         <img
           src="/assets/svgs/logo.svg"
           alt="logo"
-          className="h-[252px] w-[322px]"
+          className="h-[20vh] w-[23vw]"
         />
       </div>
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-tl-[65px] lg:rounded-bl-[65px]">
-        <div className="laptop:max-w-[60%] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0">
+        {/* <div className="laptop:max-w-[60%] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0"> */}
+        <div className="laptop:max-w-[35vw] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0">
           <Typography variant="textTitle">Create Account</Typography>
           <SocialLogins setProvider={setProvider} setProfile={setProfile} />
           <Form

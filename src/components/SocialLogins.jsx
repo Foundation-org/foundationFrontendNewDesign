@@ -15,7 +15,7 @@ const SocialLogins = ({ setProvider, setProfile }) => {
   // }, []);
 
   return (
-    <div className="laptop:gap-6 my-5 flex gap-2 md:mb-6 md:mt-[37.8px] 5xl:mb-9 tall:my-4">
+    <div className="laptop:justify-between my-5 flex gap-2 md:mb-6 md:mt-[37.8px] 5xl:mb-9 tall:my-4 laptop:w-[35.2vw]">
       <LoginSocialGoogle
         isOnlyGetToken
         client_id={import.meta.env.VITE_GG_APP_ID}

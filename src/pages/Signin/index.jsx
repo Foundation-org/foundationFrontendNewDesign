@@ -84,7 +84,8 @@ export default function Signin() {
         />
       </div>
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-tr-[65px] lg:rounded-br-[65px]">
-        <div className="mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[60%]">
+        {/* <div className="mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[60%]"> */}
+        <div className="laptop:max-w-[35vw] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0">
           <Typography variant="textTitle" className="text-center tablet:text-left">Login</Typography>
           <SocialLogins setProvider={setProvider} setProfile={setProfile} />
           <Form onEmailChange={onEmailChange} onPassChange={onPassChange} />
@@ -129,7 +130,7 @@ export default function Signin() {
         <img
           src="/assets/svgs/logo.svg"
           alt="logo"
-          className="h-[258px] w-[329px]"
+          className="h-[20vh] w-[23vw]"
         />
       </div>
     </div>
