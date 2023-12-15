@@ -132,11 +132,11 @@ const SidebarLeft = ({
       {/* sidebar mobile */}
       <div className="block bg-white px-[15px] py-[10px] dark:bg-[#0A0A0C] tablet:px-[37px] tablet:py-[26px] laptop:hidden">
         <div className="flex items-center justify-between gap-[13px]">
-          <div className="relative w-full">
+          <div className="relative w-fit">
             <input
               type="text"
               placeholder="Search here...."
-              className="h-[25px] w-full min-w-[224px] rounded-[18px] border-[1px] border-white bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8] tablet:h-[50.7px] tablet:text-[17.13px]"
+              className="h-[25px] w-[70vw] min-w-[224px] rounded-[18px] border-[1px] border-white bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8] tablet:h-[50.7px] tablet:text-[17.13px]"
               value={searchData}
               onChange={handleSearch}
             />
@@ -154,7 +154,7 @@ const SidebarLeft = ({
               <img
                 src="/assets/svgs/dashboard/search.svg"
                 alt="search"
-                className="absolute right-3 top-[9px] h-3 w-3 tablet:h-[26.4px] tablet:w-[24.3px]"
+                className="absolute right-6 top-[9px] h-3 w-3 tablet:h-[26.4px] tablet:w-[24.3px]"
               />
             )}
           </div>
