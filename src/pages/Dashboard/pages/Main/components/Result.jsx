@@ -253,12 +253,6 @@ const Result = (props) => {
             btnText={"Results"}
             answersSelection={props.answersSelection}
             setAnswerSelection={props.setAnswerSelection}
-            handleCheckChange={
-              console.log('change')
-            }
-            handleContendChange={
-              console.log('change')
-            }
           />
         ))
       ) : props.title === "Ranked Choice" ? (
