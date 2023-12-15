@@ -25,7 +25,7 @@ const Form = ({ onEmailChange, onPassChange }) => {
   };
 
   return (
-    <form className="mt-[50px] flex w-full flex-col gap-11 text-gray-600 dark:text-white laptop:my-[50px] 5xl:gap-14 short:gap-[38px]">
+    <form className="mt-[50px] flex w-full flex-col gap-11 text-gray-600 dark:text-white laptop:my-11 5xl:gap-14 short:gap-[38px]">
       <Input
         type="email"
         id="email"
