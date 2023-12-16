@@ -10,7 +10,7 @@
 }
 
 .tab-button {
-  @apply rounded-[5px] border-[1px] px-[10px] py-1 text-[1.9vw] font-semibold leading-normal 2xl:px-[24px] tablet:rounded-[10.4px] tablet:px-[21px] tablet:py-2  laptop:rounded-[20.93px] laptop:px-8 laptop:py-3 ;
+  @apply rounded-[5px] border-[1px] px-[10px] py-1 text-[1.9vw] font-semibold leading-normal 2xl:px-[24px] tablet:rounded-[10.4px] tablet:px-[21px] tablet:py-2 laptop:rounded-[20.93px] laptop:px-8 laptop:py-3;
 }
 
 .heading {

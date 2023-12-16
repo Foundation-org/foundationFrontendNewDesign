@@ -32,7 +32,7 @@ const Form = ({ onEmailChange, onPassChange,handleCancel,email}) => {
           type="email"
           id="email"
           label="Email Address"
-          className="peer w-full border-b-[1px] border-[#C0C0C0] bg-white py-1 pl-[10px] text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
+          className="peer w-full border-b-[1px] border-[#C0C0C0] bg-white rounded-[2px] py-1 pl-[10px] text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
           autoComplete="off"
           onChange={onEmailChange}
           value={email}
@@ -64,8 +64,8 @@ const Form = ({ onEmailChange, onPassChange,handleCancel,email}) => {
               type={inputType}
               id="password"
               label="Password"
-              className="peer w-full border-b-[1px] bg-black border-[#C0C0C0] bg-white py-1 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white
-               dark:bg-dark dark:focus:border-white md:text-[22.9px] short:py-0  taller:text-[16px] rounded-[6px] pl-[10px]"
+              className="peer w-full border-b-[1px]  border-[#C0C0C0] bg-white py-1 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white
+               dark:bg-dark dark:focus:border-white md:text-[22.9px] short:py-0  taller:text-[16px] rounded-[2px] pl-[10px]"
               autoComplete="new-password"
               onChange={onPassChange}
             />

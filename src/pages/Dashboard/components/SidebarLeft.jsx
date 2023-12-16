@@ -154,7 +154,7 @@ const SidebarLeft = ({
               <img
                 src="/assets/svgs/dashboard/search.svg"
                 alt="search"
-                className="absolute right-6 top-[9px] h-3 w-3 tablet:top-3 tablet:h-[26.4px] tablet:w-[24.3px]"
+                className="absolute right-[12px] top-[9px] h-3 w-3 tablet:top-3 tablet:h-[26.4px] tablet:w-[24.3px]"
               />
             )}
           </div>
