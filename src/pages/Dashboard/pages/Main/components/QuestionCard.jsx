@@ -452,8 +452,8 @@ const QuestionCard = ({
     }
   };
 
-  console.log("ranked answers", rankedAnswers);
-  console.log("answersSelection", answersSelection);
+  // console.log({ rankedAnswers });
+  // console.log({ answersSelection });
 
   return (
     <div className="rounded-[12.3px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618] tablet:rounded-[26px]">

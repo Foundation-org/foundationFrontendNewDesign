@@ -45,6 +45,10 @@ const SingleAnswerMultipleChoice = (props) => {
     });
   };
 
+  useEffect(() => {
+    setAnswer(props.answer);
+  }, [props.answer]);
+
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
   };
@@ -60,6 +64,8 @@ const SingleAnswerMultipleChoice = (props) => {
 
     props.setAnswerSelection(newArr);
   };
+
+  console.log("first", props.answer);
 
   return (
     <div className="ml-[30px] mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[72px]">
@@ -112,7 +118,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 answersSelection={props.answersSelection}
                 setAnswerSelection={props.setAnswerSelection}
                 handleDeleteClose={handleDeleteClose}
-                handleEditClose={handleEditClose}
+                handleEditClose={handleDeleteClose}
                 setAddOptionLimit={props.setAddOptionLimit}
               />
             </BasicModal>
@@ -133,8 +139,11 @@ const SingleAnswerMultipleChoice = (props) => {
             />
           </div>
         ) : (
-          <div className={`mr-[20.63px] flex items-center gap-[19px] text-[9.238px] tablet:text-[16px] ${props.btnText === "Results" ? "pointer-events-none" : ""
-            }`}>
+          <div
+            className={`mr-[20.63px] flex items-center gap-[19px] text-[9.238px] tablet:text-[16px] ${
+              props.btnText === "Results" ? "pointer-events-none" : ""
+            }`}
+          >
             {props.title === "Multiple Choice" ? (
               <div id="custom-checkbox" className="flex h-full items-center  ">
                 <input
@@ -150,19 +159,21 @@ const SingleAnswerMultipleChoice = (props) => {
             {props.btnText === "Results" ? (
               <>
                 {props.percentages?.selectedPercentage &&
-                  props.percentages?.selectedPercentage[props.answer.trim()] ? (
+                props.percentages?.selectedPercentage[props.answer.trim()] ? (
                   props.percentages?.selectedPercentage[props.answer.trim()] ===
-                    100 ? (
+                  100 ? (
                     <span
-                      className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-                        }`}
+                      className={`w-[4ch] whitespace-nowrap ${
+                        persistedTheme === "dark" ? "text-white" : ""
+                      }`}
                     >
                       100%
                     </span>
                   ) : (
                     <span
-                      className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-                        }`}
+                      className={`w-[4ch] whitespace-nowrap ${
+                        persistedTheme === "dark" ? "text-white" : ""
+                      }`}
                     >
                       {props.percentages?.selectedPercentage[
                         props.answer.trim()
@@ -171,8 +182,9 @@ const SingleAnswerMultipleChoice = (props) => {
                   )
                 ) : (
                   <span
-                    className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-                      }`}
+                    className={`w-[4ch] whitespace-nowrap ${
+                      persistedTheme === "dark" ? "text-white" : ""
+                    }`}
                   >
                     0%
                   </span>
@@ -199,22 +211,24 @@ const SingleAnswerMultipleChoice = (props) => {
               {props.btnText === "Results" ? (
                 <>
                   {props.percentages?.contendedPercentage &&
-                    props.percentages?.contendedPercentage[
+                  props.percentages?.contendedPercentage[
                     props.answer.trim()
-                    ] ? (
+                  ] ? (
                     props.percentages?.contendedPercentage[
                       props.answer.trim()
                     ] === 100 ? (
                       <span
-                        className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-                          }`}
+                        className={`w-[4ch] whitespace-nowrap ${
+                          persistedTheme === "dark" ? "text-white" : ""
+                        }`}
                       >
                         100%
                       </span>
                     ) : (
                       <span
-                        className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-                          }`}
+                        className={`w-[4ch] whitespace-nowrap ${
+                          persistedTheme === "dark" ? "text-white" : ""
+                        }`}
                       >
                         {props.percentages?.contendedPercentage[
                           props.answer.trim()
@@ -223,8 +237,9 @@ const SingleAnswerMultipleChoice = (props) => {
                     )
                   ) : (
                     <span
-                      className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-                        }`}
+                      className={`w-[4ch] whitespace-nowrap ${
+                        persistedTheme === "dark" ? "text-white" : ""
+                      }`}
                     >
                       0%
                     </span>

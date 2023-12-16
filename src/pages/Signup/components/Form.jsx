@@ -43,7 +43,7 @@ const Form = ({
             <img
               src="/assets/svgs/cancelLight.svg"
               alt="blind"
-              className="absolute right-2 top-[10px] h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px] tablet:-top-2"
+              className="absolute right-2 top-[10px] h-[17px] w-[17px] cursor-pointer md:h-[30px] md:w-[30px] tablet:top-[5px] taller:-top-[2px]"
               onClick={handleCancel}
             />
           )

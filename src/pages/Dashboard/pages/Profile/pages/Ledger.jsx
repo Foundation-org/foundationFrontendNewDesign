@@ -1,21 +1,55 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
+import {
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import { useQuery } from "@tanstack/react-query";
+import { useDebounce } from "../../../../../utils/useDebounce";
 import { getAllLedgerData, searchLedger } from "../../../../../api/userAuth";
-import { columns, tableCustomStyles } from "../components/LedgerUtils";
-import { Pagination } from "@mui/material";
-import DataTable from "react-data-table-component";
-import { useSelector } from "react-redux";
 
-const Ledger = () => {
+export default function BasicTable() {
   const itemsPerPage = 10;
-  const [filterText, setFilterText] = useState("");
-  const [selectedOption, setSelectedOption] = useState(false);
-  const [sort, setsort] = useState("newest");
+  const rowsPerPage = 10;
+  const [totalPages, setTotalPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [sort, setsort] = useState("newest");
+  const [filterText, setFilterText] = useState("");
   const debouncedSearch = useDebounce(filterText, 1000);
-  const persistedTheme = useSelector((state) => state.utils.theme);
-  const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  const columns = [
+    {
+      accessorKey: "txUserAction",
+      header: "txUserAction",
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+    {
+      accessorKey: "txID",
+      header: "txID",
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+    {
+      accessorKey: "txAuth",
+      header: "txAuth",
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+    {
+      accessorKey: "txFrom",
+      header: "txFrom",
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+    {
+      accessorKey: "txTo",
+      header: "txTo",
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+    {
+      accessorKey: "txAmount",
+      header: "txAmount",
+      cell: (props) => <p>{props.getValue()}</p>,
+    },
+  ];
 
   const { data: ledgerData } = useQuery({
     queryFn: () => {
@@ -33,178 +67,121 @@ const Ledger = () => {
     queryKey: ["ledgerData", currentPage, sort, debouncedSearch],
   });
 
+  const table = useReactTable({
+    data: ledgerData?.data?.data || [],
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
+
+  //   custom pagination
   useEffect(() => {
-    setCurrentPage(1); // Reset current page when filter or sort changes
-  }, [debouncedSearch, sort]);
+    setTotalPages(Math.ceil(ledgerData?.data.totalCount / rowsPerPage));
+  }, [ledgerData?.data.totalCount, rowsPerPage]);
 
-  const handleChange = (event, page) => {
-    setCurrentPage(page * 1);
+  const handlePageClick = (page) => {
+    table.setPageIndex(page - 1);
   };
 
-  const handleDropdown = () => {
-    setSelectedOption(!selectedOption);
-  };
+  useEffect(() => {
+    setCurrentPage(table.getState().pagination.pageIndex + 1);
+  }, [table.getState().pagination.pageIndex]);
 
-  const handleOptionClick = (option) => {
-    setsort(option);
-    setSelectedOption(false);
-  };
-
-  const subHeaderComponentMemo = useMemo(() => {
-    return (
-      <div className="flex w-full justify-between">
-        <div className="flex gap-[10.97px] tablet:gap-[63px]">
-          {/* profile */}
-          <div className="flex gap-[7px] tablet:gap-[13px]">
-            <img
-              src="/assets/svgs/dashboard/person.svg"
-              alt="person icon"
-              className="h-[18.5px] w-[18.5px] tablet:h-[44.2px] tablet:w-[44.2px]"
-            />
-            <div>
-              <h1 className="text-[8.6px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC] tablet:text-[20.7px]">
-                My Profile
-              </h1>
-              <div className="flex gap-1 text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[13.824px]">
-                <p>Balance</p>
-                <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance : 0 }</p>
-              </div>
-            </div>
-          </div>
-          {/* treasury */}
-          <div className="flex gap-[7px] tablet:gap-[13px]">
-            <img
-              src="/assets/svgs/dashboard/treasure.svg"
-              alt="person icon"
-              className="h-[18.5px] w-[18.5px] tablet:h-[44.2px] tablet:w-[44.2px]"
-            />
-            <div>
-              <h1 className="text-[8.6px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC] tablet:text-[20.7px]">
-                Treasury
-              </h1>
-              <div className="flex gap-1 text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[13.824px]">
-                <p>Balance</p>
-                <p>{localStorage.getItem("treasuryAmount")}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-[5.4px] tablet:gap-[23.5px]">
-          {/* search */}
-          <div className="relative flex h-[12.6px] tablet:h-[43px]">
-            <img
-              src="/assets/svgs/dashboard/search2.svg"
-              alt="search icon"
-              className="absolute left-1 top-1/2 h-2 w-2 -translate-y-[50%] transform tablet:left-[9.22px] tablet:h-[27px] tablet:w-[27px]"
-            />
-            <input
-              type="text"
-              onChange={(e) => setFilterText(e.target.value)}
-              value={filterText}
-              placeholder="Search"
-              className="w-full rounded-[3.34px] border-[1.153px] border-[#C1C1C1] bg-white py-[2.3px] pl-[13.34px] text-[5.79px] font-normal leading-normal -tracking-[0.2px] text-[#B5B7C0] tablet:w-[248px] tablet:rounded-[11.526px] tablet:py-[8.07px] tablet:pl-[46px] tablet:text-[20px]"
-            />
-          </div>
-          {/* sort */}
-          <div className="relative h-[12.6px] w-[40%] rounded-[3.34px] border-[1.153px] border-[#C1C1C1] bg-white tablet:h-[43.3px] tablet:w-[186px] tablet:rounded-[11.526px]">
-            <button
-              onClick={handleDropdown}
-              className="flex  h-full w-full items-center gap-1 pl-[5px] tablet:pl-[17px]"
-            >
-              <h1 className="leading-noremal text-[5.79px] font-normal -tracking-[0.2px] text-[#7E7E7E] tablet:text-[20.021px]">
-                Sort by :
-              </h1>
-              <h1 className="leading-noremal text-[5.79px] font-semibold capitalize -tracking-[0.2px] text-[#3D3C42] tablet:text-[20.021px]">
-                {sort}
-              </h1>
-            </button>
-            <div
-              className={`${
-                selectedOption ? "flex duration-200 ease-in-out" : "hidden"
-              } absolute z-50 mt-2 w-32 flex-col gap-2 rounded-md bg-gray px-1 py-2 text-left text-black`}
-            >
-              <p
-                className="cursor-pointer rounded-md px-2 duration-200 ease-in-out hover:bg-white"
-                onClick={() => handleOptionClick("newest")}
-              >
-                Newest
-              </p>
-              <p
-                className="cursor-pointer rounded-md px-2 duration-200 ease-in-out hover:bg-white"
-                onClick={() => handleOptionClick("oldest")}
-              >
-                Oldest
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }, [filterText, selectedOption]);
+  const visibleButtons = 5;
+  const rangeStart = Math.max(1, currentPage - Math.floor(visibleButtons / 2));
+  const rangeEnd = Math.min(totalPages, rangeStart + visibleButtons - 1);
 
   return (
-    <div>
-      <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px]">
-        Ledger
-      </h1>
-
-      <div
-        className={`${
-          persistedTheme === "dark"
-            ? "dark-shadow-inside-custom"
-            : "shadow-inside"
-        } tabet:rounded-[45px] mx-6 mb-[54px] mt-4 flex flex-col gap-[18.27px] rounded-[11.91px] px-[9px] py-3 tablet:mx-[106px] tablet:my-[54px] tablet:gap-[23px] tablet:pb-6 tablet:pl-5 tablet:pr-[43.25px] tablet:pt-[31px]`}
-      >
-        <DataTable
-          columns={columns}
-          data={ledgerData?.data.data}
-          customStyles={tableCustomStyles}
-          subHeader
-          subHeaderComponent={subHeaderComponentMemo}
-        />
-        <div className="flex justify-between">
-          {currentPage === 1 ? (
-            <h1 className="text-[7.15px] font-medium text-[#B5B7C0] tablet:text-[16px]">
-              Showing data 1 to {ledgerData?.data.data.length} of{" "}
-              {ledgerData?.data.totalCount} entries
-            </h1>
-          ) : (
-            <h1 className="text-[7.15px] font-medium text-[#B5B7C0] tablet:text-[16px]">
-              Showing data {(currentPage - 1) * itemsPerPage + 1} to{" "}
-              {Math.min(
-                currentPage * itemsPerPage,
-                ledgerData?.data.totalCount,
-              )}{" "}
-              of {ledgerData?.data.totalCount} entries
-            </h1>
-          )}
-          <Pagination
-            count={ledgerData?.data.pageCount}
-            variant="outlined"
-            shape="rounded"
-            onChange={handleChange}
-          />
+    <div
+      className="mx-[60px] mb-10 rounded-[18px] px-[40px] py-[30px] text-left"
+      style={{ boxShadow: "0px 0px 8.689655303955078px 0px #00000040 inset" }}
+    >
+      <div className="no-scrollbar h-[600px] w-full overflow-auto">
+        <table className="w-full">
+          <thead className="text-[1rem] text-[#B5B7C0] md:text-[1.5rem]">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr
+                key={headerGroup.id}
+                className=" border=[#EEEEEE] border-0 border-b "
+              >
+                {headerGroup.headers.map((header) => (
+                  <th className="py-2.5 font-normal" key={header.id}>
+                    {header.column.columnDef.header}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody className="text-[0.875rem] md:text-[1.25rem]">
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id} className=" border=[#EEEEEE] border-0 border-b ">
+                {row.getVisibleCells().map((cell) => (
+                  <td className=" py-4" key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="max-[880px]:justify-center mt-6 flex flex-wrap items-center justify-between gap-3">
+        <p className="text-[1rem] text-[#B5B7C0] ">
+          Showing data {(table.getState().pagination.pageIndex + 1) * 10 - 9} to{" "}
+          {(table.getState().pagination.pageIndex + 1) * 10} of{" "}
+          {ledgerData?.data.totalCount} entries
+        </p>
+        <div className="flex items-center">
+          <button
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+            className="mr-4 h-7 w-[27px] rounded-md border border-solid border-[#EEEEEE] bg-[#F5F5F5] px-2.5 py-1.5"
+          >
+            <img
+              className="h-[14px] w-[9px]"
+              src={"./assets/svgs/arrow-back.svg"}
+              alt=""
+            />
+          </button>
+          <div className=" flex items-center gap-4">
+            {rangeStart > 1 && (
+              <button className="bg-white/0 font-medium text-black">...</button>
+            )}
+            {rangeStart && rangeEnd
+              ? [...Array(rangeEnd - rangeStart + 1)].map((_, index) => {
+                  const pageNumber = rangeStart + index;
+                  return (
+                    <button
+                      className={`text-[13px]] flex h-[28px]  w-[27px] items-center justify-center rounded-md border  border-solid border-[#EEEEEE] ${
+                        pageNumber === currentPage
+                          ? "border border-solid border-[#5932EA] bg-[#4A8DBD] text-white"
+                          : "bg-[#F5F5F5]"
+                      }`}
+                      key={pageNumber}
+                      onClick={() => handlePageClick(pageNumber)}
+                    >
+                      {pageNumber}
+                    </button>
+                  );
+                })
+              : null}
+            {rangeEnd < totalPages && (
+              <button className="bg-white/0 font-medium text-black">...</button>
+            )}
+          </div>
+          <button
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+            className="ml-4 h-[28px] w-[27px] rounded-md border border-solid border-[#EEEEEE] bg-[#F5F5F5] px-2.5 py-1.5"
+          >
+            <img
+              className="h-[14px] w-[9px]"
+              src={"./assets/svgs/arrow-forward.svg"}
+              alt=""
+            />
+          </button>
         </div>
       </div>
     </div>
   );
-};
-
-export default Ledger;
-
-// Custom hook for debounce
-function useDebounce(value, delay) {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
 }
