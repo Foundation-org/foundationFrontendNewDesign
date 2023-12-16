@@ -133,7 +133,8 @@ const SingleAnswerMultipleChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="mr-[20.63px] flex items-center gap-[19px] text-[9.238px] tablet:text-[16px] ">
+          <div className={`mr-[20.63px] flex items-center gap-[19px] text-[9.238px] tablet:text-[16px] ${props.btnText === "Results" ? "pointer-events-none" : ""
+            }`}>
             {props.title === "Multiple Choice" ? (
               <div id="custom-checkbox" className="flex h-full items-center  ">
                 <input
@@ -149,21 +150,19 @@ const SingleAnswerMultipleChoice = (props) => {
             {props.btnText === "Results" ? (
               <>
                 {props.percentages?.selectedPercentage &&
-                props.percentages?.selectedPercentage[props.answer.trim()] ? (
+                  props.percentages?.selectedPercentage[props.answer.trim()] ? (
                   props.percentages?.selectedPercentage[props.answer.trim()] ===
-                  100 ? (
+                    100 ? (
                     <span
-                      className={`w-[4ch] whitespace-nowrap ${
-                        persistedTheme === "dark" ? "text-white" : ""
-                      }`}
+                      className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                        }`}
                     >
                       100%
                     </span>
                   ) : (
                     <span
-                      className={`w-[4ch] whitespace-nowrap ${
-                        persistedTheme === "dark" ? "text-white" : ""
-                      }`}
+                      className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                        }`}
                     >
                       {props.percentages?.selectedPercentage[
                         props.answer.trim()
@@ -172,9 +171,8 @@ const SingleAnswerMultipleChoice = (props) => {
                   )
                 ) : (
                   <span
-                    className={`w-[4ch] whitespace-nowrap ${
-                      persistedTheme === "dark" ? "text-white" : ""
-                    }`}
+                    className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                      }`}
                   >
                     0%
                   </span>
@@ -201,24 +199,22 @@ const SingleAnswerMultipleChoice = (props) => {
               {props.btnText === "Results" ? (
                 <>
                   {props.percentages?.contendedPercentage &&
-                  props.percentages?.contendedPercentage[
+                    props.percentages?.contendedPercentage[
                     props.answer.trim()
-                  ] ? (
+                    ] ? (
                     props.percentages?.contendedPercentage[
                       props.answer.trim()
                     ] === 100 ? (
                       <span
-                        className={`w-[4ch] whitespace-nowrap ${
-                          persistedTheme === "dark" ? "text-white" : ""
-                        }`}
+                        className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                          }`}
                       >
                         100%
                       </span>
                     ) : (
                       <span
-                        className={`w-[4ch] whitespace-nowrap ${
-                          persistedTheme === "dark" ? "text-white" : ""
-                        }`}
+                        className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                          }`}
                       >
                         {props.percentages?.contendedPercentage[
                           props.answer.trim()
@@ -227,9 +223,8 @@ const SingleAnswerMultipleChoice = (props) => {
                     )
                   ) : (
                     <span
-                      className={`w-[4ch] whitespace-nowrap ${
-                        persistedTheme === "dark" ? "text-white" : ""
-                      }`}
+                      className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                        }`}
                     >
                       0%
                     </span>
