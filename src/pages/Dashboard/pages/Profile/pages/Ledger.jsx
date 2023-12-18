@@ -44,6 +44,7 @@ export default function BasicTable() {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    columnResizeMode: "onChange", // onChange onEnd
   });
 
   //   custom pagination
@@ -71,7 +72,7 @@ export default function BasicTable() {
       <div
         className={`${
           persistedTheme === "dark" ? "ledger-dark" : "ledger-light"
-        } mx-[106px] mb-10 rounded-[45px] px-[1.36rem] py-[30px] text-left`}
+        } mx-[17px] mb-10 rounded-[7.89px] px-[1.36rem] py-[13px] text-left tablet:mx-11 tablet:rounded-[10.4px] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
       >
         <LedgerTableTopbar
           sort={sort}
@@ -83,28 +84,46 @@ export default function BasicTable() {
         />
         <div className="no-scrollbar h-[600px] w-full overflow-auto">
           <table className="w-full">
-            <thead className="text-[1rem] text-[#bbb] dark:text-[#B5B7C0] md:text-[1.45rem]">
+            <thead
+              style={{ width: table.getTotalSize() }}
+              className="text-[0.7rem] text-[#bbb] dark:text-[#B5B7C0] md:text-[1.45rem] tablet:text-[1rem]"
+            >
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
                   key={headerGroup.id}
                   className=" border-0 border-b border-[#EEEEEE] "
                 >
                   {headerGroup.headers.map((header) => (
-                    <th className="py-2.5 font-normal" key={header.id}>
+                    <th
+                      style={{ width: header.getSize() }}
+                      className="relative py-2.5 font-normal"
+                      key={header.id}
+                    >
                       {header.column.columnDef.header}
+                      <div
+                        onMouseDown={header.getResizeHandler()}
+                        onTouchStart={header.getResizeHandler()}
+                        className={`resizer ${
+                          header.column.getIsResizing() ? "isResizing" : ""
+                        }`}
+                      />
                     </th>
                   ))}
                 </tr>
               ))}
             </thead>
-            <tbody className="text-[0.875rem] font-medium -tracking-[0.0125rem] md:text-[1.25rem]">
+            <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] md:text-[1.25rem] tablet:text-[0.875rem]">
               {table.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}
                   className=" border-0 border-b border-[#EEEEEE] text-[#292D32] dark:text-[#C8C8C8] "
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td className=" py-4" key={cell.id}>
+                    <td
+                      className=" py-4"
+                      key={cell.id}
+                      style={{ width: cell.column.getSize() }}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -117,7 +136,7 @@ export default function BasicTable() {
           </table>
         </div>
         <div className="max-[880px]:justify-center mt-6 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-[1rem] text-[#B5B7C0] ">
+          <p className="text-[0.44rem] text-[#B5B7C0] tablet:text-[1rem] ">
             Showing data {(table.getState().pagination.pageIndex + 1) * 10 - 9}{" "}
             to {(table.getState().pagination.pageIndex + 1) * 10} of{" "}
             {ledgerData?.data.totalCount} entries
@@ -126,15 +145,15 @@ export default function BasicTable() {
             <button
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="mr-4 h-7 w-[27px] rounded-md border border-solid border-[#EEEEEE] bg-[#F5F5F5] px-2.5 py-1.5 dark:bg-[#A5A5A5]"
+              className="pagination-btn"
             >
               <img
-                className="h-[14px] w-[9px]"
+                className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px] "
                 src={"./assets/svgs/arrow-back.svg"}
                 alt=""
               />
             </button>
-            <div className=" flex items-center gap-4">
+            <div className=" flex items-center gap-[0.46rem] tablet:gap-4">
               {rangeStart > 1 && (
                 <button className="bg-white/0 font-medium text-black">
                   ...
@@ -145,7 +164,7 @@ export default function BasicTable() {
                     const pageNumber = rangeStart + index;
                     return (
                       <button
-                        className={`flex h-[28px] w-[27px] items-center justify-center rounded-md border border-solid border-[#EEEEEE] text-[13px] ${
+                        className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] border border-solid border-[#EEEEEE] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:text-[13px] ${
                           pageNumber === currentPage
                             ? "border border-solid border-[#5932EA] bg-[#4A8DBD] text-white"
                             : "bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]"
@@ -167,10 +186,10 @@ export default function BasicTable() {
             <button
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="ml-4 h-[28px] w-[27px] rounded-md border border-solid border-[#EEEEEE] bg-[#F5F5F5] px-2.5 py-1.5 dark:bg-[#A5A5A5]"
+              className="pagination-btn"
             >
               <img
-                className="h-[14px] w-[9px]"
+                className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px] "
                 src={"./assets/svgs/arrow-forward.svg"}
                 alt=""
               />

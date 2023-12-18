@@ -6,11 +6,11 @@ import { toast } from "sonner";
 import { useState, useEffect } from "react";
 
 const OptionBar = ({
+  id,
   btnText,
   btnColor,
   handleStartTest,
   handleViewResults,
-  id,
   answersSelection,
   time,
   setHowManyTimesAnsChanged,
@@ -216,6 +216,18 @@ const OptionBar = ({
     }
   }
 
+  const copyToClipboard = () => {
+    const textArea = document.createElement("textarea");
+    textArea.value = `https://localhost:5173/quest/${id}`;
+
+    document.body.appendChild(textArea);
+
+    textArea.select();
+    document.execCommand("copy");
+
+    document.body.removeChild(textArea);
+  };
+
   return (
     <>
       <div className="mb-1 flex items-center">
@@ -249,15 +261,23 @@ const OptionBar = ({
           </button>
         </div>
       </div>
-      <div className="mb-3 ml-[14.24px] flex h-3 w-[53.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:mb-[23px] tablet:ml-[26px] tablet:h-[26px] tablet:w-[114px] tablet:gap-1 tablet:rounded-[10px]">
+      <div className="mx-[2.4rem] mb-[1.83rem] mt-[3.99rem] flex items-center justify-between">
         <img
-          src="/assets/svgs/dashboard/clock-outline.svg"
+          src="/assets/svgs/copy.svg"
           alt="clock"
-          className="h-[7.64px] w-[7.64px] tablet:h-4 tablet:w-4"
+          className="h-[7.64px] w-[7.64px] cursor-pointer tablet:h-[23px] tablet:w-[23px]"
+          onClick={copyToClipboard}
         />
-        <p className="text-[6px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[10px]">
-          {timeAgo}
-        </p>
+        <div className="flex h-3 w-[53.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:h-[26px] tablet:w-[114px] tablet:gap-1 tablet:rounded-[10px]">
+          <img
+            src="/assets/svgs/dashboard/clock-outline.svg"
+            alt="clock"
+            className="h-[7.64px] w-[7.64px] tablet:h-4 tablet:w-4"
+          />
+          <p className="text-[6px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[10px]">
+            {timeAgo}
+          </p>
+        </div>
       </div>
     </>
   );
