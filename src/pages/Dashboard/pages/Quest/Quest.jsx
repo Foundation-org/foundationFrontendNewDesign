@@ -11,7 +11,7 @@ const Quest = () => {
   const handleTab = (id) => setTab(id);
 
   return (
-    <div className="h-[calc(100vh-96px)] w-full overflow-y-auto bg-white pt-[60px] dark:bg-[#0A0A0C] tablet:h-[calc(100vh-116px)] laptop:h-[calc(100vh-96px)]">
+    <div className="h-[calc(100vh-96px)] w-full overflow-y-auto bg-white pt-[20px] tablet:pt-[60px] dark:bg-[#0A0A0C] tablet:h-[calc(100vh-116px)] laptop:h-[calc(100vh-96px)]">
       <Navbar handleTab={handleTab} tab={tab} />
       {tab === 0 && <RankChoice />}
       {tab === 1 && <MultipleChoice />}

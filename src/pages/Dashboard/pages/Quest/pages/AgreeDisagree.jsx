@@ -42,7 +42,7 @@ const AgreeDisagree = () => {
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
-      if(resp.status === 201) {
+      if (resp.status === 201) {
         toast.success("Successfully Created Quest");
         setTimeout(() => {
           navigate("/dashboard");
@@ -134,8 +134,8 @@ const AgreeDisagree = () => {
       </h4>
       <div
         className={`${persistedTheme === "dark"
-            ? "border-[1px] border-[#858585] tablet:border-[2px]"
-            : ""
+          ? "border-[1px] border-[#858585] tablet:border-[2px]"
+          : ""
           } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
@@ -189,7 +189,7 @@ const AgreeDisagree = () => {
         <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
           Customize your Quest
         </h3>
-        <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[16px] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:py-[35px] laptop:max-w-[838px]">
+        <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[0.30925rem] tablet:rounded-[16px] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:py-[35px] laptop:max-w-[838px]">
           <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[30px]">
             Settings
           </h5>
@@ -214,13 +214,14 @@ const AgreeDisagree = () => {
                   defaultValue=""
                   name="radio-buttons-group"
                 >
-                  <div className="flex flex-wrap justify-center gap-4 -mb-4 mt-2">
+                  <div className="flex flex-wrap justify-center gap-[1px] tablet:gap-4 mb-[0px] tablet:-mb-4 mt-2">
                     {changeOptions?.map((item) => (
                       <FormControlLabel
                         key={item.id}
                         value={item.value}
                         control={<Radio sx={{ color: "#9C9C9C" }} />}
                         label={item.title}
+                        className="text-[11px] md:text-sm w-[60px] tablet:w-[auto] h-[20px] tablet:h-[auto] "
                         onChange={(e) => {
                           setChangedOption(e.target.value);
                         }}

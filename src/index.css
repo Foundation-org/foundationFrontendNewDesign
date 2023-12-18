@@ -211,13 +211,8 @@ iframe {
   height: 100%;
 }
 
-@media only screen and (min-width: 744px) {
-  #custom-yello-checkbox .checkbox::after {
-    content: url("/public/assets/svgs/exclamation-tablet.svg");
-    display: none;
-    width: 100%;
-    height: 100%;
-  }
+.Mui-checked {
+  color: #0fb063 !important;
 }
 
 #custom-yello-checkbox .checkbox:checked::after {
@@ -232,6 +227,21 @@ iframe {
   height: 23.19px;
   display: flex;
 }
+
+.non-active-radio {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+@media only screen and (min-width: 744px) {
+  #custom-yello-checkbox .checkbox::after {
+    content: url("/public/assets/svgs/exclamation-tablet.svg");
+    display: none;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 
 @media (min-width: 744px) {
   #dragIcon>div {
@@ -265,6 +275,15 @@ iframe {
   }
 }
 
-.Mui-checked {
-  color: #0fb063 !important;
+
+@media (max-width: 744px) {
+  .MuiFormControlLabel-labelPlacementEnd>span:last-child {
+    font-size: 10px;
+    white-space: nowrap;
+    margin-top: 1.5px;
+  }
+
+  .MuiSvgIcon-root {
+    width: 11px !important;
+  }
 }
