@@ -122,7 +122,7 @@ const QuestionCard = ({
       handleStartTest(null);
     },
     onError: (err) => {
-      toast.error(err.response.data);
+      toast.error(err.response.data.message.split(':')[1]);
     },
   });
 
@@ -196,7 +196,7 @@ const QuestionCard = ({
       handleViewResults(id);
     },
     onError: (err) => {
-      toast.error(err.response.data);
+      toast.error(err.response.data.message.split(':')[1]);
     },
   });
 
@@ -219,7 +219,7 @@ const QuestionCard = ({
       }
     },
     onError: (err) => {
-      toast.error(err.response.data);
+      toast.error(err.response.data.message.split(':')[1]);
     },
   });
 

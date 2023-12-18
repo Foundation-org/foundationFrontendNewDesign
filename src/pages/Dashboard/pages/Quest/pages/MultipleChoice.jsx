@@ -98,7 +98,7 @@ const MultipleChoice = () => {
     },
     onError: (err) => {
       // console.log('error', err);
-      toast.error(err.response.data);
+      toast.error(err.response.data.message.split(':')[1]);
     },
   });
 

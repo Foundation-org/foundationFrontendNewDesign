@@ -50,7 +50,7 @@ const AgreeDisagree = () => {
       }
     },
     onError: (err) => {
-      toast.error(err.response.data);
+      toast.error(err.response.data.message.split(':')[1]);
     },
   });
 

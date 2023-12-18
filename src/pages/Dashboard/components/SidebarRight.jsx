@@ -115,7 +115,7 @@ const SidebarRight = () => {
       // console.log(resp);
       setResponse(resp.data);
     } catch (e) {
-      toast.error(e.response.data);
+      toast.error(e.response.data.message.split(':')[1]);
     }
   };
 
