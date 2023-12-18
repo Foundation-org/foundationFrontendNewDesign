@@ -22,7 +22,6 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
-// import "react-tooltip/dist/react-tooltip.css";
 
 const AgreeDisagree = () => {
   const navigate = useNavigate();

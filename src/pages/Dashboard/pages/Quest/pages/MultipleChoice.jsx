@@ -449,44 +449,17 @@ const MultipleChoice = () => {
               setEnabled={setMultipleOption}
             />
           </div>
-          <div className="mx-5 flex flex-col items-center rounded-[0.30925rem] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] dark:bg-[#080A0C] tablet:rounded-[16px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
-            <div className="flex w-full items-center justify-between">
-              <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
-                This Quest has a Change Option.
-              </h5>
-              <CustomSwitch
-                enabled={changeState}
-                setEnabled={() => {
-                  setChangeState((prev) => !prev);
-                  setChangedOption("Daily");
-                }}
-              />
-            </div>
-
-            {changeState ? (
-              <FormControl>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue=""
-                  name="radio-buttons-group"
-                >
-                  <div className="-mb-4 mt-2 flex flex-wrap justify-center gap-4">
-                    {changeOptions?.map((item) => (
-                      <FormControlLabel
-                        key={item.id}
-                        value={item.value}
-                        control={<Radio sx={{ color: "#9C9C9C" }} />}
-                        label={item.title}
-                        onChange={(e) => {
-                          setChangedOption(e.target.value);
-                        }}
-                      />
-                    ))}
-                  </div>
-                </RadioGroup>
-              </FormControl>
-            ) : null}
+          <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] dark:bg-[#080A0C] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
+              Participant can add their own options.
+            </h5>
+            <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
+          <ChangeChoiceOption
+            changeState={changeState}
+            setChangeState={setChangeState}
+            setChangedOption={setChangedOption}
+          />
         </div>
         <div className="flex w-full justify-end">
           <button
