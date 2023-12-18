@@ -293,10 +293,9 @@ const QuestionCard = ({
         uuid: localStorage.getItem("uId"),
       };
 
-      if (!(params.answer.selected && params.answer.contended)) {
-        toast.warning(
-          "you cannot submit without answering both selected and contended",
-        );
+      // if (!(params.answer.selected && params.answer.contended)) {
+      if (!(params.answer.selected)) {
+        toast.warning("You cannot submit without answering");
         return;
       }
 
@@ -381,11 +380,11 @@ const QuestionCard = ({
           uuid: localStorage.getItem("uId"),
         };
 
+        // && params.answer.contended.length === 0
         if (
-          params.answer.selected.length === 0 &&
-          params.answer.contended.length === 0
+          params.answer.selected.length === 0
         ) {
-          toast.warning("you cannot submit without answering");
+          toast.warning("You cannot submit without answering");
           return;
         }
 
