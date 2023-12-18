@@ -37,14 +37,14 @@ const Form = ({
             <img
               src="/assets/svgs/cancelDark.svg"
               alt="blind"
-              className="cursor-pointer absolute right-2 h-[17px] w-[17px] md:h-[30px] md:w-[30px] "
+              className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px] "
               onClick={handleCancel}
             />
           ) : (
             <img
               src="/assets/svgs/cancelLight.svg"
               alt="blind"
-              className="cursor-pointer absolute right-2 h-[17px] w-[17px] md:h-[30px] md:w-[30px] "
+              className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px] "
               onClick={handleCancel}
             />
           )
@@ -68,14 +68,14 @@ const Form = ({
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
-                  className="cursor-pointer absolute right-2 h-[17px] w-[17px] md:h-[30px] md:w-[30px] "
+                  className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
                   onClick={togglePasswordVisibility}
                 />
               ) : (
                 <img
                   src="/assets/svgs/eye-white.svg"
                   alt="blind"
-                  className="cursor-pointer absolute right-2 h-[17px] w-[17px] md:h-[30px] md:w-[30px] "
+                  className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
                   onClick={togglePasswordVisibility}
                 />
               )
@@ -83,14 +83,14 @@ const Form = ({
               <img
                 src="/assets/svgs/eye.svg"
                 alt="blind"
-                className="cursor-pointer absolute right-2 h-[17px] w-[17px] md:h-[30px] md:w-[30px] "
+                className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
                 onClick={togglePasswordVisibility}
               />
             ) : (
               <img
                 src="/assets/svgs/eyeLight.svg"
                 alt="blind"
-                className="cursor-pointer absolute right-2 h-[17px] w-[17px] md:h-[30px] md:w-[30px] "
+                className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
                 onClick={togglePasswordVisibility}
               />
             )}
@@ -117,14 +117,14 @@ const Form = ({
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
-                  className="cursor-pointer absolute right-2 h-[17px] w-[17px] md:h-[30px] md:w-[30px] "
+                  className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
                   onClick={toggleCnfmPasswordVisibility}
                 />
               ) : (
                 <img
                   src="/assets/svgs/eye-white.svg"
                   alt="blind"
-                  className="cursor-pointer absolute right-2 h-[17px] w-[17px] md:h-[30px] md:w-[30px] "
+                  className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
                   onClick={toggleCnfmPasswordVisibility}
                 />
               )
@@ -132,14 +132,14 @@ const Form = ({
               <img
                 src="/assets/svgs/eye.svg"
                 alt="blind"
-                className="cursor-pointer absolute right-2 h-[17px] w-[17px] md:h-[30px] md:w-[30px] "
+                className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
                 onClick={toggleCnfmPasswordVisibility}
               />
             ) : (
               <img
                 src="/assets/svgs/eyeLight.svg"
                 alt="blind"
-                className="cursor-pointer absolute right-2 h-[17px] w-[17px] md:h-[30px] md:w-[30px] "
+                className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
                 onClick={toggleCnfmPasswordVisibility}
               />
             )}
