@@ -9,7 +9,6 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import SingleAnswer from "../../../components/SingleAnswer";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
-import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
 import RankedResult from "../../../components/RankedResult";
 
 const Result = (props) => {
@@ -272,13 +271,13 @@ const Result = (props) => {
       ) : (
         <></>
       )}
-      <div className="my-8 flex w-[98%] justify-end">
+      <div className="my-8 flex justify-end">
         <button
           className={`${
             persistedTheme === "dark"
               ? "bg-[#333B46]"
               : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-          } inset-0 mr-[30px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner dark:text-[#B6B6B6] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+          } inset-0 mr-[14px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner dark:text-[#B6B6B6] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
           onClick={() => {
             props.handleViewResults(null);
           }}

@@ -11,11 +11,13 @@ export const Tooltip = ({ optionStatus }) => {
     <div>
       {tooltipStatus?.name === "Fail" && (
         <div
-          className={`absolute ${tooltipStatus?.duplication ? "-top-[26px]" : "-top-[36px]"
-            } left-0 -translate-x-1/2 transform laptop:left-1/2 ${tooltipStatus?.duplication
+          className={`absolute ${
+            tooltipStatus?.duplication ? "-top-[26px]" : "-top-[36px]"
+          } left-0 -translate-x-1/2 transform laptop:left-1/2 ${
+            tooltipStatus?.duplication
               ? "tablet:-top-[42px]"
               : "tablet:-top-[127px]"
-            }`}
+          }`}
         >
           <div class="relative mx-2 flex flex-col items-end">
             <div
@@ -28,7 +30,7 @@ export const Tooltip = ({ optionStatus }) => {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="text-white tablet:h-4 tablet:w-4 laptop:h-6 laptop:w-6"
+                className="h-[5px] w-[5px] text-white tablet:h-4 tablet:w-4 laptop:h-6 laptop:w-6"
               >
                 <path
                   fillRule="evenodd"
@@ -38,10 +40,10 @@ export const Tooltip = ({ optionStatus }) => {
               </svg>
             </div>
 
-            <div class="bottom-full right-0 w-[7.3rem] rounded-[15px] border-[0.533px] bg-[#FEDEDE] px-[0.35rem] py-[0.2rem] text-[0.3rem] font-normal text-[#F34141] dark:bg-[#3C1A20] dark:text-[#DB6262] tablet:w-[28rem] tablet:py-[18px] tablet:text-[1rem]">
+            <div class="bottom-full right-0 w-[7.3rem] rounded-md border-[0.533px] bg-[#FEDEDE] px-[0.35rem] py-[0.2rem] text-[0.4rem] font-normal text-[#F34141] dark:bg-[#3C1A20] dark:text-[#DB6262] tablet:w-[28rem] tablet:rounded-[15px] tablet:py-[18px] tablet:text-[1rem]">
               {tooltipStatus?.tooltipName}
               <svg
-                class="absolute left-0 top-full h-2 w-full text-[#FEDEDE] dark:text-[#3C1A20] tablet:h-[28px] -mt-[1px]"
+                class="absolute left-0 top-full -mt-[1px] h-2 w-full text-[#FEDEDE] dark:text-[#3C1A20] tablet:h-[28px]"
                 x="0px"
                 y="0px"
                 viewBox="0 0 255 255"
@@ -54,7 +56,6 @@ export const Tooltip = ({ optionStatus }) => {
                   stroke-width="10"
                 />
               </svg>
-
             </div>
           </div>
         </div>

@@ -21,6 +21,7 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { useSelector } from "react-redux";
+import ChangeChoiceOption from "../components/ChangeChoiceOption";
 // import "react-tooltip/dist/react-tooltip.css";
 
 const AgreeDisagree = () => {
@@ -69,16 +70,14 @@ const AgreeDisagree = () => {
         "This quest is not unique. A similar quest already exists.",
       );
 
-
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
       validatedQuestion: question,
     });
     // If any error captured
     if (errorMessage) {
-      return toast.error("Something Went Wrong")
+      return toast.error("Something Went Wrong");
     }
-
 
     const params = {
       Question: question,
@@ -86,7 +85,7 @@ const AgreeDisagree = () => {
       usersChangeTheirAns: changedOption,
       QuestionCorrect: "Not Selected",
       uuid: localStorage.getItem("uId"),
-      QuestTopic: questTopic
+      QuestTopic: questTopic,
     };
 
     createQuest(params);
@@ -133,10 +132,11 @@ const AgreeDisagree = () => {
         Make a statement that anyone can "Agree" or "Disagree" with
       </h4>
       <div
-        className={`${persistedTheme === "dark"
-          ? "border-[1px] border-[#858585] tablet:border-[2px]"
-          : ""
-          } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
+        className={`${
+          persistedTheme === "dark"
+            ? "border-[1px] border-[#858585] tablet:border-[2px]"
+            : ""
+        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
           Create Quest
@@ -189,50 +189,15 @@ const AgreeDisagree = () => {
         <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
           Customize your Quest
         </h3>
-        <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[0.30925rem] tablet:rounded-[16px] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:py-[35px] laptop:max-w-[838px]">
+        <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[0.30925rem] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:rounded-[16px] tablet:py-[35px] laptop:max-w-[838px]">
           <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[30px]">
             Settings
           </h5>
-          <div className="mx-5 flex flex-col items-center rounded-[0.30925rem] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] dark:bg-[#080A0C] tablet:rounded-[16px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
-            <div className="flex items-center justify-between w-full ">
-              <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px] ">
-                This Quest has a Change Option.
-              </h5>
-              <CustomSwitch
-                enabled={changeState}
-                setEnabled={() => {
-                  setChangeState((prev) => !prev);
-                  setChangedOption("Daily");
-                }}
-              />
-            </div>
-
-            {changeState ? (
-              <FormControl>
-                <RadioGroup
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue=""
-                  name="radio-buttons-group"
-                >
-                  <div className="flex flex-wrap justify-center gap-[1px] tablet:gap-4 mb-[0px] tablet:-mb-4 mt-2">
-                    {changeOptions?.map((item) => (
-                      <FormControlLabel
-                        key={item.id}
-                        value={item.value}
-                        control={<Radio sx={{ color: "#9C9C9C" }} />}
-                        label={item.title}
-                        className="text-[11px] md:text-sm w-[60px] tablet:w-[auto] h-[20px] tablet:h-[auto] "
-                        onChange={(e) => {
-                          setChangedOption(e.target.value);
-                        }}
-                      />
-                    ))}
-                  </div>
-                </RadioGroup>
-              </FormControl>
-            ) : null}
-          </div>
-
+          <ChangeChoiceOption
+            changeState={changeState}
+            setChangeState={setChangeState}
+            setChangedOption={setChangedOption}
+          />
         </div>
         <div className="flex w-full justify-end">
           <button

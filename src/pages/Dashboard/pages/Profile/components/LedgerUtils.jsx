@@ -1,46 +1,37 @@
 export const columns = [
   {
-    name: "txUserAction",
-    selector: (row) => row.txUserAction,
-    style: {
-      fontSize: "16px"
-    }
+    accessorKey: "txUserAction",
+    header: "txUserAction",
+    cell: (props) => <p>{props.getValue()}</p>,
   },
   {
-    name: "txID",
-    selector: (row) => row.txID,
-    width: "240px",
+    accessorKey: "txID",
+    header: "txID",
+    cell: (props) => <p>{props.getValue()}</p>,
   },
   {
-    name: "txAuth",
-    selector: (row) => row.txAuth,
-    width: "110px",
+    accessorKey: "txAuth",
+    header: "txAuth",
+    cell: (props) => <p>{props.getValue()}</p>,
   },
   {
-    name: "txFrom",
-    selector: (row) => row.txFrom,
-    width: "240px",
+    accessorKey: "txFrom",
+    header: "txFrom",
+    cell: (props) => <p>{props.getValue()}</p>,
   },
   {
-    name: "txTo",
-    selector: (row) => capitalize(row.txTo),
-    width: "110px",
+    accessorKey: "txTo",
+    header: "txTo",
+    cell: (props) => <p>{props.getValue()}</p>,
   },
   {
-    name: "txAmount",
-    selector: (row) => row.txAmount,
-    width: "150px",
+    accessorKey: "txAmount",
+    header: "txAmount",
+    cell: (props) => <p>{props.getValue()}</p>,
   },
-  {
-    name: "txDate",
-    selector: (row) => formatDate(row.txDate),
-  },
-  // {
-  //   name: "txDescription",
-  //   selector: (row) => row.txDescription,
-  //   width: "450px",
-  // },
 ];
+
+// =================== old
 function capitalize(str) {
   // Check if the input is a string
   if (typeof str !== "string") {
@@ -49,11 +40,16 @@ function capitalize(str) {
   return str.toUpperCase();
 }
 function formatDate(dateString) {
-  const options = { year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "numeric"};
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
   const formattedDate = new Date(dateString).toLocaleString(undefined, options);
   return formattedDate;
 }
-
 
 export const tableCustomStyles = {
   headRow: {

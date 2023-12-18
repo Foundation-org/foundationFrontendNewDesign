@@ -92,7 +92,7 @@ const QuestionCard = ({
       delete: true,
     };
 
-    setAnswerSelection([...answersSelection, newOption]);
+    setAnswerSelection([newOption, ...answersSelection]);
 
     setAddOptionField(0);
     setAddOptionLimit(1);

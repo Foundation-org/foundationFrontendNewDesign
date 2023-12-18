@@ -22,6 +22,10 @@ const SingleAnswerRankedChoice = (props) => {
     console.log("ranked percentages", props.percentages);
   }, [props.check]);
 
+  useEffect(() => {
+    setAnswer(props.answer);
+  }, [props.answer]);
+
   const handleCheckChange = () => {
     setCheckState((prevState) => {
       props.handleCheckChange(!prevState);

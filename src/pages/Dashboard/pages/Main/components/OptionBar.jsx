@@ -19,9 +19,10 @@ const OptionBar = ({
   setAnswerSelection,
   rankedAnswers,
   setRankedAnswers,
-  startStatus
+  startStatus,
 }) => {
   const dispatch = useDispatch();
+  const [timeAgo, setTimeAgo] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
@@ -59,9 +60,9 @@ const OptionBar = ({
       ) {
         if (
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-          "agree" ||
+            "agree" ||
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-          "yes"
+            "yes"
         ) {
           console.log("ran 1");
           handleToggleCheck(
@@ -72,9 +73,9 @@ const OptionBar = ({
         }
         if (
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-          "agree" ||
+            "agree" ||
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-          "yes"
+            "yes"
         ) {
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].contended,
@@ -84,9 +85,9 @@ const OptionBar = ({
         }
         if (
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-          "disagree" ||
+            "disagree" ||
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-          "no"
+            "no"
         ) {
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].contended,
@@ -96,9 +97,9 @@ const OptionBar = ({
         }
         if (
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-          "disagree" ||
+            "disagree" ||
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-          "no"
+            "no"
         ) {
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].selected,
@@ -148,8 +149,6 @@ const OptionBar = ({
       console.log("Mutation Error", err);
     },
   });
-
-  const [timeAgo, setTimeAgo] = useState("");
 
   useEffect(() => {
     const calculateTimeAgo = () => {
@@ -233,10 +232,11 @@ const OptionBar = ({
           </button>
 
           <button
-            className={`${startStatus?.trim() !== ""
-                ? "border-none bg-[#04AD66] text-white dark:text-white dark:bg-[#707175]"
-                : "dark:border-[#7C7C7C] border-[#20D47E]"
-              } mt-[16.2px] w-[78px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[7.1px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#20D47E] dark:border-[#7C7C7C] dark:text-[#C9C8C8] tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+            className={`${
+              startStatus?.trim() !== ""
+                ? "border-none bg-[#04AD66] text-white dark:bg-[#707175] dark:text-white"
+                : "border-[#20D47E] dark:border-[#7C7C7C]"
+            } mt-[16.2px] w-[78px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[7.1px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#20D47E] dark:border-[#7C7C7C] dark:text-[#C9C8C8] tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
             onClick={() => {
               if (btnText !== "") {
                 handleViewResults(id);

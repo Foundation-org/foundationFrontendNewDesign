@@ -160,17 +160,19 @@ const Main = () => {
   };
 
   const handleStartTest = (testId) => {
+    setViewResult(null);
     setStartTest((prev) => (prev === testId ? null : testId));
   };
 
   const handleViewResults = (testId) => {
+    setStartTest(null);
     setViewResult((prev) => (prev === testId ? null : testId));
   };
 
   console.log({ allData });
 
   return (
-    <div className="laptop:flex-row flex w-full flex-col">
+    <div className="flex w-full flex-col laptop:flex-row">
       <SidebarLeft
         handleSearch={handleSearch}
         searchData={searchData}

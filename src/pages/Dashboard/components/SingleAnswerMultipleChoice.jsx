@@ -65,8 +65,6 @@ const SingleAnswerMultipleChoice = (props) => {
     props.setAnswerSelection(newArr);
   };
 
-  console.log("first", props.answer);
-
   return (
     <div className="ml-[30px] mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[72px]">
       <div className="flex w-full justify-between rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
@@ -145,7 +143,7 @@ const SingleAnswerMultipleChoice = (props) => {
             }`}
           >
             {props.title === "Multiple Choice" ? (
-              <div id="custom-checkbox" className="flex h-full items-center  ">
+              <div id="custom-checkbox" className="flex h-full items-center">
                 <input
                   id="small-checkbox"
                   type="checkbox"

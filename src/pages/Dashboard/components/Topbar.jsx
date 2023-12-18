@@ -53,7 +53,7 @@ const Topbar = () => {
               My Profile
             </h3>
             <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
-              Balance{" "}
+              Balance:{" "}
               {persistedUserInfo?.balance ? persistedUserInfo?.balance : 0}
               {/* Balance 0.5 */}
             </h3>
@@ -67,11 +67,8 @@ const Topbar = () => {
             className="w-[34.5px] tablet:w-[69.2px] laptop:w-[5.75rem]"
           />
         </Link>
-        <div
-          className="flex w-fit cursor-pointer items-center justify-center gap-[78px] text-[11.8px] font-semibold leading-normal text-white tablet:text-[21.4px] laptop:hidden"
-          onClick={handleLogout}
-        >
-          <div className="relative">
+        <div className="flex w-fit items-center justify-center gap-4 text-[11.8px] font-semibold leading-normal text-white tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
+          <div className="relative cursor-pointer ">
             <img
               src="/assets/svgs/dashboard/notification_icon.svg"
               alt="arrow-right"
@@ -84,7 +81,8 @@ const Topbar = () => {
           <img
             src="/assets/svgs/dashboard/arrow-right-outline.svg"
             alt="arrow-right"
-            className="h-[18px] w-[16.2px] tablet:h-[36px] tablet:w-[28px]"
+            className="h-[18px] w-[16.2px] cursor-pointer tablet:h-[36px] tablet:w-[28px]"
+            onClick={handleLogout}
           />
         </div>
       </div>

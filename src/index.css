@@ -222,7 +222,7 @@ iframe {
   margin-top: 1px;
 }
 
-#dragIcon>div {
+#dragIcon > div {
   position: relative;
   height: 23.19px;
   display: flex;
@@ -244,7 +244,7 @@ iframe {
 
 
 @media (min-width: 744px) {
-  #dragIcon>div {
+  #dragIcon > div {
     position: relative;
     height: 45px;
     display: flex;
@@ -256,20 +256,20 @@ iframe {
 }
 
 @media (min-width: 1280px) {
-  #dragIcon>div {
+  #dragIcon > div {
     position: relative;
     height: 74px;
     display: flex;
   }
 }
 
-#dragIcon2>div {
+#dragIcon2 > div {
   position: relative;
   height: 21px;
 }
 
 @media (min-width: 744px) {
-  #dragIcon2>div {
+  #dragIcon2 > div {
     position: relative;
     height: 45px;
   }
@@ -286,4 +286,13 @@ iframe {
   .MuiSvgIcon-root {
     width: 11px !important;
   }
+}
+
+.ledger-dark {
+  background: #141618;
+  box-shadow: 0px 0px 8.69px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.ledger-light {
+  box-shadow: 0px 0px 8.689655303955078px 0px #00000040 inset;
 }

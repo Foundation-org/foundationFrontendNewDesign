@@ -23,6 +23,7 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import ChangeChoiceOption from "../components/ChangeChoiceOption";
 
 const DragHandler = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -111,14 +112,13 @@ const MultipleChoice = () => {
         "This quest is not unique. A similar quest already exists.",
       );
 
-
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
       validatedQuestion: question,
     });
     // If any error captured
     if (errorMessage) {
-      return toast.error("Something Went Wrong")
+      return toast.error("Something Went Wrong");
     }
 
     const params = {
@@ -131,7 +131,7 @@ const MultipleChoice = () => {
       userCanSelectMultiple: multipleOption,
       QuestAnswersSelected: [],
       uuid: localStorage.getItem("uId"),
-      QuestTopic: questTopic
+      QuestTopic: questTopic,
     };
 
     const isEmptyAnswer = params.QuestAnswers.some(
@@ -284,11 +284,11 @@ const MultipleChoice = () => {
       optionStatus:
         value.trim() === ""
           ? {
-            name: "Ok",
-            color: "text-[#389CE3]",
-            tooltipName: "Please write something...",
-            tooltipStyle: "tooltip-info",
-          }
+              name: "Ok",
+              color: "text-[#389CE3]",
+              tooltipName: "Please write something...",
+              tooltipStyle: "tooltip-info",
+            }
           : { name: "Ok", color: "text-[#b0a00f]" },
     };
     setTypedValues(newTypedValues);
@@ -345,10 +345,11 @@ const MultipleChoice = () => {
         options
       </h4>
       <div
-        className={`${persistedTheme === "dark"
-          ? "border-[1px] border-[#858585] tablet:border-[2px]"
-          : ""
-          } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
+        className={`${
+          persistedTheme === "dark"
+            ? "border-[1px] border-[#858585] tablet:border-[2px]"
+            : ""
+        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
           Create Quest
@@ -435,12 +436,12 @@ const MultipleChoice = () => {
           Customize your Quest
         </h3>
         {/* settings */}
-        <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[0.30925rem] tablet:rounded-[16px] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:py-[35px] laptop:max-w-[838px]">
+        <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[16px] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:py-[35px] laptop:max-w-[838px]">
           <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[30px]">
             Settings
           </h5>
-          <div className="mx-5 flex items-center justify-between rounded-[0.30925rem] tablet:rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] dark:bg-[#080A0C] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
-            <h5 className="w-[180px] text-[9px]  font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
+          <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] dark:bg-[#080A0C] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
+            <h5 className="w-[150px] text-[9px]  font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
               Participants can select multiple options.
             </h5>
             <CustomSwitch
@@ -449,7 +450,7 @@ const MultipleChoice = () => {
             />
           </div>
           <div className="mx-5 flex flex-col items-center rounded-[0.30925rem] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] dark:bg-[#080A0C] tablet:rounded-[16px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
-            <div className="flex items-center justify-between w-full">
+            <div className="flex w-full items-center justify-between">
               <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
                 This Quest has a Change Option.
               </h5>
@@ -469,14 +470,13 @@ const MultipleChoice = () => {
                   defaultValue=""
                   name="radio-buttons-group"
                 >
-                  <div className="flex flex-wrap justify-center gap-[1px] tablet:gap-4 mb-[0px] tablet:-mb-4 mt-2">
+                  <div className="-mb-4 mt-2 flex flex-wrap justify-center gap-4">
                     {changeOptions?.map((item) => (
                       <FormControlLabel
                         key={item.id}
                         value={item.value}
                         control={<Radio sx={{ color: "#9C9C9C" }} />}
                         label={item.title}
-                        className="text-[11px] md:text-sm w-[60px] tablet:w-[auto] h-[20px] tablet:h-[auto] "
                         onChange={(e) => {
                           setChangedOption(e.target.value);
                         }}
@@ -487,7 +487,6 @@ const MultipleChoice = () => {
               </FormControl>
             ) : null}
           </div>
-
         </div>
         <div className="flex w-full justify-end">
           <button

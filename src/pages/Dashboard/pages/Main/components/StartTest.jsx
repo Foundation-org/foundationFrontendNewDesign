@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { STDropHandler } from "../../../../../utils/STDropHandler";
 import { SortableList, SortableItem } from "@thaddeusjiang/react-sortable-list";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
-import { STDropHandler } from "../../../../../utils/STDropHandler";
 
 const StartTest = ({
   title,
@@ -46,6 +46,8 @@ const StartTest = ({
   useEffect(() => {
     // Trigger a re-render when answersSelection is updated
   }, [answersSelection]);
+
+  console.log({ answersSelection });
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) =>
@@ -143,36 +145,34 @@ const StartTest = ({
             )}
           </>
         ) : title === "Multiple Choice" ? (
-          [...answersSelection]
-            .reverse()
-            .map((item, index) => (
-              <SingleAnswerMultipleChoice
-                key={index}
-                number={"#" + (index + 1)}
-                answer={item.label}
-                editable={item.edit}
-                deleteable={item.delete}
-                title={title}
-                multipleOption={multipleOption}
-                setAddOptionLimit={setAddOptionLimit}
-                answersSelection={answersSelection}
-                setAnswerSelection={setAnswerSelection}
-                checkInfo={true}
-                check={findLabelChecked(answersSelection, item.label)}
-                contend={findLabelContend(answersSelection, item.label)}
-                whichTypeQuestion={whichTypeQuestion}
-                handleCheckChange={
-                  multipleOption === true
-                    ? (check) => handleCheckChange(index, check)
-                    : (check) => handleCheckChangeSingle(index, check)
-                }
-                handleContendChange={
-                  multipleOption === true
-                    ? (contend) => handleContendChange(index, contend)
-                    : (contend) => handleContendChangeSingle(index, contend)
-                }
-              />
-            ))
+          [...answersSelection].map((item, index) => (
+            <SingleAnswerMultipleChoice
+              key={index}
+              number={"#" + (index + 1)}
+              answer={item.label}
+              editable={item.edit}
+              deleteable={item.delete}
+              title={title}
+              multipleOption={multipleOption}
+              setAddOptionLimit={setAddOptionLimit}
+              answersSelection={answersSelection}
+              setAnswerSelection={setAnswerSelection}
+              checkInfo={true}
+              check={findLabelChecked(answersSelection, item.label)}
+              contend={findLabelContend(answersSelection, item.label)}
+              whichTypeQuestion={whichTypeQuestion}
+              handleCheckChange={
+                multipleOption === true
+                  ? (check) => handleCheckChange(index, check)
+                  : (check) => handleCheckChangeSingle(index, check)
+              }
+              handleContendChange={
+                multipleOption === true
+                  ? (contend) => handleContendChange(index, contend)
+                  : (contend) => handleContendChangeSingle(index, contend)
+              }
+            />
+          ))
         ) : (
           <SortableList
             items={rankedAnswers}
@@ -184,11 +184,7 @@ const StartTest = ({
                 id="dragIcon2"
                 className="flex flex-col gap-[5.7px] tablet:gap-[16px]"
               >
-                {/* [
-                  items[items.length - 1],
-                  ...items.slice(0, items.length - 1),
-                ] */}
-                {[...items].reverse().map((item, index) => (
+                {[...items].map((item, index) => (
                   <SortableItem
                     key={item.id}
                     id={item.id}
