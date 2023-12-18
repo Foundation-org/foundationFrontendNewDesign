@@ -20,6 +20,8 @@ import { createBookmark } from "../../../../../api/homepageApis";
 import { deleteBookmarkById } from "../../../../../api/homepageApis";
 import { getStartQuestInfo } from "../../../../../api/questsApi";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
+import { userInfo } from "../../../../../api/userAuth";
+import { addUser } from "../../../../../features/auth/authSlice";
 
 const QuestionCard = ({
   id,
@@ -194,6 +196,11 @@ const QuestionCard = ({
         queryClient.invalidateQueries("FeedData");
       }
       handleViewResults(id);
+      userInfo(localStorage.getItem("uId")).then(resp => {
+        if (resp.status === 200) {
+          dispatch(addUser(resp.data));
+        }
+      });
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
@@ -217,6 +224,11 @@ const QuestionCard = ({
         toast.success("Successfully Changed Quest");
         handleViewResults(id);
       }
+      userInfo(localStorage.getItem("uId")).then(resp => {
+        if (resp.status === 200) {
+          dispatch(addUser(resp.data));
+        }
+      });
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
