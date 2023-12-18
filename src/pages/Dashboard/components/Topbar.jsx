@@ -84,7 +84,7 @@ const Topbar = ({ title }) => {
             </h3>
             <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
               Balance:{" "}
-              {persistedUserInfo?.balance ? persistedUserInfo?.balance : 0}
+              {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
               {/* Balance 0.5 */}
             </h3>
           </div>
