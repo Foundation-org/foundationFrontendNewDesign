@@ -76,7 +76,7 @@ const Options = ({
         </div>
       ) : (
         <div className="flex w-full items-center justify-center">
-          <div className="mx-[21px] flex w-full rounded-r-[0.33rem] bg-white dark:bg-[#0D1012] tablet:ml-[54px] tablet:mr-[73px] tablet:w-full tablet:rounded-[10.3px] laptop:rounded-2xl">
+          <div className="mx-[21px] mr-[22px] flex w-full rounded-r-[0.33rem] bg-transparent dark:bg-[#0D1012] tablet:ml-[54px] tablet:mr-[70px] tablet:w-full tablet:rounded-[10.3px] laptop:rounded-2xl">
             <div className="dragIconWrapper ">
               {persistedTheme === "dark" ? (
                 <img

@@ -42,7 +42,7 @@ const AgreeDisagreeOptions = ({
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
           <div className="flex w-full items-center">
-            <div className="flex h-full w-[13.39px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[7px] py-[6px] dark:bg-[#9E9E9E] tablet:w-[25.9px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px] laptop:w-[36.03px]">
+            <div className="flex h-full w-[11.39px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[0px] py-[6px] dark:bg-[#9E9E9E] tablet:w-[23.5px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px] laptop:w-[36.03px]">
               {dragable ? (
                 persistedTheme === "dark" ? (
                   <img

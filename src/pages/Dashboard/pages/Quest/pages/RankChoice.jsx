@@ -478,7 +478,7 @@ const RankChoice = () => {
           <Droppable droppableId={`typedValues-${Date.now()}`}>
             {(provided) => (
               <ul
-                className="mt-[1.46rem] flex flex-col items-center gap-[9.24px] tablet:mb-8 tablet:mt-10 tablet:gap-5 laptop:gap-[30px]"
+                className="mt-[1.46rem] flex flex-col items-center gap-[6.24px] tablet:mb-8 tablet:mt-10 tablet:gap-[14.7px] laptop:gap-[30px]"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
