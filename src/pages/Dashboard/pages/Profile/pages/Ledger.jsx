@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "../../../../../utils/useDebounce";
 import { getAllLedgerData, searchLedger } from "../../../../../api/userAuth";
@@ -11,7 +11,7 @@ import {
 } from "@tanstack/react-table";
 import { useSelector } from "react-redux";
 import LedgerTableTopbar from "../components/LedgerTableTopbar";
-
+import { format } from 'date-fns';
 export default function BasicTable() {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const itemsPerPage = 10;
@@ -22,10 +22,13 @@ export default function BasicTable() {
   const [filterText, setFilterText] = useState("");
   const [selectedOption, setSelectedOption] = useState(false);
   const debouncedSearch = useDebounce(filterText, 1000);
+  const [ledgerData, setLedgerData] = useState([]);
+  // const [pagination, setPagination] = useState('')
 
-  const { data: ledgerData } = useQuery({
+  const { data } = useQuery({
     queryFn: () => {
       if (debouncedSearch === "") {
+        console.log("inside... calling");
         return getAllLedgerData(
           currentPage,
           itemsPerPage,
@@ -36,12 +39,59 @@ export default function BasicTable() {
         return searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
       }
     },
-    queryKey: ["ledgerData", currentPage, sort, debouncedSearch],
+    queryKey: ["ledgerData", sort, debouncedSearch],
   });
+
+  // let ledgerData;
+  const fetchData = async() => {
+    const data = await getAllLedgerData(
+      currentPage,
+      itemsPerPage,
+      sort,
+      localStorage.getItem("uId"),
+    );
+    if(data) {
+      setLedgerData(data);
+    }
+  }
+
+  const findingLedger = async() => {
+    const data = await searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
+    if(data) {
+      setLedgerData(data);
+    }
+  }
+
+  useEffect(() => {
+    if(debouncedSearch === "") {
+      fetchData()
+    } else {
+      findingLedger()
+    }
+    console.log("here...");
+  }, [sort, debouncedSearch])
+
+  // const [{ pageIndex, pageSize }, setPagination] =
+  // React.useState({
+  //   pageIndex: 0,
+  //   pageSize: 10,
+  // })
+
+  // const pagination = React.useMemo(
+  //   () => ({
+  //     pageIndex,
+  //     pageSize,
+  //   }),
+  //   [pageIndex, pageSize]
+  // )
 
   const table = useReactTable({
     data: ledgerData?.data?.data || [],
     columns,
+    // state: {
+    //   pagination,
+    // },
+    // onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     columnResizeMode: "onChange", // onChange onEnd
@@ -49,20 +99,37 @@ export default function BasicTable() {
 
   //   custom pagination
   useEffect(() => {
-    setTotalPages(Math.ceil(ledgerData?.data.totalCount / rowsPerPage));
-  }, [ledgerData?.data.totalCount, rowsPerPage]);
+    setTotalPages(Math.ceil(ledgerData?.data?.totalCount / rowsPerPage));
+  }, [ledgerData?.data?.totalCount, rowsPerPage]);
 
-  const handlePageClick = (page) => {
-    table.setPageIndex(page - 1);
+  const handlePageClick = async(page) => {
+    // table.setPageIndex(page - 1);
+    console.log(page);
+    setCurrentPage(page)
+    const data = await getAllLedgerData(
+      page,
+      itemsPerPage,
+      sort,
+      localStorage.getItem("uId"),
+    );
+    if(data) {
+      setLedgerData(data);
+    }
+    // console.log("🚀 ~ file: Ledger.jsx:57 ~ handlePageClick ~ page:", page)
+    // console.log("testing...", table.setPageIndex(page - 1));
   };
 
-  useEffect(() => {
-    setCurrentPage(table.getState().pagination.pageIndex + 1);
-  }, [table.getState().pagination.pageIndex]);
+  // useEffect(() => {
+  //   setCurrentPage(table.getState().pagination.pageIndex + 1);
+  //   console.log("🚀 ~ file: Ledger.jsx:64 ~ useEffect ~ table.getState().pagination.pageIndex:", table.getState().pagination)
+  // }, [table.getState().pagination.pageIndex]);
+  // console.log("🚀 ~ file: Ledger.jsx:84 ~ useEffect ~ pagination:", pagination)
+  // console.log("🚀 ~ file: Ledger.jsx:64 ~ useEffect ~ setCurrentPage:", currentPage)
 
   const visibleButtons = 5;
   const rangeStart = Math.max(1, currentPage - Math.floor(visibleButtons / 2));
   const rangeEnd = Math.min(totalPages, rangeStart + visibleButtons - 1);
+  console.log("🚀 ~ file: Ledger.jsx:121 ~ BasicTable ~ rangeEnd:", rangeEnd)
 
   return (
     <>
@@ -127,10 +194,30 @@ export default function BasicTable() {
                       key={cell.id}
                       style={{ width: cell.column.getSize() }}
                     >
-                      {flexRender(
+                      {/* {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
-                      )}
+                      )} */}
+                      {
+                        // console.log(cell.getValue())
+                        // console.log(cell.column.id) //txID
+                      }
+                      {
+                        cell.column.id === "txID" ? 
+                          `${cell.getValue().slice(0, 4)} **** ${cell.getValue().slice(-3)}` 
+                          : 
+                        cell.column.id === "txDate" ? 
+                          format(new Date(), 'dd MMM yyyy') 
+                          : 
+                        cell.column.id === "txFrom" && cell.getValue() !== "DAO Treasury" && cell.getValue() !== "dao" ?
+                          `${cell.getValue().slice(0, 4)} **** ${cell.getValue().slice(-3)}` 
+                          :
+                        cell.column.id === "txTo" && cell.getValue() !== "DAO Treasury" && cell.getValue() !== "dao" ?
+                          `${cell.getValue().slice(0, 4)} **** ${cell.getValue().slice(-3)}` 
+                          :
+                          cell.getValue() 
+                          // txDate
+                      }
                     </td>
                   ))}
                 </tr>
@@ -139,15 +226,16 @@ export default function BasicTable() {
           </table>
         </div>
         <div className="max-[880px]:justify-center mt-6 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-[0.44rem] text-[#B5B7C0] tablet:text-[1rem] ">
+          {/* <p className="text-[0.44rem] text-[#B5B7C0] tablet:text-[1rem] ">
             Showing data {(table.getState().pagination.pageIndex + 1) * 10 - 9}{" "}
             to {(table.getState().pagination.pageIndex + 1) * 10} of{" "}
-            {ledgerData?.data.totalCount} entries
-          </p>
+            {ledgerData?.data?.totalCount} entries
+          </p> */}
+          <p></p>
           <div className="flex items-center">
             <button
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
+              onClick={() => handlePageClick(currentPage - 1)}
+              disabled={ currentPage === rangeStart && true }
               className="pagination-btn"
             >
               <img
@@ -187,8 +275,8 @@ export default function BasicTable() {
               )}
             </div>
             <button
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
+              onClick={() => handlePageClick(currentPage + 1)}
+              disabled={ currentPage === rangeEnd && true }
               className="pagination-btn"
             >
               <img

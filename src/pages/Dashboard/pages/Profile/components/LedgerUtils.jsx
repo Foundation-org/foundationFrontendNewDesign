@@ -41,6 +41,11 @@ export const columns = [
     size: 240,
     minSize: 40,
   },
+  {
+    accessorKey: "txDate",
+    header: "txDate",
+    cell: (props) => <p>{props.getValue()}</p>,
+  },
 ];
 
 // =================== old
