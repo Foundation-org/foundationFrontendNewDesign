@@ -129,7 +129,7 @@ export default function BasicTable() {
   const visibleButtons = 5;
   const rangeStart = Math.max(1, currentPage - Math.floor(visibleButtons / 2));
   const rangeEnd = Math.min(totalPages, rangeStart + visibleButtons - 1);
-  console.log("🚀 ~ file: Ledger.jsx:121 ~ BasicTable ~ rangeEnd:", rangeEnd)
+  // console.log("🚀 ~ file: Ledger.jsx:121 ~ BasicTable ~ rangeEnd:", rangeEnd)
 
   return (
     <>
@@ -149,7 +149,7 @@ export default function BasicTable() {
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
         />
-        <div className="no-scrollbar h-[600px] w-full overflow-auto">
+        <div className="no-scrollbar tablet:h-[600px] w-full overflow-auto">
           <table
             // className="w-full"
             style={{ width: table.getCenterTotalSize() }}
@@ -190,7 +190,7 @@ export default function BasicTable() {
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td
-                      className=" py-4"
+                      className=" tablet:py-4 py-2 text-[0.7rem]  md:text-[1.45rem] tablet:text-[1rem]"
                       key={cell.id}
                       style={{ width: cell.column.getSize() }}
                     >
