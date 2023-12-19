@@ -23,6 +23,7 @@ import {
 import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const DragHandler = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -278,11 +279,11 @@ const RankChoice = () => {
       optionStatus:
         value.trim() === ""
           ? {
-              name: "Ok",
-              color: "text-[#389CE3]",
-              tooltipName: "Please write something...",
-              tooltipStyle: "tooltip-info",
-            }
+            name: "Ok",
+            color: "text-[#389CE3]",
+            tooltipName: "Please write something...",
+            tooltipStyle: "tooltip-info",
+          }
           : { name: "Ok", color: "text-[#b0a00f]" },
     };
     setTypedValues(newTypedValues);
@@ -336,6 +337,19 @@ const RankChoice = () => {
     setTypedValues(sortedItems.items);
   };
 
+  
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const newTypedValues = [...typedValues];
+    const [removed] = newTypedValues.splice(result.source.index, 1);
+    newTypedValues.splice(result.destination.index, 0, removed);
+
+    setTypedValues(newTypedValues);
+  }; 
+
   return (
     <div>
       <h4 className="mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] dark:text-[#AAA] tablet:mt-[25.8px] tablet:text-[16.58px] laptop:mt-[47px] laptop:text-[25px]">
@@ -343,11 +357,10 @@ const RankChoice = () => {
         preference.
       </h4>
       <div
-        className={`${
-          persistedTheme === "dark"
+        className={`${persistedTheme === "dark"
             ? "border-[1px] border-[#858585] tablet:border-[2px]"
             : ""
-        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
+          } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
           Create Quest
@@ -384,7 +397,59 @@ const RankChoice = () => {
             <Tooltip optionStatus={checkQuestionStatus} />
           </button>
         </div>
-        <SortableList
+
+
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId="options">
+            {(provided) => (
+              <div
+                id="dragIcon"
+                className="mt-[1.46rem] flex flex-col gap-[9.24px] tablet:mb-8 tablet:mt-10 tablet:gap-5 laptop:gap-[30px]"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {typedValues.map((item, index) => (
+                  <Draggable
+                    key={item.id}          // tried index.string() as well
+                    draggableId={item.id}      // tried index.string() as well
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <Options
+                          key={index}
+                          title="RankChoice"
+                          allowInput={true}
+                          label={`Option ${index + 1} #`}
+                          trash={true}
+                          dragable={true}
+                          handleChange={(value) => handleChange(index, value)}
+                          handleOptionSelect={() => handleOptionSelect(index)}
+                          typedValue={item.question}
+                          isSelected={item.selected}
+                          optionsCount={optionsCount}
+                          removeOption={() => removeOption(index)}
+                          number={index}
+                          optionStatus={typedValues[index].optionStatus}
+                          answerVerification={(value) =>
+                            answerVerification(index, value)
+                          }
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+
+        {/* <SortableList
           items={typedValues}
           setItems={setTypedValues}
           onSortEnd={handleOnSortEnd}
@@ -423,7 +488,7 @@ const RankChoice = () => {
               ))}
             </div>
           )}
-        </SortableList>
+        </SortableList> */}
         <button
           className="ml-[21.55px] mt-[16px] w-fit rounded-[7.287px] bg-[#C9C9C9] px-[7.29px] py-[3.89px] text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-[50px] tablet:mt-5 tablet:rounded-[15.265px] tablet:px-[15.27px] tablet:py-[8.14px] tablet:text-[20.736px] laptop:rounded-[23.6px] laptop:px-6 laptop:py-3 laptop:text-[31px]"
           onClick={handleAddOption}
