@@ -20,7 +20,7 @@ const SidebarLeft = ({
 
   return (
     <>
-      <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] overflow-y-auto bg-white pl-[2.18rem] pt-[4.563rem] text-[#535353] dark:bg-[#0A0A0C] dark:text-white laptop:block 5xl:w-[23rem] 5xl:min-w-[23rem] 5xl:pr-[2.18rem]">
+      <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] overflow-y-auto bg-white pl-[2.18rem] pt-[4vh] text-[#535353] dark:bg-[#0A0A0C] dark:text-white laptop:block 5xl:w-[23rem] 5xl:min-w-[23rem] 5xl:pr-[2.18rem]">
         <div className="form-control w-full max-w-[13.25rem] 5xl:max-w-full">
           <label className="ml-[5px] pb-[9px] text-[22px] font-[400] leading-normal">
             Search

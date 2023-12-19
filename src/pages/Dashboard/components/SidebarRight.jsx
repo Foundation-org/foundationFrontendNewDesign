@@ -35,22 +35,22 @@ const SidebarRight = () => {
       title: "Quests Answered",
       value: (response && response?.addedAnswers) || 0,
     },
-    {
-      id: 3,
-      icon: "/assets/svgs/dashboard/wronganswers.svg",
-      iconLight: "/assets/svgs/dashboard/correntans.svg",
-      alt: "icon1",
-      title: "Correct Answers",
-      value: (response && response?.correctAnswer) || 0,
-    },
-    {
-      id: 4,
-      icon: "/assets/svgs/dashboard/correctanswers.svg",
-      iconLight: "/assets/svgs/dashboard/wrongans.svg",
-      alt: "icon1",
-      title: "Wrong Answers",
-      value: (response && response?.wrongAnswers) || 0,
-    },
+    // {
+    //   id: 3,
+    //   icon: "/assets/svgs/dashboard/wronganswers.svg",
+    //   iconLight: "/assets/svgs/dashboard/correntans.svg",
+    //   alt: "icon1",
+    //   title: "Correct Answers",
+    //   value: (response && response?.correctAnswer) || 0,
+    // },
+    // {
+    //   id: 4,
+    //   icon: "/assets/svgs/dashboard/correctanswers.svg",
+    //   iconLight: "/assets/svgs/dashboard/wrongans.svg",
+    //   alt: "icon1",
+    //   title: "Wrong Answers",
+    //   value: (response && response?.wrongAnswers) || 0,
+    // },
     {
       id: 5,
       icon: "/assets/svgs/dashboard/icon5.svg",
@@ -140,8 +140,8 @@ const SidebarRight = () => {
   console.log({ response });
 
   return (
-    <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-10 shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#0A0A0C] 2xl:w-[25rem] laptop:block">
-      <div className="mb-[3.56rem] flex gap-6">
+    <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#0A0A0C] 2xl:w-[25rem] laptop:block">
+      <div className="mb-[5vh] flex gap-6">
         <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" />
         <div>
           <h4 className="heading">Treasury</h4>
@@ -150,7 +150,7 @@ const SidebarRight = () => {
           </p>
         </div>
       </div>
-      <div className="mb-[3.56rem] flex items-center gap-6">
+      <div className="mb-[5vh] flex items-center gap-6">
         <div className="relative h-fit w-fit">
           <img src="/assets/svgs/dashboard/badge.svg" alt="badge" />
           <p className="transform-center absolute z-50 pb-5 text-[35px] font-bold leading-normal text-white">
@@ -183,7 +183,7 @@ const SidebarRight = () => {
         </div>
       </div>
       {sidebarList.map((item) => (
-        <div className="mb-4 flex items-center gap-4" key={item.id}>
+        <div className="mt-[1.9vh] flex items-center gap-4" key={item.id}>
           {persistedTheme === "dark" ? (
             <img src={item.icon} alt={item.alt} />
           ) : (
