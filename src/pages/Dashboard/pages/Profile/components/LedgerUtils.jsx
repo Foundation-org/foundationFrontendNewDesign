@@ -3,31 +3,43 @@ export const columns = [
     accessorKey: "txUserAction",
     header: "txUserAction",
     cell: (props) => <p>{props.getValue()}</p>,
+    size: 240,
+    minSize: 40,
   },
   {
     accessorKey: "txID",
     header: "txID",
     cell: (props) => <p>{props.getValue()}</p>,
+    size: 240,
+    minSize: 40,
   },
   {
     accessorKey: "txAuth",
     header: "txAuth",
     cell: (props) => <p>{props.getValue()}</p>,
+    size: 240,
+    minSize: 40,
   },
   {
     accessorKey: "txFrom",
     header: "txFrom",
     cell: (props) => <p>{props.getValue()}</p>,
+    size: 240,
+    minSize: 40,
   },
   {
     accessorKey: "txTo",
     header: "txTo",
     cell: (props) => <p>{props.getValue()}</p>,
+    size: 240,
+    minSize: 40,
   },
   {
     accessorKey: "txAmount",
     header: "txAmount",
     cell: (props) => <p>{props.getValue()}</p>,
+    size: 240,
+    minSize: 40,
   },
 ];
 

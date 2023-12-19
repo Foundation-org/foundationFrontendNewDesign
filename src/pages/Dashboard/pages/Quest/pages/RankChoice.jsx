@@ -281,11 +281,11 @@ const RankChoice = () => {
       optionStatus:
         value.trim() === ""
           ? {
-            name: "Ok",
-            color: "text-[#389CE3]",
-            tooltipName: "Please write something...",
-            tooltipStyle: "tooltip-info",
-          }
+              name: "Ok",
+              color: "text-[#389CE3]",
+              tooltipName: "Please write something...",
+              tooltipStyle: "tooltip-info",
+            }
           : { name: "Ok", color: "text-[#b0a00f]" },
     };
     setTypedValues(newTypedValues);
@@ -339,7 +339,6 @@ const RankChoice = () => {
     setTypedValues(sortedItems.items);
   };
 
-
   const handleOnDragEnd = (result) => {
     console.log(result);
     if (!result.destination) {
@@ -353,7 +352,6 @@ const RankChoice = () => {
     setTypedValues(newTypedValues);
   };
 
-
   // const handleDragEnd = (result) => {
   //   console.log(result);
   //   if (!result.destination) {
@@ -365,7 +363,7 @@ const RankChoice = () => {
   //   newTypedValues.splice(result.destination.index, 0, removed);
 
   //   setTypedValues(newTypedValues);
-  // }; 
+  // };
 
   // const handleDragEnd = (result) => {
   //   console.log(result);
@@ -396,7 +394,6 @@ const RankChoice = () => {
     setDragItems(newDragItems);
   };
 
-
   return (
     <div>
       <h4 className="mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] dark:text-[#AAA] tablet:mt-[25.8px] tablet:text-[16.58px] laptop:mt-[47px] laptop:text-[25px]">
@@ -404,10 +401,11 @@ const RankChoice = () => {
         preference.
       </h4>
       <div
-        className={`${persistedTheme === "dark"
-          ? "border-[1px] border-[#858585] tablet:border-[2px]"
-          : ""
-          } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
+        className={`${
+          persistedTheme === "dark"
+            ? "border-[1px] border-[#858585] tablet:border-[2px]"
+            : ""
+        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
           Create Quest
@@ -445,30 +443,24 @@ const RankChoice = () => {
           </button>
         </div>
 
-        <DragDropContext onDragEnd={handleDragEnd}>
+        {/* test script */}
+        {/* <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="droppable">
             {(provided) => (
               <ul {...provided.droppableProps} ref={provided.innerRef}>
-                {typedValues.map((item, index) => (
-                  <Draggable key={index} draggableId={`item-${index}`} index={index}>
+                {dragItems.map((item, index) => (
+                  <Draggable
+                    key={index}
+                    draggableId={`item-${index}`}
+                    index={index}
+                  >
                     {(provided) => (
                       <li
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        <div className="flex">
-                          <img
-                            src="/assets/svgs/dashboard/six-dots.svg"
-                            alt="six dots"
-                          />
-                          <input type="text" />
-
-                          <img
-                            src="/assets/svgs/dashboard/six-dots.svg"
-                            alt="six dots"
-                          />
-                        </div>
+                        {item}
                       </li>
                     )}
                   </Draggable>
@@ -477,29 +469,32 @@ const RankChoice = () => {
               </ul>
             )}
           </Droppable>
-        </DragDropContext>
+        </DragDropContext> */}
 
-        {/* <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId="options">
+        {console.log({ typedValues })}
+
+        {/* actual examp;e */}
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId={`typedValues-${Date.now()}`}>
             {(provided) => (
-              <div
-                id="dragIcon"
-                className="mt-[1.46rem] flex flex-col gap-[9.24px] tablet:mb-8 tablet:mt-10 tablet:gap-5 laptop:gap-[30px]"
+              <ul
+                className="mt-[1.46rem] flex flex-col items-center gap-[6.24px] tablet:mb-8 tablet:mt-10 tablet:gap-[14.7px] laptop:gap-[30px]"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
                 {typedValues.map((item, index) => (
                   <Draggable
-                    key={item.id}          // tried index.string() as well
-                    draggableId={item.id}      // tried index.string() as well
+                    key={item.id} // tried index.string() as well
+                    draggableId={item.id} // tried index.string() as well
                     index={index}
                   >
                     {(provided) => (
-                      <div
+                      <li
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                  >
+                        className="w-full"
+                      >
                         <Options
                           key={index}
                           title="RankChoice"
@@ -519,15 +514,15 @@ const RankChoice = () => {
                             answerVerification(index, value)
                           }
                         />
-                      </div>
+                      </li>
                     )}
                   </Draggable>
                 ))}
                 {provided.placeholder}
-              </div>
+              </ul>
             )}
           </Droppable>
-        </DragDropContext> */}
+        </DragDropContext>
 
         {/* <SortableList
           items={typedValues}
