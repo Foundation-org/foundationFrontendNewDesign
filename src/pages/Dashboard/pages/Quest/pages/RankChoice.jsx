@@ -457,25 +457,26 @@ const RankChoice = () => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                       <Options
-                          key={index}
-                          title="RankChoice"
-                          allowInput={true}
-                          label={`Option ${index + 1} #`}
-                          trash={true}
-                          dragable={true}
-                          handleChange={(value) => handleChange(index, value)}
-                          handleOptionSelect={() => handleOptionSelect(index)}
-                          typedValue={item.question}
-                          isSelected={item.selected}
-                          optionsCount={optionsCount}
-                          removeOption={() => removeOption(index)}
-                          number={index}
-                          optionStatus={typedValues[index].optionStatus}
-                          answerVerification={(value) =>
-                            answerVerification(index, value)
-                          }
-                        />
+                  <div
+      className="
+z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-[54px] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[74px] laptop:w-[38px]"
+    >
+      <div title="drag handler" className="flex items-center">
+        {persistedTheme === "dark" ? (
+          <img
+            src="/assets/svgs/dashboard/six-dots-dark.svg"
+            alt="six dots"
+            className="h-[8.8px] tablet:h-7"
+          />
+        ) : (
+          <img
+            src="/assets/svgs/dashboard/six-dots.svg"
+            alt="six dots"
+            className="h-[8.8px] tablet:h-7"
+          />
+        )}
+      </div>
+    </div>
                   </li>
                 )}
               </Draggable>
