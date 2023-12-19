@@ -339,6 +339,7 @@ const RankChoice = () => {
 
   
   const handleOnDragEnd = (result) => {
+    console.log(result);
     if (!result.destination) {
       return;
     }
@@ -419,7 +420,7 @@ const RankChoice = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                      >
+                  >
                         <Options
                           key={index}
                           title="RankChoice"
