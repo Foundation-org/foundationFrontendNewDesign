@@ -23,7 +23,7 @@ const LedgerTableTopbar = ({
     <div className="mb-[18.27px] flex w-full justify-between tablet:mb-8">
       <div className="flex gap-[10.97px] tablet:gap-5 laptop:gap-[63px]">
         {/* profile */}
-        <div className="flex gap-[7px] tablet:gap-[13px]">
+        <div className="flex gap-[5.51px] tablet:gap-[13px]">
           <img
             src="/assets/svgs/dashboard/person.svg"
             alt="person icon"
@@ -33,7 +33,7 @@ const LedgerTableTopbar = ({
             <h1 className="whitespace-nowrap text-[8.6px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC] tablet:text-[14px] laptop:text-[20.7px]">
               My Profile
             </h1>
-            <div className="flex gap-1 text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
+            <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
               <p>Balance</p>
               <p>
                 {persistedUserInfo?.balance ? persistedUserInfo?.balance : 0}
@@ -42,7 +42,7 @@ const LedgerTableTopbar = ({
           </div>
         </div>
         {/* treasury */}
-        <div className="flex gap-[7px] tablet:gap-[13px]">
+        <div className="flex gap-[5.51px] tablet:gap-[13px]">
           <img
             src="/assets/svgs/dashboard/treasure.svg"
             alt="person icon"
@@ -52,7 +52,7 @@ const LedgerTableTopbar = ({
             <h1 className="text-[8.6px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC] tablet:text-[14px] laptop:text-[20.7px]">
               Treasury
             </h1>
-            <div className="flex gap-1 text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
+            <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
               <p>Balance</p>
               <p>{localStorage.getItem("treasuryAmount")}</p>
             </div>
@@ -72,14 +72,14 @@ const LedgerTableTopbar = ({
             onChange={(e) => setFilterText(e.target.value)}
             value={filterText}
             placeholder="Search"
-            className="py-[2.3px w-full rounded-[3.34px] border-[1.153px] border-[#C1C1C1] bg-white pl-[13.34px] text-[5.79px] font-normal leading-normal -tracking-[0.2px] text-[#B5B7C0] dark:bg-[#080A0C] tablet:w-[130px] tablet:rounded-[11.526px] tablet:py-1 tablet:pl-8 tablet:text-[10px] laptop:w-[248px] laptop:py-[8.07px] laptop:pl-[46px] laptop:text-[20px]"
+            className="py-[2.3px w-[72px] rounded-[3.34px] border-[1.153px] border-[#C1C1C1] bg-white pl-[13.34px] text-[5.79px] font-normal leading-normal -tracking-[0.2px] text-[#B5B7C0] dark:bg-[#080A0C] tablet:w-[130px] tablet:rounded-[11.526px] tablet:py-1 tablet:pl-8 tablet:text-[10px] laptop:w-[248px] laptop:py-[8.07px] laptop:pl-[46px] laptop:text-[20px]"
           />
         </div>
         {/* sort */}
         <div className="relative h-[12.6px] w-[40%] rounded-[3.34px] border-[1.153px] border-[#C1C1C1] bg-white dark:bg-[#080A0C] tablet:h-[32px] tablet:w-[130px] tablet:rounded-[11.526px] laptop:h-[43.3px] laptop:w-[240px]">
           <button
             onClick={handleDropdown}
-            className="flex  h-full w-full items-center gap-1 pl-[5px] tablet:pl-[10px] laptop:pl-[17px]"
+            className="flex  h-full w-[54px] items-center gap-1 pl-[5px] tablet:w-full tablet:pl-[10px] laptop:pl-[17px]"
           >
             <h1 className="leading-noremal text-[5.79px] font-normal -tracking-[0.2px] text-[#7E7E7E] tablet:text-[10px] laptop:text-[20.021px]">
               Sort by :

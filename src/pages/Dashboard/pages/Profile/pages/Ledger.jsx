@@ -72,7 +72,7 @@ export default function BasicTable() {
       <div
         className={`${
           persistedTheme === "dark" ? "ledger-dark" : "ledger-light"
-        } mx-[17px] mb-10 rounded-[7.89px] px-[1.36rem] py-[13px] text-left tablet:mx-11 tablet:rounded-[10.4px] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
+        } mx-[17px] mb-10 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-11 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
       >
         <LedgerTableTopbar
           sort={sort}
