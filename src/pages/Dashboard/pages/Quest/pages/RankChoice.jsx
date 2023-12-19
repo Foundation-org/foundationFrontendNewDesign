@@ -477,7 +477,6 @@ z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14px] items-center justify-center r
         )}
       </div>
     </div>
-    <input type="text" />
                   </li>
                 )}
               </Draggable>
