@@ -61,6 +61,8 @@ const RankChoice = () => {
   const [changedOption, setChangedOption] = useState("");
   const [optionsCount, setOptionsCount] = useState(2);
   const [prevValueArr, setPrevValueArr] = useState([]);
+  const [dragItems, setDragItems] = useState(["item1", "item 2", "item3"]);
+
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       id: `index-${index}`,
@@ -337,7 +339,7 @@ const RankChoice = () => {
     setTypedValues(sortedItems.items);
   };
 
-  
+
   const handleOnDragEnd = (result) => {
     console.log(result);
     if (!result.destination) {
@@ -349,7 +351,51 @@ const RankChoice = () => {
     newTypedValues.splice(result.destination.index, 0, removed);
 
     setTypedValues(newTypedValues);
-  }; 
+  };
+
+
+  // const handleDragEnd = (result) => {
+  //   console.log(result);
+  //   if (!result.destination) {
+  //     return;
+  //   }
+
+  //   const newTypedValues = [...typedValues];
+  //   const [removed] = newTypedValues.splice(result.source.index, 1);
+  //   newTypedValues.splice(result.destination.index, 0, removed);
+
+  //   setTypedValues(newTypedValues);
+  // }; 
+
+  // const handleDragEnd = (result) => {
+  //   console.log(result);
+  //   if (!result.destination) {
+  //     // Item was dragged outside the list
+  //     return;
+  //   }
+
+  //   const newTypedValues = [...typedValues];
+  //   const [removed] = newTypedValues.splice(result.source.index, 1);
+  //   newTypedValues.splice(result.destination.index, 0, removed);
+
+  //   // Update the state with the new order
+  //   setTypedValues(newTypedValues);
+  // };
+
+  const handleDragEnd = (result) => {
+    if (!result.destination) {
+      // Item was dropped outside the list
+      return;
+    }
+  
+    const newDragItems = [...dragItems];
+    const [removed] = newDragItems.splice(result.source.index, 1);
+    newDragItems.splice(result.destination.index, 0, removed);
+  
+    // Update the state with the new order
+    setDragItems(newDragItems);
+  };
+
 
   return (
     <div>
@@ -359,8 +405,8 @@ const RankChoice = () => {
       </h4>
       <div
         className={`${persistedTheme === "dark"
-            ? "border-[1px] border-[#858585] tablet:border-[2px]"
-            : ""
+          ? "border-[1px] border-[#858585] tablet:border-[2px]"
+          : ""
           } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
@@ -399,54 +445,28 @@ const RankChoice = () => {
           </button>
         </div>
 
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId={`typedValues-${Date.now()}`}>
-            {(provided) => (
-              <div
-                className="mt-10 flex flex-col gap-[30px]"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {typedValues.map((typedValue, index) => (
-                  <Draggable
-                    key={typedValue.id}
-                    draggableId={typedValue.id}
-                    index={index}
+        <DragDropContext onDragEnd={handleDragEnd}>
+      <Droppable droppableId="droppable">
+        {(provided) => (
+          <ul {...provided.droppableProps} ref={provided.innerRef}>
+            {dragItems.map((item, index) => (
+              <Draggable key={index} draggableId={`item-${index}`} index={index}>
+                {(provided) => (
+                  <li
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
                   >
-                    {(provided) => (
-                      <div
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                      >
-                      <Options
-                          key={index}
-                          title="RankChoice"
-                          allowInput={true}
-                          label={`Option ${index + 1} #`}
-                          trash={true}
-                          dragable={true}
-                          handleChange={(value) => handleChange(index, value)}
-                          handleOptionSelect={() => handleOptionSelect(index)}
-                          typedValue={typedValue.question}
-                          isSelected={typedValue.selected}
-                          optionsCount={optionsCount}
-                          removeOption={() => removeOption(index)}
-                          number={index}
-                          optionStatus={typedValues[index].optionStatus}
-                          answerVerification={(value) =>
-                            answerVerification(index, value)
-                          }
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+                    {item}
+                  </li>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>
+    </DragDropContext>
 
         {/* <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="options">
