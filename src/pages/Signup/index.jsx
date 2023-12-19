@@ -54,8 +54,8 @@ export default function Signup() {
   const { mutateAsync: userSignup } = useMutation({
     mutationFn: signUp,
   });
-  
-  const handleCancel=()=>{
+
+  const handleCancel = () => {
     setEmail("");
   }
 
@@ -86,28 +86,28 @@ export default function Signup() {
       const res = await api.post(`/user/signUpUser/social`, {
         data
       });
-      if(res.data.required_action){
+      if (res.data.required_action) {
         setModalVisible(true);
         setResData(res.data);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]); 
+      toast.error(error.response.data.message.split(':')[1]);
     }
   };
 
   const handleEmailType = async (value) => {
     try {
-      if(!value) return toast.error("Please select the email type!")
+      if (!value) return toast.error("Please select the email type!")
       setModalVisible(false);
       const res = await api.patch(`/updateBadge/${resData.userId}/${resData.badgeId}`, {
         type: value
       });
-      if(res.status === 200) {
+      if (res.status === 200) {
         localStorage.setItem("uId", res.data.data.uuid);
         navigate("/dashboard");
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]); 
+      toast.error(error.response.data.message.split(':')[1]);
     }
   }
 
@@ -144,7 +144,7 @@ export default function Signup() {
             onReTypePassChange={onReTypePassChange}
             togglePasswordVisibility={togglePasswordVisibility}
             toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}
-            handleCancel={handleCancel} 
+            handleCancel={handleCancel}
             email={email}
           />
           <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-4 taller:mt-4">
@@ -182,7 +182,7 @@ export default function Signup() {
           <Button size="large" color="blue-200" onClick={handleSignup}>
             Create Account
           </Button>
-          <div className="mt-[23px] flex gap-3">
+          <div className="mt-[10px] tablet:mt-[23px] flex gap-3">
             <Typography
               variant="textBase"
               className="text-gray-100 dark:text-gray "

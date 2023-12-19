@@ -135,7 +135,7 @@ export default function Signin() {
           <Button size="large" color="blue-200" onClick={handleSignin}>
             Sign in
           </Button>
-          <div className="mt-[23px] flex justify-center gap-3">
+          <div className="mt-[10px] tablet:mt-[23px] flex justify-center gap-3">
             <Typography
               variant="textBase"
               className="text-gray-100 dark:text-gray"
