@@ -399,8 +399,56 @@ const RankChoice = () => {
           </button>
         </div>
 
-
         <DragDropContext onDragEnd={handleOnDragEnd}>
+          <Droppable droppableId={`typedValues-${Date.now()}`}>
+            {(provided) => (
+              <div
+                className="mt-10 flex flex-col gap-[30px]"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {typedValues.map((typedValue, index) => (
+                  <Draggable
+                    key={typedValue.id}
+                    draggableId={typedValue.id}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                      >
+                      <Options
+                          key={index}
+                          title="RankChoice"
+                          allowInput={true}
+                          label={`Option ${index + 1} #`}
+                          trash={true}
+                          dragable={true}
+                          handleChange={(value) => handleChange(index, value)}
+                          handleOptionSelect={() => handleOptionSelect(index)}
+                          typedValue={typedValue.question}
+                          isSelected={typedValue.selected}
+                          optionsCount={optionsCount}
+                          removeOption={() => removeOption(index)}
+                          number={index}
+                          optionStatus={typedValues[index].optionStatus}
+                          answerVerification={(value) =>
+                            answerVerification(index, value)
+                          }
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+
+        {/* <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="options">
             {(provided) => (
               <div
@@ -448,7 +496,7 @@ const RankChoice = () => {
               </div>
             )}
           </Droppable>
-        </DragDropContext>
+        </DragDropContext> */}
 
         {/* <SortableList
           items={typedValues}
