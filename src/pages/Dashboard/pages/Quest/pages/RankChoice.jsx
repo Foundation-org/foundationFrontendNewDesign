@@ -387,11 +387,11 @@ const RankChoice = () => {
       // Item was dropped outside the list
       return;
     }
-  
+
     const newDragItems = [...dragItems];
     const [removed] = newDragItems.splice(result.source.index, 1);
     newDragItems.splice(result.destination.index, 0, removed);
-  
+
     // Update the state with the new order
     setDragItems(newDragItems);
   };
@@ -446,46 +446,38 @@ const RankChoice = () => {
         </div>
 
         <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="droppable">
-        {(provided) => (
-          <ul {...provided.droppableProps} ref={provided.innerRef}>
-            {typedValues.map((item, index) => (
-              <Draggable key={index} draggableId={`item-${index}`} index={index}>
-                {(provided) => (
-                  <li
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                  <div
-      className="
-z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-[54px] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[74px] laptop:w-[38px]"
-    >
-      <div title="drag handler" className="flex items-center">
-        {persistedTheme === "dark" ? (
-          <img
-            src="/assets/svgs/dashboard/six-dots-dark.svg"
-            alt="six dots"
-            className="h-[8.8px] tablet:h-7"
-          />
-        ) : (
-          <img
-            src="/assets/svgs/dashboard/six-dots.svg"
-            alt="six dots"
-            className="h-[8.8px] tablet:h-7"
-          />
-        )}
-      </div>
-    </div>
-                  </li>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </ul>
-        )}
-      </Droppable>
-    </DragDropContext>
+          <Droppable droppableId="droppable">
+            {(provided) => (
+              <ul {...provided.droppableProps} ref={provided.innerRef}>
+                {typedValues.map((item, index) => (
+                  <Draggable key={index} draggableId={`item-${index}`} index={index}>
+                    {(provided) => (
+                      <li
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <div className="flex">
+                          <img
+                            src="/assets/svgs/dashboard/six-dots.svg"
+                            alt="six dots"
+                          />
+                          <input type="text" />
+
+                          <img
+                            src="/assets/svgs/dashboard/six-dots.svg"
+                            alt="six dots"
+                          />
+                        </div>
+                      </li>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </ul>
+            )}
+          </Droppable>
+        </DragDropContext>
 
         {/* <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="options">
