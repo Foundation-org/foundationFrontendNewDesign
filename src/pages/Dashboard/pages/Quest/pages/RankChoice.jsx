@@ -449,7 +449,7 @@ const RankChoice = () => {
       <Droppable droppableId="droppable">
         {(provided) => (
           <ul {...provided.droppableProps} ref={provided.innerRef}>
-            {dragItems.map((item, index) => (
+            {typedValues.map((item, index) => (
               <Draggable key={index} draggableId={`item-${index}`} index={index}>
                 {(provided) => (
                   <li
@@ -457,7 +457,25 @@ const RankChoice = () => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    {item}
+                       <Options
+                          key={index}
+                          title="RankChoice"
+                          allowInput={true}
+                          label={`Option ${index + 1} #`}
+                          trash={true}
+                          dragable={true}
+                          handleChange={(value) => handleChange(index, value)}
+                          handleOptionSelect={() => handleOptionSelect(index)}
+                          typedValue={item.question}
+                          isSelected={item.selected}
+                          optionsCount={optionsCount}
+                          removeOption={() => removeOption(index)}
+                          number={index}
+                          optionStatus={typedValues[index].optionStatus}
+                          answerVerification={(value) =>
+                            answerVerification(index, value)
+                          }
+                        />
                   </li>
                 )}
               </Draggable>
