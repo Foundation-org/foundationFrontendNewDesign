@@ -11,7 +11,7 @@ export const Tooltip = ({ optionStatus }) => {
     <div>
       {tooltipStatus?.name === "Fail" && (
         <div
-          className={`absolute ${tooltipStatus?.duplication ? "-top-[26px]" : "-top-[54px]"
+          className={`absolute ${tooltipStatus?.duplication ? "-top-[26px]" : "-top-[24px]"
             } left-[0px] tablet:-left-[12px] -translate-x-1/2 transform laptop:left-[60px] ${tooltipStatus?.duplication
               ? "tablet:-top-[42px]"
               : "tablet:-top-[127px]"
