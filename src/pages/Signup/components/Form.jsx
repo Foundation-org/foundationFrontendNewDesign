@@ -112,7 +112,7 @@ const Form = ({
               autoComplete="new-password"
               onChange={onReTypePassChange}
             />
-            {!showPassword ? (
+            {!showCnfmPassword ? (
               persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/blind.svg"
