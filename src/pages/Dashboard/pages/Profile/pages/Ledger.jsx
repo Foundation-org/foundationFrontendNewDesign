@@ -83,7 +83,10 @@ export default function BasicTable() {
           setSelectedOption={setSelectedOption}
         />
         <div className="no-scrollbar h-[600px] w-full overflow-auto">
-          <table className="w-full">
+          <table
+            // className="w-full"
+            style={{ width: table.getCenterTotalSize() }}
+          >
             <thead
               style={{ width: table.getTotalSize() }}
               className="text-[0.7rem] text-[#bbb] dark:text-[#B5B7C0] md:text-[1.45rem] tablet:text-[1rem]"
@@ -91,7 +94,7 @@ export default function BasicTable() {
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
                   key={headerGroup.id}
-                  className=" border-0 border-b border-[#EEEEEE] "
+                  className="border-0 border-b border-[#EEEEEE]"
                 >
                   {headerGroup.headers.map((header) => (
                     <th

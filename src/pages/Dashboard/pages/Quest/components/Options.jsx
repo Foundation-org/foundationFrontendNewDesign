@@ -29,8 +29,7 @@ const Options = ({
         label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row items-center gap-[25px]"
-        // }  w-[95%] tablet:w-[88%] laptop:w-[87%]`}
-      } mr-[0px] w-[95%] tablet:mr-[70.4px] `}
+      } w-full `}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
@@ -76,62 +75,76 @@ const Options = ({
           </div>
         </div>
       ) : (
-        <div className="flex items-center">
-          <div className="w-full">
-            <div className="w-[calc(100%-51.55px] mr-[22.4px] flex tablet:ml-0 tablet:mr-0 tablet:w-full">
-              <input
-                className="w-full border-y-[1px] border-[#ACACAC] bg-white py-[0.35rem] pl-6 pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] laptop:py-[18px] laptop:text-[1.875rem]"
-                onChange={(e) => handleChange(e.target.value)}
-                onBlur={(e) =>
-                  e.target.value.trim() !== "" &&
-                  answerVerification(e.target.value.trim())
-                }
-                value={typedValue}
-                placeholder="Add your own option"
-              />
-              {(title === "RankChoice" || title === "MultipleChoice") &&
-                trash && (
-                  <button
-                    id={`test${number}`}
-                    className={`border-y-[1px] border-[#ACACAC]  bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] xl:text-[1.875rem] tablet:text-[17.54px] ${optionStatus?.color} py-[0.29rem]`}
-                  >
-                    <div className="pr-[1.25rem] tablet:pr-[2.4rem]">
-                      <>
-                        {optionsCount > 2 && (
-                          <div
-                            onClick={() => {
-                              removeOption(number);
-                            }}
-                          >
-                            <img
-                              src="/assets/svgs/dashboard/trash2.svg"
-                              alt="trash"
-                              className="min-w-[.6rem] cursor-pointer tablet:min-w-[1.5rem]"
-                            />
-                          </div>
-                        )}
-                      </>
-                    </div>
-                  </button>
-                )}
-              <button
-                id={`test${number}`}
-                className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${optionStatus.color}`}
-              >
-                <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
-                  <span>{optionStatus.name}</span>
-                </div>
-                <Tooltip optionStatus={optionStatus} />
-              </button>
+        <div className="flex w-full items-center justify-center">
+          <div className="mx-[21px] flex w-full rounded-r-[0.33rem] bg-white dark:bg-[#0D1012] tablet:ml-[54px] tablet:mr-[73px] tablet:w-full tablet:rounded-[10.3px] laptop:rounded-2xl">
+            <div className="dragIconWrapper ">
+              {persistedTheme === "dark" ? (
+                <img
+                  src="/assets/svgs/dashboard/six-dots-dark.svg"
+                  alt="six dots"
+                  className="h-[8.8px] tablet:h-7"
+                />
+              ) : (
+                <img
+                  src="/assets/svgs/dashboard/six-dots.svg"
+                  alt="six dots"
+                  className="h-[8.8px] tablet:h-7"
+                />
+              )}
             </div>
-            <div
-              className={`${
-                optionsCount > 2
-                  ? "absolute left-[208px] tablet:left-[42rem]"
-                  : "absolute left-[221px] tablet:left-[24rem] laptop:left-[44rem]"
-              } -top-[22px] flex w-fit items-center tablet:-top-[46px] laptop:-top-[74px]`}
-            ></div>
+            <div className="h-[25.19px] w-9 border-y-[1px] border-[#ACACAC] bg-white dark:border-[#0D1012] dark:bg-[#0D1012] tablet:h-[50.19px] laptop:h-[74px] "></div>
+            <input
+              className="h-[25.19px] w-full border-y-[1px] border-[#ACACAC] bg-white py-[0.35rem] pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:h-[50.19px] tablet:py-[11.6px] tablet:pr-11 tablet:text-[1.296rem] laptop:h-[74px] laptop:py-[18px] laptop:text-[1.875rem]"
+              onChange={(e) => handleChange(e.target.value)}
+              onBlur={(e) =>
+                e.target.value.trim() !== "" &&
+                answerVerification(e.target.value.trim())
+              }
+              value={typedValue}
+              placeholder="Add your own option"
+            />
+            {(title === "RankChoice" || title === "MultipleChoice") &&
+              trash && (
+                <button
+                  id={`test${number}`}
+                  className={`h-[25.19px] border-y-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] ${optionStatus?.color} py-[0.29rem]`}
+                >
+                  <div className="pr-[1.25rem] tablet:pr-[2.4rem]">
+                    <>
+                      {optionsCount > 2 && (
+                        <div
+                          onClick={() => {
+                            removeOption(number);
+                          }}
+                        >
+                          <img
+                            src="/assets/svgs/dashboard/trash2.svg"
+                            alt="trash"
+                            className="min-w-[.6rem] cursor-pointer tablet:min-w-[1.5rem]"
+                          />
+                        </div>
+                      )}
+                    </>
+                  </div>
+                </button>
+              )}
+            <button
+              id={`test${number}`}
+              className={`relative h-[25.19px] rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:h-[74px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${optionStatus.color}`}
+            >
+              <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
+                <span>{optionStatus.name}</span>
+              </div>
+              <Tooltip optionStatus={optionStatus} />
+            </button>
           </div>
+          <div
+            className={`${
+              optionsCount > 2
+                ? "absolute left-[208px] tablet:left-[42rem]"
+                : "absolute left-[221px] tablet:left-[24rem] laptop:left-[44rem]"
+            } -top-[22px] flex w-fit items-center tablet:-top-[46px] laptop:-top-[74px]`}
+          ></div>
         </div>
       )}
     </div>

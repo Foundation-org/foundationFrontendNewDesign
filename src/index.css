@@ -37,6 +37,10 @@
   @apply mr-[0.46rem] flex h-[0.9rem] w-[0.9rem] items-center justify-center rounded-[0.15rem] border border-solid border-[#EEEEEE] bg-[#F5F5F5] dark:bg-[#A5A5A5] tablet:mr-4 tablet:h-7 tablet:w-[27px] tablet:rounded-md;
 }
 
+.dragIconWrapper {
+  @apply mb-[0.5px] flex h-[25.19px] w-[19px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[74px] laptop:w-[43px];
+}
+
 .kqFNyH {
   font-size: 14px !important;
   line-height: 1.5;
@@ -301,21 +305,28 @@ iframe {
 
 .resizer {
   position: absolute;
-  opacity: 0;
-  top: 0;
   right: 0;
+  top: 0;
   height: 100%;
   width: 5px;
-  background: skyblue;
+  background: gray;
   cursor: col-resize;
+  user-select: none;
+  touch-action: none;
   border-radius: 6px;
 }
 
 .resizer.isResizing {
-  background: "#2eff31";
+  background: #399ce2;
   opacity: 1;
 }
 
-*:hover > .resizer {
-  opacity: 1;
+@media (hover: hover) {
+  .resizer {
+    opacity: 0;
+  }
+
+  *:hover > .resizer {
+    opacity: 1;
+  }
 }
