@@ -1,9 +1,20 @@
+import { toast } from "sonner";
+import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { getStartQuestInfo } from "../../../../../api/questsApi";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
-import { toast } from "sonner";
-import { useState, useEffect } from "react";
+import Copy from "../../../../../assets/Copy";
+import Link from "../../../../../assets/Link";
+import Mail from "../../../../../assets/Mail";
+import Twitter from "../../../../../assets/Twitter";
+import Facebook from "../../../../../assets/Facebook";
+import BasicModal from "../../../../../components/BasicModal";
+import CopyDialogue from "./Shareables/CopyDialogue";
+import UrlDialogue from "./Shareables/UrlDialogue";
+import EmailDialogue from "./Shareables/EmailDialogue";
+import TwitterDialogue from "./Shareables/TwitterDialogue";
+import FbDialogue from "./Shareables/FbDialogue";
 
 const OptionBar = ({
   id,
@@ -20,10 +31,32 @@ const OptionBar = ({
   rankedAnswers,
   setRankedAnswers,
   startStatus,
+  createdBy,
+  img,
+  alt,
+  badgeCount,
+  title,
+  question,
 }) => {
   const dispatch = useDispatch();
   const [timeAgo, setTimeAgo] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const [copyModal, setCopyModal] = useState(false);
+  const [linkModal, setLinkModal] = useState(false);
+  const [emailModal, setEmailModal] = useState(false);
+  const [twitterModal, setTwitterModal] = useState(false);
+  const [fbModal, setFbModal] = useState(false);
+
+  const handleCopyOpen = () => setCopyModal(true);
+  const handleCopyClose = () => setCopyModal(false);
+  const handleLinkOpen = () => setLinkModal(true);
+  const handleLinkClose = () => setLinkModal(false);
+  const handleEmailOpen = () => setEmailModal(true);
+  const handleEmailClose = () => setEmailModal(false);
+  const handleTwitterOpen = () => setTwitterModal(true);
+  const handleTwitterClose = () => setTwitterModal(false);
+  const handleFbOpen = () => setFbModal(true);
+  const handleFbClose = () => setFbModal(false);
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
@@ -216,22 +249,18 @@ const OptionBar = ({
     }
   }
 
-  const copyToClipboard = () => {
-    const textArea = document.createElement("textarea");
-    textArea.value = `https://localhost:5173/quest/${id}`;
-
-    document.body.appendChild(textArea);
-
-    textArea.select();
-    document.execCommand("copy");
-
-    document.body.removeChild(textArea);
+  const customModalStyle = {
+    backgroundColor: "#FCFCFD",
+    borderRadius: "26px",
+    boxShadow: "none",
+    border: "0px",
+    outline: "none",
   };
 
   return (
     <>
       <div className="mb-1 flex items-center">
-        <div className="mb-1 mr-[30px] flex w-full justify-end gap-[19.14px] tablet:gap-[42px]">
+        <div className="mr-[30px] flex w-full justify-end gap-[19.14px] tablet:gap-[42px]">
           <button
             className={` ${getButtonClassName(
               persistedTheme,
@@ -261,13 +290,92 @@ const OptionBar = ({
           </button>
         </div>
       </div>
-      <div className="mx-[2.4rem] mb-[1.83rem] mt-[3.99rem] flex items-center justify-between">
-        <img
-          src="/assets/svgs/copy.svg"
-          alt="clock"
-          className="h-[7.64px] w-[7.64px] cursor-pointer tablet:h-[23px] tablet:w-[23px]"
-          onClick={copyToClipboard}
-        />
+      <div className="mx-[0.57rem] mb-[0.55rem] mt-[0.86rem] flex items-center justify-between tablet:mx-[2.4rem] tablet:mb-[1.83rem] tablet:mt-[3.99rem]">
+        <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
+          <div onClick={handleCopyOpen} className="cursor-pointer">
+            {persistedTheme === "dark" ? <Copy /> : <Copy />}
+          </div>
+          <BasicModal
+            open={copyModal}
+            handleClose={handleCopyClose}
+            customStyle={customModalStyle}
+          >
+            <CopyDialogue
+              handleClose={handleCopyClose}
+              id={id}
+              createdBy={createdBy}
+              img={img}
+              alt={alt}
+              badgeCount={badgeCount}
+            />
+          </BasicModal>
+          <div className="cursor-pointer" onClick={handleLinkOpen}>
+            {persistedTheme === "dark" ? <Link /> : <Link />}
+          </div>
+          <BasicModal
+            open={linkModal}
+            handleClose={handleLinkClose}
+            customStyle={customModalStyle}
+          >
+            <UrlDialogue
+              handleClose={handleLinkClose}
+              id={id}
+              createdBy={createdBy}
+              img={img}
+              alt={alt}
+              badgeCount={badgeCount}
+            />
+          </BasicModal>
+          <div className="cursor-pointer" onClick={handleEmailOpen}>
+            {persistedTheme === "dark" ? <Mail /> : <Mail />}
+          </div>
+          <BasicModal
+            open={emailModal}
+            handleClose={handleEmailClose}
+            customStyle={customModalStyle}
+          >
+            <EmailDialogue handleClose={handleEmailClose} />
+          </BasicModal>
+          <div className="cursor-pointer" onClick={handleTwitterOpen}>
+            {persistedTheme === "dark" ? <Twitter /> : <Twitter />}
+          </div>
+          <BasicModal
+            open={twitterModal}
+            handleClose={handleTwitterClose}
+            customStyle={customModalStyle}
+          >
+            <TwitterDialogue
+              handleClose={handleTwitterClose}
+              id={id}
+              createdBy={createdBy}
+              img={img}
+              alt={alt}
+              badgeCount={badgeCount}
+              title={title}
+              question={question}
+              timeAgo={timeAgo}
+            />
+          </BasicModal>
+          <div className="cursor-pointer" onClick={handleFbOpen}>
+            {persistedTheme === "dark" ? <Facebook /> : <Facebook />}
+          </div>
+          <BasicModal
+            open={fbModal}
+            handleClose={handleFbClose}
+            customStyle={customModalStyle}
+          >
+            <FbDialogue
+              handleClose={handleFbClose}
+              createdBy={createdBy}
+              img={img}
+              alt={alt}
+              badgeCount={badgeCount}
+              title={title}
+              question={question}
+              timeAgo={timeAgo}
+            />
+          </BasicModal>
+        </div>
         <div className="flex h-3 w-[53.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:h-[26px] tablet:w-[114px] tablet:gap-1 tablet:rounded-[10px]">
           <img
             src="/assets/svgs/dashboard/clock-outline.svg"

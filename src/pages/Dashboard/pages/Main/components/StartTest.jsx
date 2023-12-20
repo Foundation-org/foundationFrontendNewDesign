@@ -47,8 +47,6 @@ const StartTest = ({
     // Trigger a re-render when answersSelection is updated
   }, [answersSelection]);
 
-  console.log({ answersSelection });
-
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) =>
       prevAnswers.map((answer, i) =>
