@@ -1,7 +1,5 @@
 import { useSelector } from "react-redux";
 import { Tooltip } from "../../../../../utils/Tooltip";
-// import "react-tooltip/dist/react-tooltip.css";
-// import { Tooltip } from "react-tooltip";
 
 const Options = ({
   title,
@@ -77,7 +75,7 @@ const Options = ({
       ) : (
         <div className="flex w-full items-center justify-center">
           <div className="mx-[21px] mr-[22px] flex w-full rounded-r-[0.33rem] bg-transparent dark:bg-[#0D1012] tablet:ml-[54px] tablet:mr-[70px] tablet:w-full tablet:rounded-[10.3px] laptop:rounded-2xl">
-            <div className="dragIconWrapper ">
+            <div className="dragIconWrapper">
               {persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/dashboard/six-dots-dark.svg"
@@ -105,9 +103,9 @@ const Options = ({
             />
             {(title === "RankChoice" || title === "MultipleChoice") &&
               trash && (
-                <button
+                <div
                   id={`test${number}`}
-                  className={`h-[25.19px] border-y-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] ${optionStatus?.color} py-[0.29rem]`}
+                  className={`flex h-[25.19px] items-center border-y-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] ${optionStatus?.color} py-[0.29rem]`}
                 >
                   <div className="pr-[1.25rem] tablet:pr-[2.4rem]">
                     <>
@@ -126,17 +124,18 @@ const Options = ({
                       )}
                     </>
                   </div>
-                </button>
+                </div>
               )}
-            <button
+
+            <div
               id={`test${number}`}
-              className={`relative h-[25.19px] rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:h-[74px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${optionStatus.color}`}
+              className={`relative flex h-[25.19px] items-center rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:h-[74px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${optionStatus.color}`}
             >
-              <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
+              <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[166px]">
                 <span>{optionStatus.name}</span>
               </div>
               <Tooltip optionStatus={optionStatus} />
-            </button>
+            </div>
           </div>
           <div
             className={`${
