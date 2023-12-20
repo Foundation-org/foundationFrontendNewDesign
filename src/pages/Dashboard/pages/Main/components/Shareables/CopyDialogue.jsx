@@ -1,4 +1,5 @@
 import Copy from "../../../../../../assets/Copy";
+import { toast } from "sonner";
 
 const CopyDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
   let url = `https://localhost:5173/quest/${id}`;
@@ -60,6 +61,7 @@ const CopyDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
             className="rounded-r-[26px] bg-[#DEE6F7] px-[30px] py-5"
             onClick={() => {
               copyToClipboard();
+              toast.success("Link Copied!")
             }}
           >
             <Copy h="51px" w="51px" color="#8BAAC0" />
