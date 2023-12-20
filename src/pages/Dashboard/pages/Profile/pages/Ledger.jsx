@@ -43,27 +43,27 @@ export default function BasicTable() {
   });
 
   // let ledgerData;
-  const fetchData = async() => {
+  const fetchData = async () => {
     const data = await getAllLedgerData(
       currentPage,
       itemsPerPage,
       sort,
       localStorage.getItem("uId"),
     );
-    if(data) {
+    if (data) {
       setLedgerData(data);
     }
   }
 
-  const findingLedger = async() => {
+  const findingLedger = async () => {
     const data = await searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
-    if(data) {
+    if (data) {
       setLedgerData(data);
     }
   }
 
   useEffect(() => {
-    if(debouncedSearch === "") {
+    if (debouncedSearch === "") {
       fetchData()
     } else {
       findingLedger()
@@ -102,7 +102,7 @@ export default function BasicTable() {
     setTotalPages(Math.ceil(ledgerData?.data?.totalCount / rowsPerPage));
   }, [ledgerData?.data?.totalCount, rowsPerPage]);
 
-  const handlePageClick = async(page) => {
+  const handlePageClick = async (page) => {
     // table.setPageIndex(page - 1);
     console.log(page);
     setCurrentPage(page)
@@ -112,7 +112,7 @@ export default function BasicTable() {
       sort,
       localStorage.getItem("uId"),
     );
-    if(data) {
+    if (data) {
       setLedgerData(data);
     }
     // console.log("🚀 ~ file: Ledger.jsx:57 ~ handlePageClick ~ page:", page)
@@ -137,9 +137,8 @@ export default function BasicTable() {
         Ledger
       </h1>
       <div
-        className={`${
-          persistedTheme === "dark" ? "ledger-dark" : "ledger-light"
-        } mx-[17px] mb-10 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-11 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
+        className={`${persistedTheme === "dark" ? "ledger-dark" : "ledger-light"
+          } mx-[17px] mb-10 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-11 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
       >
         <LedgerTableTopbar
           sort={sort}
@@ -151,12 +150,15 @@ export default function BasicTable() {
         />
         <div className="no-scrollbar tablet:h-[600px] w-full overflow-auto">
           <table
-            // className="w-full"
-            style={{ width: table.getCenterTotalSize() }}
+            // style={{ width: table.getCenterTotalSize() }}
+            style={{
+              minWidth: window.innerWidth <= 1700 && window.innerWidth >= 744 ? '600px' : window.innerWidth <= 744 && window.innerWidth >= 0 ? '350px' : 'auto',
+              width: window.innerWidth <= 1700 && window.innerWidth >= 900 ? '100%' : window.innerWidth <= 900 && window.innerWidth >= 744 ? "120%" : window.innerWidth <= 744 && window.innerWidth >= 0 ? '100%' : table.getCenterTotalSize(),
+            }}
           >
             <thead
               style={{ width: table.getTotalSize() }}
-              className="text-[0.7rem] text-[#bbb] dark:text-[#B5B7C0] md:text-[1.45rem] tablet:text-[1rem]"
+              className="text-[0.4rem] text-[#bbb] dark:text-[#B5B7C0] md:text-[.88rem] laptop:text-[1.2rem]"
             >
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
@@ -166,16 +168,15 @@ export default function BasicTable() {
                   {headerGroup.headers.map((header) => (
                     <th
                       style={{ width: header.getSize() }}
-                      className="relative py-2.5 font-normal"
+                      className="relative py-1 tablet:py-3font-normal"
                       key={header.id}
                     >
                       {header.column.columnDef.header}
                       <div
                         onMouseDown={header.getResizeHandler()}
                         onTouchStart={header.getResizeHandler()}
-                        className={`resizer ${
-                          header.column.getIsResizing() ? "isResizing" : ""
-                        }`}
+                        className={`resizer ${header.column.getIsResizing() ? "isResizing" : ""
+                          }`}
                       />
                     </th>
                   ))}
@@ -183,49 +184,56 @@ export default function BasicTable() {
               ))}
             </thead>
             <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] md:text-[1.25rem] tablet:text-[0.875rem]">
-              {table.getRowModel().rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className=" border-0 border-b border-[#EEEEEE] text-[#292D32] dark:text-[#C8C8C8] "
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <td
-                      className=" tablet:py-4 py-2 text-[0.7rem]  md:text-[1.45rem] tablet:text-[1rem]"
-                      key={cell.id}
-                      style={{ width: cell.column.getSize() }}
-                    >
-                      {/* {flexRender(
+              {table.getRowModel().rows.length === 0 ?
+                <h4 className="text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem] mt-12">
+                  No records found.
+                </h4> :
+                table.getRowModel().rows.map((row) => (
+                  <tr
+                    key={row.id}
+                    className=" border-0 border-b border-[#EEEEEE] text-[#292D32] dark:text-[#C8C8C8] whitespace-nowrap"
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <td
+                        className="py-1 tablet:py-3 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem]"
+                        key={cell.id}
+                        style={{ width: cell.column.getSize() }}
+                      >
+                        {/* {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
                       )} */}
-                      {
-                        // console.log(cell.getValue())
-                        // console.log(cell.column.id) //txID
-                      }
-                      {
-                        cell.column.id === "txID" ? 
-                          `${cell.getValue().slice(0, 4)} **** ${cell.getValue().slice(-3)}` 
-                          : 
-                        cell.column.id === "txDate" ? 
-                          format(new Date(), 'dd MMM yyyy') 
-                          : 
-                        cell.column.id === "txFrom" && cell.getValue() !== "DAO Treasury" && cell.getValue() !== "dao" ?
-                          `${cell.getValue().slice(0, 4)} **** ${cell.getValue().slice(-3)}` 
-                          :
-                        cell.column.id === "txTo" && cell.getValue() !== "DAO Treasury" && cell.getValue() !== "dao" ?
-                          `${cell.getValue().slice(0, 4)} **** ${cell.getValue().slice(-3)}` 
-                          :
-                          cell.getValue() 
+                        {
+                          // console.log(cell.getValue())
+                          // console.log(cell.column.id) //txID
+                        }
+                        {
+                          cell.column.id === "txID" ?
+                            `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
+                            :
+                            cell.column.id === "txDate" ?
+                              format(new Date(), 'dd MMM yyyy')
+                              :
+                              cell.column.id === "txFrom" && cell.getValue() !== "DAO Treasury" && cell.getValue() !== "dao" && cell.getValue() !== localStorage.getItem("uId") ?
+                                `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
+                                :
+                                cell.getValue() === localStorage.getItem("uId") ? "My Account"
+                                  :
+                                  cell.column.id === "txTo" && cell.getValue() !== "DAO Treasury" && cell.getValue() !== "dao" ?
+                                    `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
+                                    : cell.getValue() === "dao" ? "DAO" :
+                                      cell.getValue()
                           // txDate
-                      }
-                    </td>
-                  ))}
-                </tr>
-              ))}
+                        }
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              }
             </tbody>
           </table>
         </div>
-        <div className="max-[880px]:justify-center mt-6 flex flex-wrap items-center justify-between gap-3">
+        <div className="max-[880px]:justify-center mt-2 tablet:-mt-7 laptop:mt-6 flex flex-wrap items-center justify-between gap-3">
           {/* <p className="text-[0.44rem] text-[#B5B7C0] tablet:text-[1rem] ">
             Showing data {(table.getState().pagination.pageIndex + 1) * 10 - 9}{" "}
             to {(table.getState().pagination.pageIndex + 1) * 10} of{" "}
@@ -235,7 +243,7 @@ export default function BasicTable() {
           <div className="flex items-center">
             <button
               onClick={() => handlePageClick(currentPage - 1)}
-              disabled={ currentPage === rangeStart && true }
+              disabled={currentPage === rangeStart && true}
               className="pagination-btn"
             >
               <img
@@ -246,37 +254,36 @@ export default function BasicTable() {
             </button>
             <div className=" flex items-center gap-[0.46rem] tablet:gap-4">
               {rangeStart > 1 && (
-                <button className="bg-white/0 font-medium text-black">
+                <button className="bg-white/0 font-medium text-black dark:text-[#B3B3B3] text-[9px] tablet:text-[16px]">
                   ...
                 </button>
               )}
               {rangeStart && rangeEnd
                 ? [...Array(rangeEnd - rangeStart + 1)].map((_, index) => {
-                    const pageNumber = rangeStart + index;
-                    return (
-                      <button
-                        className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] border border-solid border-[#EEEEEE] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:text-[13px] ${
-                          pageNumber === currentPage
-                            ? "border border-solid border-[#5932EA] bg-[#4A8DBD] text-white"
-                            : "bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]"
+                  const pageNumber = rangeStart + index;
+                  return (
+                    <button
+                      className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] text-[0.45rem] pt-[2px] tablet:pt-[0px] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:text-[13px] ${pageNumber === currentPage
+                        ? "bg-[#4A8DBD] dark:bg-[#252D37] text-white border border-solid border-[#5932EA] dark:border-none"
+                        : "bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]"
                         }`}
-                        key={pageNumber}
-                        onClick={() => handlePageClick(pageNumber)}
-                      >
-                        {pageNumber}
-                      </button>
-                    );
-                  })
+                      key={pageNumber}
+                      onClick={() => handlePageClick(pageNumber)}
+                    >
+                      {pageNumber}
+                    </button>
+                  );
+                })
                 : null}
               {rangeEnd < totalPages && (
-                <button className="bg-white/0 font-medium text-black dark:text-[#B3B3B3]">
+                <button className="bg-white/0 font-medium text-black dark:text-[#B3B3B3] mr-2 tablet:mr-4 text-[9px] tablet:text-[16px]">
                   ...
                 </button>
               )}
             </div>
             <button
               onClick={() => handlePageClick(currentPage + 1)}
-              disabled={ currentPage === rangeEnd && true }
+              disabled={currentPage === rangeEnd && true}
               className="pagination-btn"
             >
               <img
