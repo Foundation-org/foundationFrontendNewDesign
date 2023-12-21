@@ -103,7 +103,7 @@ const Topbar = () => {
                   : "text-[#BEDEF4]"
             }`}
           >
-            {location.pathname === "/dashboard" &&
+            {(location.pathname === "/dashboard" || location.pathname === "/dashboard/") &&
 
                 <img
                   src="/assets/svgs/dashboard/home-white.svg"
@@ -125,7 +125,7 @@ const Topbar = () => {
                   : "text-[#BEDEF4]"
             }`}
           >
-            {location.pathname === "/dashboard/quest" && (
+            {(location.pathname === "/dashboard/quest" || location.pathname === "/dashboard/quest/") && (
               <img
                 src="/assets/svgs/dashboard/quest.svg"
                 alt="quest"
@@ -146,7 +146,7 @@ const Topbar = () => {
                   : "text-[#BEDEF4]"
             }`}
           >
-            {location.pathname === "/dashboard/bookmark" && (
+            {(location.pathname === "/dashboard/bookmark" || location.pathname === "/dashboard/bookmark/") && (
               <img
                 src="/assets/svgs/dashboard/bookmark-white.svg"
                 alt="bookmark"
