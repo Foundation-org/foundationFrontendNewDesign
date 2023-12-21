@@ -212,7 +212,7 @@ export default function BasicTable() {
                             `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
                             :
                             cell.column.id === "txDate" ?
-                              format(new Date(), 'dd MMM yyyy')
+                              format(new Date(cell.getValue()), 'dd MMM yyyy, hh:mm a')
                               :
                               cell.column.id === "txFrom" && cell.getValue() !== "DAO Treasury" && cell.getValue() !== "dao" && cell.getValue() !== localStorage.getItem("uId") ?
                                 `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
