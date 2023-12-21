@@ -21,6 +21,7 @@ const Topbar = () => {
       toast.error(error.response.data.message.split(":")[1]);
     }
   };
+  console.log("location"+location.pathname);
 
   return (
     <div
@@ -78,12 +79,15 @@ const Topbar = () => {
               2
             </p>
           </div>
+          <div className="relative cursor-pointer " onClick={handleLogout}>
+
           <img
             src="/assets/svgs/dashboard/arrow-right-outline.svg"
             alt="arrow-right"
             className="h-[18px] w-[16.2px] cursor-pointer tablet:h-[36px] tablet:w-[28px]"
             onClick={handleLogout}
-          />
+            />
+            </div>
         </div>
       </div>
       {/* items */}
@@ -100,19 +104,13 @@ const Topbar = () => {
             }`}
           >
             {location.pathname === "/dashboard" &&
-              (persistedTheme === "dark" ? (
+
                 <img
-                  src="/assets/svgs/dashboard/home.svg"
+                  src="/assets/svgs/dashboard/home-white.svg"
                   alt="home"
                   className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[27px]"
                 />
-              ) : (
-                <img
-                  src="/assets/svgs/dashboard/home-white.svg"
-                  alt="home-white"
-                  className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
-                />
-              ))}
+              }
             Home
           </Link>
         </li>
@@ -162,7 +160,7 @@ const Topbar = () => {
       {/* logout btn */}
       <div
         className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:gap-[35px]"
-        onClick={handleLogout}
+
       >
         <div className="relative">
           <img
@@ -173,10 +171,13 @@ const Topbar = () => {
             2
           </p>
         </div>
+        <div onClick={handleLogout}>
+          
         <img
           src="/assets/svgs/dashboard/arrow-right-outline.svg"
           alt="arrow-right"
-        />
+          />
+          </div>
       </div>
     </div>
   );
