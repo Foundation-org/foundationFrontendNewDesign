@@ -96,7 +96,7 @@ const Topbar = () => {
           <Link
             to={"/dashboard"}
             className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
-              location.pathname === "/dashboard"
+              (location.pathname === "/dashboard" || location.pathname === "/dashboard/")
                 ? "text-white"
                 : persistedTheme === "dark"
                   ? "text-[#92959D]"
@@ -118,7 +118,7 @@ const Topbar = () => {
           <Link
             to={"/dashboard/quest"}
             className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
-              location.pathname === "/dashboard/quest"
+              (location.pathname === "/dashboard/quest" || location.pathname === "/dashboard/quest/")
                 ? "text-white"
                 : persistedTheme === "dark"
                   ? "text-[#92959D]"
@@ -139,7 +139,7 @@ const Topbar = () => {
           <Link
             to={"/dashboard/bookmark"}
             className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
-              location.pathname === "/dashboard/bookmark"
+              (location.pathname === "/dashboard/bookmark" || location.pathname === "/dashboard/bookmark/")
                 ? "text-white"
                 : persistedTheme === "dark"
                   ? "text-[#92959D]"
