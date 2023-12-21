@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Tooltip } from "../../../../../utils/Tooltip";
-import { useState } from "react";
 
 const Options = ({
   title,
@@ -21,13 +20,14 @@ const Options = ({
   optionStatus,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const [isActive, setIsActive] = useState(false);
+
   return (
     <div
-      className={`${label
+      className={`${
+        label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row items-center gap-[25px]"
-        } w-full `}
+      } w-full `}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
@@ -94,10 +94,6 @@ const Options = ({
             <input
               className="h-[25.19px] w-full border-y-[1px] border-[#ACACAC] bg-white py-[0.35rem] pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:h-[50.19px] tablet:py-[11.6px] tablet:pr-11 tablet:text-[1.296rem] laptop:h-[74px] laptop:py-[18px] laptop:text-[1.875rem]"
               onChange={(e) => handleChange(e.target.value)}
-              onMouseDown={(e) => {
-                if (isActive) { e.preventDefault() }
-              }}
-              onClick={() => setIsActive(true)}
               onBlur={(e) =>
                 e.target.value.trim() !== "" &&
                 answerVerification(e.target.value.trim())
@@ -142,10 +138,11 @@ const Options = ({
             </div>
           </div>
           <div
-            className={`${optionsCount > 2
+            className={`${
+              optionsCount > 2
                 ? "absolute left-[208px] tablet:left-[42rem]"
                 : "absolute left-[221px] tablet:left-[24rem] laptop:left-[44rem]"
-              } -top-[22px] flex w-fit items-center tablet:-top-[46px] laptop:-top-[74px]`}
+            } -top-[22px] flex w-fit items-center tablet:-top-[46px] laptop:-top-[74px]`}
           ></div>
         </div>
       )}
