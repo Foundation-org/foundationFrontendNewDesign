@@ -33,3 +33,7 @@ export const searchLedger = async (page, limit, sort, term) => {
 export const deleteAccount = async (uuid) => {
   return await api.delete(`/delete/${uuid}`);
 };
+
+export const createGuestMode = async () => {
+  return await api.post("/user/create/guestMode");
+};

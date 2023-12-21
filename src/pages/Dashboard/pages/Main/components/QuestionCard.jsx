@@ -59,6 +59,16 @@ const QuestionCard = ({
     })),
   );
 
+  useEffect(() => {
+    setAnswerSelection(
+      answers?.map((answer) => ({
+        label: answer.question,
+        check: false,
+        contend: false,
+      })),
+    );
+  }, [answers]);
+
   const [rankedAnswers, setRankedAnswers] = useState(
     answersSelection?.map((item, index) => ({
       id: `unique-${index}`,
@@ -68,12 +78,14 @@ const QuestionCard = ({
 
   useEffect(() => {
     setRankedAnswers(
-      answersSelection.map((item, index) => ({
+      answersSelection?.map((item, index) => ({
         id: `unique-${index}`,
         ...item,
       })),
     );
   }, [answersSelection]);
+
+  console.log({ answers, answersSelection, rankedAnswers });
 
   const handleOpen = () => {
     setAddOptionField(1);

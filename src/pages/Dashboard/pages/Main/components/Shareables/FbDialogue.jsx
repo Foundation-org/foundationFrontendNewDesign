@@ -1,3 +1,4 @@
+import { FacebookProvider, ShareButton } from "react-facebook";
 import Close from "../../../../../../assets/Close";
 
 const FbDialogue = ({
@@ -9,6 +10,7 @@ const FbDialogue = ({
   title,
   question,
   timeAgo,
+  id,
 }) => {
   return (
     <div className="relative pb-[75px]">
@@ -83,9 +85,15 @@ const FbDialogue = ({
         </div>
         {/* Share Button */}
         <div className="flex justify-center gap-[43px]">
-          <button className="mt-[16.2px] w-[212px] rounded-[7.1px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]">
-            Share a Post
-          </button>
+          <FacebookProvider appId={import.meta.env.VITE_FB_APP_ID}>
+            <ShareButton
+              href={`https://master.d30vd0vty5w4k4.amplifyapp.com/quest/${id}`}
+              quote="Foundation Quest"
+              className="mt-[16.2px] w-[212px] rounded-[7.1px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]"
+            >
+              Share a Post
+            </ShareButton>
+          </FacebookProvider>
           <button className="mt-[16.2px] w-[341px] rounded-[7.1px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]">
             Send in a Personal Message
           </button>

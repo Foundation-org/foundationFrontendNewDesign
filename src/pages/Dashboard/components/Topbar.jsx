@@ -4,7 +4,7 @@ import api from "../../../api/Axios";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
-const Topbar = () => {
+const Topbar = ({ title }) => {
   const location = useLocation();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -21,7 +21,7 @@ const Topbar = () => {
       toast.error(error.response.data.message.split(":")[1]);
     }
   };
-  console.log("location"+location.pathname);
+  console.log("location" + location.pathname);
 
   return (
     <div
@@ -80,14 +80,13 @@ const Topbar = () => {
             </p>
           </div>
           <div className="relative cursor-pointer " onClick={handleLogout}>
-
-          <img
-            src="/assets/svgs/dashboard/arrow-right-outline.svg"
-            alt="arrow-right"
-            className="h-[18px] w-[16.2px] cursor-pointer tablet:h-[36px] tablet:w-[28px]"
-            onClick={handleLogout}
+            <img
+              src="/assets/svgs/dashboard/arrow-right-outline.svg"
+              alt="arrow-right"
+              className="h-[18px] w-[16.2px] cursor-pointer tablet:h-[36px] tablet:w-[28px]"
+              onClick={handleLogout}
             />
-            </div>
+          </div>
         </div>
       </div>
       {/* items */}
@@ -103,14 +102,14 @@ const Topbar = () => {
                   : "text-[#BEDEF4]"
             }`}
           >
-            {(location.pathname === "/dashboard" || location.pathname === "/dashboard/") &&
-
-                <img
-                  src="/assets/svgs/dashboard/home-white.svg"
-                  alt="home"
-                  className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[27px]"
-                />
-              }
+            {(location.pathname === "/dashboard" ||
+              location.pathname === "/dashboard/") && (
+              <img
+                src="/assets/svgs/dashboard/home-white.svg"
+                alt="home"
+                className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[27px]"
+              />
+            )}
             Home
           </Link>
         </li>
@@ -125,7 +124,8 @@ const Topbar = () => {
                   : "text-[#BEDEF4]"
             }`}
           >
-            {(location.pathname === "/dashboard/quest" || location.pathname === "/dashboard/quest/") && (
+            {(location.pathname === "/dashboard/quest" ||
+              location.pathname === "/dashboard/quest/") && (
               <img
                 src="/assets/svgs/dashboard/quest.svg"
                 alt="quest"
@@ -146,7 +146,8 @@ const Topbar = () => {
                   : "text-[#BEDEF4]"
             }`}
           >
-            {(location.pathname === "/dashboard/bookmark" || location.pathname === "/dashboard/bookmark/") && (
+            {(location.pathname === "/dashboard/bookmark" ||
+              location.pathname === "/dashboard/bookmark/") && (
               <img
                 src="/assets/svgs/dashboard/bookmark-white.svg"
                 alt="bookmark"
@@ -158,10 +159,7 @@ const Topbar = () => {
         </li>
       </ul>
       {/* logout btn */}
-      <div
-        className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:gap-[35px]"
-
-      >
+      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:gap-[35px]">
         <div className="relative">
           <img
             src="/assets/svgs/dashboard/notification_icon.svg"
@@ -172,12 +170,11 @@ const Topbar = () => {
           </p>
         </div>
         <div onClick={handleLogout}>
-          
-        <img
-          src="/assets/svgs/dashboard/arrow-right-outline.svg"
-          alt="arrow-right"
+          <img
+            src="/assets/svgs/dashboard/arrow-right-outline.svg"
+            alt="arrow-right"
           />
-          </div>
+        </div>
       </div>
     </div>
   );

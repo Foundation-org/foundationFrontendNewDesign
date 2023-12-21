@@ -1,0 +1,352 @@
+import { useEffect, useState } from "react";
+import GuestTopbar from "./GuestTopbar";
+import StartTest from "../../Dashboard/pages/Main/components/StartTest";
+import Result from "../../Dashboard/pages/Main/components/Result";
+import { useDispatch } from "react-redux";
+import { useMutation } from "@tanstack/react-query";
+import { createStartQuest } from "../../../api/questsApi";
+import { toast } from "sonner";
+
+const QuestionCard = ({
+  tab,
+  id,
+  question,
+  answers,
+  title,
+  usersAddTheirAns,
+  whichTypeQuestion,
+  btnText,
+  startStatus,
+  viewResult,
+  handleViewResults,
+}) => {
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const [addOptionField, setAddOptionField] = useState(0);
+  const [addOptionLimit, setAddOptionLimit] = useState(0);
+  const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
+  const [answersSelection, setAnswerSelection] = useState(
+    answers?.map((answer) => ({
+      label: answer.question,
+      check: false,
+      contend: false,
+    })),
+  );
+
+  useEffect(() => {
+    setAnswerSelection(
+      answers?.map((answer) => ({
+        label: answer.question,
+        check: false,
+        contend: false,
+      })),
+    );
+  }, [answers]);
+
+  const [rankedAnswers, setRankedAnswers] = useState(
+    answersSelection?.map((item, index) => ({
+      id: `unique-${index}`,
+      ...item,
+    })),
+  );
+
+  useEffect(() => {
+    setRankedAnswers(
+      answersSelection?.map((item, index) => ({
+        id: `unique-${index}`,
+        ...item,
+      })),
+    );
+  }, [answersSelection]);
+
+  const handleOpen = () => {
+    setAddOptionField(1);
+    handleAddOption();
+  };
+
+  const handleAddOption = () => {
+    const newOption = {
+      label: "",
+      check: true,
+      contend: false,
+      addedOptionByUser: true,
+      edit: true,
+      delete: true,
+    };
+
+    setAnswerSelection([newOption, ...answersSelection]);
+
+    setAddOptionField(0);
+    setAddOptionLimit(1);
+  };
+
+  const { mutateAsync: startQuest } = useMutation({
+    mutationFn: createStartQuest,
+    onSuccess: (resp) => {
+      if (resp.data.message === "Start Quest Created Successfully") {
+        toast.success("Successfully Answered Quest");
+        queryClient.invalidateQueries("FeedData");
+      }
+      handleStartTest(null);
+    },
+    onError: (err) => {
+      toast.error(err.response.data);
+    },
+  });
+
+  const handleSubmit = () => {
+    if (
+      whichTypeQuestion === "agree/disagree" ||
+      whichTypeQuestion === "yes/no"
+    ) {
+      const { selected, contended } = extractSelectedAndContended(
+        whichTypeQuestion === "agree/disagree"
+          ? quests.agreeDisagree
+          : quests.yesNo,
+      );
+
+      let ans = {
+        created: new Date(),
+      };
+      if (selected) {
+        ans.selected = selected.charAt(0).toUpperCase() + selected.slice(1);
+      }
+      if (contended) {
+        ans.contended = contended.charAt(0).toUpperCase() + contended.slice(1);
+      }
+
+      const params = {
+        questId: id,
+        answer: ans,
+        addedAnswer: "",
+        uuid: localStorage.getItem("uId"),
+      };
+
+      // if (!(params.answer.selected && params.answer.contended)) {
+      if (!params.answer.selected) {
+        toast.warning("You cannot submit without answering");
+        return;
+      }
+
+      if (btnText === "change answer") {
+        console.log(howManyTimesAnsChanged);
+        const currentDate = new Date();
+
+        const timeInterval = validateInterval();
+        // Check if enough time has passed
+        if (
+          howManyTimesAnsChanged > 1 &&
+          currentDate - new Date(lastInteractedAt) < timeInterval
+        ) {
+          // Alert the user if the time condition is not met
+          toast.error(
+            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+          );
+        } else {
+          changeAnswer(params);
+        }
+      } else {
+        startQuest(params);
+      }
+    } else if (whichTypeQuestion === "multiple choise") {
+      let answerSelected = [];
+      let answerContended = [];
+      let addedAnswerValue = "";
+
+      for (let i = 0; i < answersSelection.length; i++) {
+        if (answersSelection[i].check) {
+          if (answersSelection[i].addedOptionByUser) {
+            // If user Add his own option
+
+            answerSelected.push({
+              question: answersSelection[i].label,
+              addedAnswerByUser: true,
+            });
+            addedAnswerValue = answersSelection[i].label;
+            console.log("added ans value" + addedAnswerValue);
+          } else {
+            answerSelected.push({ question: answersSelection[i].label });
+          }
+        }
+
+        if (answersSelection[i].contend) {
+          answerContended.push({ question: answersSelection[i].label });
+        }
+      }
+
+      let dataToSend = {
+        selected: answerSelected,
+        contended: answerContended,
+        created: new Date(),
+      };
+      const currentDate = new Date();
+
+      if (btnText === "change answer") {
+        const timeInterval = validateInterval();
+        // Check if enough time has passed
+        if (
+          howManyTimesAnsChanged > 1 &&
+          currentDate - new Date(lastInteractedAt) < timeInterval
+        ) {
+          // Alert the user if the time condition is not met
+          toast.error(
+            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+          );
+        } else {
+          const params = {
+            questId: id,
+            answer: dataToSend,
+            uuid: localStorage.getItem("uId"),
+          };
+          console.log("params", params);
+          changeAnswer(params);
+        }
+      } else {
+        const params = {
+          questId: id,
+          answer: dataToSend,
+          addedAnswer: addedAnswerValue,
+          uuid: localStorage.getItem("uId"),
+        };
+
+        // && params.answer.contended.length === 0
+        if (params.answer.selected.length === 0) {
+          toast.warning("You cannot submit without answering");
+          return;
+        }
+
+        console.log("params", params);
+        startQuest(params);
+      }
+    } else if (whichTypeQuestion === "ranked choise") {
+      let addedAnswerValue = "";
+      let answerSelected = [];
+
+      for (let i = 0; i < rankedAnswers.length; i++) {
+        if (rankedAnswers[i].addedOptionByUser) {
+          // If user Add his own option
+          console.log("added answer ran");
+          answerSelected.push({
+            question: rankedAnswers[i].label,
+            addedAnswerByUser: true,
+          });
+          addedAnswerValue = rankedAnswers[i].label;
+          console.log("added ans value" + addedAnswerValue);
+        } else {
+          answerSelected.push({ question: rankedAnswers[i].label });
+        }
+      }
+
+      let dataToSend = {
+        selected: answerSelected,
+        contended: "",
+        created: new Date(),
+      };
+      const currentDate = new Date();
+
+      if (btnText === "change answer") {
+        const timeInterval = validateInterval();
+        // Check if enough time has passed
+        if (
+          howManyTimesAnsChanged > 1 &&
+          currentDate - new Date(lastInteractedAt) < timeInterval
+        ) {
+          // Alert the user if the time condition is not met
+          toast.error(
+            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+          );
+        } else {
+          const params = {
+            questId: id,
+            answer: dataToSend,
+            uuid: localStorage.getItem("uId"),
+          };
+          console.log("params", params);
+          changeAnswer(params);
+        }
+      } else {
+        const params = {
+          questId: id,
+          answer: dataToSend,
+          addedAnswer: addedAnswerValue,
+          uuid: localStorage.getItem("uId"),
+        };
+        console.log("params", params);
+
+        startQuest(params);
+      }
+    }
+  };
+
+  // results
+
+  const capitalizeFirstLetter = (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
+
+  const handleToggleCheck = (option, check, contend) => {
+    const capitalizedOption = capitalizeFirstLetter(option);
+
+    const actionPayload = {
+      option: capitalizedOption,
+      check,
+      contend,
+    };
+
+    console.log({ actionPayload });
+
+    dispatch(toggleCheck(actionPayload));
+  };
+
+  const handleClose = () => setOpen(false);
+
+  return (
+    <div className="flex justify-center">
+      <div className="mx-[5.25rem] w-full rounded-[1.625rem] bg-[#F3F3F3]">
+        <GuestTopbar badgeCount={5} title={title} />
+        <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:ml-[52.65px] tablet:text-[25px]">
+          {question?.endsWith("?") ? "Q." : "S."} {question}
+        </h1>
+        {tab === "Participate" ? (
+          rankedAnswers && (
+            <StartTest
+              title={title}
+              answers={answers}
+              rankedAnswers={rankedAnswers}
+              setRankedAnswers={setRankedAnswers}
+              answersSelection={answersSelection}
+              setAnswerSelection={setAnswerSelection}
+              usersAddTheirAns={usersAddTheirAns}
+              handleOpen={handleOpen}
+              addOptionField={addOptionField}
+              setAddOptionField={setAddOptionField}
+              addOptionLimit={addOptionLimit}
+              setAddOptionLimit={setAddOptionLimit}
+              handleSubmit={handleSubmit}
+            />
+          )
+        ) : (
+          <Result
+            id={id}
+            title={title}
+            handleToggleCheck={handleToggleCheck}
+            handleClose={handleClose}
+            answers={answers}
+            btnText={btnText}
+            whichTypeQuestion={whichTypeQuestion}
+            setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+            answersSelection={answersSelection}
+            setAnswerSelection={setAnswerSelection}
+            rankedAnswers={rankedAnswers}
+            setRankedAnswers={setRankedAnswers}
+            viewResult={viewResult}
+            handleViewResults={handleViewResults}
+            startStatus={startStatus}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default QuestionCard;

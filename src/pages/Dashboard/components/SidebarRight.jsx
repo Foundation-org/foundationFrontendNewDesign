@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { userInfo } from "../../../api/userAuth";
+import { createGuestMode, userInfo } from "../../../api/userAuth";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -13,8 +13,7 @@ const SidebarRight = () => {
   const dispath = useDispatch();
   const navigate = useNavigate();
   const [response, setResponse] = useState();
-  const [treasuryAmount, setTreasuryAmount] = useState(0)
-
+  const [treasuryAmount, setTreasuryAmount] = useState(0);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -123,21 +122,39 @@ const SidebarRight = () => {
   const getTreasuryAmount = async () => {
     try {
       const res = await api.get(`/treasury/get`);
-      if(res.status === 200){
-        localStorage.setItem("treasuryAmount", res.data.data)
-        setTreasuryAmount(res.data.data)
+      if (res.status === 200) {
+        localStorage.setItem("treasuryAmount", res.data.data);
+        setTreasuryAmount(res.data.data);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]); 
+      toast.error(error.response.data.message.split(":")[1]);
     }
   };
 
   useEffect(() => {
     handleUserInfo(localStorage.getItem("uId"));
-    getTreasuryAmount()
+    getTreasuryAmount();
   }, []);
 
-  console.log({ response });
+  const { mutateAsync: createGuest } = useMutation({
+    mutationFn: createGuestMode,
+    onSuccess: (resp) => {
+      localStorage.setItem("isGuestMode", resp.data.isGuestMode);
+      localStorage.setItem("jwt", resp.data.token);
+      localStorage.setItem("uId", resp.data.uuid);
+    },
+    onError: (err) => {
+      toast.error(err.response.data);
+    },
+  });
+
+  useEffect(() => {
+    const uId = localStorage.getItem("uId");
+
+    if (!uId) {
+      createGuest();
+    }
+  }, []);
 
   return (
     <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#0A0A0C] 2xl:w-[25rem] laptop:block">
@@ -150,38 +167,69 @@ const SidebarRight = () => {
           </p>
         </div>
       </div>
-      <div className="mb-[5vh] flex items-center gap-6">
-        <div className="relative h-fit w-fit">
-          <img src="/assets/svgs/dashboard/badge.svg" alt="badge" />
-          <p className="transform-center absolute z-50 pb-5 text-[35px] font-bold leading-normal text-white">
-            5
-          </p>
-        </div>
-        <div>
-          <h4 className="heading">My Profile</h4>
-          <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
-            <p>Balance</p>
-            <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance : 0 }</p>
+      {localStorage.getItem("isGuestMode") ? (
+        <div className="mb-[5vh] flex items-center gap-6">
+          <div className="relative h-fit w-fit">
+            <img src="/assets/svgs/dashboard/yellowBadge.svg" alt="badge" />
+            <p className="transform-center absolute z-50 pb-5 text-[1.875rem] font-medium leading-normal text-[#362E04]">
+              G
+            </p>
           </div>
-          <div
-            onClick={() => {
-              navigate("/profile");
-            }}
-          >
-            <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">
-              Edit Profile
-            </Anchor>
-          </div>
-          <div className="mt-3 flex gap-2">
-            <div className="h-[9px] w-6 rounded-md bg-[#4A8DBD]"></div>
-            <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-            <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-            <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-            <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-            <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+          <div>
+            <h4 className="heading">Guest User</h4>
+            <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
+              <p>Balance</p>
+              <p>
+                {persistedUserInfo?.balance ? persistedUserInfo?.balance : 0}
+              </p>
+            </div>
+            <div
+              onClick={() => {
+                navigate("/profile");
+              }}
+            >
+              <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">
+                Create Account
+              </Anchor>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="mb-[5vh] flex items-center gap-6">
+          <div className="relative h-fit w-fit">
+            <img src="/assets/svgs/dashboard/badge.svg" alt="badge" />
+            <p className="transform-center absolute z-50 pb-5 text-[35px] font-bold leading-normal text-white">
+              5
+            </p>
+          </div>
+          <div>
+            <h4 className="heading">My Profile</h4>
+            <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
+              <p>Balance</p>
+              <p>
+                {persistedUserInfo?.balance ? persistedUserInfo?.balance : 0}
+              </p>
+            </div>
+            <div
+              onClick={() => {
+                navigate("/profile");
+              }}
+            >
+              <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">
+                Edit Profile
+              </Anchor>
+            </div>
+            <div className="mt-3 flex gap-2">
+              <div className="h-[9px] w-6 rounded-md bg-[#4A8DBD]"></div>
+              <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+              <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+              <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+              <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+              <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+            </div>
+          </div>
+        </div>
+      )}
       {sidebarList.map((item) => (
         <div className="mt-[1.9vh] flex items-center gap-4" key={item.id}>
           {persistedTheme === "dark" ? (

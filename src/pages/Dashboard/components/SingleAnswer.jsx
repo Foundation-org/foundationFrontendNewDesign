@@ -100,7 +100,7 @@ const SingleAnswer = (props) => {
               )}
             </div>
           )}
-          <h1 className="ml-8 pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px] ">
+          <h1 className="ml-[15.8px] pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px] ">
             {props.answer}
           </h1>
         </div>

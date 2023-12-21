@@ -290,6 +290,7 @@ const OptionBar = ({
           </button>
         </div>
       </div>
+
       <div className="mx-[0.57rem] mb-[0.55rem] mt-[0.86rem] flex items-center justify-between tablet:mx-[2.4rem] tablet:mb-[1.83rem] tablet:mt-[3.99rem]">
         <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
           <div onClick={handleCopyOpen} className="cursor-pointer">
@@ -373,6 +374,7 @@ const OptionBar = ({
               title={title}
               question={question}
               timeAgo={timeAgo}
+              id={id}
             />
           </BasicModal>
         </div>

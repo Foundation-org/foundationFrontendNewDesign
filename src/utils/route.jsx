@@ -4,7 +4,7 @@ import Signup from "../pages/Signup";
 import Dashboard from "../pages/Dashboard";
 import Profile from "../pages/Dashboard/pages/Profile";
 import VerifyEmail from "../pages/Signup/VerifyEmail";
-import SingleQuest from "../pages/SingleQuest";
+import Guests from "../pages/Guests";
 
 export function Router() {
   return (
@@ -16,7 +16,7 @@ export function Router() {
         <Route path="/signin" element={<Signin />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/quest/:id" element={<SingleQuest />} />
+        <Route path="/quest/:id" element={<Guests />} />
         {/* 404 page */}
         <Route
           path="*"

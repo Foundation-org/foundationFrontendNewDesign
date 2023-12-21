@@ -210,6 +210,7 @@ const StartTest = ({
           </SortableList>
         )}
 
+        {/* Add Options Button */}
         {usersAddTheirAns && addOptionLimit === 0 ? (
           <div>
             {title === "Yes/No" ||

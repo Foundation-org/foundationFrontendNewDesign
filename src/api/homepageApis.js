@@ -1,9 +1,11 @@
 import api from "./Axios";
 
 // For Search in Feed
-export const searchQuestions = async (term,uuid) => {
+export const searchQuestions = async (term, uuid) => {
   if (term !== "") {
-    const response = await api.post(`/search/easySearch?term=${term}&uuid=${uuid}`);
+    const response = await api.post(
+      `/search/easySearch?term=${term}&uuid=${uuid}`,
+    );
     return response.data;
   }
 };
@@ -13,6 +15,11 @@ export const searchQuestions = async (term,uuid) => {
 // For Default
 export const getAllQuestsWithDefaultStatus = async (params) => {
   return await api.post("/infoquestions/getAllQuestsWithDefaultStatus", params);
+};
+
+// Get Quest By Id
+export const getQuestById = async (id) => {
+  return await api.get(`/infoquestions/getQuest/${id}`);
 };
 
 // For Unanswered
@@ -30,8 +37,6 @@ export const getAllAnswered = async (params) => {
     params,
   );
 };
-
-
 
 // For InCorrect
 export const getAllCompleted = async (params) => {
@@ -58,29 +63,30 @@ export const getAllBookmarkedQuests = async (uuid) => {
   });
 };
 
-// Add Bookmarks 
+// Add Bookmarks
 export const createBookmark = async (data) => {
   return await api.post(`/bookmarkQuest/createBookmarkQuest`, {
-    uuid:data.uuid,
-    questForeignKey:data.questForeignKey,
-    whichTypeQuestion:data.whichTypeQuestion,
-    Question:data.Question
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
+    whichTypeQuestion: data.whichTypeQuestion,
+    Question: data.Question,
   });
 };
 
-// Delete Bookmarks 
+// Delete Bookmarks
 export const deleteBookmarkById = async (data) => {
   return await api.post(`/bookmarkQuest/deleteBookmarkQuest`, {
-    uuid:data.uuid,
-    questForeignKey:data.questForeignKey
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
   });
 };
 
-
-export const searchBookmarks = async (term,uuid) => {
+export const searchBookmarks = async (term, uuid) => {
   if (term !== "") {
     console.log(uuid);
-    const response = await api.post(`/search/searchBookmarks?term=${term}&uuid=${uuid}`);
+    const response = await api.post(
+      `/search/searchBookmarks?term=${term}&uuid=${uuid}`,
+    );
     return response.data;
   }
 };
