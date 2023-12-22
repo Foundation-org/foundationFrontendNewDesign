@@ -74,6 +74,7 @@ const Guests = () => {
             startStatus={singleQuest?.startStatus}
             viewResult={viewResult}
             handleViewResults={handleViewResults}
+            multipleOption={singleQuest?.userCanSelectMultiple}
           />
         </div>
         <SidebarRight />

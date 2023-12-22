@@ -1,12 +1,16 @@
+import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { createStartQuest } from "../../../api/questsApi";
 import GuestTopbar from "./GuestTopbar";
 import StartTest from "../../Dashboard/pages/Main/components/StartTest";
 import Result from "../../Dashboard/pages/Main/components/Result";
-import { useDispatch } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createStartQuest } from "../../../api/questsApi";
-import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { getQuests, toggleCheck } from "../../../features/quest/questsSlice";
+import SingleAnswer from "../../Dashboard/components/SingleAnswer";
 
 const QuestionCard = ({
   tab,
@@ -21,8 +25,10 @@ const QuestionCard = ({
   startStatus,
   viewResult,
   handleViewResults,
+  multipleOption,
 }) => {
   const dispatch = useDispatch();
+  const quests = useSelector(getQuests);
   const [open, setOpen] = useState(false);
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
@@ -92,7 +98,6 @@ const QuestionCard = ({
         queryClient.invalidateQueries("FeedData");
         navigate("/dashboard");
       }
-      
     },
     onError: (err) => {
       toast.error(err);
@@ -283,8 +288,6 @@ const QuestionCard = ({
     }
   };
 
-  // results
-
   const capitalizeFirstLetter = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
@@ -317,17 +320,25 @@ const QuestionCard = ({
             <StartTest
               title={title}
               answers={answers}
+              multipleOption={multipleOption}
+              SingleAnswer={SingleAnswer}
+              quests={quests}
+              whichTypeQuestion={whichTypeQuestion}
+              handleToggleCheck={handleToggleCheck}
+              handleSubmit={handleSubmit}
+              handleOpen={handleOpen}
+              handleClose={handleClose}
+              open={open}
+              // btnText={btnText}
+              usersAddTheirAns={usersAddTheirAns}
+              setAnswerSelection={setAnswerSelection}
+              answersSelection={answersSelection}
               rankedAnswers={rankedAnswers}
               setRankedAnswers={setRankedAnswers}
-              answersSelection={answersSelection}
-              setAnswerSelection={setAnswerSelection}
-              usersAddTheirAns={usersAddTheirAns}
-              handleOpen={handleOpen}
               addOptionField={addOptionField}
               setAddOptionField={setAddOptionField}
               addOptionLimit={addOptionLimit}
               setAddOptionLimit={setAddOptionLimit}
-              handleSubmit={handleSubmit}
               time={time}
             />
           )
