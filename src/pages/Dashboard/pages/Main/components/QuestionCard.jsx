@@ -18,10 +18,6 @@ import CardTopbar from "./CardTopbar";
 import StartTest from "./StartTest";
 import { createBookmark } from "../../../../../api/homepageApis";
 import { deleteBookmarkById } from "../../../../../api/homepageApis";
-import { getStartQuestInfo } from "../../../../../api/questsApi";
-import { resetQuests } from "../../../../../features/quest/questsSlice";
-import { userInfo } from "../../../../../api/userAuth";
-import { addUser } from "../../../../../features/auth/authSlice";
 
 const QuestionCard = ({
   id,
@@ -34,8 +30,10 @@ const QuestionCard = ({
   whichTypeQuestion,
   time,
   btnText,
+  btnColor,
   isBookmarked,
   handleStartTest,
+  startTest,
   viewResult,
   handleViewResults,
   lastInteractedAt,
@@ -188,6 +186,19 @@ const QuestionCard = ({
     return updatedAnswers;
   };
 
+  const handleRankedChoice = (option, label) => {
+    const actionPayload = {
+      option,
+      label,
+    };
+
+    console.log({ actionPayload });
+
+    setAnswerSelection((prevAnswers) =>
+      updateAnswersSelectionForRanked(prevAnswers, actionPayload),
+    );
+  };
+
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: createStartQuest,
     onSuccess: (resp) => {
@@ -275,131 +286,6 @@ const QuestionCard = ({
       return (timeInterval = 4 * 365 * 24 * 60 * 60 * 1000); // 4 years in milliseconds
     }
   };
-
-  function updateAnswerSelection(apiResponse, answerSelectionArray) {
-    answerSelectionArray.forEach((item, index) => {
-      // Check in selected array
-      if (
-        apiResponse.selected.some(
-          (selectedItem) => selectedItem.question === item.label,
-        )
-      ) {
-        answerSelectionArray[index].check = true;
-      }
-
-      // Check in contended array
-      if (
-        apiResponse.contended.some(
-          (contendedItem) => contendedItem.question === item.label,
-        )
-      ) {
-        answerSelectionArray[index].contend = true;
-      }
-    });
-    setAnswerSelection(answerSelectionArray);
-  }
-
-  const { mutateAsync: getStartQuestDetail } = useMutation({
-    mutationFn: getStartQuestInfo,
-    onSuccess: (res) => {
-      console.log("resp", res.data.data);
-      console.log({ whichTypeQuestion });
-      setHowManyTimesAnsChanged(res.data.data.length);
-      if (
-        whichTypeQuestion === "agree/disagree" ||
-        whichTypeQuestion === "yes/no"
-      ) {
-        if (
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "agree" ||
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "yes"
-        ) {
-          console.log("ran 1");
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].selected,
-            true,
-            false,
-          );
-        }
-        if (
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "agree" ||
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "yes"
-        ) {
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].contended,
-            false,
-            true,
-          );
-        }
-        if (
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "disagree" ||
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "no"
-        ) {
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].contended,
-            false,
-            true,
-          );
-        }
-        if (
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "disagree" ||
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "no"
-        ) {
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].selected,
-            true,
-            false,
-          );
-        }
-      }
-      if (whichTypeQuestion === "multiple choise") {
-        updateAnswerSelection(
-          res?.data.data[res.data.data.length - 1],
-          answersSelection,
-        );
-      }
-      if (whichTypeQuestion === "ranked choise") {
-        console.log(
-          "ranked response" + res?.data.data[res.data.data.length - 1].selected,
-        );
-
-        const updatedRankedAnswers = res?.data.data[
-          res.data.data.length - 1
-        ].selected.map((item) => {
-          const correspondingRankedAnswer = rankedAnswers.find(
-            (rankedItem) => rankedItem.label === item.question,
-          );
-
-          if (correspondingRankedAnswer) {
-            return {
-              id: correspondingRankedAnswer.id,
-              label: correspondingRankedAnswer.label,
-              check: false,
-              contend: false,
-            };
-          }
-
-          return null;
-        });
-        // Filter out any null values (items not found in rankedAnswers)
-        const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
-
-        // Update the state with the new array
-        setRankedAnswers(filteredRankedAnswers);
-      }
-    },
-    onError: (err) => {
-      toast.error(err.response?.data);
-      console.log("Mutation Error", err);
-    },
-  });
 
   const handleSubmit = () => {
     if (
@@ -585,22 +471,6 @@ const QuestionCard = ({
     }
   };
 
-  useEffect(() => {
-    if (btnText === "") {
-      dispatch(resetQuests());
-      handleStartTest(id);
-    }
-    if (btnText === "change answer") {
-      const data = { questForeignKey: id, uuid: localStorage.getItem("uId") };
-      getStartQuestDetail(data);
-      handleStartTest(id);
-    }
-    if (btnText === "completed") {
-      handleViewResults(id);
-    }
-   
-  }, []);
-
   // console.log({ rankedAnswers });
   // console.log({ answersSelection });
 
@@ -620,8 +490,8 @@ const QuestionCard = ({
         {question?.endsWith("?") ? "Q." : "S."} {question}
       </h1>
       {viewResult !== id ? (
+        startTest === id ? (
           <StartTest
-          id={id}
             title={title}
             answers={answers}
             multipleOption={multipleOption}
@@ -643,15 +513,32 @@ const QuestionCard = ({
             setAddOptionField={setAddOptionField}
             addOptionLimit={addOptionLimit}
             setAddOptionLimit={setAddOptionLimit}
+          />
+        ) : (
+          <OptionBar
+            id={id}
+            time={time}
+            btnText={btnText}
+            btnColor={btnColor}
+            handleStartTest={handleStartTest}
+            handleViewResults={handleViewResults}
+            setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+            whichTypeQuestion={whichTypeQuestion}
+            handleToggleCheck={handleToggleCheck}
+            handleRankedChoice={handleRankedChoice}
+            rankedAnswers={rankedAnswers}
+            setRankedAnswers={setRankedAnswers}
+            answersSelection={answersSelection}
+            setAnswerSelection={setAnswerSelection}
+            startStatus={startStatus}
             createdBy={createdBy}
             img={img}
             alt={alt}
             badgeCount={badgeCount}
+            title={title}
             question={question}
-            time={time}
-
           />
-       
+        )
       ) : (
         <Result
           id={id}
