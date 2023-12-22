@@ -114,7 +114,9 @@ export default function Signup() {
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white dark:bg-black-200 lg:flex-row">
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
-      <div className="flex h-[65px] w-full items-center justify-center bg-[#202329] lg:hidden">
+      <div className={ `${persistedTheme === "dark"
+          ? "bg-dark"
+          : "bg-blue" } flex h-[65px] w-full items-center justify-center bg-[#202329] lg:hidden`}>
         <img
           src="/assets/svgs/logo.svg"
           alt="logo"
