@@ -3,11 +3,14 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { sendEmail } from "../../../../../../api/DialogueApis";
 
-const EmailDialogue = ({ handleClose }) => {
+const EmailDialogue = ({ handleClose, id }) => {
+  const { protocol, host} = window.location;
+  let url = `${protocol}//${host}/quest/${id}`;
   const [payload, setPayload] = useState({
     email: "",
     subject: "",
-    message: "",
+    message: `Here is the link ${url} of the quest. Please feel free to engage with the quest`,
+
   });
 
   const handleChange = (e) => {
@@ -27,6 +30,7 @@ const EmailDialogue = ({ handleClose }) => {
         subject: "",
         message: "",
       });
+      handleClose()
     },
     onError: (err) => {
       toast.error(err.response.data);
