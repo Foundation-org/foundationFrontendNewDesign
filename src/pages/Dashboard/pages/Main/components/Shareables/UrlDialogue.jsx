@@ -1,5 +1,6 @@
 const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
-  let url = `https://localhost:5173/quest/${id}`;
+  const { protocol, host} = window.location;
+  let url = `${protocol}//${host}/quest/${id}`;
 
   return (
     <div className="relative pb-[75px] pt-[37px]">

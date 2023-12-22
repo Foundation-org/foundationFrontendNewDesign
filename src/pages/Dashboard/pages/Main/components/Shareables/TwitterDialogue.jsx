@@ -12,7 +12,8 @@ const TwitterDialogue = ({
   timeAgo,
   id,
 }) => {
-  let url = `https://localhost:5173/quest/${id}`;
+  const { protocol, host} = window.location;
+  let url = `${protocol}//${host}/quest/${id}`;
 
   return (
     <div className="relative pb-[75px]">

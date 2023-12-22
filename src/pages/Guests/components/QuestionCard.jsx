@@ -1,8 +1,6 @@
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { createStartQuest } from "../../../api/questsApi";
 import GuestTopbar from "./GuestTopbar";
 import StartTest from "../../Dashboard/pages/Main/components/StartTest";
 import Result from "../../Dashboard/pages/Main/components/Result";

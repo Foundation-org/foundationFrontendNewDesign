@@ -2,10 +2,11 @@ import Copy from "../../../../../../assets/Copy";
 import { toast } from "sonner";
 
 const CopyDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
-  let url = `https://localhost:5173/quest/${id}`;
+  const { protocol, host} = window.location;
+  let url = `${protocol}//${host}/quest/${id}`;
 
   const copyToClipboard = async () => {
-    const textToCopy = `https://localhost:5174/quest/${id}`;
+    const textToCopy = url;
 
     try {
       await navigator.clipboard.writeText(textToCopy);
