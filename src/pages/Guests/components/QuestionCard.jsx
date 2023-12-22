@@ -3,13 +3,15 @@ import GuestTopbar from "./GuestTopbar";
 import StartTest from "../../Dashboard/pages/Main/components/StartTest";
 import Result from "../../Dashboard/pages/Main/components/Result";
 import { useDispatch } from "react-redux";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createStartQuest } from "../../../api/questsApi";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const QuestionCard = ({
   tab,
   id,
+  time,
   question,
   answers,
   title,
@@ -24,7 +26,9 @@ const QuestionCard = ({
   const [open, setOpen] = useState(false);
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
+  const queryClient = useQueryClient();
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
+  const navigate = useNavigate();
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -86,11 +90,12 @@ const QuestionCard = ({
       if (resp.data.message === "Start Quest Created Successfully") {
         toast.success("Successfully Answered Quest");
         queryClient.invalidateQueries("FeedData");
+        navigate("/dashboard");
       }
-      handleStartTest(null);
+      
     },
     onError: (err) => {
-      toast.error(err.response.data);
+      toast.error(err);
     },
   });
 
@@ -323,6 +328,7 @@ const QuestionCard = ({
               addOptionLimit={addOptionLimit}
               setAddOptionLimit={setAddOptionLimit}
               handleSubmit={handleSubmit}
+              time={time}
             />
           )
         ) : (

@@ -60,6 +60,7 @@ export default function Signin() {
 
         if (resp.status === 200) {
           localStorage.setItem("uId", resp.data.uuid);
+          localStorage.setItem("isGuestMode", false);
           toast.success("User signin successfully");
           setEmail("");
           setPassword("");

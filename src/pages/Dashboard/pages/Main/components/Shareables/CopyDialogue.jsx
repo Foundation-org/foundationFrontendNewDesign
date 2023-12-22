@@ -5,7 +5,7 @@ const CopyDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
   let url = `https://localhost:5173/quest/${id}`;
 
   const copyToClipboard = async () => {
-    const textToCopy = `https://localhost:5173/quest/${id}`;
+    const textToCopy = `https://localhost:5174/quest/${id}`;
 
     try {
       await navigator.clipboard.writeText(textToCopy);

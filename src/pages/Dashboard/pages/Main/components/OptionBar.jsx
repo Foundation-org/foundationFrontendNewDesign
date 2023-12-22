@@ -223,6 +223,22 @@ const OptionBar = ({
     }
   };
 
+  useEffect(() => {
+    if (btnText === "") {
+      dispatch(resetQuests());
+      handleStartTest(id);
+    }
+    if (btnText === "change answer") {
+      const data = { questForeignKey: id, uuid: localStorage.getItem("uId") };
+      getStartQuestDetail(data);
+      handleStartTest(id);
+    }
+    if (btnText === "completed") {
+      handleViewResults(id);
+    }
+   
+  }, []);
+
   function getButtonText(btnText) {
     switch (btnText) {
       case "completed":

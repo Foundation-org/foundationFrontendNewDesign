@@ -185,7 +185,7 @@ const SidebarRight = () => {
             </div>
             <div
               onClick={() => {
-                navigate("/profile");
+                navigate("/");
               }}
             >
               <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">

@@ -25,14 +25,43 @@ const Topbar = ({ title }) => {
 
   return (
     <div
-      className={`${
-        persistedTheme === "dark"
+      className={`${persistedTheme === "dark"
           ? "bg-gray-600"
           : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-      } flex h-24 w-full flex-col items-center justify-between pb-4 tablet:h-[116px] laptop:h-[90px] laptop:flex-row laptop:pb-0 `}
+        } flex h-24 w-full flex-col items-center justify-between pb-4 tablet:h-[116px] laptop:h-[90px] laptop:flex-row laptop:pb-0 `}
     >
       {/* logo */}
+
       <div className="flex w-full items-center justify-between px-[17px] py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
+      {localStorage.getItem("isGuestMode") ? (
+         <div className="flex h-full items-center justify-center space-x-2 laptop:hidden">
+         <div className="relative block h-fit w-fit laptop:hidden">
+           <img
+             src="/assets/svgs/dashboard/yellowBadge.svg"
+             alt="badge"
+             className="h-6 w-[19.8px] tablet:h-[51.5px] tablet:w-[42px]"
+           />
+           <p className="transform-center absolute z-50 pb-1 text-[8.6px] font-normal leading-normal text-[#362E04]">
+             5
+           </p>
+         </div>
+         <div className="text-blue-100 flex flex-col ">
+           <h3
+             className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] dark:text-white tablet:text-[20px]"
+             onClick={() => {
+               navigate("/profile");
+             }}
+           >
+             My Profile
+           </h3>
+           <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
+             Balance:{" "}
+             {persistedUserInfo?.balance ? persistedUserInfo?.balance : 0}
+             {/* Balance 0.5 */}
+           </h3>
+         </div>
+       </div>
+      ):(
         <div className="flex h-full items-center justify-center space-x-2 laptop:hidden">
           <div className="relative block h-fit w-fit laptop:hidden">
             <img
@@ -59,7 +88,7 @@ const Topbar = ({ title }) => {
               {/* Balance 0.5 */}
             </h3>
           </div>
-        </div>
+        </div>)}
 
         <Link to={"/dashboard"}>
           <img
@@ -79,14 +108,23 @@ const Topbar = ({ title }) => {
               2
             </p>
           </div>
-          <div className="relative cursor-pointer " onClick={handleLogout}>
+          {localStorage.getItem("isGuestMode") ?
+          <div onClick={()=>{
+            navigate("/");
+          }}>
+          <img
+            src="/assets/svgs/dashboard/signupIcon.png"
+            alt="signup Icon"
+            className="h-[18px] w-[16.2px] cursor-pointer tablet:h-[36px] tablet:w-[28px]"
+          />
+        </div> :
+          <div onClick={handleLogout}>
             <img
               src="/assets/svgs/dashboard/arrow-right-outline.svg"
               alt="arrow-right"
               className="h-[18px] w-[16.2px] cursor-pointer tablet:h-[36px] tablet:w-[28px]"
-              onClick={handleLogout}
             />
-          </div>
+          </div>}
         </div>
       </div>
       {/* items */}
@@ -94,70 +132,68 @@ const Topbar = ({ title }) => {
         <li>
           <Link
             to={"/dashboard"}
-            className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
-              (location.pathname === "/dashboard" || location.pathname === "/dashboard/")
+            className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${(location.pathname === "/dashboard" || location.pathname === "/dashboard/")
                 ? "text-white"
                 : persistedTheme === "dark"
                   ? "text-[#92959D]"
                   : "text-[#BEDEF4]"
-            }`}
+              }`}
           >
             {(location.pathname === "/dashboard" ||
               location.pathname === "/dashboard/") && (
-              <img
-                src="/assets/svgs/dashboard/home-white.svg"
-                alt="home"
-                className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[27px]"
-              />
-            )}
+                <img
+                  src="/assets/svgs/dashboard/home-white.svg"
+                  alt="home"
+                  className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[27px]"
+                />
+              )}
             Home
           </Link>
         </li>
         <li>
           <Link
             to={"/dashboard/quest"}
-            className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
-              (location.pathname === "/dashboard/quest" || location.pathname === "/dashboard/quest/")
+            className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${(location.pathname === "/dashboard/quest" || location.pathname === "/dashboard/quest/")
                 ? "text-white"
                 : persistedTheme === "dark"
                   ? "text-[#92959D]"
                   : "text-[#BEDEF4]"
-            }`}
+              }`}
           >
             {(location.pathname === "/dashboard/quest" ||
               location.pathname === "/dashboard/quest/") && (
-              <img
-                src="/assets/svgs/dashboard/quest.svg"
-                alt="quest"
-                className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
-              />
-            )}
+                <img
+                  src="/assets/svgs/dashboard/quest.svg"
+                  alt="quest"
+                  className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
+                />
+              )}
             Quests
           </Link>
         </li>
         <li>
           <Link
             to={"/dashboard/bookmark"}
-            className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
-              (location.pathname === "/dashboard/bookmark" || location.pathname === "/dashboard/bookmark/")
+            className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${(location.pathname === "/dashboard/bookmark" || location.pathname === "/dashboard/bookmark/")
                 ? "text-white"
                 : persistedTheme === "dark"
                   ? "text-[#92959D]"
                   : "text-[#BEDEF4]"
-            }`}
+              }`}
           >
             {(location.pathname === "/dashboard/bookmark" ||
               location.pathname === "/dashboard/bookmark/") && (
-              <img
-                src="/assets/svgs/dashboard/bookmark-white.svg"
-                alt="bookmark"
-                className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
-              />
-            )}
+                <img
+                  src="/assets/svgs/dashboard/bookmark-white.svg"
+                  alt="bookmark"
+                  className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
+                />
+              )}
             Bookmarks
           </Link>
         </li>
       </ul>
+
       {/* logout btn */}
       <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:gap-[35px]">
         <div className="relative">
@@ -169,12 +205,22 @@ const Topbar = ({ title }) => {
             2
           </p>
         </div>
-        <div onClick={handleLogout}>
+
+        {localStorage.getItem("isGuestMode") ?
+          <div onClick={()=>{
+            navigate("/");
+          }}>
           <img
-            src="/assets/svgs/dashboard/arrow-right-outline.svg"
-            alt="arrow-right"
+            src="/assets/svgs/dashboard/signupIcon.png"
+            alt="signup Icon"
           />
-        </div>
+        </div> :
+          <div onClick={handleLogout}>
+            <img
+              src="/assets/svgs/dashboard/arrow-right-outline.svg"
+              alt="arrow-right"
+            />
+          </div>}
       </div>
     </div>
   );

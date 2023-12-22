@@ -64,6 +64,7 @@ const Guests = () => {
           <QuestionCard
             tab={tab}
             id={singleQuest?._id}
+            time={singleQuest?.createdAt}
             title={getQuestionTitle(singleQuest?.whichTypeQuestion)}
             question={singleQuest?.Question}
             answers={singleQuest?.QuestAnswers}
