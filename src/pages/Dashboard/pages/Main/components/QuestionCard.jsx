@@ -18,6 +18,8 @@ import CardTopbar from "./CardTopbar";
 import StartTest from "./StartTest";
 import { createBookmark } from "../../../../../api/homepageApis";
 import { deleteBookmarkById } from "../../../../../api/homepageApis";
+import { userInfo } from "../../../../../api/userAuth";
+import { addUser } from "../../../../../features/auth/authSlice";
 
 const QuestionCard = ({
   id,
