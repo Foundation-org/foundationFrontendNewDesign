@@ -102,6 +102,25 @@ const QuestionCard = ({
     },
   });
 
+  const extractSelectedAndContended = (quests) => {
+    let selected = null;
+    let contended = null;
+
+    for (const key in quests) {
+      const option = quests[key];
+
+      if (option.check) {
+        selected = key;
+      }
+
+      if (option.contend) {
+        contended = key;
+      }
+    }
+
+    return { selected, contended };
+  };
+
   const handleSubmit = () => {
     if (
       whichTypeQuestion === "agree/disagree" ||
