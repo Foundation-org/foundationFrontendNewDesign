@@ -36,7 +36,7 @@ const LedgerTableTopbar = ({
             <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
               <p>Balance</p>
               <p>
-                {persistedUserInfo?.balance ? persistedUserInfo?.balance : 0}
+                {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
               </p>
             </div>
           </div>
