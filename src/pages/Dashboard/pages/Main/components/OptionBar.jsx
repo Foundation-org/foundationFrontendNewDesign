@@ -351,7 +351,7 @@ const OptionBar = ({
             handleClose={handleEmailClose}
             customStyle={customModalStyle}
           >
-            <EmailDialogue handleClose={handleEmailClose} />
+            <EmailDialogue handleClose={handleEmailClose} id={id} />
           </BasicModal>
           <div className="cursor-pointer" onClick={handleTwitterOpen}>
             {persistedTheme === "dark" ? <Twitter /> : <Twitter />}
