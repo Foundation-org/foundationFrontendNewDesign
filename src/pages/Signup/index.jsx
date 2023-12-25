@@ -209,7 +209,7 @@ export default function Signup() {
             >
               Already have an account?
             </Typography>
-            <Link to="/signin">
+            <Link to="/">
               <Typography
                 variant="textBase"
                 className="text-blue dark:text-white"

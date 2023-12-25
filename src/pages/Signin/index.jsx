@@ -63,7 +63,6 @@ export default function Signin() {
           localStorage.setItem("uId", resp.data.uuid);
           localStorage.removeItem("isGuestMode");
           localStorage.setItem("jwt", resp.data.token);
-          toast.success("User signin successfully");
           setEmail("");
           setPassword("");
           navigate("/dashboard");
@@ -167,7 +166,7 @@ export default function Signin() {
             >
               Do not have an account?
             </Typography>
-            <Link to="/">
+            <Link to="/signup">
               <Typography
                 variant="textBase"
                 className="text-blue dark:text-white"

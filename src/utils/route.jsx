@@ -11,9 +11,9 @@ export function Router() {
     <>
       <Routes>
         {/* public routes */}
-        <Route path="/" element={<Signup />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/signin" element={<Signin />} />
+        <Route path="/" element={<Signin />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/quest/:id" element={<Guests />} />

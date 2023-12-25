@@ -378,13 +378,13 @@ const OptionBar = ({
             />
           </BasicModal>
         </div>
-        <div className="flex h-3 w-[53.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:h-[26px] tablet:w-[114px] tablet:gap-1 tablet:rounded-[10px]">
+        <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:h-[29px] tablet:w-[127px] tablet:gap-1 tablet:rounded-[10.9px]">
           <img
             src="/assets/svgs/dashboard/clock-outline.svg"
             alt="clock"
-            className="h-[7.64px] w-[7.64px] tablet:h-4 tablet:w-4"
+            className="h-[8.64px] w-[8.64px] tablet:h-[18px] tablet:w-[18px]"
           />
-          <p className="text-[6px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[10px]">
+          <p className="text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[17.48px]">
             {timeAgo}
           </p>
         </div>

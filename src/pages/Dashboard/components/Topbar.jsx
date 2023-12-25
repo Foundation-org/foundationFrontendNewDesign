@@ -35,7 +35,9 @@ const Topbar = ({ title }) => {
 
       <div className="flex w-full items-center justify-between px-[17px] py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
         {localStorage.getItem("isGuestMode") ? (
-          <div className="flex h-full items-center justify-center space-x-2 laptop:hidden">
+          <div className="flex h-full items-center justify-center space-x-2 laptop:hidden"   onClick={() => {
+            navigate("/profile");
+          }}>
             <div className="relative block h-fit w-fit laptop:hidden">
               <img
                 src="/assets/svgs/dashboard/yellowBadge.svg"
@@ -119,7 +121,7 @@ const Topbar = ({ title }) => {
           {localStorage.getItem("isGuestMode") ? (
             <div
               onClick={() => {
-                navigate("/");
+                navigate("/signup");
               }}
             >
               <img
@@ -227,7 +229,7 @@ const Topbar = ({ title }) => {
         {localStorage.getItem("isGuestMode") ? (
           <div
             onClick={() => {
-              navigate("/");
+              navigate("/signup");
             }}
           >
             <img

@@ -33,6 +33,7 @@ const QuestionCard = ({
   const queryClient = useQueryClient();
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const navigate = useNavigate();
+  const [loading,setLoading]=useState(false);
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -122,6 +123,7 @@ const QuestionCard = ({
   };
 
   const handleSubmit = () => {
+    setLoading(true);
     if (
       whichTypeQuestion === "agree/disagree" ||
       whichTypeQuestion === "yes/no"
@@ -357,6 +359,8 @@ const QuestionCard = ({
               addOptionLimit={addOptionLimit}
               setAddOptionLimit={setAddOptionLimit}
               time={time}
+              loading={loading}
+              setLoading={setLoading}
             />
           )
         ) : (
