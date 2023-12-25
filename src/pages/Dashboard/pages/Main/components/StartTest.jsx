@@ -15,6 +15,7 @@ import EmailDialogue from "./Shareables/EmailDialogue";
 import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { FaSpinner } from 'react-icons/fa';
 
 const StartTest = ({
   id,
@@ -43,6 +44,7 @@ const StartTest = ({
   question,
   time,
   setStartTest,
+  loading
 }) => {
   const dispatch = useDispatch();
   const [timeAgo, setTimeAgo] = useState("");
@@ -351,49 +353,47 @@ const StartTest = ({
 
       {/* Add Options && Cancel && Submit Button */}
       <div
-        className={`${
-          title === "Multiple Choice"
-            ? "mt-4 tablet:mt-10"
-            : addOptionField === 1
-              ? "mt-[4rem] tablet:mt-[10rem]"
-              : "mt-4 tablet:mt-10"
-        }  flex w-full justify-end gap-5 tablet:gap-10`}
+        className={`${title === "Multiple Choice"
+          ? "mt-4 tablet:mt-10"
+          : addOptionField === 1
+            ? "mt-[4rem] tablet:mt-[10rem]"
+            : "mt-4 tablet:mt-10"
+          }  flex w-full justify-end gap-5 tablet:gap-10`}
       >
         {/* Add Options Button */}
         {usersAddTheirAns && addOptionLimit === 0 ? (
           <div>
             {title === "Yes/No" ||
-            title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
-              <button
-                onClick={handleOpen}
-                className="ml-4 flex w-fit items-center gap-[5.8px] rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-0 tablet:mt-0 tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px]"
-              >
-                {persistedTheme === "dark" ? (
-                  <img
-                    src="/assets/svgs/dashboard/add-dark.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                ) : (
-                  <img
-                    src="/assets/svgs/dashboard/add.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                )}
-                Add Option
-              </button>
-            ) : null}
+              title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
+                <button
+                  onClick={handleOpen}
+                  className="ml-4 flex w-fit items-center gap-[5.8px] rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-0 tablet:mt-0 tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px]"
+                >
+                  {persistedTheme === "dark" ? (
+                    <img
+                      src="/assets/svgs/dashboard/add-dark.svg"
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  ) : (
+                    <img
+                      src="/assets/svgs/dashboard/add.svg"
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  )}
+                  Add Option
+                </button>
+              ) : null}
           </div>
         ) : null}
-
+        {console.log("loading", loading)}
         <div className="mr-[14px] flex gap-4 tablet:mr-[30px]">
           <button
-            className={` ${
-              persistedTheme === "dark"
-                ? "bg-[#333B46]"
-                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]  tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+            className={` ${persistedTheme === "dark"
+              ? "bg-[#333B46]"
+              : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+              } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]  tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
             onClick={() => {
               setStartTest(null);
             }}
@@ -401,15 +401,20 @@ const StartTest = ({
             Cancel
           </button>
           <button
-            className={` ${
-              persistedTheme === "dark"
-                ? "bg-[#333B46]"
-                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]  tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+            className={`relative ${persistedTheme === "dark"
+              ? "bg-[#333B46]"
+              : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+              } flex items-center justify-center w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] mr-[14px] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
             onClick={() => handleSubmit()}
+            disabled={loading === true ? true : false}
           >
-            Submit
+            {loading === true ? (
+              <FaSpinner className="animate-spin text-[#EAEAEA]" />
+            ) : (
+              'Submit'
+            )}
           </button>
+
         </div>
       </div>
 

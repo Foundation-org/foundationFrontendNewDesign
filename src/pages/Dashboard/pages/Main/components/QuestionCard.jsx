@@ -54,6 +54,7 @@ const QuestionCard = ({
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
+  const [loading,setLoading]=useState(false);
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -136,6 +137,7 @@ const QuestionCard = ({
     },
     onError: (err) => {
       console.log(err);
+      
     },
   });
 
@@ -203,6 +205,7 @@ const QuestionCard = ({
     onSuccess: (resp) => {
       if (resp.data.message === "Start Quest Created Successfully") {
         toast.success("Successfully Answered Quest");
+        setLoading(false)
         queryClient.invalidateQueries("FeedData");
       }
       handleViewResults(id);
@@ -214,6 +217,7 @@ const QuestionCard = ({
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(":")[1]);
+      setLoading(false)
     },
   });
 
@@ -221,6 +225,7 @@ const QuestionCard = ({
     mutationFn: updateChangeAnsStartQuest,
     onSuccess: (resp) => {
       if (resp.data.message === "Answer has not changed") {
+        setLoading(false)
         toast.warning(
           "You have selected the same option as last time. Your option was not changed.",
         );
@@ -228,10 +233,12 @@ const QuestionCard = ({
       if (
         resp.data.message === "You can change your answer once every 1 hour"
       ) {
+        setLoading(false)
         toast.warning("You can change your option once every 1 hour.");
       }
       if (resp.data.message === "Start Quest Updated Successfully") {
         toast.success("Successfully Changed Quest");
+        setLoading(false)
         handleViewResults(id);
       }
       userInfo(localStorage.getItem("uId")).then((resp) => {
@@ -242,6 +249,7 @@ const QuestionCard = ({
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(":")[1]);
+      setLoading(false)
     },
   });
 
@@ -287,6 +295,7 @@ const QuestionCard = ({
   };
 
   const handleSubmit = () => {
+    setLoading(true);
     if (
       whichTypeQuestion === "agree/disagree" ||
       whichTypeQuestion === "yes/no"
@@ -317,6 +326,7 @@ const QuestionCard = ({
       // if (!(params.answer.selected && params.answer.contended)) {
       if (!params.answer.selected) {
         toast.warning("You cannot submit without answering");
+        setLoading(false)
         return;
       }
 
@@ -334,6 +344,7 @@ const QuestionCard = ({
           toast.error(
             `You can only finish after ${usersChangeTheirAns} interval has passed.`,
           );
+          setLoading(false)
         } else {
           changeAnswer(params);
         }
@@ -384,6 +395,7 @@ const QuestionCard = ({
           toast.error(
             `You can only finish after ${usersChangeTheirAns} interval has passed.`,
           );
+          setLoading(false)
         } else {
           const params = {
             questId: id,
@@ -404,6 +416,7 @@ const QuestionCard = ({
         // && params.answer.contended.length === 0
         if (params.answer.selected.length === 0) {
           toast.warning("You cannot submit without answering");
+          setLoading(false)
           return;
         }
 
@@ -447,6 +460,7 @@ const QuestionCard = ({
           toast.error(
             `You can only finish after ${usersChangeTheirAns} interval has passed.`,
           );
+          setLoading(false)
         } else {
           const params = {
             questId: id,
@@ -511,6 +525,7 @@ const QuestionCard = ({
             setAddOptionLimit={setAddOptionLimit}
             time={time}
             setStartTest={setStartTest}
+            loading={loading}
           />
         ) : (
           <OptionBar

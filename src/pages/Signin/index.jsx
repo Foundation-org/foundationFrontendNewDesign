@@ -11,6 +11,8 @@ import Form from "./components/Form";
 import ReCAPTCHA from "react-google-recaptcha";
 import "../../index.css";
 import api from "../../api/Axios";
+import { FaSpinner } from 'react-icons/fa';
+
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -157,7 +159,12 @@ export default function Signin() {
             }}
             disabled={isLoading === true ? true : false}
           >
-            Sign in
+             {isLoading === true ? (
+              <FaSpinner className="animate-spin text-[#EAEAEA]" />
+            ) : (
+              'Sign in'
+            )}
+            
           </Button>
           <div className="mt-[10px] flex justify-center gap-3 tablet:mt-[23px]">
             <Typography

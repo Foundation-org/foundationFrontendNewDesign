@@ -12,6 +12,8 @@ import Typography from "../../components/Typography";
 import SocialLogins from "../../components/SocialLogins";
 import MyModal from "./components/Modal";
 import api from "../../api/Axios";
+import { FaSpinner } from 'react-icons/fa';
+
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -200,7 +202,12 @@ export default function Signup() {
             }}
             disabled={isLoading === true ? true : false}
           >
-            Create Account
+            {isLoading === true ? (
+              <FaSpinner className="animate-spin text-[#EAEAEA]" />
+            ) : (
+              'Create Account'
+            )}
+            
           </Button>
           <div className="mt-[10px] flex gap-3 tablet:mt-[23px]">
             <Typography
