@@ -36,7 +36,7 @@ export const columns = [
   },
   {
     accessorKey: "txAmount",
-    header: "txAmount",
+    header: "txAmt",
     cell: (props) => <p>{props.getValue()}</p>,
     size: 240,
     minSize: 40,
