@@ -186,7 +186,6 @@ const AgreeDisagree = () => {
           />
         </div>
         <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
-          Customize your Quest
         </h3>
         <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[0.30925rem] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:rounded-[16px] tablet:py-[35px] laptop:max-w-[838px]">
           <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[30px]">

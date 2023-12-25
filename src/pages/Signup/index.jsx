@@ -133,7 +133,7 @@ export default function Signup() {
       </div>
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-tl-[65px] lg:rounded-bl-[65px]">
         {/* <div className="laptop:max-w-[60%] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0"> */}
-        <div className="laptop:max-w-[35vw] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0">
+        <div className="laptop:max-w-[35vw] mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0">
           <Typography variant="textTitle">Create Account</Typography>
           <SocialLogins setProvider={setProvider} setProfile={setProfile} />
           <Form

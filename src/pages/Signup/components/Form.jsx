@@ -107,7 +107,7 @@ const Form = ({
             <Input
               type={cnfmPassInputType}
               id="password"
-              label="Password"
+              label="Re-type Password"
               className="peer w-full rounded-[2px] border-b-[1px] border-[#C0C0C0] bg-white py-1  pr-8 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
               autoComplete="new-password"
               onChange={onReTypePassChange}

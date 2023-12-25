@@ -111,7 +111,7 @@ export default function Signin() {
       {/* flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-tr-[65px] lg:rounded-br-[65px] */}
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px]">
         {/* laptop:max-w-[35vw] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0 */}
-        <div className="mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
+        <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography
             variant="textTitle"
             className="text-center tablet:text-left"
