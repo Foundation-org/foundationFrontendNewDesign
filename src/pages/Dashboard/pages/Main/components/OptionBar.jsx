@@ -261,16 +261,18 @@ const OptionBar = ({
     <>
       <div className="mb-1 flex items-center">
         <div className="mr-[30px] flex w-full justify-end gap-[19.14px] tablet:gap-[42px]">
-          <button
-            className={` ${getButtonClassName(
-              persistedTheme,
-              btnText,
-              btnColor,
-            )} mt-[16.2px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
-            onClick={handleStartChange}
-          >
-            {getButtonText(btnText)}
-          </button>
+          {getButtonText(btnText) !== "Completed" ? (
+            <button
+              className={` ${getButtonClassName(
+                persistedTheme,
+                btnText,
+                btnColor,
+              )} mt-[16.2px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+              onClick={handleStartChange}
+            >
+              {getButtonText(btnText)}
+            </button>
+          ) : null}
 
           <button
             className={`${

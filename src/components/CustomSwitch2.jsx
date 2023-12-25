@@ -5,7 +5,7 @@ const CustomSwitch2 = ({ enabled, setEnabled }) => {
     <Switch
       checked={enabled}
       onChange={setEnabled}
-      className={`${enabled ? "bg-[#7EEAAF]" : "bg-[#D9D9D9]"}
+      className={`${enabled ? "bg-[#DFE9FC]" : "bg-[#D9D9D9]"}
       green-select2`}
     >
       <span className="sr-only">Use setting</span>
@@ -13,7 +13,7 @@ const CustomSwitch2 = ({ enabled, setEnabled }) => {
         aria-hidden="true"
         className={`${
           enabled
-            ? "translate-x-3 bg-[#0DA65D] tablet:translate-x-6"
+            ? "translate-x-3 bg-[#389CE3] tablet:translate-x-6"
             : "translate-x-[3px] bg-[#707070]"
         }
       green-select2-shape`}
