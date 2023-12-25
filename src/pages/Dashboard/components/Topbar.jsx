@@ -15,7 +15,7 @@ const Topbar = ({ title }) => {
       const res = await api.post(`user/logout/${localStorage.getItem("uId")}`);
       if (res.status === 200) {
         localStorage.clear();
-        navigate("/");
+        navigate("/signin");
       }
     } catch (error) {
       toast.error(error.response.data.message.split(":")[1]);
