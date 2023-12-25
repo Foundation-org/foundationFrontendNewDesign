@@ -155,6 +155,11 @@ export default function BasicTable() {
               minWidth: window.innerWidth <= 1700 && window.innerWidth >= 744 ? '600px' : window.innerWidth <= 744 && window.innerWidth >= 0 ? '350px' : 'auto',
               width: window.innerWidth <= 1700 && window.innerWidth >= 900 ? '100%' : window.innerWidth <= 900 && window.innerWidth >= 744 ? "120%" : window.innerWidth <= 744 && window.innerWidth >= 0 ? '100%' : table.getCenterTotalSize(),
             }}
+            {...{
+              style: {
+                width: table.getCenterTotalSize(),
+              },
+            }}
           >
             <thead
               style={{ width: table.getTotalSize() }}
@@ -163,20 +168,51 @@ export default function BasicTable() {
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
                   key={headerGroup.id}
-                  className="border-0 border-b border-[#EEEEEE]"
+                  // className="border-0 border-b border-[#EEEEEE]"
                 >
                   {headerGroup.headers.map((header) => (
                     <th
-                      style={{ width: header.getSize() }}
-                      className="relative py-1 tablet:py-3font-normal"
-                      key={header.id}
+                    // style={{ width: header.getSize() }}
+                    className="relative py-1 tablet:py-3 font-normal"
+                    // key={header.id}
+                    {...{
+                      key: header.id,
+                      colSpan: header.colSpan,
+                      style: {
+                        width: header.getSize(),
+                      },
+                    }}
                     >
-                      {header.column.columnDef.header}
+                      {console.log("🚀 ~ file: Ledger.jsx:183 ~ BasicTable ~ header.getSize():", header.getSize())}
+                      {console.log("🚀 ~ file: Ledger.jsx:188 ~ BasicTable ~ header.column.columnDef.size:", header.column.columnDef.size)}
+                      {/* {header.column.columnDef.header} */}
+                      {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                        )}
                       <div
-                        onMouseDown={header.getResizeHandler()}
-                        onTouchStart={header.getResizeHandler()}
-                        className={`resizer ${header.column.getIsResizing() ? "isResizing" : ""
-                          }`}
+                        // onMouseDown={header.getResizeHandler()}
+                        // onTouchStart={header.getResizeHandler()}
+                        // className={`resizer ${header.column.getIsResizing() ? "isResizing" : ""
+                        //   }`}
+                        {...{
+                          onMouseDown: header.getResizeHandler(),
+                          onTouchStart: header.getResizeHandler(),
+                          className: `resizer ${
+                            header.column.getIsResizing() ? 'isResizing' : ''
+                          }`,
+                          // style: {
+                          //   transform:
+                          //     columnResizeMode === 'onEnd' &&
+                          //     header.column.getIsResizing()
+                          //       ? `translateX(${
+                          //           table.getState().columnSizingInfo.deltaOffset
+                          //         }px)`
+                          //       : '',
+                          // },
+                        }}
                       />
                     </th>
                   ))}
@@ -196,8 +232,14 @@ export default function BasicTable() {
                     {row.getVisibleCells().map((cell) => (
                       <td
                         className="py-1 tablet:py-3 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem]"
-                        key={cell.id}
-                        style={{ width: cell.column.getSize() }}
+                        // key={cell.id}
+                        // style={{ width: cell.column.getSize() }}
+                        {...{
+                          key: cell.id,
+                          style: {
+                            width: cell.column.getSize(),
+                          },
+                        }}
                       >
                         {/* {flexRender(
                         cell.column.columnDef.cell,
