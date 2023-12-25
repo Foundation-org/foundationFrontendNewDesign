@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
+import { FaSpinner } from 'react-icons/fa';
 
 const AgreeDisagree = () => {
   const navigate = useNavigate();
@@ -30,6 +31,8 @@ const AgreeDisagree = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [changedOption, setChangedOption] = useState("");
   const [changeState, setChangeState] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const reset = {
     name: "Ok",
     color: "text-[#389CE3]",
@@ -45,12 +48,14 @@ const AgreeDisagree = () => {
       if (resp.status === 201) {
         toast.success("Successfully Created Quest");
         setTimeout(() => {
+          setLoading(false)
           navigate("/dashboard");
         }, 2000);
       }
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
+      setLoading(false)
     },
   });
 
@@ -59,22 +64,27 @@ const AgreeDisagree = () => {
   };
 
   const handleSubmit = async () => {
-    // To check uniqueness of the question
+    setLoading(true);
     const constraintResponse = await checkUniqueQuestion(question);
 
-    if (question === "") return toast.warning("Question cannot be empty");
-
-    if (!constraintResponse.data.isUnique)
+    if (question === "") {
+      setLoading(false)
+      return toast.warning("Question cannot be empty");
+    }
+    if (!constraintResponse.data.isUnique) {
+      setLoading(false)
       return toast.warning(
         "This quest is not unique. A similar quest already exists.",
       );
 
+    }
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
       validatedQuestion: question,
     });
     // If any error captured
     if (errorMessage) {
+      setLoading(false)
       return toast.error("Something Went Wrong");
     }
 
@@ -106,6 +116,7 @@ const AgreeDisagree = () => {
     });
     // If any error captured
     if (errorMessage) {
+      setLoading(false)
       return setCheckQuestionStatus({
         name: "Fail",
         color: "text-[#b00f0f]",
@@ -131,11 +142,10 @@ const AgreeDisagree = () => {
         Make a statement that anyone can "Agree" or "Disagree" with
       </h4>
       <div
-        className={`${
-          persistedTheme === "dark"
+        className={`${persistedTheme === "dark"
             ? "border-[1px] border-[#858585] tablet:border-[2px]"
             : ""
-        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
+          } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
           Create Quest
@@ -201,8 +211,13 @@ const AgreeDisagree = () => {
           <button
             className="mr-7 mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] laptop:rounded-[23.6px] laptop:px-[60px] laptop:py-3 laptop:text-[31.5px]"
             onClick={() => handleSubmit()}
+            disabled={loading===true?true:false}
           >
-            Submit
+            {loading === true ? (
+              <FaSpinner className="animate-spin text-[#EAEAEA]" />
+            ) : (
+              'Submit'
+            )}
           </button>
         </div>
       </div>

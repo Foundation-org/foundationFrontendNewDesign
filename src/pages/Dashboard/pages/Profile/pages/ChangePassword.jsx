@@ -3,12 +3,18 @@ import { changePassword } from "../../../../../api/userAuth";
 import { toast } from "sonner";
 import Button from "../components/Button";
 import { useSelector } from "react-redux";
+import { FaSpinner } from 'react-icons/fa';
+import { useState } from "react";
+
 
 const ChangePassword = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const mutation = useMutation({ mutationFn: changePassword });
+  const [loading, setLoading] = useState(false);
+
 
   const savePassword = async (event) => {
+    setLoading(true);
     event.preventDefault();
 
     const currentPassword = event.target.elements.currentPassword.value;
@@ -25,14 +31,17 @@ const ChangePassword = () => {
 
         if (resp.status === 200) {
           toast.success(resp.data.message);
+          setLoading(false);
         }
       } catch (err) {
         toast.error(err.response.data.error);
+        setLoading(false);
       }
     } else {
       toast.warning(
         "Passwords do not match. Please make sure the new password and retype password match.",
       );
+      setLoading(false);
     }
   };
 
@@ -83,8 +92,14 @@ const ChangePassword = () => {
             </div>
           </div>
           <div className="absolute -bottom-[14px] right-5 tablet:-bottom-8 tablet:right-10">
-            <button className="rounded-[6.45px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[12.65px] py-[5.94px] text-[9.08px] font-semibold leading-normal text-white 2xl:text-[32px] tablet:mr-[18.5px] tablet:rounded-[23px] tablet:px-[45px] tablet:py-5 tablet:text-[20px]">
-              Save
+            <button className="rounded-[6.45px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[12.65px] py-[5.94px] text-[9.08px] font-semibold leading-normal text-white 2xl:text-[32px] tablet:mr-[18.5px] tablet:rounded-[23px] tablet:px-[45px] tablet:py-5 tablet:text-[20px]"
+             disabled={loading === true ? true : false}
+             >
+               {loading === true ? (
+                 <FaSpinner className="animate-spin text-[#EAEAEA]" />
+               ) : (
+                 'Save'
+               )}
             </button>
           </div>
         </div>

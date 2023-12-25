@@ -25,6 +25,7 @@ import {
 } from "@mui/material";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { FaSpinner } from 'react-icons/fa';
 
 const DragHandler = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -53,6 +54,7 @@ z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14px] items-center justify-center r
   );
 };
 
+
 const MultipleChoice = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
@@ -64,6 +66,9 @@ const MultipleChoice = () => {
   const [selectedValues, setSelectedValues] = useState([]);
   const [optionsCount, setOptionsCount] = useState(2);
   const [prevValueArr, setPrevValueArr] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       id: `index-${index}`,
@@ -92,6 +97,7 @@ const MultipleChoice = () => {
       if (resp.status === 201) {
         toast.success("Successfully Created Quest");
         setTimeout(() => {
+          setLoading(false)
           navigate("/dashboard");
         }, 2000);
       }
@@ -99,19 +105,25 @@ const MultipleChoice = () => {
     onError: (err) => {
       // console.log('error', err);
       toast.error(err.response.data.message.split(':')[1]);
+      setLoading(false)
     },
   });
 
   const handleSubmit = async () => {
-    // To check uniqueness of the question
+    setLoading(true)
     const constraintResponse = await checkUniqueQuestion(question);
 
-    if (question === "") return toast.warning("Question cannot be empty");
+    if (question === "") {
+      setLoading(false)
+      return toast.warning("Question cannot be empty");
+    }
 
-    if (!constraintResponse.data.isUnique)
+    if (!constraintResponse.data.isUnique){
+      setLoading(false)
       return toast.warning(
         "This quest is not unique. A similar quest already exists.",
-      );
+        );
+      }
 
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
@@ -119,6 +131,7 @@ const MultipleChoice = () => {
     });
     // If any error captured
     if (errorMessage) {
+      setLoading(false)
       return toast.error("Something Went Wrong");
     }
 
@@ -139,7 +152,10 @@ const MultipleChoice = () => {
       (answer) => answer.question.trim() === "",
     );
 
-    if (isEmptyAnswer) return toast.warning("Answer cannot be empty");
+    if (isEmptyAnswer){
+      setLoading(false)
+      return toast.warning("Answer cannot be empty");
+    } 
 
     createQuest(params);
   };
@@ -525,8 +541,13 @@ const MultipleChoice = () => {
           <button
             className="mr-7 mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] laptop:rounded-[23.6px] laptop:px-[60px] laptop:py-3 laptop:text-[31.5px]"
             onClick={() => handleSubmit()}
+            disabled={loading===true?true:false}
           >
-            Submit
+            {loading === true ? (
+              <FaSpinner className="animate-spin text-[#EAEAEA]" />
+            ) : (
+              'Submit'
+            )}
           </button>
         </div>
       </div>
