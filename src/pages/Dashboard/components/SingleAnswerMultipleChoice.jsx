@@ -138,61 +138,61 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         ) : (
           <div
-            className={`mr-[20.63px] flex items-center gap-[19px] text-[9.238px] tablet:text-[16px] ${
+            className={`mr-[7.55px] flex items-center gap-[10.03px] text-[9.238px] tablet:mr-[20.63px] tablet:gap-[19px] tablet:text-[16px] ${
               props.btnText === "Results" ? "pointer-events-none" : ""
             }`}
           >
-            {props.title === "Multiple Choice" ? (
-              <div id="custom-checkbox" className="flex h-full items-center">
-                <input
-                  id="small-checkbox"
-                  type="checkbox"
-                  className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
-                  checked={checkState}
-                  onChange={handleCheckChange}
-                />
-              </div>
-            ) : null}
+            <div className="flex items-center gap-1 laptop:gap-[18px]">
+              {props.title === "Multiple Choice" ? (
+                <div id="custom-checkbox" className="flex h-full items-center">
+                  <input
+                    id="small-checkbox"
+                    type="checkbox"
+                    className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
+                    checked={checkState}
+                    onChange={handleCheckChange}
+                  />
+                </div>
+              ) : null}
 
-            {props.btnText === "Results" ? (
-              <>
-                {props.percentages?.selectedPercentage &&
-                props.percentages?.selectedPercentage[props.answer.trim()] ? (
-                  props.percentages?.selectedPercentage[props.answer.trim()] ===
-                  100 ? (
-                    <span
-                      className={`w-[4ch] whitespace-nowrap ${
-                        persistedTheme === "dark" ? "text-white" : ""
-                      }`}
-                    >
-                      100%
-                    </span>
+              {props.btnText === "Results" ? (
+                <>
+                  {props.percentages?.selectedPercentage &&
+                  props.percentages?.selectedPercentage[props.answer.trim()] ? (
+                    props.percentages?.selectedPercentage[
+                      props.answer.trim()
+                    ] === 100 ? (
+                      <span
+                        className={`w-[4ch] whitespace-nowrap ${
+                          persistedTheme === "dark" ? "text-white" : ""
+                        }`}
+                      >
+                        100%
+                      </span>
+                    ) : (
+                      <span
+                        className={`w-[4ch] whitespace-nowrap ${
+                          persistedTheme === "dark" ? "text-white" : ""
+                        }`}
+                      >
+                        {props.percentages?.selectedPercentage[
+                          props.answer.trim()
+                        ] + "%"}
+                      </span>
+                    )
                   ) : (
                     <span
                       className={`w-[4ch] whitespace-nowrap ${
                         persistedTheme === "dark" ? "text-white" : ""
                       }`}
                     >
-                      {props.percentages?.selectedPercentage[
-                        props.answer.trim()
-                      ] + "%"}
+                      0%
                     </span>
-                  )
-                ) : (
-                  <span
-                    className={`w-[4ch] whitespace-nowrap ${
-                      persistedTheme === "dark" ? "text-white" : ""
-                    }`}
-                  >
-                    0%
-                  </span>
-                )}
-              </>
-            ) : (
-              <></>
-            )}
-
-            <>
+                  )}
+                </>
+              ) : null}
+            </div>
+            <div className="flex items-center gap-1 laptop:gap-[18px]">
               <div
                 id="custom-yello-checkbox"
                 className="flex h-full items-center "
@@ -243,10 +243,8 @@ const SingleAnswerMultipleChoice = (props) => {
                     </span>
                   )}
                 </>
-              ) : (
-                <></>
-              )}
-            </>
+              ) : null}
+            </div>
           </div>
         )}
       </div>

@@ -187,6 +187,8 @@ const Main = () => {
         setFilterBySort={setFilterBySort}
         setFilterByStatus={setFilterByStatus}
         setFilterByType={setFilterByType}
+        expandedView={expandedView}
+        setExpandedView={setExpandedView}
       />
       <div className="shadow-inner-md no-scrollbar flex h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] py-[27px] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#06070a]">
         <InfiniteScroll
@@ -207,9 +209,8 @@ const Main = () => {
           height={"88vh"}
           className="no-scrollbar flex flex-col gap-[27px]"
         >
-          {expandedView ?
-            (
-              allData?.map((item, index) => (
+          {expandedView
+            ? allData?.map((item, index) => (
                 <div key={index + 1}>
                   <QuestionCardWithToggle
                     id={item._id}
@@ -233,6 +234,7 @@ const Main = () => {
                     question={item?.Question}
                     whichTypeQuestion={item?.whichTypeQuestion}
                     startTest={startTest}
+                    setStartTest={setStartTest}
                     viewResult={viewResult}
                     usersAddTheirAns={item?.usersAddTheirAns}
                     handleViewResults={handleViewResults}
@@ -255,54 +257,53 @@ const Main = () => {
                   />
                 </div>
               ))
-            ) :
-            (allData?.map((item, index) => (
-              <div key={index + 1}>
-                <QuestionCard
-                  id={item._id}
-                  img="/assets/svgs/dashboard/badge.svg"
-                  alt="badge"
-                  badgeCount="5"
-                  title={
-                    item?.whichTypeQuestion === "agree/disagree"
-                      ? "Agree/Disagree"
-                      : item?.whichTypeQuestion === "multiple choise"
-                        ? "Multiple Choice"
-                        : item?.whichTypeQuestion === "ranked choise"
-                          ? "Ranked Choice"
-                          : item?.whichTypeQuestion === "yes/no"
-                            ? "Yes/No"
-                            : null
-                  }
-                  answers={item?.QuestAnswers}
-                  time={item?.createdAt}
-                  multipleOption={item?.userCanSelectMultiple}
-                  question={item?.Question}
-                  whichTypeQuestion={item?.whichTypeQuestion}
-                  startTest={startTest}
-                  viewResult={viewResult}
-                  usersAddTheirAns={item?.usersAddTheirAns}
-                  handleViewResults={handleViewResults}
-                  handleStartTest={handleStartTest}
-                  startStatus={item?.startStatus}
-                  createdBy={item?.uuid}
-                  btnColor={
-                    item?.startStatus === "completed"
-                      ? "bg-[#4ABD71]"
-                      : item?.startStatus === "change answer"
-                        ? "bg-[#FDD503]"
-                        : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-                  }
-                  btnText={item?.startStatus}
-                  isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                    return bookmark.questForeignKey === item._id;
-                  })}
-                  lastInteractedAt={item.lastInteractedAt}
-                  usersChangeTheirAns={item.usersChangeTheirAns}
-                />
-              </div>)
-            ))}
-
+            : allData?.map((item, index) => (
+                <div key={index + 1}>
+                  <QuestionCard
+                    id={item._id}
+                    img="/assets/svgs/dashboard/badge.svg"
+                    alt="badge"
+                    badgeCount="5"
+                    title={
+                      item?.whichTypeQuestion === "agree/disagree"
+                        ? "Agree/Disagree"
+                        : item?.whichTypeQuestion === "multiple choise"
+                          ? "Multiple Choice"
+                          : item?.whichTypeQuestion === "ranked choise"
+                            ? "Ranked Choice"
+                            : item?.whichTypeQuestion === "yes/no"
+                              ? "Yes/No"
+                              : null
+                    }
+                    answers={item?.QuestAnswers}
+                    time={item?.createdAt}
+                    multipleOption={item?.userCanSelectMultiple}
+                    question={item?.Question}
+                    whichTypeQuestion={item?.whichTypeQuestion}
+                    startTest={startTest}
+                    setStartTest={setStartTest}
+                    viewResult={viewResult}
+                    usersAddTheirAns={item?.usersAddTheirAns}
+                    handleViewResults={handleViewResults}
+                    handleStartTest={handleStartTest}
+                    startStatus={item?.startStatus}
+                    createdBy={item?.uuid}
+                    btnColor={
+                      item?.startStatus === "completed"
+                        ? "bg-[#4ABD71]"
+                        : item?.startStatus === "change answer"
+                          ? "bg-[#FDD503]"
+                          : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                    }
+                    btnText={item?.startStatus}
+                    isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                      return bookmark.questForeignKey === item._id;
+                    })}
+                    lastInteractedAt={item.lastInteractedAt}
+                    usersChangeTheirAns={item.usersChangeTheirAns}
+                  />
+                </div>
+              ))}
         </InfiniteScroll>
       </div>
       <SidebarRight />

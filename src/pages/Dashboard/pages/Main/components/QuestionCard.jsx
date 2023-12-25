@@ -36,6 +36,7 @@ const QuestionCard = ({
   isBookmarked,
   handleStartTest,
   startTest,
+  setStartTest,
   viewResult,
   handleViewResults,
   lastInteractedAt,
@@ -87,8 +88,6 @@ const QuestionCard = ({
     );
   }, [answersSelection]);
 
-  console.log({ answers, answersSelection, rankedAnswers });
-
   const handleOpen = () => {
     setAddOptionField(1);
     handleAddOption();
@@ -124,7 +123,7 @@ const QuestionCard = ({
       handleStartTest(null);
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      toast.error(err.response.data.message.split(":")[1]);
     },
   });
 
@@ -168,8 +167,6 @@ const QuestionCard = ({
       contend,
     };
 
-    console.log({ actionPayload });
-
     dispatch(toggleCheck(actionPayload));
   };
 
@@ -209,14 +206,14 @@ const QuestionCard = ({
         queryClient.invalidateQueries("FeedData");
       }
       handleViewResults(id);
-      userInfo(localStorage.getItem("uId")).then(resp => {
+      userInfo(localStorage.getItem("uId")).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
       });
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      toast.error(err.response.data.message.split(":")[1]);
     },
   });
 
@@ -237,14 +234,14 @@ const QuestionCard = ({
         toast.success("Successfully Changed Quest");
         handleViewResults(id);
       }
-      userInfo(localStorage.getItem("uId")).then(resp => {
+      userInfo(localStorage.getItem("uId")).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
       });
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      toast.error(err.response.data.message.split(":")[1]);
     },
   });
 
@@ -473,9 +470,6 @@ const QuestionCard = ({
     }
   };
 
-  // console.log({ rankedAnswers });
-  // console.log({ answersSelection });
-
   return (
     <div className="rounded-[12.3px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618] tablet:rounded-[26px]">
       <CardTopbar
@@ -515,6 +509,8 @@ const QuestionCard = ({
             setAddOptionField={setAddOptionField}
             addOptionLimit={addOptionLimit}
             setAddOptionLimit={setAddOptionLimit}
+            time={time}
+            setStartTest={setStartTest}
           />
         ) : (
           <OptionBar
@@ -558,6 +554,7 @@ const QuestionCard = ({
           viewResult={viewResult}
           handleViewResults={handleViewResults}
           startStatus={startStatus}
+          time={time}
         />
       )}
     </div>

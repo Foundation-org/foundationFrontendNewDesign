@@ -27,7 +27,7 @@ const Options = ({
         label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row items-center gap-[25px]"
-      } w-full `}
+      } w-full`}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">

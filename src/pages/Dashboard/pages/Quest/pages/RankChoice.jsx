@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { changeOptions } from "../../../../../utils/options";
 import { useMutation } from "@tanstack/react-query";
 import {
   answerValidation,
@@ -11,46 +10,12 @@ import {
   questionValidation,
 } from "../../../../../api/questsApi";
 import { toast } from "sonner";
-import { SortableItem, SortableList } from "@thaddeusjiang/react-sortable-list";
 import { useSelector } from "react-redux";
 import { Tooltip } from "../../../../../utils/Tooltip";
-import {
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
 import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
-const DragHandler = (props) => {
-  const persistedTheme = useSelector((state) => state.utils.theme);
-  return (
-    <div
-      {...props}
-      className="
-z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-[54px] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[74px] laptop:w-[38px]"
-    >
-      <div title="drag handler" className="flex items-center">
-        {persistedTheme === "dark" ? (
-          <img
-            src="/assets/svgs/dashboard/six-dots-dark.svg"
-            alt="six dots"
-            className="h-[8.8px] tablet:h-7"
-          />
-        ) : (
-          <img
-            src="/assets/svgs/dashboard/six-dots.svg"
-            alt="six dots"
-            className="h-[8.8px] tablet:h-7"
-          />
-        )}
-      </div>
-    </div>
-  );
-};
 
 const RankChoice = () => {
   const navigate = useNavigate();

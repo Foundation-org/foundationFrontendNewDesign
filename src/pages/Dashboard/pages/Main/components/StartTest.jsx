@@ -1,14 +1,8 @@
-import { STDropHandler } from "../../../../../utils/STDropHandler";
-import { SortableList, SortableItem } from "@thaddeusjiang/react-sortable-list";
+// import { STDropHandler } from "../../../../../utils/STDropHandler"; // need to be removed
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
-
-import { toast } from "sonner";
 import { useState, useEffect } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { getStartQuestInfo } from "../../../../../api/questsApi";
-import { resetQuests } from "../../../../../features/quest/questsSlice";
 import Copy from "../../../../../assets/Copy";
 import Link from "../../../../../assets/Link";
 import Mail from "../../../../../assets/Mail";
@@ -20,6 +14,7 @@ import UrlDialogue from "./Shareables/UrlDialogue";
 import EmailDialogue from "./Shareables/EmailDialogue";
 import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const StartTest = ({
   id,
@@ -46,7 +41,8 @@ const StartTest = ({
   alt,
   badgeCount,
   question,
-  time
+  time,
+  setStartTest,
 }) => {
   const dispatch = useDispatch();
   const [timeAgo, setTimeAgo] = useState("");
@@ -74,7 +70,6 @@ const StartTest = ({
       check: false,
       contend: false,
     }));
-
 
     setAnswerSelection(updatedAnswersSelection);
     setRankedAnswers(
@@ -119,6 +114,13 @@ const StartTest = ({
     const calculateTimeAgo = () => {
       const currentDate = new Date();
       const createdAtDate = new Date(time);
+
+      console.log({ createdAtDate });
+
+      if (isNaN(createdAtDate.getTime())) {
+        setTimeAgo("Invalid date");
+        return;
+      }
 
       const timeDifference = currentDate - createdAtDate;
       const seconds = Math.floor(timeDifference / 1000);
@@ -172,6 +174,18 @@ const StartTest = ({
     outline: "none",
   };
 
+  const handleOnDragEnd = (result) => {
+    console.log(result);
+    if (!result.destination) {
+      return;
+    }
+
+    const newTypedValues = [...typedValues];
+    const [removed] = newTypedValues.splice(result.source.index, 1);
+    newTypedValues.splice(result.destination.index, 0, removed);
+
+    setTypedValues(newTypedValues);
+  };
 
   return (
     <>
@@ -248,90 +262,150 @@ const StartTest = ({
             />
           ))
         ) : (
-          <SortableList
-            items={rankedAnswers}
-            setItems={setRankedAnswers}
-            onSortEnd={handleOnSortEnd}
-          >
-            {({ items }) => (
-              <div
-                id="dragIcon2"
-                className="flex flex-col gap-[5.7px] tablet:gap-[16px]"
-              >
-                {[...items].map((item, index) => (
-                  <SortableItem
-                    key={item.id}
-                    id={item.id}
-                    DragHandler={STDropHandler}
-                  >
-                    <SingleAnswerRankedChoice
-                      number={"#" + (index + 1)}
-                      editable={item.edit}
-                      deleteable={item.delete}
-                      answer={item.label}
-                      answersSelection={answersSelection}
-                      setAnswerSelection={setAnswerSelection}
-                      title={title}
-                      checkInfo={false}
-                      check={findLabelChecked(answersSelection, item.label)}
-                      handleCheckChange={(check) =>
-                        handleCheckChange(index, check)
-                      }
-                      setAddOptionLimit={setAddOptionLimit}
-                    />
-                  </SortableItem>
-                ))}
-              </div>
-            )}
-          </SortableList>
+          // <SortableList
+          //   items={rankedAnswers}
+          //   setItems={setRankedAnswers}
+          //   onSortEnd={handleOnSortEnd}
+          // >
+          //   {({ items }) => (
+          //     <div
+          //       id="dragIcon2"
+          //       className="flex flex-col gap-[5.7px] tablet:gap-[16px]"
+          //     >
+          //       {[...items].map((item, index) => (
+          //         <SortableItem
+          //           key={item.id}
+          //           id={item.id}
+          //           DragHandler={STDropHandler}
+          //         >
+          //           <SingleAnswerRankedChoice
+          //             number={"#" + (index + 1)}
+          //             editable={item.edit}
+          //             deleteable={item.delete}
+          //             answer={item.label}
+          //             answersSelection={answersSelection}
+          //             setAnswerSelection={setAnswerSelection}
+          //             title={title}
+          //             checkInfo={false}
+          //             check={findLabelChecked(answersSelection, item.label)}
+          //             handleCheckChange={(check) =>
+          //               handleCheckChange(index, check)
+          //             }
+          //             setAddOptionLimit={setAddOptionLimit}
+          //           />
+          //         </SortableItem>
+          //       ))}
+          //     </div>
+          //   )}
+          // </SortableList>
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
+              {(provided) => (
+                <ul
+                  className="flex flex-col items-center gap-[5.7px] tablet:gap-4"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {rankedAnswers.map((item, index) => (
+                    <Draggable
+                      key={item.id}
+                      draggableId={item.id}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <li
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className="w-full"
+                        >
+                          <SingleAnswerRankedChoice
+                            number={"#" + (index + 1)}
+                            editable={item.edit}
+                            deleteable={item.delete}
+                            answer={item.label}
+                            answersSelection={answersSelection}
+                            setAnswerSelection={setAnswerSelection}
+                            title={title}
+                            checkInfo={false}
+                            check={findLabelChecked(
+                              answersSelection,
+                              item.label,
+                            )}
+                            handleCheckChange={(check) =>
+                              handleCheckChange(index, check)
+                            }
+                            setAddOptionLimit={setAddOptionLimit}
+                          />
+                        </li>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </ul>
+              )}
+            </Droppable>
+          </DragDropContext>
         )}
-
-
       </div>
 
-      {/* Submit Button */}
+      {/* Add Options && Cancel && Submit Button */}
       <div
-        className={`${title === "Multiple Choice"
-          ? "mt-4 tablet:mt-10"
-          : addOptionField === 1
-            ? "mt-[4rem] tablet:mt-[10rem]"
-            : "mt-4 tablet:mt-10"
-          }  flex w-full justify-end gap-5 tablet:gap-10`}
+        className={`${
+          title === "Multiple Choice"
+            ? "mt-4 tablet:mt-10"
+            : addOptionField === 1
+              ? "mt-[4rem] tablet:mt-[10rem]"
+              : "mt-4 tablet:mt-10"
+        }  flex w-full justify-end gap-5 tablet:gap-10`}
       >
         {/* Add Options Button */}
         {usersAddTheirAns && addOptionLimit === 0 ? (
           <div>
             {title === "Yes/No" ||
-              title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
-                <button
-                  onClick={handleOpen}
-                  className="ml-[55.38px] mt-[5.5px] flex w-fit items-center gap-[5.8px] rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-[135px] tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] tablet:mt-0"
-                >
-                  {persistedTheme === "dark" ? (
-                    <img
-                      src="/assets/svgs/dashboard/add-dark.svg"
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  ) : (
-                    <img
-                      src="/assets/svgs/dashboard/add.svg"
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  )}
-                  Add Option
-                </button>
-              ) : null}
+            title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
+              <button
+                onClick={handleOpen}
+                className="ml-4 flex w-fit items-center gap-[5.8px] rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-0 tablet:mt-0 tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px]"
+              >
+                {persistedTheme === "dark" ? (
+                  <img
+                    src="/assets/svgs/dashboard/add-dark.svg"
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
+                ) : (
+                  <img
+                    src="/assets/svgs/dashboard/add.svg"
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
+                )}
+                Add Option
+              </button>
+            ) : null}
           </div>
         ) : null}
 
-        <div>
+        <div className="mr-[14px] flex gap-4 tablet:mr-[30px]">
           <button
-            className={` ${persistedTheme === "dark"
-              ? "bg-[#333B46]"
-              : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-              } inset-0 mr-[14px] w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+            className={` ${
+              persistedTheme === "dark"
+                ? "bg-[#333B46]"
+                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+            } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]  tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+            onClick={() => {
+              setStartTest(null);
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            className={` ${
+              persistedTheme === "dark"
+                ? "bg-[#333B46]"
+                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+            } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]  tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
             onClick={() => handleSubmit()}
           >
             Submit

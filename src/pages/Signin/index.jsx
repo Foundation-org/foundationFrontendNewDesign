@@ -11,7 +11,6 @@ import Form from "./components/Form";
 import ReCAPTCHA from "react-google-recaptcha";
 import "../../index.css";
 import api from "../../api/Axios";
-// import axios from 'axios';
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -19,6 +18,7 @@ export default function Signin() {
   const [provider, setProvider] = useState("");
   const [profile, setProfile] = useState(null);
   const [capthaToken, setCaptchaToken] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -33,9 +33,9 @@ export default function Signin() {
     setEmail(e.target.value);
   };
 
-  const handleCancel=()=>{
+  const handleCancel = () => {
     setEmail("");
-  }
+  };
 
   const onPassChange = (e) => {
     setPassword(e.target.value);
@@ -46,6 +46,7 @@ export default function Signin() {
   });
 
   const handleSignin = async () => {
+    setIsLoading(true);
     try {
       // const recaptchaResp = await axios({
       //   url: `https://www.google.com/recaptcha/api/siteverify?secret=${
@@ -78,37 +79,41 @@ export default function Signin() {
 
       // console.log(resp);
     } catch (e) {
-      toast.error(e.response.data.message.split(':')[1]);
+      toast.error(e.response.data.message.split(":")[1]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSignInSocial = async (data) => {
     try {
       const res = await api.post(`/user/signInUser/social`, {
-        data
+        data,
       });
       // if(res.data.required_action){
-      if(res.status === 200){
+      if (res.status === 200) {
         localStorage.setItem("uId", res.data.uuid);
         navigate("/dashboard");
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]); 
+      toast.error(error.response.data.message.split(":")[1]);
     }
   };
 
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white dark:bg-black-200 lg:flex-row">
-      <div className={ `${persistedTheme === "dark"
-          ? "bg-dark"
-          : "bg-blue" } flex h-[65px] w-full items-center justify-center bg-[#202329] lg:hidden`}>
+      <div
+        className={`${
+          persistedTheme === "dark" ? "bg-dark" : "bg-blue"
+        } flex h-[65px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+      >
         <img
           src="/assets/svgs/logo.svg"
           alt="logo"
           className="h-[45px] w-[58px]"
         />
       </div>
-      {/* flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-tr-[65px] lg:rounded-br-[65px] */}
+
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px]">
         {/* laptop:max-w-[35vw] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0 */}
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
@@ -118,8 +123,18 @@ export default function Signin() {
           >
             Login
           </Typography>
-          <SocialLogins setProvider={setProvider} setProfile={setProfile} handleSignInSocial={handleSignInSocial} isLogin={true}  />
-          <Form onEmailChange={onEmailChange} onPassChange={onPassChange} handleCancel={handleCancel} email={email} />
+          <SocialLogins
+            setProvider={setProvider}
+            setProfile={setProfile}
+            handleSignInSocial={handleSignInSocial}
+            isLogin={true}
+          />
+          <Form
+            onEmailChange={onEmailChange}
+            onPassChange={onPassChange}
+            handleCancel={handleCancel}
+            email={email}
+          />
           <div className="mb-4 mt-4 flex w-full items-start md:mb-10 laptop:mb-[5.5rem] laptop:mt-[2.5rem] taller:mb-[30px] taller:mt-[35px]">
             {persistedTheme === "dark" ? (
               <ReCAPTCHA
@@ -135,11 +150,17 @@ export default function Signin() {
               />
             )}
           </div>
-
-          <Button size="large" color="blue-200" onClick={handleSignin}>
+          <Button
+            size="large"
+            color="blue-200"
+            onClick={() => {
+              handleSignin();
+            }}
+            disabled={isLoading === true ? true : false}
+          >
             Sign in
           </Button>
-          <div className="mt-[10px] tablet:mt-[23px] flex justify-center gap-3">
+          <div className="mt-[10px] flex justify-center gap-3 tablet:mt-[23px]">
             <Typography
               variant="textBase"
               className="text-gray-100 dark:text-gray"

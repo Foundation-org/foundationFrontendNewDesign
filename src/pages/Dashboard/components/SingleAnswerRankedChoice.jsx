@@ -51,8 +51,8 @@ const SingleAnswerRankedChoice = (props) => {
 
   return (
     <div
-      className="absolute left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem] laptop:w-[90%]"
-      style={{ position: "absolute" }}
+      className="left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem] laptop:w-[90%]"
+      // style={{ position: "absolute" }}
     >
       <div className="flex w-full justify-between rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
         <div className="flex w-full items-center">

@@ -52,12 +52,12 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
         ) : null}
       </div> */}
 
-      <div className="relative w-full grid grid-cols-[1fr] items-center">
+      <div className="relative grid w-full grid-cols-[1fr] items-center">
         <Input
           type="email"
           id="email"
           label="Email Address"
-          className="peer w-full rounded-[2px] border-b-[1px] border-[#C0C0C0] bg-white py-1  pr-8 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
+          className="peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
           autoComplete="sign-email"
           onChange={onEmailChange}
           value={email}
@@ -67,14 +67,14 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
             <img
               src="/assets/svgs/cancelDark.svg"
               alt="blind"
-              className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
+              className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
               onClick={handleCancel}
             />
           ) : (
             <img
               src="/assets/svgs/cancelLight.svg"
               alt="blind"
-              className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
+              className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
               onClick={handleCancel}
             />
           )
@@ -126,13 +126,12 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
             )}
           </div> */}
 
-          <div className="relative w-full grid grid-cols-[1fr] items-center">
-
+          <div className="relative grid w-full grid-cols-[1fr] items-center">
             <Input
               type={inputType}
               id="password"
               label="Password"
-              className="peer w-full rounded-[2px] border-b-[1px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-2 focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
+              className="peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none dark:border-white dark:bg-dark dark:focus:border-white md:text-[22.9px] short:py-0 taller:text-[16px]"
               autoComplete="new-password"
               onChange={onPassChange}
             />
@@ -141,14 +140,14 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
-                  className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
+                  className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                   onClick={togglePasswordVisibility}
                 />
               ) : (
                 <img
                   src="/assets/svgs/eye-white.svg"
                   alt="blind"
-                  className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
+                  className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                   onClick={togglePasswordVisibility}
                 />
               )
@@ -156,14 +155,14 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
               <img
                 src="/assets/svgs/eye.svg"
                 alt="blind"
-                className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
+                className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                 onClick={togglePasswordVisibility}
               />
             ) : (
               <img
                 src="/assets/svgs/eyeLight.svg"
                 alt="blind"
-                className="cursor-pointer absolute right-2 h-[17px] w-[17px]  2xl:h-[24px] 3xl:h-[30px] 2xl:w-[24px] 3xl:w-[30px]"
+                className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                 onClick={togglePasswordVisibility}
               />
             )}
