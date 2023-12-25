@@ -135,9 +135,9 @@ const StartTest = ({
       } else if (hours > 0) {
         setTimeAgo(`${hours} ${hours === 1 ? "hour" : "hours"} ago`);
       } else if (minutes > 0) {
-        setTimeAgo(`${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`);
+        setTimeAgo(`${minutes} ${minutes === 1 ? "min" : "mins"} ago`);
       } else {
-        setTimeAgo(`${seconds} ${seconds === 1 ? "second" : "seconds"} ago`);
+        setTimeAgo(`${seconds} ${seconds === 1 ? "sec" : "secs"} ago`);
       }
     };
 
