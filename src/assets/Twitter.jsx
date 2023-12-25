@@ -1,7 +1,7 @@
 const Twitter = ({ color, h, w }) => {
   return (
     <svg
-      className="h-[.6rem] w-[.6rem] tablet:h-[1.4rem] tablet:w-[1.4rem]"
+      className="h-[1.024rem] w-[1.024rem] mr-[0.2rem] tablet:h-[2.183rem] tablet:w-[2.183rem]  tablet: mr-[0.5rem]"
       style={{ height: h, width: w }}
       xmlns="http://www.w3.org/2000/svg"
       width="11"

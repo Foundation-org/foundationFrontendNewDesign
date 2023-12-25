@@ -4,16 +4,46 @@ import { useQuery } from "@tanstack/react-query";
 import { getStartQuestPercent } from "../../../../../api/questsApi";
 import { getStartQuestInfo } from "../../../../../api/questsApi";
 import { getRankedQuestPercent } from "../../../../../api/questsApi";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import SingleAnswer from "../../../components/SingleAnswer";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 import RankedResult from "../../../components/RankedResult";
 
+import Copy from "../../../../../assets/Copy";
+import Link from "../../../../../assets/Link";
+import Mail from "../../../../../assets/Mail";
+import Twitter from "../../../../../assets/Twitter";
+import Facebook from "../../../../../assets/Facebook";
+import BasicModal from "../../../../../components/BasicModal";
+import CopyDialogue from "./Shareables/CopyDialogue";
+import UrlDialogue from "./Shareables/UrlDialogue";
+import EmailDialogue from "./Shareables/EmailDialogue";
+import TwitterDialogue from "./Shareables/TwitterDialogue";
+import FbDialogue from "./Shareables/FbDialogue";
+
 const Result = (props) => {
   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
+
+  const [timeAgo, setTimeAgo] = useState("");
+  const [copyModal, setCopyModal] = useState(false);
+  const [linkModal, setLinkModal] = useState(false);
+  const [emailModal, setEmailModal] = useState(false);
+  const [twitterModal, setTwitterModal] = useState(false);
+  const [fbModal, setFbModal] = useState(false);
+
+  const handleCopyOpen = () => setCopyModal(true);
+  const handleCopyClose = () => setCopyModal(false);
+  const handleLinkOpen = () => setLinkModal(true);
+  const handleLinkClose = () => setLinkModal(false);
+  const handleEmailOpen = () => setEmailModal(true);
+  const handleEmailClose = () => setEmailModal(false);
+  const handleTwitterOpen = () => setTwitterModal(true);
+  const handleTwitterClose = () => setTwitterModal(false);
+  const handleFbOpen = () => setFbModal(true);
+  const handleFbClose = () => setFbModal(false);
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
@@ -45,6 +75,31 @@ const Result = (props) => {
     };
     getStartQuestDetail(data);
   }, []);
+
+  useEffect(() => {
+    const calculateTimeAgo = () => {
+      const currentDate = new Date();
+      const createdAtDate = new Date(props.time);
+
+      const timeDifference = currentDate - createdAtDate;
+      const seconds = Math.floor(timeDifference / 1000);
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
+
+      if (days > 0) {
+        setTimeAgo(`${days} ${days === 1 ? "day" : "days"} ago`);
+      } else if (hours > 0) {
+        setTimeAgo(`${hours} ${hours === 1 ? "hour" : "hours"} ago`);
+      } else if (minutes > 0) {
+        setTimeAgo(`${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`);
+      } else {
+        setTimeAgo(`${seconds} ${seconds === 1 ? "second" : "seconds"} ago`);
+      }
+    };
+
+    calculateTimeAgo();
+  }, [props.time]);
 
   const { mutateAsync: getStartQuestDetail } = useMutation({
     mutationFn: getStartQuestInfo,
@@ -115,7 +170,7 @@ const Result = (props) => {
         if (props.whichTypeQuestion === "ranked choise") {
           console.log(
             "ranked response" +
-              res?.data.data[res.data.data.length - 1].selected,
+            res?.data.data[res.data.data.length - 1].selected,
           );
 
           const updatedRankedAnswers = res?.data.data[
@@ -183,9 +238,16 @@ const Result = (props) => {
     }
   }
 
-  console.log(props);
+  const customModalStyle = {
+    backgroundColor: "#FCFCFD",
+    borderRadius: "26px",
+    boxShadow: "none",
+    border: "0px",
+    outline: "none",
+  };
 
   return (
+    <>
     <div className="mt-[26px] flex flex-col gap-[10px]">
       {console.log(props.title)}
       {props.title === "Yes/No" || props.title === "Agree/Disagree" ? (
@@ -271,21 +333,139 @@ const Result = (props) => {
       ) : (
         <></>
       )}
-      <div className="my-8 flex justify-end">
-        <button
-          className={`${
-            persistedTheme === "dark"
-              ? "bg-[#333B46]"
-              : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-          } inset-0 mr-[14px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner dark:text-[#B6B6B6] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
-          onClick={() => {
-            props.handleViewResults(null);
-          }}
-        >
-          Ok
-        </button>
+      
+      {props.expanded ?
+        (
+          <div className="mt-2.5 tablet:mt-8 flex justify-end">
+            <button
+              className={`${persistedTheme === "dark"
+                ? "bg-[#BB9D02]"
+                : "bg-[#FDD503]"
+                } inset-0 mr-[14px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner dark:text-[#B6B6B6] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+              onClick={() => {
+                props.handleChange(props.id);
+              }}
+            >
+              Change
+            </button>
+          </div>
+        ) :
+        (
+          
+          <div className="mt-4 tablet:mt-10 flex justify-end">
+            <button
+              className={`${persistedTheme === "dark"
+                ? "bg-[#333B46]"
+                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                } inset-0 mr-[14px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner dark:text-[#B6B6B6] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+              onClick={() => {
+                props.handleViewResults(null);
+              }}
+            >
+              Ok
+            </button>
+          </div >)}
+
+    </div >
+    <div className="mx-[0.57rem] mb-[0.55rem] mt-[0.86rem] flex items-center justify-between tablet:mx-[2.4rem] tablet:mb-[1.83rem] tablet:mt-[1.19rem]">
+        <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
+          <div onClick={handleCopyOpen} className="cursor-pointer">
+            {persistedTheme === "dark" ? <Copy /> : <Copy />}
+          </div>
+          <BasicModal
+            open={copyModal}
+            handleClose={handleCopyClose}
+            customStyle={customModalStyle}
+          >
+            <CopyDialogue
+              handleClose={handleCopyClose}
+              id={props.id}
+              createdBy={props.createdBy}
+              img={props.img}
+              alt={props.alt}
+              badgeCount={props.badgeCount}
+            />
+          </BasicModal>
+          <div className="cursor-pointer" onClick={handleLinkOpen}>
+            {persistedTheme === "dark" ? <Link /> : <Link />}
+          </div>
+          <BasicModal
+            open={linkModal}
+            handleClose={handleLinkClose}
+            customStyle={customModalStyle}
+          >
+            <UrlDialogue
+              handleClose={handleLinkClose}
+              id={props.id}
+              createdBy={props.createdBy}
+              img={props.img}
+              alt={props.alt}
+              badgeCount={props.badgeCount}
+            />
+          </BasicModal>
+          <div className="cursor-pointer" onClick={handleEmailOpen}>
+            {persistedTheme === "dark" ? <Mail /> : <Mail />}
+          </div>
+          <BasicModal
+            open={emailModal}
+            handleClose={handleEmailClose}
+            customStyle={customModalStyle}
+          >
+            <EmailDialogue handleClose={handleEmailClose} id={props.id} />
+          </BasicModal>
+          <div className="cursor-pointer" onClick={handleTwitterOpen}>
+            {persistedTheme === "dark" ? <Twitter /> : <Twitter />}
+          </div>
+          <BasicModal
+            open={twitterModal}
+            handleClose={handleTwitterClose}
+            customStyle={customModalStyle}
+          >
+            <TwitterDialogue
+              handleClose={handleTwitterClose}
+              id={props.id}
+              createdBy={props.createdBy}
+              img={props.img}
+              alt={props.alt}
+              badgeCount={props.badgeCount}
+              title={props.title}
+              question={props.question}
+              timeAgo={timeAgo}
+            />
+          </BasicModal>
+          <div className="cursor-pointer" onClick={handleFbOpen}>
+            {persistedTheme === "dark" ? <Facebook /> : <Facebook />}
+          </div>
+          <BasicModal
+            open={fbModal}
+            handleClose={handleFbClose}
+            customStyle={customModalStyle}
+          >
+            <FbDialogue
+              handleClose={handleFbClose}
+              createdBy={props.createdBy}
+              img={props.img}
+              alt={props.alt}
+              badgeCount={props.badgeCount}
+              title={props.title}
+              question={props.question}
+              timeAgo={timeAgo}
+              id={props.id}
+            />
+          </BasicModal>
+        </div>
+        <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:h-[29px] tablet:w-[127px] tablet:gap-1 tablet:rounded-[10.9px]">
+          <img
+            src="/assets/svgs/dashboard/clock-outline.svg"
+            alt="clock"
+            className="h-[8.64px] w-[8.64px] tablet:h-[18px] tablet:w-[18px]"
+          />
+          <p className="text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[17.48px]">
+            {timeAgo}
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
