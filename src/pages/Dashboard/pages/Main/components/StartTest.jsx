@@ -2,7 +2,7 @@
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Copy from "../../../../../assets/Copy";
 import Link from "../../../../../assets/Link";
 import Mail from "../../../../../assets/Mail";
@@ -15,7 +15,7 @@ import EmailDialogue from "./Shareables/EmailDialogue";
 import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { FaSpinner } from 'react-icons/fa';
+import { FaSpinner } from "react-icons/fa";
 
 const StartTest = ({
   id,
@@ -44,9 +44,8 @@ const StartTest = ({
   question,
   time,
   setStartTest,
-  loading
+  loading,
 }) => {
-  const dispatch = useDispatch();
   const [timeAgo, setTimeAgo] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [copyModal, setCopyModal] = useState(false);
@@ -164,10 +163,6 @@ const StartTest = ({
     return labelFound[0]?.contend === true;
   }
 
-  const handleOnSortEnd = (sortedItems) => {
-    setRankedAnswers(sortedItems.items);
-  };
-
   const customModalStyle = {
     backgroundColor: "#FCFCFD",
     borderRadius: "26px",
@@ -182,11 +177,11 @@ const StartTest = ({
       return;
     }
 
-    const newTypedValues = [...typedValues];
+    const newTypedValues = [...rankedAnswers];
     const [removed] = newTypedValues.splice(result.source.index, 1);
     newTypedValues.splice(result.destination.index, 0, removed);
 
-    setTypedValues(newTypedValues);
+    setRankedAnswers(newTypedValues);
   };
 
   return (
@@ -264,42 +259,6 @@ const StartTest = ({
             />
           ))
         ) : (
-          // <SortableList
-          //   items={rankedAnswers}
-          //   setItems={setRankedAnswers}
-          //   onSortEnd={handleOnSortEnd}
-          // >
-          //   {({ items }) => (
-          //     <div
-          //       id="dragIcon2"
-          //       className="flex flex-col gap-[5.7px] tablet:gap-[16px]"
-          //     >
-          //       {[...items].map((item, index) => (
-          //         <SortableItem
-          //           key={item.id}
-          //           id={item.id}
-          //           DragHandler={STDropHandler}
-          //         >
-          //           <SingleAnswerRankedChoice
-          //             number={"#" + (index + 1)}
-          //             editable={item.edit}
-          //             deleteable={item.delete}
-          //             answer={item.label}
-          //             answersSelection={answersSelection}
-          //             setAnswerSelection={setAnswerSelection}
-          //             title={title}
-          //             checkInfo={false}
-          //             check={findLabelChecked(answersSelection, item.label)}
-          //             handleCheckChange={(check) =>
-          //               handleCheckChange(index, check)
-          //             }
-          //             setAddOptionLimit={setAddOptionLimit}
-          //           />
-          //         </SortableItem>
-          //       ))}
-          //     </div>
-          //   )}
-          // </SortableList>
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
               {(provided) => (
@@ -353,47 +312,48 @@ const StartTest = ({
 
       {/* Add Options && Cancel && Submit Button */}
       <div
-        className={`${title === "Multiple Choice"
-          ? "mt-4 tablet:mt-10"
-          : addOptionField === 1
-            ? "mt-[4rem] tablet:mt-[10rem]"
-            : "mt-4 tablet:mt-10"
-          }  flex w-full justify-end gap-5 tablet:gap-10`}
+        className={`${
+          title === "Multiple Choice"
+            ? "mt-4 tablet:mt-10"
+            : addOptionField === 1
+              ? "mt-[4rem] tablet:mt-[10rem]"
+              : "mt-4 tablet:mt-10"
+        }  flex w-full justify-end gap-3 tablet:gap-10`}
       >
         {/* Add Options Button */}
         {usersAddTheirAns && addOptionLimit === 0 ? (
           <div>
             {title === "Yes/No" ||
-              title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
-                <button
-                  onClick={handleOpen}
-                  className="ml-4 flex w-fit items-center gap-[5.8px] rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-0 tablet:mt-0 tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px]"
-                >
-                  {persistedTheme === "dark" ? (
-                    <img
-                      src="/assets/svgs/dashboard/add-dark.svg"
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  ) : (
-                    <img
-                      src="/assets/svgs/dashboard/add.svg"
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  )}
-                  Add Option
-                </button>
-              ) : null}
+            title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
+              <button
+                onClick={handleOpen}
+                className="ml-4 flex w-fit items-center gap-[5.8px] rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-0 tablet:mt-0 tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px]"
+              >
+                {persistedTheme === "dark" ? (
+                  <img
+                    src="/assets/svgs/dashboard/add-dark.svg"
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
+                ) : (
+                  <img
+                    src="/assets/svgs/dashboard/add.svg"
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
+                )}
+                Add Option
+              </button>
+            ) : null}
           </div>
         ) : null}
-        {console.log("loading", loading)}
-        <div className="mr-[14px] flex gap-4 tablet:mr-[30px]">
+        <div className="mr-[14px] flex gap-2 tablet:mr-[30px] tablet:gap-4">
           <button
-            className={` ${persistedTheme === "dark"
-              ? "bg-[#333B46]"
-              : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-              } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]  tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+            className={` ${
+              persistedTheme === "dark"
+                ? "bg-[#333B46]"
+                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+            } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]  tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
             onClick={() => {
               setStartTest(null);
             }}
@@ -401,20 +361,20 @@ const StartTest = ({
             Cancel
           </button>
           <button
-            className={`relative ${persistedTheme === "dark"
-              ? "bg-[#333B46]"
-              : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-              } flex items-center justify-center w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] mr-[14px] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+            className={`relative ${
+              persistedTheme === "dark"
+                ? "bg-[#333B46]"
+                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+            } mr-[14px] flex w-[82.8px] items-center justify-center rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
             onClick={() => handleSubmit()}
             disabled={loading === true ? true : false}
           >
             {loading === true ? (
               <FaSpinner className="animate-spin text-[#EAEAEA]" />
             ) : (
-              'Submit'
+              "Submit"
             )}
           </button>
-
         </div>
       </div>
 
@@ -505,13 +465,13 @@ const StartTest = ({
             />
           </BasicModal>
         </div>
-        <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:h-[29px] tablet:w-[127px] tablet:gap-1 tablet:rounded-[10.9px]">
+        <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:h-[29px] tablet:w-[150px] tablet:gap-1 tablet:rounded-[10.9px]">
           <img
             src="/assets/svgs/dashboard/clock-outline.svg"
             alt="clock"
             className="h-[8.64px] w-[8.64px] tablet:h-[18px] tablet:w-[18px]"
           />
-          <p className="text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[17.48px]">
+          <p className="whitespace-nowrap text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[17.48px]">
             {timeAgo}
           </p>
         </div>

@@ -16,8 +16,7 @@ import Options from "../components/Options";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { FaSpinner } from 'react-icons/fa';
-
+import { FaSpinner } from "react-icons/fa";
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -30,7 +29,6 @@ const RankChoice = () => {
   const [prevValueArr, setPrevValueArr] = useState([]);
   const [dragItems, setDragItems] = useState(["item1", "item 2", "item3"]);
   const [loading, setLoading] = useState(false);
-
 
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
@@ -66,7 +64,7 @@ const RankChoice = () => {
       if (resp.status === 201) {
         toast.success("Successfully Created Quest");
         setTimeout(() => {
-          setLoading(false)
+          setLoading(false);
           navigate("/dashboard");
         }, 2000);
       }
@@ -79,11 +77,11 @@ const RankChoice = () => {
     const constraintResponse = await checkUniqueQuestion(question);
 
     if (question === "") {
-      setLoading(false)
+      setLoading(false);
       return toast.warning("Question cannot be empty");
     }
     if (!constraintResponse.data.isUnique) {
-      setLoading(false)
+      setLoading(false);
 
       return toast.warning(
         "This quest is not unique. A similar quest already exists.",
@@ -96,7 +94,7 @@ const RankChoice = () => {
     });
     // If any error captured
     if (errorMessage) {
-      setLoading(false)
+      setLoading(false);
       return toast.error("Something Went Wrong");
     }
 
@@ -116,7 +114,7 @@ const RankChoice = () => {
     );
 
     if (isEmptyAnswer) {
-      setLoading(false)
+      setLoading(false);
 
       return toast.warning("Answer cannot be empty");
     }
@@ -261,11 +259,11 @@ const RankChoice = () => {
       optionStatus:
         value.trim() === ""
           ? {
-            name: "Ok",
-            color: "text-[#389CE3]",
-            tooltipName: "Please write something...",
-            tooltipStyle: "tooltip-info",
-          }
+              name: "Ok",
+              color: "text-[#389CE3]",
+              tooltipName: "Please write something...",
+              tooltipStyle: "tooltip-info",
+            }
           : { name: "Ok", color: "text-[#b0a00f]" },
     };
     setTypedValues(newTypedValues);
@@ -360,19 +358,19 @@ const RankChoice = () => {
   //   setTypedValues(newTypedValues);
   // };
 
-  const handleDragEnd = (result) => {
-    if (!result.destination) {
-      // Item was dropped outside the list
-      return;
-    }
+  // const handleDragEnd = (result) => {
+  //   if (!result.destination) {
+  //     // Item was dropped outside the list
+  //     return;
+  //   }
 
-    const newDragItems = [...dragItems];
-    const [removed] = newDragItems.splice(result.source.index, 1);
-    newDragItems.splice(result.destination.index, 0, removed);
+  //   const newDragItems = [...dragItems];
+  //   const [removed] = newDragItems.splice(result.source.index, 1);
+  //   newDragItems.splice(result.destination.index, 0, removed);
 
-    // Update the state with the new order
-    setDragItems(newDragItems);
-  };
+  //   // Update the state with the new order
+  //   setDragItems(newDragItems);
+  // };
 
   return (
     <div>
@@ -381,10 +379,11 @@ const RankChoice = () => {
         preference.
       </h4>
       <div
-        className={`${persistedTheme === "dark"
-          ? "border-[1px] border-[#858585] tablet:border-[2px]"
-          : ""
-          } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
+        className={`${
+          persistedTheme === "dark"
+            ? "border-[1px] border-[#858585] tablet:border-[2px]"
+            : ""
+        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
           Create Quest
@@ -466,7 +465,7 @@ const RankChoice = () => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
-                        className="w-full "
+                        className="w-full"
                       >
                         <Options
                           key={index}
@@ -543,8 +542,7 @@ const RankChoice = () => {
         >
           + Add Option
         </button>
-        <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
-        </h3>
+        <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]"></h3>
         {/* settings */}
         <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[16px] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:py-[35px] laptop:max-w-[838px]">
           <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[30px]">
@@ -571,7 +569,7 @@ const RankChoice = () => {
             {loading === true ? (
               <FaSpinner className="animate-spin text-[#EAEAEA]" />
             ) : (
-              'Submit'
+              "Submit"
             )}
           </button>
         </div>

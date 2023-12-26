@@ -1,9 +1,10 @@
 const Close = ({ color }) => {
   return (
     <svg
+      className="h-[8.52px] w-[8.52px] tablet:h-[22px] tablet:w-[22px]"
       xmlns="http://www.w3.org/2000/svg"
-      width="22"
-      height="22"
+      // width="22"
+      // height="22"
       viewBox="0 0 22 22"
       fill="none"
     >

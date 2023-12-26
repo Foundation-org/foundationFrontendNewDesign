@@ -251,7 +251,7 @@ const OptionBar = ({
 
   const customModalStyle = {
     backgroundColor: "#FCFCFD",
-    borderRadius: "26px",
+    // borderRadius: "26px",
     boxShadow: "none",
     border: "0px",
     outline: "none",
@@ -380,13 +380,13 @@ const OptionBar = ({
             />
           </BasicModal>
         </div>
-        <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:h-[29px] tablet:w-[127px] tablet:gap-1 tablet:rounded-[10.9px]">
+        <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:h-[29px] tablet:w-[150px] tablet:gap-1 tablet:rounded-[10.9px]">
           <img
             src="/assets/svgs/dashboard/clock-outline.svg"
             alt="clock"
             className="h-[8.64px] w-[8.64px] tablet:h-[18px] tablet:w-[18px]"
           />
-          <p className="text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[17.48px]">
+          <p className="whitespace-nowrap text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[17.48px]">
             {timeAgo}
           </p>
         </div>

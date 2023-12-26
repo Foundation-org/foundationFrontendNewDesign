@@ -310,7 +310,6 @@ iframe {
   box-shadow: 0px 0px 8.689655303955078px 0px #00000040 inset;
 }
 
-
 table,
 .divTable {
   /* border: 1px solid lightgray; */
@@ -348,7 +347,6 @@ td,
 .td {
   /* height: 30px; */
 }
-
 
 .resizer {
   position: absolute;

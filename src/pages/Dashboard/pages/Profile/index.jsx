@@ -36,12 +36,6 @@ const Profile = () => {
       <Topbar />
       <div className="h-[calc(100vh-96px)] overflow-y-auto bg-white dark:bg-[#0A0A0C]">
         <div className="laptop::mt-12 mr-5 mt-5 flex justify-end gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[109px]">
-          {/* <div className="relative h-[26.8px] w-[21.8px] tablet:h-[75px] tablet:w-[61px] laptop:h-fit laptop:w-fit">
-            <img src="/assets/svgs/dashboard/badge.svg" alt="badge" />
-            <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-[9.2px] font-bold leading-normal text-white tablet:text-[35px]">
-              2
-            </p>
-          </div> */}
           <div
             style={{
               background: "url(/assets/svgs/dashboard/badge.svg)",
@@ -57,12 +51,14 @@ const Profile = () => {
           <div>
             <h4 className="heading">My Profile</h4>
             <div className="flex items-center gap-1 tablet:gap-[13px]">
-              <p className="text-[8px] tablet:text-[16px] dark:text-white">Light</p>
+              <p className="text-[8px] dark:text-white tablet:text-[16px]">
+                Light
+              </p>
               <Switch
                 checked={checkState}
                 onChange={handleTheme}
                 className={`${checkState ? "bg-[#CBCCCD]" : "bg-[#BEDEF4]"}
-      relative inline-flex h-[10.78px] w-[20.53px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 tablet:h-[25px]  tablet:w-12`}
+      relative inline-flex h-[10.78px] w-[20.53px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 tablet:h-[25px] tablet:w-12`}
               >
                 <span className="sr-only">Use setting</span>
                 <span
@@ -75,7 +71,9 @@ const Profile = () => {
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
                 />
               </Switch>
-              <p className="text-[8px] tablet:text-[16px] dark:text-white">Dark</p>
+              <p className="text-[8px] dark:text-white tablet:text-[16px]">
+                Dark
+              </p>
             </div>
           </div>
         </div>

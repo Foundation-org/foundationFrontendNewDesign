@@ -1,13 +1,13 @@
 const Twitter = ({ color, h, w }) => {
   return (
     <svg
-      className="h-[1.024rem] w-[1.024rem] mr-[0.2rem] tablet:h-[2.183rem] tablet:w-[2.183rem]  tablet: mr-[0.5rem]"
-      style={{ height: h, width: w }}
+      className="mr-[0.5rem] h-[26px] w-[17px] tablet:mr-[0.2rem] tablet:h-[37px] tablet:w-[37px]"
       xmlns="http://www.w3.org/2000/svg"
-      width="11"
-      height="12"
+      // width="11"
+      // height="12"
       viewBox="0 0 11 12"
       fill="none"
+      style={{ height: h, width: w }}
     >
       <path
         d="M9.56679 10.1332L6.16595 5.19173L5.78143 4.63289L3.34787 1.09875L3.14621 0.805664H0.157227L0.886101 1.86522L4.12117 6.56573L4.50569 7.12371L7.10503 10.9005L7.30669 11.1928H10.2965L9.56679 10.1332ZM7.6613 10.516L4.96113 6.59222L4.57661 6.03339L1.44322 1.48156H2.79074L5.32514 5.16353L5.70966 5.72236L9.00967 10.5169H7.6613V10.516Z"

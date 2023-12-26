@@ -4,7 +4,7 @@ import api from "../../../api/Axios";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
-const Topbar = ({ title }) => {
+const Topbar = () => {
   const location = useLocation();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -21,7 +21,6 @@ const Topbar = ({ title }) => {
       toast.error(error.response.data.message.split(":")[1]);
     }
   };
-  console.log("location" + location.pathname);
 
   return (
     <div
@@ -32,12 +31,14 @@ const Topbar = ({ title }) => {
       } flex h-24 w-full flex-col items-center justify-between pb-4 tablet:h-[116px] laptop:h-[90px] laptop:flex-row laptop:pb-0 `}
     >
       {/* logo */}
-
-      <div className="flex w-full items-center justify-between px-[17px] py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
+      <div className="relative flex w-full items-center justify-between px-[17px] py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
         {localStorage.getItem("isGuestMode") ? (
-          <div className="flex h-full items-center justify-center space-x-2 laptop:hidden"   onClick={() => {
-            navigate("/profile");
-          }}>
+          <div
+            className="flex h-full items-center justify-center space-x-2 laptop:hidden"
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
             <div className="relative block h-fit w-fit laptop:hidden">
               <img
                 src="/assets/svgs/dashboard/yellowBadge.svg"
@@ -55,7 +56,7 @@ const Topbar = ({ title }) => {
                   navigate("/profile");
                 }}
               >
-                My Profile
+                Guest User
               </h3>
               <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
                 Balance:{" "}
@@ -91,12 +92,10 @@ const Topbar = ({ title }) => {
                 {persistedUserInfo?.balance
                   ? persistedUserInfo?.balance.toFixed(2)
                   : 0}
-                {/* Balance 0.5 */}
               </h3>
             </div>
           </div>
         )}
-
         <Link
           to={"/dashboard"}
           className="flex w-[85.81px] justify-center tablet:w-[149.47px]"
@@ -142,11 +141,11 @@ const Topbar = ({ title }) => {
         </div>
       </div>
       {/* items */}
-      <ul className="flex w-full items-end justify-around gap-16 px-5 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-[57px] laptop:gap-28 laptop:px-0">
+      <ul className="flex w-full items-end justify-around gap-[2.19rem] px-5 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-[57px] laptop:gap-[3.12rem] laptop:px-0">
         <li>
           <Link
             to={"/dashboard"}
-            className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
+            className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
               location.pathname === "/dashboard" ||
               location.pathname === "/dashboard/"
                 ? "text-white"
@@ -169,7 +168,7 @@ const Topbar = ({ title }) => {
         <li>
           <Link
             to={"/dashboard/quest"}
-            className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
+            className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
               location.pathname === "/dashboard/quest" ||
               location.pathname === "/dashboard/quest/"
                 ? "text-white"
@@ -192,7 +191,7 @@ const Topbar = ({ title }) => {
         <li>
           <Link
             to={"/dashboard/bookmark"}
-            className={`flex items-center gap-2 text-[14px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
+            className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
               location.pathname === "/dashboard/bookmark" ||
               location.pathname === "/dashboard/bookmark/"
                 ? "text-white"
@@ -212,10 +211,34 @@ const Topbar = ({ title }) => {
             Bookmarks
           </Link>
         </li>
+        <li>
+          <Link
+            // to={"/dashboard/bookmark"}
+            className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
+              location.pathname === "/dashboard/marketplace" ||
+              location.pathname === "/dashboard/marketplace/"
+                ? "text-white"
+                : persistedTheme === "dark"
+                  ? "text-[#92959D]"
+                  : "text-[#BEDEF4]"
+            }`}
+            onClick={() => toast.info("Marketplace is comming soon")}
+          >
+            {(location.pathname === "/dashboard/marketplace" ||
+              location.pathname === "/dashboard/marketplace/") && (
+              <img
+                src="/assets/svgs/dashboard/bookmark-white.svg"
+                alt="bookmark"
+                className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
+              />
+            )}
+            Marketplace
+          </Link>
+        </li>
       </ul>
 
       {/* logout btn */}
-      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:gap-[35px]">
+      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
         <div className="relative">
           <img
             src="/assets/svgs/dashboard/notification_icon.svg"

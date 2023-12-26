@@ -148,7 +148,7 @@ const SingleAnswerMultipleChoice = (props) => {
                   <input
                     id="small-checkbox"
                     type="checkbox"
-                    className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
+                    className="checkbox h-[11.4px] w-[11.4px] rounded-[2px] tablet:h-5 tablet:w-5"
                     checked={checkState}
                     onChange={handleCheckChange}
                   />
@@ -200,7 +200,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 <input
                   id="small-yello-checkbox"
                   type="checkbox"
-                  className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
+                  className="checkbox h-[11.4px] w-[11.4px] rounded-[2px] tablet:h-5 tablet:w-5"
                   checked={contendState}
                   onChange={handleContendChange}
                 />

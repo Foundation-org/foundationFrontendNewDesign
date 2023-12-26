@@ -40,14 +40,12 @@ const Guests = () => {
     setViewResult((prev) => (prev === testId ? null : testId));
   };
 
-  // console.log({ singleQuest });
-
   return (
     <>
       <Topbar />
       <div className="flex h-[calc(100vh-90px)] bg-white dark:bg-[#0A0A0C]">
         <div className="w-full">
-          <div className="my-[3.81rem] flex justify-center gap-[5.69rem]">
+          <div className="my-7 flex justify-center gap-5 tablet:my-[3.81rem] tablet:gap-[5.69rem]">
             <button
               className="w-[81.8px] rounded-[7.1px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:w-[250px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[23.63px]"
               onClick={() => setTab("Participate")}

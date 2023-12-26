@@ -9,7 +9,6 @@ const BasicModal = ({ open, handleClose, children, customStyle }) => {
     transform: "translate(-50%, -50%)",
     width: "fit-content",
     boxShadow: 5,
-    borderRadius: "26px",
   };
 
   const mergedStyle = { ...defaultStyle, ...customStyle };
@@ -21,7 +20,9 @@ const BasicModal = ({ open, handleClose, children, customStyle }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={mergedStyle}>{children}</Box>
+      <Box sx={mergedStyle} className="rounded-[9.251px] laptop:rounded-[26px]">
+        {children}
+      </Box>
     </Modal>
   );
 };
