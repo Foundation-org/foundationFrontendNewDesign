@@ -4,11 +4,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { getStartQuestInfo } from "../../../../../api/questsApi";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
-import Copy from "../../../../../assets/Copy";
-import Link from "../../../../../assets/Link";
-import Mail from "../../../../../assets/Mail";
-import Twitter from "../../../../../assets/Twitter";
-import Facebook from "../../../../../assets/Facebook";
+import Copy from "../../../../../assets/optionbar/Copy";
+import Link from "../../../../../assets/optionbar/Link";
+import Mail from "../../../../../assets/optionbar/Mail";
+import Twitter from "../../../../../assets/optionbar/Twitter";
+import Facebook from "../../../../../assets/optionbar/Facebook";
 import BasicModal from "../../../../../components/BasicModal";
 import CopyDialogue from "./Shareables/CopyDialogue";
 import UrlDialogue from "./Shareables/UrlDialogue";
@@ -251,7 +251,6 @@ const OptionBar = ({
 
   const customModalStyle = {
     backgroundColor: "#FCFCFD",
-    // borderRadius: "26px",
     boxShadow: "none",
     border: "0px",
     outline: "none",

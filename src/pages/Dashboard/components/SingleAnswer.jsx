@@ -120,46 +120,46 @@ const SingleAnswer = (props) => {
           </div>
         ) : (
           <div
-            className={`mr-[20.63px] flex items-center gap-[10.3px] text-[9.2px] tablet:gap-[22px] tablet:text-[16px] ${
+            className={`mr-1 flex items-center gap-[10.3px] text-[9.2px] tablet:mr-[20.63px] tablet:gap-[22px] tablet:text-[16px] ${
               props.btnText === "Results" ? "pointer-events-none" : ""
             }`}
           >
-            <div id="custom-checkbox" className="flex h-full items-center">
-              <input
-                id="small-checkbox"
-                type="checkbox"
-                className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
-                checked={props.check}
-                onChange={() =>
-                  props.handleToggleCheck(props.answer, true, false)
-                }
-              />
-            </div>
+            <div className="flex items-center gap-1 tablet:gap-3">
+              <div id="custom-checkbox" className="flex h-full items-center">
+                <input
+                  id="small-checkbox"
+                  type="checkbox"
+                  className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
+                  checked={props.check}
+                  onChange={() =>
+                    props.handleToggleCheck(props.answer, true, false)
+                  }
+                />
+              </div>
 
-            {props.btnText === "Results" ? (
-              <>{fetchSelectedPercentage()}</>
-            ) : (
-              <></>
-            )}
-            <div
-              id="custom-yello-checkbox"
-              className="flex h-full items-center "
-            >
-              <input
-                id="small-yello-checkbox"
-                type="checkbox"
-                className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
-                checked={props.contend}
-                onChange={() =>
-                  props.handleToggleCheck(props.answer, false, true)
-                } // Wrap the function call in an arrow function
-              />
+              {props.btnText === "Results" ? (
+                <>{fetchSelectedPercentage()}</>
+              ) : null}
             </div>
-            {props.btnText === "Results" ? (
-              <>{fetchContendedPercentage()}</>
-            ) : (
-              <></>
-            )}
+            <div className="flex items-center gap-1 tablet:gap-3">
+              <div
+                id="custom-yello-checkbox"
+                className="flex h-full items-center "
+              >
+                <input
+                  id="small-yello-checkbox"
+                  type="checkbox"
+                  className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
+                  checked={props.contend}
+                  onChange={() =>
+                    props.handleToggleCheck(props.answer, false, true)
+                  }
+                />
+              </div>
+              {props.btnText === "Results" ? (
+                <>{fetchContendedPercentage()}</>
+              ) : null}
+            </div>
           </div>
         )}
       </div>

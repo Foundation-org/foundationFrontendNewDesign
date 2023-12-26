@@ -1,8 +1,8 @@
+import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Link, useLocation } from "react-router-dom";
 import api from "../../../api/Axios";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 
 const Topbar = () => {
   const location = useLocation();
@@ -28,7 +28,7 @@ const Topbar = () => {
         persistedTheme === "dark"
           ? "bg-gray-600"
           : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-      } flex h-24 w-full flex-col items-center justify-between pb-4 tablet:h-[116px] laptop:h-[90px] laptop:flex-row laptop:pb-0 `}
+      } flex h-[4.18rem] w-full flex-col items-center justify-between pb-2 tablet:h-[116px] laptop:h-[90px] laptop:flex-row laptop:pb-0 `}
     >
       {/* logo */}
       <div className="relative flex w-full items-center justify-between px-[17px] py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
@@ -67,7 +67,12 @@ const Topbar = () => {
             </div>
           </div>
         ) : (
-          <div className="flex h-full items-center justify-center space-x-2 laptop:hidden">
+          <div
+            className="flex h-full items-center justify-center space-x-2 laptop:hidden"
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
             <div className="relative block h-fit w-fit laptop:hidden">
               <img
                 src="/assets/svgs/dashboard/badge.svg"
@@ -79,12 +84,7 @@ const Topbar = () => {
               </p>
             </div>
             <div className="text-blue-100 flex flex-col ">
-              <h3
-                className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] dark:text-white tablet:text-[20px]"
-                onClick={() => {
-                  navigate("/profile");
-                }}
-              >
+              <h3 className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] dark:text-white tablet:text-[20px]">
                 My Profile
               </h3>
               <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
@@ -236,7 +236,6 @@ const Topbar = () => {
           </Link>
         </li>
       </ul>
-
       {/* logout btn */}
       <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
         <div className="relative">

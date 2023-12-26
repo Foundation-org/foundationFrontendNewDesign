@@ -12,15 +12,21 @@ import ChangePassword from "./pages/ChangePassword";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const [checkState, setCheckState] = useState(false);
+  const [checkState, setCheckState] = useState(
+    localStorage.getItem("theme") === "dark" ? true : false,
+  );
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [selectedTab, setSelectedTab] = useState(1);
+
+  console.log({ checkState });
 
   useEffect(() => {
     if (persistedTheme === "light") {
       setCheckState(false);
+      localStorage.setItem("theme", "light");
     } else {
       setCheckState(true);
+      localStorage.setItem("theme", "dark");
     }
   }, [persistedTheme]);
 
