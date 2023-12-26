@@ -50,7 +50,7 @@ const QuestionCard = ({
   const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
   const [open, setOpen] = useState(false);
-  const [bookmarkStatus, setbookmarkStatus] = useState(isBookmarked);
+  const [bookmarkStatus, setbookmarkStatus] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
@@ -62,6 +62,10 @@ const QuestionCard = ({
       contend: false,
     })),
   );
+  useEffect(() => {
+    setbookmarkStatus(isBookmarked)
+  }, [isBookmarked])
+  
 
   useEffect(() => {
     setAnswerSelection(
