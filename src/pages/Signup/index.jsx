@@ -148,7 +148,7 @@ export default function Signup() {
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-bl-[65px] lg:rounded-tl-[65px]">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle">Create Account</Typography>
-          <SocialLogins setProvider={setProvider} setProfile={setProfile} />
+          <SocialLogins setProvider={setProvider} setProfile={setProfile} handleSignUpSocial={handleSignUpSocial} />
           <Form
             password={password}
             reTypePassword={reTypePassword}

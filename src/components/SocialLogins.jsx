@@ -20,6 +20,9 @@ const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial, handleSignI
         // isOnlyGetToken
         client_id={import.meta.env.VITE_GG_APP_ID}
         redirect_uri={REDIRECT_URI}
+        scope="openid profile email"
+        iscoveryDocs="claims_supported"
+        // access_type="offline"
         onResolve={({ provider, data }) => {
           setProvider(provider);
           setProfile(data);
@@ -39,15 +42,16 @@ const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial, handleSignI
         </Button>
       </LoginSocialGoogle>
       <LoginSocialFacebook
-        isOnlyGetToken
+        // isOnlyGetToken
         appId={import.meta.env.VITE_FB_APP_ID}
         onResolve={({ provider, data }) => {
           setProvider(provider);
           setProfile(data);
-          // console.log(data.access_token);
+          isLogin ? handleSignInSocial(data) : handleSignUpSocial(data);
         }}
+        redirect_uri={REDIRECT_URI}
         onReject={(err) => {
-          // console.log(err);
+          console.log(err);
         }}
         className="container w-full"
       >
