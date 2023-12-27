@@ -454,7 +454,7 @@ const RankChoice = () => {
           <Droppable droppableId={`typedValues-${Date.now()}`}>
             {(provided) => (
               <ul
-                className="mt-[1.46rem] flex flex-col items-center gap-[6.24px] tablet:mb-8 tablet:mt-10 tablet:gap-[14.7px] laptop:gap-[30px]"
+                className="mt-[1.46rem] flex flex-col items-center gap-[6.24px] tablet:mb-8 tablet:mt-14 tablet:gap-[14.7px] laptop:gap-[30px]"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
@@ -542,7 +542,9 @@ const RankChoice = () => {
         >
           + Add Option
         </button>
-        <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]"></h3>
+        <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
+          &#x200B;
+        </h3>
         {/* settings */}
         <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[16px] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:py-[35px] laptop:max-w-[838px]">
           <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[30px]">

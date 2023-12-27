@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
-import { FaSpinner } from 'react-icons/fa';
+import { FaSpinner } from "react-icons/fa";
 
 const YesNo = () => {
   const navigate = useNavigate();
@@ -45,14 +45,14 @@ const YesNo = () => {
       if (resp.status === 201) {
         toast.success("Successfully Created Quest");
         setTimeout(() => {
-          setLoading(false)
+          setLoading(false);
           navigate("/dashboard");
         }, 2000);
       }
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
-      setLoading(false)
+      toast.error(err.response.data.message.split(":")[1]);
+      setLoading(false);
     },
   });
 
@@ -141,10 +141,11 @@ const YesNo = () => {
         Ask a question that allows for a straightforward "Yes" or "No" response
       </h4>
       <div
-        className={`${persistedTheme === "dark"
+        className={`${
+          persistedTheme === "dark"
             ? "border-[1px] border-[#858585] tablet:border-[2px]"
             : ""
-          } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
+        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
           Create Quest
@@ -180,7 +181,7 @@ const YesNo = () => {
             <Tooltip optionStatus={checkQuestionStatus} />
           </button>
         </div>
-        <div className="mt-[1.46rem] flex flex-col gap-[7px] tablet:mt-10 tablet:gap-[14px] laptop:gap-[30px]">
+        <div className="mt-[1.46rem] flex flex-col gap-[7px] tablet:mt-14 tablet:gap-[14px] laptop:gap-[30px]">
           <YesNoOptions
             number={"#1"}
             answer={"Yes"}
@@ -197,6 +198,7 @@ const YesNo = () => {
           />
         </div>
         <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
+          &#x200B;
         </h3>
         <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[0.30925rem] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:rounded-[16px] tablet:py-[35px] laptop:max-w-[838px]">
           <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[30px]">
@@ -212,12 +214,12 @@ const YesNo = () => {
           <button
             className="mr-7 mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] laptop:rounded-[23.6px] laptop:px-[60px] laptop:py-3 laptop:text-[31.5px]"
             onClick={() => handleSubmit()}
-            disabled={loading===true?true:false}
+            disabled={loading === true ? true : false}
           >
             {loading === true ? (
               <FaSpinner className="animate-spin text-[#EAEAEA]" />
             ) : (
-              'Submit'
+              "Submit"
             )}
           </button>
         </div>

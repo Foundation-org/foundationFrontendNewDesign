@@ -14,7 +14,7 @@ const CustomSwitch2 = ({ enabled, setEnabled }) => {
         className={`${
           enabled
             ? "translate-x-3 bg-[#389CE3] tablet:translate-x-6"
-            : "translate-x-[3px] bg-[#707070]"
+            : "translate-x-[1px] bg-[#707070]"
         }
       green-select2-shape`}
       />

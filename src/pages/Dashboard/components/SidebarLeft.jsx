@@ -1,9 +1,8 @@
 import { useState } from "react";
-import Dropdown from "../../../components/Dropdown";
-import { useDispatch, useSelector } from "react-redux";
 import { GrClose } from "react-icons/gr";
-import CustomSwitch2 from "../../../components/CustomSwitch2";
+import { useDispatch, useSelector } from "react-redux";
 import Dropdown2 from "../../../components/Dropdown2";
+import CustomSwitch2 from "../../../components/CustomSwitch2";
 
 const SidebarLeft = ({
   handleSearch,
@@ -29,11 +28,9 @@ const SidebarLeft = ({
     setMultipleOption(!multipleOption);
   };
 
-  console.log({ filterStates });
-
   return (
     <>
-      <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] flex-col items-center justify-between overflow-y-auto  bg-white text-[#535353] dark:bg-[#0A0A0C] dark:text-white laptop:block laptop:flex laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem]">
+      <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] flex-col items-center justify-between overflow-y-auto  bg-white text-[#535353] dark:bg-[#0A0A0C] dark:text-white laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem]">
         <div className="flex flex-col items-center">
           <div className="flex w-full items-center justify-center gap-[25px] border-b-2 border-[#707175] pb-6 pt-[35px]">
             <h1 className="ml-[5px] flex items-center gap-2 text-[20px] font-medium leading-normal text-[#707175] dark:text-white">
@@ -223,8 +220,8 @@ const SidebarLeft = ({
             </div>
           </div>
         </div>
-        <div className="mt-[10px] flex justify-between gap-[6px] tablet:mt-[21px]">
-          <Dropdown
+        <div className="mt-3 flex items-end justify-between gap-[6px] tablet:mt-[21px]">
+          <Dropdown2
             label={"Status"}
             title={
               filterStates.filterByStatus ? filterStates.filterByStatus : "All"
@@ -234,7 +231,7 @@ const SidebarLeft = ({
               dispatch(setFilterByStatus(item));
             }}
           />
-          <Dropdown
+          <Dropdown2
             label={"Type"}
             title={
               filterStates.filterByType ? filterStates.filterByType : "All"
@@ -250,17 +247,7 @@ const SidebarLeft = ({
               dispatch(setFilterByType(item));
             }}
           />
-          <Dropdown
-            label={"Scope"}
-            title={
-              filterStates.filterByScope ? filterStates.filterByScope : "All"
-            }
-            items={["All", "Me"]}
-            handleSelect={(item) => {
-              dispatch(setFilterByScope(item));
-            }}
-          />
-          <Dropdown
+          <Dropdown2
             label={"Sort"}
             title={
               filterStates.filterBySort
@@ -277,6 +264,52 @@ const SidebarLeft = ({
               dispatch(setFilterBySort(item));
             }}
           />
+          <button
+            className={`${
+              persistedTheme === "dark"
+                ? "bg-[#333B46]"
+                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+            }  inset-0 w-full rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
+            onClick={() => {
+              dispatch(resetFilters());
+              setClearFilter(!clearFilter);
+            }}
+          >
+            Clear Filters
+          </button>
+        </div>
+        <div className="mt-[9px] flex items-center justify-between gap-[6px] tablet:mt-[21px]">
+          <button
+            className={`${
+              persistedTheme === "dark"
+                ? "bg-[#333B46]"
+                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+            }  inset-0 w-full rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
+            onClick={() => {
+              dispatch(resetFilters());
+              setClearFilter(!clearFilter);
+            }}
+          >
+            Preferences
+          </button>
+          <div className="flex w-full items-center justify-center gap-[6px]">
+            <h1 className="text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">
+              Expanded View
+            </h1>
+            <CustomSwitch2
+              enabled={expandedView}
+              setEnabled={setExpandedView}
+            />
+          </div>
+          <div className="flex w-full items-center justify-center gap-[6px]">
+            <h1 className="text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">
+              Show Only My Quests
+            </h1>
+            <CustomSwitch2
+              enabled={multipleOption}
+              setEnabled={handleSwitchChange}
+            />
+          </div>
         </div>
       </div>
     </>

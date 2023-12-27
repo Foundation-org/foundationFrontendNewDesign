@@ -25,7 +25,7 @@ import {
 } from "@mui/material";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { FaSpinner } from 'react-icons/fa';
+import { FaSpinner } from "react-icons/fa";
 
 const DragHandler = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -54,7 +54,6 @@ z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14px] items-center justify-center r
   );
 };
 
-
 const MultipleChoice = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
@@ -67,7 +66,6 @@ const MultipleChoice = () => {
   const [optionsCount, setOptionsCount] = useState(2);
   const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
-
 
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
@@ -97,33 +95,33 @@ const MultipleChoice = () => {
       if (resp.status === 201) {
         toast.success("Successfully Created Quest");
         setTimeout(() => {
-          setLoading(false)
+          setLoading(false);
           navigate("/dashboard");
         }, 2000);
       }
     },
     onError: (err) => {
       // console.log('error', err);
-      toast.error(err.response.data.message.split(':')[1]);
-      setLoading(false)
+      toast.error(err.response.data.message.split(":")[1]);
+      setLoading(false);
     },
   });
 
   const handleSubmit = async () => {
-    setLoading(true)
+    setLoading(true);
     const constraintResponse = await checkUniqueQuestion(question);
 
     if (question === "") {
-      setLoading(false)
+      setLoading(false);
       return toast.warning("Question cannot be empty");
     }
 
-    if (!constraintResponse.data.isUnique){
-      setLoading(false)
+    if (!constraintResponse.data.isUnique) {
+      setLoading(false);
       return toast.warning(
         "This quest is not unique. A similar quest already exists.",
-        );
-      }
+      );
+    }
 
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
@@ -131,7 +129,7 @@ const MultipleChoice = () => {
     });
     // If any error captured
     if (errorMessage) {
-      setLoading(false)
+      setLoading(false);
       return toast.error("Something Went Wrong");
     }
 
@@ -152,10 +150,10 @@ const MultipleChoice = () => {
       (answer) => answer.question.trim() === "",
     );
 
-    if (isEmptyAnswer){
-      setLoading(false)
+    if (isEmptyAnswer) {
+      setLoading(false);
       return toast.warning("Answer cannot be empty");
-    } 
+    }
 
     createQuest(params);
   };
@@ -420,7 +418,7 @@ const MultipleChoice = () => {
           <Droppable droppableId={`typedValues-${Date.now()}`}>
             {(provided) => (
               <ul
-                className="mt-[1.46rem] flex flex-col items-center gap-[6.24px] tablet:mb-8 tablet:mt-10 tablet:gap-[14.7px] laptop:gap-[30px]"
+                className="mt-[1.46rem] flex flex-col items-center gap-[6.24px] tablet:mb-8 tablet:mt-14 tablet:gap-[14.7px] laptop:gap-[30px]"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
@@ -510,6 +508,7 @@ const MultipleChoice = () => {
           + Add Option
         </button>
         <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
+          &#x200B;
         </h3>
         {/* settings */}
         <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[16px] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:py-[35px] laptop:max-w-[838px]">
@@ -541,12 +540,12 @@ const MultipleChoice = () => {
           <button
             className="mr-7 mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] laptop:rounded-[23.6px] laptop:px-[60px] laptop:py-3 laptop:text-[31.5px]"
             onClick={() => handleSubmit()}
-            disabled={loading===true?true:false}
+            disabled={loading === true ? true : false}
           >
             {loading === true ? (
               <FaSpinner className="animate-spin text-[#EAEAEA]" />
             ) : (
-              'Submit'
+              "Submit"
             )}
           </button>
         </div>

@@ -44,6 +44,7 @@ const QuestionCardWithToggle = ({
   multipleOption,
   startStatus,
   createdBy,
+  expandedView,
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -88,17 +89,13 @@ const QuestionCardWithToggle = ({
     );
   }, [answersSelection]);
 
-
   const handleChange = () => {
-
     console.log("change clicked");
     setOpenResults(false);
     const data = { questForeignKey: id, uuid: localStorage.getItem("uId") };
     getStartQuestDetail(data);
     handleStartTest(id);
-
   };
-
 
   const handleOpen = () => {
     setAddOptionField(1);
@@ -135,7 +132,7 @@ const QuestionCardWithToggle = ({
       handleStartTest(null);
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      toast.error(err.response.data.message.split(":")[1]);
     },
   });
 
@@ -184,7 +181,6 @@ const QuestionCardWithToggle = ({
     dispatch(toggleCheck(actionPayload));
   };
 
-
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: createStartQuest,
     onSuccess: (resp) => {
@@ -193,14 +189,14 @@ const QuestionCardWithToggle = ({
         queryClient.invalidateQueries("FeedData");
       }
       handleViewResults(id);
-      userInfo(localStorage.getItem("uId")).then(resp => {
+      userInfo(localStorage.getItem("uId")).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
       });
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      toast.error(err.response.data.message.split(":")[1]);
     },
   });
 
@@ -221,14 +217,14 @@ const QuestionCardWithToggle = ({
         toast.success("Successfully Changed Quest");
         handleViewResults(id);
       }
-      userInfo(localStorage.getItem("uId")).then(resp => {
+      userInfo(localStorage.getItem("uId")).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
       });
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      toast.error(err.response.data.message.split(":")[1]);
     },
   });
 
@@ -308,9 +304,9 @@ const QuestionCardWithToggle = ({
       ) {
         if (
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-          "agree" ||
+            "agree" ||
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-          "yes"
+            "yes"
         ) {
           console.log("ran 1");
           handleToggleCheck(
@@ -321,9 +317,9 @@ const QuestionCardWithToggle = ({
         }
         if (
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-          "agree" ||
+            "agree" ||
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-          "yes"
+            "yes"
         ) {
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].contended,
@@ -333,9 +329,9 @@ const QuestionCardWithToggle = ({
         }
         if (
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-          "disagree" ||
+            "disagree" ||
           res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-          "no"
+            "no"
         ) {
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].contended,
@@ -345,9 +341,9 @@ const QuestionCardWithToggle = ({
         }
         if (
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-          "disagree" ||
+            "disagree" ||
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-          "no"
+            "no"
         ) {
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].selected,
@@ -582,11 +578,7 @@ const QuestionCardWithToggle = ({
     }
   };
 
-
   useEffect(() => {
-
-    console.log("btn text", btnText);
-    console.log("View Results", viewResult);
     if (startStatus === "") {
       dispatch(resetQuests());
       setOpenResults(false);
@@ -595,15 +587,12 @@ const QuestionCardWithToggle = ({
     if (startStatus === "change answer") {
       setOpenResults(true);
       handleViewResults(id);
-
     }
     if (startStatus === "completed") {
       setOpenResults(true);
       handleViewResults(id);
     }
-
   }, []);
-
 
   return (
     <div className="rounded-[12.3px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618] tablet:rounded-[26px]">
@@ -620,7 +609,7 @@ const QuestionCardWithToggle = ({
       <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:ml-[52.65px] tablet:text-[25px]">
         {question?.endsWith("?") ? "Q." : "S."} {question}
       </h1>
-      {(viewResult !== id && openResults !== true) ? (
+      {viewResult !== id && openResults !== true ? (
         <StartTest
           id={id}
           title={title}
@@ -650,9 +639,8 @@ const QuestionCardWithToggle = ({
           badgeCount={badgeCount}
           question={question}
           time={time}
-
+          expandedView={expandedView}
         />
-
       ) : (
         <Result
           id={id}

@@ -12,8 +12,7 @@ import Typography from "../../components/Typography";
 import SocialLogins from "../../components/SocialLogins";
 import MyModal from "./components/Modal";
 import api from "../../api/Axios";
-import { FaSpinner } from 'react-icons/fa';
-
+import { FaSpinner } from "react-icons/fa";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -148,7 +147,11 @@ export default function Signup() {
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-bl-[65px] lg:rounded-tl-[65px]">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle">Create Account</Typography>
-          <SocialLogins setProvider={setProvider} setProfile={setProfile} handleSignUpSocial={handleSignUpSocial} />
+          <SocialLogins
+            setProvider={setProvider}
+            setProfile={setProfile}
+            handleSignUpSocial={handleSignUpSocial}
+          />
           <Form
             password={password}
             reTypePassword={reTypePassword}
@@ -205,9 +208,8 @@ export default function Signup() {
             {isLoading === true ? (
               <FaSpinner className="animate-spin text-[#EAEAEA]" />
             ) : (
-              'Create Account'
+              "Create Account"
             )}
-            
           </Button>
           <div className="mt-[10px] flex gap-3 tablet:mt-[23px]">
             <Typography
@@ -221,7 +223,7 @@ export default function Signup() {
                 variant="textBase"
                 className="text-blue dark:text-white"
               >
-                Log in
+                Sign in
               </Typography>
             </Link>
           </div>

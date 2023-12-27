@@ -250,13 +250,12 @@ const Result = (props) => {
 
   return (
     <>
-      <div className="mt-[26px] flex flex-col gap-[10px]">
+      <div className="mt-[11.66px] flex flex-col gap-[10px] tablet:mt-[26px]">
         {console.log(props.title)}
         {props.title === "Yes/No" || props.title === "Agree/Disagree" ? (
           <>
             {props.title === "Yes/No" ? (
               <>
-                {/* {console.log(ResultsData?.data[ResultsData?.data.length - 1])} */}
                 <SingleAnswer
                   number={"#1"}
                   answer={"Yes"}

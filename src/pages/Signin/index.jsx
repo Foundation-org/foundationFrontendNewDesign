@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { FaSpinner } from "react-icons/fa";
 import { signIn } from "../../api/userAuth";
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,8 +12,6 @@ import Form from "./components/Form";
 import ReCAPTCHA from "react-google-recaptcha";
 import "../../index.css";
 import api from "../../api/Axios";
-import { FaSpinner } from 'react-icons/fa';
-
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -62,6 +61,7 @@ export default function Signin() {
         const resp = await userSignin({ email, password });
 
         if (resp.status === 200) {
+          localStorage.setItem("userLoggedIn", resp.data.uuid);
           localStorage.setItem("uId", resp.data.uuid);
           localStorage.removeItem("isGuestMode");
           localStorage.setItem("jwt", resp.data.token);
@@ -116,13 +116,12 @@ export default function Signin() {
       </div>
 
       <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px]">
-        {/* laptop:max-w-[35vw] mt-10 flex w-[80%] flex-col items-center justify-center md:mt-0 */}
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography
             variant="textTitle"
             className="text-center tablet:text-left"
           >
-            Login
+            Sign in
           </Typography>
           <SocialLogins
             setProvider={setProvider}
@@ -159,12 +158,11 @@ export default function Signin() {
             }}
             disabled={isLoading === true ? true : false}
           >
-             {isLoading === true ? (
+            {isLoading === true ? (
               <FaSpinner className="animate-spin text-[#EAEAEA]" />
             ) : (
-              'Sign in'
+              "Sign in"
             )}
-            
           </Button>
           <div className="mt-[10px] flex justify-center gap-3 tablet:mt-[23px]">
             <Typography

@@ -254,6 +254,7 @@ const Main = () => {
                     })}
                     lastInteractedAt={item.lastInteractedAt}
                     usersChangeTheirAns={item.usersChangeTheirAns}
+                    expandedView={expandedView}
                   />
                 </div>
               ))
@@ -301,6 +302,7 @@ const Main = () => {
                     })}
                     lastInteractedAt={item.lastInteractedAt}
                     usersChangeTheirAns={item.usersChangeTheirAns}
+                    expandedView={expandedView}
                   />
                 </div>
               ))}

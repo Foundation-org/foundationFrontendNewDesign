@@ -26,11 +26,11 @@
 }
 
 .green-select2 {
-  @apply relative inline-flex h-[10px] w-[25px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 tablet:h-[24px] tablet:w-[50px];
+  @apply relative inline-flex h-[14px] w-[28px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 tablet:h-[24px] tablet:w-[50px];
 }
 
 .green-select2-shape {
-  @apply pointer-events-none inline-block h-4 w-4 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-[20px] tablet:w-[20px];
+  @apply pointer-events-none inline-block h-3 w-3 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-[20px] tablet:w-[20px];
 }
 
 .blue-submit-button {

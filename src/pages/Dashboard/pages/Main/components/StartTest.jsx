@@ -45,6 +45,7 @@ const StartTest = ({
   time,
   setStartTest,
   loading,
+  expandedView,
 }) => {
   const [timeAgo, setTimeAgo] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -230,83 +231,95 @@ const StartTest = ({
             )}
           </>
         ) : title === "Multiple Choice" ? (
-          [...answersSelection].map((item, index) => (
-            <SingleAnswerMultipleChoice
-              key={index}
-              number={"#" + (index + 1)}
-              answer={item.label}
-              editable={item.edit}
-              deleteable={item.delete}
-              title={title}
-              multipleOption={multipleOption}
-              setAddOptionLimit={setAddOptionLimit}
-              answersSelection={answersSelection}
-              setAnswerSelection={setAnswerSelection}
-              checkInfo={true}
-              check={findLabelChecked(answersSelection, item.label)}
-              contend={findLabelContend(answersSelection, item.label)}
-              whichTypeQuestion={whichTypeQuestion}
-              handleCheckChange={
-                multipleOption === true
-                  ? (check) => handleCheckChange(index, check)
-                  : (check) => handleCheckChangeSingle(index, check)
-              }
-              handleContendChange={
-                multipleOption === true
-                  ? (contend) => handleContendChange(index, contend)
-                  : (contend) => handleContendChangeSingle(index, contend)
-              }
-            />
-          ))
+          <>
+            {multipleOption ? (
+              <h4 className="mb-[10.5px] ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-3 laptop:mb-3 laptop:text-[18px]">
+                you can select multiple ansewr
+              </h4>
+            ) : null}
+            {[...answersSelection].map((item, index) => (
+              <SingleAnswerMultipleChoice
+                key={index}
+                number={"#" + (index + 1)}
+                answer={item.label}
+                editable={item.edit}
+                deleteable={item.delete}
+                title={title}
+                multipleOption={multipleOption}
+                setAddOptionLimit={setAddOptionLimit}
+                answersSelection={answersSelection}
+                setAnswerSelection={setAnswerSelection}
+                checkInfo={true}
+                check={findLabelChecked(answersSelection, item.label)}
+                contend={findLabelContend(answersSelection, item.label)}
+                whichTypeQuestion={whichTypeQuestion}
+                handleCheckChange={
+                  multipleOption === true
+                    ? (check) => handleCheckChange(index, check)
+                    : (check) => handleCheckChangeSingle(index, check)
+                }
+                handleContendChange={
+                  multipleOption === true
+                    ? (contend) => handleContendChange(index, contend)
+                    : (contend) => handleContendChangeSingle(index, contend)
+                }
+              />
+            ))}
+          </>
         ) : (
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
-              {(provided) => (
-                <ul
-                  className="flex flex-col items-center gap-[5.7px] tablet:gap-4"
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  {rankedAnswers.map((item, index) => (
-                    <Draggable
-                      key={item.id}
-                      draggableId={item.id}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <li
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          className="w-full"
-                        >
-                          <SingleAnswerRankedChoice
-                            number={"#" + (index + 1)}
-                            editable={item.edit}
-                            deleteable={item.delete}
-                            answer={item.label}
-                            answersSelection={answersSelection}
-                            setAnswerSelection={setAnswerSelection}
-                            title={title}
-                            checkInfo={false}
-                            check={findLabelChecked(
-                              answersSelection,
-                              item.label,
-                            )}
-                            handleCheckChange={(check) =>
-                              handleCheckChange(index, check)
-                            }
-                            setAddOptionLimit={setAddOptionLimit}
-                          />
-                        </li>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </ul>
-              )}
-            </Droppable>
-          </DragDropContext>
+          <>
+            <h4 className="mb-[10.5px] ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-3 laptop:mb-3 laptop:text-[18px]">
+              you can drag and drop options in your order of perfence.
+            </h4>
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+              <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
+                {(provided) => (
+                  <ul
+                    className="flex flex-col items-center gap-[5.7px] tablet:gap-4"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    {rankedAnswers.map((item, index) => (
+                      <Draggable
+                        key={item.id}
+                        draggableId={item.id}
+                        index={index}
+                      >
+                        {(provided) => (
+                          <li
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className="w-full"
+                          >
+                            <SingleAnswerRankedChoice
+                              number={"#" + (index + 1)}
+                              editable={item.edit}
+                              deleteable={item.delete}
+                              answer={item.label}
+                              answersSelection={answersSelection}
+                              setAnswerSelection={setAnswerSelection}
+                              title={title}
+                              checkInfo={false}
+                              check={findLabelChecked(
+                                answersSelection,
+                                item.label,
+                              )}
+                              handleCheckChange={(check) =>
+                                handleCheckChange(index, check)
+                              }
+                              setAddOptionLimit={setAddOptionLimit}
+                            />
+                          </li>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </ul>
+                )}
+              </Droppable>
+            </DragDropContext>
+          </>
         )}
       </div>
 
@@ -347,19 +360,22 @@ const StartTest = ({
             ) : null}
           </div>
         ) : null}
+        {console.log({ expandedView })}
         <div className="mr-[14px] flex gap-2 tablet:mr-[30px] tablet:gap-4">
-          <button
-            className={` ${
-              persistedTheme === "dark"
-                ? "bg-[#333B46]"
-                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]  tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
-            onClick={() => {
-              setStartTest(null);
-            }}
-          >
-            Cancel
-          </button>
+          {!expandedView ? (
+            <button
+              className={` ${
+                persistedTheme === "dark"
+                  ? "bg-[#333B46]"
+                  : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+              } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner dark:text-[#B6B6B6]  tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+              onClick={() => {
+                setStartTest(null);
+              }}
+            >
+              Cancel
+            </button>
+          ) : null}
           <button
             className={`relative ${
               persistedTheme === "dark"
