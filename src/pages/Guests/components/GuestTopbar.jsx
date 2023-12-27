@@ -1,4 +1,4 @@
-const GuestTopbar = ({ createdBy, badgeCount, title }) => {
+const GuestTopbar = ({ createdBy, badgeCount, title,QuestTopic }) => {
   return (
     <div className="flex items-center justify-between px-[10.4px] py-2 tablet:px-[22px] tablet:py-[17px]">
       {createdBy === localStorage.getItem("uId") ? (
@@ -29,7 +29,7 @@ const GuestTopbar = ({ createdBy, badgeCount, title }) => {
           {title}
         </h1>
         <h1 className="text-center text-[10.414px] font-medium leading-normal text-[#9A9A9A] dark:text-[#9A9A9A] tablet:text-[1.125rem]">
-          Technology
+          {QuestTopic}
         </h1>
       </div>
       <p></p>

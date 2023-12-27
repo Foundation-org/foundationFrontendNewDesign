@@ -27,6 +27,7 @@ const QuestionCard = ({
   alt,
   badgeCount,
   title,
+  QuestTopic,
   answers,
   question,
   whichTypeQuestion,
@@ -490,6 +491,7 @@ const QuestionCard = ({
     <div className="rounded-[12.3px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618] tablet:rounded-[26px]">
       <CardTopbar
         title={title}
+        QuestTopic={QuestTopic}
         img={img}
         alt={alt}
         badgeCount={badgeCount}

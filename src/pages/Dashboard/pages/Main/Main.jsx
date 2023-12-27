@@ -6,6 +6,7 @@ import {
   getAllUnanswered,
   getAllChangable,
   searchQuestions,
+  searchQuestionsWithPreferences,
   getAllBookmarkedQuests,
 } from "../../../../api/homepageApis";
 import {
@@ -15,6 +16,8 @@ import {
   setFilterBySort,
   setFilterByStatus,
   setFilterByType,
+  setSearch,
+  setPreferences,
 } from "../../../../features/filters/filtersSlice";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
@@ -42,6 +45,7 @@ const Main = () => {
     uuid: localStorage.getItem("uId"),
   };
   const [searchData, setSearchData] = useState("");
+  const [preferencesData, setPreferencesData] = useState("");
   const [clearFilter, setClearFilter] = useState(false);
   const debouncedSearch = useDebounce(searchData, 1000);
   const [startTest, setStartTest] = useState(null);
@@ -55,6 +59,9 @@ const Main = () => {
 
   const handleSearch = (e) => {
     setSearchData(e.target.value);
+  };
+  const handlePreferences = (e) => {
+    setPreferencesData(e.target.value);
   };
 
   const applyFilters = (params, filterStates) => {
@@ -94,12 +101,19 @@ const Main = () => {
     queryFn: async () => {
       params = applyFilters(params, filterStates);
 
-      if (debouncedSearch === "") {
+      if (debouncedSearch === "" && preferencesData==="") {
         const result = await fetchDataByStatus(params, filterStates);
         return result.data;
-      } else {
+      } else if(debouncedSearch!=="") {
         const result = await searchQuestions(
           debouncedSearch,
+          localStorage.getItem("uId"),
+        );
+        return result;
+      }
+      else{
+        const result = await searchQuestionsWithPreferences(
+          preferencesData,
           localStorage.getItem("uId"),
         );
         return result;
@@ -109,6 +123,7 @@ const Main = () => {
       "FeedData",
       filterStates,
       debouncedSearch,
+      preferencesData,
       pagination,
       clearFilter,
     ],
@@ -178,6 +193,8 @@ const Main = () => {
       <SidebarLeft
         handleSearch={handleSearch}
         searchData={searchData}
+        handlePreferences={handlePreferences}
+        preferencesData={preferencesData}
         clearFilter={clearFilter}
         setClearFilter={setClearFilter}
         setSearchData={setSearchData}
@@ -255,6 +272,7 @@ const Main = () => {
                     lastInteractedAt={item.lastInteractedAt}
                     usersChangeTheirAns={item.usersChangeTheirAns}
                     expandedView={expandedView}
+                    QuestTopic={item.QuestTopic}
                   />
                 </div>
               ))
@@ -303,6 +321,7 @@ const Main = () => {
                     lastInteractedAt={item.lastInteractedAt}
                     usersChangeTheirAns={item.usersChangeTheirAns}
                     expandedView={expandedView}
+                    QuestTopic={item.QuestTopic}
                   />
                 </div>
               ))}
