@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   search: "",
+  preferences:"",
   filterByStatus: "",
   filterByType: "",
   filterByScope: "",
@@ -14,6 +15,9 @@ export const filtersSlice = createSlice({
   reducers: {
     setSearch: (state, action) => {
       state.search = action.payload;
+    },
+    setPreferences:(state, action) => {
+      state.preferences = action.payload;
     },
     setFilterByStatus: (state, action) => {
       state.filterByStatus = action.payload;
@@ -35,6 +39,7 @@ export const filtersSlice = createSlice({
 
 export const {
   setSearch,
+  setPreferences,
   setFilterByStatus,
   setFilterByType,
   setFilterByScope,

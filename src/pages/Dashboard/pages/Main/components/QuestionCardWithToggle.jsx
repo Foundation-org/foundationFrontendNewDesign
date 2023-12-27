@@ -45,6 +45,7 @@ const QuestionCardWithToggle = ({
   startStatus,
   createdBy,
   expandedView,
+  QuestTopic
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -605,6 +606,7 @@ const QuestionCardWithToggle = ({
         handleClickBookmark={handleBookmark}
         bookmarkStatus={bookmarkStatus}
         createdBy={createdBy}
+        QuestTopic={QuestTopic}
       />
       <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:ml-[52.65px] tablet:text-[25px]">
         {question?.endsWith("?") ? "Q." : "S."} {question}

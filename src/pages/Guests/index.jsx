@@ -73,6 +73,7 @@ const Guests = () => {
             viewResult={viewResult}
             handleViewResults={handleViewResults}
             multipleOption={singleQuest?.userCanSelectMultiple}
+            QuestTopic={singleQuest?.QuestTopic}
           />
         </div>
         <SidebarRight />

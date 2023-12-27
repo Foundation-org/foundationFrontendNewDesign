@@ -7,6 +7,8 @@ import CustomSwitch2 from "../../../components/CustomSwitch2";
 const SidebarLeft = ({
   handleSearch,
   searchData,
+  handlePreferences,
+  preferencesData,
   clearFilter,
   setClearFilter,
   setSearchData,
@@ -89,6 +91,8 @@ const SidebarLeft = ({
             id="floating_outlined"
             className="h-[45px] w-[212px] rounded-[10px] border-2 border-[#707175] bg-[#C9C8C8] px-5 py-2 text-[18px] font-medium text-[#707175] focus:outline-none dark:bg-[#333B46] dark:text-[#DCDCDC]"
             placeholder="Topic Preferences"
+            value={preferencesData}
+            onChange={handlePreferences}
           />
           <div className="mt-[46px] flex flex-col gap-9">
             <Dropdown2

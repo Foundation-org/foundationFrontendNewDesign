@@ -24,6 +24,7 @@ const QuestionCard = ({
   viewResult,
   handleViewResults,
   multipleOption,
+  QuestTopic
 }) => {
   const dispatch = useDispatch();
   const quests = useSelector(getQuests);
@@ -330,7 +331,7 @@ const QuestionCard = ({
   return (
     <div className="flex justify-center">
       <div className="mx-[15px] w-full rounded-[12.3px] bg-[#F3F3F3] tablet:mx-[30px] tablet:rounded-[1.625rem] laptop:mx-[5.25rem]">
-        <GuestTopbar badgeCount={5} title={title} />
+        <GuestTopbar badgeCount={5} title={title} QuestTopic={QuestTopic} />
         <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:ml-[52.65px] tablet:text-[25px]">
           {question?.endsWith("?") ? "Q." : "S."} {question}
         </h1>

@@ -9,6 +9,7 @@ const CardTopbar = ({
   handleClickBookmark,
   bookmarkStatus,
   createdBy,
+  QuestTopic
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -37,9 +38,14 @@ const CardTopbar = ({
           </p>
         </div>
       )}
-      <h1 className="text-[10.414px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF] tablet:text-[22px]">
-        {title}
-      </h1>
+      <div>
+        <h1 className="text-[10.414px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF] tablet:text-[22px]">
+          {title}
+        </h1>
+        <h1 className="text-center text-[10.414px] font-medium leading-normal text-[#9A9A9A] dark:text-[#9A9A9A] tablet:text-[1.125rem]">
+          {QuestTopic}
+        </h1>
+      </div>
       <div onClick={() => handleClickBookmark(isBookmarked)}>
         {bookmarkStatus ? (
           persistedTheme !== "dark" ? (
