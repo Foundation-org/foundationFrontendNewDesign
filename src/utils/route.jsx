@@ -16,7 +16,6 @@ export function Router() {
       const userToken = localStorage.getItem("userLoggedIn");
       if (!userToken || userToken === "undefined") {
         setIsLoggedIn(false);
-        navigate("/");
       } else {
         setIsLoggedIn(true);
       }
@@ -24,8 +23,6 @@ export function Router() {
 
     checkUserToken();
   }, [navigate]);
-
-  console.log({ isLoggedIn });
 
   return (
     <>
@@ -50,7 +47,7 @@ export function Router() {
         {/* 404 page */}
         <Route
           path="*"
-          element={<h1 className="font-semibold">404 Not found</h1>}
+          element={isLoggedIn ? <Navigate to="/dashboard" /> : <Signin />}
         />
       </Routes>
     </>
