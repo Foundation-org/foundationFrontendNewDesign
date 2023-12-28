@@ -32,7 +32,7 @@ const SidebarRight = () => {
       iconLight: "/assets/svgs/dashboard/icon12.svg",
       alt: "icon1",
       title: "Quests Answered",
-      value: (response && response?.addedAnswers) || 0,
+      value: (response && response?.usersAnswered) || 0,
     },
     // {
     //   id: 3,

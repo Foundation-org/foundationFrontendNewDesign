@@ -19,7 +19,7 @@ const Contributions = () => {
       iconLight: "/assets/svgs/dashboard/icon12.svg",
       alt: "icon1",
       title: "Quests Answered",
-      value: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0,
+      value: (persistedUserInfo && persistedUserInfo?.usersAnswered) || 0,
     },
     {
       id: 3,
