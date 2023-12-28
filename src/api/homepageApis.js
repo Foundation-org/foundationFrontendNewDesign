@@ -10,9 +10,9 @@ export const searchQuestions = async (term, uuid) => {
   }
 };
 
-// To get all topics of preferences 
+// To get all topics of preferences
 export const getAllTopics = async () => {
-  return await api.get(`/preferences/getAllTopic`);
+  return await api.get("/preferences/getAllTopic");
 };
 
 // ============ Filters

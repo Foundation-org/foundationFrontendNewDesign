@@ -107,7 +107,10 @@ const Topbar = () => {
           />
         </Link>
         <div className="flex w-[85.81px] items-center justify-end gap-4 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
-          <div className="relative cursor-pointer ">
+          <div
+            className="relative cursor-pointer "
+            onClick={() => toast.error("err coming soon")}
+          >
             <img
               src="/assets/svgs/dashboard/notification_icon.svg"
               alt="arrow-right"
@@ -237,9 +240,11 @@ const Topbar = () => {
         </li>
       </ul>
       {/* logout btn */}
-      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]"
-      onClick={() => toast.info("Notifications are coming soon")}>
-        <div className="relative">
+      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
+        <div
+          className="relative"
+          onClick={() => toast.error("err coming soon")}
+        >
           <img
             src="/assets/svgs/dashboard/notification_icon.svg"
             alt="arrow-right"

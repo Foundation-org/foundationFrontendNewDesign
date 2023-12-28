@@ -187,9 +187,10 @@ const StartTest = ({
 
   return (
     <>
-      <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
+      {/* <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]"> */}
+      <>
         {title === "Yes/No" || title === "Agree/Disagree" ? (
-          <>
+          <div className="mt-[18px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px]">
             {title === "Yes/No" ? (
               <>
                 <SingleAnswer
@@ -229,14 +230,19 @@ const StartTest = ({
                 />
               </>
             )}
-          </>
+          </div>
         ) : title === "Multiple Choice" ? (
-          <>
+          <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
             {multipleOption ? (
-              <h4 className="mb-[10.5px] ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[82.65px] tablet:text-[16.58px] laptop:-mt-3 laptop:mb-3 laptop:text-[18px]">
+              // <h4 className="mb-[10.5px] ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[82.65px] tablet:text-[16.58px] laptop:-mt-3 laptop:mb-3 laptop:text-[18px]">
+              <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
                 You can select multiple options.
               </h4>
-            ) : null}
+            ) : (
+              <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
+                &#x200B;
+              </h4>
+            )}
             {[...answersSelection].map((item, index) => (
               <SingleAnswerMultipleChoice
                 key={index}
@@ -265,10 +271,11 @@ const StartTest = ({
                 }
               />
             ))}
-          </>
+          </div>
         ) : (
-          <>
-            <h4 className="mb-[10.5px] ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-3 laptop:mb-3 laptop:text-[18px]">
+          <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
+            {/* <h4 className="mb-[10.5px] ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-3 laptop:mb-3 laptop:text-[18px]"> */}
+            <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
               You can drag and drop options in your order of preference.
             </h4>
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -319,9 +326,9 @@ const StartTest = ({
                 )}
               </Droppable>
             </DragDropContext>
-          </>
+          </div>
         )}
-      </div>
+      </>
 
       {/* Add Options && Cancel && Submit Button */}
       <div

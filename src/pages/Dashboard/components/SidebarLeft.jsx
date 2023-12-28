@@ -20,6 +20,8 @@ const SidebarLeft = ({
   setFilterByType,
   expandedView,
   setExpandedView,
+  columns,
+  setColumns,
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -114,6 +116,8 @@ const SidebarLeft = ({
             <TopicPreferences
               topicSearch={topicSearch}
               setTopicSearch={setTopicSearch}
+              columns={columns}
+              setColumns={setColumns}
             />
           </BasicModal>
           <div className="mt-[46px] flex flex-col gap-9">

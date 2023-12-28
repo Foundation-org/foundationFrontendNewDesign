@@ -1,45 +1,20 @@
-import { useState } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useEffect, useState } from "react";
 import { GrClose } from "react-icons/gr";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useQuery } from "@tanstack/react-query";
+import { getAllTopics } from "../../../../api/homepageApis";
 
-const TopicPreferences = ({ topicSearch, setTopicSearch }) => {
-  const initialColumns = {
-    All: {
-      id: "All",
-      list: [
-        "item 1",
-        "item 2",
-        "item 3",
-        "item 4",
-        "item 5",
-        "item 6",
-        "item 7",
-        "item 8",
-        "item 9",
-        "item 10",
-        "item 12",
-        "item 13",
-        "item 14",
-        "item 15",
-        "item 16",
-        "item 17",
-      ],
-    },
-    Preferences: {
-      id: "Preferences",
-      list: [],
-    },
-    Block: {
-      id: "Block",
-      list: [],
-    },
-  };
-
-  const [columns, setColumns] = useState(initialColumns);
-
+const TopicPreferences = ({
+  topicSearch,
+  setTopicSearch,
+  columns,
+  setColumns,
+}) => {
   const handleSearch = (e) => {
     setTopicSearch(e.target.value);
   };
+
+  console.log({ columns });
 
   const onDragEnd = ({ source, destination }) => {
     // Make sure we have a valid destination
@@ -156,24 +131,14 @@ const TopicPreferences = ({ topicSearch, setTopicSearch }) => {
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
-                      {col.list.length >= 1 ? (
+                      {col.list?.length >= 1 ? (
                         col.list.map((text, index) => (
                           <Draggable draggableId={text} index={index}>
-                            {(provided, snapshot) => (
+                            {(provided) => (
                               <div
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                style={{
-                                  ...provided.draggableProps.style,
-                                  transform: `translate(${
-                                    snapshot.isDragging ? 0 : 0
-                                  }px, ${
-                                    snapshot.isDragging
-                                      ? provided.draggableProps.style.transform
-                                      : 0
-                                  }px)`, // Adjust the x and y offset here
-                                }}
                                 className="w-fit rounded-[8px] border-[1px] border-[#435059] bg-[#FCFCFD] px-3 py-[6px] text-[26px] font-normal leading-normal text-[#435059]"
                               >
                                 {text}
