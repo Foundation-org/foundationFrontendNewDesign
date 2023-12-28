@@ -250,7 +250,7 @@ const Result = (props) => {
 
   return (
     <>
-      <div className="mt-[11.66px] flex flex-col gap-[10px] tablet:mt-[26px]">
+      <div className="mt-[22px] flex flex-col gap-[10px] tablet:mt-[47px]">
         {console.log(props.title)}
         {props.title === "Yes/No" || props.title === "Agree/Disagree" ? (
           <>
