@@ -187,7 +187,7 @@ const StartTest = ({
 
   return (
     <>
-      <div className="mt-[22px] flex flex-col gap-[5.7px] tablet:mt-[47px] tablet:gap-[10px]">
+      <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
         {title === "Yes/No" || title === "Agree/Disagree" ? (
           <>
             {title === "Yes/No" ? (
@@ -233,8 +233,8 @@ const StartTest = ({
         ) : title === "Multiple Choice" ? (
           <>
             {multipleOption ? (
-              <h4 className="-mt-[20px] mb-[2px] ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] target:mb-[6px] tablet:-mt-10 tablet:ml-[52.65px] tablet:text-[16.58px] laptop:text-[18px]">
-                you can select multiple answers
+              <h4 className="mb-[10.5px] ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[82.65px] tablet:text-[16.58px] laptop:-mt-3 laptop:mb-3 laptop:text-[18px]">
+                You can select multiple answers.
               </h4>
             ) : null}
             {[...answersSelection].map((item, index) => (
@@ -268,7 +268,7 @@ const StartTest = ({
           </>
         ) : (
           <>
-            <h4 className="-mt-[20px] mb-[2px] ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] target:mb-[6px] tablet:-mt-10 tablet:ml-[52.65px] tablet:text-[16.58px] laptop:text-[18px]">
+            <h4 className="mb-[10.5px] ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-3 laptop:mb-3 laptop:text-[18px]">
               you can drag and drop options in your order of perfence.
             </h4>
             <DragDropContext onDragEnd={handleOnDragEnd}>
