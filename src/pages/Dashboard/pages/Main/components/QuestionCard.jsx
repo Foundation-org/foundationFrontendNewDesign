@@ -415,13 +415,21 @@ const QuestionCard = ({
           addedAnswer: addedAnswerValue,
           uuid: localStorage.getItem("uId"),
         };
-
+        console.log("selected",params.answer.selected);
         // && params.answer.contended.length === 0
         if (params.answer.selected.length === 0) {
           toast.warning("You cannot submit without answering");
           setLoading(false);
           return;
         }
+        const isEmptyQuestion =params.answer.selected.some(item => item.question.trim() === '');
+
+        if (isEmptyQuestion) {
+          toast.error("You cannot leave the added option blank");
+          setLoading(false);
+          return;
+        }
+
 
         console.log("params", params);
         startQuest(params);

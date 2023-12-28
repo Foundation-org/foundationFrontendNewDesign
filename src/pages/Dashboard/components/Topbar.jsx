@@ -222,7 +222,7 @@ const Topbar = () => {
                   ? "text-[#92959D]"
                   : "text-[#BEDEF4]"
             }`}
-            onClick={() => toast.info("Marketplace is comming soon")}
+            onClick={() => toast.info("Marketplace is coming soon")}
           >
             {(location.pathname === "/dashboard/marketplace" ||
               location.pathname === "/dashboard/marketplace/") && (
@@ -237,7 +237,8 @@ const Topbar = () => {
         </li>
       </ul>
       {/* logout btn */}
-      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
+      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]"
+      onClick={() => toast.info("Notifications are coming soon")}>
         <div className="relative">
           <img
             src="/assets/svgs/dashboard/notification_icon.svg"

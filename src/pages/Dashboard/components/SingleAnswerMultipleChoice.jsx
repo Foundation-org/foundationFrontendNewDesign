@@ -64,6 +64,17 @@ const SingleAnswerMultipleChoice = (props) => {
 
     props.setAnswerSelection(newArr);
   };
+  const handleDeleteOption = () => {
+    const newArr = props.answersSelection.filter(
+      (item) => item.label !== props.answer,
+    );
+
+    props.setAnswerSelection(newArr);
+    props.setAddOptionLimit(0);
+    toast.success("Item deleted");
+
+  };
+
 
   return (
     <div className="ml-[30px] mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[72px]">
@@ -96,17 +107,17 @@ const SingleAnswerMultipleChoice = (props) => {
               </h1>
             )}
             <div className="flex items-center gap-[19px]">
-              {props.editable ? (
+              {/* {props.editable ? (
                 <img
                   src="/assets/svgs/dashboard/edit.svg"
                   className="h-3 tablet:h-auto"
                 />
-              ) : null}
+              ) : null} */}
               {props.deleteable ? (
                 <img
                   src="/assets/svgs/dashboard/trash.svg"
                   className="h-3 cursor-pointer tablet:h-auto"
-                  onClick={handleDeleteOpen}
+                  onClick={handleDeleteOption}
                 />
               ) : null}
             </div>

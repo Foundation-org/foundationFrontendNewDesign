@@ -366,6 +366,20 @@ const MultipleChoice = () => {
     setTypedValues(newTypedValues);
   };
 
+  const checkError=()=>{
+    const hasTooltipError = typedValues.some(
+      (value) => value.optionStatus.tooltipStyle === "tooltip-error"
+    );
+
+    if(checkQuestionStatus.tooltipStyle === 'tooltip-error'|| hasTooltipError){
+      return true
+    }
+    else{
+      return false
+    }
+
+  }
+
   return (
     <div>
       <h4 className="mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] dark:text-[#AAA] tablet:mt-[25.8px] tablet:text-[16.58px] laptop:mt-[47px] laptop:text-[25px]">
@@ -540,7 +554,7 @@ const MultipleChoice = () => {
           <button
             className="mr-7 mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] laptop:rounded-[23.6px] laptop:px-[60px] laptop:py-3 laptop:text-[31.5px]"
             onClick={() => handleSubmit()}
-            disabled={loading === true ? true : false}
+            disabled={(loading === true || checkError()) ? true : false}
           >
             {loading === true ? (
               <FaSpinner className="animate-spin text-[#EAEAEA]" />

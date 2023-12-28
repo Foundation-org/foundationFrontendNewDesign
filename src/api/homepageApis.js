@@ -9,13 +9,10 @@ export const searchQuestions = async (term, uuid) => {
     return response.data;
   }
 };
-export const searchQuestionsWithPreferences = async (term, uuid) => {
-  if (term !== "") {
-    const response = await api.post(
-      `/search/searchQuestionsWithPreferences?term=${term}&uuid=${uuid}`,
-    );
-    return response.data;
-  }
+
+// To get all topics of preferences 
+export const getAllTopics = async () => {
+  return await api.get(`/preferences/getAllTopic`);
 };
 
 // ============ Filters
