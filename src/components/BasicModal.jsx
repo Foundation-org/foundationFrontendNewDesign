@@ -1,7 +1,13 @@
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 
-const BasicModal = ({ open, handleClose, children, customStyle }) => {
+const BasicModal = ({
+  open,
+  handleClose,
+  children,
+  customStyle,
+  customClasses,
+}) => {
   const defaultStyle = {
     position: "absolute",
     top: "50%",
@@ -20,7 +26,8 @@ const BasicModal = ({ open, handleClose, children, customStyle }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={mergedStyle} className="rounded-[9.251px] laptop:rounded-[26px]">
+      {/* <Box sx={mergedStyle} className="rounded-[9.251px] laptop:rounded-[26px]"> */}
+      <Box sx={mergedStyle} className={customClasses}>
         {children}
       </Box>
     </Modal>

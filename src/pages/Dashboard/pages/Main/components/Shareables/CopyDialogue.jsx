@@ -56,7 +56,7 @@ const CopyDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
         </p>
         <div className="flex">
           <div className="w-full rounded-l-[9.42px] bg-[#F3F3F3] py-[10.51px] pl-[9.43px] pr-[1.58rem] tablet:py-[30px] tablet:pl-[26px] laptop:rounded-l-[26px] laptop:pr-[70px]">
-            <p className="desktop:w-[32rem] w-[56vw] truncate text-[9.42px] font-normal text-[#435059] tablet:text-[26px] laptop:w-[40vw]">
+            <p className="w-[56vw] truncate text-[9.42px] font-normal text-[#435059] tablet:text-[26px] laptop:w-[40vw] desktop:w-[32rem]">
               {url}
             </p>
           </div>

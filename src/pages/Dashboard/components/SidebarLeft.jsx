@@ -3,6 +3,8 @@ import { GrClose } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import Dropdown2 from "../../../components/Dropdown2";
 import CustomSwitch2 from "../../../components/CustomSwitch2";
+import BasicModal from "../../../components/BasicModal";
+import TopicPreferences from "./topicpreferences";
 
 const SidebarLeft = ({
   handleSearch,
@@ -22,10 +24,23 @@ const SidebarLeft = ({
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [multipleOption, setMultipleOption] = useState(false);
+  const [openTopicPref, setOpenTopicPref] = useState(false);
+  const [topicSearch, setTopicSearch] = useState("");
 
   const handleSwitchChange = () => {
     dispatch(setFilterByScope(multipleOption ? "All" : "Me"));
     setMultipleOption(!multipleOption);
+  };
+
+  const handleTopicPref = () => {
+    setOpenTopicPref(!openTopicPref);
+  };
+
+  const customModalStyle = {
+    backgroundColor: "#FCFCFD",
+    boxShadow: "none",
+    border: "0px",
+    outline: "none",
   };
 
   return (
@@ -84,12 +99,23 @@ const SidebarLeft = ({
             />
             Filters
           </h1>
-          <input
-            type="text"
-            id="floating_outlined"
+          <button
+            onClick={handleTopicPref}
             className="h-[45px] w-[212px] rounded-[10px] border-2 border-[#707175] bg-[#C9C8C8] px-5 py-2 text-[18px] font-medium text-[#707175] focus:outline-none dark:bg-[#333B46] dark:text-[#DCDCDC]"
-            placeholder="Topic Preferences"
-          />
+          >
+            Topic Preferences
+          </button>
+          <BasicModal
+            open={openTopicPref}
+            handleClose={handleTopicPref}
+            customStyle={customModalStyle}
+            customClasses="rounded-[2.31rem]"
+          >
+            <TopicPreferences
+              topicSearch={topicSearch}
+              setTopicSearch={setTopicSearch}
+            />
+          </BasicModal>
           <div className="mt-[46px] flex flex-col gap-9">
             <Dropdown2
               label={"Status"}

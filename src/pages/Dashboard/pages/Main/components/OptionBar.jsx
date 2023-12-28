@@ -301,6 +301,7 @@ const OptionBar = ({
             open={copyModal}
             handleClose={handleCopyClose}
             customStyle={customModalStyle}
+            customClasses="rounded-[9.251px] laptop:rounded-[26px]"
           >
             <CopyDialogue
               handleClose={handleCopyClose}
@@ -318,6 +319,7 @@ const OptionBar = ({
             open={linkModal}
             handleClose={handleLinkClose}
             customStyle={customModalStyle}
+            customClasses="rounded-[9.251px] laptop:rounded-[26px]"
           >
             <UrlDialogue
               handleClose={handleLinkClose}
@@ -335,6 +337,7 @@ const OptionBar = ({
             open={emailModal}
             handleClose={handleEmailClose}
             customStyle={customModalStyle}
+            customClasses="rounded-[9.251px] laptop:rounded-[26px]"
           >
             <EmailDialogue handleClose={handleEmailClose} id={id} />
           </BasicModal>
@@ -345,6 +348,7 @@ const OptionBar = ({
             open={twitterModal}
             handleClose={handleTwitterClose}
             customStyle={customModalStyle}
+            customClasses="rounded-[9.251px] laptop:rounded-[26px]"
           >
             <TwitterDialogue
               handleClose={handleTwitterClose}
@@ -365,6 +369,7 @@ const OptionBar = ({
             open={fbModal}
             handleClose={handleFbClose}
             customStyle={customModalStyle}
+            customClasses="rounded-[9.251px] laptop:rounded-[26px]"
           >
             <FbDialogue
               handleClose={handleFbClose}
