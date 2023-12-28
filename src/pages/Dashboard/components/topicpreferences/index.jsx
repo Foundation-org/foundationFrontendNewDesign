@@ -4,16 +4,33 @@ import { GrClose } from "react-icons/gr";
 
 const TopicPreferences = ({ topicSearch, setTopicSearch }) => {
   const initialColumns = {
-    todo: {
-      id: "todo",
-      list: ["item 1", "item 2", "item 3", "item 4", "item 5"],
+    All: {
+      id: "All",
+      list: [
+        "item 1",
+        "item 2",
+        "item 3",
+        "item 4",
+        "item 5",
+        "item 6",
+        "item 7",
+        "item 8",
+        "item 9",
+        "item 10",
+        "item 12",
+        "item 13",
+        "item 14",
+        "item 15",
+        "item 16",
+        "item 17",
+      ],
     },
-    doing: {
-      id: "doing",
+    Preferences: {
+      id: "Preferences",
       list: [],
     },
-    done: {
-      id: "done",
+    Block: {
+      id: "Block",
       list: [],
     },
   };
@@ -91,7 +108,7 @@ const TopicPreferences = ({ topicSearch, setTopicSearch }) => {
   };
 
   return (
-    <div className="w-[80%] py-[2.94rem]">
+    <div className="w-full py-[2.94rem]">
       <div className="mx-auto flex max-w-[80%] gap-7">
         <h1 className="text-[2.18rem] font-medium leading-normal text-[#535353]">
           Topic
@@ -124,40 +141,50 @@ const TopicPreferences = ({ topicSearch, setTopicSearch }) => {
         </div>
       </div>
       {/* columns */}
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className="grid grid-cols-3 gap-[1.44rem]">
-          {Object.values(columns).map((col) => (
-            <Droppable droppableId={col.id}>
-              {(provided) => (
-                <div className="flex flex-col px-6 py-4">
-                  <h2>{col.id}</h2>
-                  <div
-                    className="mt-2 flex flex-grow flex-col rounded-[8px] bg-[#ddd] p-4"
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    {col.list.map((text, index) => (
-                      <Draggable draggableId={text} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className="mt-2 rounded-[4px] bg-[#eee] px-1 py-2"
-                          >
-                            {text}
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
+      <div className="mt-[2.88rem]">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="flex justify-center gap-[1.44rem] ">
+            {Object.values(columns).map((col) => (
+              <Droppable droppableId={col.id}>
+                {(provided) => (
+                  <div className="flex w-[19.125rem] flex-col py-4">
+                    <h2 className="flex h-[4.18rem] w-full items-center justify-center rounded-t-[20px] bg-[#F2F2F2] text-center text-[28px] font-semibold text-[#535353]">
+                      {col.id}
+                    </h2>
+                    <div
+                      className="custom-scrollbar flex h-[54vh] flex-grow flex-col overflow-y-auto rounded-[8px] bg-[#FCFCFD] py-[1.19rem] pl-[2.56rem]"
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {col.list.length >= 1 ? (
+                        col.list.map((text, index) => (
+                          <Draggable draggableId={text} index={index}>
+                            {(provided) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                className="mt-2 w-fit rounded-[8px] border-[1px] border-[#435059] bg-[#FCFCFD] px-3 py-[6px] text-[26px] font-normal leading-normal text-[#435059]"
+                              >
+                                {text}
+                              </div>
+                            )}
+                          </Draggable>
+                        ))
+                      ) : (
+                        <p className="flex h-full items-center justify-center text-[1.375rem] font-normal text-[#C9C8C8]">
+                          No Record Yet
+                        </p>
+                      )}
+                      {provided.placeholder}
+                    </div>
                   </div>
-                </div>
-              )}
-            </Droppable>
-          ))}
-        </div>
-      </DragDropContext>
+                )}
+              </Droppable>
+            ))}
+          </div>
+        </DragDropContext>
+      </div>
     </div>
   );
 };

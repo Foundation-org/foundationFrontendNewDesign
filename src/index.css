@@ -375,3 +375,17 @@ td,
     opacity: 1;
   }
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 5.6rem;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #b4b4b4;
+  border-radius: 6.25rem;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #f3f4f6;
+}

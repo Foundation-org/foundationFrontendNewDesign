@@ -109,7 +109,7 @@ const SidebarLeft = ({
             open={openTopicPref}
             handleClose={handleTopicPref}
             customStyle={customModalStyle}
-            customClasses="rounded-[2.31rem]"
+            customClasses="rounded-[2.31rem] w-[75vw] h-[80vh]"
           >
             <TopicPreferences
               topicSearch={topicSearch}
@@ -319,7 +319,7 @@ const SidebarLeft = ({
             Preferences
           </button>
           <div className="flex w-full items-center justify-center gap-[6px]">
-            <h1 className="text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px] whitespace-nowrap">
+            <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">
               Expanded View
             </h1>
             <CustomSwitch2
@@ -328,7 +328,7 @@ const SidebarLeft = ({
             />
           </div>
           <div className="flex w-full items-center justify-center gap-[6px]">
-            <h1 className="text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px] whitespace-nowrap">
+            <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">
               Show Only My Quests
             </h1>
             <CustomSwitch2
