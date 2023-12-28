@@ -278,13 +278,13 @@ const SidebarLeft = ({
             Clear Filters
           </button>
         </div>
-        <div className="mt-[9px] flex items-center justify-between gap-[6px] tablet:mt-[21px]">
+        <div className="mt-[9px] flex items-center justify-between gap-[4px] tablet:mt-[21px]">
           <button
             className={`${
               persistedTheme === "dark"
                 ? "bg-[#333B46]"
                 : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            }  inset-0 w-full rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
+            }  inset-0 w-4/6 rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
             onClick={() => {
               dispatch(resetFilters());
               setClearFilter(!clearFilter);
@@ -293,7 +293,7 @@ const SidebarLeft = ({
             Preferences
           </button>
           <div className="flex w-full items-center justify-center gap-[6px]">
-            <h1 className="text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">
+            <h1 className="text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px] whitespace-nowrap">
               Expanded View
             </h1>
             <CustomSwitch2
@@ -302,7 +302,7 @@ const SidebarLeft = ({
             />
           </div>
           <div className="flex w-full items-center justify-center gap-[6px]">
-            <h1 className="text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">
+            <h1 className="text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px] whitespace-nowrap">
               Show Only My Quests
             </h1>
             <CustomSwitch2

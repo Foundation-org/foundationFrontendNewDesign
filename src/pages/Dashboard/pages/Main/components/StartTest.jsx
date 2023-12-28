@@ -234,7 +234,7 @@ const StartTest = ({
           <>
             {multipleOption ? (
               <h4 className="mb-[10.5px] ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[82.65px] tablet:text-[16.58px] laptop:-mt-3 laptop:mb-3 laptop:text-[18px]">
-                You can select multiple answers.
+                You can select multiple options.
               </h4>
             ) : null}
             {[...answersSelection].map((item, index) => (
@@ -269,7 +269,7 @@ const StartTest = ({
         ) : (
           <>
             <h4 className="mb-[10.5px] ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-3 laptop:mb-3 laptop:text-[18px]">
-              you can drag and drop options in your order of perfence.
+              You can drag and drop options in your order of preference.
             </h4>
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
