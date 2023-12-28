@@ -147,24 +147,34 @@ const TopicPreferences = ({ topicSearch, setTopicSearch }) => {
             {Object.values(columns).map((col) => (
               <Droppable droppableId={col.id}>
                 {(provided) => (
-                  <div className="flex flex-col">
+                  <div className="flex w-[19.125rem] flex-col">
                     <h2 className="flex h-[4.18rem] w-full items-center justify-center rounded-t-[20px] bg-[#F2F2F2] text-center text-[28px] font-semibold text-[#535353]">
                       {col.id}
                     </h2>
                     <div
-                      className="custom-scrollbar flex h-[54vh] flex-grow flex-col overflow-y-auto rounded-[8px] bg-[#FCFCFD] py-[1.19rem] pl-[2.56rem]"
+                      className="custom-scrollbar flex h-[54vh] flex-col gap-[0.94rem] overflow-y-auto rounded-[8px] bg-[#FCFCFD] py-[1.19rem] pl-[2.56rem]"
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
                       {col.list.length >= 1 ? (
                         col.list.map((text, index) => (
                           <Draggable draggableId={text} index={index}>
-                            {(provided) => (
+                            {(provided, snapshot) => (
                               <div
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                className="mt-2 w-fit rounded-[8px] border-[1px] border-[#435059] bg-[#FCFCFD] px-3 py-[6px] text-[26px] font-normal leading-normal text-[#435059]"
+                                style={{
+                                  ...provided.draggableProps.style,
+                                  transform: `translate(${
+                                    snapshot.isDragging ? 0 : 0
+                                  }px, ${
+                                    snapshot.isDragging
+                                      ? provided.draggableProps.style.transform
+                                      : 0
+                                  }px)`, // Adjust the x and y offset here
+                                }}
+                                className="w-fit rounded-[8px] border-[1px] border-[#435059] bg-[#FCFCFD] px-3 py-[6px] text-[26px] font-normal leading-normal text-[#435059]"
                               >
                                 {text}
                               </div>
