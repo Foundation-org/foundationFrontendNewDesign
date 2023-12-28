@@ -131,7 +131,11 @@ const TopicPreferences = ({ topicSearch, setTopicSearch }) => {
               {(provided) => (
                 <div className="flex flex-col px-6 py-4">
                   <h2>{col.id}</h2>
-                  <div className="mt-2 flex flex-grow flex-col rounded-[8px] bg-[#ddd] p-4">
+                  <div
+                    className="mt-2 flex flex-grow flex-col rounded-[8px] bg-[#ddd] p-4"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
                     {col.list.map((text, index) => (
                       <Draggable draggableId={text} index={index}>
                         {(provided) => (
