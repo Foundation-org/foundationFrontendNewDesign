@@ -81,7 +81,7 @@ const SingleAnswerRankedChoice = (props) => {
               )}
             </div>
           )}
-          <div className="flex w-full justify-between">
+          <div className="flex w-full justify-between border-y border-y-[#ACACAC] border-r border-r-[#ACACAC] rounded-r-[4.7px] tablet:rounded-r-[10px]">
             {props.editable ? (
               <input
                 type="text"

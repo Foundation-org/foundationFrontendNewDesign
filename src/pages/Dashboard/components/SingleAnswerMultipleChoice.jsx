@@ -161,7 +161,7 @@ const SingleAnswerMultipleChoice = (props) => {
               )}
             </div>
           )}
-          <div className="flex w-full justify-between">
+          <div className="flex w-full justify-between border-y border-y-[#ACACAC]">
             {props.editable ? (
               <input
                 type="text"
@@ -183,7 +183,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 // id={`test${number}`}
                 className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-[#0D1012] tablet:h-[50.19px] tablet:text-[1rem] laptop:text-[1.2rem] ${checkOptionStatus.color}`}
               >
-                <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
+                <div className="flex w-[45px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
                   <span>{checkOptionStatus.name}</span>
                 </div>
                 <Tooltip optionStatus={checkOptionStatus} />
@@ -206,7 +206,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         ) : (
           <div
-            className={`flex items-center gap-[10.03px] rounded-r-[4.7px] bg-white pr-[7.55px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:pr-[20.63px] tablet:text-[16px]  ${
+            className={`flex items-center gap-[10.03px] rounded-r-[4.7px] bg-white pr-[7.55px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:pr-[20.63px] tablet:text-[16px] border-y border-y-[#ACACAC] border-r border-r-[#ACACAC] ${
               props.btnText === "Results" ? "pointer-events-none" : ""
             }`}
           >

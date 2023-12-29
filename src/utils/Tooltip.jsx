@@ -19,7 +19,7 @@ export const Tooltip = ({ optionStatus }) => {
               : "tablet:-top-[127px]"
           }`}
         >
-          <div class="relative mx-2 flex flex-col items-end">
+          <div class="relative mx-2 flex flex-col items-end text-center">
             <div
               className="relative -right-[7px] top-[10px] rounded-full bg-[#F34141] p-[2px] tablet:-right-4 tablet:top-[18px] tablet:p-2"
               onClick={() => {
