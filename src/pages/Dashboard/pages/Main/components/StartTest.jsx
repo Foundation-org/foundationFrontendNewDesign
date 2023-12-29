@@ -321,6 +321,7 @@ const StartTest = ({
                                 handleCheckChange(index, check)
                               }
                               setAddOptionLimit={setAddOptionLimit}
+                              setIsSubmit={setIsSubmit}
                             />
                           </li>
                         )}

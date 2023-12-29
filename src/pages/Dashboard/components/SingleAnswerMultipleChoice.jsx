@@ -83,7 +83,7 @@ const SingleAnswerMultipleChoice = (props) => {
     });
     // If any error captured
     if (errorMessage) {
-      props.setIsSubmit(false);
+      // props.setIsSubmit(false);
       return setCheckOptionStatus({
         name: "Fail",
         color: "text-[#b00f0f]",

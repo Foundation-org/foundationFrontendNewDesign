@@ -4,6 +4,9 @@ import { useState } from "react";
 import BasicModal from "../../../components/BasicModal";
 import DeleteOption from "./DeleteOption";
 import { toast } from "sonner";
+import { Tooltip } from "../../../utils/Tooltip";
+import { answerValidation, checkAnswerExist } from "../../../api/questsApi";
+
 
 const SingleAnswerRankedChoice = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -11,10 +14,18 @@ const SingleAnswerRankedChoice = (props) => {
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [answer, setAnswer] = useState(props.answer);
+  const reset = {
+    name: "Ok",
+    color: "text-[#389CE3]",
+    tooltipName: "Please write something...",
+    tooltipStyle: "tooltip-info",
+  };
+  const [checkOptionStatus, setCheckOptionStatus] = useState(reset);
+  const [prevValue, setPrevValue] = useState("");
 
   const handleEditOpen = () => setEditModal(true);
   const handleEditClose = () => setEditModal(false);
-  const handleDeleteOpen = () => setDeleteModal(true);
+  // const handleDeleteOpen = () => setDeleteModal(true);
   const handleDeleteClose = () => setDeleteModal(false);
 
   useEffect(() => {
@@ -26,6 +37,17 @@ const SingleAnswerRankedChoice = (props) => {
     setAnswer(props.answer);
   }, [props.answer]);
 
+  const handleDeleteOpen = () => {
+    setCheckOptionStatus(reset)
+    const newArr = props.answersSelection.filter(
+      (item) => item.label !== props.answer,
+    );
+
+    props.setAnswerSelection(newArr);
+    props.setAddOptionLimit(0);
+    // toast.success("Item deleted");
+  };
+
   const handleCheckChange = () => {
     setCheckState((prevState) => {
       props.handleCheckChange(!prevState);
@@ -35,7 +57,63 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
+    setCheckOptionStatus(e.target.value.trim() === "" ? reset : { name: "Ok", color: "text-[#b0a00f]" })
   };
+
+  const optionVerification = async(value) => {
+    if (prevValue === answer) return;
+    setPrevValue(value);
+    setCheckOptionStatus({
+      name: "Checking",
+      color: "text-[#0FB063]",
+      tooltipName: "Verifying your option. Please wait...",
+      tooltipStyle: "tooltip-success",
+    })
+    // option Validation
+    const { validatedAnswer, errorMessage } = await answerValidation({
+      answer: value,
+    });
+    // If any error captured
+    if (errorMessage) {
+      // props.setIsSubmit(false)
+      return setCheckOptionStatus({
+        name: "Fail",
+        color: "text-[#b00f0f]",
+        tooltipName:
+          "Please review your text for proper grammar while keeping our code of conduct in mind.",
+        tooltipStyle: "tooltip-error",
+      })
+    }
+    // Check Answer is unique
+    let answerExist = checkAnswerExist({
+      answersArray: props.answersSelection,
+      answer: validatedAnswer,
+      index: 0,
+      startQuest: true,
+    });
+    if (answerExist) {
+      props.setIsSubmit(false)
+      return setCheckOptionStatus({
+        name: "Fail",
+        color: "text-[#b00f0f]",
+        tooltipName: "Found Duplication!",
+        tooltipStyle: "tooltip-error",
+        duplication: true,
+      })
+    }
+    // Answer is validated and status is Ok
+    if (validatedAnswer) {
+      setAnswer(validatedAnswer)
+      props.setIsSubmit(true)
+      setCheckOptionStatus({
+        name: "Ok",
+        color: "text-[#0FB063]",
+        tooltipName: "Answer is Verified",
+        tooltipStyle: "tooltip-success",
+        isVerifiedAnswer: true,
+      });
+    }
+  }
 
   useEffect(() => {
     handleAddOption();
@@ -88,12 +166,29 @@ const SingleAnswerRankedChoice = (props) => {
                 className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px]"
                 value={answer}
                 onChange={handleInputChange}
+                onBlur={(e) =>
+                  e.target.value.trim() !== "" &&
+                  optionVerification(e.target.value.trim())
+                }
               />
             ) : (
               <h1 className="ml-[15.8px] w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px]">
                 {props.answer}
               </h1>
             )}
+            {
+              props.deleteable && (
+              <div
+                // id={`test${number}`}
+                className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-[#0D1012] tablet:h-[50.19px] tablet:text-[1rem] laptop:text-[1.2rem] rounded-r-[4.7px] tablet:rounded-r-[10px] ${checkOptionStatus.color}`}
+              >
+                <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
+                  <span>{checkOptionStatus.name}</span>
+                </div>
+                <Tooltip optionStatus={checkOptionStatus} />
+              </div>
+              )
+            }
           </div>
         </div>
         {/* <div className="flex items-center gap-3 tablet:gap-[19px]"> */}
