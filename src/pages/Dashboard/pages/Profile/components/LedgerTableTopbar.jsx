@@ -34,7 +34,7 @@ const LedgerTableTopbar = ({
               My Profile
             </h1>
             <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
-              <p>Balance</p>
+              <p>Balance:{" "}</p>
               <p>
                 {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
               </p>
@@ -53,7 +53,7 @@ const LedgerTableTopbar = ({
               Treasury
             </h1>
             <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
-              <p>Balance</p>
+              <p>Balance:{" "}</p>
               <p>{localStorage.getItem("treasuryAmount")}</p>
             </div>
           </div>
