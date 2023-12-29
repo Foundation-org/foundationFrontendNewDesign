@@ -13,6 +13,7 @@ const DeleteOption = (props) => {
     props.setAddOptionLimit(0);
     toast.success("Item deleted");
     props.handleEditClose();
+    props.handleDeleteClose();
   };
 
   return (

@@ -74,7 +74,7 @@ const Options = ({
         </div>
       ) : (
         <div className="flex w-full items-center justify-center">
-          <div className="mx-[21px] flex w-full rounded-r-[0.33rem] bg-transparent dark:bg-[#0D1012] tablet:ml-[54px] tablet:mr-[70px] tablet:w-full tablet:rounded-[10.3px] laptop:rounded-2xl">
+          <div className="mx-[21px] flex w-full rounded-r-[0.33rem] bg-transparent tablet:ml-[54px] tablet:mr-[70px] tablet:w-full tablet:rounded-[10.3px] laptop:rounded-2xl">
             <div className="dragIconWrapper">
               {persistedTheme === "dark" ? (
                 <img
@@ -114,7 +114,7 @@ const Options = ({
               trash && (
                 <div
                   id={`test${number}`}
-                  className={`flex h-[25.19px] items-center text-[0.5rem] font-semibold xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] ${optionStatus?.color} py-[0.29rem]`}
+                  className={`flex h-[25.19px] items-center text-[0.5rem] font-semibold dark:bg-[#141618] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] ${optionStatus?.color} py-[0.29rem]`}
                 >
                   <div className="flex w-5 items-center justify-center tablet:w-[52.78px]">
                     <>

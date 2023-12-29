@@ -1,6 +1,4 @@
 import { useSelector } from "react-redux";
-import { FaCheck } from "react-icons/fa";
-import { FaExclamation } from "react-icons/fa6";
 import { getQuests } from "../../../features/quest/questsSlice";
 
 const SingleAnswer = (props) => {
@@ -84,10 +82,12 @@ const SingleAnswer = (props) => {
   };
 
   return (
-    <div className="ml-[30px] mr-[36px] flex items-center gap-[14px] 2xl:mx-[85px] tablet:mx-[72px] tablet:gap-[25px]">
-      <div className="flex w-full justify-between rounded-[4.73px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
+    <div className="ml-6 mr-[54.53px] flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[95.06px]">
+      <div className="flex h-[26.05px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:h-[52.5px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]">
+        &#x200B;
+      </div>
+      <div className="flex w-full justify-between rounded-r-[4.73px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white dark:bg-[#0D1012] tablet:rounded-r-[10px]">
         <div className="flex items-center">
-          <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
           {!props.checkInfo && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
               {persistedTheme === "dark" ? (

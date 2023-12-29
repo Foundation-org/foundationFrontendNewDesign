@@ -61,10 +61,14 @@ const SingleAnswerMultipleChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
-    setCheckOptionStatus(e.target.value.trim() === "" ? reset : { name: "Ok", color: "text-[#b0a00f]" })
+    setCheckOptionStatus(
+      e.target.value.trim() === ""
+        ? reset
+        : { name: "Ok", color: "text-[#b0a00f]" },
+    );
   };
 
-  const optionVerification = async(value) => {
+  const optionVerification = async (value) => {
     if (prevValue === answer) return;
     setPrevValue(value);
     setCheckOptionStatus({
@@ -72,21 +76,21 @@ const SingleAnswerMultipleChoice = (props) => {
       color: "text-[#0FB063]",
       tooltipName: "Verifying your option. Please wait...",
       tooltipStyle: "tooltip-success",
-    })
+    });
     // option Validation
     const { validatedAnswer, errorMessage } = await answerValidation({
       answer: value,
     });
     // If any error captured
     if (errorMessage) {
-      props.setIsSubmit(false)
+      props.setIsSubmit(false);
       return setCheckOptionStatus({
         name: "Fail",
         color: "text-[#b00f0f]",
         tooltipName:
           "Please review your text for proper grammar while keeping our code of conduct in mind.",
         tooltipStyle: "tooltip-error",
-      })
+      });
     }
     // Check Answer is unique
     let answerExist = checkAnswerExist({
@@ -96,19 +100,19 @@ const SingleAnswerMultipleChoice = (props) => {
       startQuest: true,
     });
     if (answerExist) {
-      props.setIsSubmit(false)
+      props.setIsSubmit(false);
       return setCheckOptionStatus({
         name: "Fail",
         color: "text-[#b00f0f]",
         tooltipName: "Found Duplication!",
         tooltipStyle: "tooltip-error",
         duplication: true,
-      })
+      });
     }
     // Answer is validated and status is Ok
     if (validatedAnswer) {
-      setAnswer(validatedAnswer)
-      props.setIsSubmit(true)
+      setAnswer(validatedAnswer);
+      props.setIsSubmit(true);
       setCheckOptionStatus({
         name: "Ok",
         color: "text-[#0FB063]",
@@ -117,7 +121,7 @@ const SingleAnswerMultipleChoice = (props) => {
         isVerifiedAnswer: true,
       });
     }
-  }
+  };
 
   useEffect(() => {
     handleAddOption();
@@ -126,11 +130,11 @@ const SingleAnswerMultipleChoice = (props) => {
   const handleAddOption = () => {
     const newArr = props.answersSelection.map((item) =>
       item.label === props.answer ? { ...item, label: answer.trim() } : item,
-      );
+    );
     props.setAnswerSelection(newArr);
   };
   const handleDeleteOption = () => {
-    setCheckOptionStatus(reset)
+    setCheckOptionStatus(reset);
     const newArr = props.answersSelection.filter(
       (item) => item.label !== props.answer,
     );
@@ -141,9 +145,9 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   return (
-    <div className="ml-[30px] mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[72px] ">
-      <div className="flex w-full justify-between rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
-        <div className="flex w-full items-center">
+    <div className="ml-6 mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px]  tablet:mx-[52.65px]">
+      <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
+        <div className="flex w-full items-center bg-white dark:bg-[#0D1012]">
           <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
           {!props.checkInfo && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
@@ -174,8 +178,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 {props.answer}
               </h1>
             )}
-            {
-              props.deleteable && (
+            {props.deleteable && (
               <div
                 // id={`test${number}`}
                 className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-[#0D1012] tablet:h-[50.19px] tablet:text-[1rem] laptop:text-[1.2rem] ${checkOptionStatus.color}`}
@@ -185,38 +188,11 @@ const SingleAnswerMultipleChoice = (props) => {
                 </div>
                 <Tooltip optionStatus={checkOptionStatus} />
               </div>
-              )
-            }
-            <div className="flex items-center gap-[19px] tablet:mr-4 mr-0 tablet:static relative left-[4rem]">
-              {/* {props.editable ? (
-                <img
-                  src="/assets/svgs/dashboard/edit.svg"
-                  className="h-3 tablet:h-auto"
-                />
-              ) : null} */}
-              {props.deleteable ? (
-                <img
-                  src="/assets/svgs/dashboard/trash.svg"
-                  className="h-3 min-w-[.9rem] cursor-pointer tablet:h-auto"
-                  onClick={handleDeleteOption}
-                />
-              ) : null}
-            </div>
-            <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
-              <DeleteOption
-                answer={props.answer}
-                answersSelection={props.answersSelection}
-                setAnswerSelection={props.setAnswerSelection}
-                handleDeleteClose={handleDeleteClose}
-                handleEditClose={handleDeleteClose}
-                setAddOptionLimit={props.setAddOptionLimit}
-              />
-            </BasicModal>
+            )}
           </div>
         </div>
-
         {!props.checkInfo ? (
-          <div className="mr-[20.63px] flex items-center gap-[37px]">
+          <div className="mr-[20.63px] flex items-center gap-[37px] rounded-r-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-r-[10px] ">
             <img
               src="/assets/svgs/dashboard/edit.svg"
               alt="edit"
@@ -230,7 +206,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         ) : (
           <div
-            className={`mr-[7.55px] flex items-center gap-[10.03px] text-[9.238px] tablet:mr-[20.63px] tablet:gap-[19px] tablet:text-[16px] ${
+            className={`flex items-center gap-[10.03px] rounded-r-[4.7px] bg-white pr-[7.55px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:pr-[20.63px] tablet:text-[16px]  ${
               props.btnText === "Results" ? "pointer-events-none" : ""
             }`}
           >
@@ -339,6 +315,26 @@ const SingleAnswerMultipleChoice = (props) => {
             </div>
           </div>
         )}
+        <div className="flex w-5 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
+          {props.deleteable ? (
+            <img
+              src="/assets/svgs/dashboard/trash2.svg"
+              alt="trash"
+              className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
+              onClick={handleDeleteOption}
+            />
+          ) : null}
+          <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
+            <DeleteOption
+              answer={props.answer}
+              answersSelection={props.answersSelection}
+              setAnswerSelection={props.setAnswerSelection}
+              handleDeleteClose={handleDeleteClose}
+              handleEditClose={handleDeleteClose}
+              setAddOptionLimit={props.setAddOptionLimit}
+            />
+          </BasicModal>
+        </div>
       </div>
     </div>
   );

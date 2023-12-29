@@ -49,13 +49,21 @@ const SingleAnswerRankedChoice = (props) => {
     props.setAnswerSelection(newArr);
   };
 
+  const customModalStyle = {
+    backgroundColor: "#FCFCFD",
+    boxShadow: "none",
+    border: "0px",
+    outline: "none",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  };
+
   return (
-    <div
-      className="left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem] laptop:w-[90%]"
-      // style={{ position: "absolute" }}
-    >
-      <div className="flex w-full justify-between rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
-        <div className="flex w-full items-center">
+    <div className="ml-6 mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[52.65px]">
+      {/* <div className="left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem] laptop:w-[90%]"> */}
+      <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
+        <div className="flex w-full items-center rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-r-[10px]">
           {props.btnText !== "Results" && (
             <div className="h-full w-fit rounded-l-[4.734px] bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] dark:bg-[#9E9E9E] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px]">
               {persistedTheme === "dark" ? (
@@ -73,7 +81,7 @@ const SingleAnswerRankedChoice = (props) => {
               )}
             </div>
           )}
-          <div className="flex w-full justify-between tablet:mr-6">
+          <div className="flex w-full justify-between">
             {props.editable ? (
               <input
                 type="text"
@@ -86,33 +94,35 @@ const SingleAnswerRankedChoice = (props) => {
                 {props.answer}
               </h1>
             )}
-            <div className="mr-1 flex items-center gap-3 tablet:gap-[19px]">
-              {props.editable ? (
-                <img
-                  src="/assets/svgs/dashboard/edit.svg"
-                  className="h-3 w-4 tablet:h-[19px]"
-                />
-              ) : null}
-              {props.deleteable ? (
-                <img
-                  src="/assets/svgs/dashboard/trash.svg"
-                  className="h-3 w-4 cursor-pointer tablet:h-[19px]"
-                  onClick={handleDeleteOpen}
-                />
-              ) : null}
-            </div>
-            <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
-              <DeleteOption
-                answer={props.answer}
-                answersSelection={props.answersSelection}
-                setAnswerSelection={props.setAnswerSelection}
-                handleDeleteClose={handleDeleteClose}
-                handleEditClose={handleEditClose}
-                setAddOptionLimit={props.setAddOptionLimit}
-              />
-            </BasicModal>
           </div>
         </div>
+        {/* <div className="flex items-center gap-3 tablet:gap-[19px]"> */}
+        <div className="flex w-5 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
+          {props.deleteable ? (
+            <img
+              src="/assets/svgs/dashboard/trash2.svg"
+              alt="trash"
+              className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
+              onClick={handleDeleteOpen}
+            />
+          ) : null}
+          <BasicModal
+            open={deleteModal}
+            handleClose={handleDeleteClose}
+            customStyle={customModalStyle}
+            customClasses="rounded-[9.251px] laptop:rounded-[26px]"
+          >
+            <DeleteOption
+              answer={props.answer}
+              answersSelection={props.answersSelection}
+              setAnswerSelection={props.setAnswerSelection}
+              handleDeleteClose={handleDeleteClose}
+              handleEditClose={handleEditClose}
+              setAddOptionLimit={props.setAddOptionLimit}
+            />
+          </BasicModal>
+        </div>
+
         {props.btnText === "Results" ? (
           <div className="mr-[20.63px] flex items-center gap-[19px] ">
             {props.percentages?.[props.answer.trim()] === undefined

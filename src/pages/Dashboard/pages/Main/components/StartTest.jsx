@@ -46,7 +46,7 @@ const StartTest = ({
   setStartTest,
   loading,
   expandedView,
-  setIsSubmit
+  setIsSubmit,
 }) => {
   const [timeAgo, setTimeAgo] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -287,7 +287,7 @@ const StartTest = ({
               <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                 {(provided) => (
                   <ul
-                    className="flex flex-col items-center gap-[5.7px] tablet:gap-4"
+                    className="flex flex-col items-center gap-[5.7px] tablet:gap-[10px]"
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
