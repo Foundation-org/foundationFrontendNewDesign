@@ -26,11 +26,15 @@ export default function Signup() {
   const [modalVisible, setModalVisible] = useState(false);
   const [resData, setResData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [termConditionCheck, setTermConditionCheck] = useState(false);
+
 
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   function onChange(value) {
     console.log("Captcha value:", value);
+    setCaptchaToken(value);
   }
 
   const onEmailChange = (e) => {
@@ -62,6 +66,8 @@ export default function Signup() {
   };
 
   const handleSignup = async () => {
+    if(!captchaToken) return toast.warning("Please complete the reCAPTCHA challenge before proceeding.",);
+    if(!termConditionCheck) return toast.warning("Please mark the term and condition!")
     setIsLoading(true);
     try {
       if (password === reTypePassword) {
@@ -188,7 +194,9 @@ export default function Signup() {
               <label className="label flex cursor-pointer gap-[11.5px] p-0">
                 <input
                   type="checkbox"
-                  checked=""
+                  // checked=""
+                  onChange={(e) => setTermConditionCheck(e.target.checked)}
+                  checked={termConditionCheck}
                   className="checkbox h-[11.725px] w-[11.725px] rounded-[2.9px] border-[1.437px] border-[#D6D6D6] md:h-[23px] md:w-[23px] md:rounded-[3.5px] "
                 />
               </label>

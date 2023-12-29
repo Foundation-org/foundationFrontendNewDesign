@@ -71,7 +71,7 @@ export default function Signin() {
         }
       } else {
         toast.warning(
-          "please complete the reCAPTCHA challenge before proceeding.",
+          "Please complete the reCAPTCHA challenge before proceeding.",
         );
       }
       // } else {

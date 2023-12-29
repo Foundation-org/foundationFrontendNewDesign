@@ -73,14 +73,14 @@ export default function MyModal({modalShow, email, handleEmailType}) {
                     </p>
                   </div>
 
-                  <div className='flex justify-center gap-8 mt-4'>
-                    <label htmlFor="personal" className={`cursor-pointer flex justify-center items-center gap-3 py-2 bg-[#4A8DBD] rounded-lg min-w-[10rem] ${value === "personal" ? 'border-dark-blue' : 'border-[#4A8DBD]'} border-[3px]`}>
-                        <div><img className='w-10 h-10' src="/assets/svgs/personal.svg" alt="personal" /></div>
+                  <div className='flex justify-center tablet:gap-8 gap-5 mt-4'>
+                    <label htmlFor="personal" className={`cursor-pointer flex justify-center items-center gap-3 py-2 bg-[#4A8DBD] rounded-lg tablet:min-w-[10rem] min-w-[8rem] ${value === "personal" ? 'border-dark-blue' : 'border-[#4A8DBD]'} border-[3px]`}>
+                        <div><img className='tablet:w-10 w-7 h-7 tablet:h-10' src="/assets/svgs/personal.svg" alt="personal" /></div>
                         <p className='text-white font-medium text-lg'>Personal</p>
                     </label>
                     <input type="radio" hidden id='personal' name='radio' value='personal' onChange={(e) => handleChange(e)} />
-                    <label htmlFor="work" className={`cursor-pointer flex justify-center items-center gap-3 py-2 bg-[#4A8DBD] rounded-lg min-w-[10rem] ${value === "work" ? 'border-dark-blue' : 'border-[#4A8DBD]'} border-[3px]`}>
-                        <div><img className='h-10 w-10' src="/assets/svgs/work.svg" alt="work" /></div>
+                    <label htmlFor="work" className={`cursor-pointer flex justify-center items-center gap-3 py-2 bg-[#4A8DBD] rounded-lg tablet:min-w-[10rem] min-w-[8rem] ${value === "work" ? 'border-dark-blue' : 'border-[#4A8DBD]'} border-[3px]`}>
+                        <div><img className='tablet:w-10 w-7 h-7 tablet:h-10' src="/assets/svgs/work.svg" alt="work" /></div>
                         <p className='text-white font-medium text-lg'>Work</p>
                     </label>
                     <input type="radio" hidden id='work' name='radio' value='work' onChange={(e) => handleChange(e)} />
