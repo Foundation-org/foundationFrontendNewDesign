@@ -161,7 +161,7 @@ const SingleAnswerMultipleChoice = (props) => {
               )}
             </div>
           )}
-          <div className="mr-4 flex w-full justify-between tablet:mr-6">
+          <div className="flex w-full justify-between">
             {props.editable ? (
               <input
                 type="text"

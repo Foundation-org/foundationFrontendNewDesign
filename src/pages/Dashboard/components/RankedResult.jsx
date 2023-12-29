@@ -49,7 +49,7 @@ const RankedResult = (props) => {
               )}
             </div>
           )}
-          <div className="mr-4 flex w-full justify-between tablet:mr-6">
+          <div className="flex w-full justify-between">
             <h1 className="ml-8 w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pb-[10px] tablet:pt-[12px]  tablet:text-[19px]">
               {props.answer}
             </h1>
