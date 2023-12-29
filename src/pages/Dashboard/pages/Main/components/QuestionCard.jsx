@@ -56,6 +56,7 @@ const QuestionCard = ({
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -430,7 +431,7 @@ const QuestionCard = ({
           return;
         }
 
-
+        if(!isSubmit) return setLoading(false)
         console.log("params", params);
         startQuest(params);
       }
@@ -538,6 +539,7 @@ const QuestionCard = ({
             time={time}
             setStartTest={setStartTest}
             loading={loading}
+            setIsSubmit={setIsSubmit}
           />
         ) : (
           <OptionBar

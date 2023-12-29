@@ -46,6 +46,7 @@ const StartTest = ({
   setStartTest,
   loading,
   expandedView,
+  setIsSubmit
 }) => {
   const [timeAgo, setTimeAgo] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -272,6 +273,7 @@ const StartTest = ({
                     ? (contend) => handleContendChange(index, contend)
                     : (contend) => handleContendChangeSingle(index, contend)
                 }
+                setIsSubmit={setIsSubmit}
               />
             ))}
           </div>

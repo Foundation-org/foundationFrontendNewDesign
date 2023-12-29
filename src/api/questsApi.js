@@ -139,10 +139,11 @@ export const answerValidation = async ({ answer }) => {
   }
 };
 
-export const checkAnswerExist = ({ answersArray, answer, index }) => {
+export const checkAnswerExist = ({ answersArray, answer, index, startQuest }) => {
   return answersArray.some(
     (item, i) =>
-      item.question.toLowerCase() === answer.toLowerCase() && i !== index,
+    startQuest ? item.label.toLowerCase() === answer.toLowerCase() && i !== index
+    : item.question.toLowerCase() === answer.toLowerCase() && i !== index
   );
 };
 
