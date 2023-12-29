@@ -26,7 +26,7 @@ const YesNoOptions = ({
         label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row items-center gap-[25px]"
-      } ml-[21px] mr-[22.4px] tablet:ml-[54px] tablet:mr-[70.04px]`}
+      } ml-[21px] mr-[41px] tablet:ml-[54px] tablet:mr-[122.78px]`}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">

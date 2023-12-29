@@ -74,7 +74,7 @@ const Options = ({
         </div>
       ) : (
         <div className="flex w-full items-center justify-center">
-          <div className="mx-[21px] mr-[22px] flex w-full rounded-r-[0.33rem] bg-transparent dark:bg-[#0D1012] tablet:ml-[54px] tablet:mr-[70px] tablet:w-full tablet:rounded-[10.3px] laptop:rounded-2xl">
+          <div className="mx-[21px] flex w-full rounded-r-[0.33rem] bg-transparent dark:bg-[#0D1012] tablet:ml-[54px] tablet:mr-[70px] tablet:w-full tablet:rounded-[10.3px] laptop:rounded-2xl">
             <div className="dragIconWrapper">
               {persistedTheme === "dark" ? (
                 <img
@@ -90,7 +90,7 @@ const Options = ({
                 />
               )}
             </div>
-            <div className="h-[25.19px] w-9 border-y-[1px] border-[#ACACAC] bg-white dark:border-[#0D1012] dark:bg-[#0D1012] tablet:h-[50.19px] laptop:h-[74px] "></div>
+            <div className="h-[25.19px] w-9 border-y-[1px] border-[#ACACAC] bg-white dark:border-[#0D1012] dark:bg-[#0D1012] tablet:h-[50.19px] laptop:h-[74px]"></div>
             <input
               className="h-[25.19px] w-full border-y-[1px] border-[#ACACAC] bg-white py-[0.35rem] pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:h-[50.19px] tablet:py-[11.6px] tablet:pr-11 tablet:text-[1.296rem] laptop:h-[74px] laptop:py-[18px] laptop:text-[1.875rem]"
               onChange={(e) => handleChange(e.target.value)}
@@ -101,13 +101,22 @@ const Options = ({
               value={typedValue}
               placeholder="Add your own option"
             />
+            <div
+              id={`test${number}`}
+              className={`relative flex h-[25.19px] items-center rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:h-[74px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${optionStatus.color}`}
+            >
+              <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[166px]">
+                <span>{optionStatus.name}</span>
+              </div>
+              <Tooltip optionStatus={optionStatus} />
+            </div>
             {(title === "RankChoice" || title === "MultipleChoice") &&
               trash && (
                 <div
                   id={`test${number}`}
-                  className={`flex h-[25.19px] items-center border-y-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] ${optionStatus?.color} py-[0.29rem]`}
+                  className={`flex h-[25.19px] items-center text-[0.5rem] font-semibold xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] ${optionStatus?.color} py-[0.29rem]`}
                 >
-                  <div className="pr-[1.25rem] tablet:pr-[2.4rem]">
+                  <div className="flex w-5 items-center justify-center tablet:w-[52.78px]">
                     <>
                       {optionsCount > 2 && (
                         <div
@@ -118,7 +127,7 @@ const Options = ({
                           <img
                             src="/assets/svgs/dashboard/trash2.svg"
                             alt="trash"
-                            className="min-w-[.6rem] cursor-pointer tablet:min-w-[1.5rem]"
+                            className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
                           />
                         </div>
                       )}
@@ -126,17 +135,8 @@ const Options = ({
                   </div>
                 </div>
               )}
-
-            <div
-              id={`test${number}`}
-              className={`relative flex h-[25.19px] items-center rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:h-[74px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${optionStatus.color}`}
-            >
-              <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[166px]">
-                <span>{optionStatus.name}</span>
-              </div>
-              <Tooltip optionStatus={optionStatus} />
-            </div>
           </div>
+
           <div
             className={`${
               optionsCount > 2

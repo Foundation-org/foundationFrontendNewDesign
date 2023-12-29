@@ -72,9 +72,7 @@ const SingleAnswerMultipleChoice = (props) => {
     props.setAnswerSelection(newArr);
     props.setAddOptionLimit(0);
     toast.success("Item deleted");
-
   };
-
 
   return (
     <div className="ml-[30px] mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[72px]">
@@ -93,7 +91,7 @@ const SingleAnswerMultipleChoice = (props) => {
               )}
             </div>
           )}
-          <div className="mr-6 flex w-full justify-between">
+          <div className="mr-4 flex w-full justify-between tablet:mr-6">
             {props.editable ? (
               <input
                 type="text"

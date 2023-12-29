@@ -47,7 +47,9 @@ export function Router() {
         {/* 404 page */}
         <Route
           path="*"
-          element={isLoggedIn ? <Navigate to="/dashboard" /> : <Signin />}
+          element={
+            isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/" />
+          }
         />
       </Routes>
     </>

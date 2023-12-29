@@ -33,7 +33,7 @@ const RankedResult = (props) => {
   };
 
   return (
-    <div className="laptop:w-[90%] left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem]">
+    <div className="left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem] laptop:w-[90%]">
       <div className="flex w-full justify-between rounded-[4.73px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
         <div className="flex w-full items-center">
           {props.btnText !== "Results" && (
@@ -48,7 +48,7 @@ const RankedResult = (props) => {
               )}
             </div>
           )}
-          <div className="mr-6 flex w-full justify-between">
+          <div className="mr-4 flex w-full justify-between tablet:mr-6">
             <h1 className="ml-8 w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pb-[10px] tablet:pt-[12px]  tablet:text-[19px]">
               {props.answer}
             </h1>

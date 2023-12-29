@@ -11,11 +11,13 @@ export const Tooltip = ({ optionStatus }) => {
     <div>
       {tooltipStatus?.name === "Fail" && (
         <div
-          className={`absolute ${tooltipStatus?.duplication ? "-top-[26px]" : "-top-[40px]"
-            } left-[0px] tablet:-left-[12px] -translate-x-1/2 transform laptop:left-[60px] ${tooltipStatus?.duplication
+          className={`absolute ${
+            tooltipStatus?.duplication ? "-top-[26px]" : "-top-[55px]"
+          } left-0 -translate-x-1/2 transform tablet:-left-[12px] laptop:left-1/2 ${
+            tooltipStatus?.duplication
               ? "tablet:-top-[42px]"
               : "tablet:-top-[127px]"
-            }`}
+          }`}
         >
           <div class="relative mx-2 flex flex-col items-end">
             <div
@@ -41,7 +43,7 @@ export const Tooltip = ({ optionStatus }) => {
             <div class="bottom-full right-0 w-[11rem] rounded-md border-[0.533px] bg-[#FEDEDE] px-[0.32rem] py-[0.2rem] text-[0.5rem] font-normal text-[#F34141] dark:bg-[#3C1A20] dark:text-[#DB6262] tablet:w-[28rem] tablet:rounded-[15px] tablet:py-[18px] tablet:text-[1rem]">
               {tooltipStatus?.tooltipName}
               <svg
-                class="absolute left-[27px] tablet:left-[65px] laptop:left-[0px] top-full -mt-[1px] h-2 w-full text-[#FEDEDE] dark:text-[#3C1A20] tablet:h-[28px]"
+                class="absolute left-[27px] top-full -mt-[1px] h-2 w-full text-[#FEDEDE] dark:text-[#3C1A20] tablet:left-[65px] tablet:h-[28px] laptop:left-[0px]"
                 x="0px"
                 y="0px"
                 viewBox="0 0 255 255"

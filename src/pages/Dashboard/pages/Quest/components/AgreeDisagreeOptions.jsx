@@ -27,7 +27,7 @@ const AgreeDisagreeOptions = ({
         label
           ? "flex flex-col gap-[13px]"
           : "flex flex-row items-center gap-[25px]"
-      } ml-[21px] mr-[22.4px] tablet:ml-[54px] tablet:mr-[70.04px]`}
+      } ml-[21px] mr-[41px] tablet:ml-[54px] tablet:mr-[122.78px]`}
     >
       {label && (
         <h1 className="ml-[53px] text-[25px] font-normal leading-normal text-[#C5C5C5]">
