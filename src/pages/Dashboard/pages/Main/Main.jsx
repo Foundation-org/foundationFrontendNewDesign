@@ -56,12 +56,10 @@ const Main = () => {
       id: "All",
       list: [],
     },
-    // terms
     Preferences: {
       id: "Preferences",
       list: [],
     },
-    // blockedTersm
     Block: {
       id: "Block",
       list: [],
@@ -74,8 +72,6 @@ const Main = () => {
     queryFn: () => getAllTopics(),
     queryKey: ["topicsData"],
   });
-
-  console.log({ topicsData });
 
   useEffect(() => {
     if (isSuccess) {

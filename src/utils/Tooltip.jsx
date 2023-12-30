@@ -53,7 +53,7 @@ export const Tooltip = ({ optionStatus }) => {
                   class="fill-current"
                   points="0,0 127.5,127.5 255,0"
                   stroke="#F34141"
-                  stroke-width="10"
+                  strokeWidth="10"
                 />
               </svg>
             </div>

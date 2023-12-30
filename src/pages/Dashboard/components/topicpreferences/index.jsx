@@ -99,7 +99,7 @@ const TopicPreferences = ({
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="flex justify-center gap-[1.44rem]">
             {Object.values(columns).map((col) => (
-              <Droppable droppableId={col.id}>
+              <Droppable droppableId={col.id} key={col.id}>
                 {(provided) => (
                   <div className="flex w-[19.125rem] flex-col">
                     <h2 className="flex h-[4.18rem] w-full items-center justify-center rounded-t-[20px] bg-[#F2F2F2] text-center text-[28px] font-semibold text-[#535353]">
@@ -112,13 +112,17 @@ const TopicPreferences = ({
                     >
                       {col.list?.length >= 1 ? (
                         col.list.map((text, index) => (
-                          <Draggable draggableId={text} index={index}>
+                          <Draggable
+                            key={text}
+                            draggableId={text}
+                            index={index}
+                          >
                             {(provided) => (
                               <div
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                className="w-fit rounded-[8px] border-[1px] border-[#435059] bg-[#FCFCFD] px-3 py-[6px] text-[26px] font-normal leading-normal text-[#435059]"
+                                className="w-fit select-none rounded-[8px] border-[1px] border-[#435059] bg-[#FCFCFD] px-3 py-[6px] text-[26px] font-normal leading-normal text-[#435059]"
                               >
                                 {text}
                               </div>
