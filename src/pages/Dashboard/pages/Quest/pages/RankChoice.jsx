@@ -122,6 +122,7 @@ const RankChoice = () => {
   };
 
   const questionVerification = async (value) => {
+    setQuestion(value.trim());
     if (prevValue === question.trim()) return;
     setPrevValue(value);
     setCheckQuestionStatus({
@@ -158,10 +159,16 @@ const RankChoice = () => {
   };
 
   const answerVerification = async (index, value) => {
-    if (prevValueArr[index]?.value === value) return;
+    const newTypedValue = [...typedValues];
+      newTypedValue[index] = {
+        ...newTypedValue[index],
+        question: value.trim()
+      };
+      setTypedValues(newTypedValue);
+    if (prevValueArr[index]?.value === value.trim()) return;
     setPrevValueArr((prev) => {
       const updatedArray = [...prev];
-      updatedArray[index] = { value };
+      updatedArray[index] = { value: value.trim() };
       return [...updatedArray];
     });
     const newTypedValues = [...typedValues];
@@ -194,28 +201,6 @@ const RankChoice = () => {
       };
       return setTypedValues(newTypedValues);
     }
-    // Answer is validated and status is Ok
-    if (validatedAnswer) {
-      setPrevValueArr((prev) => {
-        const updatedArray = [...prev];
-        updatedArray[index] = { value: validatedAnswer };
-        return [...updatedArray];
-      });
-      const newTypedValues = [...typedValues];
-      newTypedValues[index] = {
-        ...newTypedValues[index],
-        question: validatedAnswer,
-        optionStatus: {
-          name: "Ok",
-          color: "text-[#0FB063]",
-          tooltipName: "Answer is Verified",
-          tooltipStyle: "tooltip-success",
-          isVerifiedAnswer: true,
-        },
-      };
-      setTypedValues(newTypedValues);
-    }
-
     // Check Answer is unique
     let answerExist = checkAnswerExist({
       answersArray: typedValues,
@@ -236,6 +221,27 @@ const RankChoice = () => {
         },
       };
       return setTypedValues(newTypedValues);
+    }
+    // Answer is validated and status is Ok
+    if (validatedAnswer) {
+      setPrevValueArr((prev) => {
+        const updatedArray = [...prev];
+        updatedArray[index] = { value: validatedAnswer };
+        return [...updatedArray];
+      });
+      const newTypedValues = [...typedValues];
+      newTypedValues[index] = {
+        ...newTypedValues[index],
+        question: validatedAnswer,
+        optionStatus: {
+          name: "Ok",
+          color: "text-[#0FB063]",
+          tooltipName: "Answer is Verified",
+          tooltipStyle: "tooltip-success",
+          isVerifiedAnswer: true,
+        },
+      };
+      setTypedValues(newTypedValues);
     }
   };
 

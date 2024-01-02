@@ -100,6 +100,7 @@ const YesNo = () => {
   };
 
   const questionVerification = async (value) => {
+    setQuestion(value.trim());
     if (prevValue === question.trim()) return;
     setPrevValue(value);
     setCheckQuestionStatus({
