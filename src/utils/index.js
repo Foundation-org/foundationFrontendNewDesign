@@ -1,40 +1,40 @@
+import { differenceInDays, differenceInHours, differenceInMonths, formatDistanceToNow } from "date-fns"
+
 export function calculateRemainingTime(lastInteractedAt, usersChangeTheirAns) {
-    console.log("first", lastInteractedAt, usersChangeTheirAns);
-    const now = new Date();
     const lastInteractionDate = new Date(lastInteractedAt);
-    const timeDifference = now - lastInteractionDate;
-    
-    const remainingDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    const monthlyChangeThreshold = 10;
+    const currentDate = new Date();
 
-    if (
-      usersChangeTheirAns.toLowerCase() === "monthly" &&
-      remainingDays <= monthlyChangeThreshold
-    ) {
-      return `Only ${remainingDays} day${
-        remainingDays === 1 ? "" : "s"
-      } remaining for your monthly change.`;
+    console.log({lastInteractedAt});
+    console.log({currentDate});
+
+    let remainingTime;
+
+    switch (usersChangeTheirAns) {
+        case 'Monthly':
+            remainingTime = Math.floor(differenceInDays( lastInteractionDate,currentDate) / 24);  
+        // remainingTime = differenceInMonths(currentDate, lastInteractionDate);
+            // if (currentDate.getDate() < lastInteractionDate.getDate()) {
+            //     remainingTime--;
+            // }
+            break;
+        case 'Daily':
+            remainingTime = Math.floor(differenceInDays(currentDate, lastInteractionDate) / 24);
+            break;
+        case 'Hourly':
+            remainingTime = differenceInHours(currentDate, lastInteractionDate);
+            break;
+        default:
+            throw new Error('Invalid value for usersChangeTheirAns');
     }
 
-    const units = ["year", "month", "day", "hour", "second"];
-    const unitValues = [
-      365 * 24 * 60 * 60 * 1000, 
-      30.44 * 24 * 60 * 60 * 1000, 
-      24 * 60 * 60 * 1000, 
-      60 * 60 * 1000, 
-      1000, 
-    ];
+    const timeUnit = usersChangeTheirAns === 'Monthly' ? 'month' : usersChangeTheirAns.toLowerCase() === "daily" ? "day" : usersChangeTheirAns.toLowerCase();
+    const formattedTime = formatDistanceToNow(lastInteractionDate, { addSuffix: true });
 
-    for (let i = 0; i < units.length; i++) {
-      const unitValue = unitValues[i];
-      const unitCount = Math.floor(timeDifference / unitValue);
-
-      if (unitCount > 0) {
-        return `Only ${unitCount} ${units[i]}${
-          unitCount === 1 ? "" : "s"
-        } remaining.`;
-      }
+    if(lastInteractedAt !== null) {
+        return `${remainingTime} ${timeUnit}${remainingTime !== 1 ? 's' : ''} remaining (Last interaction: ${formattedTime})`;
+    } else {
+        return "You can interact now"
     }
 
-    return "No time remaining.";
-  }
+    // return `${remainingTime} ${timeUnit}${remainingTime !== 1 ? 's' : ''}`;
+}
