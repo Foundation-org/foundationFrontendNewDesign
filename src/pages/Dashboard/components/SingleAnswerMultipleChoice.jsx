@@ -145,10 +145,10 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   return (
-    <div className="ml-6 mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px]  tablet:mx-[52.65px]">
+    <div className="mx-6 flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[52.65px]">
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
         <div className="flex w-full items-center bg-white dark:bg-[#0D1012]">
-          <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
+          <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E]"></div>
           {!props.checkInfo && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
               {persistedTheme === "dark" ? (
@@ -165,7 +165,7 @@ const SingleAnswerMultipleChoice = (props) => {
             {props.editable ? (
               <input
                 type="text"
-                className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px]"
+                className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px] dark:bg-[#0D1012] dark:text-[#D3D3D3]"
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) =>
@@ -174,14 +174,13 @@ const SingleAnswerMultipleChoice = (props) => {
                 }
               />
             ) : (
-              <h1 className="ml-[15.8px] w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px]">
+              <h1 className="ml-[15.8px] w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px] dark:text-[#D3D3D3]">
                 {props.answer}
               </h1>
             )}
             {props.deleteable && (
               <div
-                // id={`test${number}`}
-                className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-[#0D1012] tablet:h-[50.19px] tablet:text-[1rem] laptop:text-[1.2rem] ${checkOptionStatus.color}`}
+                className={`relative flex items-center bg-white text-[0.5rem] font-semibold tablet:h-[50.19px] tablet:text-[1rem] laptop:text-[1.2rem] dark:bg-[#0D1012] ${checkOptionStatus.color}`}
               >
                 <div className="flex w-[45px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
                   <span>{checkOptionStatus.name}</span>
@@ -192,7 +191,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         </div>
         {!props.checkInfo ? (
-          <div className="mr-[20.63px] flex items-center gap-[37px] rounded-r-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-r-[10px] ">
+          <div className="mr-[20.63px] flex items-center gap-[37px] rounded-r-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012] ">
             <img
               src="/assets/svgs/dashboard/edit.svg"
               alt="edit"
@@ -206,7 +205,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         ) : (
           <div
-            className={`flex items-center gap-[10.03px] rounded-r-[4.7px] bg-white pr-[7.55px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:pr-[20.63px] tablet:text-[16px] border-y border-y-[#ACACAC] border-r border-r-[#ACACAC] ${
+            className={`flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[7.55px] text-[9.238px] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:pr-[20.63px] tablet:text-[16px] dark:bg-[#0D1012] ${
               props.btnText === "Results" ? "pointer-events-none" : ""
             }`}
           >
@@ -315,7 +314,7 @@ const SingleAnswerMultipleChoice = (props) => {
             </div>
           </div>
         )}
-        <div className="flex w-5 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
+        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
           {props.deleteable ? (
             <img
               src="/assets/svgs/dashboard/trash2.svg"

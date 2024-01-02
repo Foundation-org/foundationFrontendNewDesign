@@ -19,7 +19,7 @@ export const Tooltip = ({ optionStatus }) => {
               : "tablet:-top-[127px]"
           }`}
         >
-          <div class="relative mx-2 flex flex-col items-end text-center">
+          <div className="relative mx-2 flex flex-col items-end text-center">
             <div
               className="relative -right-[7px] top-[10px] rounded-full bg-[#F34141] p-[2px] tablet:-right-4 tablet:top-[18px] tablet:p-2"
               onClick={() => {
@@ -40,17 +40,17 @@ export const Tooltip = ({ optionStatus }) => {
               </svg>
             </div>
 
-            <div class="bottom-full right-0 w-[11rem] rounded-md border-[0.533px] bg-[#FEDEDE] px-[0.32rem] py-[0.2rem] text-[0.5rem] font-normal text-[#F34141] dark:bg-[#3C1A20] dark:text-[#DB6262] tablet:w-[28rem] tablet:rounded-[15px] tablet:py-[18px] tablet:text-[1rem]">
+            <div className="bottom-full right-0 w-[11rem] rounded-md border-[0.533px] bg-[#FEDEDE] px-[0.32rem] py-[0.2rem] text-[0.5rem] font-normal text-[#F34141] tablet:w-[28rem] tablet:rounded-[15px] tablet:py-[18px] tablet:text-[1rem] dark:bg-[#3C1A20] dark:text-[#DB6262]">
               {tooltipStatus?.tooltipName}
               <svg
-                class="absolute left-[27px] top-full -mt-[1px] h-2 w-full text-[#FEDEDE] dark:text-[#3C1A20] tablet:left-[65px] tablet:h-[28px] laptop:left-[0px]"
+                className="absolute left-[27px] top-full -mt-[1px] h-2 w-full text-[#FEDEDE] tablet:left-[65px] tablet:h-[28px] laptop:left-[0px] dark:text-[#3C1A20]"
                 x="0px"
                 y="0px"
                 viewBox="0 0 255 255"
-                xml:space="preserve"
+                xmlSpace="preserve"
               >
                 <polygon
-                  class="fill-current"
+                  className="fill-current"
                   points="0,0 127.5,127.5 255,0"
                   stroke="#F34141"
                   strokeWidth="10"

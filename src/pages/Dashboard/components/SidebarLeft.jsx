@@ -25,13 +25,26 @@ const SidebarLeft = ({
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const [multipleOption, setMultipleOption] = useState(false);
+
+  const [multipleOption, setMultipleOption] = useState(
+    localStorage.getItem("filterByState") !== undefined
+      ? localStorage.getItem("filterByState") === "true"
+        ? true
+        : false
+      : false,
+  );
   const [openTopicPref, setOpenTopicPref] = useState(false);
   const [topicSearch, setTopicSearch] = useState("");
 
   const handleSwitchChange = () => {
     dispatch(setFilterByScope(multipleOption ? "All" : "Me"));
+    localStorage.setItem("filterByState", !multipleOption ? "true" : "false");
     setMultipleOption(!multipleOption);
+  };
+
+  const handleExpendedView = () => {
+    localStorage.setItem("expandedView", !expandedView ? "true" : "false");
+    setExpandedView(!expandedView);
   };
 
   const handleTopicPref = () => {
@@ -52,7 +65,7 @@ const SidebarLeft = ({
 
   return (
     <>
-      <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] flex-col items-center justify-between overflow-y-auto  bg-white text-[#535353] dark:bg-[#0A0A0C] dark:text-white laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem]">
+      <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] flex-col items-center justify-between overflow-y-auto  bg-white text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:bg-[#0A0A0C] dark:text-white">
         <div className="flex flex-col items-center">
           <div className="flex w-full items-center justify-center gap-[25px] border-b-2 border-[#707175] pb-6 pt-[35px]">
             <h1 className="ml-[5px] flex items-center gap-2 text-[20px] font-medium leading-normal text-[#707175] dark:text-white">
@@ -60,7 +73,7 @@ const SidebarLeft = ({
             </h1>
             <CustomSwitch2
               enabled={expandedView}
-              setEnabled={setExpandedView}
+              setEnabled={handleExpendedView}
             />
           </div>
           <div className="relative mt-[36px]">
@@ -68,14 +81,14 @@ const SidebarLeft = ({
               <input
                 type="text"
                 id="floating_outlined"
-                className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] tablet:text-[18.23px]"
+                className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
                 placeholder=" "
                 value={searchData}
                 onChange={handleSearch}
               />
               <label
                 htmlFor="floating_outlined"
-                className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2  text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C] tablet:text-[17px]"
+                className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2  text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
               >
                 Search
               </label>
@@ -211,13 +224,13 @@ const SidebarLeft = ({
         </h1>
       </div>
       {/* sidebar mobile */}
-      <div className="block bg-white px-[15px] py-[10px] dark:bg-[#0A0A0C] tablet:px-[37px] tablet:py-[26px] laptop:hidden">
+      <div className="block bg-white px-[15px] py-[10px] tablet:px-[37px] tablet:py-[26px] laptop:hidden dark:bg-[#0A0A0C]">
         <div className="flex items-center justify-between gap-2 tablet:gap-[13px]">
           <div className="relative w-full">
             <input
               type="text"
               placeholder="Search here...."
-              className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8] tablet:h-[50.7px] tablet:text-[17.13px]"
+              className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none tablet:h-[50.7px] tablet:text-[17.13px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
               value={searchData}
               onChange={handleSearch}
             />
@@ -246,10 +259,10 @@ const SidebarLeft = ({
               className="h-[23px] w-[23px] tablet:h-[46.8px] tablet:w-[46.8px]"
             />
             <div>
-              <h4 className="text-[9.3px] font-semibold text-[#616161] dark:text-[#D4D5D7] tablet:text-[18.9px]">
+              <h4 className="text-[9.3px] font-semibold text-[#616161] tablet:text-[18.9px] dark:text-[#D4D5D7]">
                 Treasury
               </h4>
-              <p className="whitespace-nowrap text-[6.227px] text-[#616161] dark:text-[#BDBCBC] tablet:text-[12.651px]">
+              <p className="whitespace-nowrap text-[6.227px] text-[#616161] tablet:text-[12.651px] dark:text-[#BDBCBC]">
                 Balance: <span>{localStorage.getItem("treasuryAmount")}</span>
               </p>
             </div>
@@ -304,7 +317,7 @@ const SidebarLeft = ({
               persistedTheme === "dark"
                 ? "bg-[#333B46]"
                 : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            }  inset-0 w-full rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
+            }  inset-0 w-full rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
             onClick={() => {
               dispatch(resetFilters());
               setClearFilter(!clearFilter);
@@ -319,7 +332,7 @@ const SidebarLeft = ({
               persistedTheme === "dark"
                 ? "bg-[#333B46]"
                 : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            }  inset-0 w-4/6 rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
+            }  inset-0 w-4/6 rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
             onClick={() => {
               dispatch(resetFilters());
               setClearFilter(!clearFilter);
@@ -328,16 +341,16 @@ const SidebarLeft = ({
             Preferences
           </button>
           <div className="flex w-full items-center justify-center gap-[6px]">
-            <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">
+            <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] tablet:text-[15px] dark:text-white">
               Expanded View
             </h1>
             <CustomSwitch2
               enabled={expandedView}
-              setEnabled={setExpandedView}
+              setEnabled={handleExpendedView}
             />
           </div>
           <div className="flex w-full items-center justify-center gap-[6px]">
-            <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">
+            <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] tablet:text-[15px] dark:text-white">
               Show Only My Quests
             </h1>
             <CustomSwitch2

@@ -2,8 +2,6 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { changeOptions } from "../../../../../utils/options";
-import { SortableItem, SortableList } from "@thaddeusjiang/react-sortable-list";
 import { useSelector } from "react-redux";
 import Options from "../components/Options";
 import {
@@ -15,44 +13,10 @@ import {
   questionValidation,
 } from "../../../../../api/questsApi";
 import CustomSwitch from "../../../../../components/CustomSwitch";
-import Title from "../components/Title";
 import { Tooltip } from "../../../../../utils/Tooltip";
-import {
-  FormControl,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { FaSpinner } from "react-icons/fa";
-
-const DragHandler = (props) => {
-  const persistedTheme = useSelector((state) => state.utils.theme);
-  return (
-    <div
-      {...props}
-      className="
-z-10 mb-[0.5px] ml-[21px] flex h-[24.8px] w-[14px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:ml-[54px] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[74px] laptop:w-[38px]"
-    >
-      <div title="drag handler" className="flex items-center">
-        {persistedTheme === "dark" ? (
-          <img
-            src="/assets/svgs/dashboard/six-dots-dark.svg"
-            alt="six dots"
-            className="h-[8.8px] tablet:h-7"
-          />
-        ) : (
-          <img
-            src="/assets/svgs/dashboard/six-dots.svg"
-            alt="six dots"
-            className="h-[8.8px] tablet:h-7"
-          />
-        )}
-      </div>
-    </div>
-  );
-};
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -383,7 +347,7 @@ const MultipleChoice = () => {
 
   return (
     <div>
-      <h4 className="mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] dark:text-[#AAA] tablet:mt-[25.8px] tablet:text-[16.58px] laptop:mt-[47px] laptop:text-[25px]">
+      <h4 className="mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25.8px] tablet:text-[16.58px] laptop:mt-[47px] laptop:text-[25px] dark:text-[#AAA]">
         Ask a question that allows for diverse responses and multiple answer
         options
       </h4>
@@ -392,15 +356,15 @@ const MultipleChoice = () => {
           persistedTheme === "dark"
             ? "border-[1px] border-[#858585] tablet:border-[2px]"
             : ""
-        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
+        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px] dark:bg-[#141618]`}
       >
-        <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
+        <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[32px] dark:text-[#D8D8D8]">
           Create Quest
         </h1>
         <h3 className="mb-[13.54px] ml-[32px] mt-[11.71px] text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:ml-[67px] tablet:mt-[20.38px] tablet:text-[16.58px] laptop:mb-[22px] laptop:ml-[104px] laptop:mt-[38px] laptop:text-[25px]"></h3>
         <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[70px]">
           <input
-            className="w-full rounded-l-[0.33rem] border-y-[1px] border-l-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-2xl laptop:py-[18px] laptop:text-[1.875rem]"
+            className="w-full rounded-l-[0.33rem] border-y-[1px] border-l-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-2xl laptop:py-[18px] laptop:text-[1.875rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
             onChange={(e) => {
               setQuestion(e.target.value);
               setCheckQuestionStatus({
@@ -420,7 +384,7 @@ const MultipleChoice = () => {
           />
           <button
             id="new"
-            className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
+            className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:rounded-r-2xl laptop:text-[1.875rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${checkQuestionStatus.color} py-[0.29rem]`}
           >
             <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[166px]">
               {checkQuestionStatus.name}
@@ -517,7 +481,7 @@ const MultipleChoice = () => {
           )}
         </SortableList> */}
         <button
-          className="ml-[21.55px] mt-[16px] w-fit rounded-[7.287px] bg-[#C9C9C9] px-[7.29px] py-[3.89px] text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-[50px] tablet:mt-5 tablet:rounded-[15.265px] tablet:px-[15.27px] tablet:py-[8.14px] tablet:text-[20.736px] laptop:rounded-[23.6px] laptop:px-6 laptop:py-3 laptop:text-[31px]"
+          className="ml-[21.55px] mt-[16px] w-fit rounded-[7.287px] bg-[#C9C9C9] px-[7.29px] py-[3.89px] text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[50px] tablet:mt-5 tablet:rounded-[15.265px] tablet:px-[15.27px] tablet:py-[8.14px] tablet:text-[20.736px] laptop:rounded-[23.6px] laptop:px-6 laptop:py-3 laptop:text-[31px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
           onClick={handleAddOption}
         >
           + Add Option
@@ -526,11 +490,11 @@ const MultipleChoice = () => {
           &#x200B;
         </h3>
         {/* settings */}
-        <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[16px] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:py-[35px] laptop:max-w-[838px]">
-          <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[30px]">
+        <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[16px] bg-[#FCFCFC] py-[15px] tablet:gap-7 tablet:py-[35px] laptop:max-w-[838px] dark:bg-[#212224]">
+          <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] tablet:text-[19.35px] laptop:text-[30px] dark:text-[#737B82]">
             Settings
           </h5>
-          <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] dark:bg-[#080A0C] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
+          <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px] dark:bg-[#080A0C]">
             <h5 className="w-[150px] text-[9px]  font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
               Participants can select multiple options.
             </h5>
@@ -539,7 +503,7 @@ const MultipleChoice = () => {
               setEnabled={setMultipleOption}
             />
           </div>
-          <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] dark:bg-[#080A0C] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
+          <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px] dark:bg-[#080A0C]">
             <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
               Participant can add their own options.
             </h5>
@@ -553,7 +517,7 @@ const MultipleChoice = () => {
         </div>
         <div className="flex w-full justify-end">
           <button
-            className="mr-7 mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] laptop:rounded-[23.6px] laptop:px-[60px] laptop:py-3 laptop:text-[31.5px]"
+            className="mr-7 mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] laptop:rounded-[23.6px] laptop:px-[60px] laptop:py-3 laptop:text-[31.5px] dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46]"
             onClick={() => handleSubmit()}
             disabled={loading === true || checkError() ? true : false}
           >

@@ -45,7 +45,7 @@ const QuestionCardWithToggle = ({
   startStatus,
   createdBy,
   expandedView,
-  QuestTopic
+  QuestTopic,
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -128,7 +128,7 @@ const QuestionCardWithToggle = ({
   const { mutateAsync: AddBookmark } = useMutation({
     mutationFn: createBookmark,
     onSuccess: (resp) => {
-      toast.success("Successfully Bookmarked Quest");
+      toast.success("Bookmarked Added");
       queryClient.invalidateQueries("FeedData");
       handleStartTest(null);
     },
@@ -140,7 +140,7 @@ const QuestionCardWithToggle = ({
   const { mutateAsync: DelBookmark } = useMutation({
     mutationFn: deleteBookmarkById,
     onSuccess: (resp) => {
-      toast.success("Successfully Removed Bookmark");
+      toast.success("Bookmark Removed");
       queryClient.invalidateQueries("FeedData");
       handleStartTest(null);
     },
@@ -596,7 +596,7 @@ const QuestionCardWithToggle = ({
   }, []);
 
   return (
-    <div className="rounded-[12.3px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618] tablet:rounded-[26px]">
+    <div className="rounded-[12.3px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] tablet:rounded-[26px] dark:border-[#858585] dark:bg-[#141618]">
       <CardTopbar
         title={title}
         img={img}
@@ -608,7 +608,7 @@ const QuestionCardWithToggle = ({
         createdBy={createdBy}
         QuestTopic={QuestTopic}
       />
-      <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:ml-[52.65px] tablet:text-[25px]">
+      <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[52.65px] tablet:text-[25px] dark:text-[#B8B8B8]">
         {question?.endsWith("?") ? "Q." : "S."} {question}
       </h1>
       {viewResult !== id && openResults !== true ? (
@@ -642,6 +642,7 @@ const QuestionCardWithToggle = ({
           question={question}
           time={time}
           expandedView={expandedView}
+          usersChangeTheirAns={usersChangeTheirAns}
         />
       ) : (
         <Result

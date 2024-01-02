@@ -48,7 +48,19 @@ const Main = () => {
   const debouncedSearch = useDebounce(searchData, 1000);
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
-  const [expandedView, setExpandedView] = useState(false);
+  const [expandedView, setExpandedView] = useState(
+    localStorage.getItem("expandedView") !== undefined
+      ? localStorage.getItem("expandedView") === "true"
+        ? true
+        : false
+      : false,
+  );
+
+  useEffect(() => {
+    if (expandedView === false) {
+      setStartTest(null);
+    }
+  }, [expandedView]);
 
   // preferences start
   const initialColumns = {

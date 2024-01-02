@@ -3,7 +3,6 @@ import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  addChoice,
   getQuests,
   toggleCheck,
 } from "../../../../../features/quest/questsSlice";
@@ -46,6 +45,7 @@ const QuestionCard = ({
   multipleOption,
   startStatus,
   createdBy,
+  expandedView,
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -124,7 +124,7 @@ const QuestionCard = ({
   const { mutateAsync: AddBookmark } = useMutation({
     mutationFn: createBookmark,
     onSuccess: (resp) => {
-      toast.success("Successfully Bookmarked Quest");
+      toast.success("Bookmarked Added");
       queryClient.invalidateQueries("FeedData");
       handleStartTest(null);
     },
@@ -136,7 +136,7 @@ const QuestionCard = ({
   const { mutateAsync: DelBookmark } = useMutation({
     mutationFn: deleteBookmarkById,
     onSuccess: (resp) => {
-      toast.success("Successfully Removed Bookmark");
+      toast.success("Bookmark Removed ");
       queryClient.invalidateQueries("FeedData");
       handleStartTest(null);
     },
@@ -416,14 +416,16 @@ const QuestionCard = ({
           addedAnswer: addedAnswerValue,
           uuid: localStorage.getItem("uId"),
         };
-        console.log("selected",params.answer.selected);
+        console.log("selected", params.answer.selected);
         // && params.answer.contended.length === 0
         if (params.answer.selected.length === 0) {
           toast.warning("You cannot submit without answering");
           setLoading(false);
           return;
         }
-        const isEmptyQuestion =params.answer.selected.some(item => item.question.trim() === '');
+        const isEmptyQuestion = params.answer.selected.some(
+          (item) => item.question.trim() === "",
+        );
 
         if (isEmptyQuestion) {
           toast.error("You cannot leave the added option blank");
@@ -431,7 +433,7 @@ const QuestionCard = ({
           return;
         }
 
-        if(!isSubmit) return setLoading(false)
+        if (!isSubmit) return setLoading(false);
         console.log("params", params);
         startQuest(params);
       }
@@ -497,7 +499,7 @@ const QuestionCard = ({
   };
 
   return (
-    <div className="rounded-[12.3px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] dark:border-[#858585] dark:bg-[#141618] tablet:rounded-[26px]">
+    <div className="rounded-[12.3px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] tablet:rounded-[26px] dark:border-[#858585] dark:bg-[#141618]">
       <CardTopbar
         title={title}
         QuestTopic={QuestTopic}
@@ -509,7 +511,7 @@ const QuestionCard = ({
         bookmarkStatus={bookmarkStatus}
         createdBy={createdBy}
       />
-      <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:ml-[52.65px] tablet:text-[25px]">
+      <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[52.65px] tablet:text-[25px] dark:text-[#B8B8B8]">
         {question?.endsWith("?") ? "Q." : "S."} {question}
       </h1>
       {viewResult !== id ? (
@@ -540,6 +542,9 @@ const QuestionCard = ({
             setStartTest={setStartTest}
             loading={loading}
             setIsSubmit={setIsSubmit}
+            expandedView={expandedView}
+            usersChangeTheirAns={usersChangeTheirAns}
+            lastInteractedAt={lastInteractedAt}
           />
         ) : (
           <OptionBar

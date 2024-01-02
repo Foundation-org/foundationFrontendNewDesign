@@ -249,8 +249,6 @@ const Result = (props) => {
     transform: "translate(-50%, -50%)",
   };
 
-  console.log("ResultsData", ResultsData?.data);
-
   return (
     <>
       <div className="mt-[18px] flex flex-col gap-[10px] tablet:mt-[38px]">
@@ -342,7 +340,7 @@ const Result = (props) => {
             <button
               className={`${
                 persistedTheme === "dark" ? "bg-[#BB9D02]" : "bg-[#FDD503]"
-              } inset-0 mr-[14px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner dark:text-[#B6B6B6] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+              } inset-0 mr-[14.4px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
               onClick={() => {
                 props.handleChange(props.id);
               }}
@@ -357,7 +355,7 @@ const Result = (props) => {
                 persistedTheme === "dark"
                   ? "bg-[#333B46]"
                   : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-              } inset-0 mr-[14px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner dark:text-[#B6B6B6] tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+              } inset-0 mr-[14px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
               onClick={() => {
                 props.handleViewResults(null);
               }}
@@ -454,7 +452,7 @@ const Result = (props) => {
             />
           </BasicModal>
         </div>
-        <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:h-[29px] tablet:w-[127px] tablet:gap-1 tablet:rounded-[10.9px]">
+        <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white tablet:h-[29px] tablet:w-[127px] tablet:gap-1 tablet:rounded-[10.9px] dark:bg-[#090A0D]">
           <img
             src="/assets/svgs/dashboard/clock-outline.svg"
             alt="clock"

@@ -29,7 +29,6 @@ export default function Signup() {
   const [captchaToken, setCaptchaToken] = useState("");
   const [termConditionCheck, setTermConditionCheck] = useState(false);
 
-
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   function onChange(value) {
@@ -66,8 +65,12 @@ export default function Signup() {
   };
 
   const handleSignup = async () => {
-    if(!captchaToken) return toast.warning("Please complete the reCAPTCHA challenge before proceeding.",);
-    if(!termConditionCheck) return toast.warning("Please mark the term and condition!")
+    if (!captchaToken)
+      return toast.warning(
+        "Please complete the reCAPTCHA challenge before proceeding.",
+      );
+    if (!termConditionCheck)
+      return toast.warning("Please mark the term and condition!");
     setIsLoading(true);
     try {
       if (password === reTypePassword) {
@@ -128,7 +131,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col bg-blue text-white dark:bg-black-200 lg:flex-row">
+    <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
       <MyModal
         modalShow={modalVisible}
         email={profile?.email}
@@ -153,7 +156,7 @@ export default function Signup() {
           className="h-[20vh] w-[23vw]"
         />
       </div>
-      <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-bl-[65px] lg:rounded-tl-[65px]">
+      <div className="flex h-screen w-full flex-col items-center bg-white md:justify-center lg:rounded-bl-[65px] lg:rounded-tl-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle">Create Account</Typography>
           <SocialLogins
@@ -194,14 +197,13 @@ export default function Signup() {
               <label className="label flex cursor-pointer gap-[11.5px] p-0">
                 <input
                   type="checkbox"
-                  // checked=""
                   onChange={(e) => setTermConditionCheck(e.target.checked)}
                   checked={termConditionCheck}
                   className="checkbox h-[11.725px] w-[11.725px] rounded-[2.9px] border-[1.437px] border-[#D6D6D6] md:h-[23px] md:w-[23px] md:rounded-[3.5px] "
                 />
               </label>
             </div>
-            <label className="ml-4 text-[10.2px] text-gray-100 dark:text-white tablet:text-base 5xl:text-[22px] short:text-[12px]">
+            <label className="ml-4 text-[10.2px] text-gray-100 tablet:text-base 5xl:text-[22px] short:text-[12px] dark:text-white">
               Creating an account means you’re okay with our{" "}
               <Anchor href="#">Terms of Service</Anchor>,{" "}
               <Anchor href="#">Privacy Policy</Anchor>, and out default{" "}

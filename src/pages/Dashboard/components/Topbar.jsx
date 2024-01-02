@@ -51,14 +51,14 @@ const Topbar = () => {
             </div>
             <div className="text-blue-100 flex flex-col ">
               <h3
-                className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] dark:text-white tablet:text-[20px]"
+                className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] tablet:text-[20px] dark:text-white"
                 onClick={() => {
                   navigate("/profile");
                 }}
               >
                 Guest User
               </h3>
-              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
+              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] tablet:text-[12px] dark:text-white">
                 Balance:{" "}
                 {persistedUserInfo?.balance
                   ? persistedUserInfo?.balance.toFixed(2)
@@ -84,10 +84,10 @@ const Topbar = () => {
               </p>
             </div>
             <div className="text-blue-100 flex flex-col ">
-              <h3 className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] dark:text-white tablet:text-[20px]">
+              <h3 className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] tablet:text-[20px] dark:text-white">
                 My Profile
               </h3>
-              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
+              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] tablet:text-[12px] dark:text-white">
                 Balance:{" "}
                 {persistedUserInfo?.balance
                   ? persistedUserInfo?.balance.toFixed(2)
@@ -107,7 +107,7 @@ const Topbar = () => {
           />
         </Link>
         <div className="flex w-[85.81px] items-center justify-end gap-4 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
-          <div
+          {/* <div
             className="relative cursor-pointer "
             onClick={() => toast.error("err coming soon")}
           >
@@ -119,7 +119,7 @@ const Topbar = () => {
             <p className="absolute right-0 top-0 h-[7px] w-[7px] rounded-full bg-[#FF2C2C] text-center text-[4.667px] font-medium tablet:h-4 tablet:w-4 tablet:text-[10px]">
               2
             </p>
-          </div>
+          </div> */}
           {localStorage.getItem("isGuestMode") ? (
             <div
               onClick={() => {
@@ -214,9 +214,9 @@ const Topbar = () => {
             Bookmarks
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link
-            // to={"/dashboard/bookmark"}
+            to={"/dashboard/bookmark"}
             className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
               location.pathname === "/dashboard/marketplace" ||
               location.pathname === "/dashboard/marketplace/"
@@ -237,11 +237,11 @@ const Topbar = () => {
             )}
             Marketplace
           </Link>
-        </li>
+        </li> */}
       </ul>
       {/* logout btn */}
       <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
-        <div
+        {/* <div
           className="relative"
           onClick={() => toast.error("err coming soon")}
         >
@@ -252,7 +252,7 @@ const Topbar = () => {
           <p className="absolute right-0 top-0 h-5 w-5 rounded-full bg-[#FF2C2C] text-center text-[14px] font-medium">
             2
           </p>
-        </div>
+        </div> */}
 
         {localStorage.getItem("isGuestMode") ? (
           <div

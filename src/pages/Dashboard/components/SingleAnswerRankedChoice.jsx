@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { Tooltip } from "../../../utils/Tooltip";
 import { answerValidation, checkAnswerExist } from "../../../api/questsApi";
 
-
 const SingleAnswerRankedChoice = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [checkState, setCheckState] = useState(props.check);
@@ -38,7 +37,7 @@ const SingleAnswerRankedChoice = (props) => {
   }, [props.answer]);
 
   const handleDeleteOpen = () => {
-    setCheckOptionStatus(reset)
+    setCheckOptionStatus(reset);
     const newArr = props.answersSelection.filter(
       (item) => item.label !== props.answer,
     );
@@ -57,10 +56,14 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
-    setCheckOptionStatus(e.target.value.trim() === "" ? reset : { name: "Ok", color: "text-[#b0a00f]" })
+    setCheckOptionStatus(
+      e.target.value.trim() === ""
+        ? reset
+        : { name: "Ok", color: "text-[#b0a00f]" },
+    );
   };
 
-  const optionVerification = async(value) => {
+  const optionVerification = async (value) => {
     if (prevValue === answer) return;
     setPrevValue(value);
     setCheckOptionStatus({
@@ -68,7 +71,7 @@ const SingleAnswerRankedChoice = (props) => {
       color: "text-[#0FB063]",
       tooltipName: "Verifying your option. Please wait...",
       tooltipStyle: "tooltip-success",
-    })
+    });
     // option Validation
     const { validatedAnswer, errorMessage } = await answerValidation({
       answer: value,
@@ -82,7 +85,7 @@ const SingleAnswerRankedChoice = (props) => {
         tooltipName:
           "Please review your text for proper grammar while keeping our code of conduct in mind.",
         tooltipStyle: "tooltip-error",
-      })
+      });
     }
     // Check Answer is unique
     let answerExist = checkAnswerExist({
@@ -92,19 +95,19 @@ const SingleAnswerRankedChoice = (props) => {
       startQuest: true,
     });
     if (answerExist) {
-      props.setIsSubmit(false)
+      props.setIsSubmit(false);
       return setCheckOptionStatus({
         name: "Fail",
         color: "text-[#b00f0f]",
         tooltipName: "Found Duplication!",
         tooltipStyle: "tooltip-error",
         duplication: true,
-      })
+      });
     }
     // Answer is validated and status is Ok
     if (validatedAnswer) {
-      setAnswer(validatedAnswer)
-      props.setIsSubmit(true)
+      setAnswer(validatedAnswer);
+      props.setIsSubmit(true);
       setCheckOptionStatus({
         name: "Ok",
         color: "text-[#0FB063]",
@@ -113,7 +116,7 @@ const SingleAnswerRankedChoice = (props) => {
         isVerifiedAnswer: true,
       });
     }
-  }
+  };
 
   useEffect(() => {
     handleAddOption();
@@ -138,12 +141,11 @@ const SingleAnswerRankedChoice = (props) => {
   };
 
   return (
-    <div className="ml-6 mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[52.65px]">
-      {/* <div className="left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem] laptop:w-[90%]"> */}
+    <div className="mx-6 flex items-center 2xl:mx-[85px] tablet:mx-[52.65px]">
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
-        <div className="flex w-full items-center rounded-[4.7px] bg-white dark:bg-[#0D1012] tablet:rounded-r-[10px]">
+        <div className="flex w-full items-center rounded-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]">
           {props.btnText !== "Results" && (
-            <div className="h-full w-fit rounded-l-[4.734px] bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] dark:bg-[#9E9E9E] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px]">
+            <div className="h-full w-fit rounded-l-[4.734px] bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] dark:bg-[#9E9E9E]">
               {persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/dashboard/six-dots-dark.svg"
@@ -159,11 +161,11 @@ const SingleAnswerRankedChoice = (props) => {
               )}
             </div>
           )}
-          <div className="flex w-full justify-between border-y border-y-[#ACACAC] border-r border-r-[#ACACAC] rounded-r-[4.7px] tablet:rounded-r-[10px]">
+          <div className="flex w-full justify-between rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] tablet:rounded-r-[10px]">
             {props.editable ? (
               <input
                 type="text"
-                className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px]"
+                className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px] dark:bg-[#0D1012] dark:text-[#D3D3D3]"
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) =>
@@ -172,27 +174,23 @@ const SingleAnswerRankedChoice = (props) => {
                 }
               />
             ) : (
-              <h1 className="ml-[15.8px] w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px]">
+              <h1 className="ml-[15.8px] w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px] dark:text-[#D3D3D3]">
                 {props.answer}
               </h1>
             )}
-            {
-              props.deleteable && (
+            {props.deleteable && (
               <div
-                // id={`test${number}`}
-                className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-[#0D1012] tablet:h-[50.19px] tablet:text-[1rem] laptop:text-[1.2rem] rounded-r-[4.7px] tablet:rounded-r-[10px] ${checkOptionStatus.color}`}
+                className={`relative flex items-center rounded-r-[4.7px] bg-white text-[0.5rem] font-semibold tablet:h-[50.19px] tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.2rem] dark:bg-[#0D1012] ${checkOptionStatus.color}`}
               >
                 <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
                   <span>{checkOptionStatus.name}</span>
                 </div>
                 <Tooltip optionStatus={checkOptionStatus} />
               </div>
-              )
-            }
+            )}
           </div>
         </div>
-        {/* <div className="flex items-center gap-3 tablet:gap-[19px]"> */}
-        <div className="flex w-5 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
+        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
           {props.deleteable ? (
             <img
               src="/assets/svgs/dashboard/trash2.svg"

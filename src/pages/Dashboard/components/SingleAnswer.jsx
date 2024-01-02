@@ -82,11 +82,11 @@ const SingleAnswer = (props) => {
   };
 
   return (
-    <div className="ml-6 mr-[54.53px] flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[95.06px]">
-      <div className="flex h-[26.05px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:h-[52.5px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]">
+    <div className="mx-6 flex items-center 2xl:mx-[85px] tablet:mx-[52.65px]">
+      <div className="flex h-[26.05px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:h-[52.5px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E]">
         &#x200B;
       </div>
-      <div className="flex w-full justify-between rounded-r-[4.73px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white dark:bg-[#0D1012] tablet:rounded-r-[10px]">
+      <div className="flex w-full justify-between rounded-r-[4.73px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]">
         <div className="flex items-center">
           {!props.checkInfo && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
@@ -100,7 +100,7 @@ const SingleAnswer = (props) => {
               )}
             </div>
           )}
-          <h1 className="ml-[15.8px]  pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px] ">
+          <h1 className="ml-[15.8px]  pb-[5.7px] pt-[5.6px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px] dark:text-[#D3D3D3] ">
             {props.answer}
           </h1>
         </div>
@@ -163,6 +163,7 @@ const SingleAnswer = (props) => {
           </div>
         )}
       </div>
+      <div className="w-7 tablet:w-[45.6px]" />
     </div>
   );
 };

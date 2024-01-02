@@ -262,7 +262,7 @@ const OptionBar = ({
   return (
     <>
       <div className="mb-1 flex items-center">
-        <div className="mr-[30px] flex w-full justify-end gap-[19.14px] tablet:gap-[42px]">
+        <div className="mr-[14.4px] flex w-full justify-end gap-2 tablet:mr-[30px] tablet:gap-10">
           {getButtonText(btnText) !== "Completed" ? (
             <button
               className={` ${getButtonClassName(
@@ -281,7 +281,7 @@ const OptionBar = ({
               startStatus?.trim() !== ""
                 ? "border-none bg-[#04AD66] text-white dark:bg-[#707175] dark:text-white"
                 : "border-[#20D47E] dark:border-[#7C7C7C]"
-            } mt-[16.2px] w-[78px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[7.1px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#20D47E] dark:border-[#7C7C7C] dark:text-[#C9C8C8] tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+            } mt-[16.2px] w-[78px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[7.1px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#20D47E] tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:border-[#7C7C7C] dark:text-[#C9C8C8]`}
             onClick={() => {
               if (btnText !== "") {
                 handleViewResults(id);
@@ -387,7 +387,7 @@ const OptionBar = ({
             />
           </BasicModal>
         </div>
-        <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white dark:bg-[#090A0D] tablet:h-[29px] tablet:w-[150px] tablet:gap-1 tablet:rounded-[10.9px]">
+        <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white tablet:h-[29px] tablet:w-[150px] tablet:gap-1 tablet:rounded-[10.9px] dark:bg-[#090A0D]">
           <img
             src="/assets/svgs/dashboard/clock-outline.svg"
             alt="clock"

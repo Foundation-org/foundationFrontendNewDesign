@@ -1,17 +1,15 @@
+import { toast } from "sonner";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { FaSpinner } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
 import { changePassword } from "../../../../../api/userAuth";
-import { toast } from "sonner";
-import Button from "../components/Button";
-import { useSelector } from "react-redux";
-import { FaSpinner } from 'react-icons/fa';
-import { useState } from "react";
-
+import Form from "../components/Form";
 
 const ChangePassword = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const mutation = useMutation({ mutationFn: changePassword });
   const [loading, setLoading] = useState(false);
-
 
   const savePassword = async (event) => {
     setLoading(true);
@@ -56,50 +54,64 @@ const ChangePassword = () => {
             persistedTheme === "dark" ? "dark-shadow-inside" : "shadow-inside"
           }  relative mx-6 h-full rounded-[11px] pb-[45px] pt-[12.9px] tablet:mx-6 tablet:rounded-[24.8px] tablet:pb-[88px] tablet:pt-[50px] laptop:mx-[106px] laptop:rounded-[45px]`}
         >
-          <div className="mx-5 flex flex-col items-center gap-5 tablet:mx-6 tablet:flex-row tablet:gap-6 laptop:mx-12 laptop:gap-[100px]">
-            <div className="flex w-full flex-col gap-3 2xl:gap-[21px]">
-              <label className="ml-[6.4px] text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#CBCBCB] 2xl:text-[24px] tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px]">
+          <div className="mx-5 flex flex-col items-center gap-5 tablet:mx-6 tablet:gap-6 laptop:mx-12 laptop:gap-[100px]">
+            <Form
+            //   password={password}
+            //   reTypePassword={reTypePassword}
+            //   showPassword={showPassword}
+            //   showCnfmPassword={showCnfmPassword}
+            //   onEmailChange={onEmailChange}
+            //   onPassChange={onPassChange}
+            //   onReTypePassChange={onReTypePassChange}
+            //   togglePasswordVisibility={togglePasswordVisibility}
+            //   toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}
+            //   handleCancel={handleCancel}
+            //   email={email}
+            />
+            {/* <div className="flex w-full flex-col gap-3 2xl:gap-[21px]">
+              <label className="ml-[6.4px] text-[10px] font-semibold leading-normal text-[#7C7C7C] 2xl:text-[24px] tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px] dark:text-[#CBCBCB]">
                 Current Password
               </label>
               <input
                 type="password"
-                className="custom-inset-shadow h-[2.4vh] w-full rounded-[7.48px] bg-[#FCFCFD] px-8 py-2 text-xl dark:bg-[#080A0C] tablet:h-[5.8vh] tablet:rounded-[10.11px]  laptop:h-[8.5vh]  laptop:rounded-[29px]"
+                className="custom-inset-shadow h-[2.4vh] w-full rounded-[7.48px] bg-[#FCFCFD] px-8 py-2 text-xl tablet:h-[5.8vh] tablet:rounded-[10.11px] laptop:h-[8.5vh]  laptop:rounded-[29px]  dark:bg-[#080A0C]"
                 name="currentPassword"
                 required
               />
             </div>
             <div className="flex w-full flex-col gap-[5.72px] 2xl:gap-[21px] tablet:gap-3">
-              <label className="ml-[6.4px] text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#CBCBCB] 2xl:text-[24px] tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px]">
+              <label className="ml-[6.4px] text-[10px] font-semibold leading-normal text-[#7C7C7C] 2xl:text-[24px] tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px] dark:text-[#CBCBCB]">
                 New Password
               </label>
               <input
                 type="password"
-                className="custom-inset-shadow h-[2.4vh] w-full rounded-[7.48px] bg-[#FCFCFD] px-8  py-2 text-xl dark:bg-[#080A0C] tablet:h-[5.8vh] tablet:rounded-[10.11px] laptop:h-[8.5vh]  laptop:rounded-[29px]"
+                className="custom-inset-shadow h-[2.4vh] w-full rounded-[7.48px] bg-[#FCFCFD] px-8  py-2 text-xl tablet:h-[5.8vh] tablet:rounded-[10.11px] laptop:h-[8.5vh] laptop:rounded-[29px]  dark:bg-[#080A0C]"
                 name="newPassword"
                 required
               />
             </div>
             <div className="flex w-full flex-col gap-[5.72px] 2xl:gap-[21px] tablet:gap-3">
-              <label className="ml-[6.4px] text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#CBCBCB] 2xl:text-[24px]  tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px]">
+              <label className="ml-[6.4px] text-[10px] font-semibold leading-normal text-[#7C7C7C] 2xl:text-[24px] tablet:ml-[25px]  tablet:text-[20px] 3xl:text-[30px] dark:text-[#CBCBCB]">
                 Re-type New Password
               </label>
               <input
                 type="password"
-                className="custom-inset-shadow h-[2.4vh] w-full rounded-[7.48px] bg-[#FCFCFD] px-8 py-2 text-xl dark:bg-[#080A0C] tablet:h-[5.8vh] tablet:rounded-[10.11px] laptop:h-[8.5vh] laptop:rounded-[29px]"
+                className="custom-inset-shadow h-[2.4vh] w-full rounded-[7.48px] bg-[#FCFCFD] px-8 py-2 text-xl tablet:h-[5.8vh] tablet:rounded-[10.11px] laptop:h-[8.5vh] laptop:rounded-[29px] dark:bg-[#080A0C]"
                 name="retypePassword"
                 required
               />
-            </div>
+            </div> */}
           </div>
           <div className="absolute -bottom-[14px] right-5 tablet:-bottom-8 tablet:right-10">
-            <button className="rounded-[6.45px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[12.65px] py-[5.94px] text-[9.08px] font-semibold leading-normal text-white 2xl:text-[32px] tablet:mr-[18.5px] tablet:rounded-[23px] tablet:px-[45px] tablet:py-5 tablet:text-[20px]"
-             disabled={loading === true ? true : false}
-             >
-               {loading === true ? (
-                 <FaSpinner className="animate-spin text-[#EAEAEA]" />
-               ) : (
-                 'Save'
-               )}
+            <button
+              className="rounded-[6.45px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[12.65px] py-[5.94px] text-[9.08px] font-semibold leading-normal text-white 2xl:text-[32px] tablet:mr-[18.5px] tablet:rounded-[23px] tablet:px-[45px] tablet:py-5 tablet:text-[20px]"
+              disabled={loading === true ? true : false}
+            >
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : (
+                "Save"
+              )}
             </button>
           </div>
         </div>

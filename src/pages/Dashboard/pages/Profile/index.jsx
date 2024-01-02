@@ -18,8 +18,6 @@ const Profile = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [selectedTab, setSelectedTab] = useState(1);
 
-  console.log({ checkState });
-
   useEffect(() => {
     if (persistedTheme === "light") {
       setCheckState(false);
@@ -57,7 +55,7 @@ const Profile = () => {
           <div>
             <h4 className="heading">My Profile</h4>
             <div className="flex items-center gap-1 tablet:gap-[13px]">
-              <p className="text-[8px] dark:text-white tablet:text-[16px]">
+              <p className="text-[8px] tablet:text-[16px] dark:text-white">
                 Light
               </p>
               <Switch
@@ -77,7 +75,7 @@ const Profile = () => {
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
                 />
               </Switch>
-              <p className="text-[8px] dark:text-white tablet:text-[16px]">
+              <p className="text-[8px] tablet:text-[16px] dark:text-white">
                 Dark
               </p>
             </div>

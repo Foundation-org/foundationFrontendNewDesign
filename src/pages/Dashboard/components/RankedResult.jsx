@@ -33,9 +33,8 @@ const RankedResult = (props) => {
   };
 
   return (
-    // <div className="left-8 top-0 mx-auto flex w-[80%] items-center gap-[25px] tablet:left-[3rem] laptop:w-[90%]">
-    <div className="ml-6 mr-[36px] flex items-center gap-[25px] 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[95px]">
-      <div className="flex w-full justify-between rounded-[4.73px] bg-white dark:bg-[#0D1012] tablet:rounded-[10px]">
+    <div className="mx-6 flex items-center 2xl:mx-[85px] tablet:mx-[52.65px]">
+      <div className="flex w-full justify-between rounded-[4.73px] bg-white tablet:rounded-[10px] dark:bg-[#0D1012]">
         <div className="flex w-full items-center">
           {props.btnText !== "Results" && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
@@ -50,7 +49,7 @@ const RankedResult = (props) => {
             </div>
           )}
           <div className="flex w-full justify-between">
-            <h1 className="ml-8 w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:pb-[10px] tablet:pt-[12px]  tablet:text-[19px]">
+            <h1 className="ml-8 w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px]  dark:text-[#D3D3D3]">
               {props.answer}
             </h1>
             <div className="flex items-center gap-[19px]">
@@ -126,6 +125,7 @@ const RankedResult = (props) => {
           ) : null}
         </div>
       </div>
+      <div className="w-7 tablet:w-[45.6px]"></div>
     </div>
   );
 };
