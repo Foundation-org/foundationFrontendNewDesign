@@ -9,7 +9,7 @@ export const Tooltip = ({ optionStatus }) => {
 
   return (
     <div>
-      {tooltipStatus?.name === "Fail" && (
+      {tooltipStatus?.name === "Reject" && (
         <div
           className={`absolute ${
             tooltipStatus?.duplication ? "-top-[26px]" : "-top-[55px]"

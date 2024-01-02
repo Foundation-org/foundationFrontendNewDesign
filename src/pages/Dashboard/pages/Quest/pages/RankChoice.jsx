@@ -139,7 +139,7 @@ const RankChoice = () => {
     // If any error captured
     if (errorMessage) {
       return setCheckQuestionStatus({
-        name: "Fail",
+        name: "Reject",
         color: "text-[#b00f0f]",
         tooltipName:
           "Please review your text for proper grammar while keeping our code of conduct in mind.",
@@ -192,7 +192,7 @@ const RankChoice = () => {
       newTypedValues[index] = {
         ...newTypedValues[index],
         optionStatus: {
-          name: "Fail",
+          name: "Reject",
           color: "text-[#b00f0f]",
           tooltipName:
             "Please review your text for proper grammar while keeping our code of conduct in mind.",
@@ -213,7 +213,7 @@ const RankChoice = () => {
         ...newTypedValues[index],
         // question: "",
         optionStatus: {
-          name: "Fail",
+          name: "Reject",
           color: "text-[#b00f0f]",
           tooltipName: "Found Duplication!",
           tooltipStyle: "tooltip-error",
