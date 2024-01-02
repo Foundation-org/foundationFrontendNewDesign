@@ -100,7 +100,7 @@ const AgreeDisagree = () => {
   };
 
   const questionVerification = async (value) => {
-    if (prevValue === question) return;
+    if (prevValue === question.trim()) return;
     setPrevValue(value);
     setCheckQuestionStatus({
       name: "Checking",
@@ -126,6 +126,7 @@ const AgreeDisagree = () => {
     }
     // Question is validated and status is Ok
     setQuestion(validatedQuestion);
+    setPrevValue(validatedQuestion);
     setCheckQuestionStatus({
       name: "Ok",
       color: "text-[#0FB063]",

@@ -122,7 +122,7 @@ const RankChoice = () => {
   };
 
   const questionVerification = async (value) => {
-    if (prevValue === question) return;
+    if (prevValue === question.trim()) return;
     setPrevValue(value);
     setCheckQuestionStatus({
       name: "Checking",
@@ -147,6 +147,7 @@ const RankChoice = () => {
     }
     // Question is validated and status is Ok
     setQuestion(validatedQuestion);
+    setPrevValue(validatedQuestion);
     setCheckQuestionStatus({
       name: "Ok",
       color: "text-[#0FB063]",
@@ -195,6 +196,11 @@ const RankChoice = () => {
     }
     // Answer is validated and status is Ok
     if (validatedAnswer) {
+      setPrevValueArr((prev) => {
+        const updatedArray = [...prev];
+        updatedArray[index] = { value: validatedAnswer };
+        return [...updatedArray];
+      });
       const newTypedValues = [...typedValues];
       newTypedValues[index] = {
         ...newTypedValues[index],
