@@ -141,7 +141,7 @@ const SingleAnswer = (props) => {
                 <>{fetchSelectedPercentage()}</>
               ) : null}
             </div>
-            <div className="flex items-center gap-1 tablet:gap-3">
+            {/* <div className="flex items-center gap-1 tablet:gap-3">
               <div
                 id="custom-yello-checkbox"
                 className="flex h-full items-center "
@@ -159,7 +159,7 @@ const SingleAnswer = (props) => {
               {props.btnText === "Results" ? (
                 <>{fetchContendedPercentage()}</>
               ) : null}
-            </div>
+            </div> */}
           </div>
         )}
       </div>
