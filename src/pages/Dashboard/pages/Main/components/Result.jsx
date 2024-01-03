@@ -338,7 +338,7 @@ const Result = (props) => {
             <button
               className={`${
                 persistedTheme === "dark" ? "bg-[#BB9D02]" : "bg-[#FDD503]"
-              } inset-0 mr-[14.4px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+              } inset-0 mr-[14.4px] w-[81.8px] h-[23.48px] tablet:h-[52px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
               onClick={() => {
                 props.handleChange(props.id);
               }}
@@ -348,12 +348,12 @@ const Result = (props) => {
           </div>
         ) : (
           <div className="mt-4 flex justify-end tablet:mt-10">
-            <button
+            <button 
               className={`${
                 persistedTheme === "dark"
                   ? "bg-[#333B46]"
                   : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-              } inset-0 mr-[14px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+              } inset-0 mr-[14px] w-[81.8px] h-[23.48px] tablet:h-[52px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
               onClick={() => {
                 props.handleViewResults(null);
               }}
