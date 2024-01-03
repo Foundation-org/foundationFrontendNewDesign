@@ -269,19 +269,19 @@ const OptionBar = ({
                 persistedTheme,
                 btnText,
                 btnColor,
-              )} mt-[16.2px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+              )} mt-[16.2px] w-[81.8px] h-[23.48px] tablet:h-[52px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
               onClick={handleStartChange}
             >
               {getButtonText(btnText)}
             </button>
           ) : null}
 
-          <button
+          <button 
             className={`${
               startStatus?.trim() !== ""
                 ? "border-none bg-[#04AD66] text-white dark:bg-[#707175] dark:text-white"
                 : "border-[#20D47E] dark:border-[#7C7C7C]"
-            } mt-[16.2px] w-[78px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[7.1px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#20D47E] tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:border-[#7C7C7C] dark:text-[#C9C8C8]`}
+            } mt-[16.2px] w-[81.8px] h-[23.48px] tablet:h-[52px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#20D47E] tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:border-[#7C7C7C] dark:text-[#C9C8C8]`}
             onClick={() => {
               if (btnText !== "") {
                 handleViewResults(id);

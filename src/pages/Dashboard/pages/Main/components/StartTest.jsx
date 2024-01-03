@@ -379,7 +379,7 @@ const StartTest = ({
             title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
               <button
                 onClick={handleOpen}
-                className="ml-4 flex w-fit items-center gap-[5.8px] rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
+                className="ml-4 w-[81.8px] tablet:w-[173px] h-[23.48px] tablet:h-[52px] flex  items-center gap-[5.8px] rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
               >
                 {persistedTheme === "dark" ? (
                   <img
@@ -406,7 +406,7 @@ const StartTest = ({
                 persistedTheme === "dark"
                   ? "bg-[#333B46]"
                   : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-              } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+              } inset-0 w-[81.8px] h-[23.48px] tablet:h-[52px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
               onClick={() => {
                 setStartTest(null);
               }}
@@ -414,12 +414,12 @@ const StartTest = ({
               Cancel
             </button>
           ) : null}
-          <button
+          <button 
             className={`relative ${
               persistedTheme === "dark"
                 ? "bg-[#333B46]"
                 : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            } flex w-[82.8px] items-center justify-center rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+            } flex w-[81.8px] h-[23.48px] tablet:h-[52px] items-center justify-center rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
             onClick={() => handleSubmit()}
             disabled={loading === true ? true : false}
           >
