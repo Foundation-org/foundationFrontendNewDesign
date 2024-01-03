@@ -73,7 +73,7 @@ const Main = () => {
       list: [],
     },
     Block: {
-      id: "Blocked",
+      id: "Block",
       list: [],
     },
   };
