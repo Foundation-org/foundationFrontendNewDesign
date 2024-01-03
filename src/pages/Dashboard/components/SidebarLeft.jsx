@@ -129,7 +129,7 @@ const SidebarLeft = ({
             open={openTopicPref}
             handleClose={handleTopicPref}
             customStyle={customModalStyle}
-            customClasses="rounded-[2.31rem] w-[75vw] h-[80vh]"
+            customClasses="rounded-[0.9375rem] tablet:rounded-[2.31rem] w-[75vw] h-[80vh]"
           >
             <TopicPreferences
               topicSearch={topicSearch}
