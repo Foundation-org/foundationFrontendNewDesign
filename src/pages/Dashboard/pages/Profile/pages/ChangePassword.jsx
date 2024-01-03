@@ -9,15 +9,25 @@ import Form from "../components/Form";
 const ChangePassword = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const mutation = useMutation({ mutationFn: changePassword });
+  const [showCrntPass, setShowCrntPass] = useState(false);
+  const [showNewPass, setShowNewPass] = useState(false);
+  const [showNewCnfrmPass, setShowNewCnfrmPass] = useState(false);
+  const [crntPass, setCrntPass] = useState("");
+  const [newPass, setNewPass] = useState("");
+  const [cnfrmNewPass, setCnfrmNewPass] = useState("");
   const [loading, setLoading] = useState(false);
 
   const savePassword = async (event) => {
     setLoading(true);
     event.preventDefault();
 
-    const currentPassword = event.target.elements.currentPassword.value;
-    const newPassword = event.target.elements.newPassword.value;
-    const retypePassword = event.target.elements.retypePassword.value;
+    // const currentPassword = event.target.elements.currentPassword.value;
+    // const newPassword = event.target.elements.newPassword.value;
+    // const retypePassword = event.target.elements.retypePassword.value;
+
+    const currentPassword = crntPass;
+    const newPassword = newPass;
+    const retypePassword = cnfrmNewPass;
 
     if (newPassword === retypePassword) {
       try {
@@ -43,6 +53,30 @@ const ChangePassword = () => {
     }
   };
 
+  const toggleVisibilityCrntPass = () => {
+    setShowCrntPass(!showCrntPass);
+  };
+
+  const toggleVisibilityNewPass = () => {
+    setShowNewPass(!showNewPass);
+  };
+
+  const toggleVisibilityNewCnfrmPass = () => {
+    setShowNewCnfrmPass(!showNewCnfrmPass);
+  };
+
+  const onCrntPassChange = (e) => {
+    setCrntPass(e.target.value);
+  };
+
+  const onNewPassChange = (e) => {
+    setNewPass(e.target.value);
+  };
+
+  const onCnfrmNewPassChange = (e) => {
+    setCnfrmNewPass(e.target.value);
+  };
+
   return (
     <>
       <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px]">
@@ -50,20 +84,23 @@ const ChangePassword = () => {
       </h1>
       <form onSubmit={savePassword}>
         <div
-          className={`${
-            persistedTheme === "dark" ? "dark-shadow-inside" : "shadow-inside"
-          }  relative mx-6 h-full rounded-[11px] pb-[45px] pt-[12.9px] tablet:mx-6 tablet:rounded-[24.8px] tablet:pb-[88px] tablet:pt-[50px] laptop:mx-[106px] laptop:rounded-[45px]`}
+          className={`${persistedTheme === "dark" ? "dark-shadow-inside" : "shadow-inside"
+            }  relative mx-6 h-full rounded-[11px] pb-[45px] pt-[12.9px] tablet:mx-6 tablet:rounded-[24.8px] tablet:pb-[88px] tablet:pt-[50px] laptop:mx-[106px] laptop:rounded-[45px]`}
         >
           <div className="mx-5 flex flex-col items-center gap-5 tablet:mx-6 tablet:gap-6 laptop:mx-12 laptop:gap-[100px]">
             <Form
-            //   password={password}
-            //   reTypePassword={reTypePassword}
-            //   showPassword={showPassword}
-            //   showCnfmPassword={showCnfmPassword}
-            //   onEmailChange={onEmailChange}
-            //   onPassChange={onPassChange}
-            //   onReTypePassChange={onReTypePassChange}
-            //   togglePasswordVisibility={togglePasswordVisibility}
+              //   password={password}
+              //   reTypePassword={reTypePassword}
+              //   showCnfmPassword={showCnfmPassword}
+                onCnfrmNewPassChange={onCnfrmNewPassChange}
+              onCrntPassChange={onCrntPassChange}
+                onNewPassChange={onNewPassChange}
+              toggleVisibilityCrntPass={toggleVisibilityCrntPass}
+              showCrntPass={showCrntPass}
+              toggleVisibilityNewPass={toggleVisibilityNewPass}
+              showNewPass={showNewPass}
+              toggleVisibilityNewCnfrmPass={toggleVisibilityNewCnfrmPass}
+              showNewCnfrmPass={showNewCnfrmPass}
             //   toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}
             //   handleCancel={handleCancel}
             //   email={email}

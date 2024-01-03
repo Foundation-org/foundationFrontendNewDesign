@@ -6,14 +6,22 @@ const Form = ({
   password,
   reTypePassword,
   showPassword,
-  showCnfmPassword,
+  toggleVisibilityCrntPass,
+  showCrntPass,
+  toggleVisibilityNewPass,
+  showNewPass,
+  toggleVisibilityNewCnfrmPass,
+  showNewCnfrmPass,
   togglePasswordVisibility,
+  showCnfmPassword,
   toggleCnfmPasswordVisibility,
-  onPassChange,
-  onReTypePassChange,
+  onCrntPassChange,
+  onNewPassChange,
+  onCnfrmNewPassChange,
 }) => {
-  const inputType = showPassword ? "text" : "password";
-  const cnfmPassInputType = showCnfmPassword ? "text" : "password";
+  const crntPassinputType = showCrntPass ? "text" : "password";
+  const newPassinputType = showNewPass ? "text" : "password";
+  const cnfrmnewPassinputType = showNewCnfrmPass ? "text" : "password";
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
@@ -22,27 +30,27 @@ const Form = ({
         <div className="h-[50px] xl:h-[66px]">
           <div className="relative grid w-full grid-cols-[1fr] items-center">
             <Input
-              type={inputType}
+              type={crntPassinputType}
               id="password"
               label="Current Password"
               className="peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-dark dark:focus:border-white"
               autoComplete="new-password"
-              onChange={onPassChange}
+              onChange={onCrntPassChange}
             />
-            {!showPassword ? (
+            {!showCrntPass ? (
               persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                  onClick={togglePasswordVisibility}
+                  onClick={toggleVisibilityCrntPass}
                 />
               ) : (
                 <img
                   src="/assets/svgs/eye-white.svg"
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                  onClick={togglePasswordVisibility}
+                  onClick={toggleVisibilityCrntPass}
                 />
               )
             ) : persistedTheme === "dark" ? (
@@ -50,14 +58,14 @@ const Form = ({
                 src="/assets/svgs/eye.svg"
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                onClick={togglePasswordVisibility}
+                onClick={toggleVisibilityCrntPass}
               />
             ) : (
               <img
                 src="/assets/svgs/eyeLight.svg"
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                onClick={togglePasswordVisibility}
+                onClick={toggleVisibilityCrntPass}
               />
             )}
           </div>
@@ -65,30 +73,30 @@ const Form = ({
             {password && <PasswordStrengthBar password={password} />}
           </div>
         </div>
-        <div className="h-[50px] xl:h-[66px]">
+       <div className="h-[50px] xl:h-[66px]">
           <div className="relative grid w-full grid-cols-[1fr] items-center">
             <Input
-              type={inputType}
+              type={newPassinputType}
               id="password"
               label="New Password"
               className="peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1 pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-dark dark:focus:border-white"
               autoComplete="new-password"
-              onChange={onPassChange}
+              onChange={onNewPassChange}
             />
-            {!showPassword ? (
+            {!showNewPass ? (
               persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                  onClick={togglePasswordVisibility}
+                  onClick={toggleVisibilityNewPass}
                 />
               ) : (
                 <img
                   src="/assets/svgs/eye-white.svg"
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                  onClick={togglePasswordVisibility}
+                  onClick={toggleVisibilityNewPass}
                 />
               )
             ) : persistedTheme === "dark" ? (
@@ -96,14 +104,14 @@ const Form = ({
                 src="/assets/svgs/eye.svg"
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                onClick={togglePasswordVisibility}
+                onClick={toggleVisibilityNewPass}
               />
             ) : (
               <img
                 src="/assets/svgs/eyeLight.svg"
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                onClick={togglePasswordVisibility}
+                onClick={toggleVisibilityNewPass}
               />
             )}
           </div>
@@ -111,30 +119,30 @@ const Form = ({
             {password && <PasswordStrengthBar password={password} />}
           </div>
         </div>
-        <div className="h-[50px] xl:h-[66px]">
+         <div className="h-[50px] xl:h-[66px]">
           <div className="relative grid w-full grid-cols-[1fr] items-center">
             <Input
-              type={cnfmPassInputType}
+              type={cnfrmnewPassinputType}
               id="password"
               label="Re-type Password"
               className="peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white py-1  pr-8 text-[12px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none md:text-[22.9px] short:py-0 taller:text-[16px] dark:border-white dark:bg-dark dark:focus:border-white"
               autoComplete="new-password"
-              onChange={onReTypePassChange}
+              onChange={onCnfrmNewPassChange}
             />
-            {!showCnfmPassword ? (
+            {!showNewCnfrmPass ? (
               persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                  onClick={toggleCnfmPasswordVisibility}
+                  onClick={toggleVisibilityNewCnfrmPass}
                 />
               ) : (
                 <img
                   src="/assets/svgs/eye-white.svg"
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                  onClick={toggleCnfmPasswordVisibility}
+                  onClick={toggleVisibilityNewCnfrmPass}
                 />
               )
             ) : persistedTheme === "dark" ? (
@@ -142,14 +150,14 @@ const Form = ({
                 src="/assets/svgs/eye.svg"
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                onClick={toggleCnfmPasswordVisibility}
+                onClick={toggleVisibilityNewCnfrmPass}
               />
             ) : (
               <img
                 src="/assets/svgs/eyeLight.svg"
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
-                onClick={toggleCnfmPasswordVisibility}
+                onClick={toggleVisibilityNewCnfrmPass}
               />
             )}
           </div>

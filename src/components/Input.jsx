@@ -22,7 +22,7 @@ const Input = ({
   useEffect(() => {
     setInputValue(value); 
   }, [value]);
-     console.log(inputValue);
+    //  console.log(inputValue);
   return (
     
     <div className="relative">
