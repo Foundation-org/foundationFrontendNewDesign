@@ -314,26 +314,28 @@ const SingleAnswerMultipleChoice = (props) => {
             </div>
           </div>
         )}
-        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
-          {props.deleteable ? (
-            <img
-              src="/assets/svgs/dashboard/trash2.svg"
-              alt="trash"
-              className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-              onClick={handleDeleteOption}
-            />
-          ) : null}
-          <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
-            <DeleteOption
-              answer={props.answer}
-              answersSelection={props.answersSelection}
-              setAnswerSelection={props.setAnswerSelection}
-              handleDeleteClose={handleDeleteClose}
-              handleEditClose={handleDeleteClose}
-              setAddOptionLimit={props.setAddOptionLimit}
-            />
-          </BasicModal>
-        </div>
+        {props.btnText !== "Results" && (
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
+            {props.deleteable ? (
+              <img
+                src="/assets/svgs/dashboard/trash2.svg"
+                alt="trash"
+                className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
+                onClick={handleDeleteOption}
+              />
+            ) : null}
+            <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
+              <DeleteOption
+                answer={props.answer}
+                answersSelection={props.answersSelection}
+                setAnswerSelection={props.setAnswerSelection}
+                handleDeleteClose={handleDeleteClose}
+                handleEditClose={handleDeleteClose}
+                setAddOptionLimit={props.setAddOptionLimit}
+              />
+            </BasicModal>
+          </div>
+        )}
       </div>
     </div>
   );

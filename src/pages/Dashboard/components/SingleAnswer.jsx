@@ -163,7 +163,7 @@ const SingleAnswer = (props) => {
           </div>
         )}
       </div>
-      <div className="w-7 tablet:w-[45.6px]" />
+      {props.btnText !== "Results" && <div className="w-7 tablet:w-[45.6px]" />}
     </div>
   );
 };

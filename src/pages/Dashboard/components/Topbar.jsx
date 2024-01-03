@@ -41,7 +41,7 @@ const Topbar = () => {
           >
             <div className="relative block h-fit w-fit laptop:hidden">
               <img
-                src="/assets/svgs/dashboard/yellowBadge.svg"
+                src="/assets/svgs/dashboard/guestBadge.svg"
                 alt="badge"
                 className="h-6 w-[19.8px] tablet:h-[51.5px] tablet:w-[42px]"
               />
@@ -75,7 +75,7 @@ const Topbar = () => {
           >
             <div className="relative block h-fit w-fit laptop:hidden">
               <img
-                src="/assets/svgs/dashboard/badge.svg"
+                src="/assets/svgs/dashboard/MeBadge.svg"
                 alt="badge"
                 className="h-6 w-[19.8px] tablet:h-[51.5px] tablet:w-[42px]"
               />
@@ -145,7 +145,7 @@ const Topbar = () => {
       </div>
       {/* items */}
       <ul className="flex w-full items-end justify-around gap-[2.19rem] px-5 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-[57px] laptop:gap-[3.12rem] laptop:px-0">
-        <li>
+        <li className="w-[85.8px] tablet:w-[149.46px]">
           <Link
             to={"/dashboard"}
             className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
@@ -168,7 +168,7 @@ const Topbar = () => {
             Home
           </Link>
         </li>
-        <li>
+        <li className="flex w-[85.8px] items-center justify-center tablet:w-[149.46px]">
           <Link
             to={"/dashboard/quest"}
             className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
@@ -191,7 +191,7 @@ const Topbar = () => {
             Quests
           </Link>
         </li>
-        <li>
+        <li className="w-[85.8px] tablet:w-[149.46px]">
           <Link
             to={"/dashboard/bookmark"}
             className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${

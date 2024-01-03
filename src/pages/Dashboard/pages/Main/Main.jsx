@@ -298,6 +298,7 @@ const Main = () => {
                     startTest={startTest}
                     setStartTest={setStartTest}
                     viewResult={viewResult}
+                    setViewResult={setViewResult}
                     usersAddTheirAns={item?.usersAddTheirAns}
                     handleViewResults={handleViewResults}
                     handleStartTest={handleStartTest}

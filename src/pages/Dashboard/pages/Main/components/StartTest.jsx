@@ -50,6 +50,12 @@ const StartTest = ({
   setIsSubmit,
   usersChangeTheirAns,
   lastInteractedAt,
+  viewResult,
+  setViewResult,
+  openResults,
+  setOpenResults,
+  startStatus,
+  howManyTimesAnsChanged,
 }) => {
   const [timeAgo, setTimeAgo] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -282,25 +288,32 @@ const StartTest = ({
               </h4>
             ) : (
               <h4 className="ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:text-[18px]">
-                {!conditionalText && (
-                  <span
-                    className="cursor-pointer"
-                    onClick={() => setConditionalText(true)}
-                  >
-                    You can change you answer {usersChangeTheirAns}.
-                  </span>
-                )}
-                {conditionalText && (
+                {/* {!conditionalText && ( */}
+                <span
+                  className="cursor-pointer"
+                  // onClick={() => setConditionalText(true)}
+                  onClick={() =>
+                    calculateRemainingTime(
+                      lastInteractedAt,
+                      howManyTimesAnsChanged,
+                    )
+                  }
+                >
+                  You can change you answer {usersChangeTheirAns}.
+                </span>
+                {/* )} */}
+
+                {/* {conditionalText && (
                   <span
                     className="cursor-pointer"
                     onClick={() => setConditionalText(false)}
                   >
                     {calculateRemainingTime(
                       lastInteractedAt,
-                      usersChangeTheirAns,
+                      howManyTimesAnsChanged,
                     )}
                   </span>
-                )}
+                )} */}
               </h4>
             )}
           </div>
@@ -414,6 +427,23 @@ const StartTest = ({
               Cancel
             </button>
           ) : null}
+          {startStatus === "change answer" &&
+            viewResult === null &&
+            openResults === false && (
+              <button
+                className={` ${
+                  persistedTheme === "dark"
+                    ? "bg-[#333B46]"
+                    : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+                onClick={() => {
+                  setViewResult(id);
+                  setOpenResults(true);
+                }}
+              >
+                Cancel
+              </button>
+            )}
           <button
             className={`relative ${
               persistedTheme === "dark"

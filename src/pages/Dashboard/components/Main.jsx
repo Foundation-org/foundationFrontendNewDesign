@@ -14,7 +14,7 @@ const Main = () => {
       <QuestionCard
         img="/assets/svgs/dashboard/badge-g.svg"
         alt="badge"
-        badgeCount="Me"
+        badgeCount="5"
         title="Multiple Choice"
         question="Q. Technology is highly diverse and versatile?"
       />

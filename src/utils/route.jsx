@@ -34,6 +34,7 @@ export function Router() {
         />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/quest/:id" element={<Guests />} />
 
         {/* Protected routes */}
         {isLoggedIn && (

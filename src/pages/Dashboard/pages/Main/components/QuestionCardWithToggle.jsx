@@ -3,7 +3,6 @@ import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  addChoice,
   getQuests,
   toggleCheck,
 } from "../../../../../features/quest/questsSlice";
@@ -37,6 +36,7 @@ const QuestionCardWithToggle = ({
   isBookmarked,
   handleStartTest,
   viewResult,
+  setViewResult,
   handleViewResults,
   lastInteractedAt,
   usersChangeTheirAns,
@@ -643,6 +643,11 @@ const QuestionCardWithToggle = ({
           time={time}
           expandedView={expandedView}
           usersChangeTheirAns={usersChangeTheirAns}
+          viewResult={viewResult}
+          setViewResult={setViewResult}
+          openResults={openResults}
+          setOpenResults={setOpenResults}
+          startStatus={startStatus}
         />
       ) : (
         <Result

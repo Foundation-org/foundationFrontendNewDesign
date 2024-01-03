@@ -331,9 +331,7 @@ const Result = (props) => {
               btnText={"Results"}
             />
           ))
-        ) : (
-          <></>
-        )}
+        ) : null}
 
         {props.expanded ? (
           <div className="mt-2.5 flex justify-end tablet:mt-8">

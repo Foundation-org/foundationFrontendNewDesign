@@ -9,7 +9,7 @@ const CardTopbar = ({
   handleClickBookmark,
   bookmarkStatus,
   createdBy,
-  QuestTopic
+  QuestTopic,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -23,7 +23,7 @@ const CardTopbar = ({
             className="h-[28.379px] w-[22.722px] tablet:h-[60px] tablet:w-[48px]"
           />
           <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[11.3px] font-[400] leading-normal text-[#F6F6F6] tablet:top-1/2 tablet:pb-3 tablet:text-[17px]">
-            Me
+            5
           </p>
         </div>
       ) : (
@@ -39,10 +39,10 @@ const CardTopbar = ({
         </div>
       )}
       <div>
-        <h1 className="text-[10.414px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF] tablet:text-[22px]">
+        <h1 className="text-[10.414px] font-semibold leading-normal text-[#5B5B5B] tablet:text-[22px] dark:text-[#CFCFCF]">
           {title}
         </h1>
-        <h1 className="text-center text-[10.414px] font-medium leading-normal text-[#9A9A9A] dark:text-[#9A9A9A] tablet:text-[1.125rem]">
+        <h1 className="text-center text-[10.414px] font-medium leading-normal text-[#9A9A9A] tablet:text-[1.125rem] dark:text-[#9A9A9A]">
           {QuestTopic}
         </h1>
       </div>

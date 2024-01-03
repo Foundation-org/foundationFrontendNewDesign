@@ -42,10 +42,10 @@ const Profile = () => {
         <div className="laptop::mt-12 mr-5 mt-5 flex justify-end gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[109px]">
           <div
             style={{
-              background: "url(/assets/svgs/dashboard/badge.svg)",
-              backgroundSize: "cover",
+              background: "url(/assets/svgs/dashboard/MeBadge.svg)",
+              backgroundRepeat: "no-repeat",
             }}
-            className="flex h-[26.8px] w-[21.8px] items-center justify-center tablet:h-[75px] tablet:w-[61px]"
+            className="flex h-[26.8px] w-[21.8px] items-center justify-center bg-cover bg-no-repeat tablet:h-[85px] tablet:w-[69px]"
           >
             <p className="h-[80%] text-[9.2px] font-normal leading-normal text-white tablet:text-[30px]">
               2

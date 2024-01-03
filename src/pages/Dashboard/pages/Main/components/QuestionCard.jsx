@@ -545,6 +545,7 @@ const QuestionCard = ({
             expandedView={expandedView}
             usersChangeTheirAns={usersChangeTheirAns}
             lastInteractedAt={lastInteractedAt}
+            howManyTimesAnsChanged={howManyTimesAnsChanged}
           />
         ) : (
           <OptionBar

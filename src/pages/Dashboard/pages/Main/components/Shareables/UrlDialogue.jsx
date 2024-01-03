@@ -19,7 +19,7 @@ const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
               className="h-[28.379px] w-[22.722px] tablet:h-[106px] tablet:w-[85px]"
             />
             <p className="absolute left-[50%] top-[30%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[11.3px] font-[400] leading-normal text-[#F6F6F6] tablet:pb-3 tablet:text-[42.5px] laptop:top-[39%]">
-              Me
+              5
             </p>
           </div>
         ) : (
@@ -42,7 +42,7 @@ const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
         </p>
         <div className="flex">
           <div className="w-full rounded-[9.42px] bg-[#F3F3F3] py-[10.51px] pl-[9.43px] pr-[1.58rem] tablet:py-[30px] tablet:pl-[26px] laptop:rounded-[26px] laptop:pr-[70px]">
-            <p className="desktop:w-[32rem] w-[56vw] truncate text-[9.42px] font-normal text-[#435059] tablet:text-[26px] laptop:w-[40vw]">
+            <p className="w-[56vw] truncate text-[9.42px] font-normal text-[#435059] tablet:text-[26px] laptop:w-[40vw] desktop:w-[32rem]">
               {url}
             </p>
           </div>

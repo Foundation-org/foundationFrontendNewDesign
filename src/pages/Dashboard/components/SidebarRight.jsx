@@ -115,7 +115,7 @@ const SidebarRight = () => {
       // console.log(resp);
       setResponse(resp.data);
     } catch (e) {
-      toast.error(e.response.data.message.split(':')[1]);
+      toast.error(e.response.data.message.split(":")[1]);
     }
   };
 
@@ -157,30 +157,32 @@ const SidebarRight = () => {
   }, []);
 
   return (
-    <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#0A0A0C] 2xl:w-[25rem] laptop:block">
+    <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] shadow-[0_3px_10px_rgb(0,0,0,0.2)] 2xl:w-[25rem] laptop:block dark:bg-[#0A0A0C]">
       <div className="mb-[5vh] flex gap-6">
         <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" />
         <div>
           <h4 className="heading">Treasury</h4>
           <p className="whitespace-nowrap text-[20px] font-medium text-[#616161] dark:text-[#D4D5D7]">
-            Balance:{" "}<span>{treasuryAmount}</span>
+            Balance: <span>{treasuryAmount}</span>
           </p>
         </div>
       </div>
       {localStorage.getItem("isGuestMode") ? (
         <div className="mb-[5vh] flex items-center gap-6">
           <div className="relative h-fit w-fit">
-            <img src="/assets/svgs/dashboard/yellowBadge.svg" alt="badge" />
+            <img src="/assets/svgs/dashboard/guestBadge.svg" alt="badge" />
             <p className="transform-center absolute z-50 pb-5 text-[1.875rem] font-medium leading-normal text-[#362E04]">
               G
             </p>
           </div>
           <div>
             <h4 className="heading">Guest User</h4>
-            <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
-              <p>Balance:{" "}</p>
+            <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] tablet:text-[17px] laptop:text-[20px] dark:text-[#D2D2D2]">
+              <p>Balance: </p>
               <p>
-                {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
+                {persistedUserInfo?.balance
+                  ? persistedUserInfo?.balance.toFixed(2)
+                  : 0}
               </p>
             </div>
             <div
@@ -197,17 +199,19 @@ const SidebarRight = () => {
       ) : (
         <div className="mb-[5vh] flex items-center gap-6">
           <div className="relative h-fit w-fit">
-            <img src="/assets/svgs/dashboard/badge.svg" alt="badge" />
+            <img src="/assets/svgs/dashboard/MeBadge.svg" alt="badge" />
             <p className="transform-center absolute z-50 pb-5 text-[35px] font-bold leading-normal text-white">
               5
             </p>
           </div>
           <div>
             <h4 className="heading">My Profile</h4>
-            <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
-              <p>Balance:{" "}</p>
+            <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] tablet:text-[17px] laptop:text-[20px] dark:text-[#D2D2D2]">
+              <p>Balance: </p>
               <p>
-                {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
+                {persistedUserInfo?.balance
+                  ? persistedUserInfo?.balance.toFixed(2)
+                  : 0}
               </p>
             </div>
             <div

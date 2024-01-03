@@ -125,7 +125,7 @@ const RankedResult = (props) => {
           ) : null}
         </div>
       </div>
-      <div className="w-7 tablet:w-[45.6px]"></div>
+      {/* <div className="w-7 tablet:w-[45.6px]" /> */}
     </div>
   );
 };
