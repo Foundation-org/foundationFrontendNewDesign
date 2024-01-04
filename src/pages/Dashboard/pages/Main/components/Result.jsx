@@ -252,7 +252,7 @@ const Result = (props) => {
   return (
     <>
       <div className="mr-[1.38rem]">
-        <div className="quest-scrollbar mt-[18px] flex max-h-[22.8rem] min-h-fit flex-col gap-[10px] overflow-auto tablet:mt-[38px]">
+        <div className="quest-scrollbar mt-[18px] flex max-h-48 min-h-fit flex-col gap-[10px] overflow-auto tablet:mt-[38px] tablet:max-h-[24.8rem]">
           {props.title === "Yes/No" || props.title === "Agree/Disagree" ? (
             <>
               {props.title === "Yes/No" ? (

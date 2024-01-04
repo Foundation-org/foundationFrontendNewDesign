@@ -243,7 +243,7 @@ const StartTest = ({
             )}
           </div>
         ) : title === "Multiple Choice" ? (
-          <div className="quest-scrollbar mr-[1.38rem] mt-[11.66px] flex max-h-[22.8rem] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:mt-[26px] tablet:gap-[10px]">
+          <div className="quest-scrollbar mr-[1.38rem] mt-[11.66px] flex max-h-48 min-h-fit flex-col gap-[5.7px] overflow-auto tablet:mt-[26px] tablet:max-h-[24.8rem] tablet:gap-[10px]">
             {multipleOption ? (
               <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[5.37rem] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
                 You can select multiple options.
