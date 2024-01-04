@@ -608,7 +608,7 @@ const QuestionCardWithToggle = ({
         createdBy={createdBy}
         QuestTopic={QuestTopic}
       />
-      <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[52.65px] tablet:mt-[1.56rem] tablet:text-[25px] dark:text-[#B8B8B8]">
+      <h1 className="ml-6 mt-[11.22px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[52.65px] tablet:mt-[1.56rem] tablet:text-[25px] dark:text-[#B8B8B8]">
         {question?.endsWith("?") ? "Q." : "S."} {question}
       </h1>
       {viewResult !== id && openResults !== true ? (
