@@ -1,8 +1,8 @@
 import classNames from "classnames";
 
-const Button = ({ children, type = "button", color = "gray", onClick }) => {
+const Button = ({ children, type = "button", color, onClick }) => {
   const buttonClasses = classNames(
-    "py-[5.58px] tablet:text-[17.7px] tablet:py-[11.63px] 2xl:py-[21px] tablet:px-6 px-[11.9px] laptop:px-[45px] text-[8.4px] laptop:text-[20px] 2xl:text-[32px] font-semibold leading-normal tablet:mr-[18.5px]",
+    "w-[19.9vw] h-[5.8vw] rounded-[1.31vw] text-[1.73vw] font-semibold leading-normal tablet:mr-[18.5px]",
     {
       "border-[1.32px] tablet:border-[5px] border-[#949494] text-[#949494] rounded-[6px] tablet:rounded-[12.6px] laptop:rounded-[23px]":
         color === "gray",

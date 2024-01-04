@@ -6,10 +6,10 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic }) => {
           <img
             src="/assets/svgs/dashboard/MeBadge.svg"
             alt={alt}
-            className="h-[28.379px] w-[22.722px] tablet:h-[2.43rem] tablet:w-[1.95rem]"
+            className="h-[28.379px] w-[22.722px] tablet:h-[46px] tablet:w-[34px]"
           />
-          <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[11.3px] font-[400] leading-normal text-[#7A7016] tablet:top-1/2 tablet:pb-3 tablet:text-[17px]">
-            5
+          <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[11.3px] font-[400] leading-normal text-[#7A7016] tablet:top-1/2 tablet:pb-3 tablet:text-[15px]">
+            {badgeCount}
           </p>
         </div>
       ) : (
@@ -17,9 +17,9 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic }) => {
           <img
             src={img}
             alt={alt}
-            className="h-[28.379px] w-[22.722px] tablet:h-[60px] tablet:w-[48px]"
+            className="h-[28.379px] w-[22.722px] tablet:h-[46px] tablet:w-[34px]"
           />
-          <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[11.3px] font-[400] leading-normal text-[#F6F6F6] tablet:top-1/2 tablet:pb-3 tablet:text-[17px]">
+          <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[11.3px] font-[400] leading-normal text-[#F6F6F6] tablet:top-1/2 tablet:pb-3 tablet:text-[15px]">
             {badgeCount}
           </p>
         </div>
