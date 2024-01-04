@@ -4,11 +4,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { getStartQuestInfo } from "../../../../../api/questsApi";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
-import Copy from "../../../../../assets/optionbar/Copy";
-import Link from "../../../../../assets/optionbar/Link";
-import Mail from "../../../../../assets/optionbar/Mail";
-import Twitter from "../../../../../assets/optionbar/Twitter";
-import Facebook from "../../../../../assets/optionbar/Facebook";
+import Copy from "../../../../../assets/Copy";
+import Link from "../../../../../assets/Link";
+import Mail from "../../../../../assets/Mail";
+import Twitter from "../../../../../assets/Twitter";
+import Facebook from "../../../../../assets/Facebook";
 import BasicModal from "../../../../../components/BasicModal";
 import CopyDialogue from "./Shareables/CopyDialogue";
 import UrlDialogue from "./Shareables/UrlDialogue";
@@ -269,19 +269,19 @@ const OptionBar = ({
                 persistedTheme,
                 btnText,
                 btnColor,
-              )} mt-[16.2px] w-[81.8px] h-[23.48px] tablet:h-[52px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+              )} mt-[16.2px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
               onClick={handleStartChange}
             >
               {getButtonText(btnText)}
             </button>
           ) : null}
 
-          <button 
+          <button
             className={`${
               startStatus?.trim() !== ""
                 ? "border-none bg-[#04AD66] text-white dark:bg-[#707175] dark:text-white"
                 : "border-[#20D47E] dark:border-[#7C7C7C]"
-            } mt-[16.2px] w-[81.8px] h-[23.48px] tablet:h-[52px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#20D47E] tablet:mt-12 tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:border-[#7C7C7C] dark:text-[#C9C8C8]`}
+            } mt-[16.2px] h-[23.48px] w-[81.8px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#20D47E] tablet:mt-12 tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:border-[#7C7C7C] dark:text-[#C9C8C8]`}
             onClick={() => {
               if (btnText !== "") {
                 handleViewResults(id);
@@ -295,7 +295,8 @@ const OptionBar = ({
         </div>
       </div>
 
-      <div className="mx-[0.57rem] mb-[0.55rem] mt-[0.86rem] flex items-center justify-between tablet:mx-[2.4rem] tablet:mb-[1.83rem] tablet:mt-[3.99rem]">
+      {/* <div className="mx-[0.57rem] mb-[0.55rem] mt-[0.86rem] flex items-center justify-between tablet:mx-[2.4rem] tablet:mb-[1.83rem] tablet:mt-[3.99rem]"> */}
+      <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-[1.37rem] tablet:py-[0.85rem] dark:border-white">
         <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
           <div onClick={handleCopyOpen} className="cursor-pointer">
             {persistedTheme === "dark" ? <Copy /> : <Copy />}
@@ -393,7 +394,7 @@ const OptionBar = ({
             alt="clock"
             className="h-[8.64px] w-[8.64px] tablet:h-[18px] tablet:w-[18px]"
           />
-          <p className="whitespace-nowrap text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[17.48px]">
+          <p className="whitespace-nowrap text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[18px]">
             {timeAgo}
           </p>
         </div>

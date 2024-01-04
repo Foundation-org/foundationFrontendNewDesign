@@ -48,6 +48,7 @@ const QuestionCard = ({
   expandedView,
 }) => {
   const dispatch = useDispatch();
+  const persistedTheme = useSelector((state) => state.utils.theme);
   const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
   const [open, setOpen] = useState(false);
@@ -416,7 +417,7 @@ const QuestionCard = ({
           addedAnswer: addedAnswerValue,
           uuid: localStorage.getItem("uId"),
         };
-        console.log("selected", params.answer.selected);
+        console.log("selected", params);
         // && params.answer.contended.length === 0
         if (params.answer.selected.length === 0) {
           toast.warning("You cannot submit without answering");
@@ -432,8 +433,9 @@ const QuestionCard = ({
           setLoading(false);
           return;
         }
+        console.log({ isSubmit });
 
-        if (!isSubmit) return setLoading(false);
+        if (!isSubmit) setLoading(false);
         console.log("params", params);
         startQuest(params);
       }
@@ -499,21 +501,46 @@ const QuestionCard = ({
   };
 
   return (
-    <div className="rounded-[12.3px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] tablet:rounded-[26px] dark:border-[#858585] dark:bg-[#141618]">
+    <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-white dark:bg-[#141618]">
       <CardTopbar
-        title={title}
+        // title={title}
         QuestTopic={QuestTopic}
         img={img}
         alt={alt}
         badgeCount={badgeCount}
-        isBookmarked={isBookmarked}
-        handleClickBookmark={handleBookmark}
-        bookmarkStatus={bookmarkStatus}
+        // isBookmarked={isBookmarked}
+        // handleClickBookmark={handleBookmark}
+        // bookmarkStatus={bookmarkStatus}
         createdBy={createdBy}
       />
-      <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[52.65px] tablet:text-[25px] dark:text-[#B8B8B8]">
-        {question?.endsWith("?") ? "Q." : "S."} {question}
-      </h1>
+      <div className="ml-6 mr-[1.38rem] mt-[1.56rem] flex items-center justify-between tablet:ml-[52.65px]">
+        <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[25px] dark:text-[#B8B8B8]">
+          {question?.endsWith("?") ? "Q." : "S."} {question}
+        </h1>
+        <div onClick={() => handleBookmark(isBookmarked)}>
+          {bookmarkStatus ? (
+            persistedTheme !== "dark" ? (
+              <img
+                src="/assets/svgs/dashboard/bookmark-blue.svg"
+                alt="save icon"
+                className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
+              />
+            ) : (
+              <img
+                src="/assets/svgs/dashboard/bookmark-white.svg"
+                alt="save icon"
+                className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
+              />
+            )
+          ) : (
+            <img
+              src="/assets/svgs/dashboard/save.svg"
+              alt="save icon"
+              className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
+            />
+          )}
+        </div>
+      </div>
       {viewResult !== id ? (
         startTest === id ? (
           <StartTest

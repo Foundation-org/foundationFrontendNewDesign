@@ -64,14 +64,14 @@ const TopicPreferences = ({
   return (
     <div className="w-[90vw] px-[1.19rem] py-[1.5rem] tablet:w-[75vw] tablet:px-[2.75rem] tablet:py-[2.94rem]">
       <div className="max-[100%] mx-auto flex items-center gap-2 laptop:max-w-[80%]">
-        <h1 className=" text-[1rem] font-medium leading-normal text-[#535353] laptop:text-[2.18rem]">
+        <h1 className=" text-[1rem] font-medium leading-normal text-[#535353] tablet:text-[1.4rem] laptop:text-[2.18rem]">
           Topic
         </h1>
         <div className="relative w-full">
           <input
             type="text"
             placeholder="Search here...."
-            className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F3F3F3] px-3 text-[8.4px] text-gray-400 focus:outline-none laptop:h-[80px] laptop:rounded-[26px] laptop:pl-[45px] laptop:pr-[60px] laptop:text-[26px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
+            className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F3F3F3] px-3 text-[8.4px] text-gray-400 focus:outline-none tablet:h-[32px] tablet:text-[18px] laptop:h-[80px] laptop:rounded-[26px] laptop:pl-[45px] laptop:pr-[60px] laptop:text-[26px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
             value={topicSearch}
             onChange={handleSearch}
           />
@@ -126,7 +126,7 @@ const TopicPreferences = ({
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                className="w-fit select-none rounded-[0.2rem] border-[1px] border-[#435059] bg-[#FCFCFD] px-3 py-[3px] text-[0.6rem] font-normal leading-normal text-[#435059] laptop:rounded-[8px] laptop:py-[6px] laptop:text-[1.6rem]"
+                                className="w-fit select-none rounded-[0.2rem] border-[1px] border-[#435059] bg-[#FCFCFD] px-3 py-[3px] text-[0.6rem] font-normal leading-normal text-[#435059] tablet:text-[1rem] laptop:rounded-[8px] laptop:py-[6px] laptop:text-[1.6rem]"
                               >
                                 {text}
                               </div>

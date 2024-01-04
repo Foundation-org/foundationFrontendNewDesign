@@ -143,9 +143,9 @@ const SingleAnswerRankedChoice = (props) => {
   return (
     <div className="mx-6 flex items-center 2xl:mx-[85px] tablet:mx-[52.65px]">
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
-        <div className="flex w-full items-center rounded-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]">
+        <div className="flex w-full items-center rounded-[4.7px] rounded-l-[4.734px] bg-white tablet:rounded-l-[10px] tablet:rounded-r-[10px] dark:bg-[#0D1012]">
           {props.btnText !== "Results" && (
-            <div className="h-full w-fit rounded-l-[4.734px] bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] dark:bg-[#9E9E9E]">
+            <div className="flex h-full w-fit items-center rounded-l-[4.734px] bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] dark:bg-[#9E9E9E]">
               {persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/dashboard/six-dots-dark.svg"

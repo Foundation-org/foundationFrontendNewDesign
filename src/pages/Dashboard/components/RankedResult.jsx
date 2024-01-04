@@ -6,10 +6,8 @@ import { useState } from "react";
 import BasicModal from "../../../components/BasicModal";
 import EditNewOption from "./EditNewOption";
 import DeleteOption from "./DeleteOption";
-// import { getQuests } from "../../../features/quest/questsSlice";
 
 const RankedResult = (props) => {
-  //   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [checkState, setCheckState] = useState(props.check);
   const [editModal, setEditModal] = useState(false);

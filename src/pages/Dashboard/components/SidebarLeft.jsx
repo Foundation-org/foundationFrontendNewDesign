@@ -67,50 +67,53 @@ const SidebarLeft = ({
     <>
       <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] flex-col items-center justify-between overflow-y-auto  bg-white text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:bg-[#0A0A0C] dark:text-white">
         <div className="flex flex-col items-center">
-          <div className="flex w-full items-center justify-center gap-[25px] border-b-2 border-[#707175] pb-6 pt-[35px]">
-            <h1 className="ml-[5px] flex items-center gap-2 text-[20px] font-medium leading-normal text-[#707175] dark:text-white">
-              Expanded View
-            </h1>
-            <CustomSwitch2
-              enabled={expandedView}
-              setEnabled={handleExpendedView}
-            />
-          </div>
-          <div className="relative mt-[36px]">
-            <div className="relative h-[45px] w-[212px]">
-              <input
-                type="text"
-                id="floating_outlined"
-                className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-                placeholder=" "
-                value={searchData}
-                onChange={handleSearch}
+          <div className="flex w-full flex-col items-center justify-center gap-10 border-b-2 border-[#707175] pb-[2.94rem] pt-[35px]">
+            <div className="flex items-center justify-center gap-[25px]">
+              <h1 className="ml-[5px] flex items-center gap-2 text-[20px] font-medium leading-normal text-[#707175] dark:text-white">
+                Expanded View
+              </h1>
+              <CustomSwitch2
+                enabled={expandedView}
+                setEnabled={handleExpendedView}
               />
-              <label
-                htmlFor="floating_outlined"
-                className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2  text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
-              >
-                Search
-              </label>
             </div>
-            {searchData && (
-              <button
-                className="absolute right-3 top-4"
-                onClick={() => {
-                  setSearchData("");
-                }}
-              >
-                <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
-              </button>
-            )}
-            {!searchData && (
-              <img
-                src="/assets/svgs/dashboard/search.svg"
-                alt="search"
-                className="absolute right-3 top-4 h-4 w-4"
-              />
-            )}
+            <div className="relative">
+              <div className="relative h-[45px] w-[212px]">
+                <input
+                  type="text"
+                  id="floating_outlined"
+                  className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
+                  placeholder=" "
+                  value={searchData}
+                  onChange={handleSearch}
+                />
+                <label
+                  htmlFor="floating_outlined"
+                  className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2  text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
+                >
+                  Search
+                </label>
+              </div>
+              {searchData && (
+                <button
+                  className="absolute right-3 top-4"
+                  onClick={() => {
+                    setSearchData("");
+                  }}
+                >
+                  <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
+                </button>
+              )}
+              {!searchData && (
+                <img
+                  src="/assets/svgs/dashboard/search.svg"
+                  alt="search"
+                  className="absolute right-3 top-4 h-4 w-4"
+                />
+              )}
+            </div>
           </div>
+
           <h1 className="flex w-[212px] items-center gap-2 pb-[31px] pt-[33px] text-[22px] font-[500] leading-normal text-[#888] dark:text-white">
             <img
               src="/assets/svgs/dashboard/filter.svg"
@@ -121,7 +124,11 @@ const SidebarLeft = ({
           </h1>
           <button
             onClick={handleTopicPref}
-            className="h-[45px] w-[212px] rounded-[10px] border-2 border-[#707175] bg-[#C9C8C8] px-5 py-2 text-[18px] font-medium text-[#707175] focus:outline-none dark:bg-[#333B46] dark:text-[#DCDCDC]"
+            className={`${
+              persistedTheme === "dark"
+                ? "bg-[#EDEDED]"
+                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+            }  h-[45px] w-[212px] rounded-[10px] px-5 py-2 text-[18px] font-medium text-white focus:outline-none dark:text-[#707175]`}
           >
             Topic Preferences
           </button>
@@ -203,9 +210,9 @@ const SidebarLeft = ({
           <button
             className={`${
               persistedTheme === "dark"
-                ? "bg-[#333B46]"
+                ? "bg-[#F0F0F0]"
                 : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            }  inset-0 w-[192px] rounded-[0.938rem] px-5 py-2 text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#EAEAEA]`}
+            }  inset-0 w-[192px] rounded-[0.938rem] px-5 py-2 text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
             onClick={() => {
               dispatch(resetFilters());
               setClearFilter(!clearFilter);

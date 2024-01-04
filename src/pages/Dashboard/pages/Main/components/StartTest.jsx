@@ -243,13 +243,13 @@ const StartTest = ({
             )}
           </div>
         ) : title === "Multiple Choice" ? (
-          <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
+          <div className="quest-scrollbar mr-[1.38rem] mt-[11.66px] flex max-h-[22.8rem] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:mt-[26px] tablet:gap-[10px]">
             {multipleOption ? (
-              <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
+              <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[5.37rem] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
                 You can select multiple options.
               </h4>
             ) : (
-              <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
+              <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[5.37rem] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
                 &#x200B;
               </h4>
             )}
@@ -296,6 +296,7 @@ const StartTest = ({
                     calculateRemainingTime(
                       lastInteractedAt,
                       howManyTimesAnsChanged,
+                      usersChangeTheirAns,
                     )
                   }
                 >
@@ -319,59 +320,60 @@ const StartTest = ({
           </div>
         ) : (
           <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
-            {/* <h4 className="mb-[10.5px] ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-3 laptop:mb-3 laptop:text-[18px]"> */}
             <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
               You can drag and drop options in your order of preference.
             </h4>
-            <DragDropContext onDragEnd={handleOnDragEnd}>
-              <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
-                {(provided) => (
-                  <ul
-                    className="flex flex-col items-center gap-[5.7px] tablet:gap-[10px]"
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    {rankedAnswers.map((item, index) => (
-                      <Draggable
-                        key={item.id}
-                        draggableId={item.id}
-                        index={index}
-                      >
-                        {(provided) => (
-                          <li
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className="w-full"
-                          >
-                            <SingleAnswerRankedChoice
-                              number={"#" + (index + 1)}
-                              editable={item.edit}
-                              deleteable={item.delete}
-                              answer={item.label}
-                              answersSelection={answersSelection}
-                              setAnswerSelection={setAnswerSelection}
-                              title={title}
-                              checkInfo={false}
-                              check={findLabelChecked(
-                                answersSelection,
-                                item.label,
-                              )}
-                              handleCheckChange={(check) =>
-                                handleCheckChange(index, check)
-                              }
-                              setAddOptionLimit={setAddOptionLimit}
-                              setIsSubmit={setIsSubmit}
-                            />
-                          </li>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </ul>
-                )}
-              </Droppable>
-            </DragDropContext>
+            <div className="mr-[1.38rem]">
+              <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
+                  {(provided) => (
+                    <ul
+                      className="quest-scrollbar flex max-h-[22.8rem] min-h-fit flex-col items-center gap-[5.7px] overflow-auto  tablet:gap-[10px]"
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {rankedAnswers.map((item, index) => (
+                        <Draggable
+                          key={item.id}
+                          draggableId={item.id}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <li
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className="w-full"
+                            >
+                              <SingleAnswerRankedChoice
+                                number={"#" + (index + 1)}
+                                editable={item.edit}
+                                deleteable={item.delete}
+                                answer={item.label}
+                                answersSelection={answersSelection}
+                                setAnswerSelection={setAnswerSelection}
+                                title={title}
+                                checkInfo={false}
+                                check={findLabelChecked(
+                                  answersSelection,
+                                  item.label,
+                                )}
+                                handleCheckChange={(check) =>
+                                  handleCheckChange(index, check)
+                                }
+                                setAddOptionLimit={setAddOptionLimit}
+                                setIsSubmit={setIsSubmit}
+                              />
+                            </li>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </ul>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
           </div>
         )}
       </>
@@ -379,10 +381,10 @@ const StartTest = ({
       <div
         className={`${
           title === "Multiple Choice"
-            ? "mt-4 tablet:mt-10"
+            ? "mt-4 tablet:mt-5"
             : addOptionField === 1
               ? "mt-[4rem] tablet:mt-[10rem]"
-              : "mt-4 tablet:mt-10"
+              : "mt-4 tablet:mt-5"
         } flex w-full justify-end gap-2 tablet:gap-10`}
       >
         {/* Add Options Button */}
@@ -392,7 +394,7 @@ const StartTest = ({
             title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
               <button
                 onClick={handleOpen}
-                className="ml-4 flex h-[23.48px] w-[81.8px] items-center gap-[5.8px]  rounded-[4.734px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:h-[52px] tablet:w-[173px] tablet:gap-[11.37px] tablet:rounded-[10px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
+                className="ml-4 flex h-[23.48px] w-[81.8px] items-center gap-[5.8px] rounded-[7.1px] bg-[#D9D9D9]  px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:h-[52px] tablet:w-[173px] tablet:gap-[11.37px] tablet:rounded-[15px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
               >
                 {persistedTheme === "dark" ? (
                   <img
@@ -462,7 +464,7 @@ const StartTest = ({
         </div>
       </div>
       {/* Social Icons */}
-      <div className="mx-[0.57rem] mb-[0.55rem] mt-[0.86rem] flex items-center justify-between tablet:mx-[2.4rem] tablet:mb-[1.83rem] tablet:mt-[1.19rem]">
+      <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-[1.37rem] tablet:py-[0.85rem]">
         <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
           <div onClick={handleCopyOpen} className="cursor-pointer">
             {persistedTheme === "dark" ? <Copy /> : <Copy />}
@@ -555,7 +557,7 @@ const StartTest = ({
             alt="clock"
             className="h-[8.64px] w-[8.64px] tablet:h-[18px] tablet:w-[18px]"
           />
-          <p className="whitespace-nowrap text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[17.48px]">
+          <p className="whitespace-nowrap text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[18px]">
             {timeAgo}
           </p>
         </div>

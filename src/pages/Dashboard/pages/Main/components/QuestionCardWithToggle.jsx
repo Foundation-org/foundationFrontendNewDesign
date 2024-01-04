@@ -596,7 +596,7 @@ const QuestionCardWithToggle = ({
   }, []);
 
   return (
-    <div className="rounded-[12.3px] border-[1px] border-[#F3F3F3] bg-[#F3F3F3] tablet:rounded-[26px] dark:border-[#858585] dark:bg-[#141618]">
+    <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-[#858585] dark:bg-[#141618]">
       <CardTopbar
         title={title}
         img={img}
@@ -608,7 +608,7 @@ const QuestionCardWithToggle = ({
         createdBy={createdBy}
         QuestTopic={QuestTopic}
       />
-      <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[52.65px] tablet:text-[25px] dark:text-[#B8B8B8]">
+      <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[52.65px] tablet:mt-[1.56rem] tablet:text-[25px] dark:text-[#B8B8B8]">
         {question?.endsWith("?") ? "Q." : "S."} {question}
       </h1>
       {viewResult !== id && openResults !== true ? (

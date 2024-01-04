@@ -251,119 +251,132 @@ const Result = (props) => {
 
   return (
     <>
-      <div className="mt-[18px] flex flex-col gap-[10px] tablet:mt-[38px]">
-        {props.title === "Yes/No" || props.title === "Agree/Disagree" ? (
-          <>
-            {props.title === "Yes/No" ? (
-              <>
-                <SingleAnswer
-                  number={"#1"}
-                  answer={"Yes"}
-                  checkInfo={true}
-                  percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-                  check={quests.yesNo.yes.check}
-                  contend={quests.yesNo.yes.contend}
-                  handleToggleCheck={props.handleToggleCheck}
-                  btnText={"Results"}
-                />
-                <SingleAnswer
-                  number={"#2"}
-                  answer={"No"}
-                  checkInfo={true}
-                  percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-                  check={quests.yesNo.no.check}
-                  contend={quests.yesNo.no.contend}
-                  handleToggleCheck={props.handleToggleCheck}
-                  btnText={"Results"}
-                />
-              </>
-            ) : props.title === "Agree/Disagree" ? (
-              <>
-                <SingleAnswer
-                  number={"#1"}
-                  answer={"Agree"}
-                  checkInfo={true}
-                  percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-                  check={quests.agreeDisagree.agree.check}
-                  contend={quests.agreeDisagree.agree.contend}
-                  handleToggleCheck={props.handleToggleCheck}
-                  btnText={"Results"}
-                />
-                <SingleAnswer
-                  number={"#2"}
-                  answer={"Disagree"}
-                  checkInfo={true}
-                  percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-                  check={quests.agreeDisagree.disagree.check}
-                  contend={quests.agreeDisagree.disagree.contend}
-                  handleToggleCheck={props.handleToggleCheck}
-                  btnText={"Results"}
-                />
-              </>
-            ) : null}
-          </>
-        ) : props.title === "Multiple Choice" ? (
-          props.answers?.map((item, index) => (
-            <SingleAnswerMultipleChoice
-              number={"#" + (index + 1)}
-              answer={item.question}
-              title={props.title}
-              checkInfo={true}
-              percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-              check={findLabelChecked(props.answersSelection, item.question)}
-              contend={findLabelContend(props.answersSelection, item.question)}
-              btnText={"Results"}
-              answersSelection={props.answersSelection}
-              setAnswerSelection={props.setAnswerSelection}
-            />
-          ))
-        ) : props.title === "Ranked Choice" ? (
-          props.rankedAnswers?.map((item, index) => (
-            <RankedResult
-              number={"#" + (index + 1)}
-              answer={item.label}
-              answersSelection={props.answersSelection}
-              setAnswerSelection={props.setAnswerSelection}
-              title={props.title}
-              percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-              checkInfo={false}
-              setAddOptionLimit={props.setAddOptionLimit}
-              btnText={"Results"}
-            />
-          ))
-        ) : null}
+      <div className="mr-[1.38rem]">
+        <div className="quest-scrollbar mt-[18px] flex max-h-[22.8rem] min-h-fit flex-col gap-[10px] overflow-auto tablet:mt-[38px]">
+          {props.title === "Yes/No" || props.title === "Agree/Disagree" ? (
+            <>
+              {props.title === "Yes/No" ? (
+                <>
+                  <SingleAnswer
+                    number={"#1"}
+                    answer={"Yes"}
+                    checkInfo={true}
+                    percentages={
+                      ResultsData?.data[ResultsData?.data.length - 1]
+                    }
+                    check={quests.yesNo.yes.check}
+                    contend={quests.yesNo.yes.contend}
+                    handleToggleCheck={props.handleToggleCheck}
+                    btnText={"Results"}
+                  />
+                  <SingleAnswer
+                    number={"#2"}
+                    answer={"No"}
+                    checkInfo={true}
+                    percentages={
+                      ResultsData?.data[ResultsData?.data.length - 1]
+                    }
+                    check={quests.yesNo.no.check}
+                    contend={quests.yesNo.no.contend}
+                    handleToggleCheck={props.handleToggleCheck}
+                    btnText={"Results"}
+                  />
+                </>
+              ) : props.title === "Agree/Disagree" ? (
+                <>
+                  <SingleAnswer
+                    number={"#1"}
+                    answer={"Agree"}
+                    checkInfo={true}
+                    percentages={
+                      ResultsData?.data[ResultsData?.data.length - 1]
+                    }
+                    check={quests.agreeDisagree.agree.check}
+                    contend={quests.agreeDisagree.agree.contend}
+                    handleToggleCheck={props.handleToggleCheck}
+                    btnText={"Results"}
+                  />
+                  <SingleAnswer
+                    number={"#2"}
+                    answer={"Disagree"}
+                    checkInfo={true}
+                    percentages={
+                      ResultsData?.data[ResultsData?.data.length - 1]
+                    }
+                    check={quests.agreeDisagree.disagree.check}
+                    contend={quests.agreeDisagree.disagree.contend}
+                    handleToggleCheck={props.handleToggleCheck}
+                    btnText={"Results"}
+                  />
+                </>
+              ) : null}
+            </>
+          ) : props.title === "Multiple Choice" ? (
+            props.answers?.map((item, index) => (
+              <SingleAnswerMultipleChoice
+                number={"#" + (index + 1)}
+                answer={item.question}
+                title={props.title}
+                checkInfo={true}
+                percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                check={findLabelChecked(props.answersSelection, item.question)}
+                contend={findLabelContend(
+                  props.answersSelection,
+                  item.question,
+                )}
+                btnText={"Results"}
+                answersSelection={props.answersSelection}
+                setAnswerSelection={props.setAnswerSelection}
+              />
+            ))
+          ) : props.title === "Ranked Choice" ? (
+            props.rankedAnswers?.map((item, index) => (
+              <RankedResult
+                number={"#" + (index + 1)}
+                answer={item.label}
+                answersSelection={props.answersSelection}
+                setAnswerSelection={props.setAnswerSelection}
+                title={props.title}
+                percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                checkInfo={false}
+                setAddOptionLimit={props.setAddOptionLimit}
+                btnText={"Results"}
+              />
+            ))
+          ) : null}
 
-        {props.expanded ? (
-          <div className="mt-2.5 flex justify-end tablet:mt-8">
-            <button
-              className={`${
-                persistedTheme === "dark" ? "bg-[#BB9D02]" : "bg-[#FDD503]"
-              } inset-0 mr-[14.4px] w-[81.8px] h-[23.48px] tablet:h-[52px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
-              onClick={() => {
-                props.handleChange(props.id);
-              }}
-            >
-              Change
-            </button>
-          </div>
-        ) : (
-          <div className="mt-4 flex justify-end tablet:mt-10">
-            <button 
-              className={`${
-                persistedTheme === "dark"
-                  ? "bg-[#333B46]"
-                  : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-              } inset-0 mr-[14px] w-[81.8px] h-[23.48px] tablet:h-[52px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
-              onClick={() => {
-                props.handleViewResults(null);
-              }}
-            >
-              Ok
-            </button>
-          </div>
-        )}
+          {props.expanded ? (
+            <div className="mt-2.5 flex justify-end tablet:mt-8">
+              <button
+                className={`${
+                  persistedTheme === "dark" ? "bg-[#BB9D02]" : "bg-[#FDD503]"
+                } inset-0 mr-[14.4px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+                onClick={() => {
+                  props.handleChange(props.id);
+                }}
+              >
+                Change
+              </button>
+            </div>
+          ) : (
+            <div className="mt-4 flex justify-end tablet:mt-10">
+              <button
+                className={`${
+                  persistedTheme === "dark"
+                    ? "bg-[#333B46]"
+                    : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                } inset-0 mr-[14px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+                onClick={() => {
+                  props.handleViewResults(null);
+                }}
+              >
+                Ok
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="mx-[0.57rem] mb-[0.55rem] mt-[0.86rem] flex items-center justify-between tablet:mx-[2.4rem] tablet:mb-[1.83rem] tablet:mt-[1.19rem]">
+      <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-[1.37rem] tablet:py-[0.85rem]">
         <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
           <div onClick={handleCopyOpen} className="cursor-pointer">
             {persistedTheme === "dark" ? <Copy /> : <Copy />}
@@ -450,7 +463,7 @@ const Result = (props) => {
             />
           </BasicModal>
         </div>
-        <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white tablet:h-[29px] tablet:w-[127px] tablet:gap-1 tablet:rounded-[10.9px] dark:bg-[#090A0D]">
+        <div className="flex h-4 items-center justify-center gap-[2px] rounded-[4.73px] bg-white px-2 tablet:h-[29px] tablet:gap-1 tablet:rounded-[10.9px] dark:bg-[#090A0D]">
           <img
             src="/assets/svgs/dashboard/clock-outline.svg"
             alt="clock"

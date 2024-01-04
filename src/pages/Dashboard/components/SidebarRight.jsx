@@ -162,7 +162,7 @@ const SidebarRight = () => {
         <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" />
         <div>
           <h4 className="heading">Treasury</h4>
-          <p className="whitespace-nowrap text-[20px] font-medium text-[#616161] dark:text-[#D4D5D7]">
+          <p className="whitespace-nowrap text-[20px] font-medium text-[#616161] dark:text-white">
             Balance: <span>{treasuryAmount}</span>
           </p>
         </div>
@@ -199,7 +199,11 @@ const SidebarRight = () => {
       ) : (
         <div className="mb-[5vh] flex items-center gap-6">
           <div className="relative h-fit w-fit">
-            <img src="/assets/svgs/dashboard/MeBadge.svg" alt="badge" />
+            <img
+              src="/assets/svgs/dashboard/MeBadge.svg"
+              alt="badge"
+              className="tablet:h-[5.43rem] tablet:w-[4.36rem]"
+            />
             <p className="transform-center absolute z-50 pb-5 text-[35px] font-bold leading-normal text-white">
               5
             </p>

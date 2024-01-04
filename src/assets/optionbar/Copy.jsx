@@ -1,7 +1,7 @@
 const Copy = ({ color, h, w }) => {
   return (
     <svg
-      className="h-[1.024rem] w-[1.024rem] tablet:h-[2.183rem] tablet:w-[2.183rem] "
+      className="h-[1.024rem] w-[1.024rem] tablet:h-[2.183rem] tablet:w-[2.183rem]"
       style={{ height: h, width: w }}
       xmlns="http://www.w3.org/2000/svg"
       width="23"

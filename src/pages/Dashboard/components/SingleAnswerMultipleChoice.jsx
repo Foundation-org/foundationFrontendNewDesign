@@ -147,7 +147,7 @@ const SingleAnswerMultipleChoice = (props) => {
   return (
     <div className="mx-6 flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[52.65px]">
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
-        <div className="flex w-full items-center bg-white dark:bg-[#0D1012]">
+        <div className="flex w-full items-center rounded-l-[5.387px] bg-white tablet:rounded-l-[10px] dark:bg-[#0D1012]">
           <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E]"></div>
           {!props.checkInfo && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">

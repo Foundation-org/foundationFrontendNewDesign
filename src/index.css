@@ -14,7 +14,7 @@
 }
 
 .heading {
-  @apply text-[12px] font-semibold leading-normal text-[#616161] 2xl:text-[30px] tablet:text-[26.9px] laptop:text-[27px] dark:text-[#D2D2D2];
+  @apply text-[12px] font-semibold leading-normal text-[#616161] 2xl:text-[30px] tablet:text-[26.9px] laptop:text-[27px] dark:text-white;
 }
 
 .green-select {
@@ -388,4 +388,18 @@ td,
 
 .custom-scrollbar::-webkit-scrollbar-track {
   background-color: #f3f4f6;
+}
+
+.quest-scrollbar::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 5.6rem;
+}
+
+.quest-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #9b9d9e;
+  border-radius: 6.25rem;
+}
+
+.quest-scrollbar::-webkit-scrollbar-track {
+  background-color: #e0e0e0;
 }

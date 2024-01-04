@@ -1,7 +1,7 @@
 const Link = () => {
   return (
     <svg
-      className="h-[1.6rem] w-[1.6rem] tablet:h-[3.4rem] tablet:w-[3.4rem]"
+      className="h-[1.6rem] w-[1.6rem] tablet:h-[2rem] tablet:w-[2rem]"
       xmlns="http://www.w3.org/2000/svg"
       width="14"
       height="14"
