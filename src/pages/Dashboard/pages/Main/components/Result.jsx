@@ -251,7 +251,7 @@ const Result = (props) => {
 
   return (
     <>
-      <div className="mt-[18px] flex flex-col gap-[10px] tablet:mt-[38px] ">
+      <div className="mt-[18px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px] ">
         {props.title === "Yes/No" || props.title === "Agree/Disagree" ? (
           <>
             {props.title === "Yes/No" ? (
@@ -303,7 +303,7 @@ const Result = (props) => {
             ) : null}
           </>
         ) : props.title === "Multiple Choice" ? (
-          <div className="quest-scrollbar flex max-h-48 min-h-fit flex-col gap-[10px] overflow-auto tablet:max-h-[24.8rem]">
+          <div className="quest-scrollbar flex max-h-48 min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[24.8rem] tablet:gap-[10px]">
             {props.answers?.map((item, index) => (
               <SingleAnswerMultipleChoice
                 number={"#" + (index + 1)}
