@@ -383,9 +383,15 @@ const StartTest = ({
       {/* Add Options && Cancel && Submit Button */}
       {(answersSelection && answersSelection.length > 6) ||
       (rankedAnswers && rankedAnswers.length > 6) ? (
-        <div className="mr-[14.4px] mt-4 flex items-center justify-end gap-[14px] tablet:mr-[30px] tablet:mt-5">
-          <img src="/assets/svgs/fullscreen.svg" alt="fullscreen" />
-          <p className="text-[16px] font-medium text-[#435059]">Fullscreen</p>
+        <div className="mr-[14.4px] mt-4 flex items-center justify-end gap-1 tablet:mr-[30px] tablet:mt-5 tablet:gap-[14px]">
+          <img
+            src="/assets/svgs/fullscreen.svg"
+            alt="fullscreen"
+            className="h-[14px] w-[14px] tablet:h-[21px] tablet:w-[21px]"
+          />
+          <p className="text-[9px] font-medium text-[#435059] tablet:text-[16px]">
+            Full Screen
+          </p>
         </div>
       ) : null}
       <div
