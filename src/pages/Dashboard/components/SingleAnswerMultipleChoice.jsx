@@ -145,7 +145,26 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   return (
-    <div className="mx-6 flex items-center gap-[25px] 2xl:mx-[85px] tablet:mx-[52.65px]">
+    <div className="mx-1 flex items-center tablet:gap-[5px] 2xl:mx-[85px] tablet:mx-[52.65px]">
+      {console.log("uuid", props.addedAnswerUuid, localStorage.getItem("uId"))}
+      {props.addedAnswerUuid ? ((props.addedAnswerUuid === localStorage.getItem("uId")) ? (
+        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
+          <img
+            src="/assets/svgs/dashboard/optionMeBadge.svg"
+            alt="trash"
+            className="h-4 w-[12px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
+          />
+
+        </div>
+      ) : (<div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
+        <img
+          src="/assets/svgs/dashboard/bluebadge.svg"
+          alt="trash"
+          className="h-4 w-[12px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
+        />
+      </div>))
+        : <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
+      }
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
         <div className="flex w-full items-center rounded-l-[5.387px] bg-white tablet:rounded-l-[10px] dark:bg-[#0D1012]">
           <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E]"></div>
@@ -205,9 +224,8 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         ) : (
           <div
-            className={`flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[7.55px] text-[9.238px] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:pr-[20.63px] tablet:text-[16px] dark:bg-[#0D1012] ${
-              props.btnText === "Results" ? "pointer-events-none" : ""
-            }`}
+            className={`flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[7.55px] text-[9.238px] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:pr-[20.63px] tablet:text-[16px] dark:bg-[#0D1012] ${props.btnText === "Results" ? "pointer-events-none" : ""
+              }`}
           >
             <div className="flex items-center gap-1 laptop:gap-[18px]">
               {props.title === "Multiple Choice" ? (
@@ -225,22 +243,20 @@ const SingleAnswerMultipleChoice = (props) => {
               {props.btnText === "Results" ? (
                 <>
                   {props.percentages?.selectedPercentage &&
-                  props.percentages?.selectedPercentage[props.answer.trim()] ? (
+                    props.percentages?.selectedPercentage[props.answer.trim()] ? (
                     props.percentages?.selectedPercentage[
                       props.answer.trim()
                     ] === 100 ? (
                       <span
-                        className={`w-[4ch] whitespace-nowrap ${
-                          persistedTheme === "dark" ? "text-white" : ""
-                        }`}
+                        className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                          }`}
                       >
                         100%
                       </span>
                     ) : (
                       <span
-                        className={`w-[4ch] whitespace-nowrap ${
-                          persistedTheme === "dark" ? "text-white" : ""
-                        }`}
+                        className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                          }`}
                       >
                         {props.percentages?.selectedPercentage[
                           props.answer.trim()
@@ -249,9 +265,8 @@ const SingleAnswerMultipleChoice = (props) => {
                     )
                   ) : (
                     <span
-                      className={`w-[4ch] whitespace-nowrap ${
-                        persistedTheme === "dark" ? "text-white" : ""
-                      }`}
+                      className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                        }`}
                     >
                       0%
                     </span>
@@ -276,24 +291,22 @@ const SingleAnswerMultipleChoice = (props) => {
               {props.btnText === "Results" ? (
                 <>
                   {props.percentages?.contendedPercentage &&
-                  props.percentages?.contendedPercentage[
+                    props.percentages?.contendedPercentage[
                     props.answer.trim()
-                  ] ? (
+                    ] ? (
                     props.percentages?.contendedPercentage[
                       props.answer.trim()
                     ] === 100 ? (
                       <span
-                        className={`w-[4ch] whitespace-nowrap ${
-                          persistedTheme === "dark" ? "text-white" : ""
-                        }`}
+                        className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                          }`}
                       >
                         100%
                       </span>
                     ) : (
                       <span
-                        className={`w-[4ch] whitespace-nowrap ${
-                          persistedTheme === "dark" ? "text-white" : ""
-                        }`}
+                        className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                          }`}
                       >
                         {props.percentages?.contendedPercentage[
                           props.answer.trim()
@@ -302,9 +315,8 @@ const SingleAnswerMultipleChoice = (props) => {
                     )
                   ) : (
                     <span
-                      className={`w-[4ch] whitespace-nowrap ${
-                        persistedTheme === "dark" ? "text-white" : ""
-                      }`}
+                      className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
+                        }`}
                     >
                       0%
                     </span>

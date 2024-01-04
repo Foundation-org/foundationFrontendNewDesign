@@ -82,6 +82,7 @@ const StartTest = ({
       label: questAnswer.question,
       check: false,
       contend: false,
+      uuid:questAnswer.uuid
     }));
 
     setAnswerSelection(updatedAnswersSelection);
@@ -259,6 +260,7 @@ const StartTest = ({
                   key={index}
                   number={"#" + (index + 1)}
                   answer={item.label}
+                  addedAnswerUuid={item.uuid}
                   editable={item.edit}
                   deleteable={item.delete}
                   title={title}
@@ -285,11 +287,11 @@ const StartTest = ({
               ))}
             </div>
             {usersChangeTheirAns === "" ? (
-              <h4 className="ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:text-[18px]">
+              <h4 className="ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[102.65px] tablet:text-[16.58px] laptop:text-[18px]">
                 Your selection is final and cannot be changed.
               </h4>
             ) : (
-              <h4 className="ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:text-[18px]">
+              <h4 className="ml-8 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[102.65px] tablet:text-[16.58px] laptop:text-[18px]">
                 {/* {!conditionalText && ( */}
                 <span
                   className="cursor-pointer"
@@ -352,6 +354,7 @@ const StartTest = ({
                                 editable={item.edit}
                                 deleteable={item.delete}
                                 answer={item.label}
+                                addedAnswerUuid={item.uuid}
                                 answersSelection={answersSelection}
                                 setAnswerSelection={setAnswerSelection}
                                 title={title}

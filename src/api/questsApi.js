@@ -17,6 +17,7 @@ export const createStartQuest = async (data) => {
     questForeignKey: data.questId,
     data: data.answer,
     addedAnswer: data.addedAnswer,
+    addedAnswerUuid:data.addedAnswerUuid,
     uuid: data.uuid,
   });
 };

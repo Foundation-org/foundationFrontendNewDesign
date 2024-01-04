@@ -68,6 +68,10 @@ const QuestionCard = ({
   useEffect(() => {
     setbookmarkStatus(isBookmarked);
   }, [isBookmarked]);
+  useEffect(() => {
+    console.log("answersSelection",answersSelection);
+  }, [answersSelection]);
+
 
   useEffect(() => {
     setAnswerSelection(
@@ -75,6 +79,7 @@ const QuestionCard = ({
         label: answer.question,
         check: false,
         contend: false,
+        uuid:answer.uuid
       })),
     );
   }, [answers]);
@@ -110,6 +115,7 @@ const QuestionCard = ({
       addedOptionByUser: true,
       edit: true,
       delete: true,
+      uuid:localStorage.getItem('uId')
     };
 
     setAnswerSelection([newOption, ...answersSelection]);
@@ -299,6 +305,7 @@ const QuestionCard = ({
     }
   };
 
+
   const handleSubmit = () => {
     setLoading(true);
     if (
@@ -360,6 +367,7 @@ const QuestionCard = ({
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = "";
+      let addedAnswerUuidValue="";
 
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
@@ -369,8 +377,10 @@ const QuestionCard = ({
             answerSelected.push({
               question: answersSelection[i].label,
               addedAnswerByUser: true,
+              uuid:answersSelection[i].uuid,
             });
             addedAnswerValue = answersSelection[i].label;
+            addedAnswerUuidValue=answersSelection[i].uuid;
             console.log("added ans value" + addedAnswerValue);
           } else {
             answerSelected.push({ question: answersSelection[i].label });
@@ -415,6 +425,7 @@ const QuestionCard = ({
           questId: id,
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
+          addedAnswerUuid:addedAnswerUuidValue,
           uuid: localStorage.getItem("uId"),
         };
         console.log("selected", params);
