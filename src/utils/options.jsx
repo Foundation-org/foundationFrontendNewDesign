@@ -1,8 +1,8 @@
 export const changeOptions = [
   {
     id: 1,
-    title: "AnyTime",
-    value: "AnyTime",
+    title: "Anytime",
+    value: "Anytime",
   },
   {
     id: 2,

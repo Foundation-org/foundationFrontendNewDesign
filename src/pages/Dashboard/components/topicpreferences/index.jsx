@@ -62,7 +62,7 @@ const TopicPreferences = ({
   };
 
   return (
-    <div className="w-[90vw] px-[1.19rem] py-[1.5rem] tablet:w-[75vw] tablet:px-[2.75rem] tablet:py-[2.94rem]">
+    <div className="h-[80%] w-[90vw] px-[1.19rem] py-[1.5rem] tablet:w-[75vw] tablet:px-[2.75rem] tablet:py-[2.94rem]">
       <div className="max-[100%] mx-auto flex items-center gap-2 laptop:max-w-[80%]">
         <h1 className=" text-[1rem] font-medium leading-normal text-[#535353] tablet:text-[1.4rem] laptop:text-[2.18rem]">
           Topic
@@ -71,7 +71,7 @@ const TopicPreferences = ({
           <input
             type="text"
             placeholder="Search here...."
-            className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F3F3F3] px-3 text-[8.4px] text-gray-400 focus:outline-none tablet:h-[32px] tablet:text-[18px] laptop:h-[80px] laptop:rounded-[26px] laptop:pl-[45px] laptop:pr-[60px] laptop:text-[26px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
+            className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F3F3F3] px-3 text-[8.4px] text-gray-400 focus:outline-none tablet:h-[38px] tablet:text-[18px] laptop:h-[80px] laptop:rounded-[26px] laptop:pl-[45px] laptop:pr-[60px] laptop:text-[26px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
             value={topicSearch}
             onChange={handleSearch}
           />
@@ -95,9 +95,9 @@ const TopicPreferences = ({
         </div>
       </div>
       {/* columns */}
-      <div className="mt-4 laptop:mt-[2.88rem]">
+      <div className="mt-4 h-full tablet:mt-12 laptop:mt-[2.88rem]">
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="flex flex-col justify-center gap-0 laptop:flex-row laptop:gap-[1.44rem]">
+          <div className="flex h-full flex-col justify-center gap-0 laptop:flex-row laptop:gap-[1.44rem]">
             {Object.values(columns).map((col) => (
               <Droppable droppableId={col.id} key={col.id}>
                 {(provided) => (
@@ -105,7 +105,7 @@ const TopicPreferences = ({
                     <h2
                       className={`flex h-[2rem] w-full items-center justify-center laptop:h-[4.18rem] ${
                         col.id === "All" ? "rounded-t-[0.5rem]" : ""
-                      } bg-[#F2F2F2] text-center text-[1rem] font-semibold text-[#535353] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem]`}
+                      } bg-[#F2F2F2] text-center text-[1rem] font-semibold text-[#535353] tablet:text-[1.4rem] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem]`}
                     >
                       {col.id}
                     </h2>

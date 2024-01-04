@@ -300,7 +300,7 @@ const StartTest = ({
                     )
                   }
                 >
-                  You can change you answer {usersChangeTheirAns}.
+                  You can change your answer {usersChangeTheirAns}.
                 </span>
                 {/* )} */}
 
@@ -377,7 +377,15 @@ const StartTest = ({
           </div>
         )}
       </>
+
       {/* Add Options && Cancel && Submit Button */}
+      {(answersSelection && answersSelection.length > 6) ||
+      (rankedAnswers && rankedAnswers.length > 6) ? (
+        <div className="mr-[14.4px] mt-4 flex items-center justify-end gap-[14px] tablet:mr-[30px] tablet:mt-5">
+          <img src="/assets/svgs/fullscreen.svg" alt="fullscreen" />
+          <p className="text-[16px] font-medium text-[#435059]">Fullscreen</p>
+        </div>
+      ) : null}
       <div
         className={`${
           title === "Multiple Choice"
@@ -419,9 +427,9 @@ const StartTest = ({
             <button
               className={` ${
                 persistedTheme === "dark"
-                  ? "bg-[#333B46]"
-                  : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-              } inset-0 h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:h-[52px] tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+                  ? "bg-[#F4F4F4] text-[#707175]"
+                  : "bg-[#707175] text-white"
+              } inset-0 h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal shadow-inner tablet:h-[52px] tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
               onClick={() => {
                 setStartTest(null);
               }}

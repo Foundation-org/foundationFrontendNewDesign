@@ -47,7 +47,7 @@ const Profile = () => {
             }}
             className="flex h-[26.8px] w-[21.8px] items-center justify-center bg-cover bg-no-repeat tablet:h-[85px] tablet:w-[69px]"
           >
-            <p className="h-[80%] text-[9.2px] font-normal leading-normal text-white tablet:text-[30px]">
+            <p className="h-[80%] text-[9.2px] font-normal leading-normal text-[#7A7016] tablet:text-[30px]">
               2
             </p>
           </div>

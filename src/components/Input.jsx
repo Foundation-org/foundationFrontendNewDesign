@@ -20,11 +20,10 @@ const Input = ({
   };
 
   useEffect(() => {
-    setInputValue(value); 
+    setInputValue(value);
   }, [value]);
-    //  console.log(inputValue);
+  //  console.log(inputValue);
   return (
-    
     <div className="relative">
       <input
         type={type}
@@ -37,7 +36,7 @@ const Input = ({
       />
       <label
         htmlFor={id}
-        className="short:text-[14px] absolute -top-6 left-0 cursor-text text-[10.2px] leading-none text-gray-300 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-gray-300 dark:text-white-200 tablet:text-[18px] md:text-[20px]"
+        className="absolute -top-6 left-0 cursor-text text-[10.2px] leading-none text-gray-300 transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-gray-300 md:text-[20px] tablet:text-[18px] short:text-[14px] dark:text-white-200"
       >
         {label}
       </label>

@@ -38,7 +38,7 @@ const FbDialogue = ({
                   alt={alt}
                   className="h-[18.379px] w-[22.722px] tablet:h-[60px] tablet:w-[48px]"
                 />
-                <p className="absolute left-[50%] top-[24%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[9px] font-[400] leading-normal text-[#F6F6F6] tablet:top-[39%] tablet:pb-3 tablet:text-[24px]">
+                <p className="absolute left-[50%] top-[24%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[9px] font-[400] leading-normal text-[#7A7016] tablet:top-[39%] tablet:pb-3 tablet:text-[24px]">
                   5
                 </p>
               </div>

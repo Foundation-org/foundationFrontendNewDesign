@@ -42,7 +42,7 @@ const Dropdown2 = ({ label, title, items, handleSelect }) => {
       {isOpen && (
         <ul
           tabIndex={0}
-          className="menu dropdown-content z-[100] w-fit min-w-[5rem] rounded-[10px] bg-[#F4F6F6] p-0 py-1 text-[0.5rem] leading-[2] text-white shadow shadow-md tablet:rounded-box tablet:w-36 tablet:text-sm laptop:w-52 dark:bg-dark-gray"
+          className="menu dropdown-content z-[100] w-fit min-w-[5rem] rounded-[10px] bg-[#F4F6F6] p-0 py-1 text-[0.5rem] leading-[2] text-white shadow-md tablet:rounded-box tablet:w-36 tablet:text-sm laptop:w-52 dark:bg-dark-gray"
         >
           {items.map((item, index) => (
             <li

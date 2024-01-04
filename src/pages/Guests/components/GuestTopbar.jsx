@@ -8,7 +8,7 @@ const GuestTopbar = ({ createdBy, badgeCount, title, QuestTopic }) => {
             alt="Me Badge"
             className="h-[28.379px] w-[22.722px] tablet:h-[60px] tablet:w-[48px]"
           />
-          <p className="transform-center absolute z-50 text-[11.3px] font-[400] leading-normal text-[#F6F6F6] tablet:pb-3 tablet:text-[17px]">
+          <p className="transform-center absolute z-50 text-[11.3px] font-[400] leading-normal text-[#7A7016] tablet:pb-3 tablet:text-[17px]">
             5
           </p>
         </div>

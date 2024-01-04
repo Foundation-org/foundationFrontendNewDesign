@@ -4,7 +4,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
       <button
         className={`${
           active === 1
-            ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-[#252D37]"
+            ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black"
             : "border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]"
         } tab-button`}
         onClick={() => {
@@ -16,7 +16,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
       <button
         className={`${
           active === 2
-            ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-[#252D37]"
+            ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black"
             : "border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]"
         } tab-button`}
         onClick={() => {
@@ -28,7 +28,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
       <button
         className={`${
           active === 3
-            ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-[#252D37]"
+            ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black"
             : "border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]"
         } tab-button`}
         onClick={() => {
@@ -40,7 +40,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
       <button
         className={`${
           active === 4
-            ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-[#252D37]"
+            ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black"
             : "border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]"
         } tab-button`}
         onClick={() => {

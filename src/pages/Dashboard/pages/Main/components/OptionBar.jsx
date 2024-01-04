@@ -295,8 +295,7 @@ const OptionBar = ({
         </div>
       </div>
 
-      {/* <div className="mx-[0.57rem] mb-[0.55rem] mt-[0.86rem] flex items-center justify-between tablet:mx-[2.4rem] tablet:mb-[1.83rem] tablet:mt-[3.99rem]"> */}
-      <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-[1.37rem] tablet:py-[0.85rem] dark:border-white">
+      <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] py-[0.4rem] tablet:px-[1.37rem] tablet:py-[0.85rem] dark:border-white">
         <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
           <div onClick={handleCopyOpen} className="cursor-pointer">
             {persistedTheme === "dark" ? <Copy /> : <Copy />}
