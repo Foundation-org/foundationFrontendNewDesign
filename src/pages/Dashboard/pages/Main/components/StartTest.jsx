@@ -243,7 +243,7 @@ const StartTest = ({
             )}
           </div>
         ) : title === "Multiple Choice" ? (
-          <div className="quest-scrollbar mr-[1.38rem] mt-[11.66px] flex max-h-48 min-h-fit flex-col gap-[5.7px] overflow-auto tablet:mt-[26px] tablet:max-h-[24.8rem] tablet:gap-[10px]">
+          <div className="mt-[11.66px] flex flex-col gap-[5.7px] overflow-auto tablet:mt-[26px] tablet:gap-[10px]">
             {multipleOption ? (
               <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[5.37rem] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
                 You can select multiple options.
@@ -253,35 +253,37 @@ const StartTest = ({
                 &#x200B;
               </h4>
             )}
-            {[...answersSelection].map((item, index) => (
-              <SingleAnswerMultipleChoice
-                key={index}
-                number={"#" + (index + 1)}
-                answer={item.label}
-                editable={item.edit}
-                deleteable={item.delete}
-                title={title}
-                multipleOption={multipleOption}
-                setAddOptionLimit={setAddOptionLimit}
-                answersSelection={answersSelection}
-                setAnswerSelection={setAnswerSelection}
-                checkInfo={true}
-                check={findLabelChecked(answersSelection, item.label)}
-                contend={findLabelContend(answersSelection, item.label)}
-                whichTypeQuestion={whichTypeQuestion}
-                handleCheckChange={
-                  multipleOption === true
-                    ? (check) => handleCheckChange(index, check)
-                    : (check) => handleCheckChangeSingle(index, check)
-                }
-                handleContendChange={
-                  multipleOption === true
-                    ? (contend) => handleContendChange(index, contend)
-                    : (contend) => handleContendChangeSingle(index, contend)
-                }
-                setIsSubmit={setIsSubmit}
-              />
-            ))}
+            <div className="quest-scrollbar flex max-h-48 min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[24.8rem] tablet:gap-[10px]">
+              {[...answersSelection].map((item, index) => (
+                <SingleAnswerMultipleChoice
+                  key={index}
+                  number={"#" + (index + 1)}
+                  answer={item.label}
+                  editable={item.edit}
+                  deleteable={item.delete}
+                  title={title}
+                  multipleOption={multipleOption}
+                  setAddOptionLimit={setAddOptionLimit}
+                  answersSelection={answersSelection}
+                  setAnswerSelection={setAnswerSelection}
+                  checkInfo={true}
+                  check={findLabelChecked(answersSelection, item.label)}
+                  contend={findLabelContend(answersSelection, item.label)}
+                  whichTypeQuestion={whichTypeQuestion}
+                  handleCheckChange={
+                    multipleOption === true
+                      ? (check) => handleCheckChange(index, check)
+                      : (check) => handleCheckChangeSingle(index, check)
+                  }
+                  handleContendChange={
+                    multipleOption === true
+                      ? (contend) => handleContendChange(index, contend)
+                      : (contend) => handleContendChangeSingle(index, contend)
+                  }
+                  setIsSubmit={setIsSubmit}
+                />
+              ))}
+            </div>
             {usersChangeTheirAns === "" ? (
               <h4 className="ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:text-[18px]">
                 Your selection is final and cannot be changed.
@@ -323,7 +325,7 @@ const StartTest = ({
             <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
               You can drag and drop options in your order of preference.
             </h4>
-            <div className="mr-[1.38rem]">
+            <div className="mt-[11.66px] flex flex-col gap-[5.7px] overflow-auto tablet:mt-[26px] tablet:gap-[10px]">
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                   {(provided) => (
