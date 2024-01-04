@@ -257,10 +257,10 @@ const VerificationBadges = () => {
             </div>
             {
               item.NoOfButton!==1?
-              <>
-              <button className="w-[9.8vw] h-[5.8vw] rounded-[1.31vw] text-[1.73vw] bg-[#FAD308] dark:bg-[#FAD308] text-white rounded-[6px] tablet:rounded-[12.6px] laptop:rounded-[23px]">Edit</button>
-              <button className="w-[9.8vw] h-[5.8vw] rounded-[1.31vw] text-[1.73vw] bg-[#FF4057] dark:bg-[#C13232] text-white rounded-[6px] tablet:rounded-[12.6px] laptop:rounded-[23px]">Remove</button>
-              </>
+              <div className="w-[19.9vw] flex gap-2">
+              <button className="w-[45%] h-[5.8vw] rounded-[1.31vw] text-[1.73vw] bg-[#FAD308] dark:bg-[#FAD308] text-white rounded-[6px] tablet:rounded-[12.6px] laptop:rounded-[23px]">Edit</button>
+              <button className="w-[52%] h-[5.8vw] rounded-[1.31vw] text-[1.73vw] bg-[#FF4057] dark:bg-[#C13232] text-white rounded-[6px] tablet:rounded-[12.6px] laptop:rounded-[23px]">Remove</button>
+              </div>
 
               :
             <Button color={item.ButtonColor}>{item.ButtonText}</Button>
