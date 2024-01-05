@@ -61,7 +61,7 @@ const QuestionCardWithToggle = ({
       label: answer.question,
       check: false,
       contend: false,
-      uuid:answer.uuid
+      uuid: answer.uuid,
     })),
   );
 
@@ -71,12 +71,12 @@ const QuestionCardWithToggle = ({
         label: answer.question,
         check: false,
         contend: false,
-        uuid:answer.uuid
+        uuid: answer.uuid,
       })),
     );
   }, [answers]);
-  
-console.log(answersSelection);
+
+  console.log(answersSelection);
   const [rankedAnswers, setRankedAnswers] = useState(
     answersSelection?.map((item, index) => ({
       id: `unique-${index}`,
@@ -116,7 +116,7 @@ console.log(answersSelection);
       addedOptionByUser: true,
       edit: true,
       delete: true,
-      uuid:localStorage.getItem('uId')
+      uuid: localStorage.getItem("uId"),
     };
 
     setAnswerSelection([newOption, ...answersSelection]);
@@ -646,12 +646,14 @@ console.log(answersSelection);
           question={question}
           time={time}
           expandedView={expandedView}
-          usersChangeTheirAns={usersChangeTheirAns}
           viewResult={viewResult}
           setViewResult={setViewResult}
           openResults={openResults}
           setOpenResults={setOpenResults}
           startStatus={startStatus}
+          usersChangeTheirAns={usersChangeTheirAns}
+          lastInteractedAt={lastInteractedAt}
+          howManyTimesAnsChanged={howManyTimesAnsChanged}
         />
       ) : (
         <Result
