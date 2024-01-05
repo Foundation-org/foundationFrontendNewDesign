@@ -29,6 +29,7 @@ const RankChoice = () => {
   const [prevValueArr, setPrevValueArr] = useState([]);
   // const [dragItems, setDragItems] = useState(["item1", "item 2", "item3"]);
   const [loading, setLoading] = useState(false);
+  const [optionWaiting, setOptionWaiting] = useState(false)
 
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
@@ -182,10 +183,12 @@ const RankChoice = () => {
       },
     };
     setTypedValues(newTypedValues);
+    setOptionWaiting(true)
     // Answer Validation
     const { validatedAnswer, errorMessage } = await answerValidation({
       answer: value,
     });
+    setOptionWaiting(false)
     // If any error captured
     if (errorMessage) {
       const newTypedValues = [...typedValues];
@@ -246,6 +249,7 @@ const RankChoice = () => {
   };
 
   const handleAddOption = () => {
+    if(optionWaiting) return
     setOptionsCount((prevCount) => prevCount + 1);
     setTypedValues((prevValues) => [
       ...prevValues,
@@ -264,6 +268,7 @@ const RankChoice = () => {
   };
 
   const handleChange = (index, value) => {
+    if(optionWaiting) return
     const newTypedValues = [...typedValues];
     newTypedValues[index] = {
       ...newTypedValues[index],
