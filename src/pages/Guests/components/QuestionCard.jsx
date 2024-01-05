@@ -13,6 +13,9 @@ import SingleAnswer from "../../Dashboard/components/SingleAnswer";
 const QuestionCard = ({
   tab,
   id,
+  img,
+  alt,
+  badgeCount,
   time,
   question,
   answers,
@@ -25,14 +28,13 @@ const QuestionCard = ({
   handleViewResults,
   multipleOption,
   QuestTopic,
+  createdBy
 }) => {
   const dispatch = useDispatch();
   const quests = useSelector(getQuests);
-  const persistedTheme = useSelector((state) => state.utils.theme);
   const [open, setOpen] = useState(false);
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
-  const [bookmarkStatus, setbookmarkStatus] = useState(false);
   const queryClient = useQueryClient();
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const navigate = useNavigate();
@@ -323,6 +325,8 @@ const QuestionCard = ({
       contend,
     };
 
+    console.log({ actionPayload });
+
     dispatch(toggleCheck(actionPayload));
   };
 
@@ -330,36 +334,12 @@ const QuestionCard = ({
 
   return (
     <div className="flex justify-center">
-      <div className="mx-[15px] w-full rounded-[12.3px] bg-[#F3F3F3] tablet:mx-[30px] tablet:rounded-[15px] laptop:mx-[5.25rem]">
-        <GuestTopbar badgeCount={5} title={title} QuestTopic={QuestTopic} />
-        <div className="ml-6 mr-[1.38rem] mt-[2.25rem] flex items-center justify-between tablet:ml-[4.5rem]">
-          <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[28px] dark:text-[#B8B8B8]">
-            {question?.endsWith("?") ? "Q." : "S."} {question}
-          </h1>
-          <div>
-            {bookmarkStatus ? (
-              persistedTheme !== "dark" ? (
-                <img
-                  src="/assets/svgs/dashboard/bookmark-blue.svg"
-                  alt="save icon"
-                  className="h-[17px] w-[12.7px] cursor-pointer tablet:h-[39px] tablet:w-[28px]"
-                />
-              ) : (
-                <img
-                  src="/assets/svgs/dashboard/bookmark-white.svg"
-                  alt="save icon"
-                  className="h-[17px] w-[12.7px] cursor-pointer tablet:h-[39px] tablet:w-[28px]"
-                />
-              )
-            ) : (
-              <img
-                src="/assets/svgs/dashboard/save.svg"
-                alt="save icon"
-                className="h-[17px] w-[12.7px] cursor-pointer tablet:h-[39px] tablet:w-[28px]"
-              />
-            )}
-          </div>
-        </div>
+      <div className="mx-[15px] w-full rounded-[12.3px] bg-[#F3F3F3] tablet:mx-[30px] tablet:rounded-[1.625rem] laptop:mx-[5.25rem]">
+        <GuestTopbar title={title} badgeCount={badgeCount} QuestTopic={QuestTopic} img={img}
+        alt={alt} createdBy={createdBy}/>
+        <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:ml-[52.65px] tablet:text-[25px]">
+          {question?.endsWith("?") ? "Q." : "S."} {question}
+        </h1>
         {tab === "Participate" ? (
           rankedAnswers && (
             <StartTest
@@ -387,7 +367,6 @@ const QuestionCard = ({
               time={time}
               loading={loading}
               setLoading={setLoading}
-              tab={tab}
             />
           )
         ) : (

@@ -30,6 +30,7 @@ const MultipleChoice = () => {
   const [optionsCount, setOptionsCount] = useState(2);
   const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [optionWaiting, setOptionWaiting] = useState(false)
 
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
@@ -186,10 +187,12 @@ const MultipleChoice = () => {
       },
     };
     setTypedValues(newTypedValues);
+    setOptionWaiting(true)
     // Answer Validation
     const { validatedAnswer, errorMessage } = await answerValidation({
       answer: value,
     });
+    setOptionWaiting(false)
     // If any error captured
     if (errorMessage) {
       const newTypedValues = [...typedValues];
@@ -252,6 +255,7 @@ const MultipleChoice = () => {
   };
 
   const handleAddOption = () => {
+    if(optionWaiting) return
     setOptionsCount((prevCount) => prevCount + 1);
     setTypedValues((prevValues) => [
       ...prevValues,
@@ -270,6 +274,7 @@ const MultipleChoice = () => {
   };
 
   const handleChange = (index, value) => {
+    if(optionWaiting) return
     const newTypedValues = [...typedValues];
     newTypedValues[index] = {
       ...newTypedValues[index],

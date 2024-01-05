@@ -138,7 +138,7 @@ const VerificationBadges = () => {
     },
     {
       image: "/assets/profile/Multi-factor-Authentication-2x.png",
-      title: "Multi-Factor Authentication",
+      title: "First Name",
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:2,
