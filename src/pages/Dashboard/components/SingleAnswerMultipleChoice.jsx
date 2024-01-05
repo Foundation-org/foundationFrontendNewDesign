@@ -146,7 +146,6 @@ const SingleAnswerMultipleChoice = (props) => {
 
   return (
     <div className="mx-1 flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px] tablet:gap-[5px]">
-      {console.log("uuid", props.addedAnswerUuid, localStorage.getItem("uId"))}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === localStorage.getItem("uId") ? (
           <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
@@ -357,7 +356,9 @@ const SingleAnswerMultipleChoice = (props) => {
               />
             </BasicModal>
           </div>
-        ):(<div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>)}
+        ) : (
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
+        )}
       </div>
     </div>
   );

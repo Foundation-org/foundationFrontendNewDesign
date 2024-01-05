@@ -63,7 +63,7 @@ const QuestionCard = ({
       label: answer.question,
       check: false,
       contend: false,
-      uuid:answer.uuid
+      uuid: answer.uuid,
     })),
   );
   useEffect(() => {
@@ -118,7 +118,7 @@ const QuestionCard = ({
       uuid: localStorage.getItem("uId"),
     };
 
-    setAnswerSelection([newOption, ...answersSelection]);
+    setAnswerSelection([...answersSelection, newOption]);
 
     setAddOptionField(0);
     setAddOptionLimit(1);

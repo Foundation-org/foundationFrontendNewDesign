@@ -362,7 +362,7 @@ const StartTest = ({
         usersChangeTheirAns={usersChangeTheirAns}
       />
       {/* Add Options && Cancel && Submit Button */}
-      <div className="ml-[20px] mr-[28px] mt-[18px] flex items-center justify-between tablet:ml-[66px] tablet:mr-[46px]">
+      <div className="ml-[20px] mr-[28px] mt-[18px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
         {usersAddTheirAns && addOptionLimit === 0 ? (
           <div>
             {title === "Yes/No" ||
@@ -388,7 +388,9 @@ const StartTest = ({
               </button>
             ) : null}
           </div>
-        ) : null}
+        ) : (
+          <div></div>
+        )}
         {((isFullScreen === undefined && answersSelection?.length > 6) ||
           (isFullScreen === undefined && rankedAnswers?.length > 6)) && (
           <div
