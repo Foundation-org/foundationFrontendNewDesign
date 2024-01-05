@@ -45,6 +45,7 @@ const Profile = () => {
               style={{
                 background: "url(/assets/svgs/dashboard/MeBadge.svg)",
                 backgroundRepeat: "no-repeat",
+                backgroundSize: "100% 100%", // This will make the background image cover the entire div
               }}
               className="flex h-[26.8px] w-[21.8px] items-center justify-center bg-cover bg-no-repeat tablet:h-[85px] tablet:w-[69px]"
             >
@@ -52,7 +53,6 @@ const Profile = () => {
                 2
               </p>
             </div>
-
             <div>
               <h4 className="heading">My Profile</h4>
               <div className="flex items-center gap-1 tablet:gap-[13px]">
@@ -68,11 +68,10 @@ const Profile = () => {
                   <span className="sr-only">Use setting</span>
                   <span
                     aria-hidden="true"
-                    className={`${
-                      checkState
+                    className={`${checkState
                         ? "translate-x-[9px] bg-[#565D62] tablet:translate-x-6"
                         : "translate-x-[1px] bg-[#4A8DBD]"
-                    }
+                      }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
                   />
                 </Switch>

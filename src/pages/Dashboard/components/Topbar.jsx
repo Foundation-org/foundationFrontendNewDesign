@@ -169,7 +169,7 @@ const Topbar = () => {
           </Link>
         </li>
         <li className="flex w-[85.8px] items-center justify-center tablet:w-[149.46px]">
-          <Link
+        <Link
             to={"/dashboard/quest"}
             className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
               location.pathname === "/dashboard/quest" ||
@@ -183,12 +183,12 @@ const Topbar = () => {
             {(location.pathname === "/dashboard/quest" ||
               location.pathname === "/dashboard/quest/") && (
               <img
-                src="/assets/svgs/dashboard/quest.svg"
+                src="/assets/svgs/dashboard/create.svg"
                 alt="quest"
                 className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
               />
             )}
-            Quests
+            Create
           </Link>
         </li>
         <li className="w-[85.8px] tablet:w-[149.46px]">
