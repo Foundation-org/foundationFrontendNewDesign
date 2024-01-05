@@ -17,7 +17,7 @@ import FbDialogue from "./Shareables/FbDialogue";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { FaSpinner } from "react-icons/fa";
 import QuestTimeRemaining from "./QuestTimeRemaining";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const StartTest = ({
   id,
@@ -57,8 +57,10 @@ const StartTest = ({
   setOpenResults,
   startStatus,
   howManyTimesAnsChanged,
+  tab,
 }) => {
   const navigate = useNavigate();
+  const { isFullScreen } = useParams();
   const [timeAgo, setTimeAgo] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [copyModal, setCopyModal] = useState(false);
@@ -198,8 +200,6 @@ const StartTest = ({
     setRankedAnswers(newTypedValues);
   };
 
-  console.log({ multipleOption });
-
   return (
     <>
       <>
@@ -256,7 +256,13 @@ const StartTest = ({
                 &#x200B;
               </h4>
             )}
-            <div className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]">
+            <div
+              className={`${
+                isFullScreen === undefined
+                  ? "quest-scrollbar max-h-[17vh] min-h-fit overflow-auto tablet:max-h-[23.2rem]"
+                  : ""
+              }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+            >
               {[...answersSelection].map((item, index) => (
                 <SingleAnswerMultipleChoice
                   key={index}
@@ -383,12 +389,12 @@ const StartTest = ({
             ) : null}
           </div>
         ) : null}
-        {(answersSelection && answersSelection.length > 6) ||
-        (rankedAnswers && rankedAnswers.length > 6) ? (
+        {((isFullScreen === undefined && answersSelection?.length > 6) ||
+          (isFullScreen === undefined && rankedAnswers?.length > 6)) && (
           <div
             className="flex cursor-pointer items-center justify-end gap-1 tablet:gap-[14px]"
             onClick={() => {
-              navigate(`/quest/${id}`);
+              navigate(`/quest/${id}/isfullscreen`);
             }}
           >
             <img
@@ -400,7 +406,7 @@ const StartTest = ({
               Full Screen
             </p>
           </div>
-        ) : null}
+        )}
       </div>
       <div
         className={`${

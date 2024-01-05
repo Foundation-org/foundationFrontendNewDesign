@@ -34,14 +34,14 @@ export function Router() {
         />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/quest/:id" element={<Guests />} />
+        <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
 
         {/* Protected routes */}
         {isLoggedIn && (
           <>
             <Route path="/dashboard/*" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/quest/:id" element={<Guests />} />
+            <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
           </>
         )}
 

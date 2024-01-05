@@ -323,8 +323,6 @@ const QuestionCard = ({
       contend,
     };
 
-    console.log({ actionPayload });
-
     dispatch(toggleCheck(actionPayload));
   };
 
@@ -332,7 +330,7 @@ const QuestionCard = ({
 
   return (
     <div className="flex justify-center">
-      <div className="mx-[15px] w-full rounded-[12.3px] bg-[#F3F3F3] tablet:mx-[30px] tablet:rounded-[1.625rem] laptop:mx-[5.25rem]">
+      <div className="mx-[15px] w-full rounded-[12.3px] bg-[#F3F3F3] tablet:mx-[30px] tablet:rounded-[15px] laptop:mx-[5.25rem]">
         <GuestTopbar badgeCount={5} title={title} QuestTopic={QuestTopic} />
         <div className="ml-6 mr-[1.38rem] mt-[2.25rem] flex items-center justify-between tablet:ml-[4.5rem]">
           <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[28px] dark:text-[#B8B8B8]">
@@ -362,9 +360,6 @@ const QuestionCard = ({
             )}
           </div>
         </div>
-        {/* <h1 className="ml-6 mt-[36px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[52.65px] tablet:text-[25px] dark:text-[#B8B8B8]">
-          {question?.endsWith("?") ? "Q." : "S."} {question}
-        </h1> */}
         {tab === "Participate" ? (
           rankedAnswers && (
             <StartTest
@@ -392,6 +387,7 @@ const QuestionCard = ({
               time={time}
               loading={loading}
               setLoading={setLoading}
+              tab={tab}
             />
           )
         ) : (
