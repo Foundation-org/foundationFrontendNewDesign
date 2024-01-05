@@ -118,7 +118,7 @@ const YesNo = () => {
     if (errorMessage) {
       setLoading(false);
       return setCheckQuestionStatus({
-        name: "Reject",
+        name: "Rejected",
         color: "text-[#b00f0f]",
         tooltipName:
           "Please review your text for proper grammar while keeping our code of conduct in mind.",

@@ -85,7 +85,7 @@ const SingleAnswerMultipleChoice = (props) => {
     if (errorMessage) {
       // props.setIsSubmit(false);
       return setCheckOptionStatus({
-        name: "Fail",
+        name: "Rejected",
         color: "text-[#b00f0f]",
         tooltipName:
           "Please review your text for proper grammar while keeping our code of conduct in mind.",
@@ -100,9 +100,9 @@ const SingleAnswerMultipleChoice = (props) => {
       startQuest: true,
     });
     if (answerExist) {
-      props.setIsSubmit(false);
+      // props.setIsSubmit(false);
       return setCheckOptionStatus({
-        name: "Fail",
+        name: "Rejected",
         color: "text-[#b00f0f]",
         tooltipName: "Found Duplication!",
         tooltipStyle: "tooltip-error",
@@ -112,7 +112,7 @@ const SingleAnswerMultipleChoice = (props) => {
     // Answer is validated and status is Ok
     if (validatedAnswer) {
       setAnswer(validatedAnswer);
-      props.setIsSubmit(true);
+      // props.setIsSubmit(true);
       setCheckOptionStatus({
         name: "Ok",
         color: "text-[#0FB063]",

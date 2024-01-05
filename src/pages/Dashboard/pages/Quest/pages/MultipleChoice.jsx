@@ -142,7 +142,7 @@ const MultipleChoice = () => {
     // If any error captured
     if (errorMessage) {
       return setCheckQuestionStatus({
-        name: "Reject",
+        name: "Rejected",
         color: "text-[#b00f0f]",
         tooltipName:
           "Please review your text for proper grammar while keeping our code of conduct in mind.",
@@ -196,7 +196,7 @@ const MultipleChoice = () => {
       newTypedValues[index] = {
         ...newTypedValues[index],
         optionStatus: {
-          name: "Reject",
+          name: "Rejected",
           color: "text-[#b00f0f]",
           tooltipName:
             "Please review your text for proper grammar while keeping our code of conduct in mind.",
@@ -218,7 +218,7 @@ const MultipleChoice = () => {
         ...newTypedValues[index],
         // question: "",
         optionStatus: {
-          name: "Reject",
+          name: "Rejected",
           color: "text-[#b00f0f]",
           tooltipName: "Found Duplication!",
           tooltipStyle: "tooltip-error",

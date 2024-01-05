@@ -150,7 +150,7 @@ const MultipleChoiceOptions = ({
                 <Tooltip optionStatus={optionStatus} />
               </button>
 
-              {/* {optionStatus?.name === "Fail" && (
+              {/* {optionStatus?.name === "Rejected" && (
                   <div className="absolute -top-[36px] left-1/2 -translate-x-1/2 transform">
                     <div class="relative mx-2 flex flex-col items-end">
                       <svg
@@ -246,7 +246,7 @@ const MultipleChoiceOptions = ({
             </div>
             {/* <Tooltip
               anchorSelect={`#test${number}`}
-              isOpen={optionStatus?.name === "Fail" && true}
+              isOpen={optionStatus?.name === "Rejected" && true}
               border="1px solid red"
               style={{
                 backgroundColor: "#fbdfe4",

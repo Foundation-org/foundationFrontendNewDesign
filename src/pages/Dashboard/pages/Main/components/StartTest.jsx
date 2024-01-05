@@ -300,12 +300,12 @@ const StartTest = ({
             <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[52.65px] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
               You can drag and drop options in your order of preference.
             </h4>
-            <div className="mt-[11.66px] flex flex-col gap-[5.7px] overflow-auto tablet:mt-[26px] tablet:gap-[10px]">
+            <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                   {(provided) => (
                     <ul
-                      className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col items-center gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]"
+                      className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col items-center gap-[5.7px] tablet:max-h-[23.2rem] tablet:gap-[10px]"
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
