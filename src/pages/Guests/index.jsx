@@ -40,12 +40,14 @@ const Guests = () => {
     setViewResult((prev) => (prev === testId ? null : testId));
   };
 
+  console.log({ singleQuest });
+
   return (
     <>
       <Topbar />
       <div className="flex h-[calc(100vh-90px)] bg-white dark:bg-[#0A0A0C]">
-        <div className="w-full">
-          <div className="my-7 flex justify-center gap-5 tablet:my-[3.81rem] tablet:gap-[5.69rem]">
+        <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
+          <div className="mb-7 flex justify-center gap-5 tablet:mb-[3.81rem] tablet:gap-[5.69rem]">
             <button
               className="w-[81.8px] rounded-[7.1px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:w-[250px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[23.63px]"
               onClick={() => setTab("Participate")}
@@ -59,26 +61,28 @@ const Guests = () => {
               Result
             </button>
           </div>
-          <QuestionCard
-            tab={tab}
-            id={singleQuest?._id}
-            img="/assets/svgs/dashboard/badge.svg"
-            alt="badge"
-            badgeCount="5"
-            time={singleQuest?.createdAt}
-            title={getQuestionTitle(singleQuest?.whichTypeQuestion)}
-            question={singleQuest?.Question}
-            answers={singleQuest?.QuestAnswers}
-            usersAddTheirAns={singleQuest?.usersAddTheirAns}
-            whichTypeQuestion={singleQuest?.whichTypeQuestion}
-            btnText={singleQuest?.startStatus}
-            startStatus={singleQuest?.startStatus}
-            viewResult={viewResult}
-            handleViewResults={handleViewResults}
-            multipleOption={singleQuest?.userCanSelectMultiple}
-            QuestTopic={singleQuest?.QuestTopic}
-            createdBy={singleQuest?.uuid}
-          />
+          <div>
+            <QuestionCard
+              tab={tab}
+              id={singleQuest?._id}
+              img="/assets/svgs/dashboard/badge.svg"
+              alt="badge"
+              badgeCount="5"
+              time={singleQuest?.createdAt}
+              title={getQuestionTitle(singleQuest?.whichTypeQuestion)}
+              question={singleQuest?.Question}
+              answers={singleQuest?.QuestAnswers}
+              usersAddTheirAns={singleQuest?.usersAddTheirAns}
+              whichTypeQuestion={singleQuest?.whichTypeQuestion}
+              btnText={singleQuest?.startStatus}
+              startStatus={singleQuest?.startStatus}
+              viewResult={viewResult}
+              handleViewResults={handleViewResults}
+              multipleOption={singleQuest?.userCanSelectMultiple}
+              QuestTopic={singleQuest?.QuestTopic}
+              createdBy={singleQuest?.uuid}
+            />
+          </div>
         </div>
         <SidebarRight />
       </div>
