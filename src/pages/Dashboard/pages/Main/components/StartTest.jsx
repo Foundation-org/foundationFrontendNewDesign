@@ -305,7 +305,7 @@ const StartTest = ({
                 <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                   {(provided) => (
                     <ul
-                      className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col items-center gap-[5.7px] tablet:max-h-[23.2rem] tablet:gap-[10px]"
+                      className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col items-center gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]"
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
@@ -467,8 +467,8 @@ const StartTest = ({
               <button
                 className={` ${
                   persistedTheme === "dark"
-                    ? "bg-[#333B46]"
-                    : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                    ? "bg-[#F4F4F4] text-[#707175]"
+                    : "bg-[#707175] text-white"
                 } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
                 onClick={() => {
                   setViewResult(id);
