@@ -323,19 +323,21 @@ const Result = (props) => {
             ))}
           </div>
         ) : props.title === "Ranked Choice" ? (
-          props.rankedAnswers?.map((item, index) => (
-            <RankedResult
-              number={"#" + (index + 1)}
-              answer={item.label}
-              answersSelection={props.answersSelection}
-              setAnswerSelection={props.setAnswerSelection}
-              title={props.title}
-              percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-              checkInfo={false}
-              setAddOptionLimit={props.setAddOptionLimit}
-              btnText={"Results"}
-            />
-          ))
+          <div className="quest-scrollbar flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]">
+            {props.rankedAnswers?.map((item, index) => (
+              <RankedResult
+                number={"#" + (index + 1)}
+                answer={item.label}
+                answersSelection={props.answersSelection}
+                setAnswerSelection={props.setAnswerSelection}
+                title={props.title}
+                percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                checkInfo={false}
+                setAddOptionLimit={props.setAddOptionLimit}
+                btnText={"Results"}
+              />
+            ))}
+          </div>
         ) : null}
 
         {props.expanded && props.btnText === "change answer" ? (
