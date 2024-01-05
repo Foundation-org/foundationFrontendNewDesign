@@ -22,9 +22,11 @@ import UrlDialogue from "./Shareables/UrlDialogue";
 import EmailDialogue from "./Shareables/EmailDialogue";
 import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
+import { useParams } from "react-router-dom";
 
 const Result = (props) => {
   const quests = useSelector(getQuests);
+  const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const [timeAgo, setTimeAgo] = useState("");
@@ -303,7 +305,13 @@ const Result = (props) => {
             ) : null}
           </>
         ) : props.title === "Multiple Choice" ? (
-          <div className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]">
+          <div
+            className={`${
+              isFullScreen === undefined
+                ? "quest-scrollbar max-h-[17vh] min-h-fit overflow-auto tablet:max-h-[23.2rem]"
+                : ""
+            }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+          >
             {props.answers?.map((item, index) => (
               <SingleAnswerMultipleChoice
                 number={"#" + (index + 1)}
@@ -324,7 +332,13 @@ const Result = (props) => {
             ))}
           </div>
         ) : props.title === "Ranked Choice" ? (
-          <div className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]">
+          <div
+            className={`${
+              isFullScreen === undefined
+                ? "quest-scrollbar max-h-[17vh] min-h-fit overflow-auto tablet:max-h-[23.2rem]"
+                : ""
+            }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+          >
             {props.rankedAnswers?.map((item, index) => (
               <RankedResult
                 number={"#" + (index + 1)}
