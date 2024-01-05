@@ -276,7 +276,7 @@ const Main = () => {
             )
           }
           height={"88vh"}
-          style={{ overflow: "visible" }}
+          // style={{ overflow: "visible" }}
           className="no-scrollbar flex flex-col gap-[27px]"
         >
           {expandedView
