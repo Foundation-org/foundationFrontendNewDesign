@@ -332,7 +332,7 @@ const StartTest = ({
                 <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                   {(provided) => (
                     <ul
-                      className="quest-scrollbar flex max-h-[22.8rem] min-h-fit flex-col items-center gap-[5.7px] overflow-auto  tablet:gap-[10px]"
+                      className="quest-scrollbar flex max-h-[17vh] min-h-fit flex-col items-center gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]"
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
