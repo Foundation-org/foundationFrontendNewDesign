@@ -82,7 +82,7 @@ const StartTest = ({
       label: questAnswer.question,
       check: false,
       contend: false,
-      uuid:questAnswer.uuid
+      uuid: questAnswer.uuid,
     }));
 
     setAnswerSelection(updatedAnswersSelection);
@@ -254,7 +254,7 @@ const StartTest = ({
                 &#x200B;
               </h4>
             )}
-            <div className="quest-scrollbar flex max-h-48 min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[24.8rem] tablet:gap-[10px]">
+            <div className="quest-scrollbar flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[24.8rem] tablet:gap-[10px]">
               {[...answersSelection].map((item, index) => (
                 <SingleAnswerMultipleChoice
                   key={index}
