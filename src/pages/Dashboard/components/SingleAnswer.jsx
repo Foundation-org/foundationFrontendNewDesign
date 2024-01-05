@@ -166,8 +166,9 @@ const SingleAnswer = (props) => {
             </div> */}
           </div>
         )}
+        
       </div>
-      {props.btnText !== "Results" && <div className="w-7 tablet:w-[45.6px]" />}
+      <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
     </div>
   );
 };

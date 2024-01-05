@@ -7,9 +7,9 @@ const VerificationBadges = () => {
     {
       image: "/assets/profile/Education-Email-2x.png",
       title: "Personal Email",
-      ButtonColor: "blue",
-      ButtonText: "Add New Badge",
-      NoOfButton:2,
+      ButtonColor: "yellow",
+      ButtonText: "Change Password",
+      NoOfButton:1,
     },
     {
       image: "/assets/profile/Education-Email-2x.png",
@@ -26,52 +26,22 @@ const VerificationBadges = () => {
       NoOfButton:1,
     },
     {
-      image: "/assets/profile/Education-Gmail-2x.png",
-      title: "Personal Email",
+      image: "/assets/profile/cellphone.png",
+      title: "Cell Phone",
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
     },
   ]
   const socials = [
-    {
-      image: "/assets/profile/Education-Gmail-2x.png",
-      title: "Work Gmail",
-      ButtonColor: "blue",
-      ButtonText: "Add New Badge",
-      NoOfButton:1,
-    },
-    {
-      image: "/assets/profile/Education-Gmail-2x.png",
-      title: "Education Gmail",
-      ButtonColor: "blue",
-      ButtonText: "Add New Badge",
-      NoOfButton:1,
-    },
-    {
-      image: "/assets/profile/Ethereum-Wallet-2x.png",
-      title: "Etherium Wallet",
-      ButtonColor: "blue",
-      ButtonText: "Add New Badge",
-      NoOfButton:1,
-    },
+    
     {
       image: "/assets/profile/LinkedIn-2x.png",
       title: "LinkedIn",
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
-    },
-    {
-      image: "/assets/profile/Github-2x.png",
-      title: "Github",
-      ButtonColor: "blue",
-      ButtonText: "Add New Badge",
-      NoOfButton:1,
-    },]
-
-  const web3 = [
-    {
+    },{
       image: "/assets/profile/Facebook-2x.png",
       title: "Facebook",
       ButtonColor: "blue",
@@ -88,33 +58,27 @@ const VerificationBadges = () => {
     {
       image: "/assets/profile/Instagram-2x.png",
       title: "Instagram",
-      ButtonColor: "gray",
+      ButtonColor: "blue",
+      ButtonText: "Add New Badge",
+      NoOfButton:1,
+    },
+   
+    {
+      image: "/assets/profile/Github-2x.png",
+      title: "Github",
+      ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
     },]
 
-  const personal = [
+  const web3 = [
     {
-      image: "/assets/profile/Geolocation-2x.png",
-      title: "Geolocation",
+      image: "/assets/profile/Ethereum-Wallet-2x.png",
+      title: "Etherium Wallet",
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
-    },
-    {
-      image: "/assets/profile/Personal-Phone-2x.png",
-      title: "Personal Phone",
-      ButtonColor: "blue",
-      ButtonText: "Add New Badge",
-      NoOfButton:1,
-    },
-    {
-      image: "/assets/profile/Work-Phone-2x.png",
-      title: "Work Phone",
-      ButtonColor: "blue",
-      ButtonText: "Add New Badge",
-      NoOfButton:1,
-    },
+    } ,
     {
       image: "/assets/profile/WebAuth-Desktop-2x.png",
       title: "WebAuth Desktop",
@@ -128,20 +92,75 @@ const VerificationBadges = () => {
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
+    }]
+
+  const personal = [
+   
+    {
+      image: "/assets/profile/firstname.png",
+      title: "First Name",
+      NoOfButton:2,
     },
     {
-      image: "/assets/profile/Identity-2x.png",
-      title: "Identity",
+      image: "/assets/profile/Work-Phone-2x.png",
+      title: "Last Name",
+      NoOfButton:2,
+    },
+    {
+      image: "/assets/profile/currentcity.png",
+      title: "Current City",
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
     },
     {
-      image: "/assets/profile/Multi-factor-Authentication-2x.png",
-      title: "First Name",
+      image: "/assets/profile/hometown.png",
+      title: "Home Town",
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
-      NoOfButton:2,
+      NoOfButton:1,
+    },
+    {
+      image: "/assets/profile/relationaship.png",
+      title: "Relationship Status",
+      ButtonColor: "blue",
+      ButtonText: "Add New Badge",
+      NoOfButton:1,
+    },
+    {
+      image: "/assets/profile/work.png",
+      title: "Work",
+      ButtonColor: "blue",
+      ButtonText: "Add New Badge",
+      NoOfButton:1,
+    },
+    {
+      image: "/assets/profile/education.png",
+      title: "Education",
+      ButtonColor: "blue",
+      ButtonText: "Add New Badge",
+      NoOfButton:1,
+    },
+    {
+      image: "/assets/profile/Identity-2x.png",
+      title: "ID / Passport",
+      ButtonColor: "blue",
+      ButtonText: "Add New Badge",
+      NoOfButton:1,
+    },
+    {
+      image: "/assets/profile/Geolocation-2x.png",
+      title: "Geolocation",
+      ButtonColor: "blue",
+      ButtonText: "Add New Badge",
+      NoOfButton:1,
+    },
+    {
+      image: "/assets/profile/securityquestion.png",
+      title: "Security Question",
+      ButtonColor: "blue",
+      ButtonText: "Add New Badge",
+      NoOfButton:1,
     },
   ];
 

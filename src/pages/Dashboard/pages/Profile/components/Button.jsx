@@ -4,8 +4,8 @@ const Button = ({ children, type = "button", color, onClick }) => {
   const buttonClasses = classNames(
     "w-[19.9vw] h-[5.8vw] rounded-[1.31vw] text-[1.73vw] font-semibold leading-normal tablet:mr-[18.5px]",
     {
-      "border-[1.32px] tablet:border-[5px] border-[#949494] text-[#949494] rounded-[6px] tablet:rounded-[12.6px] laptop:rounded-[23px]":
-        color === "gray",
+      "  text-white bg-[#FAD308]   rounded-[6px] tablet:rounded-[12.6px] laptop:rounded-[23px]":
+        color === "yellow",
       "border-[1px] border-[#BABABA] text-[#949494] dark-bg-[#252D37] bg-[#fff] rounded-[23px]":
         color === "gray-light",
       "bg-[#FF4057] dark:bg-[#C13232] text-white rounded-[6px] tablet:rounded-[12.6px] laptop:rounded-[23px]":
