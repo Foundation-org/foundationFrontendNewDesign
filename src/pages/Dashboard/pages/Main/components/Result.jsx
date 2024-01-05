@@ -303,7 +303,7 @@ const Result = (props) => {
             ) : null}
           </>
         ) : props.title === "Multiple Choice" ? (
-          <div className="quest-scrollbar flex max-h-48 min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[24.8rem] tablet:gap-[10px]">
+          <div className="quest-scrollbar flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]">
             {props.answers?.map((item, index) => (
               <SingleAnswerMultipleChoice
                 number={"#" + (index + 1)}
@@ -338,12 +338,10 @@ const Result = (props) => {
           ))
         ) : null}
 
-        {props.expanded ? (
+        {props.expanded && props.btnText === "change answer" ? (
           <div className="mt-2.5 flex justify-end tablet:mt-8">
             <button
-              className={`${
-                persistedTheme === "dark" ? "bg-[#BB9D02]" : "bg-[#FDD503]"
-              } inset-0 mr-[14.4px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+              className="inset-0 mr-[14.4px] h-[23.48px] w-[81.8px] rounded-[7.1px] bg-[#FDD503] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:bg-[#BB9D02] dark:text-[#B6B6B6]"
               onClick={() => {
                 props.handleChange(props.id);
               }}

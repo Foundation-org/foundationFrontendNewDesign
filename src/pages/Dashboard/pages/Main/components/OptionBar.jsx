@@ -265,7 +265,7 @@ const OptionBar = ({
         <div className="mr-[14.4px] flex w-full justify-end gap-2 tablet:mr-[30px] tablet:gap-10">
           {getButtonText(btnText) !== "Completed" ? (
             <button
-              className={` ${getButtonClassName(
+              className={`${getButtonClassName(
                 persistedTheme,
                 btnText,
                 btnColor,
@@ -295,6 +295,7 @@ const OptionBar = ({
         </div>
       </div>
 
+      {/* Social shareable icons & Timestamp */}
       <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] py-[0.4rem] tablet:px-[1.37rem] tablet:py-[0.85rem] dark:border-white">
         <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
           <div onClick={handleCopyOpen} className="cursor-pointer">

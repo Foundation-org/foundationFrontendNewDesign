@@ -59,6 +59,7 @@ const Main = () => {
   useEffect(() => {
     if (expandedView === false) {
       setStartTest(null);
+      setViewResult(null);
     }
   }, [expandedView]);
 
@@ -231,7 +232,13 @@ const Main = () => {
     setViewResult((prev) => (prev === testId ? null : testId));
   };
 
+  // useEffect(() => {
+  //   if (expandedView === false) {
+  //   }
+  // });
+
   console.log({ allData });
+  console.log({ expandedView });
 
   return (
     <div className="flex w-full flex-col laptop:flex-row">
