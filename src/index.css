@@ -403,3 +403,7 @@ td,
 .quest-scrollbar::-webkit-scrollbar-track {
   background-color: #e0e0e0;
 }
+
+.addoption-boxShadow {
+  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.15) inset;
+}

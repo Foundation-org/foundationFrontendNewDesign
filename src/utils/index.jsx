@@ -1,5 +1,3 @@
-import { toast } from "sonner";
-
 export function calculateRemainingTime(
   lastInteractedAt,
   howManyTimesAnsChanged,
@@ -29,14 +27,29 @@ export function calculateRemainingTime(
     howManyTimesAnsChanged >= 1 &&
     currentDate - new Date(lastInteractedAt) < timeInterval
   ) {
-    let currentDate = new Date();
     let futureDate = new Date(currentDate.getTime() + timeInterval);
-    let futureDateTimeString = futureDate
-      .toISOString()
-      .slice(0, 19)
-      .replace("T", " ");
-    toast.error(`You can change your answer after ${futureDateTimeString}.`);
+
+    const timeDifference = futureDate - currentDate;
+    const days = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
+    const weeks = Math.floor(days / 7);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(days / 365);
+    const twoYears = Math.floor(days / (2 * 365));
+    const fourYears = Math.floor(days / (4 * 365));
+
+    const remainingTime = [
+      days > 0 ? `${days} days` : null,
+      weeks > 0 ? `${weeks} weeks` : null,
+      months > 0 ? `${months} months` : null,
+      years > 0 ? `${years} years` : null,
+      twoYears > 0 ? `${twoYears} two years` : null,
+      fourYears > 0 ? `${fourYears} four years` : null,
+    ]
+      .filter(Boolean)
+      .join(", ");
+
+    return `, after ${remainingTime.split(",")[0]}.`;
   } else {
-    toast.success(`You are good to go!`);
+    return ", you are good to go!";
   }
 }

@@ -31,7 +31,7 @@ const RankedResult = (props) => {
   };
 
   return (
-    <div className="mx-6 flex items-center 2xl:mx-[85px] tablet:mx-[52.65px]">
+    <div className="mx-6 flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px]">
       <div className="flex w-full justify-between rounded-[4.73px] bg-white tablet:rounded-[10px] dark:bg-[#0D1012]">
         <div className="flex w-full items-center">
           {props.btnText !== "Results" && (

@@ -303,7 +303,7 @@ const Result = (props) => {
             ) : null}
           </>
         ) : props.title === "Multiple Choice" ? (
-          <div className="quest-scrollbar flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]">
+          <div className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]">
             {props.answers?.map((item, index) => (
               <SingleAnswerMultipleChoice
                 number={"#" + (index + 1)}
@@ -323,7 +323,7 @@ const Result = (props) => {
             ))}
           </div>
         ) : props.title === "Ranked Choice" ? (
-          <div className="quest-scrollbar flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]">
+          <div className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]">
             {props.rankedAnswers?.map((item, index) => (
               <RankedResult
                 number={"#" + (index + 1)}

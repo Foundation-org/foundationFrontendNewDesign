@@ -16,7 +16,8 @@ import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { FaSpinner } from "react-icons/fa";
-import { calculateRemainingTime } from "../../../../../utils";
+import QuestTimeRemaining from "./QuestTimeRemaining";
+import { useNavigate } from "react-router-dom";
 
 const StartTest = ({
   id,
@@ -57,6 +58,7 @@ const StartTest = ({
   startStatus,
   howManyTimesAnsChanged,
 }) => {
+  const navigate = useNavigate();
   const [timeAgo, setTimeAgo] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [copyModal, setCopyModal] = useState(false);
@@ -64,7 +66,6 @@ const StartTest = ({
   const [emailModal, setEmailModal] = useState(false);
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
-  const [conditionalText, setConditionalText] = useState(false);
 
   const handleCopyOpen = () => setCopyModal(true);
   const handleCopyClose = () => setCopyModal(false);
@@ -186,7 +187,6 @@ const StartTest = ({
   };
 
   const handleOnDragEnd = (result) => {
-    console.log(result);
     if (!result.destination) {
       return;
     }
@@ -197,6 +197,8 @@ const StartTest = ({
 
     setRankedAnswers(newTypedValues);
   };
+
+  console.log({ multipleOption });
 
   return (
     <>
@@ -244,9 +246,9 @@ const StartTest = ({
             )}
           </div>
         ) : title === "Multiple Choice" ? (
-          <div className="mt-[11.66px] flex flex-col gap-[5.7px] overflow-auto tablet:mt-[26px] tablet:gap-[10px]">
+          <div className="flex flex-col gap-[5.7px] overflow-auto tablet:gap-[29px]">
             {multipleOption ? (
-              <h4 className="-mt-3 ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[5.37rem] tablet:text-[16.58px] laptop:-mt-[25px] laptop:text-[18px]">
+              <h4 className="ml-6 mt-[15px] text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[5.37rem] tablet:text-[16.58px] laptop:text-[18px]">
                 You can select multiple options.
               </h4>
             ) : (
@@ -254,7 +256,7 @@ const StartTest = ({
                 &#x200B;
               </h4>
             )}
-            <div className="quest-scrollbar flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]">
+            <div className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]">
               {[...answersSelection].map((item, index) => (
                 <SingleAnswerMultipleChoice
                   key={index}
@@ -286,41 +288,6 @@ const StartTest = ({
                 />
               ))}
             </div>
-            {usersChangeTheirAns === "" ? (
-              <h4 className="ml-6 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[102.65px] tablet:text-[16.58px] laptop:text-[18px]">
-                Your selection is final and cannot be changed.
-              </h4>
-            ) : (
-              <h4 className="ml-8 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[102.65px] tablet:text-[16.58px] laptop:text-[18px]">
-                {/* {!conditionalText && ( */}
-                <span
-                  className="cursor-pointer"
-                  // onClick={() => setConditionalText(true)}
-                  onClick={() =>
-                    calculateRemainingTime(
-                      lastInteractedAt,
-                      howManyTimesAnsChanged,
-                      usersChangeTheirAns,
-                    )
-                  }
-                >
-                  You can change your answer {usersChangeTheirAns}.
-                </span>
-                {/* )} */}
-
-                {/* {conditionalText && (
-                  <span
-                    className="cursor-pointer"
-                    onClick={() => setConditionalText(false)}
-                  >
-                    {calculateRemainingTime(
-                      lastInteractedAt,
-                      howManyTimesAnsChanged,
-                    )}
-                  </span>
-                )} */}
-              </h4>
-            )}
           </div>
         ) : (
           <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
@@ -332,7 +299,7 @@ const StartTest = ({
                 <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                   {(provided) => (
                     <ul
-                      className="quest-scrollbar flex max-h-[17vh] min-h-fit flex-col items-center gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]"
+                      className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col items-center gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]"
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
@@ -383,20 +350,58 @@ const StartTest = ({
         )}
       </>
 
+      <QuestTimeRemaining
+        lastInteractedAt={lastInteractedAt}
+        howManyTimesAnsChanged={howManyTimesAnsChanged}
+        usersChangeTheirAns={usersChangeTheirAns}
+      />
       {/* Add Options && Cancel && Submit Button */}
-      {(answersSelection && answersSelection.length > 6) ||
-      (rankedAnswers && rankedAnswers.length > 6) ? (
-        <div className="mr-[14.4px] mt-4 flex items-center justify-end gap-1 tablet:mr-[30px] tablet:mt-5 tablet:gap-[14px]">
-          <img
-            src="/assets/svgs/fullscreen.svg"
-            alt="fullscreen"
-            className="h-[14px] w-[14px] tablet:h-[21px] tablet:w-[21px]"
-          />
-          <p className="text-[9px] font-medium text-[#435059] tablet:text-[16px]">
-            Full Screen
-          </p>
-        </div>
-      ) : null}
+      <div className="ml-[20px] mr-[28px] mt-[18px] flex items-center justify-between tablet:ml-[66px] tablet:mr-[46px]">
+        {usersAddTheirAns && addOptionLimit === 0 ? (
+          <div>
+            {title === "Yes/No" ||
+            title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
+              <button
+                onClick={handleOpen}
+                className="addoption-boxShadow ml-4 flex h-[23.48px] w-[81.8px] items-center gap-[5.8px] rounded-[7.1px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:h-[52px] tablet:w-[173px] tablet:gap-[11.37px] tablet:rounded-[15px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
+              >
+                {persistedTheme === "dark" ? (
+                  <img
+                    src="/assets/svgs/dashboard/add-dark.svg"
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
+                ) : (
+                  <img
+                    src="/assets/svgs/dashboard/add.svg"
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
+                )}
+                Add Option
+              </button>
+            ) : null}
+          </div>
+        ) : null}
+        {(answersSelection && answersSelection.length > 6) ||
+        (rankedAnswers && rankedAnswers.length > 6) ? (
+          <div
+            className="flex cursor-pointer items-center justify-end gap-1 tablet:gap-[14px]"
+            onClick={() => {
+              navigate(`/quest/${id}`);
+            }}
+          >
+            <img
+              src="/assets/svgs/fullscreen.svg"
+              alt="fullscreen"
+              className="h-[14px] w-[14px] tablet:h-[21px] tablet:w-[21px]"
+            />
+            <p className="text-[9px] font-medium text-[#435059] tablet:text-[16px]">
+              Full Screen
+            </p>
+          </div>
+        ) : null}
+      </div>
       <div
         className={`${
           title === "Multiple Choice"
@@ -407,7 +412,7 @@ const StartTest = ({
         } flex w-full justify-end gap-2 tablet:gap-10`}
       >
         {/* Add Options Button */}
-        {usersAddTheirAns && addOptionLimit === 0 ? (
+        {/* {usersAddTheirAns && addOptionLimit === 0 ? (
           <div>
             {title === "Yes/No" ||
             title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
@@ -432,7 +437,7 @@ const StartTest = ({
               </button>
             ) : null}
           </div>
-        ) : null}
+        ) : null} */}
         <div className="mr-[14.4px] flex gap-2 tablet:mr-[30px] tablet:gap-10">
           {!expandedView ? (
             <button
