@@ -61,6 +61,7 @@ const QuestionCardWithToggle = ({
       label: answer.question,
       check: false,
       contend: false,
+      uuid:answer.uuid
     })),
   );
 
@@ -70,10 +71,12 @@ const QuestionCardWithToggle = ({
         label: answer.question,
         check: false,
         contend: false,
+        uuid:answer.uuid
       })),
     );
   }, [answers]);
-
+  
+console.log(answersSelection);
   const [rankedAnswers, setRankedAnswers] = useState(
     answersSelection?.map((item, index) => ({
       id: `unique-${index}`,
@@ -113,6 +116,7 @@ const QuestionCardWithToggle = ({
       addedOptionByUser: true,
       edit: true,
       delete: true,
+      uuid:localStorage.getItem('uId')
     };
 
     setAnswerSelection([newOption, ...answersSelection]);

@@ -257,7 +257,7 @@ const VerificationBadges = () => {
             </div>
             {
               item.NoOfButton!==1?
-              <div className="w-[19.9vw] flex justify-between pr-3">
+              <div className="w-[19.9vw] flex justify-between  tablet:mr-[18.5px]">
               <button className="w-[45%] h-[5.8vw] rounded-[1.31vw] text-[1.73vw] bg-[#FAD308] dark:bg-[#FAD308] text-white rounded-[6px] tablet:rounded-[12.6px] laptop:rounded-[23px]">Edit</button>
               <button className="w-[52%] h-[5.8vw] rounded-[1.31vw] text-[1.73vw] bg-[#FF4057] dark:bg-[#C13232] text-white rounded-[6px] tablet:rounded-[12.6px] laptop:rounded-[23px]">Remove</button>
               </div>

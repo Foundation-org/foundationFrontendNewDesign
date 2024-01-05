@@ -308,6 +308,7 @@ const Result = (props) => {
               <SingleAnswerMultipleChoice
                 number={"#" + (index + 1)}
                 answer={item.question}
+                addedAnswerUuid={item.uuid}
                 title={props.title}
                 checkInfo={true}
                 percentages={ResultsData?.data[ResultsData?.data.length - 1]}
@@ -328,6 +329,7 @@ const Result = (props) => {
               <RankedResult
                 number={"#" + (index + 1)}
                 answer={item.label}
+                addedAnswerUuid={item.uuid}
                 answersSelection={props.answersSelection}
                 setAnswerSelection={props.setAnswerSelection}
                 title={props.title}

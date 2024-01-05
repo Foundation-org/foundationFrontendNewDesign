@@ -336,7 +336,7 @@ const SingleAnswerMultipleChoice = (props) => {
             </div>
           </div>
         )}
-        {props.btnText !== "Results" && (
+        {props.btnText !== "Results" ? (
           <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
             {props.deleteable ? (
               <img
@@ -357,7 +357,7 @@ const SingleAnswerMultipleChoice = (props) => {
               />
             </BasicModal>
           </div>
-        )}
+        ):(<div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>)}
       </div>
     </div>
   );

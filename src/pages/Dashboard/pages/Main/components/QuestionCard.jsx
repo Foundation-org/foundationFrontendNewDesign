@@ -63,6 +63,7 @@ const QuestionCard = ({
       label: answer.question,
       check: false,
       contend: false,
+      uuid:answer.uuid
     })),
   );
   useEffect(() => {
