@@ -204,7 +204,7 @@ const StartTest = ({
     <>
       <>
         {title === "Yes/No" || title === "Agree/Disagree" ? (
-          <div className="mt-[18px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px]">
+          <div className="mt-[23.7px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px]">
             {title === "Yes/No" ? (
               <>
                 <SingleAnswer
@@ -246,7 +246,7 @@ const StartTest = ({
             )}
           </div>
         ) : title === "Multiple Choice" ? (
-          <div className="flex flex-col gap-[5.7px] overflow-auto tablet:gap-[29px]">
+          <div className="flex flex-col mt-[18px] gap-[5.7px] overflow-auto tablet:gap-[29px]">
             {multipleOption ? (
               <h4 className="ml-6 mt-[15px] text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[5.37rem] tablet:text-[16.58px] laptop:text-[18px]">
                 You can select multiple options.

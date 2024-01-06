@@ -145,14 +145,14 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   return (
-    <div className="mx-1 flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px] tablet:gap-[5px]">
+    <div className="flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px] tablet:gap-[5px]">
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === localStorage.getItem("uId") ? (
           <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"
               alt="trash"
-              className="h-4 w-[12px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
+              className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />
           </div>
         ) : (
@@ -160,7 +160,7 @@ const SingleAnswerMultipleChoice = (props) => {
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="trash"
-              className="h-4 w-[12px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
+              className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />
           </div>
         )

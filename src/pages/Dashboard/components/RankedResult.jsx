@@ -31,7 +31,7 @@ const RankedResult = (props) => {
   };
 
   return (
-    <div className="mx-1 flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px]">
+    <div className="flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px]">
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === localStorage.getItem("uId") ? (
           <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
@@ -73,7 +73,7 @@ const RankedResult = (props) => {
             </div>
           )}
           <div className="flex w-full justify-between">
-            <h1 className="ml-8 w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px]  dark:text-[#D3D3D3]">
+            <h1 className=" ml-4 tablet:ml-8 w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px]  dark:text-[#D3D3D3]">
               {props.answer}
             </h1>
             <div className="flex items-center gap-[19px]">
@@ -113,7 +113,7 @@ const RankedResult = (props) => {
           </div>
         </div>
         {/* to show ranked and multiple choice options */}
-        <div className="mr-[20.63px] flex items-center gap-[19px] text-[9.238px] tablet:text-[16px] ">
+        <div className="tablet:mr-[20.63px] mr-[10.63px] flex items-center gap-[19px] text-[9.238px] tablet:text-[16px] ">
           {props.btnText === "Results" ? (
             <>
               {props.percentages?.rankedPercentage &&

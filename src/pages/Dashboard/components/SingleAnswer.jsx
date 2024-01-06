@@ -82,7 +82,7 @@ const SingleAnswer = (props) => {
   };
 
   return (
-    <div className="mx-1 flex items-center tablet:gap-[5px] 2xl:mx-[85px] tablet:mx-[52.65px]">
+    <div className="mx-[2px] flex items-center tablet:gap-[5px] 2xl:mx-[85px] tablet:mx-[52.65px]">
       <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
 
 
@@ -124,16 +124,16 @@ const SingleAnswer = (props) => {
           </div>
         ) : (
           <div
-            className={`mr-1 flex items-center gap-[10.3px] text-[9.2px] tablet:mr-[20.63px] tablet:gap-[22px] tablet:text-[16px] ${
+            className={`flex items-center gap-[10.3px] text-[9.2px] pr-[7.55px] tablet:pr-[20.63px] tablet:gap-[22px] tablet:text-[16px] ${
               props.btnText === "Results" ? "pointer-events-none" : ""
             }`}
           >
-            <div className="flex items-center gap-1 tablet:gap-3">
+            <div className="flex items-center gap-1 laptop:gap-[18px]">
               <div id="custom-checkbox" className="flex h-full items-center">
                 <input
                   id="small-checkbox"
                   type="checkbox"
-                  className="checkbox h-[10.4px] w-[10.4px] rounded-[2px] tablet:h-5 tablet:w-5"
+                  className="checkbox h-[11.4px] w-[11.4px] rounded-[2px] tablet:h-5 tablet:w-5"
                   checked={props.check}
                   onChange={() =>
                     props.handleToggleCheck(props.answer, true, false)

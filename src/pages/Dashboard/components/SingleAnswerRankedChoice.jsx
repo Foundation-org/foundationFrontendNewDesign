@@ -157,7 +157,7 @@ const SingleAnswerRankedChoice = (props) => {
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="trash"
-              className="h-4 w-[12px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
+              className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />
           </div>
         )
