@@ -58,7 +58,7 @@ const RankedResult = (props) => {
         {" "}
         &#x200B;
       </div>
-      <div className="tablet:rounded-l-0 rounded-l-0 flex  w-full justify-between rounded-[4.73px] border-y border-l-0 border-r border-[#ACACAC] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]">
+      <div className="tablet:rounded-l-0 rounded-l-0 flex w-full justify-between rounded-r-[4.73px] border-y border-l-0 border-r border-[#ACACAC] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]">
         <div className="flex w-full items-center">
           {props.btnText !== "Results" && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">

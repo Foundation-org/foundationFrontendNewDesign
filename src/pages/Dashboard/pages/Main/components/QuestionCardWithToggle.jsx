@@ -600,7 +600,7 @@ const QuestionCardWithToggle = ({
   }, []);
 
   return (
-    <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-[#858585] dark:bg-[#141618]">
+    <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-white dark:bg-[#141618]">
       <CardTopbar
         title={title}
         img={img}

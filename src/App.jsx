@@ -24,7 +24,7 @@ function App() {
   }, [theme]);
 
   return (
-    <>
+    <div className="h-screen overflow-hidden">
       <Router />
       <Toaster
         position="top-right"
@@ -32,7 +32,7 @@ function App() {
         theme={persistedTheme === "dark" ? "dark" : "light"}
         richColors
       />
-    </>
+    </div>
   );
 }
 

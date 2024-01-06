@@ -232,13 +232,7 @@ const Main = () => {
     setViewResult((prev) => (prev === testId ? null : testId));
   };
 
-  // useEffect(() => {
-  //   if (expandedView === false) {
-  //   }
-  // });
-
   console.log({ allData });
-  console.log({ expandedView });
 
   return (
     <div className="flex w-full flex-col laptop:flex-row">
@@ -259,7 +253,7 @@ const Main = () => {
         columns={columns}
         setColumns={setColumns}
       />
-      <div className="shadow-inner-md no-scrollbar flex h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] py-[27px] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:border-x-2 dark:border-white dark:bg-[#06070a]">
+      <div className="shadow-inner-md no-scrollbar flex h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] py-[27px] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#06070a]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}

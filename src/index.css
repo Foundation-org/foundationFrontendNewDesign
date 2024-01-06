@@ -391,8 +391,7 @@ td,
 }
 
 .quest-scrollbar::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 5.6rem;
+  @apply h-[5rem] w-1 tablet:w-2;
 }
 
 .quest-scrollbar::-webkit-scrollbar-thumb {
@@ -402,6 +401,7 @@ td,
 
 .quest-scrollbar::-webkit-scrollbar-track {
   background-color: #e0e0e0;
+  border-radius: 4px;
 }
 
 .addoption-boxShadow {
