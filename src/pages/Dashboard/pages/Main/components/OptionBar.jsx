@@ -38,6 +38,7 @@ const OptionBar = ({
   badgeCount,
   title,
   question,
+  setLoadingDetail
 }) => {
   const dispatch = useDispatch();
   const [timeAgo, setTimeAgo] = useState("");
@@ -58,6 +59,7 @@ const OptionBar = ({
   const handleTwitterClose = () => setTwitterModal(false);
   const handleFbOpen = () => setFbModal(true);
   const handleFbClose = () => setFbModal(false);
+  
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
@@ -181,6 +183,7 @@ const OptionBar = ({
         // Update the state with the new array
         setRankedAnswers(filteredRankedAnswers);
       }
+      setLoadingDetail(false);
     },
     onError: (err) => {
       toast.error(err.response?.data);

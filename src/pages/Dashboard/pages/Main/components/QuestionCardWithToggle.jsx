@@ -58,6 +58,7 @@ const QuestionCardWithToggle = ({
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
   const [openResults, setOpenResults] = useState(null);
+  const [loadingDetail,setLoadingDetail]=useState(true);
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -394,6 +395,7 @@ const QuestionCardWithToggle = ({
         // Update the state with the new array
         setRankedAnswers(filteredRankedAnswers);
       }
+      setLoadingDetail(false);
     },
     onError: (err) => {
       toast.error(err.response?.data);
@@ -607,6 +609,7 @@ const QuestionCardWithToggle = ({
         startQuest(params);
       }
     }
+    setLoadingDetail(false);
   };
 
   useEffect(() => {
@@ -705,6 +708,7 @@ const QuestionCardWithToggle = ({
           usersChangeTheirAns={usersChangeTheirAns}
           lastInteractedAt={lastInteractedAt}
           howManyTimesAnsChanged={howManyTimesAnsChanged}
+          loadingDetail={loadingDetail}
         />
       ) : (
         <Result

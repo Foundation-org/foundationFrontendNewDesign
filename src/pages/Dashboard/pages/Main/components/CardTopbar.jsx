@@ -15,7 +15,7 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic }) => {
           </p>
         </div>
       ) : (
-        <div className="relative h-fit w-fit">
+        <div className="relative h-fit w-fit z-50">
           <img
             src={img}
             alt={alt}

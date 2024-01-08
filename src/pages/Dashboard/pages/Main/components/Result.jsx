@@ -24,6 +24,8 @@ import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
+import { FaSpinner } from "react-icons/fa";
+
 
 const Result = (props) => {
   const quests = useSelector(getQuests);
@@ -36,6 +38,8 @@ const Result = (props) => {
   const [emailModal, setEmailModal] = useState(false);
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
+  const [loading,setLoading]=useState(true);
+  const [checkLoading,setCheckLoading]=useState(true);
 
   const handleCopyOpen = () => setCopyModal(true);
   const handleCopyClose = () => setCopyModal(false);
@@ -206,6 +210,7 @@ const Result = (props) => {
           props.setRankedAnswers(filteredRankedAnswers);
         }
       }
+      setCheckLoading(false);
     },
     onError: (err) => {
       toast.error(err.response?.data);
@@ -258,8 +263,13 @@ const Result = (props) => {
   };
 
   return (
+
     <>
-      <div className="mx-1 mt-[23.7px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px] ">
+      {checkLoading === true || ResultsData === undefined ? (
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-white bg-opacity-20 z-100">
+          <FaSpinner className="animate-spin text-blue text-[20vw] tablet:text-[7vw]" />
+        </div>
+      ) : <div className="mx-1 mt-[23.7px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px] ">
         {props.title === "Yes/No" || props.title === "Agree/Disagree" || props.title === "Like/Unlike" ? (
           <>
             {props.title === "Yes/No" ? (
@@ -339,8 +349,8 @@ const Result = (props) => {
         ) : props.title === "Multiple Choice" ? (
           <div
             className={`${isFullScreen === undefined
-                ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
-                : ""
+              ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
+              : ""
               }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
             {props.answers?.map((item, index) => (
@@ -365,8 +375,8 @@ const Result = (props) => {
         ) : props.title === "Ranked Choice" ? (
           <div
             className={`${isFullScreen === undefined
-                ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
-                : ""
+              ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
+              : ""
               }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
             {props.rankedAnswers?.map((item, index) => (
@@ -401,8 +411,8 @@ const Result = (props) => {
           <div className="mt-4 flex justify-end tablet:mt-10">
             <button
               className={`${persistedTheme === "dark"
-                  ? "bg-[#333B46]"
-                  : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                ? "bg-[#333B46]"
+                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
                 } inset-0 mr-[14px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
               onClick={() => {
                 props.handleViewResults(null);
@@ -412,7 +422,8 @@ const Result = (props) => {
             </button>
           </div>
         )}
-      </div>
+      </div>}
+
       <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-[1.37rem] tablet:py-[0.85rem]">
         <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
           <div onClick={handleCopyOpen} className="cursor-pointer">

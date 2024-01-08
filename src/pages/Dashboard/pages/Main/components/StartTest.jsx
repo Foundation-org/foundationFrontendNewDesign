@@ -60,17 +60,18 @@ const StartTest = ({
   startStatus,
   howManyTimesAnsChanged,
   tab,
+  loadingDetail
 }) => {
   const navigate = useNavigate();
   const { isFullScreen } = useParams();
   const [timeAgo, setTimeAgo] = useState("");
-  const questUtils = useSelector(getQuestUtils);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [copyModal, setCopyModal] = useState(false);
   const [linkModal, setLinkModal] = useState(false);
   const [emailModal, setEmailModal] = useState(false);
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
+ 
   const uuidExists = answers.some(
     (item) => item.uuid === localStorage.getItem("uId"),
   );
@@ -215,6 +216,11 @@ const StartTest = ({
 
   return (
     <>
+     {loadingDetail === true ? (
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-white bg-opacity-20 z-100">
+          <FaSpinner className="animate-spin text-blue text-[20vw] tablet:text-[7vw]" />
+        </div>
+      ) : 
       <>
         {title === "Yes/No" || title === "Agree/Disagree" || title==="Like/Unlike" ? (
           <div className="mt-[18px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px]">
@@ -392,7 +398,7 @@ const StartTest = ({
             </div>
           </div>
         )}
-      </>
+      </>}
 
       <QuestTimeRemaining
         lastInteractedAt={localStorage.getItem("lastInteractedAt")}

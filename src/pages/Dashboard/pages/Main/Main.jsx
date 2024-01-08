@@ -27,6 +27,8 @@ import SidebarLeft from "../../components/SidebarLeft";
 import SidebarRight from "../../components/SidebarRight";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Cookies from "js-cookie";
+import { FaSpinner } from "react-icons/fa";
+
 
 const Main = () => {
   const pageLimit = 10;
@@ -276,9 +278,11 @@ const Main = () => {
                 <b>You are all caught up!</b>
               </p>
             ) : (
-              <p className="text-center">
-                <b>Loading...</b>
-              </p>
+
+              <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-white bg-opacity-20 z-100">
+                <FaSpinner className="animate-spin text-blue text-[20vw] tablet:text-[7vw]" />
+              </div>
+
             )
           }
           height={"88vh"}
@@ -286,16 +290,16 @@ const Main = () => {
         >
           {expandedView
             ? allData?.map((item, index) => (
-                <div key={index + 1}>
-                  <QuestionCardWithToggle
-                    id={item._id}
-                    img="/assets/svgs/dashboard/badge.svg"
-                    alt="badge"
-                    badgeCount="5"
-                    title={
-                      item?.whichTypeQuestion === "agree/disagree"
-                        ? "Agree/Disagree"
-                        :item?.whichTypeQuestion === "like/unlike"
+              <div key={index + 1}>
+                <QuestionCardWithToggle
+                  id={item._id}
+                  img="/assets/svgs/dashboard/badge.svg"
+                  alt="badge"
+                  badgeCount="5"
+                  title={
+                    item?.whichTypeQuestion === "agree/disagree"
+                      ? "Agree/Disagree"
+                      : item?.whichTypeQuestion === "like/unlike"
                         ? "Like/Unlike"
                         : item?.whichTypeQuestion === "multiple choise"
                           ? "Multiple Choice"
@@ -304,50 +308,50 @@ const Main = () => {
                             : item?.whichTypeQuestion === "yes/no"
                               ? "Yes/No"
                               : null
-                    }
-                    answers={item?.QuestAnswers}
-                    time={item?.createdAt}
-                    multipleOption={item?.userCanSelectMultiple}
-                    question={item?.Question}
-                    whichTypeQuestion={item?.whichTypeQuestion}
-                    startTest={startTest}
-                    setStartTest={setStartTest}
-                    viewResult={viewResult}
-                    setViewResult={setViewResult}
-                    usersAddTheirAns={item?.usersAddTheirAns}
-                    handleViewResults={handleViewResults}
-                    handleStartTest={handleStartTest}
-                    startStatus={item?.startStatus}
-                    createdBy={item?.uuid}
-                    btnColor={
-                      item?.startStatus === "completed"
-                        ? "bg-[#4ABD71]"
-                        : item?.startStatus === "change answer"
-                          ? "bg-[#FDD503]"
-                          : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-                    }
-                    btnText={item?.startStatus}
-                    isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                      return bookmark.questForeignKey === item._id;
-                    })}
-                    lastInteractedAt={item.lastInteractedAt}
-                    usersChangeTheirAns={item.usersChangeTheirAns}
-                    expandedView={expandedView}
-                    QuestTopic={item.QuestTopic}
-                  />
-                </div>
-              ))
+                  }
+                  answers={item?.QuestAnswers}
+                  time={item?.createdAt}
+                  multipleOption={item?.userCanSelectMultiple}
+                  question={item?.Question}
+                  whichTypeQuestion={item?.whichTypeQuestion}
+                  startTest={startTest}
+                  setStartTest={setStartTest}
+                  viewResult={viewResult}
+                  setViewResult={setViewResult}
+                  usersAddTheirAns={item?.usersAddTheirAns}
+                  handleViewResults={handleViewResults}
+                  handleStartTest={handleStartTest}
+                  startStatus={item?.startStatus}
+                  createdBy={item?.uuid}
+                  btnColor={
+                    item?.startStatus === "completed"
+                      ? "bg-[#4ABD71]"
+                      : item?.startStatus === "change answer"
+                        ? "bg-[#FDD503]"
+                        : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                  }
+                  btnText={item?.startStatus}
+                  isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                    return bookmark.questForeignKey === item._id;
+                  })}
+                  lastInteractedAt={item.lastInteractedAt}
+                  usersChangeTheirAns={item.usersChangeTheirAns}
+                  expandedView={expandedView}
+                  QuestTopic={item.QuestTopic}
+                />
+              </div>
+            ))
             : allData?.map((item, index) => (
-                <div key={index + 1}>
-                  <QuestionCard
-                    id={item._id}
-                    img="/assets/svgs/dashboard/badge.svg"
-                    alt="badge"
-                    badgeCount="5"
-                    title={
-                      item?.whichTypeQuestion === "agree/disagree"
-                        ? "Agree/Disagree"
-                        :item?.whichTypeQuestion === "like/unlike"
+              <div key={index + 1}>
+                <QuestionCard
+                  id={item._id}
+                  img="/assets/svgs/dashboard/badge.svg"
+                  alt="badge"
+                  badgeCount="5"
+                  title={
+                    item?.whichTypeQuestion === "agree/disagree"
+                      ? "Agree/Disagree"
+                      : item?.whichTypeQuestion === "like/unlike"
                         ? "Like/Unlike"
                         : item?.whichTypeQuestion === "multiple choise"
                           ? "Multiple Choice"
@@ -356,38 +360,38 @@ const Main = () => {
                             : item?.whichTypeQuestion === "yes/no"
                               ? "Yes/No"
                               : null
-                    }
-                    answers={item?.QuestAnswers}
-                    time={item?.createdAt}
-                    multipleOption={item?.userCanSelectMultiple}
-                    question={item?.Question}
-                    whichTypeQuestion={item?.whichTypeQuestion}
-                    startTest={startTest}
-                    setStartTest={setStartTest}
-                    viewResult={viewResult}
-                    usersAddTheirAns={item?.usersAddTheirAns}
-                    handleViewResults={handleViewResults}
-                    handleStartTest={handleStartTest}
-                    startStatus={item?.startStatus}
-                    createdBy={item?.uuid}
-                    btnColor={
-                      item?.startStatus === "completed"
-                        ? "bg-[#4ABD71]"
-                        : item?.startStatus === "change answer"
-                          ? "bg-[#FDD503]"
-                          : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-                    }
-                    btnText={item?.startStatus}
-                    isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                      return bookmark.questForeignKey === item._id;
-                    })}
-                    lastInteractedAt={item.lastInteractedAt}
-                    usersChangeTheirAns={item.usersChangeTheirAns}
-                    expandedView={expandedView}
-                    QuestTopic={item.QuestTopic}
-                  />
-                </div>
-              ))}
+                  }
+                  answers={item?.QuestAnswers}
+                  time={item?.createdAt}
+                  multipleOption={item?.userCanSelectMultiple}
+                  question={item?.Question}
+                  whichTypeQuestion={item?.whichTypeQuestion}
+                  startTest={startTest}
+                  setStartTest={setStartTest}
+                  viewResult={viewResult}
+                  usersAddTheirAns={item?.usersAddTheirAns}
+                  handleViewResults={handleViewResults}
+                  handleStartTest={handleStartTest}
+                  startStatus={item?.startStatus}
+                  createdBy={item?.uuid}
+                  btnColor={
+                    item?.startStatus === "completed"
+                      ? "bg-[#4ABD71]"
+                      : item?.startStatus === "change answer"
+                        ? "bg-[#FDD503]"
+                        : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                  }
+                  btnText={item?.startStatus}
+                  isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                    return bookmark.questForeignKey === item._id;
+                  })}
+                  lastInteractedAt={item.lastInteractedAt}
+                  usersChangeTheirAns={item.usersChangeTheirAns}
+                  expandedView={expandedView}
+                  QuestTopic={item.QuestTopic}
+                />
+              </div>
+            ))}
         </InfiniteScroll>
       </div>
       <SidebarRight />

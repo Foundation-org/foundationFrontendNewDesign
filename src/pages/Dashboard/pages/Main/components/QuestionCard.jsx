@@ -68,6 +68,8 @@ const QuestionCard = ({
       uuid: answer.uuid,
     })),
   );
+  const [loadingDetail,setLoadingDetail]=useState(true);
+  
   useEffect(() => {
     setbookmarkStatus(isBookmarked);
   }, [isBookmarked]);
@@ -600,6 +602,7 @@ const QuestionCard = ({
             usersChangeTheirAns={usersChangeTheirAns}
             lastInteractedAt={lastInteractedAt}
             howManyTimesAnsChanged={howManyTimesAnsChanged}
+            loadingDetail={loadingDetail}
           />
         ) : (
           <OptionBar
@@ -619,6 +622,7 @@ const QuestionCard = ({
             setAnswerSelection={setAnswerSelection}
             startStatus={startStatus}
             createdBy={createdBy}
+            setLoadingDetail={setLoadingDetail}
             img={img}
             alt={alt}
             badgeCount={badgeCount}

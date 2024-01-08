@@ -402,7 +402,7 @@ const MultipleChoice = () => {
             value={question}
             placeholder="Make a statement or pose a question"
           />
-          <button
+          <div
             id="new"
             className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:rounded-r-2xl laptop:text-[1.875rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${checkQuestionStatus.color} py-[0.29rem]`}
           >
@@ -410,13 +410,13 @@ const MultipleChoice = () => {
               {checkQuestionStatus.name}
             </div>
             <Tooltip optionStatus={checkQuestionStatus} />
-          </button>
+          </div>
         </div>
 
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId={`typedValues-${Date.now()}`}>
             {(provided) => (
-              <ul
+              <div
                 className="mt-[1.46rem] flex flex-col items-center gap-[6.24px] tablet:mb-8 tablet:mt-14 tablet:gap-[14.7px] laptop:gap-[30px]"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
@@ -424,7 +424,7 @@ const MultipleChoice = () => {
                 {typedValues.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided) => (
-                      <li
+                      <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
@@ -450,12 +450,12 @@ const MultipleChoice = () => {
                             answerVerification(index, value)
                           }
                         />
-                      </li>
+                      </div>
                     )}
                   </Draggable>
                 ))}
                 {provided.placeholder}
-              </ul>
+              </div>
             )}
           </Droppable>
         </DragDropContext>
