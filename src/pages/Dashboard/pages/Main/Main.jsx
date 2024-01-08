@@ -253,7 +253,7 @@ const Main = () => {
         columns={columns}
         setColumns={setColumns}
       />
-      <div className="shadow-inner-md no-scrollbar flex h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] py-3 pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] tablet:py-[27px] dark:bg-[#06070a]">
+      <div className="shadow-inner-md no-scrollbar flex h-[calc(100vh-180.33px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] py-3 pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] tablet:h-[calc(100vh-96px)] tablet:py-[27px] dark:bg-[#06070a]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
