@@ -248,7 +248,7 @@ const StartTest = ({
         ) : title === "Multiple Choice" ? (
           <div className="flex flex-col  overflow-auto ">
             {multipleOption ? (
-              <h4 className="ml-8 tablet:mt-6 mt-3 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:text-[16.58px] laptop:text-[18px]">
+              <h4 className="ml-8 mt-3 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
                 You can select multiple options.
               </h4>
             ) : (
@@ -259,7 +259,7 @@ const StartTest = ({
             <div
               className={`${
                 isFullScreen === undefined
-                  ? "quest-scrollbar max-h-[17vh] min-h-fit overflow-auto tablet:max-h-[23.2rem]"
+                  ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px] tablet:max-h-[23.2rem]"
                   : ""
               }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
@@ -297,15 +297,15 @@ const StartTest = ({
           </div>
         ) : (
           <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
-            <h4 className="tablet:mb-2 ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[108.65px] tablet:text-[16.58px] laptop:text-[18px]">
+            <h4 className="ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-2 tablet:ml-[108.65px] tablet:text-[16.58px] laptop:text-[18px]">
               You can drag and drop options in your order of preference.
             </h4>
-            <div className="-mt-1 tablet:-mt-3 flex flex-col gap-[5.7px]  tablet:gap-[10px]">
+            <div className="-mt-1 flex flex-col gap-[5.7px] tablet:-mt-3  tablet:gap-[10px]">
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                   {(provided) => (
                     <ul
-                      className="quest-scrollbar mr-1 flex max-h-[17vh] min-h-fit flex-col items-center gap-[5.7px] overflow-auto tablet:max-h-[23.2rem] tablet:gap-[10px]"
+                      className="quest-scrollbar mr-1 flex max-h-[250px] min-h-fit flex-col items-center gap-[5.7px] overflow-auto md:max-h-[496px] tablet:gap-[10px]"
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
