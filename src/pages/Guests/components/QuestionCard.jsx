@@ -341,7 +341,7 @@ const QuestionCard = ({
 
   return (
     <div className="flex justify-center">
-      <div className="mx-[15px] w-full rounded-[12.3px] bg-[#F3F3F3] tablet:mx-[30px] tablet:rounded-[1.625rem] laptop:mx-[5.25rem]">
+      <div className="mx-[15px] w-full rounded-[12.3px] bg-[#F3F3F3] tablet:mx-[30px] tablet:rounded-[1.625rem] laptop:mx-[5.25rem] dark:bg-[#141618]">
         <GuestTopbar
           title={title}
           badgeCount={badgeCount}

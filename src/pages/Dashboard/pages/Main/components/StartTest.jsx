@@ -19,6 +19,7 @@ import { FaSpinner } from "react-icons/fa";
 import QuestTimeRemaining from "./QuestTimeRemaining";
 import { useNavigate, useParams } from "react-router-dom";
 import { getQuestUtils } from "../../../../../features/quest/utilsSlice";
+import { MdFullscreen } from "react-icons/md";
 
 const StartTest = ({
   id,
@@ -409,17 +410,18 @@ const StartTest = ({
         {((isFullScreen === undefined && answersSelection?.length > 8) ||
           (isFullScreen === undefined && rankedAnswers?.length > 8)) && (
           <div
-            className="flex cursor-pointer items-center justify-end gap-1 tablet:gap-[14px]"
+            className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[14px] dark:text-[#ACACAC] "
             onClick={() => {
               navigate(`/quest/${id}/isfullscreen`);
             }}
           >
-            <img
+            <MdFullscreen className="text-[17px] tablet:text-[32px]" />
+            {/* <img
               src="/assets/svgs/fullscreen.svg"
               alt="fullscreen"
-              className="h-[14px] w-[14px] tablet:h-[21px] tablet:w-[21px]"
-            />
-            <p className="text-[9px] font-medium text-[#435059] tablet:text-[16px]">
+            
+            /> */}
+            <p className="text-[9px] font-medium tablet:text-[16px] ">
               Full Screen
             </p>
           </div>

@@ -197,7 +197,12 @@ const SidebarRight = () => {
           </div>
         </div>
       ) : (
-        <div className="mb-[5vh] flex items-center gap-6">
+        <div
+          className="mb-[5vh] flex items-center gap-6"
+          onClick={() => {
+            navigate("/profile");
+          }}
+        >
           <div className="relative h-fit w-fit">
             <img
               src="/assets/svgs/dashboard/MeBadge.svg"
@@ -218,11 +223,7 @@ const SidebarRight = () => {
                   : 0}
               </p>
             </div>
-            <div
-              onClick={() => {
-                navigate("/profile");
-              }}
-            >
+            <div>
               <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">
                 Edit Profile
               </Anchor>
