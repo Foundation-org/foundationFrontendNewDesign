@@ -11,7 +11,7 @@ const Dashboard = () => {
   return (
     <>
       <Topbar />
-      <div className="flex justify-between">
+      <div className="flex h-[calc(100vh-66.8px)] justify-between">
         {/* <SidebarLeft /> */}
         <Routes>
           <Route path="/" element={<Main />} />
