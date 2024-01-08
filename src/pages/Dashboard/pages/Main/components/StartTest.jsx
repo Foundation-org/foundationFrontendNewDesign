@@ -378,7 +378,7 @@ const StartTest = ({
         usersChangeTheirAns={localStorage.getItem("usersChangeTheirAns")}
       />
       {/* Add Options && Cancel && Submit Button */}
-      <div className="ml-[20px] mr-[28px] mt-[18px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
+      <div className="ml-[20px] mr-[28px] mt-[13px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
         {usersAddTheirAns && uuidExists === false ? (
           <div>
             {title === "Yes/No" || title === "Agree/Disagree" ? null : (
