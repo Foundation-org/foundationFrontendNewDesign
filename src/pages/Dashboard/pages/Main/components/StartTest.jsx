@@ -74,7 +74,7 @@ const StartTest = ({
     (item) => item.uuid === localStorage.getItem("uId"),
   );
 
-  console.log({ uuidExists });
+  console.log({ rankedAnswers });
 
   const handleCopyOpen = () => setCopyModal(true);
   const handleCopyClose = () => setCopyModal(false);
@@ -100,6 +100,7 @@ const StartTest = ({
     }));
 
     setAnswerSelection(updatedAnswersSelection);
+
     setRankedAnswers(
       updatedAnswersSelection.map((item, index) => ({
         id: `unique-${index}`,
