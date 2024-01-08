@@ -16,7 +16,7 @@ const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial, handleSignI
 
   return (
     <div className="my-5 flex w-full gap-2 md:mb-6 md:mt-[37.8px] 2xl:mb-[41.75px] laptop:w-[35.2vw] laptop:justify-between laptop:gap-10 5xl:mb-9 tall:my-4 rounded-[6.043px] 2xl:rounded-[11.703px] ">
-      <LoginSocialGoogle
+      {/* <LoginSocialGoogle
         // isOnlyGetToken
         client_id={import.meta.env.VITE_GG_APP_ID}
         redirect_uri={REDIRECT_URI}
@@ -33,14 +33,14 @@ const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial, handleSignI
         }}
         className="w-full"
       >
-        <Button size="login-btn" color="gray">
+      </LoginSocialGoogle> */}
+        <Button size="login-btn" color="gray" onClick={() => window.open("http://localhost:7354/auth/google", "_self")}>
           <img
             src="/assets/svgs/google.svg"
             className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] "
           />{" "}
           Continue with Google
         </Button>
-      </LoginSocialGoogle>
       <LoginSocialFacebook
         // isOnlyGetToken
         appId={import.meta.env.VITE_FB_APP_ID}

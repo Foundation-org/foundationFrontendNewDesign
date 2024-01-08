@@ -1,7 +1,9 @@
+import Cookies from "js-cookie";
+
 const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic }) => {
   return (
     <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-[10.4px] py-[5.2px] tablet:px-[22px] tablet:py-[10px] dark:border-white">
-      {createdBy === localStorage.getItem("uId") ? (
+      {createdBy === Cookies.get("uId") ? (
         <div className="relative h-fit w-fit">
           <img
             src="/assets/svgs/dashboard/MeBadge.svg"

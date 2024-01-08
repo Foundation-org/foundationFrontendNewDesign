@@ -15,6 +15,7 @@ import UrlDialogue from "./Shareables/UrlDialogue";
 import EmailDialogue from "./Shareables/EmailDialogue";
 import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
+import Cookies from "js-cookie";
 
 const OptionBar = ({
   id,
@@ -214,7 +215,7 @@ const OptionBar = ({
       handleStartTest(id);
     }
     if (btnText === "change answer") {
-      const data = { questForeignKey: id, uuid: localStorage.getItem("uId") };
+      const data = { questForeignKey: id, uuid: Cookies.get("uId") };
       getStartQuestDetail(data);
       handleStartTest(id);
     }

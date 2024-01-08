@@ -1,7 +1,9 @@
+import Cookies from "js-cookie";
+
 const GuestTopbar = ({ createdBy, badgeCount, QuestTopic, img }) => {
   return (
     <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-[10.4px] py-2 tablet:px-[22px] tablet:pb-[10px] tablet:pt-[17px]">
-      {createdBy === localStorage.getItem("uId") ? (
+      {createdBy === Cookies.get("uId") ? (
         <div className="relative h-fit w-fit">
           <img
             src="/assets/svgs/dashboard/MeBadge.svg"

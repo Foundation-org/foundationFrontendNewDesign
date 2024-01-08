@@ -26,6 +26,7 @@ import QuestionCardWithToggle from "./components/QuestionCardWithToggle";
 import SidebarLeft from "../../components/SidebarLeft";
 import SidebarRight from "../../components/SidebarRight";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Cookies from "js-cookie";
 
 const Main = () => {
   const pageLimit = 10;
@@ -41,7 +42,7 @@ const Main = () => {
     _limit: pageLimit,
     start: pagination.sliceStart,
     end: pagination.sliceEnd,
-    uuid: localStorage.getItem("uId"),
+    uuid: Cookies.get("uId"),
   };
   const [searchData, setSearchData] = useState("");
   const [clearFilter, setClearFilter] = useState(false);
@@ -101,7 +102,7 @@ const Main = () => {
   // preferences end
 
   const { data: bookmarkedData } = useQuery({
-    queryFn: () => getAllBookmarkedQuests(localStorage.getItem("uId")),
+    queryFn: () => getAllBookmarkedQuests(Cookies.get("uId")),
     queryKey: ["getBookmarked"],
   });
 
@@ -160,7 +161,7 @@ const Main = () => {
       } else {
         const result = await searchQuestions(
           debouncedSearch,
-          localStorage.getItem("uId"),
+          Cookies.get("uId"),
         );
         return result;
       }

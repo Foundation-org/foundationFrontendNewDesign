@@ -23,6 +23,7 @@ import {
 import { useSelector } from "react-redux";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { FaSpinner } from "react-icons/fa";
+import Cookies from "js-cookie";
 
 const AgreeDisagree = () => {
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ const AgreeDisagree = () => {
       whichTypeQuestion: "agree/disagree",
       usersChangeTheirAns: changedOption,
       QuestionCorrect: "Not Selected",
-      uuid: localStorage.getItem("uId"),
+      uuid: Cookies.get("uId"),
       QuestTopic: questTopic,
     };
 

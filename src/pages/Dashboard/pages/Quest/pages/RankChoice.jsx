@@ -17,6 +17,7 @@ import CustomSwitch from "../../../../../components/CustomSwitch";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FaSpinner } from "react-icons/fa";
+import Cookies from "js-cookie";
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -106,7 +107,7 @@ const RankChoice = () => {
       QuestAnswers: typedValues,
       usersAddTheirAns: addOption,
       usersChangeTheirAns: changedOption,
-      uuid: localStorage.getItem("uId"),
+      uuid: Cookies.get("uId"),
       QuestTopic: questTopic,
     };
 

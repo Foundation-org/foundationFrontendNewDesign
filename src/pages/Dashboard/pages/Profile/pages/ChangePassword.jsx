@@ -5,6 +5,7 @@ import { FaSpinner } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
 import { changePassword } from "../../../../../api/userAuth";
 import Form from "../components/Form";
+import Cookies from "js-cookie";
 
 const ChangePassword = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -34,7 +35,7 @@ const ChangePassword = () => {
         const resp = await mutation.mutateAsync({
           currentPassword,
           newPassword,
-          uuid: localStorage.getItem("uId"),
+          uuid: Cookies.get("uId"),
         });
 
         if (resp.status === 200) {

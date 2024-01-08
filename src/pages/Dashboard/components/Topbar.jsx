@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link, useLocation } from "react-router-dom";
 import api from "../../../api/Axios";
+import Cookies from "js-cookie";
 
 const Topbar = () => {
   const location = useLocation();
@@ -12,7 +13,7 @@ const Topbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await api.post(`user/logout/${localStorage.getItem("uId")}`);
+      const res = await api.post(`user/logout/${Cookies.get("uId")}`);
       if (res.status === 200) {
         localStorage.clear();
         navigate("/");

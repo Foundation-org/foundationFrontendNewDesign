@@ -9,6 +9,7 @@ import { createStartQuest } from "../../../api/questsApi";
 import { useNavigate } from "react-router-dom";
 import { getQuests, toggleCheck } from "../../../features/quest/questsSlice";
 import SingleAnswer from "../../Dashboard/components/SingleAnswer";
+import Cookies from "js-cookie";
 
 const QuestionCard = ({
   tab,
@@ -157,7 +158,7 @@ const QuestionCard = ({
         questId: id,
         answer: ans,
         addedAnswer: "",
-        uuid: localStorage.getItem("uId"),
+        uuid: Cookies.get("uId"),
       };
 
       // if (!(params.answer.selected && params.answer.contended)) {
@@ -234,7 +235,7 @@ const QuestionCard = ({
           const params = {
             questId: id,
             answer: dataToSend,
-            uuid: localStorage.getItem("uId"),
+            uuid: Cookies.get("uId"),
           };
           console.log("params", params);
           changeAnswer(params);
@@ -244,7 +245,7 @@ const QuestionCard = ({
           questId: id,
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
-          uuid: localStorage.getItem("uId"),
+          uuid: Cookies.get("uId"),
         };
 
         // && params.answer.contended.length === 0
@@ -297,7 +298,7 @@ const QuestionCard = ({
           const params = {
             questId: id,
             answer: dataToSend,
-            uuid: localStorage.getItem("uId"),
+            uuid: Cookies.get("uId"),
           };
           console.log("params", params);
           changeAnswer(params);
@@ -307,7 +308,7 @@ const QuestionCard = ({
           questId: id,
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
-          uuid: localStorage.getItem("uId"),
+          uuid: Cookies.get("uId"),
         };
         console.log("params", params);
 

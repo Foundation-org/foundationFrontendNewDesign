@@ -20,6 +20,7 @@ import { deleteBookmarkById } from "../../../../../api/homepageApis";
 import { userInfo } from "../../../../../api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
 import { updateOptionLimit } from "../../../../../features/quest/utilsSlice";
+import Cookies from "js-cookie";
 
 const QuestionCard = ({
   id,
@@ -160,13 +161,13 @@ const QuestionCard = ({
     if (status) {
       const params = {
         questForeignKey: id,
-        uuid: localStorage.getItem("uId"),
+        uuid: Cookies.get("uId"),
       };
       DelBookmark(params);
     } else {
       const params = {
         questForeignKey: id,
-        uuid: localStorage.getItem("uId"),
+        uuid: Cookies.get("uId"),
         Question: question,
         whichTypeQuestion: whichTypeQuestion,
       };
@@ -223,7 +224,7 @@ const QuestionCard = ({
         queryClient.invalidateQueries("FeedData");
       }
       handleViewResults(id);
-      userInfo(localStorage.getItem("uId")).then((resp) => {
+      userInfo(Cookies.get("uId")).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
@@ -255,7 +256,7 @@ const QuestionCard = ({
         setLoading(false);
         handleViewResults(id);
       }
-      userInfo(localStorage.getItem("uId")).then((resp) => {
+      userInfo(Cookies.get("uId")).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
@@ -334,7 +335,7 @@ const QuestionCard = ({
         questId: id,
         answer: ans,
         addedAnswer: "",
-        uuid: localStorage.getItem("uId"),
+        uuid: Cookies.get("uId"),
       };
 
       // if (!(params.answer.selected && params.answer.contended)) {
@@ -417,7 +418,7 @@ const QuestionCard = ({
           const params = {
             questId: id,
             answer: dataToSend,
-            uuid: localStorage.getItem("uId"),
+            uuid: Cookies.get("uId"),
           };
           console.log("params", params);
           changeAnswer(params);
@@ -428,7 +429,7 @@ const QuestionCard = ({
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
-          uuid: localStorage.getItem("uId"),
+          uuid: Cookies.get("uId"),
         };
         console.log("selected", params);
         // && params.answer.contended.length === 0
@@ -496,7 +497,7 @@ const QuestionCard = ({
           const params = {
             questId: id,
             answer: dataToSend,
-            uuid: localStorage.getItem("uId"),
+            uuid: Cookies.get("uId"),
           };
           console.log("params", params);
           changeAnswer(params);
@@ -507,7 +508,7 @@ const QuestionCard = ({
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
-          uuid: localStorage.getItem("uId"),
+          uuid: Cookies.get("uId"),
         };
         console.log("params", params);
 

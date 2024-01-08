@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
   const { protocol, host } = window.location;
   let url = `${protocol}//${host}/quest/${id}`;
@@ -11,7 +13,7 @@ const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
         onClick={handleClose}
       />
       <div className="flex flex-col justify-center px-[22px] laptop:px-[81px]">
-        {createdBy === localStorage.getItem("uId") ? (
+        {createdBy === Cookies.get("uId") ? (
           <div className="relative flex h-fit w-full items-center justify-center pb-[15px] laptop:pb-[15px]">
             <img
               src="/assets/svgs/dashboard/MeBadge.svg"

@@ -23,6 +23,7 @@ import EmailDialogue from "./Shareables/EmailDialogue";
 import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
 import { useParams } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Result = (props) => {
   const quests = useSelector(getQuests);
@@ -73,7 +74,7 @@ const Result = (props) => {
   useEffect(() => {
     const data = {
       questForeignKey: props.id,
-      uuid: localStorage.getItem("uId"),
+      uuid: Cookies.get("uId"),
     };
     getStartQuestDetail(data);
   }, []);
@@ -211,7 +212,7 @@ const Result = (props) => {
     queryFn: async () => {
       const params = {
         questForeignKey: props.id,
-        uuid: localStorage.getItem("uId"),
+        uuid: Cookies.get("uId"),
       };
       if (props.whichTypeQuestion === "ranked choise") {
         return await getRankedQuestPercent(params);

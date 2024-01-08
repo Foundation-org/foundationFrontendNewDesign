@@ -1,5 +1,6 @@
 import { toast } from "sonner";
 import Copy from "../../../../../../assets/optionbar/Copy";
+import Cookies from "js-cookie";
 
 const CopyDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
   const { protocol, host } = window.location;
@@ -25,7 +26,7 @@ const CopyDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
         onClick={handleClose}
       />
       <div className="flex flex-col justify-center px-[22px] laptop:px-[81px]">
-        {createdBy === localStorage.getItem("uId") ? (
+        {createdBy === Cookies.get("uId") ? (
           <div className="relative flex h-fit w-full items-center justify-center pb-[4.11px] laptop:pb-[15px]">
             <img
               src="/assets/svgs/dashboard/MeBadge.svg"

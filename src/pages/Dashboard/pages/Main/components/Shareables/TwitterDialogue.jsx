@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import Close from "../../../../../../assets/Close";
 import Twitter from "../../../../../../assets/Twitter";
 
@@ -30,7 +31,7 @@ const TwitterDialogue = ({
         {/* QuestionCard Preview */}
         <div className="mt-[19.84px] w-full rounded-[9.8px] bg-[#F3F3F3] px-6 pb-[23px] pt-5 tablet:mt-[78px] tablet:rounded-[26px]">
           <div className="flex items-start justify-between">
-            {createdBy === localStorage.getItem("uId") ? (
+            {createdBy === Cookies.get("uId") ? (
               <div className="relative h-fit pb-[15px]">
                 <img
                   src="/assets/svgs/dashboard/MeBadge.svg"

@@ -12,6 +12,7 @@ import {
 import { useSelector } from "react-redux";
 import LedgerTableTopbar from "../components/LedgerTableTopbar";
 import { format } from 'date-fns';
+import Cookies from "js-cookie";
 export default function BasicTable() {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const itemsPerPage = 10;
@@ -33,7 +34,7 @@ export default function BasicTable() {
           currentPage,
           itemsPerPage,
           sort,
-          localStorage.getItem("uId"),
+          Cookies.get("uId"),
         );
       } else {
         return searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
@@ -48,7 +49,7 @@ export default function BasicTable() {
       currentPage,
       itemsPerPage,
       sort,
-      localStorage.getItem("uId"),
+      Cookies.get("uId"),
     );
     if (data) {
       setLedgerData(data);
@@ -110,7 +111,7 @@ export default function BasicTable() {
       page,
       itemsPerPage,
       sort,
-      localStorage.getItem("uId"),
+      Cookies.get("uId"),
     );
     if (data) {
       setLedgerData(data);
@@ -256,10 +257,10 @@ export default function BasicTable() {
                             cell.column.id === "txDate" ?
                               format(new Date(cell.getValue()), 'dd MMM yyyy, hh:mm a')
                               :
-                              cell.column.id === "txFrom" && cell.getValue() !== "DAO Treasury" && cell.getValue() !== "dao" && cell.getValue() !== localStorage.getItem("uId") ?
+                              cell.column.id === "txFrom" && cell.getValue() !== "DAO Treasury" && cell.getValue() !== "dao" && cell.getValue() !== Cookies.get("uId") ?
                                 `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
                                 :
-                                cell.getValue() === localStorage.getItem("uId") ? "My Account"
+                                cell.getValue() === Cookies.get("uId") ? "My Account"
                                   :
                                   cell.column.id === "txTo" && cell.getValue() !== "DAO Treasury" && cell.getValue() !== "dao" ?
                                     `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`

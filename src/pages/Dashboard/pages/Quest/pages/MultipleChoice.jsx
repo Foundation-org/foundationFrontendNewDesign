@@ -17,6 +17,7 @@ import { Tooltip } from "../../../../../utils/Tooltip";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { FaSpinner } from "react-icons/fa";
+import Cookies from "js-cookie";
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -107,7 +108,7 @@ const MultipleChoice = () => {
       usersChangeTheirAns: changedOption,
       userCanSelectMultiple: multipleOption,
       QuestAnswersSelected: [],
-      uuid: localStorage.getItem("uId"),
+      uuid: Cookies.get("uId"),
       QuestTopic: questTopic,
     };
 

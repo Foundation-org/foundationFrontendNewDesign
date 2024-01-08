@@ -23,6 +23,7 @@ import QuestionCard from "./Main/components/QuestionCard";
 import SidebarLeft from "../components/SidebarLeft";
 import SidebarRight from "../components/SidebarRight";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Cookies from "js-cookie";
 
 const Bookmark = () => {
   const pageLimit = 10;
@@ -38,7 +39,7 @@ const Bookmark = () => {
     _limit: pageLimit,
     start: pagination.sliceStart,
     end: pagination.sliceEnd,
-    uuid: localStorage.getItem("uId"),
+    uuid: Cookies.get("uId"),
     Page: "Bookmark",
   };
   const [searchData, setSearchData] = useState("");
@@ -48,7 +49,7 @@ const Bookmark = () => {
   const debouncedSearch = useDebounce(searchData, 1000);
 
   const { data: bookmarkedData } = useQuery({
-    queryFn: () => getAllBookmarkedQuests(localStorage.getItem("uId")),
+    queryFn: () => getAllBookmarkedQuests(Cookies.get("uId")),
     queryKey: ["getBookmarked"],
   });
 
@@ -99,7 +100,7 @@ const Bookmark = () => {
       } else {
         const result = await searchBookmarks(
           debouncedSearch,
-          localStorage.getItem("uId"),
+          Cookies.get("uId"),
         );
         return result;
       }
