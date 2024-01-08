@@ -51,6 +51,7 @@ const QuestionCardWithToggle = ({
   const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
   const [open, setOpen] = useState(false);
+  const persistedTheme = useSelector((state) => state.utils.theme);
   const [bookmarkStatus, setbookmarkStatus] = useState(isBookmarked);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addOptionField, setAddOptionField] = useState(0);
@@ -400,6 +401,7 @@ const QuestionCardWithToggle = ({
   });
 
   const handleSubmit = () => {
+    setLoading(true);
     if (
       whichTypeQuestion === "agree/disagree" ||
       whichTypeQuestion === "yes/no"
@@ -430,6 +432,7 @@ const QuestionCardWithToggle = ({
       // if (!(params.answer.selected && params.answer.contended)) {
       if (!params.answer.selected) {
         toast.warning("You cannot submit without answering");
+        setLoading(false);
         return;
       }
 
@@ -447,6 +450,7 @@ const QuestionCardWithToggle = ({
           toast.error(
             `You can only finish after ${usersChangeTheirAns} interval has passed.`,
           );
+          setLoading(false);
         } else {
           changeAnswer(params);
         }
@@ -457,6 +461,7 @@ const QuestionCardWithToggle = ({
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = "";
+      let addedAnswerUuidValue = "";
 
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
@@ -466,8 +471,10 @@ const QuestionCardWithToggle = ({
             answerSelected.push({
               question: answersSelection[i].label,
               addedAnswerByUser: true,
+              uuid: answersSelection[i].uuid,
             });
             addedAnswerValue = answersSelection[i].label;
+            addedAnswerUuidValue = answersSelection[i].uuid;
             console.log("added ans value" + addedAnswerValue);
           } else {
             answerSelected.push({ question: answersSelection[i].label });
@@ -497,6 +504,7 @@ const QuestionCardWithToggle = ({
           toast.error(
             `You can only finish after ${usersChangeTheirAns} interval has passed.`,
           );
+          setLoading(false);
         } else {
           const params = {
             questId: id,
@@ -511,20 +519,34 @@ const QuestionCardWithToggle = ({
           questId: id,
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
+          addedAnswerUuid: addedAnswerUuidValue,
           uuid: localStorage.getItem("uId"),
         };
-
+        console.log("selected", params);
         // && params.answer.contended.length === 0
         if (params.answer.selected.length === 0) {
           toast.warning("You cannot submit without answering");
+          setLoading(false);
           return;
         }
+        const isEmptyQuestion = params.answer.selected.some(
+          (item) => item.question.trim() === "",
+        );
 
+        if (isEmptyQuestion) {
+          toast.error("You cannot leave the added option blank");
+          setLoading(false);
+          return;
+        }
+        console.log({ isSubmit });
+
+        if (!isSubmit) setLoading(false);
         console.log("params", params);
         startQuest(params);
       }
     } else if (whichTypeQuestion === "ranked choise") {
       let addedAnswerValue = "";
+      let addedAnswerUuidValue = "";
       let answerSelected = [];
 
       for (let i = 0; i < rankedAnswers.length; i++) {
@@ -536,6 +558,7 @@ const QuestionCardWithToggle = ({
             addedAnswerByUser: true,
           });
           addedAnswerValue = rankedAnswers[i].label;
+          addedAnswerUuidValue = answersSelection[i].uuid;
           console.log("added ans value" + addedAnswerValue);
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
@@ -560,6 +583,7 @@ const QuestionCardWithToggle = ({
           toast.error(
             `You can only finish after ${usersChangeTheirAns} interval has passed.`,
           );
+          setLoading(false);
         } else {
           const params = {
             questId: id,
@@ -574,6 +598,7 @@ const QuestionCardWithToggle = ({
           questId: id,
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
+          addedAnswerUuid: addedAnswerUuidValue,
           uuid: localStorage.getItem("uId"),
         };
         console.log("params", params);
@@ -612,9 +637,34 @@ const QuestionCardWithToggle = ({
         createdBy={createdBy}
         QuestTopic={QuestTopic}
       />
-      <h1 className="ml-6 mt-[11.22px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[52.65px] tablet:mt-[1.56rem] tablet:text-[25px] dark:text-[#B8B8B8]">
-        {question?.endsWith("?") ? "Q." : "S."} {question}
-      </h1>
+       <div className="ml-6 mr-[1.38rem] mt-[1.56rem] flex items-center justify-between tablet:ml-[52.65px]">
+        <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[25px] dark:text-[#B8B8B8]">
+          {question?.endsWith("?") ? "Q." : "S."} {question}
+        </h1>
+        <div onClick={() => handleBookmark(isBookmarked)}>
+          {bookmarkStatus ? (
+            persistedTheme !== "dark" ? (
+              <img
+                src="/assets/svgs/dashboard/bookmark-blue.svg"
+                alt="save icon"
+                className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
+              />
+            ) : (
+              <img
+                src="/assets/svgs/dashboard/bookmark-white.svg"
+                alt="save icon"
+                className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
+              />
+            )
+          ) : (
+            <img
+              src="/assets/svgs/dashboard/save.svg"
+              alt="save icon"
+              className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
+            />
+          )}
+        </div>
+      </div>
       {viewResult !== id && openResults !== true ? (
         <StartTest
           id={id}
