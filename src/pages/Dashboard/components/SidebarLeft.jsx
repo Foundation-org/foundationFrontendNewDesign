@@ -25,6 +25,7 @@ const SidebarLeft = ({
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const [localExpanded,setlocalExpaneded]=useState(expandedView);
 
   const [multipleOption, setMultipleOption] = useState(
     localStorage.getItem("filterByState") !== undefined
@@ -33,16 +34,19 @@ const SidebarLeft = ({
         : false
       : false,
   );
+  const [localMe,setLocalMe]=useState(multipleOption);
   const [openTopicPref, setOpenTopicPref] = useState(false);
   const [topicSearch, setTopicSearch] = useState("");
 
   const handleSwitchChange = () => {
+    setLocalMe(!multipleOption)
     dispatch(setFilterByScope(multipleOption ? "All" : "Me"));
     localStorage.setItem("filterByState", !multipleOption ? "true" : "false");
     setMultipleOption(!multipleOption);
   };
 
   const handleExpendedView = () => {
+    setlocalExpaneded(!expandedView);
     localStorage.setItem("expandedView", !expandedView ? "true" : "false");
     setExpandedView(!expandedView);
   };
@@ -73,7 +77,7 @@ const SidebarLeft = ({
                 Expanded View
               </h1>
               <CustomSwitch2
-                enabled={expandedView}
+                enabled={localExpanded}
                 setEnabled={handleExpendedView}
               />
             </div>
@@ -203,7 +207,7 @@ const SidebarLeft = ({
               Show Only My Posts
             </h1>
             <CustomSwitch2
-              enabled={multipleOption}
+              enabled={localMe}
               setEnabled={handleSwitchChange}
             />
           </div>
@@ -349,7 +353,7 @@ const SidebarLeft = ({
               Expanded View
             </h1>
             <CustomSwitch2
-              enabled={expandedView}
+              enabled={localExpanded}
               setEnabled={handleExpendedView}
             />
           </div>
@@ -358,7 +362,7 @@ const SidebarLeft = ({
               Show Only My Posts
             </h1>
             <CustomSwitch2
-              enabled={multipleOption}
+              enabled={localMe}
               setEnabled={handleSwitchChange}
             />
           </div>
