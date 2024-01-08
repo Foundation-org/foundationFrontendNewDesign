@@ -454,6 +454,7 @@ const QuestionCard = ({
       }
     } else if (whichTypeQuestion === "ranked choise") {
       let addedAnswerValue = "";
+      let addedAnswerUuidValue = "";
       let answerSelected = [];
 
       for (let i = 0; i < rankedAnswers.length; i++) {
@@ -465,6 +466,7 @@ const QuestionCard = ({
             addedAnswerByUser: true,
           });
           addedAnswerValue = rankedAnswers[i].label;
+          addedAnswerUuidValue = answersSelection[i].uuid;
           console.log("added ans value" + addedAnswerValue);
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
@@ -504,6 +506,7 @@ const QuestionCard = ({
           questId: id,
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
+          addedAnswerUuid: addedAnswerUuidValue,
           uuid: localStorage.getItem("uId"),
         };
         console.log("params", params);

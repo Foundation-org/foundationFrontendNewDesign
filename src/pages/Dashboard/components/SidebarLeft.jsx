@@ -200,7 +200,7 @@ const SidebarLeft = ({
           </div>
           <div className="flex w-full items-center justify-center gap-[17px] pb-[30px] pt-[35px]">
             <h1 className="flex items-center gap-2 text-[14px] font-medium leading-normal text-[#707175] dark:text-white">
-              Show Only My Quests
+              Show Only My Posts
             </h1>
             <CustomSwitch2
               enabled={multipleOption}
@@ -355,7 +355,7 @@ const SidebarLeft = ({
           </div>
           <div className="flex w-full items-center justify-center gap-[6px]">
             <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] tablet:text-[15px] dark:text-white">
-              Show Only My Quests
+              Show Only My Posts
             </h1>
             <CustomSwitch2
               enabled={multipleOption}
