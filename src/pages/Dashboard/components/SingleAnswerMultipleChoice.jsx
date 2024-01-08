@@ -230,7 +230,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         ) : (
           <div
-            className={`flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[7.55px] text-[9.238px] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:pr-[20.63px] tablet:text-[16px] dark:bg-[#0D1012] ${
+            className={`flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[10.63px] text-[9.238px] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:pr-[20.63px] tablet:text-[16px] dark:bg-[#0D1012] ${
               props.btnText === "Results" ? "pointer-events-none" : ""
             }`}
           >

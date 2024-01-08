@@ -82,11 +82,8 @@ const SingleAnswer = (props) => {
   };
 
   return (
-    <div className="mx-[2px] flex items-center tablet:gap-[5px] 2xl:mx-[85px] tablet:mx-[52.65px]">
-      <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
-
-
-        </div>
+    <div className="mx-[2px] flex items-center 2xl:mx-[85px] tablet:mx-[52.65px] tablet:gap-[5px]">
+      <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
       <div className="flex h-[26.05px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:h-[52.5px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E]">
         &#x200B;
       </div>
@@ -124,7 +121,7 @@ const SingleAnswer = (props) => {
           </div>
         ) : (
           <div
-            className={`flex items-center gap-[10.3px] text-[9.2px] pr-[7.55px] tablet:pr-[20.63px] tablet:gap-[22px] tablet:text-[16px] ${
+            className={`flex items-center gap-[10.3px] pr-[10.63px] text-[9.2px] tablet:gap-[22px] tablet:pr-[20.63px] tablet:text-[16px] ${
               props.btnText === "Results" ? "pointer-events-none" : ""
             }`}
           >
@@ -166,7 +163,6 @@ const SingleAnswer = (props) => {
             </div> */}
           </div>
         )}
-        
       </div>
       <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
     </div>
