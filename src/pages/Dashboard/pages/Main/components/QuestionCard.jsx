@@ -517,12 +517,6 @@ const QuestionCard = ({
   };
 
   useEffect(() => {
-    console.log(
-      "hamza",
-      lastInteractedAt,
-      howManyTimesAnsChanged,
-      // usersChangeTheirAns,
-    );
     localStorage.setItem("lastInteractedAt", lastInteractedAt);
     localStorage.setItem("howManyTimesAnsChanged", howManyTimesAnsChanged);
   }, [lastInteractedAt, howManyTimesAnsChanged]);

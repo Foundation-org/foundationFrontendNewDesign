@@ -79,6 +79,8 @@ const Guests = () => {
               multipleOption={singleQuest?.userCanSelectMultiple}
               QuestTopic={singleQuest?.QuestTopic}
               createdBy={singleQuest?.uuid}
+              lastInteractedAt={singleQuest?.lastInteractedAt}
+              usersChangeTheirAns={singleQuest?.usersChangeTheirAns}
             />
           </div>
         </div>

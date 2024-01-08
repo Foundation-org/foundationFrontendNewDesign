@@ -370,14 +370,12 @@ const StartTest = ({
           </div>
         )}
       </>
-      {console.log("first", usersAddTheirAns, uuidExists, title, btnText)}
 
       <QuestTimeRemaining
         lastInteractedAt={localStorage.getItem("lastInteractedAt")}
         howManyTimesAnsChanged={localStorage.getItem("howManyTimesAnsChanged")}
         usersChangeTheirAns={localStorage.getItem("usersChangeTheirAns")}
       />
-
       {/* Add Options && Cancel && Submit Button */}
       <div className="ml-[20px] mr-[28px] mt-[18px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
         {usersAddTheirAns && uuidExists === false ? (

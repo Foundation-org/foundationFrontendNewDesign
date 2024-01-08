@@ -329,12 +329,15 @@ const QuestionCard = ({
       contend,
     };
 
-    console.log({ actionPayload });
-
     dispatch(toggleCheck(actionPayload));
   };
 
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    localStorage.setItem("lastInteractedAt", lastInteractedAt);
+    localStorage.setItem("howManyTimesAnsChanged", howManyTimesAnsChanged);
+  }, [lastInteractedAt, howManyTimesAnsChanged]);
 
   return (
     <div className="flex justify-center">
