@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import BasicModal from "../../../components/BasicModal";
 import DeleteOption from "./DeleteOption";
-import { toast } from "sonner";
 import { Tooltip } from "../../../utils/Tooltip";
 import { answerValidation, checkAnswerExist } from "../../../api/questsApi";
 import { useDispatch } from "react-redux";

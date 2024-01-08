@@ -53,7 +53,6 @@ export const getAllCompleted = async (params) => {
 
 // For Changable
 export const getAllChangable = async (params) => {
-  console.log("params in api", params);
   return await api.post(
     `/infoquestions/getAllQuestsWithChangeAnsStatus`,
     params,
@@ -88,7 +87,6 @@ export const deleteBookmarkById = async (data) => {
 
 export const searchBookmarks = async (term, uuid) => {
   if (term !== "") {
-    console.log(uuid);
     const response = await api.post(
       `/search/searchBookmarks?term=${term}&uuid=${uuid}`,
     );

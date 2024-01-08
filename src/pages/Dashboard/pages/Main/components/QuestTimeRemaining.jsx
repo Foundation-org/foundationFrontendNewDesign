@@ -39,7 +39,7 @@ const QuestTimeRemaining = ({
           onClick={handleClick}
         >
           You can change your selection {usersChangeTheirAns}
-          {resultString}
+          {resultString}.
         </h4>
       )}
     </div>
