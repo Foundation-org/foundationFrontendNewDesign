@@ -34,7 +34,7 @@ const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial, handleSignI
         className="w-full"
       >
       </LoginSocialGoogle> */}
-        <Button size="login-btn" color="gray" onClick={() => window.open("http://localhost:7354/auth/google", "_self")}>
+        <Button size="login-btn" color="gray" onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, "_self")}>
           <img
             src="/assets/svgs/google.svg"
             className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] "
