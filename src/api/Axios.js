@@ -6,7 +6,7 @@ export const url = import.meta.env.VITE_API_URL;
 const BASE_URL = url;
 
 const api = axios.create({
-  withCredentials: true,
+  // withCredentials: true,
   baseURL: BASE_URL,
 });
 
