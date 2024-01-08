@@ -7,7 +7,7 @@ const SingleAnswer = (props) => {
 
   const fetchSelectedPercentage = () => {
     const percentageKey =
-      props.answer === "Yes" || props.answer === "Agree" ? "Yes" : "No";
+      props.answer === "Yes" || props.answer === "Agree" || props.answer==="Like" ? "Yes" : "No";
 
     const selectedPercentage =
       props.percentages?.selectedPercentage?.[percentageKey];
@@ -45,7 +45,7 @@ const SingleAnswer = (props) => {
 
   const fetchContendedPercentage = () => {
     const percentageKey =
-      props.answer === "Yes" || props.answer === "Agree" ? "Yes" : "No";
+    props.answer === "Yes" || props.answer === "Agree" || props.answer==="Like" ? "Yes" : "No";
 
     const contendedPercentage =
       props.percentages?.contendedPercentage?.[percentageKey];

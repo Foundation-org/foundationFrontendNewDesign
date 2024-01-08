@@ -22,6 +22,8 @@ const Guests = () => {
 
   function getQuestionTitle(whichTypeQuestion) {
     switch (whichTypeQuestion) {
+      case "like/unlike":
+        return "Like/Unlike";
       case "agree/disagree":
         return "Agree/Disagree";
       case "multiple choise":

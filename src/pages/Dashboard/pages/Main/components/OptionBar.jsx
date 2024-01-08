@@ -90,27 +90,29 @@ const OptionBar = ({
       setHowManyTimesAnsChanged(res.data.data.length);
       if (
         whichTypeQuestion === "agree/disagree" ||
-        whichTypeQuestion === "yes/no"
+        whichTypeQuestion === "yes/no" ||
+        whichTypeQuestion === "like/unlike"
       ) {
+
         if (
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "agree" ||
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "yes"
+          res?.data.data[res.data.data.length - 1].selected === "Agree" ||
+          res?.data.data[res.data.data.length - 1].selected === "Yes" ||
+          res?.data.data[res.data.data.length - 1].selected === "Like"
         ) {
           console.log("ran 1");
-          handleToggleCheck(
+         handleToggleCheck(
             res.data.data[res.data.data.length - 1].selected,
             true,
             false,
           );
         }
         if (
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "agree" ||
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "yes"
+          res?.data.data[res.data.data.length - 1].contended === "Agree" ||
+          res?.data.data[res.data.data.length - 1].contended === "Yes" ||
+          res?.data.data[res.data.data.length - 1].contended === "Like"
         ) {
+          console.log("ran 2");
+
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].contended,
             false,
@@ -118,11 +120,12 @@ const OptionBar = ({
           );
         }
         if (
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "disagree" ||
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "no"
+          res?.data.data[res.data.data.length - 1].contended === "Disagree" ||
+          res?.data.data[res.data.data.length - 1].contended === "No" ||
+          res?.data.data[res.data.data.length - 1].contended === "Unlike"
         ) {
+          console.log("ran 3");
+
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].contended,
             false,
@@ -130,11 +133,12 @@ const OptionBar = ({
           );
         }
         if (
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "disagree" ||
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "no"
+          res?.data.data[res.data.data.length - 1].selected === "Disagree" ||
+          res?.data.data[res.data.data.length - 1].selected === "No" ||
+          res?.data.data[res.data.data.length - 1].selected === "Unlike"
         ) {
+          console.log("ran 4");
+
           handleToggleCheck(
             res.data.data[res.data.data.length - 1].selected,
             true,

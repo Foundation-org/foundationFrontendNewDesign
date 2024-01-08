@@ -112,12 +112,14 @@ const Result = (props) => {
       if (res.data) {
         if (
           props.whichTypeQuestion === "agree/disagree" ||
-          props.whichTypeQuestion === "yes/no"
+          props.whichTypeQuestion === "yes/no" ||
+          props.whichTypeQuestion === "like/unlike"
         ) {
           props.setHowManyTimesAnsChanged(res?.data.data.length);
           if (
             res?.data.data[res.data.data.length - 1].selected === "Agree" ||
-            res?.data.data[res.data.data.length - 1].selected === "Yes"
+            res?.data.data[res.data.data.length - 1].selected === "Yes" ||
+            res?.data.data[res.data.data.length - 1].selected === "Like"
           ) {
             console.log("ran 1");
             props.handleToggleCheck(
@@ -128,7 +130,8 @@ const Result = (props) => {
           }
           if (
             res?.data.data[res.data.data.length - 1].contended === "Agree" ||
-            res?.data.data[res.data.data.length - 1].contended === "Yes"
+            res?.data.data[res.data.data.length - 1].contended === "Yes" ||
+            res?.data.data[res.data.data.length - 1].contended === "Like"
           ) {
             console.log("ran 2");
 
@@ -140,7 +143,8 @@ const Result = (props) => {
           }
           if (
             res?.data.data[res.data.data.length - 1].contended === "Disagree" ||
-            res?.data.data[res.data.data.length - 1].contended === "No"
+            res?.data.data[res.data.data.length - 1].contended === "No" ||
+            res?.data.data[res.data.data.length - 1].contended === "Unlike"
           ) {
             console.log("ran 3");
 
@@ -152,7 +156,8 @@ const Result = (props) => {
           }
           if (
             res?.data.data[res.data.data.length - 1].selected === "Disagree" ||
-            res?.data.data[res.data.data.length - 1].selected === "No"
+            res?.data.data[res.data.data.length - 1].selected === "No" ||
+            res?.data.data[res.data.data.length - 1].selected === "Unlike"
           ) {
             console.log("ran 4");
 
@@ -173,7 +178,7 @@ const Result = (props) => {
         if (props.whichTypeQuestion === "ranked choise") {
           console.log(
             "ranked response" +
-              res?.data.data[res.data.data.length - 1].selected,
+            res?.data.data[res.data.data.length - 1].selected,
           );
 
           const updatedRankedAnswers = res?.data.data[
@@ -255,7 +260,7 @@ const Result = (props) => {
   return (
     <>
       <div className="mx-1 mt-[23.7px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px] ">
-        {props.title === "Yes/No" || props.title === "Agree/Disagree" ? (
+        {props.title === "Yes/No" || props.title === "Agree/Disagree" || props.title === "Like/Unlike" ? (
           <>
             {props.title === "Yes/No" ? (
               <>
@@ -303,15 +308,40 @@ const Result = (props) => {
                   btnText={"Results"}
                 />
               </>
-            ) : null}
+            )
+              : props.title === "Like/Unlike" ?
+                (
+                  <>
+                    {console.log(props.title)}
+                    <SingleAnswer
+                      number={"#1"}
+                      answer={"Like"}
+                      checkInfo={true}
+                      percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                      check={quests.likeUnlike.like.check}
+                      contend={quests.likeUnlike.like.contend}
+                      handleToggleCheck={props.handleToggleCheck}
+                      btnText={"Results"}
+                    />
+                    <SingleAnswer
+                      number={"#2"}
+                      answer={"Unlike"}
+                      checkInfo={true}
+                      percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                      check={quests.likeUnlike.unlike.check}
+                      contend={quests.likeUnlike.unlike.contend}
+                      handleToggleCheck={props.handleToggleCheck}
+                      btnText={"Results"}
+                    />
+                  </>
+                ) : null}
           </>
         ) : props.title === "Multiple Choice" ? (
           <div
-            className={`${
-              isFullScreen === undefined
+            className={`${isFullScreen === undefined
                 ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
                 : ""
-            }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+              }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
             {props.answers?.map((item, index) => (
               <SingleAnswerMultipleChoice
@@ -334,11 +364,10 @@ const Result = (props) => {
           </div>
         ) : props.title === "Ranked Choice" ? (
           <div
-            className={`${
-              isFullScreen === undefined
+            className={`${isFullScreen === undefined
                 ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
                 : ""
-            }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+              }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
             {props.rankedAnswers?.map((item, index) => (
               <RankedResult
@@ -371,11 +400,10 @@ const Result = (props) => {
         ) : (
           <div className="mt-4 flex justify-end tablet:mt-10">
             <button
-              className={`${
-                persistedTheme === "dark"
+              className={`${persistedTheme === "dark"
                   ? "bg-[#333B46]"
                   : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-              } inset-0 mr-[14px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+                } inset-0 mr-[14px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
               onClick={() => {
                 props.handleViewResults(null);
               }}

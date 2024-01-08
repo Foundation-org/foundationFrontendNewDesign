@@ -2,6 +2,7 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import YesNo from "./pages/YesNo";
 import AgreeDisagree from "./pages/AgreeDisagree";
+import LikeUnlike from "./pages/LikeUnlikeQuest";
 import MultipleChoice from "./pages/MultipleChoice";
 import RankChoice from "./pages/RankChoice";
 
@@ -17,6 +18,7 @@ const Quest = () => {
       {tab === 1 && <MultipleChoice />}
       {tab === 2 && <AgreeDisagree />}
       {tab === 3 && <YesNo />}
+      {tab === 4 && <LikeUnlike/>}
     </div>
   );
 };

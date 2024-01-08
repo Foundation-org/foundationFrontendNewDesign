@@ -216,7 +216,7 @@ const StartTest = ({
   return (
     <>
       <>
-        {title === "Yes/No" || title === "Agree/Disagree" ? (
+        {title === "Yes/No" || title === "Agree/Disagree" || title==="Like/Unlike" ? (
           <div className="mt-[18px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px]">
             {title === "Yes/No" ? (
               <>
@@ -237,7 +237,7 @@ const StartTest = ({
                   handleToggleCheck={handleToggleCheck}
                 />
               </>
-            ) : (
+            ) : title==="Agree/Disagree"?(
               <>
                 <SingleAnswer
                   number={"#1"}
@@ -253,6 +253,27 @@ const StartTest = ({
                   checkInfo={true}
                   check={quests.agreeDisagree.disagree.check}
                   contend={quests.agreeDisagree.disagree.contend}
+                  handleToggleCheck={handleToggleCheck}
+                />
+              </>
+            ):
+            (
+              <>
+              {console.log(title)}
+                <SingleAnswer
+                  number={"#1"}
+                  answer={"Like"}
+                  checkInfo={true}
+                  check={quests.likeUnlike.like.check}
+                  contend={quests.likeUnlike.like.contend}
+                  handleToggleCheck={handleToggleCheck}
+                />
+                <SingleAnswer
+                  number={"#2"}
+                  answer={"Unlike"}
+                  checkInfo={true}
+                  check={quests.likeUnlike.unlike.check}
+                  contend={quests.likeUnlike.unlike.contend}
                   handleToggleCheck={handleToggleCheck}
                 />
               </>
@@ -382,7 +403,7 @@ const StartTest = ({
       <div className="ml-[20px] mr-[28px] mt-[13px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
         {usersAddTheirAns && uuidExists === false ? (
           <div>
-            {title === "Yes/No" || title === "Agree/Disagree" ? null : (
+            {title === "Yes/No" || title === "Agree/Disagree" || title ==="Like/Unlike" ? null : (
               <button
                 onClick={handleOpen}
                 className="addoption-boxShadow ml-4 flex h-[23.48px] w-[81.8px] items-center gap-[5.8px] rounded-[7.1px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:h-[52px] tablet:w-[173px] tablet:gap-[11.37px] tablet:rounded-[15px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"

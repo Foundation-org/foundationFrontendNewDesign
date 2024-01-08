@@ -295,6 +295,8 @@ const Main = () => {
                     title={
                       item?.whichTypeQuestion === "agree/disagree"
                         ? "Agree/Disagree"
+                        :item?.whichTypeQuestion === "like/unlike"
+                        ? "Like/Unlike"
                         : item?.whichTypeQuestion === "multiple choise"
                           ? "Multiple Choice"
                           : item?.whichTypeQuestion === "ranked choise"
@@ -345,6 +347,8 @@ const Main = () => {
                     title={
                       item?.whichTypeQuestion === "agree/disagree"
                         ? "Agree/Disagree"
+                        :item?.whichTypeQuestion === "like/unlike"
+                        ? "Like/Unlike"
                         : item?.whichTypeQuestion === "multiple choise"
                           ? "Multiple Choice"
                           : item?.whichTypeQuestion === "ranked choise"

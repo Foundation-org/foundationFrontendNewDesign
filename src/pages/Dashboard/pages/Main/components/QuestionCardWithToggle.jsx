@@ -307,7 +307,7 @@ const QuestionCardWithToggle = ({
       setHowManyTimesAnsChanged(res.data.data.length);
       if (
         whichTypeQuestion === "agree/disagree" ||
-        whichTypeQuestion === "yes/no"
+        whichTypeQuestion === "yes/no" || whichTypeQuestion === "like/unlike"
       ) {
         if (
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
@@ -405,12 +405,12 @@ const QuestionCardWithToggle = ({
     setLoading(true);
     if (
       whichTypeQuestion === "agree/disagree" ||
-      whichTypeQuestion === "yes/no"
+      whichTypeQuestion === "yes/no" || whichTypeQuestion === "like/unlike"
     ) {
       const { selected, contended } = extractSelectedAndContended(
         whichTypeQuestion === "agree/disagree"
-          ? quests.agreeDisagree
-          : quests.yesNo,
+          ? quests.agreeDisagree : whichTypeQuestion === "yes/no" ? quests.yesNo
+            : quests.likeUnlike,
       );
 
       let ans = {

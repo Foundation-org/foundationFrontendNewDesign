@@ -49,6 +49,18 @@ const Navbar = ({ handleTab, tab }) => {
       >
         Yes/No
       </button>
+      <button
+        className={`${
+          tab === 4
+            ? "bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]"
+            : "bg-[#E6E6E6] text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]"
+        } quest-topbar`}
+        onClick={() => {
+          handleTab(4);
+        }}
+      >
+        Like/Unlike
+      </button>
     </div>
   );
 };

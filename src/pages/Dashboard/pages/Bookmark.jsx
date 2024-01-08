@@ -216,11 +216,15 @@ const Bookmark = () => {
                 title={
                   item?.whichTypeQuestion === "agree/disagree"
                     ? "Agree/Disagree"
+                    :item?.whichTypeQuestion === "like/unlike"
+                    ? "Like/Unlike"
                     : item?.whichTypeQuestion === "multiple choise"
                       ? "Multiple Choice"
                       : item?.whichTypeQuestion === "ranked choise"
                         ? "Ranked Choice"
-                        : "Yes/No"
+                        : item?.whichTypeQuestion === "yes/no"
+                          ? "Yes/No"
+                          : null
                 }
                 answers={item?.QuestAnswers}
                 time={item?.createdAt}

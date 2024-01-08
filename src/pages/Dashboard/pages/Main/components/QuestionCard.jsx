@@ -176,6 +176,8 @@ const QuestionCard = ({
   };
 
   const handleToggleCheck = (option, check, contend) => {
+
+    console.log("option",option+check+contend);
     const capitalizedOption = capitalizeFirstLetter(option);
 
     const actionPayload = {
@@ -313,12 +315,12 @@ const QuestionCard = ({
     setLoading(true);
     if (
       whichTypeQuestion === "agree/disagree" ||
-      whichTypeQuestion === "yes/no"
+      whichTypeQuestion === "yes/no" || whichTypeQuestion === "like/unlike"
     ) {
       const { selected, contended } = extractSelectedAndContended(
         whichTypeQuestion === "agree/disagree"
-          ? quests.agreeDisagree
-          : quests.yesNo,
+          ? quests.agreeDisagree : whichTypeQuestion === "yes/no" ? quests.yesNo
+            : quests.likeUnlike,
       );
 
       let ans = {
@@ -364,6 +366,8 @@ const QuestionCard = ({
           changeAnswer(params);
         }
       } else {
+        console.log(whichTypeQuestion);
+        console.log(params);
         startQuest(params);
       }
     } else if (whichTypeQuestion === "multiple choise") {
