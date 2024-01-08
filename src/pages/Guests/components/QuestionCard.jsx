@@ -29,6 +29,8 @@ const QuestionCard = ({
   multipleOption,
   QuestTopic,
   createdBy,
+  usersChangeTheirAns,
+  lastInteractedAt,
 }) => {
   const dispatch = useDispatch();
   const quests = useSelector(getQuests);
@@ -403,6 +405,9 @@ const QuestionCard = ({
               time={time}
               loading={loading}
               setLoading={setLoading}
+              usersChangeTheirAns={usersChangeTheirAns}
+              lastInteractedAt={lastInteractedAt}
+              howManyTimesAnsChanged={howManyTimesAnsChanged}
             />
           )
         ) : (
@@ -422,6 +427,7 @@ const QuestionCard = ({
             viewResult={viewResult}
             handleViewResults={handleViewResults}
             startStatus={startStatus}
+            time={time}
           />
         )}
       </div>

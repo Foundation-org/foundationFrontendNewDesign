@@ -1,7 +1,10 @@
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { resetOptionLimit } from "../../../features/quest/utilsSlice";
 
 const DeleteOption = (props) => {
+  const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const handleDeleteOption = () => {
@@ -10,7 +13,8 @@ const DeleteOption = (props) => {
     );
 
     props.setAnswerSelection(newArr);
-    props.setAddOptionLimit(0);
+    dispatch(resetOptionLimit());
+    // props.setAddOptionLimit(0);
     toast.success("Item deleted");
     props.handleEditClose();
     props.handleDeleteClose();
@@ -18,7 +22,7 @@ const DeleteOption = (props) => {
 
   return (
     <div className="flex flex-col items-center gap-4 rounded-[4.7px] bg-[#232628] p-6 tablet:min-w-[350px] tablet:rounded-[26px]">
-      <h1 className="text-[8.72px] font-semibold leading-normal text-[#5B5B5B] dark:text-[#CFCFCF] tablet:text-[22px]">
+      <h1 className="text-[8.72px] font-semibold leading-normal text-[#5B5B5B] tablet:text-[22px] dark:text-[#CFCFCF]">
         Delete Option
       </h1>
       <div className="flex gap-2 tablet:gap-6">

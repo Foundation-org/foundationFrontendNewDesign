@@ -19,6 +19,7 @@ import { createBookmark } from "../../../../../api/homepageApis";
 import { deleteBookmarkById } from "../../../../../api/homepageApis";
 import { userInfo } from "../../../../../api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
+import { updateOptionLimit } from "../../../../../features/quest/utilsSlice";
 
 const QuestionCard = ({
   id,
@@ -55,7 +56,7 @@ const QuestionCard = ({
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addOptionField, setAddOptionField] = useState(0);
-  const [addOptionLimit, setAddOptionLimit] = useState(0);
+  // const [addOptionLimit, setAddOptionLimit] = useState(0);
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [answersSelection, setAnswerSelection] = useState(
@@ -121,7 +122,9 @@ const QuestionCard = ({
     setAnswerSelection([...answersSelection, newOption]);
 
     setAddOptionField(0);
-    setAddOptionLimit(1);
+    // setAddOptionLimit(1);
+
+    dispatch(updateOptionLimit());
   };
 
   const capitalizeFirstLetter = (text) => {
@@ -510,6 +513,17 @@ const QuestionCard = ({
     }
   };
 
+  useEffect(() => {
+    console.log(
+      "hamza",
+      lastInteractedAt,
+      howManyTimesAnsChanged,
+      // usersChangeTheirAns,
+    );
+    localStorage.setItem("lastInteractedAt", lastInteractedAt);
+    localStorage.setItem("howManyTimesAnsChanged", howManyTimesAnsChanged);
+  }, [lastInteractedAt, howManyTimesAnsChanged]);
+
   return (
     <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-white dark:bg-[#141618]">
       <CardTopbar
@@ -574,8 +588,8 @@ const QuestionCard = ({
             setRankedAnswers={setRankedAnswers}
             addOptionField={addOptionField}
             setAddOptionField={setAddOptionField}
-            addOptionLimit={addOptionLimit}
-            setAddOptionLimit={setAddOptionLimit}
+            // addOptionLimit={addOptionLimit}
+            // setAddOptionLimit={setAddOptionLimit}
             time={time}
             setStartTest={setStartTest}
             loading={loading}

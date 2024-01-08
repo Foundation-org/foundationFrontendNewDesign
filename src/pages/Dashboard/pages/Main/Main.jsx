@@ -253,7 +253,7 @@ const Main = () => {
         columns={columns}
         setColumns={setColumns}
       />
-      <div className="shadow-inner-md no-scrollbar flex h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] py-[27px] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#06070a]">
+      <div className="shadow-inner-md no-scrollbar flex h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] py-3 pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] tablet:py-[27px] dark:bg-[#06070a]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -269,8 +269,18 @@ const Main = () => {
               <h4>No more data to display.</h4>
             )
           }
+          endMessage={
+            feedData?.hasNextPage === false ? (
+              <p className="text-center">
+                <b>You are all caught up!</b>
+              </p>
+            ) : (
+              <p className="text-center">
+                <b>Loading...</b>
+              </p>
+            )
+          }
           height={"88vh"}
-          // style={{ overflow: "visible" }}
           className="no-scrollbar flex flex-col gap-[27px]"
         >
           {expandedView

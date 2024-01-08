@@ -194,8 +194,13 @@ const Bookmark = () => {
                   : "No records found."}
               </h4>
             ) : (
-              <h4>No more data to display.</h4>
+              <h4>End of bookmarks.</h4>
             )
+          }
+          endMessage={
+            <p className="text-center">
+              <b>End of bookmarks</b>
+            </p>
           }
           height={"88vh"}
           className="no-scrollbar flex flex-col gap-[27px]"

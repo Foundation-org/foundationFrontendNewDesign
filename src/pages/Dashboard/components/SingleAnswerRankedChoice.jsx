@@ -6,8 +6,11 @@ import DeleteOption from "./DeleteOption";
 import { toast } from "sonner";
 import { Tooltip } from "../../../utils/Tooltip";
 import { answerValidation, checkAnswerExist } from "../../../api/questsApi";
+import { useDispatch } from "react-redux";
+import { resetOptionLimit } from "../../../features/quest/utilsSlice";
 
 const SingleAnswerRankedChoice = (props) => {
+  const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [checkState, setCheckState] = useState(props.check);
   const [editModal, setEditModal] = useState(false);
@@ -43,7 +46,8 @@ const SingleAnswerRankedChoice = (props) => {
     );
 
     props.setAnswerSelection(newArr);
-    props.setAddOptionLimit(0);
+    // props.setAddOptionLimit(0);
+    dispatch(resetOptionLimit());
     // toast.success("Item deleted");
   };
 
@@ -233,7 +237,7 @@ const SingleAnswerRankedChoice = (props) => {
               setAnswerSelection={props.setAnswerSelection}
               handleDeleteClose={handleDeleteClose}
               handleEditClose={handleEditClose}
-              setAddOptionLimit={props.setAddOptionLimit}
+              // setAddOptionLimit={props.setAddOptionLimit}
             />
           </BasicModal>
         </div>

@@ -169,7 +169,7 @@ const Topbar = () => {
           </Link>
         </li>
         <li className="flex w-[85.8px] items-center justify-center tablet:w-[149.46px]">
-        <Link
+          <Link
             to={"/dashboard/quest"}
             className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
               location.pathname === "/dashboard/quest" ||

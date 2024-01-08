@@ -18,6 +18,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { FaSpinner } from "react-icons/fa";
 import QuestTimeRemaining from "./QuestTimeRemaining";
 import { useNavigate, useParams } from "react-router-dom";
+import { getQuestUtils } from "../../../../../features/quest/utilsSlice";
 
 const StartTest = ({
   id,
@@ -37,8 +38,8 @@ const StartTest = ({
   rankedAnswers,
   setRankedAnswers,
   addOptionField,
-  addOptionLimit,
-  setAddOptionLimit,
+  // addOptionLimit,
+  // setAddOptionLimit,
   createdBy,
   img,
   alt,
@@ -62,12 +63,18 @@ const StartTest = ({
   const navigate = useNavigate();
   const { isFullScreen } = useParams();
   const [timeAgo, setTimeAgo] = useState("");
+  const questUtils = useSelector(getQuestUtils);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [copyModal, setCopyModal] = useState(false);
   const [linkModal, setLinkModal] = useState(false);
   const [emailModal, setEmailModal] = useState(false);
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
+  const uuidExists = answers.some(
+    (item) => item.uuid === localStorage.getItem("uId"),
+  );
+
+  console.log({ uuidExists });
 
   const handleCopyOpen = () => setCopyModal(true);
   const handleCopyClose = () => setCopyModal(false);
@@ -79,6 +86,10 @@ const StartTest = ({
   const handleTwitterClose = () => setTwitterModal(false);
   const handleFbOpen = () => setFbModal(true);
   const handleFbClose = () => setFbModal(false);
+
+  useEffect(() => {
+    localStorage.setItem("usersChangeTheirAns", usersChangeTheirAns);
+  }, [usersChangeTheirAns]);
 
   useEffect(() => {
     const updatedAnswersSelection = answers.map((questAnswer) => ({
@@ -259,9 +270,9 @@ const StartTest = ({
             <div
               className={`${
                 isFullScreen === undefined
-                  ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px] tablet:max-h-[23.2rem]"
+                  ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
                   : ""
-              }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+              } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
               {[...answersSelection].map((item, index) => (
                 <SingleAnswerMultipleChoice
@@ -273,7 +284,7 @@ const StartTest = ({
                   deleteable={item.delete}
                   title={title}
                   multipleOption={multipleOption}
-                  setAddOptionLimit={setAddOptionLimit}
+                  // setAddOptionLimit={setAddOptionLimit}
                   answersSelection={answersSelection}
                   setAnswerSelection={setAnswerSelection}
                   checkInfo={true}
@@ -300,12 +311,16 @@ const StartTest = ({
             <h4 className="ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-2 tablet:ml-[108.65px] tablet:text-[16.58px] laptop:text-[18px]">
               You can drag and drop options in your order of preference.
             </h4>
-            <div className="-mt-1 flex flex-col gap-[5.7px] tablet:-mt-3  tablet:gap-[10px]">
+            <div className="-mt-1 flex flex-col gap-[5.7px] tablet:-mt-3 tablet:gap-[10px]">
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                   {(provided) => (
                     <ul
-                      className="quest-scrollbar mr-1 flex max-h-[250px] min-h-fit flex-col items-center gap-[5.7px] overflow-auto md:max-h-[496px] tablet:gap-[10px]"
+                      className={`${
+                        isFullScreen === undefined
+                          ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto tablet:max-h-[496px]"
+                          : ""
+                      }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
@@ -339,7 +354,7 @@ const StartTest = ({
                                 handleCheckChange={(check) =>
                                   handleCheckChange(index, check)
                                 }
-                                setAddOptionLimit={setAddOptionLimit}
+                                // setAddOptionLimit={setAddOptionLimit}
                                 setIsSubmit={setIsSubmit}
                               />
                             </li>
@@ -355,18 +370,19 @@ const StartTest = ({
           </div>
         )}
       </>
+      {console.log("first", usersAddTheirAns, uuidExists, title, btnText)}
 
       <QuestTimeRemaining
-        lastInteractedAt={lastInteractedAt}
-        howManyTimesAnsChanged={howManyTimesAnsChanged}
-        usersChangeTheirAns={usersChangeTheirAns}
+        lastInteractedAt={localStorage.getItem("lastInteractedAt")}
+        howManyTimesAnsChanged={localStorage.getItem("howManyTimesAnsChanged")}
+        usersChangeTheirAns={localStorage.getItem("usersChangeTheirAns")}
       />
+
       {/* Add Options && Cancel && Submit Button */}
       <div className="ml-[20px] mr-[28px] mt-[18px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
-        {usersAddTheirAns && addOptionLimit === 0 ? (
+        {usersAddTheirAns && uuidExists === false ? (
           <div>
-            {title === "Yes/No" ||
-            title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
+            {title === "Yes/No" || title === "Agree/Disagree" ? null : (
               <button
                 onClick={handleOpen}
                 className="addoption-boxShadow ml-4 flex h-[23.48px] w-[81.8px] items-center gap-[5.8px] rounded-[7.1px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:h-[52px] tablet:w-[173px] tablet:gap-[11.37px] tablet:rounded-[15px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
@@ -386,13 +402,13 @@ const StartTest = ({
                 )}
                 Add Option
               </button>
-            ) : null}
+            )}
           </div>
         ) : (
           <div></div>
         )}
-        {((isFullScreen === undefined && answersSelection?.length > 6) ||
-          (isFullScreen === undefined && rankedAnswers?.length > 6)) && (
+        {((isFullScreen === undefined && answersSelection?.length > 8) ||
+          (isFullScreen === undefined && rankedAnswers?.length > 8)) && (
           <div
             className="flex cursor-pointer items-center justify-end gap-1 tablet:gap-[14px]"
             onClick={() => {

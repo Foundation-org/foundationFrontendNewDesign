@@ -308,7 +308,7 @@ const Result = (props) => {
           <div
             className={`${
               isFullScreen === undefined
-                ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px] tablet:max-h-[23.2rem]"
+                ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
                 : ""
             }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
