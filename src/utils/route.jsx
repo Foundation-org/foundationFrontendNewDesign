@@ -8,21 +8,21 @@ import VerifyEmail from "../pages/Signup/VerifyEmail";
 import Profile from "../pages/Dashboard/pages/Profile";
 
 export function Router() {
-  const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const navigate = useNavigate();
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const checkUserToken = () => {
-      const userToken = localStorage.getItem("userLoggedIn");
-      if (!userToken || userToken === "undefined") {
-        setIsLoggedIn(false);
-      } else {
-        setIsLoggedIn(true);
-      }
-    };
+  // useEffect(() => {
+  //   const checkUserToken = () => {
+  //     const userToken = localStorage.getItem("userLoggedIn");
+  //     if (!userToken || userToken === "undefined") {
+  //       setIsLoggedIn(false);
+  //     } else {
+  //       setIsLoggedIn(true);
+  //     }
+  //   };
 
-    checkUserToken();
-  }, [navigate]);
+  //   checkUserToken();
+  // }, [navigate]);
 
   return (
     <>
@@ -30,20 +30,20 @@ export function Router() {
         {/* public routes */}
         <Route
           path="/"
-          element={isLoggedIn ? <Navigate to="/dashboard" /> : <Signin />}
+          element={<Signin />}
         />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
 
         {/* Protected routes */}
-        {isLoggedIn && (
-          <>
-            <Route path="/dashboard/*" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
-          </>
-        )}
+        {/* {isLoggedIn && (
+        )} */}
+        <>
+          <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
+        </>
 
         {/* 404 page */}
         <Route
