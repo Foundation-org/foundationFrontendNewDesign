@@ -31,7 +31,7 @@ const StartTest = ({
   whichTypeQuestion,
   handleSubmit,
   handleOpen,
-  btnText,
+  // btnText,
   usersAddTheirAns,
   setAnswerSelection,
   answersSelection,
@@ -75,8 +75,6 @@ const StartTest = ({
   const uuidExists = answers.some(
     (item) => item.uuid === localStorage.getItem("uId"),
   );
-
-  console.log({ rankedAnswers });
 
   const handleCopyOpen = () => setCopyModal(true);
   const handleCopyClose = () => setCopyModal(false);
@@ -266,7 +264,6 @@ const StartTest = ({
                 </>
               ) : (
                 <>
-                  {console.log(title)}
                   <SingleAnswer
                     number={"#1"}
                     answer={"Like"}
@@ -447,11 +444,6 @@ const StartTest = ({
             }}
           >
             <MdFullscreen className="text-[17px] tablet:text-[32px]" />
-            {/* <img
-              src="/assets/svgs/fullscreen.svg"
-              alt="fullscreen"
-            
-            /> */}
             <p className="text-[9px] font-medium tablet:text-[16px] ">
               Full Screen
             </p>

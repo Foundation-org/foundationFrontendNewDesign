@@ -58,7 +58,7 @@ const QuestionCardWithToggle = ({
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
   const [openResults, setOpenResults] = useState(null);
-  const [loadingDetail,setLoadingDetail]=useState(true);
+  const [loadingDetail, setLoadingDetail] = useState(true);
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -79,7 +79,6 @@ const QuestionCardWithToggle = ({
     );
   }, [answers]);
 
-  console.log(answersSelection);
   const [rankedAnswers, setRankedAnswers] = useState(
     answersSelection?.map((item, index) => ({
       id: `unique-${index}`,
@@ -308,7 +307,8 @@ const QuestionCardWithToggle = ({
       setHowManyTimesAnsChanged(res.data.data.length);
       if (
         whichTypeQuestion === "agree/disagree" ||
-        whichTypeQuestion === "yes/no" || whichTypeQuestion === "like/unlike"
+        whichTypeQuestion === "yes/no" ||
+        whichTypeQuestion === "like/unlike"
       ) {
         if (
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
@@ -407,11 +407,14 @@ const QuestionCardWithToggle = ({
     setLoading(true);
     if (
       whichTypeQuestion === "agree/disagree" ||
-      whichTypeQuestion === "yes/no" || whichTypeQuestion === "like/unlike"
+      whichTypeQuestion === "yes/no" ||
+      whichTypeQuestion === "like/unlike"
     ) {
       const { selected, contended } = extractSelectedAndContended(
         whichTypeQuestion === "agree/disagree"
-          ? quests.agreeDisagree : whichTypeQuestion === "yes/no" ? quests.yesNo
+          ? quests.agreeDisagree
+          : whichTypeQuestion === "yes/no"
+            ? quests.yesNo
             : quests.likeUnlike,
       );
 
@@ -641,7 +644,7 @@ const QuestionCardWithToggle = ({
         createdBy={createdBy}
         QuestTopic={QuestTopic}
       />
-       <div className="ml-6 mr-[1.38rem] mt-[1.56rem] flex items-center justify-between tablet:ml-[52.65px]">
+      <div className="ml-6 mr-[1.38rem] mt-[1.56rem] flex items-center justify-between tablet:ml-[52.65px]">
         <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[25px] dark:text-[#B8B8B8]">
           {question?.endsWith("?") ? "Q." : "S."} {question}
         </h1>
