@@ -24,6 +24,7 @@ function App() {
   }, [theme]);
 
   return (
+    // <div style={{overflow: 'hidden', height: '100vh'}}>
     <div className="h-screen overflow-hidden">
       <Router />
       <Toaster
