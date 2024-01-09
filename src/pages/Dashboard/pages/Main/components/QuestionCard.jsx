@@ -68,7 +68,7 @@ const QuestionCard = ({
       uuid: answer.uuid,
     })),
   );
-  const [loadingDetail, setLoadingDetail] = useState(true);
+  const [loadingDetail, setLoadingDetail] = useState(false);
 
   useEffect(() => {
     setbookmarkStatus(isBookmarked);
@@ -653,6 +653,7 @@ const QuestionCard = ({
           handleViewResults={handleViewResults}
           startStatus={startStatus}
           time={time}
+          
         />
       )}
     </div>

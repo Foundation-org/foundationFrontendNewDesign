@@ -188,6 +188,7 @@ const OptionBar = ({
     onError: (err) => {
       toast.error(err.response?.data);
       console.log("Mutation Error", err);
+      setLoadingDetail(false);
     },
   });
 
@@ -222,11 +223,13 @@ const OptionBar = ({
       handleStartTest(id);
     }
     if (btnText === "change answer") {
+      setLoadingDetail(true);
       const data = { questForeignKey: id, uuid: Cookies.get("uId") };
       getStartQuestDetail(data);
       handleStartTest(id);
     }
     if (btnText === "completed") {
+      setLoadingDetail(true);
       handleViewResults(id);
     }
   };

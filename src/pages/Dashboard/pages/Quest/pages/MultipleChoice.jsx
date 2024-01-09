@@ -402,7 +402,7 @@ const MultipleChoice = () => {
             value={question}
             placeholder="Make a statement or pose a question"
           />
-          <div
+          <button
             id="new"
             className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:rounded-r-2xl laptop:text-[1.875rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${checkQuestionStatus.color} py-[0.29rem]`}
           >
@@ -410,7 +410,7 @@ const MultipleChoice = () => {
               {checkQuestionStatus.name}
             </div>
             <Tooltip optionStatus={checkQuestionStatus} />
-          </div>
+          </button>
         </div>
 
         <DragDropContext onDragEnd={handleOnDragEnd}>
