@@ -146,7 +146,7 @@ const Topbar = () => {
       </div>
       {/* items */}
       <ul className="flex w-full items-end justify-around gap-[2.19rem] px-5 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-[57px] laptop:gap-[3.12rem] laptop:px-0">
-        <li className="w-[85.8px] tablet:w-[149.46px]">
+        <li className="flex w-[85.8px] items-center justify-center tablet:w-[149.46px]">
           <Link
             to={"/dashboard"}
             className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
@@ -192,7 +192,7 @@ const Topbar = () => {
             Create
           </Link>
         </li>
-        <li className="w-[85.8px] tablet:w-[149.46px]">
+        <li className="flex w-[85.8px] items-center justify-center tablet:w-[149.46px]">
           <Link
             to={"/dashboard/bookmark"}
             className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${

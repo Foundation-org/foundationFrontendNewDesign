@@ -1,15 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
 import { Switch } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { changeTheme } from "../../../../features/utils/utilsSlice";
 import Topbar from "../../components/Topbar";
 import Tabs from "./components/Tabs";
-import Contributions from "./pages/Contributions";
-import VerificationBadges from "./pages/VerificationBadges";
-import Ledger from "./pages/Ledger";
-import ChangePassword from "./pages/ChangePassword";
-import { Outlet } from "react-router-dom";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -85,10 +80,6 @@ const Profile = () => {
           </div>
           <Tabs handleSelectedTab={handleSelectedTab} active={selectedTab} />
           <Outlet />
-          {/* {selectedTab === 1 && <Contributions />}
-          {selectedTab === 2 && <VerificationBadges />}
-          {selectedTab === 3 && <Ledger />}
-          {selectedTab === 4 && <ChangePassword />} */}
         </div>
       </div>
     </div>

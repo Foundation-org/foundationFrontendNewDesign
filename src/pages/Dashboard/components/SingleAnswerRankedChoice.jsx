@@ -127,7 +127,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleAddOption = () => {
     const newArr = props.answersSelection.map((item) =>
-      item.label === props.answer ? {label: answer.trim(), ...item } : item,
+      item.label === props.answer ? { label: answer.trim(), ...item } : item,
     );
 
     props.setAnswerSelection(newArr);

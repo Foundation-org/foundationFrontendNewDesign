@@ -51,6 +51,7 @@ const QuestionCard = ({
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
   const [open, setOpen] = useState(false);
@@ -111,6 +112,8 @@ const QuestionCard = ({
 
   const handleClose = () => setOpen(false);
 
+  console.log({ persistedUserInfo });
+
   const handleAddOption = () => {
     const newOption = {
       label: "",
@@ -119,7 +122,7 @@ const QuestionCard = ({
       addedOptionByUser: true,
       edit: true,
       delete: true,
-      uuid: localStorage.getItem("uId"),
+      uuid: persistedUserInfo.uuid,
     };
 
     setAnswerSelection([...answersSelection, newOption]);
@@ -653,7 +656,6 @@ const QuestionCard = ({
           handleViewResults={handleViewResults}
           startStatus={startStatus}
           time={time}
-          
         />
       )}
     </div>
