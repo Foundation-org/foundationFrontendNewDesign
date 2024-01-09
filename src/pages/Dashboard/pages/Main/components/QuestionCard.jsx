@@ -70,7 +70,6 @@ const QuestionCard = ({
     })),
   );
 
-  console.log("answer selection",answersSelection);
   const [loadingDetail, setLoadingDetail] = useState(false);
 
   useEffect(() => {

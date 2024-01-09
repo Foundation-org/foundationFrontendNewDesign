@@ -240,7 +240,7 @@ const Main = () => {
   setTimeout(() => {
       return (
         <p className="text-center">
-          <b>No records found.</b>
+          <b>No results found</b>
         </p>
       );
     }, 1000)

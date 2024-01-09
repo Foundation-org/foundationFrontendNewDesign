@@ -222,9 +222,11 @@ const QuestionCardWithToggle = ({
         resp.data.message === "You can change your answer once every 1 hour"
       ) {
         toast.warning("You can change your option once every 1 hour.");
+        setLoading(false);
       }
       if (resp.data.message === "Start Quest Updated Successfully") {
         toast.success("Successfully Changed Quest");
+        setLoading(false);
         handleViewResults(id);
       }
       userInfo(Cookies.get("uId")).then((resp) => {
@@ -235,6 +237,7 @@ const QuestionCardWithToggle = ({
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(":")[1]);
+      setLoading(false);
     },
   });
 

@@ -176,7 +176,7 @@ const Bookmark = () => {
     setTimeout(() => {
         return (
           <p className="text-center">
-            <b>No records found.</b>
+            <b>No results found</b>
           </p>
         );
       }, 1000)
@@ -211,18 +211,6 @@ const Bookmark = () => {
           dataLength={allData?.length}
           next={fetchMoreData}
           hasMore={feedData?.hasNextPage}
-          loader={
-            allData && allData.length === 0 ? (
-              <h4>
-                {feedData && feedData.hasNextPage
-                  ? "Loading..."
-                  : "No records found."}
-              </h4>
-            ) : (
-              <h4>No more data to display.</h4>
-            )
-          }
-          
           endMessage={
             feedData?.hasNextPage === false ? (
               <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
@@ -372,7 +360,7 @@ const Bookmark = () => {
               <h4>
                 {feedData && feedData.hasNextPage
                   ? "Loading..."
-                  : "No records found."}
+                  : "No results found"}
               </h4>
             ) : (
               <h4>End of bookmarks.</h4>

@@ -248,7 +248,7 @@ export default function BasicTable() {
             <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] md:text-[1.25rem] tablet:text-[0.875rem]">
               {table.getRowModel().rows.length === 0 ? (
                 <h4 className="mt-12 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem]">
-                  No records found.
+                  No results found
                 </h4>
               ) : (
                 table.getRowModel().rows.map((row) => (
