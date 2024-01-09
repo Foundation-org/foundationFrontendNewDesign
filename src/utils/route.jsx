@@ -28,10 +28,7 @@ export function Router() {
     <>
       <Routes>
         {/* public routes */}
-        <Route
-          path="/"
-          element={<Signin />}
-        />
+        <Route path="/" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/quest/:id/:isFullScreen" element={<Guests />} />

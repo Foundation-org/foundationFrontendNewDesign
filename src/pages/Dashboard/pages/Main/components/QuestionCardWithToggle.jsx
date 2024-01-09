@@ -58,7 +58,7 @@ const QuestionCardWithToggle = ({
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
   const [openResults, setOpenResults] = useState(null);
-  const [loadingDetail, setLoadingDetail] = useState(true);
+  const [loadingDetail, setLoadingDetail] = useState(false);
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -621,6 +621,7 @@ const QuestionCardWithToggle = ({
       setOpenResults(false);
       handleStartTest(id);
     }
+    console.log({ startStatus });
     if (startStatus === "change answer") {
       setOpenResults(true);
       handleViewResults(id);
@@ -630,6 +631,8 @@ const QuestionCardWithToggle = ({
       handleViewResults(id);
     }
   }, []);
+
+  console.log("hamza", viewResult, openResults);
 
   return (
     <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-white dark:bg-[#141618]">

@@ -8,13 +8,6 @@ const QuestTimeRemaining = ({
 }) => {
   const [resultString, setResultString] = useState("");
 
-  console.log(
-    "hello",
-    lastInteractedAt,
-    howManyTimesAnsChanged,
-    usersChangeTheirAns,
-  );
-
   const handleClick = () => {
     const result = calculateRemainingTime(
       lastInteractedAt,
@@ -24,8 +17,6 @@ const QuestTimeRemaining = ({
 
     setResultString(result);
   };
-
-  console.log({ usersChangeTheirAns });
 
   return (
     <div className="mt-[15px]">

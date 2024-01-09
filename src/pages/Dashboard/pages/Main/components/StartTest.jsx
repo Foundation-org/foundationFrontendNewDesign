@@ -72,9 +72,11 @@ const StartTest = ({
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
 
-  const uuidExists = answers.some(
-    (item) => item.uuid === localStorage.getItem("uId"),
-  );
+  console.log({ answers });
+
+  const uuidExists =
+    answers &&
+    answers?.some((item) => item.uuid === localStorage.getItem("uId"));
 
   const handleCopyOpen = () => setCopyModal(true);
   const handleCopyClose = () => setCopyModal(false);
@@ -92,7 +94,7 @@ const StartTest = ({
   }, [usersChangeTheirAns]);
 
   useEffect(() => {
-    const updatedAnswersSelection = answers.map((questAnswer) => ({
+    const updatedAnswersSelection = answers?.map((questAnswer) => ({
       label: questAnswer.question,
       check: false,
       contend: false,
@@ -102,7 +104,7 @@ const StartTest = ({
     setAnswerSelection(updatedAnswersSelection);
 
     setRankedAnswers(
-      updatedAnswersSelection.map((item, index) => ({
+      updatedAnswersSelection?.map((item, index) => ({
         id: `unique-${index}`,
         ...item,
       })),
@@ -351,7 +353,7 @@ const StartTest = ({
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                       >
-                        {rankedAnswers.map((item, index) => (
+                        {rankedAnswers?.map((item, index) => (
                           <Draggable
                             key={item.id}
                             draggableId={item.id}
