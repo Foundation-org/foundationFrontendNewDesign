@@ -62,8 +62,8 @@ export default function Signin() {
         const resp = await userSignin({ email, password });
 
         if (resp.status === 200) {
-          Cookies.set('uId', resp.data.uuid)
-          Cookies.set('jwt', resp.data.token)
+          // Cookies.set('uId', resp.data.uuid)
+          // Cookies.set('jwt', resp.data.token)
           // localStorage.setItem("userLoggedIn", resp.data.uuid);
           // localStorage.setItem("uId", resp.data.uuid);
           localStorage.removeItem("isGuestMode");
