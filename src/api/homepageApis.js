@@ -23,8 +23,8 @@ export const getAllQuestsWithDefaultStatus = async (params) => {
 };
 
 // Get Quest By Id
-export const getQuestById = async (id) => {
-  return await api.get(`/infoquestions/getQuest/${id}`);
+export const getQuestById = async (id, qId) => {
+  return await api.get(`/infoquestions/getQuest/${id}/${qId}`);
 };
 
 // For Unanswered

@@ -6,9 +6,11 @@ import Topbar from "../Dashboard/components/Topbar";
 import SidebarRight from "../Dashboard/components/SidebarRight";
 import QuestionCard from "./components/QuestionCard";
 import QuestionCardWithToggle from "../Dashboard/pages/Main/components/QuestionCardWithToggle";
+import { useSelector } from "react-redux";
 
 const Guests = () => {
   let { id, isFullScreen } = useParams();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [tab, setTab] = useState("Participate");
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
@@ -22,8 +24,8 @@ const Guests = () => {
 
   const { data: singleQuest } = useQuery({
     queryFn: async () => {
-      const result = await getQuestById(id);
-      return result.data.data;
+      const result = await getQuestById(persistedUserInfo.uuid, id);
+      return result.data.data[0];
     },
     queryKey: [id],
     staleTime: 0,
@@ -129,6 +131,7 @@ const Guests = () => {
                   lastInteractedAt={singleQuest?.lastInteractedAt}
                   usersChangeTheirAns={singleQuest?.usersChangeTheirAns}
                   startStatus={singleQuest?.startStatus}
+                  expandedView={true}
                 />
               </div>
             )}

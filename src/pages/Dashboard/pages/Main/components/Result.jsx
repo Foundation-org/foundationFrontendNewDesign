@@ -80,7 +80,7 @@ const Result = (props) => {
       questForeignKey: props.id,
       uuid: Cookies.get("uId"),
     };
-    
+
     getStartQuestDetail(data);
   }, []);
 
@@ -260,115 +260,111 @@ const Result = (props) => {
 
   return (
     <>
-
       <div className="mx-1 mt-[23.7px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px] ">
         {props.title === "Yes/No" ||
-          props.title === "Agree/Disagree" ||
-          props.title === "Like/Unlike" ? (
-
+        props.title === "Agree/Disagree" ||
+        props.title === "Like/Unlike" ? (
           <>
             {props.title === "Yes/No" ? (
               checkLoading === true || ResultsData === undefined ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
                   <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
                 </div>
-              ) :
-                (
-
-                  <>
-                    <SingleAnswer
-                      number={"#1"}
-                      answer={"Yes"}
-                      checkInfo={true}
-                      percentages={
-                        ResultsData?.data[ResultsData?.data.length - 1]
-                      }
-                      check={quests.yesNo.yes.check}
-                      contend={quests.yesNo.yes.contend}
-                      handleToggleCheck={props.handleToggleCheck}
-                      btnText={"Results"}
-                    />
-                    <SingleAnswer
-                      number={"#2"}
-                      answer={"No"}
-                      checkInfo={true}
-                      percentages={
-                        ResultsData?.data[ResultsData?.data.length - 1]
-                      }
-                      check={quests.yesNo.no.check}
-                      contend={quests.yesNo.no.contend}
-                      handleToggleCheck={props.handleToggleCheck}
-                      btnText={"Results"}
-                    />
-                  </>)
-
+              ) : (
+                <>
+                  <SingleAnswer
+                    number={"#1"}
+                    answer={"Yes"}
+                    checkInfo={true}
+                    percentages={
+                      ResultsData?.data[ResultsData?.data.length - 1]
+                    }
+                    check={quests.yesNo.yes.check}
+                    contend={quests.yesNo.yes.contend}
+                    handleToggleCheck={props.handleToggleCheck}
+                    btnText={"Results"}
+                  />
+                  <SingleAnswer
+                    number={"#2"}
+                    answer={"No"}
+                    checkInfo={true}
+                    percentages={
+                      ResultsData?.data[ResultsData?.data.length - 1]
+                    }
+                    check={quests.yesNo.no.check}
+                    contend={quests.yesNo.no.contend}
+                    handleToggleCheck={props.handleToggleCheck}
+                    btnText={"Results"}
+                  />
+                </>
+              )
             ) : props.title === "Agree/Disagree" ? (
               checkLoading === true || ResultsData === undefined ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
                   <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
                 </div>
-              ) :
-                (
-                  <>
-                    <SingleAnswer
-                      number={"#1"}
-                      answer={"Agree"}
-                      checkInfo={true}
-                      percentages={
-                        ResultsData?.data[ResultsData?.data.length - 1]
-                      }
-                      check={quests.agreeDisagree.agree.check}
-                      contend={quests.agreeDisagree.agree.contend}
-                      handleToggleCheck={props.handleToggleCheck}
-                      btnText={"Results"}
-                    />
-                    <SingleAnswer
-                      number={"#2"}
-                      answer={"Disagree"}
-                      checkInfo={true}
-                      percentages={
-                        ResultsData?.data[ResultsData?.data.length - 1]
-                      }
-                      check={quests.agreeDisagree.disagree.check}
-                      contend={quests.agreeDisagree.disagree.contend}
-                      handleToggleCheck={props.handleToggleCheck}
-                      btnText={"Results"}
-                    />
-                  </>)
+              ) : (
+                <>
+                  <SingleAnswer
+                    number={"#1"}
+                    answer={"Agree"}
+                    checkInfo={true}
+                    percentages={
+                      ResultsData?.data[ResultsData?.data.length - 1]
+                    }
+                    check={quests.agreeDisagree.agree.check}
+                    contend={quests.agreeDisagree.agree.contend}
+                    handleToggleCheck={props.handleToggleCheck}
+                    btnText={"Results"}
+                  />
+                  <SingleAnswer
+                    number={"#2"}
+                    answer={"Disagree"}
+                    checkInfo={true}
+                    percentages={
+                      ResultsData?.data[ResultsData?.data.length - 1]
+                    }
+                    check={quests.agreeDisagree.disagree.check}
+                    contend={quests.agreeDisagree.disagree.contend}
+                    handleToggleCheck={props.handleToggleCheck}
+                    btnText={"Results"}
+                  />
+                </>
+              )
             ) : props.title === "Like/Unlike" ? (
               checkLoading === true || ResultsData === undefined ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
                   <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
                 </div>
-              ) :
-                (
-                  <>
-                    {console.log(props.title)}
-                    <SingleAnswer
-                      number={"#1"}
-                      answer={"Like"}
-                      checkInfo={true}
-                      percentages={
-                        ResultsData?.data[ResultsData?.data.length - 1]
-                      }
-                      check={quests.likeUnlike.like.check}
-                      contend={quests.likeUnlike.like.contend}
-                      handleToggleCheck={props.handleToggleCheck}
-                      btnText={"Results"}
-                    />
-                    <SingleAnswer
-                      number={"#2"}
-                      answer={"Unlike"}
-                      checkInfo={true}
-                      percentages={
-                        ResultsData?.data[ResultsData?.data.length - 1]
-                      }
-                      check={quests.likeUnlike.unlike.check}
-                      contend={quests.likeUnlike.unlike.contend}
-                      handleToggleCheck={props.handleToggleCheck}
-                      btnText={"Results"}
-                    />
-                  </>)
+              ) : (
+                <>
+                  {console.log(props.title)}
+                  <SingleAnswer
+                    number={"#1"}
+                    answer={"Like"}
+                    checkInfo={true}
+                    percentages={
+                      ResultsData?.data[ResultsData?.data.length - 1]
+                    }
+                    check={quests.likeUnlike.like.check}
+                    contend={quests.likeUnlike.like.contend}
+                    handleToggleCheck={props.handleToggleCheck}
+                    btnText={"Results"}
+                  />
+                  <SingleAnswer
+                    number={"#2"}
+                    answer={"Unlike"}
+                    checkInfo={true}
+                    percentages={
+                      ResultsData?.data[ResultsData?.data.length - 1]
+                    }
+                    check={quests.likeUnlike.unlike.check}
+                    contend={quests.likeUnlike.unlike.contend}
+                    handleToggleCheck={props.handleToggleCheck}
+                    btnText={"Results"}
+                  />
+                </>
+              )
             ) : null}
           </>
         ) : props.title === "Multiple Choice" ? (
@@ -376,86 +372,87 @@ const Result = (props) => {
             <div className="flex items-center justify-center bg-transparent bg-opacity-20">
               <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
             </div>
-          ) :
-            (
-              <div
-                className={`${isFullScreen === undefined
+          ) : (
+            <div
+              className={`${
+                isFullScreen === undefined
                   ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
                   : ""
-                  }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-              >
-                {props.answers?.map((item, index) => (
-                  <SingleAnswerMultipleChoice
-                    number={"#" + (index + 1)}
-                    answer={item.question}
-                    addedAnswerUuid={item.uuid}
-                    title={props.title}
-                    checkInfo={true}
-                    percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-                    check={findLabelChecked(
-                      props.answersSelection,
-                      item.question,
-                    )}
-                    contend={findLabelContend(
-                      props.answersSelection,
-                      item.question,
-                    )}
-                    btnText={"Results"}
-                    answersSelection={props.answersSelection}
-                    setAnswerSelection={props.setAnswerSelection}
-                  />
-                ))}
-              </div>)
+              }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+            >
+              {props.answers?.map((item, index) => (
+                <SingleAnswerMultipleChoice
+                  number={"#" + (index + 1)}
+                  answer={item.question}
+                  addedAnswerUuid={item.uuid}
+                  title={props.title}
+                  checkInfo={true}
+                  percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                  check={findLabelChecked(
+                    props.answersSelection,
+                    item.question,
+                  )}
+                  contend={findLabelContend(
+                    props.answersSelection,
+                    item.question,
+                  )}
+                  btnText={"Results"}
+                  answersSelection={props.answersSelection}
+                  setAnswerSelection={props.setAnswerSelection}
+                />
+              ))}
+            </div>
+          )
         ) : props.title === "Ranked Choice" ? (
           checkLoading === true || ResultsData === undefined ? (
             <div className="flex items-center justify-center bg-transparent bg-opacity-20">
               <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
             </div>
-          ) :
-            (
-              <div
-                className={`${isFullScreen === undefined
+          ) : (
+            <div
+              className={`${
+                isFullScreen === undefined
                   ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
                   : ""
-                  }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-              >
-                {props.rankedAnswers?.map((item, index) => (
-                  <RankedResult
-                    number={"#" + (index + 1)}
-                    answer={item.label}
-                    addedAnswerUuid={item.uuid}
-                    answersSelection={props.answersSelection}
-                    setAnswerSelection={props.setAnswerSelection}
-                    title={props.title}
-                    percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-                    checkInfo={false}
-                    setAddOptionLimit={props.setAddOptionLimit}
-                    btnText={"Results"}
-                  />
-                ))}
-              </div>)
+              }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+            >
+              {props.rankedAnswers?.map((item, index) => (
+                <RankedResult
+                  number={"#" + (index + 1)}
+                  answer={item.label}
+                  addedAnswerUuid={item.uuid}
+                  answersSelection={props.answersSelection}
+                  setAnswerSelection={props.setAnswerSelection}
+                  title={props.title}
+                  percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                  checkInfo={false}
+                  setAddOptionLimit={props.setAddOptionLimit}
+                  btnText={"Results"}
+                />
+              ))}
+            </div>
+          )
         ) : null}
 
-          {props.expanded && props.btnText === "change answer" ? (
-            <div className="mt-2.5 flex justify-between tablet:mt-8">
-              {(isFullScreen === undefined &&
-                props.answersSelection?.length > 8) ||
-              (isFullScreen === undefined &&
-                props.rankedAnswers?.length > 8) ? (
-                <div
-                  className="ml-[22px] flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:ml-[85px] tablet:gap-[14px] dark:text-[#ACACAC] "
-                  onClick={() => {
-                    navigate(`/quest/${props.id}/isfullscreen`);
-                  }}
-                >
-                  <MdFullscreen className="text-[17px] tablet:text-[32px]" />
-                  <p className="text-[9px] font-medium tablet:text-[16px] ">
-                    Full Screen
-                  </p>
-                </div>
-              ) : (
-                <div></div>
-              )}
+        {props.expanded && props.btnText === "change answer" ? (
+          <div className="mt-2.5 flex justify-between tablet:mt-8">
+            {(isFullScreen === undefined &&
+              props.answersSelection?.length > 8) ||
+            (isFullScreen === undefined && props.rankedAnswers?.length > 8) ? (
+              <div
+                className="ml-[22px] flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:ml-[85px] tablet:gap-[14px] dark:text-[#ACACAC] "
+                onClick={() => {
+                  navigate(`/quest/${props.id}/isfullscreen`);
+                }}
+              >
+                <MdFullscreen className="text-[17px] tablet:text-[32px]" />
+                <p className="text-[9px] font-medium tablet:text-[16px] ">
+                  Full Screen
+                </p>
+              </div>
+            ) : (
+              <div></div>
+            )}
             <button
               className="inset-0 mr-[14.4px] h-[23.48px] w-[81.8px] rounded-[7.1px] bg-[#FDD503] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-white shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:bg-[#BB9D02]"
               onClick={() => {
@@ -468,10 +465,11 @@ const Result = (props) => {
         ) : (
           <div className="mt-4 flex justify-end tablet:mt-10">
             <button
-              className={`${persistedTheme === "dark"
-                ? "bg-[#333B46]"
-                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-                } inset-0 mr-[14px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+              className={`${
+                persistedTheme === "dark"
+                  ? "bg-[#333B46]"
+                  : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+              } inset-0 mr-[14px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
               onClick={() => {
                 props.handleViewResults(null);
               }}
@@ -481,7 +479,6 @@ const Result = (props) => {
           </div>
         )}
       </div>
-
 
       <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-[1.37rem] tablet:py-[0.85rem]">
         <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">

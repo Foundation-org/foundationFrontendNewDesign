@@ -155,7 +155,7 @@ const SingleAnswerMultipleChoice = (props) => {
           <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"
-              alt="trash"
+              alt="optionMeBadge"
               className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />
           </div>
@@ -163,7 +163,7 @@ const SingleAnswerMultipleChoice = (props) => {
           <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
-              alt="trash"
+              alt="bluebadge"
               className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />
           </div>

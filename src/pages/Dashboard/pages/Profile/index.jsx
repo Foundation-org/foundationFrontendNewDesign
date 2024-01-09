@@ -1,14 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
 import { Switch } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { changeTheme } from "../../../../features/utils/utilsSlice";
 import Topbar from "../../components/Topbar";
 import Tabs from "./components/Tabs";
-import Contributions from "./pages/Contributions";
-import VerificationBadges from "./pages/VerificationBadges";
-import Ledger from "./pages/Ledger";
-import ChangePassword from "./pages/ChangePassword";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -68,10 +64,11 @@ const Profile = () => {
                   <span className="sr-only">Use setting</span>
                   <span
                     aria-hidden="true"
-                    className={`${checkState
+                    className={`${
+                      checkState
                         ? "translate-x-[9px] bg-[#565D62] tablet:translate-x-6"
                         : "translate-x-[1px] bg-[#4A8DBD]"
-                      }
+                    }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
                   />
                 </Switch>
@@ -82,10 +79,7 @@ const Profile = () => {
             </div>
           </div>
           <Tabs handleSelectedTab={handleSelectedTab} active={selectedTab} />
-          {selectedTab === 1 && <Contributions />}
-          {selectedTab === 2 && <VerificationBadges />}
-          {selectedTab === 3 && <Ledger />}
-          {selectedTab === 4 && <ChangePassword />}
+          <Outlet />
         </div>
       </div>
     </div>
