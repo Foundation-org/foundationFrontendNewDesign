@@ -289,7 +289,7 @@ const Main = () => {
                 />
               </div>
             ) : (
-              <div className="z-100 fixed left-0 top-0 flex h-full w-full items-center justify-center bg-white bg-opacity-20">
+              <div className="flex items-center justify-center">
                 <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
               </div>
             )
