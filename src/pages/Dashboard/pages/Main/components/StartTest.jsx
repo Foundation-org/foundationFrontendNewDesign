@@ -219,7 +219,7 @@ const StartTest = ({
             {title === "Yes/No" ? (
               loadingDetail === true ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+                  <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
                 </div>
               ) : (
                 <>
@@ -244,7 +244,7 @@ const StartTest = ({
             ) : title === "Agree/Disagree" ? (
               loadingDetail === true ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+                  <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
                 </div>
               ) : (
                 <>
@@ -268,7 +268,7 @@ const StartTest = ({
               )
             ) : loadingDetail === true ? (
               <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+                <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
               </div>
             ) : (
               <>
@@ -294,7 +294,7 @@ const StartTest = ({
         ) : title === "Multiple Choice" ? (
           loadingDetail === true ? (
             <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-              <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+              <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
             </div>
           ) : (
             <div className="flex flex-col  overflow-auto ">
@@ -349,7 +349,7 @@ const StartTest = ({
           )
         ) : loadingDetail === true ? (
           <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-            <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+            <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
           </div>
         ) : (
           <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">

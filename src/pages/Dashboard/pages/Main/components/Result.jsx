@@ -268,7 +268,7 @@ const Result = (props) => {
             {props.title === "Yes/No" ? (
               checkLoading === true || ResultsData === undefined ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+                  <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
                 </div>
               ) : (
                 <>
@@ -301,7 +301,7 @@ const Result = (props) => {
             ) : props.title === "Agree/Disagree" ? (
               checkLoading === true || ResultsData === undefined ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+                  <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
                 </div>
               ) : (
                 <>
@@ -334,7 +334,7 @@ const Result = (props) => {
             ) : props.title === "Like/Unlike" ? (
               checkLoading === true || ResultsData === undefined ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+                  <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
                 </div>
               ) : (
                 <>
@@ -370,7 +370,7 @@ const Result = (props) => {
         ) : props.title === "Multiple Choice" ? (
           checkLoading === true || ResultsData === undefined ? (
             <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-              <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+              <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
             </div>
           ) : (
             <div
@@ -406,7 +406,7 @@ const Result = (props) => {
         ) : props.title === "Ranked Choice" ? (
           checkLoading === true || ResultsData === undefined ? (
             <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-              <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+              <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
             </div>
           ) : (
             <div

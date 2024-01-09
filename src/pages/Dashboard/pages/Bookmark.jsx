@@ -246,7 +246,7 @@ const Bookmark = () => {
               </div>
             ) : (
               <div className="flex items-center justify-center">
-                <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+                <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
               </div>
             )
           }
@@ -391,7 +391,7 @@ const Bookmark = () => {
               </div>
             ) : (
               <div className="flex items-center justify-center">
-                <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+                <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
               </div>
             )
           }

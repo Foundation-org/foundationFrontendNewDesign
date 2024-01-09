@@ -207,7 +207,7 @@ const Topbar = () => {
             {(location.pathname === "/dashboard/bookmark" ||
               location.pathname === "/dashboard/bookmark/") && (
               <img
-                src="/assets/svgs/dashboard/bookmark-white.svg"
+                src="/assets/bookmark/darkbookmark.png"
                 alt="bookmark"
                 className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
               />
