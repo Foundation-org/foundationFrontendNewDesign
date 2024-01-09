@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { FaSpinner } from "react-icons/fa";
+
 import {
   getAllQuestsWithDefaultStatus,
   getAllAnswered,
@@ -202,15 +204,21 @@ const Bookmark = () => {
             )
           }
           endMessage={
-            <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
-              <p className="text-center">
-                <b>You are all caught up!</b>
-              </p>
-              <IoIosArrowUp
-                className="cursor-pointer text-2xl"
-                onClick={handleClickScroll}
-              />
-            </div>
+            feedData?.hasNextPage === false ? (
+              <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
+                <p className="text-center">
+                  <b>You are all caught up!</b>
+                </p>
+                <IoIosArrowUp
+                  className="cursor-pointer text-2xl"
+                  onClick={handleClickScroll}
+                />
+              </div>
+            ) : (
+              <div className="flex items-center justify-center">
+                <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+              </div>
+            )
           }
           height={"88vh"}
           className="no-scrollbar"
