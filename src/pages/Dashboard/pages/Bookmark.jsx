@@ -25,6 +25,7 @@ import QuestionCard from "./Main/components/QuestionCard";
 import SidebarLeft from "../components/SidebarLeft";
 import SidebarRight from "../components/SidebarRight";
 import InfiniteScroll from "react-infinite-scroll-component";
+import QuestionCardWithToggle from "./Main/components/QuestionCardWithToggle";
 import Cookies from "js-cookie";
 import { handleClickScroll } from "../../../utils";
 import { IoIosArrowUp } from "react-icons/io";
@@ -51,6 +52,13 @@ const Bookmark = () => {
   const [startTest, setStartTest] = useState(null);
   const [clearFilter, setClearFilter] = useState(false);
   const debouncedSearch = useDebounce(searchData, 1000);
+  const [expandedView, setExpandedView] = useState(
+    localStorage.getItem("expandedView") !== undefined
+      ? localStorage.getItem("expandedView") === "true"
+        ? true
+        : false
+      : false,
+  );
 
   const { data: bookmarkedData } = useQuery({
     queryFn: () => getAllBookmarkedQuests(Cookies.get("uId")),
@@ -164,6 +172,15 @@ const Bookmark = () => {
   const handleViewResults = (testId) => {
     setViewResult((prev) => (prev === testId ? null : testId));
   };
+  const printNoRecords=()=>{
+    setTimeout(() => {
+        return (
+          <p className="text-center">
+            <b>No records found.</b>
+          </p>
+        );
+      }, 1000)
+    }
 
   const fetchMoreData = () => {
     setPagination((prevPagination) => ({
@@ -188,7 +205,163 @@ const Bookmark = () => {
         setFilterByType={setFilterByType}
       />
       <div className="shadow-inner-md no-scrollbar flex h-full min-h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#06070a]">
-        <InfiniteScroll
+      <InfiniteScroll
+          dataLength={allData?.length}
+          next={fetchMoreData}
+          hasMore={feedData?.hasNextPage}
+          loader={
+            allData && allData.length === 0 ? (
+              <h4>
+                {feedData && feedData.hasNextPage
+                  ? "Loading..."
+                  : "No records found."}
+              </h4>
+            ) : (
+              <h4>No more data to display.</h4>
+            )
+          }
+          
+          endMessage={
+            feedData?.hasNextPage === false ? (
+              <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
+                {searchData && allData.length==0 ?
+                  <p className="text-center">
+                    <b>No matching quest found.</b>
+                  </p>
+                  :!searchData && allData.length===0?
+                  <>
+                  {printNoRecords()}
+                </>
+                  : !searchData &&
+                  <p className="text-center">
+                    <b>You are all caught up!</b>
+                  </p>
+                }
+                <IoIosArrowUp
+                  className="cursor-pointer text-2xl"
+                  onClick={handleClickScroll}
+                />
+              </div>
+            ) : (
+              <div className="flex items-center justify-center">
+                <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+              </div>
+            )
+          }
+          height={"88vh"}
+          className="no-scrollbar "
+        >
+          <div
+            id="section-1"
+            className="flex flex-col gap-2 py-3 tablet:gap-[17px] tablet:py-[27px]"
+          >
+            {expandedView
+              ? allData?.map((item, index) => (
+                <div key={index + 1}>
+                  <QuestionCardWithToggle
+                    id={item._id}
+                    img="/assets/svgs/dashboard/badge.svg"
+                    alt="badge"
+                    badgeCount="5"
+                    title={
+                      item?.whichTypeQuestion === "agree/disagree"
+                        ? "Agree/Disagree"
+                        : item?.whichTypeQuestion === "like/unlike"
+                          ? "Like/Unlike"
+                          : item?.whichTypeQuestion === "multiple choise"
+                            ? "Multiple Choice"
+                            : item?.whichTypeQuestion === "ranked choise"
+                              ? "Ranked Choice"
+                              : item?.whichTypeQuestion === "yes/no"
+                                ? "Yes/No"
+                                : null
+                    }
+                    answers={item?.QuestAnswers}
+                    time={item?.createdAt}
+                    multipleOption={item?.userCanSelectMultiple}
+                    question={item?.Question}
+                    whichTypeQuestion={item?.whichTypeQuestion}
+                    startTest={startTest}
+                    setStartTest={setStartTest}
+                    viewResult={viewResult}
+                    setViewResult={setViewResult}
+                    handleViewResults={handleViewResults}
+                    handleStartTest={handleStartTest}
+                    usersAddTheirAns={item?.usersAddTheirAns}
+                    startStatus={item?.startStatus}
+                    createdBy={item?.uuid}
+                    btnColor={
+                      item?.startStatus === "completed"
+                        ? "bg-[#4ABD71]"
+                        : item?.startStatus === "change answer"
+                          ? "bg-[#FDD503]"
+                          : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                    }
+                    btnText={item?.startStatus}
+                    isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                      return bookmark.questForeignKey === item._id;
+                    })}
+                    lastInteractedAt={item.lastInteractedAt}
+                    usersChangeTheirAns={item.usersChangeTheirAns}
+                    expandedView={expandedView}
+                    QuestTopic={item.QuestTopic}
+                  />
+                </div>
+              ))
+              : allData?.map((item, index) => (
+                <div key={index + 1}>
+                  <QuestionCard
+                    id={item._id}
+                    img="/assets/svgs/dashboard/badge.svg"
+                    alt="badge"
+                    badgeCount="5"
+                    title={
+                      item?.whichTypeQuestion === "agree/disagree"
+                        ? "Agree/Disagree"
+                        : item?.whichTypeQuestion === "like/unlike"
+                          ? "Like/Unlike"
+                          : item?.whichTypeQuestion === "multiple choise"
+                            ? "Multiple Choice"
+                            : item?.whichTypeQuestion === "ranked choise"
+                              ? "Ranked Choice"
+                              : item?.whichTypeQuestion === "yes/no"
+                                ? "Yes/No"
+                                : null
+                    }
+                    answers={item?.QuestAnswers}
+                    time={item?.createdAt}
+                    multipleOption={item?.userCanSelectMultiple}
+                    question={item?.Question}
+                    whichTypeQuestion={item?.whichTypeQuestion}
+                    startTest={startTest}
+                    setStartTest={setStartTest}
+                    viewResult={viewResult}
+                    usersAddTheirAns={item?.usersAddTheirAns}
+                    handleViewResults={handleViewResults}
+                    handleStartTest={handleStartTest}
+                    startStatus={item?.startStatus}
+                    createdBy={item?.uuid}
+                    btnColor={
+                      item?.startStatus === "completed"
+                        ? "bg-[#4ABD71]"
+                        : item?.startStatus === "change answer"
+                          ? "bg-[#FDD503]"
+                          : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                    }
+                    btnText={item?.startStatus}
+                    isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                      return bookmark.questForeignKey === item._id;
+                    })}
+                    lastInteractedAt={item.lastInteractedAt}
+                    usersChangeTheirAns={item.usersChangeTheirAns}
+                    expandedView={expandedView}
+                    QuestTopic={item.QuestTopic}
+                  />
+                </div>
+              ))}
+          </div>
+        </InfiniteScroll>
+        {/* <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
           hasMore={feedData?.hasNextPage}
@@ -275,7 +448,7 @@ const Bookmark = () => {
               </div>
             ))}
           </div>
-        </InfiniteScroll>
+        </InfiniteScroll> */}
       </div>
       <SidebarRight />
     </div>

@@ -103,8 +103,8 @@ const StartTest = ({
 
     setRankedAnswers(
       updatedAnswersSelection?.map((item, index) => ({
-        id: `unique-${index}`,
-        ...item,
+        
+        ...item,id: `unique-${index}`
       })),
     );
   }, [answers]);
