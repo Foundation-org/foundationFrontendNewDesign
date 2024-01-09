@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
+
 const Tabs = ({ handleSelectedTab, active }) => {
   return (
     <div className="mx-6 mb-[19px] mt-[14px] flex justify-between gap-[9.21px] tablet:mx-11 tablet:my-[26px] tablet:gap-[19.9px] laptop:mx-[62px] laptop:mb-[67px] laptop:mt-[50px] laptop:gap-9">
-      <button
+      <Link
+        to={""}
         className={`${
           active === 1
             ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black"
@@ -12,8 +15,9 @@ const Tabs = ({ handleSelectedTab, active }) => {
         }}
       >
         Contributions
-      </button>
-      <button
+      </Link>
+      <Link
+        to={"verification-badges"}
         className={`${
           active === 2
             ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black"
@@ -24,8 +28,9 @@ const Tabs = ({ handleSelectedTab, active }) => {
         }}
       >
         Verfication Badges
-      </button>
-      <button
+      </Link>
+      <Link
+        to={"ledger"}
         className={`${
           active === 3
             ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black"
@@ -36,8 +41,9 @@ const Tabs = ({ handleSelectedTab, active }) => {
         }}
       >
         Ledger
-      </button>
-      <button
+      </Link>
+      <Link
+        to={"change-password"}
         className={`${
           active === 4
             ? "border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black"
@@ -48,7 +54,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
         }}
       >
         Change Password
-      </button>
+      </Link>
     </div>
   );
 };

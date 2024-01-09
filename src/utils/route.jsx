@@ -6,6 +6,10 @@ import Guests from "../pages/Guests";
 import Dashboard from "../pages/Dashboard";
 import VerifyEmail from "../pages/Signup/VerifyEmail";
 import Profile from "../pages/Dashboard/pages/Profile";
+import Contributions from "../pages/Dashboard/pages/Profile/pages/Contributions";
+import VerificationBadges from "../pages/Dashboard/pages/Profile/pages/VerificationBadges";
+import BasicTable from "../pages/Dashboard/pages/Profile/pages/Ledger";
+import ChangePassword from "../pages/Dashboard/pages/Profile/pages/ChangePassword";
 
 export function Router() {
   // const navigate = useNavigate();
@@ -38,7 +42,15 @@ export function Router() {
         )} */}
         <>
           <Route path="/dashboard/*" element={<Dashboard />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/" element={<Profile />}>
+            <Route path="" element={<Contributions />} />
+            <Route
+              path="verification-badges"
+              element={<VerificationBadges />}
+            />
+            <Route path="ledger" element={<BasicTable />} />
+            <Route path="change-password" element={<ChangePassword />} />
+          </Route>
           <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
         </>
 

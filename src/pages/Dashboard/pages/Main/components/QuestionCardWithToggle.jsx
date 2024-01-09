@@ -59,6 +59,7 @@ const QuestionCardWithToggle = ({
   const [addOptionLimit, setAddOptionLimit] = useState(0);
   const [openResults, setOpenResults] = useState(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -718,6 +719,7 @@ const QuestionCardWithToggle = ({
           lastInteractedAt={lastInteractedAt}
           howManyTimesAnsChanged={howManyTimesAnsChanged}
           loadingDetail={loadingDetail}
+          loading={loading}
         />
       ) : (
         <Result
@@ -745,6 +747,7 @@ const QuestionCardWithToggle = ({
           badgeCount={badgeCount}
           question={question}
           time={time}
+          loading={loading}
         />
       )}
     </div>
