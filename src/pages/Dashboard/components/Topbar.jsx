@@ -29,7 +29,7 @@ const Topbar = () => {
         persistedTheme === "dark"
           ? "bg-gray-600"
           : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-      } flex h-[4.18rem] w-full flex-col items-center justify-between pb-2 tablet:h-[116px] laptop:h-[90px] laptop:flex-row laptop:pb-0 `}
+      } flex w-full flex-col items-center justify-between overflow-hidden pb-2 tablet:h-[116px] laptop:h-[90px] laptop:flex-row laptop:pb-0 `}
     >
       {/* logo */}
       <div className="relative flex w-full items-center justify-between px-[17px] py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
