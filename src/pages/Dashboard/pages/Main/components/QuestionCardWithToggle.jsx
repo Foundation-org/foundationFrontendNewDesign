@@ -61,6 +61,7 @@ const QuestionCardWithToggle = ({
   const [openResults, setOpenResults] = useState(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -721,6 +722,7 @@ const QuestionCardWithToggle = ({
           howManyTimesAnsChanged={howManyTimesAnsChanged}
           loadingDetail={loadingDetail}
           loading={loading}
+          setIsSubmit={setIsSubmit}
         />
       ) : (
         <Result

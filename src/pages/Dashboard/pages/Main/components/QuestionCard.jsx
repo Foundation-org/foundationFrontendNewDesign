@@ -69,6 +69,8 @@ const QuestionCard = ({
       uuid: answer.uuid,
     })),
   );
+
+  console.log("answer selection",answersSelection);
   const [loadingDetail, setLoadingDetail] = useState(false);
 
   useEffect(() => {
