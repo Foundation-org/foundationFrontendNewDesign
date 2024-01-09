@@ -24,6 +24,8 @@ import SidebarLeft from "../components/SidebarLeft";
 import SidebarRight from "../components/SidebarRight";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Cookies from "js-cookie";
+import { handleClickScroll } from "../../../utils";
+import { IoIosArrowUp } from "react-icons/io";
 
 const Bookmark = () => {
   const pageLimit = 10;
@@ -167,6 +169,7 @@ const Bookmark = () => {
       page: prevPagination.page + 1,
     }));
   };
+
   return (
     <div className="flex w-full flex-col laptop:flex-row">
       <SidebarLeft
@@ -182,7 +185,7 @@ const Bookmark = () => {
         setFilterByStatus={setFilterByStatus}
         setFilterByType={setFilterByType}
       />
-      <div className="shadow-inner-md no-scrollbar flex h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] py-[27px] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#06070a]">
+      <div className="shadow-inner-md no-scrollbar flex h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#06070a]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -199,60 +202,71 @@ const Bookmark = () => {
             )
           }
           endMessage={
-            <p className="text-center">
-              <b>End of bookmarks</b>
-            </p>
-          }
-          height={"88vh"}
-          className="no-scrollbar flex flex-col gap-[27px]"
-        >
-          {allData?.map((item, index) => (
-            <div key={index + 1}>
-              <QuestionCard
-                id={item?._id}
-                img="/assets/svgs/dashboard/badge.svg"
-                alt="badge"
-                badgeCount="5"
-                title={
-                  item?.whichTypeQuestion === "agree/disagree"
-                    ? "Agree/Disagree"
-                    :item?.whichTypeQuestion === "like/unlike"
-                    ? "Like/Unlike"
-                    : item?.whichTypeQuestion === "multiple choise"
-                      ? "Multiple Choice"
-                      : item?.whichTypeQuestion === "ranked choise"
-                        ? "Ranked Choice"
-                        : item?.whichTypeQuestion === "yes/no"
-                          ? "Yes/No"
-                          : null
-                }
-                answers={item?.QuestAnswers}
-                time={item?.createdAt}
-                multipleOption={item?.userCanSelectMultiple}
-                viewResult={viewResult}
-                startTest={startTest}
-                handleViewResults={handleViewResults}
-                handleStartTest={handleStartTest}
-                whichTypeQuestion={item?.whichTypeQuestion}
-                createdBy={item?.uuid}
-                usersAddTheirAns={item?.usersAddTheirAns}
-                question={item?.Question}
-                btnColor={
-                  item?.startStatus === "completed"
-                    ? "bg-[#4ABD71]"
-                    : item?.startStatus === "change answer"
-                      ? "bg-[#FDD503]"
-                      : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-                }
-                btnText={item?.startStatus}
-                lastInteractedAt={item?.lastInteractedAt}
-                usersChangeTheirAns={item?.usersChangeTheirAns}
-                isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                  return bookmark.questForeignKey === item?._id;
-                })}
+            <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
+              <p className="text-center">
+                <b>You are all caught up!</b>
+              </p>
+              <IoIosArrowUp
+                className="cursor-pointer text-2xl"
+                onClick={handleClickScroll}
               />
             </div>
-          ))}
+          }
+          height={"88vh"}
+          className="no-scrollbar"
+        >
+          <div
+            id="section-1"
+            className="flex flex-col gap-[27px] py-3 tablet:py-[27px]"
+          >
+            {allData?.map((item, index) => (
+              <div key={index + 1}>
+                <QuestionCard
+                  id={item?._id}
+                  img="/assets/svgs/dashboard/badge.svg"
+                  alt="badge"
+                  badgeCount="5"
+                  title={
+                    item?.whichTypeQuestion === "agree/disagree"
+                      ? "Agree/Disagree"
+                      : item?.whichTypeQuestion === "like/unlike"
+                        ? "Like/Unlike"
+                        : item?.whichTypeQuestion === "multiple choise"
+                          ? "Multiple Choice"
+                          : item?.whichTypeQuestion === "ranked choise"
+                            ? "Ranked Choice"
+                            : item?.whichTypeQuestion === "yes/no"
+                              ? "Yes/No"
+                              : null
+                  }
+                  answers={item?.QuestAnswers}
+                  time={item?.createdAt}
+                  multipleOption={item?.userCanSelectMultiple}
+                  viewResult={viewResult}
+                  startTest={startTest}
+                  handleViewResults={handleViewResults}
+                  handleStartTest={handleStartTest}
+                  whichTypeQuestion={item?.whichTypeQuestion}
+                  createdBy={item?.uuid}
+                  usersAddTheirAns={item?.usersAddTheirAns}
+                  question={item?.Question}
+                  btnColor={
+                    item?.startStatus === "completed"
+                      ? "bg-[#4ABD71]"
+                      : item?.startStatus === "change answer"
+                        ? "bg-[#FDD503]"
+                        : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                  }
+                  btnText={item?.startStatus}
+                  lastInteractedAt={item?.lastInteractedAt}
+                  usersChangeTheirAns={item?.usersChangeTheirAns}
+                  isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                    return bookmark.questForeignKey === item?._id;
+                  })}
+                />
+              </div>
+            ))}
+          </div>
         </InfiniteScroll>
       </div>
       <SidebarRight />

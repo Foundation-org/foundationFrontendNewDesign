@@ -53,3 +53,10 @@ export function calculateRemainingTime(
     return ", you are good to go!";
   }
 }
+
+export const handleClickScroll = () => {
+  const element = document.getElementById("section-1");
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth" });
+  }
+};

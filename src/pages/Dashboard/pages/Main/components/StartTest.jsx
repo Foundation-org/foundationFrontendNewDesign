@@ -60,7 +60,7 @@ const StartTest = ({
   startStatus,
   howManyTimesAnsChanged,
   tab,
-  loadingDetail
+  loadingDetail,
 }) => {
   const navigate = useNavigate();
   const { isFullScreen } = useParams();
@@ -71,7 +71,7 @@ const StartTest = ({
   const [emailModal, setEmailModal] = useState(false);
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
- 
+
   const uuidExists = answers.some(
     (item) => item.uuid === localStorage.getItem("uId"),
   );
@@ -216,189 +216,191 @@ const StartTest = ({
 
   return (
     <>
-     {loadingDetail === true ? (
-        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-white bg-opacity-20 z-100">
-          <FaSpinner className="animate-spin text-blue text-[20vw] tablet:text-[7vw]" />
+      {loadingDetail === true ? (
+        <div className="z-100 fixed left-0 top-0 flex h-full w-full items-center justify-center bg-white bg-opacity-20">
+          <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
         </div>
-      ) : 
-      <>
-        {title === "Yes/No" || title === "Agree/Disagree" || title==="Like/Unlike" ? (
-          <div className="mt-[18px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px]">
-            {title === "Yes/No" ? (
-              <>
-                <SingleAnswer
-                  number={"#1"}
-                  answer={"Yes"}
-                  checkInfo={true}
-                  check={quests.yesNo.yes.check}
-                  contend={quests.yesNo.yes.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-                <SingleAnswer
-                  number={"#2"}
-                  answer={"No"}
-                  checkInfo={true}
-                  check={quests.yesNo.no.check}
-                  contend={quests.yesNo.no.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-              </>
-            ) : title==="Agree/Disagree"?(
-              <>
-                <SingleAnswer
-                  number={"#1"}
-                  answer={"Agree"}
-                  checkInfo={true}
-                  check={quests.agreeDisagree.agree.check}
-                  contend={quests.agreeDisagree.agree.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-                <SingleAnswer
-                  number={"#2"}
-                  answer={"Disagree"}
-                  checkInfo={true}
-                  check={quests.agreeDisagree.disagree.check}
-                  contend={quests.agreeDisagree.disagree.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-              </>
-            ):
-            (
-              <>
-              {console.log(title)}
-                <SingleAnswer
-                  number={"#1"}
-                  answer={"Like"}
-                  checkInfo={true}
-                  check={quests.likeUnlike.like.check}
-                  contend={quests.likeUnlike.like.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-                <SingleAnswer
-                  number={"#2"}
-                  answer={"Unlike"}
-                  checkInfo={true}
-                  check={quests.likeUnlike.unlike.check}
-                  contend={quests.likeUnlike.unlike.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-              </>
-            )}
-          </div>
-        ) : title === "Multiple Choice" ? (
-          <div className="flex flex-col  overflow-auto ">
-            {multipleOption ? (
-              <h4 className="ml-8 mt-3 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
-                You can select multiple options.
-              </h4>
-            ) : (
-              <h4 className="ml-8 mt-[15px] text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:text-[16.58px] laptop:text-[18px]">
-                &#x200B;
-              </h4>
-            )}
-            <div
-              className={`${
-                isFullScreen === undefined
-                  ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
-                  : ""
-              } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-            >
-              {[...answersSelection].map((item, index) => (
-                <SingleAnswerMultipleChoice
-                  key={index}
-                  number={"#" + (index + 1)}
-                  answer={item.label}
-                  addedAnswerUuid={item.uuid}
-                  editable={item.edit}
-                  deleteable={item.delete}
-                  title={title}
-                  multipleOption={multipleOption}
-                  // setAddOptionLimit={setAddOptionLimit}
-                  answersSelection={answersSelection}
-                  setAnswerSelection={setAnswerSelection}
-                  checkInfo={true}
-                  check={findLabelChecked(answersSelection, item.label)}
-                  contend={findLabelContend(answersSelection, item.label)}
-                  whichTypeQuestion={whichTypeQuestion}
-                  handleCheckChange={
-                    multipleOption === true
-                      ? (check) => handleCheckChange(index, check)
-                      : (check) => handleCheckChangeSingle(index, check)
-                  }
-                  handleContendChange={
-                    multipleOption === true
-                      ? (contend) => handleContendChange(index, contend)
-                      : (contend) => handleContendChangeSingle(index, contend)
-                  }
-                  setIsSubmit={setIsSubmit}
-                />
-              ))}
+      ) : (
+        <>
+          {title === "Yes/No" ||
+          title === "Agree/Disagree" ||
+          title === "Like/Unlike" ? (
+            <div className="mt-[18px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px]">
+              {title === "Yes/No" ? (
+                <>
+                  <SingleAnswer
+                    number={"#1"}
+                    answer={"Yes"}
+                    checkInfo={true}
+                    check={quests.yesNo.yes.check}
+                    contend={quests.yesNo.yes.contend}
+                    handleToggleCheck={handleToggleCheck}
+                  />
+                  <SingleAnswer
+                    number={"#2"}
+                    answer={"No"}
+                    checkInfo={true}
+                    check={quests.yesNo.no.check}
+                    contend={quests.yesNo.no.contend}
+                    handleToggleCheck={handleToggleCheck}
+                  />
+                </>
+              ) : title === "Agree/Disagree" ? (
+                <>
+                  <SingleAnswer
+                    number={"#1"}
+                    answer={"Agree"}
+                    checkInfo={true}
+                    check={quests.agreeDisagree.agree.check}
+                    contend={quests.agreeDisagree.agree.contend}
+                    handleToggleCheck={handleToggleCheck}
+                  />
+                  <SingleAnswer
+                    number={"#2"}
+                    answer={"Disagree"}
+                    checkInfo={true}
+                    check={quests.agreeDisagree.disagree.check}
+                    contend={quests.agreeDisagree.disagree.contend}
+                    handleToggleCheck={handleToggleCheck}
+                  />
+                </>
+              ) : (
+                <>
+                  {console.log(title)}
+                  <SingleAnswer
+                    number={"#1"}
+                    answer={"Like"}
+                    checkInfo={true}
+                    check={quests.likeUnlike.like.check}
+                    contend={quests.likeUnlike.like.contend}
+                    handleToggleCheck={handleToggleCheck}
+                  />
+                  <SingleAnswer
+                    number={"#2"}
+                    answer={"Unlike"}
+                    checkInfo={true}
+                    check={quests.likeUnlike.unlike.check}
+                    contend={quests.likeUnlike.unlike.contend}
+                    handleToggleCheck={handleToggleCheck}
+                  />
+                </>
+              )}
             </div>
-          </div>
-        ) : (
-          <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
-            <h4 className="ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-2 tablet:ml-[108.65px] tablet:text-[16.58px] laptop:text-[18px]">
-              You can drag and drop options in your order of preference.
-            </h4>
-            <div className="-mt-1 flex flex-col gap-[5.7px] tablet:-mt-3 tablet:gap-[10px]">
-              <DragDropContext onDragEnd={handleOnDragEnd}>
-                <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
-                  {(provided) => (
-                    <ul
-                      className={`${
-                        isFullScreen === undefined
-                          ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto tablet:max-h-[496px]"
-                          : ""
-                      }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
-                      {rankedAnswers.map((item, index) => (
-                        <Draggable
-                          key={item.id}
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {(provided) => (
-                            <li
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className="w-full"
-                            >
-                              <SingleAnswerRankedChoice
-                                number={"#" + (index + 1)}
-                                editable={item.edit}
-                                deleteable={item.delete}
-                                answer={item.label}
-                                addedAnswerUuid={item.uuid}
-                                answersSelection={answersSelection}
-                                setAnswerSelection={setAnswerSelection}
-                                title={title}
-                                checkInfo={false}
-                                check={findLabelChecked(
-                                  answersSelection,
-                                  item.label,
-                                )}
-                                handleCheckChange={(check) =>
-                                  handleCheckChange(index, check)
-                                }
-                                // setAddOptionLimit={setAddOptionLimit}
-                                setIsSubmit={setIsSubmit}
-                              />
-                            </li>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </ul>
-                  )}
-                </Droppable>
-              </DragDropContext>
+          ) : title === "Multiple Choice" ? (
+            <div className="flex flex-col  overflow-auto ">
+              {multipleOption ? (
+                <h4 className="ml-8 mt-3 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
+                  You can select multiple options.
+                </h4>
+              ) : (
+                <h4 className="ml-8 mt-[15px] text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:text-[16.58px] laptop:text-[18px]">
+                  &#x200B;
+                </h4>
+              )}
+              <div
+                className={`${
+                  isFullScreen === undefined
+                    ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
+                    : ""
+                } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+              >
+                {[...answersSelection].map((item, index) => (
+                  <SingleAnswerMultipleChoice
+                    key={index}
+                    number={"#" + (index + 1)}
+                    answer={item.label}
+                    addedAnswerUuid={item.uuid}
+                    editable={item.edit}
+                    deleteable={item.delete}
+                    title={title}
+                    multipleOption={multipleOption}
+                    // setAddOptionLimit={setAddOptionLimit}
+                    answersSelection={answersSelection}
+                    setAnswerSelection={setAnswerSelection}
+                    checkInfo={true}
+                    check={findLabelChecked(answersSelection, item.label)}
+                    contend={findLabelContend(answersSelection, item.label)}
+                    whichTypeQuestion={whichTypeQuestion}
+                    handleCheckChange={
+                      multipleOption === true
+                        ? (check) => handleCheckChange(index, check)
+                        : (check) => handleCheckChangeSingle(index, check)
+                    }
+                    handleContendChange={
+                      multipleOption === true
+                        ? (contend) => handleContendChange(index, contend)
+                        : (contend) => handleContendChangeSingle(index, contend)
+                    }
+                    setIsSubmit={setIsSubmit}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        )}
-      </>}
+          ) : (
+            <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
+              <h4 className="ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-2 tablet:ml-[108.65px] tablet:text-[16.58px] laptop:text-[18px]">
+                You can drag and drop options in your order of preference.
+              </h4>
+              <div className="-mt-1 flex flex-col gap-[5.7px] tablet:-mt-3 tablet:gap-[10px]">
+                <DragDropContext onDragEnd={handleOnDragEnd}>
+                  <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
+                    {(provided) => (
+                      <ul
+                        className={`${
+                          isFullScreen === undefined
+                            ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto tablet:max-h-[496px]"
+                            : ""
+                        }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                      >
+                        {rankedAnswers.map((item, index) => (
+                          <Draggable
+                            key={item.id}
+                            draggableId={item.id}
+                            index={index}
+                          >
+                            {(provided) => (
+                              <li
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                className="w-full"
+                              >
+                                <SingleAnswerRankedChoice
+                                  number={"#" + (index + 1)}
+                                  editable={item.edit}
+                                  deleteable={item.delete}
+                                  answer={item.label}
+                                  addedAnswerUuid={item.uuid}
+                                  answersSelection={answersSelection}
+                                  setAnswerSelection={setAnswerSelection}
+                                  title={title}
+                                  checkInfo={false}
+                                  check={findLabelChecked(
+                                    answersSelection,
+                                    item.label,
+                                  )}
+                                  handleCheckChange={(check) =>
+                                    handleCheckChange(index, check)
+                                  }
+                                  // setAddOptionLimit={setAddOptionLimit}
+                                  setIsSubmit={setIsSubmit}
+                                />
+                              </li>
+                            )}
+                          </Draggable>
+                        ))}
+                        {provided.placeholder}
+                      </ul>
+                    )}
+                  </Droppable>
+                </DragDropContext>
+              </div>
+            </div>
+          )}
+        </>
+      )}
 
       <QuestTimeRemaining
         lastInteractedAt={localStorage.getItem("lastInteractedAt")}
@@ -409,7 +411,9 @@ const StartTest = ({
       <div className="ml-[20px] mr-[28px] mt-[13px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
         {usersAddTheirAns && uuidExists === false ? (
           <div>
-            {title === "Yes/No" || title === "Agree/Disagree" || title ==="Like/Unlike" ? null : (
+            {title === "Yes/No" ||
+            title === "Agree/Disagree" ||
+            title === "Like/Unlike" ? null : (
               <button
                 onClick={handleOpen}
                 className="addoption-boxShadow ml-4 flex h-[23.48px] w-[81.8px] items-center gap-[5.8px] rounded-[7.1px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:h-[52px] tablet:w-[173px] tablet:gap-[11.37px] tablet:rounded-[15px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
