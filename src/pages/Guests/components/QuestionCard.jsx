@@ -136,11 +136,14 @@ const QuestionCard = ({
     setLoading(true);
     if (
       whichTypeQuestion === "agree/disagree" ||
-      whichTypeQuestion === "yes/no" || whichTypeQuestion === "like/unlike"
+      whichTypeQuestion === "yes/no" ||
+      whichTypeQuestion === "like/unlike"
     ) {
       const { selected, contended } = extractSelectedAndContended(
         whichTypeQuestion === "agree/disagree"
-          ? quests.agreeDisagree : whichTypeQuestion === "yes/no" ? quests.yesNo
+          ? quests.agreeDisagree
+          : whichTypeQuestion === "yes/no"
+            ? quests.yesNo
             : quests.likeUnlike,
       );
 
@@ -362,20 +365,20 @@ const QuestionCard = ({
             {bookmarkStatus ? (
               persistedTheme !== "dark" ? (
                 <img
-                  src="/assets/svgs/dashboard/bookmark-blue.svg"
+                  src="/assets/bookmark/bookmark.png"
                   alt="save icon"
                   className="h-[17px] w-[12.7px] cursor-pointer tablet:h-[39px] tablet:w-[28px]"
                 />
               ) : (
                 <img
-                  src="/assets/svgs/dashboard/bookmark-white.svg"
+                  src="/assets/bookmark/darkbookmark.png"
                   alt="save icon"
                   className="h-[17px] w-[12.7px] cursor-pointer tablet:h-[39px] tablet:w-[28px]"
                 />
               )
             ) : (
               <img
-                src="/assets/svgs/dashboard/save.svg"
+                src="/assets/bookmark/disablebookmark.png"
                 alt="save icon"
                 className="h-[17px] w-[12.7px] cursor-pointer tablet:h-[39px] tablet:w-[28px]"
               />

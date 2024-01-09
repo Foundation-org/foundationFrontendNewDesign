@@ -25,7 +25,7 @@ const SidebarLeft = ({
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const [localExpanded,setlocalExpaneded]=useState(expandedView);
+  const [localExpanded, setlocalExpaneded] = useState(expandedView);
 
   const [multipleOption, setMultipleOption] = useState(
     localStorage.getItem("filterByState") !== undefined
@@ -34,12 +34,12 @@ const SidebarLeft = ({
         : false
       : false,
   );
-  const [localMe,setLocalMe]=useState(multipleOption);
+  const [localMe, setLocalMe] = useState(multipleOption);
   const [openTopicPref, setOpenTopicPref] = useState(false);
   const [topicSearch, setTopicSearch] = useState("");
 
   const handleSwitchChange = () => {
-    setLocalMe(!multipleOption)
+    setLocalMe(!multipleOption);
     dispatch(setFilterByScope(multipleOption ? "All" : "Me"));
     localStorage.setItem("filterByState", !multipleOption ? "true" : "false");
     setMultipleOption(!multipleOption);
@@ -69,7 +69,7 @@ const SidebarLeft = ({
 
   return (
     <>
-      <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] flex-col items-center justify-between overflow-y-auto bg-white text-[#535353]  laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:border-r-2 dark:border-white dark:bg-[#0A0A0C] dark:text-white">
+      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] flex-col items-center justify-between overflow-y-auto bg-white text-[#535353]  laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:border-r-2 dark:border-white dark:bg-[#0A0A0C] dark:text-white">
         <div className="flex flex-col items-center">
           <div className="flex w-full flex-col items-center justify-center gap-10 border-b-2 border-[#707175] pb-[2.94rem] pt-[35px]">
             <div className="flex items-center justify-center gap-[25px]">
@@ -207,10 +207,7 @@ const SidebarLeft = ({
             <h1 className="flex items-center gap-2 text-[14px] font-medium leading-normal text-[#707175] dark:text-white">
               Show Only My Posts
             </h1>
-            <CustomSwitch2
-              enabled={localMe}
-              setEnabled={handleSwitchChange}
-            />
+            <CustomSwitch2 enabled={localMe} setEnabled={handleSwitchChange} />
           </div>
           <button
             className={`${
@@ -363,10 +360,7 @@ const SidebarLeft = ({
             <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] tablet:text-[15px] dark:text-white">
               Show Only My Posts
             </h1>
-            <CustomSwitch2
-              enabled={localMe}
-              setEnabled={handleSwitchChange}
-            />
+            <CustomSwitch2 enabled={localMe} setEnabled={handleSwitchChange} />
           </div>
         </div>
       </div>

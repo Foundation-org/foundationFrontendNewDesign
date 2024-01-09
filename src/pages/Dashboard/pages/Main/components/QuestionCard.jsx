@@ -68,8 +68,8 @@ const QuestionCard = ({
       uuid: answer.uuid,
     })),
   );
-  const [loadingDetail,setLoadingDetail]=useState(true);
-  
+  const [loadingDetail, setLoadingDetail] = useState(true);
+
   useEffect(() => {
     setbookmarkStatus(isBookmarked);
   }, [isBookmarked]);
@@ -178,8 +178,7 @@ const QuestionCard = ({
   };
 
   const handleToggleCheck = (option, check, contend) => {
-
-    console.log("option",option+check+contend);
+    console.log("option", option + check + contend);
     const capitalizedOption = capitalizeFirstLetter(option);
 
     const actionPayload = {
@@ -317,11 +316,14 @@ const QuestionCard = ({
     setLoading(true);
     if (
       whichTypeQuestion === "agree/disagree" ||
-      whichTypeQuestion === "yes/no" || whichTypeQuestion === "like/unlike"
+      whichTypeQuestion === "yes/no" ||
+      whichTypeQuestion === "like/unlike"
     ) {
       const { selected, contended } = extractSelectedAndContended(
         whichTypeQuestion === "agree/disagree"
-          ? quests.agreeDisagree : whichTypeQuestion === "yes/no" ? quests.yesNo
+          ? quests.agreeDisagree
+          : whichTypeQuestion === "yes/no"
+            ? quests.yesNo
             : quests.likeUnlike,
       );
 
@@ -545,24 +547,27 @@ const QuestionCard = ({
         <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[25px] dark:text-[#B8B8B8]">
           {question?.endsWith("?") ? "Q." : "S."} {question}
         </h1>
-        <div onClick={() => handleBookmark(isBookmarked)}>
+        <div
+          className="pl-[21.72px]"
+          onClick={() => handleBookmark(isBookmarked)}
+        >
           {bookmarkStatus ? (
             persistedTheme !== "dark" ? (
               <img
-                src="/assets/svgs/dashboard/bookmark-blue.svg"
+                src="/assets/bookmark/bookmark.png"
                 alt="save icon"
                 className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
               />
             ) : (
               <img
-                src="/assets/svgs/dashboard/bookmark-white.svg"
+                src="/assets/bookmark/darkbookmark.png"
                 alt="save icon"
                 className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
               />
             )
           ) : (
             <img
-              src="/assets/svgs/dashboard/save.svg"
+              src="/assets/bookmark/disablebookmark.png"
               alt="save icon"
               className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
             />

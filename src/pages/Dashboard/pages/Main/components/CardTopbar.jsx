@@ -15,7 +15,7 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic }) => {
           </p>
         </div>
       ) : (
-        <div className="relative h-fit w-fit z-50">
+        <div className="relative z-50 h-fit w-fit">
           <img
             src={img}
             alt={alt}
@@ -26,37 +26,9 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic }) => {
           </p>
         </div>
       )}
-      {/* <div> */}
-      {/* <h1 className="text-[10.414px] font-semibold leading-normal text-[#5B5B5B] tablet:text-[22px] dark:text-[#CFCFCF]">
-          {title}
-        </h1> */}
       <h1 className="text-center text-[10.414px] font-medium leading-normal text-[#9A9A9A] tablet:text-[1.25rem] dark:text-[#9A9A9A]">
         {QuestTopic}
       </h1>
-      {/* </div> */}
-      {/* <div onClick={() => handleClickBookmark(isBookmarked)}>
-        {bookmarkStatus ? (
-          persistedTheme !== "dark" ? (
-            <img
-              src="/assets/svgs/dashboard/bookmark-blue.svg"
-              alt="save icon"
-              className="h-[17px] w-[12.7px] cursor-pointer tablet:h-7 tablet:w-9"
-            />
-          ) : (
-            <img
-              src="/assets/svgs/dashboard/bookmark-white.svg"
-              alt="save icon"
-              className="h-[17px] w-[12.7px] cursor-pointer tablet:h-7 tablet:w-9"
-            />
-          )
-        ) : (
-          <img
-            src="/assets/svgs/dashboard/save.svg"
-            alt="save icon"
-            className="h-[17px] w-[12.7px] cursor-pointer tablet:h-7 tablet:w-9"
-          />
-        )}
-      </div> */}
     </div>
   );
 };

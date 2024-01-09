@@ -20,7 +20,6 @@ const SidebarRight = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-
   const sidebarList = [
     {
       id: 1,
@@ -114,7 +113,7 @@ const SidebarRight = () => {
 
       if (resp.status === 200) {
         dispath(addUser(resp.data));
-        if(resp.data.requiredAction) {
+        if (resp.data.requiredAction) {
           setModalVisible(true);
         }
       }
@@ -187,8 +186,8 @@ const SidebarRight = () => {
 
   return (
     <>
-      <div className="no-scrollbar hidden h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] shadow-[0_3px_10px_rgb(0,0,0,0.2)] 2xl:w-[25rem] laptop:block dark:border-l-2 dark:border-white dark:bg-[#0A0A0C]">
-        <EmailTypeModal 
+      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] shadow-[0_3px_10px_rgb(0,0,0,0.2)] 2xl:w-[25rem] laptop:block dark:border-l-2 dark:border-white dark:bg-[#0A0A0C]">
+        <EmailTypeModal
           modalShow={modalVisible}
           email={persistedUserInfo?.email}
           handleEmailType={handleEmailType}
@@ -275,12 +274,12 @@ const SidebarRight = () => {
           </div>
         )}
         {sidebarList.map((item) => (
-        <div className="mt-[1.9vh] flex items-center gap-4" key={item.id}>
-          {persistedTheme === "dark" ? (
-            <img src={item.icon} alt={item.alt} />
-          ) : (
-            <img src={item.iconLight} alt={item.alt} />
-          )}
+          <div className="mt-[1.9vh] flex items-center gap-4" key={item.id}>
+            {persistedTheme === "dark" ? (
+              <img src={item.icon} alt={item.alt} />
+            ) : (
+              <img src={item.iconLight} alt={item.alt} />
+            )}
 
             <div className="flex w-full items-center justify-between text-[18px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#878787]">
               <h5>{item.title}</h5>

@@ -260,7 +260,7 @@ const Main = () => {
       />
       <div
         ref={myRef}
-        className="shadow-inner-md no-scrollbar flex h-full w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] tablet:h-[calc(100vh-96px)] dark:bg-[#06070a]"
+        className="shadow-inner-md no-scrollbar flex h-full w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] tablet:min-h-[calc(100vh-96px)] dark:bg-[#06070a]"
       >
         <InfiniteScroll
           dataLength={allData?.length}
