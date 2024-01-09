@@ -1,10 +1,10 @@
 import api from "./Axios";
 
 // For Search in Feed
-export const searchQuestions = async (term, uuid) => {
+export const searchQuestions = async (term) => {
   if (term !== "") {
     const response = await api.post(
-      `/search/easySearch?term=${term}&uuid=${uuid}`,
+      `/search/easySearch?term=${term}`,
     );
     return response.data;
   }
@@ -61,16 +61,13 @@ export const getAllChangable = async (params) => {
 
 // ================= Bookmark
 // Get Bookmarks
-export const getAllBookmarkedQuests = async (uuid) => {
-  return await api.post(`/bookmarkQuest/getAllBookmarkQuests`, {
-    uuid,
-  });
+export const getAllBookmarkedQuests = async () => {
+  return await api.post(`/bookmarkQuest/getAllBookmarkQuests`);
 };
 
 // Add Bookmarks
 export const createBookmark = async (data) => {
   return await api.post(`/bookmarkQuest/createBookmarkQuest`, {
-    uuid: data.uuid,
     questForeignKey: data.questForeignKey,
     whichTypeQuestion: data.whichTypeQuestion,
     Question: data.Question,
@@ -80,15 +77,14 @@ export const createBookmark = async (data) => {
 // Delete Bookmarks
 export const deleteBookmarkById = async (data) => {
   return await api.post(`/bookmarkQuest/deleteBookmarkQuest`, {
-    uuid: data.uuid,
     questForeignKey: data.questForeignKey,
   });
 };
 
-export const searchBookmarks = async (term, uuid) => {
+export const searchBookmarks = async (term) => {
   if (term !== "") {
     const response = await api.post(
-      `/search/searchBookmarks?term=${term}&uuid=${uuid}`,
+      `/search/searchBookmarks?term=${term}`,
     );
     return response.data;
   }

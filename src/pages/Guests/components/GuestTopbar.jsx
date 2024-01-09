@@ -1,9 +1,10 @@
-import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 
 const GuestTopbar = ({ createdBy, badgeCount, QuestTopic, img }) => {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   return (
     <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-[10.4px] py-2 tablet:px-[22px] tablet:pb-[10px] tablet:pt-[17px]">
-      {createdBy === Cookies.get("uId") ? (
+      {createdBy === persistedUserInfo?.uuid ? (
         <div className="relative h-fit w-fit">
           <img
             src="/assets/svgs/dashboard/MeBadge.svg"

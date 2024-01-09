@@ -26,11 +26,11 @@ import SidebarLeft from "../components/SidebarLeft";
 import SidebarRight from "../components/SidebarRight";
 import InfiniteScroll from "react-infinite-scroll-component";
 import QuestionCardWithToggle from "./Main/components/QuestionCardWithToggle";
-import Cookies from "js-cookie";
 import { handleClickScroll } from "../../../utils";
 import { IoIosArrowUp } from "react-icons/io";
 
 const Bookmark = () => {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const pageLimit = 10;
   const filterStates = useSelector(getFilters);
   const [pagination, setPagination] = useState({
@@ -44,7 +44,7 @@ const Bookmark = () => {
     _limit: pageLimit,
     start: pagination.sliceStart,
     end: pagination.sliceEnd,
-    uuid: Cookies.get("uId"),
+    uuid: persistedUserInfo?.uuid,
     Page: "Bookmark",
   };
   const [searchData, setSearchData] = useState("");
@@ -61,7 +61,7 @@ const Bookmark = () => {
   );
 
   const { data: bookmarkedData } = useQuery({
-    queryFn: () => getAllBookmarkedQuests(Cookies.get("uId")),
+    queryFn: () => getAllBookmarkedQuests(),
     queryKey: ["getBookmarked"],
   });
 
@@ -110,10 +110,7 @@ const Bookmark = () => {
         const result = await fetchDataByStatus(params, filterStates);
         return result.data;
       } else {
-        const result = await searchBookmarks(
-          debouncedSearch,
-          Cookies.get("uId"),
-        );
+        const result = await searchBookmarks(debouncedSearch);
         return result;
       }
     },

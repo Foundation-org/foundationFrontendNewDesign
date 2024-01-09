@@ -21,7 +21,6 @@ import {
 import { useSelector } from "react-redux";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { FaSpinner } from "react-icons/fa";
-import Cookies from "js-cookie";
 
 const YesNo = () => {
   const navigate = useNavigate();
@@ -39,6 +38,7 @@ const YesNo = () => {
   };
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -93,7 +93,7 @@ const YesNo = () => {
       whichTypeQuestion: "yes/no",
       usersChangeTheirAns: changedOption,
       QuestionCorrect: "Not Selected",
-      uuid: Cookies.get("uId"),
+      uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
     };
 

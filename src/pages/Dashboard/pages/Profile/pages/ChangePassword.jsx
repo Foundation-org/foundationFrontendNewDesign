@@ -5,10 +5,10 @@ import { FaSpinner } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
 import { changePassword } from "../../../../../api/userAuth";
 import Form from "../components/Form";
-import Cookies from "js-cookie";
 
 const ChangePassword = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const mutation = useMutation({ mutationFn: changePassword });
   const [showCrntPass, setShowCrntPass] = useState(false);
   const [showNewPass, setShowNewPass] = useState(false);
@@ -35,7 +35,7 @@ const ChangePassword = () => {
         const resp = await mutation.mutateAsync({
           currentPassword,
           newPassword,
-          uuid: Cookies.get("uId"),
+          uuid: persistedUserInfo?.uuid,
         });
 
         if (resp.status === 200) {

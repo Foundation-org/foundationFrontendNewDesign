@@ -1,6 +1,6 @@
 import { FacebookProvider, ShareButton } from "react-facebook";
 import Close from "../../../../../../assets/Close";
-import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 
 const FbDialogue = ({
   handleClose,
@@ -13,6 +13,7 @@ const FbDialogue = ({
   timeAgo,
   id,
 }) => {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   return (
     <div className="relative w-[90vw] pb-[17px] tablet:pb-[75px] laptop:w-[52.6rem]">
       <div className="rounded-t-[9.251px] bg-[#1877F2] py-[6px] pl-[22px] laptop:rounded-t-[26px]">
@@ -32,7 +33,7 @@ const FbDialogue = ({
         {/* QuestionCard Preview */}
         <div className="mt-[19.84px] w-full rounded-[9.8px] bg-[#F3F3F3] px-6 pb-[23px] pt-5 tablet:mt-[78px] tablet:rounded-[26px]">
           <div className="flex items-start justify-between">
-            {createdBy === Cookies.get("uId") ? (
+            {createdBy === persistedUserInfo?.uuid ? (
               <div className="relative h-fit pb-[15px]">
                 <img
                   src="/assets/svgs/dashboard/MeBadge.svg"

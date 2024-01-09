@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import api from "./Axios";
 import { toast } from "sonner";
 
@@ -158,9 +157,7 @@ export const checkUniqueQuestion = async (question) => {
 
 const updateViolationCounterAPI = async () => {
   // Make an API call to update the violation counter
-  const response = await api.post("/startQuest/updateViolationCounter", {
-    uuid: Cookies.get("uId"),
-  });
+  const response = await api.post("/startQuest/updateViolationCounter");
   return response.data;
 };
 export default updateViolationCounterAPI;

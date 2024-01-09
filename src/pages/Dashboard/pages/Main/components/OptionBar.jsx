@@ -15,7 +15,6 @@ import UrlDialogue from "./Shareables/UrlDialogue";
 import EmailDialogue from "./Shareables/EmailDialogue";
 import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
-import Cookies from "js-cookie";
 
 const OptionBar = ({
   id,
@@ -40,6 +39,7 @@ const OptionBar = ({
   question,
   setLoadingDetail
 }) => {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const [timeAgo, setTimeAgo] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -224,7 +224,7 @@ const OptionBar = ({
     }
     if (btnText === "change answer") {
       setLoadingDetail(true);
-      const data = { questForeignKey: id, uuid: Cookies.get("uId") };
+      const data = { questForeignKey: id, uuid: persistedUserInfo?.uuid };
       getStartQuestDetail(data);
       handleStartTest(id);
     }

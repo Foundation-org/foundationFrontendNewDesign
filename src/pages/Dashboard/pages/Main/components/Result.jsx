@@ -23,7 +23,6 @@ import EmailDialogue from "./Shareables/EmailDialogue";
 import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
 import { useNavigate, useParams } from "react-router-dom";
-import Cookies from "js-cookie";
 import { FaSpinner } from "react-icons/fa";
 import { MdFullscreen } from "react-icons/md";
 
@@ -32,6 +31,7 @@ const Result = (props) => {
   const navigate = useNavigate();
   const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const [timeAgo, setTimeAgo] = useState("");
   const [copyModal, setCopyModal] = useState(false);
@@ -78,7 +78,7 @@ const Result = (props) => {
   useEffect(() => {
     const data = {
       questForeignKey: props.id,
-      uuid: Cookies.get("uId"),
+      uuid: persistedUserInfo?.uuid,
     };
 
     getStartQuestDetail(data);
@@ -218,7 +218,7 @@ const Result = (props) => {
     queryFn: async () => {
       const params = {
         questForeignKey: props.id,
-        uuid: Cookies.get("uId"),
+        uuid: persistedUserInfo?.uuid,
       };
       if (props.whichTypeQuestion === "ranked choise") {
         return await getRankedQuestPercent(params);

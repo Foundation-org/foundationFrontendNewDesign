@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../../features/auth/authSlice";
 import Anchor from "../../../components/Anchor";
 import api from "../../../api/Axios";
-import Cookies from "js-cookie";
 import EmailTypeModal from "../../../components/EmailTypeModal";
 
 const SidebarRight = () => {
@@ -107,9 +106,9 @@ const SidebarRight = () => {
     mutationFn: userInfo,
   });
 
-  const handleUserInfo = async (id) => {
+  const handleUserInfo = async () => {
     try {
-      const resp = await getUserInfo(id);
+      const resp = await getUserInfo();
 
       if (resp.status === 200) {
         dispath(addUser(resp.data));
@@ -138,7 +137,7 @@ const SidebarRight = () => {
   };
 
   useEffect(() => {
-    handleUserInfo(Cookies.get("uId"));
+    handleUserInfo();
     getTreasuryAmount();
   }, []);
 
@@ -155,10 +154,12 @@ const SidebarRight = () => {
   });
 
   useEffect(() => {
-    const uId = Cookies.get("uId");
-
-    if (!uId) {
-      createGuest();
+    if(persistedUserInfo) {
+      const uId = persistedUserInfo?.uuid;
+  
+      if (!uId) {
+        createGuest();
+      }
     }
   }, []);
 

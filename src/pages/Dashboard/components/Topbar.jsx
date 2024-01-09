@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +13,7 @@ const Topbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await api.post(`user/logout/${Cookies.get("uId")}`);
+      const res = await api.post('user/logout');
       if (res.status === 200) {
         localStorage.clear();
         navigate("/");

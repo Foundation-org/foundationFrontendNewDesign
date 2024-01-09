@@ -17,7 +17,6 @@ import CustomSwitch from "../../../../../components/CustomSwitch";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FaSpinner } from "react-icons/fa";
-import Cookies from "js-cookie";
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -59,6 +58,7 @@ const RankChoice = () => {
     tooltipStyle: "tooltip-info",
   });
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -107,7 +107,7 @@ const RankChoice = () => {
       QuestAnswers: typedValues,
       usersAddTheirAns: addOption,
       usersChangeTheirAns: changedOption,
-      uuid: Cookies.get("uId"),
+      uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
     };
 
