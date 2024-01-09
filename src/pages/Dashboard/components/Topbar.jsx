@@ -1,15 +1,16 @@
+import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link, useLocation } from "react-router-dom";
+import { TopbarItems } from "../../../constants/topbar";
 import api from "../../../api/Axios";
-import Cookies from "js-cookie";
 
 const Topbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -29,7 +30,7 @@ const Topbar = () => {
         persistedTheme === "dark"
           ? "bg-gray-600"
           : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-      } static flex h-[4.18rem] w-full flex-col items-center justify-between pb-2 tablet:h-[116px] laptop:h-[90px] laptop:flex-row laptop:pb-0 `}
+      } static flex h-[4.18rem] w-full flex-col items-center justify-between pb-2 tablet:h-[116px] laptop:h-[92px] laptop:flex-row laptop:pb-0 `}
     >
       {/* logo */}
       <div className="relative flex w-full items-center justify-between px-[17px] py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
@@ -146,99 +147,34 @@ const Topbar = () => {
       </div>
       {/* items */}
       <ul className="flex w-full items-end justify-around gap-[2.19rem] px-5 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-[57px] laptop:gap-[3.12rem] laptop:px-0">
-        <li className="flex w-[85.8px] items-center justify-center tablet:w-[149.46px]">
-          <Link
-            to={"/dashboard"}
-            className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
-              location.pathname === "/dashboard" ||
-              location.pathname === "/dashboard/"
-                ? "text-white"
-                : persistedTheme === "dark"
-                  ? "text-[#92959D]"
-                  : "text-[#BEDEF4]"
-            }`}
-          >
-            {(location.pathname === "/dashboard" ||
-              location.pathname === "/dashboard/") && (
-              <img
-                src="/assets/svgs/dashboard/home-white.svg"
-                alt="home"
-                className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[27px]"
-              />
-            )}
-            Home
-          </Link>
-        </li>
-        <li className="flex w-[85.8px] items-center justify-center tablet:w-[149.46px]">
-          <Link
-            to={"/dashboard/quest"}
-            className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
-              location.pathname === "/dashboard/quest" ||
-              location.pathname === "/dashboard/quest/"
-                ? "text-white"
-                : persistedTheme === "dark"
-                  ? "text-[#92959D]"
-                  : "text-[#BEDEF4]"
-            }`}
-          >
-            {(location.pathname === "/dashboard/quest" ||
-              location.pathname === "/dashboard/quest/") && (
-              <img
-                src="/assets/svgs/dashboard/create.svg"
-                alt="quest"
-                className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
-              />
-            )}
-            Create
-          </Link>
-        </li>
-        <li className="flex w-[85.8px] items-center justify-center tablet:w-[149.46px]">
-          <Link
-            to={"/dashboard/bookmark"}
-            className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
-              location.pathname === "/dashboard/bookmark" ||
-              location.pathname === "/dashboard/bookmark/"
-                ? "text-white"
-                : persistedTheme === "dark"
-                  ? "text-[#92959D]"
-                  : "text-[#BEDEF4]"
-            }`}
-          >
-            {(location.pathname === "/dashboard/bookmark" ||
-              location.pathname === "/dashboard/bookmark/") && (
-              <img
-                src="/assets/bookmark/darkbookmark.png"
-                alt="bookmark"
-                className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
-              />
-            )}
-            Bookmarks
-          </Link>
-        </li>
-        {/* <li>
-          <Link
-            to={"/dashboard/bookmark"}
-            className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
-              location.pathname === "/dashboard/marketplace" ||
-              location.pathname === "/dashboard/marketplace/"
-                ? "text-white"
-                : persistedTheme === "dark"
-                  ? "text-[#92959D]"
-                  : "text-[#BEDEF4]"
-            }`}
-            onClick={() => toast.info("Marketplace is coming soon")}
-          >
-            {(location.pathname === "/dashboard/marketplace" ||
-              location.pathname === "/dashboard/marketplace/") && (
-              <img
-                src="/assets/svgs/dashboard/bookmark-white.svg"
-                alt="bookmark"
-                className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
-              />
-            )}
-            Marketplace
-          </Link>
-        </li> */}
+        {TopbarItems?.map((item) => (
+          <li className="flex w-[85.8px] items-center justify-center tablet:w-[210px]">
+            <Link
+              to={item.path}
+              className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
+                location.pathname === item.path ||
+                location.pathname === `${item.path}/`
+                  ? "text-white"
+                  : persistedTheme === "dark"
+                    ? "text-[#92959D]"
+                    : "text-[#BEDEF4]"
+              }`}
+            >
+              {location.pathname === item.path ||
+              location.pathname === `${item.path}/` ? (
+                <img
+                  src={item.icon}
+                  alt={item.title}
+                  className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[26px]"
+                  // className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
+                />
+              ) : (
+                <div className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[27px]" />
+              )}
+              {item.title}
+            </Link>
+          </li>
+        ))}
       </ul>
       {/* logout btn */}
       <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">

@@ -100,8 +100,8 @@ const StartTest = ({
 
     setRankedAnswers(
       updatedAnswersSelection?.map((item, index) => ({
-        
-        ...item,id: `unique-${index}`
+        ...item,
+        id: `unique-${index}`,
       })),
     );
   }, [answers]);
@@ -314,36 +314,38 @@ const StartTest = ({
                     : ""
                 } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
               >
-                {[...answersSelection].map((item, index) => (
-                  <SingleAnswerMultipleChoice
-                    key={index}
-                    number={"#" + (index + 1)}
-                    answer={item.label}
-                    addedAnswerUuid={item.uuid}
-                    editable={item.edit}
-                    deleteable={item.delete}
-                    title={title}
-                    multipleOption={multipleOption}
-                    // setAddOptionLimit={setAddOptionLimit}
-                    answersSelection={answersSelection}
-                    setAnswerSelection={setAnswerSelection}
-                    checkInfo={true}
-                    check={findLabelChecked(answersSelection, item.label)}
-                    contend={findLabelContend(answersSelection, item.label)}
-                    whichTypeQuestion={whichTypeQuestion}
-                    handleCheckChange={
-                      multipleOption === true
-                        ? (check) => handleCheckChange(index, check)
-                        : (check) => handleCheckChangeSingle(index, check)
-                    }
-                    handleContendChange={
-                      multipleOption === true
-                        ? (contend) => handleContendChange(index, contend)
-                        : (contend) => handleContendChangeSingle(index, contend)
-                    }
-                    setIsSubmit={setIsSubmit}
-                  />
-                ))}
+                {answersSelection &&
+                  [...answersSelection]?.map((item, index) => (
+                    <SingleAnswerMultipleChoice
+                      key={index}
+                      number={"#" + (index + 1)}
+                      answer={item.label}
+                      addedAnswerUuid={item.uuid}
+                      editable={item.edit}
+                      deleteable={item.delete}
+                      title={title}
+                      multipleOption={multipleOption}
+                      // setAddOptionLimit={setAddOptionLimit}
+                      answersSelection={answersSelection}
+                      setAnswerSelection={setAnswerSelection}
+                      checkInfo={true}
+                      check={findLabelChecked(answersSelection, item.label)}
+                      contend={findLabelContend(answersSelection, item.label)}
+                      whichTypeQuestion={whichTypeQuestion}
+                      handleCheckChange={
+                        multipleOption === true
+                          ? (check) => handleCheckChange(index, check)
+                          : (check) => handleCheckChangeSingle(index, check)
+                      }
+                      handleContendChange={
+                        multipleOption === true
+                          ? (contend) => handleContendChange(index, contend)
+                          : (contend) =>
+                              handleContendChangeSingle(index, contend)
+                      }
+                      setIsSubmit={setIsSubmit}
+                    />
+                  ))}
               </div>
             </div>
           )
