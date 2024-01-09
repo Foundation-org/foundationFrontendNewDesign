@@ -411,10 +411,10 @@ const Result = (props) => {
 
           {props.expanded && props.btnText === "change answer" ? (
             <div className="mt-2.5 flex justify-between tablet:mt-8">
-              {((isFullScreen === undefined &&
+              {(isFullScreen === undefined &&
                 props.answersSelection?.length > 8) ||
-                (isFullScreen === undefined &&
-                  props.rankedAnswers?.length > 8)) && (
+              (isFullScreen === undefined &&
+                props.rankedAnswers?.length > 8) ? (
                 <div
                   className="ml-[22px] flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:ml-[85px] tablet:gap-[14px] dark:text-[#ACACAC] "
                   onClick={() => {
@@ -426,6 +426,8 @@ const Result = (props) => {
                     Full Screen
                   </p>
                 </div>
+              ) : (
+                <div></div>
               )}
               <button
                 className="inset-0 mr-[14.4px] h-[23.48px] w-[81.8px] rounded-[7.1px] bg-[#FDD503] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-white shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:bg-[#BB9D02]"

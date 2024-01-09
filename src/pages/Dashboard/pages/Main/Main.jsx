@@ -299,7 +299,7 @@ const Main = () => {
         >
           <div
             id="section-1"
-            className="flex flex-col gap-[27px] py-3 tablet:py-[27px]"
+            className="flex flex-col gap-2 py-3 tablet:gap-[17px] tablet:py-[27px]"
           >
             {expandedView
               ? allData?.map((item, index) => (

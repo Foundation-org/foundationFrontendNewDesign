@@ -217,7 +217,7 @@ const Bookmark = () => {
         >
           <div
             id="section-1"
-            className="flex flex-col gap-[27px] py-3 tablet:py-[27px]"
+            className="flex flex-col gap-2 py-3 tablet:gap-[17px] tablet:py-[27px]"
           >
             {allData?.map((item, index) => (
               <div key={index + 1}>
