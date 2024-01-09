@@ -53,6 +53,7 @@ const QuestionCardWithToggle = ({
   const quests = useSelector(getQuests);
   const [open, setOpen] = useState(false);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [bookmarkStatus, setbookmarkStatus] = useState(isBookmarked);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addOptionField, setAddOptionField] = useState(0);
@@ -119,7 +120,7 @@ const QuestionCardWithToggle = ({
       addedOptionByUser: true,
       edit: true,
       delete: true,
-      uuid: localStorage.getItem("uId"),
+      uuid: persistedUserInfo.uuid,
     };
 
     setAnswerSelection([newOption, ...answersSelection]);

@@ -64,6 +64,7 @@ const StartTest = ({
   const { isFullScreen } = useParams();
   const [timeAgo, setTimeAgo] = useState("");
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [copyModal, setCopyModal] = useState(false);
   const [linkModal, setLinkModal] = useState(false);
   const [emailModal, setEmailModal] = useState(false);
@@ -73,8 +74,7 @@ const StartTest = ({
   console.log({ answers });
 
   const uuidExists =
-    answers &&
-    answers?.some((item) => item.uuid === localStorage.getItem("uId"));
+    answers && answers?.some((item) => item.uuid === persistedUserInfo.uuid);
 
   const handleCopyOpen = () => setCopyModal(true);
   const handleCopyClose = () => setCopyModal(false);
@@ -214,16 +214,15 @@ const StartTest = ({
 
   return (
     <>
-
       <>
         {title === "Yes/No" ||
-          title === "Agree/Disagree" ||
-          title === "Like/Unlike" ? (
+        title === "Agree/Disagree" ||
+        title === "Like/Unlike" ? (
           <div className="mt-[18px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px]">
             {title === "Yes/No" ? (
               loadingDetail === true ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+                  <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
                 </div>
               ) : (
                 <>
@@ -243,7 +242,8 @@ const StartTest = ({
                     contend={quests.yesNo.no.contend}
                     handleToggleCheck={handleToggleCheck}
                   />
-                </>)
+                </>
+              )
             ) : title === "Agree/Disagree" ? (
               loadingDetail === true ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
@@ -267,37 +267,37 @@ const StartTest = ({
                     contend={quests.agreeDisagree.disagree.contend}
                     handleToggleCheck={handleToggleCheck}
                   />
-                </>)
+                </>
+              )
+            ) : loadingDetail === true ? (
+              <div className="flex items-center justify-center bg-transparent bg-opacity-20">
+                <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+              </div>
             ) : (
-              loadingDetail === true ? (
-                <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
-                </div>
-              ) : (
-                <>
-                  <SingleAnswer
-                    number={"#1"}
-                    answer={"Like"}
-                    checkInfo={true}
-                    check={quests.likeUnlike.like.check}
-                    contend={quests.likeUnlike.like.contend}
-                    handleToggleCheck={handleToggleCheck}
-                  />
-                  <SingleAnswer
-                    number={"#2"}
-                    answer={"Unlike"}
-                    checkInfo={true}
-                    check={quests.likeUnlike.unlike.check}
-                    contend={quests.likeUnlike.unlike.contend}
-                    handleToggleCheck={handleToggleCheck}
-                  />
-                </>)
+              <>
+                <SingleAnswer
+                  number={"#1"}
+                  answer={"Like"}
+                  checkInfo={true}
+                  check={quests.likeUnlike.like.check}
+                  contend={quests.likeUnlike.like.contend}
+                  handleToggleCheck={handleToggleCheck}
+                />
+                <SingleAnswer
+                  number={"#2"}
+                  answer={"Unlike"}
+                  checkInfo={true}
+                  check={quests.likeUnlike.unlike.check}
+                  contend={quests.likeUnlike.unlike.contend}
+                  handleToggleCheck={handleToggleCheck}
+                />
+              </>
             )}
           </div>
         ) : title === "Multiple Choice" ? (
           loadingDetail === true ? (
             <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+              <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
             </div>
           ) : (
             <div className="flex flex-col  overflow-auto ">
@@ -311,10 +311,11 @@ const StartTest = ({
                 </h4>
               )}
               <div
-                className={`${isFullScreen === undefined
-                  ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
-                  : ""
-                  } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                className={`${
+                  isFullScreen === undefined
+                    ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
+                    : ""
+                } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
               >
                 {[...answersSelection].map((item, index) => (
                   <SingleAnswerMultipleChoice
@@ -347,77 +348,76 @@ const StartTest = ({
                   />
                 ))}
               </div>
-            </div>)
-        ) : (
-          loadingDetail === true ? (
-            <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
-            </div>
-          ) : (
-            <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
-              <h4 className="ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-2 tablet:ml-[108.65px] tablet:text-[16.58px] laptop:text-[18px]">
-                You can drag and drop options in your order of preference.
-              </h4>
-              <div className="-mt-1 flex flex-col gap-[5.7px] tablet:-mt-3 tablet:gap-[10px]">
-                <DragDropContext onDragEnd={handleOnDragEnd}>
-                  <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
-                    {(provided) => (
-                      <ul
-                        className={`${isFullScreen === undefined
-                          ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto tablet:max-h-[496px]"
-                          : ""
-                          }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                      >
-                        {rankedAnswers?.map((item, index) => (
-                          <Draggable
-                            key={item.id}
-                            draggableId={item.id}
-                            index={index}
-                          >
-                            {(provided) => (
-                              <li
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                className="w-full"
-                              >
-                                <SingleAnswerRankedChoice
-                                  number={"#" + (index + 1)}
-                                  editable={item.edit}
-                                  deleteable={item.delete}
-                                  answer={item.label}
-                                  addedAnswerUuid={item.uuid}
-                                  answersSelection={answersSelection}
-                                  setAnswerSelection={setAnswerSelection}
-                                  title={title}
-                                  checkInfo={false}
-                                  check={findLabelChecked(
-                                    answersSelection,
-                                    item.label,
-                                  )}
-                                  handleCheckChange={(check) =>
-                                    handleCheckChange(index, check)
-                                  }
-                                  // setAddOptionLimit={setAddOptionLimit}
-                                  setIsSubmit={setIsSubmit}
-                                />
-                              </li>
-                            )}
-                          </Draggable>
-                        ))}
-                        {provided.placeholder}
-                      </ul>
-                    )}
-                  </Droppable>
-                </DragDropContext>
-              </div>
             </div>
           )
+        ) : loadingDetail === true ? (
+          <div className="flex items-center justify-center bg-transparent bg-opacity-20">
+            <FaSpinner className="animate-spin text-[20vw] text-blue tablet:text-[7vw]" />
+          </div>
+        ) : (
+          <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
+            <h4 className="ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-2 tablet:ml-[108.65px] tablet:text-[16.58px] laptop:text-[18px]">
+              You can drag and drop options in your order of preference.
+            </h4>
+            <div className="-mt-1 flex flex-col gap-[5.7px] tablet:-mt-3 tablet:gap-[10px]">
+              <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
+                  {(provided) => (
+                    <ul
+                      className={`${
+                        isFullScreen === undefined
+                          ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto tablet:max-h-[496px]"
+                          : ""
+                      }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {rankedAnswers?.map((item, index) => (
+                        <Draggable
+                          key={item.id}
+                          draggableId={item.id}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <li
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className="w-full"
+                            >
+                              <SingleAnswerRankedChoice
+                                number={"#" + (index + 1)}
+                                editable={item.edit}
+                                deleteable={item.delete}
+                                answer={item.label}
+                                addedAnswerUuid={item.uuid}
+                                answersSelection={answersSelection}
+                                setAnswerSelection={setAnswerSelection}
+                                title={title}
+                                checkInfo={false}
+                                check={findLabelChecked(
+                                  answersSelection,
+                                  item.label,
+                                )}
+                                handleCheckChange={(check) =>
+                                  handleCheckChange(index, check)
+                                }
+                                // setAddOptionLimit={setAddOptionLimit}
+                                setIsSubmit={setIsSubmit}
+                              />
+                            </li>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </ul>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
+          </div>
         )}
       </>
-
 
       <QuestTimeRemaining
         lastInteractedAt={localStorage.getItem("lastInteractedAt")}
@@ -429,8 +429,8 @@ const StartTest = ({
         {usersAddTheirAns && uuidExists === false ? (
           <div>
             {title === "Yes/No" ||
-              title === "Agree/Disagree" ||
-              title === "Like/Unlike" ? null : (
+            title === "Agree/Disagree" ||
+            title === "Like/Unlike" ? null : (
               <button
                 onClick={handleOpen}
                 className="addoption-boxShadow ml-4 flex h-[23.48px] w-[81.8px] items-center gap-[5.8px] rounded-[7.1px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:h-[52px] tablet:w-[173px] tablet:gap-[11.37px] tablet:rounded-[15px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
@@ -457,26 +457,27 @@ const StartTest = ({
         )}
         {((isFullScreen === undefined && answersSelection?.length > 8) ||
           (isFullScreen === undefined && rankedAnswers?.length > 8)) && (
-            <div
-              className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[14px] dark:text-[#ACACAC] "
-              onClick={() => {
-                navigate(`/quest/${id}/isfullscreen`);
-              }}
-            >
-              <MdFullscreen className="text-[17px] tablet:text-[32px]" />
-              <p className="text-[9px] font-medium tablet:text-[16px] ">
-                Full Screen
-              </p>
-            </div>
-          )}
+          <div
+            className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[14px] dark:text-[#ACACAC] "
+            onClick={() => {
+              navigate(`/quest/${id}/isfullscreen`);
+            }}
+          >
+            <MdFullscreen className="text-[17px] tablet:text-[32px]" />
+            <p className="text-[9px] font-medium tablet:text-[16px] ">
+              Full Screen
+            </p>
+          </div>
+        )}
       </div>
       <div
-        className={`${title === "Multiple Choice"
-          ? "mt-4 tablet:mt-5"
-          : addOptionField === 1
-            ? "mt-[4rem] tablet:mt-[10rem]"
-            : "mt-4 tablet:mt-5"
-          } flex w-full justify-end gap-2 tablet:gap-10`}
+        className={`${
+          title === "Multiple Choice"
+            ? "mt-4 tablet:mt-5"
+            : addOptionField === 1
+              ? "mt-[4rem] tablet:mt-[10rem]"
+              : "mt-4 tablet:mt-5"
+        } flex w-full justify-end gap-2 tablet:gap-10`}
       >
         {/* Add Options Button */}
         {/* {usersAddTheirAns && addOptionLimit === 0 ? (
@@ -508,10 +509,11 @@ const StartTest = ({
         <div className="mr-[14.4px] flex gap-2 tablet:mr-[30px] tablet:gap-10">
           {!expandedView ? (
             <button
-              className={` ${persistedTheme === "dark"
-                ? "bg-[#F4F4F4] text-[#707175]"
-                : "bg-[#707175] text-white"
-                } inset-0 h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal shadow-inner tablet:h-[52px] tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+              className={` ${
+                persistedTheme === "dark"
+                  ? "bg-[#F4F4F4] text-[#707175]"
+                  : "bg-[#707175] text-white"
+              } inset-0 h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal shadow-inner tablet:h-[52px] tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
               onClick={() => {
                 setStartTest(null);
               }}
@@ -523,10 +525,11 @@ const StartTest = ({
             viewResult === null &&
             openResults === false && (
               <button
-                className={` ${persistedTheme === "dark"
-                  ? "bg-[#F4F4F4] text-[#707175]"
-                  : "bg-[#707175] text-white"
-                  } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+                className={` ${
+                  persistedTheme === "dark"
+                    ? "bg-[#F4F4F4] text-[#707175]"
+                    : "bg-[#707175] text-white"
+                } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
                 onClick={() => {
                   setViewResult(id);
                   setOpenResults(true);
@@ -536,10 +539,11 @@ const StartTest = ({
               </button>
             )}
           <button
-            className={`relative ${persistedTheme === "dark"
-              ? "bg-[#333B46]"
-              : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-              } flex h-[23.48px] w-[81.8px] items-center justify-center rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+            className={`relative ${
+              persistedTheme === "dark"
+                ? "bg-[#333B46]"
+                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+            } flex h-[23.48px] w-[81.8px] items-center justify-center rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
             onClick={() => handleSubmit()}
             disabled={loading === true ? true : false}
           >

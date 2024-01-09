@@ -11,6 +11,7 @@ import { resetOptionLimit } from "../../../features/quest/utilsSlice";
 const SingleAnswerRankedChoice = (props) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [checkState, setCheckState] = useState(props.check);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -145,9 +146,9 @@ const SingleAnswerRankedChoice = (props) => {
 
   return (
     <div className="mx-1 flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px] tablet:gap-[5px]">
-      {console.log("uuid", props.addedAnswerUuid, localStorage.getItem("uId"))}
+      {console.log("uuid", props.addedAnswerUuid, persistedUserInfo.uuid)}
       {props.addedAnswerUuid ? (
-        props.addedAnswerUuid === localStorage.getItem("uId") ? (
+        props.addedAnswerUuid === persistedUserInfo.uuid ? (
           <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"

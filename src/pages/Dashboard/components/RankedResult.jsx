@@ -9,6 +9,7 @@ import DeleteOption from "./DeleteOption";
 
 const RankedResult = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [checkState, setCheckState] = useState(props.check);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -32,7 +33,7 @@ const RankedResult = (props) => {
   return (
     <div className="flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px]">
       {props.addedAnswerUuid ? (
-        props.addedAnswerUuid === localStorage.getItem("uId") ? (
+        props.addedAnswerUuid === persistedUserInfo.uuid ? (
           <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"
