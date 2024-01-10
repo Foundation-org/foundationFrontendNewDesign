@@ -19,6 +19,7 @@ const Topbar = () => {
         navigate("/");
       }
     } catch (error) {
+      console.log(error);
       toast.error(error.response.data.message.split(":")[1]);
     }
   };
@@ -149,7 +150,7 @@ const Topbar = () => {
         {TopbarItems?.map((item) => (
           <li
             key={item.id}
-            className="flex w-[85.8px] items-center justify-center tablet:w-[210px]"
+            className="relative flex w-[85.8px] items-center justify-center tablet:w-[210px]"
           >
             <Link
               to={item.path}
@@ -167,11 +168,15 @@ const Topbar = () => {
                 <img
                   src={item.icon}
                   alt={item.title}
-                  className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[26px]"
+                  className={`absolute h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[26px] ${
+                    item.id === 3
+                      ? "-left-[4px] tablet:left-[11px] laptop:-left-[13px]"
+                      : item.id === 2
+                        ? "left-[8px] tablet:left-[40px] laptop:left-[20px]"
+                        : "left-[10px] tablet:left-[40px] laptop:left-[26px]"
+                  }`}
                 />
-              ) : (
-                <div className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[27px]" />
-              )}
+              ) : null}
               {item.title}
             </Link>
           </li>

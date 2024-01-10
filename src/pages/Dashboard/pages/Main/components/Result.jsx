@@ -53,6 +53,8 @@ const Result = (props) => {
   const handleFbOpen = () => setFbModal(true);
   const handleFbClose = () => setFbModal(false);
 
+  console.log("hamzaa", props.answersSelection);
+
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
       // Check in selected array

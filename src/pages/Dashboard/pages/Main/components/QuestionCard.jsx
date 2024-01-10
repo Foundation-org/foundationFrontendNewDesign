@@ -165,6 +165,7 @@ const QuestionCard = ({
 
   const handleBookmark = (status) => {
     setbookmarkStatus((prevIsBookmarked) => !prevIsBookmarked);
+    console.log({ status });
     if (status) {
       const params = {
         questForeignKey: id,

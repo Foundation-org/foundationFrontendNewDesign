@@ -109,17 +109,19 @@ const SidebarRight = () => {
   const handleUserInfo = async () => {
     try {
       const resp = await getUserInfo();
+      console.log({ resp });
+      if (resp?.status === 200) {
+        dispath(addUser(resp?.data));
 
-      if (resp.status === 200) {
-        dispath(addUser(resp.data));
-        if (resp.data.requiredAction) {
+        if (resp?.data?.requiredAction) {
           setModalVisible(true);
         }
       }
 
       // console.log(resp);
-      setResponse(resp.data);
+      setResponse(resp?.data);
     } catch (e) {
+      console.log({ e });
       toast.error(e.response.data.message.split(":")[1]);
     }
   };

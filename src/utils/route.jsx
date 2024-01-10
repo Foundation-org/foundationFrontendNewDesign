@@ -12,6 +12,9 @@ import ChangePassword from "../pages/Dashboard/pages/Profile/pages/ChangePasswor
 import PrivateRoutes from "./PrivateRoutes";
 import { useSelector } from "react-redux";
 import AppRoutes from "./AppRoutes";
+import Main from "../pages/Dashboard/pages/Main/Main";
+import Quest from "../pages/Dashboard/pages/Quest/Quest";
+import Bookmark from "../pages/Dashboard/pages/Bookmark";
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -24,10 +27,13 @@ export function Router() {
           <Route path="/" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
-          <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
         </Route>
         <Route element={<PrivateRoutes auth={auth} />}>
-          <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/dashboard/" element={<Dashboard />}>
+            <Route path="" element={<Main />} />
+            <Route path="quest" element={<Quest />} />
+            <Route path="bookmark" element={<Bookmark />} />
+          </Route>
           <Route path="/profile/" element={<Profile />}>
             <Route path="" element={<Contributions />} />
             <Route
