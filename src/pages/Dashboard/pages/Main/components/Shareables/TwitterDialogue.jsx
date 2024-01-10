@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import Close from "../../../../../../assets/Close";
 import Twitter from "../../../../../../assets/Twitter";
-import { useSelector } from 'react-redux'
 
 const TwitterDialogue = ({
   handleClose,
