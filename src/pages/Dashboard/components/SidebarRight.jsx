@@ -70,15 +70,15 @@ const SidebarRight = () => {
     },
     {
       id: 7,
-      icon: "/assets/svgs/dashboard/icon10.svg",
-      iconLight: "/assets/svgs/dashboard/icon17.svg",
+      icon: "/assets/svgs/dashboard/icon7.svg",
+      iconLight: "/assets/svgs/dashboard/workng.svg",
       alt: "icon1",
       title: "Agreement Received",
       value: (response && response?.selectionsOnAddedAns) || 0,
     },
     {
       id: 8,
-      icon: "/assets/svgs/dashboard/icon7.svg",
+      icon: "/assets/svgs/dashboard/icon8.svg",
       iconLight: "/assets/svgs/dashboard/icon18.svg",
       alt: "icon1",
       title: "Contentions Received",
@@ -86,7 +86,7 @@ const SidebarRight = () => {
     },
     {
       id: 9,
-      icon: "/assets/svgs/dashboard/icon8.svg",
+      icon: "/assets/svgs/dashboard/icon9.svg",
       iconLight: "/assets/svgs/dashboard/icon19.svg",
       alt: "icon1",
       title: "Contentions Given",
@@ -94,7 +94,7 @@ const SidebarRight = () => {
     },
     {
       id: 10,
-      icon: "/assets/svgs/dashboard/icon9.svg",
+      icon: "/assets/svgs/dashboard/last.svg",
       iconLight: "/assets/svgs/dashboard/icon20.svg",
       alt: "icon1",
       title: "Code of Conduct Fails",
