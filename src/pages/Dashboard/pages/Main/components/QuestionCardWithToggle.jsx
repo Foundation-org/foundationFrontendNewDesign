@@ -751,6 +751,9 @@ const QuestionCardWithToggle = ({
           question={question}
           time={time}
           loading={loading}
+          usersChangeTheirAns={usersChangeTheirAns}
+          lastInteractedAt={lastInteractedAt}
+          howManyTimesAnsChanged={howManyTimesAnsChanged}
         />
       )}
     </div>

@@ -25,6 +25,7 @@ import FbDialogue from "./Shareables/FbDialogue";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
 import { MdFullscreen } from "react-icons/md";
+import QuestTimeRemaining from "./QuestTimeRemaining";
 
 const Result = (props) => {
   const quests = useSelector(getQuests);
@@ -433,52 +434,61 @@ const Result = (props) => {
             </div>
           )
         ) : null}
-
-        {props.expanded && props.btnText === "change answer" ? (
-          <div className="mt-2.5 flex justify-between tablet:mt-8">
-            {(isFullScreen === undefined &&
-              props.answersSelection?.length > 8) ||
-            (isFullScreen === undefined && props.rankedAnswers?.length > 8) ? (
-              <div
-                className="ml-[22px] flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:ml-[85px] tablet:gap-[14px] dark:text-[#ACACAC] "
-                onClick={() => {
-                  navigate(`/quest/${props.id}/isfullscreen`);
-                }}
-              >
-                <MdFullscreen className="text-[17px] tablet:text-[32px]" />
-                <p className="text-[9px] font-medium tablet:text-[16px] ">
-                  Full Screen
-                </p>
-              </div>
-            ) : (
-              <div></div>
-            )}
-            <button
-              className="inset-0 mr-[14.4px] h-[23.48px] w-[81.8px] rounded-[7.1px] bg-[#FDD503] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-white shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:bg-[#BB9D02]"
-              onClick={() => {
-                props.handleChange(props.id);
-              }}
-            >
-              Change
-            </button>
-          </div>
-        ) : (
-          <div className="mt-4 flex justify-end tablet:mt-10">
-            <button
-              className={`${
-                persistedTheme === "dark"
-                  ? "bg-[#F4F4F4] text-[#707175]"
-                  : "bg-[#707175] text-white"
-              } inset-0 mr-[14px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
-              onClick={() => {
-                props.handleViewResults(null);
-              }}
-            >
-              Go Back
-            </button>
-          </div>
-        )}
       </div>
+
+      {props.expanded && props.btnText === "change answer" ? (
+        <div className="mr-[48px] mt-7 flex items-center justify-between">
+          <QuestTimeRemaining
+            lastInteractedAt={props.lastInteractedAt}
+            howManyTimesAnsChanged={props.howManyTimesAnsChanged}
+            usersChangeTheirAns={props.usersChangeTheirAns}
+          />
+          {(isFullScreen === undefined && props.answersSelection?.length > 8) ||
+          (isFullScreen === undefined && props.rankedAnswers?.length > 8) ? (
+            <div
+              className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[10.48px] dark:text-[#ACACAC] "
+              onClick={() => {
+                navigate(`/quest/${props.id}/isfullscreen`);
+              }}
+            >
+              <MdFullscreen className="text-[17px] tablet:text-[32px]" />
+              <p className="text-[9px] font-medium tablet:text-[16px] ">
+                Full Screen
+              </p>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+      ) : null}
+
+      {props.expanded && props.btnText === "change answer" ? (
+        <div className="mt-2.5 flex justify-end tablet:mt-8">
+          <button
+            className="inset-0 mr-[14.4px] h-[23.48px] w-[81.8px] rounded-[7.1px] bg-[#FDD503] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-white shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:bg-[#BB9D02]"
+            onClick={() => {
+              props.handleChange(props.id);
+            }}
+          >
+            Change
+          </button>
+        </div>
+      ) : (
+        <div className="mt-4 flex justify-end tablet:mt-10">
+          <button
+            className={`${
+              persistedTheme === "dark"
+                ? "bg-[#F4F4F4] text-[#707175]"
+                : "bg-[#707175] text-white"
+            } inset-0 mr-[14px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+            onClick={() => {
+              props.handleViewResults(null);
+            }}
+          >
+            Go Back
+          </button>
+        </div>
+      )}
 
       <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-[1.37rem] tablet:py-[0.85rem]">
         <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">

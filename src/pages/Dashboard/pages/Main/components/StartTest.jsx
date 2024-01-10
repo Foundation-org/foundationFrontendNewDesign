@@ -418,11 +418,30 @@ const StartTest = ({
         )}
       </>
 
-      <QuestTimeRemaining
-        lastInteractedAt={localStorage.getItem("lastInteractedAt")}
-        howManyTimesAnsChanged={localStorage.getItem("howManyTimesAnsChanged")}
-        usersChangeTheirAns={localStorage.getItem("usersChangeTheirAns")}
-      />
+      <div className="mr-[48px] mt-7 flex items-center justify-between">
+        <QuestTimeRemaining
+          lastInteractedAt={localStorage.getItem("lastInteractedAt")}
+          howManyTimesAnsChanged={localStorage.getItem(
+            "howManyTimesAnsChanged",
+          )}
+          usersChangeTheirAns={localStorage.getItem("usersChangeTheirAns")}
+        />
+        {((isFullScreen === undefined && answersSelection?.length > 8) ||
+          (isFullScreen === undefined && rankedAnswers?.length > 8)) && (
+          <div
+            className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[14px] dark:text-[#ACACAC] "
+            onClick={() => {
+              navigate(`/quest/${id}/isfullscreen`);
+            }}
+          >
+            <MdFullscreen className="text-[17px] tablet:text-[32px]" />
+            <p className="text-[9px] font-medium tablet:text-[16px] ">
+              Full Screen
+            </p>
+          </div>
+        )}
+      </div>
+
       {/* Add Options && Cancel && Submit Button */}
       <div className="ml-[20px] mr-[28px] mt-[13px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
         {usersAddTheirAns && uuidExists === false ? (
@@ -453,20 +472,6 @@ const StartTest = ({
           </div>
         ) : (
           <div></div>
-        )}
-        {((isFullScreen === undefined && answersSelection?.length > 8) ||
-          (isFullScreen === undefined && rankedAnswers?.length > 8)) && (
-          <div
-            className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[14px] dark:text-[#ACACAC] "
-            onClick={() => {
-              navigate(`/quest/${id}/isfullscreen`);
-            }}
-          >
-            <MdFullscreen className="text-[17px] tablet:text-[32px]" />
-            <p className="text-[9px] font-medium tablet:text-[16px] ">
-              Full Screen
-            </p>
-          </div>
         )}
       </div>
       <div
@@ -517,7 +522,7 @@ const StartTest = ({
                 setStartTest(null);
               }}
             >
-             Go Back
+              Go Back
             </button>
           ) : null}
           {startStatus === "change answer" &&
