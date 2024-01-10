@@ -168,7 +168,6 @@ const Topbar = () => {
                   src={item.icon}
                   alt={item.title}
                   className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[26px]"
-                  // className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-auto laptop:w-auto"
                 />
               ) : (
                 <div className="h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[27px]" />

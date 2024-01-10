@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import Guests from "../pages/Guests";
@@ -10,37 +9,24 @@ import Contributions from "../pages/Dashboard/pages/Profile/pages/Contributions"
 import VerificationBadges from "../pages/Dashboard/pages/Profile/pages/VerificationBadges";
 import BasicTable from "../pages/Dashboard/pages/Profile/pages/Ledger";
 import ChangePassword from "../pages/Dashboard/pages/Profile/pages/ChangePassword";
+import PrivateRoutes from "./PrivateRoutes";
+import { useSelector } from "react-redux";
+import AppRoutes from "./AppRoutes";
 
 export function Router() {
-  // const navigate = useNavigate();
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // useEffect(() => {
-  //   const checkUserToken = () => {
-  //     const userToken = localStorage.getItem("userLoggedIn");
-  //     if (!userToken || userToken === "undefined") {
-  //       setIsLoggedIn(false);
-  //     } else {
-  //       setIsLoggedIn(true);
-  //     }
-  //   };
-
-  //   checkUserToken();
-  // }, [navigate]);
+  const persistedUser = useSelector((state) => state.auth.user);
+  let auth = { token: persistedUser !== null ? true : false };
 
   return (
     <>
       <Routes>
-        {/* public routes */}
-        <Route path="/" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
-
-        {/* Protected routes */}
-        {/* {isLoggedIn && (
-        )} */}
-        <>
+        <Route element={<AppRoutes auth={auth} />}>
+          <Route path="/" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
+        </Route>
+        <Route element={<PrivateRoutes auth={auth} />}>
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/profile/" element={<Profile />}>
             <Route path="" element={<Contributions />} />
@@ -52,15 +38,13 @@ export function Router() {
             <Route path="change-password" element={<ChangePassword />} />
           </Route>
           <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
-        </>
-
-        {/* 404 page */}
-        {/* <Route
+        </Route>
+        <Route
           path="*"
           element={
-            isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/" />
+            auth.token ? <Navigate to="/dashboard" /> : <Navigate to="/" />
           }
-        /> */}
+        />
       </Routes>
     </>
   );

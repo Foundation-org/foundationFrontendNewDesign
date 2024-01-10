@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { FaSpinner } from "react-icons/fa";
-import { signIn } from "../../api/userAuth";
+import { signIn, userInfo } from "../../api/userAuth";
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
@@ -12,6 +12,8 @@ import Form from "./components/Form";
 import ReCAPTCHA from "react-google-recaptcha";
 import "../../index.css";
 import api from "../../api/Axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../features/auth/authSlice";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -21,6 +23,7 @@ export default function Signin() {
   const [capthaToken, setCaptchaToken] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const persistedTheme = useSelector((state) => state.utils.theme);
   // console.log(provider, profile);
@@ -63,6 +66,7 @@ export default function Signin() {
         if (resp.status === 200) {
           // localStorage.setItem("userLoggedIn", resp.data.uuid);
           // localStorage.setItem("uId", resp.data.uuid);
+          await getUserInfo();
           localStorage.removeItem("isGuestMode");
           // localStorage.setItem("jwt", resp.data.token);
           setEmail("");
@@ -86,6 +90,18 @@ export default function Signin() {
     }
   };
 
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+    onSuccess: (res) => {
+      console.log("User info fetched:", res.data);
+      dispatch(addUser(res.data));
+    },
+    onError: (error) => {
+      console.error("Error fetching user info:", error);
+      localStorage.setItem("loggedIn", "false");
+    },
+  });
+
   const handleSignInSocial = async (data) => {
     try {
       const res = await api.post(`/user/signInUser/social`, {
@@ -105,7 +121,7 @@ export default function Signin() {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col bg-blue text-white dark:bg-black-200 lg:flex-row">
+    <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
       <div
         className={`${
           persistedTheme === "dark" ? "bg-dark" : "bg-blue"
@@ -118,7 +134,7 @@ export default function Signin() {
         />
       </div>
 
-      <div className="flex h-screen w-full flex-col items-center bg-white dark:bg-dark md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px]">
+      <div className="flex h-screen w-full flex-col items-center bg-white md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography
             variant="textTitle"

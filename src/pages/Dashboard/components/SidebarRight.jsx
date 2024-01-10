@@ -154,9 +154,9 @@ const SidebarRight = () => {
   });
 
   useEffect(() => {
-    if(persistedUserInfo) {
+    if (persistedUserInfo) {
       const uId = persistedUserInfo?.uuid;
-  
+
       if (!uId) {
         createGuest();
       }
