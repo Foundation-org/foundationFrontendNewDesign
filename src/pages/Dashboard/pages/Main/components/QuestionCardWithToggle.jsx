@@ -211,6 +211,7 @@ const QuestionCardWithToggle = ({
     mutationFn: updateChangeAnsStartQuest,
     onSuccess: (resp) => {
       if (resp.data.message === "Answer has not changed") {
+        setLoading(false);
         toast.warning(
           "You have selected the same option as last time. Your option was not changed.",
         );

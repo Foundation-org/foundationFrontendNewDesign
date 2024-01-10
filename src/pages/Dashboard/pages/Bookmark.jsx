@@ -211,8 +211,9 @@ const Bookmark = () => {
           endMessage={
             feedData?.hasNextPage === false ? (
               <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
+                <div></div>
                 {searchData && allData.length==0 ?
-                  <p className="text-center">
+                  <p className="text-center  text-xl">
                     <b>No matching quest found.</b>
                   </p>
                   :!searchData && allData.length===0?
@@ -220,14 +221,17 @@ const Bookmark = () => {
                   {printNoRecords()}
                 </>
                   : !searchData &&
-                  <p className="text-center">
+                  <p className="text-center text-xl">
                     <b>You are all caught up!</b>
                   </p>
                 }
-                <IoIosArrowUp
+                {!searchData && allData.length !==0 ?
+
+                  <IoIosArrowUp
                   className="cursor-pointer text-2xl"
                   onClick={handleClickScroll}
-                />
+                  />: <div></div>
+                }
               </div>
             ) : (
               <div className="flex items-center justify-center">

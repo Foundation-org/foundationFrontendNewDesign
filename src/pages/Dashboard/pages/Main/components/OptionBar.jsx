@@ -15,6 +15,8 @@ import UrlDialogue from "./Shareables/UrlDialogue";
 import EmailDialogue from "./Shareables/EmailDialogue";
 import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
+import { calculateRemainingTime } from "../../../../../utils";
+
 
 const OptionBar = ({
   id,
@@ -251,12 +253,25 @@ const OptionBar = ({
         case "completed":
           return "bg-[#148339]";
         case "change answer":
-          return "bg-[#BB9D02]";
+        if(calculateRemainingTime()===", you are good to go!"){
+           return "dark:bg-[#BB9D02] text-white"
+        }
+        else{
+          return "bg-[#7E6C01] text-[#CCCCCC]";
+
+        }
         default:
           return "inset-0 rounded-[15px] border-[1px] border-[#333B46] bg-[#333B46] shadow-inner";
       }
     } else {
-      return btnColor;
+      if(calculateRemainingTime()===", you are good to go!"){
+        return btnColor;
+     }
+     else{
+       return "bg-[#7E6C01] text-[#CCCCCC]";
+
+     }
+      
     }
   }
 

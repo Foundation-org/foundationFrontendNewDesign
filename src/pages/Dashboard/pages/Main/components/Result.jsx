@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { calculateRemainingTime } from "../../../../../utils";
 import { getQuests } from "../../../../../features/quest/questsSlice";
 import { useQuery } from "@tanstack/react-query";
 import { getStartQuestPercent } from "../../../../../api/questsApi";
@@ -462,12 +463,19 @@ const Result = (props) => {
             <div></div>
           )}
         </div>
-      ) : null}
+      ) : (props.expanded && props.btnText === "completed") &&
+      <div className="mr-[48px] mt-7 flex items-center justify-between">
+          <QuestTimeRemaining
+            lastInteractedAt={props.lastInteractedAt}
+            howManyTimesAnsChanged={props.howManyTimesAnsChanged}
+            usersChangeTheirAns={props.usersChangeTheirAns}
+          />
+        </div>}
 
       {props.expanded && props.btnText === "change answer" ? (
         <div className="mt-2.5 flex justify-end tablet:mt-8">
           <button
-            className="inset-0 mr-[14.4px] h-[23.48px] w-[81.8px] rounded-[7.1px] bg-[#FDD503] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-white shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:bg-[#BB9D02]"
+            className={`inset-0 mr-[14.4px] h-[23.48px] w-[81.8px] rounded-[7.1px] ${calculateRemainingTime()===", you are good to go!"?"bg-[#FDD503] dark:bg-[#BB9D02] text-white":"bg-[#7E6C01] text-[#CCCCCC]"} px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal  shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] `}
             onClick={() => {
               props.handleChange(props.id);
             }}
@@ -475,8 +483,9 @@ const Result = (props) => {
             Change
           </button>
         </div>
-      ) : (
+      ) : (props.expanded && props.btnText !== "completed") || (!props.expanded) ?(
         <div className="mt-4 flex justify-end tablet:mt-10">
+        {console.log("inside")}
           <button
             className={`${
               persistedTheme === "dark"
@@ -490,7 +499,13 @@ const Result = (props) => {
             Go Back
           </button>
         </div>
-      )}
+      ):<div className="mt-4 flex justify-end tablet:mt-10">
+      <div
+        className={`inset-0 mr-[14px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px]  tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] `}
+        
+      >
+      </div>
+    </div>}
 
       <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-[1.37rem] tablet:py-[0.85rem]">
         <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
