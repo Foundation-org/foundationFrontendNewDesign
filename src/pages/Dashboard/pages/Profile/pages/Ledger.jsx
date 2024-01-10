@@ -200,14 +200,14 @@ export default function BasicTable() {
                         },
                       }}
                     >
-                      {console.log(
+                      {/* {console.log(
                         "🚀 ~ file: Ledger.jsx:183 ~ BasicTable ~ header.getSize():",
                         header.getSize(),
                       )}
                       {console.log(
                         "🚀 ~ file: Ledger.jsx:188 ~ BasicTable ~ header.column.columnDef.size:",
                         header.column.columnDef.size,
-                      )}
+                      )} */}
                       {/* {header.column.columnDef.header} */}
                       {header.isPlaceholder
                         ? null

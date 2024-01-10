@@ -81,7 +81,7 @@ const Topbar = () => {
                 className="h-6 w-[19.8px] tablet:h-[51.5px] tablet:w-[42px]"
               />
               <p className="transform-center absolute z-50 pb-1 text-[8.6px] font-normal leading-normal text-[#7A7016]">
-                5
+                {persistedUserInfo?.badges?.length}
               </p>
             </div>
             <div className="text-blue-100 flex flex-col ">

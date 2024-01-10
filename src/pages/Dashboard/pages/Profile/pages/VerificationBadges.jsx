@@ -1,15 +1,42 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../components/Button";
+import { useEffect, useState } from "react";
+import { addUser } from "../../../../../features/auth/authSlice";
+import { userInfo } from "../../../../../api/userAuth";
 
 const VerificationBadges = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const dispatch = useDispatch();
+  const [fetchUser, setFetchUser] = useState([]);
+
+  const handleUserInfo = async (id) => {
+    try {
+      const resp = await userInfo(id);
+
+      if (resp.status === 200) {
+        dispatch(addUser(resp.data));
+      }
+
+      // console.log(resp);
+      setFetchUser(resp.data);
+    } catch (e) {
+      toast.error(e.response.data.message.split(":")[1]);
+    }
+  };
+
+  useEffect(() => {
+    handleUserInfo()
+  }, [])
+
   const contacts = [
     {
       image: "/assets/profile/Education-Email-2x.png",
       title: "Personal Email",
-      ButtonColor: "yellow",
-      ButtonText: "Change Password",
+      ButtonColor: "blue",
+      ButtonText: "Add New Badge",
       NoOfButton:1,
+      accountName: "Gmail",
+      type: "personal",
     },
     {
       image: "/assets/profile/Education-Email-2x.png",
@@ -17,6 +44,8 @@ const VerificationBadges = () => {
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
+      accountName: "Gmail",
+      type: "work",
     },
     {
       image: "/assets/profile/Education-Email-2x.png",
@@ -24,6 +53,8 @@ const VerificationBadges = () => {
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
+      accountName: "Gmail",
+      type: "education",
     },
     {
       image: "/assets/profile/cellphone.png",
@@ -41,12 +72,14 @@ const VerificationBadges = () => {
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
+      link: "/auth/linkedin"
     },{
       image: "/assets/profile/Facebook-2x.png",
       title: "Facebook",
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
+      link: "/auth/facebook"
     },
     {
       image: "/assets/profile/Twitter-2x.png",
@@ -54,6 +87,7 @@ const VerificationBadges = () => {
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
+      link: "/auth/twitter"
     },
     {
       image: "/assets/profile/Instagram-2x.png",
@@ -61,6 +95,7 @@ const VerificationBadges = () => {
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
+      link: "/auth/instagram"
     },
    
     {
@@ -69,6 +104,7 @@ const VerificationBadges = () => {
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
+      link: "/auth/github"
     },]
 
   const web3 = [
@@ -164,6 +200,8 @@ const VerificationBadges = () => {
     },
   ];
 
+  const checkPersonal = (itemType) => fetchUser?.badges?.some(i => i.type === itemType)
+
   return (
     <div>
       <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] dark:text-[#B8B8B8] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px]">
@@ -202,7 +240,7 @@ const VerificationBadges = () => {
                 {item.title}
               </h1>
             </div>
-            <Button color={item.ButtonColor}>{item.ButtonText}</Button>
+            <Button color={checkPersonal(item.type) ? "yellow" : item.ButtonColor}>{checkPersonal(item.type) ? "Added" : item.ButtonText}</Button>
           </div>
         ))}
         <h1 className="font-500 text-[2.22vw] font-bold ml-[3.5vw] font-Inter font-normal text-[#000] dark:text-white">Social</h1>
@@ -226,7 +264,7 @@ const VerificationBadges = () => {
                 {item.title}
               </h1>
             </div>
-            <Button color={item.ButtonColor}>{item.ButtonText}</Button>
+            <Button onClick={() => window.open(`${import.meta.env.VITE_API_URL}${item.link}`, "_self")} color={item.ButtonColor}>{item.ButtonText}</Button>
           </div>
         ))}
         <h1 className="font-500 text-[2.22vw] ml-[3.5vw] font-Inter font-normal text-[#000] dark:text-white">Web 3</h1>

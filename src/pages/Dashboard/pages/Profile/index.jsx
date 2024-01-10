@@ -12,6 +12,7 @@ const Profile = () => {
     localStorage.getItem("theme") === "dark" ? true : false,
   );
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [selectedTab, setSelectedTab] = useState(1);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const Profile = () => {
               className="flex h-[26.8px] w-[21.8px] items-center justify-center bg-cover bg-no-repeat tablet:h-[85px] tablet:w-[69px]"
             >
               <p className="h-[80%] text-[9.2px] font-normal leading-normal text-[#7A7016] tablet:text-[30px]">
-                2
+                {persistedUserInfo?.badges?.length}
               </p>
             </div>
             <div>

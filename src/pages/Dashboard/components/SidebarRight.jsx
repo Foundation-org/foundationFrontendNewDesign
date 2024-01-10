@@ -245,7 +245,7 @@ const SidebarRight = () => {
                 className="tablet:h-[5.43rem] tablet:w-[4.36rem]"
               />
               <p className="transform-center absolute z-50 pb-5 text-[35px] font-bold leading-normal text-[#7A7016]">
-                5
+                {persistedUserInfo?.badges?.length}
               </p>
             </div>
             <div>
