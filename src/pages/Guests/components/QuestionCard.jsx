@@ -9,7 +9,6 @@ import { createStartQuest } from "../../../api/questsApi";
 import { useNavigate } from "react-router-dom";
 import { getQuests, toggleCheck } from "../../../features/quest/questsSlice";
 import SingleAnswer from "../../Dashboard/components/SingleAnswer";
-import Cookies from "js-cookie";
 
 const QuestionCard = ({
   tab,
@@ -36,6 +35,7 @@ const QuestionCard = ({
   const dispatch = useDispatch();
   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [open, setOpen] = useState(false);
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
@@ -161,7 +161,7 @@ const QuestionCard = ({
         questId: id,
         answer: ans,
         addedAnswer: "",
-        uuid: Cookies.get("uId"),
+        uuid: persistedUserInfo?.uuid,
       };
 
       // if (!(params.answer.selected && params.answer.contended)) {
@@ -238,7 +238,7 @@ const QuestionCard = ({
           const params = {
             questId: id,
             answer: dataToSend,
-            uuid: Cookies.get("uId"),
+            uuid: persistedUserInfo?.uuid,
           };
           console.log("params", params);
           changeAnswer(params);
@@ -248,7 +248,7 @@ const QuestionCard = ({
           questId: id,
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
-          uuid: Cookies.get("uId"),
+          uuid: persistedUserInfo?.uuid,
         };
 
         // && params.answer.contended.length === 0
@@ -301,7 +301,7 @@ const QuestionCard = ({
           const params = {
             questId: id,
             answer: dataToSend,
-            uuid: Cookies.get("uId"),
+            uuid: persistedUserInfo?.uuid,
           };
           console.log("params", params);
           changeAnswer(params);
@@ -311,7 +311,7 @@ const QuestionCard = ({
           questId: id,
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
-          uuid: Cookies.get("uId"),
+          uuid: persistedUserInfo?.uuid,
         };
         console.log("params", params);
 

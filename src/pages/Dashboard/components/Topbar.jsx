@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +13,7 @@ const Topbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await api.post(`user/logout/${Cookies.get("uId")}`);
+      const res = await api.post('user/logout');
       if (res.status === 200) {
         localStorage.clear();
         navigate("/");
@@ -82,7 +81,7 @@ const Topbar = () => {
                 className="h-6 w-[19.8px] tablet:h-[51.5px] tablet:w-[42px]"
               />
               <p className="transform-center absolute z-50 pb-1 text-[8.6px] font-normal leading-normal text-[#7A7016]">
-                5
+                {persistedUserInfo?.badges?.length}
               </p>
             </div>
             <div className="text-blue-100 flex flex-col ">

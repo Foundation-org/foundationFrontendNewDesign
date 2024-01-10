@@ -11,16 +11,16 @@ export const signIn = async (data) => {
   return await api.post("/user/signInUser", data);
 };
 
-export const userInfo = async (uuid) => {
-  return await api.post("/user/userInfo", { uuid });
+export const userInfo = async () => {
+  return await api.post("/user/userInfo");
 };
 export const changePassword = async (params) => {
   return await api.put("/user/changePassword", params);
 };
 
-export const getAllLedgerData = async (page, limit, sort, uuid) => {
+export const getAllLedgerData = async (page, limit, sort) => {
   return await api.get("/ledger/ledgerById", {
-    params: { page, limit, sort, uuid },
+    params: { page, limit, sort },
   });
 };
 

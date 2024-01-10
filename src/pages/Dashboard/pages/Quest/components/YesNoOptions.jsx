@@ -110,7 +110,7 @@ const YesNoOptions = ({
               )}
 
               <h1 className="leading-0 ml-4 border-l-2 border-[#F3F3F3] px-6 text-[30px] font-semibold text-[#0FB063]">
-                OK
+              Go Back
               </h1>
             </div>
           </div>

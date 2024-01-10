@@ -1,6 +1,6 @@
 import { FacebookProvider, ShareButton } from "react-facebook";
 import Close from "../../../../../../assets/Close";
-import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 
 const FbDialogue = ({
   handleClose,
@@ -13,6 +13,7 @@ const FbDialogue = ({
   timeAgo,
   id,
 }) => {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   return (
     <div className="relative w-[90vw] pb-[17px] tablet:pb-[75px] laptop:w-[52.6rem]">
       <div className="rounded-t-[9.251px] bg-[#1877F2] py-[6px] pl-[22px] laptop:rounded-t-[26px]">
@@ -32,7 +33,7 @@ const FbDialogue = ({
         {/* QuestionCard Preview */}
         <div className="mt-[19.84px] w-full rounded-[9.8px] bg-[#F3F3F3] px-6 pb-[23px] pt-5 tablet:mt-[78px] tablet:rounded-[26px]">
           <div className="flex items-start justify-between">
-            {createdBy === Cookies.get("uId") ? (
+            {createdBy === persistedUserInfo?.uuid ? (
               <div className="relative h-fit pb-[15px]">
                 <img
                   src="/assets/svgs/dashboard/MeBadge.svg"
@@ -40,7 +41,7 @@ const FbDialogue = ({
                   className="h-[18.379px] w-[22.722px] tablet:h-[60px] tablet:w-[48px]"
                 />
                 <p className="absolute left-[50%] top-[24%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[9px] font-[400] leading-normal text-[#7A7016] tablet:top-[39%] tablet:pb-3 tablet:text-[24px]">
-                  5
+                  {persistedUserInfo?.badges?.length}
                 </p>
               </div>
             ) : (

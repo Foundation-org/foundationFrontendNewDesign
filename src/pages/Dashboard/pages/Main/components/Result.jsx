@@ -23,7 +23,6 @@ import EmailDialogue from "./Shareables/EmailDialogue";
 import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
 import { useNavigate, useParams } from "react-router-dom";
-import Cookies from "js-cookie";
 import { FaSpinner } from "react-icons/fa";
 import { MdFullscreen } from "react-icons/md";
 
@@ -32,6 +31,7 @@ const Result = (props) => {
   const navigate = useNavigate();
   const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const [timeAgo, setTimeAgo] = useState("");
   const [copyModal, setCopyModal] = useState(false);
@@ -78,7 +78,7 @@ const Result = (props) => {
   useEffect(() => {
     const data = {
       questForeignKey: props.id,
-      uuid: Cookies.get("uId"),
+      uuid: persistedUserInfo?.uuid,
     };
 
     getStartQuestDetail(data);
@@ -218,7 +218,7 @@ const Result = (props) => {
     queryFn: async () => {
       const params = {
         questForeignKey: props.id,
-        uuid: Cookies.get("uId"),
+        uuid: persistedUserInfo?.uuid,
       };
       if (props.whichTypeQuestion === "ranked choise") {
         return await getRankedQuestPercent(params);
@@ -467,14 +467,14 @@ const Result = (props) => {
             <button
               className={`${
                 persistedTheme === "dark"
-                  ? "bg-[#333B46]"
-                  : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                  ? "bg-[#F4F4F4] text-[#707175]"
+                  : "bg-[#707175] text-white"
               } inset-0 mr-[14px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
               onClick={() => {
                 props.handleViewResults(null);
               }}
             >
-              Ok
+              Go Back
             </button>
           </div>
         )}

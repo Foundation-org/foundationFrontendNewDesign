@@ -12,10 +12,10 @@ import {
 import { useSelector } from "react-redux";
 import LedgerTableTopbar from "../components/LedgerTableTopbar";
 import { format } from "date-fns";
-import Cookies from "js-cookie";
 
 export default function BasicTable() {
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const itemsPerPage = 10;
   const rowsPerPage = 10;
   const [totalPages, setTotalPages] = useState(null);
@@ -35,7 +35,6 @@ export default function BasicTable() {
           currentPage,
           itemsPerPage,
           sort,
-          Cookies.get("uId"),
         );
       } else {
         return searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
@@ -49,8 +48,7 @@ export default function BasicTable() {
     const data = await getAllLedgerData(
       currentPage,
       itemsPerPage,
-      sort,
-      Cookies.get("uId"),
+      sort
     );
     if (data) {
       setLedgerData(data);
@@ -117,7 +115,6 @@ export default function BasicTable() {
       page,
       itemsPerPage,
       sort,
-      Cookies.get("uId"),
     );
     if (data) {
       setLedgerData(data);
@@ -203,14 +200,14 @@ export default function BasicTable() {
                         },
                       }}
                     >
-                      {console.log(
+                      {/* {console.log(
                         "🚀 ~ file: Ledger.jsx:183 ~ BasicTable ~ header.getSize():",
                         header.getSize(),
                       )}
                       {console.log(
                         "🚀 ~ file: Ledger.jsx:188 ~ BasicTable ~ header.column.columnDef.size:",
                         header.column.columnDef.size,
-                      )}
+                      )} */}
                       {/* {header.column.columnDef.header} */}
                       {header.isPlaceholder
                         ? null
@@ -289,11 +286,11 @@ export default function BasicTable() {
                               : cell.column.id === "txFrom" &&
                                   cell.getValue() !== "DAO Treasury" &&
                                   cell.getValue() !== "dao" &&
-                                  cell.getValue() !== Cookies.get("uId")
+                                  cell.getValue() !== persistedUserInfo?.uuid
                                 ? `${cell.getValue().slice(0, 4)}..${cell
                                     .getValue()
                                     .slice(-3)}`
-                                : cell.getValue() === Cookies.get("uId")
+                                : cell.getValue() === persistedUserInfo?.uuid
                                   ? "My Account"
                                   : cell.column.id === "txTo" &&
                                       cell.getValue() !== "DAO Treasury" &&

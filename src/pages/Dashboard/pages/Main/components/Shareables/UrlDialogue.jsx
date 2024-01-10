@@ -1,6 +1,7 @@
-import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 
 const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
   let url = `${protocol}//${host}/quest/${id}`;
 
@@ -13,7 +14,7 @@ const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
         onClick={handleClose}
       />
       <div className="flex flex-col justify-center px-[22px] laptop:px-[81px]">
-        {createdBy === Cookies.get("uId") ? (
+        {createdBy === persistedUserInfo?.uuid ? (
           <div className="relative flex h-fit w-full items-center justify-center pb-[15px] laptop:pb-[15px]">
             <img
               src="/assets/svgs/dashboard/MeBadge.svg"
@@ -21,7 +22,7 @@ const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
               className="h-[28.379px] w-[22.722px] tablet:h-[106px] tablet:w-[85px]"
             />
             <p className="absolute left-[50%] top-[30%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[11.3px] font-[400] leading-normal text-[#7A7016] tablet:pb-3 tablet:text-[42.5px] laptop:top-[39%]">
-              5
+              {persistedUserInfo?.badges?.length}
             </p>
           </div>
         ) : (

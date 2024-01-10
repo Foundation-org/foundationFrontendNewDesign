@@ -20,7 +20,6 @@ import { deleteBookmarkById } from "../../../../../api/homepageApis";
 import { userInfo } from "../../../../../api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
 import { updateOptionLimit } from "../../../../../features/quest/utilsSlice";
-import Cookies from "js-cookie";
 
 const QuestionCard = ({
   id,
@@ -48,6 +47,7 @@ const QuestionCard = ({
   startStatus,
   createdBy,
   expandedView,
+  isBookmarkTab
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -154,7 +154,9 @@ const QuestionCard = ({
     mutationFn: deleteBookmarkById,
     onSuccess: (resp) => {
       toast.success("Bookmark Removed ");
-      queryClient.invalidateQueries("FeedData");
+      if(!isBookmarkTab){
+        queryClient.invalidateQueries("FeedData");
+      }
       handleStartTest(null);
     },
     onError: (err) => {
@@ -167,13 +169,11 @@ const QuestionCard = ({
     if (status) {
       const params = {
         questForeignKey: id,
-        uuid: Cookies.get("uId"),
       };
       DelBookmark(params);
     } else {
       const params = {
         questForeignKey: id,
-        uuid: Cookies.get("uId"),
         Question: question,
         whichTypeQuestion: whichTypeQuestion,
       };
@@ -231,7 +231,7 @@ const QuestionCard = ({
         queryClient.invalidateQueries("FeedData");
       }
       handleViewResults(id);
-      userInfo(Cookies.get("uId")).then((resp) => {
+      userInfo().then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
@@ -263,7 +263,7 @@ const QuestionCard = ({
         setLoading(false);
         handleViewResults(id);
       }
-      userInfo(Cookies.get("uId")).then((resp) => {
+      userInfo().then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
@@ -345,7 +345,7 @@ const QuestionCard = ({
         questId: id,
         answer: ans,
         addedAnswer: "",
-        uuid: Cookies.get("uId"),
+        uuid: persistedUserInfo?.uuid,
       };
 
       // if (!(params.answer.selected && params.answer.contended)) {
@@ -430,7 +430,7 @@ const QuestionCard = ({
           const params = {
             questId: id,
             answer: dataToSend,
-            uuid: Cookies.get("uId"),
+            uuid: persistedUserInfo?.uuid,
           };
           console.log("params", params);
           changeAnswer(params);
@@ -441,7 +441,7 @@ const QuestionCard = ({
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
-          uuid: Cookies.get("uId"),
+          uuid: persistedUserInfo?.uuid,
         };
         console.log("selected", params);
         // && params.answer.contended.length === 0
@@ -509,7 +509,7 @@ const QuestionCard = ({
           const params = {
             questId: id,
             answer: dataToSend,
-            uuid: Cookies.get("uId"),
+            uuid: persistedUserInfo?.uuid,
           };
           console.log("params", params);
           changeAnswer(params);
@@ -520,7 +520,7 @@ const QuestionCard = ({
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
-          uuid: Cookies.get("uId"),
+          uuid: persistedUserInfo?.uuid,
         };
         console.log("params", params);
 

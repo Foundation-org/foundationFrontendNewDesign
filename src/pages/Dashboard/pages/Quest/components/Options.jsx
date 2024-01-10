@@ -118,7 +118,7 @@ const Options = ({
                 >
                   <div className="flex w-5 items-center justify-center tablet:w-[52.78px]">
                     <>
-                      {optionsCount > 2 && (
+                      {optionsCount > 3 && (
                         <div
                           onClick={() => {
                             removeOption(number);

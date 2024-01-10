@@ -1,4 +1,4 @@
-import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 import Close from "../../../../../../assets/Close";
 import Twitter from "../../../../../../assets/Twitter";
 
@@ -13,6 +13,7 @@ const TwitterDialogue = ({
   timeAgo,
   id,
 }) => {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
   let url = `${protocol}//${host}/quest/${id}`;
 
@@ -31,7 +32,7 @@ const TwitterDialogue = ({
         {/* QuestionCard Preview */}
         <div className="mt-[19.84px] w-full rounded-[9.8px] bg-[#F3F3F3] px-6 pb-[23px] pt-5 tablet:mt-[78px] tablet:rounded-[26px]">
           <div className="flex items-start justify-between">
-            {createdBy === Cookies.get("uId") ? (
+            {createdBy === persistedUserInfo?.uuid ? (
               <div className="relative h-fit pb-[15px]">
                 <img
                   src="/assets/svgs/dashboard/MeBadge.svg"
@@ -39,7 +40,7 @@ const TwitterDialogue = ({
                   className="h-[18.379px] w-[22.722px] tablet:h-[60px] tablet:w-[48px]"
                 />
                 <p className="absolute left-[50%] top-[24%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[9px] font-[400] leading-normal text-[#7A7016] tablet:top-[39%] tablet:pb-3 tablet:text-[24px]">
-                  5
+                  {persistedUserInfo?.badges?.length}
                 </p>
               </div>
             ) : (

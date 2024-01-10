@@ -21,7 +21,6 @@ import { getStartQuestInfo } from "../../../../../api/questsApi";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
 import { userInfo } from "../../../../../api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
-import Cookies from "js-cookie";
 
 const QuestionCardWithToggle = ({
   id,
@@ -101,7 +100,7 @@ const QuestionCardWithToggle = ({
   const handleChange = () => {
     console.log("change clicked");
     setOpenResults(false);
-    const data = { questForeignKey: id, uuid: Cookies.get("uId") };
+    const data = { questForeignKey: id, uuid: persistedUserInfo?.uuid };
     getStartQuestDetail(data);
     handleStartTest(id);
   };
@@ -163,13 +162,11 @@ const QuestionCardWithToggle = ({
     if (status) {
       const params = {
         questForeignKey: id,
-        uuid: Cookies.get("uId"),
       };
       DelBookmark(params);
     } else {
       const params = {
         questForeignKey: id,
-        uuid: Cookies.get("uId"),
         Question: question,
         whichTypeQuestion: whichTypeQuestion,
       };
@@ -199,7 +196,7 @@ const QuestionCardWithToggle = ({
         queryClient.invalidateQueries("FeedData");
       }
       handleViewResults(id);
-      userInfo(Cookies.get("uId")).then((resp) => {
+      userInfo(persistedUserInfo?.uuid).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
@@ -229,7 +226,7 @@ const QuestionCardWithToggle = ({
         setLoading(false);
         handleViewResults(id);
       }
-      userInfo(Cookies.get("uId")).then((resp) => {
+      userInfo(persistedUserInfo?.uuid).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
@@ -438,7 +435,7 @@ const QuestionCardWithToggle = ({
         questId: id,
         answer: ans,
         addedAnswer: "",
-        uuid: Cookies.get("uId"),
+        uuid: persistedUserInfo?.uuid,
       };
 
       // if (!(params.answer.selected && params.answer.contended)) {
@@ -521,7 +518,7 @@ const QuestionCardWithToggle = ({
           const params = {
             questId: id,
             answer: dataToSend,
-            uuid: Cookies.get("uId"),
+            uuid: persistedUserInfo?.uuid,
           };
           console.log("params", params);
           changeAnswer(params);
@@ -532,7 +529,7 @@ const QuestionCardWithToggle = ({
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
-          uuid: Cookies.get("uId"),
+          uuid: persistedUserInfo?.uuid,
         };
         console.log("selected", params);
         // && params.answer.contended.length === 0
@@ -600,7 +597,7 @@ const QuestionCardWithToggle = ({
           const params = {
             questId: id,
             answer: dataToSend,
-            uuid: Cookies.get("uId"),
+            uuid: persistedUserInfo?.uuid,
           };
           console.log("params", params);
           changeAnswer(params);
@@ -611,7 +608,7 @@ const QuestionCardWithToggle = ({
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
-          uuid: Cookies.get("uId"),
+          uuid: persistedUserInfo?.uuid,
         };
         console.log("params", params);
 

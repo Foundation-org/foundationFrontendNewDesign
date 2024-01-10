@@ -17,7 +17,6 @@ import CustomSwitch from "../../../../../components/CustomSwitch";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { FaSpinner } from "react-icons/fa";
-import Cookies from "js-cookie";
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ const RankChoice = () => {
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
   const [changedOption, setChangedOption] = useState("");
-  const [optionsCount, setOptionsCount] = useState(2);
+  const [optionsCount, setOptionsCount] = useState(3);
   const [prevValueArr, setPrevValueArr] = useState([]);
   // const [dragItems, setDragItems] = useState(["item1", "item 2", "item3"]);
   const [loading, setLoading] = useState(false);
@@ -59,6 +58,7 @@ const RankChoice = () => {
     tooltipStyle: "tooltip-info",
   });
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -107,7 +107,7 @@ const RankChoice = () => {
       QuestAnswers: typedValues,
       usersAddTheirAns: addOption,
       usersChangeTheirAns: changedOption,
-      uuid: Cookies.get("uId"),
+      uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
     };
 

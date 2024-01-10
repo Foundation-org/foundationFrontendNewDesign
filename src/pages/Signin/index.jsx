@@ -12,7 +12,6 @@ import Form from "./components/Form";
 import ReCAPTCHA from "react-google-recaptcha";
 import "../../index.css";
 import api from "../../api/Axios";
-import Cookies from 'js-cookie'
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -62,8 +61,6 @@ export default function Signin() {
         const resp = await userSignin({ email, password });
 
         if (resp.status === 200) {
-          Cookies.set('uId', resp.data.uuid)
-          Cookies.set('jwt', resp.data.token)
           // localStorage.setItem("userLoggedIn", resp.data.uuid);
           // localStorage.setItem("uId", resp.data.uuid);
           localStorage.removeItem("isGuestMode");

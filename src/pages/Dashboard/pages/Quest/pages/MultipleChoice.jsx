@@ -17,7 +17,6 @@ import { Tooltip } from "../../../../../utils/Tooltip";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { FaSpinner } from "react-icons/fa";
-import Cookies from "js-cookie";
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ const MultipleChoice = () => {
   const [changeState, setChangeState] = useState(false);
   const [changedOption, setChangedOption] = useState("");
   const [selectedValues, setSelectedValues] = useState([]);
-  const [optionsCount, setOptionsCount] = useState(2);
+  const [optionsCount, setOptionsCount] = useState(3);
   const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
   const [optionWaiting, setOptionWaiting] = useState(false)
@@ -54,6 +53,7 @@ const MultipleChoice = () => {
   };
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -108,7 +108,7 @@ const MultipleChoice = () => {
       usersChangeTheirAns: changedOption,
       userCanSelectMultiple: multipleOption,
       QuestAnswersSelected: [],
-      uuid: Cookies.get("uId"),
+      uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
     };
 
