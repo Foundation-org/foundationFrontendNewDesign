@@ -1,10 +1,10 @@
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaSpinner } from "react-icons/fa";
 import { signIn, userInfo } from "../../api/userAuth";
 import { useMutation } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/Button";
 import Typography from "../../components/Typography";
 import SocialLogins from "../../components/SocialLogins";
@@ -16,14 +16,15 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../../features/auth/authSlice";
 
 export default function Signin() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { authO } = useParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [provider, setProvider] = useState("");
   const [profile, setProfile] = useState(null);
   const [capthaToken, setCaptchaToken] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const persistedTheme = useSelector((state) => state.utils.theme);
   // console.log(provider, profile);
@@ -119,6 +120,12 @@ export default function Signin() {
       toast.error(error.response.data.message.split(":")[1]);
     }
   };
+
+  useEffect(() => {
+    if (authO === "auth0") {
+      getUserInfo();
+    }
+  }, [authO]);
 
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">

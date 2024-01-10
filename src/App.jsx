@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Router } from "./utils/route";
 import { Toaster } from "sonner";
-import { useSelector } from "react-redux";
 
 function App() {
   const [theme, setTheme] = useState(null);

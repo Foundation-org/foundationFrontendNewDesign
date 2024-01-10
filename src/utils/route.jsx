@@ -24,7 +24,7 @@ export function Router() {
     <>
       <Routes>
         <Route element={<AppRoutes auth={auth} />}>
-          <Route path="/" element={<Signin />} />
+          <Route path="/:authO?" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
         </Route>
