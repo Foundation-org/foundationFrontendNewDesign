@@ -47,6 +47,7 @@ const QuestionCard = ({
   startStatus,
   createdBy,
   expandedView,
+  isBookmarkTab
 }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -153,7 +154,9 @@ const QuestionCard = ({
     mutationFn: deleteBookmarkById,
     onSuccess: (resp) => {
       toast.success("Bookmark Removed ");
-      queryClient.invalidateQueries("FeedData");
+      if(!isBookmarkTab){
+        queryClient.invalidateQueries("FeedData");
+      }
       handleStartTest(null);
     },
     onError: (err) => {

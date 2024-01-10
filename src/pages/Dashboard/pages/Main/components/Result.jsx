@@ -467,14 +467,14 @@ const Result = (props) => {
             <button
               className={`${
                 persistedTheme === "dark"
-                  ? "bg-[#333B46]"
-                  : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+                  ? "bg-[#F4F4F4] text-[#707175]"
+                  : "bg-[#707175] text-white"
               } inset-0 mr-[14px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#FFF] shadow-inner tablet:mr-[30px] tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
               onClick={() => {
                 props.handleViewResults(null);
               }}
             >
-              Ok
+              Go Back
             </button>
           </div>
         )}

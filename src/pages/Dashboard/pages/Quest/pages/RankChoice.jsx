@@ -25,7 +25,7 @@ const RankChoice = () => {
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
   const [changedOption, setChangedOption] = useState("");
-  const [optionsCount, setOptionsCount] = useState(2);
+  const [optionsCount, setOptionsCount] = useState(3);
   const [prevValueArr, setPrevValueArr] = useState([]);
   // const [dragItems, setDragItems] = useState(["item1", "item 2", "item3"]);
   const [loading, setLoading] = useState(false);

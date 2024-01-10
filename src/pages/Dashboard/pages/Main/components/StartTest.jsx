@@ -517,7 +517,7 @@ const StartTest = ({
                 setStartTest(null);
               }}
             >
-              Cancel
+             Go Back
             </button>
           ) : null}
           {startStatus === "change answer" &&
@@ -534,7 +534,7 @@ const StartTest = ({
                   setOpenResults(true);
                 }}
               >
-                Cancel
+                Go Back
               </button>
             )}
           <button

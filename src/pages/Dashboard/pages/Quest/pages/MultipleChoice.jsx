@@ -27,7 +27,7 @@ const MultipleChoice = () => {
   const [changeState, setChangeState] = useState(false);
   const [changedOption, setChangedOption] = useState("");
   const [selectedValues, setSelectedValues] = useState([]);
-  const [optionsCount, setOptionsCount] = useState(2);
+  const [optionsCount, setOptionsCount] = useState(3);
   const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
   const [optionWaiting, setOptionWaiting] = useState(false)

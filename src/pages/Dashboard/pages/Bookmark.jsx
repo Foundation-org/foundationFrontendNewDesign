@@ -292,6 +292,7 @@ const Bookmark = () => {
                     usersChangeTheirAns={item.usersChangeTheirAns}
                     expandedView={expandedView}
                     QuestTopic={item.QuestTopic}
+                    isBookmarkTab={true}
                   />
                 </div>
               ))
@@ -343,6 +344,7 @@ const Bookmark = () => {
                     usersChangeTheirAns={item.usersChangeTheirAns}
                     expandedView={expandedView}
                     QuestTopic={item.QuestTopic}
+                    isBookmarkTab={true}
                   />
                 </div>
               ))}

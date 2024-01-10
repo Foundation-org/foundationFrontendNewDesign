@@ -39,7 +39,7 @@ const Contributions = () => {
     },
     {
       id: 5,
-      icon: "/assets/svgs/dashboard/icon10.svg",
+      icon: "/assets/svgs/dashboard/icon7.svg",
       iconLight: "/assets/svgs/dashboard/icon17.svg",
       alt: "icon1",
       title: "Agreement Received",
@@ -48,7 +48,7 @@ const Contributions = () => {
     },
     {
       id: 6,
-      icon: "/assets/svgs/dashboard/icon7.svg",
+      icon: "/assets/svgs/dashboard/icon8.svg",
       iconLight: "/assets/svgs/dashboard/icon18.svg",
       alt: "icon1",
       title: "Contentions Received",
@@ -57,7 +57,7 @@ const Contributions = () => {
     },
     {
       id: 7,
-      icon: "/assets/svgs/dashboard/icon8.svg",
+      icon: "/assets/svgs/dashboard/icon9.svg",
       iconLight: "/assets/svgs/dashboard/icon19.svg",
       alt: "icon1",
       title: "Contentions Given",
@@ -65,7 +65,7 @@ const Contributions = () => {
     },
     {
       id: 8,
-      icon: "/assets/svgs/dashboard/icon9.svg",
+      icon: "/assets/svgs/dashboard/last.svg",
       iconLight: "/assets/svgs/dashboard/icon20.svg",
       alt: "icon1",
       title: "CoC Fails",
