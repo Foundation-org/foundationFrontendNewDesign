@@ -103,7 +103,7 @@ iframe {
 }
 
 #green-checkbox input[type="checkbox"]::after {
-  content: url("/public/assets/svgs/checkmark.svg");
+  content: url("/assets/svgs/checkmark.svg");
   left: 0px;
   top: 0px;
   position: absolute;
@@ -181,7 +181,7 @@ iframe {
 }
 
 #custom-checkbox .checkbox::after {
-  content: url("/public/assets/svgs/checkmark-small.svg");
+  content: url("/assets/svgs/checkmark-small.svg");
   display: none;
   width: 100%;
   height: 100%;
@@ -189,7 +189,7 @@ iframe {
 
 @media only screen and (min-width: 744px) {
   #custom-checkbox .checkbox::after {
-    content: url("/public/assets/svgs/checkmark-tablet.svg");
+    content: url("/assets/svgs/checkmark-tablet.svg");
     display: none;
     width: 100%;
     height: 100%;
@@ -223,7 +223,7 @@ iframe {
 }
 
 #custom-yello-checkbox .checkbox::after {
-  content: url("/public/assets/svgs/exclamation-mark.svg");
+  content: url("/assets/svgs/exclamation-mark.svg");
   display: none;
   width: 100%;
   height: 100%;
@@ -253,7 +253,7 @@ iframe {
 
 @media only screen and (min-width: 744px) {
   #custom-yello-checkbox .checkbox::after {
-    content: url("/public/assets/svgs/exclamation-tablet.svg");
+    content: url("/assets/svgs/exclamation-tablet.svg");
     display: none;
     width: 100%;
     height: 100%;

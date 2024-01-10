@@ -548,11 +548,11 @@ const QuestionCard = ({
         createdBy={createdBy}
       />
       <div className="ml-6 mr-[1.38rem] mt-[1.56rem] flex items-center justify-between tablet:ml-[52.65px]">
-        <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[25px] dark:text-[#B8B8B8]">
+        <h1 className="w-[93%] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[25px] dark:text-[#B8B8B8]">
           {question?.endsWith("?") ? "Q." : "S."} {question}
         </h1>
         <div
-          className="pl-[21.72px]"
+          className="flex w-[45.7px] justify-end"
           onClick={() => handleBookmark(isBookmarked)}
         >
           {bookmarkStatus ? (
