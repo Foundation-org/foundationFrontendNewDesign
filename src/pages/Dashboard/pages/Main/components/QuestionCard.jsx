@@ -75,6 +75,7 @@ const QuestionCard = ({
   useEffect(() => {
     setbookmarkStatus(isBookmarked);
   }, [isBookmarked]);
+
   useEffect(() => {
     console.log("answersSelection", answersSelection);
   }, [answersSelection]);
@@ -112,8 +113,6 @@ const QuestionCard = ({
   };
 
   const handleClose = () => setOpen(false);
-
-  console.log({ persistedUserInfo });
 
   const handleAddOption = () => {
     const newOption = {
@@ -261,6 +260,7 @@ const QuestionCard = ({
       if (resp.data.message === "Start Quest Updated Successfully") {
         toast.success("Successfully Changed Quest");
         setLoading(false);
+        queryClient.invalidateQueries("FeedData", "ResultsData");
         handleViewResults(id);
       }
       userInfo().then((resp) => {

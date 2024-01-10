@@ -100,7 +100,7 @@ const QuestionCardWithToggle = ({
   const handleChange = () => {
     console.log("change clicked");
     setOpenResults(false);
-    const data = { questForeignKey: id, uuid: persistedUserInfo?.uuid };
+    const data = { questForeignKey: id, uuid: persistedUserInfo.uuid };
     getStartQuestDetail(data);
     handleStartTest(id);
   };
@@ -123,7 +123,7 @@ const QuestionCardWithToggle = ({
       uuid: persistedUserInfo.uuid,
     };
 
-    setAnswerSelection([newOption, ...answersSelection]);
+    setAnswerSelection([...answersSelection, newOption]);
 
     setAddOptionField(0);
     setAddOptionLimit(1);

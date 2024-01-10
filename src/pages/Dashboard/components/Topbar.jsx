@@ -13,7 +13,7 @@ const Topbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await api.post('user/logout');
+      const res = await api.post("user/logout");
       if (res.status === 200) {
         localStorage.clear();
         navigate("/");
@@ -147,7 +147,10 @@ const Topbar = () => {
       {/* items */}
       <ul className="flex w-full items-end justify-around gap-[2.19rem] px-5 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-[57px] laptop:gap-[3.12rem] laptop:px-0">
         {TopbarItems?.map((item) => (
-          <li className="flex w-[85.8px] items-center justify-center tablet:w-[210px]">
+          <li
+            key={item.id}
+            className="flex w-[85.8px] items-center justify-center tablet:w-[210px]"
+          >
             <Link
               to={item.path}
               className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
