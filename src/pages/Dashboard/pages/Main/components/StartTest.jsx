@@ -418,7 +418,7 @@ const StartTest = ({
         )}
       </>
 
-      <div className="mr-[48px] mt-7 flex items-center justify-between">
+      <div className="mr-[22px] mt-7 flex items-center justify-between tablet:mr-[48px]">
         <QuestTimeRemaining
           lastInteractedAt={localStorage.getItem("lastInteractedAt")}
           howManyTimesAnsChanged={localStorage.getItem(

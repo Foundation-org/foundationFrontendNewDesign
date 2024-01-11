@@ -103,7 +103,7 @@ const QuestionCard = ({
     mutationFn: createStartQuest,
     onSuccess: (resp) => {
       if (resp.data.message === "Start Quest Created Successfully") {
-        toast.success("Successfully Answered Quest");
+        toast.success("Successfully Completed");
         queryClient.invalidateQueries("FeedData");
         navigate("/dashboard");
       }
@@ -182,7 +182,7 @@ const QuestionCard = ({
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+            `You can change your selection again in ${usersChangeTheirAns}`,
           );
         } else {
           changeAnswer(params);
@@ -232,7 +232,7 @@ const QuestionCard = ({
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+            `You can change your selection again in ${usersChangeTheirAns}`,
           );
         } else {
           const params = {
@@ -295,7 +295,7 @@ const QuestionCard = ({
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+            `You can change your selection again in ${usersChangeTheirAns}`,
           );
         } else {
           const params = {

@@ -29,7 +29,7 @@ const RankChoice = () => {
   const [prevValueArr, setPrevValueArr] = useState([]);
   // const [dragItems, setDragItems] = useState(["item1", "item 2", "item3"]);
   const [loading, setLoading] = useState(false);
-  const [optionWaiting, setOptionWaiting] = useState(false)
+  const [optionWaiting, setOptionWaiting] = useState(false);
 
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
@@ -64,7 +64,7 @@ const RankChoice = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        toast.success("Successfully Created Quest");
+        toast.success("Successfully Created");
         setTimeout(() => {
           setLoading(false);
           navigate("/dashboard");
@@ -80,13 +80,13 @@ const RankChoice = () => {
 
     if (question === "") {
       setLoading(false);
-      return toast.warning("Question cannot be empty");
+      return toast.warning("Post cannot be empty");
     }
     if (!constraintResponse.data.isUnique) {
       setLoading(false);
 
       return toast.warning(
-        "This quest is not unique. A similar quest already exists.",
+        "This post is not unique. A similar post already exists.",
       );
     }
 
@@ -97,7 +97,7 @@ const RankChoice = () => {
     // If any error captured
     if (errorMessage) {
       setLoading(false);
-      return toast.error("Something Went Wrong");
+      return toast.error("Oops! Something Went Wrong.");
     }
 
     const params = {
@@ -118,7 +118,7 @@ const RankChoice = () => {
     if (isEmptyAnswer) {
       setLoading(false);
 
-      return toast.warning("Answer cannot be empty");
+      return toast.warning("Option cannot be empty");
     }
     createQuest(params);
   };
@@ -184,12 +184,12 @@ const RankChoice = () => {
       },
     };
     setTypedValues(newTypedValues);
-    setOptionWaiting(true)
+    setOptionWaiting(true);
     // Answer Validation
     const { validatedAnswer, errorMessage } = await answerValidation({
       answer: value,
     });
-    setOptionWaiting(false)
+    setOptionWaiting(false);
     // If any error captured
     if (errorMessage) {
       const newTypedValues = [...typedValues];
@@ -250,7 +250,7 @@ const RankChoice = () => {
   };
 
   const handleAddOption = () => {
-    if(optionWaiting) return
+    if (optionWaiting) return;
     setOptionsCount((prevCount) => prevCount + 1);
     setTypedValues((prevValues) => [
       ...prevValues,
@@ -269,7 +269,7 @@ const RankChoice = () => {
   };
 
   const handleChange = (index, value) => {
-    if(optionWaiting) return
+    if (optionWaiting) return;
     const newTypedValues = [...typedValues];
     newTypedValues[index] = {
       ...newTypedValues[index],

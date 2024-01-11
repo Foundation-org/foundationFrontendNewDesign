@@ -17,7 +17,6 @@ import TwitterDialogue from "./Shareables/TwitterDialogue";
 import FbDialogue from "./Shareables/FbDialogue";
 import { calculateRemainingTime } from "../../../../../utils";
 
-
 const OptionBar = ({
   id,
   btnText,
@@ -39,7 +38,7 @@ const OptionBar = ({
   badgeCount,
   title,
   question,
-  setLoadingDetail
+  setLoadingDetail,
 }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -61,7 +60,6 @@ const OptionBar = ({
   const handleTwitterClose = () => setTwitterModal(false);
   const handleFbOpen = () => setFbModal(true);
   const handleFbClose = () => setFbModal(false);
-  
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
@@ -97,14 +95,13 @@ const OptionBar = ({
         whichTypeQuestion === "yes/no" ||
         whichTypeQuestion === "like/unlike"
       ) {
-
         if (
           res?.data.data[res.data.data.length - 1].selected === "Agree" ||
           res?.data.data[res.data.data.length - 1].selected === "Yes" ||
           res?.data.data[res.data.data.length - 1].selected === "Like"
         ) {
           console.log("ran 1");
-         handleToggleCheck(
+          handleToggleCheck(
             res.data.data[res.data.data.length - 1].selected,
             true,
             false,
@@ -253,25 +250,20 @@ const OptionBar = ({
         case "completed":
           return "bg-[#148339]";
         case "change answer":
-        if(calculateRemainingTime()===", you are good to go!"){
-           return "dark:bg-[#BB9D02] text-white"
-        }
-        else{
-          return "bg-[#7E6C01] text-[#CCCCCC]";
-
-        }
+          if (calculateRemainingTime() === ", you are good to go!") {
+            return "dark:bg-[#BB9D02] text-white";
+          } else {
+            return "bg-[#7E6C01] text-[#CCCCCC]";
+          }
         default:
           return "inset-0 rounded-[15px] border-[1px] border-[#333B46] bg-[#333B46] shadow-inner";
       }
     } else {
-      if(calculateRemainingTime()===", you are good to go!"){
+      if (calculateRemainingTime() === ", you are good to go!") {
         return btnColor;
-     }
-     else{
-       return "bg-[#7E6C01] text-[#CCCCCC]";
-
-     }
-      
+      } else {
+        return "bg-[#7E6C01] text-[#CCCCCC]";
+      }
     }
   }
 
@@ -312,7 +304,7 @@ const OptionBar = ({
               if (btnText !== "") {
                 handleViewResults(id);
               } else {
-                toast.error("First Start this question to see Results");
+                toast.error("First give your response to see Results");
               }
             }}
           >

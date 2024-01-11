@@ -72,6 +72,8 @@ const QuestionCard = ({
 
   const [loadingDetail, setLoadingDetail] = useState(false);
 
+  console.log({ isBookmarked });
+
   useEffect(() => {
     setbookmarkStatus(isBookmarked);
   }, [isBookmarked]);
@@ -226,7 +228,7 @@ const QuestionCard = ({
     mutationFn: createStartQuest,
     onSuccess: (resp) => {
       if (resp.data.message === "Start Quest Created Successfully") {
-        toast.success("Successfully Answered Quest");
+        toast.success("Successfully Completed");
         setLoading(false);
         queryClient.invalidateQueries("FeedData");
       }
@@ -259,7 +261,7 @@ const QuestionCard = ({
         toast.warning("You can change your option once every 1 hour.");
       }
       if (resp.data.message === "Start Quest Updated Successfully") {
-        toast.success("Successfully Changed Quest");
+        toast.success("Successfully Changed");
         setLoading(false);
         queryClient.invalidateQueries("FeedData", "ResultsData");
         handleViewResults(id);
@@ -317,6 +319,7 @@ const QuestionCard = ({
     }
   };
 
+  console.log({ answersSelection });
   const handleSubmit = () => {
     setLoading(true);
     if (
@@ -368,7 +371,7 @@ const QuestionCard = ({
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+            `You can change your selection again in ${usersChangeTheirAns}`,
           );
           setLoading(false);
         } else {
@@ -406,6 +409,10 @@ const QuestionCard = ({
         if (answersSelection[i].contend) {
           answerContended.push({ question: answersSelection[i].label });
         }
+
+        // if(answersSelection[i].check === false && answersSelection[i].contend === false) {
+        // empty check will come here
+        // }
       }
 
       let dataToSend = {
@@ -424,7 +431,7 @@ const QuestionCard = ({
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+            `You can change your selection again in ${usersChangeTheirAns}`,
           );
           setLoading(false);
         } else {
@@ -503,7 +510,7 @@ const QuestionCard = ({
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+            `You can change your selection again in ${usersChangeTheirAns}`,
           );
           setLoading(false);
         } else {

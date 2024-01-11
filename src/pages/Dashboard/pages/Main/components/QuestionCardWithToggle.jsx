@@ -192,7 +192,7 @@ const QuestionCardWithToggle = ({
     mutationFn: createStartQuest,
     onSuccess: (resp) => {
       if (resp.data.message === "Start Quest Created Successfully") {
-        toast.success("Successfully Answered Quest");
+        toast.success("Successfully Completed");
         queryClient.invalidateQueries("FeedData");
       }
       handleViewResults(id);
@@ -223,7 +223,7 @@ const QuestionCardWithToggle = ({
         setLoading(false);
       }
       if (resp.data.message === "Start Quest Updated Successfully") {
-        toast.success("Successfully Changed Quest");
+        toast.success("Successfully Changed");
         setLoading(false);
         handleViewResults(id);
       }
@@ -458,7 +458,7 @@ const QuestionCardWithToggle = ({
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+            `You can change your selection again in ${usersChangeTheirAns}`,
           );
           setLoading(false);
         } else {
@@ -512,7 +512,7 @@ const QuestionCardWithToggle = ({
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+            `You can change your selection again in ${usersChangeTheirAns}`,
           );
           setLoading(false);
         } else {
@@ -591,7 +591,7 @@ const QuestionCardWithToggle = ({
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can only finish after ${usersChangeTheirAns} interval has passed.`,
+            `You can change your selection again in ${usersChangeTheirAns}`,
           );
           setLoading(false);
         } else {

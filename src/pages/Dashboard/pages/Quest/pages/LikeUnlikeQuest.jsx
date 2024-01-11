@@ -38,7 +38,7 @@ const LikeUnlike = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        toast.success("Successfully Created Quest");
+        toast.success("Successfully Created");
         setTimeout(() => {
           setLoading(false);
           navigate("/dashboard");
@@ -61,12 +61,12 @@ const LikeUnlike = () => {
 
     if (question === "") {
       setLoading(false);
-      return toast.warning("Question cannot be empty");
+      return toast.warning("Post cannot be empty");
     }
     if (!constraintResponse.data.isUnique) {
       setLoading(false);
       return toast.warning(
-        "This quest is not unique. A similar quest already exists.",
+        "This post is not unique. A similar post already exists.",
       );
     }
     // getTopicOfValidatedQuestion
@@ -76,7 +76,7 @@ const LikeUnlike = () => {
     // If any error captured
     if (errorMessage) {
       setLoading(false);
-      return toast.error("Something Went Wrong");
+      return toast.error("Oops! Something Went Wrong.");
     }
 
     const params = {

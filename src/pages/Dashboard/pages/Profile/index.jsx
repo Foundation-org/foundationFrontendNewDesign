@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Switch } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTheme } from "../../../../features/utils/utilsSlice";
@@ -8,12 +8,14 @@ import Tabs from "./components/Tabs";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const { pathname } = location;
   const [checkState, setCheckState] = useState(
     localStorage.getItem("theme") === "dark" ? true : false,
   );
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [selectedTab, setSelectedTab] = useState(1);
+  const [selectedTab, setSelectedTab] = useState(pathname);
 
   useEffect(() => {
     if (persistedTheme === "light") {
@@ -31,6 +33,8 @@ const Profile = () => {
   };
 
   const handleSelectedTab = (id) => setSelectedTab(id);
+
+  console.log({ selectedTab });
 
   return (
     <div>

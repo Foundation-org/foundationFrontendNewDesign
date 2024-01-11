@@ -70,7 +70,9 @@ export default function Signup() {
         "Please complete the reCAPTCHA challenge before proceeding.",
       );
     if (!termConditionCheck)
-      return toast.warning("Please accept terms and conditions to continue!");
+      return toast.warning(
+        "Please accept the terms and conditions to continue!",
+      );
     setIsLoading(true);
     try {
       if (password === reTypePassword) {

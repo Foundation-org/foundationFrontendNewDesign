@@ -30,7 +30,7 @@ const MultipleChoice = () => {
   const [optionsCount, setOptionsCount] = useState(3);
   const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [optionWaiting, setOptionWaiting] = useState(false)
+  const [optionWaiting, setOptionWaiting] = useState(false);
 
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
@@ -59,7 +59,7 @@ const MultipleChoice = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        toast.success("Successfully Created Quest");
+        toast.success("Successfully Created");
         setTimeout(() => {
           setLoading(false);
           navigate("/dashboard");
@@ -79,13 +79,13 @@ const MultipleChoice = () => {
 
     if (question === "") {
       setLoading(false);
-      return toast.warning("Question cannot be empty");
+      return toast.warning("Post cannot be empty");
     }
 
     if (!constraintResponse.data.isUnique) {
       setLoading(false);
       return toast.warning(
-        "This quest is not unique. A similar quest already exists.",
+        "This post is not unique. A similar post already exists.",
       );
     }
 
@@ -96,7 +96,7 @@ const MultipleChoice = () => {
     // If any error captured
     if (errorMessage) {
       setLoading(false);
-      return toast.error("Something Went Wrong");
+      return toast.error("Oops! Something Went Wrong.");
     }
 
     const params = {
@@ -118,7 +118,7 @@ const MultipleChoice = () => {
 
     if (isEmptyAnswer) {
       setLoading(false);
-      return toast.warning("Answer cannot be empty");
+      return toast.warning("Option cannot be empty");
     }
 
     createQuest(params);
@@ -188,12 +188,12 @@ const MultipleChoice = () => {
       },
     };
     setTypedValues(newTypedValues);
-    setOptionWaiting(true)
+    setOptionWaiting(true);
     // Answer Validation
     const { validatedAnswer, errorMessage } = await answerValidation({
       answer: value,
     });
-    setOptionWaiting(false)
+    setOptionWaiting(false);
     // If any error captured
     if (errorMessage) {
       const newTypedValues = [...typedValues];
@@ -256,7 +256,7 @@ const MultipleChoice = () => {
   };
 
   const handleAddOption = () => {
-    if(optionWaiting) return
+    if (optionWaiting) return;
     setOptionsCount((prevCount) => prevCount + 1);
     setTypedValues((prevValues) => [
       ...prevValues,
@@ -275,7 +275,7 @@ const MultipleChoice = () => {
   };
 
   const handleChange = (index, value) => {
-    if(optionWaiting) return
+    if (optionWaiting) return;
     const newTypedValues = [...typedValues];
     newTypedValues[index] = {
       ...newTypedValues[index],
