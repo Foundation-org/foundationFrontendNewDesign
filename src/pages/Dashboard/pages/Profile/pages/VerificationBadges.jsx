@@ -6,6 +6,7 @@ import { userInfo } from "../../../../../api/userAuth";
 import { useSearchParams } from 'react-router-dom'
 import Loader from "../../../../Signup/components/Loader";
 import api from "../../../../../api/Axios";
+import { toast } from "sonner";
 
 const VerificationBadges = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
