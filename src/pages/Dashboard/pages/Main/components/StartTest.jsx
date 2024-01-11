@@ -310,7 +310,7 @@ const StartTest = ({
               <div
                 className={`${
                   isFullScreen === undefined
-                    ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
+                    ? "quest-scrollbar max-h-[182px] min-h-fit overflow-auto md:max-h-[362px]"
                     : ""
                 } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
               >
@@ -365,7 +365,7 @@ const StartTest = ({
                     <ul
                       className={`${
                         isFullScreen === undefined
-                          ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto tablet:max-h-[496px]"
+                          ? "quest-scrollbar max-h-[182px] min-h-fit overflow-auto tablet:max-h-[362px]"
                           : ""
                       }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
                       {...provided.droppableProps}
@@ -426,8 +426,8 @@ const StartTest = ({
           )}
           usersChangeTheirAns={localStorage.getItem("usersChangeTheirAns")}
         />
-        {((isFullScreen === undefined && answersSelection?.length > 8) ||
-          (isFullScreen === undefined && rankedAnswers?.length > 8)) && (
+        {((isFullScreen === undefined && answersSelection?.length > 6) ||
+          (isFullScreen === undefined && rankedAnswers?.length > 6)) && (
           <div
             className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[14px] dark:text-[#ACACAC] "
             onClick={() => {

@@ -380,7 +380,7 @@ const Result = (props) => {
             <div
               className={`${
                 isFullScreen === undefined
-                  ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
+                  ? "quest-scrollbar max-h-[182px] min-h-fit overflow-auto md:max-h-[362px]"
                   : ""
               }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
@@ -416,7 +416,7 @@ const Result = (props) => {
             <div
               className={`${
                 isFullScreen === undefined
-                  ? "quest-scrollbar max-h-[250px] min-h-fit overflow-auto md:max-h-[496px]"
+                  ? "quest-scrollbar max-h-[182px] min-h-fit overflow-auto md:max-h-[362px]"
                   : ""
               }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
@@ -446,8 +446,8 @@ const Result = (props) => {
             howManyTimesAnsChanged={props.howManyTimesAnsChanged}
             usersChangeTheirAns={props.usersChangeTheirAns}
           />
-          {(isFullScreen === undefined && props.answersSelection?.length > 8) ||
-          (isFullScreen === undefined && props.rankedAnswers?.length > 8) ? (
+          {(isFullScreen === undefined && props.answersSelection?.length > 6) ||
+          (isFullScreen === undefined && props.rankedAnswers?.length > 6) ? (
             <div
               className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[10.48px] dark:text-[#ACACAC] "
               onClick={() => {
