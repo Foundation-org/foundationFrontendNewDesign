@@ -211,8 +211,7 @@ const StartTest = ({
 
   return (
     <>
-    
-    <div className="mx-1 flex flex-col gap-[5.7px]  tablet:gap-[10px] ">
+      <div className="mx-1 flex flex-col gap-[5.7px]  tablet:gap-[10px] ">
         {title === "Yes/No" ||
         title === "Agree/Disagree" ||
         title === "Like/Unlike" ? (
@@ -300,18 +299,18 @@ const StartTest = ({
           ) : (
             <div className="flex flex-col  overflow-auto ">
               {multipleOption ? (
-                <h4 className="ml-8 mt-3  mb-[23.7px] tablet:mb-[30px] text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
+                <h4 className="mb-[23.7px] ml-8  mt-3 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-[30px] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
                   You can select multiple options.
                 </h4>
               ) : (
-                <h4 className="ml-8 mt-3  mb-[23.7px] tablet:mb-[30px] text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
+                <h4 className="mb-[23.7px] ml-8  mt-3 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-[30px] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
                   &#x200B;
                 </h4>
               )}
               <div
                 className={`${
                   isFullScreen === undefined
-                    ? "quest-scrollbar max-h-[182px] min-h-fit overflow-auto md:max-h-[362px]"
+                    ? "quest-scrollbar max-h-[182px] min-h-fit overflow-auto md:max-h-[366px]"
                     : ""
                 } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
               >
@@ -366,7 +365,7 @@ const StartTest = ({
                     <ul
                       className={`${
                         isFullScreen === undefined
-                          ? "quest-scrollbar max-h-[182px] min-h-fit overflow-auto tablet:max-h-[362px]"
+                          ? "quest-scrollbar max-h-[182px] min-h-fit overflow-auto tablet:max-h-[366px]"
                           : ""
                       }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
                       {...provided.droppableProps}
@@ -378,7 +377,7 @@ const StartTest = ({
                           draggableId={item.id}
                           index={index}
                         >
-                          {(provided) => (
+                          {(provided, snapshot) => (
                             <li
                               ref={provided.innerRef}
                               {...provided.draggableProps}
@@ -386,6 +385,7 @@ const StartTest = ({
                               className="w-full"
                             >
                               <SingleAnswerRankedChoice
+                                snapshot={snapshot}
                                 number={"#" + (index + 1)}
                                 editable={item.edit}
                                 deleteable={item.delete}
@@ -417,7 +417,7 @@ const StartTest = ({
             </div>
           </div>
         )}
-</div>
+      </div>
 
       <div className="mr-[22px] mt-7 flex items-center justify-between tablet:mr-[48px]">
         <QuestTimeRemaining

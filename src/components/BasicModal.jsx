@@ -31,7 +31,6 @@ const BasicModal = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      {/* <Box sx={mergedStyle} className="rounded-[9.251px] laptop:rounded-[26px]"> */}
       <Box sx={mergedStyle} className={customClasses}>
         {children}
       </Box>

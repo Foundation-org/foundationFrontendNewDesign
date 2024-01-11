@@ -423,7 +423,7 @@ const MultipleChoice = () => {
               >
                 {typedValues.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
-                    {(provided) => (
+                    {(provided, snapshot) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
@@ -431,6 +431,7 @@ const MultipleChoice = () => {
                         className="w-full"
                       >
                         <Options
+                          snapshot={snapshot}
                           key={index}
                           title="MultipleChoice"
                           allowInput={true}

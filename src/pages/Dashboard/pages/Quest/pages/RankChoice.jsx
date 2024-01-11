@@ -493,7 +493,7 @@ const RankChoice = () => {
               >
                 {typedValues.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
-                    {(provided) => (
+                    {(provided, snapshot) => (
                       <li
                         ref={provided.innerRef}
                         {...provided.draggableProps}
@@ -501,6 +501,7 @@ const RankChoice = () => {
                         className="w-full"
                       >
                         <Options
+                          snapshot={snapshot}
                           key={index}
                           title="RankChoice"
                           allowInput={true}

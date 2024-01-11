@@ -58,7 +58,7 @@ const SidebarLeft = ({
   const customModalStyle = {
     backgroundColor: "#FCFCFD",
     boxShadow: "none",
-    border: "0px",
+    border: "6px solid #F2F2F2",
     outline: "none",
     top: "0",
     bottom: "0",
@@ -140,13 +140,14 @@ const SidebarLeft = ({
             open={openTopicPref}
             handleClose={handleTopicPref}
             customStyle={customModalStyle}
-            customClasses="rounded-[0.9375rem] tablet:rounded-[2.31rem] w-[75vw] h-[80vh]"
+            customClasses="rounded-[0.9375rem] tablet:rounded-[2.31rem] w-[75vw] h-[90vh]"
           >
             <TopicPreferences
               topicSearch={topicSearch}
               setTopicSearch={setTopicSearch}
               columns={columns}
               setColumns={setColumns}
+              handleClose={handleTopicPref}
             />
           </BasicModal>
           <div className="mt-[46px] flex flex-col gap-9">

@@ -171,7 +171,13 @@ const SingleAnswerRankedChoice = (props) => {
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
         <div className="flex w-full items-center rounded-[4.7px] rounded-l-[4.734px] bg-white tablet:rounded-l-[10px] tablet:rounded-r-[10px] dark:bg-[#0D1012]">
           {props.btnText !== "Results" && (
-            <div className="flex h-full w-fit items-center rounded-l-[4.734px] bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] dark:bg-[#9E9E9E]">
+            <div
+              className={`${
+                props.snapshot.isDragging
+                  ? "border-y-[#5FA3D5] border-r-[#5FA3D5]"
+                  : "border-y-[#DEE6F7] border-s-[#DEE6F7]"
+              } flex h-full w-fit items-center rounded-l-[4.734px] border-y border-s bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] dark:bg-[#9E9E9E]`}
+            >
               {persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/dashboard/six-dots-dark.svg"
@@ -187,11 +193,21 @@ const SingleAnswerRankedChoice = (props) => {
               )}
             </div>
           )}
-          <div className="flex w-full justify-between rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] tablet:rounded-r-[10px]">
+          <div
+            className={`${
+              props.snapshot.isDragging
+                ? "border-y-[#5FA3D5] border-r-[#5FA3D5] bg-[#F2F6FF]"
+                : "border-y-[#ACACAC] border-r-[#ACACAC]"
+            } flex w-full justify-between rounded-r-[4.7px] border-y border-r tablet:rounded-r-[10px]`}
+          >
             {props.editable ? (
               <input
                 type="text"
-                className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px] dark:bg-[#0D1012] dark:text-[#D3D3D3]"
+                className={`${
+                  props.snapshot.isDragging
+                    ? "bg-[#F2F6FF]"
+                    : "bg-white dark:bg-[#0D1012]"
+                } w-full rounded-[4.73px]  px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px]  dark:text-[#D3D3D3]`}
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) =>
@@ -206,7 +222,13 @@ const SingleAnswerRankedChoice = (props) => {
             )}
             {props.deleteable && (
               <div
-                className={`relative flex items-center rounded-r-[4.7px] bg-white text-[0.5rem] font-semibold tablet:h-[50.19px] tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.2rem] dark:bg-[#0D1012] ${checkOptionStatus.color}`}
+                className={`${
+                  props.snapshot.isDragging
+                    ? "bg-[#F2F6FF]"
+                    : "bg-white dark:bg-[#0D1012]"
+                } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:h-[50.19px] tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.2rem] ${
+                  checkOptionStatus.color
+                }`}
               >
                 <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
                   <span>{checkOptionStatus.name}</span>

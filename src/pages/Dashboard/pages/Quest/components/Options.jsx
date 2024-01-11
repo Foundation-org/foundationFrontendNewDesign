@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Tooltip } from "../../../../../utils/Tooltip";
 
 const Options = ({
+  snapshot,
   title,
   answer,
   options,
@@ -20,6 +21,8 @@ const Options = ({
   optionStatus,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
+
+  console.log({ snapshot });
 
   return (
     <div
@@ -75,7 +78,13 @@ const Options = ({
       ) : (
         <div className="flex w-full items-center justify-center">
           <div className="mx-[21px] flex w-full rounded-r-[0.33rem] bg-transparent tablet:ml-[54px] tablet:mr-[70px] tablet:w-full tablet:rounded-[10.3px] laptop:rounded-2xl">
-            <div className="dragIconWrapper">
+            <div
+              className={`${
+                snapshot.isDragging
+                  ? "border-[#5FA3D5]"
+                  : "border-[#DEE6F7] dark:border-[#9E9E9E]"
+              } dragIconWrapper border-y border-s`}
+            >
               {persistedTheme === "dark" ? (
                 <img
                   src="/assets/svgs/dashboard/six-dots-dark.svg"
@@ -90,9 +99,19 @@ const Options = ({
                 />
               )}
             </div>
-            <div className="h-[25.19px] w-9 border-y-[1px] border-[#ACACAC] bg-white dark:border-[#0D1012] dark:bg-[#0D1012] tablet:h-[50.19px] laptop:h-[74px]"></div>
+            <div
+              className={`${
+                snapshot.isDragging
+                  ? "border-[#5FA3D5] bg-[#F2F6FF]"
+                  : "border-[#ACACAC] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]"
+              } h-[25.19px] w-9 border-y-[1px] tablet:h-[50.19px] laptop:h-[74px]`}
+            ></div>
             <input
-              className="h-[25.19px] w-full border-y-[1px] border-[#ACACAC] bg-white py-[0.35rem] pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:h-[50.19px] tablet:py-[11.6px] tablet:pr-11 tablet:text-[1.296rem] laptop:h-[74px] laptop:py-[18px] laptop:text-[1.875rem]"
+              className={`${
+                snapshot.isDragging
+                  ? "border-[#5FA3D5] bg-[#F2F6FF]"
+                  : "border-[#ACACAC] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]"
+              } h-[25.19px] w-full border-y-[1px] py-[0.35rem] pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none tablet:h-[50.19px] tablet:py-[11.6px] tablet:pr-11 tablet:text-[1.296rem] laptop:h-[74px] laptop:py-[18px] laptop:text-[1.875rem] dark:text-[#7C7C7C]`}
               onChange={(e) => handleChange(e.target.value)}
               onBlur={(e) =>
                 e.target.value.trim() !== "" &&
@@ -103,7 +122,13 @@ const Options = ({
             />
             <div
               id={`test${number}`}
-              className={`relative flex h-[25.19px] items-center rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:h-[74px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${optionStatus.color}`}
+              className={`${
+                snapshot.isDragging
+                  ? "border-[#5FA3D5] bg-[#F2F6FF]"
+                  : "border-[#ACACAC] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]"
+              } relative flex h-[25.19px] items-center rounded-r-[0.33rem] border-y-[1px] border-r-[1px] text-[0.5rem] font-semibold tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:h-[74px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${
+                optionStatus.color
+              }`}
             >
               <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[166px]">
                 <span>{optionStatus.name}</span>
@@ -114,7 +139,7 @@ const Options = ({
               trash && (
                 <div
                   id={`test${number}`}
-                  className={`flex h-[25.19px] items-center text-[0.5rem] font-semibold dark:bg-[#141618] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] ${optionStatus?.color} py-[0.29rem]`}
+                  className={`flex h-[25.19px] items-center text-[0.5rem] font-semibold xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] dark:bg-[#141618] ${optionStatus?.color} py-[0.29rem]`}
                 >
                   <div className="flex w-5 items-center justify-center tablet:w-[52.78px]">
                     <>
