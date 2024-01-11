@@ -31,7 +31,7 @@ import { IoIosArrowUp } from "react-icons/io";
 
 const Bookmark = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const pageLimit = 10;
+  const pageLimit = 5;
   const filterStates = useSelector(getFilters);
   const [pagination, setPagination] = useState({
     page: 1,
@@ -213,22 +213,22 @@ const Bookmark = () => {
               <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
                 <div></div>
                 {searchData && allData.length==0 ?
-                  <p className="text-center  text-xl">
-                    <b>No matching quest found.</b>
+                  <p className="text-center  text-[2vw]">
+                    No matching posts found.
                   </p>
                   :!searchData && allData.length===0?
                   <>
                   {printNoRecords()}
                 </>
                   : !searchData &&
-                  <p className="text-center text-xl">
+                  <p className="text-center  text-[2vw]">
                     <b>You are all caught up!</b>
                   </p>
                 }
                 {!searchData && allData.length !==0 ?
 
                   <IoIosArrowUp
-                  className="cursor-pointer text-2xl"
+                  className="cursor-pointer  text-[2vw]"
                   onClick={handleClickScroll}
                   />: <div></div>
                 }

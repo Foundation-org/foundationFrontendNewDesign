@@ -70,7 +70,7 @@ const Topbar = () => {
           </div>
         ) : (
           <div
-            className="flex h-full items-center justify-center space-x-2 laptop:hidden"
+            className="flex h-full items-center justify-center space-x-2 cursor-pointer laptop:hidden"
             onClick={() => {
               navigate("/profile");
             }}

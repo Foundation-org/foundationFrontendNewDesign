@@ -235,9 +235,10 @@ const SidebarRight = () => {
           </div>
         ) : (
           <div
-            className="mb-[5vh] flex items-center gap-6"
+            className="mb-[5vh] flex items-center gap-6 cursor-pointer"
             onClick={() => {
               navigate("/profile");
+              
             }}
           >
             <div className="relative h-fit w-fit">
@@ -279,9 +280,9 @@ const SidebarRight = () => {
         {sidebarList.map((item) => (
           <div className="mt-[1.9vh] flex items-center gap-4" key={item.id}>
             {persistedTheme === "dark" ? (
-              <img src={item.icon} alt={item.alt} />
+              <img src={item.icon} alt={item.alt} className="h-[56px] w-[60px]"/>
             ) : (
-              <img src={item.iconLight} alt={item.alt} />
+              <img src={item.iconLight} alt={item.alt} className="h-[56px] w-[60px]" />
             )}
 
             <div className="flex w-full items-center justify-between text-[18px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#878787]">

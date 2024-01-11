@@ -46,6 +46,7 @@ const QuestionCardWithToggle = ({
   createdBy,
   expandedView,
   QuestTopic,
+  isBookmarkTab
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -149,7 +150,9 @@ const QuestionCardWithToggle = ({
     mutationFn: deleteBookmarkById,
     onSuccess: (resp) => {
       toast.success("Bookmark Removed");
-      queryClient.invalidateQueries("FeedData");
+      if(!isBookmarkTab){
+        queryClient.invalidateQueries("FeedData");
+      }
       handleStartTest(null);
     },
     onError: (err) => {

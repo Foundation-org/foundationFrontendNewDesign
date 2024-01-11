@@ -211,11 +211,12 @@ const StartTest = ({
 
   return (
     <>
-      <>
+    
+    <div className="mx-1 flex flex-col gap-[5.7px]  tablet:gap-[10px] ">
         {title === "Yes/No" ||
         title === "Agree/Disagree" ||
         title === "Like/Unlike" ? (
-          <div className="mt-[18px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px]">
+          <>
             {title === "Yes/No" ? (
               loadingDetail === true ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
@@ -290,7 +291,7 @@ const StartTest = ({
                 />
               </>
             )}
-          </div>
+          </>
         ) : title === "Multiple Choice" ? (
           loadingDetail === true ? (
             <div className="flex items-center justify-center bg-transparent bg-opacity-20">
@@ -299,11 +300,11 @@ const StartTest = ({
           ) : (
             <div className="flex flex-col  overflow-auto ">
               {multipleOption ? (
-                <h4 className="ml-8 mt-3 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
+                <h4 className="ml-8 mt-3  mb-[23.7px] tablet:mb-[30px] text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
                   You can select multiple options.
                 </h4>
               ) : (
-                <h4 className="ml-8 mt-[15px] text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:text-[16.58px] laptop:text-[18px]">
+                <h4 className="ml-8 mt-3  mb-[23.7px] tablet:mb-[30px] text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
                   &#x200B;
                 </h4>
               )}
@@ -416,7 +417,7 @@ const StartTest = ({
             </div>
           </div>
         )}
-      </>
+</div>
 
       <div className="mr-[22px] mt-7 flex items-center justify-between tablet:mr-[48px]">
         <QuestTimeRemaining

@@ -32,7 +32,7 @@ import { handleClickScroll } from "../../../../utils";
 
 const Main = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const pageLimit = 10;
+  const pageLimit = 5;
   const myRef = useRef(null);
   const filterStates = useSelector(getFilters);
   const [pagination, setPagination] = useState({
@@ -280,7 +280,7 @@ const Main = () => {
               <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
                 <div></div>
                 {searchData && allData.length==0 ?
-                  <p className="text-center  text-xl">
+                  <p className="text-center text-[2vw]">
                     <b>No matching quest found.</b>
                   </p>
                   :!searchData && allData.length===0?
@@ -288,14 +288,14 @@ const Main = () => {
                   {printNoRecords()}
                 </>
                   : !searchData &&
-                  <p className="text-center  text-xl">
+                  <p className="text-center text-[2vw]">
                     <b>You are all caught up!</b>
                   </p>
                 }
                 {!searchData && allData.length !==0 ?
 
                   <IoIosArrowUp
-                  className="cursor-pointer text-2xl"
+                  className="cursor-pointer text-[2vw]"
                   onClick={handleClickScroll}
                   />: <div></div>
                 }
