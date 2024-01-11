@@ -201,7 +201,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 }
               />
             ) : (
-              <h1 className="ml-[15.8px] w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px] dark:text-[#D3D3D3]">
+              <h1 className="ml-[15.8px] w-full pb-[5.7px] pr-[9px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px] dark:text-[#D3D3D3]">
                 {props.answer}
               </h1>
             )}

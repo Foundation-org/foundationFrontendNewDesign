@@ -103,11 +103,11 @@ const TopicPreferences = ({
           )}
         </div>
       </div>
-      <h1 className="laptop:ml- mx-auto hidden py-[1rem] text-[1rem] font-normal leading-normal text-[#707175] tablet:block tablet:text-[1.2rem] laptop:max-w-[80%] laptop:py-[2.19rem] laptop:text-[1.625rem]">
+      <h1 className="mx-auto max-w-[90%] py-[1rem]  text-[10px] font-normal leading-normal text-[#707175] tablet:text-[1.2rem] laptop:max-w-[80%] laptop:py-[2.19rem] laptop:text-[1.625rem]">
         Drag and drop to set your preferences and blocks
       </h1>
       {/* columns */}
-      <div className="mt-[1.12rem] h-full tablet:mt-0 laptop:h-[80%]">
+      <div className="h-full tablet:mt-0 laptop:h-[80%]">
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="flex flex-col justify-center gap-0 laptop:h-full laptop:flex-row laptop:gap-[1.44rem]">
             {Object.values(columns).map((col) => (
@@ -148,19 +148,19 @@ const TopicPreferences = ({
                                       snapshot.isDragging
                                         ? "border-[#5FA3D5]"
                                         : "border-[#DEE6F7]"
-                                    } flex h-full w-[0.6rem] min-w-[0.6rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] pl-[1px] tablet:min-w-[1rem] laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
+                                    } flex h-[19.7px] w-[0.6rem] min-w-[0.6rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] pl-[1px] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
                                   >
                                     {persistedTheme === "dark" ? (
                                       <img
                                         src="/assets/svgs/dashboard/six-dots-dark.svg"
                                         alt="six dots"
-                                        className="h-3 laptop:h-auto"
+                                        className="h-2 tablet:h-3 laptop:h-auto"
                                       />
                                     ) : (
                                       <img
                                         src="/assets/svgs/dashboard/six-dots.svg"
                                         alt="six dots"
-                                        className="h-3 laptop:h-auto"
+                                        className="h-2 tablet:h-3 laptop:h-auto"
                                       />
                                     )}
                                   </div>
@@ -178,7 +178,7 @@ const TopicPreferences = ({
                             </Draggable>
                           ))
                         ) : (
-                          <p className="flex h-full justify-center pt-16 text-center text-[1.375rem] font-normal text-[#C9C8C8]">
+                          <p className="flex h-full justify-center pt-[14px] text-center text-[10px] font-normal text-[#C9C8C8] tablet:pt-16 tablet:text-[1.375rem]">
                             Drag and drop your Blocks here
                           </p>
                         )}
