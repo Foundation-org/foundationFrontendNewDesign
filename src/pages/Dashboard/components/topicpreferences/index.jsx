@@ -68,8 +68,8 @@ const TopicPreferences = ({
 
   return (
     <div className="relative h-full w-[90vw] px-[1.19rem] py-[1.5rem] tablet:w-[75vw] tablet:px-[2.75rem] tablet:py-[2.94rem]">
-      <IoClose
-        className="absolute right-3 top-3 h-3 w-3 cursor-pointer text-[#C9C8C8] tablet:h-[33px] tablet:w-[33px] laptop:right-5 laptop:top-5 dark:text-white"
+      <GrClose
+        className="absolute right-3 top-3 cursor-pointer text-[12px] text-[#C9C8C8] tablet:h-[16px] tablet:w-[16px] laptop:right-5 laptop:top-5 dark:text-white"
         onClick={handleClose}
       />
       <div className="max-[100%] mx-auto flex items-center gap-2 tablet:gap-7 laptop:max-w-[80%]">
@@ -147,8 +147,8 @@ const TopicPreferences = ({
                                     className={`${
                                       snapshot.isDragging
                                         ? "border-[#5FA3D5]"
-                                        : "border-[#DEE6F7]"
-                                    } flex h-[19.7px] w-[0.6rem] min-w-[0.6rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] pl-[1px] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
+                                        : "dakr: border-[#DEE6F7]"
+                                    } flex h-[19.7px] w-[0.6rem] min-w-[0.6rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
                                   >
                                     {persistedTheme === "dark" ? (
                                       <img
@@ -179,7 +179,7 @@ const TopicPreferences = ({
                           ))
                         ) : (
                           <p className="flex h-full justify-center pt-[14px] text-center text-[10px] font-normal text-[#C9C8C8] tablet:pt-16 tablet:text-[1.375rem]">
-                            Drag and drop your Blocks here
+                            Drag and drop here
                           </p>
                         )}
                         {provided.placeholder}
