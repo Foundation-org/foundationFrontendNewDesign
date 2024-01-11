@@ -3,11 +3,16 @@ import Button from "../components/Button";
 import { useEffect, useState } from "react";
 import { addUser } from "../../../../../features/auth/authSlice";
 import { userInfo } from "../../../../../api/userAuth";
+import { useSearchParams } from 'react-router-dom'
+import Loader from "../../../../Signup/components/Loader";
+import api from "../../../../../api/Axios";
 
 const VerificationBadges = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
   const [fetchUser, setFetchUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUserInfo = async (id) => {
     try {
@@ -24,8 +29,26 @@ const VerificationBadges = () => {
     }
   };
 
+  const handleSocialBadges = async () => {
+    try {
+      setIsLoading(true)
+      const resp = await api.post('/addBadge/social');
+      if (resp.status === 200) {
+        handleUserInfo()
+        navigate("/profile/verification-badges")
+      }
+      setIsLoading(false)
+    } catch (e) {
+      setIsLoading(false)
+      toast.error(e.response.data.message.split(":")[1]);
+    }
+  };
+
   useEffect(() => {
     handleUserInfo()
+    if(searchParams.get('social')) {
+      handleSocialBadges()
+    }
   }, [])
 
   const contacts = [
@@ -72,14 +95,16 @@ const VerificationBadges = () => {
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
-      link: "/auth/linkedin"
+      link: "/auth/linkedin",
+      accountName: "linkedin"
     },{
       image: "/assets/profile/Facebook-2x.png",
       title: "Facebook",
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
-      link: "/auth/facebook"
+      link: "/auth/facebook",
+      accountName: "facebook"
     },
     {
       image: "/assets/profile/Twitter-2x.png",
@@ -87,7 +112,8 @@ const VerificationBadges = () => {
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
-      link: "/auth/twitter"
+      link: "/auth/twitter",
+      accountName: "twitter"
     },
     {
       image: "/assets/profile/Instagram-2x.png",
@@ -95,7 +121,8 @@ const VerificationBadges = () => {
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
-      link: "/auth/instagram"
+      link: "/auth/instagram",
+      accountName: "instagram"
     },
    
     {
@@ -104,7 +131,8 @@ const VerificationBadges = () => {
       ButtonColor: "blue",
       ButtonText: "Add New Badge",
       NoOfButton:1,
-      link: "/auth/github"
+      link: "/auth/github",
+      accountName: "github"
     },]
 
   const web3 = [
@@ -202,8 +230,17 @@ const VerificationBadges = () => {
 
   const checkPersonal = (itemType) => fetchUser?.badges?.some(i => i.type === itemType)
 
+  // const checkSocial = (itemType) => {
+  //   console.log("🚀 ~ checkSocial ~ itemType:", itemType)
+  //   const check = fetchUser?.badges?.some(i => i.accountName === itemType)
+  //   console.log("🚀 ~ checkSocial ~ check:", check)
+  // }
+
+  const checkSocial = (itemType) => (fetchUser?.badges?.some(i => i.accountName === itemType))
+
   return (
     <div>
+      { isLoading && <Loader/> }
       <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] dark:text-[#B8B8B8] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px]">
         My Verification Badges
       </h1>
@@ -264,7 +301,7 @@ const VerificationBadges = () => {
                 {item.title}
               </h1>
             </div>
-            <Button onClick={() => window.open(`${import.meta.env.VITE_API_URL}${item.link}`, "_self")} color={item.ButtonColor}>{item.ButtonText}</Button>
+            <Button color={checkSocial(item.accountName) ? "yellow" : item.ButtonColor} onClick={() => {!checkSocial(item.accountName) && window.open(`${import.meta.env.VITE_API_URL}${item.link}`, "_self")}}>{checkSocial(item.accountName) ? "Added" : item.ButtonText}</Button>
           </div>
         ))}
         <h1 className="font-500 text-[2.22vw] ml-[3.5vw] font-Inter font-normal text-[#000] dark:text-white">Web 3</h1>
