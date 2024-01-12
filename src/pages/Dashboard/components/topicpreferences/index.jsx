@@ -1,18 +1,18 @@
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { useSelector } from "react-redux";
-import { IoClose } from "react-icons/io5";
-
 import * as prefActions from "../../../../features/preferences/prefSlice";
 
 // icons
+import { IoClose } from "react-icons/io5";
 import { GrClose } from "react-icons/gr";
-import { useDispatch } from "react-redux";
+import Cross from "../../../../assets/preferences/Cross";
 
 const TopicPreferences = ({ columns, setColumns, handleClose }) => {
   const dispatch = useDispatch();
   const getPreferences = useSelector(prefActions.getPrefs);
-  console.log({ getPreferences });
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const [itemsWithCross, setItemsWithCross] = useState([]);
 
   const handleSearch = (e) => {
     dispatch(prefActions.setTopicSearch(e.target.value));
@@ -43,6 +43,16 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
       setColumns((state) => ({ ...state, [newCol.id]: newCol }));
       return null;
     } else {
+      const draggedItem = start.list[source.index];
+
+      if (
+        source.droppableId === "All" &&
+        (destination.droppableId === "Preferences" ||
+          destination.droppableId === "Block")
+      ) {
+        setItemsWithCross((prevItems) => [...prevItems, draggedItem]);
+      }
+
       const newStartList = start.list.filter((_, idx) => idx !== source.index);
 
       const newStartCol = {
@@ -68,12 +78,43 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
     }
   };
 
+  const handleRemoveItemFromList = (text, sourceColumnId) => {
+    const updatedList = columns[sourceColumnId].list.filter(
+      (item) => item !== text,
+    );
+
+    const updatedColumn = {
+      ...columns[sourceColumnId],
+      list: updatedList,
+    };
+
+    setColumns((prevColumns) => ({
+      ...prevColumns,
+      [sourceColumnId]: updatedColumn,
+    }));
+
+    if (sourceColumnId !== "All") {
+      setColumns((prevColumns) => ({
+        ...prevColumns,
+        All: {
+          ...prevColumns.All,
+          list: [...prevColumns.All.list, text],
+        },
+      }));
+    }
+
+    setItemsWithCross((prevItems) => prevItems.filter((item) => item !== text));
+  };
+
   return (
     <div className="relative h-full w-[90vw] px-[1.19rem] py-[1.5rem] tablet:w-[75vw] tablet:px-[2.75rem] tablet:py-[2.94rem]">
-      <GrClose
-        className="absolute right-3 top-3 cursor-pointer text-[12px] text-[#C9C8C8] tablet:h-[16px] tablet:w-[16px] laptop:right-5 laptop:top-5 dark:text-white"
-        onClick={handleClose}
-      />
+      <div onClick={handleClose}>
+        <Cross
+          styles={
+            "w-[0.8rem] h-[0.8rem] tablet:w-5 tablet:h-5 laptop:w-[27px] laptop:h-[27px] absolute top-[0.38rem] right-[0.32rem] tablet:right-[18px] tablet:top-[15px] laptop:right-[1.28rem] laptop:top-[1.44rem] cursor-pointer"
+          }
+        />
+      </div>
       <div className="max-[100%] mx-auto flex items-center gap-2 tablet:gap-7 laptop:max-w-[80%]">
         <h1 className=" text-[1rem] font-medium leading-normal text-[#535353] tablet:text-[1.4rem] laptop:text-[2.18rem]">
           Topic
@@ -141,7 +182,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
-                                  className={`flex h-[2.78rem] items-center ${
+                                  className={`flex h-[19.7px] items-center tablet:h-[1.78rem] laptop:h-[2.78rem] ${
                                     snapshot.isDragging ? "" : ""
                                   }`}
                                 >
@@ -171,9 +212,19 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                                       snapshot.isDragging
                                         ? "border-[#5FA3D5] bg-[#F2F6FF]"
                                         : "border-[#ACACAC] bg-[#FCFCFD]"
-                                    } w-fit select-none truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-3 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[1.6rem]`}
+                                    } flex h-[19.7px] w-fit select-none items-center gap-[5px] truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[1.6rem]`}
                                   >
                                     {text}
+                                    <GrClose
+                                      className={`${
+                                        itemsWithCross.includes(text)
+                                          ? "block"
+                                          : "hidden"
+                                      } h-[9.4px] w-[9.4px] cursor-pointer text-[#C9C8C8] tablet:h-[16px] tablet:w-[16px] laptop:h-[20px] laptop:w-[20px] dark:text-white`}
+                                      onClick={() =>
+                                        handleRemoveItemFromList(text, col.id)
+                                      }
+                                    />
                                   </p>
                                 </div>
                               )}
