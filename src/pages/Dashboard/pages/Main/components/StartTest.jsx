@@ -303,11 +303,11 @@ const StartTest = ({
           ) : (
             <div className="flex flex-col overflow-auto ">
               {multipleOption ? (
-                <h4 className=" ml-8  text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-[15px] tablet:mt-[20px] tablet:ml-[6.37rem] tablet:text-[16.58px] laptop:text-[18px]">
+                <h4 className=" ml-8  text-[9px] font-medium leading-normal text-[#ACACAC] mb-[9px] tablet:mb-[15px] tablet:mt-[20px] tablet:ml-[6.37rem] tablet:text-[16.58px] laptop:text-[18px]">
                   You can select multiple options.
                 </h4>
               ) : (
-                <h4 className="ml-8 text-[9px] font-medium leading-normal text-[#ACACAC]  tablet:ml-[6.37rem] tablet:mb-[15px] tablet:mt-[20px] tablet:text-[16.58px] laptop:text-[18px]">
+                <h4 className="ml-8 text-[9px] font-medium leading-normal text-[#ACACAC]  tablet:ml-[6.37rem] mb-[8px] tablet:mb-[15px] tablet:mt-[20px] tablet:text-[16.58px] laptop:text-[18px]">
                   &#x200B;
                 </h4>
               )}
