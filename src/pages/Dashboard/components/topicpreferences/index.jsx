@@ -1,7 +1,9 @@
-import { GrClose } from "react-icons/gr";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
+import { searchTopics } from "../../../../api/homepageApis";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 const TopicPreferences = ({
   topicSearch,
@@ -15,6 +17,28 @@ const TopicPreferences = ({
   const handleSearch = (e) => {
     setTopicSearch(e.target.value);
   };
+
+  const { data: searchResults , isSuccess } = useQuery({
+    queryFn: async() => {
+      if(topicSearch!==""){
+        const result = await searchTopics(topicSearch);
+        console.log("search",searchResults);
+      return result; 
+      }
+    },
+    queryKey: [topicSearch]
+  });
+
+
+
+  useEffect(() => {
+    if(isSuccess){
+      setColumns( {All: {
+        list: searchResults?.data.data || []}}
+      )
+    }
+
+  },[]);
 
   const onDragEnd = ({ source, destination }) => {
     if (destination === undefined || destination === null) return null;
@@ -107,6 +131,7 @@ const TopicPreferences = ({
         Drag and drop to set your preferences and blocks
       </h1>
       {/* columns */}
+      {console.log({columns})}
       <div className="mt-[1.12rem] h-full tablet:mt-0 laptop:h-[80%]">
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="flex flex-col justify-center gap-0 laptop:h-full laptop:flex-row laptop:gap-[1.44rem]">

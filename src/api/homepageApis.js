@@ -15,6 +15,11 @@ export const getAllTopics = async () => {
   return await api.get("/preferences/getAllTopic");
 };
 
+export const searchTopics = async (topicSearch) => {
+  return await api.get(`/preferences/searchTopics?search=${topicSearch}`);
+};
+
+
 // ============ Filters
 
 // For Default

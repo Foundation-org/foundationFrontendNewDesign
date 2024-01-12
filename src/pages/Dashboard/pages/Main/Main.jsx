@@ -92,7 +92,9 @@ const Main = () => {
     queryKey: ["topicsData"],
   });
 
+  
   useEffect(() => {
+    console.log("Topic data",topicsData);
     if (isSuccess) {
       setColumns((prevColumns) => ({
         ...prevColumns,
