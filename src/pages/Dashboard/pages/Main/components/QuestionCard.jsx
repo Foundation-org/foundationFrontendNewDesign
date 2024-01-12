@@ -165,10 +165,9 @@ const QuestionCard = ({
     },
   });
 
-  const handleBookmark = (status) => {
+  const handleBookmark = () => {
     setbookmarkStatus((prevIsBookmarked) => !prevIsBookmarked);
-    console.log({ status });
-    if (status) {
+    if (bookmarkStatus) {
       const params = {
         questForeignKey: id,
       };
@@ -561,7 +560,7 @@ const QuestionCard = ({
         </h1>
         <div
           className="flex w-[45.7px] justify-end"
-          onClick={() => handleBookmark(isBookmarked)}
+          onClick={() => handleBookmark()}
         >
           {bookmarkStatus ? (
             persistedTheme !== "dark" ? (
