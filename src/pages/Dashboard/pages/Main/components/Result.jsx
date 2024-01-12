@@ -260,7 +260,7 @@ const Result = (props) => {
 
   return (
     <>
-      <div className="mx-1 mt-[23.7px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px] ">
+      <div className="mx-1 mt-[23.7px] flex flex-col gap-[5.7px] tablet:mt-[62px] tablet:gap-[10px] ">
         {props.title === "Yes/No" ||
         props.title === "Agree/Disagree" ||
         props.title === "Like/Dislike" ? (
@@ -435,7 +435,7 @@ const Result = (props) => {
       </div>
 
       {props.expanded && props.btnText === "change answer" ? (
-        <div className="mr-[22px] mt-7 flex items-center justify-between tablet:mr-[48px]">
+        <div className="mr-[22px] mt-[15px] flex items-center justify-between tablet:mr-[48px]">
           <QuestTimeRemaining
             lastInteractedAt={props.lastInteractedAt}
             howManyTimesAnsChanged={props.howManyTimesAnsChanged}
@@ -461,7 +461,7 @@ const Result = (props) => {
       ) : (
         props.expanded &&
         props.btnText === "completed" && (
-          <div className="mr-[22px] mt-7 flex items-center justify-between tablet:mr-[48px]">
+          <div className="mr-[22px] mt-[15px] flex items-center justify-between tablet:mr-[48px]">
             <QuestTimeRemaining
               lastInteractedAt={props.lastInteractedAt}
               howManyTimesAnsChanged={props.howManyTimesAnsChanged}

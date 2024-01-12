@@ -213,10 +213,12 @@ const StartTest = ({
 
   return (
     <>
-      <div className="mx-1 flex flex-col gap-[5.7px]  tablet:gap-[10px] ">
-        {title === "Yes/No" ||
+      <div className={`mx-1 mt-[2px] flex flex-col gap-[5.7px] tablet:gap-[10px] ${title === "Yes/No" ||
         title === "Agree/Disagree" ||
-        title === "Like/Dislike" ? (
+        title === "Like/Dislike" ? "tablet:mt-[53px] mt-[23.7px]" : ""}`}>
+        {title === "Yes/No" ||
+          title === "Agree/Disagree" ||
+          title === "Like/Dislike" ? (
           <>
             {title === "Yes/No" ? (
               loadingDetail === true ? (
@@ -299,22 +301,21 @@ const StartTest = ({
               <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
             </div>
           ) : (
-            <div className="flex flex-col  overflow-auto ">
+            <div className="flex flex-col overflow-auto ">
               {multipleOption ? (
-                <h4 className="mb-[23.7px] ml-8  mt-3 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-[30px] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
+                <h4 className=" ml-8  text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-[15px] tablet:mt-[20px] tablet:ml-[6.37rem] tablet:text-[16.58px] laptop:text-[18px]">
                   You can select multiple options.
                 </h4>
               ) : (
-                <h4 className="mb-[23.7px] ml-8  mt-3 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-[30px] tablet:ml-[6.37rem] tablet:mt-6 tablet:text-[16.58px] laptop:text-[18px]">
+                <h4 className="ml-8 text-[9px] font-medium leading-normal text-[#ACACAC]  tablet:ml-[6.37rem] tablet:mb-[15px] tablet:mt-[20px] tablet:text-[16.58px] laptop:text-[18px]">
                   &#x200B;
                 </h4>
               )}
               <div
-                className={`${
-                  isFullScreen === undefined
+                className={`${isFullScreen === undefined
                     ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]"
                     : ""
-                } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                  } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
               >
                 {answersSelection &&
                   [...answersSelection]?.map((item, index) => (
@@ -343,7 +344,7 @@ const StartTest = ({
                         multipleOption === true
                           ? (contend) => handleContendChange(index, contend)
                           : (contend) =>
-                              handleContendChangeSingle(index, contend)
+                            handleContendChangeSingle(index, contend)
                       }
                       setIsSubmit={setIsSubmit}
                     />
@@ -356,8 +357,8 @@ const StartTest = ({
             <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
           </div>
         ) : (
-          <div className="mt-[11.66px] flex flex-col gap-[5.7px] tablet:mt-[26px] tablet:gap-[10px]">
-            <h4 className="ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-2 tablet:ml-[108.65px] tablet:text-[16.58px] laptop:text-[18px]">
+          <div className=" flex flex-col gap-[5.7px] tablet:gap-[10px]">
+            <h4 className="ml-9 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-[15px] tablet:mt-[20px] tablet:ml-[108.65px] tablet:text-[16.58px] laptop:text-[18px]">
               You can drag and drop options in your order of preference.
             </h4>
             <div className="-mt-1 flex flex-col gap-[5.7px] tablet:-mt-3 tablet:gap-[10px]">
@@ -365,11 +366,10 @@ const StartTest = ({
                 <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                   {(provided) => (
                     <ul
-                      className={`${
-                        isFullScreen === undefined
+                      className={`${isFullScreen === undefined
                           ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto tablet:max-h-[366px]"
                           : ""
-                      }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                        }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
@@ -421,7 +421,7 @@ const StartTest = ({
         )}
       </div>
 
-      <div className="mr-[22px] mt-7 flex items-center justify-between tablet:mr-[48px]">
+      <div className="mr-[22px] mt-[15px] flex items-center justify-between tablet:mr-[46px]">
         <QuestTimeRemaining
           lastInteractedAt={localStorage.getItem("lastInteractedAt")}
           howManyTimesAnsChanged={localStorage.getItem(
@@ -431,18 +431,18 @@ const StartTest = ({
         />
         {((isFullScreen === undefined && answersSelection?.length > 6) ||
           (isFullScreen === undefined && rankedAnswers?.length > 6)) && (
-          <div
-            className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[14px] dark:text-[#ACACAC] "
-            onClick={() => {
-              navigate(`/quest/${id}/isfullscreen`);
-            }}
-          >
-            <MdFullscreen className="text-[17px] tablet:text-[32px]" />
-            <p className="text-[9px] font-medium tablet:text-[16px] ">
-              Full Screen
-            </p>
-          </div>
-        )}
+            <div
+              className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[14px] dark:text-[#ACACAC] "
+              onClick={() => {
+                navigate(`/quest/${id}/isfullscreen`);
+              }}
+            >
+              <MdFullscreen className="text-[17px] tablet:text-[32px]" />
+              <p className="text-[9px] font-medium tablet:text-[16px] ">
+                Full Screen
+              </p>
+            </div>
+          )}
       </div>
 
       {/* Add Options && Cancel && Submit Button */}
@@ -450,8 +450,8 @@ const StartTest = ({
         {usersAddTheirAns && uuidExists === false ? (
           <div>
             {title === "Yes/No" ||
-            title === "Agree/Disagree" ||
-            title === "Like/Dislike" ? null : (
+              title === "Agree/Disagree" ||
+              title === "Like/Dislike" ? null : (
               <button
                 onClick={handleOpen}
                 className="addoption-boxShadow ml-4 flex h-[23.48px] w-[81.8px] items-center gap-[5.8px] rounded-[7.1px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:h-[52px] tablet:w-[173px] tablet:gap-[11.37px] tablet:rounded-[15px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
@@ -478,13 +478,12 @@ const StartTest = ({
         )}
       </div>
       <div
-        className={`${
-          title === "Multiple Choice"
+        className={`${title === "Multiple Choice"
             ? "mt-4 tablet:mt-5"
             : addOptionField === 1
               ? "mt-[4rem] tablet:mt-[10rem]"
               : "mt-4 tablet:mt-5"
-        } flex w-full justify-end gap-2 tablet:gap-10`}
+          } flex w-full justify-end gap-2 tablet:gap-10`}
       >
         {/* Add Options Button */}
         {/* {usersAddTheirAns && addOptionLimit === 0 ? (
@@ -516,11 +515,10 @@ const StartTest = ({
         <div className="mr-[14.4px] flex gap-2 tablet:mr-[30px] tablet:gap-10">
           {!expandedView ? (
             <button
-              className={` ${
-                persistedTheme === "dark"
+              className={` ${persistedTheme === "dark"
                   ? "bg-[#F4F4F4] text-[#707175]"
                   : "bg-[#707175] text-white"
-              } inset-0 h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal shadow-inner tablet:h-[52px] tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+                } inset-0 h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal shadow-inner tablet:h-[52px] tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
               onClick={() => {
                 setStartTest(null);
               }}
@@ -532,11 +530,10 @@ const StartTest = ({
             viewResult === null &&
             openResults === false && (
               <button
-                className={` ${
-                  persistedTheme === "dark"
+                className={` ${persistedTheme === "dark"
                     ? "bg-[#F4F4F4] text-[#707175]"
                     : "bg-[#707175] text-white"
-                } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+                  } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
                 onClick={() => {
                   setViewResult(id);
                   setOpenResults(true);
@@ -546,11 +543,10 @@ const StartTest = ({
               </button>
             )}
           <button
-            className={`relative ${
-              persistedTheme === "dark"
+            className={`relative ${persistedTheme === "dark"
                 ? "bg-[#333B46]"
                 : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            } flex h-[23.48px] w-[81.8px] items-center justify-center rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
+              } flex h-[23.48px] w-[81.8px] items-center justify-center rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
             onClick={() => handleSubmit()}
             disabled={loading === true ? true : false}
           >
