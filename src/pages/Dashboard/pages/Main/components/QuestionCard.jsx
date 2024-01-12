@@ -72,14 +72,12 @@ const QuestionCard = ({
 
   const [loadingDetail, setLoadingDetail] = useState(false);
 
-  console.log({ isBookmarked });
-
   useEffect(() => {
     setbookmarkStatus(isBookmarked);
   }, [isBookmarked]);
 
   useEffect(() => {
-    console.log("answersSelection", answersSelection);
+    // console.log("answersSelection", answersSelection);
   }, [answersSelection]);
 
   useEffect(() => {
@@ -319,7 +317,6 @@ const QuestionCard = ({
     }
   };
 
-  console.log({ answersSelection });
   const handleSubmit = () => {
     setLoading(true);
     if (

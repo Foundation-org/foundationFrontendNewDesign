@@ -68,8 +68,6 @@ const StartTest = ({
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
 
-  console.log({ answers });
-
   const uuidExists =
     answers && answers?.some((item) => item.uuid === persistedUserInfo.uuid);
 

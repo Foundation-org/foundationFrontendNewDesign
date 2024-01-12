@@ -1,10 +1,17 @@
 import { useState } from "react";
-import { GrClose } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
+
+// components
 import Dropdown2 from "../../../components/Dropdown2";
 import CustomSwitch2 from "../../../components/CustomSwitch2";
 import BasicModal from "../../../components/BasicModal";
 import TopicPreferences from "./topicpreferences";
+
+// extras
+import * as filtersActions from "../../../features/sidebar/filtersSlice";
+
+// icons
+import { GrClose } from "react-icons/gr";
 
 const SidebarLeft = ({
   handleSearch,
@@ -13,11 +20,6 @@ const SidebarLeft = ({
   setClearFilter,
   setSearchData,
   filterStates,
-  resetFilters,
-  setFilterByScope,
-  setFilterBySort,
-  setFilterByStatus,
-  setFilterByType,
   expandedView,
   setExpandedView,
   columns,
@@ -40,7 +42,7 @@ const SidebarLeft = ({
 
   const handleSwitchChange = () => {
     setLocalMe(!multipleOption);
-    dispatch(setFilterByScope(multipleOption ? "All" : "Me"));
+    dispatch(filtersActions.setFilterByScope(multipleOption ? "All" : "Me"));
     localStorage.setItem("filterByState", !multipleOption ? "true" : "false");
     setMultipleOption(!multipleOption);
   };
@@ -166,7 +168,7 @@ const SidebarLeft = ({
                 "Changeable",
               ]}
               handleSelect={(item) => {
-                dispatch(setFilterByStatus(item));
+                dispatch(filtersActions.setFilterByStatus(item));
               }}
             />
             <Dropdown2
@@ -183,7 +185,7 @@ const SidebarLeft = ({
                 "Ranked Choise",
               ]}
               handleSelect={(item) => {
-                dispatch(setFilterByType(item));
+                dispatch(filtersActions.setFilterByType(item));
               }}
             />
             <Dropdown2
@@ -200,7 +202,7 @@ const SidebarLeft = ({
                 "Newest First",
               ]}
               handleSelect={(item) => {
-                dispatch(setFilterBySort(item));
+                dispatch(filtersActions.setFilterBySort(item));
               }}
             />
           </div>
@@ -217,7 +219,7 @@ const SidebarLeft = ({
                 : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
             }  inset-0 w-[192px] rounded-[0.938rem] px-5 py-2 text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
             onClick={() => {
-              dispatch(resetFilters());
+              dispatch(filtersActions.resetFilters());
               setClearFilter(!clearFilter);
             }}
           >
@@ -286,7 +288,7 @@ const SidebarLeft = ({
             }
             items={["All", "Unanswered", "Answered", "Completed", "Changeable"]}
             handleSelect={(item) => {
-              dispatch(setFilterByStatus(item));
+              dispatch(filtersActions.setFilterByStatus(item));
             }}
           />
           <Dropdown2
@@ -303,7 +305,7 @@ const SidebarLeft = ({
               "Ranked Choise",
             ]}
             handleSelect={(item) => {
-              dispatch(setFilterByType(item));
+              dispatch(filtersActions.setFilterByType(item));
             }}
           />
           <Dropdown2
@@ -320,7 +322,7 @@ const SidebarLeft = ({
               "Newest First",
             ]}
             handleSelect={(item) => {
-              dispatch(setFilterBySort(item));
+              dispatch(filtersActions.setFilterBySort(item));
             }}
           />
           <button
@@ -330,7 +332,7 @@ const SidebarLeft = ({
                 : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
             }  inset-0 w-full rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
             onClick={() => {
-              dispatch(resetFilters());
+              dispatch(filtersActions.resetFilters());
               setClearFilter(!clearFilter);
             }}
           >

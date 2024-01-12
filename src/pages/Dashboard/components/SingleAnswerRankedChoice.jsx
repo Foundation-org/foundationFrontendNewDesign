@@ -32,7 +32,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   useEffect(() => {
     setCheckState(props.check);
-    console.log("ranked percentages", props.percentages);
+    // console.log("ranked percentages", props.percentages);
   }, [props.check]);
 
   useEffect(() => {
@@ -146,7 +146,6 @@ const SingleAnswerRankedChoice = (props) => {
 
   return (
     <div className="mx-1 flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px] tablet:gap-[5px]">
-      {console.log("uuid", props.addedAnswerUuid, persistedUserInfo.uuid)}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo.uuid ? (
           <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">

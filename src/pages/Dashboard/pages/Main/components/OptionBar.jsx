@@ -87,8 +87,6 @@ const OptionBar = ({
   const { mutateAsync: getStartQuestDetail } = useMutation({
     mutationFn: getStartQuestInfo,
     onSuccess: (res) => {
-      console.log("resp", res.data.data);
-      console.log({ whichTypeQuestion });
       setHowManyTimesAnsChanged(res.data.data.length);
       if (
         whichTypeQuestion === "agree/disagree" ||

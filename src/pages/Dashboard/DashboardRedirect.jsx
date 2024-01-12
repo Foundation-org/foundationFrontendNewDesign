@@ -12,7 +12,6 @@ const DashboardRedirect = () => {
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
     onSuccess: (res) => {
-      console.log("User info fetched:", res.data);
       dispatch(addUser(res.data));
       navigate("/dashboard");
     },

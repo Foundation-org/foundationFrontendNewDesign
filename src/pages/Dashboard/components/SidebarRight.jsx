@@ -109,7 +109,6 @@ const SidebarRight = () => {
   const handleUserInfo = async () => {
     try {
       const resp = await getUserInfo();
-      console.log({ resp });
       if (resp?.status === 200) {
         dispath(addUser(resp?.data));
 
@@ -118,7 +117,6 @@ const SidebarRight = () => {
         }
       }
 
-      // console.log(resp);
       setResponse(resp?.data);
     } catch (e) {
       console.log({ e });
@@ -235,10 +233,9 @@ const SidebarRight = () => {
           </div>
         ) : (
           <div
-            className="mb-[5vh] flex items-center gap-6 cursor-pointer"
+            className="mb-[5vh] flex cursor-pointer items-center gap-6"
             onClick={() => {
               navigate("/profile");
-              
             }}
           >
             <div className="relative h-fit w-fit">
@@ -280,9 +277,17 @@ const SidebarRight = () => {
         {sidebarList.map((item) => (
           <div className="mt-[1.9vh] flex items-center gap-4" key={item.id}>
             {persistedTheme === "dark" ? (
-              <img src={item.icon} alt={item.alt} className="h-[56px] w-[60px]"/>
+              <img
+                src={item.icon}
+                alt={item.alt}
+                className="h-[56px] w-[60px]"
+              />
             ) : (
-              <img src={item.iconLight} alt={item.alt} className="h-[56px] w-[60px]" />
+              <img
+                src={item.iconLight}
+                alt={item.alt}
+                className="h-[56px] w-[60px]"
+              />
             )}
 
             <div className="flex w-full items-center justify-between text-[18px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#878787]">

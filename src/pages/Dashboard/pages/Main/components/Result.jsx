@@ -54,8 +54,6 @@ const Result = (props) => {
   const handleFbOpen = () => setFbModal(true);
   const handleFbClose = () => setFbModal(false);
 
-  console.log("hamzaa", props.answersSelection);
-
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
       // Check in selected array
@@ -116,8 +114,6 @@ const Result = (props) => {
   const { mutateAsync: getStartQuestDetail } = useMutation({
     mutationFn: getStartQuestInfo,
     onSuccess: (res) => {
-      // console.log(res?.data?.data);
-      // console.log(props.whichTypeQuestion);
       if (res.data) {
         if (
           props.whichTypeQuestion === "agree/disagree" ||
@@ -342,7 +338,6 @@ const Result = (props) => {
                 </div>
               ) : (
                 <>
-                  {console.log(props.title)}
                   <SingleAnswer
                     number={"#1"}
                     answer={"Like"}

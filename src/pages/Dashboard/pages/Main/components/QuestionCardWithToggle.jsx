@@ -46,7 +46,7 @@ const QuestionCardWithToggle = ({
   createdBy,
   expandedView,
   QuestTopic,
-  isBookmarkTab
+  isBookmarkTab,
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -150,7 +150,7 @@ const QuestionCardWithToggle = ({
     mutationFn: deleteBookmarkById,
     onSuccess: (resp) => {
       toast.success("Bookmark Removed");
-      if(!isBookmarkTab){
+      if (!isBookmarkTab) {
         queryClient.invalidateQueries("FeedData");
       }
       handleStartTest(null);
@@ -628,7 +628,6 @@ const QuestionCardWithToggle = ({
       setOpenResults(false);
       handleStartTest(id);
     }
-    console.log({ startStatus });
     if (startStatus === "change answer") {
       setOpenResults(true);
       handleViewResults(id);
@@ -638,8 +637,6 @@ const QuestionCardWithToggle = ({
       handleViewResults(id);
     }
   }, []);
-
-  console.log("hamza", viewResult, openResults);
 
   return (
     <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-white dark:bg-[#141618]">

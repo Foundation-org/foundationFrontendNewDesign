@@ -58,8 +58,6 @@ const Guests = () => {
     setViewResult((prev) => (prev === testId ? null : testId));
   };
 
-  console.log({ singleQuest });
-
   return (
     <>
       <Topbar />

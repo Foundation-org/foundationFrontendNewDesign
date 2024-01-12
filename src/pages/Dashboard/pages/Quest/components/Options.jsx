@@ -22,8 +22,6 @@ const Options = ({
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
-  console.log({ snapshot });
-
   return (
     <div
       className={`${

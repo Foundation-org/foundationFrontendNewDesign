@@ -7,7 +7,7 @@ import storage from "redux-persist/lib/storage";
 // reducers
 import utilsReducer from "../features/utils/utilsSlice";
 import authReducer from "../features/auth/authSlice";
-import filterReducer from "../features/filters/filtersSlice";
+import filterReducer from "../features/sidebar/filtersSlice";
 import bookmarkFilterReducer from "../features/filters/bookmarkFilterSlice";
 import questsReducer from "../features/quest/questsSlice";
 import questUtilsReducer from "../features/quest/utilsSlice";

@@ -31,11 +31,7 @@ export default function BasicTable() {
     queryFn: () => {
       if (debouncedSearch === "") {
         console.log("inside... calling");
-        return getAllLedgerData(
-          currentPage,
-          itemsPerPage,
-          sort,
-        );
+        return getAllLedgerData(currentPage, itemsPerPage, sort);
       } else {
         return searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
       }
@@ -45,11 +41,7 @@ export default function BasicTable() {
 
   // let ledgerData;
   const fetchData = async () => {
-    const data = await getAllLedgerData(
-      currentPage,
-      itemsPerPage,
-      sort
-    );
+    const data = await getAllLedgerData(currentPage, itemsPerPage, sort);
     if (data) {
       setLedgerData(data);
     }
@@ -73,7 +65,6 @@ export default function BasicTable() {
     } else {
       findingLedger();
     }
-    console.log("here...");
   }, [sort, debouncedSearch]);
 
   // const [{ pageIndex, pageSize }, setPagination] =
@@ -111,11 +102,7 @@ export default function BasicTable() {
     // table.setPageIndex(page - 1);
     console.log(page);
     setCurrentPage(page);
-    const data = await getAllLedgerData(
-      page,
-      itemsPerPage,
-      sort,
-    );
+    const data = await getAllLedgerData(page, itemsPerPage, sort);
     if (data) {
       setLedgerData(data);
     }

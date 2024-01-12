@@ -303,7 +303,7 @@ const QuestionCard = ({
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
-          console.log("params", params);
+          // console.log("params", params);
           changeAnswer(params);
         }
       } else {

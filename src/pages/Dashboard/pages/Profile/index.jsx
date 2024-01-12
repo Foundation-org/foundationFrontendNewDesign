@@ -34,8 +34,6 @@ const Profile = () => {
 
   const handleSelectedTab = (id) => setSelectedTab(id);
 
-  console.log({ selectedTab });
-
   return (
     <div>
       <Topbar />
