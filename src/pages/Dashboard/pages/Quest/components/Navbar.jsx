@@ -59,7 +59,7 @@ const Navbar = ({ handleTab, tab }) => {
           handleTab(4);
         }}
       >
-        Like/Unlike
+        Like/Dislike
       </button>
     </div>
   );

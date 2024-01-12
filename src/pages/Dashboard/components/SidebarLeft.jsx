@@ -177,7 +177,7 @@ const SidebarLeft = ({
                 "All",
                 "Yes/No",
                 "Agree/Disagree",
-                "Like/Unlike",
+                "Like/Dislike",
                 "Multiple Choise",
                 "Ranked Choise",
               ]}
@@ -297,7 +297,7 @@ const SidebarLeft = ({
               "All",
               "Yes/No",
               "Agree/Disagree",
-              "Like/Unlike",
+              "Like/Dislike",
               "Multiple Choise",
               "Ranked Choise",
             ]}

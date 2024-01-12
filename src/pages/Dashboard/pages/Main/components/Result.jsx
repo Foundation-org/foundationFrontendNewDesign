@@ -118,7 +118,7 @@ const Result = (props) => {
         if (
           props.whichTypeQuestion === "agree/disagree" ||
           props.whichTypeQuestion === "yes/no" ||
-          props.whichTypeQuestion === "like/unlike"
+          props.whichTypeQuestion === "like/dislike"
         ) {
           props.setHowManyTimesAnsChanged(res?.data.data.length);
           if (
@@ -149,7 +149,7 @@ const Result = (props) => {
           if (
             res?.data.data[res.data.data.length - 1].contended === "Disagree" ||
             res?.data.data[res.data.data.length - 1].contended === "No" ||
-            res?.data.data[res.data.data.length - 1].contended === "Unlike"
+            res?.data.data[res.data.data.length - 1].contended === "Dislike"
           ) {
             console.log("ran 3");
 
@@ -162,7 +162,7 @@ const Result = (props) => {
           if (
             res?.data.data[res.data.data.length - 1].selected === "Disagree" ||
             res?.data.data[res.data.data.length - 1].selected === "No" ||
-            res?.data.data[res.data.data.length - 1].selected === "Unlike"
+            res?.data.data[res.data.data.length - 1].selected === "Dislike"
           ) {
             console.log("ran 4");
 
@@ -263,7 +263,7 @@ const Result = (props) => {
       <div className="mx-1 mt-[23.7px] flex flex-col gap-[5.7px] tablet:mt-[38px] tablet:gap-[10px] ">
         {props.title === "Yes/No" ||
         props.title === "Agree/Disagree" ||
-        props.title === "Like/Unlike" ? (
+        props.title === "Like/Dislike" ? (
           <>
             {props.title === "Yes/No" ? (
               checkLoading === true || ResultsData === undefined ? (
@@ -331,7 +331,7 @@ const Result = (props) => {
                   />
                 </>
               )
-            ) : props.title === "Like/Unlike" ? (
+            ) : props.title === "Like/Dislike" ? (
               checkLoading === true || ResultsData === undefined ? (
                 <div className="flex items-center justify-center bg-transparent bg-opacity-20">
                   <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
@@ -345,20 +345,20 @@ const Result = (props) => {
                     percentages={
                       ResultsData?.data[ResultsData?.data.length - 1]
                     }
-                    check={quests.likeUnlike.like.check}
-                    contend={quests.likeUnlike.like.contend}
+                    check={quests.likeDislike.like.check}
+                    contend={quests.likeDislike.like.contend}
                     handleToggleCheck={props.handleToggleCheck}
                     btnText={"Results"}
                   />
                   <SingleAnswer
                     number={"#2"}
-                    answer={"Unlike"}
+                    answer={"Dislike"}
                     checkInfo={true}
                     percentages={
                       ResultsData?.data[ResultsData?.data.length - 1]
                     }
-                    check={quests.likeUnlike.unlike.check}
-                    contend={quests.likeUnlike.unlike.contend}
+                    check={quests.likeDislike.dislike.check}
+                    contend={quests.likeDislike.dislike.contend}
                     handleToggleCheck={props.handleToggleCheck}
                     btnText={"Results"}
                   />
