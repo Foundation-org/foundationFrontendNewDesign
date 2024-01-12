@@ -1,4 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import AppRoutes from "./AppRoutes";
+import PrivateRoutes from "./PrivateRoutes";
+
+// pages
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import Guests from "../pages/Guests";
@@ -9,12 +15,10 @@ import Contributions from "../pages/Dashboard/pages/Profile/pages/Contributions"
 import VerificationBadges from "../pages/Dashboard/pages/Profile/pages/VerificationBadges";
 import BasicTable from "../pages/Dashboard/pages/Profile/pages/Ledger";
 import ChangePassword from "../pages/Dashboard/pages/Profile/pages/ChangePassword";
-import PrivateRoutes from "./PrivateRoutes";
-import { useSelector } from "react-redux";
-import AppRoutes from "./AppRoutes";
 import Main from "../pages/Dashboard/pages/Main/Main";
 import Quest from "../pages/Dashboard/pages/Quest/Quest";
 import Bookmark from "../pages/Dashboard/pages/Bookmark";
+import DashboardRedirect from "../pages/Dashboard/DashboardRedirect";
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -23,11 +27,15 @@ export function Router() {
   return (
     <>
       <Routes>
+        {/* public */}
         <Route element={<AppRoutes auth={auth} />}>
-          <Route path="/:authO?" element={<Signin />} />
+          <Route path="/" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/auth0" element={<DashboardRedirect />} />
         </Route>
+
+        {/* private */}
         <Route element={<PrivateRoutes auth={auth} />}>
           <Route path="/dashboard/" element={<Dashboard />}>
             <Route path="" element={<Main />} />
@@ -45,6 +53,8 @@ export function Router() {
           </Route>
           <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
         </Route>
+
+        {/* catch all */}
         <Route
           path="*"
           element={

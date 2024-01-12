@@ -14,12 +14,14 @@ import { useDebounce } from "../../../../utils/useDebounce";
 import { handleClickScroll } from "../../../../utils";
 import * as HomepageAPIs from "../../../../api/homepageApis";
 import * as filtersActions from "../../../../features/sidebar/filtersSlice";
+import * as prefActions from "../../../../features/preferences/prefSlice";
 
 // icons
 import { FaSpinner } from "react-icons/fa";
 import { IoIosArrowUp } from "react-icons/io";
 
 const Main = () => {
+  const getPreferences = useSelector(prefActions.getPrefs);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const pageLimit = 5;
@@ -80,18 +82,39 @@ const Main = () => {
     queryKey: ["topicsData"],
   });
 
+  const { data: prefSearchResults } = useQuery({
+    queryFn: async () => {
+      if (getPreferences?.topicSearch !== "") {
+        const result = await HomepageAPIs.searchTopics(
+          getPreferences?.topicSearch,
+        );
+        return result;
+      }
+    },
+    queryKey: [getPreferences?.topicSearch],
+  });
+
   useEffect(() => {
-    console.log("Topic data", topicsData);
-    if (isSuccess) {
+    if (prefSearchResults?.data.data.length >= 1) {
       setColumns((prevColumns) => ({
         ...prevColumns,
         All: {
           ...prevColumns.All,
-          list: topicsData?.data.data || [],
+          list: prefSearchResults?.data.data || [],
         },
       }));
+    } else {
+      if (isSuccess) {
+        setColumns((prevColumns) => ({
+          ...prevColumns,
+          All: {
+            ...prevColumns.All,
+            list: topicsData?.data.data || [],
+          },
+        }));
+      }
     }
-  }, [topicsData]);
+  }, [topicsData, prefSearchResults]);
   // preferences end
 
   const { data: bookmarkedData } = useQuery({

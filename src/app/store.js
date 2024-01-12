@@ -11,6 +11,7 @@ import filterReducer from "../features/sidebar/filtersSlice";
 import bookmarkFilterReducer from "../features/filters/bookmarkFilterSlice";
 import questsReducer from "../features/quest/questsSlice";
 import questUtilsReducer from "../features/quest/utilsSlice";
+import prefReducer from "../features/preferences/prefSlice";
 
 const persistConfig = {
   key: "persist-store",
@@ -26,6 +27,7 @@ const reducer = combineReducers({
   bookmarkFilters: bookmarkFilterReducer,
   quests: questsReducer,
   questUtils: questUtilsReducer,
+  preferences: prefReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);

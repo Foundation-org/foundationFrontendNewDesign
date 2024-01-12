@@ -54,7 +54,7 @@ const CopyDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
           Say Thanks to Contributor
         </h1>
         <p className="mb-[0.48rem] ml-[26px] text-[10px] font-semibold text-[#5B5B5B] tablet:mb-[15px] tablet:text-[22px]">
-          Copy Quest Address
+          Copy Post Address
         </p>
         <div className="flex">
           <div className="w-full rounded-l-[9.42px] bg-[#F3F3F3] py-[10.51px] pl-[9.43px] pr-[1.58rem] tablet:py-[30px] tablet:pl-[26px] laptop:rounded-l-[26px] laptop:pr-[70px]">

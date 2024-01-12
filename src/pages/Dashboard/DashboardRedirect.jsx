@@ -24,7 +24,11 @@ const DashboardRedirect = () => {
     getUserInfo();
   }, []);
 
-  return <div>DashboardRedirect</div>;
+  return (
+    <div className="dark:bg flex h-full min-h-screen justify-center bg-white pt-8 text-lg text-[#7C7C7C] dark:bg-black dark:text-[#B8B8B8]">
+      Signing in...
+    </div>
+  );
 };
 
 export default DashboardRedirect;

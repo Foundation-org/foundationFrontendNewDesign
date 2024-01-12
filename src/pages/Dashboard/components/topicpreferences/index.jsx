@@ -1,43 +1,22 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
-import { searchTopics } from "../../../../api/homepageApis";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 
-const TopicPreferences = ({
-  topicSearch,
-  setTopicSearch,
-  columns,
-  setColumns,
-  handleClose,
-}) => {
+import * as prefActions from "../../../../features/preferences/prefSlice";
+
+// icons
+import { GrClose } from "react-icons/gr";
+import { useDispatch } from "react-redux";
+
+const TopicPreferences = ({ columns, setColumns, handleClose }) => {
+  const dispatch = useDispatch();
+  const getPreferences = useSelector(prefActions.getPrefs);
+  console.log({ getPreferences });
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const handleSearch = (e) => {
-    setTopicSearch(e.target.value);
+    dispatch(prefActions.setTopicSearch(e.target.value));
   };
-
-  const { data: searchResults, isSuccess } = useQuery({
-    queryFn: async () => {
-      if (topicSearch !== "") {
-        const result = await searchTopics(topicSearch);
-        console.log("search", searchResults);
-        return result;
-      }
-    },
-    queryKey: [topicSearch],
-  });
-
-  useEffect(() => {
-    if (isSuccess) {
-      setColumns({
-        All: {
-          list: searchResults?.data.data || [],
-        },
-      });
-    }
-  }, []);
 
   const onDragEnd = ({ source, destination }) => {
     if (destination === undefined || destination === null) return null;
@@ -104,20 +83,20 @@ const TopicPreferences = ({
             type="text"
             placeholder="Search here...."
             className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F3F3F3] px-3 text-[8.4px] text-[#435059] focus:outline-none tablet:h-[38px] tablet:text-[18px] laptop:h-[80px] laptop:rounded-[26px] laptop:pl-[45px] laptop:pr-[60px] laptop:text-[26px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
-            value={topicSearch}
+            value={getPreferences?.topicSearch}
             onChange={handleSearch}
           />
-          {topicSearch && (
+          {getPreferences?.topicSearch && (
             <button
               className="absolute right-3 top-[9px] laptop:top-1/2 laptop:-translate-x-1/2 laptop:-translate-y-1/2"
               onClick={() => {
-                setTopicSearch("");
+                dispatch(prefActions.setTopicSearch(""));
               }}
             >
               <IoClose className="h-3 w-3 text-[#C9C8C8] laptop:h-[27px] laptop:w-[27px] dark:text-white" />
             </button>
           )}
-          {!topicSearch && (
+          {!getPreferences?.topicSearch && (
             <img
               src="/assets/svgs/dashboard/search.svg"
               alt="search"

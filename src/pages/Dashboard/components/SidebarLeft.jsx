@@ -38,7 +38,6 @@ const SidebarLeft = ({
   );
   const [localMe, setLocalMe] = useState(multipleOption);
   const [openTopicPref, setOpenTopicPref] = useState(false);
-  const [topicSearch, setTopicSearch] = useState("");
 
   const handleSwitchChange = () => {
     setLocalMe(!multipleOption);
@@ -145,8 +144,6 @@ const SidebarLeft = ({
             customClasses="rounded-[0.9375rem] tablet:rounded-[2.31rem] w-[75vw] h-[90vh]"
           >
             <TopicPreferences
-              topicSearch={topicSearch}
-              setTopicSearch={setTopicSearch}
               columns={columns}
               setColumns={setColumns}
               handleClose={handleTopicPref}
