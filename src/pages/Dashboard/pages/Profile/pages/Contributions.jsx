@@ -10,7 +10,7 @@ const Contributions = () => {
       icon: "/assets/svgs/dashboard/icon1.svg",
       iconLight: "/assets/svgs/dashboard/icon11.svg",
       alt: "icon1",
-      title: "Quests Created",
+      title: "Posts Created",
       value: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0,
     },
     {
@@ -18,7 +18,7 @@ const Contributions = () => {
       icon: "/assets/svgs/dashboard/icon2.svg",
       iconLight: "/assets/svgs/dashboard/icon12.svg",
       alt: "icon1",
-      title: "Quests Answered",
+      title: "Posts Answered",
       value: (persistedUserInfo && persistedUserInfo?.usersAnswered) || 0,
     },
     {

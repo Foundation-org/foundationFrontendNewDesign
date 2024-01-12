@@ -32,6 +32,7 @@ import { handleClickScroll } from "../../../../utils";
 
 const Main = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedTheme = useSelector((state) => state.utils.theme);
   const pageLimit = 5;
   const myRef = useRef(null);
   const filterStates = useSelector(getFilters);
@@ -280,9 +281,15 @@ const Main = () => {
               <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
                 <div></div>
                 {searchData && allData.length==0 ?
-                  <p className="text-center text-[2vw]">
-                    <b>No matching quest found.</b>
-                  </p>
+                  <div className="flex flex-col  justify-center my-[15vh]">
+                    {persistedTheme === "dark"?
+
+                      <img src="../../../../../public/assets/svgs/dashboard/noposts.png" alt="noposts image" />:
+                      <img src="../../../../../public/assets/svgs/dashboard/noposts.png" alt="noposts image" />
+                    }
+                    <p className="text-center text-[#9F9F9F] dark:text-gray font-inter text-[2.083vw] mt-[1.319vw]">No Matching Posts Found</p>
+
+                  </div>
                   :!searchData && allData.length===0?
                   <>
                   {printNoRecords()}
@@ -292,13 +299,7 @@ const Main = () => {
                     <b>You are all caught up!</b>
                   </p>
                 }
-                {!searchData && allData.length !==0 ?
-
-                  <IoIosArrowUp
-                  className="cursor-pointer text-[2vw]"
-                  onClick={handleClickScroll}
-                  />: <div></div>
-                }
+                  <div></div>
               </div>
             ) : (
               <div className="flex items-center justify-center">
