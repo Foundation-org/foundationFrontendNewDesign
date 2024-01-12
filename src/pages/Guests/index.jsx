@@ -1,12 +1,17 @@
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
+// utils
 import { getQuestById } from "../../api/homepageApis";
+
+// components
 import Topbar from "../Dashboard/components/Topbar";
 import SidebarRight from "../Dashboard/components/SidebarRight";
 import QuestionCard from "./components/QuestionCard";
 import QuestionCardWithToggle from "../Dashboard/pages/Main/components/QuestionCardWithToggle";
-import { useSelector } from "react-redux";
+import { createGuestMode } from "../../api/userAuth";
 
 const Guests = () => {
   let { id, isFullScreen } = useParams();
@@ -14,6 +19,8 @@ const Guests = () => {
   const [tab, setTab] = useState("Participate");
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
+  const [singleQuest, setSingleQuest] = useState();
+  // console.log("first", isFullScreen);
 
   useEffect(() => {
     if (isFullScreen !== "isfullscreen") {
@@ -22,14 +29,31 @@ const Guests = () => {
     }
   }, [isFullScreen]);
 
-  const { data: singleQuest } = useQuery({
-    queryFn: async () => {
-      const result = await getQuestById(persistedUserInfo.uuid, id);
-      return result.data.data[0];
-    },
-    queryKey: [id],
-    staleTime: 0,
-  });
+  // const { data: singleQuest } = useQuery({
+  //   queryFn: async () => {
+  //     const result = await getQuestById(
+  //       persistedUserInfo.uuid || localStorage.getItem("uId"),
+  //       id,
+  //     );
+  //     return result.data.data[0];
+  //   },
+  //   queryKey: [],
+  //   staleTime: 0,
+  // });
+
+  useEffect(() => {
+    const handleGetQuestById = async () => {
+      if (localStorage.getItem("uId")) {
+        const result = await getQuestById(localStorage.getItem("uId"), id);
+        setSingleQuest(result.data.data[0]);
+      } else {
+        const result = await getQuestById(persistedUserInfo.uuid, id);
+        setSingleQuest(result.data.data[0]);
+      }
+    };
+
+    handleGetQuestById();
+  }, []);
 
   function getQuestionTitle(whichTypeQuestion) {
     switch (whichTypeQuestion) {
@@ -57,6 +81,28 @@ const Guests = () => {
     setStartTest(null);
     setViewResult((prev) => (prev === testId ? null : testId));
   };
+
+  const { mutateAsync: createGuest } = useMutation({
+    mutationFn: createGuestMode,
+    onSuccess: (resp) => {
+      localStorage.setItem("isGuestMode", resp.data.isGuestMode);
+      localStorage.setItem("jwt", resp.data.token);
+      localStorage.setItem("uId", resp.data.uuid);
+    },
+    onError: (err) => {
+      toast.error(err.response.data);
+    },
+  });
+
+  console.log({ persistedUserInfo });
+
+  useEffect(() => {
+    if (persistedUserInfo === null) {
+      createGuest();
+    }
+  }, []);
+
+  console.log({ singleQuest });
 
   return (
     <>

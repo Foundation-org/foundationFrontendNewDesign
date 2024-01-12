@@ -33,7 +33,8 @@ const RankedResult = (props) => {
   return (
     <div className="flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px]">
       {props.addedAnswerUuid ? (
-        props.addedAnswerUuid === persistedUserInfo.uuid ? (
+        props.addedAnswerUuid === persistedUserInfo?.uuid ||
+        localStorage.getItem("uId") ? (
           <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"

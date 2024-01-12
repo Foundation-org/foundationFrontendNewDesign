@@ -354,9 +354,6 @@ const QuestionCard = ({
           alt={alt}
           createdBy={createdBy}
         />
-        {/* <h1 className="ml-6 mt-[5px] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:ml-[52.65px] tablet:text-[25px] dark:text-[#B8B8B8]">
-          {question?.endsWith("?") ? "Q." : "S."} {question}
-        </h1> */}
         <div className="ml-6 mr-[1.38rem] mt-[2.25rem] flex items-center justify-between tablet:ml-[4.5rem]">
           <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[28px] dark:text-[#B8B8B8]">
             {question?.endsWith("?") ? "Q." : "S."} {question}

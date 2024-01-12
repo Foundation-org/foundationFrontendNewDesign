@@ -3,9 +3,7 @@ import api from "./Axios";
 // For Search in Feed
 export const searchQuestions = async (term) => {
   if (term !== "") {
-    const response = await api.post(
-      `/search/easySearch?term=${term}`,
-    );
+    const response = await api.post(`/search/easySearch?term=${term}`);
     return response.data;
   }
 };
@@ -18,7 +16,6 @@ export const getAllTopics = async () => {
 export const searchTopics = async (topicSearch) => {
   return await api.get(`/preferences/searchTopics?search=${topicSearch}`);
 };
-
 
 // ============ Filters
 
@@ -88,9 +85,7 @@ export const deleteBookmarkById = async (data) => {
 
 export const searchBookmarks = async (term) => {
   if (term !== "") {
-    const response = await api.post(
-      `/search/searchBookmarks?term=${term}`,
-    );
+    const response = await api.post(`/search/searchBookmarks?term=${term}`);
     return response.data;
   }
 };

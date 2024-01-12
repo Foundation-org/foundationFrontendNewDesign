@@ -69,7 +69,11 @@ const StartTest = ({
   const [fbModal, setFbModal] = useState(false);
 
   const uuidExists =
-    answers && answers?.some((item) => item.uuid === persistedUserInfo.uuid);
+    answers &&
+    answers?.some(
+      (item) =>
+        item.uuid === persistedUserInfo?.uuid || localStorage.getItem("uId"),
+    );
 
   const handleCopyOpen = () => setCopyModal(true);
   const handleCopyClose = () => setCopyModal(false);
