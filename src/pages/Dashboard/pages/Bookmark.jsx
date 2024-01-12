@@ -264,8 +264,8 @@ const Bookmark = () => {
                       title={
                         item?.whichTypeQuestion === "agree/disagree"
                           ? "Agree/Disagree"
-                          : item?.whichTypeQuestion === "like/unlike"
-                            ? "Like/Unlike"
+                          : item?.whichTypeQuestion === "like/dislike"
+                            ? "Like/Dislike"
                             : item?.whichTypeQuestion === "multiple choise"
                               ? "Multiple Choice"
                               : item?.whichTypeQuestion === "ranked choise"
@@ -317,8 +317,8 @@ const Bookmark = () => {
                       title={
                         item?.whichTypeQuestion === "agree/disagree"
                           ? "Agree/Disagree"
-                          : item?.whichTypeQuestion === "like/unlike"
-                            ? "Like/Unlike"
+                          : item?.whichTypeQuestion === "like/dislike"
+                            ? "Like/Dislike"
                             : item?.whichTypeQuestion === "multiple choise"
                               ? "Multiple Choice"
                               : item?.whichTypeQuestion === "ranked choise"
@@ -410,8 +410,8 @@ const Bookmark = () => {
                   title={
                     item?.whichTypeQuestion === "agree/disagree"
                       ? "Agree/Disagree"
-                      : item?.whichTypeQuestion === "like/unlike"
-                        ? "Like/Unlike"
+                      : item?.whichTypeQuestion === "like/dislike"
+                        ? "Like/Dislike"
                         : item?.whichTypeQuestion === "multiple choise"
                           ? "Multiple Choice"
                           : item?.whichTypeQuestion === "ranked choise"

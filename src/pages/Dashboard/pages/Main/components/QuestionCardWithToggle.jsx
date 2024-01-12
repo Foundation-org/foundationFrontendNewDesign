@@ -197,17 +197,20 @@ const QuestionCardWithToggle = ({
     onSuccess: (resp) => {
       if (resp.data.message === "Start Quest Created Successfully") {
         toast.success("Successfully Completed");
+        setLoading(false);
         queryClient.invalidateQueries("FeedData");
       }
       handleViewResults(id);
       userInfo(persistedUserInfo?.uuid).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
+                 
         }
       });
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(":")[1]);
+      setLoading(false);
     },
   });
 
@@ -316,7 +319,7 @@ const QuestionCardWithToggle = ({
       if (
         whichTypeQuestion === "agree/disagree" ||
         whichTypeQuestion === "yes/no" ||
-        whichTypeQuestion === "like/unlike"
+        whichTypeQuestion === "like/dislike"
       ) {
         if (
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
@@ -416,14 +419,14 @@ const QuestionCardWithToggle = ({
     if (
       whichTypeQuestion === "agree/disagree" ||
       whichTypeQuestion === "yes/no" ||
-      whichTypeQuestion === "like/unlike"
+      whichTypeQuestion === "like/dislike"
     ) {
       const { selected, contended } = extractSelectedAndContended(
         whichTypeQuestion === "agree/disagree"
           ? quests.agreeDisagree
           : whichTypeQuestion === "yes/no"
             ? quests.yesNo
-            : quests.likeUnlike,
+            : quests.likeDislike,
       );
 
       let ans = {

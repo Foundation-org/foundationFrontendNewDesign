@@ -216,7 +216,7 @@ const StartTest = ({
       <div className="mx-1 flex flex-col gap-[5.7px]  tablet:gap-[10px] ">
         {title === "Yes/No" ||
         title === "Agree/Disagree" ||
-        title === "Like/Unlike" ? (
+        title === "Like/Dislike" ? (
           <>
             {title === "Yes/No" ? (
               loadingDetail === true ? (
@@ -278,16 +278,16 @@ const StartTest = ({
                   number={"#1"}
                   answer={"Like"}
                   checkInfo={true}
-                  check={quests.likeUnlike.like.check}
-                  contend={quests.likeUnlike.like.contend}
+                  check={quests.likeDislike.like.check}
+                  contend={quests.likeDislike.like.contend}
                   handleToggleCheck={handleToggleCheck}
                 />
                 <SingleAnswer
                   number={"#2"}
-                  answer={"Unlike"}
+                  answer={"Dislike"}
                   checkInfo={true}
-                  check={quests.likeUnlike.unlike.check}
-                  contend={quests.likeUnlike.unlike.contend}
+                  check={quests.likeDislike.dislike.check}
+                  contend={quests.likeDislike.dislike.contend}
                   handleToggleCheck={handleToggleCheck}
                 />
               </>
@@ -451,7 +451,7 @@ const StartTest = ({
           <div>
             {title === "Yes/No" ||
             title === "Agree/Disagree" ||
-            title === "Like/Unlike" ? null : (
+            title === "Like/Dislike" ? null : (
               <button
                 onClick={handleOpen}
                 className="addoption-boxShadow ml-4 flex h-[23.48px] w-[81.8px] items-center gap-[5.8px] rounded-[7.1px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:h-[52px] tablet:w-[173px] tablet:gap-[11.37px] tablet:rounded-[15px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"

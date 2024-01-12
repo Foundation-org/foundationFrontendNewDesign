@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";
 import { FaSpinner } from "react-icons/fa";
 
-const LikeUnlike = () => {
+const LikeDislike = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
   const [prevValue, setPrevValue] = useState("");
@@ -81,7 +81,7 @@ const LikeUnlike = () => {
 
     const params = {
       Question: question,
-      whichTypeQuestion: "like/unlike",
+      whichTypeQuestion: "like/dislike",
       usersChangeTheirAns: changedOption,
       QuestionCorrect: "Not Selected",
       uuid: persistedUserInfo.uuid,
@@ -104,7 +104,7 @@ const LikeUnlike = () => {
     // Question Validation
     const { validatedQuestion, errorMessage } = await questionValidation({
       question: value,
-      queryType: "like/unlike",
+      queryType: "like/dislike",
     });
     // If any error captured
     if (errorMessage) {
@@ -132,7 +132,7 @@ const LikeUnlike = () => {
   return (
     <div>
       <h4 className="mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25.8px] tablet:text-[16.58px] laptop:mt-[47px] laptop:text-[25px] dark:text-[#AAA]">
-        Make a statement that anyone can "Like" or "Unlike"
+        Make a statement that anyone can "Like" or "Dislike"
       </h4>
       <div
         className={`${
@@ -183,10 +183,10 @@ const LikeUnlike = () => {
             isSelected={selectedOption === "Like"}
           />
           <AgreeDisagreeOptions
-            answer={"Unlike"}
+            answer={"Dislike"}
             options={false}
-            handleOptionChange={() => handleOptionChange("Unlike")}
-            isSelected={selectedOption === "Unlike"}
+            handleOptionChange={() => handleOptionChange("Dislike")}
+            isSelected={selectedOption === "Dislike"}
           />
         </div>
         <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
@@ -225,4 +225,4 @@ const LikeUnlike = () => {
   );
 };
 
-export default LikeUnlike;
+export default LikeDislike;

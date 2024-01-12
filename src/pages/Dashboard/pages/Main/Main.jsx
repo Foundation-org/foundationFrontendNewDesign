@@ -311,12 +311,12 @@ const Main = () => {
                   <div className="my-[15vh] flex  flex-col justify-center">
                     {persistedTheme === "dark" ? (
                       <img
-                        src="../../../../../public/assets/svgs/dashboard/noposts.png"
+                        src="../../../../../public/assets/svgs/dashboard/noMatchingDark.svg"
                         alt="noposts image"
                       />
                     ) : (
                       <img
-                        src="../../../../../public/assets/svgs/dashboard/noposts.png"
+                        src="../../../../../public/assets/svgs/dashboard/noMatchingLight.svg"
                         alt="noposts image"
                       />
                     )}
@@ -359,8 +359,8 @@ const Main = () => {
                       title={
                         item?.whichTypeQuestion === "agree/disagree"
                           ? "Agree/Disagree"
-                          : item?.whichTypeQuestion === "like/unlike"
-                            ? "Like/Unlike"
+                          : item?.whichTypeQuestion === "like/dislike"
+                            ? "Like/Dislike"
                             : item?.whichTypeQuestion === "multiple choise"
                               ? "Multiple Choice"
                               : item?.whichTypeQuestion === "ranked choise"
@@ -411,8 +411,8 @@ const Main = () => {
                       title={
                         item?.whichTypeQuestion === "agree/disagree"
                           ? "Agree/Disagree"
-                          : item?.whichTypeQuestion === "like/unlike"
-                            ? "Like/Unlike"
+                          : item?.whichTypeQuestion === "like/dislike"
+                            ? "Like/Dislike"
                             : item?.whichTypeQuestion === "multiple choise"
                               ? "Multiple Choice"
                               : item?.whichTypeQuestion === "ranked choise"

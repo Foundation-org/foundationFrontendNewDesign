@@ -91,7 +91,7 @@ const OptionBar = ({
       if (
         whichTypeQuestion === "agree/disagree" ||
         whichTypeQuestion === "yes/no" ||
-        whichTypeQuestion === "like/unlike"
+        whichTypeQuestion === "like/dislike"
       ) {
         if (
           res?.data.data[res.data.data.length - 1].selected === "Agree" ||
@@ -121,7 +121,7 @@ const OptionBar = ({
         if (
           res?.data.data[res.data.data.length - 1].contended === "Disagree" ||
           res?.data.data[res.data.data.length - 1].contended === "No" ||
-          res?.data.data[res.data.data.length - 1].contended === "Unlike"
+          res?.data.data[res.data.data.length - 1].contended === "Dislike"
         ) {
           console.log("ran 3");
 
@@ -134,7 +134,7 @@ const OptionBar = ({
         if (
           res?.data.data[res.data.data.length - 1].selected === "Disagree" ||
           res?.data.data[res.data.data.length - 1].selected === "No" ||
-          res?.data.data[res.data.data.length - 1].selected === "Unlike"
+          res?.data.data[res.data.data.length - 1].selected === "Dislike"
         ) {
           console.log("ran 4");
 

@@ -137,14 +137,14 @@ const QuestionCard = ({
     if (
       whichTypeQuestion === "agree/disagree" ||
       whichTypeQuestion === "yes/no" ||
-      whichTypeQuestion === "like/unlike"
+      whichTypeQuestion === "like/dislike"
     ) {
       const { selected, contended } = extractSelectedAndContended(
         whichTypeQuestion === "agree/disagree"
           ? quests.agreeDisagree
           : whichTypeQuestion === "yes/no"
             ? quests.yesNo
-            : quests.likeUnlike,
+            : quests.likeDislike,
       );
 
       let ans = {

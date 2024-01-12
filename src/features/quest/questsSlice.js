@@ -21,12 +21,12 @@ const initialState = {
       contend: false,
     },
   },
-  likeUnlike: {
+  likeDislike: {
     like: {
       check: false,
       contend: false,
     },
-    unlike: {
+    dislike: {
       check: false,
       contend: false,
     },
@@ -87,24 +87,24 @@ export const questsSlice = createSlice({
       }
       if (option === "Like") {
         if (check) {
-          state["likeUnlike"]["like"].check = true;
-          state["likeUnlike"]["like"].contend = false;
-          state["likeUnlike"]["unlike"].check = false;
+          state["likeDislike"]["like"].check = true;
+          state["likeDislike"]["like"].contend = false;
+          state["likeDislike"]["dislike"].check = false;
         } else if (contend) {
-          state["likeUnlike"]["like"].check = false;
-          state["likeUnlike"]["like"].contend = true;
-          state["likeUnlike"]["unlike"].contend = false;
+          state["likeDislike"]["like"].check = false;
+          state["likeDislike"]["like"].contend = true;
+          state["likeDislike"]["dislike"].contend = false;
         }
       }
-      if (option === "Unlike") {
+      if (option === "Dislike") {
         if (check) {
-          state["likeUnlike"]["unlike"].check = true;
-          state["likeUnlike"]["unlike"].contend = false;
-          state["likeUnlike"]["like"].check = false;
+          state["likeDislike"]["dislike"].check = true;
+          state["likeDislike"]["dislike"].contend = false;
+          state["likeDislike"]["like"].check = false;
         } else if (contend) {
-          state["likeUnlike"]["unlike"].check = false;
-          state["likeUnlike"]["unlike"].contend = true;
-          state["likeUnlike"]["like"].contend = false;
+          state["likeDislike"]["dislike"].check = false;
+          state["likeDislike"]["dislike"].contend = true;
+          state["likeDislike"]["like"].contend = false;
         }
       }
       if (option === "Multiple Choice") {
