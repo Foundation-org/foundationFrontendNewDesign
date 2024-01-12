@@ -21,6 +21,7 @@ import { getStartQuestInfo } from "../../../../../api/questsApi";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
 import { userInfo } from "../../../../../api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
+import { validateInterval } from "../../../../../utils";
 
 const QuestionCardWithToggle = ({
   id,
@@ -204,7 +205,6 @@ const QuestionCardWithToggle = ({
       userInfo(persistedUserInfo?.uuid).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
-                 
         }
       });
     },
@@ -263,28 +263,6 @@ const QuestionCardWithToggle = ({
     }
 
     return { selected, contended };
-  };
-
-  const validateInterval = () => {
-    // Define the time interval (in milliseconds) based on usersChangeTheirAns value
-    let timeInterval = 0;
-    if (usersChangeTheirAns === "Daily") {
-      return (timeInterval = 24 * 60 * 60 * 1000); // 24 hours in milliseconds
-    } else if (usersChangeTheirAns === "Weekly") {
-      return (timeInterval = 7 * 24 * 60 * 60 * 1000); // 7 days in milliseconds
-    } else if (usersChangeTheirAns === "Monthly") {
-      // Assuming 30 days in a month for simplicity
-      return (timeInterval = 30 * 24 * 60 * 60 * 1000); // 30 days in milliseconds
-    } else if (usersChangeTheirAns === "Yearly") {
-      // Assuming 365 days in a year for simplicity
-      return (timeInterval = 365 * 24 * 60 * 60 * 1000); // 365 days in milliseconds
-    } else if (usersChangeTheirAns === "TwoYears") {
-      // Assuming 2 years
-      return (timeInterval = 2 * 365 * 24 * 60 * 60 * 1000); // 2 years in milliseconds
-    } else if (usersChangeTheirAns === "FourYears") {
-      // Assuming 4 years
-      return (timeInterval = 4 * 365 * 24 * 60 * 60 * 1000); // 4 years in milliseconds
-    }
   };
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {

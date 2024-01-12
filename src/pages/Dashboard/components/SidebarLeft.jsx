@@ -12,22 +12,15 @@ import * as filtersActions from "../../../features/sidebar/filtersSlice";
 
 // icons
 import { GrClose } from "react-icons/gr";
+import { topicPreferencesModalStyle } from "../../../assets/styles";
 
-const SidebarLeft = ({
-  handleSearch,
-  searchData,
-  clearFilter,
-  setClearFilter,
-  setSearchData,
-  filterStates,
-  expandedView,
-  setExpandedView,
-  columns,
-  setColumns,
-}) => {
+const SidebarLeft = ({ columns, setColumns }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const [localExpanded, setlocalExpaneded] = useState(expandedView);
+  const filterStates = useSelector(filtersActions.getFilters);
+  const [localExpanded, setlocalExpaneded] = useState(
+    filterStates.expandedView,
+  );
 
   const [multipleOption, setMultipleOption] = useState(
     localStorage.getItem("filterByState") !== undefined
@@ -47,30 +40,25 @@ const SidebarLeft = ({
   };
 
   const handleExpendedView = () => {
-    setlocalExpaneded(!expandedView);
-    localStorage.setItem("expandedView", !expandedView ? "true" : "false");
-    setExpandedView(!expandedView);
+    setlocalExpaneded(!filterStates.expandedView);
+    localStorage.setItem(
+      "expandedView",
+      !filterStates.expandedView ? "true" : "false",
+    );
+    dispatch(filtersActions.toggleExapandedView());
   };
 
   const handleTopicPref = () => {
     setOpenTopicPref(!openTopicPref);
   };
 
-  const customModalStyle = {
-    backgroundColor: "#FCFCFD",
-    boxShadow: "none",
-    border: "6px solid #F2F2F2",
-    outline: "none",
-    top: "0",
-    bottom: "0",
-    left: "0",
-    right: "0",
-    margin: "auto",
+  const handleSearch = (e) => {
+    dispatch(filtersActions.setSearchData(e.target.value));
   };
 
   return (
     <>
-      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] flex-col items-center justify-between overflow-y-auto bg-white text-[#535353]  laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:border-r-2 dark:border-white dark:bg-[#0A0A0C] dark:text-white">
+      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[18.25rem] min-w-[18.25rem] flex-col items-center justify-between overflow-y-auto bg-white text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:border-r-2 dark:border-white dark:bg-[#0A0A0C] dark:text-white">
         <div className="flex flex-col items-center">
           <div className="flex w-full flex-col items-center justify-center gap-10 border-b-2 border-[#707175] pb-[2.94rem] pt-[35px]">
             <div className="flex items-center justify-center gap-[25px]">
@@ -89,7 +77,7 @@ const SidebarLeft = ({
                   id="floating_outlined"
                   className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
                   placeholder=" "
-                  value={searchData}
+                  value={filterStates.searchData}
                   onChange={handleSearch}
                 />
                 <label
@@ -99,17 +87,17 @@ const SidebarLeft = ({
                   Search
                 </label>
               </div>
-              {searchData && (
+              {filterStates.searchData && (
                 <button
                   className="absolute right-3 top-4"
                   onClick={() => {
-                    setSearchData("");
+                    dispatch(filtersActions.setSearchData(""));
                   }}
                 >
                   <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
                 </button>
               )}
-              {!searchData && (
+              {!filterStates.searchData && (
                 <img
                   src="/assets/svgs/dashboard/search.svg"
                   alt="search"
@@ -140,7 +128,7 @@ const SidebarLeft = ({
           <BasicModal
             open={openTopicPref}
             handleClose={handleTopicPref}
-            customStyle={customModalStyle}
+            customStyle={topicPreferencesModalStyle}
             customClasses="rounded-[0.9375rem] tablet:rounded-[2.31rem] w-[75vw] h-[90vh]"
           >
             <TopicPreferences
@@ -217,7 +205,6 @@ const SidebarLeft = ({
             }  inset-0 w-[192px] rounded-[0.938rem] px-5 py-2 text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
             onClick={() => {
               dispatch(filtersActions.resetFilters());
-              setClearFilter(!clearFilter);
             }}
           >
             Clear Filters
@@ -240,20 +227,20 @@ const SidebarLeft = ({
               type="text"
               placeholder="Search here...."
               className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none tablet:h-[50.7px] tablet:text-[17.13px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
-              value={searchData}
+              value={filterStates.searchData}
               onChange={handleSearch}
             />
-            {searchData && (
+            {filterStates.searchData && (
               <button
                 className="absolute right-3 top-[9px]"
                 onClick={() => {
-                  setSearchData("");
+                  dispatch(filtersActions.setSearchData(""));
                 }}
               >
                 <GrClose className="h-3 w-3 text-black dark:text-white" />
               </button>
             )}
-            {!searchData && (
+            {!filterStates.searchData && (
               <img
                 src="/assets/svgs/dashboard/search.svg"
                 alt="search"
@@ -330,7 +317,6 @@ const SidebarLeft = ({
             }  inset-0 w-full rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
             onClick={() => {
               dispatch(filtersActions.resetFilters());
-              setClearFilter(!clearFilter);
             }}
           >
             Clear Filters

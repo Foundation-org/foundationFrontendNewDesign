@@ -22,6 +22,7 @@ import { addUser } from "../../../../../features/auth/authSlice";
 import { updateOptionLimit } from "../../../../../features/quest/utilsSlice";
 
 import * as questCardActions from "../../../../../features/quest/questCardSlice";
+import { capitalizeFirstLetter, validateInterval } from "../../../../../utils";
 
 const QuestionCard = ({
   id,
@@ -52,17 +53,18 @@ const QuestionCard = ({
   isBookmarkTab,
 }) => {
   const dispatch = useDispatch();
-  const persistedTheme = useSelector((state) => state.utils.theme);
-  const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
+  const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+
   const [open, setOpen] = useState(false);
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addOptionField, setAddOptionField] = useState(0);
-  // const [addOptionLimit, setAddOptionLimit] = useState(0);
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [loadingDetail, setLoadingDetail] = useState(false);
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -71,8 +73,6 @@ const QuestionCard = ({
       uuid: answer.uuid,
     })),
   );
-
-  const [loadingDetail, setLoadingDetail] = useState(false);
 
   useEffect(() => {
     setbookmarkStatus(isBookmarked);
@@ -135,10 +135,6 @@ const QuestionCard = ({
     dispatch(updateOptionLimit());
   };
 
-  const capitalizeFirstLetter = (text) => {
-    return text.charAt(0).toUpperCase() + text.slice(1);
-  };
-
   const { mutateAsync: AddBookmark } = useMutation({
     mutationFn: createBookmark,
     onSuccess: (resp) => {
@@ -183,7 +179,6 @@ const QuestionCard = ({
   };
 
   const handleToggleCheck = (option, check, contend) => {
-    console.log("option", option + check + contend);
     const capitalizedOption = capitalizeFirstLetter(option);
 
     const actionPayload = {
@@ -294,28 +289,6 @@ const QuestionCard = ({
     }
 
     return { selected, contended };
-  };
-
-  const validateInterval = () => {
-    // Define the time interval (in milliseconds) based on usersChangeTheirAns value
-    let timeInterval = 0;
-    if (usersChangeTheirAns === "Daily") {
-      return (timeInterval = 24 * 60 * 60 * 1000); // 24 hours in milliseconds
-    } else if (usersChangeTheirAns === "Weekly") {
-      return (timeInterval = 7 * 24 * 60 * 60 * 1000); // 7 days in milliseconds
-    } else if (usersChangeTheirAns === "Monthly") {
-      // Assuming 30 days in a month for simplicity
-      return (timeInterval = 30 * 24 * 60 * 60 * 1000); // 30 days in milliseconds
-    } else if (usersChangeTheirAns === "Yearly") {
-      // Assuming 365 days in a year for simplicity
-      return (timeInterval = 365 * 24 * 60 * 60 * 1000); // 365 days in milliseconds
-    } else if (usersChangeTheirAns === "TwoYears") {
-      // Assuming 2 years
-      return (timeInterval = 2 * 365 * 24 * 60 * 60 * 1000); // 2 years in milliseconds
-    } else if (usersChangeTheirAns === "FourYears") {
-      // Assuming 4 years
-      return (timeInterval = 4 * 365 * 24 * 60 * 60 * 1000); // 4 years in milliseconds
-    }
   };
 
   const handleSubmit = () => {
@@ -543,14 +516,10 @@ const QuestionCard = ({
   return (
     <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-white dark:bg-[#141618]">
       <CardTopbar
-        // title={title}
         QuestTopic={QuestTopic}
         img={img}
         alt={alt}
         badgeCount={badgeCount}
-        // isBookmarked={isBookmarked}
-        // handleClickBookmark={handleBookmark}
-        // bookmarkStatus={bookmarkStatus}
         createdBy={createdBy}
       />
       <div className="ml-6 mr-[1.38rem] mt-[1.56rem] flex items-center justify-between tablet:ml-[52.65px]">

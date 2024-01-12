@@ -19,6 +19,7 @@ import Main from "../pages/Dashboard/pages/Main/Main";
 import Quest from "../pages/Dashboard/pages/Quest/Quest";
 import Bookmark from "../pages/Dashboard/pages/Bookmark";
 import DashboardRedirect from "../pages/Dashboard/DashboardRedirect";
+import Test from "../pages/Test";
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -53,6 +54,7 @@ export function Router() {
             <Route path="change-password" element={<ChangePassword />} />
           </Route>
           <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
+          <Route path="/test" element={<Test />} />
         </Route>
 
         {/* catch all */}

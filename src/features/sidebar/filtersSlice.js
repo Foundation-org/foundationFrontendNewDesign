@@ -1,19 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  search: "",
+  expandedView: localStorage.getItem("expandedView") === "true" ? true : false,
+  searchData: "",
   filterByStatus: "",
   filterByType: "",
   filterByScope: "",
   filterBySort: "Newest First",
+  clearFilter: false,
 };
 
 export const filtersSlice = createSlice({
   name: "filters",
   initialState,
   reducers: {
-    setSearch: (state, action) => {
-      state.search = action.payload;
+    toggleExapandedView: (state, action) => {
+      state.expandedView = !state.expandedView;
+    },
+    setSearchData: (state, action) => {
+      state.searchData = action.payload;
     },
     setFilterByStatus: (state, action) => {
       state.filterByStatus = action.payload;
@@ -34,7 +39,8 @@ export const filtersSlice = createSlice({
 });
 
 export const {
-  setSearch,
+  toggleExapandedView,
+  setSearchData,
   setFilterByStatus,
   setFilterByType,
   setFilterByScope,

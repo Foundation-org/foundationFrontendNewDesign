@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 // components
@@ -11,21 +11,25 @@ import QuestionCardWithToggle from "./components/QuestionCardWithToggle";
 
 // extras
 import { useDebounce } from "../../../../utils/useDebounce";
-import { handleClickScroll } from "../../../../utils";
+import { printNoRecordsMessage } from "../../../../utils";
 import * as HomepageAPIs from "../../../../api/homepageApis";
 import * as filtersActions from "../../../../features/sidebar/filtersSlice";
 import * as prefActions from "../../../../features/preferences/prefSlice";
 
 // icons
 import { FaSpinner } from "react-icons/fa";
-import { IoIosArrowUp } from "react-icons/io";
 
 const Main = () => {
+  const dispatch = useDispatch();
   const getPreferences = useSelector(prefActions.getPrefs);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const pageLimit = 5;
   const filterStates = useSelector(filtersActions.getFilters);
+
+  const debouncedSearch = useDebounce(filterStates.searchData, 1000);
+
+  // check them
+  const pageLimit = 5;
   const [pagination, setPagination] = useState({
     page: 1,
     sliceStart: 0,
@@ -39,25 +43,15 @@ const Main = () => {
     end: pagination.sliceEnd,
     uuid: persistedUserInfo?.uuid,
   };
-  const [searchData, setSearchData] = useState("");
-  const [clearFilter, setClearFilter] = useState(false);
-  const debouncedSearch = useDebounce(searchData, 1000);
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
-  const [expandedView, setExpandedView] = useState(
-    localStorage.getItem("expandedView") !== undefined
-      ? localStorage.getItem("expandedView") === "true"
-        ? true
-        : false
-      : false,
-  );
 
   useEffect(() => {
-    if (expandedView === false) {
+    if (filterStates.expandedView === false) {
       setStartTest(null);
       setViewResult(null);
     }
-  }, [expandedView]);
+  }, [filterStates.expandedView]);
 
   // preferences start
   const initialColumns = {
@@ -91,10 +85,8 @@ const Main = () => {
         return result;
       }
     },
-    queryKey: [getPreferences?.topicSearch],
+    queryKey: [getPreferences.topicSearch],
   });
-
-  console.log({ columns });
 
   useEffect(() => {
     if (prefSearchResults?.data.data.length !== undefined) {
@@ -106,8 +98,6 @@ const Main = () => {
             !prevColumns.Block.list.includes(item) &&
             !prevColumns.Preferences.list.includes(item),
         );
-
-        console.log({ filteredList });
 
         return {
           ...prevColumns,
@@ -128,8 +118,6 @@ const Main = () => {
               !prevColumns.Preferences.list.includes(item),
           );
 
-          console.log({ filteredList });
-
           return {
             ...prevColumns,
             All: {
@@ -147,10 +135,6 @@ const Main = () => {
     queryFn: () => HomepageAPIs.getAllBookmarkedQuests(),
     queryKey: ["getBookmarked"],
   });
-
-  const handleSearch = (e) => {
-    setSearchData(e.target.value);
-  };
 
   const applyFilters = (params, filterStates) => {
     if (filterStates.filterBySort !== "") {
@@ -205,14 +189,7 @@ const Main = () => {
         return result;
       }
     },
-    queryKey: [
-      "FeedData",
-      filterStates,
-      debouncedSearch,
-      pagination,
-      clearFilter,
-      columns,
-    ],
+    queryKey: ["FeedData", filterStates, debouncedSearch, pagination, columns],
     staleTime: 0,
   });
 
@@ -224,7 +201,7 @@ const Main = () => {
       page: 1,
     }));
     setAllData([]);
-  }, [filterStates, searchData]);
+  }, [filterStates, filterStates.searchData]);
 
   useEffect(() => {
     if (pagination.page === 1) {
@@ -272,32 +249,11 @@ const Main = () => {
     setViewResult((prev) => (prev === testId ? null : testId));
   };
 
-  const printNoRecords = () => {
-    setTimeout(() => {
-      return (
-        <p className="text-center">
-          <b>No results found</b>
-        </p>
-      );
-    }, 1000);
-  };
-
   console.log({ allData });
 
   return (
     <div className="flex w-full flex-col laptop:flex-row">
-      <SidebarLeft
-        handleSearch={handleSearch}
-        searchData={searchData}
-        clearFilter={clearFilter}
-        setClearFilter={setClearFilter}
-        setSearchData={setSearchData}
-        filterStates={filterStates}
-        expandedView={expandedView}
-        setExpandedView={setExpandedView}
-        columns={columns}
-        setColumns={setColumns}
-      />
+      <SidebarLeft columns={columns} setColumns={setColumns} />
       <div className="shadow-inner-md no-scrollbar flex h-full w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] tablet:min-h-[calc(100vh-96px)] dark:bg-[#06070a]">
         <InfiniteScroll
           dataLength={allData?.length}
@@ -307,7 +263,7 @@ const Main = () => {
             feedData?.hasNextPage === false ? (
               <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
                 <div></div>
-                {searchData && allData.length == 0 ? (
+                {filterStates.searchData && allData.length == 0 ? (
                   <div className="my-[15vh] flex  flex-col justify-center">
                     {persistedTheme === "dark" ? (
                       <img
@@ -324,10 +280,10 @@ const Main = () => {
                       No Matching Posts Found
                     </p>
                   </div>
-                ) : !searchData && allData.length === 0 ? (
-                  <>{printNoRecords()}</>
+                ) : !filterStates.searchData && allData.length === 0 ? (
+                  <>{printNoRecordsMessage()}</>
                 ) : (
-                  !searchData && (
+                  !filterStates.searchData && (
                     <p className="text-center text-[2vw]">
                       <b>You are all caught up!</b>
                     </p>
@@ -348,7 +304,7 @@ const Main = () => {
             id="section-1"
             className="flex flex-col gap-2 py-3 tablet:gap-[17px] tablet:py-[27px]"
           >
-            {expandedView
+            {filterStates.expandedView
               ? allData?.map((item, index) => (
                   <div key={index + 1}>
                     <QuestionCardWithToggle
@@ -396,7 +352,7 @@ const Main = () => {
                       })}
                       lastInteractedAt={item.lastInteractedAt}
                       usersChangeTheirAns={item.usersChangeTheirAns}
-                      expandedView={expandedView}
+                      expandedView={filterStates.expandedView}
                       QuestTopic={item.QuestTopic}
                     />
                   </div>
@@ -447,7 +403,7 @@ const Main = () => {
                       })}
                       lastInteractedAt={item.lastInteractedAt}
                       usersChangeTheirAns={item.usersChangeTheirAns}
-                      expandedView={expandedView}
+                      expandedView={filterStates.expandedView}
                       QuestTopic={item.QuestTopic}
                     />
                   </div>

@@ -60,3 +60,39 @@ export const handleClickScroll = () => {
     element.scrollIntoView({ behavior: "smooth" });
   }
 };
+
+export const printNoRecordsMessage = () => {
+  setTimeout(() => {
+    return (
+      <p className="text-center">
+        <b>No results found</b>
+      </p>
+    );
+  }, 1000);
+};
+
+export const validateInterval = () => {
+  // Define the time interval (in milliseconds) based on usersChangeTheirAns value
+  let timeInterval = 0;
+  if (usersChangeTheirAns === "Daily") {
+    return (timeInterval = 24 * 60 * 60 * 1000); // 24 hours in milliseconds
+  } else if (usersChangeTheirAns === "Weekly") {
+    return (timeInterval = 7 * 24 * 60 * 60 * 1000); // 7 days in milliseconds
+  } else if (usersChangeTheirAns === "Monthly") {
+    // Assuming 30 days in a month for simplicity
+    return (timeInterval = 30 * 24 * 60 * 60 * 1000); // 30 days in milliseconds
+  } else if (usersChangeTheirAns === "Yearly") {
+    // Assuming 365 days in a year for simplicity
+    return (timeInterval = 365 * 24 * 60 * 60 * 1000); // 365 days in milliseconds
+  } else if (usersChangeTheirAns === "TwoYears") {
+    // Assuming 2 years
+    return (timeInterval = 2 * 365 * 24 * 60 * 60 * 1000); // 2 years in milliseconds
+  } else if (usersChangeTheirAns === "FourYears") {
+    // Assuming 4 years
+    return (timeInterval = 4 * 365 * 24 * 60 * 60 * 1000); // 4 years in milliseconds
+  }
+};
+
+export const capitalizeFirstLetter = (text) => {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};

@@ -186,6 +186,8 @@ const Bookmark = () => {
     }));
   };
 
+  console.log({ allData });
+
   return (
     <div className="flex w-full flex-col laptop:flex-row">
       <SidebarLeft
