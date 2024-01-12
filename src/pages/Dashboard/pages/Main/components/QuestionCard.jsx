@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -20,6 +20,8 @@ import { deleteBookmarkById } from "../../../../../api/homepageApis";
 import { userInfo } from "../../../../../api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
 import { updateOptionLimit } from "../../../../../features/quest/utilsSlice";
+
+import * as questCardActions from "../../../../../features/quest/questCardSlice";
 
 const QuestionCard = ({
   id,

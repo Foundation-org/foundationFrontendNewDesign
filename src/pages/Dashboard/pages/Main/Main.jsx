@@ -94,24 +94,50 @@ const Main = () => {
     queryKey: [getPreferences?.topicSearch],
   });
 
+  console.log({ columns });
+
   useEffect(() => {
-    if (prefSearchResults?.data.data.length >= 1) {
-      setColumns((prevColumns) => ({
-        ...prevColumns,
-        All: {
-          ...prevColumns.All,
-          list: prefSearchResults?.data.data || [],
-        },
-      }));
-    } else {
-      if (isSuccess) {
-        setColumns((prevColumns) => ({
+    if (prefSearchResults?.data.data.length !== undefined) {
+      setColumns((prevColumns) => {
+        const newList = prefSearchResults?.data.data || [];
+
+        const filteredList = newList.filter(
+          (item) =>
+            !prevColumns.Block.list.includes(item) &&
+            !prevColumns.Preferences.list.includes(item),
+        );
+
+        console.log({ filteredList });
+
+        return {
           ...prevColumns,
           All: {
             ...prevColumns.All,
-            list: topicsData?.data.data || [],
+            list: filteredList || [],
           },
-        }));
+        };
+      });
+    } else {
+      if (isSuccess) {
+        setColumns((prevColumns) => {
+          const newList = topicsData?.data.data || [];
+
+          const filteredList = newList.filter(
+            (item) =>
+              !prevColumns.Block.list.includes(item) &&
+              !prevColumns.Preferences.list.includes(item),
+          );
+
+          console.log({ filteredList });
+
+          return {
+            ...prevColumns,
+            All: {
+              ...prevColumns.All,
+              list: filteredList || [],
+            },
+          };
+        });
       }
     }
   }, [topicsData, prefSearchResults]);
