@@ -25,7 +25,7 @@ const SidebarRight = () => {
       icon: "/assets/svgs/dashboard/icon1.svg",
       iconLight: "/assets/svgs/dashboard/icon11.svg",
       alt: "icon1",
-      title: "Quests Created",
+      title: "Posts Created",
       value: (response && response?.questsCreated) || 0,
     },
     {
@@ -33,7 +33,7 @@ const SidebarRight = () => {
       icon: "/assets/svgs/dashboard/icon2.svg",
       iconLight: "/assets/svgs/dashboard/icon12.svg",
       alt: "icon1",
-      title: "Quests Answered",
+      title: "Posts Answered",
       value: (response && response?.usersAnswered) || 0,
     },
     // {
@@ -280,13 +280,13 @@ const SidebarRight = () => {
               <img
                 src={item.icon}
                 alt={item.alt}
-                className="h-[56px] w-[60px]"
+                className="h-[43.043px] w-[40px]"
               />
             ) : (
               <img
                 src={item.iconLight}
                 alt={item.alt}
-                className="h-[56px] w-[60px]"
+                className="h-[43.043px] w-[40px]"
               />
             )}
 

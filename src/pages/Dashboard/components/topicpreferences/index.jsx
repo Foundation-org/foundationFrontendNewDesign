@@ -1,7 +1,9 @@
-import { GrClose } from "react-icons/gr";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
+import { searchTopics } from "../../../../api/homepageApis";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 const TopicPreferences = ({
   topicSearch,
@@ -15,6 +17,27 @@ const TopicPreferences = ({
   const handleSearch = (e) => {
     setTopicSearch(e.target.value);
   };
+
+  const { data: searchResults, isSuccess } = useQuery({
+    queryFn: async () => {
+      if (topicSearch !== "") {
+        const result = await searchTopics(topicSearch);
+        console.log("search", searchResults);
+        return result;
+      }
+    },
+    queryKey: [topicSearch],
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setColumns({
+        All: {
+          list: searchResults?.data.data || [],
+        },
+      });
+    }
+  }, []);
 
   const onDragEnd = ({ source, destination }) => {
     if (destination === undefined || destination === null) return null;

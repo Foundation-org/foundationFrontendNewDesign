@@ -213,25 +213,26 @@ const Bookmark = () => {
               <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
                 <div></div>
                 {searchData && allData.length==0 ?
-                  <p className="text-center  text-[2vw]">
-                    No matching posts found.
-                  </p>
+                   <div className="flex flex-col  justify-center my-[15vh]">
+                   {persistedTheme === "dark"?
+
+                     <img src="../../../../../public/assets/svgs/dashboard/noposts.png" alt="noposts image" />:
+                     <img src="../../../../../public/assets/svgs/dashboard/noposts.png" alt="noposts image" />
+                   }
+                   <p className="text-center text-[#9F9F9F]-600 dark:text-gray font-inter text-[2.083vw] mt-[1.319vw]">No Matching Posts Found</p>
+
+                 </div>
                   :!searchData && allData.length===0?
                   <>
                   {printNoRecords()}
                 </>
                   : !searchData &&
-                  <p className="text-center  text-[2vw]">
+                  <p className="text-center  text-[2vw] dark:text-gray">
                     <b>You are all caught up!</b>
                   </p>
                 }
-                {!searchData && allData.length !==0 ?
-
-                  <IoIosArrowUp
-                  className="cursor-pointer  text-[2vw]"
-                  onClick={handleClickScroll}
-                  />: <div></div>
-                }
+                  <div></div>
+                
               </div>
             ) : (
               <div className="flex items-center justify-center">
