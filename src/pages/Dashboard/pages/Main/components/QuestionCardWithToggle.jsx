@@ -62,6 +62,7 @@ const QuestionCardWithToggle = ({
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+
   const [answersSelection, setAnswerSelection] = useState(
     answers?.map((answer) => ({
       label: answer.question,
@@ -160,9 +161,9 @@ const QuestionCardWithToggle = ({
     },
   });
 
-  const handleBookmark = (status) => {
+  const handleBookmark = () => {
     setbookmarkStatus((prevIsBookmarked) => !prevIsBookmarked);
-    if (status) {
+    if (bookmarkStatus) {
       const params = {
         questForeignKey: id,
       };
@@ -660,7 +661,7 @@ const QuestionCardWithToggle = ({
         </h1>
         <div
           className="flex w-[45.7px] justify-end"
-          onClick={() => handleBookmark(isBookmarked)}
+          onClick={() => handleBookmark()}
         >
           {bookmarkStatus ? (
             persistedTheme !== "dark" ? (
