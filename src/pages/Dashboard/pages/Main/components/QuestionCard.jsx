@@ -23,11 +23,14 @@ import { updateOptionLimit } from "../../../../../features/quest/utilsSlice";
 
 import * as questCardActions from "../../../../../features/quest/questCardSlice";
 import { capitalizeFirstLetter, validateInterval } from "../../../../../utils";
+import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
+import BookmarkIcon from "./BookmarkIcon";
 
 const QuestionCard = ({
-  id,
+  mainData,
   img,
   alt,
+  id,
   badgeCount,
   title,
   QuestTopic,
@@ -516,7 +519,7 @@ const QuestionCard = ({
   return (
     <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-white dark:bg-[#141618]">
       <CardTopbar
-        QuestTopic={QuestTopic}
+        QuestTopic={mainData.QuestTopic}
         img={img}
         alt={alt}
         badgeCount={badgeCount}
@@ -526,32 +529,11 @@ const QuestionCard = ({
         <h1 className="w-[93%] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[25px] dark:text-[#B8B8B8]">
           {question?.endsWith("?") ? "Q." : "S."} {question}
         </h1>
-        <div
-          className="flex w-[45.7px] justify-end"
-          onClick={() => handleBookmark()}
-        >
-          {bookmarkStatus ? (
-            persistedTheme !== "dark" ? (
-              <img
-                src="/assets/bookmark/bookmark.png"
-                alt="save icon"
-                className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
-              />
-            ) : (
-              <img
-                src="/assets/bookmark/darkbookmark.png"
-                alt="save icon"
-                className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
-              />
-            )
-          ) : (
-            <img
-              src="/assets/bookmark/disablebookmark.png"
-              alt="save icon"
-              className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
-            />
-          )}
-        </div>
+        <BookmarkIcon
+          bookmarkStatus={bookmarkStatus}
+          persistedTheme={persistedTheme}
+          handleBookmark={handleBookmark}
+        />
       </div>
       {viewResult !== id ? (
         startTest === id ? (
@@ -576,8 +558,6 @@ const QuestionCard = ({
             setRankedAnswers={setRankedAnswers}
             addOptionField={addOptionField}
             setAddOptionField={setAddOptionField}
-            // addOptionLimit={addOptionLimit}
-            // setAddOptionLimit={setAddOptionLimit}
             time={time}
             setStartTest={setStartTest}
             loading={loading}

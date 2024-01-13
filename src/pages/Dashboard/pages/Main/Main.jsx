@@ -236,6 +236,7 @@ const Main = () => {
               ? allData?.map((item, index) => (
                   <div key={index + 1}>
                     <QuestionCardWithToggle
+                      mainData={item}
                       id={item._id}
                       img="/assets/svgs/dashboard/badge.svg"
                       alt="badge"
@@ -288,10 +289,11 @@ const Main = () => {
               : allData?.map((item, index) => (
                   <div key={index + 1}>
                     <QuestionCard
-                      id={item._id}
+                      mainData={item}
                       img="/assets/svgs/dashboard/badge.svg"
                       alt="badge"
                       badgeCount="5"
+                      id={item._id}
                       title={
                         item?.whichTypeQuestion === "agree/disagree"
                           ? "Agree/Disagree"
