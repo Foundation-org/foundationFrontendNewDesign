@@ -10,7 +10,7 @@ import { getQuestById } from "../../api/homepageApis";
 import Topbar from "../Dashboard/components/Topbar";
 import SidebarRight from "../Dashboard/components/SidebarRight";
 import QuestionCard from "./components/QuestionCard";
-import QuestionCardWithToggle from "../Dashboard/pages/Main/components/QuestionCardWithToggle";
+import QuestionCardWithToggle from "../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle";
 import { createGuestMode } from "../../api/userAuth";
 
 const Guests = () => {

@@ -15,7 +15,7 @@ import Contributions from "../pages/Dashboard/pages/Profile/pages/Contributions"
 import VerificationBadges from "../pages/Dashboard/pages/Profile/pages/VerificationBadges";
 import BasicTable from "../pages/Dashboard/pages/Profile/pages/Ledger";
 import ChangePassword from "../pages/Dashboard/pages/Profile/pages/ChangePassword";
-import QuestStartSection from "../pages/Dashboard/pages/Main/QuestStartSection";
+import QuestStartSection from "../pages/Dashboard/pages/QuestStartSection";
 import Quest from "../pages/Dashboard/pages/Quest/Quest";
 import Bookmark from "../pages/Dashboard/pages/Bookmark";
 import DashboardRedirect from "../pages/Dashboard/DashboardRedirect";

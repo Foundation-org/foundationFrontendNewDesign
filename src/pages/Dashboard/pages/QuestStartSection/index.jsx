@@ -259,12 +259,12 @@ const QuestStartSection = () => {
                       multipleOption={item?.userCanSelectMultiple}
                       question={item?.Question}
                       whichTypeQuestion={item?.whichTypeQuestion}
-                      // startTest={startTest}
-                      // setStartTest={setStartTest}
-                      // viewResult={viewResult}
-                      // setViewResult={setViewResult}
-                      // handleViewResults={handleViewResults}
-                      // handleStartTest={handleStartTest}
+                      startTest={startTest}
+                      setStartTest={setStartTest}
+                      viewResult={viewResult}
+                      setViewResult={setViewResult}
+                      handleViewResults={handleViewResults}
+                      handleStartTest={handleStartTest}
                       usersAddTheirAns={item?.usersAddTheirAns}
                       startStatus={item?.startStatus}
                       createdBy={item?.uuid}
@@ -276,18 +276,18 @@ const QuestStartSection = () => {
                             : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
                       }
                       btnText={item?.startStatus}
-                      // isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                      //   return bookmark.questForeignKey === item._id;
-                      // })}
+                      isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                        return bookmark.questForeignKey === item._id;
+                      })}
                       lastInteractedAt={item.lastInteractedAt}
                       usersChangeTheirAns={item.usersChangeTheirAns}
-                      // expandedView={filterStates.expandedView}
+                      expandedView={filterStates.expandedView}
                       QuestTopic={item.QuestTopic}
                     />
                   </div>
                 ))
               : allData?.map((item, index) => (
-                  <div key={index + 1}>
+                <div key={index + 1}>
                     <QuestionCard
                       questStartData={item}
                       startTest={startTest}
