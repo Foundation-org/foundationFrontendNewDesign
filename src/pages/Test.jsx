@@ -8,9 +8,9 @@ const Test = () => {
   return (
     <>
       <Topbar />
-      <div className="flex flex-col justify-between bg-white tablet:flex-row dark:bg-black">
+      <div className="flex flex-col justify-between bg-white laptop:flex-row dark:bg-black">
         <SidebarLeft />
-        <div className="w-full px-[1.12rem] pt-[0.63rem] tablet:pt-[0.94rem]">
+        <div className="w-full px-[1.13rem] pt-[0.63rem] tablet:pt-[0.94rem]">
           <QuestCard />
         </div>
         <SidebarRight />

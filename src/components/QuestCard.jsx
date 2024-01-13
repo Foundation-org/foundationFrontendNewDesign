@@ -3,10 +3,10 @@ import { Button } from "./NewButton";
 
 const QuestCard = () => {
   return (
-    <div className="h-fit w-full rounded-[0.9375rem] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:mx-auto tablet:max-w-[43.5rem]">
-      <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-2 py-2 tablet:px-4 tablet:py-[0.63rem]">
+    <div className="h-fit w-full rounded-[0.43031rem] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[1.65569rem] laptop:mx-auto laptop:max-w-[43.5rem] laptop:rounded-[0.9375rem]">
+      <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-2 py-2 tablet:px-5 tablet:py-[0.63rem] laptop:px-4">
         <svg
-          className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-[24px]"
+          className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888pxpx]"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 29"
           fill="none"
@@ -88,19 +88,18 @@ const QuestCard = () => {
             fill="white"
           />
         </svg>
-        <h4 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1rem]">
+        <h4 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">
           Technology
         </h4>
       </div>
       <div className="border-b-2 border-[#D9D9D9] pb-5 pt-[0.94rem]">
-        <div className="ml-[1.39rem] mr-[1.3rem] flex items-center justify-between tablet:ml-[3.67rem]">
+        <div className="ml-[1.39rem] mr-[0.62rem] flex items-center justify-between tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
           <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem]">
             S. Technology is highly diverse and versatile.
           </h4>
           <svg
+            className="h-[15.147px] w-[11.016px] tablet:h-[30px] tablet:w-[21.818px] laptop:h-[25px] laptop:w-[18.182px]"
             xmlns="http://www.w3.org/2000/svg"
-            width="19"
-            height="25"
             viewBox="0 0 19 25"
             fill="none"
           >
@@ -123,16 +122,16 @@ const QuestCard = () => {
             </defs>
           </svg>
         </div>
-        <h4 className="mb-[0.63rem] ml-[2.19rem] mt-[0.69rem] text-[0.5625rem] font-normal text-[#85898C] tablet:ml-[4.81rem] tablet:text-[1rem]">
+        <h4 className="mb-2 ml-[2.19rem] mt-[0.53rem] text-[0.5625rem] font-normal text-[#85898C] tablet:mb-[0.68rem] tablet:ml-[5.06rem] tablet:mt-[0.87rem] tablet:text-[1rem] laptop:mb-[0.63rem] laptop:ml-[4.81rem] laptop:mt-[0.69rem]">
           You can select multiple options
         </h4>
         {/* options */}
-        <div className="flex flex-col gap-[0.69rem] pl-7 tablet:pl-[3.94rem]">
+        <div className="flex flex-col gap-[0.69rem] pl-7 pr-[2.34rem] tablet:pl-[4.12rem] tablet:pr-20 laptop:pl-[3.94rem]">
           <div className="flex w-full">
-            <div className="flex h-[1.33rem] w-full tablet:h-[2.8125rem] ">
-              <div className="h-full w-[0.743rem] rounded-s-[0.29756rem] bg-[#DEE6F7] tablet:w-[1.5625rem] tablet:rounded-s-[0.625rem]" />
-              <div className="flex h-full w-full items-center rounded-e-[0.29756rem] bg-[#FCFCFC] px-[0.41rem] tablet:rounded-e-[0.625rem] tablet:px-[1.12rem]">
-                <h4 className="text-[0.5625rem] font-normal text-[#435059] tablet:text-[1.125rem]">
+            <div className="flex h-[1.33rem] w-full tablet:h-[2.94rem] laptop:h-[2.8125rem] ">
+              <div className="h-full w-[0.743rem] rounded-s-[0.29756rem] bg-[#DEE6F7] tablet:w-[1.63rem] tablet:rounded-s-[0.625rem] laptop:w-[1.5625rem]" />
+              <div className="flex h-full w-full items-center rounded-e-[0.29756rem] bg-[#FCFCFC] px-[0.41rem] tablet:rounded-e-[0.625rem] tablet:px-[0.49rem] laptop:max-w-[29.56rem] laptop:px-[1.12rem]">
+                <h4 className="w-full text-[0.5625rem] font-normal text-[#435059] tablet:text-[1.24313rem] laptop:text-[1.125rem]">
                   Technology is versatile.
                 </h4>
               </div>
@@ -171,18 +170,17 @@ const QuestCard = () => {
             </div>
           </div>
           <div className="flex w-full">
-            <div className="ml-[3.94rem] flex h-[2.8125rem] w-full max-w-[33.187rem]">
-              <div className="h-full w-[1.5625rem] rounded-s-[0.625rem] bg-[#DEE6F7]" />
-              <div className="flex h-full w-full max-w-[29.56rem] items-center rounded-e-[0.625rem] bg-[#FCFCFC] px-[1.12rem]">
-                <h4 className="text-[1.125rem] font-normal text-[#435059]">
+            <div className="flex h-[1.33rem] w-full tablet:h-[2.94rem] laptop:h-[2.8125rem] ">
+              <div className="h-full w-[0.743rem] rounded-s-[0.29756rem] bg-[#DEE6F7] tablet:w-[1.63rem] tablet:rounded-s-[0.625rem] laptop:w-[1.5625rem]" />
+              <div className="flex h-full w-full items-center rounded-e-[0.29756rem] bg-[#FCFCFC] px-[0.41rem] tablet:rounded-e-[0.625rem] tablet:px-[0.49rem] laptop:max-w-[29.56rem] laptop:px-[1.12rem]">
+                <h4 className="w-full text-[0.5625rem] font-normal text-[#435059] tablet:text-[1.24313rem] laptop:text-[1.125rem]">
                   Technology is versatile.
                 </h4>
               </div>
-              <div className="flex h-full w-[2.125rem] items-center rounded-e-[0.625rem] bg-[#FCFCFC]">
+              <div className="flex h-full w-[1.0675rem] items-center rounded-e-[0.625rem] bg-[#FCFCFC] tablet:w-[2.125rem]">
                 <svg
+                  className="h-[11px] w-[11px] tablet:h-[25px] tablet:w-[25px]"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
                   viewBox="0 0 25 25"
                   fill="none"
                 >
@@ -214,18 +212,17 @@ const QuestCard = () => {
             </div>
           </div>
           <div className="flex w-full">
-            <div className="ml-[3.94rem] flex h-[2.8125rem] w-full max-w-[33.187rem]">
-              <div className="h-full w-[1.5625rem] rounded-s-[0.625rem] bg-[#DEE6F7]" />
-              <div className="flex h-full w-full max-w-[29.56rem] items-center rounded-e-[0.625rem] bg-[#FCFCFC] px-[1.12rem]">
-                <h4 className="text-[1.125rem] font-normal text-[#435059]">
+            <div className="flex h-[1.33rem] w-full tablet:h-[2.94rem] laptop:h-[2.8125rem] ">
+              <div className="h-full w-[0.743rem] rounded-s-[0.29756rem] bg-[#DEE6F7] tablet:w-[1.63rem] tablet:rounded-s-[0.625rem] laptop:w-[1.5625rem]" />
+              <div className="flex h-full w-full items-center rounded-e-[0.29756rem] bg-[#FCFCFC] px-[0.41rem] tablet:rounded-e-[0.625rem] tablet:px-[0.49rem] laptop:max-w-[29.56rem] laptop:px-[1.12rem]">
+                <h4 className="w-full text-[0.5625rem] font-normal text-[#435059] tablet:text-[1.24313rem] laptop:text-[1.125rem]">
                   Technology is versatile.
                 </h4>
               </div>
-              <div className="flex h-full w-[2.125rem] items-center rounded-e-[0.625rem] bg-[#FCFCFC]">
+              <div className="flex h-full w-[1.0675rem] items-center rounded-e-[0.625rem] bg-[#FCFCFC] tablet:w-[2.125rem]">
                 <svg
+                  className="h-[11px] w-[11px] tablet:h-[25px] tablet:w-[25px]"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
                   viewBox="0 0 25 25"
                   fill="none"
                 >
@@ -258,15 +255,14 @@ const QuestCard = () => {
           </div>
         </div>
         {/* conditonal text + Full Screen */}
-        <div className="mb-[1.37rem] ml-[5rem] mr-[3.06rem] mt-[1.06rem] flex items-center justify-between">
-          <h4 className=" text-[1rem] font-normal text-[#85898C]">
+        <div className="mb-[0.52rem] ml-[2.19rem] mr-[1.3rem] mt-[0.56rem] flex items-center justify-between tablet:mb-[1.29rem] tablet:ml-[5rem] tablet:mr-[3.06rem] tablet:mt-[0.74rem] laptop:mb-[1.37rem] laptop:mt-[1.06rem]">
+          <h4 className="text-[0.5625rem] font-normal text-[#85898C] tablet:text-[1rem]">
             You can change your answer for everyday
           </h4>
-          <div className="flex items-center gap-[0.66rem]">
+          <div className="flex items-center gap-[0.44rem] tablet:gap-[0.66rem]">
             <svg
+              className="h-[11px] w-[10px] tablet:h-[23px] tablet:w-5"
               xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="23"
               viewBox="0 0 20 23"
               fill="none"
             >
@@ -275,18 +271,19 @@ const QuestCard = () => {
                 fill="#435059"
               />
             </svg>
-            <h4 className=" text-[1.125rem] font-normal text-[#435059]">
+            <h4 className="text-[0.5625rem] font-normal text-[#435059] tablet:text-[1.125rem]">
               Full Screen
             </h4>
           </div>
         </div>
         {/* Buttons */}
-        <div className="ml-[1.56rem] mr-[1.75rem] flex justify-between">
+        <div className="ml-7 mr-[0.87rem] flex justify-between tablet:ml-[1.56rem] tablet:mr-[1.75rem]">
           <Button
             variant="addOption"
-            className="flex items-center gap-[0.48rem]"
+            className="flex items-center gap-1 tablet:gap-[0.48rem]"
           >
             <svg
+              className="h-[8.262px] w-[9.516px] tablet:h-[15px] tablet:w-[18px]"
               xmlns="http://www.w3.org/2000/svg"
               width="18"
               height="15"
@@ -300,13 +297,13 @@ const QuestCard = () => {
             </svg>
             Add Option
           </Button>
-          <div className="flex items-center gap-[1.56rem]">
+          <div className="flex items-center gap-[0.69rem] tablet:gap-[1.56rem]">
             <Button variant="cancel">Cancel</Button>{" "}
             <Button variant="submit">Submit</Button>
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between px-[1.47rem] py-[0.63rem] pl-[1.19rem]">
+      <div className="flex items-center justify-between px-[1.19rem] py-[0.63rem] tablet:px-5">
         <div className="flex items-center gap-[0.34rem]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -426,9 +423,8 @@ const QuestCard = () => {
         </div>
         <div className="flex h-[1.75rem] w-fit items-center gap-[0.44rem] rounded-[0.625rem] bg-white px-[0.5rem]">
           <svg
+            className="h-2 w-2 tablet:h-[18px] tablet:w-[18px]"
             xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
             viewBox="0 0 18 18"
             fill="none"
           >
@@ -437,7 +433,9 @@ const QuestCard = () => {
               fill="#9C9C9C"
             />
           </svg>
-          <h4 className="text-[1rem] font-medium text-[#9C9C9C]">5 min ago</h4>
+          <h4 className="text-[0.51638rem] font-medium text-[#9C9C9C] tablet:text-[1.13531rem] laptop:text-[1rem]">
+            5 min ago
+          </h4>
         </div>
       </div>
     </div>
