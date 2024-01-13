@@ -15,7 +15,7 @@ import Contributions from "../pages/Dashboard/pages/Profile/pages/Contributions"
 import VerificationBadges from "../pages/Dashboard/pages/Profile/pages/VerificationBadges";
 import BasicTable from "../pages/Dashboard/pages/Profile/pages/Ledger";
 import ChangePassword from "../pages/Dashboard/pages/Profile/pages/ChangePassword";
-import Main from "../pages/Dashboard/pages/Main/Main";
+import QuestStartSection from "../pages/Dashboard/pages/Main/QuestStartSection";
 import Quest from "../pages/Dashboard/pages/Quest/Quest";
 import Bookmark from "../pages/Dashboard/pages/Bookmark";
 import DashboardRedirect from "../pages/Dashboard/DashboardRedirect";
@@ -40,7 +40,7 @@ export function Router() {
         {/* private */}
         <Route element={<PrivateRoutes auth={auth} />}>
           <Route path="/dashboard/" element={<Dashboard />}>
-            <Route path="" element={<Main />} />
+            <Route path="" element={<QuestStartSection />} />
             <Route path="quest" element={<Quest />} />
             <Route path="bookmark" element={<Bookmark />} />
           </Route>

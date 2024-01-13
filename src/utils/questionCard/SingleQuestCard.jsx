@@ -14,3 +14,14 @@ export function getQuestionTitle(whichTypeQuestion) {
       return null;
   }
 }
+
+export const getButtonColor = (startStatus) => {
+  switch (startStatus) {
+    case "completed":
+      return "bg-[#4ABD71]";
+    case "change answer":
+      return "bg-[#FDD503]";
+    default:
+      return "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]";
+  }
+};

@@ -23,37 +23,20 @@ import { updateOptionLimit } from "../../../../../features/quest/utilsSlice";
 
 import * as questCardActions from "../../../../../features/quest/questCardSlice";
 import { capitalizeFirstLetter, validateInterval } from "../../../../../utils";
-import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
+import { getQuestionTitle, getButtonColor } from "../../../../../utils/questionCard/SingleQuestCard";
 import BookmarkIcon from "./BookmarkIcon";
 
 const QuestionCard = ({
-  mainData,
-  img,
-  alt,
-  id,
-  badgeCount,
-  title,
-  QuestTopic,
-  answers,
-  question,
-  whichTypeQuestion,
-  time,
-  btnText,
-  btnColor,
   isBookmarked,
   handleStartTest,
   startTest,
   setStartTest,
   viewResult,
   handleViewResults,
-  lastInteractedAt,
-  usersChangeTheirAns,
-  usersAddTheirAns,
-  multipleOption,
-  startStatus,
-  createdBy,
   expandedView,
-  isBookmarkTab,
+  filterStates,
+
+  questStartData
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -69,7 +52,7 @@ const QuestionCard = ({
   const [isSubmit, setIsSubmit] = useState(false);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [answersSelection, setAnswerSelection] = useState(
-    answers?.map((answer) => ({
+    questStartData.QuestAnswers?.map((answer) => ({
       label: answer.question,
       check: false,
       contend: false,
@@ -87,14 +70,14 @@ const QuestionCard = ({
 
   useEffect(() => {
     setAnswerSelection(
-      answers?.map((answer) => ({
+      questStartData.QuestAnswers?.map((answer) => ({
         label: answer.question,
         check: false,
         contend: false,
         uuid: answer.uuid,
       })),
     );
-  }, [answers]);
+  }, [questStartData.QuestAnswers]);
 
   const [rankedAnswers, setRankedAnswers] = useState(
     answersSelection?.map((item, index) => ({
@@ -168,14 +151,14 @@ const QuestionCard = ({
     setbookmarkStatus((prevIsBookmarked) => !prevIsBookmarked);
     if (bookmarkStatus) {
       const params = {
-        questForeignKey: id,
+        questForeignKey: questStartData._id,
       };
       DelBookmark(params);
     } else {
       const params = {
-        questForeignKey: id,
-        Question: question,
-        whichTypeQuestion: whichTypeQuestion,
+        questForeignKey: questStartData._id,
+        Question: questStartData.Question,
+        whichTypeQuestion: questStartData.whichTypeQuestion,
       };
       AddBookmark(params);
     }
@@ -229,7 +212,7 @@ const QuestionCard = ({
         setLoading(false);
         queryClient.invalidateQueries("FeedData");
       }
-      handleViewResults(id);
+      handleViewResults(questStartData._id);
       userInfo().then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
@@ -261,7 +244,7 @@ const QuestionCard = ({
         toast.success("Successfully Changed");
         setLoading(false);
         queryClient.invalidateQueries("FeedData", "ResultsData");
-        handleViewResults(id);
+        handleViewResults(questStartData._id);
       }
       userInfo().then((resp) => {
         if (resp.status === 200) {
@@ -297,14 +280,14 @@ const QuestionCard = ({
   const handleSubmit = () => {
     setLoading(true);
     if (
-      whichTypeQuestion === "agree/disagree" ||
-      whichTypeQuestion === "yes/no" ||
-      whichTypeQuestion === "like/dislike"
+      questStartData.whichTypeQuestion === "agree/disagree" ||
+      questStartData.whichTypeQuestion === "yes/no" ||
+      questStartData.whichTypeQuestion === "like/dislike"
     ) {
       const { selected, contended } = extractSelectedAndContended(
-        whichTypeQuestion === "agree/disagree"
+        questStartData.whichTypeQuestion === "agree/disagree"
           ? quests.agreeDisagree
-          : whichTypeQuestion === "yes/no"
+          : questStartData.whichTypeQuestion === "yes/no"
             ? quests.yesNo
             : quests.likeDislike,
       );
@@ -320,7 +303,7 @@ const QuestionCard = ({
       }
 
       const params = {
-        questId: id,
+        questId: questStartData._id,
         answer: ans,
         addedAnswer: "",
         uuid: persistedUserInfo?.uuid,
@@ -333,7 +316,7 @@ const QuestionCard = ({
         return;
       }
 
-      if (btnText === "change answer") {
+      if (questStartData.startStatus === "change answer") {
         console.log(howManyTimesAnsChanged);
         const currentDate = new Date();
 
@@ -341,22 +324,22 @@ const QuestionCard = ({
         // Check if enough time has passed
         if (
           howManyTimesAnsChanged > 1 &&
-          currentDate - new Date(lastInteractedAt) < timeInterval
+          currentDate - new Date(questStartData.lastInteractedAt) < timeInterval
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can change your selection again in ${usersChangeTheirAns}`,
+            `You can change your selection again in ${questStartData.usersChangeTheirAns}`,
           );
           setLoading(false);
         } else {
           changeAnswer(params);
         }
       } else {
-        console.log(whichTypeQuestion);
+        console.log(questStartData.whichTypeQuestion);
         console.log(params);
         startQuest(params);
       }
-    } else if (whichTypeQuestion === "multiple choise") {
+    } else if (questStartData.whichTypeQuestion === "multiple choise") {
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = "";
@@ -396,21 +379,21 @@ const QuestionCard = ({
       };
       const currentDate = new Date();
 
-      if (btnText === "change answer") {
+      if (questStartData.startStatus === "change answer") {
         const timeInterval = validateInterval();
         // Check if enough time has passed
         if (
           howManyTimesAnsChanged > 1 &&
-          currentDate - new Date(lastInteractedAt) < timeInterval
+          currentDate - new Date(questStartData.lastInteractedAt) < timeInterval
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can change your selection again in ${usersChangeTheirAns}`,
+            `You can change your selection again in ${questStartData.usersChangeTheirAns}`,
           );
           setLoading(false);
         } else {
           const params = {
-            questId: id,
+            questId: questStartData._id,
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
@@ -419,7 +402,7 @@ const QuestionCard = ({
         }
       } else {
         const params = {
-          questId: id,
+          questId: questStartData._id,
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
@@ -447,7 +430,7 @@ const QuestionCard = ({
         console.log("params", params);
         startQuest(params);
       }
-    } else if (whichTypeQuestion === "ranked choise") {
+    } else if (questStartData.whichTypeQuestion === "ranked choise") {
       let addedAnswerValue = "";
       let addedAnswerUuidValue = "";
       let answerSelected = [];
@@ -475,21 +458,21 @@ const QuestionCard = ({
       };
       const currentDate = new Date();
 
-      if (btnText === "change answer") {
+      if (questStartData.startStatus === "change answer") {
         const timeInterval = validateInterval();
         // Check if enough time has passed
         if (
           howManyTimesAnsChanged > 1 &&
-          currentDate - new Date(lastInteractedAt) < timeInterval
+          currentDate - new Date(questStartData.lastInteractedAt) < timeInterval
         ) {
           // Alert the user if the time condition is not met
           toast.error(
-            `You can change your selection again in ${usersChangeTheirAns}`,
+            `You can change your selection again in ${questStartData.usersChangeTheirAns}`,
           );
           setLoading(false);
         } else {
           const params = {
-            questId: id,
+            questId: questStartData._id,
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
@@ -498,7 +481,7 @@ const QuestionCard = ({
         }
       } else {
         const params = {
-          questId: id,
+          questId: questStartData._id,
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
@@ -512,22 +495,22 @@ const QuestionCard = ({
   };
 
   useEffect(() => {
-    localStorage.setItem("lastInteractedAt", lastInteractedAt);
+    localStorage.setItem("lastInteractedAt", questStartData.lastInteractedAt);
     localStorage.setItem("howManyTimesAnsChanged", howManyTimesAnsChanged);
-  }, [lastInteractedAt, howManyTimesAnsChanged]);
+  }, [questStartData.lastInteractedAt, howManyTimesAnsChanged]);
 
   return (
     <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-white dark:bg-[#141618]">
       <CardTopbar
-        QuestTopic={mainData.QuestTopic}
-        img={img}
-        alt={alt}
-        badgeCount={badgeCount}
-        createdBy={createdBy}
+        QuestTopic={questStartData.QuestTopic}
+        img={'assets/svgs/dashboard/badge.svg'}
+        alt={"badge"}
+        badgeCount={5}
+        createdBy={questStartData.uuid}
       />
       <div className="ml-6 mr-[1.38rem] mt-[1.56rem] flex items-center justify-between tablet:ml-[52.65px]">
         <h1 className="w-[93%] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[25px] dark:text-[#B8B8B8]">
-          {question?.endsWith("?") ? "Q." : "S."} {question}
+          {questStartData.Question?.endsWith("?") ? "Q." : "S."} {questStartData.Question}
         </h1>
         <BookmarkIcon
           bookmarkStatus={bookmarkStatus}
@@ -535,74 +518,74 @@ const QuestionCard = ({
           handleBookmark={handleBookmark}
         />
       </div>
-      {viewResult !== id ? (
-        startTest === id ? (
+      {viewResult !== questStartData._id ? (
+        startTest === questStartData._id ? (
           <StartTest
-            id={id}
-            title={title}
-            answers={answers}
-            multipleOption={multipleOption}
+            id={questStartData._id}
+            title={getQuestionTitle(questStartData.whichTypeQuestion)}
+            answers={questStartData.QuestAnswers}
+            multipleOption={questStartData.userCanSelectMultiple}
             SingleAnswer={SingleAnswer}
             quests={quests}
-            whichTypeQuestion={whichTypeQuestion}
+            whichTypeQuestion={questStartData.whichTypeQuestion}
             handleToggleCheck={handleToggleCheck}
             handleSubmit={handleSubmit}
             handleOpen={handleOpen}
             handleClose={handleClose}
             open={open}
-            btnText={btnText}
-            usersAddTheirAns={usersAddTheirAns}
+            btnText={questStartData.startStatus}
+            usersAddTheirAns={questStartData.usersAddTheirAns}
             setAnswerSelection={setAnswerSelection}
             answersSelection={answersSelection}
             rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
             addOptionField={addOptionField}
             setAddOptionField={setAddOptionField}
-            time={time}
+            time={questStartData.createdAt}
             setStartTest={setStartTest}
             loading={loading}
             setIsSubmit={setIsSubmit}
             expandedView={expandedView}
-            usersChangeTheirAns={usersChangeTheirAns}
-            lastInteractedAt={lastInteractedAt}
+            usersChangeTheirAns={questStartData.usersChangeTheirAns}
+            lastInteractedAt={questStartData.lastInteractedAt}
             howManyTimesAnsChanged={howManyTimesAnsChanged}
             loadingDetail={loadingDetail}
           />
         ) : (
           <OptionBar
-            id={id}
-            time={time}
-            btnText={btnText}
-            btnColor={btnColor}
+            id={questStartData._id}
+            time={questStartData.createdAt}
+            btnText={questStartData.startStatus}
+            btnColor={getButtonColor(questStartData.startStatus)}
             handleStartTest={handleStartTest}
             handleViewResults={handleViewResults}
             setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-            whichTypeQuestion={whichTypeQuestion}
+            whichTypeQuestion={questStartData.whichTypeQuestion}
             handleToggleCheck={handleToggleCheck}
             handleRankedChoice={handleRankedChoice}
             rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
             answersSelection={answersSelection}
             setAnswerSelection={setAnswerSelection}
-            startStatus={startStatus}
-            createdBy={createdBy}
+            startStatus={questStartData.startStatus}
+            createdBy={questStartData.uuid}
             setLoadingDetail={setLoadingDetail}
-            img={img}
-            alt={alt}
-            badgeCount={badgeCount}
-            title={title}
-            question={question}
+            img={'/assets/svgs/dashboard/badge.svg'}
+            alt={'badge'}
+            badgeCount={5}
+            title={getQuestionTitle(questStartData.whichTypeQuestion)}
+            question={questStartData.Question}
           />
         )
       ) : (
         <Result
-          id={id}
-          title={title}
+          id={questStartData._id}
+          title={getQuestionTitle(questStartData.whichTypeQuestion)}
           handleToggleCheck={handleToggleCheck}
           handleClose={handleClose}
-          answers={answers}
-          btnText={btnText}
-          whichTypeQuestion={whichTypeQuestion}
+          answers={questStartData.QuestAnswers}
+          btnText={questStartData.startStatus}
+          whichTypeQuestion={questStartData.whichTypeQuestion}
           setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
           answersSelection={answersSelection}
           setAnswerSelection={setAnswerSelection}
@@ -610,10 +593,10 @@ const QuestionCard = ({
           setRankedAnswers={setRankedAnswers}
           viewResult={viewResult}
           handleViewResults={handleViewResults}
-          startStatus={startStatus}
-          time={time}
-          usersChangeTheirAns={usersChangeTheirAns}
-          lastInteractedAt={lastInteractedAt}
+          startStatus={questStartData.startStatus}
+          time={questStartData.createdAt}
+          usersChangeTheirAns={questStartData.usersChangeTheirAns}
+          lastInteractedAt={questStartData.lastInteractedAt}
           howManyTimesAnsChanged={howManyTimesAnsChanged}
         />
       )}
