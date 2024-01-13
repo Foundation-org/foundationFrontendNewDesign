@@ -11,13 +11,10 @@ import QuestionCardWithToggle from "./components/QuestionCardWithToggle";
 
 // extras
 import { useDebounce } from "../../../../utils/useDebounce";
-import { printNoRecordsMessage } from "../../../../utils";
+import { printEndMessage } from "../../../../utils";
 import * as HomepageAPIs from "../../../../api/homepageApis";
 import * as filtersActions from "../../../../features/sidebar/filtersSlice";
 import * as prefActions from "../../../../features/preferences/prefSlice";
-
-// icons
-import { FaSpinner } from "react-icons/fa";
 import {
   applyFilters,
   fetchDataByStatus,
@@ -217,51 +214,19 @@ const Main = () => {
   return (
     <div className="flex w-full flex-col laptop:flex-row">
       <SidebarLeft columns={columns} setColumns={setColumns} />
-      <div className="shadow-inner-md no-scrollbar flex h-full w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] tablet:min-h-[calc(100vh-96px)] dark:bg-[#06070a]">
+      <div className="no-scrollbar flex h-full w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] pl-6 pr-[23px] tablet:min-h-[calc(100vh-96px)] dark:bg-[#06070a]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
           hasMore={feedData?.hasNextPage}
-          endMessage={
-            feedData?.hasNextPage === false ? (
-              <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
-                <div></div>
-                {filterStates.searchData && allData.length == 0 ? (
-                  <div className="my-[15vh] flex  flex-col justify-center">
-                    {persistedTheme === "dark" ? (
-                      <img
-                        src="/assets/svgs/dashboard/noMatchingDark.svg"
-                        alt="noposts image"
-                      />
-                    ) : (
-                      <img
-                        src="/assets/svgs/dashboard/noMatchingLight.svg"
-                        alt="noposts image"
-                      />
-                    )}
-                    <p className="font-inter mt-[1.319vw] text-center text-[2.083vw] text-[#9F9F9F] dark:text-gray">
-                      No Matching Posts Found
-                    </p>
-                  </div>
-                ) : !filterStates.searchData && allData.length === 0 ? (
-                  <>{printNoRecordsMessage()}</>
-                ) : (
-                  !filterStates.searchData && (
-                    <p className="text-center text-[2vw]">
-                      <b>You are all caught up!</b>
-                    </p>
-                  )
-                )}
-                <div></div>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center">
-                <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-              </div>
-            )
-          }
+          endMessage={printEndMessage(
+            feedData,
+            filterStates,
+            allData,
+            persistedTheme,
+          )}
           height={"88vh"}
-          className="no-scrollbar "
+          className="no-scrollbar"
         >
           <div
             id="section-1"

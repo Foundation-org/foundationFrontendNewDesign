@@ -187,7 +187,7 @@ const SidebarRight = () => {
 
   return (
     <>
-      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] shadow-[0_3px_10px_rgb(0,0,0,0.2)] 2xl:w-[25rem] laptop:block dark:border-l-2 dark:border-white dark:bg-[#0A0A0C]">
+      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[23rem] min-w-[23rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] 2xl:w-[25rem] laptop:block dark:border-white dark:bg-[#0A0A0C]">
         <EmailTypeModal
           modalShow={modalVisible}
           email={persistedUserInfo?.email}

@@ -3,12 +3,11 @@ import { Button } from "./NewButton";
 
 const QuestCard = () => {
   return (
-    <div className="mx-auto h-fit w-full max-w-[43.5rem] rounded-[0.9375rem] border-2 border-[#D9D9D9] bg-[#F3F3F3]">
-      <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-4 py-[0.63rem]">
+    <div className="h-fit w-full rounded-[0.9375rem] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:mx-auto tablet:max-w-[43.5rem]">
+      <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-2 py-2 tablet:px-4 tablet:py-[0.63rem]">
         <svg
+          className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-[24px]"
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="29"
           viewBox="0 0 24 29"
           fill="none"
         >
@@ -89,11 +88,13 @@ const QuestCard = () => {
             fill="white"
           />
         </svg>
-        <h4 className="text-[1rem] font-medium text-[#9A9A9A]">Technology</h4>
+        <h4 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1rem]">
+          Technology
+        </h4>
       </div>
       <div className="border-b-2 border-[#D9D9D9] pb-5 pt-[0.94rem]">
-        <div className="ml-[3.67rem] mr-[1.3rem] flex items-center justify-between">
-          <h4 className="text-[1.25rem] font-semibold text-[#7C7C7C]">
+        <div className="ml-[1.39rem] mr-[1.3rem] flex items-center justify-between tablet:ml-[3.67rem]">
+          <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem]">
             S. Technology is highly diverse and versatile.
           </h4>
           <svg
@@ -122,24 +123,23 @@ const QuestCard = () => {
             </defs>
           </svg>
         </div>
-        <h4 className="mb-[0.63rem] ml-[4.81rem] mt-[0.69rem] text-[1rem] font-normal text-[#85898C]">
+        <h4 className="mb-[0.63rem] ml-[2.19rem] mt-[0.69rem] text-[0.5625rem] font-normal text-[#85898C] tablet:ml-[4.81rem] tablet:text-[1rem]">
           You can select multiple options
         </h4>
         {/* options */}
-        <div className="flex flex-col gap-[0.69rem]">
+        <div className="flex flex-col gap-[0.69rem] pl-7 tablet:pl-[3.94rem]">
           <div className="flex w-full">
-            <div className="ml-[3.94rem] flex h-[2.8125rem] w-full max-w-[33.187rem]">
-              <div className="h-full w-[1.5625rem] rounded-s-[0.625rem] bg-[#DEE6F7]" />
-              <div className="flex h-full w-full max-w-[29.56rem] items-center rounded-e-[0.625rem] bg-[#FCFCFC] px-[1.12rem]">
-                <h4 className="text-[1.125rem] font-normal text-[#435059]">
+            <div className="flex h-[1.33rem] w-full tablet:h-[2.8125rem] ">
+              <div className="h-full w-[0.743rem] rounded-s-[0.29756rem] bg-[#DEE6F7] tablet:w-[1.5625rem] tablet:rounded-s-[0.625rem]" />
+              <div className="flex h-full w-full items-center rounded-e-[0.29756rem] bg-[#FCFCFC] px-[0.41rem] tablet:rounded-e-[0.625rem] tablet:px-[1.12rem]">
+                <h4 className="text-[0.5625rem] font-normal text-[#435059] tablet:text-[1.125rem]">
                   Technology is versatile.
                 </h4>
               </div>
-              <div className="flex h-full w-[2.125rem] items-center rounded-e-[0.625rem] bg-[#FCFCFC]">
+              <div className="flex h-full w-[1.0675rem] items-center rounded-e-[0.625rem] bg-[#FCFCFC] tablet:w-[2.125rem]">
                 <svg
+                  className="h-[11px] w-[11px] tablet:h-[25px] tablet:w-[25px]"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
                   viewBox="0 0 25 25"
                   fill="none"
                 >
