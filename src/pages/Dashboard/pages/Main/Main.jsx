@@ -267,12 +267,12 @@ const Main = () => {
                   <div className="my-[15vh] flex  flex-col justify-center">
                     {persistedTheme === "dark" ? (
                       <img
-                        src="../../../../../public/assets/svgs/dashboard/noMatchingDark.svg"
+                        src="/assets/svgs/dashboard/noMatchingDark.svg"
                         alt="noposts image"
                       />
                     ) : (
                       <img
-                        src="../../../../../public/assets/svgs/dashboard/noMatchingLight.svg"
+                        src="/assets/svgs/dashboard/noMatchingLight.svg"
                         alt="noposts image"
                       />
                     )}
