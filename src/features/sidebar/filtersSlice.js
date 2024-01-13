@@ -1,5 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialColumns = {
+  All: {
+    id: "All",
+    list: [],
+  },
+  Preferences: {
+    id: "Preferences",
+    list: [],
+  },
+  Block: {
+    id: "Block",
+    list: [],
+  },
+};
+
 const initialState = {
   expandedView: localStorage.getItem("expandedView") === "true" ? true : false,
   searchData: "",
@@ -7,6 +22,7 @@ const initialState = {
   filterByType: "",
   filterByScope: "",
   filterBySort: "Newest First",
+  columns: initialColumns,
   clearFilter: false,
 };
 
@@ -32,6 +48,35 @@ export const filtersSlice = createSlice({
     setFilterBySort: (state, action) => {
       state.filterBySort = action.payload;
     },
+    setAllColumn: (state, action) => {
+      const newList = action.payload?.data.data || [];
+
+      const filteredList = newList?.filter(
+        (item) =>
+          !state.columns.Block.list.includes(item) &&
+          !state.columns.Preferences.list.includes(item),
+      );
+
+      state.columns.All = {
+        ...state.columns.All,
+        list: filteredList,
+      };
+    },
+    setColumns: (state, action) => {
+      console.log({ action });
+      if (action.payload.check === true) {
+        state.columns = {
+          ...state.columns,
+          [action.payload.newColId.id]: action.payload.newCol.list,
+        };
+      } else {
+        state.columns = {
+          ...state.columns,
+          [action.payload.newStartColId.id]: action.payload.newStartCol.list,
+          [action.payload.newEndColId.id]: action.payload.newEndCol.list,
+        };
+      }
+    },
     resetFilters: (state) => {
       Object.assign(state, initialState);
     },
@@ -45,6 +90,8 @@ export const {
   setFilterByType,
   setFilterByScope,
   setFilterBySort,
+  setAllColumn,
+  setColumns,
   resetFilters,
 } = filtersSlice.actions;
 

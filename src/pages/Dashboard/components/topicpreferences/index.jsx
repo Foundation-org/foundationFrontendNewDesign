@@ -10,6 +10,7 @@ import Cross from "../../../../assets/preferences/Cross";
 
 const TopicPreferences = ({ columns, setColumns, handleClose }) => {
   const dispatch = useDispatch();
+  // const [columns, setColumns] = useState();
   const getPreferences = useSelector(prefActions.getPrefs);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [itemsWithCross, setItemsWithCross] = useState([]);

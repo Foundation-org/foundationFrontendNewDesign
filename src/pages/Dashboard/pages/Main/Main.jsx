@@ -18,6 +18,10 @@ import * as prefActions from "../../../../features/preferences/prefSlice";
 
 // icons
 import { FaSpinner } from "react-icons/fa";
+import {
+  applyFilters,
+  fetchDataByStatus,
+} from "../../../../utils/questionCard";
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -136,50 +140,9 @@ const Main = () => {
     queryKey: ["getBookmarked"],
   });
 
-  const applyFilters = (params, filterStates) => {
-    if (filterStates.filterBySort !== "") {
-      params = { ...params, sort: filterStates.filterBySort };
-    }
-
-    if (filterStates.filterByType && filterStates.filterByType !== "All") {
-      params = { ...params, type: filterStates.filterByType.toLowerCase() };
-    } else {
-      params = { ...params, type: "" };
-    }
-
-    if (filterStates.filterByScope === "Me") {
-      params = { ...params, filter: true };
-    }
-
-    if (columns.Preferences.list.length !== 0) {
-      params = { ...params, terms: columns.Preferences.list };
-    }
-
-    if (columns.Block.list.length !== 0) {
-      params = { ...params, blockedTerms: columns.Block.list };
-    }
-
-    return params;
-  };
-
-  const fetchDataByStatus = async (params, filterStates) => {
-    switch (filterStates.filterByStatus) {
-      case "Unanswered":
-        return await HomepageAPIs.getAllUnanswered(params);
-      case "Answered":
-        return await HomepageAPIs.getAllAnswered(params);
-      case "Completed":
-        return await HomepageAPIs.getAllCompleted(params);
-      case "Changeable":
-        return await HomepageAPIs.getAllChangable(params);
-      default:
-        return await HomepageAPIs.getAllQuestsWithDefaultStatus(params);
-    }
-  };
-
   const { data: feedData } = useQuery({
     queryFn: async () => {
-      params = applyFilters(params, filterStates);
+      params = applyFilters(params, filterStates, columns);
 
       if (debouncedSearch === "") {
         const result = await fetchDataByStatus(params, filterStates);
