@@ -11,7 +11,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Typography from "../../components/Typography";
 import SocialLogins from "../../components/SocialLogins";
 import MyModal from "./components/Modal";
-import api from "../../services/services/api/Axios";
+import api from "../../services/api/Axios";
 import { FaSpinner } from "react-icons/fa";
 
 export default function Signup() {

@@ -1,6 +1,5 @@
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 // components
@@ -12,21 +11,15 @@ import QuestionCardWithToggle from "./components/QuestionCardWithToggle";
 // extras
 import { useDebounce } from "../../../../utils/useDebounce";
 import { printEndMessage } from "../../../../utils";
-import * as HomepageAPIs from "../../../../services/api/homepageApis";
+import * as QuestServices from "../../../../services/queries/quest";
 import * as filtersActions from "../../../../features/sidebar/filtersSlice";
 import * as prefActions from "../../../../features/preferences/prefSlice";
-import {
-  applyFilters,
-  fetchDataByStatus,
-} from "../../../../utils/questionCard";
 
 const QuestStartSection = () => {
-  const dispatch = useDispatch();
   const getPreferences = useSelector(prefActions.getPrefs);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
-
   const debouncedSearch = useDebounce(filterStates.searchData, 1000);
 
   // check them
@@ -72,27 +65,14 @@ const QuestStartSection = () => {
 
   const [columns, setColumns] = useState(initialColumns);
 
-  const { data: topicsData, isSuccess } = useQuery({
-    queryFn: () => HomepageAPIs.getAllTopics(),
-    queryKey: ["topicsData"],
-  });
+  const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
 
-  const { data: prefSearchResults } = useQuery({
-    queryFn: async () => {
-      if (getPreferences?.topicSearch !== "") {
-        const result = await HomepageAPIs.searchTopics(
-          getPreferences?.topicSearch,
-        );
-        return result;
-      }
-    },
-    queryKey: [getPreferences.topicSearch],
-  });
+  const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
 
   useEffect(() => {
-    if (prefSearchResults?.data.data.length !== undefined) {
+    if (prefSearchRes?.data.data.length !== undefined) {
       setColumns((prevColumns) => {
-        const newList = prefSearchResults?.data.data || [];
+        const newList = prefSearchRes?.data.data || [];
 
         const filteredList = newList.filter(
           (item) =>
@@ -129,29 +109,18 @@ const QuestStartSection = () => {
         });
       }
     }
-  }, [topicsData, prefSearchResults]);
+  }, [topicsData, prefSearchRes]);
   // preferences end
 
-  const { data: bookmarkedData } = useQuery({
-    queryFn: () => HomepageAPIs.getAllBookmarkedQuests(),
-    queryKey: ["getBookmarked"],
-  });
+  const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
 
-  const { data: feedData } = useQuery({
-    queryFn: async () => {
-      params = applyFilters(params, filterStates, columns);
-
-      if (debouncedSearch === "") {
-        const result = await fetchDataByStatus(params, filterStates);
-        return result.data;
-      } else {
-        const result = await HomepageAPIs.searchQuestions(debouncedSearch);
-        return result;
-      }
-    },
-    queryKey: ["FeedData", filterStates, debouncedSearch, pagination, columns],
-    staleTime: 0,
-  });
+  const { data: feedData } = QuestServices.useGetFeedData(
+    filterStates,
+    debouncedSearch,
+    pagination,
+    columns,
+    params,
+  );
 
   useEffect(() => {
     setPagination((prevPagination) => ({
