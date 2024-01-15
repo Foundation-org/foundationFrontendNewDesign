@@ -152,9 +152,7 @@ const StartTest = ({
           <>
             {title === "Yes/No" ? (
               loadingDetail === true ? (
-                <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-                </div>
+                <Loader />
               ) : (
                 <>
                   <SingleAnswer
@@ -177,9 +175,7 @@ const StartTest = ({
               )
             ) : title === "Agree/Disagree" ? (
               loadingDetail === true ? (
-                <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-                </div>
+                <Loader />
               ) : (
                 <>
                   <SingleAnswer
@@ -201,9 +197,7 @@ const StartTest = ({
                 </>
               )
             ) : loadingDetail === true ? (
-              <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-              </div>
+              <Loader />
             ) : (
               <>
                 <SingleAnswer
@@ -227,9 +221,7 @@ const StartTest = ({
           </>
         ) : title === "Multiple Choice" ? (
           loadingDetail === true ? (
-            <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-              <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-            </div>
+            <Loader />
           ) : (
             <div className="flex flex-col overflow-auto ">
               {multipleOption ? (
@@ -284,9 +276,7 @@ const StartTest = ({
             </div>
           )
         ) : loadingDetail === true ? (
-          <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-            <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-          </div>
+          <Loader />
         ) : (
           <div className=" flex flex-col gap-[5.7px] tablet:gap-[10px]">
             <h4 className="mb-[7px] ml-9 text-[9px] font-medium leading-normal  text-[#ACACAC] tablet:mb-[6px] tablet:ml-[108.65px] tablet:mt-[20px] tablet:text-[16.58px] laptop:text-[18px]">
@@ -353,6 +343,7 @@ const StartTest = ({
         )}
       </div>
 
+      {/* Conditional Text + Full Screen */}
       <div className="mr-[22px] mt-[15px] flex items-center justify-between tablet:mr-[46px]">
         <QuestTimeRemaining
           lastInteractedAt={localStorage.getItem("lastInteractedAt")}
@@ -418,33 +409,6 @@ const StartTest = ({
               : "mt-4 tablet:mt-5"
         } flex w-full justify-end gap-2 tablet:gap-10`}
       >
-        {/* Add Options Button */}
-        {/* {usersAddTheirAns && addOptionLimit === 0 ? (
-          <div>
-            {title === "Yes/No" ||
-            title === "Agree/Disagree" ? null : btnText !== "change answer" ? (
-              <button
-                onClick={handleOpen}
-                className="ml-4 flex h-[23.48px] w-[81.8px] items-center gap-[5.8px] rounded-[7.1px] bg-[#D9D9D9]  px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:h-[52px] tablet:w-[173px] tablet:gap-[11.37px] tablet:rounded-[15px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
-              >
-                {persistedTheme === "dark" ? (
-                  <img
-                    src="/assets/svgs/dashboard/add-dark.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                ) : (
-                  <img
-                    src="/assets/svgs/dashboard/add.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                )}
-                Add Option
-              </button>
-            ) : null}
-          </div>
-        ) : null} */}
         <div className="mr-[14.4px] flex gap-2 tablet:mr-[30px] tablet:gap-10">
           {!expandedView ? (
             <button

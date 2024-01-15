@@ -12,9 +12,9 @@ import SingleAnswer from "../../../components/SingleAnswer";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 import RankedResult from "../../../components/RankedResult";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaSpinner } from "react-icons/fa";
 import { MdFullscreen } from "react-icons/md";
 import QuestTimeRemaining from "./QuestTimeRemaining";
+import Loader from "../../../../../components/ui/Loader";
 
 const Result = (props) => {
   const navigate = useNavigate();
@@ -201,9 +201,7 @@ const Result = (props) => {
           <>
             {props.title === "Yes/No" ? (
               checkLoading === true || ResultsData === undefined ? (
-                <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-                </div>
+                <Loader />
               ) : (
                 <>
                   <SingleAnswer
@@ -234,9 +232,7 @@ const Result = (props) => {
               )
             ) : props.title === "Agree/Disagree" ? (
               checkLoading === true || ResultsData === undefined ? (
-                <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-                </div>
+                <Loader />
               ) : (
                 <>
                   <SingleAnswer
@@ -267,9 +263,7 @@ const Result = (props) => {
               )
             ) : props.title === "Like/Dislike" ? (
               checkLoading === true || ResultsData === undefined ? (
-                <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-                  <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-                </div>
+                <Loader />
               ) : (
                 <>
                   <SingleAnswer
@@ -302,9 +296,7 @@ const Result = (props) => {
           </>
         ) : props.title === "Multiple Choice" ? (
           checkLoading === true || ResultsData === undefined ? (
-            <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-              <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-            </div>
+            <Loader />
           ) : (
             <div
               className={`${
@@ -338,9 +330,7 @@ const Result = (props) => {
           )
         ) : props.title === "Ranked Choice" ? (
           checkLoading === true || ResultsData === undefined ? (
-            <div className="flex items-center justify-center bg-transparent bg-opacity-20">
-              <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-            </div>
+            <Loader />
           ) : (
             <div
               className={`${

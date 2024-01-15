@@ -29,6 +29,7 @@ import {
 } from "../../../../../utils/questionCard/SingleQuestCard";
 import BookmarkIcon from "./BookmarkIcon";
 import QuestBottombar from "../../../../../components/question-card/QuestBottombar";
+import QuestCardLayout from "../../../../../components/question-card/QuestCardLayout";
 
 const QuestionCard = ({
   isBookmarked,
@@ -43,11 +44,9 @@ const QuestionCard = ({
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
-  const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const [open, setOpen] = useState(false);
-  const [bookmarkStatus, setbookmarkStatus] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addOptionField, setAddOptionField] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -61,10 +60,6 @@ const QuestionCard = ({
       uuid: answer.uuid,
     })),
   );
-
-  useEffect(() => {
-    setbookmarkStatus(isBookmarked);
-  }, [isBookmarked]);
 
   useEffect(() => {
     // console.log("answersSelection", answersSelection);
@@ -121,49 +116,6 @@ const QuestionCard = ({
     // setAddOptionLimit(1);
 
     dispatch(updateOptionLimit());
-  };
-
-  const { mutateAsync: AddBookmark } = useMutation({
-    mutationFn: createBookmark,
-    onSuccess: (resp) => {
-      toast.success("Bookmarked Added");
-      queryClient.invalidateQueries("FeedData");
-      handleStartTest(null);
-    },
-    onError: (err) => {
-      toast.error(err.response.data.message.split(":")[1]);
-    },
-  });
-
-  const { mutateAsync: DelBookmark } = useMutation({
-    mutationFn: deleteBookmarkById,
-    onSuccess: (resp) => {
-      toast.success("Bookmark Removed ");
-      if (!isBookmarkTab) {
-        queryClient.invalidateQueries("FeedData");
-      }
-      handleStartTest(null);
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
-
-  const handleBookmark = () => {
-    setbookmarkStatus((prevIsBookmarked) => !prevIsBookmarked);
-    if (bookmarkStatus) {
-      const params = {
-        questForeignKey: questStartData._id,
-      };
-      DelBookmark(params);
-    } else {
-      const params = {
-        questForeignKey: questStartData._id,
-        Question: questStartData.Question,
-        whichTypeQuestion: questStartData.whichTypeQuestion,
-      };
-      AddBookmark(params);
-    }
   };
 
   const handleToggleCheck = (option, check, contend) => {
@@ -502,26 +454,12 @@ const QuestionCard = ({
   }, [questStartData.lastInteractedAt, howManyTimesAnsChanged]);
 
   return (
-    <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-white dark:bg-[#141618]">
-      <CardTopbar
-        QuestTopic={questStartData.QuestTopic}
-        img={"assets/svgs/dashboard/badge.svg"}
-        alt={"badge"}
-        badgeCount={5}
-        createdBy={questStartData.uuid}
-      />
-      <div className="pb-5 pt-[0.94rem]">
-        <div className="ml-[1.39rem] mr-[0.62rem] flex items-center justify-between tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
-          <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem]">
-            {questStartData.Question?.endsWith("?") ? "Q." : "S."}{" "}
-            {questStartData.Question}
-          </h4>
-          <BookmarkIcon
-            bookmarkStatus={bookmarkStatus}
-            persistedTheme={persistedTheme}
-            handleBookmark={handleBookmark}
-          />
-        </div>
+    <>
+      <QuestCardLayout
+        questStartData={questStartData}
+        isBookmarked={isBookmarked}
+        handleStartTest={handleStartTest}
+      >
         {viewResult !== questStartData._id ? (
           startTest === questStartData._id ? (
             <StartTest
@@ -591,18 +529,8 @@ const QuestionCard = ({
             howManyTimesAnsChanged={howManyTimesAnsChanged}
           />
         )}
-      </div>
-      <QuestBottombar
-        time={questStartData.createdAt}
-        id={questStartData._id}
-        createdBy={questStartData.uuid}
-        title={getQuestionTitle(questStartData.whichTypeQuestion)}
-        question={questStartData.Question}
-        img={"assets/svgs/dashboard/badge.svg"}
-        alt={"badge"}
-        badgeCount={5}
-      />
-    </div>
+      </QuestCardLayout>
+    </>
   );
 };
 

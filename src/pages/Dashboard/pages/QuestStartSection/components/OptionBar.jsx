@@ -174,38 +174,36 @@ const OptionBar = ({
   };
 
   return (
-    <div className="mb-1 flex items-center">
-      <div className="mr-[14.4px] flex w-full justify-end gap-2 tablet:mr-[30px] tablet:gap-10">
-        {getButtonText(btnText) !== "Completed" ? (
-          <button
-            className={`${getButtonClassName(
-              persistedTheme,
-              btnText,
-              btnColor,
-            )} mt-[16.2px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
-            onClick={handleStartChange}
-          >
-            {getButtonText(btnText)}
-          </button>
-        ) : null}
-
+    <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:mr-[30px] tablet:gap-10">
+      {getButtonText(btnText) !== "Completed" ? (
         <button
-          className={`${
-            startStatus?.trim() !== ""
-              ? "border-none bg-[#04AD66] text-white dark:bg-[#707175] dark:text-white"
-              : "border-[#20D47E] dark:border-[#7C7C7C]"
-          } mt-[16.2px] h-[23.48px] w-[81.8px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#20D47E] tablet:mt-12 tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:border-[#7C7C7C] dark:text-[#C9C8C8]`}
-          onClick={() => {
-            if (btnText !== "") {
-              handleViewResults(id);
-            } else {
-              toast.error("First give your response to see Results");
-            }
-          }}
+          className={`${getButtonClassName(
+            persistedTheme,
+            btnText,
+            btnColor,
+          )} mt-[16.2px] h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-white tablet:mt-12 tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
+          onClick={handleStartChange}
         >
-          Results
+          {getButtonText(btnText)}
         </button>
-      </div>
+      ) : null}
+
+      <button
+        className={`${
+          startStatus?.trim() !== ""
+            ? "border-none bg-[#04AD66] text-white dark:bg-[#707175] dark:text-white"
+            : "border-[#20D47E] dark:border-[#7C7C7C]"
+        } mt-[16.2px] h-[23.48px] w-[81.8px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#20D47E] tablet:mt-12 tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:border-[#7C7C7C] dark:text-[#C9C8C8]`}
+        onClick={() => {
+          if (btnText !== "") {
+            handleViewResults(id);
+          } else {
+            toast.error("First give your response to see Results");
+          }
+        }}
+      >
+        Results
+      </button>
     </div>
   );
 };
