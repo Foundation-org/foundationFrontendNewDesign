@@ -70,7 +70,7 @@ const QuestStartSection = () => {
   const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
 
   useEffect(() => {
-    if (prefSearchRes?.data.data.length !== undefined) {
+    if (prefSearchRes?.length !== 0) {
       setColumns((prevColumns) => {
         const newList = prefSearchRes?.data.data || [];
 

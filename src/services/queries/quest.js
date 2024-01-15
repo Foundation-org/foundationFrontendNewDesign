@@ -47,8 +47,10 @@ export function useSearchTopics(getPreferences) {
           getPreferences?.topicSearch,
         );
         return result;
+      } else {
+        return [];
       }
     },
-    queryKey: [getPreferences.topicSearch],
+    queryKey: ["TopicSearch", getPreferences.topicSearch],
   });
 }

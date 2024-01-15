@@ -37,7 +37,7 @@ const Guests = () => {
   //     );
   //     return result.data.data[0];
   //   },
-  //   queryKey: [],
+  //   queryKey: ["singleQuest"],
   //   staleTime: 0,
   // });
 
