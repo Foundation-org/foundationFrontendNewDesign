@@ -9,17 +9,17 @@ import {
 import {
   createStartQuest,
   updateChangeAnsStartQuest,
-} from "../../../../../api/questsApi";
+} from "../../../../../services/api/questsApi";
 import SingleAnswer from "../../../components/SingleAnswer";
 import Result from "./Result";
 import OptionBar from "./OptionBar";
 import CardTopbar from "../../../../../components/question-card/CardTopbar";
 import StartTest from "./StartTest";
-import { createBookmark } from "../../../../../api/homepageApis";
-import { deleteBookmarkById } from "../../../../../api/homepageApis";
-import { getStartQuestInfo } from "../../../../../api/questsApi";
+import { createBookmark } from "../../../../../services/api/homepageApis";
+import { deleteBookmarkById } from "../../../../../services/api/homepageApis";
+import { getStartQuestInfo } from "../../../../../services/api/questsApi";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
-import { userInfo } from "../../../../../api/userAuth";
+import { userInfo } from "../../../../../services/api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
 import { validateInterval } from "../../../../../utils";
 

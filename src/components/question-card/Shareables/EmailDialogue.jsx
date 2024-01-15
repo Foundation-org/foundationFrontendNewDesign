@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { sendEmail } from "../../../api/DialogueApis";
+import { sendEmail } from "../../../services/api/DialogueApis";
 
 const EmailDialogue = ({ handleClose, id }) => {
   const { protocol, host } = window.location;

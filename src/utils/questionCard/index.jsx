@@ -1,4 +1,4 @@
-import * as HomepageAPIs from "../../api/homepageApis";
+import * as HomepageAPIs from "../../services/api/homepageApis";
 
 export const applyFilters = (params, filterStates, columns) => {
   if (filterStates.filterBySort !== "") {

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "../../../../../utils/useDebounce";
-import { getAllLedgerData, searchLedger } from "../../../../../api/userAuth";
+import {
+  getAllLedgerData,
+  searchLedger,
+} from "../../../../../services/api/userAuth";
 import { columns } from "../components/LedgerUtils";
 import {
   flexRender,

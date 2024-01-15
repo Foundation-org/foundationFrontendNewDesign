@@ -5,7 +5,7 @@ import GuestTopbar from "./GuestTopbar";
 import StartTest from "../../Dashboard/pages/QuestStartSection/components/StartTest";
 import Result from "../../Dashboard/pages/QuestStartSection/components/Result";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createStartQuest } from "../../../api/questsApi";
+import { createStartQuest } from "../../../services/api/questsApi";
 import { useNavigate } from "react-router-dom";
 import { getQuests, toggleCheck } from "../../../features/quest/questsSlice";
 import SingleAnswer from "../../Dashboard/components/SingleAnswer";

@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { signUp } from "../../api/userAuth";
+import { signUp } from "../../services/api/userAuth";
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import Form from "./components/Form";
@@ -11,7 +11,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Typography from "../../components/Typography";
 import SocialLogins from "../../components/SocialLogins";
 import MyModal from "./components/Modal";
-import api from "../../api/Axios";
+import api from "../../services/services/api/Axios";
 import { FaSpinner } from "react-icons/fa";
 
 export default function Signup() {

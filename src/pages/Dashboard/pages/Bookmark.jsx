@@ -9,7 +9,7 @@ import {
   getAllChangable,
   searchBookmarks,
   getAllBookmarkedQuests,
-} from "../../../api/homepageApis";
+} from "../../../services/api/homepageApis";
 import {
   getFilters,
   resetFilters,

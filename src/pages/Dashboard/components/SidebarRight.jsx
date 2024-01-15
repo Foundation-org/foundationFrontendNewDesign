@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { createGuestMode, userInfo } from "../../../api/userAuth";
+import { createGuestMode, userInfo } from "../../../services/api/userAuth";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../../features/auth/authSlice";
 import Anchor from "../../../components/Anchor";
-import api from "../../../api/Axios";
+import api from "../../../services/api/Axios";
 import EmailTypeModal from "../../../components/EmailTypeModal";
 
 const SidebarRight = () => {

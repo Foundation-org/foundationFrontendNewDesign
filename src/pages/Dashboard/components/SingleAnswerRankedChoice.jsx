@@ -4,7 +4,10 @@ import { useState } from "react";
 import BasicModal from "../../../components/BasicModal";
 import DeleteOption from "./DeleteOption";
 import { Tooltip } from "../../../utils/Tooltip";
-import { answerValidation, checkAnswerExist } from "../../../api/questsApi";
+import {
+  answerValidation,
+  checkAnswerExist,
+} from "../../../services/api/questsApi";
 import { useDispatch } from "react-redux";
 import { resetOptionLimit } from "../../../features/quest/utilsSlice";
 

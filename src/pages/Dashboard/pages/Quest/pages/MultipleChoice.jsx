@@ -11,7 +11,7 @@ import {
   createInfoQuest,
   getTopicOfValidatedQuestion,
   questionValidation,
-} from "../../../../../api/questsApi";
+} from "../../../../../services/api/questsApi";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import { Tooltip } from "../../../../../utils/Tooltip";
 import ChangeChoiceOption from "../components/ChangeChoiceOption";

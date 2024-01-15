@@ -8,7 +8,7 @@ import {
   createInfoQuest,
   getTopicOfValidatedQuestion,
   questionValidation,
-} from "../../../../../api/questsApi";
+} from "../../../../../services/api/questsApi";
 import { useMutation } from "@tanstack/react-query";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import Title from "../../../pages/Quest/components/Title";

@@ -8,7 +8,7 @@ import {
   createInfoQuest,
   getTopicOfValidatedQuestion,
   questionValidation,
-} from "../../../../../api/questsApi";
+} from "../../../../../services/api/questsApi";
 import YesNoOptions from "../components/YesNoOptions";
 import CustomSwitch from "../../../../../components/CustomSwitch";
 import { Tooltip } from "../../../../../utils/Tooltip";

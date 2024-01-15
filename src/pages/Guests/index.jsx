@@ -4,14 +4,14 @@ import { useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 // utils
-import { getQuestById } from "../../api/homepageApis";
+import { getQuestById } from "../../services/api/homepageApis";
 
 // components
 import Topbar from "../Dashboard/components/Topbar";
 import SidebarRight from "../Dashboard/components/SidebarRight";
 import QuestionCard from "./components/QuestionCard";
 import QuestionCardWithToggle from "../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle";
-import { createGuestMode } from "../../api/userAuth";
+import { createGuestMode } from "../../services/api/userAuth";
 
 const Guests = () => {
   let { id, isFullScreen } = useParams();

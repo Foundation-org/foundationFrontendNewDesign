@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { FaSpinner } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
-import { changePassword } from "../../../../../api/userAuth";
+import { changePassword } from "../../../../../services/api/userAuth";
 import Form from "../components/Form";
 
 const ChangePassword = () => {

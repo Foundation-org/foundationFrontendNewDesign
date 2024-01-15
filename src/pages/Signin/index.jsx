@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaSpinner } from "react-icons/fa";
-import { signIn, userInfo } from "../../api/userAuth";
+import { signIn, userInfo } from "../../services/api/userAuth";
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/Button";
@@ -11,7 +11,7 @@ import SocialLogins from "../../components/SocialLogins";
 import Form from "./components/Form";
 import ReCAPTCHA from "react-google-recaptcha";
 import "../../index.css";
-import api from "../../api/Axios";
+import api from "../../services/api/Axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../features/auth/authSlice";
 

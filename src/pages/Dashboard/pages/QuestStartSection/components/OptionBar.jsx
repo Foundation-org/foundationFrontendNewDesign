@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { getStartQuestInfo } from "../../../../../api/questsApi";
+import { getStartQuestInfo } from "../../../../../services/api/questsApi";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
 import Copy from "../../../../../assets/Copy";
 import Link from "../../../../../assets/Link";

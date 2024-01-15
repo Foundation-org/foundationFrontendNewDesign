@@ -12,7 +12,7 @@ import QuestionCardWithToggle from "./components/QuestionCardWithToggle";
 // extras
 import { useDebounce } from "../../../../utils/useDebounce";
 import { printEndMessage } from "../../../../utils";
-import * as HomepageAPIs from "../../../../api/homepageApis";
+import * as HomepageAPIs from "../../../../services/api/homepageApis";
 import * as filtersActions from "../../../../features/sidebar/filtersSlice";
 import * as prefActions from "../../../../features/preferences/prefSlice";
 import {

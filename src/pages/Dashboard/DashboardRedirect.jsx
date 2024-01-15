@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { userInfo } from "../../api/userAuth";
+import { userInfo } from "../../services/api/userAuth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../features/auth/authSlice";

@@ -8,7 +8,7 @@ import {
   createInfoQuest,
   getTopicOfValidatedQuestion,
   questionValidation,
-} from "../../../../../api/questsApi";
+} from "../../../../../services/api/questsApi";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { Tooltip } from "../../../../../utils/Tooltip";
