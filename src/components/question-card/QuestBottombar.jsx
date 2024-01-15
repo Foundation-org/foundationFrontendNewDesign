@@ -84,7 +84,7 @@ const QuestBottombar = ({
   };
 
   return (
-    <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-[1.37rem] tablet:py-[0.85rem]">
+    <div className="flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-5 tablet:py-[0.63rem]">
       <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
         <div onClick={handleCopyOpen} className="cursor-pointer">
           {persistedTheme === "dark" ? <Copy /> : <Copy />}
@@ -171,15 +171,15 @@ const QuestBottombar = ({
           />
         </BasicModal>
       </div>
-      <div className="flex h-4 w-[63.9px] items-center justify-center gap-[2px] rounded-[4.73px] bg-white tablet:h-[29px] tablet:w-[150px] tablet:gap-1 tablet:rounded-[10.9px] dark:bg-[#090A0D]">
+      <div className="flex h-[1.75rem] w-fit items-center gap-[0.44rem] rounded-[0.625rem] bg-white px-[0.5rem]">
         <img
           src="/assets/svgs/dashboard/clock-outline.svg"
           alt="clock"
           className="h-[8.64px] w-[8.64px] tablet:h-[18px] tablet:w-[18px]"
         />
-        <p className="whitespace-nowrap text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[18px]">
-          {timeAgo}
-        </p>
+        <h4 className="whitespace-nowrap text-[0.51638rem] font-medium text-[#9C9C9C] tablet:text-[1.13531rem] laptop:text-[1rem]">
+          5 min ago
+        </h4>
       </div>
     </div>
   );

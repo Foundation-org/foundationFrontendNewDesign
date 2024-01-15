@@ -14,14 +14,11 @@ const BookmarkIcon = ({ bookmarkStatus, persistedTheme, handleBookmark }) => {
   };
 
   return (
-    <div
-      className="flex w-[45.7px] justify-end"
-      onClick={() => handleBookmark()}
-    >
+    <div onClick={() => handleBookmark()}>
       <img
         src={getBookmarkIcon()}
         alt="save icon"
-        className="h-[17px] w-[12.7px] cursor-pointer tablet:h-8 tablet:w-6"
+        className="h-[15.147px] w-[11.016px] cursor-pointer tablet:h-[30px] tablet:w-[21.818px] laptop:h-[25px] laptop:w-[18.182px]"
       />
     </div>
   );

@@ -181,9 +181,9 @@ const QuestStartSection = () => {
   console.log({ allData });
 
   return (
-    <div className="flex w-full flex-col laptop:flex-row">
+    <div className="flex w-full flex-col bg-white laptop:flex-row dark:bg-black">
       <SidebarLeft columns={columns} setColumns={setColumns} />
-      <div className="no-scrollbar flex h-full w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] pl-6 pr-[23px] tablet:min-h-[calc(100vh-96px)] dark:bg-[#06070a]">
+      <div className="no-scrollbar flex h-full w-full flex-col overflow-y-auto px-[1.13rem] py-[0.63rem] tablet:min-h-[calc(100vh-92px)] tablet:py-[0.94rem]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -194,12 +194,12 @@ const QuestStartSection = () => {
             allData,
             persistedTheme,
           )}
-          height={"88vh"}
+          height={"calc(100vh - 92px)"}
           className="no-scrollbar"
         >
           <div
             id="section-1"
-            className="flex flex-col gap-2 py-3 tablet:gap-[17px] tablet:py-[27px]"
+            className="flex flex-col gap-2 tablet:gap-[0.94rem]"
           >
             {filterStates.expandedView
               ? allData?.map((item, index) => (

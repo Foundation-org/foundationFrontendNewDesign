@@ -11,48 +11,18 @@ import { toast } from "sonner";
 import SingleAnswer from "../../../components/SingleAnswer";
 import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
 import RankedResult from "../../../components/RankedResult";
-
-import Copy from "../../../../../assets/Copy";
-import Link from "../../../../../assets/Link";
-import Mail from "../../../../../assets/Mail";
-import Twitter from "../../../../../assets/Twitter";
-import Facebook from "../../../../../assets/Facebook";
-import BasicModal from "../../../../../components/BasicModal";
-import CopyDialogue from "../../../../../components/question-card/Shareables/CopyDialogue";
-import UrlDialogue from "../../../../../components/question-card/Shareables/UrlDialogue";
-import EmailDialogue from "../../../../../components/question-card/Shareables/EmailDialogue";
-import TwitterDialogue from "../../../../../components/question-card/Shareables/TwitterDialogue";
-import FbDialogue from "../../../../../components/question-card/Shareables/FbDialogue";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
 import { MdFullscreen } from "react-icons/md";
 import QuestTimeRemaining from "./QuestTimeRemaining";
 
 const Result = (props) => {
-  const quests = useSelector(getQuests);
   const navigate = useNavigate();
   const { isFullScreen } = useParams();
+  const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
-  const [timeAgo, setTimeAgo] = useState("");
-  const [copyModal, setCopyModal] = useState(false);
-  const [linkModal, setLinkModal] = useState(false);
-  const [emailModal, setEmailModal] = useState(false);
-  const [twitterModal, setTwitterModal] = useState(false);
-  const [fbModal, setFbModal] = useState(false);
   const [checkLoading, setCheckLoading] = useState(true);
-
-  const handleCopyOpen = () => setCopyModal(true);
-  const handleCopyClose = () => setCopyModal(false);
-  const handleLinkOpen = () => setLinkModal(true);
-  const handleLinkClose = () => setLinkModal(false);
-  const handleEmailOpen = () => setEmailModal(true);
-  const handleEmailClose = () => setEmailModal(false);
-  const handleTwitterOpen = () => setTwitterModal(true);
-  const handleTwitterClose = () => setTwitterModal(false);
-  const handleFbOpen = () => setFbModal(true);
-  const handleFbClose = () => setFbModal(false);
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
@@ -85,31 +55,6 @@ const Result = (props) => {
 
     getStartQuestDetail(data);
   }, []);
-
-  useEffect(() => {
-    const calculateTimeAgo = () => {
-      const currentDate = new Date();
-      const createdAtDate = new Date(props.time);
-
-      const timeDifference = currentDate - createdAtDate;
-      const seconds = Math.floor(timeDifference / 1000);
-      const minutes = Math.floor(seconds / 60);
-      const hours = Math.floor(minutes / 60);
-      const days = Math.floor(hours / 24);
-
-      if (days > 0) {
-        setTimeAgo(`${days} ${days === 1 ? "day" : "days"} ago`);
-      } else if (hours > 0) {
-        setTimeAgo(`${hours} ${hours === 1 ? "hour" : "hours"} ago`);
-      } else if (minutes > 0) {
-        setTimeAgo(`${minutes} ${minutes === 1 ? "min" : "mins"} ago`);
-      } else {
-        setTimeAgo(`${seconds} ${seconds === 1 ? "sec" : "secs"} ago`);
-      }
-    };
-
-    calculateTimeAgo();
-  }, [props.time]);
 
   const { mutateAsync: getStartQuestDetail } = useMutation({
     mutationFn: getStartQuestInfo,
@@ -246,17 +191,6 @@ const Result = (props) => {
       return false;
     }
   }
-
-  const customModalStyle = {
-    backgroundColor: "#FCFCFD",
-    borderRadius: "26px",
-    boxShadow: "none",
-    border: "0px",
-    outline: "none",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  };
 
   return (
     <>
@@ -509,105 +443,6 @@ const Result = (props) => {
           ></div>
         </div>
       )}
-
-      <div className="mt-7 flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-[1.37rem] tablet:py-[0.85rem]">
-        <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
-          <div onClick={handleCopyOpen} className="cursor-pointer">
-            {persistedTheme === "dark" ? <Copy /> : <Copy />}
-          </div>
-          <BasicModal
-            open={copyModal}
-            handleClose={handleCopyClose}
-            customStyle={customModalStyle}
-          >
-            <CopyDialogue
-              handleClose={handleCopyClose}
-              id={props.id}
-              createdBy={props.createdBy}
-              img={props.img}
-              alt={props.alt}
-              badgeCount={props.badgeCount}
-            />
-          </BasicModal>
-          <div className="cursor-pointer" onClick={handleLinkOpen}>
-            {persistedTheme === "dark" ? <Link /> : <Link />}
-          </div>
-          <BasicModal
-            open={linkModal}
-            handleClose={handleLinkClose}
-            customStyle={customModalStyle}
-          >
-            <UrlDialogue
-              handleClose={handleLinkClose}
-              id={props.id}
-              createdBy={props.createdBy}
-              img={props.img}
-              alt={props.alt}
-              badgeCount={props.badgeCount}
-            />
-          </BasicModal>
-          <div className="cursor-pointer" onClick={handleEmailOpen}>
-            {persistedTheme === "dark" ? <Mail /> : <Mail />}
-          </div>
-          <BasicModal
-            open={emailModal}
-            handleClose={handleEmailClose}
-            customStyle={customModalStyle}
-          >
-            <EmailDialogue handleClose={handleEmailClose} id={props.id} />
-          </BasicModal>
-          <div className="cursor-pointer" onClick={handleTwitterOpen}>
-            {persistedTheme === "dark" ? <Twitter /> : <Twitter />}
-          </div>
-          <BasicModal
-            open={twitterModal}
-            handleClose={handleTwitterClose}
-            customStyle={customModalStyle}
-          >
-            <TwitterDialogue
-              handleClose={handleTwitterClose}
-              id={props.id}
-              createdBy={props.createdBy}
-              img={props.img}
-              alt={props.alt}
-              badgeCount={props.badgeCount}
-              title={props.title}
-              question={props.question}
-              timeAgo={timeAgo}
-            />
-          </BasicModal>
-          <div className="cursor-pointer" onClick={handleFbOpen}>
-            {persistedTheme === "dark" ? <Facebook /> : <Facebook />}
-          </div>
-          <BasicModal
-            open={fbModal}
-            handleClose={handleFbClose}
-            customStyle={customModalStyle}
-          >
-            <FbDialogue
-              handleClose={handleFbClose}
-              createdBy={props.createdBy}
-              img={props.img}
-              alt={props.alt}
-              badgeCount={props.badgeCount}
-              title={props.title}
-              question={props.question}
-              timeAgo={timeAgo}
-              id={props.id}
-            />
-          </BasicModal>
-        </div>
-        <div className="flex h-4 items-center justify-center gap-[2px] rounded-[4.73px] bg-white px-2 tablet:h-[29px] tablet:gap-1 tablet:rounded-[10.9px] dark:bg-[#090A0D]">
-          <img
-            src="/assets/svgs/dashboard/clock-outline.svg"
-            alt="clock"
-            className="h-[8.64px] w-[8.64px] tablet:h-[18px] tablet:w-[18px]"
-          />
-          <p className="text-[8.5px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[17.48px]">
-            {timeAgo}
-          </p>
-        </div>
-      </div>
     </>
   );
 };

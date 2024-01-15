@@ -510,106 +510,97 @@ const QuestionCard = ({
         badgeCount={5}
         createdBy={questStartData.uuid}
       />
-      <div className="ml-6 mr-[1.38rem] mt-[1.56rem] flex items-center justify-between tablet:ml-[52.65px]">
-        <h1 className="w-[93%] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[25px] dark:text-[#B8B8B8]">
-          {questStartData.Question?.endsWith("?") ? "Q." : "S."}{" "}
-          {questStartData.Question}
-        </h1>
-        <BookmarkIcon
-          bookmarkStatus={bookmarkStatus}
-          persistedTheme={persistedTheme}
-          handleBookmark={handleBookmark}
-        />
-      </div>
-      {viewResult !== questStartData._id ? (
-        startTest === questStartData._id ? (
-          <StartTest
-            id={questStartData._id}
-            title={getQuestionTitle(questStartData.whichTypeQuestion)}
-            answers={questStartData.QuestAnswers}
-            multipleOption={questStartData.userCanSelectMultiple}
-            SingleAnswer={SingleAnswer}
-            quests={quests}
-            whichTypeQuestion={questStartData.whichTypeQuestion}
-            handleToggleCheck={handleToggleCheck}
-            handleSubmit={handleSubmit}
-            handleOpen={handleOpen}
-            handleClose={handleClose}
-            open={open}
-            btnText={questStartData.startStatus}
-            usersAddTheirAns={questStartData.usersAddTheirAns}
-            setAnswerSelection={setAnswerSelection}
-            answersSelection={answersSelection}
-            rankedAnswers={rankedAnswers}
-            setRankedAnswers={setRankedAnswers}
-            addOptionField={addOptionField}
-            setAddOptionField={setAddOptionField}
-            setStartTest={setStartTest}
-            loading={loading}
-            setIsSubmit={setIsSubmit}
-            expandedView={expandedView}
-            usersChangeTheirAns={questStartData.usersChangeTheirAns}
-            howManyTimesAnsChanged={howManyTimesAnsChanged}
-            loadingDetail={loadingDetail}
+      <div className="pb-5 pt-[0.94rem]">
+        <div className="ml-[1.39rem] mr-[0.62rem] flex items-center justify-between tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
+          <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem]">
+            {questStartData.Question?.endsWith("?") ? "Q." : "S."}{" "}
+            {questStartData.Question}
+          </h4>
+          <BookmarkIcon
+            bookmarkStatus={bookmarkStatus}
+            persistedTheme={persistedTheme}
+            handleBookmark={handleBookmark}
           />
+        </div>
+        {viewResult !== questStartData._id ? (
+          startTest === questStartData._id ? (
+            <StartTest
+              id={questStartData._id}
+              title={getQuestionTitle(questStartData.whichTypeQuestion)}
+              answers={questStartData.QuestAnswers}
+              multipleOption={questStartData.userCanSelectMultiple}
+              SingleAnswer={SingleAnswer}
+              quests={quests}
+              whichTypeQuestion={questStartData.whichTypeQuestion}
+              handleToggleCheck={handleToggleCheck}
+              handleSubmit={handleSubmit}
+              handleOpen={handleOpen}
+              handleClose={handleClose}
+              open={open}
+              btnText={questStartData.startStatus}
+              usersAddTheirAns={questStartData.usersAddTheirAns}
+              setAnswerSelection={setAnswerSelection}
+              answersSelection={answersSelection}
+              rankedAnswers={rankedAnswers}
+              setRankedAnswers={setRankedAnswers}
+              addOptionField={addOptionField}
+              setAddOptionField={setAddOptionField}
+              setStartTest={setStartTest}
+              loading={loading}
+              setIsSubmit={setIsSubmit}
+              expandedView={expandedView}
+              usersChangeTheirAns={questStartData.usersChangeTheirAns}
+              howManyTimesAnsChanged={howManyTimesAnsChanged}
+              loadingDetail={loadingDetail}
+            />
+          ) : (
+            <OptionBar
+              id={questStartData._id}
+              btnText={questStartData.startStatus}
+              btnColor={getButtonColor(questStartData.startStatus)}
+              handleStartTest={handleStartTest}
+              handleViewResults={handleViewResults}
+              setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+              whichTypeQuestion={questStartData.whichTypeQuestion}
+              handleToggleCheck={handleToggleCheck}
+              handleRankedChoice={handleRankedChoice}
+              rankedAnswers={rankedAnswers}
+              setRankedAnswers={setRankedAnswers}
+              answersSelection={answersSelection}
+              setAnswerSelection={setAnswerSelection}
+              startStatus={questStartData.startStatus}
+              setLoadingDetail={setLoadingDetail}
+            />
+          )
         ) : (
-          <OptionBar
+          <Result
             id={questStartData._id}
-            time={questStartData.createdAt}
-            btnText={questStartData.startStatus}
-            btnColor={getButtonColor(questStartData.startStatus)}
-            handleStartTest={handleStartTest}
-            handleViewResults={handleViewResults}
-            setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-            whichTypeQuestion={questStartData.whichTypeQuestion}
+            title={getQuestionTitle(questStartData.whichTypeQuestion)}
             handleToggleCheck={handleToggleCheck}
-            handleRankedChoice={handleRankedChoice}
-            rankedAnswers={rankedAnswers}
-            setRankedAnswers={setRankedAnswers}
+            answers={questStartData.QuestAnswers}
+            btnText={questStartData.startStatus}
+            whichTypeQuestion={questStartData.whichTypeQuestion}
+            setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
             answersSelection={answersSelection}
             setAnswerSelection={setAnswerSelection}
-            startStatus={questStartData.startStatus}
-            createdBy={questStartData.uuid}
-            setLoadingDetail={setLoadingDetail}
-            img={"/assets/svgs/dashboard/badge.svg"}
-            alt={"badge"}
-            badgeCount={5}
-            title={getQuestionTitle(questStartData.whichTypeQuestion)}
-            question={questStartData.Question}
+            rankedAnswers={rankedAnswers}
+            setRankedAnswers={setRankedAnswers}
+            handleViewResults={handleViewResults}
+            usersChangeTheirAns={questStartData.usersChangeTheirAns}
+            lastInteractedAt={questStartData.lastInteractedAt}
+            howManyTimesAnsChanged={howManyTimesAnsChanged}
           />
-        )
-      ) : (
-        <Result
-          id={questStartData._id}
-          title={getQuestionTitle(questStartData.whichTypeQuestion)}
-          handleToggleCheck={handleToggleCheck}
-          handleClose={handleClose}
-          answers={questStartData.QuestAnswers}
-          btnText={questStartData.startStatus}
-          whichTypeQuestion={questStartData.whichTypeQuestion}
-          setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-          answersSelection={answersSelection}
-          setAnswerSelection={setAnswerSelection}
-          rankedAnswers={rankedAnswers}
-          setRankedAnswers={setRankedAnswers}
-          viewResult={viewResult}
-          handleViewResults={handleViewResults}
-          startStatus={questStartData.startStatus}
-          time={questStartData.createdAt}
-          usersChangeTheirAns={questStartData.usersChangeTheirAns}
-          lastInteractedAt={questStartData.lastInteractedAt}
-          howManyTimesAnsChanged={howManyTimesAnsChanged}
-        />
-      )}
+        )}
+      </div>
       <QuestBottombar
         time={questStartData.createdAt}
         id={questStartData._id}
         createdBy={questStartData.uuid}
+        title={getQuestionTitle(questStartData.whichTypeQuestion)}
+        question={questStartData.Question}
         img={"assets/svgs/dashboard/badge.svg"}
         alt={"badge"}
         badgeCount={5}
-        title={getQuestionTitle(questStartData.whichTypeQuestion)}
-        question={questStartData.Question}
       />
     </div>
   );

@@ -2,7 +2,7 @@ import { Button } from "./ui/Button";
 
 const QuestCard = () => {
   return (
-    <div className="h-fit w-full rounded-[0.43031rem] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[1.65569rem] laptop:mx-auto laptop:max-w-[43.5rem] laptop:rounded-[0.9375rem]">
+    <div className="h-fit w-full rounded-[0.43031rem] border-2 border-[#D9D9D9] bg-[#F3F3F3] 2xl:min-w-[43.5rem] tablet:rounded-[1.65569rem] laptop:mx-auto laptop:max-w-[43.5rem] laptop:rounded-[0.9375rem]">
       <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-2 py-2 tablet:px-5 tablet:py-[0.63rem] laptop:px-4">
         <svg
           className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888pxpx]"
