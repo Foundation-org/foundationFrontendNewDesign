@@ -13,7 +13,7 @@ import {
 import SingleAnswer from "../../../components/SingleAnswer";
 import Result from "./Result";
 import OptionBar from "./OptionBar";
-import CardTopbar from "./CardTopbar";
+import CardTopbar from "../../../../../components/question-card/CardTopbar";
 import StartTest from "./StartTest";
 import { createBookmark } from "../../../../../api/homepageApis";
 import { deleteBookmarkById } from "../../../../../api/homepageApis";

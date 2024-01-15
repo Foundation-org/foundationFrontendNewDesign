@@ -1,5 +1,5 @@
 import { FacebookProvider, ShareButton } from "react-facebook";
-import Close from "../../../../../../assets/Close";
+import Close from "../../../assets/Close";
 import { useSelector } from "react-redux";
 
 const FbDialogue = ({

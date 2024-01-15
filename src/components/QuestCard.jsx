@@ -1,5 +1,4 @@
-import React from "react";
-import { Button } from "./NewButton";
+import { Button } from "./ui/Button";
 
 const QuestCard = () => {
   return (

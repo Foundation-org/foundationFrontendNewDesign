@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import Copy from "../../../../../../assets/optionbar/Copy";
+import Copy from "../../../assets/optionbar/Copy";
 import { useSelector } from "react-redux";
 
 const CopyDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {

@@ -13,7 +13,7 @@ import {
 import SingleAnswer from "../../../components/SingleAnswer";
 import Result from "./Result";
 import OptionBar from "./OptionBar";
-import CardTopbar from "./CardTopbar";
+import CardTopbar from "../../../../../components/question-card/CardTopbar";
 import StartTest from "./StartTest";
 import { createBookmark } from "../../../../../api/homepageApis";
 import { deleteBookmarkById } from "../../../../../api/homepageApis";
@@ -23,8 +23,12 @@ import { updateOptionLimit } from "../../../../../features/quest/utilsSlice";
 
 import * as questCardActions from "../../../../../features/quest/questCardSlice";
 import { capitalizeFirstLetter, validateInterval } from "../../../../../utils";
-import { getQuestionTitle, getButtonColor } from "../../../../../utils/questionCard/SingleQuestCard";
+import {
+  getQuestionTitle,
+  getButtonColor,
+} from "../../../../../utils/questionCard/SingleQuestCard";
 import BookmarkIcon from "./BookmarkIcon";
+import QuestBottombar from "../../../../../components/question-card/QuestBottombar";
 
 const QuestionCard = ({
   isBookmarked,
@@ -34,9 +38,7 @@ const QuestionCard = ({
   viewResult,
   handleViewResults,
   expandedView,
-  filterStates,
-
-  questStartData
+  questStartData,
 }) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -503,14 +505,15 @@ const QuestionCard = ({
     <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-[#F3F3F3] tablet:rounded-[15px] dark:border-white dark:bg-[#141618]">
       <CardTopbar
         QuestTopic={questStartData.QuestTopic}
-        img={'assets/svgs/dashboard/badge.svg'}
+        img={"assets/svgs/dashboard/badge.svg"}
         alt={"badge"}
         badgeCount={5}
         createdBy={questStartData.uuid}
       />
       <div className="ml-6 mr-[1.38rem] mt-[1.56rem] flex items-center justify-between tablet:ml-[52.65px]">
         <h1 className="w-[93%] text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[25px] dark:text-[#B8B8B8]">
-          {questStartData.Question?.endsWith("?") ? "Q." : "S."} {questStartData.Question}
+          {questStartData.Question?.endsWith("?") ? "Q." : "S."}{" "}
+          {questStartData.Question}
         </h1>
         <BookmarkIcon
           bookmarkStatus={bookmarkStatus}
@@ -541,13 +544,11 @@ const QuestionCard = ({
             setRankedAnswers={setRankedAnswers}
             addOptionField={addOptionField}
             setAddOptionField={setAddOptionField}
-            time={questStartData.createdAt}
             setStartTest={setStartTest}
             loading={loading}
             setIsSubmit={setIsSubmit}
             expandedView={expandedView}
             usersChangeTheirAns={questStartData.usersChangeTheirAns}
-            lastInteractedAt={questStartData.lastInteractedAt}
             howManyTimesAnsChanged={howManyTimesAnsChanged}
             loadingDetail={loadingDetail}
           />
@@ -570,8 +571,8 @@ const QuestionCard = ({
             startStatus={questStartData.startStatus}
             createdBy={questStartData.uuid}
             setLoadingDetail={setLoadingDetail}
-            img={'/assets/svgs/dashboard/badge.svg'}
-            alt={'badge'}
+            img={"/assets/svgs/dashboard/badge.svg"}
+            alt={"badge"}
             badgeCount={5}
             title={getQuestionTitle(questStartData.whichTypeQuestion)}
             question={questStartData.Question}
@@ -600,6 +601,16 @@ const QuestionCard = ({
           howManyTimesAnsChanged={howManyTimesAnsChanged}
         />
       )}
+      <QuestBottombar
+        time={questStartData.createdAt}
+        id={questStartData._id}
+        createdBy={questStartData.uuid}
+        img={"assets/svgs/dashboard/badge.svg"}
+        alt={"badge"}
+        badgeCount={5}
+        title={getQuestionTitle(questStartData.whichTypeQuestion)}
+        question={questStartData.Question}
+      />
     </div>
   );
 };
