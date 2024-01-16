@@ -14,6 +14,7 @@ import { printEndMessage } from "../../../../utils";
 import * as QuestServices from "../../../../services/queries/quest";
 import * as filtersActions from "../../../../features/sidebar/filtersSlice";
 import * as prefActions from "../../../../features/preferences/prefSlice";
+import { initialColumns } from "../../../../constants/preferences";
 
 const QuestStartSection = () => {
   const getPreferences = useSelector(prefActions.getPrefs);
@@ -48,20 +49,6 @@ const QuestStartSection = () => {
   }, [filterStates.expandedView]);
 
   // preferences start
-  const initialColumns = {
-    All: {
-      id: "All",
-      list: [],
-    },
-    Preferences: {
-      id: "Preferences",
-      list: [],
-    },
-    Block: {
-      id: "Block",
-      list: [],
-    },
-  };
 
   const [columns, setColumns] = useState(initialColumns);
 

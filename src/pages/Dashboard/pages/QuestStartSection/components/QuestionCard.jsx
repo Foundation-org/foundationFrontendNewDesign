@@ -30,6 +30,8 @@ import {
 import BookmarkIcon from "./BookmarkIcon";
 import QuestBottombar from "../../../../../components/question-card/QuestBottombar";
 import QuestCardLayout from "../../../../../components/question-card/QuestCardLayout";
+import ButtonHandler from "../../../../../components/question-card/ButtonHandler";
+import { useStartQuest } from "../../../../../services/mutations/quest";
 
 const QuestionCard = ({
   isBookmarked,
@@ -45,6 +47,8 @@ const QuestionCard = ({
   const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  const startTestMutation = useStartQuest();
 
   const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
@@ -158,26 +162,23 @@ const QuestionCard = ({
     );
   };
 
-  const { mutateAsync: startQuest } = useMutation({
-    mutationFn: createStartQuest,
-    onSuccess: (resp) => {
-      if (resp.data.message === "Start Quest Created Successfully") {
-        toast.success("Successfully Completed");
-        setLoading(false);
-        queryClient.invalidateQueries("FeedData");
-      }
+  const handleStartQuest = (params) => {
+    startTestMutation.mutate(params);
+
+    if (startTestMutation.isSuccess) {
+      setLoading(false);
       handleViewResults(questStartData._id);
       userInfo().then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
       });
-    },
-    onError: (err) => {
-      toast.error(err.response.data.message.split(":")[1]);
+    }
+
+    if (startTestMutation.error) {
       setLoading(false);
-    },
-  });
+    }
+  };
 
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: updateChangeAnsStartQuest,
@@ -291,7 +292,8 @@ const QuestionCard = ({
       } else {
         console.log(questStartData.whichTypeQuestion);
         console.log(params);
-        startQuest(params);
+        // startQuest(params);
+        handleStartQuest(params);
       }
     } else if (questStartData.whichTypeQuestion === "multiple choise") {
       let answerSelected = [];
@@ -382,7 +384,8 @@ const QuestionCard = ({
 
         if (!isSubmit) setLoading(false);
         console.log("params", params);
-        startQuest(params);
+        // startQuest(params);
+        handleStartQuest(params);
       }
     } else if (questStartData.whichTypeQuestion === "ranked choise") {
       let addedAnswerValue = "";
@@ -443,7 +446,8 @@ const QuestionCard = ({
         };
         console.log("params", params);
 
-        startQuest(params);
+        // startQuest(params);
+        handleStartQuest(params);
       }
     }
   };
@@ -453,84 +457,93 @@ const QuestionCard = ({
     localStorage.setItem("howManyTimesAnsChanged", howManyTimesAnsChanged);
   }, [questStartData.lastInteractedAt, howManyTimesAnsChanged]);
 
-  return (
-    <>
-      <QuestCardLayout
-        questStartData={questStartData}
-        isBookmarked={isBookmarked}
+  const renderQuestContent = () => {
+    if (viewResult === questStartData._id) {
+      return (
+        <Result
+          id={questStartData._id}
+          title={getQuestionTitle(questStartData.whichTypeQuestion)}
+          handleToggleCheck={handleToggleCheck}
+          answers={questStartData.QuestAnswers}
+          btnText={questStartData.startStatus}
+          whichTypeQuestion={questStartData.whichTypeQuestion}
+          setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+          answersSelection={answersSelection}
+          setAnswerSelection={setAnswerSelection}
+          rankedAnswers={rankedAnswers}
+          setRankedAnswers={setRankedAnswers}
+          handleViewResults={handleViewResults}
+          usersChangeTheirAns={questStartData.usersChangeTheirAns}
+          lastInteractedAt={questStartData.lastInteractedAt}
+          howManyTimesAnsChanged={howManyTimesAnsChanged}
+        />
+      );
+    }
+
+    if (startTest === questStartData._id) {
+      return (
+        <StartTest
+          id={questStartData._id}
+          title={getQuestionTitle(questStartData.whichTypeQuestion)}
+          answers={questStartData.QuestAnswers}
+          multipleOption={questStartData.userCanSelectMultiple}
+          SingleAnswer={SingleAnswer}
+          quests={quests}
+          whichTypeQuestion={questStartData.whichTypeQuestion}
+          handleToggleCheck={handleToggleCheck}
+          handleSubmit={handleSubmit}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          open={open}
+          btnText={questStartData.startStatus}
+          usersAddTheirAns={questStartData.usersAddTheirAns}
+          setAnswerSelection={setAnswerSelection}
+          answersSelection={answersSelection}
+          rankedAnswers={rankedAnswers}
+          setRankedAnswers={setRankedAnswers}
+          addOptionField={addOptionField}
+          setAddOptionField={setAddOptionField}
+          setStartTest={setStartTest}
+          loading={loading}
+          setIsSubmit={setIsSubmit}
+          expandedView={expandedView}
+          usersChangeTheirAns={questStartData.usersChangeTheirAns}
+          howManyTimesAnsChanged={howManyTimesAnsChanged}
+          loadingDetail={loadingDetail}
+        />
+      );
+    }
+
+    return (
+      <OptionBar
+        id={questStartData._id}
+        btnText={questStartData.startStatus}
+        btnColor={getButtonColor(questStartData.startStatus)}
         handleStartTest={handleStartTest}
-      >
-        {viewResult !== questStartData._id ? (
-          startTest === questStartData._id ? (
-            <StartTest
-              id={questStartData._id}
-              title={getQuestionTitle(questStartData.whichTypeQuestion)}
-              answers={questStartData.QuestAnswers}
-              multipleOption={questStartData.userCanSelectMultiple}
-              SingleAnswer={SingleAnswer}
-              quests={quests}
-              whichTypeQuestion={questStartData.whichTypeQuestion}
-              handleToggleCheck={handleToggleCheck}
-              handleSubmit={handleSubmit}
-              handleOpen={handleOpen}
-              handleClose={handleClose}
-              open={open}
-              btnText={questStartData.startStatus}
-              usersAddTheirAns={questStartData.usersAddTheirAns}
-              setAnswerSelection={setAnswerSelection}
-              answersSelection={answersSelection}
-              rankedAnswers={rankedAnswers}
-              setRankedAnswers={setRankedAnswers}
-              addOptionField={addOptionField}
-              setAddOptionField={setAddOptionField}
-              setStartTest={setStartTest}
-              loading={loading}
-              setIsSubmit={setIsSubmit}
-              expandedView={expandedView}
-              usersChangeTheirAns={questStartData.usersChangeTheirAns}
-              howManyTimesAnsChanged={howManyTimesAnsChanged}
-              loadingDetail={loadingDetail}
-            />
-          ) : (
-            <OptionBar
-              id={questStartData._id}
-              btnText={questStartData.startStatus}
-              btnColor={getButtonColor(questStartData.startStatus)}
-              handleStartTest={handleStartTest}
-              handleViewResults={handleViewResults}
-              setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-              whichTypeQuestion={questStartData.whichTypeQuestion}
-              handleToggleCheck={handleToggleCheck}
-              handleRankedChoice={handleRankedChoice}
-              rankedAnswers={rankedAnswers}
-              setRankedAnswers={setRankedAnswers}
-              answersSelection={answersSelection}
-              setAnswerSelection={setAnswerSelection}
-              startStatus={questStartData.startStatus}
-              setLoadingDetail={setLoadingDetail}
-            />
-          )
-        ) : (
-          <Result
-            id={questStartData._id}
-            title={getQuestionTitle(questStartData.whichTypeQuestion)}
-            handleToggleCheck={handleToggleCheck}
-            answers={questStartData.QuestAnswers}
-            btnText={questStartData.startStatus}
-            whichTypeQuestion={questStartData.whichTypeQuestion}
-            setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-            answersSelection={answersSelection}
-            setAnswerSelection={setAnswerSelection}
-            rankedAnswers={rankedAnswers}
-            setRankedAnswers={setRankedAnswers}
-            handleViewResults={handleViewResults}
-            usersChangeTheirAns={questStartData.usersChangeTheirAns}
-            lastInteractedAt={questStartData.lastInteractedAt}
-            howManyTimesAnsChanged={howManyTimesAnsChanged}
-          />
-        )}
-      </QuestCardLayout>
-    </>
+        handleViewResults={handleViewResults}
+        setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+        whichTypeQuestion={questStartData.whichTypeQuestion}
+        handleToggleCheck={handleToggleCheck}
+        handleRankedChoice={handleRankedChoice}
+        rankedAnswers={rankedAnswers}
+        setRankedAnswers={setRankedAnswers}
+        answersSelection={answersSelection}
+        setAnswerSelection={setAnswerSelection}
+        startStatus={questStartData.startStatus}
+        setLoadingDetail={setLoadingDetail}
+      />
+    );
+  };
+
+  return (
+    <QuestCardLayout
+      questStartData={questStartData}
+      isBookmarked={isBookmarked}
+      handleStartTest={handleStartTest}
+    >
+      {renderQuestContent()}
+      {/* <ButtonHandler /> */}
+    </QuestCardLayout>
   );
 };
 
