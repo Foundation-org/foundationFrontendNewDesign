@@ -12,7 +12,6 @@ import {
 } from "../../../../../services/api/questsApi";
 import SingleAnswer from "../../../../../components/question-card/options/SingleAnswer";
 import Result from "./Result";
-import OptionBar from "./OptionBar";
 import CardTopbar from "../../../../../components/question-card/CardTopbar";
 import StartTest from "./StartTest";
 import { createBookmark } from "../../../../../services/api/homepageApis";

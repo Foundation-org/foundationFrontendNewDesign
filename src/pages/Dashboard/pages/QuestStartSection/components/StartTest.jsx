@@ -352,8 +352,8 @@ const StartTest = ({
         ) : (
           <div></div>
         )}
-      </div>
-      <div
+      </div> */}
+      {/* <div
         className={`${
           title === "Multiple Choice"
             ? "mt-4 tablet:mt-5"

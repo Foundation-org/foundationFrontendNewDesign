@@ -39,6 +39,17 @@ export function getButtonText(btnText) {
   }
 }
 
+export function getButtonVariants(btnText) {
+  switch (btnText) {
+    case "completed":
+      return "result";
+    case "change answer":
+      return "change";
+    default:
+      return "submit";
+  }
+}
+
 export function getButtonClassName(persistedTheme, btnText, btnColor) {
   if (persistedTheme === "dark") {
     switch (btnText) {

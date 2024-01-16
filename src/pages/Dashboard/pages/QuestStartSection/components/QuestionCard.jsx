@@ -11,7 +11,7 @@ import {
   updateChangeAnsStartQuest,
 } from "../../../../../services/api/questsApi";
 import Result from "./Result";
-import OptionBar from "./OptionBar";
+import OptionBar from "../../../../../components/question-card/ButtonGroup";
 import CardTopbar from "../../../../../components/question-card/CardTopbar";
 import StartTest from "./StartTest";
 import { createBookmark } from "../../../../../services/api/homepageApis";
@@ -29,7 +29,6 @@ import {
 import BookmarkIcon from "./BookmarkIcon";
 import QuestBottombar from "../../../../../components/question-card/QuestBottombar";
 import QuestCardLayout from "../../../../../components/question-card/QuestCardLayout";
-import ButtonHandler from "../../../../../components/question-card/ButtonHandler";
 import { useStartQuest } from "../../../../../services/mutations/quest";
 import QuestInfoText from "../../../../../components/question-card/QuestInfoText";
 import ConditionalTextFullScreen from "../../../../../components/question-card/ConditionalTextFullScreen";
@@ -514,8 +513,21 @@ const QuestionCard = ({
         />
       );
     }
+  };
 
-    return (
+  return (
+    <QuestCardLayout
+      questStartData={questStartData}
+      isBookmarked={isBookmarked}
+      handleStartTest={handleStartTest}
+    >
+      <QuestInfoText questType={"ranked"} />
+      {renderQuestContent()}
+      <ConditionalTextFullScreen
+        show={true}
+        answersSelection={answersSelection}
+        rankedAnswers={rankedAnswers}
+      />
       <OptionBar
         id={questStartData._id}
         btnText={questStartData.startStatus}
@@ -532,24 +544,19 @@ const QuestionCard = ({
         setAnswerSelection={setAnswerSelection}
         startStatus={questStartData.startStatus}
         setLoadingDetail={setLoadingDetail}
+        handleOpen={handleOpen}
+        usersAddTheirAns={questStartData.usersAddTheirAns}
+        answers={questStartData.QuestAnswers}
+        title={getQuestionTitle(questStartData.whichTypeQuestion)}
+        expandedView={expandedView}
+        setStartTest={setStartTest}
+        viewResult={viewResult}
+        // setViewResult={setViewResult}
+        // openResults={openResults}
+        // setOpenResults{setOpenResults}
+        handleSubmit={handleSubmit}
+        loading={loading}
       />
-    );
-  };
-
-  return (
-    <QuestCardLayout
-      questStartData={questStartData}
-      isBookmarked={isBookmarked}
-      handleStartTest={handleStartTest}
-    >
-      <QuestInfoText questType={"ranked"} />
-      {renderQuestContent()}
-      <ConditionalTextFullScreen
-        show={true}
-        answersSelection={answersSelection}
-        rankedAnswers={rankedAnswers}
-      />
-      <ButtonHandler unAnswered={true} />
     </QuestCardLayout>
   );
 };
