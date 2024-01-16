@@ -18,7 +18,7 @@ import ChangePassword from "../pages/Dashboard/pages/Profile/pages/ChangePasswor
 import QuestStartSection from "../pages/Dashboard/pages/QuestStartSection";
 import Quest from "../pages/Dashboard/pages/Quest/Quest";
 import Bookmark from "../pages/Dashboard/pages/Bookmark";
-import DashboardRedirect from "../pages/Dashboard/DashboardRedirect";
+import DashboardRedirect from "../pages/DashboardRedirect";
 import Test from "../pages/Test";
 
 export function Router() {

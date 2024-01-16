@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Router } from "./utils/route";
+import { Router } from "./routes/route";
 import { Toaster } from "sonner";
 
 function App() {

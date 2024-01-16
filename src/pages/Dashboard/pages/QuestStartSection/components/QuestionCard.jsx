@@ -10,7 +10,6 @@ import {
   createStartQuest,
   updateChangeAnsStartQuest,
 } from "../../../../../services/api/questsApi";
-// import SingleAnswer from "../../../components/SingleAnswer";
 import Result from "./Result";
 import OptionBar from "./OptionBar";
 import CardTopbar from "../../../../../components/question-card/CardTopbar";
@@ -490,7 +489,6 @@ const QuestionCard = ({
           title={getQuestionTitle(questStartData.whichTypeQuestion)}
           answers={questStartData.QuestAnswers}
           multipleOption={questStartData.userCanSelectMultiple}
-          // SingleAnswer={SingleAnswer}
           quests={quests}
           whichTypeQuestion={questStartData.whichTypeQuestion}
           handleToggleCheck={handleToggleCheck}

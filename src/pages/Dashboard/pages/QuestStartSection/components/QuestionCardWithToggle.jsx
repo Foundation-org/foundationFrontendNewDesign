@@ -10,7 +10,7 @@ import {
   createStartQuest,
   updateChangeAnsStartQuest,
 } from "../../../../../services/api/questsApi";
-import SingleAnswer from "../../../components/SingleAnswer";
+import SingleAnswer from "../../../../../components/question-card/options/SingleAnswer";
 import Result from "./Result";
 import OptionBar from "./OptionBar";
 import CardTopbar from "../../../../../components/question-card/CardTopbar";

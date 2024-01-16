@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createStartQuest } from "../../../services/api/questsApi";
 import { useNavigate } from "react-router-dom";
 import { getQuests, toggleCheck } from "../../../features/quest/questsSlice";
-import SingleAnswer from "../../Dashboard/components/SingleAnswer";
+import SingleAnswer from "../../../components/question-card/options/SingleAnswer";
 
 const QuestionCard = ({
   tab,

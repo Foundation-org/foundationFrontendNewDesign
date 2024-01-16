@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import BasicModal from "../../../components/BasicModal";
-import DeleteOption from "./DeleteOption";
+import BasicModal from "../../BasicModal";
+import DeleteOption from "../../../pages/Dashboard/components/DeleteOption";
 import { Tooltip } from "../../../utils/Tooltip";
 import {
   answerValidation,

@@ -2,15 +2,10 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-
-import SingleAnswerMultipleChoice from "../../../components/SingleAnswerMultipleChoice";
-import SingleAnswerRankedChoice from "../../../components/SingleAnswerRankedChoice";
-import QuestTimeRemaining from "./QuestTimeRemaining";
-
-import { FaSpinner } from "react-icons/fa";
-import { MdFullscreen } from "react-icons/md";
+import SingleAnswerMultipleChoice from "../../../../../components/question-card/options/SingleAnswerMultipleChoice";
+import SingleAnswerRankedChoice from "../../../../../components/question-card/options/SingleAnswerRankedChoice";
 import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
-import SingleAnswer from "../../../components/SingleAnswer";
+import SingleAnswer from "../../../../../components/question-card/options/SingleAnswer";
 
 const StartTest = ({
   id,
@@ -139,17 +134,16 @@ const StartTest = ({
   };
 
   const renderOptionsByTitle = () => {
-    if (
-      getQuestionTitle(questStartData.whichTypeQuestion) === "Yes/No" ||
-      getQuestionTitle(questStartData.whichTypeQuestion) === "Agree/Disagree" ||
-      getQuestionTitle(questStartData.whichTypeQuestion) === "Like/Dislike"
-    ) {
-      return (
-        <>
-          {title === "Yes/No" ? (
-            loadingDetail === true ? (
-              <Loader />
-            ) : (
+    if (!loadingDetail) {
+      if (
+        getQuestionTitle(questStartData.whichTypeQuestion) === "Yes/No" ||
+        getQuestionTitle(questStartData.whichTypeQuestion) ===
+          "Agree/Disagree" ||
+        getQuestionTitle(questStartData.whichTypeQuestion) === "Like/Dislike"
+      ) {
+        return (
+          <>
+            {title === "Yes/No" ? (
               <>
                 <SingleAnswer
                   number={"#1"}
@@ -166,11 +160,7 @@ const StartTest = ({
                   handleToggleCheck={handleToggleCheck}
                 />
               </>
-            )
-          ) : title === "Agree/Disagree" ? (
-            loadingDetail === true ? (
-              <Loader />
-            ) : (
+            ) : title === "Agree/Disagree" ? (
               <>
                 <SingleAnswer
                   number={"#1"}
@@ -187,145 +177,141 @@ const StartTest = ({
                   handleToggleCheck={handleToggleCheck}
                 />
               </>
-            )
-          ) : loadingDetail === true ? (
-            <Loader />
-          ) : (
-            <>
-              <SingleAnswer
-                number={"#1"}
-                answer={"Like"}
-                check={quests.likeDislike.like.check}
-                contend={quests.likeDislike.like.contend}
-                handleToggleCheck={handleToggleCheck}
-              />
-              <SingleAnswer
-                number={"#2"}
-                answer={"Dislike"}
-                check={quests.likeDislike.dislike.check}
-                contend={quests.likeDislike.dislike.contend}
-                handleToggleCheck={handleToggleCheck}
-              />
-            </>
-          )}
-        </>
-      );
-    }
-
-    if (
-      getQuestionTitle(questStartData.whichTypeQuestion) === "Multiple Choice"
-    ) {
-      return loadingDetail === true ? (
-        <Loader />
-      ) : (
-        <div className="flex flex-col overflow-auto">
-          <div
-            className={`${
-              isFullScreen === undefined
-                ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]"
-                : ""
-            } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-          >
-            {answersSelection &&
-              [...answersSelection]?.map((item, index) => (
-                <SingleAnswerMultipleChoice
-                  key={index}
-                  number={"#" + (index + 1)}
-                  answer={item.label}
-                  addedAnswerUuid={item.uuid}
-                  editable={item.edit}
-                  deleteable={item.delete}
-                  title={title}
-                  multipleOption={multipleOption}
-                  // setAddOptionLimit={setAddOptionLimit}
-                  answersSelection={answersSelection}
-                  setAnswerSelection={setAnswerSelection}
-                  checkInfo={true}
-                  check={findLabelChecked(answersSelection, item.label)}
-                  contend={findLabelContend(answersSelection, item.label)}
-                  whichTypeQuestion={whichTypeQuestion}
-                  handleCheckChange={
-                    multipleOption === true
-                      ? (check) => handleCheckChange(index, check)
-                      : (check) => handleCheckChangeSingle(index, check)
-                  }
-                  handleContendChange={
-                    multipleOption === true
-                      ? (contend) => handleContendChange(index, contend)
-                      : (contend) => handleContendChangeSingle(index, contend)
-                  }
-                  setIsSubmit={setIsSubmit}
+            ) : (
+              <>
+                <SingleAnswer
+                  number={"#1"}
+                  answer={"Like"}
+                  check={quests.likeDislike.like.check}
+                  contend={quests.likeDislike.like.contend}
+                  handleToggleCheck={handleToggleCheck}
                 />
-              ))}
-          </div>
-        </div>
-      );
-    }
+                <SingleAnswer
+                  number={"#2"}
+                  answer={"Dislike"}
+                  check={quests.likeDislike.dislike.check}
+                  contend={quests.likeDislike.dislike.contend}
+                  handleToggleCheck={handleToggleCheck}
+                />
+              </>
+            )}
+          </>
+        );
+      }
 
-    if (
-      getQuestionTitle(questStartData.whichTypeQuestion) === "Ranked Choice"
-    ) {
-      return loadingDetail === true ? (
-        <Loader />
-      ) : (
-        <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
-              {(provided) => (
-                <ul
-                  className={`${
-                    isFullScreen === undefined
-                      ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto tablet:max-h-[366px]"
-                      : ""
-                  }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  {rankedAnswers?.map((item, index) => (
-                    <Draggable
-                      key={item.id}
-                      draggableId={item.id}
-                      index={index}
-                    >
-                      {(provided, snapshot) => (
-                        <li
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          className="w-full"
-                        >
-                          <SingleAnswerRankedChoice
-                            snapshot={snapshot}
-                            number={"#" + (index + 1)}
-                            editable={item.edit}
-                            deleteable={item.delete}
-                            answer={item.label}
-                            addedAnswerUuid={item.uuid}
-                            answersSelection={answersSelection}
-                            setAnswerSelection={setAnswerSelection}
-                            title={title}
-                            checkInfo={false}
-                            check={findLabelChecked(
-                              answersSelection,
-                              item.label,
-                            )}
-                            handleCheckChange={(check) =>
-                              handleCheckChange(index, check)
-                            }
-                            // setAddOptionLimit={setAddOptionLimit}
-                            setIsSubmit={setIsSubmit}
-                          />
-                        </li>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </ul>
-              )}
-            </Droppable>
-          </DragDropContext>
-        </div>
-      );
+      if (
+        getQuestionTitle(questStartData.whichTypeQuestion) === "Multiple Choice"
+      ) {
+        return (
+          <div className="flex flex-col overflow-auto">
+            <div
+              className={`${
+                isFullScreen === undefined
+                  ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]"
+                  : ""
+              } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+            >
+              {answersSelection &&
+                [...answersSelection]?.map((item, index) => (
+                  <SingleAnswerMultipleChoice
+                    key={index}
+                    number={"#" + (index + 1)}
+                    answer={item.label}
+                    addedAnswerUuid={item.uuid}
+                    editable={item.edit}
+                    deleteable={item.delete}
+                    title={title}
+                    multipleOption={multipleOption}
+                    // setAddOptionLimit={setAddOptionLimit}
+                    answersSelection={answersSelection}
+                    setAnswerSelection={setAnswerSelection}
+                    checkInfo={true}
+                    check={findLabelChecked(answersSelection, item.label)}
+                    contend={findLabelContend(answersSelection, item.label)}
+                    whichTypeQuestion={whichTypeQuestion}
+                    handleCheckChange={
+                      multipleOption === true
+                        ? (check) => handleCheckChange(index, check)
+                        : (check) => handleCheckChangeSingle(index, check)
+                    }
+                    handleContendChange={
+                      multipleOption === true
+                        ? (contend) => handleContendChange(index, contend)
+                        : (contend) => handleContendChangeSingle(index, contend)
+                    }
+                    setIsSubmit={setIsSubmit}
+                  />
+                ))}
+            </div>
+          </div>
+        );
+      }
+
+      if (
+        getQuestionTitle(questStartData.whichTypeQuestion) === "Ranked Choice"
+      ) {
+        return (
+          <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+              <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
+                {(provided) => (
+                  <ul
+                    className={`${
+                      isFullScreen === undefined
+                        ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto tablet:max-h-[366px]"
+                        : ""
+                    }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    {rankedAnswers?.map((item, index) => (
+                      <Draggable
+                        key={item.id}
+                        draggableId={item.id}
+                        index={index}
+                      >
+                        {(provided, snapshot) => (
+                          <li
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className="w-full"
+                          >
+                            <SingleAnswerRankedChoice
+                              snapshot={snapshot}
+                              number={"#" + (index + 1)}
+                              editable={item.edit}
+                              deleteable={item.delete}
+                              answer={item.label}
+                              addedAnswerUuid={item.uuid}
+                              answersSelection={answersSelection}
+                              setAnswerSelection={setAnswerSelection}
+                              title={title}
+                              checkInfo={false}
+                              check={findLabelChecked(
+                                answersSelection,
+                                item.label,
+                              )}
+                              handleCheckChange={(check) =>
+                                handleCheckChange(index, check)
+                              }
+                              // setAddOptionLimit={setAddOptionLimit}
+                              setIsSubmit={setIsSubmit}
+                            />
+                          </li>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </ul>
+                )}
+              </Droppable>
+            </DragDropContext>
+          </div>
+        );
+      }
+    } else {
+      <Loader />;
     }
   };
 
@@ -334,236 +320,6 @@ const StartTest = ({
       <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
         {renderOptionsByTitle()}
       </div>
-      {/* <div
-        className={`mx-1 mt-[2px] flex flex-col gap-[5.7px] tablet:gap-[10px] ${
-          title === "Yes/No" ||
-          title === "Agree/Disagree" ||
-          title === "Like/Dislike"
-            ? "mt-[24px] tablet:mt-[53px]"
-            : ""
-        }`}
-      >
-        {title === "Yes/No" ||
-        title === "Agree/Disagree" ||
-        title === "Like/Dislike" ? (
-          <>
-            {title === "Yes/No" ? (
-              loadingDetail === true ? (
-                <Loader />
-              ) : (
-                <>
-                  <SingleAnswer
-                    number={"#1"}
-                    answer={"Yes"}
-                    checkInfo={true}
-                    check={quests.yesNo.yes.check}
-                    contend={quests.yesNo.yes.contend}
-                    handleToggleCheck={handleToggleCheck}
-                  />
-                  <SingleAnswer
-                    number={"#2"}
-                    answer={"No"}
-                    checkInfo={true}
-                    check={quests.yesNo.no.check}
-                    contend={quests.yesNo.no.contend}
-                    handleToggleCheck={handleToggleCheck}
-                  />
-                </>
-              )
-            ) : title === "Agree/Disagree" ? (
-              loadingDetail === true ? (
-                <Loader />
-              ) : (
-                <>
-                  <SingleAnswer
-                    number={"#1"}
-                    answer={"Agree"}
-                    checkInfo={true}
-                    check={quests.agreeDisagree.agree.check}
-                    contend={quests.agreeDisagree.agree.contend}
-                    handleToggleCheck={handleToggleCheck}
-                  />
-                  <SingleAnswer
-                    number={"#2"}
-                    answer={"Disagree"}
-                    checkInfo={true}
-                    check={quests.agreeDisagree.disagree.check}
-                    contend={quests.agreeDisagree.disagree.contend}
-                    handleToggleCheck={handleToggleCheck}
-                  />
-                </>
-              )
-            ) : loadingDetail === true ? (
-              <Loader />
-            ) : (
-              <>
-                <SingleAnswer
-                  number={"#1"}
-                  answer={"Like"}
-                  checkInfo={true}
-                  check={quests.likeDislike.like.check}
-                  contend={quests.likeDislike.like.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-                <SingleAnswer
-                  number={"#2"}
-                  answer={"Dislike"}
-                  checkInfo={true}
-                  check={quests.likeDislike.dislike.check}
-                  contend={quests.likeDislike.dislike.contend}
-                  handleToggleCheck={handleToggleCheck}
-                />
-              </>
-            )}
-          </>
-        ) : title === "Multiple Choice" ? (
-          loadingDetail === true ? (
-            <Loader />
-          ) : (
-            <div className="flex flex-col overflow-auto ">
-              {multipleOption ? (
-                <h4 className=" mb-[8px]  ml-8 text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mb-[4px] tablet:ml-[6.37rem] tablet:mt-[20px] tablet:text-[16.58px] laptop:text-[18px]">
-                  You can select multiple options.
-                </h4>
-              ) : (
-                <h4 className="mb-[9px] ml-8 text-[9px] font-medium leading-normal  text-[#ACACAC] tablet:mb-[4px] tablet:ml-[6.37rem] tablet:mt-[20px] tablet:text-[16.58px] laptop:text-[18px]">
-                  &#x200B;
-                </h4>
-              )}
-              <div
-                className={`${
-                  isFullScreen === undefined
-                    ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]"
-                    : ""
-                } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-              >
-                {answersSelection &&
-                  [...answersSelection]?.map((item, index) => (
-                    <SingleAnswerMultipleChoice
-                      key={index}
-                      number={"#" + (index + 1)}
-                      answer={item.label}
-                      addedAnswerUuid={item.uuid}
-                      editable={item.edit}
-                      deleteable={item.delete}
-                      title={title}
-                      multipleOption={multipleOption}
-                      // setAddOptionLimit={setAddOptionLimit}
-                      answersSelection={answersSelection}
-                      setAnswerSelection={setAnswerSelection}
-                      checkInfo={true}
-                      check={findLabelChecked(answersSelection, item.label)}
-                      contend={findLabelContend(answersSelection, item.label)}
-                      whichTypeQuestion={whichTypeQuestion}
-                      handleCheckChange={
-                        multipleOption === true
-                          ? (check) => handleCheckChange(index, check)
-                          : (check) => handleCheckChangeSingle(index, check)
-                      }
-                      handleContendChange={
-                        multipleOption === true
-                          ? (contend) => handleContendChange(index, contend)
-                          : (contend) =>
-                              handleContendChangeSingle(index, contend)
-                      }
-                      setIsSubmit={setIsSubmit}
-                    />
-                  ))}
-              </div>
-            </div>
-          )
-        ) : loadingDetail === true ? (
-          <Loader />
-        ) : (
-          <div className=" flex flex-col gap-[5.7px] tablet:gap-[10px]">
-            <h4 className="mb-[7px] ml-9 text-[9px] font-medium leading-normal  text-[#ACACAC] tablet:mb-[6px] tablet:ml-[108.65px] tablet:mt-[20px] tablet:text-[16.58px] laptop:text-[18px]">
-              You can drag and drop options in your order of preference.
-            </h4>
-            <div className="-mt-1 flex flex-col gap-[5.7px] tablet:-mt-3 tablet:gap-[10px]">
-              <DragDropContext onDragEnd={handleOnDragEnd}>
-                <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
-                  {(provided) => (
-                    <ul
-                      className={`${
-                        isFullScreen === undefined
-                          ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto tablet:max-h-[366px]"
-                          : ""
-                      }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
-                      {rankedAnswers?.map((item, index) => (
-                        <Draggable
-                          key={item.id}
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {(provided, snapshot) => (
-                            <li
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className="w-full"
-                            >
-                              <SingleAnswerRankedChoice
-                                snapshot={snapshot}
-                                number={"#" + (index + 1)}
-                                editable={item.edit}
-                                deleteable={item.delete}
-                                answer={item.label}
-                                addedAnswerUuid={item.uuid}
-                                answersSelection={answersSelection}
-                                setAnswerSelection={setAnswerSelection}
-                                title={title}
-                                checkInfo={false}
-                                check={findLabelChecked(
-                                  answersSelection,
-                                  item.label,
-                                )}
-                                handleCheckChange={(check) =>
-                                  handleCheckChange(index, check)
-                                }
-                                // setAddOptionLimit={setAddOptionLimit}
-                                setIsSubmit={setIsSubmit}
-                              />
-                            </li>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </ul>
-                  )}
-                </Droppable>
-              </DragDropContext>
-            </div>
-          </div>
-        )}
-      </div> */}
-
-      {/* Conditional Text + Full Screen */}
-      {/* <div className="mr-[22px] mt-[15px] flex items-center justify-between tablet:mr-[46px]">
-        <QuestTimeRemaining
-          lastInteractedAt={localStorage.getItem("lastInteractedAt")}
-          howManyTimesAnsChanged={localStorage.getItem(
-            "howManyTimesAnsChanged",
-          )}
-          usersChangeTheirAns={localStorage.getItem("usersChangeTheirAns")}
-        />
-        {((isFullScreen === undefined && answersSelection?.length > 6) ||
-          (isFullScreen === undefined && rankedAnswers?.length > 6)) && (
-          <div
-            className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[14px] dark:text-[#ACACAC] "
-            onClick={() => {
-              navigate(`/quest/${id}/isfullscreen`);
-            }}
-          >
-            <MdFullscreen className="text-[17px] tablet:text-[32px]" />
-            <p className="text-[9px] font-medium tablet:text-[16px] ">
-              Full Screen
-            </p>
-          </div>
-        )}
-      </div> */}
 
       {/* Add Options && Cancel && Submit Button */}
       {/* <div className="ml-[20px] mr-[28px] mt-[13px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
