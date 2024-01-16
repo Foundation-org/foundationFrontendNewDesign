@@ -529,9 +529,9 @@ const QuestionCard = ({
         rankedAnswers={rankedAnswers}
       />
       <OptionBar
+        questStartData={questStartData}
         id={questStartData._id}
         btnText={questStartData.startStatus}
-        btnColor={getButtonColor(questStartData.startStatus)}
         handleStartTest={handleStartTest}
         handleViewResults={handleViewResults}
         setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
@@ -556,6 +556,7 @@ const QuestionCard = ({
         // setOpenResults{setOpenResults}
         handleSubmit={handleSubmit}
         loading={loading}
+        startTest={startTest}
       />
     </QuestCardLayout>
   );

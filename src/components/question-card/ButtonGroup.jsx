@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStartQuestInfo } from "../../services/api/questsApi";
 import { resetQuests } from "../../features/quest/questsSlice";
 import {
-  getButtonClassName,
   getButtonText,
   getButtonVariants,
 } from "../../utils/questionCard/SingleQuestCard";
@@ -16,7 +15,6 @@ const ButtonGroup = ({
   title,
   id,
   btnText,
-  btnColor,
   handleStartTest,
   handleViewResults,
   answersSelection,
@@ -39,6 +37,8 @@ const ButtonGroup = ({
   handleSubmit,
   loading,
   addOptionField,
+  questStartData,
+  startTest,
 }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -195,8 +195,91 @@ const ButtonGroup = ({
     }
   };
 
+  if (startTest === questStartData._id) {
+    return (
+      <>
+        {/* Add Options */}
+        <div className="ml-[20px] mr-[28px] mt-[13px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
+          {usersAddTheirAns && uuidExists === false ? (
+            <div>
+              {title === "Yes/No" ||
+              title === "Agree/Disagree" ||
+              title === "Like/Dislike" ? null : (
+                <Button onClick={handleOpen} variant={"change"}>
+                  {persistedTheme === "dark" ? (
+                    <img
+                      src="/assets/svgs/dashboard/add-dark.svg"
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  ) : (
+                    <img
+                      src="/assets/svgs/dashboard/add.svg"
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  )}
+                  Add Option
+                </Button>
+              )}
+            </div>
+          ) : null}
+        </div>
+
+        {/* Go back / Submit */}
+        <div
+          className={`${
+            title === "Multiple Choice"
+              ? "mt-4 tablet:mt-5"
+              : addOptionField === 1
+                ? "mt-[4rem] tablet:mt-[10rem]"
+                : "mt-4 tablet:mt-5"
+          } flex w-full justify-end gap-2 tablet:gap-10`}
+        >
+          <div className="mr-[14.4px] flex gap-2 tablet:mr-[30px] tablet:gap-10">
+            {!expandedView ? (
+              <Button
+                variant="cancel"
+                onClick={() => {
+                  setStartTest(null);
+                }}
+              >
+                Go Back
+              </Button>
+            ) : null}
+            {startStatus === "change answer" &&
+              viewResult === null &&
+              openResults === false && (
+                <Button
+                  variant="cancel"
+                  onClick={() => {
+                    setViewResult(id);
+                    setOpenResults(true);
+                  }}
+                >
+                  Go Back
+                </Button>
+              )}
+            <Button
+              variant="submit"
+              onClick={() => handleSubmit()}
+              disabled={loading === true ? true : false}
+            >
+              {loading === true ? (
+                <FaSpinner className="animate-spin text-[#EAEAEA]" />
+              ) : (
+                "Submit"
+              )}
+            </Button>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:mr-[30px] tablet:gap-10">
+      {/* Start / Change */}
       {getButtonText(btnText) !== "Completed" ? (
         <Button
           variant={getButtonVariants(btnText)}
@@ -205,12 +288,10 @@ const ButtonGroup = ({
           {getButtonText(btnText)}
         </Button>
       ) : null}
+
+      {/* Result / Result Outline */}
       <Button
-        className={`${
-          startStatus?.trim() !== ""
-            ? "border-none bg-[#04AD66] text-white dark:bg-[#707175] dark:text-white"
-            : "border-[#20D47E] dark:border-[#7C7C7C]"
-        } mt-[16.2px] h-[23.48px] w-[81.8px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#20D47E] tablet:mt-12 tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:border-[#7C7C7C] dark:text-[#C9C8C8]`}
+        variant={startStatus?.trim() !== "" ? "result" : "result-outline"}
         onClick={() => {
           if (btnText !== "") {
             handleViewResults(id);
@@ -221,80 +302,6 @@ const ButtonGroup = ({
       >
         Results
       </Button>
-
-      <div className="ml-[20px] mr-[28px] mt-[13px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
-        {usersAddTheirAns && uuidExists === false ? (
-          <div>
-            {title === "Yes/No" ||
-            title === "Agree/Disagree" ||
-            title === "Like/Dislike" ? null : (
-              <Button onClick={handleOpen} variant={"change"}>
-                {persistedTheme === "dark" ? (
-                  <img
-                    src="/assets/svgs/dashboard/add-dark.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                ) : (
-                  <img
-                    src="/assets/svgs/dashboard/add.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                )}
-                Add Option
-              </Button>
-            )}
-          </div>
-        ) : null}
-      </div>
-
-      <div
-        className={`${
-          title === "Multiple Choice"
-            ? "mt-4 tablet:mt-5"
-            : addOptionField === 1
-              ? "mt-[4rem] tablet:mt-[10rem]"
-              : "mt-4 tablet:mt-5"
-        } flex w-full justify-end gap-2 tablet:gap-10`}
-      >
-        <div className="mr-[14.4px] flex gap-2 tablet:mr-[30px] tablet:gap-10">
-          {!expandedView ? (
-            <Button
-              variant="cancel"
-              onClick={() => {
-                setStartTest(null);
-              }}
-            >
-              Go Back
-            </Button>
-          ) : null}
-          {startStatus === "change answer" &&
-            viewResult === null &&
-            openResults === false && (
-              <Button
-                variant="cancel"
-                onClick={() => {
-                  setViewResult(id);
-                  setOpenResults(true);
-                }}
-              >
-                Go Back
-              </Button>
-            )}
-          <Button
-            variant="submit"
-            onClick={() => handleSubmit()}
-            disabled={loading === true ? true : false}
-          >
-            {loading === true ? (
-              <FaSpinner className="animate-spin text-[#EAEAEA]" />
-            ) : (
-              "Submit"
-            )}
-          </Button>
-        </div>
-      </div>
     </div>
   );
 };
