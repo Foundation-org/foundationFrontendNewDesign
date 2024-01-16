@@ -154,18 +154,19 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   return (
-    <div className="flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px] tablet:gap-[5px]">
+    <div className="flex items-center tablet:mr-[65.36px] tablet:gap-[10px] tablet:pl-[1.75rem]">
+      {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo.uuid ? (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#141618]">
             <img
-              src="/assets/svgs/dashboard/optionMeBadge.svg"
+              src="/assets/svgs/dashboard/MeBadge.svg"
               alt="optionMeBadge"
               className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#141618]">
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="bluebadge"
@@ -174,23 +175,14 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
+        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#141618]">
+          &#x200B;
+        </div>
       )}
+      {/* =============== To Display Option */}
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
         <div className="flex w-full items-center rounded-l-[5.387px] bg-white tablet:rounded-l-[10px] dark:bg-[#0D1012]">
           <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E]"></div>
-          {!props.checkInfo && (
-            <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
-              {persistedTheme === "dark" ? (
-                <img
-                  src="/assets/svgs/dashboard/six-dots-dark.svg"
-                  alt="six dots"
-                />
-              ) : (
-                <img src="/assets/svgs/dashboard/six-dots.svg" alt="six dots" />
-              )}
-            </div>
-          )}
           <div className="flex w-full justify-between border-y border-y-[#ACACAC]">
             {props.editable ? (
               <input
@@ -204,7 +196,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 }
               />
             ) : (
-              <h1 className="ml-[15.8px] w-full pb-[5.7px] pr-[9px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px] dark:text-[#D3D3D3]">
+              <h1 className="pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] tablet:py-3 tablet:text-[19px] dark:text-[#D3D3D3]">
                 {props.answer}
               </h1>
             )}
@@ -220,132 +212,63 @@ const SingleAnswerMultipleChoice = (props) => {
             )}
           </div>
         </div>
-        {!props.checkInfo ? (
-          <div className="mr-[20.63px] flex items-center gap-[37px] rounded-r-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012] ">
-            <img
-              src="/assets/svgs/dashboard/edit.svg"
-              alt="edit"
-              className="h-[19.942px] w-[16px]"
-            />
-            <img
-              src="/assets/svgs/dashboard/trash.svg"
-              alt="trash"
-              className="h-[19.942px] w-[16px]"
-            />
-          </div>
-        ) : (
-          <div
-            className={`flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[10.63px] text-[9.238px] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:pr-[20.63px] tablet:text-[16px] dark:bg-[#0D1012] ${
-              props.btnText === "Results" ? "pointer-events-none" : ""
-            }`}
-          >
-            <div className="flex items-center gap-1 laptop:gap-[18px]">
-              {props.title === "Multiple Choice" ? (
-                <div id="custom-checkbox" className="flex h-full items-center">
-                  <input
-                    id="small-checkbox"
-                    type="checkbox"
-                    className="checkbox h-[11.4px] w-[11.4px] rounded-[2px] tablet:h-5 tablet:w-5"
-                    checked={checkState}
-                    onChange={handleCheckChange}
-                  />
-                </div>
-              ) : null}
+        <div
+          className={`flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[10px] text-[9.238px] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:text-[16px] dark:bg-[#0D1012] ${
+            props.btnText === "Results" ? "pointer-events-none" : ""
+          }`}
+        >
+          <div className="flex items-center gap-1 laptop:gap-[18px]">
+            <div id="custom-checkbox" className="flex h-full items-center">
+              <input
+                id="small-checkbox"
+                type="checkbox"
+                className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                checked={checkState}
+                onChange={handleCheckChange}
+              />
+            </div>
 
-              {props.btnText === "Results" ? (
-                <>
-                  {props.percentages?.selectedPercentage &&
-                  props.percentages?.selectedPercentage[props.answer.trim()] ? (
-                    props.percentages?.selectedPercentage[
-                      props.answer.trim()
-                    ] === 100 ? (
-                      <span
-                        className={`w-[4ch] whitespace-nowrap ${
-                          persistedTheme === "dark" ? "text-white" : ""
-                        }`}
-                      >
-                        100%
-                      </span>
-                    ) : (
-                      <span
-                        className={`w-[4ch] whitespace-nowrap ${
-                          persistedTheme === "dark" ? "text-white" : ""
-                        }`}
-                      >
-                        {props.percentages?.selectedPercentage[
-                          props.answer.trim()
-                        ] + "%"}
-                      </span>
-                    )
+            {props.btnText === "Results" ? (
+              <>
+                {props.percentages?.selectedPercentage &&
+                props.percentages?.selectedPercentage[props.answer.trim()] ? (
+                  props.percentages?.selectedPercentage[props.answer.trim()] ===
+                  100 ? (
+                    <span
+                      className={`w-[4ch] whitespace-nowrap ${
+                        persistedTheme === "dark" ? "text-white" : ""
+                      }`}
+                    >
+                      100%
+                    </span>
                   ) : (
                     <span
                       className={`w-[4ch] whitespace-nowrap ${
                         persistedTheme === "dark" ? "text-white" : ""
                       }`}
                     >
-                      0%
+                      {props.percentages?.selectedPercentage[
+                        props.answer.trim()
+                      ] + "%"}
                     </span>
-                  )}
-                </>
-              ) : null}
-            </div>
-            <div className="flex items-center gap-1 laptop:gap-[18px]">
-              <div
-                id="custom-yello-checkbox"
-                className="flex h-full items-center "
-              >
-                <input
-                  id="small-yello-checkbox"
-                  type="checkbox"
-                  className="checkbox h-[11.4px] w-[11.4px] rounded-[2px] tablet:h-5 tablet:w-5"
-                  checked={contendState}
-                  onChange={handleContendChange}
-                />
-              </div>
-
-              {props.btnText === "Results" ? (
-                <>
-                  {props.percentages?.contendedPercentage &&
-                  props.percentages?.contendedPercentage[
-                    props.answer.trim()
-                  ] ? (
-                    props.percentages?.contendedPercentage[
-                      props.answer.trim()
-                    ] === 100 ? (
-                      <span
-                        className={`w-[4ch] whitespace-nowrap ${
-                          persistedTheme === "dark" ? "text-white" : ""
-                        }`}
-                      >
-                        100%
-                      </span>
-                    ) : (
-                      <span
-                        className={`w-[4ch] whitespace-nowrap ${
-                          persistedTheme === "dark" ? "text-white" : ""
-                        }`}
-                      >
-                        {props.percentages?.contendedPercentage[
-                          props.answer.trim()
-                        ] + "%"}
-                      </span>
-                    )
-                  ) : (
-                    <span
-                      className={`w-[4ch] whitespace-nowrap ${
-                        persistedTheme === "dark" ? "text-white" : ""
-                      }`}
-                    >
-                      0%
-                    </span>
-                  )}
-                </>
-              ) : null}
-            </div>
+                  )
+                ) : (
+                  <span
+                    className={`w-[4ch] whitespace-nowrap ${
+                      persistedTheme === "dark" ? "text-white" : ""
+                    }`}
+                  >
+                    0%
+                  </span>
+                )}
+              </>
+            ) : null}
           </div>
-        )}
+        </div>
+
+        {/* =============== To Display Contention and Trash Right of Option */}
         {props.btnText !== "Results" ? (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] pl-[15px] tablet:w-8 dark:bg-[#141618]">
             {props.deleteable ? (
               <img
                 src="/assets/svgs/dashboard/trash2.svg"
@@ -353,7 +276,61 @@ const SingleAnswerMultipleChoice = (props) => {
                 className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
                 onClick={handleDeleteOption}
               />
-            ) : null}
+            ) : (
+              <div className="flex items-center gap-1 laptop:gap-[18px]">
+                <div
+                  id="custom-yello-checkbox"
+                  className="flex h-full items-center "
+                >
+                  <input
+                    id="small-yello-checkbox"
+                    type="checkbox"
+                    className="checkbox h-[11.4px] w-[11.4px] rounded-[2px] tablet:h-5 tablet:w-5"
+                    checked={contendState}
+                    onChange={handleContendChange}
+                  />
+                </div>
+
+                {props.btnText === "Results" ? (
+                  <>
+                    {props.percentages?.contendedPercentage &&
+                    props.percentages?.contendedPercentage[
+                      props.answer.trim()
+                    ] ? (
+                      props.percentages?.contendedPercentage[
+                        props.answer.trim()
+                      ] === 100 ? (
+                        <span
+                          className={`w-[4ch] whitespace-nowrap ${
+                            persistedTheme === "dark" ? "text-white" : ""
+                          }`}
+                        >
+                          100%
+                        </span>
+                      ) : (
+                        <span
+                          className={`w-[4ch] whitespace-nowrap ${
+                            persistedTheme === "dark" ? "text-white" : ""
+                          }`}
+                        >
+                          {props.percentages?.contendedPercentage[
+                            props.answer.trim()
+                          ] + "%"}
+                        </span>
+                      )
+                    ) : (
+                      <span
+                        className={`w-[4ch] whitespace-nowrap ${
+                          persistedTheme === "dark" ? "text-white" : ""
+                        }`}
+                      >
+                        0%
+                      </span>
+                    )}
+                  </>
+                ) : null}
+              </div>
+            )}
             <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
               <DeleteOption
                 answer={props.answer}
@@ -361,7 +338,6 @@ const SingleAnswerMultipleChoice = (props) => {
                 setAnswerSelection={props.setAnswerSelection}
                 handleDeleteClose={handleDeleteClose}
                 handleEditClose={handleDeleteClose}
-                // setAddOptionLimit={props.setAddOptionLimit}
               />
             </BasicModal>
           </div>

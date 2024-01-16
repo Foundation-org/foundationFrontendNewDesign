@@ -148,11 +148,12 @@ const SingleAnswerRankedChoice = (props) => {
   };
 
   return (
-    <div className="mx-1 flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px] tablet:gap-[5px]">
+    <div className="flex items-center tablet:mr-[65.36px] tablet:gap-[10px] tablet:pl-[1.75rem]">
+      {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid ||
         localStorage.getItem("uId") ? (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#141618]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"
               alt="trash"
@@ -160,7 +161,7 @@ const SingleAnswerRankedChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#141618]">
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="trash"
@@ -169,17 +170,21 @@ const SingleAnswerRankedChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
+        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#141618]">
+          {" "}
+          &#x200B;
+        </div>
       )}
+      {/* =============== To Display Option */}
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
-        <div className="flex w-full items-center rounded-[4.7px] rounded-l-[4.734px] bg-white tablet:rounded-l-[10px] tablet:rounded-r-[10px] dark:bg-[#0D1012]">
+        <div className="flex w-full items-center rounded-l-[4.734px] bg-white tablet:rounded-l-[10px] dark:bg-[#0D1012]">
           {props.btnText !== "Results" && (
             <div
               className={`${
                 props.snapshot.isDragging
                   ? "border-y-[#5FA3D5] border-r-[#5FA3D5]"
                   : "border-y-[#DEE6F7] border-s-[#DEE6F7]"
-              } flex h-full w-fit items-center rounded-l-[4.734px] border-y border-s bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] dark:bg-[#9E9E9E]`}
+              } flex h-full w-fit items-center rounded-l-[4.734px] border-y border-s bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-3 dark:bg-[#9E9E9E]`}
             >
               {persistedTheme === "dark" ? (
                 <img
@@ -199,9 +204,9 @@ const SingleAnswerRankedChoice = (props) => {
           <div
             className={`${
               props.snapshot.isDragging
-                ? "border-y-[#5FA3D5] border-r-[#5FA3D5] bg-[#F2F6FF]"
-                : "border-y-[#ACACAC] border-r-[#ACACAC]"
-            } flex w-full justify-between rounded-r-[4.7px] border-y border-r tablet:rounded-r-[10px]`}
+                ? "border-y-[#5FA3D5] bg-[#F2F6FF]"
+                : "border-y-[#ACACAC]"
+            } flex w-full justify-between border-y`}
           >
             {props.editable ? (
               <input
@@ -210,7 +215,7 @@ const SingleAnswerRankedChoice = (props) => {
                   props.snapshot.isDragging
                     ? "bg-[#F2F6FF]"
                     : "bg-white dark:bg-[#0D1012]"
-                } w-full rounded-[4.73px]  px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px]  dark:text-[#D3D3D3]`}
+                } w-full rounded-[4.73px] px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px]  dark:text-[#D3D3D3]`}
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) =>
@@ -219,7 +224,7 @@ const SingleAnswerRankedChoice = (props) => {
                 }
               />
             ) : (
-              <h1 className="ml-[15.8px] w-full pb-[5.7px] pr-[9px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px] dark:text-[#D3D3D3]">
+              <h1 className="pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] tablet:py-3 tablet:text-[19px] dark:text-[#D3D3D3]">
                 {props.answer}
               </h1>
             )}
@@ -241,7 +246,13 @@ const SingleAnswerRankedChoice = (props) => {
             )}
           </div>
         </div>
-        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
+        <div className="flex w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r border-[#ACACAC] bg-white tablet:rounded-r-[10px]">
+          <h1 className="text-[25px] font-bold leading-[0px] text-[#22AA69]">
+            R
+          </h1>
+        </div>
+        {/* =============== To Display Contention and Trash Right of Option */}
+        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] pl-[15px] tablet:w-8 dark:bg-[#141618]">
           {props.deleteable ? (
             <img
               src="/assets/svgs/dashboard/trash2.svg"
@@ -266,7 +277,6 @@ const SingleAnswerRankedChoice = (props) => {
             />
           </BasicModal>
         </div>
-
         {props.btnText === "Results" ? (
           <div className="mr-[20.63px] flex items-center gap-[19px] ">
             {props.percentages?.[props.answer.trim()] === undefined

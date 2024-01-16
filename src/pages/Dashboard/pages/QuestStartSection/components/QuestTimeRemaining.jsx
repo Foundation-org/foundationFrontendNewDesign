@@ -5,6 +5,7 @@ const QuestTimeRemaining = ({
   lastInteractedAt,
   howManyTimesAnsChanged,
   usersChangeTheirAns,
+  show,
 }) => {
   const [resultString, setResultString] = useState("");
 
@@ -20,17 +21,25 @@ const QuestTimeRemaining = ({
 
   return (
     <div>
-      {usersChangeTheirAns === "" ? (
-        <h4 className="ml-[35px] cursor-pointer text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[102.65px] tablet:text-[16.58px] laptop:text-[18px]">
-          Your selection is final and cannot be changed.
-        </h4>
+      {show ? (
+        <div>
+          {usersChangeTheirAns === "" ? (
+            <h4 className="cursor-pointer text-[9px] font-normal text-[#85898C] tablet:text-[16.58px] laptop:text-[1rem]">
+              Your selection is final and cannot be changed.
+            </h4>
+          ) : (
+            <h4
+              className="cursor-pointer text-[9px] font-normal text-[#85898C] tablet:text-[16.58px] laptop:text-[1rem]"
+              onClick={handleClick}
+            >
+              You can change your selection {usersChangeTheirAns}
+              {resultString}.
+            </h4>
+          )}
+        </div>
       ) : (
-        <h4
-          className="ml-[35px] cursor-pointer text-[9px] font-medium leading-normal text-[#ACACAC] tablet:ml-[102.65px] tablet:text-[16.58px] laptop:text-[18px]"
-          onClick={handleClick}
-        >
-          You can change your selection {usersChangeTheirAns}
-          {resultString}.
+        <h4 className="cursor-pointer text-[9px] font-normal text-[#85898C] tablet:text-[16.58px] laptop:text-[1rem]">
+          &#x200B;
         </h4>
       )}
     </div>

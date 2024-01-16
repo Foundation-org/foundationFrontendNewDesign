@@ -10,7 +10,7 @@ import {
   createStartQuest,
   updateChangeAnsStartQuest,
 } from "../../../../../services/api/questsApi";
-import SingleAnswer from "../../../components/SingleAnswer";
+// import SingleAnswer from "../../../components/SingleAnswer";
 import Result from "./Result";
 import OptionBar from "./OptionBar";
 import CardTopbar from "../../../../../components/question-card/CardTopbar";
@@ -32,6 +32,8 @@ import QuestBottombar from "../../../../../components/question-card/QuestBottomb
 import QuestCardLayout from "../../../../../components/question-card/QuestCardLayout";
 import ButtonHandler from "../../../../../components/question-card/ButtonHandler";
 import { useStartQuest } from "../../../../../services/mutations/quest";
+import QuestInfoText from "../../../../../components/question-card/QuestInfoText";
+import ConditionalTextFullScreen from "../../../../../components/question-card/ConditionalTextFullScreen";
 
 const QuestionCard = ({
   isBookmarked,
@@ -483,11 +485,12 @@ const QuestionCard = ({
     if (startTest === questStartData._id) {
       return (
         <StartTest
+          questStartData={questStartData}
           id={questStartData._id}
           title={getQuestionTitle(questStartData.whichTypeQuestion)}
           answers={questStartData.QuestAnswers}
           multipleOption={questStartData.userCanSelectMultiple}
-          SingleAnswer={SingleAnswer}
+          // SingleAnswer={SingleAnswer}
           quests={quests}
           whichTypeQuestion={questStartData.whichTypeQuestion}
           handleToggleCheck={handleToggleCheck}
@@ -541,8 +544,14 @@ const QuestionCard = ({
       isBookmarked={isBookmarked}
       handleStartTest={handleStartTest}
     >
+      <QuestInfoText questType={"ranked"} />
       {renderQuestContent()}
-      {/* <ButtonHandler /> */}
+      <ConditionalTextFullScreen
+        show={true}
+        answersSelection={answersSelection}
+        rankedAnswers={rankedAnswers}
+      />
+      <ButtonHandler unAnswered={true} />
     </QuestCardLayout>
   );
 };

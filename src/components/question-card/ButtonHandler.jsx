@@ -10,23 +10,25 @@ const ButtonHandler = ({
 }) => {
   const renderButtons = () => {
     const commonButtons = expandedView ? (
-      <div>
+      <div className="flex items-center gap-[1.56rem]">
         <Button variant="addOption">Add Option</Button>
         <Button variant="submit">Submit</Button>
       </div>
     ) : (
       <>
-        <div>
+        <div className="flex items-center gap-[1.56rem]">
           {unAnswered && <Button variant="submit">Start</Button>}
           {!unAnswered && changeAble && (
             <Button variant="change">Change</Button>
           )}
-          {!changeAble && <Button variant="result">Result</Button>}
-          {result && <Button variant="result-outline">Result</Button>}
+          {!unAnswered && !changeAble && (
+            <Button variant="result">Result</Button>
+          )}
+          {!result && <Button variant="result-outline">Result</Button>}
         </div>
         <br />
         {start && change && (
-          <div>
+          <div className="flex items-center gap-[1.56rem]">
             <Button variant="addOption">Add Option</Button>
             <Button variant="cancel">Cancel</Button>
             <Button variant="submit">Submit</Button>
@@ -47,7 +49,7 @@ const ButtonHandler = ({
     );
   };
 
-  return <div>{renderButtons()}</div>;
+  return <div className="flex w-full justify-end pr-7">{renderButtons()}</div>;
 };
 
 export default ButtonHandler;

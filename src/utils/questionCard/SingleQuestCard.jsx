@@ -6,9 +6,9 @@ export function getQuestionTitle(whichTypeQuestion) {
       return "Agree/Disagree";
     case "like/dislike":
       return "Like/Dislike";
-    case "multiple choice":
+    case "multiple choise":
       return "Multiple Choice";
-    case "ranked choice":
+    case "ranked choise":
       return "Ranked Choice";
     case "yes/no":
       return "Yes/No";
