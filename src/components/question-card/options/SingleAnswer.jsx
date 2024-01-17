@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
+import { getQuests } from "../../../features/quest/questsSlice";
 
 const SingleAnswer = (props) => {
+  const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const fetchSelectedPercentage = () => {
@@ -45,6 +47,8 @@ const SingleAnswer = (props) => {
     }
   };
 
+  console.log({ quests });
+  console.log("props.check", props.check);
   return (
     <div className="flex items-center pl-[3.94rem] pr-[6.3rem]">
       <div className="flex h-[26.05px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:h-[52.5px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:h-[45px] laptop:w-[25px] dark:bg-[#9E9E9E]">
@@ -67,9 +71,20 @@ const SingleAnswer = (props) => {
                 id="small-checkbox"
                 type="checkbox"
                 className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                checked={props.check}
+                checked={
+                  props.btnText !== "Results"
+                    ? quests.id === props.questStartData._id
+                      ? props.check
+                      : null
+                    : props.check
+                }
                 onChange={() =>
-                  props.handleToggleCheck(props.answer, true, false)
+                  props.handleToggleCheck(
+                    props.answer,
+                    true,
+                    false,
+                    props.questStartData._id,
+                  )
                 }
               />
             </div>

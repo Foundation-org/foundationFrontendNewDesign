@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  id: "",
   yesNo: {
     yes: {
       check: false,
@@ -39,8 +40,9 @@ export const questsSlice = createSlice({
   initialState,
   reducers: {
     toggleCheck: (state, action) => {
-      const { option, check, contend, label } = action.payload;
-
+      const { option, check, contend, label, id } = action.payload;
+      console.log("first", action.payload, state);
+      state.id = id;
       if (option === "Yes") {
         if (check) {
           state["yesNo"]["yes"].check = true;

@@ -99,13 +99,14 @@ const QuestionCard = ({
     dispatch(questUtilsActions.updateaddOptionLimit());
   };
 
-  const handleToggleCheck = (option, check, contend) => {
+  const handleToggleCheck = (option, check, contend, id) => {
     const capitalizedOption = capitalizeFirstLetter(option);
 
     const actionPayload = {
       option: capitalizedOption,
       check,
       contend,
+      id,
     };
 
     dispatch(toggleCheck(actionPayload));

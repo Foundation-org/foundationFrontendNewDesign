@@ -208,6 +208,7 @@ const Result = (props) => {
                   contend={quests.yesNo.yes.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
+                  questStartData={props.questStartData}
                 />
                 <SingleAnswer
                   number={"#2"}
@@ -218,6 +219,7 @@ const Result = (props) => {
                   contend={quests.yesNo.no.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
+                  questStartData={props.questStartData}
                 />
               </>
             )
@@ -235,6 +237,7 @@ const Result = (props) => {
                   contend={quests.agreeDisagree.agree.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
+                  questStartData={props.questStartData}
                 />
                 <SingleAnswer
                   number={"#2"}
@@ -245,6 +248,7 @@ const Result = (props) => {
                   contend={quests.agreeDisagree.disagree.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
+                  questStartData={props.questStartData}
                 />
               </>
             )
@@ -262,6 +266,7 @@ const Result = (props) => {
                   contend={quests.likeDislike.like.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
+                  questStartData={props.questStartData}
                 />
                 <SingleAnswer
                   number={"#2"}
@@ -272,6 +277,7 @@ const Result = (props) => {
                   contend={quests.likeDislike.dislike.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
+                  questStartData={props.questStartData}
                 />
               </>
             )

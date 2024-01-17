@@ -142,6 +142,7 @@ const StartTest = ({
                   check={quests.yesNo.yes.check}
                   contend={quests.yesNo.yes.contend}
                   handleToggleCheck={handleToggleCheck}
+                  questStartData={questStartData}
                 />
                 <SingleAnswer
                   number={"#2"}
@@ -149,6 +150,7 @@ const StartTest = ({
                   check={quests.yesNo.no.check}
                   contend={quests.yesNo.no.contend}
                   handleToggleCheck={handleToggleCheck}
+                  questStartData={questStartData}
                 />
               </>
             ) : title === "Agree/Disagree" ? (
@@ -159,6 +161,7 @@ const StartTest = ({
                   check={quests.agreeDisagree.agree.check}
                   contend={quests.agreeDisagree.agree.contend}
                   handleToggleCheck={handleToggleCheck}
+                  questStartData={questStartData}
                 />
                 <SingleAnswer
                   number={"#2"}
@@ -166,6 +169,7 @@ const StartTest = ({
                   check={quests.agreeDisagree.disagree.check}
                   contend={quests.agreeDisagree.disagree.contend}
                   handleToggleCheck={handleToggleCheck}
+                  questStartData={questStartData}
                 />
               </>
             ) : (
@@ -176,6 +180,7 @@ const StartTest = ({
                   check={quests.likeDislike.like.check}
                   contend={quests.likeDislike.like.contend}
                   handleToggleCheck={handleToggleCheck}
+                  questStartData={questStartData}
                 />
                 <SingleAnswer
                   number={"#2"}
@@ -183,6 +188,7 @@ const StartTest = ({
                   check={quests.likeDislike.dislike.check}
                   contend={quests.likeDislike.dislike.contend}
                   handleToggleCheck={handleToggleCheck}
+                  questStartData={questStartData}
                 />
               </>
             )}

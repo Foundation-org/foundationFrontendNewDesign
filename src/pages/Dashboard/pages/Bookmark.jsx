@@ -28,11 +28,13 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import QuestionCardWithToggle from "./QuestStartSection/components/QuestionCardWithToggle";
 import { handleClickScroll } from "../../../utils";
 import { IoIosArrowUp } from "react-icons/io";
+import * as filtersActions from "../../../features/sidebar/filtersSlice";
 
 const Bookmark = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const pageLimit = 5;
   const filterStates = useSelector(getFilters);
+  const newfilterStates = useSelector(filtersActions.getFilters);
   const [pagination, setPagination] = useState({
     page: 1,
     sliceStart: 0,
@@ -188,6 +190,8 @@ const Bookmark = () => {
 
   console.log({ allData });
 
+  console.log({ filterStates });
+
   return (
     <div className="flex w-full flex-col laptop:flex-row">
       <SidebarLeft
@@ -255,10 +259,11 @@ const Bookmark = () => {
             id="section-1"
             className="flex flex-col gap-2 py-3 tablet:gap-[17px] tablet:py-[27px]"
           >
-            {expandedView
+            {newfilterStates.expandedView
               ? allData?.map((item, index) => (
                   <div key={index + 1}>
                     <QuestionCardWithToggle
+                      questStartData={item}
                       id={item._id}
                       img="/assets/svgs/dashboard/badge.svg"
                       alt="badge"
@@ -312,6 +317,7 @@ const Bookmark = () => {
               : allData?.map((item, index) => (
                   <div key={index + 1}>
                     <QuestionCard
+                      questStartData={item}
                       id={item._id}
                       img="/assets/svgs/dashboard/badge.svg"
                       alt="badge"
