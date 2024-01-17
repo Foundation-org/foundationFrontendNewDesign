@@ -10,6 +10,8 @@ import {
 import { Button } from "../ui/Button";
 import { FaSpinner } from "react-icons/fa";
 
+import * as questUtilsActions from "../../features/quest/utilsSlice";
+
 const ButtonGroup = ({
   usersAddTheirAns,
   title,
@@ -43,6 +45,7 @@ const ButtonGroup = ({
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
   const uuidExists =
     answers &&
     answers?.some(
@@ -197,34 +200,38 @@ const ButtonGroup = ({
 
   if (startTest === questStartData._id) {
     return (
-      <>
+      <div className="flex w-full justify-between pl-[3.19rem] pr-[3.44rem]">
         {/* Add Options */}
-        <div className="ml-[20px] mr-[28px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
-          {usersAddTheirAns && uuidExists === false ? (
-            <div>
-              {title === "Yes/No" ||
-              title === "Agree/Disagree" ||
-              title === "Like/Dislike" ? null : (
-                <Button onClick={handleOpen} variant={"change"}>
-                  {persistedTheme === "dark" ? (
-                    <img
-                      src="/assets/svgs/dashboard/add-dark.svg"
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  ) : (
-                    <img
-                      src="/assets/svgs/dashboard/add.svg"
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  )}
-                  Add Option
-                </Button>
-              )}
-            </div>
-          ) : null}
-        </div>
+        {getQuestUtilsState.addOptionLimit === 0 ? (
+          <div className="flex items-center justify-center">
+            {usersAddTheirAns && uuidExists === false ? (
+              <div>
+                {title === "Yes/No" ||
+                title === "Agree/Disagree" ||
+                title === "Like/Dislike" ? null : (
+                  <Button onClick={handleOpen} variant={"addOption"}>
+                    {persistedTheme === "dark" ? (
+                      <img
+                        src="/assets/svgs/dashboard/add-dark.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    ) : (
+                      <img
+                        src="/assets/svgs/dashboard/add.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    )}
+                    Add Option
+                  </Button>
+                )}
+              </div>
+            ) : null}
+          </div>
+        ) : (
+          <div></div>
+        )}
 
         {/* Go back / Submit */}
         <div
@@ -234,9 +241,9 @@ const ButtonGroup = ({
               : addOptionField === 1
                 ? "mt-[4rem] tablet:mt-[10rem]"
                 : ""
-          } flex w-full justify-end gap-2 tablet:gap-10`}
+          }`}
         >
-          <div className="mr-[14.4px] flex gap-2 tablet:mr-[30px] tablet:gap-10">
+          <div className="flex gap-2 tablet:gap-[0.75rem]">
             {!expandedView ? (
               <Button
                 variant="cancel"
@@ -273,12 +280,12 @@ const ButtonGroup = ({
             </Button>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 
   return (
-    <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:mr-[30px] tablet:gap-10">
+    <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
       {/* Start / Change */}
       {getButtonText(btnText) !== "Completed" ? (
         <Button

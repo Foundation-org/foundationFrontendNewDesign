@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { resetOptionLimit } from "../../../features/quest/utilsSlice";
+import { resetaddOptionLimit } from "../../../features/quest/utilsSlice";
 
 const DeleteOption = (props) => {
   const dispatch = useDispatch();
@@ -13,8 +13,7 @@ const DeleteOption = (props) => {
     );
 
     props.setAnswerSelection(newArr);
-    dispatch(resetOptionLimit());
-    // props.setAddOptionLimit(0);
+    dispatch(resetaddOptionLimit());
     toast.success("Item deleted");
     props.handleEditClose();
     props.handleDeleteClose();

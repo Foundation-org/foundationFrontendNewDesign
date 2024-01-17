@@ -9,7 +9,7 @@ import {
   checkAnswerExist,
 } from "../../../services/api/questsApi";
 import { useDispatch } from "react-redux";
-import { resetOptionLimit } from "../../../features/quest/utilsSlice";
+import { resetaddOptionLimit } from "../../../features/quest/utilsSlice";
 
 const SingleAnswerRankedChoice = (props) => {
   const dispatch = useDispatch();
@@ -49,8 +49,7 @@ const SingleAnswerRankedChoice = (props) => {
     );
 
     props.setAnswerSelection(newArr);
-    // props.setAddOptionLimit(0);
-    dispatch(resetOptionLimit());
+    dispatch(resetaddOptionLimit());
     // toast.success("Item deleted");
   };
 
@@ -131,7 +130,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleAddOption = () => {
     const newArr = props.answersSelection.map((item) =>
-      item.label === props.answer ? { label: answer.trim(), ...item } : item,
+      item.label === props.answer ? { ...item, label: answer.trim() } : item,
     );
 
     props.setAnswerSelection(newArr);

@@ -12,13 +12,13 @@ import OptionBar from "../../../../../components/question-card/ButtonGroup";
 import StartTest from "./StartTest";
 import { userInfo } from "../../../../../services/api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
-import { updateOptionLimit } from "../../../../../features/quest/utilsSlice";
 import { capitalizeFirstLetter, validateInterval } from "../../../../../utils";
 import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
 import QuestCardLayout from "../../../../../components/question-card/QuestCardLayout";
 import { useStartQuest } from "../../../../../services/mutations/quest";
 import QuestInfoText from "../../../../../components/question-card/QuestInfoText";
 import ConditionalTextFullScreen from "../../../../../components/question-card/ConditionalTextFullScreen";
+import * as questUtilsActions from "../../../../../features/quest/utilsSlice";
 
 const QuestionCard = ({
   isBookmarked,
@@ -34,12 +34,10 @@ const QuestionCard = ({
   const queryClient = useQueryClient();
   const quests = useSelector(getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
   const startTestMutation = useStartQuest();
 
   const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
-  const [addOptionField, setAddOptionField] = useState(0);
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [loadingDetail, setLoadingDetail] = useState(false);
@@ -83,11 +81,6 @@ const QuestionCard = ({
     );
   }, [answersSelection]);
 
-  const handleOpen = () => {
-    setAddOptionField(1);
-    handleAddOption();
-  };
-
   const handleClose = () => setOpen(false);
 
   const handleAddOption = () => {
@@ -103,10 +96,7 @@ const QuestionCard = ({
 
     setAnswerSelection([...answersSelection, newOption]);
 
-    setAddOptionField(0);
-    // setAddOptionLimit(1);
-
-    dispatch(updateOptionLimit());
+    dispatch(questUtilsActions.updateaddOptionLimit());
   };
 
   const handleToggleCheck = (option, check, contend) => {
@@ -160,10 +150,13 @@ const QuestionCard = ({
           dispatch(addUser(resp.data));
         }
       });
+
+      dispatch(questUtilsActions.resetaddOptionLimit());
     }
 
     if (startTestMutation.error) {
       setLoading(false);
+      dispatch(questUtilsActions.resetaddOptionLimit());
     }
   };
 
@@ -193,10 +186,14 @@ const QuestionCard = ({
           dispatch(addUser(resp.data));
         }
       });
+
+      dispatch(questUtilsActions.resetaddOptionLimit());
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(":")[1]);
       setLoading(false);
+
+      dispatch(questUtilsActions.resetaddOptionLimit());
     },
   });
 
@@ -494,17 +491,14 @@ const QuestionCard = ({
             whichTypeQuestion={questStartData.whichTypeQuestion}
             handleToggleCheck={handleToggleCheck}
             handleSubmit={handleSubmit}
-            handleOpen={handleOpen}
             handleClose={handleClose}
             open={open}
             btnText={questStartData.startStatus}
             usersAddTheirAns={questStartData.usersAddTheirAns}
-            setAnswerSelection={setAnswerSelection}
             answersSelection={answersSelection}
+            setAnswerSelection={setAnswerSelection}
             rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
-            addOptionField={addOptionField}
-            setAddOptionField={setAddOptionField}
             setStartTest={setStartTest}
             loading={loading}
             setIsSubmit={setIsSubmit}
@@ -514,7 +508,7 @@ const QuestionCard = ({
             loadingDetail={loadingDetail}
           />
           <ConditionalTextFullScreen
-            show={true}
+            show={false}
             answersSelection={answersSelection}
             rankedAnswers={rankedAnswers}
           />
@@ -553,7 +547,7 @@ const QuestionCard = ({
         setAnswerSelection={setAnswerSelection}
         startStatus={questStartData.startStatus}
         setLoadingDetail={setLoadingDetail}
-        handleOpen={handleOpen}
+        handleOpen={handleAddOption}
         usersAddTheirAns={questStartData.usersAddTheirAns}
         answers={questStartData.QuestAnswers}
         title={getQuestionTitle(questStartData.whichTypeQuestion)}

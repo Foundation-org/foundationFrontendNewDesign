@@ -2,30 +2,27 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import SingleAnswerMultipleChoice from "../../../../../components/question-card/options/SingleAnswerMultipleChoice";
-import SingleAnswerRankedChoice from "../../../../../components/question-card/options/SingleAnswerRankedChoice";
 import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
-import SingleAnswer from "../../../../../components/question-card/options/SingleAnswer";
 import Loader from "../../../../../components/ui/Loader";
+import SingleAnswer from "../../../../../components/question-card/options/SingleAnswer";
+import SingleAnswerRankedChoice from "../../../../../components/question-card/options/SingleAnswerRankedChoice";
+import SingleAnswerMultipleChoice from "../../../../../components/question-card/options/SingleAnswerMultipleChoice";
 
 const StartTest = ({
   id,
   questStartData,
   title,
   answers,
-  // SingleAnswer,
   quests,
   handleToggleCheck,
   whichTypeQuestion,
   handleSubmit,
-  handleOpen,
   usersAddTheirAns,
-  setAnswerSelection,
   answersSelection,
-  multipleOption,
+  setAnswerSelection,
   rankedAnswers,
   setRankedAnswers,
-  addOptionField,
+  multipleOption,
   setStartTest,
   loading,
   expandedView,
@@ -42,13 +39,6 @@ const StartTest = ({
   const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
-  const uuidExists =
-    answers &&
-    answers?.some(
-      (item) =>
-        item.uuid === persistedUserInfo?.uuid || localStorage.getItem("uId"),
-    );
 
   useEffect(() => {
     localStorage.setItem("usersChangeTheirAns", usersChangeTheirAns);

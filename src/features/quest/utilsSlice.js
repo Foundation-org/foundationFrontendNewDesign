@@ -1,23 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  optionLimit: 0,
+  addOptionLimit: 0,
 };
 
 export const utilsSlice = createSlice({
   name: "questUtils",
   initialState,
   reducers: {
-    updateOptionLimit: (state) => {
-      state.optionLimit = state.optionLimit + 1;
+    updateaddOptionLimit: (state) => {
+      state.addOptionLimit = state.addOptionLimit === 0 ? 1 : 0;
     },
-    resetOptionLimit: (state) => {
-      state.optionLimit = initialState.optionLimit;
+    resetaddOptionLimit: (state) => {
+      state.addOptionLimit = initialState.addOptionLimit;
     },
   },
 });
 
-export const { updateOptionLimit, resetOptionLimit } = utilsSlice.actions;
+export const { updateaddOptionLimit, resetaddOptionLimit } = utilsSlice.actions;
 
 export default utilsSlice.reducer;
 

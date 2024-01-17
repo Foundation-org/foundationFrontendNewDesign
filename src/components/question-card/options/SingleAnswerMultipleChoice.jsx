@@ -8,7 +8,7 @@ import {
   checkAnswerExist,
 } from "../../../services/api/questsApi";
 import { useDispatch } from "react-redux";
-import { resetOptionLimit } from "../../../features/quest/utilsSlice";
+import { resetaddOptionLimit } from "../../../features/quest/utilsSlice";
 
 const SingleAnswerMultipleChoice = (props) => {
   const dispatch = useDispatch();
@@ -149,7 +149,7 @@ const SingleAnswerMultipleChoice = (props) => {
 
     props.setAnswerSelection(newArr);
     // props.setAddOptionLimit(0);
-    dispatch(resetOptionLimit());
+    dispatch(resetaddOptionLimit());
     toast.success("Item deleted");
   };
 
