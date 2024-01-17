@@ -10,7 +10,7 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic }) => {
           <img
             src="/assets/svgs/dashboard/MeBadge.svg"
             alt={alt}
-            className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888pxpx]"
+            className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888px]"
           />
           <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[11.3px] font-[400] leading-normal text-[#F6F6F6] tablet:top-1/2 tablet:text-[15px]">
             {persistedUserInfo?.badges?.length}
@@ -19,9 +19,9 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic }) => {
       ) : (
         <div className="relative z-50 h-fit w-fit">
           <img
-            src={img}
+            src={"/assets/svgs/dashboard/badge.svg"}
             alt={alt}
-            className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888pxpx]"
+            className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888px]"
           />
           <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[11.3px] font-[400] leading-normal text-[#F6F6F6] tablet:top-1/2 tablet:text-[15px]">
             {badgeCount}

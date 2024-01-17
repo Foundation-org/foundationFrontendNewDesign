@@ -18,6 +18,10 @@ const Profile = () => {
   const [selectedTab, setSelectedTab] = useState(pathname);
 
   useEffect(() => {
+    setSelectedTab(pathname);
+  }, [pathname]);
+
+  useEffect(() => {
     if (persistedTheme === "light") {
       setCheckState(false);
       localStorage.setItem("theme", "light");

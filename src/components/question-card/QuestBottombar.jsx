@@ -171,13 +171,29 @@ const QuestBottombar = ({
           />
         </BasicModal>
       </div>
-      <div className="flex h-[1.75rem] w-fit items-center gap-[0.44rem] rounded-[0.625rem] bg-white px-[0.5rem]">
-        <img
-          src="/assets/svgs/dashboard/clock-outline.svg"
-          alt="clock"
-          className="h-[8.64px] w-[8.64px] tablet:h-[18px] tablet:w-[18px]"
-        />
-        <h4 className="whitespace-nowrap text-[0.51638rem] font-medium text-[#9C9C9C] tablet:text-[1.13531rem] laptop:text-[1rem]">
+      <div className="flex h-[1.75rem] w-fit items-center gap-[0.44rem] rounded-[0.625rem] bg-white px-[0.5rem] dark:bg-[#424242]">
+        {persistedTheme === "dark" ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="19"
+            viewBox="0 0 18 19"
+            fill="none"
+          >
+            <path
+              d="M9.24484 18.3643C4.44763 18.3643 0.54541 14.4552 0.54541 9.64956C0.54541 4.8439 4.44763 0.934814 9.24484 0.934814C14.0421 0.934814 17.9443 4.8439 17.9443 9.64956C17.9443 14.4552 14.0414 18.3643 9.24484 18.3643ZM9.24484 2.32917C5.21526 2.32917 1.93732 5.61289 1.93732 9.64956C1.93732 13.6862 5.21526 16.9699 9.24484 16.9699C13.2744 16.9699 16.5524 13.6862 16.5524 9.64956C16.5524 5.61289 13.2737 2.32917 9.24484 2.32917ZM9.18916 10.291H4.72114C4.53656 10.291 4.35954 10.2175 4.22902 10.0868C4.09851 9.95602 4.02518 9.77869 4.02518 9.59379C4.02518 9.40888 4.09851 9.23155 4.22902 9.10081C4.35954 8.97006 4.53656 8.89661 4.72114 8.89661H8.49321V3.72353C8.49321 3.53863 8.56653 3.3613 8.69705 3.23055C8.82757 3.09981 9.00459 3.02635 9.18916 3.02635C9.37374 3.02635 9.55076 3.09981 9.68128 3.23055C9.8118 3.3613 9.88512 3.53863 9.88512 3.72353V9.59379C9.88512 9.77869 9.8118 9.95602 9.68128 10.0868C9.55076 10.2175 9.37374 10.291 9.18916 10.291Z"
+              fill="white"
+            />
+          </svg>
+        ) : (
+          <img
+            src="/assets/svgs/dashboard/clock-outline.svg"
+            alt="clock"
+            className="h-[8.64px] w-[8.64px] tablet:h-[18px] tablet:w-[18px]"
+          />
+        )}
+
+        <h4 className="whitespace-nowrap text-[0.51638rem] font-medium text-[#9C9C9C] tablet:text-[1.13531rem] laptop:text-[1rem] dark:text-white">
           5 min ago
         </h4>
       </div>
