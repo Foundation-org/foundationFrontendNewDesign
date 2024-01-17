@@ -10,7 +10,7 @@ const ConditionalTextFullScreen = ({
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-between pb-[1.44rem] pl-20 pr-12 pt-[1.2rem]">
+    <div className="flex items-center justify-between pb-[0.62rem] pl-[2.19rem] pr-12 pt-[0.56rem] tablet:pb-[1.44rem] tablet:pl-20 tablet:pt-[1.2rem]">
       <QuestTimeRemaining
         lastInteractedAt={localStorage.getItem("lastInteractedAt")}
         howManyTimesAnsChanged={localStorage.getItem("howManyTimesAnsChanged")}

@@ -509,7 +509,7 @@ const QuestionCard = ({
             loadingDetail={loadingDetail}
           />
           <ConditionalTextFullScreen
-            show={false}
+            show={true}
             answersSelection={answersSelection}
             rankedAnswers={rankedAnswers}
           />

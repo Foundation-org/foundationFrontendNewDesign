@@ -4,7 +4,7 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return (
-    <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-2 py-2 tablet:px-5 tablet:py-[0.63rem] laptop:px-4">
+    <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-2 py-1 tablet:px-5 tablet:py-[0.63rem] laptop:px-4">
       {createdBy === persistedUserInfo?.uuid ? (
         <div className="relative h-fit w-fit">
           <img

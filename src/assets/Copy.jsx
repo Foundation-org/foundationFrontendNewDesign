@@ -4,8 +4,6 @@ const Copy = ({ color, h, w }) => {
       className="h-[1.024rem] w-[1.024rem] tablet:h-[1.28rem] tablet:w-[1.28rem]"
       style={{ height: h, width: w }}
       xmlns="http://www.w3.org/2000/svg"
-      width="23"
-      height="23"
       viewBox="0 0 23 23"
       fill="none"
     >

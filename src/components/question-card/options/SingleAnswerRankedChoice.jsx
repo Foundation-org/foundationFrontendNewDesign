@@ -175,7 +175,7 @@ const SingleAnswerRankedChoice = (props) => {
         </div>
       )}
       {/* =============== To Display Option */}
-      <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
+      <div className="flex w-full items-center rounded-[4.7px] tablet:rounded-[10px]">
         <div className="flex w-full items-center rounded-l-[4.734px] bg-white tablet:rounded-l-[10px] dark:bg-[#0D1012]">
           {props.btnText !== "Results" && (
             <div
@@ -245,8 +245,8 @@ const SingleAnswerRankedChoice = (props) => {
             )}
           </div>
         </div>
-        <div className="flex w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r border-[#ACACAC] bg-white tablet:rounded-r-[10px]">
-          <h1 className="text-[25px] font-bold leading-[0px] text-[#22AA69]">
+        <div className="flex h-[21.8px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r border-[#ACACAC] bg-white tablet:h-[45px] tablet:rounded-r-[10px]">
+          <h1 className="text-[16px] font-bold leading-[0px] text-[#22AA69] tablet:text-[25px]">
             R
           </h1>
         </div>

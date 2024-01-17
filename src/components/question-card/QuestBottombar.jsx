@@ -84,7 +84,7 @@ const QuestBottombar = ({
   };
 
   return (
-    <div className="flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] pb-[0.55rem] pt-[0.86rem] tablet:px-5 tablet:py-[0.63rem]">
+    <div className="flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] py-2 tablet:px-5 tablet:py-[0.63rem]">
       <div className="flex items-center gap-[0.17rem] tablet:gap-[6px]">
         <div onClick={handleCopyOpen} className="cursor-pointer">
           {persistedTheme === "dark" ? <Copy /> : <Copy />}
