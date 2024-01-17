@@ -199,7 +199,7 @@ const ButtonGroup = ({
     return (
       <>
         {/* Add Options */}
-        <div className="ml-[20px] mr-[28px] mt-[13px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
+        <div className="ml-[20px] mr-[28px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
           {usersAddTheirAns && uuidExists === false ? (
             <div>
               {title === "Yes/No" ||
@@ -230,10 +230,10 @@ const ButtonGroup = ({
         <div
           className={`${
             title === "Multiple Choice"
-              ? "mt-4 tablet:mt-5"
+              ? ""
               : addOptionField === 1
                 ? "mt-[4rem] tablet:mt-[10rem]"
-                : "mt-4 tablet:mt-5"
+                : ""
           } flex w-full justify-end gap-2 tablet:gap-10`}
         >
           <div className="mr-[14.4px] flex gap-2 tablet:mr-[30px] tablet:gap-10">

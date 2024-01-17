@@ -1,5 +1,4 @@
 import { FaSpinner } from "react-icons/fa";
-import { useSelector } from "react-redux";
 
 export function calculateRemainingTime(
   lastInteractedAt,
@@ -118,8 +117,8 @@ export const printEndMessage = (
   );
 };
 
-export const validateInterval = () => {
-  // Define the time interval (in milliseconds) based on usersChangeTheirAns value
+export const validateInterval = (usersChangeTheirAns) => {
+  console.log({ usersChangeTheirAns });
   let timeInterval = 0;
   if (usersChangeTheirAns === "Daily") {
     return (timeInterval = 24 * 60 * 60 * 1000); // 24 hours in milliseconds
