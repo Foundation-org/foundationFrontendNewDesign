@@ -551,9 +551,6 @@ const QuestionCard = ({
         expandedView={expandedView}
         setStartTest={setStartTest}
         viewResult={viewResult}
-        // setViewResult={setViewResult}
-        // openResults={openResults}
-        // setOpenResults{setOpenResults}
         handleSubmit={handleSubmit}
         loading={loading}
         startTest={startTest}

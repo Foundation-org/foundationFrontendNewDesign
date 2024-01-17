@@ -23,6 +23,7 @@ import { addUser } from "../../../../../features/auth/authSlice";
 import { validateInterval } from "../../../../../utils";
 
 const QuestionCardWithToggle = ({
+  questStartData,
   id,
   img,
   alt,
@@ -665,6 +666,7 @@ const QuestionCardWithToggle = ({
       </div>
       {viewResult !== id && openResults !== true ? (
         <StartTest
+          questStartData={questStartData}
           id={id}
           title={title}
           answers={answers}

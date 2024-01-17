@@ -49,7 +49,6 @@ const QuestStartSection = () => {
   }, [filterStates.expandedView]);
 
   // preferences start
-
   const [columns, setColumns] = useState(initialColumns);
 
   const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
@@ -192,6 +191,7 @@ const QuestStartSection = () => {
               ? allData?.map((item, index) => (
                   <div key={index + 1}>
                     <QuestionCardWithToggle
+                      questStartData={item}
                       mainData={item}
                       id={item._id}
                       img="/assets/svgs/dashboard/badge.svg"

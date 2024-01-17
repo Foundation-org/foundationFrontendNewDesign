@@ -6,6 +6,7 @@ import SingleAnswerMultipleChoice from "../../../../../components/question-card/
 import SingleAnswerRankedChoice from "../../../../../components/question-card/options/SingleAnswerRankedChoice";
 import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
 import SingleAnswer from "../../../../../components/question-card/options/SingleAnswer";
+import Loader from "../../../../../components/ui/Loader";
 
 const StartTest = ({
   id,
@@ -228,7 +229,7 @@ const StartTest = ({
                     checkInfo={true}
                     check={findLabelChecked(answersSelection, item.label)}
                     contend={findLabelContend(answersSelection, item.label)}
-                    whichTypeQuestion={whichTypeQuestion}
+                    whichTypeQuestion={questStartData.whichTypeQuestion}
                     handleCheckChange={
                       multipleOption === true
                         ? (check) => handleCheckChange(index, check)
@@ -316,102 +317,9 @@ const StartTest = ({
   };
 
   return (
-    <>
-      <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
-        {renderOptionsByTitle()}
-      </div>
-
-      {/* Add Options && Cancel && Submit Button */}
-      {/* <div className="ml-[20px] mr-[28px] mt-[13px] flex items-center justify-between tablet:ml-[100px] tablet:mr-[46px]">
-        {usersAddTheirAns && uuidExists === false ? (
-          <div>
-            {title === "Yes/No" ||
-            title === "Agree/Disagree" ||
-            title === "Like/Dislike" ? null : (
-              <button
-                onClick={handleOpen}
-                className="addoption-boxShadow ml-4 flex h-[23.48px] w-[81.8px] items-center gap-[5.8px] rounded-[7.1px] bg-[#D9D9D9] px-[10px] py-[3.4px] text-[8.52px] font-normal leading-normal text-[#435059] tablet:ml-0 tablet:mt-0 tablet:h-[52px] tablet:w-[173px] tablet:gap-[11.37px] tablet:rounded-[15px] tablet:px-[21px] tablet:py-[10px] tablet:text-[18px] dark:bg-[#595C60] dark:text-[#BCBCBC]"
-              >
-                {persistedTheme === "dark" ? (
-                  <img
-                    src="/assets/svgs/dashboard/add-dark.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                ) : (
-                  <img
-                    src="/assets/svgs/dashboard/add.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                )}
-                Add Option
-              </button>
-            )}
-          </div>
-        ) : (
-          <div></div>
-        )}
-      </div> */}
-      {/* <div
-        className={`${
-          title === "Multiple Choice"
-            ? "mt-4 tablet:mt-5"
-            : addOptionField === 1
-              ? "mt-[4rem] tablet:mt-[10rem]"
-              : "mt-4 tablet:mt-5"
-        } flex w-full justify-end gap-2 tablet:gap-10`}
-      >
-        <div className="mr-[14.4px] flex gap-2 tablet:mr-[30px] tablet:gap-10">
-          {!expandedView ? (
-            <button
-              className={` ${
-                persistedTheme === "dark"
-                  ? "bg-[#F4F4F4] text-[#707175]"
-                  : "bg-[#707175] text-white"
-              } inset-0 h-[23.48px] w-[81.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal shadow-inner tablet:h-[52px] tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]`}
-              onClick={() => {
-                setStartTest(null);
-              }}
-            >
-              Go Back
-            </button>
-          ) : null}
-          {startStatus === "change answer" &&
-            viewResult === null &&
-            openResults === false && (
-              <button
-                className={` ${
-                  persistedTheme === "dark"
-                    ? "bg-[#F4F4F4] text-[#707175]"
-                    : "bg-[#707175] text-white"
-                } inset-0 w-[82.8px] rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:w-[173px]  tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
-                onClick={() => {
-                  setViewResult(id);
-                  setOpenResults(true);
-                }}
-              >
-                Go Back
-              </button>
-            )}
-          <button
-            className={`relative ${
-              persistedTheme === "dark"
-                ? "bg-[#333B46]"
-                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-            } flex h-[23.48px] w-[81.8px] items-center justify-center rounded-[7.1px] px-[9.4px] py-[3.7px] text-[9.4px] font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:h-[52px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] dark:text-[#B6B6B6]`}
-            onClick={() => handleSubmit()}
-            disabled={loading === true ? true : false}
-          >
-            {loading === true ? (
-              <FaSpinner className="animate-spin text-[#EAEAEA]" />
-            ) : (
-              "Submit"
-            )}
-          </button>
-        </div>
-      </div> */}
-    </>
+    <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
+      {renderOptionsByTitle()}
+    </div>
   );
 };
 

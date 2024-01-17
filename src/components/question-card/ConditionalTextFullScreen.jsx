@@ -17,9 +17,8 @@ const ConditionalTextFullScreen = ({
         usersChangeTheirAns={localStorage.getItem("usersChangeTheirAns")}
         show={show}
       />
-      {/* {((isFullScreen === undefined && answersSelection?.length > 6) ||
-        (isFullScreen === undefined && rankedAnswers?.length > 6)) && ( */}
-      {show ? (
+      {(isFullScreen === undefined && answersSelection?.length > 6) ||
+      (isFullScreen === undefined && rankedAnswers?.length > 6) ? (
         <div
           className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
           onClick={() => {
@@ -46,8 +45,6 @@ const ConditionalTextFullScreen = ({
           &#x200B;
         </p>
       )}
-
-      {/* )} */}
     </div>
   );
 };
