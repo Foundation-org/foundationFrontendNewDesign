@@ -183,7 +183,7 @@ const SingleAnswerRankedChoice = (props) => {
                 props.snapshot.isDragging
                   ? "border-y-[#5FA3D5] border-r-[#5FA3D5]"
                   : "border-y-[#DEE6F7] border-s-[#DEE6F7]"
-              } flex h-full w-fit items-center rounded-l-[4.734px] border-y border-s bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-3 dark:bg-[#9E9E9E]`}
+              } flex h-full w-fit items-center rounded-l-[4.734px] border-y border-s bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:py-[13px] dark:bg-[#9E9E9E]`}
             >
               {persistedTheme === "dark" ? (
                 <img
@@ -214,7 +214,7 @@ const SingleAnswerRankedChoice = (props) => {
                   props.snapshot.isDragging
                     ? "bg-[#F2F6FF]"
                     : "bg-white dark:bg-[#0D1012]"
-                } w-full rounded-[4.73px] px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] outline-none tablet:rounded-[10.949px] tablet:pl-[32px] tablet:pt-[12px] tablet:text-[19px]  dark:text-[#D3D3D3]`}
+                } w-full rounded-[4.73px] px-4 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none tablet:rounded-[10.949px] tablet:py-[9px] tablet:pl-[32px] tablet:text-[19px] dark:text-[#D3D3D3]`}
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) =>
@@ -223,7 +223,7 @@ const SingleAnswerRankedChoice = (props) => {
                 }
               />
             ) : (
-              <h1 className="pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] tablet:py-3 tablet:text-[19px] dark:text-[#D3D3D3]">
+              <h1 className="pb-[5.6px] pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none tablet:py-3 tablet:pl-[32px] tablet:text-[19px] dark:text-[#D3D3D3]">
                 {props.answer}
               </h1>
             )}
@@ -233,7 +233,7 @@ const SingleAnswerRankedChoice = (props) => {
                   props.snapshot.isDragging
                     ? "bg-[#F2F6FF]"
                     : "bg-white dark:bg-[#0D1012]"
-                } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:h-[50.19px] tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.2rem] ${
+                } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:h-[43px] tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.2rem] ${
                   checkOptionStatus.color
                 }`}
               >

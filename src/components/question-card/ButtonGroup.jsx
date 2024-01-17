@@ -53,6 +53,7 @@ const ButtonGroup = ({
         item.uuid === persistedUserInfo?.uuid || localStorage.getItem("uId"),
     );
 
+  console.log("getQuestUtilsState", getQuestUtilsState);
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
       // Check in selected array
@@ -182,6 +183,7 @@ const ButtonGroup = ({
   });
 
   const handleStartChange = () => {
+    dispatch(questUtilsActions.resetaddOptionLimit());
     if (btnText === "") {
       dispatch(resetQuests());
       handleStartTest(id);

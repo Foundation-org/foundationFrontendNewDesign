@@ -8,7 +8,6 @@ import {
 } from "../../../../../features/quest/questsSlice";
 import { updateChangeAnsStartQuest } from "../../../../../services/api/questsApi";
 import Result from "./Result";
-import OptionBar from "../../../../../components/question-card/ButtonGroup";
 import StartTest from "./StartTest";
 import { userInfo } from "../../../../../services/api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
@@ -19,6 +18,7 @@ import { useStartQuest } from "../../../../../services/mutations/quest";
 import QuestInfoText from "../../../../../components/question-card/QuestInfoText";
 import ConditionalTextFullScreen from "../../../../../components/question-card/ConditionalTextFullScreen";
 import * as questUtilsActions from "../../../../../features/quest/utilsSlice";
+import ButtonGroup from "../../../../../components/question-card/ButtonGroup";
 
 const QuestionCard = ({
   isBookmarked,
@@ -532,7 +532,7 @@ const QuestionCard = ({
       handleStartTest={handleStartTest}
     >
       {renderQuestContent()}
-      <OptionBar
+      <ButtonGroup
         questStartData={questStartData}
         id={questStartData._id}
         btnText={questStartData.startStatus}
