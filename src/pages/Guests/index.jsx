@@ -99,35 +99,11 @@ const Guests = () => {
               </button>
             </div>
           )}
-
-          <div>
-            {singleQuestResp && isFullScreen !== "isfullscreen" ? (
-              <QuestionCard
-                tab={tab}
-                questStartData={singleQuestResp}
-                id={singleQuestResp?._id}
-                img="/assets/svgs/dashboard/badge.svg"
-                alt="badge"
-                badgeCount="5"
-                time={singleQuestResp?.createdAt}
-                title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
-                question={singleQuestResp?.Question}
-                answers={singleQuestResp?.QuestAnswers}
-                usersAddTheirAns={singleQuestResp?.usersAddTheirAns}
-                whichTypeQuestion={singleQuestResp?.whichTypeQuestion}
-                btnText={singleQuestResp?.startStatus}
-                startStatus={singleQuestResp?.startStatus}
-                viewResult={viewResult}
-                handleViewResults={handleViewResults}
-                multipleOption={singleQuestResp?.userCanSelectMultiple}
-                QuestTopic={singleQuestResp?.QuestTopic}
-                createdBy={singleQuestResp?.uuid}
-                lastInteractedAt={singleQuestResp?.lastInteractedAt}
-                usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
-              />
-            ) : (
-              <div className="px-[25px] tablet:px-[86px]">
-                <QuestionCardWithToggle
+          {singleQuestResp && (
+            <div>
+              {isFullScreen !== "isfullscreen" ? (
+                <QuestionCard
+                  tab={tab}
                   questStartData={singleQuestResp}
                   id={singleQuestResp?._id}
                   img="/assets/svgs/dashboard/badge.svg"
@@ -140,23 +116,48 @@ const Guests = () => {
                   usersAddTheirAns={singleQuestResp?.usersAddTheirAns}
                   whichTypeQuestion={singleQuestResp?.whichTypeQuestion}
                   btnText={singleQuestResp?.startStatus}
-                  startTest={startTest}
-                  setStartTest={setStartTest}
+                  startStatus={singleQuestResp?.startStatus}
                   viewResult={viewResult}
-                  setViewResult={setViewResult}
                   handleViewResults={handleViewResults}
-                  handleStartTest={handleStartTest}
                   multipleOption={singleQuestResp?.userCanSelectMultiple}
                   QuestTopic={singleQuestResp?.QuestTopic}
                   createdBy={singleQuestResp?.uuid}
                   lastInteractedAt={singleQuestResp?.lastInteractedAt}
                   usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
-                  startStatus={singleQuestResp?.startStatus}
-                  expandedView={true}
                 />
-              </div>
-            )}
-          </div>
+              ) : (
+                <div className="px-[25px] tablet:px-[86px]">
+                  <QuestionCardWithToggle
+                    questStartData={singleQuestResp}
+                    id={singleQuestResp?._id}
+                    img="/assets/svgs/dashboard/badge.svg"
+                    alt="badge"
+                    badgeCount="5"
+                    time={singleQuestResp?.createdAt}
+                    title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
+                    question={singleQuestResp?.Question}
+                    answers={singleQuestResp?.QuestAnswers}
+                    usersAddTheirAns={singleQuestResp?.usersAddTheirAns}
+                    whichTypeQuestion={singleQuestResp?.whichTypeQuestion}
+                    btnText={singleQuestResp?.startStatus}
+                    startTest={startTest}
+                    setStartTest={setStartTest}
+                    viewResult={viewResult}
+                    setViewResult={setViewResult}
+                    handleViewResults={handleViewResults}
+                    handleStartTest={handleStartTest}
+                    multipleOption={singleQuestResp?.userCanSelectMultiple}
+                    QuestTopic={singleQuestResp?.QuestTopic}
+                    createdBy={singleQuestResp?.uuid}
+                    lastInteractedAt={singleQuestResp?.lastInteractedAt}
+                    usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
+                    startStatus={singleQuestResp?.startStatus}
+                    expandedView={true}
+                  />
+                </div>
+              )}
+            </div>
+          )}
         </div>
         <SidebarRight />
       </div>

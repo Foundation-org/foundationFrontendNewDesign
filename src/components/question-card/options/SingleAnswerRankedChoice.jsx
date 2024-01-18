@@ -201,7 +201,7 @@ const SingleAnswerRankedChoice = (props) => {
           <div
             className={`${
               props.snapshot.isDragging
-                ? "border-y-[#5FA3D5] bg-[#F2F6FF]"
+                ? "border-y-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]"
                 : "border-y-[#ACACAC]"
             } flex w-full justify-between border-y`}
           >
@@ -210,7 +210,7 @@ const SingleAnswerRankedChoice = (props) => {
                 type="text"
                 className={`${
                   props.snapshot.isDragging
-                    ? "bg-[#F2F6FF]"
+                    ? "bg-[#F2F6FF] dark:bg-[#0D1012]"
                     : "bg-white dark:bg-[#0D1012]"
                 } w-full rounded-[4.73px] px-4 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none tablet:rounded-[10.949px] tablet:py-[9px] tablet:pl-[32px] tablet:text-[19px] dark:text-[#D3D3D3]`}
                 value={answer}
@@ -229,7 +229,7 @@ const SingleAnswerRankedChoice = (props) => {
               <div
                 className={`${
                   props.snapshot.isDragging
-                    ? "bg-[#F2F6FF]"
+                    ? "bg-[#F2F6FF] "
                     : "bg-white dark:bg-[#0D1012]"
                 } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:h-[43px] tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.2rem] ${
                   checkOptionStatus.color
@@ -243,7 +243,7 @@ const SingleAnswerRankedChoice = (props) => {
             )}
           </div>
         </div>
-        <div className="flex h-[21.8px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r border-[#ACACAC] bg-white tablet:h-[45px] tablet:rounded-r-[10px]">
+        <div className="flex h-[21.8px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r border-[#ACACAC] bg-white tablet:h-[45px] tablet:rounded-r-[10px] dark:bg-[#0D1012]">
           <h1 className="text-[16px] font-bold leading-[0px] text-[#22AA69] tablet:text-[25px]">
             R
           </h1>
