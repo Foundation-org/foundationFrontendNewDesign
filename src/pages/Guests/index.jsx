@@ -12,6 +12,7 @@ import SidebarRight from "../Dashboard/components/SidebarRight";
 import QuestionCard from "./components/QuestionCard";
 import QuestionCardWithToggle from "../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle";
 import { createGuestMode } from "../../services/api/userAuth";
+import { useGetSingleQuest } from "../../services/queries/quest";
 
 const Guests = () => {
   let { id, isFullScreen } = useParams();
@@ -21,6 +22,8 @@ const Guests = () => {
   const [viewResult, setViewResult] = useState(null);
   const [singleQuest, setSingleQuest] = useState();
 
+  console.log("persistedUserInfo", persistedUserInfo.uuid, id);
+
   useEffect(() => {
     if (isFullScreen !== "isfullscreen") {
       setStartTest(null);
@@ -28,31 +31,26 @@ const Guests = () => {
     }
   }, [isFullScreen]);
 
-  // const { data: singleQuest } = useQuery({
-  //   queryFn: async () => {
-  //     const result = await getQuestById(
-  //       persistedUserInfo.uuid || localStorage.getItem("uId"),
-  //       id,
-  //     );
-  //     return result.data.data[0];
-  //   },
-  //   queryKey: ["singleQuest"],
-  //   staleTime: 0,
-  // });
+  const { data: singleQuestResp } = useGetSingleQuest(
+    persistedUserInfo.uuid,
+    id,
+  );
 
-  useEffect(() => {
-    const handleGetQuestById = async () => {
-      if (localStorage.getItem("uId")) {
-        const result = await getQuestById(localStorage.getItem("uId"), id);
-        setSingleQuest(result.data.data[0]);
-      } else {
-        const result = await getQuestById(persistedUserInfo.uuid, id);
-        setSingleQuest(result.data.data[0]);
-      }
-    };
+  console.log({ singleQuestResp });
 
-    handleGetQuestById();
-  }, []);
+  // useEffect(() => {
+  //   const handleGetQuestById = async () => {
+  //     if (persistedUserInfo.uuid) {
+  //       const result = await getQuestById(persistedUserInfo.uuid, id);
+  //       setSingleQuest(result.data.data[0]);
+  //     } else {
+  //       const result = await getQuestById(persistedUserInfo.uuid, id);
+  //       setSingleQuest(result.data.data[0]);
+  //     }
+  //   };
+
+  //   handleGetQuestById();
+  // }, []);
 
   function getQuestionTitle(whichTypeQuestion) {
     switch (whichTypeQuestion) {
@@ -93,8 +91,6 @@ const Guests = () => {
     },
   });
 
-  console.log({ persistedUserInfo });
-
   useEffect(() => {
     if (persistedUserInfo === null) {
       createGuest();
@@ -124,10 +120,11 @@ const Guests = () => {
               </button>
             </div>
           )}
-          <div>
+          {/* <div>
             {isFullScreen !== "isfullscreen" ? (
               <QuestionCard
                 tab={tab}
+                questStartData={singleQuest}
                 id={singleQuest?._id}
                 img="/assets/svgs/dashboard/badge.svg"
                 alt="badge"
@@ -151,6 +148,7 @@ const Guests = () => {
             ) : (
               <div className="px-[25px] tablet:px-[86px]">
                 <QuestionCardWithToggle
+                  questStartData={singleQuest}
                   id={singleQuest?._id}
                   img="/assets/svgs/dashboard/badge.svg"
                   alt="badge"
@@ -178,7 +176,7 @@ const Guests = () => {
                 />
               </div>
             )}
-          </div>
+          </div> */}
         </div>
         <SidebarRight />
       </div>

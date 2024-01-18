@@ -29,7 +29,6 @@ const StartTest = ({
   setIsSubmit,
   usersChangeTheirAns,
   viewResult,
-  setViewResult,
   openResults,
   setOpenResults,
   startStatus,

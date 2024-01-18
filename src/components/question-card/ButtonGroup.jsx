@@ -32,7 +32,6 @@ const ButtonGroup = ({
   setLoadingDetail,
   answers,
   handleOpen,
-  expandedView,
   setStartTest,
   viewResult,
   openResults,
@@ -52,8 +51,6 @@ const ButtonGroup = ({
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
   const buttonGroupState = useSelector(buttonGroupActions.getButtonGroup);
 
-  // console.log("buttonGroupState", buttonGroupState);
-
   const uuidExists =
     answers &&
     answers?.some(
@@ -63,7 +60,6 @@ const ButtonGroup = ({
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
-      // Check in selected array
       if (
         apiResponse.selected.some(
           (selectedItem) => selectedItem.question === item.label,
@@ -72,7 +68,6 @@ const ButtonGroup = ({
         answerSelectionArray[index].check = true;
       }
 
-      // Check in contended array
       if (
         apiResponse.contended.some(
           (contendedItem) => contendedItem.question === item.label,
@@ -243,7 +238,7 @@ const ButtonGroup = ({
             }`}
           >
             <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
-              {!expandedView ? (
+              {!filterState.expandedView ? (
                 <Button
                   variant="cancel"
                   onClick={() => {

@@ -63,7 +63,6 @@ export const filtersSlice = createSlice({
       };
     },
     setColumns: (state, action) => {
-      console.log({ action });
       if (action.payload.check === true) {
         state.columns = {
           ...state.columns,

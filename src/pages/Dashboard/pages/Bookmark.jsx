@@ -190,8 +190,6 @@ const Bookmark = () => {
 
   console.log({ allData });
 
-  console.log({ filterStates });
-
   return (
     <div className="flex w-full flex-col laptop:flex-row">
       <SidebarLeft

@@ -23,7 +23,6 @@ const VerificationBadges = () => {
         dispatch(addUser(resp.data));
       }
 
-      // console.log(resp);
       setFetchUser(resp.data);
     } catch (e) {
       toast.error(e.response.data.message.split(":")[1]);

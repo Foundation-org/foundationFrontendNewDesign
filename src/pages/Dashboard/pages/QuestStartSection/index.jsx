@@ -160,12 +160,10 @@ const QuestStartSection = () => {
   };
 
   const handleViewResults = (testId) => {
-    console.log("questStartData", testId);
     setStartTest(null);
     setViewResult((prev) => (prev === testId ? null : testId));
   };
 
-  // console.log({ viewResult });
   console.log({ allData });
 
   return (
@@ -202,12 +200,6 @@ const QuestStartSection = () => {
                       isBookmarked={bookmarkedData?.data.some((bookmark) => {
                         return bookmark.questForeignKey === item._id;
                       })}
-                      expandedView={filterStates.expandedView}
-                      multipleOption={item?.userCanSelectMultiple}
-                      question={item?.Question}
-                      whichTypeQuestion={item?.whichTypeQuestion}
-                      setViewResult={setViewResult}
-                      startStatus={item?.startStatus}
                     />
                   </div>
                 ))
@@ -223,7 +215,6 @@ const QuestStartSection = () => {
                       isBookmarked={bookmarkedData?.data.some((bookmark) => {
                         return bookmark.questForeignKey === item._id;
                       })}
-                      expandedView={filterStates.expandedView}
                     />
                   </div>
                 ))}

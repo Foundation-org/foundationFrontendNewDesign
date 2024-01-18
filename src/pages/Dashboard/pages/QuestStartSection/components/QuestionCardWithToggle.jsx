@@ -21,26 +21,17 @@ import ConditionalTextFullScreen from "../../../../../components/question-card/C
 import * as questAction from "../../../../../features/quest/questsSlice";
 import * as questServices from "../../../../../services/api/questsApi";
 
-const QuestionCardWithToggle = ({
-  questStartData,
-  question,
-  whichTypeQuestion,
-  isBookmarked,
-  handleStartTest,
-  viewResult,
-  setViewResult,
-  handleViewResults,
-  multipleOption,
-  startStatus,
-  expandedView,
-  startTest,
-  setStartTest,
-}) => {
+const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const quests = useSelector(questAction.getQuests);
-  const [open, setOpen] = useState(false);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  const { questStartData } = props;
+  const { handleStartTest, startTest, setStartTest } = props;
+  const { isBookmarked, viewResult, handleViewResults } = props;
+
+  const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
@@ -48,6 +39,8 @@ const QuestionCardWithToggle = ({
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+
+  console.log({ questStartData });
 
   const [answersSelection, setAnswerSelection] = useState(
     questStartData.QuestAnswers?.map((answer) => ({
@@ -207,7 +200,6 @@ const QuestionCardWithToggle = ({
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
-      // Check in selected array
       if (
         apiResponse.selected.some(
           (selectedItem) => selectedItem.question === item.label,
@@ -216,7 +208,6 @@ const QuestionCardWithToggle = ({
         answerSelectionArray[index].check = true;
       }
 
-      // Check in contended array
       if (
         apiResponse.contended.some(
           (contendedItem) => contendedItem.question === item.label,
@@ -231,13 +222,11 @@ const QuestionCardWithToggle = ({
   const { mutateAsync: getStartQuestDetail } = useMutation({
     mutationFn: getStartQuestInfo,
     onSuccess: (res) => {
-      console.log("resp", res.data.data);
-      console.log({ whichTypeQuestion });
       setHowManyTimesAnsChanged(res.data.data.length);
       if (
-        whichTypeQuestion === "agree/disagree" ||
-        whichTypeQuestion === "yes/no" ||
-        whichTypeQuestion === "like/dislike"
+        questStartData.whichTypeQuestion === "agree/disagree" ||
+        questStartData.whichTypeQuestion === "yes/no" ||
+        questStartData.whichTypeQuestion === "like/dislike"
       ) {
         if (
           res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
@@ -288,13 +277,13 @@ const QuestionCardWithToggle = ({
           );
         }
       }
-      if (whichTypeQuestion === "multiple choise") {
+      if (questStartData.whichTypeQuestion === "multiple choise") {
         updateAnswerSelection(
           res?.data.data[res.data.data.length - 1],
           answersSelection,
         );
       }
-      if (whichTypeQuestion === "ranked choise") {
+      if (questStartData.whichTypeQuestion === "ranked choise") {
         const updatedRankedAnswers = res?.data.data[
           res.data.data.length - 1
         ].selected.map((item) => {
@@ -330,14 +319,14 @@ const QuestionCardWithToggle = ({
   const handleSubmit = () => {
     setLoading(true);
     if (
-      whichTypeQuestion === "agree/disagree" ||
-      whichTypeQuestion === "yes/no" ||
-      whichTypeQuestion === "like/dislike"
+      questStartData.whichTypeQuestion === "agree/disagree" ||
+      questStartData.whichTypeQuestion === "yes/no" ||
+      questStartData.whichTypeQuestion === "like/dislike"
     ) {
       const { selected, contended } = extractSelectedAndContended(
-        whichTypeQuestion === "agree/disagree"
+        questStartData.whichTypeQuestion === "agree/disagree"
           ? quests.agreeDisagree
-          : whichTypeQuestion === "yes/no"
+          : questStartData.whichTypeQuestion === "yes/no"
             ? quests.yesNo
             : quests.likeDislike,
       );
@@ -384,7 +373,7 @@ const QuestionCardWithToggle = ({
       } else {
         startQuest(params);
       }
-    } else if (whichTypeQuestion === "multiple choise") {
+    } else if (questStartData.whichTypeQuestion === "multiple choise") {
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = "";
@@ -469,7 +458,7 @@ const QuestionCardWithToggle = ({
         console.log("params", params);
         startQuest(params);
       }
-    } else if (whichTypeQuestion === "ranked choise") {
+    } else if (questStartData.whichTypeQuestion === "ranked choise") {
       let addedAnswerValue = "";
       let addedAnswerUuidValue = "";
       let answerSelected = [];
@@ -533,16 +522,16 @@ const QuestionCardWithToggle = ({
   };
 
   useEffect(() => {
-    if (startStatus === "") {
+    if (questStartData.startStatus === "") {
       dispatch(resetQuests());
       setOpenResults(false);
       handleStartTest(questStartData._id);
     }
-    if (startStatus === "change answer") {
+    if (questStartData.startStatus === "change answer") {
       setOpenResults(true);
       handleViewResults(questStartData._id);
     }
-    if (startStatus === "completed") {
+    if (questStartData.startStatus === "completed") {
       setOpenResults(true);
       handleViewResults(questStartData._id);
     }
@@ -584,20 +573,16 @@ const QuestionCardWithToggle = ({
           />
           <StartTest
             questStartData={questStartData}
-            id={questStartData._id}
             title={getQuestionTitle(questStartData.whichTypeQuestion)}
             answers={questStartData.QuestAnswers}
-            multipleOption={multipleOption}
+            multipleOption={questStartData.userCanSelectMultiple}
             SingleAnswer={SingleAnswer}
             quests={quests}
-            whichTypeQuestion={whichTypeQuestion}
             handleToggleCheck={handleToggleCheck}
-            handleSubmit={handleSubmit}
             handleOpen={handleOpen}
             handleClose={handleClose}
             open={open}
             btnText={questStartData.startStatus}
-            usersAddTheirAns={questStartData.usersAddTheirAns}
             setAnswerSelection={setAnswerSelection}
             answersSelection={answersSelection}
             rankedAnswers={rankedAnswers}
@@ -610,19 +595,12 @@ const QuestionCardWithToggle = ({
             img={"/assets/svgs/dashboard/badge.svg"}
             alt={"badge"}
             badgeCount={5}
-            question={question}
+            question={questStartData.Question}
             time={questStartData.createdAt}
-            expandedView={expandedView}
-            viewResult={viewResult}
-            setViewResult={setViewResult}
-            openResults={openResults}
-            setOpenResults={setOpenResults}
-            startStatus={startStatus}
             usersChangeTheirAns={questStartData.usersChangeTheirAns}
             lastInteractedAt={questStartData.lastInteractedAt}
             howManyTimesAnsChanged={howManyTimesAnsChanged}
             loadingDetail={loadingDetail}
-            loading={loading}
             setIsSubmit={setIsSubmit}
           />
           <ConditionalTextFullScreen
@@ -647,7 +625,7 @@ const QuestionCardWithToggle = ({
             handleClose={handleClose}
             answers={questStartData.QuestAnswers}
             btnText={questStartData.startStatus}
-            whichTypeQuestion={whichTypeQuestion}
+            whichTypeQuestion={questStartData.whichTypeQuestion}
             setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
             answersSelection={answersSelection}
             addOptionField={addOptionField}
@@ -692,7 +670,6 @@ const QuestionCardWithToggle = ({
         usersAddTheirAns={questStartData.usersAddTheirAns}
         answers={questStartData.QuestAnswers}
         title={getQuestionTitle(questStartData.whichTypeQuestion)}
-        expandedView={expandedView}
         setStartTest={setStartTest}
         viewResult={viewResult}
         handleSubmit={handleSubmit}

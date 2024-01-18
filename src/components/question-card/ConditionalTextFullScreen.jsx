@@ -5,6 +5,7 @@ const ConditionalTextFullScreen = ({
   show,
   answersSelection,
   rankedAnswers,
+  questStartData,
 }) => {
   const { isFullScreen } = useParams();
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const ConditionalTextFullScreen = ({
         <div
           className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
           onClick={() => {
-            navigate(`/quest/${id}/isfullscreen`);
+            navigate(`/quest/${questStartData._id}/isfullscreen`);
           }}
         >
           <svg

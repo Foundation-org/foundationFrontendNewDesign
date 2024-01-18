@@ -84,8 +84,6 @@ export default function Signup() {
           setPassword("");
           navigate("/verify-email");
         }
-
-        console.log(resp);
       } else {
         toast.warning("Password does not match");
       }

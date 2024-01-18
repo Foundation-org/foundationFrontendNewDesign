@@ -25,6 +25,24 @@ export function useGetFeedData(
   });
 }
 
+export function useGetSingleQuest(uuid, id) {
+  return useQuery({
+    queryFn: () => HomepageAPIs.getQuestById(uuid, id),
+    queryKey: ["SingleQuest"],
+  });
+}
+// export function useGetSingleQuest(uuid, id) {
+//   return useQuery({
+//     queryFn: async () => {
+//       console.log("Making API call with uuid:", uuid, "and id:", id);
+//       const result = await HomepageAPIs.getQuestById(uuid, id);
+//       console.log("API call result:", result);
+//       return result;
+//     },
+//     queryKey: ["SingleQuest"],
+//   });
+// }
+
 export function useGetBookmarkData() {
   return useQuery({
     queryFn: () => HomepageAPIs.getAllBookmarkedQuests(),

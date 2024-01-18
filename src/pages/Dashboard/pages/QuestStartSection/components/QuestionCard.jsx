@@ -29,7 +29,7 @@ const QuestionCard = (props) => {
 
   const { questStartData } = props;
   const { handleStartTest, startTest, setStartTest } = props;
-  const { isBookmarked, viewResult, handleViewResults, expandedView } = props;
+  const { isBookmarked, viewResult, handleViewResults } = props;
 
   const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
@@ -461,6 +461,7 @@ const QuestionCard = (props) => {
             howManyTimesAnsChanged={howManyTimesAnsChanged}
           />
           <ConditionalTextFullScreen
+            questStartData={questStartData}
             show={false}
             answersSelection={answersSelection}
             rankedAnswers={rankedAnswers}
@@ -497,12 +498,12 @@ const QuestionCard = (props) => {
             setStartTest={setStartTest}
             loading={loading}
             setIsSubmit={setIsSubmit}
-            expandedView={expandedView}
             usersChangeTheirAns={questStartData.usersChangeTheirAns}
             howManyTimesAnsChanged={howManyTimesAnsChanged}
             loadingDetail={loadingDetail}
           />
           <ConditionalTextFullScreen
+            questStartData={questStartData}
             show={true}
             answersSelection={answersSelection}
             rankedAnswers={rankedAnswers}
@@ -546,7 +547,6 @@ const QuestionCard = (props) => {
         usersAddTheirAns={questStartData.usersAddTheirAns}
         answers={questStartData.QuestAnswers}
         title={getQuestionTitle(questStartData.whichTypeQuestion)}
-        expandedView={expandedView}
         setStartTest={setStartTest}
         viewResult={viewResult}
         handleSubmit={handleSubmit}

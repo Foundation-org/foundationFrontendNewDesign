@@ -9,7 +9,6 @@ export function useStartQuest() {
     mutationFn: (data) => createStartQuest(data),
 
     onSettled: async (_, error) => {
-      console.log("settled");
       if (error) {
         toast.error(error.response.data.message.split(":")[1]);
       } else {
@@ -27,7 +26,6 @@ export function useChangeAnswer() {
     mutationFn: (data) => updateChangeAnsStartQuest(data),
 
     onSettled: async (_, error) => {
-      console.log("settled");
       if (error) {
         toast.error(error.response.data.message.split(":")[1]);
       } else {

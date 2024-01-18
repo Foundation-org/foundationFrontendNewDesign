@@ -30,12 +30,10 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleEditOpen = () => setEditModal(true);
   const handleEditClose = () => setEditModal(false);
-  // const handleDeleteOpen = () => setDeleteModal(true);
   const handleDeleteClose = () => setDeleteModal(false);
 
   useEffect(() => {
     setCheckState(props.check);
-    // console.log("ranked percentages", props.percentages);
   }, [props.check]);
 
   useEffect(() => {

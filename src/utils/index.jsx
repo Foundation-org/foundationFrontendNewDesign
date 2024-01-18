@@ -118,7 +118,6 @@ export const printEndMessage = (
 };
 
 export const validateInterval = (usersChangeTheirAns) => {
-  console.log({ usersChangeTheirAns });
   let timeInterval = 0;
   if (usersChangeTheirAns === "Daily") {
     return (timeInterval = 24 * 60 * 60 * 1000); // 24 hours in milliseconds
