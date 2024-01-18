@@ -20,9 +20,6 @@ const Guests = () => {
   const [tab, setTab] = useState("Participate");
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
-  const [singleQuest, setSingleQuest] = useState();
-
-  console.log("persistedUserInfo", persistedUserInfo.uuid, id);
 
   useEffect(() => {
     if (isFullScreen !== "isfullscreen") {
@@ -35,22 +32,6 @@ const Guests = () => {
     persistedUserInfo.uuid,
     id,
   );
-
-  console.log({ singleQuestResp });
-
-  // useEffect(() => {
-  //   const handleGetQuestById = async () => {
-  //     if (persistedUserInfo.uuid) {
-  //       const result = await getQuestById(persistedUserInfo.uuid, id);
-  //       setSingleQuest(result.data.data[0]);
-  //     } else {
-  //       const result = await getQuestById(persistedUserInfo.uuid, id);
-  //       setSingleQuest(result.data.data[0]);
-  //     }
-  //   };
-
-  //   handleGetQuestById();
-  // }, []);
 
   function getQuestionTitle(whichTypeQuestion) {
     switch (whichTypeQuestion) {
@@ -97,8 +78,6 @@ const Guests = () => {
     }
   }, []);
 
-  console.log({ singleQuest });
-
   return (
     <>
       <Topbar />
@@ -120,63 +99,64 @@ const Guests = () => {
               </button>
             </div>
           )}
-          {/* <div>
-            {isFullScreen !== "isfullscreen" ? (
+
+          <div>
+            {singleQuestResp && isFullScreen !== "isfullscreen" ? (
               <QuestionCard
                 tab={tab}
-                questStartData={singleQuest}
-                id={singleQuest?._id}
+                questStartData={singleQuestResp}
+                id={singleQuestResp?._id}
                 img="/assets/svgs/dashboard/badge.svg"
                 alt="badge"
                 badgeCount="5"
-                time={singleQuest?.createdAt}
-                title={getQuestionTitle(singleQuest?.whichTypeQuestion)}
-                question={singleQuest?.Question}
-                answers={singleQuest?.QuestAnswers}
-                usersAddTheirAns={singleQuest?.usersAddTheirAns}
-                whichTypeQuestion={singleQuest?.whichTypeQuestion}
-                btnText={singleQuest?.startStatus}
-                startStatus={singleQuest?.startStatus}
+                time={singleQuestResp?.createdAt}
+                title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
+                question={singleQuestResp?.Question}
+                answers={singleQuestResp?.QuestAnswers}
+                usersAddTheirAns={singleQuestResp?.usersAddTheirAns}
+                whichTypeQuestion={singleQuestResp?.whichTypeQuestion}
+                btnText={singleQuestResp?.startStatus}
+                startStatus={singleQuestResp?.startStatus}
                 viewResult={viewResult}
                 handleViewResults={handleViewResults}
-                multipleOption={singleQuest?.userCanSelectMultiple}
-                QuestTopic={singleQuest?.QuestTopic}
-                createdBy={singleQuest?.uuid}
-                lastInteractedAt={singleQuest?.lastInteractedAt}
-                usersChangeTheirAns={singleQuest?.usersChangeTheirAns}
+                multipleOption={singleQuestResp?.userCanSelectMultiple}
+                QuestTopic={singleQuestResp?.QuestTopic}
+                createdBy={singleQuestResp?.uuid}
+                lastInteractedAt={singleQuestResp?.lastInteractedAt}
+                usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
               />
             ) : (
               <div className="px-[25px] tablet:px-[86px]">
                 <QuestionCardWithToggle
-                  questStartData={singleQuest}
-                  id={singleQuest?._id}
+                  questStartData={singleQuestResp}
+                  id={singleQuestResp?._id}
                   img="/assets/svgs/dashboard/badge.svg"
                   alt="badge"
                   badgeCount="5"
-                  time={singleQuest?.createdAt}
-                  title={getQuestionTitle(singleQuest?.whichTypeQuestion)}
-                  question={singleQuest?.Question}
-                  answers={singleQuest?.QuestAnswers}
-                  usersAddTheirAns={singleQuest?.usersAddTheirAns}
-                  whichTypeQuestion={singleQuest?.whichTypeQuestion}
-                  btnText={singleQuest?.startStatus}
+                  time={singleQuestResp?.createdAt}
+                  title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
+                  question={singleQuestResp?.Question}
+                  answers={singleQuestResp?.QuestAnswers}
+                  usersAddTheirAns={singleQuestResp?.usersAddTheirAns}
+                  whichTypeQuestion={singleQuestResp?.whichTypeQuestion}
+                  btnText={singleQuestResp?.startStatus}
                   startTest={startTest}
                   setStartTest={setStartTest}
                   viewResult={viewResult}
                   setViewResult={setViewResult}
                   handleViewResults={handleViewResults}
                   handleStartTest={handleStartTest}
-                  multipleOption={singleQuest?.userCanSelectMultiple}
-                  QuestTopic={singleQuest?.QuestTopic}
-                  createdBy={singleQuest?.uuid}
-                  lastInteractedAt={singleQuest?.lastInteractedAt}
-                  usersChangeTheirAns={singleQuest?.usersChangeTheirAns}
-                  startStatus={singleQuest?.startStatus}
+                  multipleOption={singleQuestResp?.userCanSelectMultiple}
+                  QuestTopic={singleQuestResp?.QuestTopic}
+                  createdBy={singleQuestResp?.uuid}
+                  lastInteractedAt={singleQuestResp?.lastInteractedAt}
+                  usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
+                  startStatus={singleQuestResp?.startStatus}
                   expandedView={true}
                 />
               </div>
             )}
-          </div> */}
+          </div>
         </div>
         <SidebarRight />
       </div>

@@ -40,8 +40,6 @@ const QuestionCardWithToggle = (props) => {
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
 
-  console.log({ questStartData });
-
   const [answersSelection, setAnswerSelection] = useState(
     questStartData.QuestAnswers?.map((answer) => ({
       label: answer.question,
