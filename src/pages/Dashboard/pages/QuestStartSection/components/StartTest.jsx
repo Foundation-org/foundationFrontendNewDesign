@@ -129,7 +129,7 @@ const StartTest = ({
     useEffect(() => {
       let listlength = answersSelection.length;
 
-      if (answersSelection[listlength-1]?.addedOptionByUser && listContainerRef.current) {
+      if (answersSelection[listlength - 1]?.addedOptionByUser && listContainerRef.current) {
         listContainerRef.current.scrollTop = listContainerRef.current.scrollHeight;
       }
     }, [answersSelection]);
@@ -205,7 +205,6 @@ const StartTest = ({
           </>
         );
       }
-
       if (
         getQuestionTitle(questStartData.whichTypeQuestion) === "Multiple Choice"
       ) {
@@ -214,8 +213,8 @@ const StartTest = ({
             <div
               ref={listContainerRef}
               className={`${isFullScreen === undefined
-                  ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]"
-                  : ""
+                ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]"
+                : ""
                 } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
               {answersSelection &&
@@ -263,54 +262,57 @@ const StartTest = ({
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                 {(provided) => (
-                  <ul
-                    className={`${isFullScreen === undefined
-                        ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto tablet:max-h-[366px]"
+                  <div ref={listContainerRef}
+                    className={`${isFullScreen === undefined ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto" : null}`}>
+                    <ul
+                      className={`${isFullScreen === undefined
+                        ? " tablet:max-h-[366px]"
                         : ""
-                      }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    {rankedAnswers?.map((item, index) => (
-                      <Draggable
-                        key={item.id}
-                        draggableId={item.id}
-                        index={index}
-                      >
-                        {(provided, snapshot) => (
-                          <li
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className="w-full"
-                          >
-                            <SingleAnswerRankedChoice
-                              snapshot={snapshot}
-                              number={"#" + (index + 1)}
-                              editable={item.edit}
-                              deleteable={item.delete}
-                              answer={item.label}
-                              addedAnswerUuid={item.uuid}
-                              answersSelection={answersSelection}
-                              setAnswerSelection={setAnswerSelection}
-                              title={title}
-                              checkInfo={false}
-                              check={findLabelChecked(
-                                answersSelection,
-                                item.label,
-                              )}
-                              handleCheckChange={(check) =>
-                                handleCheckChange(index, check)
-                              }
-                              // setAddOptionLimit={setAddOptionLimit}
-                              setIsSubmit={setIsSubmit}
-                            />
-                          </li>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </ul>
+                        }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {rankedAnswers?.map((item, index) => (
+                        <Draggable
+                          key={item.id}
+                          draggableId={item.id}
+                          index={index}
+                        >
+                          {(provided, snapshot) => (
+                            <li
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              className="w-full"
+                            >
+                              <SingleAnswerRankedChoice
+                                snapshot={snapshot}
+                                number={"#" + (index + 1)}
+                                editable={item.edit}
+                                deleteable={item.delete}
+                                answer={item.label}
+                                addedAnswerUuid={item.uuid}
+                                answersSelection={answersSelection}
+                                setAnswerSelection={setAnswerSelection}
+                                title={title}
+                                checkInfo={false}
+                                check={findLabelChecked(
+                                  answersSelection,
+                                  item.label,
+                                )}
+                                handleCheckChange={(check) =>
+                                  handleCheckChange(index, check)
+                                }
+                                // setAddOptionLimit={setAddOptionLimit}
+                                setIsSubmit={setIsSubmit}
+                              />
+                            </li>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </ul>
+                  </div>
                 )}
               </Droppable>
             </DragDropContext>
