@@ -160,10 +160,12 @@ const QuestStartSection = () => {
   };
 
   const handleViewResults = (testId) => {
+    console.log("questStartData", testId);
     setStartTest(null);
     setViewResult((prev) => (prev === testId ? null : testId));
   };
 
+  // console.log({ viewResult });
   console.log({ allData });
 
   return (

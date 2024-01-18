@@ -52,7 +52,7 @@ const ButtonGroup = ({
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
   const buttonGroupState = useSelector(buttonGroupActions.getButtonGroup);
 
-  console.log("buttonGroupState", buttonGroupState);
+  // console.log("buttonGroupState", buttonGroupState);
 
   const uuidExists =
     answers &&
@@ -145,10 +145,6 @@ const ButtonGroup = ({
         );
       }
       if (whichTypeQuestion === "ranked choise") {
-        console.log(
-          "ranked response" + res?.data.data[res.data.data.length - 1].selected,
-        );
-
         const updatedRankedAnswers = res?.data.data[
           res.data.data.length - 1
         ].selected.map((item) => {
@@ -287,7 +283,6 @@ const ButtonGroup = ({
       );
     }
   } else {
-    console.log({ startTest });
     if (
       btnText === "change answer" &&
       (startTest === null || startTest === false)
@@ -336,29 +331,44 @@ const ButtonGroup = ({
           </Button>
         </div>
       ) : (
-        <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
-          <Button
-            variant="cancel"
-            onClick={() => {
-              handleViewResults(null);
-              handleStartTest(false);
-            }}
-          >
-            Go Back
-          </Button>
+        <>
+          {startTest === questStartData._id ? (
+            <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+              <Button
+                variant="cancel"
+                onClick={() => {
+                  handleViewResults(questStartData._id);
+                  handleStartTest(false);
+                }}
+              >
+                Go Back
+              </Button>
 
-          <Button
-            variant="submit"
-            onClick={() => handleSubmit()}
-            disabled={loading === true ? true : false}
-          >
-            {loading === true ? (
-              <FaSpinner className="animate-spin text-[#EAEAEA]" />
-            ) : (
-              "Submit"
-            )}
-          </Button>
-        </div>
+              <Button
+                variant="submit"
+                onClick={() => handleSubmit()}
+                disabled={loading === true ? true : false}
+              >
+                {loading === true ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+            </div>
+          ) : (
+            <div className="flex w-full justify-end pr-[14.4px] tablet:pr-[3.44rem]">
+              <Button
+                variant="change"
+                onClick={() => {
+                  handleChange(questStartData._id);
+                }}
+              >
+                Change
+              </Button>
+            </div>
+          )}
+        </>
       )}
     </>
   );
