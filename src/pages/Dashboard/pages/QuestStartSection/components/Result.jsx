@@ -67,7 +67,6 @@ const Result = (props) => {
             res?.data.data[res.data.data.length - 1].selected === "Yes" ||
             res?.data.data[res.data.data.length - 1].selected === "Like"
           ) {
-            console.log("ran 1");
             props.handleToggleCheck(
               res.data.data[res.data.data.length - 1].selected,
               true,
@@ -79,8 +78,6 @@ const Result = (props) => {
             res?.data.data[res.data.data.length - 1].contended === "Yes" ||
             res?.data.data[res.data.data.length - 1].contended === "Like"
           ) {
-            console.log("ran 2");
-
             props.handleToggleCheck(
               res.data.data[res.data.data.length - 1].contended,
               false,
@@ -92,8 +89,6 @@ const Result = (props) => {
             res?.data.data[res.data.data.length - 1].contended === "No" ||
             res?.data.data[res.data.data.length - 1].contended === "Dislike"
           ) {
-            console.log("ran 3");
-
             props.handleToggleCheck(
               res.data.data[res.data.data.length - 1].contended,
               false,
@@ -105,8 +100,6 @@ const Result = (props) => {
             res?.data.data[res.data.data.length - 1].selected === "No" ||
             res?.data.data[res.data.data.length - 1].selected === "Dislike"
           ) {
-            console.log("ran 4");
-
             props.handleToggleCheck(
               res.data.data[res.data.data.length - 1].selected,
               true,

@@ -41,7 +41,6 @@ export const questsSlice = createSlice({
   reducers: {
     toggleCheck: (state, action) => {
       const { option, check, contend, label, id } = action.payload;
-      console.log("first", action.payload, state);
       state.id = id;
       if (option === "Yes") {
         if (check) {

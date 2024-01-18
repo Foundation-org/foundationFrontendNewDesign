@@ -2,39 +2,34 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  getQuests,
-  toggleCheck,
-} from "../../../../../features/quest/questsSlice";
-import { updateChangeAnsStartQuest } from "../../../../../services/api/questsApi";
-import Result from "./Result";
-import StartTest from "./StartTest";
+
 import { userInfo } from "../../../../../services/api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
-import { capitalizeFirstLetter, validateInterval } from "../../../../../utils";
-import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
-import QuestCardLayout from "../../../../../components/question-card/QuestCardLayout";
 import { useStartQuest } from "../../../../../services/mutations/quest";
-import QuestInfoText from "../../../../../components/question-card/QuestInfoText";
-import ConditionalTextFullScreen from "../../../../../components/question-card/ConditionalTextFullScreen";
-import * as questUtilsActions from "../../../../../features/quest/utilsSlice";
-import ButtonGroup from "../../../../../components/question-card/ButtonGroup";
+import { capitalizeFirstLetter, validateInterval } from "../../../../../utils";
+import { updateChangeAnsStartQuest } from "../../../../../services/api/questsApi";
+import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
 
-const QuestionCard = ({
-  isBookmarked,
-  handleStartTest,
-  startTest,
-  setStartTest,
-  viewResult,
-  handleViewResults,
-  expandedView,
-  questStartData,
-}) => {
+import Result from "./Result";
+import StartTest from "./StartTest";
+import ButtonGroup from "../../../../../components/question-card/ButtonGroup";
+import QuestInfoText from "../../../../../components/question-card/QuestInfoText";
+import QuestCardLayout from "../../../../../components/question-card/QuestCardLayout";
+import ConditionalTextFullScreen from "../../../../../components/question-card/ConditionalTextFullScreen";
+
+import * as questAction from "../../../../../features/quest/questsSlice";
+import * as questUtilsActions from "../../../../../features/quest/utilsSlice";
+
+const QuestionCard = (props) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const quests = useSelector(getQuests);
-  const persistedUserInfo = useSelector((state) => state.auth.user);
   const startTestMutation = useStartQuest();
+  const quests = useSelector(questAction.getQuests);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  const { questStartData } = props;
+  const { handleStartTest, startTest, setStartTest } = props;
+  const { isBookmarked, viewResult, handleViewResults, expandedView } = props;
 
   const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
@@ -109,7 +104,7 @@ const QuestionCard = ({
       id,
     };
 
-    dispatch(toggleCheck(actionPayload));
+    dispatch(questAction.toggleCheck(actionPayload));
   };
 
   const updateAnswersSelectionForRanked = (prevAnswers, actionPayload) => {
@@ -132,8 +127,6 @@ const QuestionCard = ({
       option,
       label,
     };
-
-    console.log({ actionPayload });
 
     setAnswerSelection((prevAnswers) =>
       updateAnswersSelectionForRanked(prevAnswers, actionPayload),
@@ -450,6 +443,7 @@ const QuestionCard = ({
             questType={questStartData.whichTypeQuestion}
           />
           <Result
+            questStartData={questStartData}
             id={questStartData._id}
             title={getQuestionTitle(questStartData.whichTypeQuestion)}
             handleToggleCheck={handleToggleCheck}

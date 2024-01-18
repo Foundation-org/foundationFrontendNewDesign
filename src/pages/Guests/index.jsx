@@ -20,7 +20,6 @@ const Guests = () => {
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
   const [singleQuest, setSingleQuest] = useState();
-  // console.log("first", isFullScreen);
 
   useEffect(() => {
     if (isFullScreen !== "isfullscreen") {

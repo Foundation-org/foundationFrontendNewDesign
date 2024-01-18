@@ -192,53 +192,20 @@ const QuestStartSection = () => {
                   <div key={index + 1}>
                     <QuestionCardWithToggle
                       questStartData={item}
-                      mainData={item}
-                      id={item._id}
-                      img="/assets/svgs/dashboard/badge.svg"
-                      alt="badge"
-                      badgeCount="5"
-                      title={
-                        item?.whichTypeQuestion === "agree/disagree"
-                          ? "Agree/Disagree"
-                          : item?.whichTypeQuestion === "like/dislike"
-                            ? "Like/Dislike"
-                            : item?.whichTypeQuestion === "multiple choise"
-                              ? "Multiple Choice"
-                              : item?.whichTypeQuestion === "ranked choise"
-                                ? "Ranked Choice"
-                                : item?.whichTypeQuestion === "yes/no"
-                                  ? "Yes/No"
-                                  : null
-                      }
-                      answers={item?.QuestAnswers}
-                      time={item?.createdAt}
-                      multipleOption={item?.userCanSelectMultiple}
-                      question={item?.Question}
-                      whichTypeQuestion={item?.whichTypeQuestion}
                       startTest={startTest}
                       setStartTest={setStartTest}
                       viewResult={viewResult}
-                      setViewResult={setViewResult}
                       handleViewResults={handleViewResults}
                       handleStartTest={handleStartTest}
-                      usersAddTheirAns={item?.usersAddTheirAns}
-                      startStatus={item?.startStatus}
-                      createdBy={item?.uuid}
-                      btnColor={
-                        item?.startStatus === "completed"
-                          ? "bg-[#4ABD71]"
-                          : item?.startStatus === "change answer"
-                            ? "bg-[#FDD503]"
-                            : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-                      }
-                      btnText={item?.startStatus}
                       isBookmarked={bookmarkedData?.data.some((bookmark) => {
                         return bookmark.questForeignKey === item._id;
                       })}
-                      lastInteractedAt={item.lastInteractedAt}
-                      usersChangeTheirAns={item.usersChangeTheirAns}
                       expandedView={filterStates.expandedView}
-                      QuestTopic={item.QuestTopic}
+                      multipleOption={item?.userCanSelectMultiple}
+                      question={item?.Question}
+                      whichTypeQuestion={item?.whichTypeQuestion}
+                      setViewResult={setViewResult}
+                      startStatus={item?.startStatus}
                     />
                   </div>
                 ))
