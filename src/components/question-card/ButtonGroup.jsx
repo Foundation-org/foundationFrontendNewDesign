@@ -305,31 +305,46 @@ const ButtonGroup = ({
   return (
     <>
       {filterState.expandedView === false ? (
-        <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
-          {/* Start / Change */}
-          {getButtonText(btnText) !== "Completed" ? (
-            <Button
-              variant={getButtonVariants(btnText)}
-              onClick={handleStartChange}
-            >
-              {getButtonText(btnText)}
-            </Button>
-          ) : null}
+        viewResult !== questStartData._id ? (
+          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+            {/* Start / Change */}
+            {getButtonText(btnText) !== "Completed" ? (
+              <Button
+                variant={getButtonVariants(btnText)}
+                onClick={handleStartChange}
+              >
+                {getButtonText(btnText)}
+              </Button>
+            ) : null}
 
-          {/* Result / Result Outline */}
-          <Button
-            variant={startStatus?.trim() !== "" ? "result" : "result-outline"}
-            onClick={() => {
-              if (btnText !== "") {
-                handleViewResults(id);
-              } else {
-                toast.error("First give your response to see Results");
-              }
-            }}
-          >
-            Results
-          </Button>
-        </div>
+            {/* Result / Result Outline */}
+            <Button
+              variant={startStatus?.trim() !== "" ? "result" : "result-outline"}
+              onClick={() => {
+                if (btnText !== "") {
+                  handleViewResults(id);
+                } else {
+                  toast.error("First give your response to see Results");
+                }
+              }}
+            >
+              Results
+            </Button>
+          </div>
+        ) : (
+          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+            <Button
+              variant="cancel"
+              onClick={() => {
+                handleViewResults(null);
+                setStartTest(false);
+                // setOpenResults(true);
+              }}
+            >
+              Go Back
+            </Button>
+          </div>
+        )
       ) : (
         <>
           {startTest === questStartData._id ? (
