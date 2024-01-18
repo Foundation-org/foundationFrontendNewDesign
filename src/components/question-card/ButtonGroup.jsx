@@ -368,14 +368,28 @@ const ButtonGroup = ({
             </div>
           ) : (
             <div className="flex w-full justify-end pr-[14.4px] tablet:pr-[3.44rem]">
-              <Button
-                variant="change"
-                onClick={() => {
-                  handleChange(questStartData._id);
-                }}
-              >
-                Change
-              </Button>
+              {viewResult !== questStartData._id ? (
+                <Button
+                  variant="submit"
+                  onClick={() => handleSubmit()}
+                  disabled={loading === true ? true : false}
+                >
+                  {loading === true ? (
+                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
+              ) : (
+                <Button
+                  variant="change"
+                  onClick={() => {
+                    handleChange(questStartData._id);
+                  }}
+                >
+                  Change
+                </Button>
+              )}
             </div>
           )}
         </>
