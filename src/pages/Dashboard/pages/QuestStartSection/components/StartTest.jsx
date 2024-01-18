@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
@@ -125,11 +125,22 @@ const StartTest = ({
   };
 
   const renderOptionsByTitle = () => {
+    const listContainerRef = useRef(null);
+
+    useEffect(() => {
+      let listlength = answersSelection.length;
+
+      if (answersSelection[listlength-1]?.addedOptionByUser && listContainerRef.current) {
+        listContainerRef.current.scrollTop = listContainerRef.current.scrollHeight;
+      }
+    }, [answersSelection]);
+
+
     if (!loadingDetail) {
       if (
         getQuestionTitle(questStartData.whichTypeQuestion) === "Yes/No" ||
         getQuestionTitle(questStartData.whichTypeQuestion) ===
-          "Agree/Disagree" ||
+        "Agree/Disagree" ||
         getQuestionTitle(questStartData.whichTypeQuestion) === "Like/Dislike"
       ) {
         return (
@@ -202,11 +213,11 @@ const StartTest = ({
         return (
           <div className="flex flex-col overflow-auto">
             <div
-              className={`${
-                isFullScreen === undefined
+              ref={listContainerRef}
+              className={`${isFullScreen === undefined
                   ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]"
                   : ""
-              } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
               {answersSelection &&
                 [...answersSelection]?.map((item, index) => (
@@ -244,6 +255,7 @@ const StartTest = ({
         );
       }
 
+
       if (
         getQuestionTitle(questStartData.whichTypeQuestion) === "Ranked Choice"
       ) {
@@ -253,11 +265,10 @@ const StartTest = ({
               <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                 {(provided) => (
                   <ul
-                    className={`${
-                      isFullScreen === undefined
+                    className={`${isFullScreen === undefined
                         ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto tablet:max-h-[366px]"
                         : ""
-                    }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                      }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                   >
