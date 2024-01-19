@@ -11,10 +11,10 @@ import QuestionCardWithToggle from "./components/QuestionCardWithToggle";
 // extras
 import { useDebounce } from "../../../../utils/useDebounce";
 import { printEndMessage } from "../../../../utils";
+import { initialColumns } from "../../../../constants/preferences";
 import * as QuestServices from "../../../../services/queries/quest";
 import * as filtersActions from "../../../../features/sidebar/filtersSlice";
 import * as prefActions from "../../../../features/preferences/prefSlice";
-import { initialColumns } from "../../../../constants/preferences";
 
 const QuestStartSection = () => {
   const getPreferences = useSelector(prefActions.getPrefs);
@@ -192,11 +192,6 @@ const QuestStartSection = () => {
                   <div key={index + 1}>
                     <QuestionCardWithToggle
                       questStartData={item}
-                      startTest={startTest}
-                      setStartTest={setStartTest}
-                      viewResult={viewResult}
-                      handleViewResults={handleViewResults}
-                      handleStartTest={handleStartTest}
                       isBookmarked={bookmarkedData?.data.some((bookmark) => {
                         return bookmark.questForeignKey === item._id;
                       })}

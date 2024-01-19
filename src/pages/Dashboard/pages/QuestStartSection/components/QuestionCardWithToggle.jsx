@@ -27,9 +27,7 @@ const QuestionCardWithToggle = (props) => {
   const quests = useSelector(questAction.getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const { questStartData } = props;
-  const { handleStartTest, startTest, setStartTest } = props;
-  const { isBookmarked, viewResult, handleViewResults } = props;
+  const { questStartData, isBookmarked } = props;
 
   const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
@@ -39,6 +37,8 @@ const QuestionCardWithToggle = (props) => {
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [startTest, setStartTest] = useState("");
+  const [viewResult, setViewResult] = useState("");
 
   const [answersSelection, setAnswerSelection] = useState(
     questStartData.QuestAnswers?.map((answer) => ({
@@ -76,8 +76,17 @@ const QuestionCardWithToggle = (props) => {
     );
   }, [answersSelection]);
 
+  const handleStartTest = (testId) => {
+    setViewResult("");
+    setStartTest((prev) => (prev === testId ? "" : testId));
+  };
+
+  const handleViewResults = (testId) => {
+    setStartTest("");
+    setViewResult((prev) => (prev === testId ? "s" : testId));
+  };
+
   const handleChange = () => {
-    console.log("change clicked");
     setOpenResults(false);
     const data = {
       questForeignKey: questStartData._id,

@@ -242,7 +242,8 @@ const ButtonGroup = ({
                 <Button
                   variant="cancel"
                   onClick={() => {
-                    setStartTest(null);
+                    handleStartTest("");
+                    // setStartTest(null);
                   }}
                 >
                   Go Back
@@ -254,8 +255,9 @@ const ButtonGroup = ({
                   <Button
                     variant="cancel"
                     onClick={() => {
-                      setViewResult(id);
-                      setOpenResults(true);
+                      // setViewResult(id);
+                      handleViewResult(questStartData._id),
+                        setOpenResults(true);
                     }}
                   >
                     Go Back
@@ -278,20 +280,90 @@ const ButtonGroup = ({
       );
     }
   } else {
-    if (
-      btnText === "change answer" &&
-      (startTest === null || startTest === false)
-    ) {
+    if (startTest === questStartData._id) {
       return (
-        <div className="flex w-full justify-end pr-[14.4px] tablet:pr-[3.44rem]">
-          <Button
-            variant="change"
-            onClick={() => {
-              handleChange(questStartData._id);
-            }}
-          >
-            Change
-          </Button>
+        <div className="flex w-full justify-between gap-2 pl-7 pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+          {/* Go back / Submit */}
+          {btnText === "change answer" ? (
+            <>
+              {getQuestUtilsState.addOptionLimit === 0 ? (
+                <div className="flex items-center justify-center">
+                  {usersAddTheirAns && uuidExists === false ? (
+                    <div>
+                      {title === "Yes/No" ||
+                      title === "Agree/Disagree" ||
+                      title === "Like/Dislike" ? null : (
+                        <Button onClick={handleOpen} variant={"addOption"}>
+                          {persistedTheme === "dark" ? (
+                            <img
+                              src="/assets/svgs/dashboard/add-dark.svg"
+                              alt="add"
+                              className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                            />
+                          ) : (
+                            <img
+                              src="/assets/svgs/dashboard/add.svg"
+                              alt="add"
+                              className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                            />
+                          )}
+                          Add Option
+                        </Button>
+                      )}
+                    </div>
+                  ) : null}
+                </div>
+              ) : (
+                <div></div>
+              )}
+              <div
+                className={`${
+                  title === "Multiple Choice"
+                    ? ""
+                    : addOptionField === 1
+                      ? "mt-[4rem] tablet:mt-[10rem]"
+                      : ""
+                }`}
+              >
+                <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
+                  <Button
+                    variant="cancel"
+                    onClick={() => {
+                      handleStartTest("");
+                      // setStartTest(null);
+                    }}
+                  >
+                    Go Back
+                  </Button>
+                  <Button
+                    variant="submit"
+                    onClick={() => handleSubmit()}
+                    disabled={loading === true ? true : false}
+                  >
+                    {loading === true ? (
+                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                    ) : (
+                      "Submit"
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="flex w-full justify-end ">
+              <Button
+                variant="submit"
+                onClick={() => handleSubmit()}
+                disabled={loading === true ? true : false}
+              >
+                {loading === true ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+            </div>
+          )}
         </div>
       );
     }
@@ -299,10 +371,10 @@ const ButtonGroup = ({
 
   return (
     <>
+      {/* Start / Change and  Result / Result Outline*/}
       {filterState.expandedView === false ? (
         viewResult !== questStartData._id ? (
           <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
-            {/* Start / Change */}
             {getButtonText(btnText) !== "Completed" ? (
               <Button
                 variant={getButtonVariants(btnText)}
@@ -312,7 +384,6 @@ const ButtonGroup = ({
               </Button>
             ) : null}
 
-            {/* Result / Result Outline */}
             <Button
               variant={startStatus?.trim() !== "" ? "result" : "result-outline"}
               onClick={() => {
@@ -327,12 +398,14 @@ const ButtonGroup = ({
             </Button>
           </div>
         ) : (
+          // Go Back
           <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
             <Button
               variant="cancel"
               onClick={() => {
                 handleViewResults(null);
-                setStartTest(false);
+                handleStartTest("");
+                // setStartTest(false);
                 // setOpenResults(true);
               }}
             >
@@ -342,73 +415,75 @@ const ButtonGroup = ({
         )
       ) : (
         <>
-          {startTest === questStartData._id ? (
-            <div className="flex w-full justify-between pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
-              <Button onClick={handleOpen} variant={"addOption"}>
-                {persistedTheme === "dark" ? (
-                  <img
-                    src="/assets/svgs/dashboard/add-dark.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                ) : (
-                  <img
-                    src="/assets/svgs/dashboard/add.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                )}
-                Add Option
-              </Button>
-              <div className="flex gap-2 tablet:gap-[0.75rem]">
-                <Button
-                  variant="cancel"
-                  onClick={() => {
-                    handleViewResults(questStartData._id);
-                    handleStartTest(false);
-                  }}
-                >
-                  Go Back
-                </Button>
-                <Button
-                  variant="submit"
-                  onClick={() => handleSubmit()}
-                  disabled={loading === true ? true : false}
-                >
-                  {loading === true ? (
-                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                  ) : (
-                    "Submit"
-                  )}
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className="flex w-full justify-end pr-[14.4px] tablet:pr-[3.44rem]">
-              {viewResult !== questStartData._id ? (
-                <Button
-                  variant="submit"
-                  onClick={() => handleSubmit()}
-                  disabled={loading === true ? true : false}
-                >
-                  {loading === true ? (
-                    <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                  ) : (
-                    "Submit"
-                  )}
-                </Button>
-              ) : (
-                <Button
-                  variant="change"
-                  onClick={() => {
-                    handleChange(questStartData._id);
-                  }}
-                >
-                  Change
-                </Button>
+          <div className="flex">
+            {/* Add Options / Go Back / Submit */}
+            {btnText === "change answer" &&
+              startTest === questStartData._id && (
+                <div className="flex w-full justify-between pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+                  <Button onClick={handleOpen} variant={"addOption"}>
+                    {persistedTheme === "dark" ? (
+                      <img
+                        src="/assets/svgs/dashboard/add-dark.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    ) : (
+                      <img
+                        src="/assets/svgs/dashboard/add.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    )}
+                    Add Option
+                  </Button>
+
+                  <div className="flex gap-2">
+                    <Button
+                      variant="cancel"
+                      onClick={() => {
+                        handleViewResults(questStartData._id);
+                        handleStartTest(false);
+                      }}
+                    >
+                      Go Back
+                    </Button>
+                    {viewResult !== questStartData._id && (
+                      <Button
+                        variant="submit"
+                        onClick={() => handleSubmit()}
+                        disabled={loading === true ? true : false}
+                      >
+                        {loading === true ? (
+                          <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                        ) : (
+                          "Submit"
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                </div>
               )}
-            </div>
-          )}
+          </div>
+          <div className="flex w-full justify-end pr-[14.4px] tablet:pr-[3.44rem]">
+            {btnText === "change answer" &&
+            viewResult === questStartData._id ? (
+              <Button variant="change" onClick={handleChange}>
+                Change
+              </Button>
+            ) : (
+              <Button
+                variant="submit"
+                onClick={() => handleSubmit()}
+                disabled={loading === true ? true : false}
+              >
+                {loading === true ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+            )}
+          </div>
         </>
       )}
     </>
