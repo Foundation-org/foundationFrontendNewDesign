@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
 import Loader from "../../../../../components/ui/Loader";
@@ -8,48 +7,38 @@ import SingleAnswer from "../../../../../components/question-card/options/Single
 import SingleAnswerRankedChoice from "../../../../../components/question-card/options/SingleAnswerRankedChoice";
 import SingleAnswerMultipleChoice from "../../../../../components/question-card/options/SingleAnswerMultipleChoice";
 
+import * as questAction from "../../../../../features/quest/questsSlice";
+import { useSelector } from "react-redux";
+
 const StartTest = ({
-  id,
   questStartData,
-  title,
-  answers,
-  quests,
   handleToggleCheck,
-  whichTypeQuestion,
-  handleSubmit,
-  usersAddTheirAns,
   answersSelection,
   setAnswerSelection,
   rankedAnswers,
   setRankedAnswers,
-  multipleOption,
-  setStartTest,
-  loading,
-  expandedView,
   setIsSubmit,
-  usersChangeTheirAns,
-  viewResult,
-  openResults,
-  setOpenResults,
-  startStatus,
   loadingDetail,
 }) => {
-  const navigate = useNavigate();
   const { isFullScreen } = useParams();
-  const persistedTheme = useSelector((state) => state.utils.theme);
-  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const quests = useSelector(questAction.getQuests);
 
   useEffect(() => {
-    localStorage.setItem("usersChangeTheirAns", usersChangeTheirAns);
-  }, [usersChangeTheirAns]);
+    localStorage.setItem(
+      "usersChangeTheirAns",
+      questStartData.usersChangeTheirAns,
+    );
+  }, [questStartData.usersChangeTheirAns]);
 
   useEffect(() => {
-    const updatedAnswersSelection = answers?.map((questAnswer) => ({
-      label: questAnswer.question,
-      check: false,
-      contend: false,
-      uuid: questAnswer.uuid,
-    }));
+    const updatedAnswersSelection = questStartData.QuestAnswers?.map(
+      (questAnswer) => ({
+        label: questAnswer.question,
+        check: false,
+        contend: false,
+        uuid: questAnswer.uuid,
+      }),
+    );
 
     setAnswerSelection(updatedAnswersSelection);
 
@@ -59,7 +48,7 @@ const StartTest = ({
         id: `unique-${index}`,
       })),
     );
-  }, [answers]);
+  }, [questStartData.QuestAnswers]);
 
   useEffect(() => {
     // Trigger a re-render when answersSelection is updated
@@ -129,22 +118,25 @@ const StartTest = ({
     useEffect(() => {
       let listlength = answersSelection.length;
 
-      if (answersSelection[listlength - 1]?.addedOptionByUser && listContainerRef.current) {
-        listContainerRef.current.scrollTop = listContainerRef.current.scrollHeight;
+      if (
+        answersSelection[listlength - 1]?.addedOptionByUser &&
+        listContainerRef.current
+      ) {
+        listContainerRef.current.scrollTop =
+          listContainerRef.current.scrollHeight;
       }
     }, [answersSelection]);
-
 
     if (!loadingDetail) {
       if (
         getQuestionTitle(questStartData.whichTypeQuestion) === "Yes/No" ||
         getQuestionTitle(questStartData.whichTypeQuestion) ===
-        "Agree/Disagree" ||
+          "Agree/Disagree" ||
         getQuestionTitle(questStartData.whichTypeQuestion) === "Like/Dislike"
       ) {
         return (
           <>
-            {title === "Yes/No" ? (
+            {getQuestionTitle(questStartData.whichTypeQuestion) === "Yes/No" ? (
               <>
                 <SingleAnswer
                   number={"#1"}
@@ -163,7 +155,8 @@ const StartTest = ({
                   questStartData={questStartData}
                 />
               </>
-            ) : title === "Agree/Disagree" ? (
+            ) : getQuestionTitle(questStartData.whichTypeQuestion) ===
+              "Agree/Disagree" ? (
               <>
                 <SingleAnswer
                   number={"#1"}
@@ -212,10 +205,11 @@ const StartTest = ({
           <div className="flex flex-col overflow-auto">
             <div
               ref={listContainerRef}
-              className={`${isFullScreen === undefined
-                ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]"
-                : ""
-                } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+              className={`${
+                isFullScreen === undefined
+                  ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]"
+                  : ""
+              } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
               {answersSelection &&
                 [...answersSelection]?.map((item, index) => (
@@ -226,8 +220,8 @@ const StartTest = ({
                     addedAnswerUuid={item.uuid}
                     editable={item.edit}
                     deleteable={item.delete}
-                    title={title}
-                    multipleOption={multipleOption}
+                    title={getQuestionTitle(questStartData.whichTypeQuestion)}
+                    multipleOption={questStartData.userCanSelectMultiple}
                     // setAddOptionLimit={setAddOptionLimit}
                     answersSelection={answersSelection}
                     setAnswerSelection={setAnswerSelection}
@@ -236,12 +230,12 @@ const StartTest = ({
                     contend={findLabelContend(answersSelection, item.label)}
                     whichTypeQuestion={questStartData.whichTypeQuestion}
                     handleCheckChange={
-                      multipleOption === true
+                      questStartData.userCanSelectMultiple === true
                         ? (check) => handleCheckChange(index, check)
                         : (check) => handleCheckChangeSingle(index, check)
                     }
                     handleContendChange={
-                      multipleOption === true
+                      questStartData.userCanSelectMultiple === true
                         ? (contend) => handleContendChange(index, contend)
                         : (contend) => handleContendChangeSingle(index, contend)
                     }
@@ -253,7 +247,6 @@ const StartTest = ({
         );
       }
 
-
       if (
         getQuestionTitle(questStartData.whichTypeQuestion) === "Ranked Choice"
       ) {
@@ -262,13 +255,20 @@ const StartTest = ({
             <DragDropContext onDragEnd={handleOnDragEnd}>
               <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
                 {(provided) => (
-                  <div ref={listContainerRef}
-                    className={`${isFullScreen === undefined ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto" : null}`}>
+                  <div
+                    ref={listContainerRef}
+                    className={`${
+                      isFullScreen === undefined
+                        ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto"
+                        : null
+                    }`}
+                  >
                     <ul
-                      className={`${isFullScreen === undefined
-                        ? " tablet:max-h-[366px]"
-                        : ""
-                        }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                      className={`${
+                        isFullScreen === undefined
+                          ? " tablet:max-h-[366px]"
+                          : ""
+                      }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
@@ -294,7 +294,9 @@ const StartTest = ({
                                 addedAnswerUuid={item.uuid}
                                 answersSelection={answersSelection}
                                 setAnswerSelection={setAnswerSelection}
-                                title={title}
+                                title={getQuestionTitle(
+                                  questStartData.whichTypeQuestion,
+                                )}
                                 checkInfo={false}
                                 check={findLabelChecked(
                                   answersSelection,

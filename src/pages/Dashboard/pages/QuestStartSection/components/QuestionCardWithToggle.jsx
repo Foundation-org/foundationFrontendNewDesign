@@ -573,35 +573,13 @@ const QuestionCardWithToggle = (props) => {
           />
           <StartTest
             questStartData={questStartData}
-            title={getQuestionTitle(questStartData.whichTypeQuestion)}
-            answers={questStartData.QuestAnswers}
-            multipleOption={questStartData.userCanSelectMultiple}
-            SingleAnswer={SingleAnswer}
-            quests={quests}
             handleToggleCheck={handleToggleCheck}
-            handleOpen={handleOpen}
-            handleClose={handleClose}
-            open={open}
-            btnText={questStartData.startStatus}
-            setAnswerSelection={setAnswerSelection}
             answersSelection={answersSelection}
+            setAnswerSelection={setAnswerSelection}
             rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
-            addOptionField={addOptionField}
-            setAddOptionField={setAddOptionField}
-            addOptionLimit={addOptionLimit}
-            setAddOptionLimit={setAddOptionLimit}
-            createdBy={questStartData.uuid}
-            img={"/assets/svgs/dashboard/badge.svg"}
-            alt={"badge"}
-            badgeCount={5}
-            question={questStartData.Question}
-            time={questStartData.createdAt}
-            usersChangeTheirAns={questStartData.usersChangeTheirAns}
-            lastInteractedAt={questStartData.lastInteractedAt}
-            howManyTimesAnsChanged={howManyTimesAnsChanged}
-            loadingDetail={loadingDetail}
             setIsSubmit={setIsSubmit}
+            loadingDetail={loadingDetail}
           />
           <ConditionalTextFullScreen
             questStartData={questStartData}
