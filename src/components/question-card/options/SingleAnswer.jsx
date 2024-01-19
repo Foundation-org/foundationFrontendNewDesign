@@ -58,8 +58,8 @@ const SingleAnswer = (props) => {
   // };
 
   return (
-    <div className="flex items-center pl-[3.94rem] pr-[6.3rem]">
-      <div className="flex h-[26.05px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:h-[45px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:h-[45px] laptop:w-[25px] dark:bg-[#9E9E9E]">
+    <div className="flex items-center pl-[1.5rem] pr-[28px] tablet:pl-[3.94rem] tablet:pr-[6.3rem]">
+      <div className="flex h-[21.8px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:h-[45px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:h-[45px] laptop:w-[25px] dark:bg-[#9E9E9E]">
         &#x200B;
       </div>
       <div className="flex w-full justify-between rounded-r-[4.73px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]">

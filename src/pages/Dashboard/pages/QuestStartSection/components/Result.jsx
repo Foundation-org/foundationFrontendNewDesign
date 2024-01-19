@@ -233,7 +233,11 @@ const Result = (props) => {
                   number={"#1"}
                   answer={"Agree"}
                   checkInfo={true}
-                  percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                  // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                  percentage={
+                    props.questStartData.selectedPercentage &&
+                    props.questStartData?.selectedPercentage[0].Agree
+                  }
                   check={quests.agreeDisagree.agree.check}
                   contend={quests.agreeDisagree.agree.contend}
                   handleToggleCheck={props.handleToggleCheck}
@@ -244,7 +248,11 @@ const Result = (props) => {
                   number={"#2"}
                   answer={"Disagree"}
                   checkInfo={true}
-                  percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                  percentage={
+                    props.questStartData.selectedPercentage &&
+                    props.questStartData?.selectedPercentage[0].Disagree
+                  }
+                  // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                   check={quests.agreeDisagree.disagree.check}
                   contend={quests.agreeDisagree.disagree.contend}
                   handleToggleCheck={props.handleToggleCheck}

@@ -55,7 +55,7 @@ const RankedResult = (props) => {
         <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
       )}
       {/* flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E] */}
-      <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7]  tablet:h-[50.5px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E]">
+      <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] tablet:h-[50.5px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E]">
         {" "}
         &#x200B;
       </div>

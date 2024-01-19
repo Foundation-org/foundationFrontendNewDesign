@@ -49,11 +49,17 @@ const QuestionCardWithToggle = (props) => {
         check: false,
       },
     },
+    "agree/disagree": {
+      agree: {
+        check: false,
+      },
+      disagree: {
+        check: false,
+      },
+    },
   });
 
   const handleQuestSelection = (actionPayload) => {
-    console.log("called", actionPayload);
-
     setQuestSelection((prevState) => {
       const newState = { ...prevState, id: actionPayload.id };
 
@@ -62,6 +68,14 @@ const QuestionCardWithToggle = (props) => {
           ...prevState["yes/no"],
           yes: { check: actionPayload.option === "Yes" ? true : false },
           no: { check: actionPayload.option === "No" ? true : false },
+        };
+      }
+
+      if (actionPayload.label === "agree/disagree") {
+        newState["agree/disagree"] = {
+          ...prevState["agree/disagree"],
+          agree: { check: actionPayload.option === "Yes" ? true : false },
+          disagree: { check: actionPayload.option === "No" ? true : false },
         };
       }
 
@@ -125,10 +139,10 @@ const QuestionCardWithToggle = (props) => {
     handleStartTest(questStartData._id);
   };
 
-  const handleOpen = () => {
-    setAddOptionField(1);
-    handleAddOption();
-  };
+  // const handleOpen = () => {
+  //   setAddOptionField(1);
+  //   handleAddOption();
+  // };
 
   const handleClose = () => setOpen(false);
 
@@ -150,7 +164,6 @@ const QuestionCardWithToggle = (props) => {
   };
 
   const handleToggleCheck = (label, option, check, id) => {
-    console.log("handleToggleCheck called");
     const actionPayload = {
       label,
       option,
@@ -163,16 +176,32 @@ const QuestionCardWithToggle = (props) => {
   };
 
   useEffect(() => {
-    handleToggleCheck(
-      questStartData.whichTypeQuestion,
-      questStartData?.result && questStartData?.result[0]?.selected.Yes === 1
-        ? "Yes"
-        : "No",
-      questStartData?.result && questStartData?.result[0]?.selected.Yes === 1
-        ? true
-        : false,
-      questStartData._id,
-    );
+    if (questStartData.whichTypeQuestion === "yes/no") {
+      handleToggleCheck(
+        questStartData.whichTypeQuestion,
+        questStartData?.result && questStartData?.result[0]?.selected.Yes === 1
+          ? "Yes"
+          : "No",
+        questStartData?.result && questStartData?.result[0]?.selected.Yes === 1
+          ? true
+          : false,
+        questStartData._id,
+      );
+    }
+    if (questStartData.whichTypeQuestion === "agree/disagree") {
+      handleToggleCheck(
+        questStartData.whichTypeQuestion,
+        questStartData?.result &&
+          questStartData?.result[0]?.selected.Agree === 1
+          ? "Yes"
+          : "No",
+        questStartData?.result &&
+          questStartData?.result[0]?.selected.Disagree === 1
+          ? true
+          : false,
+        questStartData._id,
+      );
+    }
   }, [questStartData]);
 
   console.log("questSelection", questSelection);

@@ -27,7 +27,7 @@ const ConditionalTextFullScreen = ({
           }}
         >
           <svg
-            className="h-[23px] w-5"
+            className="h-3 w-3 tablet:h-[23px] tablet:w-5"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 23"
             fill="none"

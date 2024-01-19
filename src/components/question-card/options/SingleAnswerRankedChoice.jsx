@@ -181,7 +181,7 @@ const SingleAnswerRankedChoice = (props) => {
                 props.snapshot.isDragging
                   ? "border-y-[#5FA3D5] border-r-[#5FA3D5]"
                   : "border-y-[#DEE6F7] border-s-[#DEE6F7]"
-              } flex h-full w-fit items-center rounded-l-[4.734px] border-y border-s bg-[#DEE6F7] px-[3.3px] pb-[6.6px] pt-[6.15px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:py-[13px] dark:bg-[#9E9E9E]`}
+              } flex h-full w-fit items-center rounded-l-[4.734px] border-y border-s bg-[#DEE6F7] px-[3.3px] py-[5.6px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:py-[13px] dark:bg-[#9E9E9E]`}
             >
               {persistedTheme === "dark" ? (
                 <img
