@@ -181,8 +181,10 @@ const Result = (props) => {
     }
   }
 
+  console.log("result", props.questSelection);
+
   return (
-    <div className="flex flex-col gap-[5.7px]">
+    <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
       {props.title === "Yes/No" ||
       props.title === "Agree/Disagree" ||
       props.title === "Like/Dislike" ? (
@@ -197,8 +199,8 @@ const Result = (props) => {
                   answer={"Yes"}
                   checkInfo={true}
                   percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-                  check={quests.yesNo.yes.check}
-                  contend={quests.yesNo.yes.contend}
+                  check={props.questSelection["yes/no"].yes.check}
+                  contend={props.questSelection["yes/no"].yes.check}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
                   questStartData={props.questStartData}
@@ -208,8 +210,8 @@ const Result = (props) => {
                   answer={"No"}
                   checkInfo={true}
                   percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-                  check={quests.yesNo.no.check}
-                  contend={quests.yesNo.no.contend}
+                  check={props.questSelection["yes/no"].no.check}
+                  contend={props.questSelection["yes/no"].no.check}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
                   questStartData={props.questStartData}

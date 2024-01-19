@@ -39,6 +39,35 @@ const QuestionCardWithToggle = (props) => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [startTest, setStartTest] = useState("");
   const [viewResult, setViewResult] = useState("");
+  const [questSelection, setQuestSelection] = useState({
+    id: "",
+    "yes/no": {
+      yes: {
+        check: false,
+      },
+      no: {
+        check: false,
+      },
+    },
+  });
+
+  const handleQuestSelection = (actionPayload) => {
+    console.log("called", actionPayload);
+
+    setQuestSelection((prevState) => {
+      const newState = { ...prevState, id: actionPayload.id };
+
+      if (actionPayload.label === "yes/no") {
+        newState["yes/no"] = {
+          ...prevState["yes/no"],
+          yes: { check: actionPayload.option === "Yes" ? true : false },
+          no: { check: actionPayload.option === "No" ? true : false },
+        };
+      }
+
+      return newState;
+    });
+  };
 
   const [answersSelection, setAnswerSelection] = useState(
     questStartData.QuestAnswers?.map((answer) => ({
@@ -92,7 +121,7 @@ const QuestionCardWithToggle = (props) => {
       questForeignKey: questStartData._id,
       uuid: persistedUserInfo.uuid,
     };
-    getStartQuestDetail(data);
+    // getStartQuestDetail(data);
     handleStartTest(questStartData._id);
   };
 
@@ -120,18 +149,33 @@ const QuestionCardWithToggle = (props) => {
     setAddOptionLimit(1);
   };
 
-  const handleToggleCheck = (option, check, contend, id) => {
-    const capitalizedOption = capitalizeFirstLetter(option);
-
+  const handleToggleCheck = (label, option, check, id) => {
+    console.log("handleToggleCheck called");
     const actionPayload = {
-      option: capitalizedOption,
+      label,
+      option,
       check,
-      contend,
       id,
     };
 
-    dispatch(questAction.toggleCheck(actionPayload));
+    handleQuestSelection(actionPayload);
+    // dispatch(questAction.toggleCheck(actionPayload));
   };
+
+  useEffect(() => {
+    handleToggleCheck(
+      questStartData.whichTypeQuestion,
+      questStartData?.result && questStartData?.result[0]?.selected.Yes === 1
+        ? "Yes"
+        : "No",
+      questStartData?.result && questStartData?.result[0]?.selected.Yes === 1
+        ? true
+        : false,
+      questStartData._id,
+    );
+  }, [questStartData]);
+
+  console.log("questSelection", questSelection);
 
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
@@ -186,24 +230,24 @@ const QuestionCardWithToggle = (props) => {
     },
   });
 
-  const extractSelectedAndContended = (quests) => {
-    let selected = null;
-    let contended = null;
+  // const extractSelectedAndContended = (quests) => {
+  //   let selected = null;
+  //   let contended = null;
 
-    for (const key in quests) {
-      const option = quests[key];
+  //   for (const key in quests) {
+  //     const option = quests[key];
 
-      if (option.check) {
-        selected = key;
-      }
+  //     if (option.check) {
+  //       selected = key;
+  //     }
 
-      if (option.contend) {
-        contended = key;
-      }
-    }
+  //     if (option.contend) {
+  //       contended = key;
+  //     }
+  //   }
 
-    return { selected, contended };
-  };
+  //   return { selected, contended };
+  // };
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
@@ -226,102 +270,107 @@ const QuestionCardWithToggle = (props) => {
     setAnswerSelection(answerSelectionArray);
   }
 
-  const { mutateAsync: getStartQuestDetail } = useMutation({
-    mutationFn: getStartQuestInfo,
-    onSuccess: (res) => {
-      setHowManyTimesAnsChanged(res.data.data.length);
-      if (
-        questStartData.whichTypeQuestion === "agree/disagree" ||
-        questStartData.whichTypeQuestion === "yes/no" ||
-        questStartData.whichTypeQuestion === "like/dislike"
-      ) {
-        if (
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "agree" ||
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "yes"
-        ) {
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].selected,
-            true,
-            false,
-          );
-        }
-        if (
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "agree" ||
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "yes"
-        ) {
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].contended,
-            false,
-            true,
-          );
-        }
-        if (
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "disagree" ||
-          res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-            "no"
-        ) {
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].contended,
-            false,
-            true,
-          );
-        }
-        if (
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "disagree" ||
-          res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-            "no"
-        ) {
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].selected,
-            true,
-            false,
-          );
-        }
-      }
-      if (questStartData.whichTypeQuestion === "multiple choise") {
-        updateAnswerSelection(
-          res?.data.data[res.data.data.length - 1],
-          answersSelection,
-        );
-      }
-      if (questStartData.whichTypeQuestion === "ranked choise") {
-        const updatedRankedAnswers = res?.data.data[
-          res.data.data.length - 1
-        ].selected.map((item) => {
-          const correspondingRankedAnswer = rankedAnswers.find(
-            (rankedItem) => rankedItem.label === item.question,
-          );
+  // const { mutateAsync: getStartQuestDetail } = useMutation({
+  //   mutationFn: getStartQuestInfo,
+  //   onSuccess: (res) => {
+  //     setHowManyTimesAnsChanged(res.data.data.length);
+  //     if (
+  //       questStartData.whichTypeQuestion === "agree/disagree" ||
+  //       questStartData.whichTypeQuestion === "yes/no" ||
+  //       questStartData.whichTypeQuestion === "like/dislike"
+  //     ) {
+  //       if (
+  //         res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
+  //           "agree" ||
+  //         res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
+  //           "yes"
+  //       ) {
+  //         handleToggleCheck(
+  //           res.data.data[res.data.data.length - 1].selected,
+  //           true,
+  //           false,
+  //         );
+  //       }
+  //       if (
+  //         res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
+  //           "agree" ||
+  //         res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
+  //           "yes"
+  //       ) {
+  //         handleToggleCheck(
+  //           res.data.data[res.data.data.length - 1].contended,
+  //           false,
+  //           true,
+  //         );
+  //       }
+  //       if (
+  //         res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
+  //           "disagree" ||
+  //         res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
+  //           "no"
+  //       ) {
+  //         handleToggleCheck(
+  //           res.data.data[res.data.data.length - 1].contended,
+  //           false,
+  //           true,
+  //         );
+  //       }
+  //       if (
+  //         res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
+  //           "disagree" ||
+  //         res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
+  //           "no"
+  //       ) {
+  //         handleToggleCheck(
+  //           res.data.data[res.data.data.length - 1].selected,
+  //           true,
+  //           false,
+  //         );
+  //       }
+  //     }
+  //     if (questStartData.whichTypeQuestion === "multiple choise") {
+  //       updateAnswerSelection(
+  //         res?.data.data[res.data.data.length - 1],
+  //         answersSelection,
+  //       );
+  //     }
+  //     if (questStartData.whichTypeQuestion === "ranked choise") {
+  //       const updatedRankedAnswers = res?.data.data[
+  //         res.data.data.length - 1
+  //       ].selected.map((item) => {
+  //         const correspondingRankedAnswer = rankedAnswers.find(
+  //           (rankedItem) => rankedItem.label === item.question,
+  //         );
 
-          if (correspondingRankedAnswer) {
-            return {
-              id: correspondingRankedAnswer.id,
-              label: correspondingRankedAnswer.label,
-              check: false,
-              contend: false,
-            };
-          }
+  //         if (correspondingRankedAnswer) {
+  //           return {
+  //             id: correspondingRankedAnswer.id,
+  //             label: correspondingRankedAnswer.label,
+  //             check: false,
+  //             contend: false,
+  //           };
+  //         }
 
-          return null;
-        });
-        // Filter out any null values (items not found in rankedAnswers)
-        const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
+  //         return null;
+  //       });
+  //       // Filter out any null values (items not found in rankedAnswers)
+  //       const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
 
-        // Update the state with the new array
-        setRankedAnswers(filteredRankedAnswers);
-      }
-      setLoadingDetail(false);
-    },
-    onError: (err) => {
-      toast.error(err.response?.data);
-      console.log("Mutation Error", err);
-    },
-  });
+  //       // Update the state with the new array
+  //       setRankedAnswers(filteredRankedAnswers);
+  //     }
+  //     setLoadingDetail(false);
+  //   },
+  //   onError: (err) => {
+  //     toast.error(err.response?.data);
+  //     console.log("Mutation Error", err);
+  //   },
+  // });
+
+  console.log(
+    "first",
+    questSelection["yes/no"].yes.check === true ? "Yes" : "No",
+  );
 
   const handleSubmit = () => {
     setLoading(true);
@@ -330,23 +379,26 @@ const QuestionCardWithToggle = (props) => {
       questStartData.whichTypeQuestion === "yes/no" ||
       questStartData.whichTypeQuestion === "like/dislike"
     ) {
-      const { selected, contended } = extractSelectedAndContended(
-        questStartData.whichTypeQuestion === "agree/disagree"
-          ? quests.agreeDisagree
-          : questStartData.whichTypeQuestion === "yes/no"
-            ? quests.yesNo
-            : quests.likeDislike,
-      );
+      // const { selected, contended } = extractSelectedAndContended(
+      //   questStartData.whichTypeQuestion === "agree/disagree"
+      //     ? quests.agreeDisagree
+      //     : questStartData.whichTypeQuestion === "yes/no"
+      //       ? quests.yesNo
+      //       : quests.likeDislike,
+      // );
 
       let ans = {
         created: new Date(),
+        selected: questSelection["yes/no"].yes.check === true ? "Yes" : "No",
       };
-      if (selected) {
-        ans.selected = selected.charAt(0).toUpperCase() + selected.slice(1);
-      }
-      if (contended) {
-        ans.contended = contended.charAt(0).toUpperCase() + contended.slice(1);
-      }
+      // if (selected) {
+      //   ans.selected = selected.charAt(0).toUpperCase() + selected.slice(1);
+      // }
+      // if (contended) {
+      //   ans.contended = contended.charAt(0).toUpperCase() + contended.slice(1);
+      // }
+
+      // if(questSelection[questStartData.whichTypeQuestion])
 
       const params = {
         questId: questStartData._id,
@@ -580,6 +632,7 @@ const QuestionCardWithToggle = (props) => {
             setRankedAnswers={setRankedAnswers}
             setIsSubmit={setIsSubmit}
             loadingDetail={loadingDetail}
+            questSelection={questSelection}
           />
           <ConditionalTextFullScreen
             questStartData={questStartData}
@@ -611,6 +664,7 @@ const QuestionCardWithToggle = (props) => {
             setAnswerSelection={setAnswerSelection}
             rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
+            questSelection={questSelection}
           />
           <ConditionalTextFullScreen
             questStartData={questStartData}

@@ -49,7 +49,7 @@ const SingleAnswer = (props) => {
 
   return (
     <div className="flex items-center pl-[3.94rem] pr-[6.3rem]">
-      <div className="flex h-[26.05px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:h-[52.5px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:h-[45px] laptop:w-[25px] dark:bg-[#9E9E9E]">
+      <div className="flex h-[26.05px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:h-[45px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:h-[45px] laptop:w-[25px] dark:bg-[#9E9E9E]">
         &#x200B;
       </div>
       <div className="flex w-full justify-between rounded-r-[4.73px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]">
@@ -70,22 +70,31 @@ const SingleAnswer = (props) => {
                 type="checkbox"
                 className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
                 checked={
-                  props.btnText !== "Results"
-                    ? quests.id === props.questStartData._id
-                      ? props.check
-                      : null
-                    : quests.id === "" || quests.id === undefined
-                      ? props.check
-                      : null
+                  props.check
+                  // props.btnText !== "Results"
+                  //   ? quests.id === props.questStartData._id
+                  //     ? props.check
+                  //     : null
+                  //   : quests.id === "" || quests.id === undefined
+                  //     ? props.check
+                  //     : null
                 }
                 onChange={() =>
                   props.handleToggleCheck(
+                    props.questStartData.whichTypeQuestion,
                     props.answer,
-                    true,
-                    false,
+                    !props.check,
                     props.questStartData._id,
                   )
                 }
+                // onChange={() =>
+                //   props.handleToggleCheck(
+                //     props.answer,
+                //     true,
+                //     false,
+                //     props.questStartData._id,
+                //   )
+                // }
               />
             </div>
             {props.btnText === "Results" ? (

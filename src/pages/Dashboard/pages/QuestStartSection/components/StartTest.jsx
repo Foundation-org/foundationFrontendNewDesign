@@ -1,14 +1,16 @@
 import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+
 import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
+
 import Loader from "../../../../../components/ui/Loader";
 import SingleAnswer from "../../../../../components/question-card/options/SingleAnswer";
 import SingleAnswerRankedChoice from "../../../../../components/question-card/options/SingleAnswerRankedChoice";
 import SingleAnswerMultipleChoice from "../../../../../components/question-card/options/SingleAnswerMultipleChoice";
 
 import * as questAction from "../../../../../features/quest/questsSlice";
-import { useSelector } from "react-redux";
 
 const StartTest = ({
   questStartData,
@@ -19,6 +21,7 @@ const StartTest = ({
   setRankedAnswers,
   setIsSubmit,
   loadingDetail,
+  questSelection,
 }) => {
   const { isFullScreen } = useParams();
   const quests = useSelector(questAction.getQuests);
@@ -141,16 +144,16 @@ const StartTest = ({
                 <SingleAnswer
                   number={"#1"}
                   answer={"Yes"}
-                  check={quests.yesNo.yes.check}
-                  contend={quests.yesNo.yes.contend}
+                  check={questSelection["yes/no"].yes.check}
+                  contend={questSelection["yes/no"].yes.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
                 />
                 <SingleAnswer
                   number={"#2"}
                   answer={"No"}
-                  check={quests.yesNo.no.check}
-                  contend={quests.yesNo.no.contend}
+                  check={questSelection["yes/no"].no.check}
+                  contend={questSelection["yes/no"].no.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
                 />
@@ -222,7 +225,6 @@ const StartTest = ({
                     deleteable={item.delete}
                     title={getQuestionTitle(questStartData.whichTypeQuestion)}
                     multipleOption={questStartData.userCanSelectMultiple}
-                    // setAddOptionLimit={setAddOptionLimit}
                     answersSelection={answersSelection}
                     setAnswerSelection={setAnswerSelection}
                     checkInfo={true}
