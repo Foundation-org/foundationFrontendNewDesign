@@ -40,8 +40,6 @@ const QuestionCardWithToggle = (props) => {
   const [startTest, setStartTest] = useState("");
   const [viewResult, setViewResult] = useState("");
 
-  console.log({ viewResult });
-
   const [answersSelection, setAnswerSelection] = useState(
     questStartData.QuestAnswers?.map((answer) => ({
       label: answer.question,
@@ -84,7 +82,6 @@ const QuestionCardWithToggle = (props) => {
   };
 
   const handleViewResults = (testId) => {
-    console.log("first", testId);
     setStartTest("");
     setViewResult((prev) => (prev === testId ? "" : testId));
   };
@@ -365,7 +362,6 @@ const QuestionCardWithToggle = (props) => {
       }
 
       if (questStartData.startStatus === "change answer") {
-        console.log(howManyTimesAnsChanged);
         const currentDate = new Date();
 
         const timeInterval = validateInterval();
@@ -392,8 +388,6 @@ const QuestionCardWithToggle = (props) => {
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
           if (answersSelection[i].addedOptionByUser) {
-            // If user Add his own option
-
             answerSelected.push({
               question: answersSelection[i].label,
               addedAnswerByUser: true,
@@ -401,7 +395,6 @@ const QuestionCardWithToggle = (props) => {
             });
             addedAnswerValue = answersSelection[i].label;
             addedAnswerUuidValue = answersSelection[i].uuid;
-            console.log("added ans value" + addedAnswerValue);
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
@@ -435,7 +428,7 @@ const QuestionCardWithToggle = (props) => {
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
-          console.log("params", params);
+
           changeAnswer(params);
         }
       } else {
@@ -446,7 +439,7 @@ const QuestionCardWithToggle = (props) => {
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
         };
-        console.log("selected", params);
+
         // && params.answer.contended.length === 0
         if (params.answer.selected.length === 0) {
           toast.warning("You cannot submit without answering");
@@ -462,10 +455,9 @@ const QuestionCardWithToggle = (props) => {
           setLoading(false);
           return;
         }
-        console.log({ isSubmit });
 
         if (!isSubmit) setLoading(false);
-        console.log("params", params);
+
         startQuest(params);
       }
     } else if (questStartData.whichTypeQuestion === "ranked choise") {
@@ -476,14 +468,13 @@ const QuestionCardWithToggle = (props) => {
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {
           // If user Add his own option
-          console.log("added answer ran");
+
           answerSelected.push({
             question: rankedAnswers[i].label,
             addedAnswerByUser: true,
           });
           addedAnswerValue = rankedAnswers[i].label;
           addedAnswerUuidValue = answersSelection[i].uuid;
-          console.log("added ans value" + addedAnswerValue);
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
         }
@@ -512,7 +503,7 @@ const QuestionCardWithToggle = (props) => {
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
-          console.log("params", params);
+
           changeAnswer(params);
         }
       } else {
@@ -523,7 +514,6 @@ const QuestionCardWithToggle = (props) => {
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
         };
-        console.log("params", params);
 
         startQuest(params);
       }
@@ -614,6 +604,7 @@ const QuestionCardWithToggle = (props) => {
             setIsSubmit={setIsSubmit}
           />
           <ConditionalTextFullScreen
+            questStartData={questStartData}
             show={true}
             answersSelection={answersSelection}
             rankedAnswers={rankedAnswers}
@@ -644,6 +635,7 @@ const QuestionCardWithToggle = (props) => {
             setRankedAnswers={setRankedAnswers}
           />
           <ConditionalTextFullScreen
+            questStartData={questStartData}
             show={false}
             answersSelection={answersSelection}
             rankedAnswers={rankedAnswers}
@@ -680,7 +672,6 @@ const QuestionCardWithToggle = (props) => {
         usersAddTheirAns={questStartData.usersAddTheirAns}
         answers={questStartData.QuestAnswers}
         title={getQuestionTitle(questStartData.whichTypeQuestion)}
-        setStartTest={setStartTest}
         viewResult={viewResult}
         handleSubmit={handleSubmit}
         loading={loading}

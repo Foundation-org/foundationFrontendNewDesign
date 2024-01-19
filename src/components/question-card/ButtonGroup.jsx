@@ -11,7 +11,6 @@ import { Button } from "../ui/Button";
 import { FaSpinner } from "react-icons/fa";
 
 import * as questUtilsActions from "../../features/quest/utilsSlice";
-import * as buttonGroupActions from "../../features/buttonGroup/buttonGroupSlice";
 import * as filterActions from "../../features/sidebar/filtersSlice";
 
 const ButtonGroup = ({
@@ -32,10 +31,8 @@ const ButtonGroup = ({
   setLoadingDetail,
   answers,
   handleOpen,
-  setStartTest,
   viewResult,
   openResults,
-  setViewResult,
   setOpenResults,
   handleSubmit,
   loading,
@@ -49,7 +46,6 @@ const ButtonGroup = ({
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterState = useSelector(filterActions.getFilters);
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
-  const buttonGroupState = useSelector(buttonGroupActions.getButtonGroup);
 
   const uuidExists =
     answers &&

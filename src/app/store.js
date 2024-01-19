@@ -13,7 +13,6 @@ import questsReducer from "../features/quest/questsSlice";
 import questUtilsReducer from "../features/quest/utilsSlice";
 import prefReducer from "../features/preferences/prefSlice";
 import questCardReducer from "../features/quest/questCardSlice";
-import ButtonGroupReducer from "../features/buttonGroup/buttonGroupSlice";
 
 const persistConfig = {
   key: "persist-store",
@@ -31,7 +30,6 @@ const reducer = combineReducers({
   questUtils: questUtilsReducer,
   preferences: prefReducer,
   questCard: questCardReducer,
-  buttonGroup: ButtonGroupReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);
