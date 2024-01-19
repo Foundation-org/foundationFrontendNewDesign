@@ -69,7 +69,6 @@ const SingleAnswerMultipleChoice = (props) => {
   // }, [props.answer]);
 
   const handleInputChange = (e) => {
-
     setAnswer(e.target.value);
     setCheckOptionStatus(
       e.target.value.trim() === ""
@@ -79,7 +78,6 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   const optionVerification = async (value) => {
-
     if (prevValue === answer) return;
     setPrevValue(value);
     setCheckOptionStatus({
@@ -94,7 +92,7 @@ const SingleAnswerMultipleChoice = (props) => {
     });
     // If any error captured
     if (errorMessage) {
-      console.log("this function is running")
+      console.log("this function is running");
       // props.setIsSubmit(false);
       return setCheckOptionStatus({
         name: "Rejected",
@@ -273,7 +271,7 @@ const SingleAnswerMultipleChoice = (props) => {
 
         {/* =============== To Display Contention and Trash Right of Option */}
         {props.btnText !== "Results" ? (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] pl-[15px] tablet:w-8 dark:bg-[#141618]">
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] pl-0 tablet:w-8 tablet:pl-[15px] dark:bg-[#141618]">
             {props.deleteable ? (
               <img
                 src="/assets/svgs/dashboard/trash2.svg"
