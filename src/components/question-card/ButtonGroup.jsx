@@ -255,8 +255,7 @@ const ButtonGroup = ({
                   <Button
                     variant="cancel"
                     onClick={() => {
-                      // setViewResult(id);
-                      handleViewResult(questStartData._id),
+                      handleViewResults(questStartData._id),
                         setOpenResults(true);
                     }}
                   >
@@ -329,8 +328,7 @@ const ButtonGroup = ({
                   <Button
                     variant="cancel"
                     onClick={() => {
-                      handleStartTest("");
-                      // setStartTest(null);
+                      handleViewResults(questStartData._id);
                     }}
                   >
                     Go Back

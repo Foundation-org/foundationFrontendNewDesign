@@ -40,6 +40,8 @@ const QuestionCardWithToggle = (props) => {
   const [startTest, setStartTest] = useState("");
   const [viewResult, setViewResult] = useState("");
 
+  console.log({ viewResult });
+
   const [answersSelection, setAnswerSelection] = useState(
     questStartData.QuestAnswers?.map((answer) => ({
       label: answer.question,
@@ -82,8 +84,9 @@ const QuestionCardWithToggle = (props) => {
   };
 
   const handleViewResults = (testId) => {
+    console.log("first", testId);
     setStartTest("");
-    setViewResult((prev) => (prev === testId ? "s" : testId));
+    setViewResult((prev) => (prev === testId ? "" : testId));
   };
 
   const handleChange = () => {
