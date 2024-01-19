@@ -1,51 +1,61 @@
-import { useSelector } from "react-redux";
-import { getQuests } from "../../../features/quest/questsSlice";
+// import { useSelector } from "react-redux";
+// import { getQuests } from "../../../features/quest/questsSlice";
 
 const SingleAnswer = (props) => {
-  const quests = useSelector(getQuests);
-  const persistedTheme = useSelector((state) => state.utils.theme);
+  // const quests = useSelector(getQuests);
+  // const persistedTheme = useSelector((state) => state.utils.theme);
 
-  const fetchSelectedPercentage = () => {
-    const percentageKey =
-      props.answer === "Yes" ||
-      props.answer === "Agree" ||
-      props.answer === "Like"
-        ? "Yes"
-        : "No";
+  // console.log("singleAns", props.percentage);
 
-    const selectedPercentage =
-      props.percentages?.selectedPercentage?.[percentageKey];
+  // const fetchSelectedPercentage = () => {
+  //   // const percentageKey =
+  //   //   props.answer === "Yes" ||
+  //   //   props.answer === "Agree" ||
+  //   //   props.answer === "Like"
+  //   //     ? "Yes"
+  //   //     : "No";
 
-    if (selectedPercentage !== 0 && selectedPercentage !== undefined) {
-      return selectedPercentage === 100 ? (
-        <span
-          className={`w-[4ch] whitespace-nowrap ${
-            persistedTheme === "dark" ? "text-white" : ""
-          }`}
-        >
-          100%
-        </span>
-      ) : (
-        <span
-          className={`w-[4ch] whitespace-nowrap ${
-            persistedTheme === "dark" ? "text-white" : ""
-          }`}
-        >
-          {selectedPercentage + "%"}
-        </span>
-      );
-    } else {
-      return (
-        <span
-          className={`w-[4ch] whitespace-nowrap ${
-            persistedTheme === "dark" ? "text-white" : ""
-          }`}
-        >
-          0%
-        </span>
-      );
-    }
-  };
+  //   // const selectedPercentage =
+  //   //   props.percentages?.selectedPercentage?.[percentageKey];
+
+  //   // if (selectedPercentage !== 0 && selectedPercentage !== undefined) {
+  //   //   return selectedPercentage === 100 ? (
+  //   //     <span
+  //   //       className={`w-[4ch] whitespace-nowrap ${
+  //   //         persistedTheme === "dark" ? "text-white" : ""
+  //   //       }`}
+  //   //     >
+  //   //       100%
+  //   //     </span>
+  //   //   ) : (
+  //   //     <span
+  //   //       className={`w-[4ch] whitespace-nowrap ${
+  //   //         persistedTheme === "dark" ? "text-white" : ""
+  //   //       }`}
+  //   //     >
+  //   //       {selectedPercentage + "%"}
+  //   //     </span>
+  //   //   );
+  //   if (props.percentage !== undefined) {
+  //     <span
+  //       className={`w-[4ch] whitespace-nowrap ${
+  //         persistedTheme === "dark" ? "text-white" : ""
+  //       }`}
+  //     >
+  //       {props.percentage + "%"}
+  //     </span>;
+  //   } else {
+  //     return (
+  //       <span
+  //         className={`w-[4ch] whitespace-nowrap ${
+  //           persistedTheme === "dark" ? "text-white" : ""
+  //         }`}
+  //       >
+  //         {props.percentage + "%"}
+  //       </span>
+  //     );
+  //   }
+  // };
 
   return (
     <div className="flex items-center pl-[3.94rem] pr-[6.3rem]">
@@ -98,7 +108,15 @@ const SingleAnswer = (props) => {
               />
             </div>
             {props.btnText === "Results" ? (
-              <>{fetchSelectedPercentage()}</>
+              props.percentage === undefined ? (
+                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                  0%
+                </span>
+              ) : (
+                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                  {props.percentage}
+                </span>
+              )
             ) : null}
           </div>
         </div>
