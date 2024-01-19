@@ -62,11 +62,14 @@ const SingleAnswerMultipleChoice = (props) => {
     });
   };
 
-  useEffect(() => {
-    setAnswer(props.answer);
-  }, [props.answer]);
+  // useEffect(() => {
+  //    console.log("get props.answer value", props.answer);
+  //   if(answer !== props.answer)
+  //   setAnswer(props.answer);
+  // }, [props.answer]);
 
   const handleInputChange = (e) => {
+
     setAnswer(e.target.value);
     setCheckOptionStatus(
       e.target.value.trim() === ""
@@ -76,6 +79,7 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   const optionVerification = async (value) => {
+
     if (prevValue === answer) return;
     setPrevValue(value);
     setCheckOptionStatus({
@@ -90,6 +94,7 @@ const SingleAnswerMultipleChoice = (props) => {
     });
     // If any error captured
     if (errorMessage) {
+      console.log("this function is running")
       // props.setIsSubmit(false);
       return setCheckOptionStatus({
         name: "Rejected",
