@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { userInfo } from "../../../../../services/api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
 import { resetQuests } from "../../../../../features/quest/questsSlice";
-import { getStartQuestInfo } from "../../../../../services/api/questsApi";
+// import { getStartQuestInfo } from "../../../../../services/api/questsApi";
 import { capitalizeFirstLetter, validateInterval } from "../../../../../utils";
 import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
 
@@ -15,16 +15,16 @@ import StartTest from "./StartTest";
 import ButtonGroup from "../../../../../components/question-card/ButtonGroup";
 import QuestInfoText from "../../../../../components/question-card/QuestInfoText";
 import QuestCardLayout from "../../../../../components/question-card/QuestCardLayout";
-import SingleAnswer from "../../../../../components/question-card/options/SingleAnswer";
+// import SingleAnswer from "../../../../../components/question-card/options/SingleAnswer";
 import ConditionalTextFullScreen from "../../../../../components/question-card/ConditionalTextFullScreen";
 
-import * as questAction from "../../../../../features/quest/questsSlice";
+// import * as questAction from "../../../../../features/quest/questsSlice";
 import * as questServices from "../../../../../services/api/questsApi";
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const quests = useSelector(questAction.getQuests);
+  // const quests = useSelector(questAction.getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const { questStartData, isBookmarked } = props;
@@ -310,26 +310,26 @@ const QuestionCardWithToggle = (props) => {
   //   return { selected, contended };
   // };
 
-  function updateAnswerSelection(apiResponse, answerSelectionArray) {
-    answerSelectionArray.forEach((item, index) => {
-      if (
-        apiResponse.selected.some(
-          (selectedItem) => selectedItem.question === item.label,
-        )
-      ) {
-        answerSelectionArray[index].check = true;
-      }
+  // function updateAnswerSelection(apiResponse, answerSelectionArray) {
+  //   answerSelectionArray.forEach((item, index) => {
+  //     if (
+  //       apiResponse.selected.some(
+  //         (selectedItem) => selectedItem.question === item.label,
+  //       )
+  //     ) {
+  //       answerSelectionArray[index].check = true;
+  //     }
 
-      if (
-        apiResponse.contended.some(
-          (contendedItem) => contendedItem.question === item.label,
-        )
-      ) {
-        answerSelectionArray[index].contend = true;
-      }
-    });
-    setAnswerSelection(answerSelectionArray);
-  }
+  //     if (
+  //       apiResponse.contended.some(
+  //         (contendedItem) => contendedItem.question === item.label,
+  //       )
+  //     ) {
+  //       answerSelectionArray[index].contend = true;
+  //     }
+  //   });
+  //   setAnswerSelection(answerSelectionArray);
+  // }
 
   // const { mutateAsync: getStartQuestDetail } = useMutation({
   //   mutationFn: getStartQuestInfo,
@@ -448,8 +448,22 @@ const QuestionCardWithToggle = (props) => {
 
       let ans = {
         created: new Date(),
-        selected: questSelection["yes/no"].yes.check === true ? "Yes" : "No",
       };
+      if (questStartData.whichTypeQuestion === "yes/no") {
+        ans.selected =
+          questSelection["yes/no"].yes.check === true ? "Yes" : "No";
+      }
+
+      if (questStartData.whichTypeQuestion === "agree/disagree") {
+        ans.selected =
+          questSelection["agree/disagree"].agree.check === true ? "Yes" : "No";
+      }
+
+      if (questStartData.whichTypeQuestion === "like/dislike") {
+        ans.selected =
+          questSelection["like/dislike"].like.check === true ? "Yes" : "No";
+      }
+
       // if (selected) {
       //   ans.selected = selected.charAt(0).toUpperCase() + selected.slice(1);
       // }

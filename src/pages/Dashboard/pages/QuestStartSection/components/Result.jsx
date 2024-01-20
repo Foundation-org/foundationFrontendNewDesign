@@ -196,10 +196,13 @@ const Result = (props) => {
                   number={"#1"}
                   answer={"Yes"}
                   checkInfo={true}
-                  // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                   percentage={
                     props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage[0].Yes
+                    props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[
+                          props.questStartData?.selectedPercentage.length - 1
+                        ].Yes
+                      : null
                   }
                   check={props.questSelection["yes/no"].yes.check}
                   contend={props.questSelection["yes/no"].yes.check}
@@ -211,10 +214,13 @@ const Result = (props) => {
                   number={"#2"}
                   answer={"No"}
                   checkInfo={true}
-                  // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                   percentage={
                     props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage[0].No
+                    props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[
+                          props.questStartData?.selectedPercentage.length - 1
+                        ].No
+                      : null
                   }
                   check={props.questSelection["yes/no"].no.check}
                   contend={props.questSelection["yes/no"].no.check}
@@ -233,15 +239,16 @@ const Result = (props) => {
                   number={"#1"}
                   answer={"Agree"}
                   checkInfo={true}
-                  // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                   percentage={
                     props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage[0].Yes
+                    props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[
+                          props.questStartData?.selectedPercentage.length - 1
+                        ].Yes
+                      : null
                   }
                   check={props.questSelection["agree/disagree"].agree.check}
                   contend={props.questSelection["agree/disagree"].agree.check}
-                  // check={quests.agreeDisagree.agree.check}
-                  // contend={quests.agreeDisagree.agree.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
                   questStartData={props.questStartData}
@@ -252,15 +259,16 @@ const Result = (props) => {
                   checkInfo={true}
                   percentage={
                     props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage[0].No
+                    props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[
+                          props.questStartData?.selectedPercentage.length - 1
+                        ].No
+                      : null
                   }
-                  // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                   check={props.questSelection["agree/disagree"].disagree.check}
                   contend={
                     props.questSelection["agree/disagree"].disagree.check
                   }
-                  // check={quests.agreeDisagree.disagree.check}
-                  // contend={quests.agreeDisagree.disagree.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
                   questStartData={props.questStartData}
@@ -278,9 +286,12 @@ const Result = (props) => {
                   checkInfo={true}
                   percentage={
                     props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage[0].Like
+                    props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[
+                          props.questStartData?.selectedPercentage.length - 1
+                        ].Like
+                      : null
                   }
-                  // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                   check={quests.likeDislike.like.check}
                   contend={quests.likeDislike.like.contend}
                   handleToggleCheck={props.handleToggleCheck}
@@ -293,9 +304,12 @@ const Result = (props) => {
                   checkInfo={true}
                   percentage={
                     props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage[0].Dislike
+                    props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[
+                          props.questStartData?.selectedPercentage.length - 1
+                        ].Dislike
+                      : null
                   }
-                  // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                   check={quests.likeDislike.dislike.check}
                   contend={quests.likeDislike.dislike.contend}
                   handleToggleCheck={props.handleToggleCheck}
@@ -325,12 +339,21 @@ const Result = (props) => {
                 title={props.title}
                 checkInfo={true}
                 selectedPercentages={
-                  props.questStartData?.selectedPercentage[0]
+                  props.questStartData?.selectedPercentage &&
+                  props.questStartData.selectedPercentage.length > 0
+                    ? props.questStartData.selectedPercentage[
+                        props.questStartData.selectedPercentage.length - 1
+                      ]
+                    : null
                 }
                 contendPercentages={
-                  props.questStartData?.contendedPercentage[0]
+                  props.questStartData?.contendedPercentage &&
+                  props.questStartData.contendedPercentage.length > 0
+                    ? props.questStartData.contendedPercentage[
+                        props.questStartData.contendedPercentage.length - 1
+                      ]
+                    : null
                 }
-                // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                 check={findLabelChecked(props.answersSelection, item.question)}
                 contend={findLabelContend(
                   props.answersSelection,
@@ -362,7 +385,6 @@ const Result = (props) => {
                 answersSelection={props.answersSelection}
                 setAnswerSelection={props.setAnswerSelection}
                 title={props.title}
-                percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                 selectedPercentages={
                   props.questStartData?.selectedPercentage &&
                   props.questStartData.selectedPercentage.length > 0
