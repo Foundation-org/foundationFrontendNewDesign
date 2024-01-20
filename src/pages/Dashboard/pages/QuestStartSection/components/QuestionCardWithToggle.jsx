@@ -283,6 +283,7 @@ const QuestionCardWithToggle = (props) => {
           dispatch(addUser(resp.data));
         }
       });
+      queryClient.invalidateQueries("FeedData");
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(":")[1]);
