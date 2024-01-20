@@ -54,6 +54,8 @@ const ButtonGroup = ({
         item.uuid === persistedUserInfo?.uuid || localStorage.getItem("uId"),
     );
 
+  console.log("first", loading);
+
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
       if (

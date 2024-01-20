@@ -19,12 +19,13 @@ import ConditionalTextFullScreen from "../../../../../components/question-card/C
 
 import * as questAction from "../../../../../features/quest/questsSlice";
 import * as questUtilsActions from "../../../../../features/quest/utilsSlice";
+import * as questServices from "../../../../../services/api/questsApi";
 import { questSelectionInitial } from "../../../../../constants/quests";
 
 const QuestionCard = (props) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const startTestMutation = useStartQuest();
+  // const startTestMutation = useStartQuest();
   const quests = useSelector(questAction.getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -248,26 +249,48 @@ const QuestionCard = (props) => {
     );
   };
 
-  const handleStartQuest = (params) => {
-    startTestMutation.mutate(params);
+  // const handleStartQuest = (params) => {
+  //   startTestMutation.mutate(params);
 
-    if (startTestMutation.isSuccess) {
-      setLoading(false);
+  //   if (startTestMutation.isSuccess) {
+  //     setLoading(false);
+  //     handleViewResults(questStartData._id);
+  //     userInfo().then((resp) => {
+  //       if (resp.status === 200) {
+  //         dispatch(addUser(resp.data));
+  //       }
+  //     });
+
+  //     dispatch(questUtilsActions.resetaddOptionLimit());
+  //   }
+
+  //   if (startTestMutation.error) {
+  //     setLoading(false);
+  //     dispatch(questUtilsActions.resetaddOptionLimit());
+  //   }
+  // };
+
+  const { mutateAsync: startQuest } = useMutation({
+    mutationFn: questServices.createStartQuest,
+    onSuccess: (resp) => {
+      if (resp.data.message === "Start Quest Created Successfully") {
+        toast.success("Successfully Completed");
+        setLoading(false);
+        queryClient.invalidateQueries("FeedData");
+      }
       handleViewResults(questStartData._id);
-      userInfo().then((resp) => {
+      userInfo(persistedUserInfo?.uuid).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
       });
-
-      dispatch(questUtilsActions.resetaddOptionLimit());
-    }
-
-    if (startTestMutation.error) {
       setLoading(false);
-      dispatch(questUtilsActions.resetaddOptionLimit());
-    }
-  };
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message.split(":")[1]);
+      setLoading(false);
+    },
+  });
 
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: updateChangeAnsStartQuest,
@@ -400,7 +423,7 @@ const QuestionCard = (props) => {
           changeAnswer(params);
         }
       } else {
-        handleStartQuest(params);
+        startQuest(params);
       }
     } else if (questStartData.whichTypeQuestion === "multiple choise") {
       let answerSelected = [];
@@ -488,7 +511,7 @@ const QuestionCard = (props) => {
         if (!isSubmit) setLoading(false);
         console.log("params", params);
         // startQuest(params);
-        handleStartQuest(params);
+        startQuest(params);
       }
     } else if (questStartData.whichTypeQuestion === "ranked choise") {
       let addedAnswerValue = "";
@@ -550,7 +573,7 @@ const QuestionCard = (props) => {
         console.log("params", params);
 
         // startQuest(params);
-        handleStartQuest(params);
+        startQuest(params);
       }
     }
   };

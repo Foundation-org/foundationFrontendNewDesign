@@ -107,8 +107,10 @@ const QuestionCard = ({
         queryClient.invalidateQueries("FeedData");
         navigate("/dashboard");
       }
+      setLoading(false);
     },
     onError: (err) => {
+      setLoading(false);
       toast.error(err);
     },
   });
