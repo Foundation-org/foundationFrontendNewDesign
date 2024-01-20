@@ -20,6 +20,7 @@ import ConditionalTextFullScreen from "../../../../../components/question-card/C
 
 // import * as questAction from "../../../../../features/quest/questsSlice";
 import * as questServices from "../../../../../services/api/questsApi";
+import { questSelectionInitial } from "../../../../../constants/quests";
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -39,33 +40,7 @@ const QuestionCardWithToggle = (props) => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [startTest, setStartTest] = useState("");
   const [viewResult, setViewResult] = useState("");
-  const [questSelection, setQuestSelection] = useState({
-    id: "",
-    "yes/no": {
-      yes: {
-        check: false,
-      },
-      no: {
-        check: false,
-      },
-    },
-    "agree/disagree": {
-      agree: {
-        check: false,
-      },
-      disagree: {
-        check: false,
-      },
-    },
-    "like/dislike": {
-      like: {
-        check: false,
-      },
-      dislike: {
-        check: false,
-      },
-    },
-  });
+  const [questSelection, setQuestSelection] = useState(questSelectionInitial);
 
   const handleQuestSelection = (actionPayload) => {
     setQuestSelection((prevState) => {

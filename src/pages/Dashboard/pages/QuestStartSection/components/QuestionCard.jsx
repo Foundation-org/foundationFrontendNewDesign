@@ -19,6 +19,7 @@ import ConditionalTextFullScreen from "../../../../../components/question-card/C
 
 import * as questAction from "../../../../../features/quest/questsSlice";
 import * as questUtilsActions from "../../../../../features/quest/utilsSlice";
+import { questSelectionInitial } from "../../../../../constants/quests";
 
 const QuestionCard = (props) => {
   const dispatch = useDispatch();
@@ -36,6 +37,44 @@ const QuestionCard = (props) => {
   const [loading, setLoading] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const [loadingDetail, setLoadingDetail] = useState(false);
+  const [questSelection, setQuestSelection] = useState(questSelectionInitial);
+
+  const handleQuestSelection = (actionPayload) => {
+    setQuestSelection((prevState) => {
+      const newState = { ...prevState, id: actionPayload.id };
+
+      if (actionPayload.label === "yes/no") {
+        newState["yes/no"] = {
+          ...prevState["yes/no"],
+          yes: { check: actionPayload.option === "Yes" ? true : false },
+          no: { check: actionPayload.option === "No" ? true : false },
+        };
+      }
+
+      if (actionPayload.label === "agree/disagree") {
+        newState["agree/disagree"] = {
+          ...prevState["agree/disagree"],
+          agree: { check: actionPayload.option === "Agree" ? true : false },
+          disagree: {
+            check: actionPayload.option === "Disagree" ? true : false,
+          },
+        };
+      }
+
+      if (actionPayload.label === "like/dislike") {
+        newState["like/dislike"] = {
+          ...prevState["like/dislike"],
+          like: { check: actionPayload.option === "Like" ? true : false },
+          dislike: {
+            check: actionPayload.option === "Dislike" ? true : false,
+          },
+        };
+      }
+
+      return newState;
+    });
+  };
+
   const [answersSelection, setAnswerSelection] = useState(
     questStartData.QuestAnswers?.map((answer) => ({
       label: answer.question,
@@ -94,18 +133,70 @@ const QuestionCard = (props) => {
     dispatch(questUtilsActions.updateaddOptionLimit());
   };
 
-  const handleToggleCheck = (option, check, contend, id) => {
-    const capitalizedOption = capitalizeFirstLetter(option);
+  // const handleToggleCheck = (option, check, contend, id) => {
+  //   const capitalizedOption = capitalizeFirstLetter(option);
 
+  //   const actionPayload = {
+  //     option: capitalizedOption,
+  //     check,
+  //     contend,
+  //     id,
+  //   };
+
+  //   dispatch(questAction.toggleCheck(actionPayload));
+  // };
+  const handleToggleCheck = (label, option, check, id) => {
+    console.log("called", label, option, check, id);
     const actionPayload = {
-      option: capitalizedOption,
+      label,
+      option,
       check,
-      contend,
       id,
     };
 
-    dispatch(questAction.toggleCheck(actionPayload));
+    handleQuestSelection(actionPayload);
+    // dispatch(questAction.toggleCheck(actionPayload));
   };
+
+  useEffect(() => {
+    if (questStartData.whichTypeQuestion === "yes/no") {
+      handleToggleCheck(
+        questStartData.whichTypeQuestion,
+        questStartData?.startQuestData &&
+          questStartData?.startQuestData?.data[
+            questStartData?.startQuestData?.data.length - 1
+          ]?.selected === "Yes"
+          ? "Yes"
+          : "No",
+        questStartData?.startQuestData &&
+          questStartData?.startQuestData?.data[
+            questStartData?.startQuestData?.data.length - 1
+          ]?.selected === "Yes"
+          ? true
+          : false,
+        questStartData._id,
+      );
+    }
+    if (questStartData.whichTypeQuestion === "agree/disagree") {
+      handleToggleCheck(
+        questStartData.whichTypeQuestion,
+        questStartData?.startQuestData &&
+          questStartData?.startQuestData?.data[
+            questStartData?.startQuestData?.data.length - 1
+          ]?.selected === "Yes"
+          ? "Agree"
+          : "Disagree",
+        true,
+        // questStartData?.startQuestData &&
+        //   questStartData?.startQuestData?.data[
+        //     questStartData?.startQuestData?.data.length - 1
+        //   ]?.selected === "Yes"
+        //   ? true
+        //   : true,
+        questStartData._id,
+      );
+    }
+  }, [questStartData]);
 
   const updateAnswersSelectionForRanked = (prevAnswers, actionPayload) => {
     const { option, label } = actionPayload;
@@ -191,24 +282,24 @@ const QuestionCard = (props) => {
     },
   });
 
-  const extractSelectedAndContended = (quests) => {
-    let selected = null;
-    let contended = null;
+  // const extractSelectedAndContended = (quests) => {
+  //   let selected = null;
+  //   let contended = null;
 
-    for (const key in quests) {
-      const option = quests[key];
+  //   for (const key in quests) {
+  //     const option = quests[key];
 
-      if (option.check) {
-        selected = key;
-      }
+  //     if (option.check) {
+  //       selected = key;
+  //     }
 
-      if (option.contend) {
-        contended = key;
-      }
-    }
+  //     if (option.contend) {
+  //       contended = key;
+  //     }
+  //   }
 
-    return { selected, contended };
-  };
+  //   return { selected, contended };
+  // };
 
   const handleSubmit = () => {
     setLoading(true);
@@ -217,23 +308,39 @@ const QuestionCard = (props) => {
       questStartData.whichTypeQuestion === "yes/no" ||
       questStartData.whichTypeQuestion === "like/dislike"
     ) {
-      const { selected, contended } = extractSelectedAndContended(
-        questStartData.whichTypeQuestion === "agree/disagree"
-          ? quests.agreeDisagree
-          : questStartData.whichTypeQuestion === "yes/no"
-            ? quests.yesNo
-            : quests.likeDislike,
-      );
+      // const { selected, contended } = extractSelectedAndContended(
+      //   questStartData.whichTypeQuestion === "agree/disagree"
+      //     ? quests.agreeDisagree
+      //     : questStartData.whichTypeQuestion === "yes/no"
+      //       ? quests.yesNo
+      //       : quests.likeDislike,
+      // );
 
       let ans = {
         created: new Date(),
       };
-      if (selected) {
-        ans.selected = selected.charAt(0).toUpperCase() + selected.slice(1);
+
+      if (questStartData.whichTypeQuestion === "yes/no") {
+        ans.selected =
+          questSelection["yes/no"].yes.check === true ? "Yes" : "No";
       }
-      if (contended) {
-        ans.contended = contended.charAt(0).toUpperCase() + contended.slice(1);
+
+      if (questStartData.whichTypeQuestion === "agree/disagree") {
+        ans.selected =
+          questSelection["agree/disagree"].agree.check === true ? "Yes" : "No";
       }
+
+      if (questStartData.whichTypeQuestion === "like/dislike") {
+        ans.selected =
+          questSelection["like/dislike"].like.check === true ? "Yes" : "No";
+      }
+
+      // if (selected) {
+      //   ans.selected = selected.charAt(0).toUpperCase() + selected.slice(1);
+      // }
+      // if (contended) {
+      //   ans.contended = contended.charAt(0).toUpperCase() + contended.slice(1);
+      // }
 
       const params = {
         questId: questStartData._id,
@@ -242,7 +349,6 @@ const QuestionCard = (props) => {
         uuid: persistedUserInfo?.uuid,
       };
 
-      // if (!(params.answer.selected && params.answer.contended)) {
       if (!params.answer.selected) {
         toast.warning("You cannot submit without answering");
         setLoading(false);
@@ -299,10 +405,6 @@ const QuestionCard = (props) => {
         if (answersSelection[i].contend) {
           answerContended.push({ question: answersSelection[i].label });
         }
-
-        // if(answersSelection[i].check === false && answersSelection[i].contend === false) {
-        // empty check will come here
-        // }
       }
 
       let dataToSend = {
@@ -459,6 +561,7 @@ const QuestionCard = (props) => {
             usersChangeTheirAns={questStartData.usersChangeTheirAns}
             lastInteractedAt={questStartData.lastInteractedAt}
             howManyTimesAnsChanged={howManyTimesAnsChanged}
+            questSelection={questSelection}
           />
           <ConditionalTextFullScreen
             questStartData={questStartData}
@@ -479,13 +582,13 @@ const QuestionCard = (props) => {
           />
           <StartTest
             questStartData={questStartData}
+            handleToggleCheck={handleToggleCheck}
             id={questStartData._id}
             title={getQuestionTitle(questStartData.whichTypeQuestion)}
             answers={questStartData.QuestAnswers}
             multipleOption={questStartData.userCanSelectMultiple}
             quests={quests}
             whichTypeQuestion={questStartData.whichTypeQuestion}
-            handleToggleCheck={handleToggleCheck}
             handleSubmit={handleSubmit}
             handleClose={handleClose}
             open={open}
@@ -501,6 +604,7 @@ const QuestionCard = (props) => {
             usersChangeTheirAns={questStartData.usersChangeTheirAns}
             howManyTimesAnsChanged={howManyTimesAnsChanged}
             loadingDetail={loadingDetail}
+            questSelection={questSelection}
           />
           <ConditionalTextFullScreen
             questStartData={questStartData}
@@ -529,13 +633,13 @@ const QuestionCard = (props) => {
       {renderQuestContent()}
       <ButtonGroup
         questStartData={questStartData}
+        handleToggleCheck={handleToggleCheck}
         id={questStartData._id}
         btnText={questStartData.startStatus}
         handleStartTest={handleStartTest}
         handleViewResults={handleViewResults}
         setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
         whichTypeQuestion={questStartData.whichTypeQuestion}
-        handleToggleCheck={handleToggleCheck}
         handleRankedChoice={handleRankedChoice}
         rankedAnswers={rankedAnswers}
         setRankedAnswers={setRankedAnswers}

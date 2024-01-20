@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
@@ -10,7 +10,7 @@ import SingleAnswer from "../../../../../components/question-card/options/Single
 import SingleAnswerRankedChoice from "../../../../../components/question-card/options/SingleAnswerRankedChoice";
 import SingleAnswerMultipleChoice from "../../../../../components/question-card/options/SingleAnswerMultipleChoice";
 
-import * as questAction from "../../../../../features/quest/questsSlice";
+// import * as questAction from "../../../../../features/quest/questsSlice";
 
 const StartTest = ({
   questStartData,
@@ -24,7 +24,7 @@ const StartTest = ({
   questSelection,
 }) => {
   const { isFullScreen } = useParams();
-  const quests = useSelector(questAction.getQuests);
+  // const quests = useSelector(questAction.getQuests);
 
   useEffect(() => {
     localStorage.setItem(
