@@ -668,6 +668,7 @@ const QuestionCardWithToggle = (props) => {
       return (
         <>
           <QuestInfoText
+            questStartData={questStartData}
             show={true}
             questType={questStartData.whichTypeQuestion}
           />
@@ -694,6 +695,7 @@ const QuestionCardWithToggle = (props) => {
       return (
         <>
           <QuestInfoText
+            questStartData={questStartData}
             show={false}
             questType={questStartData.whichTypeQuestion}
           />

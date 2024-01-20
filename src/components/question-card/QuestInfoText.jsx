@@ -1,4 +1,4 @@
-const QuestInfoText = ({ questType, show }) => {
+const QuestInfoText = ({ questStartData, questType, show }) => {
   const renderQuestInfoText = () => {
     if (show) {
       return (
@@ -7,7 +7,8 @@ const QuestInfoText = ({ questType, show }) => {
             <h4 className="pb-2 pl-[2.19rem] pt-[0.53rem] text-[0.5625rem] font-normal text-[#85898C] tablet:pb-[0.68rem] tablet:pl-[5.06rem] tablet:pt-[0.87rem] tablet:text-[1rem] laptop:pb-[0.63rem] laptop:pl-[4.81rem] laptop:pt-[0.69rem]">
               You can drag and drop your options
             </h4>
-          ) : questType === "multiple choise" ? (
+          ) : questType === "multiple choise" &&
+            questStartData.userCanSelectMultiple ? (
             <h4 className="pb-2 pl-[2.19rem] pt-[0.53rem] text-[0.5625rem] font-normal text-[#85898C] tablet:pb-[0.68rem] tablet:pl-[5.06rem] tablet:pt-[0.87rem] tablet:text-[1rem] laptop:pb-[0.63rem] laptop:pl-[4.81rem] laptop:pt-[0.69rem]">
               You can select multiple options
             </h4>

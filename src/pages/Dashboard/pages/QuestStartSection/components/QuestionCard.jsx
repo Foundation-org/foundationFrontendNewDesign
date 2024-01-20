@@ -541,6 +541,7 @@ const QuestionCard = (props) => {
       return (
         <>
           <QuestInfoText
+            questStartData={questStartData}
             show={false}
             questType={questStartData.whichTypeQuestion}
           />
@@ -577,6 +578,7 @@ const QuestionCard = (props) => {
       return (
         <>
           <QuestInfoText
+            questStartData={questStartData}
             show={true}
             questType={questStartData.whichTypeQuestion}
           />
@@ -617,6 +619,7 @@ const QuestionCard = (props) => {
     } else {
       return (
         <QuestInfoText
+          questStartData={questStartData}
           show={false}
           questType={questStartData.whichTypeQuestion}
         />
