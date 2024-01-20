@@ -363,6 +363,14 @@ const Result = (props) => {
                 setAnswerSelection={props.setAnswerSelection}
                 title={props.title}
                 percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                selectedPercentages={
+                  props.questStartData?.selectedPercentage &&
+                  props.questStartData.selectedPercentage.length > 0
+                    ? props.questStartData.selectedPercentage[
+                        props.questStartData.selectedPercentage.length - 1
+                      ]
+                    : null
+                }
                 checkInfo={false}
                 setAddOptionLimit={props.setAddOptionLimit}
                 btnText={"Results"}

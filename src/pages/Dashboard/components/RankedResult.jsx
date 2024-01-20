@@ -1,11 +1,9 @@
 import { useSelector } from "react-redux";
-import { FaCheck } from "react-icons/fa";
-import { FaExclamation } from "react-icons/fa6";
-import { useEffect } from "react";
-import { useState } from "react";
-import BasicModal from "../../../components/BasicModal";
-import EditNewOption from "./EditNewOption";
+import { useState, useEffect } from "react";
+
 import DeleteOption from "./DeleteOption";
+import EditNewOption from "./EditNewOption";
+import BasicModal from "../../../components/BasicModal";
 
 const RankedResult = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -54,9 +52,7 @@ const RankedResult = (props) => {
       ) : (
         <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
       )}
-      {/* flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E] */}
       <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] tablet:h-[50.5px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E]">
-        {" "}
         &#x200B;
       </div>
       <div className="tablet:rounded-l-0 rounded-l-0 flex w-full justify-between rounded-r-[4.73px] border-y border-l-0 border-r border-[#ACACAC] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]">
@@ -117,7 +113,17 @@ const RankedResult = (props) => {
         <div className="mr-[10.63px] flex items-center gap-[19px] text-[9.238px] tablet:mr-[20.63px] tablet:text-[16px] ">
           {props.btnText === "Results" ? (
             <>
-              {props.percentages?.rankedPercentage &&
+              {props?.selectedPercentages &&
+              props.selectedPercentages[props.answer.trim()] ? (
+                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                  {props?.selectedPercentages[props?.answer.trim()]}
+                </span>
+              ) : (
+                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                  0.00%
+                </span>
+              )}
+              {/* {props.percentages?.rankedPercentage &&
               props.percentages?.rankedPercentage?.[props.answer.trim()] ===
                 undefined ? (
                 <span
@@ -145,7 +151,7 @@ const RankedResult = (props) => {
                   {props.percentages?.rankedPercentage?.[props.answer.trim()] +
                     "%"}
                 </span>
-              )}
+              )} */}
             </>
           ) : null}
         </div>
