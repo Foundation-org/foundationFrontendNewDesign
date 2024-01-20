@@ -166,8 +166,6 @@ const StartTest = ({
                   answer={"Agree"}
                   check={questSelection["agree/disagree"].agree.check}
                   contend={questSelection["agree/disagree"].agree.check}
-                  // check={quests.agreeDisagree.agree.check}
-                  // contend={quests.agreeDisagree.agree.contend}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
                 />
@@ -176,8 +174,6 @@ const StartTest = ({
                   answer={"Disagree"}
                   check={questSelection["agree/disagree"].disagree.check}
                   contend={questSelection["agree/disagree"].disagree.check}
-                  // check={quests.agreeDisagree.disagree.check}
-                  // contend={quests.agreeDisagree.disagree.contend}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
                 />

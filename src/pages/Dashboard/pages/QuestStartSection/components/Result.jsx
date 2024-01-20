@@ -244,7 +244,7 @@ const Result = (props) => {
                     props.questStartData?.selectedPercentage.length > 0
                       ? props.questStartData?.selectedPercentage[
                           props.questStartData?.selectedPercentage.length - 1
-                        ].Yes
+                        ].Agree
                       : null
                   }
                   check={props.questSelection["agree/disagree"].agree.check}
@@ -262,7 +262,7 @@ const Result = (props) => {
                     props.questStartData?.selectedPercentage.length > 0
                       ? props.questStartData?.selectedPercentage[
                           props.questStartData?.selectedPercentage.length - 1
-                        ].No
+                        ].Disagree
                       : null
                   }
                   check={props.questSelection["agree/disagree"].disagree.check}
@@ -294,8 +294,6 @@ const Result = (props) => {
                   }
                   check={props.questSelection["like/dislike"].like.check}
                   contend={props.questSelection["like/dislike"].like.check}
-                  // check={quests.likeDislike.like.check}
-                  // contend={quests.likeDislike.like.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
                   questStartData={props.questStartData}
@@ -314,8 +312,6 @@ const Result = (props) => {
                   }
                   check={props.questSelection["like/dislike"].dislike.check}
                   contend={props.questSelection["like/dislike"].dislike.check}
-                  // check={quests.likeDislike.dislike.check}
-                  // contend={quests.likeDislike.dislike.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
                   questStartData={props.questStartData}

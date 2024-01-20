@@ -198,14 +198,14 @@ const QuestionCardWithToggle = (props) => {
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[
               questStartData?.startQuestData?.data.length - 1
-            ]?.selected === "Yes"
+            ]?.selected === "Agree"
             ? "Agree"
             : "Disagree"
           : null,
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[
               questStartData?.startQuestData?.data.length - 1
-            ]?.selected === "Yes"
+            ]?.selected === "Agree"
             ? true
             : true
           : null,
