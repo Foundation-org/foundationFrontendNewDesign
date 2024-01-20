@@ -57,6 +57,14 @@ const QuestionCardWithToggle = (props) => {
         check: false,
       },
     },
+    "like/dislike": {
+      like: {
+        check: false,
+      },
+      dislike: {
+        check: false,
+      },
+    },
   });
 
   const handleQuestSelection = (actionPayload) => {
@@ -77,6 +85,16 @@ const QuestionCardWithToggle = (props) => {
           agree: { check: actionPayload.option === "Agree" ? true : false },
           disagree: {
             check: actionPayload.option === "Disagree" ? true : false,
+          },
+        };
+      }
+
+      if (actionPayload.label === "like/dislike") {
+        newState["like/dislike"] = {
+          ...prevState["like/dislike"],
+          like: { check: actionPayload.option === "Like" ? true : false },
+          dislike: {
+            check: actionPayload.option === "Dislike" ? true : false,
           },
         };
       }

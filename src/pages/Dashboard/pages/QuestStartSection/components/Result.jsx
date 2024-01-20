@@ -276,7 +276,11 @@ const Result = (props) => {
                   number={"#1"}
                   answer={"Like"}
                   checkInfo={true}
-                  percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                  percentage={
+                    props.questStartData.selectedPercentage &&
+                    props.questStartData?.selectedPercentage[0].Like
+                  }
+                  // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                   check={quests.likeDislike.like.check}
                   contend={quests.likeDislike.like.contend}
                   handleToggleCheck={props.handleToggleCheck}
@@ -287,7 +291,11 @@ const Result = (props) => {
                   number={"#2"}
                   answer={"Dislike"}
                   checkInfo={true}
-                  percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                  percentage={
+                    props.questStartData.selectedPercentage &&
+                    props.questStartData?.selectedPercentage[0].Dislike
+                  }
+                  // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                   check={quests.likeDislike.dislike.check}
                   contend={quests.likeDislike.dislike.contend}
                   handleToggleCheck={props.handleToggleCheck}
@@ -316,7 +324,13 @@ const Result = (props) => {
                 addedAnswerUuid={item.uuid}
                 title={props.title}
                 checkInfo={true}
-                percentages={ResultsData?.data[ResultsData?.data.length - 1]}
+                selectedPercentages={
+                  props.questStartData?.selectedPercentage[0]
+                }
+                contendPercentages={
+                  props.questStartData?.contendedPercentage[0]
+                }
+                // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                 check={findLabelChecked(props.answersSelection, item.question)}
                 contend={findLabelContend(
                   props.answersSelection,

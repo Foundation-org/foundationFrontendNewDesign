@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+
+import { Tooltip } from "../../../utils/Tooltip";
+import { resetaddOptionLimit } from "../../../features/quest/utilsSlice";
 import BasicModal from "../../BasicModal";
 import DeleteOption from "../../../pages/Dashboard/components/DeleteOption";
-import { Tooltip } from "../../../utils/Tooltip";
-import {
-  answerValidation,
-  checkAnswerExist,
-} from "../../../services/api/questsApi";
-import { useDispatch } from "react-redux";
-import { resetaddOptionLimit } from "../../../features/quest/utilsSlice";
+
+import * as questServices from "../../../services/api/questsApi";
 
 const SingleAnswerMultipleChoice = (props) => {
   const dispatch = useDispatch();
@@ -16,7 +15,7 @@ const SingleAnswerMultipleChoice = (props) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [checkState, setCheckState] = useState(props.check);
   const [contendState, setContendState] = useState(props.contend);
-  const [editModal, setEditModal] = useState(false);
+  // const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [answer, setAnswer] = useState(props.answer);
   const reset = {
@@ -28,9 +27,9 @@ const SingleAnswerMultipleChoice = (props) => {
   const [checkOptionStatus, setCheckOptionStatus] = useState(reset);
   const [prevValue, setPrevValue] = useState("");
 
-  const handleEditOpen = () => setEditModal(true);
-  const handleEditClose = () => setEditModal(false);
-  const handleDeleteOpen = () => setDeleteModal(true);
+  // const handleEditOpen = () => setEditModal(true);
+  // const handleEditClose = () => setEditModal(false);
+  // const handleDeleteOpen = () => setDeleteModal(true);
   const handleDeleteClose = () => setDeleteModal(false);
 
   useEffect(() => {
@@ -87,9 +86,10 @@ const SingleAnswerMultipleChoice = (props) => {
       tooltipStyle: "tooltip-success",
     });
     // option Validation
-    const { validatedAnswer, errorMessage } = await answerValidation({
-      answer: value,
-    });
+    const { validatedAnswer, errorMessage } =
+      await questServices.answerValidation({
+        answer: value,
+      });
     // If any error captured
     if (errorMessage) {
       console.log("this function is running");
@@ -103,7 +103,7 @@ const SingleAnswerMultipleChoice = (props) => {
       });
     }
     // Check Answer is unique
-    let answerExist = checkAnswerExist({
+    let answerExist = questServices.checkAnswerExist({
       answersArray: props.answersSelection,
       answer: validatedAnswer,
       index: 0,
@@ -155,6 +155,8 @@ const SingleAnswerMultipleChoice = (props) => {
     dispatch(resetaddOptionLimit());
     toast.success("Item deleted");
   };
+
+  // console.log("mutipleAns", Object.keys(props?.selectedPercentages));
 
   return (
     <div className="flex items-center tablet:mr-[65.36px] tablet:gap-[10px] tablet:pl-[1.75rem]">
@@ -233,7 +235,17 @@ const SingleAnswerMultipleChoice = (props) => {
 
             {props.btnText === "Results" ? (
               <>
-                {props.percentages?.selectedPercentage &&
+                {props.selectedPercentages &&
+                props.selectedPercentages?.[props.answer.trim()] ? (
+                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                    {props.selectedPercentages[props.answer.trim()]}
+                  </span>
+                ) : (
+                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                    0%
+                  </span>
+                )}
+                {/* {props.percentages?.selectedPercentage &&
                 props.percentages?.selectedPercentage[props.answer.trim()] ? (
                   props.percentages?.selectedPercentage[props.answer.trim()] ===
                   100 ? (
@@ -263,7 +275,7 @@ const SingleAnswerMultipleChoice = (props) => {
                   >
                     0%
                   </span>
-                )}
+                )} */}
               </>
             ) : null}
           </div>
@@ -296,7 +308,17 @@ const SingleAnswerMultipleChoice = (props) => {
 
                 {props.btnText === "Results" ? (
                   <>
-                    {props.percentages?.contendedPercentage &&
+                    {props.contendPercentages &&
+                    props.contendPercentages?.[props.answer.trim()] ? (
+                      <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                        {props.contendPercentages[props.answer.trim()]}
+                      </span>
+                    ) : (
+                      <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                        0%
+                      </span>
+                    )}
+                    {/* {props.percentages?.contendedPercentage &&
                     props.percentages?.contendedPercentage[
                       props.answer.trim()
                     ] ? (
@@ -329,7 +351,7 @@ const SingleAnswerMultipleChoice = (props) => {
                       >
                         0%
                       </span>
-                    )}
+                    )} */}
                   </>
                 ) : null}
               </div>

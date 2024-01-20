@@ -187,16 +187,20 @@ const StartTest = ({
                 <SingleAnswer
                   number={"#1"}
                   answer={"Like"}
-                  check={quests.likeDislike.like.check}
-                  contend={quests.likeDislike.like.contend}
+                  check={questSelection["like/dislike"].like.check}
+                  contend={questSelection["like/dislike"].like.check}
+                  // check={quests.likeDislike.like.check}
+                  // contend={quests.likeDislike.like.contend}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
                 />
                 <SingleAnswer
                   number={"#2"}
                   answer={"Dislike"}
-                  check={quests.likeDislike.dislike.check}
-                  contend={quests.likeDislike.dislike.contend}
+                  check={questSelection["like/dislike"].dislike.check}
+                  contend={questSelection["like/dislike"].dislike.check}
+                  // check={quests.likeDislike.dislike.check}
+                  // contend={quests.likeDislike.dislike.contend}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
                 />
