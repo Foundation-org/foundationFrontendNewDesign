@@ -48,6 +48,7 @@ const SingleAnswerRankedChoice = (props) => {
 
     props.setAnswerSelection(newArr);
     dispatch(resetaddOptionLimit());
+    props.setAddOptionField(0);
     // toast.success("Item deleted");
   };
 

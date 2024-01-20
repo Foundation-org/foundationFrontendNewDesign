@@ -21,6 +21,7 @@ const StartTest = ({
   setRankedAnswers,
   setIsSubmit,
   loadingDetail,
+  setAddOptionField,
   questSelection,
 }) => {
   const { isFullScreen } = useParams();
@@ -242,6 +243,7 @@ const StartTest = ({
                         : (contend) => handleContendChangeSingle(index, contend)
                     }
                     setIsSubmit={setIsSubmit}
+                    setAddOptionField={setAddOptionField}
                   />
                 ))}
             </div>
@@ -309,6 +311,7 @@ const StartTest = ({
                                 }
                                 // setAddOptionLimit={setAddOptionLimit}
                                 setIsSubmit={setIsSubmit}
+                                setAddOptionField={setAddOptionField}
                               />
                             </li>
                           )}

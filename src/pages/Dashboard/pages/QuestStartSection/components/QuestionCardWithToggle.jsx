@@ -21,6 +21,7 @@ import ConditionalTextFullScreen from "../../../../../components/question-card/C
 // import * as questAction from "../../../../../features/quest/questsSlice";
 import * as questServices from "../../../../../services/api/questsApi";
 import { questSelectionInitial } from "../../../../../constants/quests";
+import * as questUtilsActions from "../../../../../features/quest/utilsSlice";
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -154,8 +155,9 @@ const QuestionCardWithToggle = (props) => {
 
     setAnswerSelection([...answersSelection, newOption]);
 
-    setAddOptionField(0);
+    setAddOptionField(!addOptionField);
     setAddOptionLimit(1);
+    dispatch(questUtilsActions.updateaddOptionLimit());
   };
 
   const handleToggleCheck = (label, option, check, id) => {
@@ -710,6 +712,7 @@ const QuestionCardWithToggle = (props) => {
             setRankedAnswers={setRankedAnswers}
             setIsSubmit={setIsSubmit}
             loadingDetail={loadingDetail}
+            setAddOptionField={setAddOptionField}
             questSelection={questSelection}
           />
           <ConditionalTextFullScreen
@@ -788,6 +791,7 @@ const QuestionCardWithToggle = (props) => {
         loading={loading}
         startTest={startTest}
         handleChange={handleChange}
+        addOptionField={addOptionField}
       />
     </QuestCardLayout>
   );

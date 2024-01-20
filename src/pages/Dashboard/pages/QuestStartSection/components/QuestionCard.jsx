@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
+import api from "../../../../../services/api/Axios";
 import { userInfo } from "../../../../../services/api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
 import { useStartQuest } from "../../../../../services/mutations/quest";
@@ -25,7 +25,7 @@ import { questSelectionInitial } from "../../../../../constants/quests";
 const QuestionCard = (props) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  // const startTestMutation = useStartQuest();
+  const startTestMutation = useStartQuest();
   const quests = useSelector(questAction.getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -128,7 +128,6 @@ const QuestionCard = (props) => {
       delete: true,
       uuid: persistedUserInfo.uuid,
     };
-
     setAnswerSelection([...answersSelection, newOption]);
 
     dispatch(questUtilsActions.updateaddOptionLimit());

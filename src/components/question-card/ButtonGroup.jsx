@@ -46,7 +46,7 @@ const ButtonGroup = ({
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterState = useSelector(filterActions.getFilters);
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
-
+ 
   const uuidExists =
     answers &&
     answers?.some(
@@ -76,6 +76,7 @@ const ButtonGroup = ({
     });
     setAnswerSelection(answerSelectionArray);
   }
+ 
 
   const { mutateAsync: getStartQuestDetail } = useMutation({
     mutationFn: getStartQuestInfo,
@@ -199,8 +200,8 @@ const ButtonGroup = ({
               {usersAddTheirAns && uuidExists === false ? (
                 <div>
                   {title === "Yes/No" ||
-                  title === "Agree/Disagree" ||
-                  title === "Like/Dislike" ? null : (
+                    title === "Agree/Disagree" ||
+                    title === "Like/Dislike" ? null : (
                     <Button onClick={handleOpen} variant={"addOption"}>
                       {persistedTheme === "dark" ? (
                         <img
@@ -227,13 +228,12 @@ const ButtonGroup = ({
 
           {/* Go back / Submit */}
           <div
-            className={`${
-              title === "Multiple Choice"
+            className={`${title === "Multiple Choice"
                 ? ""
                 : addOptionField === 1
                   ? "mt-[4rem] tablet:mt-[10rem]"
                   : ""
-            }`}
+              }`}
           >
             <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
               {!filterState.expandedView ? (
@@ -283,13 +283,14 @@ const ButtonGroup = ({
           {/* Go back / Submit */}
           {btnText === "change answer" ? (
             <>
-              {getQuestUtilsState.addOptionLimit === 0 ? (
+          
+              {addOptionField === 0 ? (
                 <div className="flex items-center justify-center">
                   {usersAddTheirAns && uuidExists === false ? (
                     <div>
                       {title === "Yes/No" ||
-                      title === "Agree/Disagree" ||
-                      title === "Like/Dislike" ? null : (
+                        title === "Agree/Disagree" ||
+                        title === "Like/Dislike" ? null : (
                         <Button onClick={handleOpen} variant={"addOption"}>
                           {persistedTheme === "dark" ? (
                             <img
@@ -314,13 +315,12 @@ const ButtonGroup = ({
                 <div></div>
               )}
               <div
-                className={`${
-                  title === "Multiple Choice"
+                className={`${title === "Multiple Choice"
                     ? ""
                     : addOptionField === 1
                       ? "mt-[4rem] tablet:mt-[10rem]"
                       : ""
-                }`}
+                  }`}
               >
                 <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
                   <Button
@@ -460,9 +460,10 @@ const ButtonGroup = ({
                 </div>
               )}
           </div>
+    
           <div className="flex w-full justify-end pr-[14.4px] tablet:pr-[3.44rem]">
             {btnText === "change answer" &&
-            viewResult === questStartData._id ? (
+              viewResult === questStartData._id ? (
               <Button variant="change" onClick={handleChange}>
                 Change
               </Button>
