@@ -292,8 +292,10 @@ const Result = (props) => {
                         ].Like
                       : null
                   }
-                  check={quests.likeDislike.like.check}
-                  contend={quests.likeDislike.like.contend}
+                  check={props.questSelection["like/dislike"].like.check}
+                  contend={props.questSelection["like/dislike"].like.check}
+                  // check={quests.likeDislike.like.check}
+                  // contend={quests.likeDislike.like.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
                   questStartData={props.questStartData}
@@ -310,8 +312,10 @@ const Result = (props) => {
                         ].Dislike
                       : null
                   }
-                  check={quests.likeDislike.dislike.check}
-                  contend={quests.likeDislike.dislike.contend}
+                  check={props.questSelection["like/dislike"].dislike.check}
+                  contend={props.questSelection["like/dislike"].dislike.check}
+                  // check={quests.likeDislike.dislike.check}
+                  // contend={quests.likeDislike.dislike.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
                   questStartData={props.questStartData}

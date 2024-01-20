@@ -209,6 +209,24 @@ const QuestionCardWithToggle = (props) => {
         questStartData._id,
       );
     }
+    if (questStartData.whichTypeQuestion === "like/dislike") {
+      handleToggleCheck(
+        questStartData.whichTypeQuestion,
+        questStartData?.startQuestData &&
+          questStartData?.startQuestData?.data[
+            questStartData?.startQuestData?.data.length - 1
+          ]?.selected === "Like"
+          ? "Like"
+          : "Dislike",
+        questStartData?.startQuestData &&
+          questStartData?.startQuestData?.data[
+            questStartData?.startQuestData?.data.length - 1
+          ]?.selected === "Like"
+          ? true
+          : false,
+        questStartData._id,
+      );
+    }
   }, [questStartData]);
 
   console.log("questSelection", questSelection);
@@ -431,12 +449,16 @@ const QuestionCardWithToggle = (props) => {
 
       if (questStartData.whichTypeQuestion === "agree/disagree") {
         ans.selected =
-          questSelection["agree/disagree"].agree.check === true ? "Yes" : "No";
+          questSelection["agree/disagree"].agree.check === true
+            ? "Agree"
+            : "Disagree";
       }
 
       if (questStartData.whichTypeQuestion === "like/dislike") {
         ans.selected =
-          questSelection["like/dislike"].like.check === true ? "Yes" : "No";
+          questSelection["like/dislike"].like.check === true
+            ? "Like"
+            : "Dislike";
       }
 
       // if (selected) {
