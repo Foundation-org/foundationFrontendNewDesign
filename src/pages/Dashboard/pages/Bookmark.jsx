@@ -214,7 +214,7 @@ const Bookmark = () => {
           hasMore={feedData?.hasNextPage}
           endMessage={
             feedData?.hasNextPage === false ? (
-              <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
+              <div className="flex justify-between gap-4 px-4 py-3 tablet:py-[27px]">
                 <div></div>
                 {searchData && allData.length == 0 ? (
                   <div className="my-[15vh] flex  flex-col justify-center">

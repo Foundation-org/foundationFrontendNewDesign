@@ -189,8 +189,6 @@ const StartTest = ({
                   answer={"Like"}
                   check={questSelection["like/dislike"].like.check}
                   contend={questSelection["like/dislike"].like.check}
-                  // check={quests.likeDislike.like.check}
-                  // contend={quests.likeDislike.like.contend}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
                 />
@@ -199,8 +197,6 @@ const StartTest = ({
                   answer={"Dislike"}
                   check={questSelection["like/dislike"].dislike.check}
                   contend={questSelection["like/dislike"].dislike.check}
-                  // check={quests.likeDislike.dislike.check}
-                  // contend={quests.likeDislike.dislike.contend}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
                 />

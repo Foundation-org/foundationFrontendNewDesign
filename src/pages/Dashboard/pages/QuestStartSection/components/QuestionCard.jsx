@@ -162,37 +162,61 @@ const QuestionCard = (props) => {
     if (questStartData.whichTypeQuestion === "yes/no") {
       handleToggleCheck(
         questStartData.whichTypeQuestion,
-        questStartData?.startQuestData &&
-          questStartData?.startQuestData?.data[
-            questStartData?.startQuestData?.data.length - 1
-          ]?.selected === "Yes"
-          ? "Yes"
-          : "No",
-        questStartData?.startQuestData &&
-          questStartData?.startQuestData?.data[
-            questStartData?.startQuestData?.data.length - 1
-          ]?.selected === "Yes"
-          ? true
-          : false,
+        questStartData?.startQuestData
+          ? questStartData?.startQuestData?.data[
+              questStartData?.startQuestData?.data.length - 1
+            ]?.selected === "Yes"
+            ? "Yes"
+            : "No"
+          : null,
+        questStartData?.startQuestData
+          ? questStartData?.startQuestData?.data[
+              questStartData?.startQuestData?.data.length - 1
+            ]?.selected === "Yes"
+            ? true
+            : false
+          : null,
         questStartData._id,
       );
     }
     if (questStartData.whichTypeQuestion === "agree/disagree") {
       handleToggleCheck(
         questStartData.whichTypeQuestion,
-        questStartData?.startQuestData &&
-          questStartData?.startQuestData?.data[
-            questStartData?.startQuestData?.data.length - 1
-          ]?.selected === "Yes"
-          ? "Agree"
-          : "Disagree",
-        true,
-        // questStartData?.startQuestData &&
-        //   questStartData?.startQuestData?.data[
-        //     questStartData?.startQuestData?.data.length - 1
-        //   ]?.selected === "Yes"
-        //   ? true
-        //   : true,
+        questStartData?.startQuestData
+          ? questStartData?.startQuestData?.data[
+              questStartData?.startQuestData?.data.length - 1
+            ]?.selected === "Yes"
+            ? "Agree"
+            : "Disagree"
+          : null,
+        questStartData?.startQuestData
+          ? questStartData?.startQuestData?.data[
+              questStartData?.startQuestData?.data.length - 1
+            ]?.selected === "Yes"
+            ? true
+            : true
+          : null,
+        questStartData._id,
+      );
+    }
+    if (questStartData.whichTypeQuestion === "like/dislike") {
+      handleToggleCheck(
+        questStartData.whichTypeQuestion,
+
+        questStartData?.startQuestData
+          ? questStartData?.startQuestData?.data[
+              questStartData?.startQuestData?.data.length - 1
+            ]?.selected === "Like"
+            ? "Like"
+            : "Dislike"
+          : null,
+        questStartData?.startQuestData
+          ? questStartData?.startQuestData?.data[
+              questStartData?.startQuestData?.data.length - 1
+            ]?.selected === "Like"
+            ? true
+            : false
+          : null,
         questStartData._id,
       );
     }
