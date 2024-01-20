@@ -74,8 +74,10 @@ const QuestionCardWithToggle = (props) => {
       if (actionPayload.label === "agree/disagree") {
         newState["agree/disagree"] = {
           ...prevState["agree/disagree"],
-          agree: { check: actionPayload.option === "Yes" ? true : false },
-          disagree: { check: actionPayload.option === "No" ? true : false },
+          agree: { check: actionPayload.option === "Agree" ? true : false },
+          disagree: {
+            check: actionPayload.option === "Disagree" ? true : false,
+          },
         };
       }
 
@@ -164,6 +166,7 @@ const QuestionCardWithToggle = (props) => {
   };
 
   const handleToggleCheck = (label, option, check, id) => {
+    console.log("called", label, option, check, id);
     const actionPayload = {
       label,
       option,
@@ -179,10 +182,16 @@ const QuestionCardWithToggle = (props) => {
     if (questStartData.whichTypeQuestion === "yes/no") {
       handleToggleCheck(
         questStartData.whichTypeQuestion,
-        questStartData?.result && questStartData?.result[0]?.selected.Yes === 1
+        questStartData?.startQuestData &&
+          questStartData?.startQuestData?.data[
+            questStartData?.startQuestData?.data.length - 1
+          ]?.selected === "Yes"
           ? "Yes"
           : "No",
-        questStartData?.result && questStartData?.result[0]?.selected.Yes === 1
+        questStartData?.startQuestData &&
+          questStartData?.startQuestData?.data[
+            questStartData?.startQuestData?.data.length - 1
+          ]?.selected === "Yes"
           ? true
           : false,
         questStartData._id,
@@ -191,14 +200,19 @@ const QuestionCardWithToggle = (props) => {
     if (questStartData.whichTypeQuestion === "agree/disagree") {
       handleToggleCheck(
         questStartData.whichTypeQuestion,
-        questStartData?.result &&
-          questStartData?.result[0]?.selected.Agree === 1
-          ? "Yes"
-          : "No",
-        questStartData?.result &&
-          questStartData?.result[0]?.selected.Disagree === 1
-          ? true
-          : false,
+        questStartData?.startQuestData &&
+          questStartData?.startQuestData?.data[
+            questStartData?.startQuestData?.data.length - 1
+          ]?.selected === "Yes"
+          ? "Agree"
+          : "Disagree",
+        true,
+        // questStartData?.startQuestData &&
+        //   questStartData?.startQuestData?.data[
+        //     questStartData?.startQuestData?.data.length - 1
+        //   ]?.selected === "Yes"
+        //   ? true
+        //   : true,
         questStartData._id,
       );
     }
@@ -396,10 +410,8 @@ const QuestionCardWithToggle = (props) => {
   //   },
   // });
 
-  console.log(
-    "first",
-    questSelection["yes/no"].yes.check === true ? "Yes" : "No",
-  );
+  // console.log("first", ["yes/no"].yes.check === true ? "Yes" : "No");
+  // questSelection;
 
   const handleSubmit = () => {
     setLoading(true);

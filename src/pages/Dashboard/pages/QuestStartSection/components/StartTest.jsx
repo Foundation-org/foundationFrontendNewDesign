@@ -164,16 +164,20 @@ const StartTest = ({
                 <SingleAnswer
                   number={"#1"}
                   answer={"Agree"}
-                  check={quests.agreeDisagree.agree.check}
-                  contend={quests.agreeDisagree.agree.contend}
+                  check={questSelection["agree/disagree"].agree.check}
+                  contend={questSelection["agree/disagree"].agree.check}
+                  // check={quests.agreeDisagree.agree.check}
+                  // contend={quests.agreeDisagree.agree.contend}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
                 />
                 <SingleAnswer
                   number={"#2"}
                   answer={"Disagree"}
-                  check={quests.agreeDisagree.disagree.check}
-                  contend={quests.agreeDisagree.disagree.contend}
+                  check={questSelection["agree/disagree"].disagree.check}
+                  contend={questSelection["agree/disagree"].disagree.check}
+                  // check={quests.agreeDisagree.disagree.check}
+                  // contend={quests.agreeDisagree.disagree.contend}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
                 />

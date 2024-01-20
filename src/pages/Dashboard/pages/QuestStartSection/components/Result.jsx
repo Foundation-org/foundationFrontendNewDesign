@@ -236,10 +236,12 @@ const Result = (props) => {
                   // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
                   percentage={
                     props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage[0].Agree
+                    props.questStartData?.selectedPercentage[0].Yes
                   }
-                  check={quests.agreeDisagree.agree.check}
-                  contend={quests.agreeDisagree.agree.contend}
+                  check={props.questSelection["agree/disagree"].agree.check}
+                  contend={props.questSelection["agree/disagree"].agree.check}
+                  // check={quests.agreeDisagree.agree.check}
+                  // contend={quests.agreeDisagree.agree.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
                   questStartData={props.questStartData}
@@ -250,11 +252,15 @@ const Result = (props) => {
                   checkInfo={true}
                   percentage={
                     props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage[0].Disagree
+                    props.questStartData?.selectedPercentage[0].No
                   }
                   // percentages={ResultsData?.data[ResultsData?.data.length - 1]}
-                  check={quests.agreeDisagree.disagree.check}
-                  contend={quests.agreeDisagree.disagree.contend}
+                  check={props.questSelection["agree/disagree"].disagree.check}
+                  contend={
+                    props.questSelection["agree/disagree"].disagree.check
+                  }
+                  // check={quests.agreeDisagree.disagree.check}
+                  // contend={quests.agreeDisagree.disagree.contend}
                   handleToggleCheck={props.handleToggleCheck}
                   btnText={"Results"}
                   questStartData={props.questStartData}
