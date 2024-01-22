@@ -207,7 +207,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         </div>
         <div
-          className={`tablet:lborder-r-[3px] flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:text-[16px] ${
+          className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
             props.btnText === "Results" ? "pointer-events-none" : ""
           }`}
           onClick={handleCheckChange}
@@ -258,7 +258,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 >
                   <div className="cursor-pointer" onClick={handleContendChange}>
                     <ContentionIcon
-                      classNames="bg-red-500"
+                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
                       checked={contendState}
                     />
                   </div>
