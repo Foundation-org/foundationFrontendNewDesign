@@ -11,7 +11,7 @@ import UrlDialogue from "../question-card/Shareables/UrlDialogue";
 import EmailDialogue from "../question-card/Shareables/EmailDialogue";
 import TwitterDialogue from "../question-card/Shareables/TwitterDialogue";
 import FbDialogue from "../question-card/Shareables/FbDialogue";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const QuestBottombar = ({
   time,
@@ -24,6 +24,8 @@ const QuestBottombar = ({
   question,
   questStartData,
 }) => {
+  const navigate = useNavigate();
+  
   const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
 
