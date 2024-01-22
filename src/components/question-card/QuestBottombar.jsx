@@ -177,10 +177,7 @@ const QuestBottombar = ({
       {questStartData.whichTypeQuestion === "ranked choise" ||
         (questStartData.whichTypeQuestion === "multiple choise" && (
           <div>
-            {(isFullScreen === undefined &&
-              questStartData.QuestAnswers?.length > 6) ||
-            (isFullScreen === undefined &&
-              questStartData.QuestAnswers?.length > 6) ? (
+            {isFullScreen === undefined ? (
               <div
                 className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
                 onClick={() => {
