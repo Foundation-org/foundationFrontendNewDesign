@@ -81,8 +81,6 @@ const SingleAnswerMultipleChoice = (props) => {
       });
     // If any error captured
     if (errorMessage) {
-      console.log("this function is running");
-      // props.setIsSubmit(false);
       return setCheckOptionStatus({
         name: "Rejected",
         color: "text-[#b00f0f]",
@@ -99,7 +97,6 @@ const SingleAnswerMultipleChoice = (props) => {
       startQuest: true,
     });
     if (answerExist) {
-      // props.setIsSubmit(false);
       return setCheckOptionStatus({
         name: "Rejected",
         color: "text-[#b00f0f]",
@@ -111,7 +108,6 @@ const SingleAnswerMultipleChoice = (props) => {
     // Answer is validated and status is Ok
     if (validatedAnswer) {
       setAnswer(validatedAnswer);
-      // props.setIsSubmit(true);
       setCheckOptionStatus({
         name: "Ok",
         color: "text-[#0FB063]",
@@ -175,7 +171,10 @@ const SingleAnswerMultipleChoice = (props) => {
 
       {/* =============== To Display Option */}
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
-        <div className="flex w-full items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px]">
+        <div
+          className="flex w-full cursor-pointer items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px]"
+          onClick={handleCheckChange}
+        >
           <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
           <div className="flex w-full justify-between border-y border-y-[#ACACAC]">
             {props.editable ? (
@@ -207,9 +206,10 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         </div>
         <div
-          className={`flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[10px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:text-[16px] ${
+          className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[10px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:text-[16px] ${
             props.btnText === "Results" ? "pointer-events-none" : ""
           }`}
+          onClick={handleCheckChange}
         >
           <div className="flex items-center gap-1 laptop:gap-[18px]">
             <div id="custom-checkbox" className="flex h-full items-center">
@@ -218,7 +218,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 type="checkbox"
                 className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
                 checked={checkState}
-                onChange={handleCheckChange}
+                readOnly
               />
             </div>
 
