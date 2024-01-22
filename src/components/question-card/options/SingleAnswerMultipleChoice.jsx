@@ -11,11 +11,9 @@ import * as questServices from "../../../services/api/questsApi";
 
 const SingleAnswerMultipleChoice = (props) => {
   const dispatch = useDispatch();
-  const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [checkState, setCheckState] = useState(props.check);
   const [contendState, setContendState] = useState(props.contend);
-  // const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [answer, setAnswer] = useState(props.answer);
   const reset = {
@@ -27,9 +25,6 @@ const SingleAnswerMultipleChoice = (props) => {
   const [checkOptionStatus, setCheckOptionStatus] = useState(reset);
   const [prevValue, setPrevValue] = useState("");
 
-  // const handleEditOpen = () => setEditModal(true);
-  // const handleEditClose = () => setEditModal(false);
-  // const handleDeleteOpen = () => setDeleteModal(true);
   const handleDeleteClose = () => setDeleteModal(false);
 
   useEffect(() => {
@@ -60,12 +55,6 @@ const SingleAnswerMultipleChoice = (props) => {
       return !prevState;
     });
   };
-
-  // useEffect(() => {
-  //    console.log("get props.answer value", props.answer);
-  //   if(answer !== props.answer)
-  //   setAnswer(props.answer);
-  // }, [props.answer]);
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
@@ -162,7 +151,7 @@ const SingleAnswerMultipleChoice = (props) => {
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo.uuid ? (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#141618]">
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/svgs/dashboard/MeBadge.svg"
               alt="optionMeBadge"
@@ -170,7 +159,7 @@ const SingleAnswerMultipleChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#141618]">
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="bluebadge"
@@ -179,20 +168,20 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#141618]">
+        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
           &#x200B;
         </div>
       )}
 
       {/* =============== To Display Option */}
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
-        <div className="flex w-full items-center rounded-l-[5.387px] bg-white tablet:rounded-l-[10px] dark:bg-[#0D1012]">
-          <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E]"></div>
+        <div className="flex w-full items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px]">
+          <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
           <div className="flex w-full justify-between border-y border-y-[#ACACAC]">
             {props.editable ? (
               <input
                 type="text"
-                className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-[#435059] outline-none tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[32px] tablet:text-[19px] dark:bg-[#0D1012] dark:text-[#D3D3D3]"
+                className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-[#435059] outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[32px] tablet:text-[19px]"
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) =>
@@ -201,13 +190,13 @@ const SingleAnswerMultipleChoice = (props) => {
                 }
               />
             ) : (
-              <h1 className="pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] tablet:py-3 tablet:text-[19px] dark:text-[#D3D3D3]">
+              <h1 className="pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
                 {props.answer}
               </h1>
             )}
             {props.deleteable && (
               <div
-                className={`relative flex items-center bg-white text-[0.5rem] font-semibold tablet:h-[43px] tablet:text-[1rem] laptop:text-[1.2rem] dark:bg-[#0D1012] ${checkOptionStatus.color}`}
+                className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-[#0D1012] tablet:h-[43px] tablet:text-[1rem] laptop:text-[1.2rem] ${checkOptionStatus.color}`}
               >
                 <div className="flex w-[45px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
                   <span>{checkOptionStatus.name}</span>
@@ -218,7 +207,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         </div>
         <div
-          className={`flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[10px] text-[9.238px] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:text-[16px] dark:bg-[#0D1012] ${
+          className={`flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[10px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:text-[16px] ${
             props.btnText === "Results" ? "pointer-events-none" : ""
           }`}
         >
@@ -245,35 +234,6 @@ const SingleAnswerMultipleChoice = (props) => {
                     0%
                   </span>
                 )}
-                {/* {props.percentages?.selectedPercentage &&
-                props.percentages?.selectedPercentage[props.answer.trim()] ? (
-                  props.percentages?.selectedPercentage[props.answer.trim()] ===
-                    100 ? (
-                    <span
-                      className={`w-[4ch] whitespace-nowrap ${
-                        persistedTheme === "dark" ? "text-white" : ""
-                        }`}
-                    >
-                      100%
-                    </span>
-                  ) : (
-                    <span
-                      className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-                        }`}
-                    >
-                      {props.percentages?.selectedPercentage[
-                        props.answer.trim()
-                      ] + "%"}
-                    </span>
-                  )
-                ) : (
-                  <span
-                    className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-                      }`}
-                  >
-                    0%
-                  </span>
-                )} */}
               </>
             ) : null}
           </div>
@@ -281,7 +241,7 @@ const SingleAnswerMultipleChoice = (props) => {
 
         {/* =============== To Display Contention and Trash Right of Option */}
         {props.btnText !== "Results" ? (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] pl-0 tablet:w-8 tablet:pl-[15px] dark:bg-[#141618]">
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] pl-0 dark:bg-[#141618] tablet:w-8 tablet:pl-[15px]">
             {props.deleteable ? (
               <img
                 src="/assets/svgs/dashboard/trash2.svg"
@@ -316,37 +276,6 @@ const SingleAnswerMultipleChoice = (props) => {
                         0%
                       </span>
                     )}
-                    {/* {props.percentages?.contendedPercentage &&
-                    props.percentages?.contendedPercentage[
-                      props.answer.trim()
-                      ] ? (
-                      props.percentages?.contendedPercentage[
-                        props.answer.trim()
-                      ] === 100 ? (
-                        <span
-                          className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-                            }`}
-                        >
-                          100%
-                        </span>
-                      ) : (
-                        <span
-                          className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-                            }`}
-                        >
-                          {props.percentages?.contendedPercentage[
-                            props.answer.trim()
-                          ] + "%"}
-                        </span>
-                      )
-                    ) : (
-                      <span
-                        className={`w-[4ch] whitespace-nowrap ${persistedTheme === "dark" ? "text-white" : ""
-                          }`}
-                      >
-                        0%
-                      </span>
-                    )} */}
                   </>
                 ) : null}
               </div>
@@ -362,7 +291,7 @@ const SingleAnswerMultipleChoice = (props) => {
             </BasicModal>
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]"></div>
         )}
       </div>
     </div>

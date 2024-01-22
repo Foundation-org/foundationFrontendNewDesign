@@ -35,7 +35,7 @@ export default function MyModal({ modalShow, email, handleEmailType }) {
       </div> */}
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={() => 0}>
+        <Dialog as="div" className="relative z-50" onClose={() => 0}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

@@ -146,7 +146,6 @@ const QuestionCard = (props) => {
   //   dispatch(questAction.toggleCheck(actionPayload));
   // };
   const handleToggleCheck = (label, option, check, id) => {
-    console.log("called", label, option, check, id);
     const actionPayload = {
       label,
       option,

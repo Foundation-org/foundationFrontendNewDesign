@@ -161,7 +161,6 @@ const QuestionCardWithToggle = (props) => {
   };
 
   const handleToggleCheck = (label, option, check, id) => {
-    console.log("called", label, option, check, id);
     const actionPayload = {
       label,
       option,
@@ -236,8 +235,6 @@ const QuestionCardWithToggle = (props) => {
       );
     }
   }, [questStartData]);
-
-  console.log("questSelection", questSelection);
 
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
