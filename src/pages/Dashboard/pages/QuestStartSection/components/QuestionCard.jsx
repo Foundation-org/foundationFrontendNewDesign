@@ -147,14 +147,14 @@ const QuestionCard = (props) => {
         questStartData.whichTypeQuestion,
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data.length - 1
+              questStartData?.startQuestData?.data?.length - 1
             ]?.selected === "Yes"
             ? "Yes"
             : "No"
           : null,
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data.length - 1
+              questStartData?.startQuestData?.data?.length - 1
             ]?.selected === "Yes"
             ? true
             : false
@@ -167,14 +167,14 @@ const QuestionCard = (props) => {
         questStartData.whichTypeQuestion,
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data.length - 1
+              questStartData?.startQuestData?.data?.length - 1
             ]?.selected === "Agree"
             ? "Agree"
             : "Disagree"
           : null,
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data.length - 1
+              questStartData?.startQuestData?.data?.length - 1
             ]?.selected === "Agree"
             ? true
             : true
@@ -188,14 +188,14 @@ const QuestionCard = (props) => {
 
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data.length - 1
+              questStartData?.startQuestData?.data?.length - 1
             ]?.selected === "Like"
             ? "Like"
             : "Dislike"
           : null,
         questStartData?.startQuestData
           ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data.length - 1
+              questStartData?.startQuestData?.data?.length - 1
             ]?.selected === "Like"
             ? true
             : false

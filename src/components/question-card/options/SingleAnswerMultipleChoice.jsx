@@ -299,7 +299,7 @@ const SingleAnswerMultipleChoice = (props) => {
             </BasicModal>
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#141618] tablet:w-[45.6px]"></div>
+          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#000] tablet:w-[45.6px]"></div>
         )}
       </div>
     </div>
