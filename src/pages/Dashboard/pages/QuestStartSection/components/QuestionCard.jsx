@@ -1,12 +1,10 @@
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { validateInterval } from "../../../../../utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import api from "../../../../../services/api/Axios";
 import { userInfo } from "../../../../../services/api/userAuth";
 import { addUser } from "../../../../../features/auth/authSlice";
-import { useStartQuest } from "../../../../../services/mutations/quest";
-import { capitalizeFirstLetter, validateInterval } from "../../../../../utils";
 import { updateChangeAnsStartQuest } from "../../../../../services/api/questsApi";
 import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
 
@@ -25,7 +23,6 @@ import { questSelectionInitial } from "../../../../../constants/quests";
 const QuestionCard = (props) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const startTestMutation = useStartQuest();
   const quests = useSelector(questAction.getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -133,18 +130,6 @@ const QuestionCard = (props) => {
     dispatch(questUtilsActions.updateaddOptionLimit());
   };
 
-  // const handleToggleCheck = (option, check, contend, id) => {
-  //   const capitalizedOption = capitalizeFirstLetter(option);
-
-  //   const actionPayload = {
-  //     option: capitalizedOption,
-  //     check,
-  //     contend,
-  //     id,
-  //   };
-
-  //   dispatch(questAction.toggleCheck(actionPayload));
-  // };
   const handleToggleCheck = (label, option, check, id) => {
     const actionPayload = {
       label,
@@ -154,7 +139,6 @@ const QuestionCard = (props) => {
     };
 
     handleQuestSelection(actionPayload);
-    // dispatch(questAction.toggleCheck(actionPayload));
   };
 
   useEffect(() => {
@@ -247,27 +231,6 @@ const QuestionCard = (props) => {
     );
   };
 
-  // const handleStartQuest = (params) => {
-  //   startTestMutation.mutate(params);
-
-  //   if (startTestMutation.isSuccess) {
-  //     setLoading(false);
-  //     handleViewResults(questStartData._id);
-  //     userInfo().then((resp) => {
-  //       if (resp.status === 200) {
-  //         dispatch(addUser(resp.data));
-  //       }
-  //     });
-
-  //     dispatch(questUtilsActions.resetaddOptionLimit());
-  //   }
-
-  //   if (startTestMutation.error) {
-  //     setLoading(false);
-  //     dispatch(questUtilsActions.resetaddOptionLimit());
-  //   }
-  // };
-
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
@@ -327,25 +290,6 @@ const QuestionCard = (props) => {
     },
   });
 
-  // const extractSelectedAndContended = (quests) => {
-  //   let selected = null;
-  //   let contended = null;
-
-  //   for (const key in quests) {
-  //     const option = quests[key];
-
-  //     if (option.check) {
-  //       selected = key;
-  //     }
-
-  //     if (option.contend) {
-  //       contended = key;
-  //     }
-  //   }
-
-  //   return { selected, contended };
-  // };
-
   const handleSubmit = () => {
     setLoading(true);
     if (
@@ -353,14 +297,6 @@ const QuestionCard = (props) => {
       questStartData.whichTypeQuestion === "yes/no" ||
       questStartData.whichTypeQuestion === "like/dislike"
     ) {
-      // const { selected, contended } = extractSelectedAndContended(
-      //   questStartData.whichTypeQuestion === "agree/disagree"
-      //     ? quests.agreeDisagree
-      //     : questStartData.whichTypeQuestion === "yes/no"
-      //       ? quests.yesNo
-      //       : quests.likeDislike,
-      // );
-
       let ans = {
         created: new Date(),
       };
@@ -379,13 +315,6 @@ const QuestionCard = (props) => {
         ans.selected =
           questSelection["like/dislike"].like.check === true ? "Yes" : "No";
       }
-
-      // if (selected) {
-      //   ans.selected = selected.charAt(0).toUpperCase() + selected.slice(1);
-      // }
-      // if (contended) {
-      //   ans.contended = contended.charAt(0).toUpperCase() + contended.slice(1);
-      // }
 
       const params = {
         questId: questStartData._id,
@@ -576,11 +505,6 @@ const QuestionCard = (props) => {
     }
   };
 
-  // useEffect(() => {
-  //   localStorage.setItem("lastInteractedAt", questStartData.lastInteractedAt);
-  //   localStorage.setItem("howManyTimesAnsChanged", howManyTimesAnsChanged);
-  // }, [questStartData.lastInteractedAt, howManyTimesAnsChanged]);
-
   const renderQuestContent = () => {
     if (viewResult === questStartData._id) {
       return (
@@ -612,8 +536,6 @@ const QuestionCard = (props) => {
           <ConditionalTextFullScreen
             questStartData={questStartData}
             show={false}
-            answersSelection={answersSelection}
-            rankedAnswers={rankedAnswers}
           />
         </>
       );
@@ -656,8 +578,6 @@ const QuestionCard = (props) => {
           <ConditionalTextFullScreen
             questStartData={questStartData}
             show={true}
-            answersSelection={answersSelection}
-            rankedAnswers={rankedAnswers}
           />
         </>
       );

@@ -715,8 +715,6 @@ const QuestionCardWithToggle = (props) => {
           <ConditionalTextFullScreen
             questStartData={questStartData}
             show={true}
-            answersSelection={answersSelection}
-            rankedAnswers={rankedAnswers}
           />
         </>
       );
@@ -748,8 +746,6 @@ const QuestionCardWithToggle = (props) => {
           <ConditionalTextFullScreen
             questStartData={questStartData}
             show={false}
-            answersSelection={answersSelection}
-            rankedAnswers={rankedAnswers}
           />
         </>
       );

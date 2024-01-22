@@ -4,16 +4,16 @@ const QuestInfoText = ({ questStartData, questType, show }) => {
       return (
         <div>
           {questType === "ranked choise" ? (
-            <h4 className="pb-2 pl-[2.19rem] pt-[0.53rem] text-[0.5625rem] font-normal text-[#85898C] tablet:pb-[0.68rem] tablet:pl-[5.06rem] tablet:pt-[0.87rem] tablet:text-[1rem] laptop:pb-[0.63rem] laptop:pl-[4.81rem] laptop:pt-[0.69rem]">
+            <h4 className="pb-2 pt-[0.53rem] text-center text-[0.5625rem] font-normal text-[#85898C] tablet:pb-[0.68rem] tablet:pt-[0.87rem] tablet:text-[1rem] laptop:pb-[0.63rem] laptop:pt-[0.69rem]">
               You can drag and drop your options
             </h4>
           ) : questType === "multiple choise" &&
             questStartData.userCanSelectMultiple ? (
-            <h4 className="pb-2 pl-[2.19rem] pt-[0.53rem] text-[0.5625rem] font-normal text-[#85898C] tablet:pb-[0.68rem] tablet:pl-[5.06rem] tablet:pt-[0.87rem] tablet:text-[1rem] laptop:pb-[0.63rem] laptop:pl-[4.81rem] laptop:pt-[0.69rem]">
+            <h4 className="pb-2 pt-[0.53rem] text-center text-[0.5625rem] font-normal text-[#85898C] tablet:pb-[0.68rem] tablet:pt-[0.87rem] tablet:text-[1rem] laptop:pb-[0.63rem] laptop:pt-[0.69rem]">
               You can select multiple options
             </h4>
           ) : (
-            <h4 className="mb-2 ml-[2.19rem] mt-[0.53rem] text-[0.5625rem] font-normal text-[#85898C] tablet:mb-[0.68rem] tablet:ml-[5.06rem] tablet:mt-[0.87rem] tablet:text-[1rem] laptop:mb-[0.63rem] laptop:ml-[4.81rem] laptop:mt-[0.69rem]">
+            <h4 className="pb-2 pt-[0.53rem] text-center text-[0.5625rem] font-normal text-[#85898C] tablet:pb-[0.68rem] tablet:pt-[0.87rem] tablet:text-[1rem] laptop:pb-[0.63rem] laptop:pt-[0.69rem]">
               &#x200B;
             </h4>
           )}
@@ -21,7 +21,7 @@ const QuestInfoText = ({ questStartData, questType, show }) => {
       );
     } else {
       return (
-        <h4 className="mb-2 ml-[2.19rem] mt-[0.53rem] text-[0.5625rem] font-normal text-[#85898C] tablet:mb-[0.68rem] tablet:ml-[5.06rem] tablet:mt-[0.87rem] tablet:text-[1rem] laptop:mb-[0.63rem] laptop:ml-[4.81rem] laptop:mt-[0.69rem]">
+        <h4 className="pb-2 pt-[0.53rem] text-center text-[0.5625rem] font-normal text-[#85898C] tablet:pb-[0.68rem] tablet:pt-[0.87rem] tablet:text-[1rem] laptop:pb-[0.63rem] laptop:pt-[0.69rem]">
           &#x200B;
         </h4>
       );

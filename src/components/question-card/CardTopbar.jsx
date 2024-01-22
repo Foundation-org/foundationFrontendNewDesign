@@ -1,6 +1,16 @@
 import { useSelector } from "react-redux";
+import BookmarkIcon from "../../pages/Dashboard/pages/QuestStartSection/components/BookmarkIcon";
 
-const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic }) => {
+const CardTopbar = ({
+  img,
+  alt,
+  badgeCount,
+  createdBy,
+  QuestTopic,
+  bookmarkStatus,
+  handleBookmark,
+}) => {
+  const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return (
@@ -31,6 +41,11 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic }) => {
       <h1 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">
         {QuestTopic}
       </h1>
+      <BookmarkIcon
+        bookmarkStatus={bookmarkStatus}
+        persistedTheme={persistedTheme}
+        handleBookmark={handleBookmark}
+      />
     </div>
   );
 };

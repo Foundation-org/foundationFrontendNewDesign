@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Tooltip } from "../../../utils/Tooltip";
 import { resetaddOptionLimit } from "../../../features/quest/utilsSlice";
@@ -8,6 +8,7 @@ import BasicModal from "../../BasicModal";
 import DeleteOption from "../../../pages/Dashboard/components/DeleteOption";
 
 import * as questServices from "../../../services/api/questsApi";
+import ContentionIcon from "../../../assets/Quests/ContentionIcon";
 
 const SingleAnswerMultipleChoice = (props) => {
   const dispatch = useDispatch();
@@ -147,7 +148,7 @@ const SingleAnswerMultipleChoice = (props) => {
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo.uuid ? (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/svgs/dashboard/MeBadge.svg"
               alt="optionMeBadge"
@@ -155,7 +156,7 @@ const SingleAnswerMultipleChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="bluebadge"
@@ -164,7 +165,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
+        <div className="flex w-7 items-center justify-center bg-white dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
           &#x200B;
         </div>
       )}
@@ -176,7 +177,7 @@ const SingleAnswerMultipleChoice = (props) => {
           onClick={handleCheckChange}
         >
           <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
-          <div className="flex w-full justify-between border-y border-y-[#ACACAC]">
+          <div className="flex w-full justify-between border-y border-y-[#DEE6F7] tablet:border-y-[3px]">
             {props.editable ? (
               <input
                 type="text"
@@ -206,7 +207,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         </div>
         <div
-          className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-y-[#ACACAC] border-r-[#ACACAC] bg-white pr-[10px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:text-[16px] ${
+          className={`tablet:lborder-r-[3px] flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:text-[16px] ${
             props.btnText === "Results" ? "pointer-events-none" : ""
           }`}
           onClick={handleCheckChange}
@@ -241,7 +242,7 @@ const SingleAnswerMultipleChoice = (props) => {
 
         {/* =============== To Display Contention and Trash Right of Option */}
         {props.btnText !== "Results" ? (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] pl-0 dark:bg-[#141618] tablet:w-8 tablet:pl-[15px]">
+          <div className="flex w-7 items-center justify-center bg-white pl-0 dark:bg-[#141618] tablet:w-8 tablet:pl-[15px]">
             {props.deleteable ? (
               <img
                 src="/assets/svgs/dashboard/trash2.svg"
@@ -255,13 +256,19 @@ const SingleAnswerMultipleChoice = (props) => {
                   id="custom-yello-checkbox"
                   className="flex h-full items-center "
                 >
-                  <input
+                  <div className="cursor-pointer" onClick={handleContendChange}>
+                    <ContentionIcon
+                      classNames="bg-red-500"
+                      checked={contendState}
+                    />
+                  </div>
+                  {/* <input
                     id="small-yello-checkbox"
                     type="checkbox"
                     className="checkbox h-[11.4px] w-[11.4px] rounded-[2px] tablet:h-5 tablet:w-5"
                     checked={contendState}
                     onChange={handleContendChange}
-                  />
+                  /> */}
                 </div>
 
                 {props.btnText === "Results" ? (
@@ -291,7 +298,7 @@ const SingleAnswerMultipleChoice = (props) => {
             </BasicModal>
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]"></div>
+          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#141618] tablet:w-[45.6px]"></div>
         )}
       </div>
     </div>

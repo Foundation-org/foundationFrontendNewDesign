@@ -29,11 +29,11 @@ const RankedResult = (props) => {
   };
 
   return (
-    <div className="flex items-center 2xl:mx-[85px] tablet:ml-[52.65px] tablet:mr-[48.65px]">
+    <div className="flex items-center tablet:mr-[65.36px] tablet:pl-[1.75rem]">
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid ||
         localStorage.getItem("uId") ? (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"
               alt="trash"
@@ -41,7 +41,7 @@ const RankedResult = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]">
+          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="trash"
@@ -50,12 +50,12 @@ const RankedResult = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
+        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]"></div>
       )}
-      <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] tablet:h-[50.5px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] dark:bg-[#9E9E9E]">
+      <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]">
         &#x200B;
       </div>
-      <div className="tablet:rounded-l-0 rounded-l-0 flex w-full justify-between rounded-r-[4.73px] border-y border-l-0 border-r border-[#ACACAC] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]">
+      <div className="tablet:rounded-l-0 rounded-l-0 flex w-full justify-between rounded-r-[4.73px] border-y border-l-0 border-r border-[#DEE6F7] bg-white dark:bg-[#0D1012] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]">
         <div className="flex w-full items-center">
           {props.btnText !== "Results" && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
@@ -69,8 +69,9 @@ const RankedResult = (props) => {
               )}
             </div>
           )}
+
           <div className="flex w-full justify-between">
-            <h1 className=" ml-4 w-full pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-normal text-[#435059] tablet:ml-8 tablet:pb-[10px] tablet:pt-[12px] tablet:text-[19px]  dark:text-[#D3D3D3]">
+            <h1 className="w-full pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.5px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
               {props.answer}
             </h1>
             <div className="flex items-center gap-[19px]">
@@ -157,7 +158,7 @@ const RankedResult = (props) => {
         </div>
       </div>
 
-      <div className="flex w-7 items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]" />
+      <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]" />
     </div>
   );
 };
