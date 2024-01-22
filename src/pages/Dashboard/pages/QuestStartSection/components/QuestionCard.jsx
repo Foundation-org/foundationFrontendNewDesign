@@ -577,10 +577,10 @@ const QuestionCard = (props) => {
     }
   };
 
-  useEffect(() => {
-    localStorage.setItem("lastInteractedAt", questStartData.lastInteractedAt);
-    localStorage.setItem("howManyTimesAnsChanged", howManyTimesAnsChanged);
-  }, [questStartData.lastInteractedAt, howManyTimesAnsChanged]);
+  // useEffect(() => {
+  //   localStorage.setItem("lastInteractedAt", questStartData.lastInteractedAt);
+  //   localStorage.setItem("howManyTimesAnsChanged", howManyTimesAnsChanged);
+  // }, [questStartData.lastInteractedAt, howManyTimesAnsChanged]);
 
   const renderQuestContent = () => {
     if (viewResult === questStartData._id) {

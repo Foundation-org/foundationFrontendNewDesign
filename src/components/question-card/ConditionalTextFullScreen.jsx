@@ -12,16 +12,11 @@ const ConditionalTextFullScreen = ({
 
   return (
     <div className="flex items-center justify-between pb-[0.62rem] pl-[2.19rem] pr-12 pt-[0.56rem] tablet:pb-[1.44rem] tablet:pl-20 tablet:pt-[1.2rem]">
-      <QuestTimeRemaining
-        lastInteractedAt={localStorage.getItem("lastInteractedAt")}
-        howManyTimesAnsChanged={localStorage.getItem("howManyTimesAnsChanged")}
-        usersChangeTheirAns={localStorage.getItem("usersChangeTheirAns")}
-        show={show}
-      />
+      <QuestTimeRemaining show={show} questStartData={questStartData} />
       {(isFullScreen === undefined && answersSelection?.length > 6) ||
       (isFullScreen === undefined && rankedAnswers?.length > 6) ? (
         <div
-          className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
+          className="flex cursor-pointer items-center justify-end gap-1 text-[#435059] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
           onClick={() => {
             navigate(`/quest/${questStartData._id}/isfullscreen`);
           }}

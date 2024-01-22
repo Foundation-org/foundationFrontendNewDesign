@@ -1,19 +1,15 @@
 import { useState } from "react";
 import { calculateRemainingTime } from "../../../../../utils";
 
-const QuestTimeRemaining = ({
-  lastInteractedAt,
-  howManyTimesAnsChanged,
-  usersChangeTheirAns,
-  show,
-}) => {
+const QuestTimeRemaining = ({ show, questStartData }) => {
   const [resultString, setResultString] = useState("");
 
   const handleClick = () => {
     const result = calculateRemainingTime(
-      lastInteractedAt,
-      howManyTimesAnsChanged,
-      usersChangeTheirAns,
+      questStartData?.updatedAt,
+      questStartData?.startQuestData &&
+        questStartData?.startQuestData.data.length,
+      questStartData.usersChangeTheirAns,
     );
 
     setResultString(result);
@@ -23,7 +19,7 @@ const QuestTimeRemaining = ({
     <div>
       {show ? (
         <div>
-          {usersChangeTheirAns === "" ? (
+          {questStartData?.usersChangeTheirAns === "" ? (
             <h4 className="cursor-pointer text-[9px] font-normal text-[#85898C] tablet:text-[16.58px] laptop:text-[1rem]">
               Your selection is final and cannot be changed.
             </h4>
@@ -32,7 +28,7 @@ const QuestTimeRemaining = ({
               className="cursor-pointer text-[9px] font-normal text-[#85898C] tablet:text-[16.58px] laptop:text-[1rem]"
               onClick={handleClick}
             >
-              You can change your selection {usersChangeTheirAns}
+              You can change your selection {questStartData.usersChangeTheirAns}
               {resultString}.
             </h4>
           )}

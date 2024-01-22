@@ -340,14 +340,14 @@ const QuestionCard = ({
 
   const handleClose = () => setOpen(false);
 
-  useEffect(() => {
-    localStorage.setItem("lastInteractedAt", lastInteractedAt);
-    localStorage.setItem("howManyTimesAnsChanged", howManyTimesAnsChanged);
-  }, [lastInteractedAt, howManyTimesAnsChanged]);
+  // useEffect(() => {
+  //   localStorage.setItem("lastInteractedAt", lastInteractedAt);
+  //   localStorage.setItem("howManyTimesAnsChanged", howManyTimesAnsChanged);
+  // }, [lastInteractedAt, howManyTimesAnsChanged]);
 
   return (
     <div className="flex justify-center">
-      <div className="mx-[15px] w-full rounded-[12.3px] bg-[#F3F3F3] tablet:mx-[30px] tablet:rounded-[1.625rem] laptop:mx-[5.25rem] dark:bg-[#141618]">
+      <div className="mx-[15px] w-full rounded-[12.3px] bg-[#F3F3F3] dark:bg-[#141618] tablet:mx-[30px] tablet:rounded-[1.625rem] laptop:mx-[5.25rem]">
         <GuestTopbar
           title={title}
           badgeCount={badgeCount}
@@ -357,7 +357,7 @@ const QuestionCard = ({
           createdBy={createdBy}
         />
         <div className="ml-6 mr-[1.38rem] mt-[2.25rem] flex items-center justify-between tablet:ml-[4.5rem]">
-          <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[28px] dark:text-[#B8B8B8]">
+          <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:text-[28px]">
             {question?.endsWith("?") ? "Q." : "S."} {question}
           </h1>
           <div>
