@@ -26,8 +26,6 @@ import SidebarLeft from "../components/SidebarLeft";
 import SidebarRight from "../components/SidebarRight";
 import InfiniteScroll from "react-infinite-scroll-component";
 import QuestionCardWithToggle from "./QuestStartSection/components/QuestionCardWithToggle";
-import { handleClickScroll } from "../../../utils";
-import { IoIosArrowUp } from "react-icons/io";
 import * as filtersActions from "../../../features/sidebar/filtersSlice";
 
 const Bookmark = () => {
@@ -207,7 +205,7 @@ const Bookmark = () => {
         expandedView={expandedView}
         setExpandedView={setExpandedView}
       />
-      <div className="shadow-inner-md no-scrollbar flex h-full min-h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#06070a]">
+      <div className="shadow-inner-md no-scrollbar flex h-full min-h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#FCFCFD] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#242424]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}

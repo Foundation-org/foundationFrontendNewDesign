@@ -151,7 +151,7 @@ const SingleAnswerRankedChoice = (props) => {
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid ||
         localStorage.getItem("uId") ? (
-          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"
               alt="trash"
@@ -159,7 +159,7 @@ const SingleAnswerRankedChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="trash"
@@ -168,7 +168,7 @@ const SingleAnswerRankedChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 items-center justify-center bg-white dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
+        <div className="flex w-7 items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
           {" "}
           &#x200B;
         </div>
@@ -181,8 +181,8 @@ const SingleAnswerRankedChoice = (props) => {
               className={`${
                 props.snapshot.isDragging
                   ? "border-y-[#5FA3D5] border-r-[#5FA3D5]"
-                  : "border-[#DEE6F7]"
-              } flex h-full w-fit items-center rounded-l-[4.734px] border-y border-s bg-[#DEE6F7] px-[3.3px] py-[5.6px] dark:bg-[#9E9E9E] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:px-[7px] tablet:py-[13px]`}
+                  : "border-[#DEE6F7] dark:border-[#D9D9D9]"
+              } flex h-full w-fit items-center rounded-l-[4.734px] border-y border-s bg-[#DEE6F7] px-[3.3px] py-[5.6px] dark:bg-[#D9D9D9] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:px-[7px] tablet:py-[13px]`}
             >
               {persistedTheme === "dark" ? (
                 <img
@@ -244,7 +244,7 @@ const SingleAnswerRankedChoice = (props) => {
             )}
           </div>
         </div>
-        <div className="flex h-[21.8px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white dark:bg-[#0D1012] tablet:h-[49px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]">
+        <div className="flex h-[21.8px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:h-[49px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]">
           <h1 className="text-[16px] font-bold leading-[0px] text-[#22AA69] tablet:text-[25px]">
             R
           </h1>

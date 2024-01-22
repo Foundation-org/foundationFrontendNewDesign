@@ -1,11 +1,11 @@
 const SingleAnswer = (props) => {
   return (
     <div className="flex items-center pl-[1.5rem] pr-[28px] tablet:pl-[3.94rem] tablet:pr-[6.3rem]">
-      <div className="flex h-[21.8px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]">
+      <div className="flex h-[21.8px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]">
         &#x200B;
       </div>
       <div
-        className="flex w-full cursor-pointer justify-between rounded-r-[4.73px] border-y border-r border-[#DEE6F7] bg-white dark:bg-[#0D1012] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]"
+        className="flex w-full cursor-pointer justify-between rounded-r-[4.73px] border-y border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]"
         onClick={() =>
           props.handleToggleCheck(
             props.questStartData.whichTypeQuestion,

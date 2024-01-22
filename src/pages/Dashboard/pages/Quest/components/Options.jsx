@@ -80,7 +80,7 @@ const Options = ({
               className={`${
                 snapshot.isDragging
                   ? "border-[#5FA3D5]"
-                  : "border-[#DEE6F7] dark:border-[#9E9E9E]"
+                  : "border-[#DEE6F7] dark:border-[#D9D9D9]"
               } dragIconWrapper border-y border-s`}
             >
               {persistedTheme === "dark" ? (
@@ -109,7 +109,7 @@ const Options = ({
                 snapshot.isDragging
                   ? "border-[#5FA3D5] bg-[#F2F6FF]"
                   : "border-[#ACACAC] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]"
-              } h-[25.19px] w-full border-y-[1px] py-[0.35rem] pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none tablet:h-[50.19px] tablet:py-[11.6px] tablet:pr-11 tablet:text-[1.296rem] laptop:h-[74px] laptop:py-[18px] laptop:text-[1.875rem] dark:text-[#7C7C7C]`}
+              } h-[25.19px] w-full border-y-[1px] py-[0.35rem] pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:h-[50.19px] tablet:py-[11.6px] tablet:pr-11 tablet:text-[1.296rem] laptop:h-[74px] laptop:py-[18px] laptop:text-[1.875rem]`}
               onChange={(e) => handleChange(e.target.value)}
               onBlur={(e) =>
                 e.target.value.trim() !== "" &&
@@ -137,7 +137,7 @@ const Options = ({
               trash && (
                 <div
                   id={`test${number}`}
-                  className={`flex h-[25.19px] items-center text-[0.5rem] font-semibold xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] dark:bg-[#141618] ${optionStatus?.color} py-[0.29rem]`}
+                  className={`flex h-[25.19px] items-center text-[0.5rem] font-semibold dark:bg-[#141618] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] ${optionStatus?.color} py-[0.29rem]`}
                 >
                   <div className="flex w-5 items-center justify-center tablet:w-[52.78px]">
                     <>

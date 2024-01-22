@@ -64,7 +64,7 @@ const QuestCardLayout = ({
   };
 
   return (
-    <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-white dark:border-white dark:bg-[#141618] tablet:rounded-[15px]">
+    <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-white dark:border-white dark:bg-[#000] tablet:rounded-[15px]">
       <CardTopbar
         QuestTopic={questStartData.QuestTopic}
         img={"assets/svgs/dashboard/badge.svg"}

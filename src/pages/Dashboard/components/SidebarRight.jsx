@@ -187,7 +187,7 @@ const SidebarRight = () => {
 
   return (
     <>
-      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[25rem] min-w-[25rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] 2xl:w-[25rem] laptop:block dark:border-white dark:bg-[#0A0A0C]">
+      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[25rem] min-w-[25rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] dark:border-[#000] dark:bg-[#000] 2xl:w-[25rem] laptop:block">
         <EmailTypeModal
           modalShow={modalVisible}
           email={persistedUserInfo?.email}
@@ -212,7 +212,7 @@ const SidebarRight = () => {
             </div>
             <div>
               <h4 className="heading">Guest User</h4>
-              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] tablet:text-[17px] laptop:text-[20px] dark:text-[#D2D2D2]">
+              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
                 <p>Balance: </p>
                 <p>
                   {persistedUserInfo?.balance
@@ -250,7 +250,7 @@ const SidebarRight = () => {
             </div>
             <div>
               <h4 className="heading">My Profile</h4>
-              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] tablet:text-[17px] laptop:text-[20px] dark:text-[#D2D2D2]">
+              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
                 <p>Balance: </p>
                 <p>
                   {persistedUserInfo?.balance

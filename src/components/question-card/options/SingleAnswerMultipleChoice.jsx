@@ -149,7 +149,7 @@ const SingleAnswerMultipleChoice = (props) => {
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo.uuid ? (
-          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/svgs/dashboard/MeBadge.svg"
               alt="optionMeBadge"
@@ -157,7 +157,7 @@ const SingleAnswerMultipleChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="bluebadge"
@@ -166,7 +166,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 items-center justify-center bg-white dark:bg-[#141618] tablet:h-[33px] tablet:w-[26.48px]">
+        <div className="flex w-7 items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
           &#x200B;
         </div>
       )}
@@ -177,7 +177,7 @@ const SingleAnswerMultipleChoice = (props) => {
           className="flex w-full cursor-pointer items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px]"
           onClick={handleCheckChange}
         >
-          <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#9E9E9E] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
+          <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
           <div className="flex w-full justify-between border-y border-y-[#DEE6F7] tablet:border-y-[3px]">
             {props.editable ? (
               <input
@@ -208,7 +208,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         </div>
         <div
-          className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px] text-[9.238px] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
+          className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px] text-[9.238px] dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
             props.btnText === "Results" ? "pointer-events-none" : ""
           }`}
           onClick={handleCheckChange}
@@ -243,7 +243,7 @@ const SingleAnswerMultipleChoice = (props) => {
 
         {/* =============== To Display Contention and Trash Right of Option */}
         {props.btnText !== "Results" ? (
-          <div className="flex w-7 items-center justify-center bg-white pl-0 dark:bg-[#141618] tablet:w-8 tablet:pl-[15px]">
+          <div className="flex w-7 items-center justify-center bg-white pl-0 dark:bg-[#000] tablet:w-8 tablet:pl-[15px]">
             {props.deleteable ? (
               <img
                 src="/assets/svgs/dashboard/trash2.svg"
