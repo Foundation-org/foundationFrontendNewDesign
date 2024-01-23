@@ -7,8 +7,10 @@ import { useSearchParams } from "react-router-dom";
 import Loader from "../../../../Signup/components/Loader";
 import api from "../../../../../services/api/Axios";
 import { toast } from "sonner";
+import { useNavigate } from 'react-router-dom'
 
 const VerificationBadges = () => {
+  const navigate = useNavigate();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
@@ -40,6 +42,7 @@ const VerificationBadges = () => {
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
+      navigate("/profile/verification-badges");
       toast.error(e.response.data.message.split(":")[1]);
     }
   };
