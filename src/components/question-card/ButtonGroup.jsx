@@ -47,12 +47,13 @@ const ButtonGroup = ({
   const filterState = useSelector(filterActions.getFilters);
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
-  const uuidExists =
-    answers &&
-    answers?.some(
-      (item) =>
-        item.uuid === persistedUserInfo?.uuid || localStorage.getItem("uId"),
-    );
+  const uuidExists = answers
+    ? answers?.some(
+        (item) =>
+          item.uuid === persistedUserInfo?.uuid ||
+          item.uuid === localStorage.getItem("uId"),
+      )
+    : false;
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
@@ -186,6 +187,8 @@ const ButtonGroup = ({
       handleViewResults(id);
     }
   };
+
+  console.log("first", answers, uuidExists);
 
   if (filterState.expandedView === false) {
     if (startTest === questStartData._id) {
