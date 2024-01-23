@@ -12,7 +12,7 @@ const Quest = () => {
   const handleTab = (id) => setTab(id);
 
   return (
-    <div className=" w-full overflow-y-auto bg-white pb-4 pt-[20px] dark:bg-[#242424] md:pb-1 tablet:h-[calc(100vh-116px)] tablet:pt-[60px] laptop:h-[calc(100vh-96px)]">
+    <div className=" w-full overflow-y-auto bg-[#F3F3F3] pb-4 pt-[20px] dark:bg-[#242424] md:pb-1 tablet:h-[calc(100vh-116px)] tablet:pt-[60px] laptop:h-[calc(100vh-96px)]">
       <Navbar handleTab={handleTab} tab={tab} />
       {tab === 0 && <RankChoice />}
       {tab === 1 && <MultipleChoice />}
