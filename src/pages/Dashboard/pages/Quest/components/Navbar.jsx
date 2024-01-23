@@ -1,13 +1,13 @@
 const Navbar = ({ handleTab, tab }) => {
   return (
-    <div className="flex justify-center gap-[15.44px] tablet:gap-[30px]">
+    <div className="flex justify-center gap-[6.7px] tablet:gap-4 laptop:gap-[30px]">
       <div>
-        <div className="create-quest-box-shadow flex h-[60px] justify-center rounded-xl bg-[#FCFCFC]">
-          <p className="-mt-[15px] h-fit w-fit bg-[#F3F3F3] text-[25px] font-semibold leading-none text-[#7C7C7C]">
+        <div className="create-quest-box-shadow flex h-5 justify-center rounded-[3.82px] bg-[#FCFCFC] tablet:h-12 tablet:rounded-xl laptop:h-[60px]">
+          <p className="-mt-[6px] h-fit w-fit bg-[#F3F3F3] text-[10px] font-semibold leading-none text-[#7C7C7C] tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
             Polls
           </p>
         </div>
-        <div className="-m-[30px] mx-[25px] flex gap-[25px]">
+        <div className="mx-[3px] -mt-[11px] flex gap-[6.45px] tablet:mx-[25px] tablet:-mt-[30px] tablet:gap-4 laptop:gap-[25px]">
           <button
             className={`${
               tab === 3
@@ -48,12 +48,12 @@ const Navbar = ({ handleTab, tab }) => {
       </div>
 
       <div>
-        <div className="create-quest-box-shadow flex h-[60px] justify-center rounded-xl bg-[#FCFCFC]">
-          <p className="-mt-[15px] h-fit w-fit bg-[#F3F3F3] text-[25px] font-semibold leading-none text-[#7C7C7C]">
+        <div className="create-quest-box-shadow flex h-5 justify-center rounded-[3.82px] bg-[#FCFCFC] tablet:h-12 tablet:rounded-xl laptop:h-[60px]">
+          <p className="-mt-[6px] h-fit w-fit bg-[#F3F3F3] text-[10px] font-semibold leading-none text-[#7C7C7C] tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
             Statements
           </p>
         </div>
-        <div className="-m-[30px] mx-[25px] flex gap-[25px]">
+        <div className="mx-[3px]  -mt-[11px] flex gap-[6.45px] tablet:mx-[25px] tablet:-mt-[30px] tablet:gap-4 laptop:gap-[25px]">
           <button
             className={`${
               tab === 2
