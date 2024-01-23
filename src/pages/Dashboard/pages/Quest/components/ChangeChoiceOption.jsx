@@ -13,10 +13,10 @@ const ChangeChoiceOption = ({
   setChangedOption,
 }) => {
   return (
-    <div className="mx-5 flex flex-col items-center rounded-[0.30925rem] border-[3px] border-[#DEE6F7] px-[8.62px] pb-[10.25px] pt-[10.47px] tablet:rounded-[16px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+    <div className="mx-[15px] flex flex-col items-center rounded-[0.30925rem] border border-[#DEE6F7] px-[8.62px] pb-[10.25px] pt-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
       <div className="flex w-full items-center justify-between">
         <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
-          The participants can change their choice at a later time.
+          Participants can change their choice at a later time.
         </h5>
         <CustomSwitch
           enabled={changeState}
