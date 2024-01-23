@@ -14,7 +14,7 @@
 }
 
 .heading {
-  @apply text-[12px] font-semibold leading-normal text-[#616161] 2xl:text-[30px] tablet:text-[26.9px] laptop:text-[27px] dark:text-white;
+  @apply text-[12px] font-semibold leading-normal text-[#616161] dark:text-white 2xl:text-[30px] tablet:text-[26.9px] laptop:text-[25px];
 }
 
 .green-select {
@@ -42,11 +42,11 @@
 }
 
 .pagination-btn {
-  @apply mr-[0.46rem] flex h-[0.9rem] w-[0.9rem] items-center justify-center rounded-[0.15rem] border border-solid border-[#EEEEEE] bg-[#F5F5F5] tablet:mr-4 tablet:h-7 tablet:w-[27px] tablet:rounded-md dark:bg-[#A5A5A5];
+  @apply mr-[0.46rem] flex h-[0.9rem] w-[0.9rem] items-center justify-center rounded-[0.15rem] border border-solid border-[#EEEEEE] bg-[#F5F5F5] dark:bg-[#A5A5A5] tablet:mr-4 tablet:h-7 tablet:w-[27px] tablet:rounded-md;
 }
 
 .dragIconWrapper {
-  @apply mb-[0.5px] flex h-[25.19px] w-[19px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[74px] laptop:w-[43px] dark:bg-[#9E9E9E];
+  @apply mb-[0.5px] flex h-[25.19px] w-[19px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[74px] laptop:w-[43px];
 }
 
 .kqFNyH {

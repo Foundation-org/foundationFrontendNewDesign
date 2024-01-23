@@ -25,7 +25,7 @@ const QuestBottombar = ({
   questStartData,
 }) => {
   const navigate = useNavigate();
-  
+
   const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -231,7 +231,7 @@ const QuestBottombar = ({
           )}
 
           <h4 className="whitespace-nowrap text-[0.51638rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.32569rem]">
-            5 min ago
+            {timeAgo}
           </h4>
         </div>
       </div>

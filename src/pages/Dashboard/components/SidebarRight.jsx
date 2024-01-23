@@ -187,7 +187,7 @@ const SidebarRight = () => {
 
   return (
     <>
-      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[25rem] min-w-[25rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] dark:border-[#000] dark:bg-[#000] 2xl:w-[25rem] laptop:block">
+      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] dark:border-[#000] dark:bg-[#000] laptop:block">
         <EmailTypeModal
           modalShow={modalVisible}
           email={persistedUserInfo?.email}
@@ -233,7 +233,7 @@ const SidebarRight = () => {
           </div>
         ) : (
           <div
-            className="mb-[5vh] flex cursor-pointer items-center gap-6"
+            className="mb-[5vh] flex cursor-pointer items-center gap-[15px]"
             onClick={() => {
               navigate("/profile");
             }}
@@ -251,7 +251,7 @@ const SidebarRight = () => {
             <div>
               <h4 className="heading">My Profile</h4>
               <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
-                <p>Balance: </p>
+                {/* <p>Balance: </p> */}
                 <p>
                   {persistedUserInfo?.balance
                     ? persistedUserInfo?.balance.toFixed(2)
@@ -263,13 +263,13 @@ const SidebarRight = () => {
                   Edit Profile
                 </Anchor>
               </div>
-              <div className="mt-3 flex gap-2">
-                <div className="h-[9px] w-6 rounded-md bg-[#4A8DBD]"></div>
-                <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-                <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-                <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-                <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-                <div className="h-[9px] w-6 rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+              <div className="mt-3 flex gap-1">
+                <div className="h-[9px] w-[19.5px] rounded-md bg-[#4A8DBD]"></div>
+                <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+                <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+                <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+                <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
+                <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
               </div>
             </div>
           </div>
@@ -291,7 +291,10 @@ const SidebarRight = () => {
             )}
 
             <div className="flex w-full items-center justify-between text-[18px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#878787]">
-              <h5>{item.title}</h5>
+              <div>
+                <h5>{item.title?.split(" ")[0]}</h5>
+                <h5>{item.title?.split(" ")[1]}</h5>
+              </div>
               <h5>{item.value}</h5>
             </div>
           </div>
