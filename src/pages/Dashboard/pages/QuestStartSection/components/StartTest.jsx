@@ -287,7 +287,7 @@ const StartTest = ({
                             >
                               <SingleAnswerRankedChoice
                                 snapshot={snapshot}
-                                number={"#" + (index + 1)}
+                                number={index + 1}
                                 editable={item.edit}
                                 deleteable={item.delete}
                                 answer={item.label}

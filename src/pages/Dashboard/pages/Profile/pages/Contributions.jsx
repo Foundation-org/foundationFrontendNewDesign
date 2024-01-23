@@ -51,7 +51,7 @@ const Contributions = () => {
       icon: "/assets/svgs/dashboard/icon8.svg",
       iconLight: "/assets/svgs/dashboard/icon18.svg",
       alt: "icon1",
-      title: "Contentions Received",
+      title: "Objections Received",
       value:
         (persistedUserInfo && persistedUserInfo?.contentionsOnAddedAns) || 0,
     },
@@ -60,7 +60,7 @@ const Contributions = () => {
       icon: "/assets/svgs/dashboard/icon9.svg",
       iconLight: "/assets/svgs/dashboard/icon19.svg",
       alt: "icon1",
-      title: "Contentions Given",
+      title: "Objections Given",
       value: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0,
     },
     {
@@ -78,7 +78,7 @@ const Contributions = () => {
 
   return (
     <div>
-      <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
+      <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] dark:text-[#B8B8B8] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px]">
         My Contributions
       </h1>
       <div
@@ -128,13 +128,13 @@ const Contributions = () => {
                     alt={item.alt}
                     className="mb-[7px] h-[30px] w-8 tablet:mb-[18px] tablet:h-[60px] tablet:w-[50px]"
                   />
-                  <h4 className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[18px] dark:text-[#B8B8B8]">
+                  <h4 className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:text-[18px]">
                     {item.title.split(" ")[0]}
                   </h4>
-                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] tablet:mb-6 tablet:text-[18px] dark:text-[#B8B8B8]">
+                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:mb-6 tablet:text-[18px]">
                     {item.title.split(" ")[1]}
                   </h4>
-                  <h1 className="text-center text-[16px] font-semibold leading-[14px] text-[#7C7C7C] 2xl:text-[35px] tablet:text-[24px] dark:text-[#B8B8B8]">
+                  <h1 className="text-center text-[16px] font-semibold leading-[14px] text-[#7C7C7C] dark:text-[#B8B8B8] 2xl:text-[35px] tablet:text-[24px]">
                     {item.value}
                   </h1>
                 </div>
@@ -158,13 +158,13 @@ const Contributions = () => {
                     alt={item.alt}
                     className="mb-[7px] h-[30px] w-8 tablet:mb-[18px] tablet:h-[60px] tablet:w-[50px]"
                   />
-                  <h4 className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[18px] dark:text-[#B8B8B8]">
+                  <h4 className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:text-[18px]">
                     {item.title.split(" ")[0]}
                   </h4>
-                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] tablet:mb-6 tablet:text-[18px] dark:text-[#B8B8B8]">
+                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:mb-6 tablet:text-[18px]">
                     {item.title.split(" ")[1]}
                   </h4>
-                  <h1 className="text-center text-[16px] font-semibold leading-[14px] text-[#7C7C7C] 2xl:text-[35px] tablet:text-[24px] dark:text-[#B8B8B8]">
+                  <h1 className="text-center text-[16px] font-semibold leading-[14px] text-[#7C7C7C] dark:text-[#B8B8B8] 2xl:text-[35px] tablet:text-[24px]">
                     {item.value}
                   </h1>
                 </div>

@@ -145,7 +145,11 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   return (
-    <div className="flex items-center tablet:mr-[65.36px] tablet:gap-[10px] tablet:pl-[1.75rem]">
+    <div
+      className={`flex items-center  tablet:gap-[10px] tablet:pl-[1.75rem] ${
+        props.btnText === "Results" ? "tablet:mr-[30px]" : "tablet:mr-[65.36px]"
+      }`}
+    >
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo.uuid ? (
@@ -208,7 +212,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         </div>
         <div
-          className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px] text-[9.238px] dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
+          className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px] text-[9.238px] dark:border-[#DEE6F7] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
             props.btnText === "Results" ? "pointer-events-none" : ""
           }`}
           onClick={handleCheckChange}
@@ -272,7 +276,7 @@ const SingleAnswerMultipleChoice = (props) => {
                   /> */}
                 </div>
 
-                {props.btnText === "Results" ? (
+                {/* {props.btnText === "Results" ? (
                   <>
                     {props.contendPercentages &&
                     props.contendPercentages?.[props.answer.trim()] ? (
@@ -285,7 +289,7 @@ const SingleAnswerMultipleChoice = (props) => {
                       </span>
                     )}
                   </>
-                ) : null}
+                ) : null} */}
               </div>
             )}
             <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
@@ -299,7 +303,34 @@ const SingleAnswerMultipleChoice = (props) => {
             </BasicModal>
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#000] tablet:w-[45.6px]"></div>
+          <div className="flex w-7 items-center justify-center bg-white pl-[11px] dark:bg-[#000] tablet:w-[66px]">
+            {props.btnText === "Results" ? (
+              <>
+                {props.contendPercentages &&
+                props.contendPercentages?.[props.answer.trim()] ? (
+                  <div className="flex items-center gap-[10px]">
+                    <ContentionIcon
+                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                      checked={true}
+                    />
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                      {props.contendPercentages[props.answer.trim()]}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-[10px]">
+                    <ContentionIcon
+                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                      checked={false}
+                    />
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                      0%
+                    </span>
+                  </div>
+                )}
+              </>
+            ) : null}
+          </div>
         )}
       </div>
     </div>

@@ -5,7 +5,7 @@ const QuestInfoText = ({ questStartData, questType, show }) => {
         <div>
           {questType === "ranked choise" ? (
             <h4 className="pb-2 pt-[0.53rem] text-center text-[0.5625rem] font-normal text-[#85898C] tablet:pb-[0.68rem] tablet:pt-[0.87rem] tablet:text-[1rem] laptop:pb-[0.63rem] laptop:pt-[0.69rem]">
-              You can drag and drop your options
+              Drag and drop options in your order of preference
             </h4>
           ) : questType === "multiple choise" &&
             questStartData.userCanSelectMultiple ? (

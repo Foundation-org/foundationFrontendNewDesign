@@ -81,7 +81,7 @@ const SidebarRight = () => {
       icon: "/assets/svgs/dashboard/icon8.svg",
       iconLight: "/assets/svgs/dashboard/icon18.svg",
       alt: "icon1",
-      title: "Contentions Received",
+      title: "Objections Received",
       value: (response && response?.contentionsOnAddedAns) || 0,
     },
     {
@@ -89,7 +89,7 @@ const SidebarRight = () => {
       icon: "/assets/svgs/dashboard/icon9.svg",
       iconLight: "/assets/svgs/dashboard/icon19.svg",
       alt: "icon1",
-      title: "Contentions Given",
+      title: "Objections Given",
       value: (response && response?.contentionsGiven) || 0,
     },
     {

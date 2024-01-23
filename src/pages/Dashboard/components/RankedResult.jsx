@@ -111,48 +111,24 @@ const RankedResult = (props) => {
           </div>
         </div>
         {/* to show ranked and multiple choice options */}
-        <div className="mr-[10.63px] flex items-center gap-[19px] text-[9.238px] tablet:mr-[20.63px] tablet:text-[16px] ">
+        <div className="mr-[10.63px] flex items-center gap-[19px] text-[9.238px] tablet:mr-[11px] tablet:text-[16px] ">
           {props.btnText === "Results" ? (
             <>
               {props?.selectedPercentages &&
               props.selectedPercentages[props.answer.trim()] ? (
-                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                  {props?.selectedPercentages[props?.answer.trim()]}
-                </span>
+                <div className="flex items-center gap-[10px]">
+                  <h1 className="text-[16px] font-bold leading-[0px] text-[#22AA69] tablet:text-[25px]">
+                    R
+                  </h1>
+                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                    {props?.selectedPercentages[props?.answer.trim()]}
+                  </span>
+                </div>
               ) : (
                 <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                   0.00%
                 </span>
               )}
-              {/* {props.percentages?.rankedPercentage &&
-              props.percentages?.rankedPercentage?.[props.answer.trim()] ===
-                undefined ? (
-                <span
-                  className={`w-[4ch] whitespace-nowrap ${
-                    persistedTheme === "dark" ? "text-white" : ""
-                  }`}
-                >
-                  0.00%
-                </span>
-              ) : props.percentages?.rankedPercentage?.[props.answer.trim()] ===
-                100 ? (
-                <span
-                  className={`w-[4ch] whitespace-nowrap ${
-                    persistedTheme === "dark" ? "text-white" : ""
-                  }`}
-                >
-                  100%
-                </span>
-              ) : (
-                <span
-                  className={`w-[4ch] whitespace-nowrap ${
-                    persistedTheme === "dark" ? "text-white" : ""
-                  }`}
-                >
-                  {props.percentages?.rankedPercentage?.[props.answer.trim()] +
-                    "%"}
-                </span>
-              )} */}
             </>
           ) : null}
         </div>

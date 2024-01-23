@@ -246,7 +246,7 @@ const SingleAnswerRankedChoice = (props) => {
         </div>
         <div className="flex h-[21.8px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:h-[49px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]">
           <h1 className="text-[16px] font-bold leading-[0px] text-[#22AA69] tablet:text-[25px]">
-            R
+            {props.number}
           </h1>
         </div>
         {/* =============== To Display Contention and Trash Right of Option */}
