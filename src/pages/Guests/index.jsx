@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 // utils
@@ -15,7 +15,8 @@ import { createGuestMode } from "../../services/api/userAuth";
 import { useGetSingleQuest } from "../../services/queries/quest";
 
 const Guests = () => {
-  let { id, isFullScreen } = useParams();
+  let { isFullScreen } = useParams();
+  const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [tab, setTab] = useState("Participate");
   const [startTest, setStartTest] = useState(null);
@@ -30,7 +31,7 @@ const Guests = () => {
 
   const { data: singleQuestResp } = useGetSingleQuest(
     persistedUserInfo.uuid,
-    id,
+    location.state,
   );
 
   function getQuestionTitle(whichTypeQuestion) {

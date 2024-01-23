@@ -33,7 +33,8 @@ const Result = (props) => {
 
       // Check in contended array
       if (
-        apiResponse.contended.some(
+        apiResponse.contended &&
+        apiResponse.contended?.some(
           (contendedItem) => contendedItem.question === item.label,
         )
       ) {

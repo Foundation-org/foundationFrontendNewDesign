@@ -183,7 +183,9 @@ const QuestBottombar = ({
             <div
               className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
               onClick={() => {
-                navigate(`/quest/${questStartData._id}/isfullscreen`);
+                navigate("/quest/isfullscreen", {
+                  state: questStartData._id,
+                });
               }}
             >
               <svg

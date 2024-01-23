@@ -33,7 +33,7 @@ export function Router() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/auth0" element={<DashboardRedirect />} />
-          <Route path="/quest/:id" element={<Guests />} />
+          <Route path="/guestquest/:id" element={<Guests />} />
         </Route>
 
         {/* private */}
@@ -52,7 +52,7 @@ export function Router() {
             <Route path="ledger" element={<BasicTable />} />
             <Route path="change-password" element={<ChangePassword />} />
           </Route>
-          <Route path="/quest/:id/:isFullScreen" element={<Guests />} />
+          <Route path="/quest/:isFullScreen" element={<Guests />} />
         </Route>
 
         {/* catch all */}
