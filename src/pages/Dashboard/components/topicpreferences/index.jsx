@@ -117,14 +117,14 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
         />
       </div>
       <div className="max-[100%] mx-auto flex items-center gap-2 tablet:gap-7 laptop:max-w-[80%]">
-        <h1 className=" text-[1rem] font-medium leading-normal text-[#535353] tablet:text-[1.4rem] laptop:text-[2.18rem]">
+        <h1 className=" tablet:text-[1.375rem text-[1rem] font-medium leading-normal text-[#535353] dark:text-white">
           Topic
         </h1>
         <div className="relative w-full">
           <input
             type="text"
             placeholder="Search here...."
-            className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F3F3F3] px-3 text-[8.4px] text-[#435059] focus:outline-none tablet:h-[38px] tablet:text-[18px] laptop:h-[80px] laptop:rounded-[26px] laptop:pl-[45px] laptop:pr-[60px] laptop:text-[26px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
+            className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F3F3F3] px-3 text-[8.4px] text-[#435059] focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8] tablet:h-[38px] tablet:text-[18px] laptop:h-[57px] laptop:rounded-[10px] laptop:pl-5 laptop:pr-[60px] laptop:text-[20px]"
             value={getPreferences?.topicSearch}
             onChange={handleSearch}
           />
@@ -135,7 +135,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                 dispatch(prefActions.setTopicSearch(""));
               }}
             >
-              <IoClose className="h-3 w-3 text-[#C9C8C8] laptop:h-[27px] laptop:w-[27px] dark:text-white" />
+              <IoClose className="h-3 w-3 text-[#C9C8C8] dark:text-white laptop:h-[27px] laptop:w-[27px]" />
             </button>
           )}
           {!getPreferences?.topicSearch && (
@@ -147,7 +147,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
           )}
         </div>
       </div>
-      <h1 className="mx-auto max-w-[90%] py-[1rem]  text-[10px] font-normal leading-normal text-[#707175] tablet:text-[1.2rem] laptop:max-w-[80%] laptop:py-[2.19rem] laptop:text-[1.625rem]">
+      <h1 className="py-[1rem] text-center text-[10px] font-normal leading-normal text-[#707175] dark:text-white tablet:text-[1.2rem] laptop:pb-[15px] laptop:pt-2 laptop:text-[16px]">
         Drag and drop to set your preferences and blocks
       </h1>
       {/* columns */}
@@ -161,13 +161,13 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                     <h2
                       className={`flex h-[2rem] w-full items-center justify-center laptop:h-[4.18rem] ${
                         col.id === "All" ? "rounded-t-[0.5rem]" : ""
-                      } bg-[#F2F2F2] text-center text-[1rem] font-semibold text-[#535353] tablet:text-[1.4rem] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem]`}
+                      } bg-[#F2F2F2] text-center text-[1rem] font-semibold text-[#535353] dark:bg-[#000] dark:text-white tablet:text-[1.4rem] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem]`}
                     >
                       {col.id}
                     </h2>
                     <div className="h-full border-[6px] border-[#F2F2F2]  pr-1 laptop:rounded-b-[1.25rem]">
                       <div
-                        className="custom-scrollbar flex h-[18vh] min-h-[19vh] flex-col gap-[0.4rem] overflow-y-auto bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem]"
+                        className="custom-scrollbar flex h-[18vh] min-h-[19vh] flex-col gap-[0.4rem] overflow-y-auto bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] dark:bg-[#212121] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem]"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                       >
@@ -191,8 +191,8 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                                     className={`${
                                       snapshot.isDragging
                                         ? "border-[#5FA3D5]"
-                                        : "dakr: border-[#DEE6F7]"
-                                    } flex h-[19.7px] w-[0.6rem] min-w-[0.6rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
+                                        : "border-[#DEE6F7] dark:border-[#282828]"
+                                    } flex h-[19.7px] w-[0.6rem] min-w-[0.6rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] dark:bg-[#8E8E8E] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
                                   >
                                     {persistedTheme === "dark" ? (
                                       <img
@@ -212,8 +212,8 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                                     className={`${
                                       snapshot.isDragging
                                         ? "border-[#5FA3D5] bg-[#F2F6FF]"
-                                        : "border-[#ACACAC] bg-[#FCFCFD]"
-                                    } flex h-[19.7px] w-fit select-none items-center gap-[5px] truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[1.6rem]`}
+                                        : "border-[#ACACAC] bg-[#FCFCFD] dark:bg-[#282828]"
+                                    } flex h-[19.7px] w-fit select-none items-center gap-[5px] truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] dark:text-white tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px]`}
                                   >
                                     {text}
                                     <GrClose
@@ -221,7 +221,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                                         itemsWithCross.includes(text)
                                           ? "block"
                                           : "hidden"
-                                      } h-[9.4px] w-[9.4px] cursor-pointer text-[#C9C8C8] tablet:h-[16px] tablet:w-[16px] laptop:h-[20px] laptop:w-[20px] dark:text-white`}
+                                      } h-[9.4px] w-[9.4px] cursor-pointer text-[#C9C8C8] dark:text-white tablet:h-[16px] tablet:w-[16px] laptop:h-[20px] laptop:w-[20px]`}
                                       onClick={() =>
                                         handleRemoveItemFromList(text, col.id)
                                       }

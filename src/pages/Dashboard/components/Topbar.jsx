@@ -28,7 +28,7 @@ const Topbar = () => {
     <div
       className={`${
         persistedTheme === "dark"
-          ? "bg-gray-600"
+          ? "bg-[#0C0C0D]"
           : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
       } static flex h-[4.18rem] w-full flex-col items-center justify-between pb-2 tablet:h-[116px] laptop:h-[92px] laptop:flex-row laptop:pb-0 `}
     >
@@ -53,14 +53,14 @@ const Topbar = () => {
             </div>
             <div className="text-blue-100 flex flex-col ">
               <h3
-                className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] tablet:text-[20px] dark:text-white"
+                className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] dark:text-white tablet:text-[20px]"
                 onClick={() => {
                   navigate("/profile");
                 }}
               >
                 Guest User
               </h3>
-              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] tablet:text-[12px] dark:text-white">
+              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
                 Balance:{" "}
                 {persistedUserInfo?.balance
                   ? persistedUserInfo?.balance.toFixed(2)
@@ -86,10 +86,10 @@ const Topbar = () => {
               </p>
             </div>
             <div className="text-blue-100 flex flex-col ">
-              <h3 className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] tablet:text-[20px] dark:text-white">
+              <h3 className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] dark:text-white tablet:text-[20px]">
                 My Profile
               </h3>
-              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] tablet:text-[12px] dark:text-white">
+              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
                 Balance:{" "}
                 {persistedUserInfo?.balance
                   ? persistedUserInfo?.balance.toFixed(2)

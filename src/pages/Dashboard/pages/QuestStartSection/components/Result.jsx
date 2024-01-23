@@ -332,37 +332,42 @@ const Result = (props) => {
             }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
             {props.answers?.map((item, index) => (
-              <SingleAnswerMultipleChoice
-                number={"#" + (index + 1)}
-                answer={item.question}
-                addedAnswerUuid={item.uuid}
-                title={props.title}
-                checkInfo={true}
-                selectedPercentages={
-                  props.questStartData?.selectedPercentage &&
-                  props.questStartData.selectedPercentage.length > 0
-                    ? props.questStartData.selectedPercentage[
-                        props.questStartData.selectedPercentage.length - 1
-                      ]
-                    : null
-                }
-                contendPercentages={
-                  props.questStartData?.contendedPercentage &&
-                  props.questStartData.contendedPercentage.length > 0
-                    ? props.questStartData.contendedPercentage[
-                        props.questStartData.contendedPercentage.length - 1
-                      ]
-                    : null
-                }
-                check={findLabelChecked(props.answersSelection, item.question)}
-                contend={findLabelContend(
-                  props.answersSelection,
-                  item.question,
-                )}
-                btnText={"Results"}
-                answersSelection={props.answersSelection}
-                setAnswerSelection={props.setAnswerSelection}
-              />
+              <div key={index + 1}>
+                <SingleAnswerMultipleChoice
+                  number={"#" + (index + 1)}
+                  answer={item.question}
+                  addedAnswerUuid={item.uuid}
+                  title={props.title}
+                  checkInfo={true}
+                  selectedPercentages={
+                    props.questStartData?.selectedPercentage &&
+                    props.questStartData.selectedPercentage.length > 0
+                      ? props.questStartData.selectedPercentage[
+                          props.questStartData.selectedPercentage.length - 1
+                        ]
+                      : null
+                  }
+                  contendPercentages={
+                    props.questStartData?.contendedPercentage &&
+                    props.questStartData.contendedPercentage.length > 0
+                      ? props.questStartData.contendedPercentage[
+                          props.questStartData.contendedPercentage.length - 1
+                        ]
+                      : null
+                  }
+                  check={findLabelChecked(
+                    props.answersSelection,
+                    item.question,
+                  )}
+                  contend={findLabelContend(
+                    props.answersSelection,
+                    item.question,
+                  )}
+                  btnText={"Results"}
+                  answersSelection={props.answersSelection}
+                  setAnswerSelection={props.setAnswerSelection}
+                />
+              </div>
             ))}
           </div>
         )
@@ -378,25 +383,27 @@ const Result = (props) => {
             }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
             {props.rankedAnswers?.map((item, index) => (
-              <RankedResult
-                number={"#" + (index + 1)}
-                answer={item.label}
-                addedAnswerUuid={item.uuid}
-                answersSelection={props.answersSelection}
-                setAnswerSelection={props.setAnswerSelection}
-                title={props.title}
-                selectedPercentages={
-                  props.questStartData?.selectedPercentage &&
-                  props.questStartData.selectedPercentage.length > 0
-                    ? props.questStartData.selectedPercentage[
-                        props.questStartData.selectedPercentage.length - 1
-                      ]
-                    : null
-                }
-                checkInfo={false}
-                setAddOptionLimit={props.setAddOptionLimit}
-                btnText={"Results"}
-              />
+              <div key={index + 1}>
+                <RankedResult
+                  number={"#" + (index + 1)}
+                  answer={item.label}
+                  addedAnswerUuid={item.uuid}
+                  answersSelection={props.answersSelection}
+                  setAnswerSelection={props.setAnswerSelection}
+                  title={props.title}
+                  selectedPercentages={
+                    props.questStartData?.selectedPercentage &&
+                    props.questStartData.selectedPercentage.length > 0
+                      ? props.questStartData.selectedPercentage[
+                          props.questStartData.selectedPercentage.length - 1
+                        ]
+                      : null
+                  }
+                  checkInfo={false}
+                  setAddOptionLimit={props.setAddOptionLimit}
+                  btnText={"Results"}
+                />
+              </div>
             ))}
           </div>
         )
