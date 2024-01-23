@@ -259,7 +259,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
                 Treasury
               </h4>
               <p className="whitespace-nowrap text-[6.227px] text-[#616161] dark:text-[#BDBCBC] tablet:text-[12.651px]">
-                Balance: <span>{localStorage.getItem("treasuryAmount")}</span>
+                <span>{localStorage.getItem("treasuryAmount")} FDX</span>
               </p>
             </div>
           </div>

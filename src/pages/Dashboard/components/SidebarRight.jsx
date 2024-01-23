@@ -193,12 +193,12 @@ const SidebarRight = () => {
           email={persistedUserInfo?.email}
           handleEmailType={handleEmailType}
         />
-        <div className="mb-[5vh] flex gap-6">
+        <div className="mb-[5vh] flex gap-[15px]">
           <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" />
           <div>
             <h4 className="heading">Treasury</h4>
             <p className="whitespace-nowrap text-[20px] font-medium text-[#616161] dark:text-white">
-              Balance: <span>{treasuryAmount}</span>
+              <span>{treasuryAmount} FDX</span>
             </p>
           </div>
         </div>
@@ -255,7 +255,8 @@ const SidebarRight = () => {
                 <p>
                   {persistedUserInfo?.balance
                     ? persistedUserInfo?.balance.toFixed(2)
-                    : 0}
+                    : 0}{" "}
+                  FDX
                 </p>
               </div>
               <div>

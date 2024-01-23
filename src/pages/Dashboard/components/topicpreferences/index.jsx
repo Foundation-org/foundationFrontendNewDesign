@@ -124,7 +124,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
           <input
             type="text"
             placeholder="Search here...."
-            className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F3F3F3] px-3 text-[8.4px] text-[#435059] focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8] tablet:h-[38px] tablet:text-[18px] laptop:h-[57px] laptop:rounded-[10px] laptop:pl-5 laptop:pr-[60px] laptop:text-[20px]"
+            className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F3F3F3] px-3 text-[8.4px] text-[#435059] focus:outline-none dark:border-[#151515] dark:bg-[#151515] dark:text-white tablet:h-[38px] tablet:text-[18px] laptop:h-[57px] laptop:rounded-[10px] laptop:pl-5 laptop:pr-[60px] laptop:text-[20px]"
             value={getPreferences?.topicSearch}
             onChange={handleSearch}
           />
@@ -142,7 +142,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
             <img
               src="/assets/svgs/dashboard/search.svg"
               alt="search"
-              className="absolute right-[12px] top-[9px] h-3 w-3 laptop:top-1/2 laptop:h-[26.4px] laptop:w-[24.3px] laptop:-translate-x-1/2 laptop:-translate-y-1/2"
+              className="absolute right-[12px] top-1/2 h-3 w-3 -translate-y-1/2 laptop:top-1/2 laptop:h-[26.4px] laptop:w-[24.3px] laptop:-translate-x-1/2 laptop:-translate-y-1/2"
             />
           )}
         </div>
@@ -165,11 +165,12 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                     >
                       {col.id}
                     </h2>
-                    <div className="h-full border-[6px] border-[#F2F2F2]  pr-1 laptop:rounded-b-[1.25rem]">
+                    <div className="h-full border-[6px] border-[#F2F2F2] bg-[#FCFCFD] pr-1 dark:border-[#212121] dark:bg-[#212121] laptop:rounded-b-[1.25rem]">
                       <div
                         className="custom-scrollbar flex h-[18vh] min-h-[19vh] flex-col gap-[0.4rem] overflow-y-auto bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] dark:bg-[#212121] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem]"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
+                        s
                       >
                         {col.list?.length >= 1 ? (
                           col.list.map((text, index) => (
