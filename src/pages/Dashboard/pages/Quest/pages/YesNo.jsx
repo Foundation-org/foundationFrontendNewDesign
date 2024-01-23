@@ -134,7 +134,7 @@ const YesNo = () => {
 
   return (
     <>
-      <h4 className="mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25.8px] tablet:text-[16.58px] laptop:mt-[47px] laptop:text-[25px]">
+      <h4 className="mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25.8px] tablet:text-[15px] laptop:mt-[54px]">
         Ask a question that allows for a straightforward "Yes" or "No" response
       </h4>
       <div
@@ -142,7 +142,7 @@ const YesNo = () => {
           persistedTheme === "dark"
             ? "border-[1px] border-[#858585] tablet:border-[2px]"
             : ""
-        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
+        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-white py-[12.93px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[77%] laptop:py-[42px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
           Create Post
