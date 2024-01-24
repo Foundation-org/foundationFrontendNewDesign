@@ -147,7 +147,7 @@ const SingleAnswerMultipleChoice = (props) => {
         props.addedAnswerUuid === persistedUserInfo.uuid ? (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
-              src="/assets/svgs/dashboard/MeBadge.svg"
+              src="/assets/addOptions/yellowBadge.svg"
               alt="optionMeBadge"
               className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />
@@ -155,7 +155,7 @@ const SingleAnswerMultipleChoice = (props) => {
         ) : (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
-              src="/assets/svgs/dashboard/bluebadge.svg"
+              src="/assets/addOptions/blueBadge.svg"
               alt="bluebadge"
               className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />

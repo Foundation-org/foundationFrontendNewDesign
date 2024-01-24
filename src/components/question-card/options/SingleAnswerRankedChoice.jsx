@@ -142,7 +142,7 @@ const SingleAnswerRankedChoice = (props) => {
         props.addedAnswerUuid === persistedUserInfo?.uuid || localStorage.getItem('uId') ? (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
-              src="/assets/svgs/dashboard/optionMeBadge.svg"
+              src="/assets/addOptions/yellowBadge.svg"
               alt="trash"
               className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />
@@ -150,7 +150,7 @@ const SingleAnswerRankedChoice = (props) => {
         ) : (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
-              src="/assets/svgs/dashboard/bluebadge.svg"
+              src="/assets/addOptions/blueBadge.svg"
               alt="trash"
               className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />
@@ -190,7 +190,9 @@ const SingleAnswerRankedChoice = (props) => {
           )}
           <div
             className={`${
-              props.snapshot.isDragging ? 'border-y-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]' : 'border-y-[#DEE6F7]'
+              props.snapshot.isDragging
+                ? 'border-y-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]'
+                : 'border-y-[#DEE6F7] dark:border-[#D9D9D9]'
             } flex w-full justify-between border-y tablet:border-y-[3px]`}
           >
             {props.editable ? (
@@ -225,7 +227,7 @@ const SingleAnswerRankedChoice = (props) => {
           </div>
         </div>
         <div className="flex h-[21.8px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:h-[49px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]">
-          <h1 className="text-[16px] font-bold leading-[0px] text-[#22AA69] tablet:text-[25px]">{props.number}</h1>
+          <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
         </div>
         {/* =============== To Display Contention and Trash Right of Option */}
         <div className="flex w-12 min-w-[48px] items-center justify-center bg-[#F3F3F3] pl-0 dark:bg-[#141618] tablet:w-8 tablet:pl-[15px]">
