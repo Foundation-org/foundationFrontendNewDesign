@@ -272,8 +272,6 @@ const QuestionCard = (props) => {
     },
   });
 
-  console.log({ answersSelection });
-
   const handleSubmit = () => {
     setLoading(true);
     if (
@@ -393,7 +391,11 @@ const QuestionCard = (props) => {
 
         if (!isSubmit) setLoading(false);
 
-        startQuest(params);
+        if (params.answer.selected.length !== 0) {
+          startQuest(params);
+        } else {
+          toast.warning('You cannot submit without selecting any option');
+        }
       }
     } else if (questStartData.whichTypeQuestion === 'ranked choise') {
       let addedAnswerValue = '';
