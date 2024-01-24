@@ -33,7 +33,7 @@ const RankedResult = (props) => {
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid ||
         localStorage.getItem("uId") ? (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"
               alt="trash"
@@ -41,7 +41,7 @@ const RankedResult = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="trash"
@@ -50,9 +50,9 @@ const RankedResult = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]"></div>
+        <div className="flex w-7 min-w-[28px] items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]"></div>
       )}
-      <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]">
+      <div className="flex h-full w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]">
         &#x200B;
       </div>
       <div className="tablet:rounded-l-0 rounded-l-0 flex w-full justify-between rounded-r-[4.73px] border-y border-l-0 border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]">
@@ -134,7 +134,7 @@ const RankedResult = (props) => {
         </div>
       </div>
 
-      <div className="flex w-7 items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]" />
+      <div className="flex w-12 min-w-[48px] items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]" />
     </div>
   );
 };

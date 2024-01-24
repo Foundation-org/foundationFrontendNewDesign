@@ -151,7 +151,7 @@ const SingleAnswerRankedChoice = (props) => {
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid ||
         localStorage.getItem("uId") ? (
-          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"
               alt="trash"
@@ -159,7 +159,7 @@ const SingleAnswerRankedChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="trash"
@@ -168,7 +168,7 @@ const SingleAnswerRankedChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+        <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
           {" "}
           &#x200B;
         </div>
@@ -250,7 +250,7 @@ const SingleAnswerRankedChoice = (props) => {
           </h1>
         </div>
         {/* =============== To Display Contention and Trash Right of Option */}
-        <div className="flex w-7 items-center justify-center bg-[#F3F3F3] pl-0 dark:bg-[#141618] tablet:w-8 tablet:pl-[15px]">
+        <div className="flex w-12 min-w-[48px] items-center justify-center bg-[#F3F3F3] pl-0 dark:bg-[#141618] tablet:w-8 tablet:pl-[15px]">
           {props.deleteable ? (
             <img
               src="/assets/svgs/dashboard/trash2.svg"

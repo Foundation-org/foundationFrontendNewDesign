@@ -1,6 +1,6 @@
 const SingleAnswer = (props) => {
   return (
-    <div className="flex items-center pl-[1.5rem] pr-[28px] tablet:pl-[3.94rem] tablet:pr-[6.3rem]">
+    <div className="flex items-center pl-7 pr-12 tablet:pl-[3.94rem] tablet:pr-[6.3rem]">
       <div className="flex h-[21.8px] w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]">
         &#x200B;
       </div>
