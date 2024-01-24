@@ -616,7 +616,7 @@ const QuestionCardWithToggle = (props) => {
       handleStartTest(questStartData._id);
     }
     if (questStartData.startStatus === 'change answer') {
-      setOpenResults(true);
+      setOpenResults(false);
       handleViewResults(questStartData._id);
     }
     if (questStartData.startStatus === 'completed') {
@@ -648,6 +648,8 @@ const QuestionCardWithToggle = (props) => {
 
     setAnswerSelection((prevAnswers) => updateAnswersSelectionForRanked(prevAnswers, actionPayload));
   };
+
+  console.log('first', viewResult, openResults);
 
   const renderQuestContent = () => {
     if (viewResult !== questStartData._id && openResults !== true) {

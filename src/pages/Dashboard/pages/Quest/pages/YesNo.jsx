@@ -1,5 +1,6 @@
 import { toast } from 'sonner';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import {
@@ -10,9 +11,10 @@ import {
 } from '../../../../../services/api/questsApi';
 import YesNoOptions from '../components/YesNoOptions';
 import { Tooltip } from '../../../../../utils/Tooltip';
-import { useSelector } from 'react-redux';
 import ChangeChoiceOption from '../components/ChangeChoiceOption';
 import { FaSpinner } from 'react-icons/fa';
+
+import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 
 const YesNo = () => {
   const navigate = useNavigate();
@@ -31,6 +33,9 @@ const YesNo = () => {
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const createQuestSlice = useSelector(createQuestAction.getYesNo);
+
+  console.log('createQuestSlice', createQuestSlice);
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -185,7 +190,7 @@ const YesNo = () => {
             isSelected={selectedOption === 'No'}
           />
         </div>
-        <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] dark:text-[#D8D8D8] tablet:text-[16px]">
+        <p className="my-1 tablet:mt-5 tablet:mb-[10px] text-center text-[8px] font-normal leading-normal text-[#85898C] dark:text-[#D8D8D8] tablet:text-[16px]">
           Customize your Quest.
         </p>
         <div className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
@@ -200,7 +205,7 @@ const YesNo = () => {
         </div>
         <div className="flex w-full justify-end">
           <button
-            className="mr-7 mt-[10px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
+            className="mr-7 mt-[10px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
             onClick={() => handleSubmit()}
             disabled={loading === true || checkQuestionStatus.tooltipStyle === 'tooltip-error' ? true : false}
           >

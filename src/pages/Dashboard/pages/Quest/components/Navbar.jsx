@@ -10,12 +10,12 @@ const Navbar = ({ handleTab, tab }) => {
         <div className="mx-[3px] -mt-[11px] flex gap-[6.45px] tablet:mx-[25px] tablet:-mt-[30px] tablet:gap-4 laptop:gap-[25px]">
           <button
             className={`${
-              tab === 3
+              tab === 0
                 ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
                 : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
             } quest-topbar`}
             onClick={() => {
-              handleTab(3);
+              handleTab(0);
             }}
           >
             Yes/No
@@ -34,12 +34,12 @@ const Navbar = ({ handleTab, tab }) => {
           </button>
           <button
             className={`${
-              tab === 0
+              tab === 2
                 ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
                 : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
             } quest-topbar`}
             onClick={() => {
-              handleTab(0);
+              handleTab(2);
             }}
           >
             Rank Choice
@@ -56,12 +56,12 @@ const Navbar = ({ handleTab, tab }) => {
         <div className="mx-[3px]  -mt-[11px] flex gap-[6.45px] tablet:mx-[25px] tablet:-mt-[30px] tablet:gap-4 laptop:gap-[25px]">
           <button
             className={`${
-              tab === 2
+              tab === 3
                 ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
                 : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
             } quest-topbar`}
             onClick={() => {
-              handleTab(2);
+              handleTab(3);
             }}
           >
             Agree/Disagree

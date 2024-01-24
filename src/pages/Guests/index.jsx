@@ -17,6 +17,7 @@ import { useGetSingleQuest } from '../../services/queries/quest';
 const Guests = () => {
   let { isFullScreen } = useParams();
   const location = useLocation();
+  console.log({ location });
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [tab, setTab] = useState('Participate');
   const [startTest, setStartTest] = useState(null);

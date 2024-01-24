@@ -26,7 +26,6 @@ export const getAllQuestsWithDefaultStatus = async (params) => {
 
 // Get Quest By Id
 export const getQuestById = async (id, qId) => {
-  console.log('first', id, qId);
   return await api.get(`/infoquestions/getQuest/${id}/${qId}`);
 };
 
