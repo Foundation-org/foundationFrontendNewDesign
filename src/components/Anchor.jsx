@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Anchor = ({ href, className, children, type }) => {
   let classes = `short:text-[12px] text-light-blue text-[8.158px] md:text-[16px] font-normal leading-[22px] ${className}`;

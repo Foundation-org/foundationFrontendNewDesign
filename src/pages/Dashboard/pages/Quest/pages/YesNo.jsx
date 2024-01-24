@@ -1,32 +1,32 @@
-import { toast } from "sonner";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { toast } from 'sonner';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import {
   checkUniqueQuestion,
   createInfoQuest,
   getTopicOfValidatedQuestion,
   questionValidation,
-} from "../../../../../services/api/questsApi";
-import YesNoOptions from "../components/YesNoOptions";
-import { Tooltip } from "../../../../../utils/Tooltip";
-import { useSelector } from "react-redux";
-import ChangeChoiceOption from "../components/ChangeChoiceOption";
-import { FaSpinner } from "react-icons/fa";
+} from '../../../../../services/api/questsApi';
+import YesNoOptions from '../components/YesNoOptions';
+import { Tooltip } from '../../../../../utils/Tooltip';
+import { useSelector } from 'react-redux';
+import ChangeChoiceOption from '../components/ChangeChoiceOption';
+import { FaSpinner } from 'react-icons/fa';
 
 const YesNo = () => {
   const navigate = useNavigate();
-  const [question, setQuestion] = useState("");
-  const [prevValue, setPrevValue] = useState("");
+  const [question, setQuestion] = useState('');
+  const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
-  const [changedOption, setChangedOption] = useState("");
+  const [changedOption, setChangedOption] = useState('');
   const [changeState, setChangeState] = useState(false);
   const [loading, setLoading] = useState(false);
   const reset = {
-    name: "Ok",
-    color: "text-[#389CE3]",
-    tooltipName: "Please write something...",
-    tooltipStyle: "tooltip-info",
+    name: 'Ok',
+    color: 'text-[#389CE3]',
+    tooltipName: 'Please write something...',
+    tooltipStyle: 'tooltip-info',
   };
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -36,16 +36,16 @@ const YesNo = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        toast.success("Successfully Created");
+        toast.success('Successfully Created');
         setTimeout(() => {
           setLoading(false);
-          navigate("/dashboard");
+          navigate('/dashboard');
         }, 2000);
       }
     },
     onError: (err) => {
       if (err.response) {
-        toast.error(err.response.data.message.split(":")[1]);
+        toast.error(err.response.data.message.split(':')[1]);
       }
       setLoading(false);
     },
@@ -60,16 +60,14 @@ const YesNo = () => {
     // To check uniqueness of the question
     const constraintResponse = await checkUniqueQuestion(question);
 
-    if (question === "") {
+    if (question === '') {
       setLoading(false);
-      return toast.warning("Post cannot be empty");
+      return toast.warning('Post cannot be empty');
     }
 
     if (!constraintResponse.data.isUnique) {
       setLoading(false);
-      return toast.warning(
-        "This post is not unique. A similar post already exists.",
-      );
+      return toast.warning('This post is not unique. A similar post already exists.');
     }
 
     // getTopicOfValidatedQuestion
@@ -79,14 +77,14 @@ const YesNo = () => {
     // If any error captured
     if (errorMessage) {
       setLoading(false);
-      return toast.error("Oops! Something Went Wrong.");
+      return toast.error('Oops! Something Went Wrong.');
     }
 
     const params = {
       Question: question,
-      whichTypeQuestion: "yes/no",
+      whichTypeQuestion: 'yes/no',
       usersChangeTheirAns: changedOption,
-      QuestionCorrect: "Not Selected",
+      QuestionCorrect: 'Not Selected',
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
     };
@@ -99,35 +97,34 @@ const YesNo = () => {
     if (prevValue === question.trim()) return;
     setPrevValue(value);
     setCheckQuestionStatus({
-      name: "Checking",
-      color: "text-[#0FB063]",
-      tooltipName: "Verifying your question. Please wait...",
-      tooltipStyle: "tooltip-success",
+      name: 'Checking',
+      color: 'text-[#0FB063]',
+      tooltipName: 'Verifying your question. Please wait...',
+      tooltipStyle: 'tooltip-success',
     });
     // Question Validation
     const { validatedQuestion, errorMessage } = await questionValidation({
       question: value,
-      queryType: "yes/no",
+      queryType: 'yes/no',
     });
     // If any error captured
     if (errorMessage) {
       setLoading(false);
       return setCheckQuestionStatus({
-        name: "Rejected",
-        color: "text-[#b00f0f]",
-        tooltipName:
-          "Please review your text for proper grammar while keeping our code of conduct in mind.",
-        tooltipStyle: "tooltip-error",
+        name: 'Rejected',
+        color: 'text-[#b00f0f]',
+        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+        tooltipStyle: 'tooltip-error',
       });
     }
     // Question is validated and status is Ok
     setQuestion(validatedQuestion);
     setPrevValue(validatedQuestion);
     setCheckQuestionStatus({
-      name: "Ok",
-      color: "text-[#0FB063]",
-      tooltipName: "Question is Verified",
-      tooltipStyle: "tooltip-success",
+      name: 'Ok',
+      color: 'text-[#0FB063]',
+      tooltipName: 'Question is Verified',
+      tooltipStyle: 'tooltip-success',
       isVerifiedQuestion: true,
     });
   };
@@ -139,9 +136,7 @@ const YesNo = () => {
       </h4>
       <div
         className={`${
-          persistedTheme === "dark"
-            ? "border-[1px] border-[#858585] tablet:border-[2px]"
-            : ""
+          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
         } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[25px]">
@@ -156,17 +151,11 @@ const YesNo = () => {
             onChange={(e) => {
               setQuestion(e.target.value);
               setCheckQuestionStatus({
-                name: "Ok",
-                color:
-                  e.target.value.trim() === ""
-                    ? "text-[#389CE3]"
-                    : "text-[#b0a00f]",
+                name: 'Ok',
+                color: e.target.value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
               });
             }}
-            onBlur={(e) =>
-              e.target.value.trim() !== "" &&
-              questionVerification(e.target.value.trim())
-            }
+            onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             value={question}
             placeholder="Pose a question"
           />
@@ -183,17 +172,17 @@ const YesNo = () => {
         <div className="mt-2 flex flex-col gap-[7px] tablet:mt-11 tablet:gap-[14px] laptop:gap-[40px]">
           <YesNoOptions
             number={1}
-            answer={"Yes"}
+            answer={'Yes'}
             options={false}
-            handleOptionChange={() => handleOptionChange("Yes")}
-            isSelected={selectedOption === "Yes"}
+            handleOptionChange={() => handleOptionChange('Yes')}
+            isSelected={selectedOption === 'Yes'}
           />
           <YesNoOptions
             number={2}
-            answer={"No"}
+            answer={'No'}
             options={false}
-            handleOptionChange={() => handleOptionChange("No")}
-            isSelected={selectedOption === "No"}
+            handleOptionChange={() => handleOptionChange('No')}
+            isSelected={selectedOption === 'No'}
           />
         </div>
         <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] dark:text-[#D8D8D8] tablet:text-[16px]">
@@ -213,18 +202,9 @@ const YesNo = () => {
           <button
             className="mr-7 mt-[10px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
             onClick={() => handleSubmit()}
-            disabled={
-              loading === true ||
-              checkQuestionStatus.tooltipStyle === "tooltip-error"
-                ? true
-                : false
-            }
+            disabled={loading === true || checkQuestionStatus.tooltipStyle === 'tooltip-error' ? true : false}
           >
-            {loading === true ? (
-              <FaSpinner className="animate-spin text-[#EAEAEA]" />
-            ) : (
-              "Submit"
-            )}
+            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
           </button>
         </div>
       </div>

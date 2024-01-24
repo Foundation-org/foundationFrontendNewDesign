@@ -1,23 +1,19 @@
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner } from 'react-icons/fa';
 
-export function calculateRemainingTime(
-  lastInteractedAt,
-  howManyTimesAnsChanged,
-  usersChangeTheirAns,
-) {
+export function calculateRemainingTime(lastInteractedAt, howManyTimesAnsChanged, usersChangeTheirAns) {
   const validateInterval = () => {
     let timeInterval = 0;
-    if (usersChangeTheirAns === "Daily") {
+    if (usersChangeTheirAns === 'Daily') {
       return (timeInterval = 24 * 60 * 60 * 1000);
-    } else if (usersChangeTheirAns === "Weekly") {
+    } else if (usersChangeTheirAns === 'Weekly') {
       return (timeInterval = 7 * 24 * 60 * 60 * 1000);
-    } else if (usersChangeTheirAns === "Monthly") {
+    } else if (usersChangeTheirAns === 'Monthly') {
       return (timeInterval = 30 * 24 * 60 * 60 * 1000);
-    } else if (usersChangeTheirAns === "Yearly") {
+    } else if (usersChangeTheirAns === 'Yearly') {
       return (timeInterval = 365 * 24 * 60 * 60 * 1000);
-    } else if (usersChangeTheirAns === "TwoYears") {
+    } else if (usersChangeTheirAns === 'TwoYears') {
       return (timeInterval = 2 * 365 * 24 * 60 * 60 * 1000);
-    } else if (usersChangeTheirAns === "FourYears") {
+    } else if (usersChangeTheirAns === 'FourYears') {
       return (timeInterval = 4 * 365 * 24 * 60 * 60 * 1000);
     }
   };
@@ -25,10 +21,7 @@ export function calculateRemainingTime(
   const currentDate = new Date();
   const timeInterval = validateInterval();
 
-  if (
-    howManyTimesAnsChanged >= 1 &&
-    currentDate - new Date(lastInteractedAt) < timeInterval
-  ) {
+  if (howManyTimesAnsChanged >= 1 && currentDate - new Date(lastInteractedAt) < timeInterval) {
     let futureDate = new Date(currentDate.getTime() + timeInterval);
 
     const timeDifference = futureDate - currentDate;
@@ -48,18 +41,18 @@ export function calculateRemainingTime(
       fourYears > 0 ? `${fourYears} four years` : null,
     ]
       .filter(Boolean)
-      .join(", ");
+      .join(', ');
 
-    return `, after ${remainingTime.split(",")[0]}.`;
+    return `, after ${remainingTime.split(',')[0]}.`;
   } else {
-    return ", you are good to go!";
+    return ', you are good to go!';
   }
 }
 
 export const handleClickScroll = () => {
-  const element = document.getElementById("section-1");
+  const element = document.getElementById('section-1');
   if (element) {
-    element.scrollIntoView({ behavior: "smooth" });
+    element.scrollIntoView({ behavior: 'smooth' });
   }
 };
 
@@ -73,27 +66,16 @@ export const printNoRecordsMessage = () => {
   }, 1000);
 };
 
-export const printEndMessage = (
-  feedData,
-  filterStates,
-  allData,
-  persistedTheme,
-) => {
+export const printEndMessage = (feedData, filterStates, allData, persistedTheme) => {
   return feedData?.hasNextPage === false ? (
     <div className="flex justify-between gap-4 px-4 py-3 tablet:py-[27px]">
       <div></div>
       {filterStates.searchData && allData.length == 0 ? (
         <div className="my-[15vh] flex  flex-col justify-center">
-          {persistedTheme === "dark" ? (
-            <img
-              src="/assets/svgs/dashboard/noMatchingDark.svg"
-              alt="noposts image"
-            />
+          {persistedTheme === 'dark' ? (
+            <img src="/assets/svgs/dashboard/noMatchingDark.svg" alt="noposts image" />
           ) : (
-            <img
-              src="/assets/svgs/dashboard/noMatchingLight.svg"
-              alt="noposts image"
-            />
+            <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" />
           )}
           <p className="font-inter mt-[1.319vw] text-center text-[2.083vw] text-[#9F9F9F] dark:text-gray">
             No Matching Posts Found
@@ -119,20 +101,20 @@ export const printEndMessage = (
 
 export const validateInterval = (usersChangeTheirAns) => {
   let timeInterval = 0;
-  if (usersChangeTheirAns === "Daily") {
+  if (usersChangeTheirAns === 'Daily') {
     return (timeInterval = 24 * 60 * 60 * 1000); // 24 hours in milliseconds
-  } else if (usersChangeTheirAns === "Weekly") {
+  } else if (usersChangeTheirAns === 'Weekly') {
     return (timeInterval = 7 * 24 * 60 * 60 * 1000); // 7 days in milliseconds
-  } else if (usersChangeTheirAns === "Monthly") {
+  } else if (usersChangeTheirAns === 'Monthly') {
     // Assuming 30 days in a month for simplicity
     return (timeInterval = 30 * 24 * 60 * 60 * 1000); // 30 days in milliseconds
-  } else if (usersChangeTheirAns === "Yearly") {
+  } else if (usersChangeTheirAns === 'Yearly') {
     // Assuming 365 days in a year for simplicity
     return (timeInterval = 365 * 24 * 60 * 60 * 1000); // 365 days in milliseconds
-  } else if (usersChangeTheirAns === "TwoYears") {
+  } else if (usersChangeTheirAns === 'TwoYears') {
     // Assuming 2 years
     return (timeInterval = 2 * 365 * 24 * 60 * 60 * 1000); // 2 years in milliseconds
-  } else if (usersChangeTheirAns === "FourYears") {
+  } else if (usersChangeTheirAns === 'FourYears') {
     // Assuming 4 years
     return (timeInterval = 4 * 365 * 24 * 60 * 60 * 1000); // 4 years in milliseconds
   }

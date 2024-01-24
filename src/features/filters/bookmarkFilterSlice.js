@@ -1,14 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  filterByStatus: "",
-  filterByType: "",
-  filterByScope: "",
-  filterBySort: "Newest First",
+  filterByStatus: '',
+  filterByType: '',
+  filterByScope: '',
+  filterBySort: 'Newest First',
 };
 
 export const bookmarkFiltersSlice = createSlice({
-  name: "bookmarkFilters",
+  name: 'bookmarkFilters',
   initialState,
   reducers: {
     setFilterByStatus: (state, action) => {
@@ -29,13 +29,8 @@ export const bookmarkFiltersSlice = createSlice({
   },
 });
 
-export const {
-  setFilterByStatus,
-  setFilterByType,
-  setFilterByScope,
-  setFilterBySort,
-  resetFilters,
-} = bookmarkFiltersSlice.actions;
+export const { setFilterByStatus, setFilterByType, setFilterByScope, setFilterBySort, resetFilters } =
+  bookmarkFiltersSlice.actions;
 
 export default bookmarkFiltersSlice.reducer;
 

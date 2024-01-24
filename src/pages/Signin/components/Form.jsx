@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import Input from "../../../components/Input";
-import Anchor from "../../../components/Anchor";
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import Input from '../../../components/Input';
+import Anchor from '../../../components/Anchor';
 
 const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const inputType = showPassword ? "text" : "password";
+  const inputType = showPassword ? 'text' : 'password';
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const togglePasswordVisibility = () => {
@@ -25,7 +25,7 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
           value={email}
         />
         {email ? (
-          persistedTheme === "dark" ? (
+          persistedTheme === 'dark' ? (
             <img
               src="/assets/svgs/cancelDark.svg"
               alt="blind"
@@ -55,7 +55,7 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
               onChange={onPassChange}
             />
             {!showPassword ? (
-              persistedTheme === "dark" ? (
+              persistedTheme === 'dark' ? (
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
@@ -70,7 +70,7 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
                   onClick={togglePasswordVisibility}
                 />
               )
-            ) : persistedTheme === "dark" ? (
+            ) : persistedTheme === 'dark' ? (
               <img
                 src="/assets/svgs/eye.svg"
                 alt="blind"
@@ -87,9 +87,7 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
             )}
           </div>
         </div>
-        <Anchor className="cursor-pointer dark:text-white">
-          Forgot Password?
-        </Anchor>
+        <Anchor className="cursor-pointer dark:text-white">Forgot Password?</Anchor>
       </div>
     </form>
   );

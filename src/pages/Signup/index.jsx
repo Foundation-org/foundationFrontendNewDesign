@@ -1,38 +1,38 @@
-import { toast } from "sonner";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { signUp } from "../../services/api/userAuth";
-import { useMutation } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
-import Form from "./components/Form";
-import Button from "../../components/Button";
-import Anchor from "../../components/Anchor";
-import ReCAPTCHA from "react-google-recaptcha";
-import Typography from "../../components/Typography";
-import SocialLogins from "../../components/SocialLogins";
-import MyModal from "./components/Modal";
-import api from "../../services/api/Axios";
-import { FaSpinner } from "react-icons/fa";
+import { toast } from 'sonner';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { signUp } from '../../services/api/userAuth';
+import { useMutation } from '@tanstack/react-query';
+import { Link, useNavigate } from 'react-router-dom';
+import Form from './components/Form';
+import Button from '../../components/Button';
+import Anchor from '../../components/Anchor';
+import ReCAPTCHA from 'react-google-recaptcha';
+import Typography from '../../components/Typography';
+import SocialLogins from '../../components/SocialLogins';
+import MyModal from './components/Modal';
+import api from '../../services/api/Axios';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function Signup() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [reTypePassword, setReTypePassword] = useState("");
-  const [provider, setProvider] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [reTypePassword, setReTypePassword] = useState('');
+  const [provider, setProvider] = useState('');
   const [profile, setProfile] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showCnfmPassword, setShowCnfmPassword] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [resData, setResData] = useState("");
+  const [resData, setResData] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaToken, setCaptchaToken] = useState('');
   const [termConditionCheck, setTermConditionCheck] = useState(false);
 
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   function onChange(value) {
-    console.log("Captcha value:", value);
+    console.log('Captcha value:', value);
     setCaptchaToken(value);
   }
 
@@ -61,34 +61,28 @@ export default function Signup() {
   });
 
   const handleCancel = () => {
-    setEmail("");
+    setEmail('');
   };
 
   const handleSignup = async () => {
-    if (!captchaToken)
-      return toast.warning(
-        "Please complete the reCAPTCHA challenge before proceeding.",
-      );
-    if (!termConditionCheck)
-      return toast.warning(
-        "Please accept the terms and conditions to continue!",
-      );
+    if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
+    if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
     setIsLoading(true);
     try {
       if (password === reTypePassword) {
         const resp = await userSignup({ email, password });
 
         if (resp.status === 200) {
-          toast.success("User registered successfully");
-          setEmail("");
-          setPassword("");
-          navigate("/verify-email");
+          toast.success('User registered successfully');
+          setEmail('');
+          setPassword('');
+          navigate('/verify-email');
         }
       } else {
-        toast.warning("Password does not match");
+        toast.warning('Password does not match');
       }
     } catch (e) {
-      toast.error(e.response.data.message.split(":")[1]);
+      toast.error(e.response.data.message.split(':')[1]);
     } finally {
       setIsLoading(false);
     }
@@ -104,66 +98,47 @@ export default function Signup() {
         setResData(res.data);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(":")[1]);
+      toast.error(error.response.data.message.split(':')[1]);
     }
   };
 
   const handleEmailType = async (value) => {
     try {
-      if (!value) return toast.error("Please select the email type!");
+      if (!value) return toast.error('Please select the email type!');
       setModalVisible(false);
-      const res = await api.patch(
-        `/updateBadge/${resData.userId}/${resData.badgeId}`,
-        {
-          type: value,
-        },
-      );
+      const res = await api.patch(`/updateBadge/${resData.userId}/${resData.badgeId}`, {
+        type: value,
+      });
       if (res.status === 200) {
-        localStorage.setItem("uId", res.data.uuid);
-        localStorage.setItem("userLoggedIn", res.data.uuid);
-        localStorage.removeItem("isGuestMode");
-        localStorage.setItem("jwt", res.data.token);
-        navigate("/dashboard");
+        localStorage.setItem('uId', res.data.uuid);
+        localStorage.setItem('userLoggedIn', res.data.uuid);
+        localStorage.removeItem('isGuestMode');
+        localStorage.setItem('jwt', res.data.token);
+        navigate('/dashboard');
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(":")[1]);
+      toast.error(error.response.data.message.split(':')[1]);
     }
   };
 
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
-      <MyModal
-        modalShow={modalVisible}
-        email={profile?.email}
-        handleEmailType={handleEmailType}
-      />
+      <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div
         className={`${
-          persistedTheme === "dark" ? "bg-dark" : "bg-blue"
+          persistedTheme === 'dark' ? 'bg-dark' : 'bg-blue'
         } flex h-[65px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
-        <img
-          src="/assets/svgs/logo.svg"
-          alt="logo"
-          className="h-[45px] w-[58px]"
-        />
+        <img src="/assets/svgs/logo.svg" alt="logo" className="h-[45px] w-[58px]" />
       </div>
 
       <div className="hidden h-screen w-fit items-center px-[9.15vw] lg:flex">
-        <img
-          src="/assets/svgs/logo.svg"
-          alt="logo"
-          className="h-[20vh] w-[23vw]"
-        />
+        <img src="/assets/svgs/logo.svg" alt="logo" className="h-[20vh] w-[23vw]" />
       </div>
       <div className="flex h-screen w-full flex-col items-center bg-white md:justify-center lg:rounded-bl-[65px] lg:rounded-tl-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle">Create Account</Typography>
-          <SocialLogins
-            setProvider={setProvider}
-            setProfile={setProfile}
-            handleSignUpSocial={handleSignUpSocial}
-          />
+          <SocialLogins setProvider={setProvider} setProfile={setProfile} handleSignUpSocial={handleSignUpSocial} />
           <Form
             password={password}
             reTypePassword={reTypePassword}
@@ -178,18 +153,10 @@ export default function Signup() {
             email={email}
           />
           <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-4 taller:mt-4">
-            {persistedTheme === "dark" ? (
-              <ReCAPTCHA
-                sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
-                onChange={onChange}
-                theme="dark"
-              />
+            {persistedTheme === 'dark' ? (
+              <ReCAPTCHA sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY} onChange={onChange} theme="dark" />
             ) : (
-              <ReCAPTCHA
-                sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY}
-                onChange={onChange}
-                theme="light"
-              />
+              <ReCAPTCHA sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY} onChange={onChange} theme="light" />
             )}
           </div>
           <div className="mb-12 flex items-start taller:mb-7">
@@ -204,10 +171,8 @@ export default function Signup() {
               </label>
             </div>
             <label className="ml-4 text-[10.2px] text-gray-100 tablet:text-base 5xl:text-[22px] short:text-[12px] dark:text-white">
-              Creating an account means you’re okay with our{" "}
-              <Anchor href="#">Terms of Service</Anchor>,{" "}
-              <Anchor href="#">Privacy Policy</Anchor>, and out default{" "}
-              <Anchor href="#">Notification Settings</Anchor>.
+              Creating an account means you’re okay with our <Anchor href="#">Terms of Service</Anchor>,{' '}
+              <Anchor href="#">Privacy Policy</Anchor>, and out default <Anchor href="#">Notification Settings</Anchor>.
             </label>
           </div>
           <Button
@@ -218,24 +183,14 @@ export default function Signup() {
             }}
             disabled={isLoading === true ? true : false}
           >
-            {isLoading === true ? (
-              <FaSpinner className="animate-spin text-[#EAEAEA]" />
-            ) : (
-              "Create Account"
-            )}
+            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create Account'}
           </Button>
           <div className="mt-[10px] flex gap-3 tablet:mt-[23px]">
-            <Typography
-              variant="textBase"
-              className="text-gray-100 dark:text-gray "
-            >
+            <Typography variant="textBase" className="text-gray-100 dark:text-gray ">
               Already have an account?
             </Typography>
             <Link to="/">
-              <Typography
-                variant="textBase"
-                className="text-blue dark:text-white"
-              >
+              <Typography variant="textBase" className="text-blue dark:text-white">
                 Sign in
               </Typography>
             </Link>

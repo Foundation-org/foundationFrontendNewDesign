@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
 const BookmarkIcon = ({ bookmarkStatus, persistedTheme, handleBookmark }) => {
   const getBookmarkIcon = () => {
     if (bookmarkStatus) {
-      if (persistedTheme !== "dark") {
-        return "/assets/bookmark/bookmark.png";
+      if (persistedTheme !== 'dark') {
+        return '/assets/bookmark/bookmark.png';
       } else {
-        return "/assets/bookmark/darkbookmark.png";
+        return '/assets/bookmark/darkbookmark.png';
       }
     } else {
-      return "/assets/bookmark/disablebookmark.png";
+      return '/assets/bookmark/disablebookmark.png';
     }
   };
 

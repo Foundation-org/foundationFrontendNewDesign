@@ -1,35 +1,25 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import Copy from "../../assets/Copy";
-import Link from "../../assets/Link";
-import Mail from "../../assets/Mail";
-import Twitter from "../../assets/Twitter";
-import Facebook from "../../assets/Facebook";
-import BasicModal from "../BasicModal";
-import CopyDialogue from "../question-card/Shareables/CopyDialogue";
-import UrlDialogue from "../question-card/Shareables/UrlDialogue";
-import EmailDialogue from "../question-card/Shareables/EmailDialogue";
-import TwitterDialogue from "../question-card/Shareables/TwitterDialogue";
-import FbDialogue from "../question-card/Shareables/FbDialogue";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import Copy from '../../assets/Copy';
+import Link from '../../assets/Link';
+import Mail from '../../assets/Mail';
+import Twitter from '../../assets/Twitter';
+import Facebook from '../../assets/Facebook';
+import BasicModal from '../BasicModal';
+import CopyDialogue from '../question-card/Shareables/CopyDialogue';
+import UrlDialogue from '../question-card/Shareables/UrlDialogue';
+import EmailDialogue from '../question-card/Shareables/EmailDialogue';
+import TwitterDialogue from '../question-card/Shareables/TwitterDialogue';
+import FbDialogue from '../question-card/Shareables/FbDialogue';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const QuestBottombar = ({
-  time,
-  id,
-  createdBy,
-  img,
-  alt,
-  badgeCount,
-  title,
-  question,
-  questStartData,
-}) => {
+const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, question, questStartData }) => {
   const navigate = useNavigate();
 
   const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
 
-  const [timeAgo, setTimeAgo] = useState("");
+  const [timeAgo, setTimeAgo] = useState('');
   const [copyModal, setCopyModal] = useState(false);
   const [linkModal, setLinkModal] = useState(false);
   const [emailModal, setEmailModal] = useState(false);
@@ -53,7 +43,7 @@ const QuestBottombar = ({
       const createdAtDate = new Date(time);
 
       if (isNaN(createdAtDate.getTime())) {
-        setTimeAgo("Invalid date");
+        setTimeAgo('Invalid date');
         return;
       }
 
@@ -64,13 +54,13 @@ const QuestBottombar = ({
       const days = Math.floor(hours / 24);
 
       if (days > 0) {
-        setTimeAgo(`${days} ${days === 1 ? "day" : "days"} ago`);
+        setTimeAgo(`${days} ${days === 1 ? 'day' : 'days'} ago`);
       } else if (hours > 0) {
-        setTimeAgo(`${hours} ${hours === 1 ? "hour" : "hours"} ago`);
+        setTimeAgo(`${hours} ${hours === 1 ? 'hour' : 'hours'} ago`);
       } else if (minutes > 0) {
-        setTimeAgo(`${minutes} ${minutes === 1 ? "min" : "mins"} ago`);
+        setTimeAgo(`${minutes} ${minutes === 1 ? 'min' : 'mins'} ago`);
       } else {
-        setTimeAgo(`${seconds} ${seconds === 1 ? "sec" : "secs"} ago`);
+        setTimeAgo(`${seconds} ${seconds === 1 ? 'sec' : 'secs'} ago`);
       }
     };
 
@@ -78,27 +68,23 @@ const QuestBottombar = ({
   }, [time]);
 
   const customModalStyle = {
-    backgroundColor: "#FCFCFD",
-    borderRadius: "26px",
-    boxShadow: "none",
-    border: "0px",
-    outline: "none",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    backgroundColor: '#FCFCFD',
+    borderRadius: '26px',
+    boxShadow: 'none',
+    border: '0px',
+    outline: 'none',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
   };
 
   return (
     <div className="flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] py-2 tablet:px-5 tablet:py-[0.63rem]">
       <div className="flex items-center gap-[0.17rem] border-r border-[#D9D9D9] pr-5 tablet:gap-[6px]">
         <div onClick={handleCopyOpen} className="cursor-pointer">
-          {persistedTheme === "dark" ? <Copy /> : <Copy />}
+          {persistedTheme === 'dark' ? <Copy /> : <Copy />}
         </div>
-        <BasicModal
-          open={copyModal}
-          handleClose={handleCopyClose}
-          customStyle={customModalStyle}
-        >
+        <BasicModal open={copyModal} handleClose={handleCopyClose} customStyle={customModalStyle}>
           <CopyDialogue
             handleClose={handleCopyClose}
             id={id}
@@ -109,13 +95,9 @@ const QuestBottombar = ({
           />
         </BasicModal>
         <div className="cursor-pointer" onClick={handleLinkOpen}>
-          {persistedTheme === "dark" ? <Link /> : <Link />}
+          {persistedTheme === 'dark' ? <Link /> : <Link />}
         </div>
-        <BasicModal
-          open={linkModal}
-          handleClose={handleLinkClose}
-          customStyle={customModalStyle}
-        >
+        <BasicModal open={linkModal} handleClose={handleLinkClose} customStyle={customModalStyle}>
           <UrlDialogue
             handleClose={handleLinkClose}
             id={id}
@@ -126,23 +108,15 @@ const QuestBottombar = ({
           />
         </BasicModal>
         <div className="cursor-pointer" onClick={handleEmailOpen}>
-          {persistedTheme === "dark" ? <Mail /> : <Mail />}
+          {persistedTheme === 'dark' ? <Mail /> : <Mail />}
         </div>
-        <BasicModal
-          open={emailModal}
-          handleClose={handleEmailClose}
-          customStyle={customModalStyle}
-        >
+        <BasicModal open={emailModal} handleClose={handleEmailClose} customStyle={customModalStyle}>
           <EmailDialogue handleClose={handleEmailClose} id={id} />
         </BasicModal>
         <div className="cursor-pointer" onClick={handleTwitterOpen}>
-          {persistedTheme === "dark" ? <Twitter /> : <Twitter />}
+          {persistedTheme === 'dark' ? <Twitter /> : <Twitter />}
         </div>
-        <BasicModal
-          open={twitterModal}
-          handleClose={handleTwitterClose}
-          customStyle={customModalStyle}
-        >
+        <BasicModal open={twitterModal} handleClose={handleTwitterClose} customStyle={customModalStyle}>
           <TwitterDialogue
             handleClose={handleTwitterClose}
             id={id}
@@ -156,13 +130,9 @@ const QuestBottombar = ({
           />
         </BasicModal>
         <div className="cursor-pointer" onClick={handleFbOpen}>
-          {persistedTheme === "dark" ? <Facebook /> : <Facebook />}
+          {persistedTheme === 'dark' ? <Facebook /> : <Facebook />}
         </div>
-        <BasicModal
-          open={fbModal}
-          handleClose={handleFbClose}
-          customStyle={customModalStyle}
-        >
+        <BasicModal open={fbModal} handleClose={handleFbClose} customStyle={customModalStyle}>
           <FbDialogue
             handleClose={handleFbClose}
             createdBy={createdBy}
@@ -176,14 +146,14 @@ const QuestBottombar = ({
           />
         </BasicModal>
       </div>
-      {(questStartData.whichTypeQuestion === "ranked choise" ||
-        questStartData.whichTypeQuestion === "multiple choise") && (
+      {(questStartData.whichTypeQuestion === 'ranked choise' ||
+        questStartData.whichTypeQuestion === 'multiple choise') && (
         <div>
           {isFullScreen === undefined ? (
             <div
               className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
               onClick={() => {
-                navigate("/quest/isfullscreen", {
+                navigate('/quest/isfullscreen', {
                   state: questStartData._id,
                 });
               }}
@@ -204,15 +174,13 @@ const QuestBottombar = ({
               </p>
             </div>
           ) : (
-            <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem]">
-              &#x200B;
-            </p>
+            <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem]">&#x200B;</p>
           )}
         </div>
       )}
       <div className="border-l border-[#D9D9D9] pl-5">
         <div className="flex h-4 w-fit items-center gap-[0.44rem] rounded-[0.625rem] px-[0.5rem] md:h-[1.75rem]">
-          {persistedTheme === "dark" ? (
+          {persistedTheme === 'dark' ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 18 19"

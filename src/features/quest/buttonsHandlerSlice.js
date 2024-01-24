@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   buttonHandler: [
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const questCardSlice = createSlice({
-  name: "questCard",
+  name: 'questCard',
   initialState,
   reducers: {
     setTopicSearch: (state, action) => {

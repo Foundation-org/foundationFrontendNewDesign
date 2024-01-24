@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  topicSearch: "",
+  topicSearch: '',
 };
 
 export const prefSlice = createSlice({
-  name: "preferences",
+  name: 'preferences',
   initialState,
   reducers: {
     setTopicSearch: (state, action) => {

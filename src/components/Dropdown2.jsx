@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FaAngleDown } from "react-icons/fa6";
+import { useState } from 'react';
+import { FaAngleDown } from 'react-icons/fa6';
 
 const Dropdown2 = ({ label, title, items, handleSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,9 +19,7 @@ const Dropdown2 = ({ label, title, items, handleSelect }) => {
           {title}
           <FaAngleDown
             className={`text-sm ${
-              isOpen
-                ? "rotate-180 transform transition-all duration-300"
-                : "transition-all duration-300"
+              isOpen ? 'rotate-180 transform transition-all duration-300' : 'transition-all duration-300'
             }`}
           />
           {/* <img

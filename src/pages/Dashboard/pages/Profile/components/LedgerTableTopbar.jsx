@@ -1,13 +1,6 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
-const LedgerTableTopbar = ({
-  sort,
-  setsort,
-  filterText,
-  setFilterText,
-  selectedOption,
-  setSelectedOption,
-}) => {
+const LedgerTableTopbar = ({ sort, setsort, filterText, setFilterText, selectedOption, setSelectedOption }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const handleDropdown = () => {
@@ -34,10 +27,8 @@ const LedgerTableTopbar = ({
               My Profile
             </h1>
             <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
-              <p>Balance:{" "}</p>
-              <p>
-                {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
-              </p>
+              <p>Balance: </p>
+              <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}</p>
             </div>
           </div>
         </div>
@@ -53,8 +44,8 @@ const LedgerTableTopbar = ({
               Treasury
             </h1>
             <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
-              <p>Balance:{" "}</p>
-              <p>{localStorage.getItem("treasuryAmount")}</p>
+              <p>Balance: </p>
+              <p>{localStorage.getItem('treasuryAmount')}</p>
             </div>
           </div>
         </div>
@@ -82,24 +73,23 @@ const LedgerTableTopbar = ({
             className="h-full w-[54px] gap-1 px-[5px] tablet:w-full tablet:px-[10px] laptop:px-[17px]"
           >
             <h1 className="leading-normal text-[5.79px] font-normal -tracking-[0.2px] text-[#7E7E7E] tablet:text-[10px] laptop:text-[20.021px] relative -top-[10.4px] tablet:top-[1px]">
-              Sort by : <span className=" font-semibold capitalize  text-[#3D3C42] dark:text-[#B5B5B5]">
-                {sort}
-              </span>
+              Sort by : <span className=" font-semibold capitalize  text-[#3D3C42] dark:text-[#B5B5B5]">{sort}</span>
             </h1>
           </button>
           <div
-            className={`${selectedOption ? "flex duration-200 ease-in-out" : "hidden"
-              } absolute z-50 -mt-3 tablet:mt-1 laptop:mt-2 w-10 tablet:w-20 laptop:w-32 flex-col gap-1 laptop:gap-2 rounded-md bg-gray px-1 py-[5px] laptop:py-2 text-left text-black`}
+            className={`${
+              selectedOption ? 'flex duration-200 ease-in-out' : 'hidden'
+            } absolute z-50 -mt-3 tablet:mt-1 laptop:mt-2 w-10 tablet:w-20 laptop:w-32 flex-col gap-1 laptop:gap-2 rounded-md bg-gray px-1 py-[5px] laptop:py-2 text-left text-black`}
           >
             <p
               className="cursor-pointer rounded-md laptop:px-2 duration-200 ease-in-out hover:bg-white text-[7px] tablet:text-[10px] laptop:text-[16px]"
-              onClick={() => handleOptionClick("newest")}
+              onClick={() => handleOptionClick('newest')}
             >
               Newest
             </p>
             <p
               className="cursor-pointer rounded-md laptop:px-2 duration-200 ease-in-out hover:bg-white text-[7px] tablet:text-[10px] laptop:text-[16px]"
-              onClick={() => handleOptionClick("oldest")}
+              onClick={() => handleOptionClick('oldest')}
             >
               Oldest
             </p>

@@ -1,20 +1,20 @@
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 // components
-import QuestionCard from "./components/QuestionCard";
-import SidebarLeft from "../../components/SidebarLeft";
-import SidebarRight from "../../components/SidebarRight";
-import QuestionCardWithToggle from "./components/QuestionCardWithToggle";
+import QuestionCard from './components/QuestionCard';
+import SidebarLeft from '../../components/SidebarLeft';
+import SidebarRight from '../../components/SidebarRight';
+import QuestionCardWithToggle from './components/QuestionCardWithToggle';
 
 // extras
-import { useDebounce } from "../../../../utils/useDebounce";
-import { printEndMessage } from "../../../../utils";
-import { initialColumns } from "../../../../constants/preferences";
-import * as QuestServices from "../../../../services/queries/quest";
-import * as filtersActions from "../../../../features/sidebar/filtersSlice";
-import * as prefActions from "../../../../features/preferences/prefSlice";
+import { useDebounce } from '../../../../utils/useDebounce';
+import { printEndMessage } from '../../../../utils';
+import { initialColumns } from '../../../../constants/preferences';
+import * as QuestServices from '../../../../services/queries/quest';
+import * as filtersActions from '../../../../features/sidebar/filtersSlice';
+import * as prefActions from '../../../../features/preferences/prefSlice';
 
 const QuestStartSection = () => {
   const getPreferences = useSelector(prefActions.getPrefs);
@@ -61,9 +61,7 @@ const QuestStartSection = () => {
         const newList = prefSearchRes?.data.data || [];
 
         const filteredList = newList.filter(
-          (item) =>
-            !prevColumns.Block.list.includes(item) &&
-            !prevColumns.Preferences.list.includes(item),
+          (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
         );
 
         return {
@@ -80,9 +78,7 @@ const QuestStartSection = () => {
           const newList = topicsData?.data.data || [];
 
           const filteredList = newList.filter(
-            (item) =>
-              !prevColumns.Block.list.includes(item) &&
-              !prevColumns.Preferences.list.includes(item),
+            (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
           );
 
           return {
@@ -100,13 +96,7 @@ const QuestStartSection = () => {
 
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
 
-  const { data: feedData } = QuestServices.useGetFeedData(
-    filterStates,
-    debouncedSearch,
-    pagination,
-    columns,
-    params,
-  );
+  const { data: feedData } = QuestServices.useGetFeedData(filterStates, debouncedSearch, pagination, columns, params);
 
   useEffect(() => {
     setPagination((prevPagination) => ({
@@ -174,19 +164,11 @@ const QuestStartSection = () => {
           dataLength={allData?.length}
           next={fetchMoreData}
           hasMore={feedData?.hasNextPage}
-          endMessage={printEndMessage(
-            feedData,
-            filterStates,
-            allData,
-            persistedTheme,
-          )}
-          height={"calc(100vh - 92px)"}
+          endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme)}
+          height={'calc(100vh - 92px)'}
           className="no-scrollbar"
         >
-          <div
-            id="section-1"
-            className="flex flex-col gap-2 tablet:gap-[0.94rem]"
-          >
+          <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
             {filterStates.expandedView
               ? allData?.map((item, index) => (
                   <div key={index + 1}>

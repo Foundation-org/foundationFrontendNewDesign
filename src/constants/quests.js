@@ -1,6 +1,6 @@
 export const questSelectionInitial = {
-  id: "",
-  "yes/no": {
+  id: '',
+  'yes/no': {
     yes: {
       check: false,
     },
@@ -8,7 +8,7 @@ export const questSelectionInitial = {
       check: false,
     },
   },
-  "agree/disagree": {
+  'agree/disagree': {
     agree: {
       check: false,
     },
@@ -16,7 +16,7 @@ export const questSelectionInitial = {
       check: false,
     },
   },
-  "like/dislike": {
+  'like/dislike': {
     like: {
       check: false,
     },

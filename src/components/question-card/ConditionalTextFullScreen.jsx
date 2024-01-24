@@ -1,4 +1,4 @@
-import QuestTimeRemaining from "../../pages/Dashboard/pages/QuestStartSection/components/QuestTimeRemaining";
+import QuestTimeRemaining from '../../pages/Dashboard/pages/QuestStartSection/components/QuestTimeRemaining';
 
 const ConditionalTextFullScreen = ({ show, questStartData }) => {
   return (

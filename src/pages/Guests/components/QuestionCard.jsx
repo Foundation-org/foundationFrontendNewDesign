@@ -1,14 +1,14 @@
-import { toast } from "sonner";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import GuestTopbar from "./GuestTopbar";
-import StartTest from "../../Dashboard/pages/QuestStartSection/components/StartTest";
-import Result from "../../Dashboard/pages/QuestStartSection/components/Result";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createStartQuest } from "../../../services/api/questsApi";
-import { useNavigate } from "react-router-dom";
-import { getQuests, toggleCheck } from "../../../features/quest/questsSlice";
-import SingleAnswer from "../../../components/question-card/options/SingleAnswer";
+import { toast } from 'sonner';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import GuestTopbar from './GuestTopbar';
+import StartTest from '../../Dashboard/pages/QuestStartSection/components/StartTest';
+import Result from '../../Dashboard/pages/QuestStartSection/components/Result';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { createStartQuest } from '../../../services/api/questsApi';
+import { useNavigate } from 'react-router-dom';
+import { getQuests, toggleCheck } from '../../../features/quest/questsSlice';
+import SingleAnswer from '../../../components/question-card/options/SingleAnswer';
 
 const QuestionCard = ({
   tab,
@@ -85,7 +85,7 @@ const QuestionCard = ({
 
   const handleAddOption = () => {
     const newOption = {
-      label: "",
+      label: '',
       check: true,
       contend: false,
       addedOptionByUser: true,
@@ -102,10 +102,10 @@ const QuestionCard = ({
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: createStartQuest,
     onSuccess: (resp) => {
-      if (resp.data.message === "Start Quest Created Successfully") {
-        toast.success("Successfully Completed");
-        queryClient.invalidateQueries("FeedData");
-        navigate("/dashboard");
+      if (resp.data.message === 'Start Quest Created Successfully') {
+        toast.success('Successfully Completed');
+        queryClient.invalidateQueries('FeedData');
+        navigate('/dashboard');
       }
       setLoading(false);
     },
@@ -137,14 +137,14 @@ const QuestionCard = ({
   const handleSubmit = () => {
     setLoading(true);
     if (
-      whichTypeQuestion === "agree/disagree" ||
-      whichTypeQuestion === "yes/no" ||
-      whichTypeQuestion === "like/dislike"
+      whichTypeQuestion === 'agree/disagree' ||
+      whichTypeQuestion === 'yes/no' ||
+      whichTypeQuestion === 'like/dislike'
     ) {
       const { selected, contended } = extractSelectedAndContended(
-        whichTypeQuestion === "agree/disagree"
+        whichTypeQuestion === 'agree/disagree'
           ? quests.agreeDisagree
-          : whichTypeQuestion === "yes/no"
+          : whichTypeQuestion === 'yes/no'
             ? quests.yesNo
             : quests.likeDislike,
       );
@@ -162,40 +162,35 @@ const QuestionCard = ({
       const params = {
         questId: id,
         answer: ans,
-        addedAnswer: "",
+        addedAnswer: '',
         uuid: persistedUserInfo?.uuid,
       };
 
       // if (!(params.answer.selected && params.answer.contended)) {
       if (!params.answer.selected) {
-        toast.warning("You cannot submit without answering");
+        toast.warning('You cannot submit without answering');
         return;
       }
 
-      if (btnText === "change answer") {
+      if (btnText === 'change answer') {
         console.log(howManyTimesAnsChanged);
         const currentDate = new Date();
 
         const timeInterval = validateInterval();
         // Check if enough time has passed
-        if (
-          howManyTimesAnsChanged > 1 &&
-          currentDate - new Date(lastInteractedAt) < timeInterval
-        ) {
+        if (howManyTimesAnsChanged > 1 && currentDate - new Date(lastInteractedAt) < timeInterval) {
           // Alert the user if the time condition is not met
-          toast.error(
-            `You can change your selection again in ${usersChangeTheirAns}`,
-          );
+          toast.error(`You can change your selection again in ${usersChangeTheirAns}`);
         } else {
           changeAnswer(params);
         }
       } else {
         startQuest(params);
       }
-    } else if (whichTypeQuestion === "multiple choise") {
+    } else if (whichTypeQuestion === 'multiple choise') {
       let answerSelected = [];
       let answerContended = [];
-      let addedAnswerValue = "";
+      let addedAnswerValue = '';
 
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
@@ -207,7 +202,7 @@ const QuestionCard = ({
               addedAnswerByUser: true,
             });
             addedAnswerValue = answersSelection[i].label;
-            console.log("added ans value" + addedAnswerValue);
+            console.log('added ans value' + addedAnswerValue);
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
@@ -225,24 +220,19 @@ const QuestionCard = ({
       };
       const currentDate = new Date();
 
-      if (btnText === "change answer") {
+      if (btnText === 'change answer') {
         const timeInterval = validateInterval();
         // Check if enough time has passed
-        if (
-          howManyTimesAnsChanged > 1 &&
-          currentDate - new Date(lastInteractedAt) < timeInterval
-        ) {
+        if (howManyTimesAnsChanged > 1 && currentDate - new Date(lastInteractedAt) < timeInterval) {
           // Alert the user if the time condition is not met
-          toast.error(
-            `You can change your selection again in ${usersChangeTheirAns}`,
-          );
+          toast.error(`You can change your selection again in ${usersChangeTheirAns}`);
         } else {
           const params = {
             questId: id,
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
-          console.log("params", params);
+          console.log('params', params);
           changeAnswer(params);
         }
       } else {
@@ -255,27 +245,27 @@ const QuestionCard = ({
 
         // && params.answer.contended.length === 0
         if (params.answer.selected.length === 0) {
-          toast.warning("You cannot submit without answering");
+          toast.warning('You cannot submit without answering');
           return;
         }
 
-        console.log("params", params);
+        console.log('params', params);
         startQuest(params);
       }
-    } else if (whichTypeQuestion === "ranked choise") {
-      let addedAnswerValue = "";
+    } else if (whichTypeQuestion === 'ranked choise') {
+      let addedAnswerValue = '';
       let answerSelected = [];
 
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {
           // If user Add his own option
-          console.log("added answer ran");
+          console.log('added answer ran');
           answerSelected.push({
             question: rankedAnswers[i].label,
             addedAnswerByUser: true,
           });
           addedAnswerValue = rankedAnswers[i].label;
-          console.log("added ans value" + addedAnswerValue);
+          console.log('added ans value' + addedAnswerValue);
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
         }
@@ -283,22 +273,17 @@ const QuestionCard = ({
 
       let dataToSend = {
         selected: answerSelected,
-        contended: "",
+        contended: '',
         created: new Date(),
       };
       const currentDate = new Date();
 
-      if (btnText === "change answer") {
+      if (btnText === 'change answer') {
         const timeInterval = validateInterval();
         // Check if enough time has passed
-        if (
-          howManyTimesAnsChanged > 1 &&
-          currentDate - new Date(lastInteractedAt) < timeInterval
-        ) {
+        if (howManyTimesAnsChanged > 1 && currentDate - new Date(lastInteractedAt) < timeInterval) {
           // Alert the user if the time condition is not met
-          toast.error(
-            `You can change your selection again in ${usersChangeTheirAns}`,
-          );
+          toast.error(`You can change your selection again in ${usersChangeTheirAns}`);
         } else {
           const params = {
             questId: id,
@@ -315,7 +300,7 @@ const QuestionCard = ({
           addedAnswer: addedAnswerValue,
           uuid: persistedUserInfo?.uuid,
         };
-        console.log("params", params);
+        console.log('params', params);
 
         startQuest(params);
       }
@@ -358,11 +343,11 @@ const QuestionCard = ({
         />
         <div className="ml-6 mr-[1.38rem] mt-[2.25rem] flex items-center justify-between tablet:ml-[4.5rem]">
           <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:text-[28px]">
-            {question?.endsWith("?") ? "Q." : "S."} {question}
+            {question?.endsWith('?') ? 'Q.' : 'S.'} {question}
           </h1>
           <div>
             {bookmarkStatus ? (
-              persistedTheme !== "dark" ? (
+              persistedTheme !== 'dark' ? (
                 <img
                   src="/assets/bookmark/bookmark.png"
                   alt="save icon"
@@ -384,7 +369,7 @@ const QuestionCard = ({
             )}
           </div>
         </div>
-        {tab === "Participate" ? (
+        {tab === 'Participate' ? (
           rankedAnswers && (
             <StartTest
               title={title}

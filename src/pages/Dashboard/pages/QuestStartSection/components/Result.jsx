@@ -1,18 +1,18 @@
-import { toast } from "sonner";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
-import { getQuests } from "../../../../../features/quest/questsSlice";
-import { getStartQuestPercent } from "../../../../../services/api/questsApi";
-import { getStartQuestInfo } from "../../../../../services/api/questsApi";
-import { getRankedQuestPercent } from "../../../../../services/api/questsApi";
+import { getQuests } from '../../../../../features/quest/questsSlice';
+import { getStartQuestPercent } from '../../../../../services/api/questsApi';
+import { getStartQuestInfo } from '../../../../../services/api/questsApi';
+import { getRankedQuestPercent } from '../../../../../services/api/questsApi';
 
-import SingleAnswer from "../../../../../components/question-card/options/SingleAnswer";
-import SingleAnswerMultipleChoice from "../../../../../components/question-card/options/SingleAnswerMultipleChoice";
-import RankedResult from "../../../components/RankedResult";
-import Loader from "../../../../../components/ui/Loader";
+import SingleAnswer from '../../../../../components/question-card/options/SingleAnswer';
+import SingleAnswerMultipleChoice from '../../../../../components/question-card/options/SingleAnswerMultipleChoice';
+import RankedResult from '../../../components/RankedResult';
+import Loader from '../../../../../components/ui/Loader';
 
 const Result = (props) => {
   const { isFullScreen } = useParams();
@@ -23,20 +23,14 @@ const Result = (props) => {
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
       // Check in selected array
-      if (
-        apiResponse.selected.some(
-          (selectedItem) => selectedItem.question === item.label,
-        )
-      ) {
+      if (apiResponse.selected.some((selectedItem) => selectedItem.question === item.label)) {
         answerSelectionArray[index].check = true;
       }
 
       // Check in contended array
       if (
         apiResponse.contended &&
-        apiResponse.contended?.some(
-          (contendedItem) => contendedItem.question === item.label,
-        )
+        apiResponse.contended?.some((contendedItem) => contendedItem.question === item.label)
       ) {
         answerSelectionArray[index].contend = true;
       }
@@ -58,67 +52,46 @@ const Result = (props) => {
     onSuccess: (res) => {
       if (res.data) {
         if (
-          props.whichTypeQuestion === "agree/disagree" ||
-          props.whichTypeQuestion === "yes/no" ||
-          props.whichTypeQuestion === "like/dislike"
+          props.whichTypeQuestion === 'agree/disagree' ||
+          props.whichTypeQuestion === 'yes/no' ||
+          props.whichTypeQuestion === 'like/dislike'
         ) {
           props.setHowManyTimesAnsChanged(res?.data.data.length);
           if (
-            res?.data.data[res.data.data.length - 1].selected === "Agree" ||
-            res?.data.data[res.data.data.length - 1].selected === "Yes" ||
-            res?.data.data[res.data.data.length - 1].selected === "Like"
+            res?.data.data[res.data.data.length - 1].selected === 'Agree' ||
+            res?.data.data[res.data.data.length - 1].selected === 'Yes' ||
+            res?.data.data[res.data.data.length - 1].selected === 'Like'
           ) {
-            props.handleToggleCheck(
-              res.data.data[res.data.data.length - 1].selected,
-              true,
-              false,
-            );
+            props.handleToggleCheck(res.data.data[res.data.data.length - 1].selected, true, false);
           }
           if (
-            res?.data.data[res.data.data.length - 1].contended === "Agree" ||
-            res?.data.data[res.data.data.length - 1].contended === "Yes" ||
-            res?.data.data[res.data.data.length - 1].contended === "Like"
+            res?.data.data[res.data.data.length - 1].contended === 'Agree' ||
+            res?.data.data[res.data.data.length - 1].contended === 'Yes' ||
+            res?.data.data[res.data.data.length - 1].contended === 'Like'
           ) {
-            props.handleToggleCheck(
-              res.data.data[res.data.data.length - 1].contended,
-              false,
-              true,
-            );
+            props.handleToggleCheck(res.data.data[res.data.data.length - 1].contended, false, true);
           }
           if (
-            res?.data.data[res.data.data.length - 1].contended === "Disagree" ||
-            res?.data.data[res.data.data.length - 1].contended === "No" ||
-            res?.data.data[res.data.data.length - 1].contended === "Dislike"
+            res?.data.data[res.data.data.length - 1].contended === 'Disagree' ||
+            res?.data.data[res.data.data.length - 1].contended === 'No' ||
+            res?.data.data[res.data.data.length - 1].contended === 'Dislike'
           ) {
-            props.handleToggleCheck(
-              res.data.data[res.data.data.length - 1].contended,
-              false,
-              true,
-            );
+            props.handleToggleCheck(res.data.data[res.data.data.length - 1].contended, false, true);
           }
           if (
-            res?.data.data[res.data.data.length - 1].selected === "Disagree" ||
-            res?.data.data[res.data.data.length - 1].selected === "No" ||
-            res?.data.data[res.data.data.length - 1].selected === "Dislike"
+            res?.data.data[res.data.data.length - 1].selected === 'Disagree' ||
+            res?.data.data[res.data.data.length - 1].selected === 'No' ||
+            res?.data.data[res.data.data.length - 1].selected === 'Dislike'
           ) {
-            props.handleToggleCheck(
-              res.data.data[res.data.data.length - 1].selected,
-              true,
-              false,
-            );
+            props.handleToggleCheck(res.data.data[res.data.data.length - 1].selected, true, false);
           }
         }
 
-        if (props.whichTypeQuestion === "multiple choise") {
-          updateAnswerSelection(
-            res?.data.data[res.data.data.length - 1],
-            props.answersSelection,
-          );
+        if (props.whichTypeQuestion === 'multiple choise') {
+          updateAnswerSelection(res?.data.data[res.data.data.length - 1], props.answersSelection);
         }
-        if (props.whichTypeQuestion === "ranked choise") {
-          const updatedRankedAnswers = res?.data.data[
-            res.data.data.length - 1
-          ].selected.map((item) => {
+        if (props.whichTypeQuestion === 'ranked choise') {
+          const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
             const correspondingRankedAnswer = props.rankedAnswers.find(
               (rankedItem) => rankedItem.label === item.question,
             );
@@ -145,7 +118,7 @@ const Result = (props) => {
     },
     onError: (err) => {
       toast.error(err.response?.data);
-      console.log("Mutation Error", err);
+      console.log('Mutation Error', err);
     },
   });
 
@@ -155,13 +128,13 @@ const Result = (props) => {
         questForeignKey: props.id,
         uuid: persistedUserInfo?.uuid,
       };
-      if (props.whichTypeQuestion === "ranked choise") {
+      if (props.whichTypeQuestion === 'ranked choise') {
         return await getRankedQuestPercent(params);
       } else {
         return await getStartQuestPercent(params);
       }
     },
-    queryKey: ["ResultsData", props.id],
+    queryKey: ['ResultsData', props.id],
   });
 
   function findLabelChecked(array, labelToFind) {
@@ -184,187 +157,156 @@ const Result = (props) => {
 
   return (
     <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
-      {props.title === "Yes/No" ||
-      props.title === "Agree/Disagree" ||
-      props.title === "Like/Dislike" ? (
+      {props.title === 'Yes/No' || props.title === 'Agree/Disagree' || props.title === 'Like/Dislike' ? (
         <>
-          {props.title === "Yes/No" ? (
+          {props.title === 'Yes/No' ? (
             checkLoading === true || ResultsData === undefined ? (
               <Loader />
             ) : (
               <>
                 <SingleAnswer
-                  number={"#1"}
-                  answer={"Yes"}
+                  number={'#1'}
+                  answer={'Yes'}
                   checkInfo={true}
                   percentage={
-                    props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage.length > 0
-                      ? props.questStartData?.selectedPercentage[
-                          props.questStartData?.selectedPercentage.length - 1
-                        ].Yes
+                    props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1]
+                          .Yes
                       : null
                   }
-                  check={props.questSelection["yes/no"].yes.check}
-                  contend={props.questSelection["yes/no"].yes.check}
+                  check={props.questSelection['yes/no'].yes.check}
+                  contend={props.questSelection['yes/no'].yes.check}
                   handleToggleCheck={props.handleToggleCheck}
-                  btnText={"Results"}
+                  btnText={'Results'}
                   questStartData={props.questStartData}
                 />
                 <SingleAnswer
-                  number={"#2"}
-                  answer={"No"}
+                  number={'#2'}
+                  answer={'No'}
                   checkInfo={true}
                   percentage={
-                    props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage.length > 0
-                      ? props.questStartData?.selectedPercentage[
-                          props.questStartData?.selectedPercentage.length - 1
-                        ].No
+                    props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1].No
                       : null
                   }
-                  check={props.questSelection["yes/no"].no.check}
-                  contend={props.questSelection["yes/no"].no.check}
+                  check={props.questSelection['yes/no'].no.check}
+                  contend={props.questSelection['yes/no'].no.check}
                   handleToggleCheck={props.handleToggleCheck}
-                  btnText={"Results"}
+                  btnText={'Results'}
                   questStartData={props.questStartData}
                 />
               </>
             )
-          ) : props.title === "Agree/Disagree" ? (
+          ) : props.title === 'Agree/Disagree' ? (
             checkLoading === true || ResultsData === undefined ? (
               <Loader />
             ) : (
               <>
                 <SingleAnswer
-                  number={"#1"}
-                  answer={"Agree"}
+                  number={'#1'}
+                  answer={'Agree'}
                   checkInfo={true}
                   percentage={
-                    props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage.length > 0
-                      ? props.questStartData?.selectedPercentage[
-                          props.questStartData?.selectedPercentage.length - 1
-                        ].Agree
+                    props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1]
+                          .Agree
                       : null
                   }
-                  check={props.questSelection["agree/disagree"].agree.check}
-                  contend={props.questSelection["agree/disagree"].agree.check}
+                  check={props.questSelection['agree/disagree'].agree.check}
+                  contend={props.questSelection['agree/disagree'].agree.check}
                   handleToggleCheck={props.handleToggleCheck}
-                  btnText={"Results"}
+                  btnText={'Results'}
                   questStartData={props.questStartData}
                 />
                 <SingleAnswer
-                  number={"#2"}
-                  answer={"Disagree"}
+                  number={'#2'}
+                  answer={'Disagree'}
                   checkInfo={true}
                   percentage={
-                    props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage.length > 0
-                      ? props.questStartData?.selectedPercentage[
-                          props.questStartData?.selectedPercentage.length - 1
-                        ].Disagree
+                    props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1]
+                          .Disagree
                       : null
                   }
-                  check={props.questSelection["agree/disagree"].disagree.check}
-                  contend={
-                    props.questSelection["agree/disagree"].disagree.check
-                  }
+                  check={props.questSelection['agree/disagree'].disagree.check}
+                  contend={props.questSelection['agree/disagree'].disagree.check}
                   handleToggleCheck={props.handleToggleCheck}
-                  btnText={"Results"}
+                  btnText={'Results'}
                   questStartData={props.questStartData}
                 />
               </>
             )
-          ) : props.title === "Like/Dislike" ? (
+          ) : props.title === 'Like/Dislike' ? (
             checkLoading === true || ResultsData === undefined ? (
               <Loader />
             ) : (
               <>
                 <SingleAnswer
-                  number={"#1"}
-                  answer={"Like"}
+                  number={'#1'}
+                  answer={'Like'}
                   checkInfo={true}
                   percentage={
-                    props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage.length > 0
-                      ? props.questStartData?.selectedPercentage[
-                          props.questStartData?.selectedPercentage.length - 1
-                        ].Like
+                    props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1]
+                          .Like
                       : null
                   }
-                  check={props.questSelection["like/dislike"].like.check}
-                  contend={props.questSelection["like/dislike"].like.check}
+                  check={props.questSelection['like/dislike'].like.check}
+                  contend={props.questSelection['like/dislike'].like.check}
                   handleToggleCheck={props.handleToggleCheck}
-                  btnText={"Results"}
+                  btnText={'Results'}
                   questStartData={props.questStartData}
                 />
                 <SingleAnswer
-                  number={"#2"}
-                  answer={"Dislike"}
+                  number={'#2'}
+                  answer={'Dislike'}
                   checkInfo={true}
                   percentage={
-                    props.questStartData.selectedPercentage &&
-                    props.questStartData?.selectedPercentage.length > 0
-                      ? props.questStartData?.selectedPercentage[
-                          props.questStartData?.selectedPercentage.length - 1
-                        ].Dislike
+                    props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
+                      ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1]
+                          .Dislike
                       : null
                   }
-                  check={props.questSelection["like/dislike"].dislike.check}
-                  contend={props.questSelection["like/dislike"].dislike.check}
+                  check={props.questSelection['like/dislike'].dislike.check}
+                  contend={props.questSelection['like/dislike'].dislike.check}
                   handleToggleCheck={props.handleToggleCheck}
-                  btnText={"Results"}
+                  btnText={'Results'}
                   questStartData={props.questStartData}
                 />
               </>
             )
           ) : null}
         </>
-      ) : props.title === "Multiple Choice" ? (
+      ) : props.title === 'Multiple Choice' ? (
         checkLoading === true || ResultsData === undefined ? (
           <Loader />
         ) : (
           <div
             className={`${
-              isFullScreen === undefined
-                ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]"
-                : ""
+              isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]' : ''
             }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
             {props.answers?.map((item, index) => (
               <div key={index + 1}>
                 <SingleAnswerMultipleChoice
-                  number={"#" + (index + 1)}
+                  number={'#' + (index + 1)}
                   answer={item.question}
                   addedAnswerUuid={item.uuid}
                   title={props.title}
                   checkInfo={true}
                   selectedPercentages={
-                    props.questStartData?.selectedPercentage &&
-                    props.questStartData.selectedPercentage.length > 0
-                      ? props.questStartData.selectedPercentage[
-                          props.questStartData.selectedPercentage.length - 1
-                        ]
+                    props.questStartData?.selectedPercentage && props.questStartData.selectedPercentage.length > 0
+                      ? props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1]
                       : null
                   }
                   contendPercentages={
-                    props.questStartData?.contendedPercentage &&
-                    props.questStartData.contendedPercentage.length > 0
-                      ? props.questStartData.contendedPercentage[
-                          props.questStartData.contendedPercentage.length - 1
-                        ]
+                    props.questStartData?.contendedPercentage && props.questStartData.contendedPercentage.length > 0
+                      ? props.questStartData.contendedPercentage[props.questStartData.contendedPercentage.length - 1]
                       : null
                   }
-                  check={findLabelChecked(
-                    props.answersSelection,
-                    item.question,
-                  )}
-                  contend={findLabelContend(
-                    props.answersSelection,
-                    item.question,
-                  )}
-                  btnText={"Results"}
+                  check={findLabelChecked(props.answersSelection, item.question)}
+                  contend={findLabelContend(props.answersSelection, item.question)}
+                  btnText={'Results'}
                   answersSelection={props.answersSelection}
                   setAnswerSelection={props.setAnswerSelection}
                 />
@@ -372,37 +314,32 @@ const Result = (props) => {
             ))}
           </div>
         )
-      ) : props.title === "Ranked Choice" ? (
+      ) : props.title === 'Ranked Choice' ? (
         checkLoading === true || ResultsData === undefined ? (
           <Loader />
         ) : (
           <div
             className={`${
-              isFullScreen === undefined
-                ? "quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]"
-                : ""
+              isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]' : ''
             }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
             {props.rankedAnswers?.map((item, index) => (
               <div key={index + 1}>
                 <RankedResult
-                  number={"#" + (index + 1)}
+                  number={'#' + (index + 1)}
                   answer={item.label}
                   addedAnswerUuid={item.uuid}
                   answersSelection={props.answersSelection}
                   setAnswerSelection={props.setAnswerSelection}
                   title={props.title}
                   selectedPercentages={
-                    props.questStartData?.selectedPercentage &&
-                    props.questStartData.selectedPercentage.length > 0
-                      ? props.questStartData.selectedPercentage[
-                          props.questStartData.selectedPercentage.length - 1
-                        ]
+                    props.questStartData?.selectedPercentage && props.questStartData.selectedPercentage.length > 0
+                      ? props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1]
                       : null
                   }
                   checkInfo={false}
                   setAddOptionLimit={props.setAddOptionLimit}
-                  btnText={"Results"}
+                  btnText={'Results'}
                 />
               </div>
             ))}

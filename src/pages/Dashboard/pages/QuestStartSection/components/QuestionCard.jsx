@@ -1,24 +1,24 @@
-import { toast } from "sonner";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { validateInterval } from "../../../../../utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { userInfo } from "../../../../../services/api/userAuth";
-import { addUser } from "../../../../../features/auth/authSlice";
-import { updateChangeAnsStartQuest } from "../../../../../services/api/questsApi";
-import { getQuestionTitle } from "../../../../../utils/questionCard/SingleQuestCard";
+import { toast } from 'sonner';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { validateInterval } from '../../../../../utils';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { userInfo } from '../../../../../services/api/userAuth';
+import { addUser } from '../../../../../features/auth/authSlice';
+import { updateChangeAnsStartQuest } from '../../../../../services/api/questsApi';
+import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
 
-import Result from "./Result";
-import StartTest from "./StartTest";
-import ButtonGroup from "../../../../../components/question-card/ButtonGroup";
-import QuestInfoText from "../../../../../components/question-card/QuestInfoText";
-import QuestCardLayout from "../../../../../components/question-card/QuestCardLayout";
-import ConditionalTextFullScreen from "../../../../../components/question-card/ConditionalTextFullScreen";
+import Result from './Result';
+import StartTest from './StartTest';
+import ButtonGroup from '../../../../../components/question-card/ButtonGroup';
+import QuestInfoText from '../../../../../components/question-card/QuestInfoText';
+import QuestCardLayout from '../../../../../components/question-card/QuestCardLayout';
+import ConditionalTextFullScreen from '../../../../../components/question-card/ConditionalTextFullScreen';
 
-import * as questAction from "../../../../../features/quest/questsSlice";
-import * as questUtilsActions from "../../../../../features/quest/utilsSlice";
-import * as questServices from "../../../../../services/api/questsApi";
-import { questSelectionInitial } from "../../../../../constants/quests";
+import * as questAction from '../../../../../features/quest/questsSlice';
+import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
+import * as questServices from '../../../../../services/api/questsApi';
+import { questSelectionInitial } from '../../../../../constants/quests';
 
 const QuestionCard = (props) => {
   const dispatch = useDispatch();
@@ -41,30 +41,30 @@ const QuestionCard = (props) => {
     setQuestSelection((prevState) => {
       const newState = { ...prevState, id: actionPayload.id };
 
-      if (actionPayload.label === "yes/no") {
-        newState["yes/no"] = {
-          ...prevState["yes/no"],
-          yes: { check: actionPayload.option === "Yes" ? true : false },
-          no: { check: actionPayload.option === "No" ? true : false },
+      if (actionPayload.label === 'yes/no') {
+        newState['yes/no'] = {
+          ...prevState['yes/no'],
+          yes: { check: actionPayload.option === 'Yes' ? true : false },
+          no: { check: actionPayload.option === 'No' ? true : false },
         };
       }
 
-      if (actionPayload.label === "agree/disagree") {
-        newState["agree/disagree"] = {
-          ...prevState["agree/disagree"],
-          agree: { check: actionPayload.option === "Agree" ? true : false },
+      if (actionPayload.label === 'agree/disagree') {
+        newState['agree/disagree'] = {
+          ...prevState['agree/disagree'],
+          agree: { check: actionPayload.option === 'Agree' ? true : false },
           disagree: {
-            check: actionPayload.option === "Disagree" ? true : false,
+            check: actionPayload.option === 'Disagree' ? true : false,
           },
         };
       }
 
-      if (actionPayload.label === "like/dislike") {
-        newState["like/dislike"] = {
-          ...prevState["like/dislike"],
-          like: { check: actionPayload.option === "Like" ? true : false },
+      if (actionPayload.label === 'like/dislike') {
+        newState['like/dislike'] = {
+          ...prevState['like/dislike'],
+          like: { check: actionPayload.option === 'Like' ? true : false },
           dislike: {
-            check: actionPayload.option === "Dislike" ? true : false,
+            check: actionPayload.option === 'Dislike' ? true : false,
           },
         };
       }
@@ -117,7 +117,7 @@ const QuestionCard = (props) => {
 
   const handleAddOption = () => {
     const newOption = {
-      label: "",
+      label: '',
       check: true,
       contend: false,
       addedOptionByUser: true,
@@ -142,61 +142,49 @@ const QuestionCard = (props) => {
   };
 
   useEffect(() => {
-    if (questStartData.whichTypeQuestion === "yes/no") {
+    if (questStartData.whichTypeQuestion === 'yes/no') {
       handleToggleCheck(
         questStartData.whichTypeQuestion,
         questStartData?.startQuestData
-          ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data?.length - 1
-            ]?.selected === "Yes"
-            ? "Yes"
-            : "No"
+          ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Yes'
+            ? 'Yes'
+            : 'No'
           : null,
         questStartData?.startQuestData
-          ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data?.length - 1
-            ]?.selected === "Yes"
+          ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Yes'
             ? true
             : false
           : null,
         questStartData._id,
       );
     }
-    if (questStartData.whichTypeQuestion === "agree/disagree") {
+    if (questStartData.whichTypeQuestion === 'agree/disagree') {
       handleToggleCheck(
         questStartData.whichTypeQuestion,
         questStartData?.startQuestData
-          ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data?.length - 1
-            ]?.selected === "Agree"
-            ? "Agree"
-            : "Disagree"
+          ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Agree'
+            ? 'Agree'
+            : 'Disagree'
           : null,
         questStartData?.startQuestData
-          ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data?.length - 1
-            ]?.selected === "Agree"
+          ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Agree'
             ? true
             : true
           : null,
         questStartData._id,
       );
     }
-    if (questStartData.whichTypeQuestion === "like/dislike") {
+    if (questStartData.whichTypeQuestion === 'like/dislike') {
       handleToggleCheck(
         questStartData.whichTypeQuestion,
 
         questStartData?.startQuestData
-          ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data?.length - 1
-            ]?.selected === "Like"
-            ? "Like"
-            : "Dislike"
+          ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Like'
+            ? 'Like'
+            : 'Dislike'
           : null,
         questStartData?.startQuestData
-          ? questStartData?.startQuestData?.data[
-              questStartData?.startQuestData?.data?.length - 1
-            ]?.selected === "Like"
+          ? questStartData?.startQuestData?.data[questStartData?.startQuestData?.data?.length - 1]?.selected === 'Like'
             ? true
             : false
           : null,
@@ -226,18 +214,16 @@ const QuestionCard = (props) => {
       label,
     };
 
-    setAnswerSelection((prevAnswers) =>
-      updateAnswersSelectionForRanked(prevAnswers, actionPayload),
-    );
+    setAnswerSelection((prevAnswers) => updateAnswersSelectionForRanked(prevAnswers, actionPayload));
   };
 
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
-      if (resp.data.message === "Start Quest Created Successfully") {
-        toast.success("Successfully Completed");
+      if (resp.data.message === 'Start Quest Created Successfully') {
+        toast.success('Successfully Completed');
         setLoading(false);
-        queryClient.invalidateQueries("FeedData");
+        queryClient.invalidateQueries('FeedData');
       }
       handleViewResults(questStartData._id);
       userInfo(persistedUserInfo?.uuid).then((resp) => {
@@ -248,7 +234,7 @@ const QuestionCard = (props) => {
       setLoading(false);
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(":")[1]);
+      toast.error(err.response.data.message.split(':')[1]);
       setLoading(false);
     },
   });
@@ -256,22 +242,18 @@ const QuestionCard = (props) => {
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: updateChangeAnsStartQuest,
     onSuccess: (resp) => {
-      if (resp.data.message === "Answer has not changed") {
+      if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
-        toast.warning(
-          "You have selected the same option as last time. Your option was not changed.",
-        );
+        toast.warning('You have selected the same option as last time. Your option was not changed.');
       }
-      if (
-        resp.data.message === "You can change your answer once every 1 hour"
-      ) {
+      if (resp.data.message === 'You can change your answer once every 1 hour') {
         setLoading(false);
-        toast.warning("You can change your option once every 1 hour.");
+        toast.warning('You can change your option once every 1 hour.');
       }
-      if (resp.data.message === "Start Quest Updated Successfully") {
-        toast.success("Successfully Changed");
+      if (resp.data.message === 'Start Quest Updated Successfully') {
+        toast.success('Successfully Changed');
         setLoading(false);
-        queryClient.invalidateQueries("FeedData", "ResultsData");
+        queryClient.invalidateQueries('FeedData', 'ResultsData');
         handleViewResults(questStartData._id);
       }
       userInfo().then((resp) => {
@@ -283,7 +265,7 @@ const QuestionCard = (props) => {
       dispatch(questUtilsActions.resetaddOptionLimit());
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(":")[1]);
+      toast.error(err.response.data.message.split(':')[1]);
       setLoading(false);
 
       dispatch(questUtilsActions.resetaddOptionLimit());
@@ -293,58 +275,48 @@ const QuestionCard = (props) => {
   const handleSubmit = () => {
     setLoading(true);
     if (
-      questStartData.whichTypeQuestion === "agree/disagree" ||
-      questStartData.whichTypeQuestion === "yes/no" ||
-      questStartData.whichTypeQuestion === "like/dislike"
+      questStartData.whichTypeQuestion === 'agree/disagree' ||
+      questStartData.whichTypeQuestion === 'yes/no' ||
+      questStartData.whichTypeQuestion === 'like/dislike'
     ) {
       let ans = {
         created: new Date(),
       };
 
-      if (questStartData.whichTypeQuestion === "yes/no") {
-        ans.selected =
-          questSelection["yes/no"].yes.check === true ? "Yes" : "No";
+      if (questStartData.whichTypeQuestion === 'yes/no') {
+        ans.selected = questSelection['yes/no'].yes.check === true ? 'Yes' : 'No';
       }
 
-      if (questStartData.whichTypeQuestion === "agree/disagree") {
-        ans.selected =
-          questSelection["agree/disagree"].agree.check === true ? "Yes" : "No";
+      if (questStartData.whichTypeQuestion === 'agree/disagree') {
+        ans.selected = questSelection['agree/disagree'].agree.check === true ? 'Yes' : 'No';
       }
 
-      if (questStartData.whichTypeQuestion === "like/dislike") {
-        ans.selected =
-          questSelection["like/dislike"].like.check === true ? "Yes" : "No";
+      if (questStartData.whichTypeQuestion === 'like/dislike') {
+        ans.selected = questSelection['like/dislike'].like.check === true ? 'Yes' : 'No';
       }
 
       const params = {
         questId: questStartData._id,
         answer: ans,
-        addedAnswer: "",
+        addedAnswer: '',
         uuid: persistedUserInfo?.uuid,
       };
 
       if (!params.answer.selected) {
-        toast.warning("You cannot submit without answering");
+        toast.warning('You cannot submit without answering');
         setLoading(false);
         return;
       }
 
-      if (questStartData.startStatus === "change answer") {
+      if (questStartData.startStatus === 'change answer') {
         console.log(howManyTimesAnsChanged);
         const currentDate = new Date();
 
-        const timeInterval = validateInterval(
-          questStartData.usersChangeTheirAns,
-        );
+        const timeInterval = validateInterval(questStartData.usersChangeTheirAns);
         // Check if enough time has passed
-        if (
-          howManyTimesAnsChanged > 1 &&
-          currentDate - new Date(questStartData.lastInteractedAt) < timeInterval
-        ) {
+        if (howManyTimesAnsChanged > 1 && currentDate - new Date(questStartData.lastInteractedAt) < timeInterval) {
           // Alert the user if the time condition is not met
-          toast.error(
-            `You can change your selection again in ${questStartData.usersChangeTheirAns}`,
-          );
+          toast.error(`You can change your selection again in ${questStartData.usersChangeTheirAns}`);
           setLoading(false);
         } else {
           changeAnswer(params);
@@ -352,11 +324,11 @@ const QuestionCard = (props) => {
       } else {
         startQuest(params);
       }
-    } else if (questStartData.whichTypeQuestion === "multiple choise") {
+    } else if (questStartData.whichTypeQuestion === 'multiple choise') {
       let answerSelected = [];
       let answerContended = [];
-      let addedAnswerValue = "";
-      let addedAnswerUuidValue = "";
+      let addedAnswerValue = '';
+      let addedAnswerUuidValue = '';
 
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
@@ -370,7 +342,7 @@ const QuestionCard = (props) => {
             });
             addedAnswerValue = answersSelection[i].label;
             addedAnswerUuidValue = answersSelection[i].uuid;
-            console.log("added ans value" + addedAnswerValue);
+            console.log('added ans value' + addedAnswerValue);
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
@@ -388,17 +360,12 @@ const QuestionCard = (props) => {
       };
       const currentDate = new Date();
 
-      if (questStartData.startStatus === "change answer") {
+      if (questStartData.startStatus === 'change answer') {
         const timeInterval = validateInterval();
         // Check if enough time has passed
-        if (
-          howManyTimesAnsChanged > 1 &&
-          currentDate - new Date(questStartData.lastInteractedAt) < timeInterval
-        ) {
+        if (howManyTimesAnsChanged > 1 && currentDate - new Date(questStartData.lastInteractedAt) < timeInterval) {
           // Alert the user if the time condition is not met
-          toast.error(
-            `You can change your selection again in ${questStartData.usersChangeTheirAns}`,
-          );
+          toast.error(`You can change your selection again in ${questStartData.usersChangeTheirAns}`);
           setLoading(false);
         } else {
           const params = {
@@ -406,7 +373,7 @@ const QuestionCard = (props) => {
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
-          console.log("params", params);
+          console.log('params', params);
           changeAnswer(params);
         }
       } else {
@@ -417,45 +384,43 @@ const QuestionCard = (props) => {
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
         };
-        console.log("selected", params);
+        console.log('selected', params);
         // && params.answer.contended.length === 0
         if (params.answer.selected.length === 0) {
-          toast.warning("You cannot submit without answering");
+          toast.warning('You cannot submit without answering');
           setLoading(false);
           return;
         }
-        const isEmptyQuestion = params.answer.selected.some(
-          (item) => item.question.trim() === "",
-        );
+        const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          toast.error("You cannot leave the added option blank");
+          toast.error('You cannot leave the added option blank');
           setLoading(false);
           return;
         }
         console.log({ isSubmit });
 
         if (!isSubmit) setLoading(false);
-        console.log("params", params);
+        console.log('params', params);
         // startQuest(params);
         startQuest(params);
       }
-    } else if (questStartData.whichTypeQuestion === "ranked choise") {
-      let addedAnswerValue = "";
-      let addedAnswerUuidValue = "";
+    } else if (questStartData.whichTypeQuestion === 'ranked choise') {
+      let addedAnswerValue = '';
+      let addedAnswerUuidValue = '';
       let answerSelected = [];
 
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {
           // If user Add his own option
-          console.log("added answer ran");
+          console.log('added answer ran');
           answerSelected.push({
             question: rankedAnswers[i].label,
             addedAnswerByUser: true,
           });
           addedAnswerValue = rankedAnswers[i].label;
           addedAnswerUuidValue = answersSelection[i].uuid;
-          console.log("added ans value" + addedAnswerValue);
+          console.log('added ans value' + addedAnswerValue);
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
         }
@@ -463,22 +428,17 @@ const QuestionCard = (props) => {
 
       let dataToSend = {
         selected: answerSelected,
-        contended: "",
+        contended: '',
         created: new Date(),
       };
       const currentDate = new Date();
 
-      if (questStartData.startStatus === "change answer") {
+      if (questStartData.startStatus === 'change answer') {
         const timeInterval = validateInterval();
         // Check if enough time has passed
-        if (
-          howManyTimesAnsChanged > 1 &&
-          currentDate - new Date(questStartData.lastInteractedAt) < timeInterval
-        ) {
+        if (howManyTimesAnsChanged > 1 && currentDate - new Date(questStartData.lastInteractedAt) < timeInterval) {
           // Alert the user if the time condition is not met
-          toast.error(
-            `You can change your selection again in ${questStartData.usersChangeTheirAns}`,
-          );
+          toast.error(`You can change your selection again in ${questStartData.usersChangeTheirAns}`);
           setLoading(false);
         } else {
           const params = {
@@ -486,7 +446,7 @@ const QuestionCard = (props) => {
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
-          console.log("params", params);
+          console.log('params', params);
           changeAnswer(params);
         }
       } else {
@@ -497,7 +457,7 @@ const QuestionCard = (props) => {
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
         };
-        console.log("params", params);
+        console.log('params', params);
 
         // startQuest(params);
         startQuest(params);
@@ -509,11 +469,7 @@ const QuestionCard = (props) => {
     if (viewResult === questStartData._id) {
       return (
         <>
-          <QuestInfoText
-            questStartData={questStartData}
-            show={false}
-            questType={questStartData.whichTypeQuestion}
-          />
+          <QuestInfoText questStartData={questStartData} show={false} questType={questStartData.whichTypeQuestion} />
           <Result
             questStartData={questStartData}
             id={questStartData._id}
@@ -533,10 +489,7 @@ const QuestionCard = (props) => {
             howManyTimesAnsChanged={howManyTimesAnsChanged}
             questSelection={questSelection}
           />
-          <ConditionalTextFullScreen
-            questStartData={questStartData}
-            show={false}
-          />
+          <ConditionalTextFullScreen questStartData={questStartData} show={false} />
         </>
       );
     }
@@ -544,11 +497,7 @@ const QuestionCard = (props) => {
     if (startTest === questStartData._id) {
       return (
         <>
-          <QuestInfoText
-            questStartData={questStartData}
-            show={true}
-            questType={questStartData.whichTypeQuestion}
-          />
+          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -575,29 +524,18 @@ const QuestionCard = (props) => {
             loadingDetail={loadingDetail}
             questSelection={questSelection}
           />
-          <ConditionalTextFullScreen
-            questStartData={questStartData}
-            show={true}
-          />
+          <ConditionalTextFullScreen questStartData={questStartData} show={true} />
         </>
       );
     } else {
       return (
-        <QuestInfoText
-          questStartData={questStartData}
-          show={false}
-          questType={questStartData.whichTypeQuestion}
-        />
+        <QuestInfoText questStartData={questStartData} show={false} questType={questStartData.whichTypeQuestion} />
       );
     }
   };
 
   return (
-    <QuestCardLayout
-      questStartData={questStartData}
-      isBookmarked={isBookmarked}
-      handleStartTest={handleStartTest}
-    >
+    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} handleStartTest={handleStartTest}>
       {renderQuestContent()}
       <ButtonGroup
         questStartData={questStartData}

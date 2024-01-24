@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
-import Input from "../../../../../components/Input";
-import PasswordStrengthBar from "react-password-strength-bar";
+import { useSelector } from 'react-redux';
+import Input from '../../../../../components/Input';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 const Form = ({
   password,
@@ -19,9 +19,9 @@ const Form = ({
   onNewPassChange,
   onCnfrmNewPassChange,
 }) => {
-  const crntPassinputType = showCrntPass ? "text" : "password";
-  const newPassinputType = showNewPass ? "text" : "password";
-  const cnfrmnewPassinputType = showNewCnfrmPass ? "text" : "password";
+  const crntPassinputType = showCrntPass ? 'text' : 'password';
+  const newPassinputType = showNewPass ? 'text' : 'password';
+  const cnfrmnewPassinputType = showNewCnfrmPass ? 'text' : 'password';
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
@@ -38,7 +38,7 @@ const Form = ({
               onChange={onCrntPassChange}
             />
             {!showCrntPass ? (
-              persistedTheme === "dark" ? (
+              persistedTheme === 'dark' ? (
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
@@ -53,7 +53,7 @@ const Form = ({
                   onClick={toggleVisibilityCrntPass}
                 />
               )
-            ) : persistedTheme === "dark" ? (
+            ) : persistedTheme === 'dark' ? (
               <img
                 src="/assets/svgs/eye.svg"
                 alt="blind"
@@ -69,11 +69,9 @@ const Form = ({
               />
             )}
           </div>
-          <div className="relative -top-1 mt-1 h-[19px]">
-            {password && <PasswordStrengthBar password={password} />}
-          </div>
+          <div className="relative -top-1 mt-1 h-[19px]">{password && <PasswordStrengthBar password={password} />}</div>
         </div>
-       <div className="h-[50px] xl:h-[66px]">
+        <div className="h-[50px] xl:h-[66px]">
           <div className="relative grid w-full grid-cols-[1fr] items-center">
             <Input
               type={newPassinputType}
@@ -84,7 +82,7 @@ const Form = ({
               onChange={onNewPassChange}
             />
             {!showNewPass ? (
-              persistedTheme === "dark" ? (
+              persistedTheme === 'dark' ? (
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
@@ -99,7 +97,7 @@ const Form = ({
                   onClick={toggleVisibilityNewPass}
                 />
               )
-            ) : persistedTheme === "dark" ? (
+            ) : persistedTheme === 'dark' ? (
               <img
                 src="/assets/svgs/eye.svg"
                 alt="blind"
@@ -115,11 +113,9 @@ const Form = ({
               />
             )}
           </div>
-          <div className="relative -top-1 mt-1 h-[19px]">
-            {password && <PasswordStrengthBar password={password} />}
-          </div>
+          <div className="relative -top-1 mt-1 h-[19px]">{password && <PasswordStrengthBar password={password} />}</div>
         </div>
-         <div className="h-[50px] xl:h-[66px]">
+        <div className="h-[50px] xl:h-[66px]">
           <div className="relative grid w-full grid-cols-[1fr] items-center">
             <Input
               type={cnfrmnewPassinputType}
@@ -130,7 +126,7 @@ const Form = ({
               onChange={onCnfrmNewPassChange}
             />
             {!showNewCnfrmPass ? (
-              persistedTheme === "dark" ? (
+              persistedTheme === 'dark' ? (
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
@@ -145,7 +141,7 @@ const Form = ({
                   onClick={toggleVisibilityNewCnfrmPass}
                 />
               )
-            ) : persistedTheme === "dark" ? (
+            ) : persistedTheme === 'dark' ? (
               <img
                 src="/assets/svgs/eye.svg"
                 alt="blind"
@@ -162,9 +158,7 @@ const Form = ({
             )}
           </div>
           <div className="relative -top-1 mt-1 h-[19px]">
-            {reTypePassword && (
-              <PasswordStrengthBar password={reTypePassword} />
-            )}
+            {reTypePassword && <PasswordStrengthBar password={reTypePassword} />}
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
-import Input from "../../../components/Input";
-import PasswordStrengthBar from "react-password-strength-bar";
+import { useSelector } from 'react-redux';
+import Input from '../../../components/Input';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 const Form = ({
   password,
@@ -15,8 +15,8 @@ const Form = ({
   handleCancel,
   email,
 }) => {
-  const inputType = showPassword ? "text" : "password";
-  const cnfmPassInputType = showCnfmPassword ? "text" : "password";
+  const inputType = showPassword ? 'text' : 'password';
+  const cnfmPassInputType = showCnfmPassword ? 'text' : 'password';
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
@@ -32,7 +32,7 @@ const Form = ({
           value={email}
         />
         {email ? (
-          persistedTheme === "dark" ? (
+          persistedTheme === 'dark' ? (
             <img
               src="/assets/svgs/cancelDark.svg"
               alt="blind"
@@ -61,7 +61,7 @@ const Form = ({
               onChange={onPassChange}
             />
             {!showPassword ? (
-              persistedTheme === "dark" ? (
+              persistedTheme === 'dark' ? (
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
@@ -76,7 +76,7 @@ const Form = ({
                   onClick={togglePasswordVisibility}
                 />
               )
-            ) : persistedTheme === "dark" ? (
+            ) : persistedTheme === 'dark' ? (
               <img
                 src="/assets/svgs/eye.svg"
                 alt="blind"
@@ -92,9 +92,7 @@ const Form = ({
               />
             )}
           </div>
-          <div className="relative -top-1 mt-1 h-[19px]">
-            {password && <PasswordStrengthBar password={password} />}
-          </div>
+          <div className="relative -top-1 mt-1 h-[19px]">{password && <PasswordStrengthBar password={password} />}</div>
         </div>
         <div className="h-[50px] xl:h-[66px]">
           <div className="relative grid w-full grid-cols-[1fr] items-center">
@@ -107,7 +105,7 @@ const Form = ({
               onChange={onReTypePassChange}
             />
             {!showCnfmPassword ? (
-              persistedTheme === "dark" ? (
+              persistedTheme === 'dark' ? (
                 <img
                   src="/assets/svgs/blind.svg"
                   alt="blind"
@@ -122,7 +120,7 @@ const Form = ({
                   onClick={toggleCnfmPasswordVisibility}
                 />
               )
-            ) : persistedTheme === "dark" ? (
+            ) : persistedTheme === 'dark' ? (
               <img
                 src="/assets/svgs/eye.svg"
                 alt="blind"
@@ -139,9 +137,7 @@ const Form = ({
             )}
           </div>
           <div className="relative -top-1 mt-1 h-[19px]">
-            {reTypePassword && (
-              <PasswordStrengthBar password={reTypePassword} />
-            )}
+            {reTypePassword && <PasswordStrengthBar password={reTypePassword} />}
           </div>
         </div>
       </div>

@@ -1,17 +1,17 @@
-import { calculateRemainingTime } from "../../utils";
+import { calculateRemainingTime } from '../../utils';
 
 export function getQuestionTitle(whichTypeQuestion) {
   switch (whichTypeQuestion) {
-    case "agree/disagree":
-      return "Agree/Disagree";
-    case "like/dislike":
-      return "Like/Dislike";
-    case "multiple choise":
-      return "Multiple Choice";
-    case "ranked choise":
-      return "Ranked Choice";
-    case "yes/no":
-      return "Yes/No";
+    case 'agree/disagree':
+      return 'Agree/Disagree';
+    case 'like/dislike':
+      return 'Like/Dislike';
+    case 'multiple choise':
+      return 'Multiple Choice';
+    case 'ranked choise':
+      return 'Ranked Choice';
+    case 'yes/no':
+      return 'Yes/No';
     default:
       return null;
   }
@@ -19,56 +19,56 @@ export function getQuestionTitle(whichTypeQuestion) {
 
 export const getButtonColor = (startStatus) => {
   switch (startStatus) {
-    case "completed":
-      return "bg-[#4ABD71]";
-    case "change answer":
-      return "bg-[#FDD503]";
+    case 'completed':
+      return 'bg-[#4ABD71]';
+    case 'change answer':
+      return 'bg-[#FDD503]';
     default:
-      return "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]";
+      return 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]';
   }
 };
 
 export function getButtonText(btnText) {
   switch (btnText) {
-    case "completed":
-      return "Completed";
-    case "change answer":
-      return "Change";
+    case 'completed':
+      return 'Completed';
+    case 'change answer':
+      return 'Change';
     default:
-      return "Start";
+      return 'Start';
   }
 }
 
 export function getButtonVariants(btnText) {
   switch (btnText) {
-    case "completed":
-      return "result";
-    case "change answer":
-      return "change";
+    case 'completed':
+      return 'result';
+    case 'change answer':
+      return 'change';
     default:
-      return "submit";
+      return 'submit';
   }
 }
 
 export function getButtonClassName(persistedTheme, btnText, btnColor) {
-  if (persistedTheme === "dark") {
+  if (persistedTheme === 'dark') {
     switch (btnText) {
-      case "completed":
-        return "bg-[#148339]";
-      case "change answer":
-        if (calculateRemainingTime() === ", you are good to go!") {
-          return "dark:bg-[#BB9D02] text-white";
+      case 'completed':
+        return 'bg-[#148339]';
+      case 'change answer':
+        if (calculateRemainingTime() === ', you are good to go!') {
+          return 'dark:bg-[#BB9D02] text-white';
         } else {
-          return "bg-[#7E6C01] text-[#CCCCCC]";
+          return 'bg-[#7E6C01] text-[#CCCCCC]';
         }
       default:
-        return "inset-0 rounded-[15px] border-[1px] border-[#333B46] bg-[#333B46] shadow-inner";
+        return 'inset-0 rounded-[15px] border-[1px] border-[#333B46] bg-[#333B46] shadow-inner';
     }
   } else {
-    if (calculateRemainingTime() === ", you are good to go!") {
+    if (calculateRemainingTime() === ', you are good to go!') {
       return btnColor;
     } else {
-      return "bg-[#7E6C01] text-[#CCCCCC]";
+      return 'bg-[#7E6C01] text-[#CCCCCC]';
     }
   }
 }

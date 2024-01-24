@@ -1,17 +1,17 @@
-import * as HomepageAPIs from "../../services/api/homepageApis";
+import * as HomepageAPIs from '../../services/api/homepageApis';
 
 export const applyFilters = (params, filterStates, columns) => {
-  if (filterStates.filterBySort !== "") {
+  if (filterStates.filterBySort !== '') {
     params = { ...params, sort: filterStates.filterBySort };
   }
 
-  if (filterStates.filterByType && filterStates.filterByType !== "All") {
+  if (filterStates.filterByType && filterStates.filterByType !== 'All') {
     params = { ...params, type: filterStates.filterByType.toLowerCase() };
   } else {
-    params = { ...params, type: "" };
+    params = { ...params, type: '' };
   }
 
-  if (filterStates.filterByScope === "Me") {
+  if (filterStates.filterByScope === 'Me') {
     params = { ...params, filter: true };
   }
 
@@ -28,13 +28,13 @@ export const applyFilters = (params, filterStates, columns) => {
 
 export const fetchDataByStatus = async (params, filterStates) => {
   switch (filterStates.filterByStatus) {
-    case "Unanswered":
+    case 'Unanswered':
       return await HomepageAPIs.getAllUnanswered(params);
-    case "Answered":
+    case 'Answered':
       return await HomepageAPIs.getAllAnswered(params);
-    case "Completed":
+    case 'Completed':
       return await HomepageAPIs.getAllCompleted(params);
-    case "Changeable":
+    case 'Changeable':
       return await HomepageAPIs.getAllChangable(params);
     default:
       return await HomepageAPIs.getAllQuestsWithDefaultStatus(params);

@@ -1,15 +1,12 @@
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { useState } from "react";
-import BasicModal from "../../BasicModal";
-import DeleteOption from "../../../pages/Dashboard/components/DeleteOption";
-import { Tooltip } from "../../../utils/Tooltip";
-import {
-  answerValidation,
-  checkAnswerExist,
-} from "../../../services/api/questsApi";
-import { useDispatch } from "react-redux";
-import { resetaddOptionLimit } from "../../../features/quest/utilsSlice";
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import BasicModal from '../../BasicModal';
+import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
+import { Tooltip } from '../../../utils/Tooltip';
+import { answerValidation, checkAnswerExist } from '../../../services/api/questsApi';
+import { useDispatch } from 'react-redux';
+import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
 
 const SingleAnswerRankedChoice = (props) => {
   const dispatch = useDispatch();
@@ -20,13 +17,13 @@ const SingleAnswerRankedChoice = (props) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [answer, setAnswer] = useState(props.answer);
   const reset = {
-    name: "Ok",
-    color: "text-[#389CE3]",
-    tooltipName: "Please write something...",
-    tooltipStyle: "tooltip-info",
+    name: 'Ok',
+    color: 'text-[#389CE3]',
+    tooltipName: 'Please write something...',
+    tooltipStyle: 'tooltip-info',
   };
   const [checkOptionStatus, setCheckOptionStatus] = useState(reset);
-  const [prevValue, setPrevValue] = useState("");
+  const [prevValue, setPrevValue] = useState('');
 
   const handleEditOpen = () => setEditModal(true);
   const handleEditClose = () => setEditModal(false);
@@ -42,9 +39,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleDeleteOpen = () => {
     setCheckOptionStatus(reset);
-    const newArr = props.answersSelection.filter(
-      (item) => item.label !== props.answer,
-    );
+    const newArr = props.answersSelection.filter((item) => item.label !== props.answer);
 
     props.setAnswerSelection(newArr);
     dispatch(resetaddOptionLimit());
@@ -61,21 +56,17 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
-    setCheckOptionStatus(
-      e.target.value.trim() === ""
-        ? reset
-        : { name: "Ok", color: "text-[#b0a00f]" },
-    );
+    setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
   };
 
   const optionVerification = async (value) => {
     if (prevValue === answer) return;
     setPrevValue(value);
     setCheckOptionStatus({
-      name: "Checking",
-      color: "text-[#0FB063]",
-      tooltipName: "Verifying your option. Please wait...",
-      tooltipStyle: "tooltip-success",
+      name: 'Checking',
+      color: 'text-[#0FB063]',
+      tooltipName: 'Verifying your option. Please wait...',
+      tooltipStyle: 'tooltip-success',
     });
     // option Validation
     const { validatedAnswer, errorMessage } = await answerValidation({
@@ -85,11 +76,10 @@ const SingleAnswerRankedChoice = (props) => {
     if (errorMessage) {
       // props.setIsSubmit(false)
       return setCheckOptionStatus({
-        name: "Rejected",
-        color: "text-[#b00f0f]",
-        tooltipName:
-          "Please review your text for proper grammar while keeping our code of conduct in mind.",
-        tooltipStyle: "tooltip-error",
+        name: 'Rejected',
+        color: 'text-[#b00f0f]',
+        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+        tooltipStyle: 'tooltip-error',
       });
     }
     // Check Answer is unique
@@ -102,10 +92,10 @@ const SingleAnswerRankedChoice = (props) => {
     if (answerExist) {
       // props.setIsSubmit(false);
       return setCheckOptionStatus({
-        name: "Rejected",
-        color: "text-[#b00f0f]",
-        tooltipName: "Found Duplication!",
-        tooltipStyle: "tooltip-error",
+        name: 'Rejected',
+        color: 'text-[#b00f0f]',
+        tooltipName: 'Found Duplication!',
+        tooltipStyle: 'tooltip-error',
         duplication: true,
       });
     }
@@ -114,10 +104,10 @@ const SingleAnswerRankedChoice = (props) => {
       setAnswer(validatedAnswer);
       // props.setIsSubmit(true);
       setCheckOptionStatus({
-        name: "Ok",
-        color: "text-[#0FB063]",
-        tooltipName: "Answer is Verified",
-        tooltipStyle: "tooltip-success",
+        name: 'Ok',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Answer is Verified',
+        tooltipStyle: 'tooltip-success',
         isVerifiedAnswer: true,
       });
     }
@@ -136,21 +126,20 @@ const SingleAnswerRankedChoice = (props) => {
   };
 
   const customModalStyle = {
-    backgroundColor: "#FCFCFD",
-    boxShadow: "none",
-    border: "0px",
-    outline: "none",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    backgroundColor: '#FCFCFD',
+    boxShadow: 'none',
+    border: '0px',
+    outline: 'none',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
   };
 
   return (
     <div className="flex items-center tablet:mr-[65.36px] tablet:gap-[10px] tablet:pl-[1.75rem]">
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
-        props.addedAnswerUuid === persistedUserInfo?.uuid ||
-        localStorage.getItem("uId") ? (
+        props.addedAnswerUuid === persistedUserInfo?.uuid || localStorage.getItem('uId') ? (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"
@@ -169,22 +158,22 @@ const SingleAnswerRankedChoice = (props) => {
         )
       ) : (
         <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
-          {" "}
+          {' '}
           &#x200B;
         </div>
       )}
       {/* =============== To Display Option */}
       <div className="flex w-full items-center rounded-[4.7px] tablet:rounded-[10px]">
         <div className="flex w-full items-center rounded-l-[4.734px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px]">
-          {props.btnText !== "Results" && (
+          {props.btnText !== 'Results' && (
             <div
               className={`${
                 props.snapshot.isDragging
-                  ? "border-y-[#5FA3D5] border-r-[#5FA3D5]"
-                  : "border-[#DEE6F7] dark:border-[#D9D9D9]"
+                  ? 'border-y-[#5FA3D5] border-r-[#5FA3D5]'
+                  : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
               } flex h-full w-fit items-center rounded-l-[4.734px] border-y border-s bg-[#DEE6F7] px-[3.3px] py-[5.6px] dark:bg-[#D9D9D9] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:px-[7px] tablet:py-[13px]`}
             >
-              {persistedTheme === "dark" ? (
+              {persistedTheme === 'dark' ? (
                 <img
                   src="/assets/svgs/dashboard/six-dots-dark.svg"
                   alt="six dots"
@@ -201,25 +190,18 @@ const SingleAnswerRankedChoice = (props) => {
           )}
           <div
             className={`${
-              props.snapshot.isDragging
-                ? "border-y-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]"
-                : "border-y-[#DEE6F7]"
+              props.snapshot.isDragging ? 'border-y-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]' : 'border-y-[#DEE6F7]'
             } flex w-full justify-between border-y tablet:border-y-[3px]`}
           >
             {props.editable ? (
               <input
                 type="text"
                 className={`${
-                  props.snapshot.isDragging
-                    ? "bg-[#F2F6FF] dark:bg-[#0D1012]"
-                    : "bg-white dark:bg-[#0D1012]"
+                  props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
                 } w-full rounded-[4.73px] px-4 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-[9px] tablet:pl-[32px] tablet:text-[19px]`}
                 value={answer}
                 onChange={handleInputChange}
-                onBlur={(e) =>
-                  e.target.value.trim() !== "" &&
-                  optionVerification(e.target.value.trim())
-                }
+                onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
               />
             ) : (
               <h1 className="pb-[5.6px] pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
@@ -229,9 +211,7 @@ const SingleAnswerRankedChoice = (props) => {
             {props.deleteable && (
               <div
                 className={`${
-                  props.snapshot.isDragging
-                    ? "bg-[#F2F6FF] "
-                    : "bg-white dark:bg-[#0D1012]"
+                  props.snapshot.isDragging ? 'bg-[#F2F6FF] ' : 'bg-white dark:bg-[#0D1012]'
                 } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:h-[43px] tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.2rem] ${
                   checkOptionStatus.color
                 }`}
@@ -245,9 +225,7 @@ const SingleAnswerRankedChoice = (props) => {
           </div>
         </div>
         <div className="flex h-[21.8px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:h-[49px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]">
-          <h1 className="text-[16px] font-bold leading-[0px] text-[#22AA69] tablet:text-[25px]">
-            {props.number}
-          </h1>
+          <h1 className="text-[16px] font-bold leading-[0px] text-[#22AA69] tablet:text-[25px]">{props.number}</h1>
         </div>
         {/* =============== To Display Contention and Trash Right of Option */}
         <div className="flex w-12 min-w-[48px] items-center justify-center bg-[#F3F3F3] pl-0 dark:bg-[#141618] tablet:w-8 tablet:pl-[15px]">
@@ -274,11 +252,11 @@ const SingleAnswerRankedChoice = (props) => {
             />
           </BasicModal>
         </div>
-        {props.btnText === "Results" ? (
+        {props.btnText === 'Results' ? (
           <div className="mr-[20.63px] flex items-center gap-[19px] ">
             {props.percentages?.[props.answer.trim()] === undefined
-              ? "0%"
-              : props.percentages?.[props.answer.trim()] + "%"}
+              ? '0%'
+              : props.percentages?.[props.answer.trim()] + '%'}
           </div>
         ) : null}
       </div>

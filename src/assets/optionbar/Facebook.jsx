@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Facebook = () => {
   return (
@@ -20,12 +20,7 @@ const Facebook = () => {
       </g>
       <defs>
         <clipPath id="clip0_984_1866">
-          <rect
-            width="13.0968"
-            height="13.0968"
-            fill="white"
-            transform="translate(0.855469 0.451172)"
-          />
+          <rect width="13.0968" height="13.0968" fill="white" transform="translate(0.855469 0.451172)" />
         </clipPath>
       </defs>
     </svg>

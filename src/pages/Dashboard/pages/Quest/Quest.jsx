@@ -1,10 +1,10 @@
-import { useState } from "react";
-import Navbar from "./components/Navbar";
-import YesNo from "./pages/YesNo";
-import AgreeDisagree from "./pages/AgreeDisagree";
-import LikeDislike from "./pages/LikeDislikeQuest";
-import MultipleChoice from "./pages/MultipleChoice";
-import RankChoice from "./pages/RankChoice";
+import { useState } from 'react';
+import Navbar from './components/Navbar';
+import YesNo from './pages/YesNo';
+import AgreeDisagree from './pages/AgreeDisagree';
+import LikeDislike from './pages/LikeDislikeQuest';
+import MultipleChoice from './pages/MultipleChoice';
+import RankChoice from './pages/RankChoice';
 
 const Quest = () => {
   const [tab, setTab] = useState(0);

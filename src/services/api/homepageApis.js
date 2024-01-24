@@ -1,8 +1,8 @@
-import api from "./Axios";
+import api from './Axios';
 
 // For Search in Feed
 export const searchQuestions = async (term) => {
-  if (term !== "") {
+  if (term !== '') {
     const response = await api.post(`/search/easySearch?term=${term}`);
     return response.data;
   }
@@ -10,7 +10,7 @@ export const searchQuestions = async (term) => {
 
 // To get all topics of preferences
 export const getAllTopics = async () => {
-  return await api.get("/preferences/getAllTopic");
+  return await api.get('/preferences/getAllTopic');
 };
 
 export const searchTopics = async (topicSearch) => {
@@ -21,45 +21,33 @@ export const searchTopics = async (topicSearch) => {
 
 // For Default
 export const getAllQuestsWithDefaultStatus = async (params) => {
-  return await api.post("/infoquestions/getAllQuestsWithDefaultStatus", params);
+  return await api.post('/infoquestions/getAllQuestsWithDefaultStatus', params);
 };
 
 // Get Quest By Id
 export const getQuestById = async (id, qId) => {
-  console.log("first", id, qId);
+  console.log('first', id, qId);
   return await api.get(`/infoquestions/getQuest/${id}/${qId}`);
 };
 
 // For Unanswered
 export const getAllUnanswered = async (params) => {
-  return await api.post(
-    `/infoquestions/getAllQuestsWithOpenInfoQuestStatus`,
-    params,
-  );
+  return await api.post(`/infoquestions/getAllQuestsWithOpenInfoQuestStatus`, params);
 };
 
 // For Answered
 export const getAllAnswered = async (params) => {
-  return await api.post(
-    `/infoquestions/getAllQuestsWithAnsweredStatus`,
-    params,
-  );
+  return await api.post(`/infoquestions/getAllQuestsWithAnsweredStatus`, params);
 };
 
 // For InCorrect
 export const getAllCompleted = async (params) => {
-  return await api.post(
-    `/infoquestions/getAllQuestsWithCompletedStatus`,
-    params,
-  );
+  return await api.post(`/infoquestions/getAllQuestsWithCompletedStatus`, params);
 };
 
 // For Changable
 export const getAllChangable = async (params) => {
-  return await api.post(
-    `/infoquestions/getAllQuestsWithChangeAnsStatus`,
-    params,
-  );
+  return await api.post(`/infoquestions/getAllQuestsWithChangeAnsStatus`, params);
 };
 
 // ================= Bookmark
@@ -85,7 +73,7 @@ export const deleteBookmarkById = async (data) => {
 };
 
 export const searchBookmarks = async (term) => {
-  if (term !== "") {
+  if (term !== '') {
     const response = await api.post(`/search/searchBookmarks?term=${term}`);
     return response.data;
   }

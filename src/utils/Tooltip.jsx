@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const Tooltip = ({ optionStatus }) => {
   const [tooltipStatus, setTooltipStatusState] = useState(optionStatus);
@@ -9,21 +9,19 @@ export const Tooltip = ({ optionStatus }) => {
 
   return (
     <div>
-      {tooltipStatus?.name === "Rejected" && (
+      {tooltipStatus?.name === 'Rejected' && (
         <div
           className={`absolute w-32 sm:w-[186px] md:w-52 xl:w-48 ${
-            tooltipStatus?.duplication ? "-top-[31px]" : "-top-[55px]"
+            tooltipStatus?.duplication ? '-top-[31px]' : '-top-[55px]'
           } left-0 -translate-x-1/2 transform tablet:-left-[12px] laptop:left-1/2 ${
-            tooltipStatus?.duplication
-              ? "tablet:-top-[100px]"
-              : "tablet:-top-[127px]"
+            tooltipStatus?.duplication ? 'tablet:-top-[100px]' : 'tablet:-top-[127px]'
           }`}
         >
           <div className="relative mx-2 flex flex-col items-end text-center">
             <div
               className="relative -right-[7px] top-[10px] rounded-full bg-[#F34141] p-[2px] tablet:-right-4 tablet:top-[18px] tablet:p-2"
               onClick={() => {
-                setTooltipStatusState("");
+                setTooltipStatusState('');
               }}
             >
               <svg
@@ -49,12 +47,7 @@ export const Tooltip = ({ optionStatus }) => {
                 viewBox="0 0 255 255"
                 xmlSpace="preserve"
               >
-                <polygon
-                  className="fill-current"
-                  points="0,0 127.5,127.5 255,0"
-                  stroke="#F34141"
-                  strokeWidth="10"
-                />
+                <polygon className="fill-current" points="0,0 127.5,127.5 255,0" stroke="#F34141" strokeWidth="10" />
               </svg>
             </div>
           </div>

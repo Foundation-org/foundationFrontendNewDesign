@@ -1,15 +1,7 @@
-import { useSelector } from "react-redux";
-import BookmarkIcon from "../../pages/Dashboard/pages/QuestStartSection/components/BookmarkIcon";
+import { useSelector } from 'react-redux';
+import BookmarkIcon from '../../pages/Dashboard/pages/QuestStartSection/components/BookmarkIcon';
 
-const CardTopbar = ({
-  img,
-  alt,
-  badgeCount,
-  createdBy,
-  QuestTopic,
-  bookmarkStatus,
-  handleBookmark,
-}) => {
+const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic, bookmarkStatus, handleBookmark }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -29,7 +21,7 @@ const CardTopbar = ({
       ) : (
         <div className="relative z-50 h-fit w-fit">
           <img
-            src={"/assets/svgs/dashboard/badge.svg"}
+            src={'/assets/svgs/dashboard/badge.svg'}
             alt={alt}
             className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888px]"
           />
@@ -41,11 +33,7 @@ const CardTopbar = ({
       <h1 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">
         {QuestTopic}
       </h1>
-      <BookmarkIcon
-        bookmarkStatus={bookmarkStatus}
-        persistedTheme={persistedTheme}
-        handleBookmark={handleBookmark}
-      />
+      <BookmarkIcon bookmarkStatus={bookmarkStatus} persistedTheme={persistedTheme} handleBookmark={handleBookmark} />
     </div>
   );
 };

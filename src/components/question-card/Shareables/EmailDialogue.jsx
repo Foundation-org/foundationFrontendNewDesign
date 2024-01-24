@@ -1,14 +1,14 @@
-import { toast } from "sonner";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { sendEmail } from "../../../services/api/DialogueApis";
+import { toast } from 'sonner';
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { sendEmail } from '../../../services/api/DialogueApis';
 
 const EmailDialogue = ({ handleClose, id }) => {
   const { protocol, host } = window.location;
   let url = `${protocol}//${host}/quest/${id}`;
   const [payload, setPayload] = useState({
-    email: "",
-    subject: "",
+    email: '',
+    subject: '',
     message: `Here is the link ${url} of the quest. Please feel free to engage with the quest`,
   });
 
@@ -25,9 +25,9 @@ const EmailDialogue = ({ handleClose, id }) => {
     onSuccess: (resp) => {
       toast.success(resp.data.message);
       setPayload({
-        email: "",
-        subject: "",
-        message: "",
+        email: '',
+        subject: '',
+        message: '',
       });
       handleClose();
     },

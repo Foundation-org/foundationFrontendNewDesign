@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 const GuestTopbar = ({ createdBy, badgeCount, QuestTopic, img }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -17,11 +17,7 @@ const GuestTopbar = ({ createdBy, badgeCount, QuestTopic, img }) => {
         </div>
       ) : (
         <div className="relative h-fit w-fit">
-          <img
-            src={img}
-            alt="badge"
-            className="h-[28.379px] w-[22.722px] tablet:h-[47px] tablet:w-[38px]"
-          />
+          <img src={img} alt="badge" className="h-[28.379px] w-[22.722px] tablet:h-[47px] tablet:w-[38px]" />
           <p className="transform-center absolute z-50 text-[11.3px] font-[400] leading-normal text-[#F6F6F6] tablet:pb-3 tablet:text-[17px]">
             {badgeCount}
           </p>

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -27,11 +27,7 @@ const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
           </div>
         ) : (
           <div className="relative flex h-fit w-full items-center justify-center pb-[4.11px] laptop:pb-[15px]">
-            <img
-              src={img}
-              alt={alt}
-              className="h-[48.8px] w-[39px] tablet:h-[106px] tablet:w-[85px]"
-            />
+            <img src={img} alt={alt} className="h-[48.8px] w-[39px] tablet:h-[106px] tablet:w-[85px]" />
             <p className="absolute left-[50%] top-[30%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[19.5px] font-[400] leading-normal text-[#F6F6F6] tablet:top-[42%] tablet:pb-3 tablet:text-[42.5px] laptop:top-[39%]">
               {badgeCount}
             </p>

@@ -1,6 +1,6 @@
-import { toast } from "sonner";
-import { createStartQuest, updateChangeAnsStartQuest } from "../api/questsApi";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from 'sonner';
+import { createStartQuest, updateChangeAnsStartQuest } from '../api/questsApi';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function useStartQuest() {
   const queryClient = useQueryClient();
@@ -10,10 +10,10 @@ export function useStartQuest() {
 
     onSettled: async (_, error) => {
       if (error) {
-        toast.error(error.response.data.message.split(":")[1]);
+        toast.error(error.response.data.message.split(':')[1]);
       } else {
-        toast.success("Successfully Completed");
-        await queryClient.invalidateQueries({ queryKey: ["FeedData"] });
+        toast.success('Successfully Completed');
+        await queryClient.invalidateQueries({ queryKey: ['FeedData'] });
       }
     },
   });
@@ -27,10 +27,10 @@ export function useChangeAnswer() {
 
     onSettled: async (_, error) => {
       if (error) {
-        toast.error(error.response.data.message.split(":")[1]);
+        toast.error(error.response.data.message.split(':')[1]);
       } else {
-        toast.success("Successfully Completed");
-        await queryClient.invalidateQueries({ queryKey: ["FeedData"] });
+        toast.success('Successfully Completed');
+        await queryClient.invalidateQueries({ queryKey: ['FeedData'] });
       }
     },
   });

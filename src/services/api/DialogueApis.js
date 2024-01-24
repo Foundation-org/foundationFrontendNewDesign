@@ -1,7 +1,7 @@
-import api from "./Axios";
+import api from './Axios';
 
 export const sendEmail = async (data) => {
-  return await api.post("/user/send/email", {
+  return await api.post('/user/send/email', {
     email: data.email,
     subject: data.subject,
     message: data.message,

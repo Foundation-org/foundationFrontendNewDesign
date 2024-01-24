@@ -1,16 +1,10 @@
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 
-const BasicModal = ({
-  open,
-  handleClose,
-  children,
-  customStyle,
-  customClasses,
-}) => {
+const BasicModal = ({ open, handleClose, children, customStyle, customClasses }) => {
   const defaultStyle = {
-    position: "absolute",
-    width: "fit-content",
+    position: 'absolute',
+    width: 'fit-content',
     boxShadow: 5,
   };
 

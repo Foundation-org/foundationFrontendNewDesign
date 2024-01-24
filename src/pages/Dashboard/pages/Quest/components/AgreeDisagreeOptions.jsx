@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 const AgreeDisagreeOptions = ({
   number,
@@ -24,9 +24,7 @@ const AgreeDisagreeOptions = ({
   return (
     <div
       className={`${
-        label
-          ? "flex flex-col gap-[13px]"
-          : "flex flex-row items-center gap-[25px]"
+        label ? 'flex flex-col gap-[13px]' : 'flex flex-row items-center gap-[25px]'
       } mx-[22px] tablet:mx-[60px]`}
     >
       <div className="w-full">
@@ -34,18 +32,10 @@ const AgreeDisagreeOptions = ({
           <div className="flex w-full items-center">
             <div className="flex h-full w-[11.39px] items-center justify-center rounded-l-[5.387px] border-y border-s border-[#DEE6F7] bg-[#DEE6F7] px-[0px] py-[6px] dark:bg-[#9E9E9E] tablet:w-[23.5px] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:border-s-[3px] tablet:pb-[13px] tablet:pt-[14px] laptop:w-[25.2px]">
               {dragable ? (
-                persistedTheme === "dark" ? (
-                  <img
-                    src="/assets/svgs/dashboard/six-dots-dark.svg"
-                    alt="six dots"
-                    className="h-7"
-                  />
+                persistedTheme === 'dark' ? (
+                  <img src="/assets/svgs/dashboard/six-dots-dark.svg" alt="six dots" className="h-7" />
                 ) : (
-                  <img
-                    src="/assets/svgs/dashboard/six-dots.svg"
-                    alt="six dots"
-                    className="h-7"
-                  />
+                  <img src="/assets/svgs/dashboard/six-dots.svg" alt="six dots" className="h-7" />
                 )
               ) : null}
             </div>
@@ -65,9 +55,7 @@ const AgreeDisagreeOptions = ({
                     />
                   </div>
                 )}
-                {trash && (
-                  <img src="/assets/svgs/dashboard/trash2.svg" alt="trash" />
-                )}
+                {trash && <img src="/assets/svgs/dashboard/trash2.svg" alt="trash" />}
               </div>
             </div>
           </div>

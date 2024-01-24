@@ -1,9 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { userInfo } from "../../services/api/userAuth";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addUser } from "../../features/auth/authSlice";
+import { useMutation } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { userInfo } from '../../services/api/userAuth';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../features/auth/authSlice';
 
 const DashboardRedirect = () => {
   const navigate = useNavigate();
@@ -13,10 +13,10 @@ const DashboardRedirect = () => {
     mutationFn: userInfo,
     onSuccess: (res) => {
       dispatch(addUser(res.data));
-      navigate("/dashboard");
+      navigate('/dashboard');
     },
     onError: (error) => {
-      console.error("Error fetching user info:", error);
+      console.error('Error fetching user info:', error);
     },
   });
 

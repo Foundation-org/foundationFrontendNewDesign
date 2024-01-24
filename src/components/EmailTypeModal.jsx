@@ -1,9 +1,9 @@
-import { Fragment, useState, useEffect } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState, useEffect } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 
 export default function EmailTypeModal({ modalShow, email, handleEmailType }) {
   let [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   useEffect(() => {
     setIsOpen(modalShow);
@@ -48,10 +48,7 @@ export default function EmailTypeModal({ modalShow, email, handleEmailType }) {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title
-                  as="h3"
-                  className="text-center text-lg font-medium leading-6 text-[#838383]"
-                >
+                <Dialog.Title as="h3" className="text-center text-lg font-medium leading-6 text-[#838383]">
                   {email}
                 </Dialog.Title>
                 <div className="mt-2">
@@ -64,17 +61,11 @@ export default function EmailTypeModal({ modalShow, email, handleEmailType }) {
                   <label
                     htmlFor="personal"
                     className={`flex min-w-[8rem] cursor-pointer items-center justify-center gap-3 rounded-lg bg-[#4A8DBD] py-2 tablet:min-w-[10rem] ${
-                      value === "personal"
-                        ? "border-dark-blue"
-                        : "border-[#4A8DBD]"
+                      value === 'personal' ? 'border-dark-blue' : 'border-[#4A8DBD]'
                     } border-[3px]`}
                   >
                     <div>
-                      <img
-                        className="h-7 w-7 tablet:h-10 tablet:w-10"
-                        src="/assets/svgs/personal.svg"
-                        alt="personal"
-                      />
+                      <img className="h-7 w-7 tablet:h-10 tablet:w-10" src="/assets/svgs/personal.svg" alt="personal" />
                     </div>
                     <p className="text-lg font-medium text-white">Personal</p>
                   </label>
@@ -89,26 +80,15 @@ export default function EmailTypeModal({ modalShow, email, handleEmailType }) {
                   <label
                     htmlFor="work"
                     className={`flex min-w-[8rem] cursor-pointer items-center justify-center gap-3 rounded-lg bg-[#4A8DBD] py-2 tablet:min-w-[10rem] ${
-                      value === "work" ? "border-dark-blue" : "border-[#4A8DBD]"
+                      value === 'work' ? 'border-dark-blue' : 'border-[#4A8DBD]'
                     } border-[3px]`}
                   >
                     <div>
-                      <img
-                        className="h-7 w-7 tablet:h-10 tablet:w-10"
-                        src="/assets/svgs/work.svg"
-                        alt="work"
-                      />
+                      <img className="h-7 w-7 tablet:h-10 tablet:w-10" src="/assets/svgs/work.svg" alt="work" />
                     </div>
                     <p className="text-lg font-medium text-white">Work</p>
                   </label>
-                  <input
-                    type="radio"
-                    hidden
-                    id="work"
-                    name="radio"
-                    value="work"
-                    onChange={(e) => handleChange(e)}
-                  />
+                  <input type="radio" hidden id="work" name="radio" value="work" onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="mt-4 text-center">

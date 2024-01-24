@@ -1,20 +1,18 @@
-import { toast } from "sonner";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { resetaddOptionLimit } from "../../../features/quest/utilsSlice";
+import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
 
 const DeleteOption = (props) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const handleDeleteOption = () => {
-    const newArr = props.answersSelection.filter(
-      (item) => item.label !== props.answer,
-    );
+    const newArr = props.answersSelection.filter((item) => item.label !== props.answer);
 
     props.setAnswerSelection(newArr);
     dispatch(resetaddOptionLimit());
-    toast.success("Item deleted");
+    toast.success('Item deleted');
     props.handleEditClose();
     props.handleDeleteClose();
   };
@@ -33,9 +31,7 @@ const DeleteOption = (props) => {
         </button>
         <button
           className={` ${
-            persistedTheme === "dark"
-              ? "bg-[#333B46]"
-              : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+            persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
           } inset-0 w-full rounded-[4.7px] px-5 py-1 text-[8.52px]  font-semibold leading-normal text-[#EAEAEA] shadow-inner tablet:rounded-[10px] tablet:py-2 tablet:text-[20px]`}
           onClick={() => {
             props.handleDeleteClose();

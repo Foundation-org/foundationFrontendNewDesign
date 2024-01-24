@@ -1,15 +1,15 @@
-import { toast } from "sonner";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import React, { useEffect, useState } from "react";
+import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 
-import { Tooltip } from "../../../utils/Tooltip";
-import { resetaddOptionLimit } from "../../../features/quest/utilsSlice";
-import BasicModal from "../../BasicModal";
-import DeleteOption from "../../../pages/Dashboard/components/DeleteOption";
+import { Tooltip } from '../../../utils/Tooltip';
+import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
+import BasicModal from '../../BasicModal';
+import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 
-import * as questServices from "../../../services/api/questsApi";
-import ContentionIcon from "../../../assets/Quests/ContentionIcon";
+import * as questServices from '../../../services/api/questsApi';
+import ContentionIcon from '../../../assets/Quests/ContentionIcon';
 
 const SingleAnswerMultipleChoice = (props) => {
   const dispatch = useDispatch();
@@ -19,13 +19,13 @@ const SingleAnswerMultipleChoice = (props) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [answer, setAnswer] = useState(props.answer);
   const reset = {
-    name: "Ok",
-    color: "text-[#389CE3]",
-    tooltipName: "Please write something...",
-    tooltipStyle: "tooltip-info",
+    name: 'Ok',
+    color: 'text-[#389CE3]',
+    tooltipName: 'Please write something...',
+    tooltipStyle: 'tooltip-info',
   };
   const [checkOptionStatus, setCheckOptionStatus] = useState(reset);
-  const [prevValue, setPrevValue] = useState("");
+  const [prevValue, setPrevValue] = useState('');
 
   const handleDeleteClose = () => setDeleteModal(false);
 
@@ -60,35 +60,29 @@ const SingleAnswerMultipleChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
-    setCheckOptionStatus(
-      e.target.value.trim() === ""
-        ? reset
-        : { name: "Ok", color: "text-[#b0a00f]" },
-    );
+    setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
   };
 
   const optionVerification = async (value) => {
     if (prevValue === answer) return;
     setPrevValue(value);
     setCheckOptionStatus({
-      name: "Checking",
-      color: "text-[#0FB063]",
-      tooltipName: "Verifying your option. Please wait...",
-      tooltipStyle: "tooltip-success",
+      name: 'Checking',
+      color: 'text-[#0FB063]',
+      tooltipName: 'Verifying your option. Please wait...',
+      tooltipStyle: 'tooltip-success',
     });
     // option Validation
-    const { validatedAnswer, errorMessage } =
-      await questServices.answerValidation({
-        answer: value,
-      });
+    const { validatedAnswer, errorMessage } = await questServices.answerValidation({
+      answer: value,
+    });
     // If any error captured
     if (errorMessage) {
       return setCheckOptionStatus({
-        name: "Rejected",
-        color: "text-[#b00f0f]",
-        tooltipName:
-          "Please review your text for proper grammar while keeping our code of conduct in mind.",
-        tooltipStyle: "tooltip-error",
+        name: 'Rejected',
+        color: 'text-[#b00f0f]',
+        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+        tooltipStyle: 'tooltip-error',
       });
     }
     // Check Answer is unique
@@ -100,10 +94,10 @@ const SingleAnswerMultipleChoice = (props) => {
     });
     if (answerExist) {
       return setCheckOptionStatus({
-        name: "Rejected",
-        color: "text-[#b00f0f]",
-        tooltipName: "Found Duplication!",
-        tooltipStyle: "tooltip-error",
+        name: 'Rejected',
+        color: 'text-[#b00f0f]',
+        tooltipName: 'Found Duplication!',
+        tooltipStyle: 'tooltip-error',
         duplication: true,
       });
     }
@@ -111,10 +105,10 @@ const SingleAnswerMultipleChoice = (props) => {
     if (validatedAnswer) {
       setAnswer(validatedAnswer);
       setCheckOptionStatus({
-        name: "Ok",
-        color: "text-[#0FB063]",
-        tooltipName: "Answer is Verified",
-        tooltipStyle: "tooltip-success",
+        name: 'Ok',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Answer is Verified',
+        tooltipStyle: 'tooltip-success',
         isVerifiedAnswer: true,
       });
     }
@@ -132,11 +126,9 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   const handleDeleteOption = () => {
-    toast.success("Item deleted");
+    toast.success('Item deleted');
     setCheckOptionStatus(reset);
-    const newArr = props.answersSelection.filter(
-      (item) => item.label !== props.answer,
-    );
+    const newArr = props.answersSelection.filter((item) => item.label !== props.answer);
 
     props.setAnswerSelection(newArr);
     // props.setAddOptionLimit(0);
@@ -147,7 +139,7 @@ const SingleAnswerMultipleChoice = (props) => {
   return (
     <div
       className={`flex items-center  tablet:gap-[10px] tablet:pl-[1.75rem] ${
-        props.btnText === "Results" ? "tablet:mr-[30px]" : "tablet:mr-[65.36px]"
+        props.btnText === 'Results' ? 'tablet:mr-[30px]' : 'tablet:mr-[65.36px]'
       }`}
     >
       {/* =============== To Display Badges on Left of Option */}
@@ -189,10 +181,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-[#435059] outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[32px] tablet:text-[19px]"
                 value={answer}
                 onChange={handleInputChange}
-                onBlur={(e) =>
-                  e.target.value.trim() !== "" &&
-                  optionVerification(e.target.value.trim())
-                }
+                onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
               />
             ) : (
               <h1 className="pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
@@ -213,7 +202,7 @@ const SingleAnswerMultipleChoice = (props) => {
         </div>
         <div
           className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px]  text-[9.238px] dark:border-[#DEE6F7] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
-            props.btnText === "Results" ? "pointer-events-none" : ""
+            props.btnText === 'Results' ? 'pointer-events-none' : ''
           }`}
           onClick={handleCheckChange}
         >
@@ -228,17 +217,14 @@ const SingleAnswerMultipleChoice = (props) => {
               />
             </div>
 
-            {props.btnText === "Results" ? (
+            {props.btnText === 'Results' ? (
               <>
-                {props.selectedPercentages &&
-                props.selectedPercentages?.[props.answer.trim()] ? (
+                {props.selectedPercentages && props.selectedPercentages?.[props.answer.trim()] ? (
                   <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                     {props.selectedPercentages[props.answer.trim()]}
                   </span>
                 ) : (
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                    0%
-                  </span>
+                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
                 )}
               </>
             ) : null}
@@ -246,7 +232,7 @@ const SingleAnswerMultipleChoice = (props) => {
         </div>
 
         {/* =============== To Display Contention and Trash Right of Option */}
-        {props.btnText !== "Results" ? (
+        {props.btnText !== 'Results' ? (
           <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]">
             {props.deleteable ? (
               <img
@@ -257,10 +243,7 @@ const SingleAnswerMultipleChoice = (props) => {
               />
             ) : (
               <div className="flex items-center gap-1 laptop:gap-[18px]">
-                <div
-                  id="custom-yello-checkbox"
-                  className="flex h-full items-center "
-                >
+                <div id="custom-yello-checkbox" className="flex h-full items-center ">
                   <div className="cursor-pointer" onClick={handleContendChange}>
                     <ContentionIcon
                       classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
@@ -282,28 +265,19 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         ) : (
           <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] dark:bg-[#000] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
-            {props.btnText === "Results" ? (
+            {props.btnText === 'Results' ? (
               <>
-                {props.contendPercentages &&
-                props.contendPercentages?.[props.answer.trim()] ? (
+                {props.contendPercentages && props.contendPercentages?.[props.answer.trim()] ? (
                   <div className="flex items-center gap-1 tablet:gap-[10px]">
-                    <ContentionIcon
-                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                      checked={true}
-                    />
+                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={true} />
                     <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                       {props.contendPercentages[props.answer.trim()]}
                     </span>
                   </div>
                 ) : (
                   <div className="flex items-center gap-1 tablet:gap-[10px]">
-                    <ContentionIcon
-                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                      checked={false}
-                    />
-                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                      0%
-                    </span>
+                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
                   </div>
                 )}
               </>

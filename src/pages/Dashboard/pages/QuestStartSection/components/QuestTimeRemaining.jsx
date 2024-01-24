@@ -1,14 +1,13 @@
-import { useState } from "react";
-import { calculateRemainingTime } from "../../../../../utils";
+import { useState } from 'react';
+import { calculateRemainingTime } from '../../../../../utils';
 
 const QuestTimeRemaining = ({ show, questStartData }) => {
-  const [resultString, setResultString] = useState("");
+  const [resultString, setResultString] = useState('');
 
   const handleClick = () => {
     const result = calculateRemainingTime(
       questStartData?.updatedAt,
-      questStartData?.startQuestData &&
-        questStartData?.startQuestData.data.length,
+      questStartData?.startQuestData && questStartData?.startQuestData.data.length,
       questStartData.usersChangeTheirAns,
     );
 
@@ -19,7 +18,7 @@ const QuestTimeRemaining = ({ show, questStartData }) => {
     <div>
       {show ? (
         <div>
-          {questStartData?.usersChangeTheirAns === "" ? (
+          {questStartData?.usersChangeTheirAns === '' ? (
             <h4 className="cursor-pointer text-[9px] font-normal text-[#85898C] tablet:text-[16.58px] laptop:text-[1rem]">
               Your selection is final and cannot be changed.
             </h4>

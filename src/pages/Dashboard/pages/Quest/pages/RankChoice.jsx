@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import {
   answerValidation,
   checkAnswerExist,
@@ -8,23 +8,23 @@ import {
   createInfoQuest,
   getTopicOfValidatedQuestion,
   questionValidation,
-} from "../../../../../services/api/questsApi";
-import { toast } from "sonner";
-import { useSelector } from "react-redux";
-import { Tooltip } from "../../../../../utils/Tooltip";
-import Options from "../components/Options";
-import CustomSwitch from "../../../../../components/CustomSwitch";
-import ChangeChoiceOption from "../components/ChangeChoiceOption";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { FaSpinner } from "react-icons/fa";
+} from '../../../../../services/api/questsApi';
+import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
+import { Tooltip } from '../../../../../utils/Tooltip';
+import Options from '../components/Options';
+import CustomSwitch from '../../../../../components/CustomSwitch';
+import ChangeChoiceOption from '../components/ChangeChoiceOption';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { FaSpinner } from 'react-icons/fa';
 
 const RankChoice = () => {
   const navigate = useNavigate();
-  const [question, setQuestion] = useState("");
-  const [prevValue, setPrevValue] = useState("");
+  const [question, setQuestion] = useState('');
+  const [prevValue, setPrevValue] = useState('');
   const [addOption, setAddOption] = useState(false);
   const [changeState, setChangeState] = useState(false);
-  const [changedOption, setChangedOption] = useState("");
+  const [changedOption, setChangedOption] = useState('');
   const [optionsCount, setOptionsCount] = useState(3);
   const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -33,28 +33,28 @@ const RankChoice = () => {
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       id: `index-${index}`,
-      question: "",
+      question: '',
       selected: false,
       optionStatus: {
-        name: "Ok",
-        color: "text-[#389CE3]",
-        tooltipName: "Please write something...",
-        tooltipStyle: "tooltip-info",
+        name: 'Ok',
+        color: 'text-[#389CE3]',
+        tooltipName: 'Please write something...',
+        tooltipStyle: 'tooltip-info',
       },
     })),
   );
   const reset = {
-    name: "Ok",
-    color: "text-[#389CE3]",
-    tooltipName: "Please write something...",
-    tooltipStyle: "tooltip-info",
+    name: 'Ok',
+    color: 'text-[#389CE3]',
+    tooltipName: 'Please write something...',
+    tooltipStyle: 'tooltip-info',
   };
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
   const [checkOptionStatus, setCheckOptionStatus] = useState({
-    name: "Ok",
-    color: "text-[#389CE3]",
-    tooltipName: "Please write something...",
-    tooltipStyle: "tooltip-info",
+    name: 'Ok',
+    color: 'text-[#389CE3]',
+    tooltipName: 'Please write something...',
+    tooltipStyle: 'tooltip-info',
   });
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -63,15 +63,15 @@ const RankChoice = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        toast.success("Successfully Created");
+        toast.success('Successfully Created');
         setTimeout(() => {
           setLoading(false);
-          navigate("/dashboard");
+          navigate('/dashboard');
         }, 2000);
       }
     },
     onError: (err) => {
-      console.log("Mutation Error", err);
+      console.log('Mutation Error', err);
       setLoading(false);
     },
   });
@@ -81,16 +81,14 @@ const RankChoice = () => {
     // To check uniqueness of the question
     const constraintResponse = await checkUniqueQuestion(question);
 
-    if (question === "") {
+    if (question === '') {
       setLoading(false);
-      return toast.warning("Post cannot be empty");
+      return toast.warning('Post cannot be empty');
     }
     if (!constraintResponse.data.isUnique) {
       setLoading(false);
 
-      return toast.warning(
-        "This post is not unique. A similar post already exists.",
-      );
+      return toast.warning('This post is not unique. A similar post already exists.');
     }
 
     // getTopicOfValidatedQuestion
@@ -100,13 +98,13 @@ const RankChoice = () => {
     // If any error captured
     if (errorMessage) {
       setLoading(false);
-      return toast.error("Oops! Something Went Wrong.");
+      return toast.error('Oops! Something Went Wrong.');
     }
 
     const params = {
       Question: question,
-      whichTypeQuestion: "ranked choise",
-      QuestionCorrect: "No option",
+      whichTypeQuestion: 'ranked choise',
+      QuestionCorrect: 'No option',
       QuestAnswers: typedValues,
       usersAddTheirAns: addOption,
       usersChangeTheirAns: changedOption,
@@ -114,14 +112,12 @@ const RankChoice = () => {
       QuestTopic: questTopic,
     };
 
-    const isEmptyAnswer = params.QuestAnswers.some(
-      (answer) => answer.question.trim() === "",
-    );
+    const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
 
     if (isEmptyAnswer) {
       setLoading(false);
 
-      return toast.warning("Option cannot be empty");
+      return toast.warning('Option cannot be empty');
     }
     createQuest(params);
   };
@@ -131,34 +127,33 @@ const RankChoice = () => {
     if (prevValue === question.trim()) return;
     setPrevValue(value);
     setCheckQuestionStatus({
-      name: "Checking",
-      color: "text-[#0FB063]",
-      tooltipName: "Verifying your question. Please wait...",
-      tooltipStyle: "tooltip-success",
+      name: 'Checking',
+      color: 'text-[#0FB063]',
+      tooltipName: 'Verifying your question. Please wait...',
+      tooltipStyle: 'tooltip-success',
     });
     // Question Validation
     const { validatedQuestion, errorMessage } = await questionValidation({
       question: value,
-      queryType: "rank choice",
+      queryType: 'rank choice',
     });
     // If any error captured
     if (errorMessage) {
       return setCheckQuestionStatus({
-        name: "Rejected",
-        color: "text-[#b00f0f]",
-        tooltipName:
-          "Please review your text for proper grammar while keeping our code of conduct in mind.",
-        tooltipStyle: "tooltip-error",
+        name: 'Rejected',
+        color: 'text-[#b00f0f]',
+        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+        tooltipStyle: 'tooltip-error',
       });
     }
     // Question is validated and status is Ok
     setQuestion(validatedQuestion);
     setPrevValue(validatedQuestion);
     setCheckQuestionStatus({
-      name: "Ok",
-      color: "text-[#0FB063]",
-      tooltipName: "Question is Verified",
-      tooltipStyle: "tooltip-success",
+      name: 'Ok',
+      color: 'text-[#0FB063]',
+      tooltipName: 'Question is Verified',
+      tooltipStyle: 'tooltip-success',
       isVerifiedQuestion: true,
     });
   };
@@ -180,10 +175,10 @@ const RankChoice = () => {
     newTypedValues[index] = {
       ...newTypedValues[index],
       optionStatus: {
-        name: "Checking",
-        color: "text-[#0FB063]",
-        tooltipName: "Verifying your answer. Please wait...",
-        tooltipStyle: "tooltip-success",
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your answer. Please wait...',
+        tooltipStyle: 'tooltip-success',
       },
     };
     setTypedValues(newTypedValues);
@@ -199,11 +194,10 @@ const RankChoice = () => {
       newTypedValues[index] = {
         ...newTypedValues[index],
         optionStatus: {
-          name: "Rejected",
-          color: "text-[#b00f0f]",
-          tooltipName:
-            "Please review your text for proper grammar while keeping our code of conduct in mind.",
-          tooltipStyle: "tooltip-error",
+          name: 'Rejected',
+          color: 'text-[#b00f0f]',
+          tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+          tooltipStyle: 'tooltip-error',
         },
       };
       return setTypedValues(newTypedValues);
@@ -220,10 +214,10 @@ const RankChoice = () => {
         ...newTypedValues[index],
         // question: "",
         optionStatus: {
-          name: "Rejected",
-          color: "text-[#b00f0f]",
-          tooltipName: "Found Duplication!",
-          tooltipStyle: "tooltip-error",
+          name: 'Rejected',
+          color: 'text-[#b00f0f]',
+          tooltipName: 'Found Duplication!',
+          tooltipStyle: 'tooltip-error',
           duplication: true,
         },
       };
@@ -241,10 +235,10 @@ const RankChoice = () => {
         ...newTypedValues[index],
         question: validatedAnswer,
         optionStatus: {
-          name: "Ok",
-          color: "text-[#0FB063]",
-          tooltipName: "Answer is Verified",
-          tooltipStyle: "tooltip-success",
+          name: 'Ok',
+          color: 'text-[#0FB063]',
+          tooltipName: 'Answer is Verified',
+          tooltipStyle: 'tooltip-success',
           isVerifiedAnswer: true,
         },
       };
@@ -259,13 +253,13 @@ const RankChoice = () => {
       ...prevValues,
       {
         id: `index-${optionsCount}`,
-        question: "",
+        question: '',
         selected: false,
         optionStatus: {
-          name: "Ok",
-          color: "text-[#389CE3]",
-          tooltipName: "Please write something...",
-          tooltipStyle: "tooltip-info",
+          name: 'Ok',
+          color: 'text-[#389CE3]',
+          tooltipName: 'Please write something...',
+          tooltipStyle: 'tooltip-info',
         },
       },
     ]);
@@ -278,14 +272,14 @@ const RankChoice = () => {
       ...newTypedValues[index],
       question: value,
       optionStatus:
-        value.trim() === ""
+        value.trim() === ''
           ? {
-              name: "Ok",
-              color: "text-[#389CE3]",
-              tooltipName: "Please write something...",
-              tooltipStyle: "tooltip-info",
+              name: 'Ok',
+              color: 'text-[#389CE3]',
+              tooltipName: 'Please write something...',
+              tooltipStyle: 'tooltip-info',
             }
-          : { name: "Ok", color: "text-[#b0a00f]" },
+          : { name: 'Ok', color: 'text-[#b0a00f]' },
     };
     setTypedValues(newTypedValues);
   };
@@ -303,9 +297,7 @@ const RankChoice = () => {
       });
       setTypedValues(newTypedValues);
 
-      const ChangedOption = newTypedValues[index].selected
-        ? [{ answers: newTypedValues[index].question }]
-        : [];
+      const ChangedOption = newTypedValues[index].selected ? [{ answers: newTypedValues[index].question }] : [];
       setSelectedValues(ChangedOption);
     } else {
       const ChangedOption = { answers: newTypedValues[index].question };
@@ -313,9 +305,7 @@ const RankChoice = () => {
       if (newTypedValues[index].selected) {
         setSelectedValues((prevValues) => [...prevValues, ChangedOption]);
       } else {
-        setSelectedValues((prevValues) =>
-          prevValues.filter((item) => item.answers !== ChangedOption.answers),
-        );
+        setSelectedValues((prevValues) => prevValues.filter((item) => item.answers !== ChangedOption.answers));
       }
     }
   };
@@ -324,13 +314,11 @@ const RankChoice = () => {
     if (optionsCount > 2) {
       const newOptionsCount = Math.max(optionsCount - 1, 2);
 
-      setTypedValues((prevTypedValues) =>
-        prevTypedValues.filter((_, index) => index !== indexToRemove),
-      );
+      setTypedValues((prevTypedValues) => prevTypedValues.filter((_, index) => index !== indexToRemove));
 
       setOptionsCount(newOptionsCount);
     } else {
-      console.warn("Cannot remove the last two options.");
+      console.warn('Cannot remove the last two options.');
     }
   };
 
@@ -352,14 +340,9 @@ const RankChoice = () => {
   };
 
   const checkError = () => {
-    const hasTooltipError = typedValues.some(
-      (value) => value.optionStatus.tooltipStyle === "tooltip-error",
-    );
+    const hasTooltipError = typedValues.some((value) => value.optionStatus.tooltipStyle === 'tooltip-error');
 
-    if (
-      checkQuestionStatus.tooltipStyle === "tooltip-error" ||
-      hasTooltipError
-    ) {
+    if (checkQuestionStatus.tooltipStyle === 'tooltip-error' || hasTooltipError) {
       return true;
     } else {
       return false;
@@ -369,14 +352,11 @@ const RankChoice = () => {
   return (
     <div>
       <h4 className="mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] dark:text-[#AAA] tablet:mt-[25.8px] tablet:text-[16.58px] laptop:mt-[47px] laptop:text-[25px]">
-        Create a selection of choices that can be arranged in order of
-        preference.
+        Create a selection of choices that can be arranged in order of preference.
       </h4>
       <div
         className={`${
-          persistedTheme === "dark"
-            ? "border-[1px] border-[#858585] tablet:border-[2px]"
-            : ""
+          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
         } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
@@ -389,17 +369,11 @@ const RankChoice = () => {
             onChange={(e) => {
               setQuestion(e.target.value);
               setCheckQuestionStatus({
-                name: "Ok",
-                color:
-                  e.target.value.trim() === ""
-                    ? "text-[#389CE3]"
-                    : "text-[#b0a00f]",
+                name: 'Ok',
+                color: e.target.value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
               });
             }}
-            onBlur={(e) =>
-              e.target.value.trim() !== "" &&
-              questionVerification(e.target.value.trim())
-            }
+            onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             value={question}
             placeholder="Make a statement or pose a question"
           />
@@ -448,9 +422,7 @@ const RankChoice = () => {
                           removeOption={() => removeOption(index)}
                           number={index}
                           optionStatus={typedValues[index].optionStatus}
-                          answerVerification={(value) =>
-                            answerVerification(index, value)
-                          }
+                          answerVerification={(value) => answerVerification(index, value)}
                         />
                       </li>
                     )}
@@ -494,11 +466,7 @@ const RankChoice = () => {
             onClick={() => handleSubmit()}
             disabled={loading === true || checkError() ? true : false}
           >
-            {loading === true ? (
-              <FaSpinner className="animate-spin text-[#EAEAEA]" />
-            ) : (
-              "Submit"
-            )}
+            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
           </button>
         </div>
       </div>

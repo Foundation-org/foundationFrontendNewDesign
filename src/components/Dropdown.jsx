@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const Dropdown = ({ label, title, items, handleSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,10 +22,9 @@ const Dropdown = ({ label, title, items, handleSelect }) => {
           <img
             src="/assets/svgs/dashboard/down-arrow.svg"
             alt="down-arrow"
-            className={`h-[2px] w-[4.71px] tablet:h-[6px] tablet:w-[14px] ${isOpen
-                ? "rotate-180 transform transition-all duration-300"
-                : "transition-all duration-300"
-              }`}
+            className={`h-[2px] w-[4.71px] tablet:h-[6px] tablet:w-[14px] ${
+              isOpen ? 'rotate-180 transform transition-all duration-300' : 'transition-all duration-300'
+            }`}
           />
         </label>
 

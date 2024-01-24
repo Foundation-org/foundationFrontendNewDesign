@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import * as prefActions from "../../../../features/preferences/prefSlice";
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import * as prefActions from '../../../../features/preferences/prefSlice';
 
 // icons
-import { IoClose } from "react-icons/io5";
-import { GrClose } from "react-icons/gr";
-import Cross from "../../../../assets/preferences/Cross";
+import { IoClose } from 'react-icons/io5';
+import { GrClose } from 'react-icons/gr';
+import Cross from '../../../../assets/preferences/Cross';
 
 const TopicPreferences = ({ columns, setColumns, handleClose }) => {
   const dispatch = useDispatch();
@@ -22,11 +22,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
   const onDragEnd = ({ source, destination }) => {
     if (destination === undefined || destination === null) return null;
 
-    if (
-      source.droppableId === destination.droppableId &&
-      destination.index === source.index
-    )
-      return null;
+    if (source.droppableId === destination.droppableId && destination.index === source.index) return null;
 
     const start = columns[source.droppableId];
     const end = columns[destination.droppableId];
@@ -47,9 +43,8 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
       const draggedItem = start.list[source.index];
 
       if (
-        source.droppableId === "All" &&
-        (destination.droppableId === "Preferences" ||
-          destination.droppableId === "Block")
+        source.droppableId === 'All' &&
+        (destination.droppableId === 'Preferences' || destination.droppableId === 'Block')
       ) {
         setItemsWithCross((prevItems) => [...prevItems, draggedItem]);
       }
@@ -80,9 +75,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
   };
 
   const handleRemoveItemFromList = (text, sourceColumnId) => {
-    const updatedList = columns[sourceColumnId].list.filter(
-      (item) => item !== text,
-    );
+    const updatedList = columns[sourceColumnId].list.filter((item) => item !== text);
 
     const updatedColumn = {
       ...columns[sourceColumnId],
@@ -94,7 +87,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
       [sourceColumnId]: updatedColumn,
     }));
 
-    if (sourceColumnId !== "All") {
+    if (sourceColumnId !== 'All') {
       setColumns((prevColumns) => ({
         ...prevColumns,
         All: {
@@ -112,7 +105,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
       <div onClick={handleClose}>
         <Cross
           styles={
-            "w-[0.8rem] h-[0.8rem] tablet:w-5 tablet:h-5 laptop:w-[27px] laptop:h-[27px] absolute top-[0.38rem] right-[0.32rem] tablet:right-[18px] tablet:top-[15px] laptop:right-[1.28rem] laptop:top-[1.44rem] cursor-pointer"
+            'w-[0.8rem] h-[0.8rem] tablet:w-5 tablet:h-5 laptop:w-[27px] laptop:h-[27px] absolute top-[0.38rem] right-[0.32rem] tablet:right-[18px] tablet:top-[15px] laptop:right-[1.28rem] laptop:top-[1.44rem] cursor-pointer'
           }
         />
       </div>
@@ -132,7 +125,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
             <button
               className="absolute right-3 top-[9px] laptop:top-1/2 laptop:-translate-x-1/2 laptop:-translate-y-1/2"
               onClick={() => {
-                dispatch(prefActions.setTopicSearch(""));
+                dispatch(prefActions.setTopicSearch(''));
               }}
             >
               <IoClose className="h-3 w-3 text-[#C9C8C8] dark:text-white laptop:h-[27px] laptop:w-[27px]" />
@@ -160,7 +153,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                   <div className="flex h-full w-full flex-col laptop:w-[19.125rem]">
                     <h2
                       className={`flex h-[2rem] w-full items-center justify-center laptop:h-[4.18rem] ${
-                        col.id === "All" ? "rounded-t-[0.5rem]" : ""
+                        col.id === 'All' ? 'rounded-t-[0.5rem]' : ''
                       } bg-[#F2F2F2] text-center text-[1rem] font-semibold text-[#535353] dark:bg-[#000] dark:text-white tablet:text-[1.4rem] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem]`}
                     >
                       {col.id}
@@ -174,28 +167,24 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                       >
                         {col.list?.length >= 1 ? (
                           col.list.map((text, index) => (
-                            <Draggable
-                              key={text}
-                              draggableId={text}
-                              index={index}
-                            >
+                            <Draggable key={text} draggableId={text} index={index}>
                               {(provided, snapshot) => (
                                 <div
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
                                   className={`flex h-[19.7px] items-center tablet:h-[1.78rem] laptop:h-[2.78rem] ${
-                                    snapshot.isDragging ? "" : ""
+                                    snapshot.isDragging ? '' : ''
                                   }`}
                                 >
                                   <div
                                     className={`${
                                       snapshot.isDragging
-                                        ? "border-[#5FA3D5]"
-                                        : "border-[#DEE6F7] dark:border-[#282828]"
+                                        ? 'border-[#5FA3D5]'
+                                        : 'border-[#DEE6F7] dark:border-[#282828]'
                                     } flex h-[19.7px] w-[0.6rem] min-w-[0.6rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] dark:bg-[#8E8E8E] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
                                   >
-                                    {persistedTheme === "dark" ? (
+                                    {persistedTheme === 'dark' ? (
                                       <img
                                         src="/assets/svgs/dashboard/six-dots-dark.svg"
                                         alt="six dots"
@@ -212,20 +201,16 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                                   <p
                                     className={`${
                                       snapshot.isDragging
-                                        ? "border-[#5FA3D5] bg-[#F2F6FF]"
-                                        : "border-[#ACACAC] bg-[#FCFCFD] dark:bg-[#282828]"
+                                        ? 'border-[#5FA3D5] bg-[#F2F6FF]'
+                                        : 'border-[#ACACAC] bg-[#FCFCFD] dark:bg-[#282828]'
                                     } flex h-[19.7px] w-fit select-none items-center gap-[5px] truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] dark:text-white tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px]`}
                                   >
                                     {text}
                                     <GrClose
                                       className={`${
-                                        itemsWithCross.includes(text)
-                                          ? "block"
-                                          : "hidden"
+                                        itemsWithCross.includes(text) ? 'block' : 'hidden'
                                       } h-[9.4px] w-[9.4px] cursor-pointer text-[#C9C8C8] dark:text-white tablet:h-[16px] tablet:w-[16px] laptop:h-[20px] laptop:w-[20px]`}
-                                      onClick={() =>
-                                        handleRemoveItemFromList(text, col.id)
-                                      }
+                                      onClick={() => handleRemoveItemFromList(text, col.id)}
                                     />
                                   </p>
                                 </div>

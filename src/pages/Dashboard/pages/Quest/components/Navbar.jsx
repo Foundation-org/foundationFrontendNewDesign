@@ -11,8 +11,8 @@ const Navbar = ({ handleTab, tab }) => {
           <button
             className={`${
               tab === 3
-                ? "bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]"
-                : "border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]"
+                ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
+                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
             } quest-topbar`}
             onClick={() => {
               handleTab(3);
@@ -23,8 +23,8 @@ const Navbar = ({ handleTab, tab }) => {
           <button
             className={`${
               tab === 1
-                ? "bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]"
-                : "border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]"
+                ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
+                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
             } quest-topbar`}
             onClick={() => {
               handleTab(1);
@@ -35,8 +35,8 @@ const Navbar = ({ handleTab, tab }) => {
           <button
             className={`${
               tab === 0
-                ? "bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]"
-                : "border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]"
+                ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
+                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
             } quest-topbar`}
             onClick={() => {
               handleTab(0);
@@ -57,8 +57,8 @@ const Navbar = ({ handleTab, tab }) => {
           <button
             className={`${
               tab === 2
-                ? "bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]"
-                : "border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]"
+                ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
+                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
             } quest-topbar`}
             onClick={() => {
               handleTab(2);
@@ -69,8 +69,8 @@ const Navbar = ({ handleTab, tab }) => {
           <button
             className={`${
               tab === 4
-                ? "bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]"
-                : "border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]"
+                ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
+                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
             } quest-topbar`}
             onClick={() => {
               handleTab(4);

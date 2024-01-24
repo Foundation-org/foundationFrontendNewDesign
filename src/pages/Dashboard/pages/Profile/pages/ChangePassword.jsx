@@ -1,10 +1,10 @@
-import { toast } from "sonner";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { FaSpinner } from "react-icons/fa";
-import { useMutation } from "@tanstack/react-query";
-import { changePassword } from "../../../../../services/api/userAuth";
-import Form from "../components/Form";
+import { toast } from 'sonner';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { FaSpinner } from 'react-icons/fa';
+import { useMutation } from '@tanstack/react-query';
+import { changePassword } from '../../../../../services/api/userAuth';
+import Form from '../components/Form';
 
 const ChangePassword = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -13,9 +13,9 @@ const ChangePassword = () => {
   const [showCrntPass, setShowCrntPass] = useState(false);
   const [showNewPass, setShowNewPass] = useState(false);
   const [showNewCnfrmPass, setShowNewCnfrmPass] = useState(false);
-  const [crntPass, setCrntPass] = useState("");
-  const [newPass, setNewPass] = useState("");
-  const [cnfrmNewPass, setCnfrmNewPass] = useState("");
+  const [crntPass, setCrntPass] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [cnfrmNewPass, setCnfrmNewPass] = useState('');
   const [loading, setLoading] = useState(false);
 
   const savePassword = async (event) => {
@@ -47,9 +47,7 @@ const ChangePassword = () => {
         setLoading(false);
       }
     } else {
-      toast.warning(
-        "Passwords do not match. Please make sure your new password and retype password match.",
-      );
+      toast.warning('Passwords do not match. Please make sure your new password and retype password match.');
       setLoading(false);
     }
   };
@@ -86,7 +84,7 @@ const ChangePassword = () => {
       <form onSubmit={savePassword}>
         <div
           className={`${
-            persistedTheme === "dark" ? "dark-shadow-inside" : "shadow-inside"
+            persistedTheme === 'dark' ? 'dark-shadow-inside' : 'shadow-inside'
           }  relative mx-6 h-full rounded-[11px] pb-[45px] pt-[12.9px] tablet:mx-6 tablet:rounded-[24.8px] tablet:pb-[88px] tablet:pt-[50px] laptop:mx-[106px] laptop:rounded-[45px]`}
         >
           <div className="mx-5 flex flex-col items-center gap-5 tablet:mx-6 tablet:gap-6 laptop:mx-12 laptop:gap-[100px]">
@@ -146,11 +144,7 @@ const ChangePassword = () => {
               className="rounded-[6.45px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[12.65px] py-[5.94px] text-[9.08px] font-semibold leading-normal text-white 2xl:text-[32px] tablet:mr-[18.5px] tablet:rounded-[23px] tablet:px-[45px] tablet:py-5 tablet:text-[20px]"
               disabled={loading === true ? true : false}
             >
-              {loading === true ? (
-                <FaSpinner className="animate-spin text-[#EAEAEA]" />
-              ) : (
-                "Save"
-              )}
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
             </button>
           </div>
         </div>

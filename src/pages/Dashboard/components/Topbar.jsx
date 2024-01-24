@@ -1,9 +1,9 @@
-import { toast } from "sonner";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Link, useLocation } from "react-router-dom";
-import { TopbarItems } from "../../../constants/topbar";
-import api from "../../../services/api/Axios";
+import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { TopbarItems } from '../../../constants/topbar';
+import api from '../../../services/api/Axios';
 
 const Topbar = () => {
   const location = useLocation();
@@ -13,32 +13,30 @@ const Topbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await api.post("user/logout");
+      const res = await api.post('user/logout');
       if (res.status === 200) {
         localStorage.clear();
-        navigate("/");
+        navigate('/');
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message.split(":")[1]);
+      toast.error(error.response.data.message.split(':')[1]);
     }
   };
 
   return (
     <div
       className={`${
-        persistedTheme === "dark"
-          ? "bg-[#0C0C0D]"
-          : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+        persistedTheme === 'dark' ? 'bg-[#0C0C0D]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
       } static flex h-[4.18rem] w-full flex-col items-center justify-between pb-2 tablet:h-[116px] laptop:h-[92px] laptop:flex-row laptop:pb-0 `}
     >
       {/* logo */}
       <div className="relative flex w-full items-center justify-between px-[17px] py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
-        {localStorage.getItem("isGuestMode") ? (
+        {localStorage.getItem('isGuestMode') ? (
           <div
             className="flex h-full items-center justify-center space-x-2 laptop:hidden"
             onClick={() => {
-              navigate("/profile");
+              navigate('/profile');
             }}
           >
             <div className="relative block h-fit w-fit laptop:hidden">
@@ -55,16 +53,13 @@ const Topbar = () => {
               <h3
                 className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] dark:text-white tablet:text-[20px]"
                 onClick={() => {
-                  navigate("/profile");
+                  navigate('/profile');
                 }}
               >
                 Guest User
               </h3>
               <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
-                {persistedUserInfo?.balance
-                  ? persistedUserInfo?.balance.toFixed(2)
-                  : 0}{" "}
-                FDX
+                {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
               </h3>
             </div>
           </div>
@@ -72,7 +67,7 @@ const Topbar = () => {
           <div
             className="flex h-full cursor-pointer items-center justify-center space-x-2 laptop:hidden"
             onClick={() => {
-              navigate("/profile");
+              navigate('/profile');
             }}
           >
             <div className="relative block h-fit w-fit laptop:hidden">
@@ -90,23 +85,13 @@ const Topbar = () => {
                 My Profile
               </h3>
               <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
-                {persistedUserInfo?.balance
-                  ? persistedUserInfo?.balance.toFixed(2)
-                  : 0}{" "}
-                FDX
+                {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
               </h3>
             </div>
           </div>
         )}
-        <Link
-          to={"/dashboard"}
-          className="flex w-[85.81px] justify-center tablet:w-[149.47px]"
-        >
-          <img
-            src="/assets/svgs/logo.svg"
-            alt="logo"
-            className="w-[34.5px] tablet:w-[69.2px] laptop:w-[5.75rem]"
-          />
+        <Link to={'/dashboard'} className="flex w-[85.81px] justify-center tablet:w-[149.47px]">
+          <img src="/assets/svgs/logo.svg" alt="logo" className="w-[34.5px] tablet:w-[69.2px] laptop:w-[5.75rem]" />
         </Link>
         <div className="flex w-[85.81px] items-center justify-end gap-4 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
           {/* <div
@@ -122,10 +107,10 @@ const Topbar = () => {
               2
             </p>
           </div> */}
-          {localStorage.getItem("isGuestMode") ? (
+          {localStorage.getItem('isGuestMode') ? (
             <div
               onClick={() => {
-                navigate("/signup");
+                navigate('/signup');
               }}
             >
               <img
@@ -148,32 +133,27 @@ const Topbar = () => {
       {/* items */}
       <ul className="flex w-full items-end justify-around gap-[2.19rem] px-5 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-[57px] laptop:gap-[3.12rem] laptop:px-0">
         {TopbarItems?.map((item) => (
-          <li
-            key={item.id}
-            className="relative flex w-[85.8px] items-center justify-center tablet:w-[210px]"
-          >
+          <li key={item.id} className="relative flex w-[85.8px] items-center justify-center tablet:w-[210px]">
             <Link
               to={item.path}
               className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
-                location.pathname === item.path ||
-                location.pathname === `${item.path}/`
-                  ? "text-white"
-                  : persistedTheme === "dark"
-                    ? "text-[#92959D]"
-                    : "text-[#BEDEF4]"
+                location.pathname === item.path || location.pathname === `${item.path}/`
+                  ? 'text-white'
+                  : persistedTheme === 'dark'
+                    ? 'text-[#92959D]'
+                    : 'text-[#BEDEF4]'
               }`}
             >
-              {location.pathname === item.path ||
-              location.pathname === `${item.path}/` ? (
+              {location.pathname === item.path || location.pathname === `${item.path}/` ? (
                 <img
                   src={item.icon}
                   alt={item.title}
                   className={`absolute h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:h-[27px] laptop:w-[26px] ${
                     item.id === 3
-                      ? "-left-[4px] tablet:left-[11px] laptop:-left-[13px]"
+                      ? '-left-[4px] tablet:left-[11px] laptop:-left-[13px]'
                       : item.id === 2
-                        ? "left-[8px] tablet:left-[40px] laptop:left-[20px]"
-                        : "left-[10px] tablet:left-[40px] laptop:left-[26px]"
+                        ? 'left-[8px] tablet:left-[40px] laptop:left-[20px]'
+                        : 'left-[10px] tablet:left-[40px] laptop:left-[26px]'
                   }`}
                 />
               ) : null}
@@ -197,23 +177,17 @@ const Topbar = () => {
           </p>
         </div> */}
 
-        {localStorage.getItem("isGuestMode") ? (
+        {localStorage.getItem('isGuestMode') ? (
           <div
             onClick={() => {
-              navigate("/signup");
+              navigate('/signup');
             }}
           >
-            <img
-              src="/assets/svgs/dashboard/signupIcon.png"
-              alt="signup Icon"
-            />
+            <img src="/assets/svgs/dashboard/signupIcon.png" alt="signup Icon" />
           </div>
         ) : (
           <div onClick={handleLogout}>
-            <img
-              src="/assets/svgs/dashboard/arrow-right-outline.svg"
-              alt="arrow-right"
-            />
+            <img src="/assets/svgs/dashboard/arrow-right-outline.svg" alt="arrow-right" />
           </div>
         )}
       </div>

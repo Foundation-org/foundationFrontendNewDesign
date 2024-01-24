@@ -33,12 +33,7 @@ const Link = () => {
       </g>
       <defs>
         <clipPath id="clip0_984_1868">
-          <rect
-            width="9.5655"
-            height="9.20955"
-            fill="white"
-            transform="translate(0.563477 6.77441) rotate(-41.8623)"
-          />
+          <rect width="9.5655" height="9.20955" fill="white" transform="translate(0.563477 6.77441) rotate(-41.8623)" />
         </clipPath>
       </defs>
     </svg>

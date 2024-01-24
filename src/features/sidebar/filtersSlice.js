@@ -1,33 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialColumns = {
   All: {
-    id: "All",
+    id: 'All',
     list: [],
   },
   Preferences: {
-    id: "Preferences",
+    id: 'Preferences',
     list: [],
   },
   Block: {
-    id: "Block",
+    id: 'Block',
     list: [],
   },
 };
 
 const initialState = {
-  expandedView: localStorage.getItem("expandedView") === "true" ? true : false,
-  searchData: "",
-  filterByStatus: "",
-  filterByType: "",
-  filterByScope: "",
-  filterBySort: "Newest First",
+  expandedView: localStorage.getItem('expandedView') === 'true' ? true : false,
+  searchData: '',
+  filterByStatus: '',
+  filterByType: '',
+  filterByScope: '',
+  filterBySort: 'Newest First',
   columns: initialColumns,
   clearFilter: false,
 };
 
 export const filtersSlice = createSlice({
-  name: "filters",
+  name: 'filters',
   initialState,
   reducers: {
     toggleExapandedView: (state, action) => {
@@ -52,9 +52,7 @@ export const filtersSlice = createSlice({
       const newList = action.payload?.data.data || [];
 
       const filteredList = newList?.filter(
-        (item) =>
-          !state.columns.Block.list.includes(item) &&
-          !state.columns.Preferences.list.includes(item),
+        (item) => !state.columns.Block.list.includes(item) && !state.columns.Preferences.list.includes(item),
       );
 
       state.columns.All = {

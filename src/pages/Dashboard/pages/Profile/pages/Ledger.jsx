@@ -1,20 +1,12 @@
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useDebounce } from "../../../../../utils/useDebounce";
-import {
-  getAllLedgerData,
-  searchLedger,
-} from "../../../../../services/api/userAuth";
-import { columns } from "../components/LedgerUtils";
-import {
-  flexRender,
-  getCoreRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import { useSelector } from "react-redux";
-import LedgerTableTopbar from "../components/LedgerTableTopbar";
-import { format } from "date-fns";
+import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useDebounce } from '../../../../../utils/useDebounce';
+import { getAllLedgerData, searchLedger } from '../../../../../services/api/userAuth';
+import { columns } from '../components/LedgerUtils';
+import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
+import { useSelector } from 'react-redux';
+import LedgerTableTopbar from '../components/LedgerTableTopbar';
+import { format } from 'date-fns';
 
 export default function BasicTable() {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -23,8 +15,8 @@ export default function BasicTable() {
   const rowsPerPage = 10;
   const [totalPages, setTotalPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sort, setsort] = useState("newest");
-  const [filterText, setFilterText] = useState("");
+  const [sort, setsort] = useState('newest');
+  const [filterText, setFilterText] = useState('');
   const [selectedOption, setSelectedOption] = useState(false);
   const debouncedSearch = useDebounce(filterText, 1000);
   const [ledgerData, setLedgerData] = useState([]);
@@ -32,14 +24,14 @@ export default function BasicTable() {
 
   const { data } = useQuery({
     queryFn: () => {
-      if (debouncedSearch === "") {
-        console.log("inside... calling");
+      if (debouncedSearch === '') {
+        console.log('inside... calling');
         return getAllLedgerData(currentPage, itemsPerPage, sort);
       } else {
         return searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
       }
     },
-    queryKey: ["ledgerData", sort, debouncedSearch],
+    queryKey: ['ledgerData', sort, debouncedSearch],
   });
 
   // let ledgerData;
@@ -51,19 +43,14 @@ export default function BasicTable() {
   };
 
   const findingLedger = async () => {
-    const data = await searchLedger(
-      currentPage,
-      itemsPerPage,
-      sort,
-      debouncedSearch,
-    );
+    const data = await searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
     if (data) {
       setLedgerData(data);
     }
   };
 
   useEffect(() => {
-    if (debouncedSearch === "") {
+    if (debouncedSearch === '') {
       fetchData();
     } else {
       findingLedger();
@@ -93,7 +80,7 @@ export default function BasicTable() {
     // onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    columnResizeMode: "onChange", // onChange onEnd
+    columnResizeMode: 'onChange', // onChange onEnd
   });
 
   //   custom pagination
@@ -132,7 +119,7 @@ export default function BasicTable() {
       </h1>
       <div
         className={`${
-          persistedTheme === "dark" ? "ledger-dark" : "ledger-light"
+          persistedTheme === 'dark' ? 'ledger-dark' : 'ledger-light'
         } mx-[17px] mb-10 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-11 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
       >
         <LedgerTableTopbar
@@ -149,17 +136,17 @@ export default function BasicTable() {
             style={{
               minWidth:
                 window.innerWidth <= 1700 && window.innerWidth >= 744
-                  ? "600px"
+                  ? '600px'
                   : window.innerWidth <= 744 && window.innerWidth >= 0
-                    ? "350px"
-                    : "auto",
+                    ? '350px'
+                    : 'auto',
               width:
                 window.innerWidth <= 1700 && window.innerWidth >= 900
-                  ? "100%"
+                  ? '100%'
                   : window.innerWidth <= 900 && window.innerWidth >= 744
-                    ? "120%"
+                    ? '120%'
                     : window.innerWidth <= 744 && window.innerWidth >= 0
-                      ? "100%"
+                      ? '100%'
                       : table.getCenterTotalSize(),
             }}
             {...{
@@ -199,12 +186,7 @@ export default function BasicTable() {
                         header.column.columnDef.size,
                       )} */}
                       {/* {header.column.columnDef.header} */}
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                       <div
                         // onMouseDown={header.getResizeHandler()}
                         // onTouchStart={header.getResizeHandler()}
@@ -213,9 +195,7 @@ export default function BasicTable() {
                         {...{
                           onMouseDown: header.getResizeHandler(),
                           onTouchStart: header.getResizeHandler(),
-                          className: `resizer ${
-                            header.column.getIsResizing() ? "isResizing" : ""
-                          }`,
+                          className: `resizer ${header.column.getIsResizing() ? 'isResizing' : ''}`,
                           // style: {
                           //   transform:
                           //     columnResizeMode === 'onEnd' &&
@@ -234,9 +214,7 @@ export default function BasicTable() {
             </thead>
             <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] md:text-[1.25rem] tablet:text-[0.875rem]">
               {table.getRowModel().rows.length === 0 ? (
-                <h4 className="mt-12 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem]">
-                  No results found
-                </h4>
+                <h4 className="mt-12 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem]">No results found</h4>
               ) : (
                 table.getRowModel().rows.map((row) => (
                   <tr
@@ -264,32 +242,23 @@ export default function BasicTable() {
                           // console.log(cell.column.id) //txID
                         }
                         {
-                          cell.column.id === "txID"
-                            ? `${cell.getValue().slice(0, 4)}..${cell
-                                .getValue()
-                                .slice(-3)}`
-                            : cell.column.id === "txDate"
-                              ? format(
-                                  new Date(cell.getValue()),
-                                  "dd MMM yyyy, hh:mm a",
-                                )
-                              : cell.column.id === "txFrom" &&
-                                  cell.getValue() !== "DAO Treasury" &&
-                                  cell.getValue() !== "dao" &&
+                          cell.column.id === 'txID'
+                            ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
+                            : cell.column.id === 'txDate'
+                              ? format(new Date(cell.getValue()), 'dd MMM yyyy, hh:mm a')
+                              : cell.column.id === 'txFrom' &&
+                                  cell.getValue() !== 'DAO Treasury' &&
+                                  cell.getValue() !== 'dao' &&
                                   cell.getValue() !== persistedUserInfo?.uuid
-                                ? `${cell.getValue().slice(0, 4)}..${cell
-                                    .getValue()
-                                    .slice(-3)}`
+                                ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
                                 : cell.getValue() === persistedUserInfo?.uuid
-                                  ? "My Account"
-                                  : cell.column.id === "txTo" &&
-                                      cell.getValue() !== "DAO Treasury" &&
-                                      cell.getValue() !== "dao"
-                                    ? `${cell.getValue().slice(0, 4)}..${cell
-                                        .getValue()
-                                        .slice(-3)}`
-                                    : cell.getValue() === "dao"
-                                      ? "DAO"
+                                  ? 'My Account'
+                                  : cell.column.id === 'txTo' &&
+                                      cell.getValue() !== 'DAO Treasury' &&
+                                      cell.getValue() !== 'dao'
+                                    ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
+                                    : cell.getValue() === 'dao'
+                                      ? 'DAO'
                                       : cell.getValue()
                           // txDate
                         }
@@ -316,7 +285,7 @@ export default function BasicTable() {
             >
               <img
                 className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px] "
-                src={"./assets/svgs/arrow-back.svg"}
+                src={'./assets/svgs/arrow-back.svg'}
                 alt=""
               />
             </button>
@@ -333,8 +302,8 @@ export default function BasicTable() {
                       <button
                         className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] pt-[2px] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:pt-[0px] tablet:text-[13px] ${
                           pageNumber === currentPage
-                            ? "border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-[#252D37]"
-                            : "bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]"
+                            ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-[#252D37]'
+                            : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]'
                         }`}
                         key={pageNumber}
                         onClick={() => handlePageClick(pageNumber)}
@@ -357,7 +326,7 @@ export default function BasicTable() {
             >
               <img
                 className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px] "
-                src={"./assets/svgs/arrow-forward.svg"}
+                src={'./assets/svgs/arrow-forward.svg'}
                 alt=""
               />
             </button>

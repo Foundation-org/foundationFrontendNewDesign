@@ -1,18 +1,8 @@
-import { useSelector } from "react-redux";
-import Close from "../../../assets/Close";
-import Twitter from "../../../assets/Twitter";
+import { useSelector } from 'react-redux';
+import Close from '../../../assets/Close';
+import Twitter from '../../../assets/Twitter';
 
-const TwitterDialogue = ({
-  handleClose,
-  createdBy,
-  img,
-  alt,
-  badgeCount,
-  title,
-  question,
-  timeAgo,
-  id,
-}) => {
+const TwitterDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, question, timeAgo, id }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
   let url = `${protocol}//${host}/quest/${id}`;
@@ -45,20 +35,14 @@ const TwitterDialogue = ({
               </div>
             ) : (
               <div className="relative h-fit pb-[15px]">
-                <img
-                  src={img}
-                  alt={alt}
-                  className="h-[18.379px] w-[22.722px] tablet:h-[60px] tablet:w-[48px]"
-                />
+                <img src={img} alt={alt} className="h-[18.379px] w-[22.722px] tablet:h-[60px] tablet:w-[48px]" />
                 <p className="absolute left-[50%] top-[24%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[9px] font-[400] leading-normal text-[#F6F6F6] tablet:top-[39%] tablet:pb-3 tablet:text-[24px]">
                   {badgeCount}
                 </p>
               </div>
             )}
             <div>
-              <h1 className="text-[8.25px] font-semibold leading-normal text-[#5B5B5B] tablet:text-[22px]">
-                {title}
-              </h1>
+              <h1 className="text-[8.25px] font-semibold leading-normal text-[#5B5B5B] tablet:text-[22px]">{title}</h1>
               <p className="text-center text-[5.2px] font-medium leading-normal text-[#9A9A9A] tablet:text-[14px]">
                 Technology
               </p>
@@ -66,7 +50,7 @@ const TwitterDialogue = ({
             <p></p>
           </div>
           <h1 className="mt-[7px] text-[7.58px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold">
-            {question?.endsWith("?") ? "Q." : "S."} {question}
+            {question?.endsWith('?') ? 'Q.' : 'S.'} {question}
           </h1>
           <div className="mr-[30px] flex w-full justify-end gap-[19.14px] tablet:gap-[42px]">
             <button className=" mt-[16.2px] w-[81.8px] rounded-[7.1px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:mt-[24px] tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[18px]">
@@ -82,9 +66,7 @@ const TwitterDialogue = ({
               alt="clock"
               className="h-[7.64px] w-[7.64px] tablet:h-4 tablet:w-4"
             />
-            <p className="text-[6px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[10px]">
-              {timeAgo}
-            </p>
+            <p className="text-[6px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[10px]">{timeAgo}</p>
           </div>
         </div>
         {/* Share Button */}

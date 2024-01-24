@@ -1,37 +1,37 @@
 export const changeOptions = [
   {
     id: 1,
-    title: "Anytime",
-    value: "Anytime",
+    title: 'Anytime',
+    value: 'Anytime',
   },
   {
     id: 2,
-    title: "Daily",
-    value: "Daily",
+    title: 'Daily',
+    value: 'Daily',
   },
   {
     id: 3,
-    title: "Weekly",
-    value: "Weekly",
+    title: 'Weekly',
+    value: 'Weekly',
   },
   {
     id: 4,
-    title: "Monthly",
-    value: "Monthly",
+    title: 'Monthly',
+    value: 'Monthly',
   },
   {
     id: 5,
-    title: "Yearly",
-    value: "Yearly",
+    title: 'Yearly',
+    value: 'Yearly',
   },
   {
     id: 6,
-    title: "2 Years",
-    value: "TwoYears",
+    title: '2 Years',
+    value: 'TwoYears',
   },
   {
     id: 7,
-    title: "4 Years",
-    value: "FourYears",
+    title: '4 Years',
+    value: 'FourYears',
   },
 ];

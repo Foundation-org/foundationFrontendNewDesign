@@ -1,30 +1,28 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // components
-import Dropdown2 from "../../../components/Dropdown2";
-import CustomSwitch2 from "../../../components/CustomSwitch2";
-import BasicModal from "../../../components/BasicModal";
-import TopicPreferences from "./topicpreferences";
+import Dropdown2 from '../../../components/Dropdown2';
+import CustomSwitch2 from '../../../components/CustomSwitch2';
+import BasicModal from '../../../components/BasicModal';
+import TopicPreferences from './topicpreferences';
 
 // extras
-import * as filtersActions from "../../../features/sidebar/filtersSlice";
+import * as filtersActions from '../../../features/sidebar/filtersSlice';
 
 // icons
-import { GrClose } from "react-icons/gr";
-import { topicPreferencesModalStyle } from "../../../assets/styles";
+import { GrClose } from 'react-icons/gr';
+import { topicPreferencesModalStyle } from '../../../assets/styles';
 
 const SidebarLeft = ({ columns, setColumns }) => {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
-  const [localExpanded, setlocalExpaneded] = useState(
-    filterStates.expandedView,
-  );
+  const [localExpanded, setlocalExpaneded] = useState(filterStates.expandedView);
 
   const [multipleOption, setMultipleOption] = useState(
-    localStorage.getItem("filterByState") !== undefined
-      ? localStorage.getItem("filterByState") === "true"
+    localStorage.getItem('filterByState') !== undefined
+      ? localStorage.getItem('filterByState') === 'true'
         ? true
         : false
       : false,
@@ -34,17 +32,14 @@ const SidebarLeft = ({ columns, setColumns }) => {
 
   const handleSwitchChange = () => {
     setLocalMe(!multipleOption);
-    dispatch(filtersActions.setFilterByScope(multipleOption ? "All" : "Me"));
-    localStorage.setItem("filterByState", !multipleOption ? "true" : "false");
+    dispatch(filtersActions.setFilterByScope(multipleOption ? 'All' : 'Me'));
+    localStorage.setItem('filterByState', !multipleOption ? 'true' : 'false');
     setMultipleOption(!multipleOption);
   };
 
   const handleExpendedView = () => {
     setlocalExpaneded(!filterStates.expandedView);
-    localStorage.setItem(
-      "expandedView",
-      !filterStates.expandedView ? "true" : "false",
-    );
+    localStorage.setItem('expandedView', !filterStates.expandedView ? 'true' : 'false');
     dispatch(filtersActions.toggleExapandedView());
   };
 
@@ -65,10 +60,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
               <h1 className="ml-[5px] flex items-center gap-2 text-[20px] font-medium leading-normal text-[#707175] dark:text-white">
                 Expanded View
               </h1>
-              <CustomSwitch2
-                enabled={localExpanded}
-                setEnabled={handleExpendedView}
-              />
+              <CustomSwitch2 enabled={localExpanded} setEnabled={handleExpendedView} />
             </div>
             <div className="relative">
               <div className="relative h-[45px] w-[212px]">
@@ -91,36 +83,26 @@ const SidebarLeft = ({ columns, setColumns }) => {
                 <button
                   className="absolute right-3 top-4"
                   onClick={() => {
-                    dispatch(filtersActions.setSearchData(""));
+                    dispatch(filtersActions.setSearchData(''));
                   }}
                 >
                   <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
                 </button>
               )}
               {!filterStates.searchData && (
-                <img
-                  src="/assets/svgs/dashboard/search.svg"
-                  alt="search"
-                  className="absolute right-3 top-4 h-4 w-4"
-                />
+                <img src="/assets/svgs/dashboard/search.svg" alt="search" className="absolute right-3 top-4 h-4 w-4" />
               )}
             </div>
           </div>
 
           <h1 className="flex w-[212px] items-center gap-2 pb-[31px] pt-[33px] text-[22px] font-[500] leading-normal text-[#888] dark:text-white">
-            <img
-              src="/assets/svgs/dashboard/filter.svg"
-              alt="filter"
-              className="h-[1.188rem] w-[1.188rem]"
-            />
+            <img src="/assets/svgs/dashboard/filter.svg" alt="filter" className="h-[1.188rem] w-[1.188rem]" />
             Filters
           </h1>
           <button
             onClick={handleTopicPref}
             className={`${
-              persistedTheme === "dark"
-                ? "bg-[#EDEDED]"
-                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+              persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             }  h-[45px] w-[212px] rounded-[10px] px-5 py-2 text-[18px] font-medium text-white focus:outline-none dark:text-[#707175]`}
           >
             Topic Preferences
@@ -131,61 +113,29 @@ const SidebarLeft = ({ columns, setColumns }) => {
             customStyle={topicPreferencesModalStyle}
             customClasses="rounded-[0.9375rem] tablet:rounded-[2.31rem] w-[75vw] h-[90vh] bg-[#FCFCFD] dark:bg-[#3E3E3E] border-[6px] border-[#F2F2F2] dark:border-[#8B8B8B]"
           >
-            <TopicPreferences
-              columns={columns}
-              setColumns={setColumns}
-              handleClose={handleTopicPref}
-            />
+            <TopicPreferences columns={columns} setColumns={setColumns} handleClose={handleTopicPref} />
           </BasicModal>
           <div className="mt-[46px] flex flex-col gap-9">
             <Dropdown2
-              label={"Status"}
-              title={
-                filterStates.filterByStatus
-                  ? filterStates.filterByStatus
-                  : "All"
-              }
-              items={[
-                "All",
-                "Unanswered",
-                "Answered",
-                "Completed",
-                "Changeable",
-              ]}
+              label={'Status'}
+              title={filterStates.filterByStatus ? filterStates.filterByStatus : 'All'}
+              items={['All', 'Unanswered', 'Answered', 'Completed', 'Changeable']}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterByStatus(item));
               }}
             />
             <Dropdown2
-              label={"Type"}
-              title={
-                filterStates.filterByType ? filterStates.filterByType : "All"
-              }
-              items={[
-                "All",
-                "Yes/No",
-                "Agree/Disagree",
-                "Like/Dislike",
-                "Multiple Choise",
-                "Ranked Choise",
-              ]}
+              label={'Type'}
+              title={filterStates.filterByType ? filterStates.filterByType : 'All'}
+              items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choise', 'Ranked Choise']}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterByType(item));
               }}
             />
             <Dropdown2
-              label={"Sort"}
-              title={
-                filterStates.filterBySort
-                  ? filterStates.filterBySort
-                  : "Newest First"
-              }
-              items={[
-                "Most Popular",
-                "Last Updated",
-                "Oldest First",
-                "Newest First",
-              ]}
+              label={'Sort'}
+              title={filterStates.filterBySort ? filterStates.filterBySort : 'Newest First'}
+              items={['Most Popular', 'Last Updated', 'Oldest First', 'Newest First']}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterBySort(item));
               }}
@@ -199,9 +149,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
           </div>
           <button
             className={`${
-              persistedTheme === "dark"
-                ? "bg-[#F0F0F0]"
-                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+              persistedTheme === 'dark' ? 'bg-[#F0F0F0]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             }  inset-0 w-[192px] rounded-[0.938rem] px-5 py-2 text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
             onClick={() => {
               dispatch(filtersActions.resetFilters());
@@ -211,12 +159,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
           </button>
         </div>
         <h1 className="flex w-[212px] items-center gap-[0.9rem] pb-[31px] pt-[33px] text-[22px] font-[500] leading-normal text-[#7C7C7C] dark:text-white">
-          <img
-            src="/assets/svgs/support.svg"
-            alt="support"
-            className="h-[2.84rem] w-[2.84rem]"
-          />{" "}
-          Support
+          <img src="/assets/svgs/support.svg" alt="support" className="h-[2.84rem] w-[2.84rem]" /> Support
         </h1>
       </div>
       {/* sidebar mobile */}
@@ -234,7 +177,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
               <button
                 className="absolute right-3 top-[9px]"
                 onClick={() => {
-                  dispatch(filtersActions.setSearchData(""));
+                  dispatch(filtersActions.setSearchData(''));
                 }}
               >
                 <GrClose className="h-3 w-3 text-black dark:text-white" />
@@ -259,61 +202,39 @@ const SidebarLeft = ({ columns, setColumns }) => {
                 Treasury
               </h4>
               <p className="whitespace-nowrap text-[6.227px] text-[#616161] dark:text-[#BDBCBC] tablet:text-[12.651px]">
-                <span>{localStorage.getItem("treasuryAmount")} FDX</span>
+                <span>{localStorage.getItem('treasuryAmount')} FDX</span>
               </p>
             </div>
           </div>
         </div>
         <div className="mt-3 flex items-end justify-between gap-[6px] tablet:mt-[21px]">
           <Dropdown2
-            label={"Status"}
-            title={
-              filterStates.filterByStatus ? filterStates.filterByStatus : "All"
-            }
-            items={["All", "Unanswered", "Answered", "Completed", "Changeable"]}
+            label={'Status'}
+            title={filterStates.filterByStatus ? filterStates.filterByStatus : 'All'}
+            items={['All', 'Unanswered', 'Answered', 'Completed', 'Changeable']}
             handleSelect={(item) => {
               dispatch(filtersActions.setFilterByStatus(item));
             }}
           />
           <Dropdown2
-            label={"Type"}
-            title={
-              filterStates.filterByType ? filterStates.filterByType : "All"
-            }
-            items={[
-              "All",
-              "Yes/No",
-              "Agree/Disagree",
-              "Like/Dislike",
-              "Multiple Choise",
-              "Ranked Choise",
-            ]}
+            label={'Type'}
+            title={filterStates.filterByType ? filterStates.filterByType : 'All'}
+            items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choise', 'Ranked Choise']}
             handleSelect={(item) => {
               dispatch(filtersActions.setFilterByType(item));
             }}
           />
           <Dropdown2
-            label={"Sort"}
-            title={
-              filterStates.filterBySort
-                ? filterStates.filterBySort
-                : "Newest First"
-            }
-            items={[
-              "Most Popular",
-              "Last Updated",
-              "Oldest First",
-              "Newest First",
-            ]}
+            label={'Sort'}
+            title={filterStates.filterBySort ? filterStates.filterBySort : 'Newest First'}
+            items={['Most Popular', 'Last Updated', 'Oldest First', 'Newest First']}
             handleSelect={(item) => {
               dispatch(filtersActions.setFilterBySort(item));
             }}
           />
           <button
             className={`${
-              persistedTheme === "dark"
-                ? "bg-[#333B46]"
-                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+              persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             }  inset-0 w-full rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
             onClick={() => {
               dispatch(filtersActions.resetFilters());
@@ -325,9 +246,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
         <div className="mt-[9px] flex items-center justify-between gap-[4px] tablet:mt-[21px]">
           <button
             className={`${
-              persistedTheme === "dark"
-                ? "bg-[#333B46]"
-                : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
+              persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             }  inset-0 w-4/6 rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
             onClick={handleTopicPref}
           >
@@ -337,10 +256,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
             <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">
               Expanded View
             </h1>
-            <CustomSwitch2
-              enabled={localExpanded}
-              setEnabled={handleExpendedView}
-            />
+            <CustomSwitch2 enabled={localExpanded} setEnabled={handleExpendedView} />
           </div>
           <div className="flex w-full items-center justify-center gap-[6px]">
             <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">

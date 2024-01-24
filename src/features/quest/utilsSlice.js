@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   addOptionLimit: 0,
 };
 
 export const utilsSlice = createSlice({
-  name: "questUtils",
+  name: 'questUtils',
   initialState,
   reducers: {
     updateaddOptionLimit: (state) => {

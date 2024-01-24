@@ -1,6 +1,6 @@
 // import React from "react";
-import { useSelector } from "react-redux";
-import { Tooltip } from "../../../../../utils/Tooltip";
+import { useSelector } from 'react-redux';
+import { Tooltip } from '../../../../../utils/Tooltip';
 // import "react-tooltip/dist/react-tooltip.css";
 // import { Tooltip } from "react-tooltip";
 
@@ -29,9 +29,7 @@ const MultipleChoiceOptions = ({
   return (
     <div
       className={`${
-        label
-          ? "flex flex-col gap-[13px]"
-          : "flex flex-row items-center gap-[25px]"
+        label ? 'flex flex-col gap-[13px]' : 'flex flex-row items-center gap-[25px]'
       } ml-[21px] mr-[22.4px] tablet:ml-[51px] tablet:mr-[71px]`}
     >
       {!allowInput ? (
@@ -39,18 +37,10 @@ const MultipleChoiceOptions = ({
           <div className="flex w-full items-center">
             <div className="flex h-full w-[14.7px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[7px] py-[6px] dark:bg-[#9E9E9E] tablet:w-[38px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px]">
               {dragable ? (
-                persistedTheme === "dark" ? (
-                  <img
-                    src="/assets/svgs/dashboard/six-dots-dark.svg"
-                    alt="six dots"
-                    className="h-7"
-                  />
+                persistedTheme === 'dark' ? (
+                  <img src="/assets/svgs/dashboard/six-dots-dark.svg" alt="six dots" className="h-7" />
                 ) : (
-                  <img
-                    src="/assets/svgs/dashboard/six-dots.svg"
-                    alt="six dots"
-                    className="h-7"
-                  />
+                  <img src="/assets/svgs/dashboard/six-dots.svg" alt="six dots" className="h-7" />
                 )
               ) : null}
             </div>
@@ -70,9 +60,7 @@ const MultipleChoiceOptions = ({
                     />
                   </div>
                 )}
-                {trash && (
-                  <img src="/assets/svgs/dashboard/trash2.svg" alt="trash" />
-                )}
+                {trash && <img src="/assets/svgs/dashboard/trash2.svg" alt="trash" />}
               </div>
             </div>
           </div>
@@ -81,18 +69,10 @@ const MultipleChoiceOptions = ({
         <div className="flex items-center">
           <div className="laptop:h-[74px] laptop:w-[40px] flex h-[24.8px] w-[13.46px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] px-[7px] dark:bg-[#9E9E9E] tablet:mt-0 tablet:h-[49.6px] tablet:w-[28.2px] tablet:rounded-l-[10.3px] tablet:pb-[13px] tablet:pt-[14px]">
             {dragable ? (
-              persistedTheme === "dark" ? (
-                <img
-                  src="/assets/svgs/dashboard/six-dots-dark.svg"
-                  alt="six dots"
-                  className="h-7"
-                />
+              persistedTheme === 'dark' ? (
+                <img src="/assets/svgs/dashboard/six-dots-dark.svg" alt="six dots" className="h-7" />
               ) : (
-                <img
-                  src="/assets/svgs/dashboard/six-dots.svg"
-                  alt="six dots"
-                  className="h-7"
-                />
+                <img src="/assets/svgs/dashboard/six-dots.svg" alt="six dots" className="h-7" />
               )
             ) : null}
           </div>
@@ -109,13 +89,10 @@ const MultipleChoiceOptions = ({
               <input
                 className="laptop:py-[18px] laptop:text-[1.875rem] w-full border-y-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem]"
                 onChange={(e) => handleChange(e.target.value)}
-                onBlur={(e) =>
-                  e.target.value.trim() !== "" &&
-                  answerVerification(e.target.value.trim())
-                }
+                onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value.trim())}
                 value={typedValue}
               />
-              {title === "MultipleChoice" && trash && (
+              {title === 'MultipleChoice' && trash && (
                 <button
                   id={`test${number}`}
                   className={`laptop:text-[1.875rem] border-y-[1px]  border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:text-[17.54px] ${optionStatus?.color} py-[0.29rem]`}
@@ -144,9 +121,7 @@ const MultipleChoiceOptions = ({
                 id={`test${number}`}
                 className={`laptop:rounded-r-2xl laptop:text-[1.875rem] relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#222325] tablet:rounded-r-[10.3px] tablet:text-[17.54px] ${optionStatus.color} py-[0.29rem]`}
               >
-                <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">
-                  {optionStatus?.name}
-                </div>
+                <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">{optionStatus?.name}</div>
                 <Tooltip optionStatus={optionStatus} />
               </button>
 
@@ -207,7 +182,7 @@ const MultipleChoiceOptions = ({
                 </div>
               )}
 
-              {title === "RankChoice" && trash ? (
+              {title === 'RankChoice' && trash ? (
                 <>
                   {optionsCount > 0 && (
                     <div

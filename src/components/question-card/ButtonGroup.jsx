@@ -1,17 +1,14 @@
-import { toast } from "sonner";
-import { useMutation } from "@tanstack/react-query";
-import { useDispatch, useSelector } from "react-redux";
-import { getStartQuestInfo } from "../../services/api/questsApi";
-import { resetQuests } from "../../features/quest/questsSlice";
-import {
-  getButtonText,
-  getButtonVariants,
-} from "../../utils/questionCard/SingleQuestCard";
-import { Button } from "../ui/Button";
-import { FaSpinner } from "react-icons/fa";
+import { toast } from 'sonner';
+import { useMutation } from '@tanstack/react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import { getStartQuestInfo } from '../../services/api/questsApi';
+import { resetQuests } from '../../features/quest/questsSlice';
+import { getButtonText, getButtonVariants } from '../../utils/questionCard/SingleQuestCard';
+import { Button } from '../ui/Button';
+import { FaSpinner } from 'react-icons/fa';
 
-import * as questUtilsActions from "../../features/quest/utilsSlice";
-import * as filterActions from "../../features/sidebar/filtersSlice";
+import * as questUtilsActions from '../../features/quest/utilsSlice';
+import * as filterActions from '../../features/sidebar/filtersSlice';
 
 const ButtonGroup = ({
   usersAddTheirAns,
@@ -48,28 +45,16 @@ const ButtonGroup = ({
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   const uuidExists = answers
-    ? answers?.some(
-        (item) =>
-          item.uuid === persistedUserInfo?.uuid ||
-          item.uuid === localStorage.getItem("uId"),
-      )
+    ? answers?.some((item) => item.uuid === persistedUserInfo?.uuid || item.uuid === localStorage.getItem('uId'))
     : false;
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
     answerSelectionArray.forEach((item, index) => {
-      if (
-        apiResponse.selected.some(
-          (selectedItem) => selectedItem.question === item.label,
-        )
-      ) {
+      if (apiResponse.selected.some((selectedItem) => selectedItem.question === item.label)) {
         answerSelectionArray[index].check = true;
       }
 
-      if (
-        apiResponse.contended.some(
-          (contendedItem) => contendedItem.question === item.label,
-        )
-      ) {
+      if (apiResponse.contended.some((contendedItem) => contendedItem.question === item.label)) {
         answerSelectionArray[index].contend = true;
       }
     });
@@ -81,68 +66,45 @@ const ButtonGroup = ({
     onSuccess: (res) => {
       setHowManyTimesAnsChanged(res.data.data.length);
       if (
-        whichTypeQuestion === "agree/disagree" ||
-        whichTypeQuestion === "yes/no" ||
-        whichTypeQuestion === "like/dislike"
+        whichTypeQuestion === 'agree/disagree' ||
+        whichTypeQuestion === 'yes/no' ||
+        whichTypeQuestion === 'like/dislike'
       ) {
         if (
-          res?.data.data[res.data.data.length - 1].selected === "Agree" ||
-          res?.data.data[res.data.data.length - 1].selected === "Yes" ||
-          res?.data.data[res.data.data.length - 1].selected === "Like"
+          res?.data.data[res.data.data.length - 1].selected === 'Agree' ||
+          res?.data.data[res.data.data.length - 1].selected === 'Yes' ||
+          res?.data.data[res.data.data.length - 1].selected === 'Like'
         ) {
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].selected,
-            true,
-            false,
-          );
+          handleToggleCheck(res.data.data[res.data.data.length - 1].selected, true, false);
         }
         if (
-          res?.data.data[res.data.data.length - 1].contended === "Agree" ||
-          res?.data.data[res.data.data.length - 1].contended === "Yes" ||
-          res?.data.data[res.data.data.length - 1].contended === "Like"
+          res?.data.data[res.data.data.length - 1].contended === 'Agree' ||
+          res?.data.data[res.data.data.length - 1].contended === 'Yes' ||
+          res?.data.data[res.data.data.length - 1].contended === 'Like'
         ) {
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].contended,
-            false,
-            true,
-          );
+          handleToggleCheck(res.data.data[res.data.data.length - 1].contended, false, true);
         }
         if (
-          res?.data.data[res.data.data.length - 1].contended === "Disagree" ||
-          res?.data.data[res.data.data.length - 1].contended === "No" ||
-          res?.data.data[res.data.data.length - 1].contended === "Dislike"
+          res?.data.data[res.data.data.length - 1].contended === 'Disagree' ||
+          res?.data.data[res.data.data.length - 1].contended === 'No' ||
+          res?.data.data[res.data.data.length - 1].contended === 'Dislike'
         ) {
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].contended,
-            false,
-            true,
-          );
+          handleToggleCheck(res.data.data[res.data.data.length - 1].contended, false, true);
         }
         if (
-          res?.data.data[res.data.data.length - 1].selected === "Disagree" ||
-          res?.data.data[res.data.data.length - 1].selected === "No" ||
-          res?.data.data[res.data.data.length - 1].selected === "Dislike"
+          res?.data.data[res.data.data.length - 1].selected === 'Disagree' ||
+          res?.data.data[res.data.data.length - 1].selected === 'No' ||
+          res?.data.data[res.data.data.length - 1].selected === 'Dislike'
         ) {
-          handleToggleCheck(
-            res.data.data[res.data.data.length - 1].selected,
-            true,
-            false,
-          );
+          handleToggleCheck(res.data.data[res.data.data.length - 1].selected, true, false);
         }
       }
-      if (whichTypeQuestion === "multiple choise") {
-        updateAnswerSelection(
-          res?.data.data[res.data.data.length - 1],
-          answersSelection,
-        );
+      if (whichTypeQuestion === 'multiple choise') {
+        updateAnswerSelection(res?.data.data[res.data.data.length - 1], answersSelection);
       }
-      if (whichTypeQuestion === "ranked choise") {
-        const updatedRankedAnswers = res?.data.data[
-          res.data.data.length - 1
-        ].selected.map((item) => {
-          const correspondingRankedAnswer = rankedAnswers.find(
-            (rankedItem) => rankedItem.label === item.question,
-          );
+      if (whichTypeQuestion === 'ranked choise') {
+        const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
+          const correspondingRankedAnswer = rankedAnswers.find((rankedItem) => rankedItem.label === item.question);
 
           if (correspondingRankedAnswer) {
             return {
@@ -165,30 +127,30 @@ const ButtonGroup = ({
     },
     onError: (err) => {
       toast.error(err.response?.data);
-      console.log("Mutation Error", err);
+      console.log('Mutation Error', err);
       setLoadingDetail(false);
     },
   });
 
   const handleStartChange = () => {
     dispatch(questUtilsActions.resetaddOptionLimit());
-    if (btnText === "") {
+    if (btnText === '') {
       dispatch(resetQuests());
       handleStartTest(id);
     }
-    if (btnText === "change answer") {
+    if (btnText === 'change answer') {
       setLoadingDetail(true);
       const data = { questForeignKey: id, uuid: persistedUserInfo?.uuid };
       getStartQuestDetail(data);
       handleStartTest(id);
     }
-    if (btnText === "completed") {
+    if (btnText === 'completed') {
       setLoadingDetail(true);
       handleViewResults(id);
     }
   };
 
-  console.log("first", answers, uuidExists);
+  console.log('first', answers, uuidExists);
 
   if (filterState.expandedView === false) {
     if (startTest === questStartData._id) {
@@ -199,11 +161,9 @@ const ButtonGroup = ({
             <div className="flex items-center justify-center">
               {usersAddTheirAns && uuidExists === false ? (
                 <div>
-                  {title === "Yes/No" ||
-                  title === "Agree/Disagree" ||
-                  title === "Like/Dislike" ? null : (
-                    <Button onClick={handleOpen} variant={"addOption"}>
-                      {persistedTheme === "dark" ? (
+                  {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+                    <Button onClick={handleOpen} variant={'addOption'}>
+                      {persistedTheme === 'dark' ? (
                         <img
                           src="/assets/svgs/dashboard/add-dark.svg"
                           alt="add"
@@ -229,11 +189,7 @@ const ButtonGroup = ({
           {/* Go back / Submit */}
           <div
             className={`${
-              title === "Multiple Choice"
-                ? ""
-                : addOptionField === 1
-                  ? "mt-[4rem] tablet:mt-[10rem]"
-                  : ""
+              title === 'Multiple Choice' ? '' : addOptionField === 1 ? 'mt-[4rem] tablet:mt-[10rem]' : ''
             }`}
           >
             <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
@@ -241,36 +197,25 @@ const ButtonGroup = ({
                 <Button
                   variant="cancel"
                   onClick={() => {
-                    handleStartTest("");
+                    handleStartTest('');
                     // setStartTest(null);
                   }}
                 >
                   Go Back
                 </Button>
               ) : null}
-              {startStatus === "change answer" &&
-                viewResult === null &&
-                openResults === false && (
-                  <Button
-                    variant="cancel"
-                    onClick={() => {
-                      handleViewResults(questStartData._id),
-                        setOpenResults(true);
-                    }}
-                  >
-                    Go Back
-                  </Button>
-                )}
-              <Button
-                variant="submit"
-                onClick={() => handleSubmit()}
-                disabled={loading === true ? true : false}
-              >
-                {loading === true ? (
-                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                ) : (
-                  "Submit"
-                )}
+              {startStatus === 'change answer' && viewResult === null && openResults === false && (
+                <Button
+                  variant="cancel"
+                  onClick={() => {
+                    handleViewResults(questStartData._id), setOpenResults(true);
+                  }}
+                >
+                  Go Back
+                </Button>
+              )}
+              <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               </Button>
             </div>
           </div>
@@ -282,17 +227,15 @@ const ButtonGroup = ({
       return (
         <div className="flex w-full justify-between gap-2 pl-7 pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
           {/* Go back / Submit */}
-          {btnText === "change answer" ? (
+          {btnText === 'change answer' ? (
             <>
               {addOptionField === 0 ? (
                 <div className="flex items-center justify-center">
                   {usersAddTheirAns && uuidExists === false ? (
                     <div>
-                      {title === "Yes/No" ||
-                      title === "Agree/Disagree" ||
-                      title === "Like/Dislike" ? null : (
-                        <Button onClick={handleOpen} variant={"addOption"}>
-                          {persistedTheme === "dark" ? (
+                      {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+                        <Button onClick={handleOpen} variant={'addOption'}>
+                          {persistedTheme === 'dark' ? (
                             <img
                               src="/assets/svgs/dashboard/add-dark.svg"
                               alt="add"
@@ -316,11 +259,7 @@ const ButtonGroup = ({
               )}
               <div
                 className={`${
-                  title === "Multiple Choice"
-                    ? ""
-                    : addOptionField === 1
-                      ? "mt-[4rem] tablet:mt-[10rem]"
-                      : ""
+                  title === 'Multiple Choice' ? '' : addOptionField === 1 ? 'mt-[4rem] tablet:mt-[10rem]' : ''
                 }`}
               >
                 <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
@@ -332,32 +271,16 @@ const ButtonGroup = ({
                   >
                     Go Back
                   </Button>
-                  <Button
-                    variant="submit"
-                    onClick={() => handleSubmit()}
-                    disabled={loading === true ? true : false}
-                  >
-                    {loading === true ? (
-                      <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                    ) : (
-                      "Submit"
-                    )}
+                  <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
+                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                   </Button>
                 </div>
               </div>
             </>
           ) : (
             <div className="flex w-full justify-end ">
-              <Button
-                variant="submit"
-                onClick={() => handleSubmit()}
-                disabled={loading === true ? true : false}
-              >
-                {loading === true ? (
-                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                ) : (
-                  "Submit"
-                )}
+              <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               </Button>
             </div>
           )}
@@ -372,22 +295,19 @@ const ButtonGroup = ({
       {filterState.expandedView === false ? (
         viewResult !== questStartData._id ? (
           <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
-            {getButtonText(btnText) !== "Completed" ? (
-              <Button
-                variant={getButtonVariants(btnText)}
-                onClick={handleStartChange}
-              >
+            {getButtonText(btnText) !== 'Completed' ? (
+              <Button variant={getButtonVariants(btnText)} onClick={handleStartChange}>
                 {getButtonText(btnText)}
               </Button>
             ) : null}
 
             <Button
-              variant={startStatus?.trim() !== "" ? "result" : "result-outline"}
+              variant={startStatus?.trim() !== '' ? 'result' : 'result-outline'}
               onClick={() => {
-                if (btnText !== "") {
+                if (btnText !== '') {
                   handleViewResults(id);
                 } else {
-                  toast.error("First give your response to see Results");
+                  toast.error('First give your response to see Results');
                 }
               }}
             >
@@ -401,7 +321,7 @@ const ButtonGroup = ({
               variant="cancel"
               onClick={() => {
                 handleViewResults(null);
-                handleStartTest("");
+                handleStartTest('');
                 // setStartTest(false);
                 // setOpenResults(true);
               }}
@@ -414,71 +334,53 @@ const ButtonGroup = ({
         <>
           <div className="flex">
             {/* Add Options / Go Back / Submit */}
-            {btnText === "change answer" &&
-              startTest === questStartData._id && (
-                <div className="flex w-full justify-between pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
-                  <Button onClick={handleOpen} variant={"addOption"}>
-                    {persistedTheme === "dark" ? (
-                      <img
-                        src="/assets/svgs/dashboard/add-dark.svg"
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
-                    ) : (
-                      <img
-                        src="/assets/svgs/dashboard/add.svg"
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
-                    )}
-                    Add Option
-                  </Button>
+            {btnText === 'change answer' && startTest === questStartData._id && (
+              <div className="flex w-full justify-between pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+                <Button onClick={handleOpen} variant={'addOption'}>
+                  {persistedTheme === 'dark' ? (
+                    <img
+                      src="/assets/svgs/dashboard/add-dark.svg"
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  ) : (
+                    <img
+                      src="/assets/svgs/dashboard/add.svg"
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  )}
+                  Add Option
+                </Button>
 
-                  <div className="flex gap-2">
-                    <Button
-                      variant="cancel"
-                      onClick={() => {
-                        handleViewResults(questStartData._id);
-                        handleStartTest(false);
-                      }}
-                    >
-                      Go Back
+                <div className="flex gap-2">
+                  <Button
+                    variant="cancel"
+                    onClick={() => {
+                      handleViewResults(questStartData._id);
+                      handleStartTest(false);
+                    }}
+                  >
+                    Go Back
+                  </Button>
+                  {viewResult !== questStartData._id && (
+                    <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
+                      {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                     </Button>
-                    {viewResult !== questStartData._id && (
-                      <Button
-                        variant="submit"
-                        onClick={() => handleSubmit()}
-                        disabled={loading === true ? true : false}
-                      >
-                        {loading === true ? (
-                          <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                        ) : (
-                          "Submit"
-                        )}
-                      </Button>
-                    )}
-                  </div>
+                  )}
                 </div>
-              )}
+              </div>
+            )}
           </div>
 
           <div className="flex w-full justify-end pr-[14.4px] tablet:pr-[3.44rem]">
-            {btnText === "change answer" &&
-            viewResult === questStartData._id ? (
+            {btnText === 'change answer' && viewResult === questStartData._id ? (
               <Button variant="change" onClick={handleChange}>
                 Change
               </Button>
             ) : (
-              <Button
-                variant="submit"
-                onClick={() => handleSubmit()}
-                disabled={loading === true ? true : false}
-              >
-                {loading === true ? (
-                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                ) : (
-                  "Submit"
-                )}
+              <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               </Button>
             )}
           </div>
