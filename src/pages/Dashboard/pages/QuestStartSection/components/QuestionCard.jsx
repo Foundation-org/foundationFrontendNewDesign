@@ -272,6 +272,8 @@ const QuestionCard = (props) => {
     },
   });
 
+  console.log({ answersSelection });
+
   const handleSubmit = () => {
     setLoading(true);
     if (
@@ -309,13 +311,11 @@ const QuestionCard = (props) => {
       }
 
       if (questStartData.startStatus === 'change answer') {
-        console.log(howManyTimesAnsChanged);
         const currentDate = new Date();
 
         const timeInterval = validateInterval(questStartData.usersChangeTheirAns);
-        // Check if enough time has passed
+
         if (howManyTimesAnsChanged > 1 && currentDate - new Date(questStartData.lastInteractedAt) < timeInterval) {
-          // Alert the user if the time condition is not met
           toast.error(`You can change your selection again in ${questStartData.usersChangeTheirAns}`);
           setLoading(false);
         } else {
@@ -333,8 +333,6 @@ const QuestionCard = (props) => {
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
           if (answersSelection[i].addedOptionByUser) {
-            // If user Add his own option
-
             answerSelected.push({
               question: answersSelection[i].label,
               addedAnswerByUser: true,
@@ -342,10 +340,12 @@ const QuestionCard = (props) => {
             });
             addedAnswerValue = answersSelection[i].label;
             addedAnswerUuidValue = answersSelection[i].uuid;
-            console.log('added ans value' + addedAnswerValue);
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
+        } else if (answersSelection[i].check === false && answersSelection[i].addedOptionByUser === true) {
+          addedAnswerValue = answersSelection[i].label;
+          addedAnswerUuidValue = answersSelection[i].uuid;
         }
 
         if (answersSelection[i].contend) {
@@ -362,9 +362,7 @@ const QuestionCard = (props) => {
 
       if (questStartData.startStatus === 'change answer') {
         const timeInterval = validateInterval();
-        // Check if enough time has passed
         if (howManyTimesAnsChanged > 1 && currentDate - new Date(questStartData.lastInteractedAt) < timeInterval) {
-          // Alert the user if the time condition is not met
           toast.error(`You can change your selection again in ${questStartData.usersChangeTheirAns}`);
           setLoading(false);
         } else {
@@ -373,7 +371,7 @@ const QuestionCard = (props) => {
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
-          console.log('params', params);
+
           changeAnswer(params);
         }
       } else {
@@ -384,13 +382,7 @@ const QuestionCard = (props) => {
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
         };
-        console.log('selected', params);
-        // && params.answer.contended.length === 0
-        if (params.answer.selected.length === 0) {
-          toast.warning('You cannot submit without answering');
-          setLoading(false);
-          return;
-        }
+
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
@@ -398,11 +390,9 @@ const QuestionCard = (props) => {
           setLoading(false);
           return;
         }
-        console.log({ isSubmit });
 
         if (!isSubmit) setLoading(false);
-        console.log('params', params);
-        // startQuest(params);
+
         startQuest(params);
       }
     } else if (questStartData.whichTypeQuestion === 'ranked choise') {
@@ -420,7 +410,7 @@ const QuestionCard = (props) => {
           });
           addedAnswerValue = rankedAnswers[i].label;
           addedAnswerUuidValue = answersSelection[i].uuid;
-          console.log('added ans value' + addedAnswerValue);
+          // console.log('added ans value' + addedAnswerValue);
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
         }
