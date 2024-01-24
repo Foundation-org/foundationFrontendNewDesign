@@ -352,22 +352,24 @@ const MultipleChoice = () => {
   };
 
   return (
-    <div>
-      <h4 className="mt-[10.5px] text-center text-[9px] font-medium leading-normal text-[#ACACAC] dark:text-[#AAA] tablet:mt-[25.8px] tablet:text-[16.58px] laptop:mt-[47px] laptop:text-[25px]">
+    <>
+      <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
         Ask a question that allows for diverse responses and multiple answer options
       </h4>
       <div
         className={`${
           persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto my-[14.63px] max-w-[85%] rounded-[8.006px] bg-[#F3F3F3] py-[12.93px] dark:bg-[#141618] tablet:my-10 tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[979px] laptop:py-[42px]`}
+        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
       >
-        <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[32px]">
-          Create Post
+        <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[25px]">
+          Create Poll
         </h1>
-        <h3 className="mb-[13.54px] ml-[32px] mt-[11.71px] text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:ml-[67px] tablet:mt-[20.38px] tablet:text-[16.58px] laptop:mb-[22px] laptop:ml-[104px] laptop:mt-[38px] laptop:text-[25px]"></h3>
-        <div className="w-[calc(100%-51.75px] mx-[21px] flex tablet:ml-[54px] tablet:mr-[70px]">
+        <p className="mt-1 text-center text-[8px] font-normal leading-normal text-[#85898C] dark:text-[#D8D8D8] tablet:text-[16px]">
+          Pose a question
+        </p>
+        <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-[10px]">
           <input
-            className="w-full rounded-l-[0.33rem] border-y-[1px] border-l-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-2xl laptop:py-[18px] laptop:text-[1.875rem]"
+            className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
             onChange={(e) => {
               setQuestion(e.target.value);
               setCheckQuestionStatus({
@@ -377,13 +379,13 @@ const MultipleChoice = () => {
             }}
             onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             value={question}
-            placeholder="Make a statement or pose a question"
+            placeholder="Pose a question"
           />
           <button
             id="new"
-            className={`relative rounded-r-[0.33rem] border-y-[1px] border-r-[1px] border-[#ACACAC] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${checkQuestionStatus.color} py-[0.29rem]`}
+            className={`relative leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[17.54px] laptop:rounded-r-[0.625rem] laptop:text-[26px] ${checkQuestionStatus.color}`}
           >
-            <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[166px]">
+            <div className="flex w-[50px] items-center justify-center border-l-[3px] border-[#DEE6F7] tablet:w-[99.58px] laptop:w-[134px]">
               {checkQuestionStatus.name}
             </div>
             <Tooltip optionStatus={checkQuestionStatus} />
@@ -394,7 +396,7 @@ const MultipleChoice = () => {
           <Droppable droppableId={`typedValues-${Date.now()}`}>
             {(provided) => (
               <div
-                className="mt-[1.46rem] flex flex-col items-center gap-[6.24px] tablet:mb-8 tablet:mt-14 tablet:gap-[14.7px] laptop:gap-[30px]"
+                className="mt-2 flex flex-col gap-[7px] tablet:mt-[15px] tablet:gap-[14px] laptop:gap-[10px]"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
@@ -435,69 +437,30 @@ const MultipleChoice = () => {
             )}
           </Droppable>
         </DragDropContext>
-        {/* <SortableList
-          items={typedValues}
-          setItems={setTypedValues}
-          onSortEnd={handleOnSortEnd}
-        >
-          {({ items }) => (
-            <div
-              id="dragIcon"
-              className="mt-[1.46rem] flex flex-col gap-[9.24px] tablet:mb-8 tablet:mt-10 tablet:gap-5 laptop:gap-[30px]"
-            >
-              {items.map((item, index) => (
-                <SortableItem
-                  key={item.id}
-                  id={item.id}
-                  DragHandler={DragHandler}
-                >
-                  <Options
-                    key={index}
-                    title="MultipleChoice"
-                    allowInput={true}
-                    label={`Option ${index + 1} #`}
-                    trash={true}
-                    options={false}
-                    dragable={true}
-                    handleChange={(value) => handleChange(index, value)}
-                    handleOptionSelect={() => handleOptionSelect(index)}
-                    typedValue={item.question}
-                    isSelected={item.selected}
-                    optionsCount={optionsCount}
-                    removeOption={() => removeOption(index)}
-                    number={index}
-                    optionStatus={typedValues[index].optionStatus}
-                    answerVerification={(value) =>
-                      answerVerification(index, value)
-                    }
-                  />
-                </SortableItem>
-              ))}
-            </div>
-          )}
-        </SortableList> */}
+
         <button
-          className="ml-[21.55px] mt-[16px] w-fit rounded-[7.287px] bg-[#C9C9C9] px-[7.29px] py-[3.89px] text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-[50px] tablet:mt-5 tablet:rounded-[15.265px] tablet:px-[15.27px] tablet:py-[8.14px] tablet:text-[20.736px] laptop:rounded-[23.6px] laptop:px-6 laptop:py-3 laptop:text-[31px]"
+          className="ml-[21.55px] mt-[16px] w-fit rounded-[7.287px] bg-[#C9C9C9] px-[7.29px] leading-[26px] py-[3.89px] text-[10px] font-normal text-[#435059] dark:bg-[#595C60] dark:text-[#BCBCBC] tablet:ml-[60px] tablet:mt-5 tablet:rounded-[10px] tablet:px-[15.27px] tablet:py-[8.14px] tablet:text-[20px] laptop:px-6 laptop:py-3"
+          style={{ boxShadow: '0px 0px 7px 0px rgba(0, 0, 0, 0.15) inset', fill: '#D9D9D9' }}
           onClick={handleAddOption}
         >
           + Add Option
         </button>
-        <h3 className="mb-1 ml-[32px] mt-4 text-[8px] font-normal leading-normal text-[#C5C5C5] tablet:mb-[32px] tablet:ml-[104px] tablet:mt-[50px] tablet:text-[25px]">
-          &#x200B;
-        </h3>
         {/* settings */}
-        <div className="mx-auto flex max-w-[85%] flex-col gap-[9.71px] rounded-[16px] bg-[#FCFCFC] py-[15px] dark:bg-[#212224] tablet:gap-7 tablet:py-[35px] laptop:max-w-[838px]">
-          <h5 className="text-center text-[11px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[30px]">
+        <p className="my-1 text-center tablet:mb-[10px] tablet:mt-5 text-[8px] font-normal leading-normal text-[#85898C] dark:text-[#D8D8D8] tablet:text-[16px]">
+          Customize your Quest.
+        </p>
+        <div className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
+          <h5 className="text-center text-[10px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[25px]">
             Settings
           </h5>
-          <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] dark:bg-[#080A0C] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
-            <h5 className="w-[150px] text-[9px]  font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
+          <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-[#DEE6F7] px-[8.62px] pb-[10.25px] pt-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
               Participants can select multiple options.
             </h5>
             <CustomSwitch enabled={multipleOption} setEnabled={setMultipleOption} />
           </div>
-          <div className="mx-5 flex items-center justify-between rounded-[16px] bg-[#F4F4F4] px-[8.62px] pb-[10.25px] pt-[10.47px] dark:bg-[#080A0C] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[51px] laptop:px-7 laptop:py-[34px]">
-            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[28px]">
+          <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-[#DEE6F7] px-[8.62px] pb-[10.25px] pt-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+            <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
               Participants can add their own options.
             </h5>
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
@@ -510,7 +473,7 @@ const MultipleChoice = () => {
         </div>
         <div className="flex w-full justify-end">
           <button
-            className="mr-7 mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:mt-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] laptop:rounded-[23.6px] laptop:px-[60px] laptop:py-3 laptop:text-[31.5px]"
+            className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
             onClick={() => handleSubmit()}
             disabled={loading === true || checkError() ? true : false}
           >
@@ -518,7 +481,7 @@ const MultipleChoice = () => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

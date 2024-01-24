@@ -130,7 +130,7 @@ const LikeDislike = () => {
 
   return (
     <>
-      <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[54px] tablet:text-[15px]">
+      <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
         Make a statement that anyone can "Like" or "Dislike"
       </h4>
       <div
@@ -160,9 +160,9 @@ const LikeDislike = () => {
           />
           <button
             id="test"
-            className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[17.54px] laptop:rounded-r-[0.625rem] laptop:text-[1.875rem] ${checkQuestionStatus.color}`}
+            className={`relative leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[17.54px] laptop:rounded-r-[0.625rem] laptop:text-[26px] ${checkQuestionStatus.color}`}
           >
-            <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[166px]">
+            <div className="flex w-[50px] items-center justify-center border-l-[3px] border-[#DEE6F7] tablet:w-[99.58px] laptop:w-[134px]">
               {checkQuestionStatus.name}
             </div>
             <Tooltip optionStatus={checkQuestionStatus} />

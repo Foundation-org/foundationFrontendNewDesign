@@ -2,7 +2,7 @@ const Navbar = ({ handleTab, tab }) => {
   return (
     <div className="flex justify-center gap-[6.7px] tablet:gap-4 laptop:gap-[30px]">
       <div>
-        <div className="create-quest-box-shadow flex h-5 justify-center rounded-[3.82px] bg-[#FCFCFC] tablet:h-12 tablet:rounded-xl laptop:h-[60px]">
+        <div className="create-quest-box-shadow flex h-5 justify-center rounded-[3.82px] bg-[#FCFCFC] dark:bg-[#242424] tablet:h-12 tablet:rounded-xl laptop:h-[60px]">
           <p className="-mt-[6px] h-fit w-fit bg-[#F3F3F3] text-[10px] font-semibold leading-none text-[#7C7C7C] tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
             Polls
           </p>
@@ -48,7 +48,7 @@ const Navbar = ({ handleTab, tab }) => {
       </div>
 
       <div>
-        <div className="create-quest-box-shadow flex h-5 justify-center rounded-[3.82px] bg-[#FCFCFC] tablet:h-12 tablet:rounded-xl laptop:h-[60px]">
+        <div className="create-quest-box-shadow flex h-5 justify-center rounded-[3.82px] bg-[#FCFCFC] dark:bg-[#242424] tablet:h-12 tablet:rounded-xl laptop:h-[60px]">
           <p className="-mt-[6px] h-fit w-fit bg-[#F3F3F3] text-[10px] font-semibold leading-none text-[#7C7C7C] tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
             Statements
           </p>

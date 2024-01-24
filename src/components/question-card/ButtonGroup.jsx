@@ -150,8 +150,6 @@ const ButtonGroup = ({
     }
   };
 
-  console.log('first', answers, uuidExists);
-
   if (filterState.expandedView === false) {
     if (startTest === questStartData._id) {
       return (

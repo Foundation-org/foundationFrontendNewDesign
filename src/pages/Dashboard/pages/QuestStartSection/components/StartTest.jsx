@@ -223,7 +223,6 @@ const StartTest = ({
           </div>
         );
       }
-
       if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Ranked Choice') {
         return (
           <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">

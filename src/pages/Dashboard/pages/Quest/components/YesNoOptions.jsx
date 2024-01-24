@@ -24,13 +24,10 @@ const YesNoOptions = ({
     <div
       className={`${
         label ? 'flex flex-col gap-[13px]' : 'flex flex-row items-center gap-[25px]'
-      } mx-[22px] tablet:mx-[60px]`}
+      } mx-[22px] tablet:ml-[60px] tablet:mr-[112px]`}
     >
       {!allowInput ? (
         <div className="w-full">
-          {/* <p className="mb-[10px] w-full pl-[15.44px] text-[10px] font-normal leading-none text-[#85898C] dark:text-[#D3D3D3] tablet:pl-6 tablet:text-[20.7px] laptop:text-[16px]">
-            Option {number} #
-          </p> */}
           <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
             <div className="flex w-full items-center">
               <div className="flex h-full w-[11.39px] items-center justify-center rounded-l-[5.387px] border-y border-s border-[#DEE6F7] bg-[#DEE6F7] px-[0px] py-[6px] dark:bg-[#9E9E9E] tablet:w-[23.5px] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:border-s-[3px] tablet:pb-[13px] tablet:pt-[14px] laptop:w-[25.2px]">

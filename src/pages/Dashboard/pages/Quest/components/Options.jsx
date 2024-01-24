@@ -23,7 +23,11 @@ const Options = ({
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
-    <div className={`${label ? 'flex flex-col gap-[13px]' : 'flex flex-row items-center gap-[25px]'} w-full`}>
+    <div
+      className={`${
+        label ? 'flex flex-col gap-[13px]' : 'flex flex-row items-center gap-[25px]'
+      } mx-[22px] tablet:mx-[60px]`}
+    >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
           <div className="flex w-full items-center">
@@ -58,85 +62,94 @@ const Options = ({
           </div>
         </div>
       ) : (
-        <div className="flex w-full items-center justify-center">
-          <div className="mx-[21px] flex w-full rounded-r-[0.33rem] bg-transparent tablet:ml-[54px] tablet:mr-[70px] tablet:w-full tablet:rounded-[10.3px] laptop:rounded-2xl">
-            <div
-              className={`${
-                snapshot.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-              } dragIconWrapper border-y border-s`}
-            >
-              {persistedTheme === 'dark' ? (
-                <img src="/assets/svgs/dashboard/six-dots-dark.svg" alt="six dots" className="h-[8.8px] tablet:h-7" />
-              ) : (
-                <img src="/assets/svgs/dashboard/six-dots.svg" alt="six dots" className="h-[8.8px] tablet:h-7" />
-              )}
-            </div>
-            <div
-              className={`${
-                snapshot.isDragging
-                  ? 'border-[#5FA3D5] bg-[#F2F6FF]'
-                  : 'border-[#ACACAC] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-              } h-[25.19px] w-9 border-y-[1px] tablet:h-[50.19px] laptop:h-[74px]`}
-            ></div>
-            <input
-              className={`${
-                snapshot.isDragging
-                  ? 'border-[#5FA3D5] bg-[#F2F6FF]'
-                  : 'border-[#ACACAC] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-              } h-[25.19px] w-full border-y-[1px] py-[0.35rem] pr-[9.24px] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:h-[50.19px] tablet:py-[11.6px] tablet:pr-11 tablet:text-[1.296rem] laptop:h-[74px] laptop:py-[18px] laptop:text-[1.875rem]`}
-              onChange={(e) => handleChange(e.target.value)}
-              onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value.trim())}
-              value={typedValue}
-              placeholder="Add your own option"
-            />
-            <div
-              id={`test${number}`}
-              className={`${
-                snapshot.isDragging
-                  ? 'border-[#5FA3D5] bg-[#F2F6FF]'
-                  : 'border-[#ACACAC] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-              } relative flex h-[25.19px] items-center rounded-r-[0.33rem] border-y-[1px] border-r-[1px] text-[0.5rem] font-semibold tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:h-[74px] laptop:rounded-r-2xl laptop:text-[1.875rem] ${
-                optionStatus.color
-              }`}
-            >
-              <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[166px]">
-                <span>{optionStatus.name}</span>
+        <div className="w-full">
+          <p className="mb-[10px] w-full pl-[15.44px] text-[10px] font-normal leading-none text-[#85898C] dark:text-[#D3D3D3] tablet:pl-6 tablet:text-[16px]">
+            Option {number} #
+          </p>
+          <div className="flex w-full items-center justify-center">
+            <div className="flex w-full rounded-r-[0.33rem] bg-transparent tablet:w-full tablet:rounded-[10.3px] laptop:rounded-[10px]">
+              <div
+                className={`${
+                  snapshot.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                } dragIconWrapper border-y tablet:border-y-[3px] border-s tablet:border-s-[3px]`}
+              >
+                {persistedTheme === 'dark' ? (
+                  <img
+                    src="/assets/svgs/dashboard/six-dots-dark.svg"
+                    alt="six dots"
+                    className="h-[8.8px] tablet:h-[18px]"
+                  />
+                ) : (
+                  <img src="/assets/svgs/dashboard/six-dots.svg" alt="six dots" className="h-[8.8px] tablet:h-[18px]" />
+                )}
               </div>
-              <Tooltip optionStatus={optionStatus} />
-            </div>
-            {(title === 'RankChoice' || title === 'MultipleChoice') && trash && (
+              <div
+                className={`${
+                  snapshot.isDragging
+                    ? 'border-[#5FA3D5] bg-[#F2F6FF]'
+                    : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
+                } h-[24.8px] w-5 min-w-5 border-y tablet:border-y-[3px] tablet:h-[50.19px] laptop:h-[45px]`}
+              ></div>
+              <input
+                className={`${
+                  snapshot.isDragging
+                    ? 'border-[#5FA3D5] bg-[#F2F6FF]'
+                    : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
+                } w-full border-y tablet:border-y-[3px] h-[24.8px] tablet:h-[51px] laptop:h-[45px] text-[0.625rem] font-normal text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:pt-[6px] tablet:pb-[7px] tablet:text-[1.296rem] laptop:leading-none laptop:text-[18px]`}
+                onChange={(e) => handleChange(e.target.value)}
+                onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value.trim())}
+                value={typedValue}
+                placeholder="Add your own option"
+              />
               <div
                 id={`test${number}`}
-                className={`flex h-[25.19px] items-center text-[0.5rem] font-semibold dark:bg-[#141618] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[74px] ${optionStatus?.color} py-[0.29rem]`}
+                className={`${
+                  snapshot.isDragging
+                    ? 'border-[#5FA3D5] bg-[#F2F6FF]'
+                    : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
+                } relative flex h-[24.8px] items-center rounded-r-[0.33rem] border-y tablet:border-y-[3px] border-r tablet:border-r-[3px] text-[0.5rem] font-semibold tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:h-[45px] laptop:rounded-r-[10px] leading-none laptop:text-[26px] ${
+                  optionStatus.color
+                }`}
               >
-                <div className="flex w-5 items-center justify-center tablet:w-[52.78px]">
-                  <>
-                    {optionsCount > 3 && (
-                      <div
-                        onClick={() => {
-                          removeOption(number);
-                        }}
-                      >
-                        <img
-                          src="/assets/svgs/dashboard/trash2.svg"
-                          alt="trash"
-                          className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
-                        />
-                      </div>
-                    )}
-                  </>
+                <div className="flex w-[50px] items-center justify-center border-l tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[99.58px] laptop:w-[134px]">
+                  <span>{optionStatus.name}</span>
                 </div>
+                <Tooltip optionStatus={optionStatus} />
               </div>
-            )}
-          </div>
+              {(title === 'RankChoice' || title === 'MultipleChoice') && trash && (
+                <div
+                  id={`test${number}`}
+                  className={`flex h-[24.8px] items-center text-[0.5rem] font-semibold dark:bg-[#141618] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[45px] ${optionStatus?.color} py-[0.29rem]`}
+                >
+                  <div className="flex w-5 items-center justify-center tablet:w-[52.78px]">
+                    <>
+                      {optionsCount > 3 && (
+                        <div
+                          onClick={() => {
+                            removeOption(number);
+                          }}
+                        >
+                          <img
+                            src="/assets/svgs/dashboard/trash2.svg"
+                            alt="trash"
+                            className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
+                          />
+                        </div>
+                      )}
+                    </>
+                  </div>
+                </div>
+              )}
+            </div>
 
-          <div
-            className={`${
-              optionsCount > 2
-                ? 'absolute left-[208px] tablet:left-[42rem]'
-                : 'absolute left-[221px] tablet:left-[24rem] laptop:left-[44rem]'
-            } -top-[22px] flex w-fit items-center tablet:-top-[46px] laptop:-top-[74px]`}
-          ></div>
+            <div
+              className={`${
+                optionsCount > 2
+                  ? 'absolute left-[208px] tablet:left-[42rem]'
+                  : 'absolute left-[221px] tablet:left-[24rem] laptop:left-[44rem]'
+              } -top-[22px] flex w-fit items-center tablet:-top-[46px] laptop:-top-[74px]`}
+            ></div>
+          </div>
         </div>
       )}
     </div>

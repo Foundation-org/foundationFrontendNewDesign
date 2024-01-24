@@ -46,7 +46,7 @@
 }
 
 .dragIconWrapper {
-  @apply mb-[0.5px] flex h-[25.19px] w-[19px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[74px] laptop:w-[43px];
+  @apply mb-[0.5px] flex h-[24.8px] w-[19px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[45px] laptop:w-[43px];
 }
 
 .kqFNyH {
