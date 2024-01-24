@@ -298,19 +298,22 @@ const ButtonGroup = ({
                 {getButtonText(btnText)}
               </Button>
             ) : null}
-
-            <Button
-              variant={startStatus?.trim() !== '' ? 'result' : 'result-outline'}
-              onClick={() => {
-                if (btnText !== '') {
-                  handleViewResults(id);
-                } else {
-                  toast.error('First give your response to see Results');
-                }
-              }}
-            >
-              Results
-            </Button>
+            {startStatus?.trim() !== '' ? (
+              <Button
+                variant="result"
+                onClick={() => {
+                  if (btnText !== '') {
+                    handleViewResults(id);
+                  } else {
+                    toast.error('First give your response to see Results');
+                  }
+                }}
+              >
+                Results
+              </Button>
+            ) : (
+              ''
+            )}
           </div>
         ) : (
           // Go Back

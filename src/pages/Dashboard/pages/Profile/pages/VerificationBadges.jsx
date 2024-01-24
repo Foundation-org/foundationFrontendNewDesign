@@ -142,7 +142,7 @@ const VerificationBadges = () => {
   const web3 = [
     {
       image: '/assets/profile/Ethereum-Wallet-2x.png',
-      title: 'Etherium Wallet',
+      title: 'Etherum Wallet',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
@@ -170,7 +170,7 @@ const VerificationBadges = () => {
       NoOfButton: 2,
     },
     {
-      image: '/assets/profile/Work-Phone-2x.png',
+      image: '/assets/profile/lastname.svg',
       title: 'Last Name',
       NoOfButton: 2,
     },
@@ -182,7 +182,7 @@ const VerificationBadges = () => {
       NoOfButton: 1,
     },
     {
-      image: '/assets/profile/hometown.png',
+      image: '/assets/profile/hometown.svg',
       title: 'Home Town',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
