@@ -373,7 +373,8 @@ const QuestionCard = (props) => {
           if (params.answer.selected.length !== 0) {
             changeAnswer(params);
           } else {
-            toast.warning('You cannot submit without selecting any option');
+            toast.warning('You cannot submit without answering');
+            setLoading(false);
           }
         }
       } else {
@@ -398,7 +399,8 @@ const QuestionCard = (props) => {
         if (params.answer.selected.length !== 0) {
           startQuest(params);
         } else {
-          toast.warning('You cannot submit without selecting any option');
+          toast.warning('You cannot submit without answering');
+          setLoading(false);
         }
       }
     } else if (questStartData.whichTypeQuestion === 'ranked choise') {
@@ -442,7 +444,7 @@ const QuestionCard = (props) => {
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
-          console.log('params', params);
+
           changeAnswer(params);
         }
       } else {
@@ -453,7 +455,6 @@ const QuestionCard = (props) => {
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
         };
-        console.log('params', params);
 
         // startQuest(params);
         startQuest(params);

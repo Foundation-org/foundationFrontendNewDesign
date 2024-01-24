@@ -267,7 +267,9 @@ const SingleAnswerMultipleChoice = (props) => {
           <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] dark:bg-[#000] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
             {props.btnText === 'Results' ? (
               <>
-                {props.contendPercentages && props.contendPercentages?.[props.answer.trim()] ? (
+                {props.contendPercentages &&
+                props.contendPercentages?.[props.answer.trim()] &&
+                props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
                   <div className="flex items-center gap-1 tablet:gap-[10px]">
                     <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={true} />
                     <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">

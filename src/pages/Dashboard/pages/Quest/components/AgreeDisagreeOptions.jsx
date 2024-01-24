@@ -30,7 +30,7 @@ const AgreeDisagreeOptions = ({
       <div className="w-full">
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
           <div className="flex w-full items-center">
-            <div className="flex h-full w-[11.39px] items-center justify-center rounded-l-[5.387px] border-y border-s border-[#DEE6F7] bg-[#DEE6F7] px-[0px] py-[6px] dark:bg-[#9E9E9E] tablet:w-[23.5px] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:border-s-[3px] tablet:pb-[13px] tablet:pt-[14px] laptop:w-[25.2px]">
+            <div className="flex h-full w-[11.39px] items-center justify-center rounded-l-[5.387px] border-y border-s border-[#DEE6F7] bg-[#DEE6F7] px-[0px] py-[6px] dark:bg-[#9E9E9E] tablet:w-[23.5px] tablet:rounded-l-[10px] tablet:border-y-[3px] tablet:border-s-[3px] tablet:pb-[13px] tablet:pt-[14px] laptop:min-w-[25.2px] laptop:w-[25.2px]">
               {dragable ? (
                 persistedTheme === 'dark' ? (
                   <img src="/assets/svgs/dashboard/six-dots-dark.svg" alt="six dots" className="h-7" />

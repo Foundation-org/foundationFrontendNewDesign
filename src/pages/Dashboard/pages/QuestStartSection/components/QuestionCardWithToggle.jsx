@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { validateInterval } from '../../../../../utils';
 import { userInfo } from '../../../../../services/api/userAuth';
 import { addUser } from '../../../../../features/auth/authSlice';
+import { questSelectionInitial } from '../../../../../constants/quests';
 import { resetQuests } from '../../../../../features/quest/questsSlice';
-// import { getStartQuestInfo } from "../../../../../services/api/questsApi";
-import { capitalizeFirstLetter, validateInterval } from '../../../../../utils';
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
 
 import Result from './Result';
@@ -15,18 +15,14 @@ import StartTest from './StartTest';
 import ButtonGroup from '../../../../../components/question-card/ButtonGroup';
 import QuestInfoText from '../../../../../components/question-card/QuestInfoText';
 import QuestCardLayout from '../../../../../components/question-card/QuestCardLayout';
-// import SingleAnswer from "../../../../../components/question-card/options/SingleAnswer";
 import ConditionalTextFullScreen from '../../../../../components/question-card/ConditionalTextFullScreen';
 
-// import * as questAction from "../../../../../features/quest/questsSlice";
 import * as questServices from '../../../../../services/api/questsApi';
-import { questSelectionInitial } from '../../../../../constants/quests';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  // const quests = useSelector(questAction.getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const { questStartData, isBookmarked } = props;
@@ -131,14 +127,9 @@ const QuestionCardWithToggle = (props) => {
       questForeignKey: questStartData._id,
       uuid: persistedUserInfo.uuid,
     };
-    // getStartQuestDetail(data);
+
     handleStartTest(questStartData._id);
   };
-
-  // const handleOpen = () => {
-  //   setAddOptionField(1);
-  //   handleAddOption();
-  // };
 
   const handleClose = () => setOpen(false);
 
@@ -169,7 +160,6 @@ const QuestionCardWithToggle = (props) => {
     };
 
     handleQuestSelection(actionPayload);
-    // dispatch(questAction.toggleCheck(actionPayload));
   };
 
   useEffect(() => {
@@ -274,146 +264,6 @@ const QuestionCardWithToggle = (props) => {
     },
   });
 
-  // const extractSelectedAndContended = (quests) => {
-  //   let selected = null;
-  //   let contended = null;
-
-  //   for (const key in quests) {
-  //     const option = quests[key];
-
-  //     if (option.check) {
-  //       selected = key;
-  //     }
-
-  //     if (option.contend) {
-  //       contended = key;
-  //     }
-  //   }
-
-  //   return { selected, contended };
-  // };
-
-  // function updateAnswerSelection(apiResponse, answerSelectionArray) {
-  //   answerSelectionArray.forEach((item, index) => {
-  //     if (
-  //       apiResponse.selected.some(
-  //         (selectedItem) => selectedItem.question === item.label,
-  //       )
-  //     ) {
-  //       answerSelectionArray[index].check = true;
-  //     }
-
-  //     if (
-  //       apiResponse.contended.some(
-  //         (contendedItem) => contendedItem.question === item.label,
-  //       )
-  //     ) {
-  //       answerSelectionArray[index].contend = true;
-  //     }
-  //   });
-  //   setAnswerSelection(answerSelectionArray);
-  // }
-
-  // const { mutateAsync: getStartQuestDetail } = useMutation({
-  //   mutationFn: getStartQuestInfo,
-  //   onSuccess: (res) => {
-  //     setHowManyTimesAnsChanged(res.data.data.length);
-  //     if (
-  //       questStartData.whichTypeQuestion === "agree/disagree" ||
-  //       questStartData.whichTypeQuestion === "yes/no" ||
-  //       questStartData.whichTypeQuestion === "like/dislike"
-  //     ) {
-  //       if (
-  //         res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-  //           "agree" ||
-  //         res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-  //           "yes"
-  //       ) {
-  //         handleToggleCheck(
-  //           res.data.data[res.data.data.length - 1].selected,
-  //           true,
-  //           false,
-  //         );
-  //       }
-  //       if (
-  //         res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-  //           "agree" ||
-  //         res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-  //           "yes"
-  //       ) {
-  //         handleToggleCheck(
-  //           res.data.data[res.data.data.length - 1].contended,
-  //           false,
-  //           true,
-  //         );
-  //       }
-  //       if (
-  //         res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-  //           "disagree" ||
-  //         res.data.data[res.data.data.length - 1].contended?.toLowerCase() ===
-  //           "no"
-  //       ) {
-  //         handleToggleCheck(
-  //           res.data.data[res.data.data.length - 1].contended,
-  //           false,
-  //           true,
-  //         );
-  //       }
-  //       if (
-  //         res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-  //           "disagree" ||
-  //         res.data.data[res.data.data.length - 1].selected?.toLowerCase() ===
-  //           "no"
-  //       ) {
-  //         handleToggleCheck(
-  //           res.data.data[res.data.data.length - 1].selected,
-  //           true,
-  //           false,
-  //         );
-  //       }
-  //     }
-  //     if (questStartData.whichTypeQuestion === "multiple choise") {
-  //       updateAnswerSelection(
-  //         res?.data.data[res.data.data.length - 1],
-  //         answersSelection,
-  //       );
-  //     }
-  //     if (questStartData.whichTypeQuestion === "ranked choise") {
-  //       const updatedRankedAnswers = res?.data.data[
-  //         res.data.data.length - 1
-  //       ].selected.map((item) => {
-  //         const correspondingRankedAnswer = rankedAnswers.find(
-  //           (rankedItem) => rankedItem.label === item.question,
-  //         );
-
-  //         if (correspondingRankedAnswer) {
-  //           return {
-  //             id: correspondingRankedAnswer.id,
-  //             label: correspondingRankedAnswer.label,
-  //             check: false,
-  //             contend: false,
-  //           };
-  //         }
-
-  //         return null;
-  //       });
-  //       // Filter out any null values (items not found in rankedAnswers)
-  //       const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
-
-  //       // Update the state with the new array
-  //       setRankedAnswers(filteredRankedAnswers);
-  //     }
-  //     setLoadingDetail(false);
-  //   },
-  //   onError: (err) => {
-  //     toast.error(err.response?.data);
-  //     console.log("Mutation Error", err);
-  //   },
-  // });
-
-  // console.log("first", ["yes/no"].yes.check === true ? "Yes" : "No");
-  // questSelection;
-
   const handleSubmit = () => {
     setLoading(true);
     if (
@@ -421,14 +271,6 @@ const QuestionCardWithToggle = (props) => {
       questStartData.whichTypeQuestion === 'yes/no' ||
       questStartData.whichTypeQuestion === 'like/dislike'
     ) {
-      // const { selected, contended } = extractSelectedAndContended(
-      //   questStartData.whichTypeQuestion === "agree/disagree"
-      //     ? quests.agreeDisagree
-      //     : questStartData.whichTypeQuestion === "yes/no"
-      //       ? quests.yesNo
-      //       : quests.likeDislike,
-      // );
-
       let ans = {
         created: new Date(),
       };
@@ -443,15 +285,6 @@ const QuestionCardWithToggle = (props) => {
       if (questStartData.whichTypeQuestion === 'like/dislike') {
         ans.selected = questSelection['like/dislike'].like.check === true ? 'Like' : 'Dislike';
       }
-
-      // if (selected) {
-      //   ans.selected = selected.charAt(0).toUpperCase() + selected.slice(1);
-      // }
-      // if (contended) {
-      //   ans.contended = contended.charAt(0).toUpperCase() + contended.slice(1);
-      // }
-
-      // if(questSelection[questStartData.whichTypeQuestion])
 
       const params = {
         questId: questStartData._id,
@@ -498,6 +331,9 @@ const QuestionCardWithToggle = (props) => {
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
+        } else if (answersSelection[i].check === false && answersSelection[i].addedOptionByUser === true) {
+          addedAnswerValue = answersSelection[i].label;
+          addedAnswerUuidValue = answersSelection[i].uuid;
         }
 
         if (answersSelection[i].contend) {
@@ -524,7 +360,12 @@ const QuestionCardWithToggle = (props) => {
             uuid: persistedUserInfo?.uuid,
           };
 
-          changeAnswer(params);
+          if (params.answer.selected.length !== 0) {
+            changeAnswer(params);
+          } else {
+            toast.warning('You cannot submit without answering');
+            setLoading(false);
+          }
         }
       } else {
         const params = {
@@ -648,8 +489,6 @@ const QuestionCardWithToggle = (props) => {
 
     setAnswerSelection((prevAnswers) => updateAnswersSelectionForRanked(prevAnswers, actionPayload));
   };
-
-  console.log('first', viewResult, openResults);
 
   const renderQuestContent = () => {
     if (viewResult !== questStartData._id && openResults !== true) {

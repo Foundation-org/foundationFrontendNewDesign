@@ -142,7 +142,7 @@ const VerificationBadges = () => {
   const web3 = [
     {
       image: '/assets/profile/Ethereum-Wallet-2x.png',
-      title: 'Etherum Wallet',
+      title: 'Ethereum Wallet',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,

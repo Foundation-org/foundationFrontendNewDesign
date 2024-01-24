@@ -1,9 +1,15 @@
+import { useSelector } from 'react-redux';
+
 const Navbar = ({ handleTab, tab }) => {
+  const persistedTheme = useSelector((state) => state.utils.theme);
+
   return (
     <div className="flex justify-center gap-[6.7px] tablet:gap-4 laptop:gap-[30px]">
       <div>
-        <div className="create-quest-box-shadow flex h-5 justify-center rounded-[3.82px] bg-[#FCFCFC] dark:bg-[#242424] tablet:h-12 tablet:rounded-xl laptop:h-[60px]">
-          <p className="-mt-[6px] h-fit w-fit bg-[#F3F3F3] text-[10px] font-semibold leading-none text-[#7C7C7C] tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
+        <div
+          className={`flex h-5 justify-center rounded-[3.82px] bg-[#FCFCFC] dark:bg-[#242424] tablet:h-12 tablet:rounded-xl laptop:h-[60px] ${persistedTheme === 'dark' ? 'dark-create-quest-box-shadow' : 'create-quest-box-shadow'}`}
+        >
+          <p className="-mt-[6px] px-1 h-fit w-fit bg-[#F3F3F3] dark:bg-[#242424] text-[10px] font-semibold leading-none text-[#7C7C7C] dark:text-white tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
             Polls
           </p>
         </div>
@@ -11,8 +17,8 @@ const Navbar = ({ handleTab, tab }) => {
           <button
             className={`${
               tab === 0
-                ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
-                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
+                ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
+                : 'border-[#BABABA] dark:border-[#5F5F5F] bg-white text-[#ACACAC] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
             } quest-topbar`}
             onClick={() => {
               handleTab(0);
@@ -23,8 +29,8 @@ const Navbar = ({ handleTab, tab }) => {
           <button
             className={`${
               tab === 1
-                ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
-                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
+                ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
+                : 'border-[#BABABA] dark:border-[#5F5F5F] bg-white text-[#ACACAC] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
             } quest-topbar`}
             onClick={() => {
               handleTab(1);
@@ -35,8 +41,8 @@ const Navbar = ({ handleTab, tab }) => {
           <button
             className={`${
               tab === 2
-                ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
-                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
+                ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
+                : 'border-[#BABABA] dark:border-[#5F5F5F] bg-white text-[#ACACAC] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
             } quest-topbar`}
             onClick={() => {
               handleTab(2);
@@ -48,8 +54,10 @@ const Navbar = ({ handleTab, tab }) => {
       </div>
 
       <div>
-        <div className="create-quest-box-shadow flex h-5 justify-center rounded-[3.82px] bg-[#FCFCFC] dark:bg-[#242424] tablet:h-12 tablet:rounded-xl laptop:h-[60px]">
-          <p className="-mt-[6px] h-fit w-fit bg-[#F3F3F3] text-[10px] font-semibold leading-none text-[#7C7C7C] tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
+        <div
+          className={`flex h-5 justify-center rounded-[3.82px] bg-[#FCFCFC] dark:bg-[#242424] tablet:h-12 tablet:rounded-xl laptop:h-[60px] ${persistedTheme === 'dark' ? 'dark-create-quest-box-shadow' : 'create-quest-box-shadow'}`}
+        >
+          <p className="-mt-[6px] px-1 h-fit w-fit bg-[#F3F3F3] dark:bg-[#242424] text-[10px] font-semibold leading-none text-[#7C7C7C] dark:text-white tablet:-mt-[10px] tablet:text-[16px] laptop:-mt-[15px] laptop:text-[25px]">
             Statements
           </p>
         </div>
@@ -57,8 +65,8 @@ const Navbar = ({ handleTab, tab }) => {
           <button
             className={`${
               tab === 3
-                ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
-                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
+                ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
+                : 'border-[#BABABA] dark:border-[#5F5F5F] bg-white text-[#ACACAC] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
             } quest-topbar`}
             onClick={() => {
               handleTab(3);
@@ -69,8 +77,8 @@ const Navbar = ({ handleTab, tab }) => {
           <button
             className={`${
               tab === 4
-                ? 'bg-[#459EDE] text-white dark:bg-[#252D37] dark:text-[#DDD]'
-                : 'border-[#BABABA] bg-white text-[#ACACAC] dark:bg-[#212428] dark:text-[#7F8184]'
+                ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
+                : 'border-[#BABABA] dark:border-[#5F5F5F] bg-white text-[#ACACAC] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
             } quest-topbar`}
             onClick={() => {
               handleTab(4);

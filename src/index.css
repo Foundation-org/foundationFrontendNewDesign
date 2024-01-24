@@ -38,7 +38,7 @@
 }
 
 .quest-topbar {
-  @apply rounded-[4.619px] border-[0.95px] px-[5.6px] py-[4.311px] text-[8px] font-semibold leading-normal tablet:rounded-[9.675px] tablet:border-[3px] tablet:px-[16px] tablet:py-[9.03px] tablet:text-[12px] laptop:rounded-[15px] laptop:px-[22px] laptop:py-[14px] laptop:text-[25px];
+  @apply rounded-[4.619px] border-[0.95px] px-[5.6px] py-[4.311px] text-[8px] font-semibold leading-normal laptop:leading-none tablet:rounded-[9.675px] tablet:border-[3px] tablet:px-[16px] tablet:py-[9.03px] tablet:text-[12px] laptop:rounded-[15px] laptop:px-[22px] laptop:py-[14px] laptop:text-[25px];
 }
 
 .pagination-btn {
@@ -46,7 +46,7 @@
 }
 
 .dragIconWrapper {
-  @apply mb-[0.5px] flex h-[24.8px] w-[19px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[45px] laptop:w-[43px];
+  @apply mb-[0.5px] flex h-[24.8px] w-[19px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:h-[49.4px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:pb-[13px] tablet:pt-[14px] laptop:h-[45px] laptop:min-w-[25.2px] laptop:w-[25.2px];
 }
 
 .kqFNyH {
@@ -410,6 +410,13 @@ td,
   box-shadow:
     0.95px 0.95px 1.53px 0px rgba(0, 0, 0, 0.2) inset,
     -1px -1px 2px 0px rgba(0, 0, 0, 0.2) inset;
+}
+
+.dark-create-quest-box-shadow {
+  border: 3px solid var(--border, #fbfbfb);
+  box-shadow:
+    0px 0px 6px 0px rgba(0, 0, 0, 0.25) inset,
+    1px 1px 4px 0px rgba(0, 0, 0, 0.2) inset;
 }
 
 @media only screen and (min-width: 744px) {
