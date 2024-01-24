@@ -29,7 +29,7 @@ const RankedResult = (props) => {
   };
 
   return (
-    <div className="flex items-center tablet:mr-[65.36px] tablet:pl-[1.75rem]">
+    <div className="flex items-center tablet:mr-[52px] tablet:pl-[1.75rem]">
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid || localStorage.getItem('uId') ? (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">

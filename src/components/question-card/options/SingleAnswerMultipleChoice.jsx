@@ -139,7 +139,7 @@ const SingleAnswerMultipleChoice = (props) => {
   return (
     <div
       className={`flex items-center  tablet:gap-[10px] tablet:pl-[1.75rem] ${
-        props.btnText === 'Results' ? 'tablet:mr-[30px]' : 'tablet:mr-[65.36px]'
+        props.btnText === 'Results' ? 'tablet:mr-[46px]' : 'tablet:mr-[52px]'
       }`}
     >
       {/* =============== To Display Badges on Left of Option */}
@@ -173,7 +173,7 @@ const SingleAnswerMultipleChoice = (props) => {
           className="flex w-full cursor-pointer items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px]"
           onClick={handleCheckChange}
         >
-          <div className="flex h-full w-[11.8px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
+          <div className="flex h-full w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
           <div className="flex w-full justify-between border-y border-y-[#DEE6F7] tablet:border-y-[3px]">
             {props.editable ? (
               <input
