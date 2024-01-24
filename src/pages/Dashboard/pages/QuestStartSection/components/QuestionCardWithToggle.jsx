@@ -113,7 +113,7 @@ const QuestionCardWithToggle = (props) => {
     } else {
       let tempSize = 0;
       questStartData.QuestAnswers.forEach((item, index) => {
-        tempSize += index === 0 ? (limit ? 45 : 24) : limit ? 55 : 29.7;
+        tempSize += index === 0 ? (limit ? 49 : 24) : limit ? 59 : 29.7;
       });
       if (limit) {
         return tempSize > 336 ? 336 : tempSize;
