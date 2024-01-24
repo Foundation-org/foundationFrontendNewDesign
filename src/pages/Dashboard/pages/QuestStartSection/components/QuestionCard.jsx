@@ -370,7 +370,11 @@ const QuestionCard = (props) => {
             uuid: persistedUserInfo?.uuid,
           };
 
-          changeAnswer(params);
+          if (params.answer.selected.length !== 0) {
+            changeAnswer(params);
+          } else {
+            toast.warning('You cannot submit without selecting any option');
+          }
         }
       } else {
         const params = {
