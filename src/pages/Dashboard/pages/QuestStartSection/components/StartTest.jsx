@@ -20,6 +20,7 @@ const StartTest = ({
   loadingDetail,
   setAddOptionField,
   questSelection,
+  cardSize,
 }) => {
   const { isFullScreen } = useParams();
 
@@ -286,7 +287,11 @@ const StartTest = ({
     }
   };
 
-  return <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">{renderOptionsByTitle()}</div>;
+  return (
+    <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${cardSize}px ` }}>
+      {renderOptionsByTitle()}
+    </div>
+  );
 };
 
 export default StartTest;

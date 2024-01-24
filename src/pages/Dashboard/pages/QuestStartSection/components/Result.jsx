@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@tanstack/react-query';
 
-import { getQuests } from '../../../../../features/quest/questsSlice';
 import { getStartQuestPercent } from '../../../../../services/api/questsApi';
 import { getStartQuestInfo } from '../../../../../services/api/questsApi';
 import { getRankedQuestPercent } from '../../../../../services/api/questsApi';
@@ -16,7 +15,6 @@ import Loader from '../../../../../components/ui/Loader';
 
 const Result = (props) => {
   const { isFullScreen } = useParams();
-  const quests = useSelector(getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [checkLoading, setCheckLoading] = useState(true);
 
@@ -156,7 +154,7 @@ const Result = (props) => {
   }
 
   return (
-    <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
+    <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${props.cardSize}px ` }}>
       {props.title === 'Yes/No' || props.title === 'Agree/Disagree' || props.title === 'Like/Dislike' ? (
         <>
           {props.title === 'Yes/No' ? (

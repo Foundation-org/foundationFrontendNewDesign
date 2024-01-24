@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { validateInterval } from '../../../../../utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -103,6 +103,27 @@ const QuestionCard = (props) => {
       ...item,
     })),
   );
+
+  const cardSize = useMemo(() => {
+    const limit = window.innerWidth >= 744 ? true : false;
+    if (
+      questStartData.whichTypeQuestion === 'agree/disagree' ||
+      questStartData.whichTypeQuestion === 'like/dislike' ||
+      questStartData.whichTypeQuestion === 'yes/no'
+    ) {
+      return limit ? 100 : 58;
+    } else {
+      let tempSize = 0;
+      questStartData.QuestAnswers.forEach((item, index) => {
+        tempSize += index === 0 ? (limit ? 45 : 24) : limit ? 55 : 29.7;
+      });
+      if (limit) {
+        return tempSize > 336 ? 336 : tempSize;
+      } else {
+        return tempSize > 187 ? 187 : tempSize;
+      }
+    }
+  }, [questStartData.QuestAnswers]);
 
   useEffect(() => {
     setRankedAnswers(
@@ -485,6 +506,7 @@ const QuestionCard = (props) => {
             lastInteractedAt={questStartData.lastInteractedAt}
             howManyTimesAnsChanged={howManyTimesAnsChanged}
             questSelection={questSelection}
+            cardSize={cardSize}
           />
           <ConditionalTextFullScreen questStartData={questStartData} show={false} />
         </>
@@ -520,6 +542,7 @@ const QuestionCard = (props) => {
             howManyTimesAnsChanged={howManyTimesAnsChanged}
             loadingDetail={loadingDetail}
             questSelection={questSelection}
+            cardSize={cardSize}
           />
           <ConditionalTextFullScreen questStartData={questStartData} show={true} />
         </>
