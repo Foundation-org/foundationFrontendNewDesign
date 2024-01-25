@@ -36,7 +36,7 @@ const QuestionCard = (props) => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [questSelection, setQuestSelection] = useState(questSelectionInitial);
-
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const handleQuestSelection = (actionPayload) => {
     setQuestSelection((prevState) => {
       const newState = { ...prevState, id: actionPayload.id };
@@ -105,13 +105,13 @@ const QuestionCard = (props) => {
   );
 
   const cardSize = useMemo(() => {
-    const limit = window.innerWidth >= 744 ? true : false;
+    const limit = windowWidth >= 744 ? true : false;
     if (
       questStartData.whichTypeQuestion === 'agree/disagree' ||
       questStartData.whichTypeQuestion === 'like/dislike' ||
       questStartData.whichTypeQuestion === 'yes/no'
     ) {
-      return limit ? 100 : 58;
+      return limit ? 100 : 49;
     } else {
       let tempSize = 0;
       questStartData.QuestAnswers.forEach((item, index) => {
@@ -124,7 +124,17 @@ const QuestionCard = (props) => {
         return tempSize > 187 ? 187 : tempSize;
       }
     }
-  }, [questStartData.QuestAnswers]);
+  }, [questStartData.QuestAnswers, windowWidth]);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
 
   useEffect(() => {
     setRankedAnswers(
