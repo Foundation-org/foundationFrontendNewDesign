@@ -187,7 +187,7 @@ const SingleAnswerMultipleChoice = (props) => {
             {props.editable ? (
               <input
                 type="text"
-                className="w-full rounded-[4.73px] bg-white px-4 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-[#435059] outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[18px] tablet:text-[19px]"
+                className="w-full rounded-[4.73px] bg-white pl-[18px] pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-[#435059] outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[18px] tablet:text-[19px]"
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
@@ -199,7 +199,7 @@ const SingleAnswerMultipleChoice = (props) => {
             )}
             {props.deleteable && (
               <div
-                className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-[#0D1012] tablet:h-[43px] tablet:text-[1rem] laptop:text-[1.2rem] ${checkOptionStatus.color}`}
+                className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-[#0D1012] tablet:h-[43px] tablet:text-[1rem] laptop:text-[1.25rem] ${checkOptionStatus.color}`}
               >
                 <div className="flex w-[45px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
                   <span>{checkOptionStatus.name}</span>

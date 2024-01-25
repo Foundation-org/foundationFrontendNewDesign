@@ -107,7 +107,7 @@ const Options = ({
                   snapshot.isDragging
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                } relative flex h-[24.8px] items-center rounded-r-[0.33rem] border-y tablet:border-y-[3px] border-r tablet:border-r-[3px] text-[0.5rem] font-semibold tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[17.54px] laptop:h-[45px] laptop:rounded-r-[10px] leading-none laptop:text-[26px] ${
+                } relative flex h-[24.8px] items-center rounded-r-[0.33rem] border-y tablet:border-y-[3px] border-r tablet:border-r-[3px] text-[0.5rem] font-semibold tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:h-[45px] laptop:rounded-r-[10px] leading-none ${
                   optionStatus.color
                 }`}
               >

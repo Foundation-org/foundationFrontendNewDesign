@@ -225,6 +225,7 @@ const StartTest = ({
         );
       }
       if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Ranked Choice') {
+        console.log('rank', rankedAnswers);
         return (
           <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
             <DragDropContext onDragEnd={handleOnDragEnd}>

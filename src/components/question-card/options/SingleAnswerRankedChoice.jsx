@@ -197,7 +197,7 @@ const SingleAnswerRankedChoice = (props) => {
                 type="text"
                 className={`${
                   props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
-                } w-full rounded-[4.73px] px-4 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-[9px] tablet:pl-[32px] tablet:text-[19px]`}
+                } w-full rounded-[4.73px] pl-[18px] pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-[9px] tablet:pl-[18px] tablet:text-[19px]`}
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
@@ -211,7 +211,7 @@ const SingleAnswerRankedChoice = (props) => {
               <div
                 className={`${
                   props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012] ' : 'bg-white dark:bg-[#0D1012]'
-                } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:h-[43px] tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.2rem] ${
+                } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:h-[43px] tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.25rem] ${
                   checkOptionStatus.color
                 }`}
               >

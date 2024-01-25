@@ -138,6 +138,7 @@ const QuestionCardWithToggle = (props) => {
   }, []);
 
   useEffect(() => {
+    console.log('i got caught');
     setRankedAnswers(
       answersSelection?.map((item, index) => ({
         id: `unique-${index}`,
@@ -145,6 +146,8 @@ const QuestionCardWithToggle = (props) => {
       })),
     );
   }, [answersSelection]);
+
+  console.log('first', rankedAnswers);
 
   const handleStartTest = (testId) => {
     setViewResult('');
