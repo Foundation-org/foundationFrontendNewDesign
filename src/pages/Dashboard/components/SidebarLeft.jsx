@@ -126,8 +126,16 @@ const SidebarLeft = ({ columns, setColumns }) => {
             />
             <Dropdown2
               label={'Type'}
-              title={filterStates.filterByType ? filterStates.filterByType : 'All'}
-              items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choise', 'Ranked Choise']}
+              title={
+                filterStates.filterByType && filterStates.filterByType === 'Multiple Choise'
+                  ? 'Multiple Choice'
+                  : filterStates.filterByType === 'Ranked Choise'
+                    ? 'Ranked Choice'
+                    : filterStates.filterByType
+                      ? filterStates.filterByType
+                      : 'All'
+              }
+              items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choice', 'Ranked Choice']}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterByType(item));
               }}
@@ -218,8 +226,16 @@ const SidebarLeft = ({ columns, setColumns }) => {
           />
           <Dropdown2
             label={'Type'}
-            title={filterStates.filterByType ? filterStates.filterByType : 'All'}
-            items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choise', 'Ranked Choise']}
+            title={
+              filterStates.filterByType && filterStates.filterByType === 'Multiple Choise'
+                ? 'Multiple Choice'
+                : filterStates.filterByType === 'Ranked Choise'
+                  ? 'Ranked Choice'
+                  : filterStates.filterByType
+                    ? filterStates.filterByType
+                    : 'All'
+            }
+            items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choice', 'Ranked Choice']}
             handleSelect={(item) => {
               dispatch(filtersActions.setFilterByType(item));
             }}

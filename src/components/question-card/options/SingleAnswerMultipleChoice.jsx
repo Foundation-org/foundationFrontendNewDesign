@@ -171,7 +171,8 @@ const SingleAnswerMultipleChoice = (props) => {
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
         <div
           className="flex w-full cursor-pointer items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px]"
-          onClick={handleCheckChange}
+          // onClick={handleCheckChange}
+          onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
         >
           <div className="flex h-full w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
           <div className="flex w-full justify-between border-y border-y-[#DEE6F7] tablet:border-y-[3px]">
@@ -204,7 +205,7 @@ const SingleAnswerMultipleChoice = (props) => {
           className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px]  text-[9.238px] dark:border-[#DEE6F7] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
             props.btnText === 'Results' ? 'pointer-events-none' : ''
           }`}
-          onClick={handleCheckChange}
+          onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
         >
           <div className="flex items-center gap-1 laptop:gap-[18px]">
             <div id="custom-checkbox" className="flex h-full items-center">

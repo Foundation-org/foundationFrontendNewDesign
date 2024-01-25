@@ -206,8 +206,7 @@ const SidebarRight = () => {
             <div>
               <h4 className="heading">Guest User</h4>
               <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
-                <p>Balance: </p>
-                <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}</p>
+                <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
               </div>
               <div
                 onClick={() => {
@@ -238,7 +237,6 @@ const SidebarRight = () => {
             <div>
               <h4 className="heading">My Profile</h4>
               <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
-                {/* <p>Balance: </p> */}
                 <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
               </div>
               <div>

@@ -40,7 +40,14 @@ export const filtersSlice = createSlice({
       state.filterByStatus = action.payload;
     },
     setFilterByType: (state, action) => {
-      state.filterByType = action.payload;
+      // state.filterByType = action.payload;
+      if (action.payload === 'Multiple Choice') {
+        state.filterByType = 'Multiple Choise';
+      } else if (action.payload === 'Ranked Choice') {
+        state.filterByType = 'Ranked Choise';
+      } else {
+        state.filterByType = action.payload;
+      }
     },
     setFilterByScope: (state, action) => {
       state.filterByScope = action.payload;
