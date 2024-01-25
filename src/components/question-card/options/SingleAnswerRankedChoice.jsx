@@ -226,7 +226,7 @@ const SingleAnswerRankedChoice = (props) => {
         <div
           className={`${
             props.snapshot.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-          } flex h-[21.8px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r bg-white dark:bg-[#0D1012] tablet:h-[47.8px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]`}
+          } flex h-[21.8px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r bg-white dark:bg-[#0D1012] tablet:h-[49px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]`}
         >
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
         </div>

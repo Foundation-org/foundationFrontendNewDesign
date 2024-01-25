@@ -1,19 +1,15 @@
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { FaSpinner } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import {
-  checkUniqueQuestion,
-  createInfoQuest,
-  getTopicOfValidatedQuestion,
-  questionValidation,
-} from '../../../../../services/api/questsApi';
-import YesNoOptions from '../components/YesNoOptions';
 import { Tooltip } from '../../../../../utils/Tooltip';
-import ChangeChoiceOption from '../components/ChangeChoiceOption';
-import { FaSpinner } from 'react-icons/fa';
 
+import YesNoOptions from '../components/YesNoOptions';
+import ChangeChoiceOption from '../components/ChangeChoiceOption';
+
+import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 
 const YesNo = () => {
@@ -38,7 +34,7 @@ const YesNo = () => {
   console.log('createQuestSlice', createQuestSlice);
 
   const { mutateAsync: createQuest } = useMutation({
-    mutationFn: createInfoQuest,
+    mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
         toast.success('Successfully Created');
@@ -63,7 +59,7 @@ const YesNo = () => {
   const handleSubmit = async () => {
     setLoading(true);
     // To check uniqueness of the question
-    const constraintResponse = await checkUniqueQuestion(question);
+    const constraintResponse = await questServices.checkUniqueQuestion(question);
 
     if (question === '') {
       setLoading(false);
@@ -75,8 +71,7 @@ const YesNo = () => {
       return toast.warning('This post is not unique. A similar post already exists.');
     }
 
-    // getTopicOfValidatedQuestion
-    const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
+    const { questTopic, errorMessage } = await questServices.getTopicOfValidatedQuestion({
       validatedQuestion: question,
     });
     // If any error captured
@@ -108,7 +103,7 @@ const YesNo = () => {
       tooltipStyle: 'tooltip-success',
     });
     // Question Validation
-    const { validatedQuestion, errorMessage } = await questionValidation({
+    const { validatedQuestion, errorMessage } = await questServices.questionValidation({
       question: value,
       queryType: 'yes/no',
     });

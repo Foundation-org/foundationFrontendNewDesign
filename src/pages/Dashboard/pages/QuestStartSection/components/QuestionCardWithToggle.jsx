@@ -19,9 +19,11 @@ import ConditionalTextFullScreen from '../../../../../components/question-card/C
 
 import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
+import { useParams } from 'react-router-dom';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
+  let { isFullScreen } = useParams();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -554,7 +556,10 @@ const QuestionCardWithToggle = (props) => {
             questSelection={questSelection}
             cardSize={cardSize}
           />
-          <ConditionalTextFullScreen questStartData={questStartData} show={false} />
+          <ConditionalTextFullScreen
+            questStartData={questStartData}
+            show={isFullScreen === 'isfullscreen' ? true : false}
+          />
         </>
       );
     }

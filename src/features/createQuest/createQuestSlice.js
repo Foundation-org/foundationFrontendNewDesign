@@ -32,21 +32,21 @@ export const createQuestSlice = createSlice({
   name: 'createQuest',
   initialState,
   reducers: {
-    toggleExapandedView: (state, action) => {
-      state.expandedView = !state.expandedView;
+    updateYesNo: (state, action) => {
+      state.yesNo = { ...action.payload };
     },
-    resetFilters: (state) => {
+    resetCreateQuest: (state) => {
       Object.assign(state, initialState);
     },
   },
 });
 
-export const { toggleExapandedView, resetFilters } = createQuestSlice.actions;
+export const { updateYesNo, resetCreateQuest } = createQuestSlice.actions;
 
 export default createQuestSlice.reducer;
 
 export const getYesNo = (state) => state.createQuest.yesNo;
-// export const getYesNo = (state) => state.createQuest.yesNo;
-// export const getYesNo = (state) => state.createQuest.yesNo;
-// export const getYesNo = (state) => state.createQuest.yesNo;
-// export const getYesNo = (state) => state.createQuest.yesNo;
+export const getAgreeDisagree = (state) => state.createQuest.agreeDisagree;
+export const getLikeDislike = (state) => state.createQuest.likeDislike;
+export const getMultipleChoice = (state) => state.createQuest.multipleChoice;
+export const getRankChoice = (state) => state.createQuest.rankedChoice;
