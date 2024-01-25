@@ -153,7 +153,6 @@ const QuestStartSection = () => {
     setStartTest(null);
     setViewResult((prev) => (prev === testId ? null : testId));
   };
-
   console.log({ allData });
 
   return (

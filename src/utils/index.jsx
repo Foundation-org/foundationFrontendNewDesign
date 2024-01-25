@@ -1,5 +1,4 @@
 import { FaSpinner } from 'react-icons/fa';
-
 export function calculateRemainingTime(lastInteractedAt, howManyTimesAnsChanged, usersChangeTheirAns) {
   const validateInterval = () => {
     let timeInterval = 0;
@@ -56,14 +55,19 @@ export const handleClickScroll = () => {
   }
 };
 
-export const printNoRecordsMessage = () => {
-  setTimeout(() => {
-    return (
-      <p className="text-center">
-        <b>No results found</b>
+export const printNoRecordsMessage = (persistedTheme) => {
+  return (
+    <div className="my-[15vh] flex  flex-col justify-center">
+      {persistedTheme === 'dark' ? (
+        <img src="/assets/svgs/dashboard/noMatchingDark.svg" alt="noposts image" />
+      ) : (
+        <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" />
+      )}
+      <p className="font-inter mt-[1.319vw] text-center text-[2.083vw] text-[#9F9F9F] dark:text-gray">
+        No Matching Posts Found
       </p>
-    );
-  }, 1000);
+    </div>
+  );
 };
 
 export const printEndMessage = (feedData, filterStates, allData, persistedTheme) => {
@@ -82,7 +86,8 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme)
           </p>
         </div>
       ) : !filterStates.searchData && allData.length === 0 ? (
-        <>{printNoRecordsMessage()}</>
+        <>{printNoRecordsMessage(persistedTheme)}
+        </>
       ) : (
         !filterStates.searchData && (
           <p className="text-center text-[2vw]">
