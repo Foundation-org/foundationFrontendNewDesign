@@ -394,7 +394,7 @@ const MultipleChoice = () => {
           <Droppable droppableId={`typedValues-${Date.now()}`}>
             {(provided) => (
               <div
-                className="mt-2 flex flex-col gap-[7px] tablet:mt-[19px] tablet:gap-[14px] laptop:gap-[10px]"
+                className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >

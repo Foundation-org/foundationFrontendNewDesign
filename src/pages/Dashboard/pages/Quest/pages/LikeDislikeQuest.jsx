@@ -165,7 +165,7 @@ const LikeDislike = () => {
             <Tooltip optionStatus={checkQuestionStatus} />
           </button>
         </div>
-        <div className="mt-2 flex flex-col gap-[7px] tablet:mt-11 tablet:gap-[40px]">
+        <div className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5">
           <AgreeDisagreeOptions
             answer={'Like'}
             options={false}

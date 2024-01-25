@@ -63,9 +63,9 @@ const Options = ({
         </div>
       ) : (
         <div className="w-full">
-          <p className="mb-[10px] w-full pl-[15.44px] text-[10px] font-normal leading-none text-[#85898C] dark:text-[#D3D3D3] tablet:pl-6 tablet:text-[16px]">
+          {/* <p className="mb-[10px] w-full pl-[15.44px] text-[10px] font-normal leading-none text-[#85898C] dark:text-[#D3D3D3] tablet:pl-6 tablet:text-[16px]">
             Option {number}
-          </p>
+          </p> */}
           <div className="flex w-full items-center justify-center">
             <div className="flex w-full rounded-r-[0.33rem] bg-transparent tablet:w-full tablet:rounded-[10.3px] laptop:rounded-[10px]">
               <div

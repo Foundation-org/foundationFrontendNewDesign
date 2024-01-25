@@ -166,7 +166,7 @@ const YesNo = () => {
             <Tooltip optionStatus={checkQuestionStatus} />
           </button>
         </div>
-        <div className="mt-2 flex flex-col gap-[7px] tablet:mt-11 tablet:gap-[40px]">
+        <div className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5">
           <YesNoOptions
             number={1}
             answer={'Yes'}
