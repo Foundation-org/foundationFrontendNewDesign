@@ -67,7 +67,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
     <>
       <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between overflow-y-auto border-r-4 border-[#F3F3F3] bg-white text-[#535353] dark:border-[#000] dark:bg-[#000] dark:text-white laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem]">
         <div className="flex flex-col items-center">
-          <div className="flex w-full flex-col items-center justify-center gap-10 border-b-2 border-[#707175] pb-[2.94rem] pt-[35px]">
+          <div className="flex w-full flex-col items-center justify-center gap-10 border-b-[1.32px] border-[#9C9C9C] pb-[2.94rem] pt-[35px]">
             <div className="flex items-center justify-center gap-[25px]">
               <h1 className="ml-[5px] flex items-center gap-2 text-[20px] font-medium leading-normal text-[#707175] dark:text-white">
                 Expanded View

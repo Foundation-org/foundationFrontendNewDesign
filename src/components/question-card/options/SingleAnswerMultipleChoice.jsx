@@ -174,7 +174,16 @@ const SingleAnswerMultipleChoice = (props) => {
           onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
         >
           <div className="flex h-full w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
-          <div className="flex w-full justify-between border-y border-y-[#DEE6F7] tablet:border-y-[3px]">
+          <div className="relative flex w-full justify-between border-y border-y-[#DEE6F7] tablet:border-y-[3px]">
+            <div
+              className="block h-[5px] tablet:h-[10px] absolute top-0 bg-[#4DD896]"
+              style={{
+                width:
+                  props.selectedPercentages && props.selectedPercentages?.[props.answer.trim()]
+                    ? props?.selectedPercentages[props?.answer.trim()]
+                    : '0%',
+              }}
+            />
             {props.editable ? (
               <input
                 type="text"
@@ -198,6 +207,17 @@ const SingleAnswerMultipleChoice = (props) => {
                 <Tooltip optionStatus={checkOptionStatus} />
               </div>
             )}
+            <div
+              className={`block h-[5px] tablet:h-[10px] absolute bottom-0 bg-[#FDD503B2]`}
+              style={{
+                width:
+                  props.contendPercentages &&
+                  props.contendPercentages?.[props.answer.trim()] &&
+                  props.contendPercentages?.[props.answer.trim()] !== '0%'
+                    ? props.contendPercentages[props.answer.trim()]
+                    : '0%',
+              }}
+            />
           </div>
         </div>
         <div

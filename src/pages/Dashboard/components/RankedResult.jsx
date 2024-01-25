@@ -66,7 +66,13 @@ const RankedResult = (props) => {
             </div>
           )}
 
-          <div className="flex w-full justify-between">
+          <div className="relative flex w-full justify-between">
+            <div
+              className="block h-[5px] tablet:h-[10px] absolute top-0 bg-[#4DD896]"
+              style={{
+                width: props?.selectedPercentages[props?.answer.trim()],
+              }}
+            />
             <h1 className="w-full pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.5px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
               {props.answer}
             </h1>
@@ -104,6 +110,12 @@ const RankedResult = (props) => {
                 setAddOptionLimit={props.setAddOptionLimit}
               />
             </BasicModal>
+            {/* <div
+              className={`block h-[10px] absolute bottom-0 bg-[#FDD503B2]`}
+              style={{
+                width: props?.selectedPercentages[props?.answer.trim()],
+              }}
+            /> */}
           </div>
         </div>
         {/* to show ranked and multiple choice options */}

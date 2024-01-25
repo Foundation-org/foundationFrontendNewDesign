@@ -5,7 +5,7 @@ const SingleAnswer = (props) => {
         &#x200B;
       </div>
       <div
-        className={`flex w-full justify-between rounded-r-[4.73px] border-y border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
+        className={` flex w-full justify-between rounded-r-[4.73px] border-y border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
         onClick={() =>
           props.btnText === 'Results'
             ? null
@@ -17,7 +17,13 @@ const SingleAnswer = (props) => {
               )
         }
       >
-        <div className="flex items-center">
+        <div className="relative flex items-center w-full">
+          <div
+            className="block h-[5px] tablet:h-[10px] absolute top-0 bg-[#4DD896]"
+            style={{
+              width: props.percentage,
+            }}
+          />
           <h1 className="pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
             {props.answer}
           </h1>

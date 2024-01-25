@@ -186,7 +186,7 @@ const SidebarRight = () => {
     <>
       <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] dark:border-[#000] dark:bg-[#000] laptop:block">
         <EmailTypeModal modalShow={modalVisible} email={persistedUserInfo?.email} handleEmailType={handleEmailType} />
-        <div className="mb-[5vh] flex gap-[15px]">
+        <div className="mb-[3vh] flex gap-[15px]">
           <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" />
           <div>
             <h4 className="heading">Treasury</h4>
@@ -256,17 +256,17 @@ const SidebarRight = () => {
         {sidebarList.map((item) => (
           <div className="mt-[1.9vh] flex items-center gap-4" key={item.id}>
             {persistedTheme === 'dark' ? (
-              <img src={item.icon} alt={item.alt} className="h-[43.043px] w-[40px]" />
+              <img src={item.icon} alt={item.alt} className="h-10 w-10" />
             ) : (
-              <img src={item.iconLight} alt={item.alt} className="h-[43.043px] w-[40px]" />
+              <img src={item.iconLight} alt={item.alt} className="h-10 w-10" />
             )}
 
-            <div className="flex w-full items-center justify-between text-[18px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#878787]">
+            <div className="flex w-full items-center justify-between text-[14px] font-medium leading-5 text-[#7C7C7C] dark:text-[#878787]">
               <div>
                 <h5>{item.title?.split(' ')[0]}</h5>
                 <h5>{item.title?.split(' ')[1]}</h5>
               </div>
-              <h5>{item.value}</h5>
+              <h5 className="text-[22px] font-semibold">{item.value}</h5>
             </div>
           </div>
         ))}
