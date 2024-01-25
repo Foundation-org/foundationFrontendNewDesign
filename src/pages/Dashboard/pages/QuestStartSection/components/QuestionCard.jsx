@@ -126,7 +126,6 @@ const QuestionCard = (props) => {
       }
     }
   }, [questStartData.QuestAnswers, windowWidth]);
-
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);

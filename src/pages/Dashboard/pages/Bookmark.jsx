@@ -152,18 +152,18 @@ const Bookmark = () => {
     setViewResult((prev) => (prev === testId ? null : testId));
   };
 
-  const printNoRecords = (persistedTheme) => {
-    <div className="my-[15vh] flex  flex-col justify-center">
-      {persistedTheme === 'dark' ? (
-        <img src="../../../../../public/assets/svgs/dashboard/noposts.png" alt="noposts image" />
-      ) : (
-        <img src="../../../../../public/assets/svgs/dashboard/noposts.png" alt="noposts image" />
-      )}
-      <p className="text-[#9F9F9F]-600 font-inter mt-[1.319vw] text-center text-[2.083vw] dark:text-gray">
-        No Matching Posts Found
-      </p>
-    </div>
-  };
+  // const printNoRecords = (persistedTheme) => {
+  //   <div className="my-[15vh] flex  flex-col justify-center">
+  //     {persistedTheme === 'dark' ? (
+  //       <img src="../../../../../public/assets/svgs/dashboard/noposts.png" alt="noposts image" />
+  //     ) : (
+  //       <img src="../../../../../public/assets/svgs/dashboard/noposts.png" alt="noposts image" />
+  //     )}
+  //     <p className="text-[#9F9F9F]-600 font-inter mt-[1.319vw] text-center text-[2.083vw] dark:text-gray">
+  //       No Matching Posts Found
+  //     </p>
+  //   </div>
+  // };
 
   console.log({ allData });
 
