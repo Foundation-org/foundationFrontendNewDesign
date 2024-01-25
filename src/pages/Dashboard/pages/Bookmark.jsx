@@ -1,38 +1,28 @@
-import { useEffect, useState } from 'react';
-import { FaSpinner } from 'react-icons/fa';
-
-import {
-  getAllQuestsWithDefaultStatus,
-  getAllAnswered,
-  getAllCompleted,
-  getAllUnanswered,
-  getAllChangable,
-  searchBookmarks,
-  getAllBookmarkedQuests,
-} from '../../../services/api/homepageApis';
-import {
-  getFilters,
-  resetFilters,
-  setFilterByScope,
-  setFilterBySort,
-  setFilterByStatus,
-  setFilterByType,
-} from '../../../features/filters/bookmarkFilterSlice';
 import { useSelector } from 'react-redux';
-import { useQuery } from '@tanstack/react-query';
-import { useDebounce } from '../../../utils/useDebounce';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
+// components
 import QuestionCard from './QuestStartSection/components/QuestionCard';
 import SidebarLeft from '../components/SidebarLeft';
 import SidebarRight from '../components/SidebarRight';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import QuestionCardWithToggle from './QuestStartSection/components/QuestionCardWithToggle';
-import * as filtersActions from '../../../features/sidebar/filtersSlice';
+
+// extras
+import { FaSpinner } from 'react-icons/fa';
+import { useDebounce } from '../../../utils/useDebounce';
+import { initialColumns } from '../../../constants/preferences';
+import * as QuestServices from '../../../services/queries/quest';
+import * as prefActions from '../../../features/preferences/prefSlice';
+import * as filtersActions from '../../../features/sidebar/bookmarkFilterSlice';
 
 const Bookmark = () => {
+  const getPreferences = useSelector(prefActions.getPrefs);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const filterStates = useSelector(filtersActions.getFilters);
+  const debouncedSearch = useDebounce(filterStates.searchData, 1000);
+
   const pageLimit = 5;
-  const filterStates = useSelector(getFilters);
-  const newfilterStates = useSelector(filtersActions.getFilters);
   const [pagination, setPagination] = useState({
     page: 1,
     sliceStart: 0,
@@ -47,76 +37,65 @@ const Bookmark = () => {
     uuid: persistedUserInfo?.uuid,
     Page: 'Bookmark',
   };
-  const [searchData, setSearchData] = useState('');
   const [viewResult, setViewResult] = useState(null);
   const [startTest, setStartTest] = useState(null);
-  const [clearFilter, setClearFilter] = useState(false);
-  const debouncedSearch = useDebounce(searchData, 1000);
-  const [expandedView, setExpandedView] = useState(
-    localStorage.getItem('expandedView') !== undefined
-      ? localStorage.getItem('expandedView') === 'true'
-        ? true
-        : false
-      : false,
-  );
 
-  const { data: bookmarkedData } = useQuery({
-    queryFn: () => getAllBookmarkedQuests(),
-    queryKey: ['getBookmarked'],
-  });
-
-  const handleSearch = (e) => {
-    setSearchData(e.target.value);
-  };
-
-  const applyFilters = (params, filterStates) => {
-    if (filterStates.filterBySort !== '') {
-      params = { ...params, sort: filterStates.filterBySort };
+  useEffect(() => {
+    if (filterStates.expandedView === false) {
+      setStartTest(null);
+      setViewResult(null);
     }
+  }, [filterStates.expandedView]);
 
-    if (filterStates.filterByType && filterStates.filterByType !== 'All') {
-      params = { ...params, type: filterStates.filterByType.toLowerCase() };
+  // preferences start
+  const [columns, setColumns] = useState(initialColumns);
+
+  const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
+
+  const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
+
+  useEffect(() => {
+    if (prefSearchRes?.length !== 0) {
+      setColumns((prevColumns) => {
+        const newList = prefSearchRes?.data.data || [];
+
+        const filteredList = newList.filter(
+          (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
+        );
+
+        return {
+          ...prevColumns,
+          All: {
+            ...prevColumns.All,
+            list: filteredList || [],
+          },
+        };
+      });
     } else {
-      params = { ...params, type: '' };
-    }
+      if (isSuccess) {
+        setColumns((prevColumns) => {
+          const newList = topicsData?.data.data || [];
 
-    if (filterStates.filterByScope === 'Me') {
-      params = { ...params, filter: true };
-    }
+          const filteredList = newList.filter(
+            (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
+          );
 
-    return params;
-  };
-
-  const fetchDataByStatus = async (params, filterStates) => {
-    switch (filterStates.filterByStatus) {
-      case 'Unanswered':
-        return await getAllUnanswered(params);
-      case 'Answered':
-        return await getAllAnswered(params);
-      case 'Completed':
-        return await getAllCompleted(params);
-      case 'Changeable':
-        return await getAllChangable(params);
-      default:
-        return await getAllQuestsWithDefaultStatus(params);
-    }
-  };
-
-  const { data: feedData } = useQuery({
-    queryFn: async () => {
-      params = applyFilters(params, filterStates);
-
-      if (debouncedSearch === '') {
-        const result = await fetchDataByStatus(params, filterStates);
-        return result.data;
-      } else {
-        const result = await searchBookmarks(debouncedSearch);
-        return result;
+          return {
+            ...prevColumns,
+            All: {
+              ...prevColumns.All,
+              list: filteredList || [],
+            },
+          };
+        });
       }
-    },
-    queryKey: ['FeedData', filterStates, debouncedSearch, pagination, clearFilter],
-    staleTime: 0,
-  });
+    }
+  }, [topicsData, prefSearchRes]);
+  // preferences end
+
+  const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
+
+  const { data: feedData } = QuestServices.useGetFeedData(filterStates, debouncedSearch, pagination, columns, params);
 
   useEffect(() => {
     setPagination((prevPagination) => ({
@@ -126,7 +105,7 @@ const Bookmark = () => {
       page: 1,
     }));
     setAllData([]);
-  }, [filterStates, searchData]);
+  }, [filterStates, filterStates.searchData]);
 
   useEffect(() => {
     if (pagination.page === 1) {
@@ -157,12 +136,21 @@ const Bookmark = () => {
     }
   }, [pagination.page]);
 
+  const fetchMoreData = () => {
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      page: prevPagination.page + 1,
+    }));
+  };
+
   const handleStartTest = (testId) => {
     setStartTest((prev) => (prev === testId ? null : testId));
   };
+
   const handleViewResults = (testId) => {
     setViewResult((prev) => (prev === testId ? null : testId));
   };
+
   const printNoRecords = () => {
     setTimeout(() => {
       return (
@@ -173,33 +161,12 @@ const Bookmark = () => {
     }, 1000);
   };
 
-  const fetchMoreData = () => {
-    setPagination((prevPagination) => ({
-      ...prevPagination,
-      page: prevPagination.page + 1,
-    }));
-  };
-
   console.log({ allData });
 
   return (
-    <div className="flex w-full flex-col laptop:flex-row">
-      <SidebarLeft
-        handleSearch={handleSearch}
-        searchData={searchData}
-        clearFilter={clearFilter}
-        setClearFilter={setClearFilter}
-        setSearchData={setSearchData}
-        filterStates={filterStates}
-        resetFilters={resetFilters}
-        setFilterByScope={setFilterByScope}
-        setFilterBySort={setFilterBySort}
-        setFilterByStatus={setFilterByStatus}
-        setFilterByType={setFilterByType}
-        expandedView={expandedView}
-        setExpandedView={setExpandedView}
-      />
-      <div className="shadow-inner-md no-scrollbar flex h-full min-h-[calc(100vh-96px)] w-full flex-col gap-[27px] overflow-y-auto bg-[#F3F3F3] pl-6 pr-[23px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] dark:bg-[#242424]">
+    <div className="flex w-full flex-col bg-white dark:bg-black laptop:flex-row">
+      <SidebarLeft columns={columns} setColumns={setColumns} />
+      <div className="no-scrollbar flex h-full w-full flex-col overflow-y-auto bg-[#F3F3F3] px-[1.13rem] py-[0.63rem] dark:bg-[#242424] tablet:min-h-[calc(100vh-92px)] tablet:py-[0.94rem]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -208,7 +175,7 @@ const Bookmark = () => {
             feedData?.hasNextPage === false ? (
               <div className="flex justify-between gap-4 px-4 py-3 tablet:py-[27px]">
                 <div></div>
-                {searchData && allData.length == 0 ? (
+                {filterStates.searchData && allData.length == 0 ? (
                   <div className="my-[15vh] flex  flex-col justify-center">
                     {persistedTheme === 'dark' ? (
                       <img src="../../../../../public/assets/svgs/dashboard/noposts.png" alt="noposts image" />
@@ -219,10 +186,10 @@ const Bookmark = () => {
                       No Matching Posts Found
                     </p>
                   </div>
-                ) : !searchData && allData.length === 0 ? (
+                ) : !filterStates.searchData && allData.length === 0 ? (
                   <>{printNoRecords()}</>
                 ) : (
-                  !searchData && (
+                  !filterStates.searchData && (
                     <p className="text-center  text-[2vw] dark:text-gray">
                       <b>No more bookmarks!</b>
                     </p>
@@ -239,8 +206,8 @@ const Bookmark = () => {
           height={'88vh'}
           className="no-scrollbar "
         >
-          <div id="section-1" className="flex flex-col gap-2 py-3 tablet:gap-[17px] tablet:py-[27px]">
-            {newfilterStates.expandedView
+          <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
+            {filterStates.expandedView
               ? allData?.map((item, index) => (
                   <div key={index + 1}>
                     <QuestionCardWithToggle
@@ -289,7 +256,7 @@ const Bookmark = () => {
                       })}
                       lastInteractedAt={item.lastInteractedAt}
                       usersChangeTheirAns={item.usersChangeTheirAns}
-                      expandedView={expandedView}
+                      expandedView={filterStates.expandedView}
                       QuestTopic={item.QuestTopic}
                       isBookmarkTab={true}
                     />
@@ -342,7 +309,7 @@ const Bookmark = () => {
                       })}
                       lastInteractedAt={item.lastInteractedAt}
                       usersChangeTheirAns={item.usersChangeTheirAns}
-                      expandedView={expandedView}
+                      expandedView={filterStates.expandedView}
                       QuestTopic={item.QuestTopic}
                       isBookmarkTab={true}
                     />
@@ -350,94 +317,6 @@ const Bookmark = () => {
                 ))}
           </div>
         </InfiniteScroll>
-        {/* <InfiniteScroll
-          dataLength={allData?.length}
-          next={fetchMoreData}
-          hasMore={feedData?.hasNextPage}
-          loader={
-            allData && allData.length === 0 ? (
-              <h4>
-                {feedData && feedData.hasNextPage
-                  ? "Loading..."
-                  : "No results found"}
-              </h4>
-            ) : (
-              <h4>End of bookmarks.</h4>
-            )
-          }
-          endMessage={
-            feedData?.hasNextPage === false ? (
-              <div className="flex justify-between gap-4 px-4 pb-3 tablet:pb-[27px]">
-                <p className="text-center">
-                  <b>You are all caught up!</b>
-                </p>
-                <IoIosArrowUp
-                  className="cursor-pointer text-2xl"
-                  onClick={handleClickScroll}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-center">
-                <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-              </div>
-            )
-          }
-          height={"88vh"}
-          className="no-scrollbar"
-        >
-          <div
-            id="section-1"
-            className="flex flex-col gap-2 py-3 tablet:gap-[17px] tablet:py-[27px]"
-          >
-            {allData?.map((item, index) => (
-              <div key={index + 1}>
-                <QuestionCard
-                  id={item?._id}
-                  img="/assets/svgs/dashboard/badge.svg"
-                  alt="badge"
-                  badgeCount="5"
-                  title={
-                    item?.whichTypeQuestion === "agree/disagree"
-                      ? "Agree/Disagree"
-                      : item?.whichTypeQuestion === "like/dislike"
-                        ? "Like/Dislike"
-                        : item?.whichTypeQuestion === "multiple choise"
-                          ? "Multiple Choice"
-                          : item?.whichTypeQuestion === "ranked choise"
-                            ? "Ranked Choice"
-                            : item?.whichTypeQuestion === "yes/no"
-                              ? "Yes/No"
-                              : null
-                  }
-                  answers={item?.QuestAnswers}
-                  time={item?.createdAt}
-                  multipleOption={item?.userCanSelectMultiple}
-                  viewResult={viewResult}
-                  startTest={startTest}
-                  handleViewResults={handleViewResults}
-                  handleStartTest={handleStartTest}
-                  whichTypeQuestion={item?.whichTypeQuestion}
-                  createdBy={item?.uuid}
-                  usersAddTheirAns={item?.usersAddTheirAns}
-                  question={item?.Question}
-                  btnColor={
-                    item?.startStatus === "completed"
-                      ? "bg-[#4ABD71]"
-                      : item?.startStatus === "change answer"
-                        ? "bg-[#FDD503]"
-                        : "bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]"
-                  }
-                  btnText={item?.startStatus}
-                  lastInteractedAt={item?.lastInteractedAt}
-                  usersChangeTheirAns={item?.usersChangeTheirAns}
-                  isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                    return bookmark.questForeignKey === item?._id;
-                  })}
-                />
-              </div>
-            ))}
-          </div>
-        </InfiniteScroll> */}
       </div>
       <SidebarRight />
     </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // components
@@ -8,7 +9,8 @@ import BasicModal from '../../../components/BasicModal';
 import TopicPreferences from './topicpreferences';
 
 // extras
-import * as filtersActions from '../../../features/sidebar/filtersSlice';
+import * as homeFilterActions from '../../../features/sidebar/filtersSlice';
+import * as bookmarkFiltersActions from '../../../features/sidebar/bookmarkFilterSlice';
 
 // icons
 import { GrClose } from 'react-icons/gr';
@@ -16,6 +18,16 @@ import { topicPreferencesModalStyle } from '../../../assets/styles';
 
 const SidebarLeft = ({ columns, setColumns }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const { pathname } = location;
+  let filtersActions;
+
+  if (pathname === '/dashboard/bookmark') {
+    filtersActions = bookmarkFiltersActions;
+  } else {
+    filtersActions = homeFilterActions;
+  }
+
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
   const [localExpanded, setlocalExpaneded] = useState(filterStates.expandedView);

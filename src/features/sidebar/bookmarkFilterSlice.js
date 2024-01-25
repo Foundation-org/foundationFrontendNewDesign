@@ -1,21 +1,36 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  expandedView: localStorage.getItem('expandedView') === 'true' ? true : false,
+  searchData: '',
   filterByStatus: '',
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
+  clearFilter: false,
 };
 
 export const bookmarkFiltersSlice = createSlice({
   name: 'bookmarkFilters',
   initialState,
   reducers: {
+    toggleExapandedView: (state, action) => {
+      state.expandedView = !state.expandedView;
+    },
+    setSearchData: (state, action) => {
+      state.searchData = action.payload;
+    },
     setFilterByStatus: (state, action) => {
       state.filterByStatus = action.payload;
     },
     setFilterByType: (state, action) => {
-      state.filterByType = action.payload;
+      if (action.payload === 'Multiple Choice') {
+        state.filterByType = 'Multiple Choise';
+      } else if (action.payload === 'Ranked Choice') {
+        state.filterByType = 'Ranked Choise';
+      } else {
+        state.filterByType = action.payload;
+      }
     },
     setFilterByScope: (state, action) => {
       state.filterByScope = action.payload;
@@ -29,8 +44,15 @@ export const bookmarkFiltersSlice = createSlice({
   },
 });
 
-export const { setFilterByStatus, setFilterByType, setFilterByScope, setFilterBySort, resetFilters } =
-  bookmarkFiltersSlice.actions;
+export const {
+  toggleExapandedView,
+  setSearchData,
+  setFilterByStatus,
+  setFilterByType,
+  setFilterByScope,
+  setFilterBySort,
+  resetFilters,
+} = bookmarkFiltersSlice.actions;
 
 export default bookmarkFiltersSlice.reducer;
 
