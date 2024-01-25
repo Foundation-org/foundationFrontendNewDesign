@@ -5,14 +5,16 @@ const SingleAnswer = (props) => {
         &#x200B;
       </div>
       <div
-        className="flex w-full cursor-pointer justify-between rounded-r-[4.73px] border-y border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]"
+        className={`flex w-full justify-between rounded-r-[4.73px] border-y border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
         onClick={() =>
-          props.handleToggleCheck(
-            props.questStartData.whichTypeQuestion,
-            props.answer,
-            !props.check,
-            props.questStartData._id,
-          )
+          props.btnText === 'Results'
+            ? null
+            : props.handleToggleCheck(
+                props.questStartData.whichTypeQuestion,
+                props.answer,
+                !props.check,
+                props.questStartData._id,
+              )
         }
       >
         <div className="flex items-center">
