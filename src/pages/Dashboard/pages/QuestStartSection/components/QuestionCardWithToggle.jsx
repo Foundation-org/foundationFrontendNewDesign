@@ -40,6 +40,7 @@ const QuestionCardWithToggle = (props) => {
   const [startTest, setStartTest] = useState('');
   const [viewResult, setViewResult] = useState('');
   const [questSelection, setQuestSelection] = useState(questSelectionInitial);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const handleQuestSelection = (actionPayload) => {
     setQuestSelection((prevState) => {
@@ -105,16 +106,17 @@ const QuestionCardWithToggle = (props) => {
   );
 
   const cardSize = useMemo(() => {
-    const limit = window.innerWidth >= 744 ? true : false;
+    const limit = windowWidth >= 744 ? true : false;
     if (
       questStartData.whichTypeQuestion === 'agree/disagree' ||
       questStartData.whichTypeQuestion === 'like/dislike' ||
       questStartData.whichTypeQuestion === 'yes/no'
     ) {
-      return limit ? 100 : 58;
+      return limit ? 100 : 49;
     } else {
       let tempSize = 0;
       questStartData.QuestAnswers.forEach((item, index) => {
+        // tempSize += index === 0 ? (limit ? 45 : 24) : limit ? 55 : 29.7;
         tempSize += index === 0 ? (limit ? 49 : 24) : limit ? 59 : 29.7;
       });
       if (limit) {
@@ -123,7 +125,17 @@ const QuestionCardWithToggle = (props) => {
         return tempSize > 187 ? 187 : tempSize;
       }
     }
-  }, [questStartData.QuestAnswers]);
+  }, [questStartData.QuestAnswers, windowWidth]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     setRankedAnswers(
