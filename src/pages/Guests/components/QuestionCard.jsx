@@ -9,6 +9,7 @@ import { createStartQuest } from '../../../services/api/questsApi';
 import { useNavigate } from 'react-router-dom';
 import { getQuests, toggleCheck } from '../../../features/quest/questsSlice';
 import SingleAnswer from '../../../components/question-card/options/SingleAnswer';
+import { validateInterval } from '../../../utils';
 
 const QuestionCard = ({
   tab,
@@ -176,7 +177,7 @@ const QuestionCard = ({
         console.log(howManyTimesAnsChanged);
         const currentDate = new Date();
 
-        const timeInterval = validateInterval();
+        const timeInterval = validateInterval(usersChangeTheirAns);
         // Check if enough time has passed
         if (howManyTimesAnsChanged > 1 && currentDate - new Date(lastInteractedAt) < timeInterval) {
           // Alert the user if the time condition is not met
@@ -221,7 +222,7 @@ const QuestionCard = ({
       const currentDate = new Date();
 
       if (btnText === 'change answer') {
-        const timeInterval = validateInterval();
+        const timeInterval = validateInterval(usersChangeTheirAns);
         // Check if enough time has passed
         if (howManyTimesAnsChanged > 1 && currentDate - new Date(lastInteractedAt) < timeInterval) {
           // Alert the user if the time condition is not met
@@ -279,7 +280,7 @@ const QuestionCard = ({
       const currentDate = new Date();
 
       if (btnText === 'change answer') {
-        const timeInterval = validateInterval();
+        const timeInterval = validateInterval(usersChangeTheirAns);
         // Check if enough time has passed
         if (howManyTimesAnsChanged > 1 && currentDate - new Date(lastInteractedAt) < timeInterval) {
           // Alert the user if the time condition is not met

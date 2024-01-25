@@ -381,7 +381,7 @@ const QuestionCard = (props) => {
       const currentDate = new Date();
 
       if (questStartData.startStatus === 'change answer') {
-        const timeInterval = validateInterval();
+        const timeInterval = validateInterval(questStartData.usersChangeTheirAns);
         if (howManyTimesAnsChanged > 1 && currentDate - new Date(questStartData.lastInteractedAt) < timeInterval) {
           toast.error(`You can change your selection again in ${questStartData.usersChangeTheirAns}`);
           setLoading(false);
@@ -454,7 +454,7 @@ const QuestionCard = (props) => {
       const currentDate = new Date();
 
       if (questStartData.startStatus === 'change answer') {
-        const timeInterval = validateInterval();
+        const timeInterval = validateInterval(questStartData.usersChangeTheirAns);
         // Check if enough time has passed
         if (howManyTimesAnsChanged > 1 && currentDate - new Date(questStartData.lastInteractedAt) < timeInterval) {
           // Alert the user if the time condition is not met
