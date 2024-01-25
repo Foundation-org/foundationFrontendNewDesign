@@ -94,7 +94,7 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, ques
             badgeCount={badgeCount}
           />
         </BasicModal>
-        <div className="cursor-pointer" onClick={handleLinkOpen}>
+        {/* <div className="cursor-pointer" onClick={handleLinkOpen}>
           {persistedTheme === 'dark' ? <Link /> : <Link />}
         </div>
         <BasicModal open={linkModal} handleClose={handleLinkClose} customStyle={customModalStyle}>
@@ -106,7 +106,7 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, ques
             alt={alt}
             badgeCount={badgeCount}
           />
-        </BasicModal>
+        </BasicModal> */}
         <div className="cursor-pointer" onClick={handleEmailOpen}>
           {persistedTheme === 'dark' ? <Mail /> : <Mail />}
         </div>

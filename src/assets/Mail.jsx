@@ -3,7 +3,7 @@ import React from 'react';
 const Mail = () => {
   return (
     <svg
-      className="mr-[4px] h-4 w-4 tablet:mr-[0.8rem] tablet:h-[1.5rem] tablet:w-[1.5rem]"
+      className="mr-[4px] h-4 w-4 tablet:mr-[0.4rem] tablet:h-[1.5rem] tablet:w-[1.5rem]"
       xmlns="http://www.w3.org/2000/svg"
       width="15"
       height="14"
