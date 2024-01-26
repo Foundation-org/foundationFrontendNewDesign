@@ -25,7 +25,7 @@ const SidebarRight = () => {
       icon: '/assets/svgs/dashboard/icon1.svg',
       iconLight: '/assets/svgs/dashboard/icon11.svg',
       alt: 'icon1',
-      title: 'Posts Created',
+      title: 'Posts-Created',
       value: (response && response?.questsCreated) || 0,
     },
     {
@@ -33,7 +33,7 @@ const SidebarRight = () => {
       icon: '/assets/svgs/dashboard/icon2.svg',
       iconLight: '/assets/svgs/dashboard/icon12.svg',
       alt: 'icon1',
-      title: 'Posts Answered',
+      title: 'Posts-Answered',
       value: (response && response?.usersAnswered) || 0,
     },
     // {
@@ -57,7 +57,7 @@ const SidebarRight = () => {
       icon: '/assets/svgs/dashboard/icon5.svg',
       iconLight: '/assets/svgs/dashboard/icon15.svg',
       alt: 'icon1',
-      title: 'Answers Changed',
+      title: 'Answers-Changed',
       value: (response && response?.changedAnswers) || 0,
     },
     {
@@ -65,7 +65,7 @@ const SidebarRight = () => {
       icon: '/assets/svgs/dashboard/icon6.svg',
       iconLight: '/assets/svgs/dashboard/icon16.svg',
       alt: 'icon1',
-      title: 'Answers Added',
+      title: 'Answers-Added',
       value: (response && response?.addedAnswers) || 0,
     },
     {
@@ -73,7 +73,7 @@ const SidebarRight = () => {
       icon: '/assets/svgs/dashboard/icon7.svg',
       iconLight: '/assets/svgs/dashboard/workng.svg',
       alt: 'icon1',
-      title: 'Agreement Received',
+      title: 'Agreement-Received',
       value: (response && response?.selectionsOnAddedAns) || 0,
     },
     {
@@ -81,7 +81,7 @@ const SidebarRight = () => {
       icon: '/assets/svgs/dashboard/icon8.svg',
       iconLight: '/assets/svgs/dashboard/icon18.svg',
       alt: 'icon1',
-      title: 'Objections Received',
+      title: 'Objections-Received',
       value: (response && response?.contentionsOnAddedAns) || 0,
     },
     {
@@ -89,7 +89,7 @@ const SidebarRight = () => {
       icon: '/assets/svgs/dashboard/icon9.svg',
       iconLight: '/assets/svgs/dashboard/icon19.svg',
       alt: 'icon1',
-      title: 'Objections Given',
+      title: 'Objections-Given',
       value: (response && response?.contentionsGiven) || 0,
     },
     {
@@ -97,7 +97,7 @@ const SidebarRight = () => {
       icon: '/assets/svgs/dashboard/last.svg',
       iconLight: '/assets/svgs/dashboard/icon20.svg',
       alt: 'icon1',
-      title: 'Code of Conduct Fails',
+      title: 'Code of Conduct-Fails',
       value: (response && response?.violationCounter) || 0,
     },
   ];
@@ -263,8 +263,8 @@ const SidebarRight = () => {
 
             <div className="flex w-full items-center justify-between text-[14px] font-medium leading-5 text-[#7C7C7C] dark:text-[#878787]">
               <div>
-                <h5>{item.title?.split(' ')[0]}</h5>
-                <h5>{item.title?.split(' ')[1]}</h5>
+                <h5>{item.title?.split('-')[0]}</h5>
+                <h5>{item.title?.split('-')[1]}</h5>
               </div>
               <h5 className="text-[22px] font-semibold">{item.value}</h5>
             </div>
