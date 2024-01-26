@@ -2,7 +2,7 @@ import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { changeOptions } from '../../../../../utils/options';
 import CustomSwitch from '../../../../../components/CustomSwitch';
 
-const ChangeChoiceOption = ({ changeState, setChangeState, setChangedOption }) => {
+const ChangeChoiceOption = ({ changeState, setChangeState, setChangedOption, changedOption }) => {
   return (
     <div className="mx-[15px] flex flex-col items-center rounded-[0.30925rem] border border-[#DEE6F7] px-[8.62px] pb-[10.25px] pt-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
       <div className="flex w-full items-center justify-between">
@@ -13,7 +13,7 @@ const ChangeChoiceOption = ({ changeState, setChangeState, setChangedOption }) =
           enabled={changeState}
           setEnabled={() => {
             setChangeState((prev) => !prev);
-            setChangedOption('Anytime');
+            // setChangedOption('Anytime');
           }}
         />
       </div>
@@ -27,6 +27,7 @@ const ChangeChoiceOption = ({ changeState, setChangeState, setChangedOption }) =
                   value={item.value}
                   control={<Radio sx={{ color: '#9C9C9C' }} />}
                   label={item.title}
+                  checked={changedOption === item.value}
                   className="h-[20px] w-[60px] text-[11px] md:text-sm tablet:h-[auto] tablet:w-[auto] "
                   onChange={(e) => {
                     setChangedOption(e.target.value);

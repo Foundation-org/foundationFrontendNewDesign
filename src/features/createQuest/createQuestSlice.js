@@ -3,28 +3,36 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   yesNo: {
     question: '',
-    changeChoice: '',
+    changedOption: '',
+    changeState: false,
   },
   agreeDisagree: {
     question: '',
-    changeChoice: '',
+    changedOption: '',
+    changeState: false,
   },
   likeDislike: {
     question: '',
-    changeChoice: '',
+    changedOption: '',
+    changeState: false,
   },
   multipleChoice: {
     question: '',
-    options: [],
-    selectMultiple: false,
+    changedOption: '',
+    changeState: false,
+
+    multipleOption: false,
     addOption: false,
-    changeChoice: '',
+    optionsCount: 3,
+    options: [],
   },
   rankedChoice: {
     question: '',
-    options: [],
+    changedOption: '',
+    changeState: false,
     addOption: false,
-    changeChoice: '',
+    optionsCount: 3,
+    options: [],
   },
 };
 
@@ -35,13 +43,31 @@ export const createQuestSlice = createSlice({
     updateYesNo: (state, action) => {
       state.yesNo = { ...action.payload };
     },
+    updateAgreeDisagree: (state, action) => {
+      state.agreeDisagree = { ...action.payload };
+    },
+    updateLikeDislike: (state, action) => {
+      state.likeDislike = { ...action.payload }
+    },
+    updateMultipleChoice: (state, action) => {
+      state.multipleChoice = { ...action.payload }
+    },
+    updateRankedChoice: (state, action) => {
+      state.rankedChoice = { ...action.payload }
+    },
     resetCreateQuest: (state) => {
       Object.assign(state, initialState);
     },
   },
 });
 
-export const { updateYesNo, resetCreateQuest } = createQuestSlice.actions;
+export const {
+  updateYesNo,
+  resetCreateQuest,
+  updateAgreeDisagree,
+  updateLikeDislike,
+  updateMultipleChoice,
+  updateRankedChoice } = createQuestSlice.actions;
 
 export default createQuestSlice.reducer;
 

@@ -1,11 +1,11 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { Tooltip } from '../../../../../utils/Tooltip';
-
+import { updateYesNo } from "../../../../../features/createQuest/createQuestSlice";
 import YesNoOptions from '../components/YesNoOptions';
 import ChangeChoiceOption from '../components/ChangeChoiceOption';
 
@@ -13,12 +13,18 @@ import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 
 const YesNo = () => {
+
   const navigate = useNavigate();
-  const [question, setQuestion] = useState('');
+  const dispatch = useDispatch();
+
+  const createQuestSlice = useSelector(createQuestAction.getYesNo);
+
+  // console.log('createQuestSlice', createQuestSlice);
+  const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
-  const [changedOption, setChangedOption] = useState('');
-  const [changeState, setChangeState] = useState(false);
+  const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
+  const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
   const reset = {
     name: 'Ok',
@@ -29,9 +35,6 @@ const YesNo = () => {
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const createQuestSlice = useSelector(createQuestAction.getYesNo);
-
-  console.log('createQuestSlice', createQuestSlice);
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
@@ -129,15 +132,22 @@ const YesNo = () => {
     });
   };
 
+  useEffect(() => {
+
+    return () => {
+      dispatch(updateYesNo({ question, changedOption,changeState }))
+    }
+
+  }, [question, changedOption, changeState])
+
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
         Ask a question that allows for a straightforward "Yes" or "No" response
       </h4>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
+        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[25px]">
           Create Poll
@@ -190,6 +200,7 @@ const YesNo = () => {
             Settings
           </h5>
           <ChangeChoiceOption
+            changedOption={changedOption}
             changeState={changeState}
             setChangeState={setChangeState}
             setChangedOption={setChangedOption}
