@@ -51,7 +51,7 @@ const RankedResult = (props) => {
       ) : (
         <div className="flex w-7 min-w-[28px] items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]"></div>
       )}
-      <div className="flex h-full w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]">
+      <div className="flex min-h-[21.8px] h-[21.8px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:min-w-[25px] laptop:w-[25px]">
         &#x200B;
       </div>
       <div className="tablet:rounded-l-0 rounded-l-0 flex w-full justify-between rounded-r-[4.73px] border-y border-l-0 border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]">
@@ -124,7 +124,7 @@ const RankedResult = (props) => {
             <>
               {props?.selectedPercentages && props.selectedPercentages[props.answer.trim()] ? (
                 <div className="flex items-center gap-[10px]">
-                  <h1 className="text-[16px] font-bold leading-[0px] text-[#22AA69] tablet:text-[25px]">R</h1>
+                  <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">R</h1>
                   <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                     {props?.selectedPercentages[props?.answer.trim()]}
                   </span>

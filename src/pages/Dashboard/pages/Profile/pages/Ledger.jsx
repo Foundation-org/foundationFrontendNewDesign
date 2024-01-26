@@ -285,7 +285,7 @@ export default function BasicTable() {
             >
               <img
                 className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px] "
-                src={'./assets/svgs/arrow-back.svg'}
+                src={'/assets/svgs/arrow-back.svg'}
                 alt=""
               />
             </button>
@@ -326,7 +326,7 @@ export default function BasicTable() {
             >
               <img
                 className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px] "
-                src={'./assets/svgs/arrow-forward.svg'}
+                src={'/assets/svgs/arrow-forward.svg'}
                 alt=""
               />
             </button>

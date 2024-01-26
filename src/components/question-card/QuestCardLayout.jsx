@@ -71,7 +71,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, childr
       />
       <div className="pb-[0.94rem] pt-[0.84rem] tablet:pb-5 tablet:pt-[0.94rem]">
         <div className="ml-[1.39rem] mr-[0.62rem] tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
-          <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem]">
+          <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-none">
             {questStartData.Question?.endsWith('?') ? 'Q.' : 'S.'} {questStartData.Question}
           </h4>
         </div>

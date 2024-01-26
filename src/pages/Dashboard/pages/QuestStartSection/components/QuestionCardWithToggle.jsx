@@ -19,17 +19,14 @@ import ConditionalTextFullScreen from '../../../../../components/question-card/C
 
 import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
-import { useParams } from 'react-router-dom';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
-  let { isFullScreen } = useParams();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const { questStartData, isBookmarked } = props;
 
-  const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addOptionField, setAddOptionField] = useState(0);
   const [addOptionLimit, setAddOptionLimit] = useState(0);
@@ -167,8 +164,6 @@ const QuestionCardWithToggle = (props) => {
 
     handleStartTest(questStartData._id);
   };
-
-  const handleClose = () => setOpen(false);
 
   const handleAddOption = () => {
     const newOption = {
@@ -557,7 +552,6 @@ const QuestionCardWithToggle = (props) => {
             id={questStartData._id}
             title={getQuestionTitle(questStartData.whichTypeQuestion)}
             handleToggleCheck={handleToggleCheck}
-            handleClose={handleClose}
             answers={questStartData.QuestAnswers}
             btnText={questStartData.startStatus}
             whichTypeQuestion={questStartData.whichTypeQuestion}
@@ -570,10 +564,7 @@ const QuestionCardWithToggle = (props) => {
             questSelection={questSelection}
             cardSize={cardSize}
           />
-          <ConditionalTextFullScreen
-            questStartData={questStartData}
-            show={isFullScreen === 'isfullscreen' ? true : false}
-          />
+          <ConditionalTextFullScreen questStartData={questStartData} show={true} />
         </>
       );
     }

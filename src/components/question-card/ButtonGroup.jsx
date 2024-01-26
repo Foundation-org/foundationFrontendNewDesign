@@ -6,6 +6,7 @@ import { resetQuests } from '../../features/quest/questsSlice';
 import { getButtonText, getButtonVariants } from '../../utils/questionCard/SingleQuestCard';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
+import { calculateRemainingTime } from '../../utils';
 
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 import * as filterActions from '../../features/sidebar/filtersSlice';
@@ -149,6 +150,12 @@ const ButtonGroup = ({
       handleViewResults(id);
     }
   };
+
+  const result = calculateRemainingTime(
+    questStartData?.updatedAt,
+    questStartData?.startQuestData && questStartData?.startQuestData.data.length,
+    questStartData.usersChangeTheirAns,
+  );
 
   if (filterState.expandedView === false) {
     if (startTest === questStartData._id) {
@@ -294,7 +301,11 @@ const ButtonGroup = ({
         viewResult !== questStartData._id ? (
           <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
             {getButtonText(btnText) !== 'Completed' ? (
-              <Button variant={getButtonVariants(btnText)} onClick={handleStartChange}>
+              <Button
+                variant={getButtonVariants(btnText)}
+                onClick={handleStartChange}
+                disabled={result === ', you are good to go!' ? false : true}
+              >
                 {getButtonText(btnText)}
               </Button>
             ) : null}
@@ -376,7 +387,11 @@ const ButtonGroup = ({
 
           <div className="flex w-full justify-end pr-[14.4px] tablet:pr-[3.44rem]">
             {btnText === 'change answer' && viewResult === questStartData._id ? (
-              <Button variant="change" onClick={handleChange}>
+              <Button
+                variant={`${result === ', you are good to go!' ? 'change' : 'change-outline'}`}
+                disabled={result === ', you are good to go!' ? false : true}
+                onClick={handleChange}
+              >
                 Change
               </Button>
             ) : (
