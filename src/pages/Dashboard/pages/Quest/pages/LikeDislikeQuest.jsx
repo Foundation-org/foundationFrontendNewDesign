@@ -15,13 +15,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import ChangeChoiceOption from '../components/ChangeChoiceOption';
 import { FaSpinner } from 'react-icons/fa';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
-import { updateLikeDislike } from '../../../../../features/createQuest/createQuestSlice';
+import { updateQuestion } from '../../../../../features/createQuest/createQuestSlice';
 
 const LikeDislike = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const createQuestSlice = useSelector(createQuestAction.getLikeDislike);
+  const createQuestSlice = useSelector(createQuestAction.getCreate);
 
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
@@ -135,9 +135,7 @@ const LikeDislike = () => {
   };
 
   useEffect(() => {
-    return () => {
-      dispatch(updateLikeDislike({ question, changedOption, changeState }));
-    };
+    dispatch(updateQuestion({ question, changedOption, changeState }));
   }, [question, changedOption, changeState]);
 
   return (

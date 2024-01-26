@@ -25,7 +25,7 @@ const MultipleChoice = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const createQuestSlice = useSelector(createQuestAction.getMultipleChoice);
+  const createQuestSlice = useSelector(createQuestAction.getCreate);
 
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
@@ -360,20 +360,17 @@ const MultipleChoice = () => {
     let tempOptions = typedValues.map((item) => {
       return item.question;
     });
-    return () => {
-      dispatch(
-        updateMultipleChoice({
-          question,
-          changedOption,
-          changeState,
-          optionsCount,
-          multipleOption,
-          addOption,
-          options: tempOptions,
-        }),
-      );
-    };
-  }, [question, changedOption, changeState, multipleOption, addOption, optionsCount, typedValues]);
+    dispatch(
+      updateMultipleChoice({
+        question,
+        changedOption,
+        changeState,
+        optionsCount,
+        addOption,
+        options: tempOptions,
+      }),
+    );
+  }, [question, changedOption, changeState, addOption, optionsCount, typedValues]);
 
   return (
     <>

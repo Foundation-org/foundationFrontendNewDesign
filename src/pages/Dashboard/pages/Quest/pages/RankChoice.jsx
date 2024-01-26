@@ -25,8 +25,7 @@ const RankChoice = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const createQuestSlice = useSelector(createQuestAction.getRankChoice);
-  console.log('our reank choice is', createQuestSlice);
+  const createQuestSlice = useSelector(createQuestAction.getCreate);
 
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
@@ -360,18 +359,16 @@ const RankChoice = () => {
     let tempOptions = typedValues.map((item) => {
       return item.question;
     });
-    return () => {
-      dispatch(
-        updateRankedChoice({
-          question,
-          changedOption,
-          changeState,
-          optionsCount,
-          addOption,
-          options: tempOptions,
-        }),
-      );
-    };
+    dispatch(
+      updateRankedChoice({
+        question,
+        changedOption,
+        changeState,
+        optionsCount,
+        addOption,
+        options: tempOptions,
+      }),
+    );
   }, [question, changedOption, changeState, addOption, optionsCount, typedValues]);
 
   return (
