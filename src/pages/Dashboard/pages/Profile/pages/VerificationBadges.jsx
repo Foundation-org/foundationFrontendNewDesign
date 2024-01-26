@@ -8,6 +8,7 @@ import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
+import { LoginSocialFacebook } from 'reactjs-social-login';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -100,15 +101,15 @@ const VerificationBadges = () => {
       link: '/auth/linkedin',
       accountName: 'linkedin',
     },
-    {
-      image: '/assets/profile/Facebook-2x.png',
-      title: 'Facebook',
-      ButtonColor: 'blue',
-      ButtonText: 'Add New Badge',
-      NoOfButton: 1,
-      link: '/auth/facebook',
-      accountName: 'facebook',
-    },
+    // {
+    //   image: '/assets/profile/Facebook-2x.png',
+    //   title: 'Facebook',
+    //   ButtonColor: 'blue',
+    //   ButtonText: 'Add New Badge',
+    //   NoOfButton: 1,
+    //   link: '/auth/facebook',
+    //   accountName: 'facebook',
+    // },
     {
       image: '/assets/profile/Twitter-2x.png',
       title: 'Twitter',
@@ -242,6 +243,43 @@ const VerificationBadges = () => {
 
   const checkSocial = (itemType) => fetchUser?.badges?.some((i) => i.accountName === itemType);
 
+  // Handle Remove Badge
+  const handleRemoveBadge = async (accountName) => {
+    const findBadge = fetchUser.badges.filter((item) => {
+      if (item.accountName === accountName) {
+        return item;
+      }
+    });
+    try {
+      const removeBadge = await api.post(`/removeBadge`, {
+        badgeAccountId: findBadge[0].accountId,
+        uuid: fetchUser.uuid,
+      });
+      if (removeBadge.status === 200) {
+        toast.success('Badge Removed Successfully!');
+        handleUserInfo();
+      }
+    } catch (error) {
+      toast.error(e.response.data.message.split(':')[1]);
+    }
+  };
+  // Handle Add Badge
+  const handleAddBadge = async (provider, data) => {
+    try {
+      const addBadge = await api.post(`/addBadge`, {
+        data,
+        provider,
+        badgeAccountId: data.userID,
+        uuid: fetchUser.uuid,
+      });
+      if (addBadge.status === 200) {
+        toast.success('Badge Added Successfully!');
+        handleUserInfo();
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+    }
+  };
   return (
     <div>
       {isLoading && <Loader />}
@@ -284,6 +322,55 @@ const VerificationBadges = () => {
           </div>
         ))}
         <h1 className="font-500 font-Inter ml-[3.5vw] text-[2.22vw] font-normal text-[#000] dark:text-white">Social</h1>
+        <div className="flex items-center justify-center">
+          <div className="flex gap-[5px] tablet:gap-[10.59px]">
+            <img
+              src="/assets/profile/Facebook-2x.png"
+              alt={'Facebook'}
+              className="h-[19.4px] w-[19.4px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
+            />
+            <div
+              className={`${
+                persistedTheme === 'dark' ? 'dark-shadow-input' : 'shadow-inside'
+              } mx-2  flex h-[5.8vw] min-w-[19.9vw] items-center justify-center rounded-[1.31vw] text-[1.73vw]  font-medium  leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA] `}
+            >
+              <h1>{'Facebook'}</h1>
+            </div>
+            {checkSocial('facebook') ? (
+              <Button
+                color={checkSocial('facebook') ? 'red' : 'blue'}
+                onClick={() => {
+                  checkSocial('facebook') && handleRemoveBadge('facebook');
+                }}
+              >
+                {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
+              </Button>
+            ) : (
+              <LoginSocialFacebook
+                // isOnlyGetToken
+                appId={import.meta.env.VITE_FB_APP_ID}
+                onResolve={({ provider, data }) => {
+                  handleAddBadge(provider, data);
+                }}
+                redirect_uri={window.location.href}
+                onReject={(err) => {
+                  console.log(err);
+                }}
+                className="container w-full"
+              >
+                <Button
+                  color={checkSocial('facebook') ? 'red' : 'blue'}
+                  onClick={() => {
+                    checkSocial('facebook') && handleRemoveBadge('facebook');
+                  }}
+                >
+                  {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
+                </Button>
+              </LoginSocialFacebook>
+            )}
+          </div>
+        </div>
+
         {socials.map((item, index) => (
           <div className="flex items-center justify-center gap-[5px] tablet:gap-[10.59px]" key={index}>
             <img
@@ -299,12 +386,13 @@ const VerificationBadges = () => {
               <h1>{item.title}</h1>
             </div>
             <Button
-              color={checkSocial(item.accountName) ? 'yellow' : item.ButtonColor}
+              color={checkSocial(item.accountName) ? 'red' : item.ButtonColor}
               onClick={() => {
                 !checkSocial(item.accountName) && window.open(`${import.meta.env.VITE_API_URL}${item.link}`, '_self');
+                checkSocial(item.accountName) && handleRemoveBadge(item.accountName);
               }}
             >
-              {checkSocial(item.accountName) ? 'Added' : item.ButtonText}
+              {checkSocial(item.accountName) ? 'Remove' : item.ButtonText}
             </Button>
           </div>
         ))}
