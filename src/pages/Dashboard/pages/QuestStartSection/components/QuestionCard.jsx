@@ -83,9 +83,9 @@ const QuestionCard = (props) => {
     })),
   );
 
-  useEffect(() => {
-    // console.log("answersSelection", answersSelection);
-  }, [answersSelection]);
+  // useEffect(() => {
+  //   console.log('answersSelection', answersSelection);
+  // }, [answersSelection]);
 
   useEffect(() => {
     setAnswerSelection(

@@ -33,9 +33,9 @@ const SingleAnswerRankedChoice = (props) => {
     setCheckState(props.check);
   }, [props.check]);
 
-  useEffect(() => {
-    setAnswer(props.answer);
-  }, [props.answer]);
+  // useEffect(() => {
+  //   setAnswer(props.answer);
+  // }, [props.answer]);
 
   const handleDeleteOpen = () => {
     setCheckOptionStatus(reset);
@@ -118,7 +118,7 @@ const SingleAnswerRankedChoice = (props) => {
   }, [answer]);
 
   const handleAddOption = () => {
-    const newArr = props.answersSelection.map((item) =>
+    const newArr = props.rankedAnswers.map((item) =>
       item.label === props.answer ? { ...item, label: answer.trim() } : item,
     );
 

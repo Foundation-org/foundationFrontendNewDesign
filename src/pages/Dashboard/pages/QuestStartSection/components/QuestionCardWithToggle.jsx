@@ -138,7 +138,6 @@ const QuestionCardWithToggle = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log('i got caught');
     setRankedAnswers(
       answersSelection?.map((item, index) => ({
         id: `unique-${index}`,

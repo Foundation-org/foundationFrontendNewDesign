@@ -262,6 +262,7 @@ const StartTest = ({
                                 addedAnswerUuid={item.uuid}
                                 answersSelection={answersSelection}
                                 setAnswerSelection={setAnswerSelection}
+                                rankedAnswers={rankedAnswers}
                                 title={getQuestionTitle(questStartData.whichTypeQuestion)}
                                 checkInfo={false}
                                 check={findLabelChecked(answersSelection, item.label)}
