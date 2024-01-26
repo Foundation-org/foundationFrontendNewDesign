@@ -6,7 +6,7 @@ const Dashboard = () => {
     <>
       <Topbar />
       {/* h-[calc(100vh-66.8px)] */}
-      <div className="flex h-[calc(100vh-66.8px)] justify-between">
+      <div className="flex h-screen justify-between">
         <Outlet />
       </div>
     </>
