@@ -14,7 +14,7 @@ import { Tooltip } from '../../../../../utils/Tooltip';
 import ChangeChoiceOption from '../components/ChangeChoiceOption';
 import { FaSpinner } from 'react-icons/fa';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
-import { updateAgreeDisagree } from '../../../../../features/createQuest/createQuestSlice';
+import { updateQuestion } from '../../../../../features/createQuest/createQuestSlice';
 
 
 const AgreeDisagree = () => {
@@ -22,8 +22,8 @@ const AgreeDisagree = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const createQuestSlice = useSelector(createQuestAction.getAgreeDisagree);
-  console.log('createQuestSlice', createQuestSlice);
+  const createQuestSlice = useSelector(createQuestAction.getCreate);
+  // console.log('createQuestSlice', createQuestSlice);
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
@@ -136,12 +136,10 @@ const AgreeDisagree = () => {
   };
 
   useEffect(() => {
-
-    return () => {
-      dispatch(updateAgreeDisagree({ question, changedOption, changeState }))
-    }
-
+      dispatch(updateQuestion({ question, changedOption, changeState }))
   }, [question, changedOption, changeState])
+
+
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">

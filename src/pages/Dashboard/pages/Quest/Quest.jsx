@@ -17,8 +17,8 @@ const Quest = () => {
       {tab === 0 && <YesNo />}
       {tab === 1 && <MultipleChoice />}
       {tab === 2 && <RankChoice />}
-      {tab === 3 && <AgreeDisagree />}
       {tab === 4 && <LikeDislike />}
+      {tab === 3 && <AgreeDisagree />}
     </div>
   );
 };

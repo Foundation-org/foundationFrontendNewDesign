@@ -5,7 +5,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { Tooltip } from '../../../../../utils/Tooltip';
-import { updateYesNo } from "../../../../../features/createQuest/createQuestSlice";
+import { updateQuestion } from "../../../../../features/createQuest/createQuestSlice";
 import YesNoOptions from '../components/YesNoOptions';
 import ChangeChoiceOption from '../components/ChangeChoiceOption';
 
@@ -17,21 +17,24 @@ const YesNo = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const createQuestSlice = useSelector(createQuestAction.getYesNo);
+  const createQuestSlice = useSelector(createQuestAction.getCreate);
 
   // console.log('createQuestSlice', createQuestSlice);
+
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
+
   const reset = {
     name: 'Ok',
     color: 'text-[#389CE3]',
     tooltipName: 'Please write something...',
     tooltipStyle: 'tooltip-info',
   };
+
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -133,11 +136,7 @@ const YesNo = () => {
   };
 
   useEffect(() => {
-
-    return () => {
-      dispatch(updateYesNo({ question, changedOption,changeState }))
-    }
-
+      dispatch(updateQuestion({ question, changedOption, changeState }))
   }, [question, changedOption, changeState])
 
   return (

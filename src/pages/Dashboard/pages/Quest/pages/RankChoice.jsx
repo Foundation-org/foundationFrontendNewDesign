@@ -25,9 +25,9 @@ const RankChoice = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const createQuestSlice = useSelector(createQuestAction.getRankChoice);
-  console.log("our reank choice is", createQuestSlice);
-  
+  const createQuestSlice = useSelector(createQuestAction.getCreate);
+
+
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
@@ -360,17 +360,16 @@ const RankChoice = () => {
     let tempOptions = typedValues.map((item) => {
       return item.question
     })
-    return () => {
-      dispatch(updateRankedChoice({
-        question,
-        changedOption,
-        changeState,
-        optionsCount,
-        addOption,
-        options: tempOptions,
-      }))
-    }
-  }, [question, changedOption, changeState,  addOption, optionsCount, typedValues])
+    dispatch(updateRankedChoice({
+      question,
+      changedOption,
+      changeState,
+      optionsCount,
+      addOption,
+      options: tempOptions,
+    }))
+
+  }, [question, changedOption, changeState, addOption, optionsCount, typedValues])
 
   return (
     <>
@@ -476,7 +475,7 @@ const RankChoice = () => {
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
           <ChangeChoiceOption
-          changedOption={changedOption}
+            changedOption={changedOption}
             changeState={changeState}
             setChangeState={setChangeState}
             setChangedOption={setChangedOption}
