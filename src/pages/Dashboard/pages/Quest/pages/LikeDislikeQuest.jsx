@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   checkUniqueQuestion,
@@ -11,17 +11,24 @@ import { useMutation } from '@tanstack/react-query';
 import AgreeDisagreeOptions from '../components/AgreeDisagreeOptions';
 import { Tooltip } from '../../../../../utils/Tooltip';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ChangeChoiceOption from '../components/ChangeChoiceOption';
 import { FaSpinner } from 'react-icons/fa';
+import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import { updateLikeDislike } from '../../../../../features/createQuest/createQuestSlice';
 
 const LikeDislike = () => {
+
   const navigate = useNavigate();
-  const [question, setQuestion] = useState('');
+  const dispatch = useDispatch();
+
+  const createQuestSlice = useSelector(createQuestAction.getLikeDislike);
+
+  const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
-  const [changedOption, setChangedOption] = useState('');
-  const [changeState, setChangeState] = useState(false);
+  const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
+  const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -128,15 +135,20 @@ const LikeDislike = () => {
     });
   };
 
+  useEffect(() => {
+    return () => {
+      dispatch(updateLikeDislike({ question, changedOption, changeState }))
+    }
+  }, [question, changedOption, changeState])
+
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
         Make a statement that anyone can "Like" or "Dislike"
       </h4>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
+        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[25px]">
           Create Poll
@@ -187,6 +199,7 @@ const LikeDislike = () => {
             Settings
           </h5>
           <ChangeChoiceOption
+          changedOption={changedOption}
             changeState={changeState}
             setChangeState={setChangeState}
             setChangedOption={setChangedOption}

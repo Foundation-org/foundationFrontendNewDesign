@@ -1,8 +1,8 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Options from '../components/Options';
 import {
   answerValidation,
@@ -18,17 +18,23 @@ import ChangeChoiceOption from '../components/ChangeChoiceOption';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../../../components/ui/Button';
+import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import { updateMultipleChoice } from "../../../../../features/createQuest/createQuestSlice";
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
-  const [question, setQuestion] = useState('');
+  const dispatch = useDispatch();
+
+  const createQuestSlice = useSelector(createQuestAction.getMultipleChoice);
+
+  const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
-  const [multipleOption, setMultipleOption] = useState(false);
-  const [addOption, setAddOption] = useState(false);
-  const [changeState, setChangeState] = useState(false);
-  const [changedOption, setChangedOption] = useState('');
+  const [multipleOption, setMultipleOption] = useState(createQuestSlice.multipleOption);
+  const [addOption, setAddOption] = useState(createQuestSlice.addOption);
+  const [changeState, setChangeState] = useState(createQuestSlice.changeState);
+  const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [selectedValues, setSelectedValues] = useState([]);
-  const [optionsCount, setOptionsCount] = useState(3);
+  const [optionsCount, setOptionsCount] = useState(createQuestSlice.optionsCount);
   const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
   const [optionWaiting, setOptionWaiting] = useState(false);
@@ -36,7 +42,7 @@ const MultipleChoice = () => {
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       id: `index-${index}`,
-      question: '',
+      question: createQuestSlice.options[index],
       selected: false,
       optionStatus: {
         name: 'Ok',
@@ -56,7 +62,7 @@ const MultipleChoice = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  console.log({ loading });
+
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -281,11 +287,11 @@ const MultipleChoice = () => {
       optionStatus:
         value.trim() === ''
           ? {
-              name: 'Ok',
-              color: 'text-[#389CE3]',
-              tooltipName: 'Please write something...',
-              tooltipStyle: 'tooltip-info',
-            }
+            name: 'Ok',
+            color: 'text-[#389CE3]',
+            tooltipName: 'Please write something...',
+            tooltipStyle: 'tooltip-info',
+          }
           : { name: 'Ok', color: 'text-[#b0a00f]' },
     };
     setTypedValues(newTypedValues);
@@ -352,15 +358,32 @@ const MultipleChoice = () => {
     }
   };
 
+
+  useEffect(() => {
+    let tempOptions = typedValues.map((item) => {
+      return item.question
+    })
+    return () => {
+      dispatch(updateMultipleChoice({
+        question,
+        changedOption,
+        changeState,
+        optionsCount,
+        multipleOption,
+        addOption,
+        options: tempOptions,
+      }))
+    }
+  }, [question, changedOption, changeState, multipleOption, addOption, optionsCount, typedValues])
+
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
         Ask a question that allows for diverse responses and multiple answer options
       </h4>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
+        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[25px]">
           Create Poll
@@ -463,6 +486,7 @@ const MultipleChoice = () => {
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
           <ChangeChoiceOption
+            changedOption={changedOption}
             changeState={changeState}
             setChangeState={setChangeState}
             setChangedOption={setChangedOption}

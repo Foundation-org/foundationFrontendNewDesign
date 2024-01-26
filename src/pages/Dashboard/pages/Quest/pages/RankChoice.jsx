@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import {
@@ -10,7 +10,7 @@ import {
   questionValidation,
 } from '../../../../../services/api/questsApi';
 import { toast } from 'sonner';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Tooltip } from '../../../../../utils/Tooltip';
 import Options from '../components/Options';
 import CustomSwitch from '../../../../../components/CustomSwitch';
@@ -18,15 +18,22 @@ import ChangeChoiceOption from '../components/ChangeChoiceOption';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../../../components/ui/Button';
+import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import { updateRankedChoice } from '../../../../../features/createQuest/createQuestSlice';
 
 const RankChoice = () => {
   const navigate = useNavigate();
-  const [question, setQuestion] = useState('');
+  const dispatch = useDispatch();
+
+  const createQuestSlice = useSelector(createQuestAction.getRankChoice);
+  console.log("our reank choice is", createQuestSlice);
+  
+  const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
-  const [addOption, setAddOption] = useState(false);
-  const [changeState, setChangeState] = useState(false);
-  const [changedOption, setChangedOption] = useState('');
-  const [optionsCount, setOptionsCount] = useState(3);
+  const [addOption, setAddOption] = useState(createQuestSlice.addOption);
+  const [changeState, setChangeState] = useState(createQuestSlice.changeState);
+  const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
+  const [optionsCount, setOptionsCount] = useState(createQuestSlice.optionsCount);
   const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
   const [optionWaiting, setOptionWaiting] = useState(false);
@@ -34,7 +41,7 @@ const RankChoice = () => {
   const [typedValues, setTypedValues] = useState(() =>
     Array.from({ length: optionsCount }, (_, index) => ({
       id: `index-${index}`,
-      question: '',
+      question: createQuestSlice.options[index],
       selected: false,
       optionStatus: {
         name: 'Ok',
@@ -275,11 +282,11 @@ const RankChoice = () => {
       optionStatus:
         value.trim() === ''
           ? {
-              name: 'Ok',
-              color: 'text-[#389CE3]',
-              tooltipName: 'Please write something...',
-              tooltipStyle: 'tooltip-info',
-            }
+            name: 'Ok',
+            color: 'text-[#389CE3]',
+            tooltipName: 'Please write something...',
+            tooltipStyle: 'tooltip-info',
+          }
           : { name: 'Ok', color: 'text-[#b0a00f]' },
     };
     setTypedValues(newTypedValues);
@@ -349,6 +356,21 @@ const RankChoice = () => {
       return false;
     }
   };
+  useEffect(() => {
+    let tempOptions = typedValues.map((item) => {
+      return item.question
+    })
+    return () => {
+      dispatch(updateRankedChoice({
+        question,
+        changedOption,
+        changeState,
+        optionsCount,
+        addOption,
+        options: tempOptions,
+      }))
+    }
+  }, [question, changedOption, changeState,  addOption, optionsCount, typedValues])
 
   return (
     <>
@@ -356,9 +378,8 @@ const RankChoice = () => {
         Create a selection of choices that can be arranged in order of preference.
       </h4>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
+        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[25px]">
           Create Poll
@@ -455,6 +476,7 @@ const RankChoice = () => {
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
           <ChangeChoiceOption
+          changedOption={changedOption}
             changeState={changeState}
             setChangeState={setChangeState}
             setChangedOption={setChangedOption}
