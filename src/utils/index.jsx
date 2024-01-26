@@ -42,9 +42,9 @@ export function calculateRemainingTime(lastInteractedAt, howManyTimesAnsChanged,
       .filter(Boolean)
       .join(', ');
 
-    return `, after ${remainingTime.split(',')[0]}.`;
+    return `, after ${remainingTime.split(',')[0]}`;
   } else {
-    return ', you are good to go!';
+    return ', you are good to go';
   }
 }
 
@@ -57,13 +57,13 @@ export const handleClickScroll = () => {
 
 export const printNoRecordsMessage = (persistedTheme) => {
   return (
-    <div className="my-[15vh] flex  flex-col justify-center">
+    <div className="my-[15vh] flex  flex-col justify-center items-center">
       {persistedTheme === 'dark' ? (
         <img src="/assets/svgs/dashboard/noMatchingDark.svg" alt="noposts image" />
       ) : (
-        <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" />
+        <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" className="w-[160px] h-[173px]" />
       )}
-      <p className="font-inter mt-[1.319vw] text-center text-[2.083vw] text-[#9F9F9F] dark:text-gray">
+      <p className="font-inter mt-[1.319vw] text-center text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
         No Matching Posts Found
       </p>
     </div>
@@ -75,19 +75,18 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme)
     <div className="flex justify-between gap-4 px-4 py-3 tablet:py-[27px]">
       <div></div>
       {filterStates.searchData && allData.length == 0 ? (
-        <div className="my-[15vh] flex  flex-col justify-center">
+        <div className="my-[15vh] flex  flex-col justify-center items-center">
           {persistedTheme === 'dark' ? (
             <img src="/assets/svgs/dashboard/noMatchingDark.svg" alt="noposts image" />
           ) : (
-            <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" />
+            <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" className="w-[160px] h-[173px]" />
           )}
-          <p className="font-inter mt-[1.319vw] text-center text-[2.083vw] text-[#9F9F9F] dark:text-gray">
+          <p className="font-inter mt-[1.319vw] text-center text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
             No Matching Posts Found
           </p>
         </div>
       ) : !filterStates.searchData && allData.length === 0 ? (
-        <>{printNoRecordsMessage(persistedTheme)}
-        </>
+        <>{printNoRecordsMessage(persistedTheme)}</>
       ) : (
         !filterStates.searchData && (
           <p className="text-center text-[2vw]">

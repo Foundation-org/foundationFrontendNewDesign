@@ -302,9 +302,10 @@ const ButtonGroup = ({
           <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
             {getButtonText(btnText) !== 'Completed' ? (
               <Button
-                variant={getButtonVariants(btnText)}
+                // variant={getButtonVariants(btnText)}
+                variant={`${result === ', you are good to go' ? getButtonVariants(btnText) : 'change-outline'}`}
                 onClick={handleStartChange}
-                disabled={result === ', you are good to go!' ? false : true}
+                disabled={result === ', you are good to go' ? false : true}
               >
                 {getButtonText(btnText)}
               </Button>
@@ -388,8 +389,8 @@ const ButtonGroup = ({
           <div className="flex w-full justify-end pr-[14.4px] tablet:pr-[3.44rem]">
             {btnText === 'change answer' && viewResult === questStartData._id ? (
               <Button
-                variant={`${result === ', you are good to go!' ? 'change' : 'change-outline'}`}
-                disabled={result === ', you are good to go!' ? false : true}
+                variant={result === ', you are good to go' ? 'change' : 'change-outline'}
+                disabled={result === ', you are good to go' ? false : true}
                 onClick={handleChange}
               >
                 Change

@@ -19,7 +19,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../../../components/ui/Button';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
-import { updateMultipleChoice } from "../../../../../features/createQuest/createQuestSlice";
+import { updateMultipleChoice } from '../../../../../features/createQuest/createQuestSlice';
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -61,8 +61,6 @@ const MultipleChoice = () => {
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
-
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -287,11 +285,11 @@ const MultipleChoice = () => {
       optionStatus:
         value.trim() === ''
           ? {
-            name: 'Ok',
-            color: 'text-[#389CE3]',
-            tooltipName: 'Please write something...',
-            tooltipStyle: 'tooltip-info',
-          }
+              name: 'Ok',
+              color: 'text-[#389CE3]',
+              tooltipName: 'Please write something...',
+              tooltipStyle: 'tooltip-info',
+            }
           : { name: 'Ok', color: 'text-[#b0a00f]' },
     };
     setTypedValues(newTypedValues);
@@ -358,23 +356,24 @@ const MultipleChoice = () => {
     }
   };
 
-
   useEffect(() => {
     let tempOptions = typedValues.map((item) => {
-      return item.question
-    })
+      return item.question;
+    });
     return () => {
-      dispatch(updateMultipleChoice({
-        question,
-        changedOption,
-        changeState,
-        optionsCount,
-        multipleOption,
-        addOption,
-        options: tempOptions,
-      }))
-    }
-  }, [question, changedOption, changeState, multipleOption, addOption, optionsCount, typedValues])
+      dispatch(
+        updateMultipleChoice({
+          question,
+          changedOption,
+          changeState,
+          optionsCount,
+          multipleOption,
+          addOption,
+          options: tempOptions,
+        }),
+      );
+    };
+  }, [question, changedOption, changeState, multipleOption, addOption, optionsCount, typedValues]);
 
   return (
     <>
@@ -382,13 +381,14 @@ const MultipleChoice = () => {
         Ask a question that allows for diverse responses and multiple answer options
       </h4>
       <div
-        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
+        className={`${
+          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[25px]">
           Create Poll
         </h1>
-        <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-5">
+        <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-5 tablet:pb-[13px]">
           <input
             className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
             onChange={(e) => {
@@ -460,14 +460,14 @@ const MultipleChoice = () => {
         </DragDropContext>
         <Button
           variant="addOption"
-          className="ml-[21.55px] mt-[16px] tablet:ml-[60px] tablet:mt-5"
+          className="ml-[21.55px] mt-[16px] tablet:ml-[60px] tablet:mt-[33px]"
           onClick={handleAddOption}
         >
           + Add Option
         </Button>
         {/* settings */}
         <p className="my-1 text-center tablet:mb-[10px] tablet:mt-5 text-[8px] font-normal leading-normal text-[#85898C] dark:text-[#D8D8D8] tablet:text-[16px]">
-          Customize your Quest.
+          &#x200B;
         </p>
         <div className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
           <h5 className="text-center text-[10px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[25px]">

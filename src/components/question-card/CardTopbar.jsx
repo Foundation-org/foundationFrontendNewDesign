@@ -14,7 +14,7 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic, bookmarkStatu
             alt={alt}
             className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888px]"
           />
-          <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[11.3px] font-[400] leading-normal text-[#F6F6F6] tablet:top-1/2 tablet:text-[15px]">
+          <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-[400] leading-none text-[#F6F6F6] tablet:top-[40%] tablet:text-[15px]">
             {persistedUserInfo?.badges?.length}
           </p>
         </div>
@@ -25,7 +25,7 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic, bookmarkStatu
             alt={alt}
             className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888px]"
           />
-          <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[11.3px] font-[400] leading-normal text-[#F6F6F6] tablet:top-1/2 tablet:text-[15px]">
+          <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-[400] leading-none text-[#F6F6F6] tablet:top-[40%] tablet:text-[15px]">
             {badgeCount}
           </p>
         </div>

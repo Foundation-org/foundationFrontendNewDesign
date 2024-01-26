@@ -231,7 +231,7 @@ const SingleAnswerRankedChoice = (props) => {
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
         </div>
         {/* =============== To Display Contention and Trash Right of Option */}
-        <div className="flex w-12 min-w-[48px] items-center justify-center bg-[#F3F3F3] pl-0 dark:bg-black tablet:w-8 tablet:pl-[15px]">
+        <div className="flex w-12 min-w-[48px] items-center justify-center bg-white pl-0 dark:bg-black tablet:w-8 tablet:pl-[15px]">
           {props.deleteable ? (
             <img
               src="/assets/svgs/dashboard/trash2.svg"

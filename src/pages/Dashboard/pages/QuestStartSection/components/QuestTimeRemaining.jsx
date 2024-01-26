@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { calculateRemainingTime } from '../../../../../utils';
 
 const QuestTimeRemaining = ({ show, questStartData }) => {
@@ -14,6 +14,10 @@ const QuestTimeRemaining = ({ show, questStartData }) => {
     setResultString(result);
   };
 
+  useEffect(() => {
+    handleClick();
+  }, [questStartData?.updatedAt, questStartData.usersChangeTheirAns]);
+
   return (
     <div>
       {show ? (
@@ -25,7 +29,7 @@ const QuestTimeRemaining = ({ show, questStartData }) => {
           ) : (
             <h4
               className="cursor-pointer text-[7.5px] font-normal text-[#85898C] tablet:text-[16.58px] laptop:text-[1rem]"
-              onClick={handleClick}
+              // onClick={handleClick}
             >
               You can change your selection {questStartData.usersChangeTheirAns}
               {resultString}.
