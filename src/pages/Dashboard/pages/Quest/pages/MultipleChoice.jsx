@@ -371,7 +371,6 @@ const MultipleChoice = () => {
         multipleOption
       }),
     );
-    console.log("my multiple choice are after", question);
   }, [question, changedOption, changeState, addOption, optionsCount, typedValues, multipleOption]);
 
   return (
