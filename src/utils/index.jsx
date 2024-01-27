@@ -72,7 +72,7 @@ export const printNoRecordsMessage = (persistedTheme) => {
 
 export const printEndMessage = (feedData, filterStates, allData, persistedTheme) => {
   return feedData?.hasNextPage === false ? (
-    <div className="flex justify-between gap-4 px-4 py-3 tablet:py-[27px]">
+    <div className="flex justify-between gap-4 px-4 pt-3 pb-[10rem] tablet:py-[27px]">
       <div></div>
       {filterStates.searchData && allData.length == 0 ? (
         <div className="my-[15vh] flex  flex-col justify-center items-center">
