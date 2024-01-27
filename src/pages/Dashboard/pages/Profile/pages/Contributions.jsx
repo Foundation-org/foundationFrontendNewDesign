@@ -82,7 +82,7 @@ const Contributions = () => {
       <div
         className={`${
           persistedTheme === 'dark' ? 'dark-shadow-inside border-2 border-[#858585] dark:border-white' : 'shadow-inside'
-        } relative mx-[86px] hidden h-[183px] rounded-[45px] laptop:block `}
+        } relative mx-[86px] hidden h-[183px] rounded-[45px] laptop:block bg-white`}
       >
         <div className="absolute -top-7 left-[50%] flex w-full -translate-x-[50%] transform px-[40px]">
           {list?.map((item) => (
