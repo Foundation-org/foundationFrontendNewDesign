@@ -5,8 +5,9 @@ import CustomSwitch from '../../../../../components/CustomSwitch';
 
 const ChangeChoiceOption = ({ changeState, setChangeState, setChangedOption, changedOption }) => {
   useEffect(() => {
-    setChangedOption((prev) => (changeState ? prev : "Anytime"));
+    setChangedOption((prev) => (changeState ? prev : ''));
   }, [changeState]);
+
   return (
     <div className="mx-[15px] flex flex-col items-center rounded-[0.30925rem] border border-[#DEE6F7] px-[8.62px] pb-[10.25px] pt-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
       <div className="flex w-full items-center justify-between">

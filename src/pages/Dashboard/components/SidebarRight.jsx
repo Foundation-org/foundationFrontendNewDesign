@@ -184,7 +184,7 @@ const SidebarRight = () => {
 
   return (
     <>
-      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] dark:border-[#000] dark:bg-[#000] laptop:block">
+      <div className="no-scrollbar hidden h-full pb-[10vh] min-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] dark:border-[#000] dark:bg-[#000] laptop:block">
         <EmailTypeModal modalShow={modalVisible} email={persistedUserInfo?.email} handleEmailType={handleEmailType} />
         <div className="mb-[3vh] flex gap-[15px]">
           <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" />

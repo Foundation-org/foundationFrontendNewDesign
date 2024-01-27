@@ -396,9 +396,11 @@ const ButtonGroup = ({
                 Change
               </Button>
             ) : (
-              <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-              </Button>
+              startStatus !== 'completed' && (
+                <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                </Button>
+              )
             )}
           </div>
         </>

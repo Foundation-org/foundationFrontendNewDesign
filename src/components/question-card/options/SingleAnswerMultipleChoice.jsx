@@ -173,8 +173,8 @@ const SingleAnswerMultipleChoice = (props) => {
           className={`flex w-full items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px] ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
           onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
         >
-          <div className="flex h-full w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
-          <div className="relative flex w-full justify-between border-y border-y-[#DEE6F7] tablet:border-y-[3px]">
+          <div className="flex min-h-[21.8px] h-[21.8px] tablet:min-h-[49px] tablet:h-[49px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
+          <div className="relative flex h-[21.8px] tablet:min-h-[49px] tablet:h-[49px] w-full justify-between border-y border-y-[#DEE6F7] tablet:border-y-[3px]">
             <div
               className="block h-[5px] tablet:h-[10px] absolute top-0 bg-[#4DD896]"
               style={{
