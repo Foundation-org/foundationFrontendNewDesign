@@ -109,7 +109,7 @@ const QuestionCardWithToggle = (props) => {
       questStartData.whichTypeQuestion === 'like/dislike' ||
       questStartData.whichTypeQuestion === 'yes/no'
     ) {
-      return limit ? 100 : 49;
+      return limit ? 108 : 49;
     } else {
       let tempSize = 0;
       questStartData.QuestAnswers.forEach((item, index) => {

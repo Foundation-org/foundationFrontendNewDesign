@@ -11,6 +11,8 @@ const QuestTimeRemaining = ({ show, questStartData }) => {
       questStartData.usersChangeTheirAns,
     );
 
+    console.log("cal time function", result);
+
     setResultString(result);
   };
 
