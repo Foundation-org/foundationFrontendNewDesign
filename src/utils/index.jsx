@@ -32,7 +32,7 @@ export function calculateRemainingTime(lastInteractedAt, howManyTimesAnsChanged,
     const fourYears = Math.floor(days / (4 * 365));
 
     const remainingTime = [
-      days > 0 ? `${days} days` : null,
+      days > 0 ? days === 1 ? "24 hours" : days === 365 ? "12 months" : `${days} days` : null,
       weeks > 0 ? `${weeks} weeks` : null,
       months > 0 ? `${months} months` : null,
       years > 0 ? `${years} years` : null,
