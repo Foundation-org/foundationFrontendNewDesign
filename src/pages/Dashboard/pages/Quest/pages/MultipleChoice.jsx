@@ -26,7 +26,7 @@ const MultipleChoice = () => {
   const dispatch = useDispatch();
 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
-
+  console.log("my multiple choice are before", createQuestSlice);
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [multipleOption, setMultipleOption] = useState(createQuestSlice.multipleOption);
@@ -285,11 +285,11 @@ const MultipleChoice = () => {
       optionStatus:
         value.trim() === ''
           ? {
-              name: 'Ok',
-              color: 'text-[#389CE3]',
-              tooltipName: 'Please write something...',
-              tooltipStyle: 'tooltip-info',
-            }
+            name: 'Ok',
+            color: 'text-[#389CE3]',
+            tooltipName: 'Please write something...',
+            tooltipStyle: 'tooltip-info',
+          }
           : { name: 'Ok', color: 'text-[#b0a00f]' },
     };
     setTypedValues(newTypedValues);
@@ -368,9 +368,11 @@ const MultipleChoice = () => {
         optionsCount,
         addOption,
         options: tempOptions,
+        multipleOption
       }),
     );
-  }, [question, changedOption, changeState, addOption, optionsCount, typedValues]);
+    console.log("my multiple choice are after", question);
+  }, [question, changedOption, changeState, addOption, optionsCount, typedValues, multipleOption]);
 
   return (
     <>
@@ -378,9 +380,8 @@ const MultipleChoice = () => {
         Ask a question that allows for diverse responses and multiple answer options
       </h4>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
+        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[25px]">
           Create Poll

@@ -20,8 +20,8 @@ export const createQuestSlice = createSlice({
     },
 
     updateMultipleChoice: (state, action) => {
-      const { qustion, changedOption, changeState, multipleOption, addOption, optionsCount, options } = action.payload;
-      return { ...state, qustion, changedOption, changeState, multipleOption, addOption, optionsCount, options }
+      const { question, changedOption, changeState, multipleOption, addOption, optionsCount, options } = action.payload;
+      return { ...state, question, changedOption, changeState, multipleOption, addOption, optionsCount, options }
     },
     updateRankedChoice: (state, action) => {
       const { question, changedOption, changeState, addOption, optionsCount, options } = action.payload;
