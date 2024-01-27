@@ -12,6 +12,8 @@ import * as questServices from '../../../services/api/questsApi';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
 
 const SingleAnswerMultipleChoice = (props) => {
+
+  const id = props.id;
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [checkState, setCheckState] = useState(props.check);
@@ -119,8 +121,8 @@ const SingleAnswerMultipleChoice = (props) => {
   }, [answer]);
 
   const handleAddOption = () => {
-    const newArr = props.answersSelection.map((item) =>
-      item.label === props.answer ? { ...item, label: answer.trim() } : item,
+    const newArr = props.answersSelection.map((item, index) =>
+      index === id ? { ...item, label: answer.trim() } : item,
     );
     props.setAnswerSelection(newArr);
   };
@@ -128,7 +130,8 @@ const SingleAnswerMultipleChoice = (props) => {
   const handleDeleteOption = () => {
     toast.success('Item deleted');
     setCheckOptionStatus(reset);
-    const newArr = props.answersSelection.filter((item) => item.label !== props.answer);
+   
+    const newArr = props.answersSelection.filter((item, index) => index !== id);
 
     props.setAnswerSelection(newArr);
     // props.setAddOptionLimit(0);
@@ -259,7 +262,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 src="/assets/svgs/dashboard/trash2.svg"
                 alt="trash"
                 className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-                onClick={handleDeleteOption}
+                onClick={()=>handleDeleteOption(props.number)}
               />
             ) : (
               <div className="flex items-center gap-1 laptop:gap-[18px]">

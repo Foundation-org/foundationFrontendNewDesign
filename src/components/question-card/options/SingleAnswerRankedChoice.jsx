@@ -9,6 +9,9 @@ import { useDispatch } from 'react-redux';
 import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
 
 const SingleAnswerRankedChoice = (props) => {
+
+  const id = props.id;
+
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -39,7 +42,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleDeleteOpen = () => {
     setCheckOptionStatus(reset);
-    const newArr = props.answersSelection.filter((item) => item.label !== props.answer);
+    const newArr = props.answersSelection.filter((item, index) => index !== id);
 
     props.setAnswerSelection(newArr);
     dispatch(resetaddOptionLimit());
@@ -118,8 +121,8 @@ const SingleAnswerRankedChoice = (props) => {
   }, [answer]);
 
   const handleAddOption = () => {
-    const newArr = props.rankedAnswers.map((item) =>
-      item.label === props.answer ? { ...item, label: answer.trim() } : item,
+    const newArr = props.rankedAnswers.map((item, index) =>
+      index === id ? { ...item, label: answer.trim() } : item,
     );
 
     props.setAnswerSelection(newArr);
