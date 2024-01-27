@@ -183,15 +183,15 @@ const StartTest = ({
           <div className="flex flex-col overflow-auto">
             <div
               ref={listContainerRef}
-              className={`${
-                isFullScreen === undefined
-                  ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]'
-                  : ''
-              } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+              className={`${isFullScreen === undefined
+                ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]'
+                : ''
+                } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
               {answersSelection &&
                 [...answersSelection]?.map((item, index) => (
                   <SingleAnswerMultipleChoice
+                    id={index}
                     key={index}
                     number={'#' + (index + 1)}
                     answer={item.label}
@@ -233,14 +233,12 @@ const StartTest = ({
                 {(provided) => (
                   <div
                     ref={listContainerRef}
-                    className={`${
-                      isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto' : null
-                    }`}
+                    className={`${isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto' : null
+                      }`}
                   >
                     <ul
-                      className={`${
-                        isFullScreen === undefined ? ' tablet:max-h-[366px]' : ''
-                      }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                      className={`${isFullScreen === undefined ? ' tablet:max-h-[366px]' : ''
+                        }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
@@ -254,6 +252,7 @@ const StartTest = ({
                               className="w-full"
                             >
                               <SingleAnswerRankedChoice
+                                id={index}
                                 snapshot={snapshot}
                                 number={index + 1}
                                 editable={item.edit}
