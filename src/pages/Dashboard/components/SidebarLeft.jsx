@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -49,6 +49,16 @@ const SidebarLeft = ({ columns, setColumns }) => {
     setMultipleOption(!multipleOption);
   };
 
+  useEffect(() => {
+    if (localStorage.getItem('filterByState') === 'true') {
+      setMultipleOption(true);
+      setLocalMe(true);
+    } else {
+      setMultipleOption(false);
+      setLocalMe(false);
+    }
+  }, [localStorage.getItem('filterByState')]);
+
   const handleExpendedView = () => {
     setlocalExpaneded(!filterStates.expandedView);
     localStorage.setItem('expandedView', !filterStates.expandedView ? 'true' : 'false');
@@ -67,10 +77,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
     <>
       <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between overflow-y-hidden border-r-4 border-[#F3F3F3] bg-white text-[#535353] dark:border-[#000] dark:bg-[#000] dark:text-white laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem]">
         <div className="flex flex-col items-center">
-          {/* <div className="flex w-full flex-col items-center justify-center gap-10 border-b-[1.32px] border-[#9C9C9C] pb-[2.94rem] pt-[35px] "> */}
           <div className="flex w-full flex-col items-center justify-center gap-[4vh] border-b-[1.32px] border-[#9C9C9C] py-[3vh] ">
-            {' '}
-            {/*short:pt-[23px] short:pb-[0.94rem] short:gap-3 tall:py-[26px] tall:gap-6*/}
             <div className="flex items-center justify-center gap-[25px]">
               <h1 className="ml-[5px] flex items-center gap-2 text-[20px] font-medium leading-normal text-[#707175] dark:text-white">
                 Expanded View
@@ -109,7 +116,6 @@ const SidebarLeft = ({ columns, setColumns }) => {
               )}
             </div>
           </div>
-          {/* <h1 className="flex w-[212px] items-center gap-2 pb-[31px] pt-[33px] text-[22px] font-[500] leading-normal text-[#888] dark:text-white short:pt-[10px] short:pb-[10px] tall:py-[20px]"> */}
           <h1 className="flex w-[212px] items-center gap-2 py-[3vh] text-[22px] font-[500] leading-none text-[#888] dark:text-white">
             <img src="/assets/svgs/dashboard/filter.svg" alt="filter" className="h-[1.188rem] w-[1.188rem]" />
             Filters
@@ -130,7 +136,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
           >
             <TopicPreferences columns={columns} setColumns={setColumns} handleClose={handleTopicPref} />
           </BasicModal>
-          {/* <div className="mt-[46px] flex flex-col gap-9 short:gap-[1.25rem] short:mt-[26px] tall:mt-[36px] tall:gap-[24px]"> */}
+
           <div className="mt-[4vh] flex flex-col gap-[3vh]">
             <Dropdown2
               label={'Status'}
@@ -165,7 +171,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
               }}
             />
           </div>
-          {/* <div className="flex w-full items-center justify-center gap-[17px] pb-[30px] pt-[35px] short:pt-[22px] short:pb-[22px] tall:py-[20px]"> */}
+
           <div className="flex w-full items-center justify-center gap-[17px] py-[3vh]">
             <h1 className="flex items-center gap-2 text-[14px] font-medium leading-normal text-[#707175] dark:text-white">
               Show Only My Posts
@@ -178,14 +184,12 @@ const SidebarLeft = ({ columns, setColumns }) => {
             }  inset-0 w-[192px] rounded-[0.938rem] px-5 py-2 text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
             onClick={() => {
               dispatch(filtersActions.resetFilters());
+              localStorage.setItem('filterByState', 'false');
             }}
           >
             Clear Filters
           </button>
         </div>
-        {/* <h1 className="flex w-[212px] items-center gap-[0.9rem] pb-[31px] pt-[33px] text-[22px] font-[500] leading-normal text-[#7C7C7C] dark:text-white">
-          <img src="/assets/svgs/support.svg" alt="support" className="h-[2.84rem] w-[2.84rem]" /> Support
-        </h1> */}
       </div>
       {/* sidebar mobile */}
       <div className="block border-b-4 border-[#F3F3F3] bg-white px-[15px] py-[10px] dark:bg-[#0A0A0C] tablet:px-[37px] tablet:py-[26px] laptop:hidden">
@@ -271,6 +275,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
             }  inset-0 w-full rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
             onClick={() => {
               dispatch(filtersActions.resetFilters());
+              localStorage.setItem('filterByState', 'false');
             }}
           >
             Clear Filters

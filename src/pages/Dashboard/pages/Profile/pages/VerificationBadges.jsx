@@ -57,7 +57,7 @@ const VerificationBadges = () => {
 
   const contacts = [
     {
-      image: '/assets/profile/Education-Email-2x.png',
+      image: '/assets/profile/Personal-Email-2x.png',
       title: 'Personal Email',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
@@ -66,7 +66,7 @@ const VerificationBadges = () => {
       type: 'personal',
     },
     {
-      image: '/assets/profile/Education-Email-2x.png',
+      image: '/assets/profile/Work-Email-2x.png',
       title: 'Work Email',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',

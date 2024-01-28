@@ -37,48 +37,74 @@ const EmailDialogue = ({ handleClose, id }) => {
   });
 
   return (
-    <div className="relative w-[90vw] pb-[17px] pt-[25px] tablet:pb-[75px] tablet:pt-[74px] laptop:w-[52.6rem]">
-      <img
-        src="/assets/svgs/close.svg"
-        alt="close icon"
-        className="absolute right-[11px] top-[10px] h-[0.48rem] w-[0.48rem] cursor-pointer tablet:right-[20px] tablet:top-[17px] tablet:h-[1.37rem] tablet:w-[1.37rem] laptop:right-[26px] laptop:top-[29px]"
-        onClick={handleClose}
-      />
-      <div className="mx-[19px] flex flex-col gap-[10.76px] tablet:mx-[40px] tablet:gap-[27px] laptop:mx-[81px] ">
-        <div className="flex w-full rounded-[10px] bg-[#F3F3F3] px-[16.6px] py-[13px] text-[12px] font-normal text-[#435059] tablet:rounded-[26px] tablet:px-[43px] tablet:py-[36px] tablet:text-[26px] laptop:w-[681px]">
+    <div className="relative w-[90vw] laptop:w-[52.6rem]">
+      <div className="relative rounded-t-[9.251px] social-blue-gradiant flex gap-[10px] tablet:gap-4 items-center py-1 tablet:py-[8px] px-[15px] tablet:px-[30px] tablet:rounded-t-[26px]">
+        <div className="bg-white p-[5px] tablet:p-[10px] rounded-full w-fit">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-[14px] h-[14px] tablet:w-[31px] tablet:h-[31px]"
+            viewBox="0 0 16 16"
+            fill="none"
+          >
+            <path
+              d="M12.9623 2.84338H3.07552C2.63865 2.84385 2.2198 3.01685 1.91088 3.32443C1.60196 3.632 1.4282 4.04903 1.42773 4.48401V11.5153C1.4282 11.9502 1.60196 12.3673 1.91088 12.6748C2.2198 12.9824 2.63865 13.1554 3.07552 13.1559H12.9623C13.3991 13.1554 13.818 12.9824 14.1269 12.6748C14.4358 12.3673 14.6096 11.9502 14.61 11.5153V4.48401C14.6096 4.04903 14.4358 3.632 14.1269 3.32443C13.818 3.01685 13.3991 2.84385 12.9623 2.84338ZM12.545 5.55715L8.30784 8.83841C8.22522 8.90236 8.12355 8.93708 8.01889 8.93708C7.91424 8.93708 7.81256 8.90236 7.72994 8.83841L3.49277 5.55715C3.44298 5.51972 3.40117 5.47281 3.36975 5.41915C3.33834 5.36549 3.31794 5.30615 3.30976 5.24457C3.30158 5.183 3.30577 5.12042 3.32208 5.06047C3.3384 5.00052 3.36652 4.9444 3.40482 4.89536C3.44311 4.84633 3.49081 4.80536 3.54514 4.77484C3.59947 4.74431 3.65935 4.72485 3.72131 4.71757C3.78326 4.71029 3.84605 4.71534 3.90602 4.73243C3.966 4.74952 4.02197 4.7783 4.07067 4.81711L8.01889 7.87454L11.9671 4.81711C12.0658 4.74288 12.1899 4.71033 12.3126 4.72648C12.4352 4.74264 12.5466 4.80622 12.6225 4.90346C12.6984 5.0007 12.7329 5.1238 12.7184 5.24613C12.7039 5.36846 12.6416 5.48019 12.545 5.55715Z"
+              fill="#107CE0"
+            />
+          </svg>
+        </div>
+        <p className="text-white text-[12px] tablet:text-[20px] font-semibold tablet:font-medium">Email</p>
+        <div
+          className="absolute right-[12px] top-[14px] cursor-pointer tablet:right-[26px] tablet:top-1/2 tablet:-translate-y-1/2"
+          onClick={handleClose}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 23 23"
+            fill="none"
+            className="w-[8px] h-[8px] tablet:w-[23px] tablet:h-[23px]"
+          >
+            <path
+              d="M0.742781 4.71145C-0.210937 3.77788 -0.251625 2.22222 0.651895 1.23678C1.55542 0.251347 3.06101 0.209303 4.01472 1.14287L10.9221 7.9044L17.466 0.76724C18.3696 -0.218195 19.8751 -0.260239 20.8289 0.673332C21.7826 1.6069 21.8233 3.16257 20.9197 4.148L14.3759 11.2852L21.2833 18.0467C22.237 18.9803 22.2777 20.5359 21.3742 21.5213C20.4706 22.5068 18.9651 22.5488 18.0113 21.6153L11.1039 14.8537L4.56004 21.9909C3.65651 22.9763 2.15092 23.0184 1.19721 22.0848C0.243494 21.1512 0.202803 19.5956 1.10632 18.6101L7.65021 11.473L0.742781 4.71145Z"
+              fill="#F3F3F3"
+            />
+          </svg>
+        </div>
+      </div>
+      <div className="mx-[19px] flex flex-col gap-[10.76px] tablet:mx-[40px] tablet:gap-[15px] laptop:mx-[64px] pb-[17px] pt-[25px] tablet:pb-6">
+        <div className="flex w-full rounded-[10px] px-[16.6px] py-3 text-[12px] font-normal tablet:font-bold text-[#435059] tablet:rounded-[15px] tablet:px-[43px] tablet:py-[14px] tablet:text-[20px] border tablet:border-[3px] border-[#DEE6F7] leading-none">
           <label htmlFor="email">Email:</label>
           <input
             name="email"
             type="email"
-            className="w-full rounded-[26px] bg-[#F3F3F3] pl-[33px] outline-none tablet:pl-[102px]"
+            className="w-full rounded-[26px] bg-white pl-[33px] outline-none tablet:pl-[102px]"
             value={payload.email}
             onChange={handleChange}
           />
         </div>
-        <div className="flex w-full rounded-[10px] bg-[#F3F3F3] px-[16.6px] py-[13px] text-[12px] font-normal text-[#435059] tablet:rounded-[26px] tablet:px-[43px] tablet:py-[36px] tablet:text-[26px] laptop:w-[681px]">
+        <div className="flex w-full rounded-[10px] px-[16.6px] py-3 text-[12px] font-normal tablet:font-bold text-[#435059] tablet:rounded-[15px] tablet:px-[43px] tablet:py-[14px] tablet:text-[20px] border tablet:border-[3px] border-[#DEE6F7] leading-none">
           <label htmlFor="Subject">Subject:</label>
           <input
             name="subject"
             type="text"
-            className="w-full rounded-[26px] bg-[#F3F3F3] pl-[22px] outline-none tablet:pl-[80px]"
+            className="w-full rounded-[26px] bg-white pl-[33px] outline-none tablet:pl-[102px]"
             value={payload.subject}
             onChange={handleChange}
           />
         </div>
-        <div className="flex w-full rounded-[10px] bg-[#F3F3F3] px-[16.6px] py-[13px] text-[12px] font-normal text-[#435059] tablet:rounded-[26px] tablet:px-[43px] tablet:py-[36px] tablet:text-[26px] laptop:w-[681px]">
+        <div className="flex w-full rounded-[10px] px-[16.6px] py-3 text-[12px] font-normal tablet:font-bold text-[#435059] tablet:rounded-[15px] tablet:px-[43px] tablet:py-[14px] tablet:text-[20px] border tablet:border-[3px] border-[#DEE6F7] leading-none">
           <label htmlFor="Subject">Message:</label>
           <textarea
             name="message"
             type="text"
-            rows={4}
-            className="w-full rounded-[26px] bg-[#F3F3F3] pl-4 outline-none tablet:pl-[60px]"
+            rows={8}
+            className="w-full rounded-[26px] bg-white pl-[33px] outline-none tablet:pl-[102px]"
             value={payload.message}
             onChange={handleChange}
           />
         </div>
         <div className="flex justify-end">
           <button
-            className="mt-[21px] w-[99px] rounded-[8.66px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[12px] font-semibold leading-normal text-white tablet:mt-6 tablet:w-[246px] tablet:rounded-[21.33px] tablet:px-5 tablet:py-[11.38px] tablet:text-[28.44px]"
+            className="w-[99px] rounded-[8.66px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[12px] font-semibold leading-normal text-white tablet:mt-[5px] tablet:w-[246px] tablet:rounded-[21.33px] tablet:px-5 tablet:py-[11.38px] tablet:text-[28.44px]"
             onClick={() => {
               userSendEmail(payload);
             }}

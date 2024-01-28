@@ -69,7 +69,7 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, ques
 
   const customModalStyle = {
     backgroundColor: '#FCFCFD',
-    borderRadius: '26px',
+    // borderRadius: '26px',
     boxShadow: 'none',
     border: '0px',
     outline: 'none',
@@ -84,7 +84,12 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, ques
         <div onClick={handleCopyOpen} className="cursor-pointer">
           {persistedTheme === 'dark' ? <Copy /> : <Copy />}
         </div>
-        <BasicModal open={copyModal} handleClose={handleCopyClose} customStyle={customModalStyle}>
+        <BasicModal
+          open={copyModal}
+          handleClose={handleCopyClose}
+          customStyle={customModalStyle}
+          customClasses="rounded-[10px] tablet:rounded-[26px]"
+        >
           <CopyDialogue
             handleClose={handleCopyClose}
             id={id}
@@ -110,13 +115,23 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, ques
         <div className="cursor-pointer" onClick={handleEmailOpen}>
           {persistedTheme === 'dark' ? <Mail /> : <Mail />}
         </div>
-        <BasicModal open={emailModal} handleClose={handleEmailClose} customStyle={customModalStyle}>
+        <BasicModal
+          open={emailModal}
+          handleClose={handleEmailClose}
+          customStyle={customModalStyle}
+          customClasses="rounded-[10px] tablet:rounded-[26px]"
+        >
           <EmailDialogue handleClose={handleEmailClose} id={id} />
         </BasicModal>
         <div className="cursor-pointer" onClick={handleTwitterOpen}>
           {persistedTheme === 'dark' ? <Twitter /> : <Twitter />}
         </div>
-        <BasicModal open={twitterModal} handleClose={handleTwitterClose} customStyle={customModalStyle}>
+        <BasicModal
+          open={twitterModal}
+          handleClose={handleTwitterClose}
+          customStyle={customModalStyle}
+          customClasses="rounded-[10px] tablet:rounded-[26px]"
+        >
           <TwitterDialogue
             handleClose={handleTwitterClose}
             id={id}
@@ -146,8 +161,8 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, ques
           />
         </BasicModal>
       </div>
-      {(questStartData.whichTypeQuestion === 'ranked choise' ||
-        questStartData.whichTypeQuestion === 'multiple choise') && (
+      {(questStartData?.whichTypeQuestion === 'ranked choise' ||
+        questStartData?.whichTypeQuestion === 'multiple choise') && (
         <div>
           {isFullScreen === undefined ? (
             <div
