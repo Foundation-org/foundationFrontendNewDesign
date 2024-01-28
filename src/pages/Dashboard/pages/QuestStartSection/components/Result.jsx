@@ -336,6 +336,11 @@ const Result = (props) => {
                       ? props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1]
                       : null
                   }
+                  contendPercentages={
+                    props.questStartData?.contendedPercentage && props.questStartData.contendedPercentage.length > 0
+                      ? props.questStartData.contendedPercentage[props.questStartData.contendedPercentage.length - 1]
+                      : null
+                  }
                   checkInfo={false}
                   setAddOptionLimit={props.setAddOptionLimit}
                   btnText={'Results'}

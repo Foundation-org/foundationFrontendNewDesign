@@ -320,11 +320,11 @@ const QuestionCard = (props) => {
       }
 
       if (questStartData.whichTypeQuestion === 'agree/disagree') {
-        ans.selected = questSelection['agree/disagree'].agree.check === true ? 'Yes' : 'No';
+        ans.selected = questSelection['agree/disagree'].agree.check === true ? 'Agree' : 'Disagree';
       }
 
       if (questStartData.whichTypeQuestion === 'like/dislike') {
-        ans.selected = questSelection['like/dislike'].like.check === true ? 'Yes' : 'No';
+        ans.selected = questSelection['like/dislike'].like.check === true ? 'Like' : 'Dislike';
       }
 
       const params = {

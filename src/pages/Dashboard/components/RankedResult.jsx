@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import DeleteOption from './DeleteOption';
 import EditNewOption from './EditNewOption';
 import BasicModal from '../../../components/BasicModal';
+import ContentionIcon from '../../../assets/Quests/ContentionIcon';
 
 const RankedResult = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -137,7 +138,61 @@ const RankedResult = (props) => {
         </div>
       </div>
 
-      <div className="flex w-12 min-w-[48px] items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]" />
+        {/* =============== To Display Contention and Trash Right of Option */}
+        {props.btnText !== 'Results' ? (
+          <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]">
+            {props.deleteable ? (
+              <img
+                src="/assets/svgs/dashboard/trash2.svg"
+                alt="trash"
+                className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
+                onClick={()=>handleDeleteOption(props.number)}
+              />
+            ) : (
+              <div className="flex items-center gap-1 laptop:gap-[18px]">
+                <div id="custom-yello-checkbox" className="flex h-full items-center ">
+                  <div className="cursor-pointer" onClick={handleContendChange}>
+                    <ContentionIcon
+                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                      checked={contendState}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+            <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
+              <DeleteOption
+                answer={props.answer}
+                answersSelection={props.answersSelection}
+                setAnswerSelection={props.setAnswerSelection}
+                handleDeleteClose={handleDeleteClose}
+                handleEditClose={handleDeleteClose}
+              />
+            </BasicModal>
+          </div>
+        ) : (
+          <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] dark:bg-[#000] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
+            {props.btnText === 'Results' ? (
+              <>
+                {props.contendPercentages &&
+                props.contendPercentages?.[props.answer.trim()] &&
+                props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
+                  <div className="flex items-center gap-1 tablet:gap-[10px]">
+                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={true} />
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                      {props.contendPercentages[props.answer.trim()]}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1 tablet:gap-[10px]">
+                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                  </div>
+                )}
+              </>
+            ) : null}
+          </div>
+        )}
     </div>
   );
 };

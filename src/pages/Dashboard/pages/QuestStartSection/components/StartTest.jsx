@@ -265,8 +265,13 @@ const StartTest = ({
                                 title={getQuestionTitle(questStartData.whichTypeQuestion)}
                                 checkInfo={false}
                                 check={findLabelChecked(answersSelection, item.label)}
+                                contend={findLabelContend(answersSelection, item.label)}
                                 handleCheckChange={(check) => handleCheckChange(index, check)}
-                                // setAddOptionLimit={setAddOptionLimit}
+                                handleContendChange={
+                                  questStartData.userCanSelectMultiple === true
+                                    ? (contend) => handleContendChange(index, contend)
+                                    : (contend) => handleContendChangeSingle(index, contend)
+                                }
                                 setIsSubmit={setIsSubmit}
                                 setAddOptionField={setAddOptionField}
                               />

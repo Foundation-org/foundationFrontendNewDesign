@@ -7,6 +7,7 @@ import { Tooltip } from '../../../utils/Tooltip';
 import { answerValidation, checkAnswerExist } from '../../../services/api/questsApi';
 import { useDispatch } from 'react-redux';
 import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
+import ContentionIcon from '../../../assets/Quests/ContentionIcon';
 
 const SingleAnswerRankedChoice = (props) => {
 
@@ -16,6 +17,7 @@ const SingleAnswerRankedChoice = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [checkState, setCheckState] = useState(props.check);
+  const [contendState, setContendState] = useState(props.contend);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [answer, setAnswer] = useState(props.answer);
@@ -138,6 +140,18 @@ const SingleAnswerRankedChoice = (props) => {
     transform: 'translate(-50%, -50%)',
   };
 
+  const handleContendChange = () => {
+    setContendState((prevState) => {
+      if (checkState) {
+        handleCheckChange(false);
+        props.handleCheckChange(false);
+      }
+
+      props.handleContendChange(!prevState);
+      return !prevState;
+    });
+  };
+
   return (
     <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
       {/* =============== To Display Badges on Left of Option */}
@@ -234,37 +248,60 @@ const SingleAnswerRankedChoice = (props) => {
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
         </div>
         {/* =============== To Display Contention and Trash Right of Option */}
-        <div className="flex w-12 min-w-[48px] items-center justify-center bg-white pl-0 dark:bg-black tablet:w-8 tablet:pl-[15px]">
-          {props.deleteable ? (
-            <img
-              src="/assets/svgs/dashboard/trash2.svg"
-              alt="trash"
-              className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-              onClick={handleDeleteOpen}
-            />
-          ) : null}
-          <BasicModal
-            open={deleteModal}
-            handleClose={handleDeleteClose}
-            customStyle={customModalStyle}
-            customClasses="rounded-[9.251px] laptop:rounded-[26px]"
-          >
-            <DeleteOption
-              answer={props.answer}
-              answersSelection={props.answersSelection}
-              setAnswerSelection={props.setAnswerSelection}
-              handleDeleteClose={handleDeleteClose}
-              handleEditClose={handleEditClose}
-            />
-          </BasicModal>
-        </div>
-        {props.btnText === 'Results' ? (
-          <div className="mr-[20.63px] flex items-center gap-[19px] ">
-            {props.percentages?.[props.answer.trim()] === undefined
-              ? '0%'
-              : props.percentages?.[props.answer.trim()] + '%'}
+        {props.btnText !== 'Results' ? (
+          <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]">
+            {props.deleteable ? (
+              <img
+                src="/assets/svgs/dashboard/trash2.svg"
+                alt="trash"
+                className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
+                onClick={()=>handleDeleteOption(props.number)}
+              />
+            ) : (
+              <div className="flex items-center gap-1 laptop:gap-[18px]">
+                <div id="custom-yello-checkbox" className="flex h-full items-center ">
+                  <div className="cursor-pointer" onClick={handleContendChange}>
+                    <ContentionIcon
+                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                      checked={contendState}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+            <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
+              <DeleteOption
+                answer={props.answer}
+                answersSelection={props.answersSelection}
+                setAnswerSelection={props.setAnswerSelection}
+                handleDeleteClose={handleDeleteClose}
+                handleEditClose={handleDeleteClose}
+              />
+            </BasicModal>
           </div>
-        ) : null}
+        ) : (
+          <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] dark:bg-[#000] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
+            {props.btnText === 'Results' ? (
+              <>
+                {props.contendPercentages &&
+                props.contendPercentages?.[props.answer.trim()] &&
+                props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
+                  <div className="flex items-center gap-1 tablet:gap-[10px]">
+                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={true} />
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                      {props.contendPercentages[props.answer.trim()]}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1 tablet:gap-[10px]">
+                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                  </div>
+                )}
+              </>
+            ) : null}
+          </div>
+        )}
       </div>
     </div>
   );
