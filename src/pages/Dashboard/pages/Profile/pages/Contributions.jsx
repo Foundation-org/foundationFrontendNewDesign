@@ -119,10 +119,10 @@ const Contributions = () => {
                     className="mb-[7px] h-[30px] w-8 tablet:mb-[18px] tablet:h-[60px] tablet:w-[50px]"
                   />
                   <h4 className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:text-[18px]">
-                    {item.title.split(' ')[0]}
+                    {item.title.split('-')[0]}
                   </h4>
                   <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:mb-6 tablet:text-[18px]">
-                    {item.title.split(' ')[1]}
+                    {item.title.split('-')[1]}
                   </h4>
                   <h1 className="text-center text-[16px] font-semibold leading-[14px] text-[#7C7C7C] dark:text-[#B8B8B8] 2xl:text-[35px] tablet:text-[24px]">
                     {item.value}
