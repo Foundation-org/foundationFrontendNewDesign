@@ -117,6 +117,17 @@ const RankedResult = (props) => {
                 width: props?.selectedPercentages[props?.answer.trim()],
               }}
             /> */}
+            <div
+              className={`block h-[5px] tablet:h-[10px] absolute bottom-0 bg-[#FDD503B2]`}
+              style={{
+                width:
+                  props.contendPercentages &&
+                  props.contendPercentages?.[props.answer.trim()] &&
+                  props.contendPercentages?.[props.answer.trim()] !== '0%'
+                    ? props.contendPercentages[props.answer.trim()]
+                    : '0%',
+              }}
+            />
           </div>
         </div>
         {/* to show ranked and multiple choice options */}
@@ -139,38 +150,7 @@ const RankedResult = (props) => {
       </div>
 
         {/* =============== To Display Contention and Trash Right of Option */}
-        {props.btnText !== 'Results' ? (
-          <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]">
-            {props.deleteable ? (
-              <img
-                src="/assets/svgs/dashboard/trash2.svg"
-                alt="trash"
-                className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-                onClick={()=>handleDeleteOption(props.number)}
-              />
-            ) : (
-              <div className="flex items-center gap-1 laptop:gap-[18px]">
-                <div id="custom-yello-checkbox" className="flex h-full items-center ">
-                  <div className="cursor-pointer" onClick={handleContendChange}>
-                    <ContentionIcon
-                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                      checked={contendState}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-            <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
-              <DeleteOption
-                answer={props.answer}
-                answersSelection={props.answersSelection}
-                setAnswerSelection={props.setAnswerSelection}
-                handleDeleteClose={handleDeleteClose}
-                handleEditClose={handleDeleteClose}
-              />
-            </BasicModal>
-          </div>
-        ) : (
+        
           <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] dark:bg-[#000] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
             {props.btnText === 'Results' ? (
               <>
@@ -192,7 +172,7 @@ const RankedResult = (props) => {
               </>
             ) : null}
           </div>
-        )}
+        
     </div>
   );
 };

@@ -439,6 +439,7 @@ const QuestionCard = (props) => {
       let addedAnswerValue = '';
       let addedAnswerUuidValue = '';
       let answerSelected = [];
+      let answerContended=[];
 
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {
@@ -454,11 +455,15 @@ const QuestionCard = (props) => {
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
         }
+
+        if (rankedAnswers[i].contend) {
+          answerContended.push({ question: rankedAnswers[i].label });
+        }
       }
 
       let dataToSend = {
         selected: answerSelected,
-        contended: '',
+        contended: answerContended,
         created: new Date(),
       };
       const currentDate = new Date();
@@ -476,7 +481,7 @@ const QuestionCard = (props) => {
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
-
+          console.log(params);
           changeAnswer(params);
         }
       } else {
@@ -488,7 +493,7 @@ const QuestionCard = (props) => {
           uuid: persistedUserInfo?.uuid,
         };
 
-        // startQuest(params);
+        console.log(params);
         startQuest(params);
       }
     }
