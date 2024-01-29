@@ -168,18 +168,21 @@ const MultipleChoice = () => {
   };
 
   const answerVerification = async (index, value) => {
+    // New Typed Value
     const newTypedValue = [...typedValues];
     newTypedValue[index] = {
       ...newTypedValue[index],
       question: value.trim(),
     };
     setTypedValues(newTypedValue);
+    // Check if Prev Value exist
     if (prevValueArr[index]?.value === value.trim()) return;
     setPrevValueArr((prev) => {
       const updatedArray = [...prev];
       updatedArray[index] = { value: value.trim() };
       return [...updatedArray];
     });
+    // 
     const newTypedValues = [...typedValues];
     newTypedValues[index] = {
       ...newTypedValues[index],

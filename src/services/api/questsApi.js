@@ -140,7 +140,7 @@ export const checkAnswerExist = ({ answersArray, answer, index, startQuest }) =>
   return answersArray.some((item, i) =>
     startQuest
       ? item.label.toLowerCase() === answer.toLowerCase() && i !== index
-      : item.question.toLowerCase() === answer.toLowerCase() && i !== index,
+      : item?.question?.toLowerCase() === answer.toLowerCase() && i !== index,
   );
 };
 
