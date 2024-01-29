@@ -89,7 +89,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme)
         <>{printNoRecordsMessage(persistedTheme)}</>
       ) : (
         !filterStates.searchData && (
-          <p className="text-center text-[2vw]">
+          <p className="text-center text-[4vw] tablet:text-[2vw]">
             <b>You are all caught up!</b>
           </p>
         )

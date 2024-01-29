@@ -1,5 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const resetState = {
+  expandedView: false,
+  searchData: '',
+  filterByStatus: '',
+  filterByType: '',
+  filterByScope: '',
+  filterBySort: 'Newest First',
+  clearFilter: false,
+};
+
 const initialState = {
   expandedView: localStorage.getItem('expandedView') === 'true' ? true : false,
   searchData: '',
@@ -39,7 +49,7 @@ export const bookmarkFiltersSlice = createSlice({
       state.filterBySort = action.payload;
     },
     resetFilters: (state) => {
-      Object.assign(state, initialState);
+      Object.assign(state, resetState);
     },
   },
 });

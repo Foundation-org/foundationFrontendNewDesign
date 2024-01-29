@@ -14,6 +14,16 @@ const initialColumns = {
     list: [],
   },
 };
+const resetState = {
+  expandedView: false,
+  searchData: '',
+  filterByStatus: '',
+  filterByType: '',
+  filterByScope: '',
+  filterBySort: 'Newest First',
+  columns: initialColumns,
+  clearFilter: false,
+};
 
 const initialState = {
   expandedView: localStorage.getItem('expandedView') === 'true' ? true : false,
@@ -81,7 +91,7 @@ export const filtersSlice = createSlice({
       }
     },
     resetFilters: (state) => {
-      Object.assign(state, initialState);
+      Object.assign(state, resetState);
     },
   },
 });

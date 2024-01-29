@@ -30,7 +30,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
 
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
-  const [localExpanded, setlocalExpaneded] = useState(filterStates.expandedView);
+
 
   const [multipleOption, setMultipleOption] = useState(
     localStorage.getItem('filterByState') !== undefined
@@ -60,7 +60,6 @@ const SidebarLeft = ({ columns, setColumns }) => {
   }, [localStorage.getItem('filterByState')]);
 
   const handleExpendedView = () => {
-    setlocalExpaneded(!filterStates.expandedView);
     localStorage.setItem('expandedView', !filterStates.expandedView ? 'true' : 'false');
     dispatch(filtersActions.toggleExapandedView());
   };
@@ -82,7 +81,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
               <h1 className="ml-[5px] flex items-center gap-2 text-[20px] font-medium leading-normal text-[#707175] dark:text-white">
                 Expanded View
               </h1>
-              <CustomSwitch2 enabled={localExpanded} setEnabled={handleExpendedView} />
+              <CustomSwitch2 enabled={filterStates.expandedView} setEnabled={handleExpendedView} />
             </div>
             <div className="relative">
               <div className="relative h-[45px] w-[212px]">
@@ -294,7 +293,7 @@ const SidebarLeft = ({ columns, setColumns }) => {
             <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">
               Expanded View
             </h1>
-            <CustomSwitch2 enabled={localExpanded} setEnabled={handleExpendedView} />
+            <CustomSwitch2 enabled={filterStates.expandedView} setEnabled={handleExpendedView} />
           </div>
           <div className="flex w-full items-center justify-center gap-[6px]">
             <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">
