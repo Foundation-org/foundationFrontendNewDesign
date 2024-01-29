@@ -1,4 +1,4 @@
-export const columns = [
+export const Columns = [
   {
     accessorKey: 'txUserAction',
     header: 'txUserAction',

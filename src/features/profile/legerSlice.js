@@ -1,17 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  columnSize: 0,
-};
+const initialState = {};
 
 export const ledgerSlice = createSlice({
   name: 'ledger',
   initialState,
   reducers: {
     updateColumnSize: (state, action) => {
-      state.columnSize = action.payload;
-      //   const { columnSize } = action.payload;
-      //   return { ...state, columnSize };
+      const { columnId, size } = action.payload;
+      state[columnId] = size;
     },
     resetCreateQuest: (state) => {
       Object.assign(state, initialState);
