@@ -57,7 +57,7 @@ const VerificationBadges = () => {
 
   const contacts = [
     {
-      image: '/assets/profile/Personal-Email-2x.png',
+      image: '/assets/profile/Personal-Email-2xa.png',
       title: 'Personal Email',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
@@ -66,7 +66,7 @@ const VerificationBadges = () => {
       type: 'personal',
     },
     {
-      image: '/assets/profile/Work-Email-2x.png',
+      image: '/assets/profile/Work-Email-2xa.png',
       title: 'Work Email',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
@@ -75,7 +75,7 @@ const VerificationBadges = () => {
       type: 'work',
     },
     {
-      image: '/assets/profile/Education-Email-2x.png',
+      image: '/assets/profile/Education-Email-2xa.png',
       title: 'Education Email',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
@@ -84,7 +84,7 @@ const VerificationBadges = () => {
       type: 'education',
     },
     {
-      image: '/assets/profile/cellphone.png',
+      image: '/assets/profile/cellphone-1.png',
       title: 'Cell Phone',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
@@ -176,7 +176,7 @@ const VerificationBadges = () => {
       NoOfButton: 2,
     },
     {
-      image: '/assets/profile/currentcity.png',
+      image: '/assets/profile/currentcity-1.png',
       title: 'Current City',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
@@ -190,42 +190,42 @@ const VerificationBadges = () => {
       NoOfButton: 1,
     },
     {
-      image: '/assets/profile/relationaship.png',
+      image: '/assets/profile/relationaship-1.png',
       title: 'Relationship Status',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
     },
     {
-      image: '/assets/profile/work.png',
+      image: '/assets/profile/work-a.png',
       title: 'Work',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
     },
     {
-      image: '/assets/profile/education.png',
+      image: '/assets/profile/education-1.png',
       title: 'Education',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
     },
     {
-      image: '/assets/profile/Identity-2x.png',
+      image: '/assets/profile/Identity-2x-1.png',
       title: 'ID / Passport',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
     },
     {
-      image: '/assets/profile/Geolocation-2x.png',
+      image: '/assets/profile/Geolocation-2x-1.png',
       title: 'Geolocation',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
     },
     {
-      image: '/assets/profile/securityquestion.png',
+      image: '/assets/profile/securityquestion-a.png',
       title: 'Security Question',
       ButtonColor: 'blue',
       ButtonText: 'Add New Badge',
@@ -288,7 +288,7 @@ const VerificationBadges = () => {
       </h1>
       <div
         className={`${
-          persistedTheme === 'dark' ? 'dark-shadow-inside' : 'shadow-inside'
+          persistedTheme === 'dark' ? 'dark-shadow-inside' : 'shadow-inside bg-white'
         } relative mx-6 mb-[54px] mt-4 flex flex-col gap-[5.91px] rounded-[11.918px] px-[14.3px] pb-[17.57px] pt-[23px] tablet:mx-6 tablet:my-[54px] tablet:gap-[23px] tablet:rounded-[24.8px] tablet:px-[29.7px] tablet:py-[48.4px] laptop:mx-[106px] laptop:rounded-[45px] laptop:px-[60px] laptop:pb-[66.8px] laptop:pt-[104px]`}
       >
         <div className="absolute -top-[3px] left-[50%] mx-auto flex w-[90%] -translate-x-[50%] transform justify-center gap-[21px] tablet:-top-1 tablet:w-[90%] laptop:w-[95%]">
