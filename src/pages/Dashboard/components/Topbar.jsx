@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
 import { TopbarItems } from '../../../constants/topbar';
 import api from '../../../services/api/Axios';
+import * as filterActions from '../../../features/sidebar/filtersSlice';
+import { useDispatch } from 'react-redux';
 
 const Topbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -15,6 +18,7 @@ const Topbar = () => {
     try {
       const res = await api.post('user/logout');
       if (res.status === 200) {
+        dispatch(filterActions.resetFilters());
         localStorage.clear();
         navigate('/');
       }
@@ -135,7 +139,9 @@ const Topbar = () => {
         {TopbarItems?.map((item) => (
           <li
             key={item.id}
-            className={`${item.id === 2 ? 'mr-[5px]' : ''} relative flex w-[85.8px] items-center justify-center tablet:w-[210px] `}
+            className={`${
+              item.id === 2 ? 'mr-[5px]' : ''
+            } relative flex w-[85.8px] items-center justify-center tablet:w-[210px] `}
           >
             <Link
               to={item.path}

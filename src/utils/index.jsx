@@ -32,7 +32,7 @@ export function calculateRemainingTime(lastInteractedAt, howManyTimesAnsChanged,
     const fourYears = Math.floor(days / (4 * 365));
 
     const remainingTime = [
-      days > 0 ? days === 1 ? "24 hours" : days === 365 ? "12 months" : `${days} days` : null,
+      days > 0 ? (days === 1 ? '24 hours' : days === 365 ? '12 months' : `${days} days`) : null,
       weeks > 0 ? `${weeks} weeks` : null,
       months > 0 ? `${months} months` : null,
       years > 0 ? `${years} years` : null,
@@ -55,7 +55,7 @@ export const handleClickScroll = () => {
   }
 };
 
-export const printNoRecordsMessage = (persistedTheme) => {
+export const printNoRecordsMessage = (persistedTheme, isBookmarked) => {
   return (
     <div className="my-[15vh] flex  flex-col justify-center items-center">
       {persistedTheme === 'dark' ? (
@@ -63,14 +63,20 @@ export const printNoRecordsMessage = (persistedTheme) => {
       ) : (
         <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" className="w-[160px] h-[173px]" />
       )}
-      <p className="font-inter mt-[1.319vw] text-center text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
-        No Matching Posts Found
-      </p>
+      {isBookmarked ? (
+        <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
+          No Bookmarks found!
+        </p>
+      ) : (
+        <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
+          No Matching Posts Found
+        </p>
+      )}
     </div>
   );
 };
 
-export const printEndMessage = (feedData, filterStates, allData, persistedTheme) => {
+export const printEndMessage = (feedData, filterStates, allData, persistedTheme, isBookmarked) => {
   return feedData?.hasNextPage === false ? (
     <div className="flex justify-between gap-4 px-4 pt-3 pb-[5rem] tablet:py-[27px]">
       <div></div>
@@ -81,12 +87,18 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme)
           ) : (
             <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" className="w-[160px] h-[173px]" />
           )}
-          <p className="font-inter mt-[1.319vw] text-center text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
-            No Matching Posts Found
-          </p>
+          {isBookmarked ? (
+            <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
+              No Bookmarks found!
+            </p>
+          ) : (
+            <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
+              No Matching Posts Found
+            </p>
+          )}
         </div>
       ) : !filterStates.searchData && allData.length === 0 ? (
-        <>{printNoRecordsMessage(persistedTheme)}</>
+        <>{printNoRecordsMessage(persistedTheme, isBookmarked)}</>
       ) : (
         !filterStates.searchData && (
           <p className="text-center text-[4vw] tablet:text-[2vw]">
