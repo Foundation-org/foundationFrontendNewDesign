@@ -13,6 +13,8 @@ import SocialLogins from '../../components/SocialLogins';
 import MyModal from './components/Modal';
 import api from '../../services/api/Axios';
 import { FaSpinner } from 'react-icons/fa';
+import BasicModal from '../../components/BasicModal';
+import ReferralCode from '../../components/ReferralCode';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -28,8 +30,13 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState('');
   const [termConditionCheck, setTermConditionCheck] = useState(false);
+  const [isReferral, setIsReferral] = useState(false);
+  const [referralCode, setReferralCode] = useState(null);
 
   const persistedTheme = useSelector((state) => state.utils.theme);
+
+  const handleReferralOpen = () => setIsReferral(true);
+  const handleReferralClose = () => setIsReferral(false);
 
   function onChange(value) {
     console.log('Captcha value:', value);
@@ -67,6 +74,8 @@ export default function Signup() {
   const handleSignup = async () => {
     if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
+    handleReferralOpen();
+
     setIsLoading(true);
     try {
       if (password === reTypePassword) {
@@ -76,7 +85,12 @@ export default function Signup() {
           toast.success('User registered successfully');
           setEmail('');
           setPassword('');
-          navigate('/verify-email');
+          if (referralCode === null) {
+            return toast.warning('Please enter the referral code to proceed.');
+          } else {
+            // referral api to be come here
+            navigate('/verify-email');
+          }
         }
       } else {
         toast.warning('Password does not match');
@@ -119,6 +133,16 @@ export default function Signup() {
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
     }
+  };
+
+  const customModalStyle = {
+    backgroundColor: '#FCFCFD',
+    boxShadow: 'none',
+    border: '0px',
+    outline: 'none',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
   };
 
   return (
@@ -197,6 +221,14 @@ export default function Signup() {
           </div>
         </div>
       </div>
+      <BasicModal
+        open={isReferral}
+        handleClose={handleReferralClose}
+        customStyle={customModalStyle}
+        customClasses="rounded-[10px] tablet:rounded-[26px]"
+      >
+        <ReferralCode handleClose={handleReferralClose} referralCode={referralCode} setReferralCode={setReferralCode} />
+      </BasicModal>
     </div>
   );
 }

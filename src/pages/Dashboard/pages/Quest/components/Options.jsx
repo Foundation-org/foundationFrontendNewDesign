@@ -19,6 +19,7 @@ const Options = ({
   number,
   answerVerification,
   optionStatus,
+  handleTab,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -63,9 +64,6 @@ const Options = ({
         </div>
       ) : (
         <div className="w-full">
-          {/* <p className="mb-[10px] w-full pl-[15.44px] text-[10px] font-normal leading-none text-[#85898C] dark:text-[#D3D3D3] tablet:pl-6 tablet:text-[16px]">
-            Option {number}
-          </p> */}
           <div className="flex w-full items-center justify-center">
             <div className="flex w-full rounded-r-[0.33rem] bg-transparent tablet:w-full tablet:rounded-[10.3px] laptop:rounded-[10px]">
               <div
@@ -91,6 +89,7 @@ const Options = ({
                 } h-[24.8px] w-5 min-w-5 border-y tablet:border-y-[3px] tablet:h-[50.19px] laptop:h-[45px]`}
               ></div>
               <input
+                id={`input-${number}`}
                 className={`${
                   snapshot.isDragging
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
@@ -100,6 +99,8 @@ const Options = ({
                 onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value.trim())}
                 value={typedValue}
                 placeholder="Add your own option"
+                tabIndex={number + 1}
+                onKeyDown={(e) => e.key === 'Tab' && handleTab(number)}
               />
               <div
                 id={`test${number}`}
