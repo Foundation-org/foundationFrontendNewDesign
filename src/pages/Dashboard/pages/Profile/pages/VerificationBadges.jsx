@@ -281,7 +281,7 @@ const VerificationBadges = () => {
     }
   };
   return (
-    <div>
+    <div className="pb-12">
       {isLoading && <Loader />}
       <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
         My Verification Badges

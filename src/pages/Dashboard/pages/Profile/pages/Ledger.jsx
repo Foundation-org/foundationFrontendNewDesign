@@ -91,15 +91,15 @@ export default function BasicTable() {
       const id = column.accessorKey;
       const size = columnSizes[id];
       return {
-        ...column,  
-        size: size || column.size,  
+        ...column,
+        size: size || column.size,
       };
     });
 
     return tempColumns;
-  },[Columns])
-  
- 
+  }, [Columns])
+
+
 
 
   const table = useReactTable({
@@ -158,7 +158,7 @@ export default function BasicTable() {
 
 
   return (
-    <>
+    <div className="pb-12">
       <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
         Ledger
       </h1>
@@ -376,6 +376,6 @@ export default function BasicTable() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
