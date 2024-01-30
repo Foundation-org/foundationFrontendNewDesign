@@ -2,8 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 const YesNoOptions = ({
-  number,
-  title,
   answer,
   options,
   label,
@@ -15,8 +13,6 @@ const YesNoOptions = ({
   handleChange,
   typedValue,
   isSelected,
-  optionsCount,
-  removeOption,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 

@@ -323,7 +323,7 @@ const VerificationBadges = () => {
         ))}
         <h1 className="font-500 font-Inter ml-[3.5vw] text-[2.22vw] font-normal text-[#000] dark:text-white">Social</h1>
         <div className="flex items-center justify-center">
-          <div className="flex gap-[5px] tablet:gap-[10.59px] items-end justify-center">
+          <div className="flex gap-[5px] tablet:gap-[10.59px] items-center justify-center">
             <img
               src="/assets/profile/Facebook-2x.png"
               alt={'Facebook'}

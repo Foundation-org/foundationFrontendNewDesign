@@ -355,6 +355,7 @@ const RankChoice = () => {
       return false;
     }
   };
+
   useEffect(() => {
     let tempOptions = typedValues.map((item) => {
       return item.question;
@@ -371,6 +372,14 @@ const RankChoice = () => {
     );
   }, [question, changedOption, changeState, addOption, optionsCount, typedValues]);
 
+  const handleTab = (index) => {
+    if (index < inputs.length - 1) {
+      document.getElementById(`input-${index + 1}`).focus();
+    } else {
+      document.getElementById(`input-0`).focus();
+    }
+  };
+
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
@@ -386,7 +395,12 @@ const RankChoice = () => {
         </h1>
         <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-5 tablet:pb-[13px]">
           <input
-            className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
+            id="input-0"
+            type="text"
+            tabIndex={1}
+            value={question}
+            placeholder="Pose a question"
+            onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             onChange={(e) => {
               setQuestion(e.target.value);
               setCheckQuestionStatus({
@@ -394,9 +408,7 @@ const RankChoice = () => {
                 color: e.target.value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
               });
             }}
-            onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
-            value={question}
-            placeholder="Pose a question"
+            className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
           />
           <button
             id="new"
@@ -444,6 +456,7 @@ const RankChoice = () => {
                           number={index + 1}
                           optionStatus={typedValues[index].optionStatus}
                           answerVerification={(value) => answerVerification(index, value)}
+                          handleTab={handleTab}
                         />
                       </li>
                     )}

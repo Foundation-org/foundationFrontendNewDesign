@@ -18,8 +18,6 @@ const YesNo = () => {
 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
 
-  // console.log('createQuestSlice', createQuestSlice);
-
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
@@ -177,14 +175,12 @@ const YesNo = () => {
         </div>
         <div className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5">
           <YesNoOptions
-            number={1}
             answer={'Yes'}
             options={false}
             handleOptionChange={() => handleOptionChange('Yes')}
             isSelected={selectedOption === 'Yes'}
           />
           <YesNoOptions
-            number={2}
             answer={'No'}
             options={false}
             handleOptionChange={() => handleOptionChange('No')}

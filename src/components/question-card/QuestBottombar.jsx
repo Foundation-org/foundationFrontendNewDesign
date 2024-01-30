@@ -69,7 +69,6 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, ques
 
   const customModalStyle = {
     backgroundColor: '#FCFCFD',
-    // borderRadius: '26px',
     boxShadow: 'none',
     border: '0px',
     outline: 'none',

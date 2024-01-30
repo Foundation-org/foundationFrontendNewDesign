@@ -444,3 +444,9 @@ input.autofill_text_color:-webkit-autofill {
 .dark input.autofill_text_color:-webkit-autofill {
   -webkit-text-fill-color: white !important;
 }
+
+input.hide_number_input_arrows::-webkit-outer-spin-button,
+input.hide_number_input_arrows2::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
