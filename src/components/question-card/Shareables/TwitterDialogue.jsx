@@ -18,7 +18,7 @@ const TwitterDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, 
         </div>
         <p className="text-white text-[12px] tablet:text-[20px] font-semibold tablet:font-medium">Twitter</p>
         <div
-          className="absolute right-[12px] top-[14px] cursor-pointer tablet:right-[26px] tablet:top-1/2 tablet:-translate-y-1/2"
+          className="absolute right-[12px] cursor-pointer tablet:right-[26px] top-1/2 -translate-y-1/2"
           onClick={handleClose}
         >
           <svg
@@ -34,88 +34,35 @@ const TwitterDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, 
           </svg>
         </div>
       </div>
-      <div className="px-6 pt-[19.84px] tablet:pt-7 tablet:px-[27px] pb-[17px] border-2 border-[#D9D9D9] mt-1">
+      <div className="px-6 py-[17px] tablet:pt-7 tablet:px-[27px] border-[0.728px] tablet:border-2 border-[#D9D9D9] mt-1">
         {/* QuestionCard Preview */}
-        <div className="w-full rounded-[9.8px] tablet:rounded-[15px] border-2 border-[#D9D9D9]">
+        <div className="w-full rounded-[9.8px] tablet:rounded-[15px] border-[0.728px] tablet:border-2 border-[#D9D9D9]">
           <CardTopbar badgeCount={5} QuestTopic="Technology" />
-          <div className="pb-[0.94rem] pt-[0.84rem] tablet:pb-5 tablet:pt-[0.94rem]">
+          <div className="pt-[12px] pb-4 tablet:pb-5 tablet:pt-[0.94rem]">
             <div className="ml-[1.39rem] mr-[0.62rem] tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
-              <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-none">
+              <h4 className="text-[7.26px] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-none">
                 {question?.endsWith('?') ? 'Q.' : 'S.'} {question}
               </h4>
             </div>
             {/* Children */}
           </div>
-          <div className="my-[16.2px] tablet:my-[24px] pr-[30px] flex w-full justify-end gap-[19.14px] tablet:gap-[42px]">
-            <button className="w-[81.8px] rounded-[7.1px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:w-[173px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[18px]">
-              Start
-            </button>
-            <button className="w-[78px] rounded-[7.1px] border-[1.42px] border-[#20D47E] px-[7.1px] py-[3.7px] text-[9.46px] font-semibold leading-normal text-[#20D47E] tablet:w-[173px] tablet:rounded-[15px] tablet:border-[3px] tablet:px-5 tablet:py-2 tablet:text-[18px] dark:border-[#7C7C7C] dark:text-[#C9C8C8]">
-              Results
-            </button>
+          <div className="my-2 tablet:my-[24px] pr-[10px] tablet:pr-[30px] flex w-full justify-end gap-[13px] tablet:gap-[42px]">
+            <Button variant="start">Start</Button>
+            <Button variant="result-outline">Result</Button>
           </div>
-          <QuestBottombar
-            time={timeAgo}
-            // id={questStartData._id}
-            // createdBy={questStartData.uuid}
-            // title={getQuestionTitle(questStartData.whichTypeQuestion)}
-            // question={questStartData.Question}
-            img={'assets/svgs/dashboard/badge.svg'}
-            alt={'badge'}
-            badgeCount={5}
-          />
-          {/* <div className="flex items-start justify-between">
-            {createdBy === persistedUserInfo?.uuid ? (
-              <div className="relative h-fit pb-[15px]">
-                <img
-                  src="/assets/svgs/dashboard/MeBadge.svg"
-                  alt={alt}
-                  className="h-[18.379px] w-[22.722px] tablet:h-[60px] tablet:w-[48px]"
-                />
-                <p className="absolute left-[50%] top-[24%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[9px] font-[400] leading-normal text-[#7A7016] tablet:top-[39%] tablet:pb-3 tablet:text-[24px]">
-                  {persistedUserInfo?.badges?.length}
-                </p>
-              </div>
-            ) : (
-              <div className="relative h-fit pb-[15px]">
-                <img src={img} alt={alt} className="h-[18.379px] w-[22.722px] tablet:h-[60px] tablet:w-[48px]" />
-                <p className="absolute left-[50%] top-[24%] z-50 -translate-x-[50%] -translate-y-[50%] transform text-[9px] font-[400] leading-normal text-[#F6F6F6] tablet:top-[39%] tablet:pb-3 tablet:text-[24px]">
-                  {badgeCount}
-                </p>
-              </div>
-            )}
-            <div>
-              <h1 className="text-[8.25px] font-semibold leading-normal text-[#5B5B5B] tablet:text-[22px]">{title}</h1>
-              <p className="text-center text-[5.2px] font-medium leading-normal text-[#9A9A9A] tablet:text-[14px]">
-                Technology
-              </p>
-            </div>
-            <p></p>
-          </div> */}
-          {/* <h1 className="mt-[7px] text-[7.58px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold">
-            {question?.endsWith('?') ? 'Q.' : 'S.'} {question}
-          </h1> */}
-
-          {/* <div className="mt-[11.36px] flex h-3 w-full items-center justify-end gap-[2px] rounded-[4.73px] tablet:mt-[30px] tablet:h-[26px] tablet:gap-1 tablet:rounded-[10px]">
-            <img
-              src="/assets/svgs/dashboard/clock-outline.svg"
-              alt="clock"
-              className="h-[7.64px] w-[7.64px] tablet:h-4 tablet:w-4"
-            />
-            <p className="text-[6px] font-[400] leading-normal text-[#9C9C9C] tablet:text-[10px]">{timeAgo}</p>
-          </div> */}
+          <QuestBottombar time={timeAgo} img={'assets/svgs/dashboard/badge.svg'} alt={'badge'} badgeCount={5} />
         </div>
       </div>
       {/* Share Buttons */}
-      <div className="mt-[18.51px] flex flex-col items-center justify-center gap-3 tablet:my-5 laptop:flex-row laptop:gap-[43px]">
+      <div className="my-[15px] flex flex-col items-center justify-center gap-2 tablet:my-5 laptop:flex-row laptop:gap-[43px]">
         <a
-          className="w-[212px] rounded-[5.56px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-center text-[12px] font-semibold leading-normal text-white tablet:w-[341px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] laptop:w-[212px]"
+          className="w-[212px] rounded-[5.56px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-center text-[10px] font-semibold leading-normal text-white tablet:w-[341px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] laptop:w-[212px]"
           href={`https://twitter.com/intent/tweet?text=${url}`}
           target="_blank"
         >
           Share a Post
         </a>
-        <button className="w-[212px] rounded-[5.56px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[12px] font-semibold leading-normal text-white tablet:w-[341px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]">
+        <button className="w-[212px] rounded-[5.56px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[10px] font-semibold leading-normal text-white tablet:w-[341px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]">
           Send in a Personal Message
         </button>
       </div>
