@@ -396,7 +396,7 @@ const ButtonGroup = ({
               <Button
                 variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                 disabled={result === ', you are good to go' ? false : true}
-                onClick={handleChange}
+                onClick={handleStartChange}
               >
                 Change
               </Button>
