@@ -104,25 +104,30 @@ const ButtonGroup = ({
         updateAnswerSelection(res?.data.data[res.data.data.length - 1], answersSelection);
       }
       if (whichTypeQuestion === 'ranked choise') {
+        const contendedQuestions = res?.data.data[res.data.data.length - 1].contended.map((item) => item.question);
+
         const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
           const correspondingRankedAnswer = rankedAnswers.find((rankedItem) => rankedItem.label === item.question);
 
           if (correspondingRankedAnswer) {
+            const isContended = contendedQuestions.includes(correspondingRankedAnswer.label);
+            // Check if the current item is in the contendedQuestions array
+
             return {
               id: correspondingRankedAnswer.id,
               label: correspondingRankedAnswer.label,
               check: false,
-              contend: false,
+              contend: isContended, // Set contend to true if the item is in the contendedQuestions array
             };
           }
 
           return null;
         });
-        // Filter out any null values (items not found in rankedAnswers)
-        const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
 
-        // Update the state with the new array
+        const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
+        console.log('aaa', filteredRankedAnswers);
         setRankedAnswers(filteredRankedAnswers);
+        updateAnswerSelection(res?.data.data[res.data.data.length - 1], rankedAnswers);
       }
       setLoadingDetail(false);
     },
