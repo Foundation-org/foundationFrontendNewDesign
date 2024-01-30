@@ -15,14 +15,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import ChangeChoiceOption from '../components/ChangeChoiceOption';
 import { FaSpinner } from 'react-icons/fa';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
-import { updateQuestion } from '../../../../../features/createQuest/createQuestSlice';
+import { updateQuestion, checkQuestion } from '../../../../../features/createQuest/createQuestSlice';
 
 const LikeDislike = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
+  const questionStatus = useSelector(createQuestAction.questionStatus);
 
+  console.log("get your value is like", createQuestSlice);
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
@@ -101,42 +103,51 @@ const LikeDislike = () => {
     setQuestion(value.trim());
     if (prevValue === question.trim()) return;
     setPrevValue(value);
-    setCheckQuestionStatus({
-      name: 'Checking',
-      color: 'text-[#0FB063]',
-      tooltipName: 'Verifying your question. Please wait...',
-      tooltipStyle: 'tooltip-success',
-    });
+    dispatch(checkQuestion(value));
+    // setCheckQuestionStatus({
+    //   name: 'Checking',
+    //   color: 'text-[#0FB063]',
+    //   tooltipName: 'Verifying your question. Please wait...',
+    //   tooltipStyle: 'tooltip-success',
+    // });
     // Question Validation
-    const { validatedQuestion, errorMessage } = await questionValidation({
-      question: value,
-      queryType: 'like/dislike',
-    });
+    // const { validatedQuestion, errorMessage } = await questionValidation({
+    //   question: value,
+    //   queryType: 'like/dislike',
+    // });
     // If any error captured
-    if (errorMessage) {
-      setLoading(false);
-      return setCheckQuestionStatus({
-        name: 'Rejected',
-        color: 'text-[#b00f0f]',
-        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-        tooltipStyle: 'tooltip-error',
-      });
-    }
+    // if (errorMessage) {
+    //   setLoading(false);
+    //   return setCheckQuestionStatus({
+    //     name: 'Rejected',
+    //     color: 'text-[#b00f0f]',
+    //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+    //     tooltipStyle: 'tooltip-error',
+    //   });
+    // }
     // Question is validated and status is Ok
-    setQuestion(validatedQuestion);
-    setPrevValue(validatedQuestion);
-    setCheckQuestionStatus({
-      name: 'Ok',
-      color: 'text-[#0FB063]',
-      tooltipName: 'Question is Verified',
-      tooltipStyle: 'tooltip-success',
-      isVerifiedQuestion: true,
-    });
+    // setQuestion(validatedQuestion);
+    // setPrevValue(validatedQuestion);
+    // setCheckQuestionStatus({
+    //   name: 'Ok',
+    //   color: 'text-[#0FB063]',
+    //   tooltipName: 'Question is Verified',
+    //   tooltipStyle: 'tooltip-success',
+    //   isVerifiedQuestion: true,
+    // });
   };
 
   useEffect(() => {
     dispatch(updateQuestion({ question, changedOption, changeState }));
   }, [question, changedOption, changeState]);
+
+  useEffect(() => {
+    // console.log("our question status is", questionStatus.status);
+    setLoading(questionStatus.status);
+    if (createQuestSlice.question) {
+      setQuestion(createQuestSlice.question)
+    }
+  }, [questionStatus]);
 
   return (
     <>
@@ -144,9 +155,8 @@ const LikeDislike = () => {
         Make a statement that anyone can "Like" or "Dislike"
       </h4>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
+        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[25px]">
           Create Poll
@@ -167,12 +177,12 @@ const LikeDislike = () => {
           />
           <button
             id="test"
-            className={`relative leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${checkQuestionStatus.color}`}
+            className={`relative leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${questionStatus.color}`}
           >
             <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[100px] laptop:w-[134px]">
-              {checkQuestionStatus.name}
+              {questionStatus.name}
             </div>
-            <Tooltip optionStatus={checkQuestionStatus} />
+            <Tooltip optionStatus={questionStatus} />
           </button>
         </div>
         <div className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5">

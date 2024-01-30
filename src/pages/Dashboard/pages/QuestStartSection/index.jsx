@@ -15,7 +15,7 @@ import { initialColumns } from '../../../../constants/preferences';
 import * as QuestServices from '../../../../services/queries/quest';
 import * as filtersActions from '../../../../features/sidebar/filtersSlice';
 import * as prefActions from '../../../../features/preferences/prefSlice';
-
+import { filterDefault } from '../../../../constants/filterDefault';
 const QuestStartSection = () => {
   const getPreferences = useSelector(prefActions.getPrefs);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -31,6 +31,8 @@ const QuestStartSection = () => {
     sliceEnd: pageLimit,
   });
   const [allData, setAllData] = useState([]);
+  // const [filterData, setFilterData] = useState([]);
+
   let params = {
     _page: pagination.page,
     _limit: pageLimit,
@@ -96,7 +98,8 @@ const QuestStartSection = () => {
 
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
 
-  const { data: feedData } = QuestServices.useGetFeedData(filterStates, debouncedSearch, pagination, columns, params);
+  // const { data: filterFeedData } = QuestServices.useGetFeedData(filterStates, debouncedSearch, pagination, columns, params);
+  const { data: feedData } = QuestServices.useGetFeedData(filterDefault, debouncedSearch, pagination, columns, params);
 
   useEffect(() => {
     setPagination((prevPagination) => ({
@@ -120,6 +123,19 @@ const QuestStartSection = () => {
       }
     }
   }, [feedData, filterStates]);
+
+  // useEffect(() => {
+  //   if (pagination.page === 1) {
+  //     setFilterData([]);
+  //   }
+  //   if (filterFeedData && filterFeedData.data) {
+  //     if (filterFeedData.length === 0) {
+  //       setFilterData(filterFeedData.data);
+  //     } else {
+  //       setFilterData((prevData) => [...prevData, ...(filterFeedData.data || [])]);
+  //     }
+  //   }
+  // }, [filterFeedData]);
 
   useEffect(() => {
     if (pagination.page === 1) {
@@ -158,7 +174,45 @@ const QuestStartSection = () => {
   return (
     <div className="flex w-full flex-col bg-white dark:bg-black laptop:flex-row">
       <SidebarLeft columns={columns} setColumns={setColumns} />
+
       <div className="no-scrollbar flex h-full w-full flex-col overflow-y-auto bg-[#F3F3F3] px-[1.13rem] pt-[0.63rem] pb-8 dark:bg-[#242424] tablet:min-h-[calc(100vh-92px)] tablet:pt-[0.94rem] tablet:pb-12">
+        {/* <InfiniteScroll
+          dataLength={filterData?.length}
+          next={fetchMoreData}
+          hasMore={feedData?.hasNextPage}
+          endMessage={printEndMessage(feedData, filterStates, filterData, persistedTheme)}
+          height={'calc(100vh - 92px)'}
+          className="no-scrollbar"
+        >
+          <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
+            {filterStates.expandedView
+              ? filterData?.map((item, index) => (
+                <div key={index + 1}>
+                  <QuestionCardWithToggle
+                    questStartData={item}
+                    isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                      return bookmark.questForeignKey === item._id;
+                    })}
+                  />
+                </div>
+              ))
+              : filterData?.map((item, index) => (
+                <div key={index + 1}>
+                  <QuestionCard
+                    questStartData={item}
+                    startTest={startTest}
+                    setStartTest={setStartTest}
+                    viewResult={viewResult}
+                    handleViewResults={handleViewResults}
+                    handleStartTest={handleStartTest}
+                    isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                      return bookmark.questForeignKey === item._id;
+                    })}
+                  />
+                </div>
+              ))}
+          </div>
+        </InfiniteScroll> */}
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -170,30 +224,30 @@ const QuestStartSection = () => {
           <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
             {filterStates.expandedView
               ? allData?.map((item, index) => (
-                  <div key={index + 1}>
-                    <QuestionCardWithToggle
-                      questStartData={item}
-                      isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                        return bookmark.questForeignKey === item._id;
-                      })}
-                    />
-                  </div>
-                ))
+                <div key={index + 1}>
+                  <QuestionCardWithToggle
+                    questStartData={item}
+                    isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                      return bookmark.questForeignKey === item._id;
+                    })}
+                  />
+                </div>
+              ))
               : allData?.map((item, index) => (
-                  <div key={index + 1}>
-                    <QuestionCard
-                      questStartData={item}
-                      startTest={startTest}
-                      setStartTest={setStartTest}
-                      viewResult={viewResult}
-                      handleViewResults={handleViewResults}
-                      handleStartTest={handleStartTest}
-                      isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                        return bookmark.questForeignKey === item._id;
-                      })}
-                    />
-                  </div>
-                ))}
+                <div key={index + 1}>
+                  <QuestionCard
+                    questStartData={item}
+                    startTest={startTest}
+                    setStartTest={setStartTest}
+                    viewResult={viewResult}
+                    handleViewResults={handleViewResults}
+                    handleStartTest={handleStartTest}
+                    isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                      return bookmark.questForeignKey === item._id;
+                    })}
+                  />
+                </div>
+              ))}
           </div>
         </InfiniteScroll>
       </div>
