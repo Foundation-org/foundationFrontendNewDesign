@@ -40,9 +40,9 @@ const CopyDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
             />
           </svg>
         </div>
-        <p className="text-white text-[12px] tablet:text-[20px] font-semibold tablet:font-medium">Copy Link</p>
+        <p className="text-white text-[7.21px] tablet:text-[20px] font-normal tablet:font-medium">Copy Link</p>
         <div
-          className="absolute right-[12px] top-[14px] cursor-pointer tablet:right-[26px] tablet:top-1/2 tablet:-translate-y-1/2"
+          className="absolute right-[12px] top-1/2 cursor-pointer tablet:right-[26px] -translate-y-1/2"
           onClick={handleClose}
         >
           <svg
