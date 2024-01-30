@@ -74,7 +74,6 @@ export default function Signup() {
   const handleSignup = async () => {
     if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
-    handleReferralOpen();
 
     setIsLoading(true);
     try {
@@ -82,6 +81,8 @@ export default function Signup() {
         const resp = await userSignup({ email, password });
 
         if (resp.status === 200) {
+          handleReferralOpen();
+
           toast.success('User registered successfully');
           setEmail('');
           setPassword('');

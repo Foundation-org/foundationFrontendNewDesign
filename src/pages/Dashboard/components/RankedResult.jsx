@@ -71,7 +71,7 @@ const RankedResult = (props) => {
             <div
               className="block h-[5px] tablet:h-[10px] absolute top-0 bg-[#4DD896]"
               style={{
-                width: props?.selectedPercentages[props?.answer.trim()],
+                width: props?.selectedPercentages && props?.selectedPercentages[props?.answer.trim()],
               }}
             />
             <h1 className="w-full pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.5px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
@@ -149,30 +149,29 @@ const RankedResult = (props) => {
         </div>
       </div>
 
-        {/* =============== To Display Contention and Trash Right of Option */}
-        
-          <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] dark:bg-[#000] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
-            {props.btnText === 'Results' ? (
-              <>
-                {props.contendPercentages &&
-                props.contendPercentages?.[props.answer.trim()] &&
-                props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
-                  <div className="flex items-center gap-1 tablet:gap-[10px]">
-                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={true} />
-                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                      {props.contendPercentages[props.answer.trim()]}
-                    </span>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-1 tablet:gap-[10px]">
-                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
-                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
-                  </div>
-                )}
-              </>
-            ) : null}
-          </div>
-        
+      {/* =============== To Display Contention and Trash Right of Option */}
+
+      <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] dark:bg-[#000] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
+        {props.btnText === 'Results' ? (
+          <>
+            {props.contendPercentages &&
+            props.contendPercentages?.[props.answer.trim()] &&
+            props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
+              <div className="flex items-center gap-1 tablet:gap-[10px]">
+                <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={true} />
+                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                  {props.contendPercentages[props.answer.trim()]}
+                </span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1 tablet:gap-[10px]">
+                <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
+                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+              </div>
+            )}
+          </>
+        ) : null}
+      </div>
     </div>
   );
 };

@@ -255,7 +255,7 @@ const QuestionCard = (props) => {
       if (resp.data.message === 'Start Quest Created Successfully') {
         toast.success('Successfully Completed');
         setLoading(false);
-         queryClient.invalidateQueries('FeedData');
+        queryClient.invalidateQueries('FeedData');
       }
       handleViewResults(questStartData._id);
       userInfo(persistedUserInfo?.uuid).then((resp) => {
@@ -439,7 +439,7 @@ const QuestionCard = (props) => {
       let addedAnswerValue = '';
       let addedAnswerUuidValue = '';
       let answerSelected = [];
-      let answerContended=[];
+      let answerContended = [];
 
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {

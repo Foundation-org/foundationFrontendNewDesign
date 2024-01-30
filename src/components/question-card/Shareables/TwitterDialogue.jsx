@@ -13,10 +13,10 @@ const TwitterDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, 
   return (
     <div className="relative w-[90vw] laptop:w-[52.6rem]">
       <div className="relative rounded-t-[9.251px] social-blue-gradiant flex gap-[10px] tablet:gap-4 items-center py-1 tablet:py-[8px] px-[15px] tablet:px-[30px] tablet:rounded-t-[26px]">
-        <div className="bg-black p-[3px] tablet:p-[10px] rounded-full w-fit">
+        <div className="bg-black p-[5px] tablet:p-[15px] rounded-full w-fit">
           <Twitter color="white" />
         </div>
-        <p className="text-white text-[7.21px] tablet:text-[20px] font-normal tablet:font-medium">Twitter</p>
+        <p className="text-white text-[12px] tablet:text-[20px] font-bold tablet:font-medium">Twitter</p>
         <div
           className="absolute right-[12px] cursor-pointer tablet:right-[26px] top-1/2 -translate-y-1/2"
           onClick={handleClose}

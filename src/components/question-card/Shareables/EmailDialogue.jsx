@@ -52,7 +52,7 @@ const EmailDialogue = ({ handleClose, id }) => {
             />
           </svg>
         </div>
-        <p className="text-white text-[7.21px] tablet:text-[20px] font-normal tablet:font-medium">Email</p>
+        <p className="text-white text-[12px] tablet:text-[20px] font-bold tablet:font-medium">Email</p>
         <div
           className="absolute right-[12px] top-1/2 cursor-pointer tablet:right-[26px] -translate-y-1/2"
           onClick={handleClose}
