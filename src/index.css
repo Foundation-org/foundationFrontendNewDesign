@@ -429,3 +429,18 @@ td,
 .social-blue-gradiant {
   background: linear-gradient(90deg, #6ba5cf 0%, #389ce3 100%);
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input.autofill_text_color:-webkit-autofill {
+  -webkit-text-fill-color: black !important;
+}
+
+.dark input.autofill_text_color:-webkit-autofill {
+  -webkit-text-fill-color: white !important;
+}

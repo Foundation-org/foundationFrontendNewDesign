@@ -27,6 +27,9 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'result-outline'
         ? 'flex h-[1.375rem] w-[4.875rem] items-center justify-center border-[1.428px] border-[#20D47E] text-[0.625rem] font-semibold text-[#0FB063] tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:border-[3px] tablet:text-[1.25rem]'
         : '',
+      variant === 'start'
+        ? 'addoption-boxShadow flex h-[1.375rem] w-[4.875rem] max-w-[10.8125rem] items-center justify-center bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
+        : '',
       className,
     )}
     {...props}
@@ -44,5 +47,14 @@ Button.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
   rounded: PropTypes.bool.isRequired,
-  variant: PropTypes.oneOf(['addOption', 'cancel', 'submit', 'change', 'change-outline', 'result', 'result-outline']),
+  variant: PropTypes.oneOf([
+    'addOption',
+    'cancel',
+    'submit',
+    'change',
+    'change-outline',
+    'result',
+    'result-outline',
+    'start',
+  ]),
 };

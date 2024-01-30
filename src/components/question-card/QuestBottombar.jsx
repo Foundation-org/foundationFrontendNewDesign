@@ -147,7 +147,12 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, ques
         <div className="cursor-pointer" onClick={handleFbOpen}>
           {persistedTheme === 'dark' ? <Facebook /> : <Facebook />}
         </div>
-        <BasicModal open={fbModal} handleClose={handleFbClose} customStyle={customModalStyle}>
+        <BasicModal
+          open={fbModal}
+          handleClose={handleFbClose}
+          customStyle={customModalStyle}
+          customClasses="rounded-[10px] tablet:rounded-[26px]"
+        >
           <FbDialogue
             handleClose={handleFbClose}
             createdBy={createdBy}
