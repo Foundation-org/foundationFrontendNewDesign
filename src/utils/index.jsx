@@ -74,6 +74,7 @@ export function remainingTime(lastInteractedAt, howManyTimesAnsChanged, usersCha
     const minutes = Math.floor(timeLeft / (60 * 1000));
     const hours = Math.floor(timeLeft / (60 * 60 * 1000));
     const days = Math.floor(timeLeft / (24 * 60 * 60 * 1000));
+    const weeks = Math.floor(days / 7);
     const months = Math.floor(days / 30);
     const years = Math.floor(days / 365);
     const twoYears = Math.floor(days / (2 * 365));
@@ -87,6 +88,8 @@ export function remainingTime(lastInteractedAt, howManyTimesAnsChanged, usersCha
       return `${years} ${years === 1 ? 'year' : 'years'}`;
     } else if (months > 0) {
       return `${months} ${months === 1 ? 'month' : 'months'}`;
+    }else if (weeks > 0) {
+      return `${weeks} ${weeks === 1 ? 'week' : 'weeks'}`;
     } else if (days > 0) {
       return `${days} ${days === 1 ? 'day' : 'days'}`;
     } else if (hours > 0) {
