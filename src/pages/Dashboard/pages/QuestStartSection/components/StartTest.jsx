@@ -52,13 +52,9 @@ const StartTest = ({
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
-
-    
   };
   const handleContendChangeRanked = (index, contend) => {
-    setRankedAnswers((prevAnswers) =>
-      prevAnswers.map((answer, i) => (i === index ? { ...answer, contend } : answer)),
-    );
+    setRankedAnswers((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, contend } : answer)));
   };
 
   const handleContendChange = (index, contend) => {
@@ -190,10 +186,11 @@ const StartTest = ({
           <div className="flex flex-col overflow-auto">
             <div
               ref={listContainerRef}
-              className={`${isFullScreen === undefined
-                ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]'
-                : ''
-                } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+              className={`${
+                isFullScreen === undefined
+                  ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]'
+                  : ''
+              } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
               {answersSelection &&
                 [...answersSelection]?.map((item, index) => (
@@ -232,7 +229,6 @@ const StartTest = ({
         );
       }
       if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Ranked Choice') {
-        console.log('rank', rankedAnswers);
         return (
           <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -240,12 +236,14 @@ const StartTest = ({
                 {(provided) => (
                   <div
                     ref={listContainerRef}
-                    className={`${isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto' : null
-                      }`}
+                    className={`${
+                      isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto' : null
+                    }`}
                   >
                     <ul
-                      className={`${isFullScreen === undefined ? ' tablet:max-h-[366px]' : ''
-                        }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                      className={`${
+                        isFullScreen === undefined ? ' tablet:max-h-[366px]' : ''
+                      }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
@@ -274,7 +272,7 @@ const StartTest = ({
                                 check={findLabelChecked(answersSelection, item.label)}
                                 contend={findLabelContend(answersSelection, item.label)}
                                 handleCheckChange={(check) => handleCheckChange(index, check)}
-                                handleContendChange={ (contend) => handleContendChangeRanked(index, contend) }
+                                handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
                                 setIsSubmit={setIsSubmit}
                                 setAddOptionField={setAddOptionField}
                               />
