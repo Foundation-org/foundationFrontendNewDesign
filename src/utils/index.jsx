@@ -65,11 +65,11 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked) => {
       )}
       {isBookmarked ? (
         <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
-          No Bookmarks found!
+          No Bookmarks Found!
         </p>
       ) : (
         <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
-          No Matching Posts Found
+          No Matching Posts Found!
         </p>
       )}
     </div>
@@ -89,11 +89,11 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
           )}
           {isBookmarked ? (
             <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
-              No Bookmarks found!
+              No Bookmarks Found!
             </p>
           ) : (
             <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
-              No Matching Posts Found
+              No Matching Posts Found!
             </p>
           )}
         </div>

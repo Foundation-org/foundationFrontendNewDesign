@@ -100,8 +100,6 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
     setItemsWithCross((prevItems) => prevItems.filter((item) => item !== text));
   };
 
-  console.log('first', Object.values(columns));
-
   return (
     <div className="relative h-full w-[90vw] px-[1.19rem] py-[1.5rem] tablet:w-[75vw] tablet:px-[2.75rem] tablet:py-[2.94rem]">
       <div onClick={handleClose}>
@@ -168,7 +166,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                         s
                       >
                         {col.list?.length >= 1 ? (
-                          col.list.map((text, index) => (
+                          col.list.sort().map((text, index) => (
                             <Draggable key={text} draggableId={text} index={index}>
                               {(provided, snapshot) => (
                                 <div
