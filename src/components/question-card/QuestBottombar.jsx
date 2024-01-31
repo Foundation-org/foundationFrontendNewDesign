@@ -165,8 +165,7 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, ques
           />
         </BasicModal>
       </div>
-      {(questStartData?.whichTypeQuestion === 'ranked choise' ||
-        questStartData?.whichTypeQuestion === 'multiple choise') && (
+
         <div>
           {isFullScreen === undefined ? (
             <div
@@ -196,7 +195,7 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, ques
             <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem]">&#x200B;</p>
           )}
         </div>
-      )}
+
       <div className="border-l border-[#D9D9D9] pl-5">
         <div className="flex h-4 w-fit items-center gap-[0.44rem] rounded-[0.625rem] px-[0.5rem] md:h-[1.75rem]">
           {persistedTheme === 'dark' ? (

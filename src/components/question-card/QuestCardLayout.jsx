@@ -64,7 +64,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, childr
         QuestTopic={questStartData.QuestTopic}
         img={'assets/svgs/dashboard/badge.svg'}
         alt={'badge'}
-        badgeCount={5}
+        badgeCount={questStartData.getUserBadge?.badges.length}
         createdBy={questStartData.uuid}
         bookmarkStatus={bookmarkStatus}
         handleBookmark={handleBookmark}
@@ -85,7 +85,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, childr
         question={questStartData.Question}
         img={'assets/svgs/dashboard/badge.svg'}
         alt={'badge'}
-        badgeCount={5}
+        badgeCount={questStartData.getUserBadge?.badges.length}
         questStartData={questStartData}
       />
     </div>
