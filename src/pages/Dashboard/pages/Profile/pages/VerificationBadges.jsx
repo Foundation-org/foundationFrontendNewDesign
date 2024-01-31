@@ -168,12 +168,17 @@ const VerificationBadges = () => {
     {
       image: '/assets/profile/firstname.png',
       title: 'First Name',
-      NoOfButton: 2,
+      ButtonColor: 'gray',
+      NoOfButton: 1,
+      // NoOfButton: 2,
+      ButtonText: 'Add New Badge',
     },
     {
       image: '/assets/profile/lastname.svg',
       title: 'Last Name',
-      NoOfButton: 2,
+      ButtonColor: 'gray',
+      NoOfButton: 1,
+      ButtonText: 'Add New Badge',
     },
     {
       image: '/assets/profile/currentcity.png',
@@ -317,7 +322,7 @@ const VerificationBadges = () => {
               <h1>{item.title}</h1>
             </div>
             <Button color={checkPersonal(item.type) ? 'yellow' : item.ButtonColor}>
-              {checkPersonal(item.type) ? 'Primary' : item.ButtonText}
+              {checkPersonal(item.type) ? 'Added' : item.ButtonText}
             </Button>
           </div>
         ))}
@@ -418,7 +423,7 @@ const VerificationBadges = () => {
           Personal
         </h1>
         {personal.map((item, index) => (
-          <div className="flex items-center justify-center gap-[5px] tablet:gap-[10.59px]" key={index}>
+          <div className="flex items-center justify-center gap-[5px] tablet:gap-[10.59px]  opacity-[60%]" key={index}>
             <img
               src={item.image}
               alt={item.title}
@@ -431,7 +436,7 @@ const VerificationBadges = () => {
             >
               <h1>{item.title}</h1>
             </div>
-            {item.NoOfButton !== 1 ? (
+            {/* {item.NoOfButton !== 1 ? (
               <div className="flex w-[19.9vw] justify-between  tablet:mr-[18.5px]">
                 <button className="rounded-[1.31vw] h-[5.8vw] w-[45%] bg-[#FAD308] text-[1.73vw] text-white tablet:rounded-[12.6px] laptop:rounded-[23px] dark:bg-[#FAD308]">
                   Edit
@@ -442,7 +447,8 @@ const VerificationBadges = () => {
               </div>
             ) : (
               <Button color={item.ButtonColor}>{item.ButtonText}</Button>
-            )}
+            )} */}
+              <Button color={item.ButtonColor}>{item.ButtonText}</Button>
           </div>
         ))}
       </div>

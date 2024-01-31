@@ -48,6 +48,60 @@ export function calculateRemainingTime(lastInteractedAt, howManyTimesAnsChanged,
   }
 }
 
+export function remainingTime(lastInteractedAt, howManyTimesAnsChanged, usersChangeTheirAns) {
+  const validateInterval = () => {
+    if (usersChangeTheirAns === 'Daily') {
+      return 24 * 60 * 60 * 1000;
+    } else if (usersChangeTheirAns === 'Weekly') {
+      return 7 * 24 * 60 * 60 * 1000;
+    } else if (usersChangeTheirAns === 'Monthly') {
+      return 30 * 24 * 60 * 60 * 1000;
+    } else if (usersChangeTheirAns === 'Yearly') {
+      return 365 * 24 * 60 * 60 * 1000;
+    } else if (usersChangeTheirAns === 'TwoYears') {
+      return 2 * 365 * 24 * 60 * 60 * 1000;
+    } else if (usersChangeTheirAns === 'FourYears') {
+      return 4 * 365 * 24 * 60 * 60 * 1000;
+    }
+  };
+
+  const currentDate = new Date();
+  const timeInterval = validateInterval();
+
+  if (howManyTimesAnsChanged >= 1 && currentDate - new Date(lastInteractedAt) < timeInterval) {
+    const timeLeft = timeInterval - (currentDate - new Date(lastInteractedAt));
+
+    const minutes = Math.floor(timeLeft / (60 * 1000));
+    const hours = Math.floor(timeLeft / (60 * 60 * 1000));
+    const days = Math.floor(timeLeft / (24 * 60 * 60 * 1000));
+    const weeks = Math.floor(days / 7);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(days / 365);
+    const twoYears = Math.floor(days / (2 * 365));
+    const fourYears = Math.floor(days / (4 * 365));
+
+    if (fourYears > 0) {
+      return `${fourYears} four years`;
+    } else if (twoYears > 0) {
+      return `${twoYears} two years`;
+    } else if (years > 0) {
+      return `${years} ${years === 1 ? 'year' : 'years'}`;
+    } else if (months > 0) {
+      return `${months} ${months === 1 ? 'month' : 'months'}`;
+    } else if (weeks > 0) {
+      return `${weeks} ${weeks === 1 ? 'week' : 'weeks'}`;
+    } else if (days > 0) {
+      return `${days} ${days === 1 ? 'day' : 'days'}`;
+    } else if (hours > 0) {
+      return `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+    } else {
+      return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
+    }
+  } else {
+    return 'you are good to go';
+  }
+}
+
 export const handleClickScroll = () => {
   const element = document.getElementById('section-1');
   if (element) {
