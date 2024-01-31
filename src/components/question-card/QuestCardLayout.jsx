@@ -18,7 +18,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, childr
   const { mutateAsync: AddBookmark } = useMutation({
     mutationFn: HomepageApis.createBookmark,
     onSuccess: (resp) => {
-      toast.success('Bookmarked Added');
+      // toast.success('Bookmarked Added');
       queryClient.invalidateQueries('FeedData');
       handleStartTest(null);
     },
@@ -30,7 +30,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, childr
   const { mutateAsync: DelBookmark } = useMutation({
     mutationFn: HomepageApis.deleteBookmarkById,
     onSuccess: (resp) => {
-      toast.success('Bookmark Removed ');
+      // toast.success('Bookmark Removed ');
       if (!isBookmarkTab) {
         queryClient.invalidateQueries('FeedData');
       }
@@ -64,7 +64,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, childr
         QuestTopic={questStartData.QuestTopic}
         img={'assets/svgs/dashboard/badge.svg'}
         alt={'badge'}
-        badgeCount={questStartData.getUserBadge?.badges.length}
+        badgeCount={questStartData.getUserBadge?.badges?.length}
         createdBy={questStartData.uuid}
         bookmarkStatus={bookmarkStatus}
         handleBookmark={handleBookmark}
@@ -85,7 +85,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, childr
         question={questStartData.Question}
         img={'assets/svgs/dashboard/badge.svg'}
         alt={'badge'}
-        badgeCount={questStartData.getUserBadge?.badges.length}
+        badgeCount={questStartData.getUserBadge?.badges?.length}
         questStartData={questStartData}
       />
     </div>

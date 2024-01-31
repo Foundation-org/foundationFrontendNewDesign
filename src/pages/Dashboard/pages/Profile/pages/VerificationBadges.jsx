@@ -398,7 +398,7 @@ const VerificationBadges = () => {
         ))}
         <h1 className="font-500 font-Inter ml-[3.5vw] text-[2.22vw] font-normal text-[#000] dark:text-white">Web 3</h1>
         {web3.map((item, index) => (
-          <div className="flex items-center justify-center gap-[5px] tablet:gap-[10.59px]" key={index}>
+          <div className="flex items-center justify-center gap-[5px] tablet:gap-[10.59px] opacity-[60%]" key={index}>
             <img
               src={item.image}
               alt={item.title}
@@ -433,7 +433,7 @@ const VerificationBadges = () => {
             </div>
             {item.NoOfButton !== 1 ? (
               <div className="flex w-[19.9vw] justify-between  tablet:mr-[18.5px]">
-                <button className="rounded-[1.31vw]] h-[5.8vw] w-[45%] bg-[#FAD308] text-[1.73vw] text-white tablet:rounded-[12.6px] laptop:rounded-[23px] dark:bg-[#FAD308]">
+                <button className="rounded-[1.31vw] h-[5.8vw] w-[45%] bg-[#FAD308] text-[1.73vw] text-white tablet:rounded-[12.6px] laptop:rounded-[23px] dark:bg-[#FAD308]">
                   Edit
                 </button>
                 <button className="h-[5.8vw] w-[52%] rounded-[1.31vw]  bg-[#FF4057] text-[1.73vw] text-white tablet:rounded-[12.6px] laptop:rounded-[23px] dark:bg-[#C13232]">

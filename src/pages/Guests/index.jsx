@@ -107,7 +107,7 @@ const Guests = () => {
                   id={singleQuestResp?._id}
                   img="/assets/svgs/dashboard/badge.svg"
                   alt="badge"
-                  badgeCount={singleQuestResp.getUserBadge?.badges.length}
+                  badgeCount={singleQuestResp.getUserBadge?.badges?.length}
                   time={singleQuestResp?.createdAt}
                   title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
                   question={singleQuestResp?.Question}
@@ -131,7 +131,7 @@ const Guests = () => {
                     id={singleQuestResp?._id}
                     img="/assets/svgs/dashboard/badge.svg"
                     alt="badge"
-                    badgeCount={singleQuestResp.getUserBadge?.badges.length}
+                    badgeCount={singleQuestResp.getUserBadge?.badges?.length}
                     time={singleQuestResp?.createdAt}
                     title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
                     question={singleQuestResp?.Question}

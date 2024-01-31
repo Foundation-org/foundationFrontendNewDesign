@@ -6,6 +6,7 @@ import { TopbarItems } from '../../../constants/topbar';
 import api from '../../../services/api/Axios';
 import * as filterActions from '../../../features/sidebar/filtersSlice';
 import { useDispatch } from 'react-redux';
+import * as createQuestActions from '../../../features/createQuest/createQuestSlice';
 
 const Topbar = () => {
   const location = useLocation();
@@ -94,7 +95,7 @@ const Topbar = () => {
             </div>
           </div>
         )}
-        <Link to={'/dashboard'} className="flex w-[85.81px] justify-center tablet:w-[149.47px]">
+        <Link to={'/dashboard'} className="flex w-[85.81px] justify-center tablet:w-[149.47px]" onClick={()=>{dispatch(createQuestActions.resetCreateQuest())}}>
           <img src="/assets/svgs/logo.svg" alt="logo" className="w-[34.5px] tablet:w-[69.2px] laptop:w-[5.75rem]" />
         </Link>
         <div className="flex w-[85.81px] items-center justify-end gap-4 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
@@ -152,6 +153,7 @@ const Topbar = () => {
                     ? 'text-[#92959D]'
                     : 'text-[#BEDEF4]'
               }`}
+              onClick={()=>{(item.id==1 || item.id===3 ) && dispatch(createQuestActions.resetCreateQuest())}}
             >
               {location.pathname === item.path || location.pathname === `${item.path}/` ? (
                 <img

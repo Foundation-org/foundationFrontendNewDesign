@@ -102,7 +102,9 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
       ) : (
         !filterStates.searchData && (
           <p className="text-center text-[4vw] tablet:text-[2vw]">
-            <b>You are all caught up!</b>
+            {isBookmarked?<b>No more bookmarks!</b>
+            :<b>You are all caught up!</b>}
+
           </p>
         )
       )}

@@ -162,7 +162,7 @@ const AgreeDisagree = () => {
             }}
             onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             value={question}
-            placeholder="Pose a question"
+            placeholder="Make a Statement"
           />
           <button
             id="test"
