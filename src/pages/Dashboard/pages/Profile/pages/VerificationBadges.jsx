@@ -356,7 +356,7 @@ const VerificationBadges = () => {
                 onReject={(err) => {
                   console.log(err);
                 }}
-                className="container w-full"
+                className="container w-full flex"
               >
                 <Button
                   color={checkSocial('facebook') ? 'red' : 'blue'}
