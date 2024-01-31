@@ -424,36 +424,44 @@ const QuestionCardWithToggle = (props) => {
 
         startQuest(params);
       }
-    } else if (questStartData.whichTypeQuestion === 'ranked choise') {
+    }  else if (questStartData.whichTypeQuestion === 'ranked choise') {
       let addedAnswerValue = '';
       let addedAnswerUuidValue = '';
       let answerSelected = [];
+      let answerContended = [];
 
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {
           // If user Add his own option
-
+          console.log('added answer ran');
           answerSelected.push({
             question: rankedAnswers[i].label,
             addedAnswerByUser: true,
           });
           addedAnswerValue = rankedAnswers[i].label;
           addedAnswerUuidValue = answersSelection[i].uuid;
+          // console.log('added ans value' + addedAnswerValue);
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
+        }
+
+        if (rankedAnswers[i].contend) {
+          answerContended.push({ question: rankedAnswers[i].label });
         }
       }
 
       let dataToSend = {
         selected: answerSelected,
-        contended: '',
+        contended: answerContended,
         created: new Date(),
       };
       const currentDate = new Date();
 
       if (questStartData.startStatus === 'change answer') {
         const timeInterval = validateInterval(questStartData.usersChangeTheirAns);
+        // Check if enough time has passed
         if (howManyTimesAnsChanged > 1 && currentDate - new Date(questStartData.lastInteractedAt) < timeInterval) {
+          // Alert the user if the time condition is not met
           toast.error(`You can change your selection again in ${questStartData.usersChangeTheirAns}`);
           setLoading(false);
         } else {
@@ -462,7 +470,7 @@ const QuestionCardWithToggle = (props) => {
             answer: dataToSend,
             uuid: persistedUserInfo?.uuid,
           };
-
+          console.log(params);
           changeAnswer(params);
         }
       } else {
@@ -474,10 +482,10 @@ const QuestionCardWithToggle = (props) => {
           uuid: persistedUserInfo?.uuid,
         };
 
+        console.log(params);
         startQuest(params);
       }
     }
-    setLoadingDetail(false);
   };
 
   useEffect(() => {

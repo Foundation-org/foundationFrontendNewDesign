@@ -52,6 +52,13 @@ const StartTest = ({
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
+
+    
+  };
+  const handleContendChangeRanked = (index, contend) => {
+    setRankedAnswers((prevAnswers) =>
+      prevAnswers.map((answer, i) => (i === index ? { ...answer, contend } : answer)),
+    );
   };
 
   const handleContendChange = (index, contend) => {
@@ -267,7 +274,7 @@ const StartTest = ({
                                 check={findLabelChecked(answersSelection, item.label)}
                                 contend={findLabelContend(answersSelection, item.label)}
                                 handleCheckChange={(check) => handleCheckChange(index, check)}
-                                handleContendChange={ (contend) => handleContendChange(index, contend) }
+                                handleContendChange={ (contend) => handleContendChangeRanked(index, contend) }
                                 setIsSubmit={setIsSubmit}
                                 setAddOptionField={setAddOptionField}
                               />
