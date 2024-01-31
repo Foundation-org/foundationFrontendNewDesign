@@ -6,6 +6,8 @@ import { useMutation } from '@tanstack/react-query';
 import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
 
+const staticCode = 'jan2024';
+
 const VerifyCode = () => {
   const navigate = useNavigate();
   const [urlQuery, seturlQuery] = useState('');
@@ -21,8 +23,6 @@ const VerifyCode = () => {
     seturlQuery(urlQuery);
 
     if (urlQuery.length > 120) {
-      //   getUserInfo();
-
       let verificationToken = urlQuery.substr(urlQuery.length - 6);
       document.getElementById('istBox').value = verificationToken.slice(0, 1);
       document.getElementById('sndBox').value = verificationToken.slice(1, 2);
@@ -52,7 +52,12 @@ const VerifyCode = () => {
   const { mutateAsync: handleVerify } = useMutation({
     mutationFn: verifyCode,
     onSuccess: (resp) => {
+      console.log(resp);
       toast.success('E-Mail Account Verified');
+
+      if (resp.status === 200) {
+        handleReferralOpen();
+      }
 
       //   setTimeout(() => {
       //     navigate('/AccountVerification');
@@ -94,72 +99,70 @@ const VerifyCode = () => {
             </div>
           </div>
           <div>
-            <form action="" method="post">
-              <div className="flex flex-col space-y-16">
-                <div className="flex flex-row items-center justify-between mx-auto w-full max-w-[25rem]">
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id="istBox"
-                    />
-                  </div>
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id="sndBox"
-                    />
-                  </div>
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id="trdBox"
-                    />
-                  </div>
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id="frtBox"
-                    />
-                  </div>
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id="fifBox"
-                    />
-                  </div>
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
-                    <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
-                      type="text"
-                      name=""
-                      id="sixBox"
-                    />
-                  </div>
+            <div className="flex flex-col space-y-16">
+              <div className="flex flex-row items-center justify-between mx-auto w-full max-w-[25rem]">
+                <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                  <input
+                    className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                    type="text"
+                    name=""
+                    id="istBox"
+                  />
                 </div>
-                <div className="flex flex-col space-y-5">
-                  <div>
-                    <button
-                      className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-[#389CE3] border-none text-white text-sm shadow-sm"
-                      onClick={() => {
-                        handleVerify(urlQuery);
-                      }}
-                    >
-                      Verify Account
-                    </button>
-                  </div>
+                <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                  <input
+                    className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                    type="text"
+                    name=""
+                    id="sndBox"
+                  />
+                </div>
+                <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                  <input
+                    className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                    type="text"
+                    name=""
+                    id="trdBox"
+                  />
+                </div>
+                <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                  <input
+                    className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                    type="text"
+                    name=""
+                    id="frtBox"
+                  />
+                </div>
+                <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                  <input
+                    className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                    type="text"
+                    name=""
+                    id="fifBox"
+                  />
+                </div>
+                <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                  <input
+                    className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                    type="text"
+                    name=""
+                    id="sixBox"
+                  />
                 </div>
               </div>
-            </form>
+              <div className="flex flex-col space-y-5">
+                <div>
+                  <button
+                    className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-[#389CE3] border-none text-white text-sm shadow-sm"
+                    onClick={() => {
+                      handleVerify(urlQuery);
+                    }}
+                  >
+                    Verify Account
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
