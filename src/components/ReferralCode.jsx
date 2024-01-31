@@ -1,8 +1,19 @@
+import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/Button';
+import { toast } from 'sonner';
 
 const ReferralCode = ({ handleClose, referralCode, setReferralCode }) => {
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     setReferralCode(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    if (referralCode === 'Jan2024') {
+      navigate('/dashboard');
+    } else {
+      toast.warning('Referral code is wrong');
+    }
   };
 
   return (
@@ -47,14 +58,21 @@ const ReferralCode = ({ handleClose, referralCode, setReferralCode }) => {
           Referral Code
         </h1>
         <input
-          type="number"
+          type="text"
           placeholder="Enter referal code"
           value={referralCode}
           onChange={handleInputChange}
           className="hide_number_input_arrows hide_number_input_arrows2 autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white pr-8 text-[10px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none tablet:text-[22.9px] short:py-0 dark:border-white dark:bg-dark dark:focus:border-white"
         />
         <div className="mt-2 tablet:mt-[25px] flex justify-end w-full">
-          <Button variant="submit">Continue</Button>
+          <Button
+            variant="submit"
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
+            Continue
+          </Button>
         </div>
       </div>
     </div>
