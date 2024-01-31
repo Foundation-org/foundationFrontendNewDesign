@@ -19,6 +19,7 @@ import QuestStartSection from '../pages/Dashboard/pages/QuestStartSection';
 import Quest from '../pages/Dashboard/pages/Quest/Quest';
 import Bookmark from '../pages/Dashboard/pages/Bookmark';
 import DashboardRedirect from '../pages/DashboardRedirect';
+import VerifyCode from '../pages/Signup/VerifyCode';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -32,6 +33,7 @@ export function Router() {
           <Route path="/" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/VerifyCode" element={<VerifyCode />} />
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/guestquest/:id" element={<Guests />} />
         </Route>
