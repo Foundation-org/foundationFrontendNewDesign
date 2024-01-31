@@ -571,7 +571,7 @@ const QuestionCard = (props) => {
   };
 
   return (
-    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} handleStartTest={handleStartTest} badgeCount={questStartData.getUserBadge.badges.length}>
+    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} handleStartTest={handleStartTest}>
       {renderQuestContent()}
      
       <ButtonGroup
