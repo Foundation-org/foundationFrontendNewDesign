@@ -12,7 +12,7 @@ export function useStartQuest() {
       if (error) {
         toast.error(error.response.data.message.split(':')[1]);
       } else {
-        toast.success('Successfully Completed');
+        // toast.success('Successfully Completed');
         await queryClient.invalidateQueries({ queryKey: ['FeedData'] });
       }
     },
@@ -29,7 +29,7 @@ export function useChangeAnswer() {
       if (error) {
         toast.error(error.response.data.message.split(':')[1]);
       } else {
-        toast.success('Successfully Completed');
+        // toast.success('Successfully Completed');
         await queryClient.invalidateQueries({ queryKey: ['FeedData'] });
       }
     },

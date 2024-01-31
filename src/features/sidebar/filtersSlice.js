@@ -15,7 +15,7 @@ const initialColumns = {
   },
 };
 const resetState = {
-  expandedView: false,
+  // expandedView: false,
   searchData: '',
   filterByStatus: '',
   filterByType: '',

@@ -253,7 +253,7 @@ const QuestionCard = (props) => {
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
       if (resp.data.message === 'Start Quest Created Successfully') {
-        toast.success('Successfully Completed');
+        // toast.success('Successfully Completed');
         setLoading(false);
         queryClient.invalidateQueries('FeedData');
       }
@@ -283,7 +283,7 @@ const QuestionCard = (props) => {
         toast.warning('You can change your option once every 1 hour.');
       }
       if (resp.data.message === 'Start Quest Updated Successfully') {
-        toast.success('Successfully Changed');
+        // toast.success('Successfully Changed');
         setLoading(false);
         queryClient.invalidateQueries('FeedData', 'ResultsData');
         handleViewResults(questStartData._id);

@@ -248,7 +248,7 @@ const QuestionCardWithToggle = (props) => {
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
       if (resp.data.message === 'Start Quest Created Successfully') {
-        toast.success('Successfully Completed');
+        // toast.success('Successfully Completed');
         setLoading(false);
         queryClient.invalidateQueries('FeedData');
       }
@@ -277,7 +277,7 @@ const QuestionCardWithToggle = (props) => {
         setLoading(false);
       }
       if (resp.data.message === 'Start Quest Updated Successfully') {
-        toast.success('Successfully Changed');
+        // toast.success('Successfully Changed');
         setLoading(false);
         handleViewResults(questStartData._id);
       }

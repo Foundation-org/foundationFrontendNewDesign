@@ -41,15 +41,15 @@ const SingleAnswerRankedChoice = (props) => {
   //   setAnswer(props.answer);
   // }, [props.answer]);
 
-  const handleDeleteOpen = () => {
-    setCheckOptionStatus(reset);
-    const newArr = props.answersSelection.filter((item, index) => index !== id);
+  // const handleDeleteOpen = () => {
+  //   setCheckOptionStatus(reset);
+  //   const newArr = props.answersSelection.filter((item, index) => index !== id);
 
-    props.setAnswerSelection(newArr);
-    dispatch(resetaddOptionLimit());
-    props.setAddOptionField(0);
-    // toast.success("Item deleted");
-  };
+  //   props.setAnswerSelection(newArr);
+  //   dispatch(resetaddOptionLimit());
+  //   props.setAddOptionField(0);
+  //   // toast.success("Item deleted");
+  // };
 
   const handleCheckChange = () => {
     setCheckState((prevState) => {
@@ -127,15 +127,15 @@ const SingleAnswerRankedChoice = (props) => {
     props.setAnswerSelection(newArr);
   };
 
-  const customModalStyle = {
-    backgroundColor: '#FCFCFD',
-    boxShadow: 'none',
-    border: '0px',
-    outline: 'none',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-  };
+  // const customModalStyle = {
+  //   backgroundColor: '#FCFCFD',
+  //   boxShadow: 'none',
+  //   border: '0px',
+  //   outline: 'none',
+  //   top: '50%',
+  //   left: '50%',
+  //   transform: 'translate(-50%, -50%)',
+  // };
 
   const handleContendChange = () => {
     setContendState((prevState) => {
@@ -240,7 +240,7 @@ const SingleAnswerRankedChoice = (props) => {
         <div
           className={`${
             props.snapshot.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-          } flex h-[21.33px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r bg-white dark:bg-[#0D1012] tablet:h-[47.8px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]`}
+          } flex h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] border-y border-r bg-white dark:bg-[#0D1012] tablet:h-[47.8px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]`}
         >
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
         </div>

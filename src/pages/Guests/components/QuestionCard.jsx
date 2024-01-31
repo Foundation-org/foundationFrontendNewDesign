@@ -104,7 +104,7 @@ const QuestionCard = ({
     mutationFn: createStartQuest,
     onSuccess: (resp) => {
       if (resp.data.message === 'Start Quest Created Successfully') {
-        toast.success('Successfully Completed');
+        // toast.success('Successfully Completed');
         queryClient.invalidateQueries('FeedData');
         navigate('/dashboard');
       }

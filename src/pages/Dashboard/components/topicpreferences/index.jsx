@@ -100,6 +100,8 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
     setItemsWithCross((prevItems) => prevItems.filter((item) => item !== text));
   };
 
+  console.log('first', Object.values(columns));
+
   return (
     <div className="relative h-full w-[90vw] px-[1.19rem] py-[1.5rem] tablet:w-[75vw] tablet:px-[2.75rem] tablet:py-[2.94rem]">
       <div onClick={handleClose}>
@@ -160,7 +162,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose }) => {
                     </h2>
                     <div className="h-full border-[6px] border-[#F2F2F2] bg-[#FCFCFD] pr-1 dark:border-[#212121] dark:bg-[#212121] laptop:rounded-b-[1.25rem]">
                       <div
-                        className="custom-scrollbar flex h-[18vh] min-h-[19vh] flex-col gap-[0.4rem] overflow-y-auto bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] dark:bg-[#212121] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem]"
+                        className="custom-scrollbar overflow-x-hidden flex h-[18vh] min-h-[19vh] flex-col gap-[0.4rem] overflow-y-auto bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] dark:bg-[#212121] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem]"
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                         s
