@@ -33,7 +33,7 @@ const SidebarRight = () => {
       icon: '/assets/svgs/dashboard/icon2.svg',
       iconLight: '/assets/svgs/dashboard/icon12.svg',
       alt: 'icon1',
-      title: 'Posts-Answered',
+      title: 'Posts-Engaged',
       value: (response && response?.usersAnswered) || 0,
     },
     // {
@@ -57,7 +57,7 @@ const SidebarRight = () => {
       icon: '/assets/svgs/dashboard/icon5.svg',
       iconLight: '/assets/svgs/dashboard/icon15.svg',
       alt: 'icon1',
-      title: 'Statements-Changed',
+      title: 'Selections-Changed',
       value: (response && response?.changedAnswers) || 0,
     },
     {

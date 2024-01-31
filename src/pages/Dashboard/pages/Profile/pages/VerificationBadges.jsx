@@ -289,7 +289,7 @@ const VerificationBadges = () => {
       <div
         className={`${
           persistedTheme === 'dark' ? 'dark-shadow-inside' : 'shadow-inside'
-        } relative mx-6 mb-[6rem] tablet:mb-[10rem] mt-4 flex flex-col gap-[5.91px] rounded-[11.918px] px-[14.3px] pb-[17.57px] pt-[23px] tablet:mx-6 tablet:my-[54px] tablet:gap-[23px] tablet:rounded-[24.8px] tablet:px-[29.7px] tablet:py-[48.4px] laptop:mx-[106px] laptop:rounded-[45px] laptop:px-[60px] laptop:pb-[66.8px] laptop:pt-[104px]`}
+        } relative mx-6 mb-[10rem] tablet:mb-[10rem] mt-4 flex flex-col gap-[5.91px] rounded-[11.918px] px-[14.3px] pb-[17.57px] pt-[23px] tablet:mx-6 tablet:my-[54px] tablet:gap-[23px] tablet:rounded-[24.8px] tablet:px-[29.7px] tablet:py-[48.4px] laptop:mx-[106px] laptop:rounded-[45px] laptop:px-[60px] laptop:pb-[66.8px] laptop:pt-[104px]`}
       >
         <div className="absolute -top-[3px] left-[50%] mx-auto flex w-[90%] -translate-x-[50%] transform justify-center gap-[21px] tablet:-top-1 tablet:w-[90%] laptop:w-[95%]">
           <div className="h-[2.94px] w-full rounded-[100px] bg-[#4A8DBD] tablet:h-[11.1px]" />
@@ -398,7 +398,7 @@ const VerificationBadges = () => {
         ))}
         <h1 className="font-500 font-Inter ml-[3.5vw] text-[2.22vw] font-normal text-[#000] dark:text-white">Web 3</h1>
         {web3.map((item, index) => (
-          <div className="flex items-center justify-center gap-[5px] tablet:gap-[10.59px]" key={index}>
+          <div className="flex items-center justify-center gap-[5px] tablet:gap-[10.59px] opacity-[60%]" key={index}>
             <img
               src={item.image}
               alt={item.title}
@@ -433,7 +433,7 @@ const VerificationBadges = () => {
             </div>
             {item.NoOfButton !== 1 ? (
               <div className="flex w-[19.9vw] justify-between  tablet:mr-[18.5px]">
-                <button className="rounded-[1.31vw]] h-[5.8vw] w-[45%] bg-[#FAD308] text-[1.73vw] text-white tablet:rounded-[12.6px] laptop:rounded-[23px] dark:bg-[#FAD308]">
+                <button className="rounded-[1.31vw] h-[5.8vw] w-[45%] bg-[#FAD308] text-[1.73vw] text-white tablet:rounded-[12.6px] laptop:rounded-[23px] dark:bg-[#FAD308]">
                   Edit
                 </button>
                 <button className="h-[5.8vw] w-[52%] rounded-[1.31vw]  bg-[#FF4057] text-[1.73vw] text-white tablet:rounded-[12.6px] laptop:rounded-[23px] dark:bg-[#C13232]">
