@@ -50,6 +50,7 @@ const QuestStartSection = () => {
 
   // preferences start
   const [columns, setColumns] = useState(initialColumns);
+  const [itemsWithCross, setItemsWithCross] = useState([]);
 
   const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
 
@@ -157,7 +158,12 @@ const QuestStartSection = () => {
 
   return (
     <div className="flex w-full flex-col bg-white dark:bg-black laptop:flex-row">
-      <SidebarLeft columns={columns} setColumns={setColumns} />
+      <SidebarLeft
+        columns={columns}
+        setColumns={setColumns}
+        itemsWithCross={itemsWithCross}
+        setItemsWithCross={setItemsWithCross}
+      />
       <div className="no-scrollbar flex h-full w-full flex-col overflow-y-auto bg-[#F3F3F3] px-[1.13rem] py-[0.63rem] dark:bg-[#242424] tablet:min-h-[calc(100vh-92px)] tablet:py-[0.94rem]">
         <InfiniteScroll
           dataLength={allData?.length}

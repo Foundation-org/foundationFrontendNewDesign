@@ -8,12 +8,11 @@ import { IoClose } from 'react-icons/io5';
 import { GrClose } from 'react-icons/gr';
 import Cross from '../../../../assets/preferences/Cross';
 
-const TopicPreferences = ({ columns, setColumns, handleClose }) => {
+const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, setItemsWithCross }) => {
   const dispatch = useDispatch();
   // const [columns, setColumns] = useState();
   const getPreferences = useSelector(prefActions.getPrefs);
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const [itemsWithCross, setItemsWithCross] = useState([]);
 
   const handleSearch = (e) => {
     dispatch(prefActions.setTopicSearch(e.target.value));

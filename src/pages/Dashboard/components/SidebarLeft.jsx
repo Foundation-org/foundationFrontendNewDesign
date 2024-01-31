@@ -16,7 +16,7 @@ import * as bookmarkFiltersActions from '../../../features/sidebar/bookmarkFilte
 import { GrClose } from 'react-icons/gr';
 import { topicPreferencesModalStyle } from '../../../assets/styles';
 
-const SidebarLeft = ({ columns, setColumns }) => {
+const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
@@ -30,7 +30,6 @@ const SidebarLeft = ({ columns, setColumns }) => {
 
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
-
 
   const [multipleOption, setMultipleOption] = useState(
     localStorage.getItem('filterByState') !== undefined
@@ -133,7 +132,13 @@ const SidebarLeft = ({ columns, setColumns }) => {
             customStyle={topicPreferencesModalStyle}
             customClasses="rounded-[0.9375rem] tablet:rounded-[2.31rem] w-[75vw] h-[90vh] bg-[#FCFCFD] dark:bg-[#3E3E3E] border-[6px] border-[#F2F2F2] dark:border-[#8B8B8B]"
           >
-            <TopicPreferences columns={columns} setColumns={setColumns} handleClose={handleTopicPref} />
+            <TopicPreferences
+              columns={columns}
+              setColumns={setColumns}
+              handleClose={handleTopicPref}
+              itemsWithCross={itemsWithCross}
+              setItemsWithCross={setItemsWithCross}
+            />
           </BasicModal>
 
           <div className="mt-[4vh] flex flex-col gap-[3vh]">
