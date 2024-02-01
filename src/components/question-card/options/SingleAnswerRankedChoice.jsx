@@ -78,7 +78,6 @@ const SingleAnswerRankedChoice = (props) => {
     });
     // If any error captured
     if (errorMessage) {
-      // props.setIsSubmit(false)
       return setCheckOptionStatus({
         name: 'Rejected',
         color: 'text-[#b00f0f]',
@@ -94,7 +93,6 @@ const SingleAnswerRankedChoice = (props) => {
       startQuest: true,
     });
     if (answerExist) {
-      // props.setIsSubmit(false);
       return setCheckOptionStatus({
         name: 'Rejected',
         color: 'text-[#b00f0f]',
@@ -106,7 +104,7 @@ const SingleAnswerRankedChoice = (props) => {
     // Answer is validated and status is Ok
     if (validatedAnswer) {
       setAnswer(validatedAnswer);
-      // props.setIsSubmit(true);
+
       setCheckOptionStatus({
         name: 'Ok',
         color: 'text-[#0FB063]',

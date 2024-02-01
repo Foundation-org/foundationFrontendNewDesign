@@ -33,7 +33,6 @@ const QuestionCardWithToggle = (props) => {
   const [openResults, setOpenResults] = useState(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(false);
   const [startTest, setStartTest] = useState('');
   const [viewResult, setViewResult] = useState('');
   const [questSelection, setQuestSelection] = useState(questSelectionInitial);
@@ -420,11 +419,9 @@ const QuestionCardWithToggle = (props) => {
           return;
         }
 
-        if (!isSubmit) setLoading(false);
-
         startQuest(params);
       }
-    }  else if (questStartData.whichTypeQuestion === 'ranked choise') {
+    } else if (questStartData.whichTypeQuestion === 'ranked choise') {
       let addedAnswerValue = '';
       let addedAnswerUuidValue = '';
       let answerSelected = [];
@@ -540,7 +537,7 @@ const QuestionCardWithToggle = (props) => {
             setAnswerSelection={setAnswerSelection}
             rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
-            setIsSubmit={setIsSubmit}
+            // setIsSubmit={setIsSubmit}
             loadingDetail={loadingDetail}
             setAddOptionField={setAddOptionField}
             questSelection={questSelection}

@@ -16,7 +16,6 @@ const StartTest = ({
   setAnswerSelection,
   rankedAnswers,
   setRankedAnswers,
-  setIsSubmit,
   loadingDetail,
   setAddOptionField,
   questSelection,
@@ -220,7 +219,6 @@ const StartTest = ({
                         ? (contend) => handleContendChange(index, contend)
                         : (contend) => handleContendChangeSingle(index, contend)
                     }
-                    setIsSubmit={setIsSubmit}
                     setAddOptionField={setAddOptionField}
                   />
                 ))}
@@ -273,7 +271,6 @@ const StartTest = ({
                                 contend={findLabelContend(answersSelection, item.label)}
                                 handleCheckChange={(check) => handleCheckChange(index, check)}
                                 handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
-                                setIsSubmit={setIsSubmit}
                                 setAddOptionField={setAddOptionField}
                               />
                             </li>

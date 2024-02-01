@@ -198,10 +198,12 @@ const SidebarRight = () => {
         {localStorage.getItem('isGuestMode') ? (
           <div className="mb-[5vh] flex items-center gap-6">
             <div className="relative h-fit w-fit">
-              <img src="/assets/svgs/dashboard/guestBadge.svg" alt="badge" />
-              <p className="transform-center absolute z-50 pb-5 text-[1.875rem] font-medium leading-normal text-[#362E04]">
-                G
-              </p>
+              <img
+                src="/assets/svgs/dashboard/guestBadge.svg"
+                alt="badge"
+                className="tablet:h-[5.43rem] tablet:w-[4.36rem]"
+              />
+              <p className="transform-center absolute z-50 pb-5 text-[35px] font-bold leading-normal text-white">G</p>
             </div>
             <div>
               <h4 className="heading">Guest User</h4>
