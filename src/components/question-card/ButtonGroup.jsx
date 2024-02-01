@@ -289,8 +289,8 @@ const ButtonGroup = ({
             </>
           ) : (
             <div className="flex justify-between w-full">
-              {questStartData.usersAddTheirAns ?
-                (title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+              {questStartData.usersAddTheirAns ? (
+                title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button onClick={handleOpen} variant={'addOption'}>
                     {persistedTheme === 'dark' ? (
                       <img
@@ -307,7 +307,10 @@ const ButtonGroup = ({
                     )}
                     Add Option
                   </Button>
-                )):<div></div>}
+                )
+              ) : (
+                <div></div>
+              )}
               <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               </Button>
