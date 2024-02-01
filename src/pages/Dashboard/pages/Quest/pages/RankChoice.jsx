@@ -26,7 +26,7 @@ const RankChoice = () => {
   const dispatch = useDispatch();
 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
-
+  const questionStatus = useSelector(createQuestAction.questionStatus);
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
@@ -133,36 +133,38 @@ const RankChoice = () => {
     setQuestion(value.trim());
     if (prevValue === question.trim()) return;
     setPrevValue(value);
-    setCheckQuestionStatus({
-      name: 'Checking',
-      color: 'text-[#0FB063]',
-      tooltipName: 'Verifying your question. Please wait...',
-      tooltipStyle: 'tooltip-success',
-    });
-    // Question Validation
-    const { validatedQuestion, errorMessage } = await questionValidation({
-      question: value,
-      queryType: 'rank choice',
-    });
-    // If any error captured
-    if (errorMessage) {
-      return setCheckQuestionStatus({
-        name: 'Rejected',
-        color: 'text-[#b00f0f]',
-        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-        tooltipStyle: 'tooltip-error',
-      });
-    }
-    // Question is validated and status is Ok
-    setQuestion(validatedQuestion);
-    setPrevValue(validatedQuestion);
-    setCheckQuestionStatus({
-      name: 'Ok',
-      color: 'text-[#0FB063]',
-      tooltipName: 'Question is Verified',
-      tooltipStyle: 'tooltip-success',
-      isVerifiedQuestion: true,
-    });
+
+    dispatch(createQuestAction.checkQuestion(value));
+    // setCheckQuestionStatus({
+    //   name: 'Checking',
+    //   color: 'text-[#0FB063]',
+    //   tooltipName: 'Verifying your question. Please wait...',
+    //   tooltipStyle: 'tooltip-success',
+    // });
+    // // Question Validation
+    // const { validatedQuestion, errorMessage } = await questionValidation({
+    //   question: value,
+    //   queryType: 'rank choice',
+    // });
+    // // If any error captured
+    // if (errorMessage) {
+    //   return setCheckQuestionStatus({
+    //     name: 'Rejected',
+    //     color: 'text-[#b00f0f]',
+    //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+    //     tooltipStyle: 'tooltip-error',
+    //   });
+    // }
+    // // Question is validated and status is Ok
+    // setQuestion(validatedQuestion);
+    // setPrevValue(validatedQuestion);
+    // setCheckQuestionStatus({
+    //   name: 'Ok',
+    //   color: 'text-[#0FB063]',
+    //   tooltipName: 'Question is Verified',
+    //   tooltipStyle: 'tooltip-success',
+    //   isVerifiedQuestion: true,
+    // });
   };
 
   const answerVerification = async (index, value) => {
@@ -380,6 +382,14 @@ const RankChoice = () => {
     }
   };
 
+  useEffect(() => {
+    console.log('our question status is yes', createQuestSlice.question);
+    setLoading(questionStatus.status);
+    if (createQuestSlice.question) {
+      setQuestion(createQuestSlice.question);
+    }
+  }, [questionStatus]);
+
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
@@ -413,12 +423,12 @@ const RankChoice = () => {
           <button
             id="new"
             data-tooltip-offset={-25}
-            className={`relative leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${checkQuestionStatus.color}`}
+            className={`relative leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${questionStatus.color}`}
           >
             <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[100px] laptop:w-[134px]">
-              {checkQuestionStatus.name}
+              {questionStatus.name}
             </div>
-            <Tooltip optionStatus={checkQuestionStatus} />
+            <Tooltip optionStatus={questionStatus} />
           </button>
         </div>
 
