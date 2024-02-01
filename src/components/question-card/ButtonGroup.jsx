@@ -289,7 +289,7 @@ const ButtonGroup = ({
             </>
           ) : (
             <div className="flex justify-between w-full">
-              {questStartData.usersAddTheirAns ?
+              {questStartData.usersAddTheirAns && addOptionField===0 ?
                 (title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button onClick={handleOpen} variant={'addOption'}>
                     {persistedTheme === 'dark' ? (
