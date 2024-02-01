@@ -32,7 +32,7 @@ const Guests = () => {
 
   console.log(persistedUserInfo);
 
-  const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo.uuid, location.state);
+  const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state);
 
   function getQuestionTitle(whichTypeQuestion) {
     switch (whichTypeQuestion) {
