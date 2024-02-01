@@ -2,21 +2,41 @@ import { toast } from 'sonner';
 import { Button } from './ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { referral } from '../services/api/authentication';
+import { useMutation } from '@tanstack/react-query';
+import { userInfo } from '../services/api/userAuth';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../features/auth/authSlice';
 
 const ReferralCode = ({ uuid, handleClose, referralCode, setReferralCode }) => {
+  const dispatch=useDispatch();
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setReferralCode(e.target.value);
   };
 
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+    onSuccess: (res) => {
+      console.log('User info fetched:', res.data);
+      dispatch(addUser(res.data));
+    },
+    onError: (error) => {
+      console.error('Error fetching user info:', error);
+      localStorage.setItem('loggedIn', 'false');
+    },
+  });
+
+
   const { mutateAsync: handleReferral } = useMutation({
     mutationFn: referral,
     onSuccess: (resp) => {
       console.log(resp);
-
+      getUserInfo();
       setTimeout(() => {
-        navigate('/login');
+        console.log("navigating");
+        
+        navigate("/dashboard")
       }, 2000);
     },
     onError: (err) => {
@@ -85,7 +105,8 @@ const ReferralCode = ({ uuid, handleClose, referralCode, setReferralCode }) => {
           <Button
             variant="submit"
             onClick={() => {
-              handleReferral(referralCode, uuid);
+              const data={code:referralCode, uuid:uuid}
+              handleReferral(data);
             }}
           >
             Continue

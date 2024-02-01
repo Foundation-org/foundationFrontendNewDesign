@@ -99,10 +99,10 @@ const VerifyCode = () => {
       }
 
       const data = await response.json();
-      setUuid(data.)
+      setUuid(data.uuid);
       console.log('first', data);
     } catch (error) {
-      console.error('Error during API request:', error.message);
+      console.log('Error during API request:', error.message);
       throw error;
     }
   };
@@ -203,7 +203,7 @@ const VerifyCode = () => {
         customStyle={customModalStyle}
         customClasses="rounded-[10px] tablet:rounded-[26px]"
       >
-        <ReferralCode handleClose={handleReferralClose} referralCode={referralCode} setReferralCode={setReferralCode} />
+        <ReferralCode handleClose={handleReferralClose} referralCode={referralCode} setReferralCode={setReferralCode} uuid={uuid}/>
       </BasicModal>
     </div>
   );
