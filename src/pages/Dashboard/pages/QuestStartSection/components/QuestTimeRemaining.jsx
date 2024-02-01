@@ -43,7 +43,7 @@ const QuestTimeRemaining = ({ show, questStartData }) => {
               className="cursor-pointer text-[7.5px] font-normal text-[#85898C] tablet:text-[16.58px] laptop:text-[1rem]"
               // onClick={handleClick}
             >
-              You can change your selection {questStartData.usersChangeTheirAns},{` ${remainTime}`}.
+              You can change your selection {questStartData.usersChangeTheirAns},{remainTime==="you are good to go" ?` ${remainTime}`: ` ${remainTime} remaining` } 
             </h4>
           )}
         </div>
