@@ -57,12 +57,12 @@ const RankChoice = () => {
     tooltipStyle: 'tooltip-info',
   };
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
-  const [checkOptionStatus, setCheckOptionStatus] = useState({
-    name: 'Ok',
-    color: 'text-[#389CE3]',
-    tooltipName: 'Please write something...',
-    tooltipStyle: 'tooltip-info',
-  });
+  // const [checkOptionStatus, setCheckOptionStatus] = useState({
+  //   name: 'Ok',
+  //   color: 'text-[#389CE3]',
+  //   tooltipName: 'Please write something...',
+  //   tooltipStyle: 'tooltip-info',
+  // });
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -331,9 +331,9 @@ const RankChoice = () => {
     }
   };
 
-  const handleOnSortEnd = (sortedItems) => {
-    setTypedValues(sortedItems.items);
-  };
+  // const handleOnSortEnd = (sortedItems) => {
+  //   setTypedValues(sortedItems.items);
+  // };
 
   const handleOnDragEnd = (result) => {
     console.log(result);

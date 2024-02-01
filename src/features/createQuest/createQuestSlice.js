@@ -1,6 +1,5 @@
-import * as questServices from '../../services/api/questsApi'
+import * as questServices from '../../services/api/questsApi';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
 
 export const checkQuestion = createAsyncThunk('createQuest/checkQuestion', async (value) => {
   const result = await questServices.questionValidation({
@@ -8,7 +7,13 @@ export const checkQuestion = createAsyncThunk('createQuest/checkQuestion', async
     queryType: 'yes/no',
   });
   return result;
+});
 
+export const checkAnswer = createAsyncThunk('createQuest/checkAnswer', async (value) => {
+  const result = await questServices.answerValidation({
+    answer: value,
+  });
+  return result;
 });
 
 const initialState = {
@@ -26,8 +31,8 @@ const initialState = {
     color: 'text-[#389CE3]',
     tooltipName: 'Please write something...',
     tooltipStyle: 'tooltip-info',
-    status : false
-  }
+    status: false,
+  },
 };
 
 export const createQuestSlice = createSlice({
@@ -38,14 +43,28 @@ export const createQuestSlice = createSlice({
       const { question, changedOption, changeState } = action.payload;
       return { ...state, questions: { ...state.questions, question, changedOption, changeState } };
     },
-
     updateMultipleChoice: (state, action) => {
       const { question, changedOption, changeState, multipleOption, addOption, optionsCount, options } = action.payload;
-      return { ...state, questions: { ...state.questions, question, changedOption, changeState, multipleOption, addOption, optionsCount, options } };
+      return {
+        ...state,
+        questions: {
+          ...state.questions,
+          question,
+          changedOption,
+          changeState,
+          multipleOption,
+          addOption,
+          optionsCount,
+          options,
+        },
+      };
     },
     updateRankedChoice: (state, action) => {
       const { question, changedOption, changeState, addOption, optionsCount, options } = action.payload;
-      return { ...state, questions: { ...state.questions, question, changedOption, changeState, addOption, optionsCount, options } };
+      return {
+        ...state,
+        questions: { ...state.questions, question, changedOption, changeState, addOption, optionsCount, options },
+      };
     },
     // checkQuestion: (state, action) => {
     //   const { type } = action.payload
@@ -70,22 +89,20 @@ export const createQuestSlice = createSlice({
         color: 'text-[#0FB063]',
         tooltipName: 'Verifying your question. Please wait...',
         tooltipStyle: 'tooltip-success',
-        status : true
-      }
-    })
+        status: true,
+      };
+    });
     builder.addCase(checkQuestion.fulfilled, (state, action) => {
-
-      const { validatedQuestion, errorMessage } = action.payload
+      const { validatedQuestion, errorMessage } = action.payload;
       if (errorMessage) {
         state.questionReset = {
           name: 'Rejected',
           color: 'text-[#b00f0f]',
           tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
           tooltipStyle: 'tooltip-error',
-          status : true
-        }
-      }
-      else {
+          status: true,
+        };
+      } else {
         state.questions.question = validatedQuestion;
         state.questionReset = {
           name: 'Ok',
@@ -93,23 +110,32 @@ export const createQuestSlice = createSlice({
           tooltipName: 'Question is Verified',
           tooltipStyle: 'tooltip-success',
           isVerifiedQuestion: true,
-          status : false
-        }
+          status: false,
+        };
       }
-
-    })
+    });
     builder.addCase(checkQuestion.rejected, (state, action) => {
       state.questionReset = {
         name: 'Rejected',
         color: 'text-[#b00f0f]',
         tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
         tooltipStyle: 'tooltip-error',
-      }
+      };
+    });
+    // For Answers
+    builder.addCase(checkAnswer.pending, (state, action) => {
+      state.questionReset = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your answer. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: true,
+      };
     });
   },
 });
 
-export const { updateQuestion, resetCreateQuest, updateMultipleChoice, updateRankedChoice } = createQuestSlice.actions;
+export const { updateQuestion, updateMultipleChoice, updateRankedChoice, resetCreateQuest } = createQuestSlice.actions;
 
 export default createQuestSlice.reducer;
 
