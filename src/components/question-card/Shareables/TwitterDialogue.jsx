@@ -50,7 +50,7 @@ const TwitterDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, 
             <Button variant="start">Start</Button>
             <Button variant="result-outline">Result</Button>
           </div>
-          <QuestBottombar time={timeAgo} img={'assets/svgs/dashboard/badge.svg'} alt={'badge'} badgeCount={5} />
+          <QuestBottombar time={timeAgo} img={'/assets/svgs/dashboard/badge.svg'} alt={'badge'} badgeCount={5} />
         </div>
       </div>
       {/* Share Buttons */}
