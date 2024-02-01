@@ -10,6 +10,14 @@ const resetState = {
   clearFilter: false,
 };
 
+const resetOtherStates = {
+  filterByStatus: '',
+  filterByType: '',
+  filterByScope: '',
+  filterBySort: 'Newest First',
+  clearFilter: false,
+};
+
 const initialState = {
   expandedView: localStorage.getItem('expandedView') === 'true' ? true : false,
   searchData: '',
@@ -51,6 +59,12 @@ export const bookmarkFiltersSlice = createSlice({
     resetFilters: (state) => {
       Object.assign(state, resetState);
     },
+    resetSearchData: (state) => {
+      state.searchData = '';
+    },
+    resetOtherFilters: (state) => {
+      Object.assign(state, resetOtherStates);
+    },
   },
 });
 
@@ -62,6 +76,8 @@ export const {
   setFilterByScope,
   setFilterBySort,
   resetFilters,
+  resetSearchData,
+  resetOtherFilters,
 } = bookmarkFiltersSlice.actions;
 
 export default bookmarkFiltersSlice.reducer;
