@@ -8,6 +8,7 @@ import * as filterActions from '../../../features/sidebar/filtersSlice';
 import { useDispatch } from 'react-redux';
 import * as createQuestActions from '../../../features/createQuest/createQuestSlice';
 
+
 const Topbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const Topbar = () => {
                 className="h-6 w-[19.8px] tablet:h-[51.5px] tablet:w-[42px]"
               />
               <p className="transform-center absolute z-50 pb-1 text-[8.6px] font-normal leading-normal text-[#362E04]">
-                5
+              {persistedUserInfo?.badges?.length}
               </p>
             </div>
             <div className="text-blue-100 flex flex-col ">
