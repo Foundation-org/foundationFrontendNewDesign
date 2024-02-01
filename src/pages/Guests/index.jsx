@@ -30,6 +30,8 @@ const Guests = () => {
     }
   }, [isFullScreen]);
 
+  console.log(persistedUserInfo);
+
   const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo.uuid, location.state);
 
   function getQuestionTitle(whichTypeQuestion) {

@@ -18,7 +18,7 @@ const Contributions = () => {
       icon: '/assets/svgs/dashboard/icon2.svg',
       iconLight: '/assets/svgs/dashboard/icon12.svg',
       alt: 'icon1',
-      title: 'Posts-Answered',
+      title: 'Posts-Engaged',
       value: (persistedUserInfo && persistedUserInfo?.usersAnswered) || 0,
     },
     {
@@ -26,7 +26,7 @@ const Contributions = () => {
       icon: '/assets/svgs/dashboard/icon5.svg',
       iconLight: '/assets/svgs/dashboard/icon15.svg',
       alt: 'icon1',
-      title: 'Statements-Changed',
+      title: 'Selections-Changed',
       value: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0,
     },
     {

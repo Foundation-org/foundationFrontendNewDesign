@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
-  let url = `${protocol}//${host}/quest/${id}`;
+  let url = `${protocol}//${host}/guestquest/${id}`;
 
   return (
     <div className="relative w-[90vw] pb-[21.37px] pt-3 tablet:pb-[75px] tablet:pt-[37px] laptop:w-[52.6rem]">

@@ -3,7 +3,6 @@ import { applyFilters, fetchDataByStatus } from '../../utils/questionCard';
 import * as HomepageAPIs from '../api/homepageApis';
 
 export function useGetFeedData(filterStates, debouncedSearch, pagination, columns, params) {
-  console.log('first', debouncedSearch);
   params = applyFilters(params, filterStates, columns);
   return useQuery({
     queryFn: async () => {
