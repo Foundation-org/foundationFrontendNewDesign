@@ -14,6 +14,9 @@ export const signIn = async (data) => {
 export const userInfo = async () => {
   return await api.post('/user/userInfo');
 };
+export const userInfoById = async (uuid) => {
+  return await api.post('/user/userInfoById', { uuid });
+};
 export const changePassword = async (params) => {
   return await api.put('/user/changePassword', params);
 };

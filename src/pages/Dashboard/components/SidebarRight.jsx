@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { createGuestMode, userInfo } from '../../../services/api/userAuth';
+import { createGuestMode, userInfo, userInfoById } from '../../../services/api/userAuth';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 import { useState } from 'react';
@@ -106,11 +106,26 @@ const SidebarRight = () => {
     mutationFn: userInfo,
   });
 
+
   const handleUserInfo = async () => {
     try {
       const resp = await getUserInfo();
+ 
       if (resp?.status === 200) {
-        dispath(addUser(resp?.data));
+        // Cookie Calling
+        if(resp.data){
+          dispath(addUser(resp?.data));
+          // Set into local storage
+          if(!localStorage.getItem('uuid')){
+            localStorage.setItem('uuid', resp.data.uuid)
+          }
+        }
+
+        // LocalStorage Calling
+        if(!resp.data){
+          const res = await userInfoById(localStorage.getItem('uuid'))
+          dispath(addUser(res?.data));
+        }
 
         if (resp?.data?.requiredAction) {
           setModalVisible(true);
