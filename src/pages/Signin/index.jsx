@@ -155,6 +155,9 @@ export default function Signin() {
     if (authO === 'auth0') {
       getUserInfo();
     }
+    if(localStorage.getItem('uuid')){
+      navigate('/dashboard')
+    }
   }, [authO]);
 
   const customModalStyle = {
