@@ -169,7 +169,7 @@ const QuestionCard = ({
 
       // if (!(params.answer.selected && params.answer.contended)) {
       if (!params.answer.selected) {
-        toast.warning('You cannot submit without answering');
+        toast.warning('You cannot submit without selecting an option');
         return;
       }
 
@@ -246,7 +246,7 @@ const QuestionCard = ({
 
         // && params.answer.contended.length === 0
         if (params.answer.selected.length === 0) {
-          toast.warning('You cannot submit without answering');
+          toast.warning('You cannot submit without selecting an option');
           return;
         }
 

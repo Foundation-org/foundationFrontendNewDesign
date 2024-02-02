@@ -335,7 +335,7 @@ const QuestionCard = (props) => {
       };
 
       if (!params.answer.selected) {
-        toast.warning('You cannot submit without answering');
+        toast.warning('You cannot submit without selecting an option');
         setLoading(false);
         return;
       }
@@ -405,7 +405,7 @@ const QuestionCard = (props) => {
           if (params.answer.selected.length !== 0) {
             changeAnswer(params);
           } else {
-            toast.warning('You cannot submit without answering');
+            toast.warning('You cannot submit without selecting an option');
             setLoading(false);
           }
         }
@@ -431,7 +431,7 @@ const QuestionCard = (props) => {
         if (params.answer.selected.length !== 0) {
           startQuest(params);
         } else {
-          toast.warning('You cannot submit without answering');
+          toast.warning('You cannot submit without selecting an option');
           setLoading(false);
         }
       }

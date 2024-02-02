@@ -323,7 +323,7 @@ const QuestionCardWithToggle = (props) => {
       };
 
       if (!params.answer.selected) {
-        toast.warning('You cannot submit without answering');
+        toast.warning('You cannot submit without selecting an option');
         setLoading(false);
         return;
       }
@@ -392,7 +392,7 @@ const QuestionCardWithToggle = (props) => {
           if (params.answer.selected.length !== 0) {
             changeAnswer(params);
           } else {
-            toast.warning('You cannot submit without answering');
+            toast.warning('You cannot submit without selecting an option');
             setLoading(false);
           }
         }
@@ -407,7 +407,7 @@ const QuestionCardWithToggle = (props) => {
 
         // && params.answer.contended.length === 0
         if (params.answer.selected.length === 0) {
-          toast.warning('You cannot submit without answering');
+          toast.warning('You cannot submit without selecting an option');
           setLoading(false);
           return;
         }
