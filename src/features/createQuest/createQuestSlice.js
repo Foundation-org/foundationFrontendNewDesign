@@ -67,7 +67,8 @@ const initialState = {
         tooltipStyle: 'tooltip-info',
       }
     },
-  ]
+  ],
+  optionslength: 3,
 };
 
 export const createQuestSlice = createSlice({
@@ -104,7 +105,7 @@ export const createQuestSlice = createSlice({
     addNewOption: (state, action) => {
 
       const newOption = {
-        id: `index-${action.payload.optionsCount}`,
+        id: `index-${state.optionslength}`,
         question: "",
         selected: false,
         optionStatus: {
@@ -115,6 +116,7 @@ export const createQuestSlice = createSlice({
         }
       }
       state.optionsValue.push(newOption);
+      state.optionslength += 1;
     },
     delOption: (state, action) => {
       const tempOptions = state.optionsValue.filter((value) => value.id !== action.payload.id);
@@ -126,8 +128,8 @@ export const createQuestSlice = createSlice({
       state.optionsValue = action.payload.newTypedValues
     },
     handleChangeOption: (state, action) => {
-     
-       state.optionsValue = action.payload.newTypedValues
+
+      state.optionsValue = action.payload.newTypedValues
     },
 
     resetCreateQuest: (state) => {
@@ -199,7 +201,7 @@ export const createQuestSlice = createSlice({
     });
     builder.addCase(checkAnswer.fulfilled, (state, action) => {
       const { id, result, index } = action.payload;
-
+      // console.log("our result is", result);
 
       if (result.validatedAnswer) {
         let answerExist = checkAnswerExist({

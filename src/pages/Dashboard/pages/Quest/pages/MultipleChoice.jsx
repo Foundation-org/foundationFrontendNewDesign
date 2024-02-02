@@ -155,7 +155,6 @@ const MultipleChoice = () => {
     // const { validatedAnswer, errorMessage } = await answerValidation({
     //   answer: value,
     // });
-    setOptionWaiting(false);
     // If any error captured
     // if (errorMessage) {
     //   const newTypedValues = [...typedValues];
@@ -200,7 +199,6 @@ const MultipleChoice = () => {
   const handleAddOption = () => {
     if (optionWaiting) return;
     const optionsCount = typedValues.length;
-
     dispatch(createQuestAction.addNewOption({ optionsCount }))
     // setOptionsCount((prevCount) => prevCount + 1);
     // setTypedValues((prevValues) => [
@@ -267,19 +265,7 @@ const MultipleChoice = () => {
 
   const removeOption = (id) => {
     dispatch(createQuestAction.delOption({ id }));
-    // const updateOptions = typedValues.filter((value) => value.id !== id);
-
-    // setTypedValues(updateOptions)
-    // const newOptionsCount = Math.max(optionsCount - 1, 2);
-
-    // setTypedValues((prevTypedValues) => prevTypedValues.filter((_, index) => index !== indexToRemove));
-
-    // setOptionsCount(newOptionsCount);
   };
-
-  // const handleOnSortEnd = (sortedItems) => {
-  //   setTypedValues(sortedItems.items);
-  // };
 
   const handleOnDragEnd = (result) => {
     // console.log(result);
@@ -338,7 +324,7 @@ const MultipleChoice = () => {
   }, [questionStatus]);
 
   useEffect(() => {
-
+    console.log("our values are", optionsValue);
     setTypedValues(optionsValue)
     const tempcheck = optionsValue.some((value) => value.optionStatus.name === "Checking")
     setOptionWaiting(tempcheck);
