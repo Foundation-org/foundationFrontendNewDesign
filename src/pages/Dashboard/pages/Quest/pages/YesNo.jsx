@@ -61,18 +61,12 @@ const YesNo = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    // To check uniqueness of the question
-    const constraintResponse = await questServices.checkUniqueQuestion(question);
 
     if (question === '') {
       setLoading(false);
       return toast.warning('Post cannot be empty');
     }
 
-    if (!constraintResponse.data.isUnique) {
-      setLoading(false);
-      return toast.warning('This post is not unique. A similar post already exists.');
-    }
 
     const { questTopic, errorMessage } = await questServices.getTopicOfValidatedQuestion({
       validatedQuestion: question,

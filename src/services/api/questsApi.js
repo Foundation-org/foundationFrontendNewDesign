@@ -105,6 +105,11 @@ export const questionValidation = async ({ question, queryType }) => {
     if (response.data.status === 'ERROR') {
       return { validatedQuestion: null, errorMessage: 'ERROR' };
     }
+    // To check uniqueness of the question
+    const constraintResponse = await checkUniqueQuestion(question);
+    if (!constraintResponse.data.isUnique) {
+      return { validatedQuestion: null, errorMessage: 'DUPLICATION' };
+    }
     return { validatedQuestion: response.data.message, errorMessage: null };
   } catch (error) {
     if (error.response.data.status === 'VIOLATION') {

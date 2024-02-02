@@ -146,13 +146,23 @@ export const createQuestSlice = createSlice({
     builder.addCase(checkQuestion.fulfilled, (state, action) => {
       const { validatedQuestion, errorMessage } = action.payload;
       if (errorMessage) {
-        state.questionReset = {
-          name: 'Rejected',
-          color: 'text-[#b00f0f]',
-          tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-          tooltipStyle: 'tooltip-error',
-          status: true,
-        };
+        if(errorMessage === "DUPLICATION"){
+          state.questionReset = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'Found Duplication',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+          };
+        } else {
+          state.questionReset = {
+            name: 'Rejected',
+            color: 'text-[#b00f0f]',
+            tooltipName: 'Please review your text for proper grammarsss while keeping our code of conduct in mind.',
+            tooltipStyle: 'tooltip-error',
+            status: true,
+          };
+        }
       } else {
         state.questions.question = validatedQuestion;
         state.questionReset = {
