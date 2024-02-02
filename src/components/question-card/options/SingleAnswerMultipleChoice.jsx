@@ -12,7 +12,6 @@ import * as questServices from '../../../services/api/questsApi';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
 
 const SingleAnswerMultipleChoice = (props) => {
-
   const id = props.id;
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -130,7 +129,7 @@ const SingleAnswerMultipleChoice = (props) => {
   const handleDeleteOption = () => {
     toast.success('Item deleted');
     setCheckOptionStatus(reset);
-   
+
     const newArr = props.answersSelection.filter((item, index) => index !== id);
 
     props.setAnswerSelection(newArr);
@@ -176,8 +175,8 @@ const SingleAnswerMultipleChoice = (props) => {
           className={`flex w-full items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px] ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
           onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
         >
-          <div className="flex min-h-[21.8px] h-[21.8px] tablet:min-h-[49px] tablet:h-[49px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
-          <div className="relative flex h-[21.8px] tablet:min-h-[49px] tablet:h-[49px] w-full justify-between border-y border-y-[#DEE6F7] tablet:border-y-[3px]">
+          <div className="flex min-h-[21.8px] h-full tablet:min-h-[49px] tablet:h-full w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
+          <div className="relative flex min-h-[21.8px] h-full tablet:min-h-[49px] tablet:h-full w-full justify-between border-y border-y-[#DEE6F7] tablet:border-y-[3px]">
             <div
               className="block h-[5px] tablet:h-[10px] absolute top-0 bg-[#4DD896]"
               style={{
@@ -196,7 +195,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
               />
             ) : (
-              <h1 className="pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
+              <h1 className="pb-[5.7px] pr-2 pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-normal text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
                 {props.answer}
               </h1>
             )}
@@ -262,7 +261,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 src="/assets/svgs/dashboard/trash2.svg"
                 alt="trash"
                 className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-                onClick={()=>handleDeleteOption(props.number)}
+                onClick={() => handleDeleteOption(props.number)}
               />
             ) : (
               <div className="flex items-center gap-1 laptop:gap-[18px]">

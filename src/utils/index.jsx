@@ -121,55 +121,6 @@ export const handleClickScroll = () => {
   }
 };
 
-export const printNoRecordsMessage = (persistedTheme, isBookmarked) => {
-  const dispatch = useDispatch();
-  return (
-    <div className="my-[15vh] flex  flex-col justify-center items-center">
-      {persistedTheme === 'dark' ? (
-        <img src="/assets/svgs/dashboard/noMatchingDark.svg" alt="noposts image" />
-      ) : (
-        <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" className="w-[160px] h-[173px]" />
-      )}
-      {isBookmarked ? (
-        <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-          <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
-            No bookmarks found!
-          </p>
-
-          {/* <button
-            className={`${
-              persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-            }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
-            onClick={() => {
-              dispatch(bookmarkfiltersActions.resetOtherFilters());
-              localStorage.setItem('filterByState', 'false');
-            }}
-          >
-            Clear Filters
-          </button> */}
-        </div>
-      ) : (
-        <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-          <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
-            No matching posts found!
-          </p>
-          <button
-            className={`${
-              persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-            }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
-            onClick={() => {
-              dispatch(filtersActions.resetFilters());
-              localStorage.setItem('filterByState', 'false');
-            }}
-          >
-            Clear Filters
-          </button>
-        </div>
-      )}
-    </div>
-  );
-};
-
 function matchFilters(filters, state) {
   for (const key in filters) {
     if (
@@ -190,6 +141,60 @@ function matchFilters(filters, state) {
 
   return true;
 }
+
+export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates) => {
+  const dispatch = useDispatch();
+  const result = matchFilters(filtersInitialState, filterStates);
+
+  return (
+    <div className="my-[15vh] flex  flex-col justify-center items-center">
+      {persistedTheme === 'dark' ? (
+        <img src="/assets/svgs/dashboard/noMatchingDark.svg" alt="noposts image" />
+      ) : (
+        <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" className="w-[160px] h-[173px]" />
+      )}
+      {isBookmarked ? (
+        <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+          <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
+            No bookmarks found!
+          </p>
+          {result === false && (
+            <button
+              className={`${
+                persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+              }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
+              onClick={() => {
+                dispatch(bookmarkfiltersActions.resetOtherFilters());
+                localStorage.setItem('filterByState', 'false');
+              }}
+            >
+              Clear Filters
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+          <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
+            No matching posts found!
+          </p>
+          {result === false && (
+            <button
+              className={`${
+                persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+              }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
+              onClick={() => {
+                dispatch(filtersActions.resetOtherFilters());
+                localStorage.setItem('filterByState', 'false');
+              }}
+            >
+              Clear Filters
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const printEndMessage = (feedData, filterStates, allData, persistedTheme, isBookmarked) => {
   const dispatch = useDispatch();
@@ -267,11 +272,30 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
           )}
         </div>
       ) : !filterStates.searchData && allData.length === 0 ? (
-        <>{printNoRecordsMessage(persistedTheme, isBookmarked)}</>
+        <>{printNoRecordsMessage(persistedTheme, isBookmarked, filterStates)}</>
       ) : (
         !filterStates.searchData && (
           <p className="text-center text-[4vw] tablet:text-[2vw]">
-            {isBookmarked ? <b>No more bookmarks!</b> : <b>You are all caught up!</b>}
+            {isBookmarked ? (
+              <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+                <b>No more bookmarks!</b>{' '}
+                {result === false && (
+                  <button
+                    className={`${
+                      persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                    }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
+                    onClick={() => {
+                      dispatch(bookmarkfiltersActions.resetOtherFilters());
+                      localStorage.setItem('filterByState', 'false');
+                    }}
+                  >
+                    Clear Filters
+                  </button>
+                )}
+              </div>
+            ) : (
+              <b>You are all caught up!</b>
+            )}
           </p>
         )
       )}
