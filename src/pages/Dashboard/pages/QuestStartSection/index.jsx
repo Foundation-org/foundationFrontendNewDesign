@@ -15,7 +15,7 @@ import { initialColumns } from '../../../../constants/preferences';
 import * as QuestServices from '../../../../services/queries/quest';
 import * as filtersActions from '../../../../features/sidebar/filtersSlice';
 import * as prefActions from '../../../../features/preferences/prefSlice';
-
+import { filterDefault } from '../../../../constants/filterDefault';
 const QuestStartSection = () => {
   const getPreferences = useSelector(prefActions.getPrefs);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -31,6 +31,8 @@ const QuestStartSection = () => {
     sliceEnd: pageLimit,
   });
   const [allData, setAllData] = useState([]);
+  // const [filterData, setFilterData] = useState([]);
+
   let params = {
     _page: pagination.page,
     _limit: pageLimit,
@@ -97,7 +99,13 @@ const QuestStartSection = () => {
 
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
 
-  const { data: feedData } = QuestServices.useGetFeedData(filterStates, filterStates.searchData===""?filterStates.searchData:debouncedSearch, pagination, columns, params);
+  const { data: feedData } = QuestServices.useGetFeedData(
+    filterStates,
+    filterStates.searchData === '' ? filterStates.searchData : debouncedSearch,
+    pagination,
+    columns,
+    params,
+  );
 
   useEffect(() => {
     setPagination((prevPagination) => ({
@@ -121,6 +129,19 @@ const QuestStartSection = () => {
       }
     }
   }, [feedData, filterStates]);
+
+  // useEffect(() => {
+  //   if (pagination.page === 1) {
+  //     setFilterData([]);
+  //   }
+  //   if (filterFeedData && filterFeedData.data) {
+  //     if (filterFeedData.length === 0) {
+  //       setFilterData(filterFeedData.data);
+  //     } else {
+  //       setFilterData((prevData) => [...prevData, ...(filterFeedData.data || [])]);
+  //     }
+  //   }
+  // }, [filterFeedData]);
 
   useEffect(() => {
     if (pagination.page === 1) {

@@ -5,12 +5,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import Options from '../components/Options';
 import {
-  answerValidation,
-  checkAnswerExist,
   checkUniqueQuestion,
   createInfoQuest,
   getTopicOfValidatedQuestion,
-  questionValidation,
 } from '../../../../../services/api/questsApi';
 import CustomSwitch from '../../../../../components/CustomSwitch';
 import { Tooltip } from '../../../../../utils/Tooltip';
@@ -26,6 +23,9 @@ const MultipleChoice = () => {
   const dispatch = useDispatch();
 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
+  const questionStatus = useSelector(createQuestAction.questionStatus);
+  const optionsValue = useSelector(createQuestAction.optionsValue);
+
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [multipleOption, setMultipleOption] = useState(createQuestSlice.multipleOption);
@@ -38,19 +38,15 @@ const MultipleChoice = () => {
   const [loading, setLoading] = useState(false);
   const [optionWaiting, setOptionWaiting] = useState(false);
 
-  const [typedValues, setTypedValues] = useState(() =>
-    Array.from({ length: optionsCount }, (_, index) => ({
-      id: `index-${index}`,
-      question: createQuestSlice.options[index],
-      selected: false,
-      optionStatus: {
-        name: 'Ok',
-        color: 'text-[#389CE3]',
-        tooltipName: 'Please write something...',
-        tooltipStyle: 'tooltip-info',
-      },
-    })),
-  );
+  const [typedValues, setTypedValues] = useState(optionsValue);
+
+  // Array.from({ length: optionsCount }, (_, index) => ({
+  //   id: `index-${index}`,
+  //   question: createQuestSlice.options[index],
+  //   selected: false,
+  //   optionStatus: optionStatus[index],
+  // })),
+
   const reset = {
     name: 'Ok',
     color: 'text-[#389CE3]',
@@ -131,42 +127,12 @@ const MultipleChoice = () => {
     setQuestion(value.trim());
     if (prevValue === question.trim()) return;
     setPrevValue(value);
-    setCheckQuestionStatus({
-      name: 'Checking',
-      color: 'text-[#0FB063]',
-      tooltipName: 'Verifying your question. Please wait...',
-      tooltipStyle: 'tooltip-success',
-    });
 
-    // Question Validation
-    const { validatedQuestion, errorMessage } = await questionValidation({
-      question: value,
-      queryType: 'multiple choice',
-    });
-
-    // If any error captured
-    if (errorMessage) {
-      return setCheckQuestionStatus({
-        name: 'Rejected',
-        color: 'text-[#b00f0f]',
-        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-        tooltipStyle: 'tooltip-error',
-      });
-    }
-
-    // Question is validated and status is Ok
-    setQuestion(validatedQuestion);
-    setPrevValue(validatedQuestion);
-    setCheckQuestionStatus({
-      name: 'Ok',
-      color: 'text-[#0FB063]',
-      tooltipName: 'Question is Verified',
-      tooltipStyle: 'tooltip-success',
-      isVerifiedQuestion: true,
-    });
+    dispatch(createQuestAction.checkQuestion(value));
   };
 
-  const answerVerification = async (index, value) => {
+  const answerVerification = async (id, index, value) => {
+    setOptionWaiting(true);
     const newTypedValue = [...typedValues];
     newTypedValue[index] = {
       ...newTypedValue[index],
@@ -181,100 +147,70 @@ const MultipleChoice = () => {
       return [...updatedArray];
     });
     //
-    const newTypedValues = [...typedValues];
-    newTypedValues[index] = {
-      ...newTypedValues[index],
-      optionStatus: {
-        name: 'Checking',
-        color: 'text-[#0FB063]',
-        tooltipName: 'Verifying your answer. Please wait...',
-        tooltipStyle: 'tooltip-success',
-      },
-    };
-    setTypedValues(newTypedValues);
-    setOptionWaiting(true);
+    dispatch(createQuestAction.checkAnswer({ id, value, index }));
     // Answer Validation
-    const { validatedAnswer, errorMessage } = await answerValidation({
-      answer: value,
-    });
-    setOptionWaiting(false);
+    // const { validatedAnswer, errorMessage } = await answerValidation({
+    //   answer: value,
+    // });
     // If any error captured
-    if (errorMessage) {
-      const newTypedValues = [...typedValues];
-      newTypedValues[index] = {
-        ...newTypedValues[index],
-        optionStatus: {
-          name: 'Rejected',
-          color: 'text-[#b00f0f]',
-          tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-          tooltipStyle: 'tooltip-error',
-        },
-      };
-      return setTypedValues(newTypedValues);
-    }
+    // if (errorMessage) {
+    //   const newTypedValues = [...typedValues];
+    //   newTypedValues[index] = {
+    //     ...newTypedValues[index],
+    //     optionStatus: {
+    //       name: 'Rejected',
+    //       color: 'text-[#b00f0f]',
+    //       tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+    //       tooltipStyle: 'tooltip-error',
+    //     },
+    //   };
+    //   return setTypedValues(newTypedValues);
+    // }
 
     // Check Answer is unique
-    let answerExist = checkAnswerExist({
-      answersArray: typedValues,
-      answer: validatedAnswer,
-      index,
-    });
-    if (answerExist) {
-      const newTypedValues = [...typedValues];
-      newTypedValues[index] = {
-        ...newTypedValues[index],
-        // question: "",
-        optionStatus: {
-          name: 'Duplicate',
-          color: 'text-[#EFD700]',
-          tooltipName: 'Found Duplication!',
-          tooltipStyle: 'tooltip-error',
-          duplication: true,
-        },
-      };
-      return setTypedValues(newTypedValues);
-    }
 
     // Answer is validated and status is Ok
-    if (validatedAnswer) {
-      setPrevValueArr((prev) => {
-        const updatedArray = [...prev];
-        updatedArray[index] = { value: validatedAnswer };
-        return [...updatedArray];
-      });
-      const newTypedValues = [...typedValues];
-      newTypedValues[index] = {
-        ...newTypedValues[index],
-        question: validatedAnswer,
-        optionStatus: {
-          name: 'Ok',
-          color: 'text-[#0FB063]',
-          tooltipName: 'Answer is Verified',
-          tooltipStyle: 'tooltip-success',
-          isVerifiedAnswer: true,
-        },
-      };
-      setTypedValues(newTypedValues);
-    }
+    // if (validatedAnswer) {
+    //   setPrevValueArr((prev) => {
+    //     const updatedArray = [...prev];
+    //     updatedArray[index] = { value: validatedAnswer };
+    //     return [...updatedArray];
+    //   });
+    //   const newTypedValues = [...typedValues];
+    //   newTypedValues[index] = {
+    //     ...newTypedValues[index],
+    //     question: validatedAnswer,
+    //     optionStatus: {
+    //       name: 'Ok',
+    //       color: 'text-[#0FB063]',
+    //       tooltipName: 'Answer is Verified',
+    //       tooltipStyle: 'tooltip-success',
+    //       isVerifiedAnswer: true,
+    //     },
+    //   };
+    //   setTypedValues(newTypedValues);
+    // }
   };
 
   const handleAddOption = () => {
     if (optionWaiting) return;
-    setOptionsCount((prevCount) => prevCount + 1);
-    setTypedValues((prevValues) => [
-      ...prevValues,
-      {
-        id: `index-${optionsCount}`,
-        question: '',
-        selected: false,
-        optionStatus: {
-          name: 'Ok',
-          color: 'text-[#389CE3]',
-          tooltipName: 'Please write something...',
-          tooltipStyle: 'tooltip-info',
-        },
-      },
-    ]);
+    const optionsCount = typedValues.length;
+    dispatch(createQuestAction.addNewOption({ optionsCount }));
+    // setOptionsCount((prevCount) => prevCount + 1);
+    // setTypedValues((prevValues) => [
+    //   ...prevValues,
+    //   {
+    //     id: `index-${optionsCount}`,
+    //     question: '',
+    //     selected: false,
+    //     optionStatus: {
+    //       name: 'Ok',
+    //       color: 'text-[#389CE3]',
+    //       tooltipName: 'Please write something...',
+    //       tooltipStyle: 'tooltip-info',
+    //     },
+    //   },
+    // ]);
   };
 
   const handleChange = (index, value) => {
@@ -293,7 +229,8 @@ const MultipleChoice = () => {
             }
           : { name: 'Ok', color: 'text-[#b0a00f]' },
     };
-    setTypedValues(newTypedValues);
+    dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
+    // setTypedValues(newTypedValues);
   };
 
   const handleOptionSelect = (index) => {
@@ -322,20 +259,12 @@ const MultipleChoice = () => {
     }
   };
 
-  const removeOption = (indexToRemove) => {
-    const newOptionsCount = Math.max(optionsCount - 1, 2);
-
-    setTypedValues((prevTypedValues) => prevTypedValues.filter((_, index) => index !== indexToRemove));
-
-    setOptionsCount(newOptionsCount);
-  };
-
-  const handleOnSortEnd = (sortedItems) => {
-    setTypedValues(sortedItems.items);
+  const removeOption = (id) => {
+    dispatch(createQuestAction.delOption({ id }));
   };
 
   const handleOnDragEnd = (result) => {
-    console.log(result);
+    // console.log(result);
     if (!result.destination) {
       return;
     }
@@ -344,12 +273,13 @@ const MultipleChoice = () => {
     const [removed] = newTypedValues.splice(result.source.index, 1);
     newTypedValues.splice(result.destination.index, 0, removed);
 
-    setTypedValues(newTypedValues);
+    dispatch(createQuestAction.drapAddDrop({ newTypedValues }));
+    // setTypedValues(newTypedValues);
   };
 
   const checkError = () => {
+    // console.log("our value are", typedValues);
     const hasTooltipError = typedValues.some((value) => value.optionStatus.tooltipStyle === 'tooltip-error');
-
     if (checkQuestionStatus.tooltipStyle === 'tooltip-error' || hasTooltipError) {
       return true;
     } else {
@@ -382,6 +312,20 @@ const MultipleChoice = () => {
     }
   };
 
+  useEffect(() => {
+    setLoading(questionStatus.status);
+    if (createQuestSlice.question) {
+      setQuestion(createQuestSlice.question);
+    }
+  }, [questionStatus]);
+
+  useEffect(() => {
+    console.log('our values are', optionsValue);
+    setTypedValues(optionsValue);
+    const tempcheck = optionsValue.some((value) => value.optionStatus.name === 'Checking');
+    setOptionWaiting(tempcheck);
+  }, [optionsValue]);
+
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
@@ -413,12 +357,12 @@ const MultipleChoice = () => {
           />
           <button
             id="new"
-            className={`relative leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${checkQuestionStatus.color}`}
+            className={`relative leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${questionStatus.color}`}
           >
             <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[100px] laptop:w-[134px]">
-              {checkQuestionStatus.name}
+              {questionStatus.name}
             </div>
-            <Tooltip optionStatus={checkQuestionStatus} />
+            <Tooltip optionStatus={questionStatus} />
           </button>
         </div>
 
@@ -452,11 +396,11 @@ const MultipleChoice = () => {
                           handleOptionSelect={() => handleOptionSelect(index)}
                           typedValue={item.question}
                           isSelected={item.selected}
-                          optionsCount={optionsCount}
-                          removeOption={() => removeOption(index)}
+                          optionsCount={typedValues.length}
+                          removeOption={() => removeOption(item.id)}
                           number={index + 1}
                           optionStatus={typedValues[index].optionStatus}
-                          answerVerification={(value) => answerVerification(index, value)}
+                          answerVerification={(value) => answerVerification(item.id, index, value)}
                           handleTab={handleTab}
                         />
                       </div>

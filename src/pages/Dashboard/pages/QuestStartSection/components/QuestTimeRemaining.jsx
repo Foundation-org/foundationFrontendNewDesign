@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { calculateRemainingTime, remainingTime } from '../../../../../utils';
+import { calculateRemainingTime, remainingTime } from '../../../../../utils';
 
 const QuestTimeRemaining = ({ show, questStartData }) => {
   const [resultString, setResultString] = useState('');
@@ -28,6 +29,7 @@ const QuestTimeRemaining = ({ show, questStartData }) => {
   useEffect(() => {
     handleClick();
     getTimeRemaining();
+    getTimeRemaining();
   }, [questStartData?.updatedAt, questStartData.usersChangeTheirAns]);
 
   return (
@@ -43,7 +45,8 @@ const QuestTimeRemaining = ({ show, questStartData }) => {
               className="cursor-pointer text-[7.5px] font-normal text-[#85898C] tablet:text-[16.58px] laptop:text-[1rem]"
               // onClick={handleClick}
             >
-              You can change your selection {questStartData.usersChangeTheirAns},{remainTime==="you are good to go" ?` ${remainTime}`: ` ${remainTime} remaining` } 
+              You can change your selection {questStartData.usersChangeTheirAns},
+              {remainTime === 'you are good to go' ? ` ${remainTime}` : ` ${remainTime} remaining`}
             </h4>
           )}
         </div>

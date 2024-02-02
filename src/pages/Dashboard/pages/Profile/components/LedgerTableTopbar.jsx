@@ -34,7 +34,7 @@ const LedgerTableTopbar = ({ sort, setsort, filterText, setFilterText, selectedO
         {/* treasury */}
         <div className="flex gap-[5.51px] tablet:gap-[13px]">
           <img
-            src="/assets/svgs/dashboard/treasure.svg"
+            src="/assets/svgs/dashboard/treasure.png"
             alt="person icon"
             className="h-[18.5px] w-[18.5px] tablet:h-[36px] tablet:w-[36px] laptop:h-[44.2px] laptop:w-[44.2px]"
           />

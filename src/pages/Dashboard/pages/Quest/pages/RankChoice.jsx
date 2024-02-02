@@ -2,12 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import {
-  answerValidation,
-  checkAnswerExist,
   checkUniqueQuestion,
   createInfoQuest,
   getTopicOfValidatedQuestion,
-  questionValidation,
 } from '../../../../../services/api/questsApi';
 import { toast } from 'sonner';
 import { useSelector, useDispatch } from 'react-redux';
@@ -26,6 +23,8 @@ const RankChoice = () => {
   const dispatch = useDispatch();
 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
+  const questionStatus = useSelector(createQuestAction.questionStatus);
+  const optionsValue = useSelector(createQuestAction.optionsValue);
 
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
@@ -37,19 +36,7 @@ const RankChoice = () => {
   const [loading, setLoading] = useState(false);
   const [optionWaiting, setOptionWaiting] = useState(false);
 
-  const [typedValues, setTypedValues] = useState(() =>
-    Array.from({ length: optionsCount }, (_, index) => ({
-      id: `index-${index}`,
-      question: createQuestSlice.options[index],
-      selected: false,
-      optionStatus: {
-        name: 'Ok',
-        color: 'text-[#389CE3]',
-        tooltipName: 'Please write something...',
-        tooltipStyle: 'tooltip-info',
-      },
-    })),
-  );
+  const [typedValues, setTypedValues] = useState(optionsValue);
   const reset = {
     name: 'Ok',
     color: 'text-[#389CE3]',
@@ -57,12 +44,12 @@ const RankChoice = () => {
     tooltipStyle: 'tooltip-info',
   };
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
-  const [checkOptionStatus, setCheckOptionStatus] = useState({
-    name: 'Ok',
-    color: 'text-[#389CE3]',
-    tooltipName: 'Please write something...',
-    tooltipStyle: 'tooltip-info',
-  });
+  // const [checkOptionStatus, setCheckOptionStatus] = useState({
+  //   name: 'Ok',
+  //   color: 'text-[#389CE3]',
+  //   tooltipName: 'Please write something...',
+  //   tooltipStyle: 'tooltip-info',
+  // });
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -133,39 +120,41 @@ const RankChoice = () => {
     setQuestion(value.trim());
     if (prevValue === question.trim()) return;
     setPrevValue(value);
-    setCheckQuestionStatus({
-      name: 'Checking',
-      color: 'text-[#0FB063]',
-      tooltipName: 'Verifying your question. Please wait...',
-      tooltipStyle: 'tooltip-success',
-    });
-    // Question Validation
-    const { validatedQuestion, errorMessage } = await questionValidation({
-      question: value,
-      queryType: 'rank choice',
-    });
-    // If any error captured
-    if (errorMessage) {
-      return setCheckQuestionStatus({
-        name: 'Rejected',
-        color: 'text-[#b00f0f]',
-        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-        tooltipStyle: 'tooltip-error',
-      });
-    }
-    // Question is validated and status is Ok
-    setQuestion(validatedQuestion);
-    setPrevValue(validatedQuestion);
-    setCheckQuestionStatus({
-      name: 'Ok',
-      color: 'text-[#0FB063]',
-      tooltipName: 'Question is Verified',
-      tooltipStyle: 'tooltip-success',
-      isVerifiedQuestion: true,
-    });
+
+    dispatch(createQuestAction.checkQuestion(value));
+    // setCheckQuestionStatus({
+    //   name: 'Checking',
+    //   color: 'text-[#0FB063]',
+    //   tooltipName: 'Verifying your question. Please wait...',
+    //   tooltipStyle: 'tooltip-success',
+    // });
+    // // Question Validation
+    // const { validatedQuestion, errorMessage } = await questionValidation({
+    //   question: value,
+    //   queryType: 'rank choice',
+    // });
+    // // If any error captured
+    // if (errorMessage) {
+    //   return setCheckQuestionStatus({
+    //     name: 'Rejected',
+    //     color: 'text-[#b00f0f]',
+    //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+    //     tooltipStyle: 'tooltip-error',
+    //   });
+    // }
+    // // Question is validated and status is Ok
+    // setQuestion(validatedQuestion);
+    // setPrevValue(validatedQuestion);
+    // setCheckQuestionStatus({
+    //   name: 'Ok',
+    //   color: 'text-[#0FB063]',
+    //   tooltipName: 'Question is Verified',
+    //   tooltipStyle: 'tooltip-success',
+    //   isVerifiedQuestion: true,
+    // });
   };
 
-  const answerVerification = async (index, value) => {
+  const answerVerification = async (id, index, value) => {
     const newTypedValue = [...typedValues];
     newTypedValue[index] = {
       ...newTypedValue[index],
@@ -178,98 +167,14 @@ const RankChoice = () => {
       updatedArray[index] = { value: value.trim() };
       return [...updatedArray];
     });
-    const newTypedValues = [...typedValues];
-    newTypedValues[index] = {
-      ...newTypedValues[index],
-      optionStatus: {
-        name: 'Checking',
-        color: 'text-[#0FB063]',
-        tooltipName: 'Verifying your answer. Please wait...',
-        tooltipStyle: 'tooltip-success',
-      },
-    };
-    setTypedValues(newTypedValues);
-    setOptionWaiting(true);
-    // Answer Validation
-    const { validatedAnswer, errorMessage } = await answerValidation({
-      answer: value,
-    });
-    setOptionWaiting(false);
-    // If any error captured
-    if (errorMessage) {
-      const newTypedValues = [...typedValues];
-      newTypedValues[index] = {
-        ...newTypedValues[index],
-        optionStatus: {
-          name: 'Rejected',
-          color: 'text-[#b00f0f]',
-          tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-          tooltipStyle: 'tooltip-error',
-        },
-      };
-      return setTypedValues(newTypedValues);
-    }
-    // Check Answer is unique
-    let answerExist = checkAnswerExist({
-      answersArray: typedValues,
-      answer: validatedAnswer,
-      index,
-    });
-    if (answerExist) {
-      const newTypedValues = [...typedValues];
-      newTypedValues[index] = {
-        ...newTypedValues[index],
-        // question: "",
-        optionStatus: {
-          name: 'Duplicate',
-          color: 'text-[#EFD700]',
-          tooltipName: 'Found Duplication!',
-          tooltipStyle: 'tooltip-error',
-          duplication: true,
-        },
-      };
-      return setTypedValues(newTypedValues);
-    }
-    // Answer is validated and status is Ok
-    if (validatedAnswer) {
-      setPrevValueArr((prev) => {
-        const updatedArray = [...prev];
-        updatedArray[index] = { value: validatedAnswer };
-        return [...updatedArray];
-      });
-      const newTypedValues = [...typedValues];
-      newTypedValues[index] = {
-        ...newTypedValues[index],
-        question: validatedAnswer,
-        optionStatus: {
-          name: 'Ok',
-          color: 'text-[#0FB063]',
-          tooltipName: 'Answer is Verified',
-          tooltipStyle: 'tooltip-success',
-          isVerifiedAnswer: true,
-        },
-      };
-      setTypedValues(newTypedValues);
-    }
+
+    dispatch(createQuestAction.checkAnswer({ id, value, index }));
   };
 
   const handleAddOption = () => {
     if (optionWaiting) return;
-    setOptionsCount((prevCount) => prevCount + 1);
-    setTypedValues((prevValues) => [
-      ...prevValues,
-      {
-        id: `index-${optionsCount}`,
-        question: '',
-        selected: false,
-        optionStatus: {
-          name: 'Ok',
-          color: 'text-[#389CE3]',
-          tooltipName: 'Please write something...',
-          tooltipStyle: 'tooltip-info',
-        },
-      },
-    ]);
+    const optionsCount = typedValues.length;
+    dispatch(createQuestAction.addNewOption({ optionsCount }));
   };
 
   const handleChange = (index, value) => {
@@ -288,7 +193,7 @@ const RankChoice = () => {
             }
           : { name: 'Ok', color: 'text-[#b0a00f]' },
     };
-    setTypedValues(newTypedValues);
+    dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
   };
 
   const handleOptionSelect = (index) => {
@@ -317,21 +222,13 @@ const RankChoice = () => {
     }
   };
 
-  const removeOption = (indexToRemove) => {
-    if (optionsCount > 2) {
-      const newOptionsCount = Math.max(optionsCount - 1, 2);
-
-      setTypedValues((prevTypedValues) => prevTypedValues.filter((_, index) => index !== indexToRemove));
-
-      setOptionsCount(newOptionsCount);
-    } else {
-      console.warn('Cannot remove the last two options.');
-    }
+  const removeOption = (id) => {
+    dispatch(createQuestAction.delOption({ id }));
   };
 
-  const handleOnSortEnd = (sortedItems) => {
-    setTypedValues(sortedItems.items);
-  };
+  // const handleOnSortEnd = (sortedItems) => {
+  //   setTypedValues(sortedItems.items);
+  // };
 
   const handleOnDragEnd = (result) => {
     console.log(result);
@@ -343,7 +240,7 @@ const RankChoice = () => {
     const [removed] = newTypedValues.splice(result.source.index, 1);
     newTypedValues.splice(result.destination.index, 0, removed);
 
-    setTypedValues(newTypedValues);
+    dispatch(createQuestAction.drapAddDrop({ newTypedValues }));
   };
 
   const checkError = () => {
@@ -380,6 +277,19 @@ const RankChoice = () => {
     }
   };
 
+  useEffect(() => {
+    // console.log('our question status is yes', createQuestSlice.question);
+    setLoading(questionStatus.status);
+    if (createQuestSlice.question) {
+      setQuestion(createQuestSlice.question);
+    }
+  }, [questionStatus]);
+
+  useEffect(() => {
+    setTypedValues(optionsValue);
+    const tempcheck = optionsValue.some((value) => value.optionStatus.name === 'Checking');
+    setOptionWaiting(tempcheck);
+  }, [optionsValue]);
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
@@ -413,12 +323,12 @@ const RankChoice = () => {
           <button
             id="new"
             data-tooltip-offset={-25}
-            className={`relative leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${checkQuestionStatus.color}`}
+            className={`relative leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${questionStatus.color}`}
           >
             <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[100px] laptop:w-[134px]">
-              {checkQuestionStatus.name}
+              {questionStatus.name}
             </div>
-            <Tooltip optionStatus={checkQuestionStatus} />
+            <Tooltip optionStatus={questionStatus} />
           </button>
         </div>
 
@@ -451,11 +361,11 @@ const RankChoice = () => {
                           handleOptionSelect={() => handleOptionSelect(index)}
                           typedValue={item.question}
                           isSelected={item.selected}
-                          optionsCount={optionsCount}
-                          removeOption={() => removeOption(index)}
+                          optionsCount={typedValues.length}
+                          removeOption={() => removeOption(item.id)}
                           number={index + 1}
                           optionStatus={typedValues[index].optionStatus}
-                          answerVerification={(value) => answerVerification(index, value)}
+                          answerVerification={(value) => answerVerification(item.id, index, value)}
                           handleTab={handleTab}
                         />
                       </li>

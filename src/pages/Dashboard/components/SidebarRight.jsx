@@ -71,7 +71,7 @@ const SidebarRight = () => {
     {
       id: 7,
       icon: '/assets/svgs/dashboard/icon7.svg',
-      iconLight: '/assets/svgs/dashboard/workng.svg',
+      iconLight: '/assets/svgs/dashboard/working.png',
       alt: 'icon1',
       title: 'Agreement-Received',
       value: (response && response?.selectionsOnAddedAns) || 0,
