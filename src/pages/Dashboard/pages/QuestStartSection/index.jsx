@@ -97,7 +97,7 @@ const QuestStartSection = () => {
 
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
 
-  const { data: feedData } = QuestServices.useGetFeedData(filterStates, debouncedSearch, pagination, columns, params);
+  const { data: feedData } = QuestServices.useGetFeedData(filterStates, filterStates.searchData===""?filterStates.searchData:debouncedSearch, pagination, columns, params);
 
   useEffect(() => {
     setPagination((prevPagination) => ({

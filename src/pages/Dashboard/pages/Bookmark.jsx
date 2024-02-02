@@ -99,7 +99,7 @@ const Bookmark = () => {
 
   const { data: feedData } = QuestServices.useGetBookmarkFeedData(
     filterStates,
-    debouncedSearch,
+    filterStates.searchData===""?filterStates.searchData:debouncedSearch,
     pagination,
     columns,
     params,
