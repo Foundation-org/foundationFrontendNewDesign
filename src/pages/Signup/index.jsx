@@ -83,7 +83,8 @@ export default function Signup() {
         if (resp.status === 200) {
           // handleReferralOpen();
 
-          toast.success('User registered successfully');
+          toast.success('A verification email has been sent to your email address. Please check your inbox.');
+
           setEmail('');
           setPassword('');
           // navigate('/verifycode');
