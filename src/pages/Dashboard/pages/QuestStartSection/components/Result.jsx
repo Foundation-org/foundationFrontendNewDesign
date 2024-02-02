@@ -284,7 +284,6 @@ const Result = (props) => {
               isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]' : ''
             }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
-           
             {props.answers?.map((item, index) => (
               <div key={index + 1}>
                 <SingleAnswerMultipleChoice

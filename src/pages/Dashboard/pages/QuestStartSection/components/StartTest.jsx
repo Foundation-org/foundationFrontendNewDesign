@@ -235,7 +235,9 @@ const StartTest = ({
                   <div
                     ref={listContainerRef}
                     className={`${
-                      isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto' : null
+                      isFullScreen === undefined
+                        ? 'quest-scrollbar max-h-[187px] md:max-h-[366px] min-h-fit overflow-auto'
+                        : null
                     }`}
                   >
                     <ul
