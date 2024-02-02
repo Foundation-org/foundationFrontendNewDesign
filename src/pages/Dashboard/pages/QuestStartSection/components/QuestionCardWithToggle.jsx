@@ -537,7 +537,6 @@ const QuestionCardWithToggle = (props) => {
             setAnswerSelection={setAnswerSelection}
             rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
-            // setIsSubmit={setIsSubmit}
             loadingDetail={loadingDetail}
             setAddOptionField={setAddOptionField}
             questSelection={questSelection}

@@ -1,20 +1,57 @@
-import { useNavigate } from 'react-router-dom';
-import { Button } from './ui/Button';
 import { toast } from 'sonner';
+import { Button } from './ui/Button';
+import { useNavigate } from 'react-router-dom';
+import { referral } from '../services/api/authentication';
+import { useMutation } from '@tanstack/react-query';
+import { userInfo } from '../services/api/userAuth';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../features/auth/authSlice';
 
-const ReferralCode = ({ handleClose, referralCode, setReferralCode }) => {
+const ReferralCode = ({ uuid, handleClose, referralCode, setReferralCode }) => {
+  const dispatch=useDispatch();
   const navigate = useNavigate();
+
   const handleInputChange = (e) => {
     setReferralCode(e.target.value);
   };
 
-  const handleSubmit = () => {
-    if (referralCode === 'Jan2024') {
-      navigate('/dashboard');
-    } else {
-      toast.warning('Referral code is wrong');
-    }
-  };
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+    onSuccess: (res) => {
+      console.log('User info fetched:', res.data);
+      dispatch(addUser(res.data));
+    },
+    onError: (error) => {
+      console.error('Error fetching user info:', error);
+      localStorage.setItem('loggedIn', 'false');
+    },
+  });
+
+
+  const { mutateAsync: handleReferral } = useMutation({
+    mutationFn: referral,
+    onSuccess: (resp) => {
+      console.log(resp);
+      getUserInfo();
+      setTimeout(() => {
+        console.log("navigating");
+        
+        navigate("/dashboard")
+      }, 2000);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  // const handleReferral = () => {
+  //   if (referralCode === 'Jan2024') {
+  //     navigate('/login');
+  //     // handleReferral(referralCode);
+  //   } else {
+  //     toast.warning('Referral code is wrong');
+  //   }
+  // };
 
   return (
     <div className="relative w-[90vw] laptop:w-[52.6rem]">
@@ -68,7 +105,8 @@ const ReferralCode = ({ handleClose, referralCode, setReferralCode }) => {
           <Button
             variant="submit"
             onClick={() => {
-              handleSubmit();
+              const data={code:referralCode, uuid:uuid}
+              handleReferral(data);
             }}
           >
             Continue

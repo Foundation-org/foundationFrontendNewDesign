@@ -25,6 +25,8 @@ export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
   let auth = { token: persistedUser !== null ? true : false };
 
+  console.log("usr",persistedUser);
+
   return (
     <>
       <Routes>

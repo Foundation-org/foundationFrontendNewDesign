@@ -5,6 +5,7 @@ import { verifyCode } from '../../services/api/authentication';
 import { useMutation } from '@tanstack/react-query';
 import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
+import { url } from '../../services/api/Axios';
 
 const staticCode = 'jan2024';
 
@@ -14,6 +15,7 @@ const VerifyCode = () => {
 
   const [isReferral, setIsReferral] = useState(false);
   const [referralCode, setReferralCode] = useState(null);
+  const [uuid, setUuid] = useState();
 
   const handleReferralOpen = () => setIsReferral(true);
   const handleReferralClose = () => setIsReferral(false);
@@ -49,32 +51,61 @@ const VerifyCode = () => {
     }
   };
 
-  const { mutateAsync: handleVerify } = useMutation({
-    mutationFn: verifyCode,
-    onSuccess: (resp) => {
-      console.log(resp);
-      toast.success('E-Mail Account Verified');
+  // const { mutateAsync: handleVerify } = useMutation({
+  //   mutationFn: verifyCode,
+  //   onSuccess: (resp) => {
+  //     console.log({ resp });
+  //     toast.success('E-Mail Account Verified');
 
-      if (resp.status === 200) {
+  //     if (resp.status === 200) {
+  //       handleReferralOpen();
+  //     }
+
+  //     //   setTimeout(() => {
+  //     //     navigate('/AccountVerification');
+  //     //   }, 2000);
+  //   },
+  //   onError: (err) => {
+  //     if (err.response.data.message === 'Invalid Verification Code') {
+  //       toast.error('Wrong Verification code, open page from Gmail');
+  //     } else if (err.response.data.message === 'Missing Token') {
+  //       toast.error('Missing Token, open page from Gmail');
+  //     } else if (err.response.data.message.message === 'invalid token') {
+  //       toast.error('invalid token, open page from Gmail, or token is expired');
+  //     } else {
+  //       toast.error('Server Error');
+  //     }
+  //   },
+  // });
+
+  const handleVerify = async (urlQuery) => {
+    const apiUrl = `${url}/user/verify?${urlQuery}`;
+    const verificationCode = urlQuery.substr(urlQuery.length - 6);
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${urlQuery}`,
+        },
+        body: JSON.stringify({ verificationCode }),
+      });
+
+      console.log(response);
+
+      if (response.status === 200) {
         handleReferralOpen();
       }
 
-      //   setTimeout(() => {
-      //     navigate('/AccountVerification');
-      //   }, 2000);
-    },
-    onError: (err) => {
-      if (err.response.data.message === 'Invalid Verification Code') {
-        toast.error('Wrong Verification code, open page from Gmail');
-      } else if (err.response.data.message === 'Missing Token') {
-        toast.error('Missing Token, open page from Gmail');
-      } else if (err.response.data.message.message === 'invalid token') {
-        toast.error('invalid token, open page from Gmail, or token is expired');
-      } else {
-        toast.error('Server Error');
-      }
-    },
-  });
+      const data = await response.json();
+      setUuid(data.uuid);
+      console.log('first', data);
+    } catch (error) {
+      console.log('Error during API request:', error.message);
+      throw error;
+    }
+  };
 
   const customModalStyle = {
     backgroundColor: '#FCFCFD',
@@ -172,7 +203,7 @@ const VerifyCode = () => {
         customStyle={customModalStyle}
         customClasses="rounded-[10px] tablet:rounded-[26px]"
       >
-        <ReferralCode handleClose={handleReferralClose} referralCode={referralCode} setReferralCode={setReferralCode} />
+        <ReferralCode handleClose={handleReferralClose} referralCode={referralCode} setReferralCode={setReferralCode} uuid={uuid}/>
       </BasicModal>
     </div>
   );
