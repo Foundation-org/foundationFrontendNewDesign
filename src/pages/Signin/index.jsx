@@ -72,7 +72,7 @@ export default function Signin() {
       // });
 
       // if (recaptchaResp.success) {
-      if (capthaToken === '') {
+      if (capthaToken !== '') {
         const resp = await userSignin({ email, password });
 
         if (resp.status === 200) {

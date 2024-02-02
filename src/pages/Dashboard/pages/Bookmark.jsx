@@ -97,7 +97,13 @@ const Bookmark = () => {
 
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
 
-  const { data: feedData } = QuestServices.useGetFeedData(filterStates, debouncedSearch, pagination, columns, params);
+  const { data: feedData } = QuestServices.useGetBookmarkFeedData(
+    filterStates,
+    debouncedSearch,
+    pagination,
+    columns,
+    params,
+  );
 
   useEffect(() => {
     setPagination((prevPagination) => ({

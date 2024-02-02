@@ -19,6 +19,23 @@ export function useGetFeedData(filterStates, debouncedSearch, pagination, column
   });
 }
 
+export function useGetBookmarkFeedData(filterStates, debouncedSearch, pagination, columns, params) {
+  params = applyFilters(params, filterStates, columns);
+  return useQuery({
+    queryFn: async () => {
+      if (debouncedSearch === '') {
+        const result = await fetchDataByStatus(params, filterStates);
+        return result.data;
+      } else {
+        const result = await HomepageAPIs.searchBookmarks(debouncedSearch);
+        return result;
+      }
+    },
+    queryKey: ['BookmarkFeedData', filterStates, debouncedSearch, pagination, columns],
+    staleTime: 0,
+  });
+}
+
 export function useGetSingleQuest(uuid, id) {
   return useQuery({
     queryFn: async () => {
