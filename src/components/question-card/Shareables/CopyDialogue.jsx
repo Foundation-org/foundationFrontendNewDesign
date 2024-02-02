@@ -2,10 +2,10 @@ import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import Copy from '../../../assets/optionbar/Copy';
 
-const CopyDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
+const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, badgeCount }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
-  let url = `${protocol}//${host}/guestquest/${id}`;
+  let url = `${protocol}//${host}/quest/post/${uniqueShareLink}`;
 
   const copyToClipboard = async () => {
     const textToCopy = url;

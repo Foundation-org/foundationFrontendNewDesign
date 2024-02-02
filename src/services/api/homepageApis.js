@@ -29,6 +29,11 @@ export const getQuestById = async (id, qId) => {
   return await api.get(`/infoquestions/getQuest/${id}/${qId}`);
 };
 
+// Get Quest By uniqueShareLink
+export const getQuestByUniqueShareLink = async (uniqueShareLink) => {
+  return await api.get(`/infoquestions/getQuest/${uniqueShareLink}`);
+};
+
 // For Unanswered
 export const getAllUnanswered = async (params) => {
   return await api.post(`/infoquestions/getAllQuestsWithOpenInfoQuestStatus`, params);

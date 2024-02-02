@@ -13,7 +13,7 @@ import TwitterDialogue from '../question-card/Shareables/TwitterDialogue';
 import FbDialogue from '../question-card/Shareables/FbDialogue';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, question, questStartData }) => {
+const QuestBottombar = ({ time, id, createdBy, img, alt, uniqueShareLink, badgeCount, title, question, questStartData }) => {
   const navigate = useNavigate();
 
   const { isFullScreen } = useParams();
@@ -92,6 +92,7 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, badgeCount, title, ques
           <CopyDialogue
             handleClose={handleCopyClose}
             id={id}
+            uniqueShareLink={uniqueShareLink}
             createdBy={createdBy}
             img={img}
             alt={alt}

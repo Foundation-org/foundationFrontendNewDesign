@@ -84,6 +84,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, childr
         {children}
       </div>
       <QuestBottombar
+        uniqueShareLink={questStartData.uniqueShareLink}
         time={questStartData.createdAt}
         id={questStartData._id}
         createdBy={questStartData.uuid}
