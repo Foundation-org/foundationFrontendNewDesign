@@ -12,3 +12,9 @@ export const referral = async ({code, uuid}) => {
     uuid,
   });
 };
+
+export const sendVerificationEmail = async ({userEmail}) => {
+  return await api.post('user/sendVerifyEmail', {
+    userEmail,
+  });
+};

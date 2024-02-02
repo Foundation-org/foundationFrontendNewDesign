@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import { addUser } from '../../features/auth/authSlice';
 import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
+import { sendVerificationEmail } from '../../services/api/authentication';
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -99,6 +100,16 @@ export default function Signin() {
     }
   };
 
+  const { mutateAsync: sendEmail } = useMutation({
+    mutationFn: sendVerificationEmail,
+    onSuccess: (res) => {
+      console.log("Email sent");
+    },
+    onError: (error) => {
+      console.error('Email not sent', error);
+    },
+  });
+
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
     onSuccess: (res) => {
@@ -109,7 +120,7 @@ export default function Signin() {
       }
       if (res.data?.verification === false && res.data?.referral === false) {
         toast.warning('Please check you email and verify your account first');
-        // email send krwani ha
+        sendEmail({userEmail:res.data?.email});
       }
       if (res.data?.verification === true && res.data?.referral === true) {
         dispatch(addUser(res.data));
