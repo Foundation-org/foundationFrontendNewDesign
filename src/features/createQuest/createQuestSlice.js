@@ -1,6 +1,6 @@
 import * as questServices from '../../services/api/questsApi';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
+import { checkAnswerExist } from "../../services/api/questsApi"
 export const checkQuestion = createAsyncThunk('createQuest/checkQuestion', async (value) => {
   const result = await questServices.questionValidation({
     question: value,
@@ -9,11 +9,11 @@ export const checkQuestion = createAsyncThunk('createQuest/checkQuestion', async
   return result;
 });
 
-export const checkAnswer = createAsyncThunk('createQuest/checkAnswer', async (value) => {
+export const checkAnswer = createAsyncThunk('createQuest/checkAnswer', async ({ id, value, index }) => {
   const result = await questServices.answerValidation({
     answer: value,
   });
-  return result;
+  return { id, result, index };
 });
 
 const initialState = {
@@ -33,6 +33,41 @@ const initialState = {
     tooltipStyle: 'tooltip-info',
     status: false,
   },
+  optionsValue: [
+    {
+      id: "index-0",
+      question: "",
+      selected: false,
+      optionStatus: {
+        name: 'Ok',
+        color: 'text-[#389CE3]',
+        tooltipName: 'Please write something...',
+        tooltipStyle: 'tooltip-info',
+      }
+    },
+    {
+      id: "index-1",
+      question: "",
+      selected: false,
+      optionStatus: {
+        name: 'Ok',
+        color: 'text-[#389CE3]',
+        tooltipName: 'Please write something...',
+        tooltipStyle: 'tooltip-info',
+      }
+    },
+    {
+      selected: false,
+      id: "index-2",
+      question: "",
+      optionStatus: {
+        name: 'Ok',
+        color: 'text-[#389CE3]',
+        tooltipName: 'Please write something...',
+        tooltipStyle: 'tooltip-info',
+      }
+    },
+  ]
 };
 
 export const createQuestSlice = createSlice({
@@ -66,35 +101,55 @@ export const createQuestSlice = createSlice({
         questions: { ...state.questions, question, changedOption, changeState, addOption, optionsCount, options },
       };
     },
-    // checkQuestion: (state, action) => {
-    //   const { type } = action.payload
-    //   console.log("question value is", type);
-    //   if (type === "Checking") {
-    //     state.questionReset = {
-    //       name: 'Checking',
-    //       color: 'text-[#0FB063]',
-    //       tooltipName: 'Verifying your question. Please wait...',
-    //       tooltipStyle: 'tooltip-success',
-    //     }
-    //   }
-    // },
+    addNewOption: (state, action) => {
+
+      const newOption = {
+        id: `index-${action.payload.optionsCount}`,
+        question: "",
+        selected: false,
+        optionStatus: {
+          name: 'Ok',
+          color: 'text-[#389CE3]',
+          tooltipName: 'Please write something...',
+          tooltipStyle: 'tooltip-info',
+        }
+      }
+      state.optionsValue.push(newOption);
+    },
+    delOption: (state, action) => {
+      const tempOptions = state.optionsValue.filter((value) => value.id !== action.payload.id);
+      state.optionsValue = tempOptions;
+
+    },
+    drapAddDrop: (state, action) => {
+
+      state.optionsValue = action.payload.newTypedValues
+    },
+    handleChangeOption: (state, action) => {
+     
+       state.optionsValue = action.payload.newTypedValues
+    },
+
     resetCreateQuest: (state) => {
       Object.assign(state, initialState);
     },
   },
   extraReducers: (builder) => {
+
+    // check question status start
     builder.addCase(checkQuestion.pending, (state, action) => {
       state.questionReset = {
         name: 'Checking',
         color: 'text-[#0FB063]',
         tooltipName: 'Verifying your question. Please wait...',
         tooltipStyle: 'tooltip-success',
-        status: true,
+        status: false,
       };
     });
     builder.addCase(checkQuestion.fulfilled, (state, action) => {
       const { validatedQuestion, errorMessage } = action.payload;
       if (errorMessage) {
+
         state.questionReset = {
           name: 'Rejected',
           color: 'text-[#b00f0f]',
@@ -122,22 +177,94 @@ export const createQuestSlice = createSlice({
         tooltipStyle: 'tooltip-error',
       };
     });
-    // For Answers
+    // check question status end
+
+    // check answer status start
     builder.addCase(checkAnswer.pending, (state, action) => {
-      state.questionReset = {
-        name: 'Checking',
-        color: 'text-[#0FB063]',
-        tooltipName: 'Verifying your answer. Please wait...',
-        tooltipStyle: 'tooltip-success',
-        status: true,
-      };
+      const { id, value } = action.meta.arg;
+
+      const tempOptions = state.optionsValue.map((option) => {
+        return option.id === id ? {
+          ...option,
+          question: value,
+          optionStatus: {
+            name: 'Checking',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Verifying your answer. Please wait...',
+            tooltipStyle: 'tooltip-success',
+          }
+        } : option
+      })
+      state.optionsValue = tempOptions;
     });
+    builder.addCase(checkAnswer.fulfilled, (state, action) => {
+      const { id, result, index } = action.payload;
+
+
+      if (result.validatedAnswer) {
+        let answerExist = checkAnswerExist({
+          answersArray: JSON.parse(JSON.stringify(state.optionsValue)),
+          answer: result.validatedAnswer,
+          index,
+        });
+
+        if (answerExist) {
+          const tempOptions = state.optionsValue.map((option) => {
+            return option.id === id ? {
+              ...option,
+              question: result.validatedAnswer,
+              optionStatus: {
+                name: 'Rejected',
+                color: 'text-[#b00f0f]',
+                tooltipName: 'Found Duplication!',
+                tooltipStyle: 'tooltip-error',
+                duplication: true,
+
+              }
+            } : option
+          })
+          state.optionsValue = tempOptions;
+        } else {
+
+          const tempOptions = state.optionsValue.map((option) => {
+            return option.id === id ? {
+              ...option,
+              question: result.validatedAnswer,
+              optionStatus: {
+                name: 'Ok',
+                color: 'text-[#389CE3]',
+                tooltipName: 'Please write something...',
+                tooltipStyle: 'tooltip-info',
+
+              }
+            } : option
+          })
+          state.optionsValue = tempOptions;
+        }
+      } else {
+
+        const tempOptions = state.optionsValue.map((option) => {
+          return option.id === id ? {
+            ...option,
+            optionStatus: {
+              name: 'Rejected',
+              color: 'text-[#b00f0f]',
+              tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+              tooltipStyle: 'tooltip-error',
+            }
+          } : option
+        })
+        state.optionsValue = tempOptions;
+      }
+
+    })
   },
 });
 
-export const { updateQuestion, updateMultipleChoice, updateRankedChoice, resetCreateQuest } = createQuestSlice.actions;
+export const { updateQuestion, updateMultipleChoice, updateRankedChoice, resetCreateQuest, addNewOption, delOption, drapAddDrop, handleChangeOption } = createQuestSlice.actions;
 
 export default createQuestSlice.reducer;
 
 export const getCreate = (state) => state.createQuest.questions;
 export const questionStatus = (state) => state.createQuest.questionReset;
+export const optionsValue = (state) => state.createQuest.optionsValue;
