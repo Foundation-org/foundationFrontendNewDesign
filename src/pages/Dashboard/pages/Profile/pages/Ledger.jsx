@@ -7,9 +7,8 @@ import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } fro
 import { useSelector, useDispatch } from 'react-redux';
 import LedgerTableTopbar from '../components/LedgerTableTopbar';
 import { format } from 'date-fns';
-import { updateColumnSize } from "../../../../../features/profile/legerSlice";
+import { updateColumnSize } from '../../../../../features/profile/legerSlice';
 export default function BasicTable() {
-
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -84,9 +83,7 @@ export default function BasicTable() {
 
   // });
 
-
   const columns = useMemo(() => {
-
     const tempColumns = Columns.map((column) => {
       const id = column.accessorKey;
       const size = columnSizes[id];
@@ -97,10 +94,7 @@ export default function BasicTable() {
     });
 
     return tempColumns;
-  }, [Columns])
-
-
-
+  }, [Columns]);
 
   const table = useReactTable({
     data: ledgerData?.data?.data || [],
@@ -112,7 +106,6 @@ export default function BasicTable() {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     columnResizeMode: 'onChange', // onChange onEnd
-
   });
 
   //   custom pagination
@@ -144,27 +137,25 @@ export default function BasicTable() {
   const rangeEnd = Math.min(totalPages, rangeStart + visibleButtons - 1);
   // console.log("🚀 ~ file: Ledger.jsx:121 ~ BasicTable ~ rangeEnd:", rangeEnd)
 
-
-
   useEffect(() => {
     return () => {
       table.getHeaderGroups()[0].headers.forEach((header) => {
         const columnId = header.id;
         const size = header.getSize();
         dispatch(updateColumnSize({ columnId, size: size }));
-      })
-    }
+      });
+    };
   }, [columnSizes, table]);
 
-
   return (
-    <div className='overflow-y-auto mb-[50px] tablet:mb-[124px]'>
+    <div className="overflow-y-auto mb-[50px] tablet:mb-[124px]">
       <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px]  tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
         Ledger
       </h1>
       <div
-        className={`${persistedTheme === 'dark' ? 'ledger-dark' : 'ledger-light bg-white'
-          } mx-[17px] mb-10 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-11 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
+        className={`${
+          persistedTheme === 'dark' ? 'ledger-dark' : 'ledger-light bg-white'
+        } mx-[17px] mb-10 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-11 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
       >
         <LedgerTableTopbar
           sort={sort}
@@ -206,7 +197,7 @@ export default function BasicTable() {
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
                   key={headerGroup.id}
-                // className="border-0 border-b border-[#EEEEEE]"
+                  // className="border-0 border-b border-[#EEEEEE]"
                 >
                   {headerGroup.headers.map((header) => (
                     <th
@@ -291,15 +282,15 @@ export default function BasicTable() {
                             : cell.column.id === 'txDate'
                               ? format(new Date(cell.getValue()), 'dd MMM yyyy, hh:mm a')
                               : cell.column.id === 'txFrom' &&
-                                cell.getValue() !== 'DAO Treasury' &&
-                                cell.getValue() !== 'dao' &&
-                                cell.getValue() !== persistedUserInfo?.uuid
+                                  cell.getValue() !== 'DAO Treasury' &&
+                                  cell.getValue() !== 'dao' &&
+                                  cell.getValue() !== persistedUserInfo?.uuid
                                 ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
                                 : cell.getValue() === persistedUserInfo?.uuid
                                   ? 'My Account'
                                   : cell.column.id === 'txTo' &&
-                                    cell.getValue() !== 'DAO Treasury' &&
-                                    cell.getValue() !== 'dao'
+                                      cell.getValue() !== 'DAO Treasury' &&
+                                      cell.getValue() !== 'dao'
                                     ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
                                     : cell.getValue() === 'dao'
                                       ? 'DAO'
@@ -341,20 +332,21 @@ export default function BasicTable() {
               )}
               {rangeStart && rangeEnd
                 ? [...Array(rangeEnd - rangeStart + 1)].map((_, index) => {
-                  const pageNumber = rangeStart + index;
-                  return (
-                    <button
-                      className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] pt-[2px] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:pt-[0px] tablet:text-[13px] ${pageNumber === currentPage
-                        ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-[#252D37]'
-                        : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]'
+                    const pageNumber = rangeStart + index;
+                    return (
+                      <button
+                        className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] pt-[2px] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:pt-[0px] tablet:text-[13px] ${
+                          pageNumber === currentPage
+                            ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-[#252D37]'
+                            : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]'
                         }`}
-                      key={pageNumber}
-                      onClick={() => handlePageClick(pageNumber)}
-                    >
-                      {pageNumber}
-                    </button>
-                  );
-                })
+                        key={pageNumber}
+                        onClick={() => handlePageClick(pageNumber)}
+                      >
+                        {pageNumber}
+                      </button>
+                    );
+                  })
                 : null}
               {rangeEnd < totalPages && (
                 <button className="mr-2 bg-white/0 text-[9px] font-medium text-black tablet:mr-4 tablet:text-[16px] dark:text-[#B3B3B3]">
@@ -377,6 +369,6 @@ export default function BasicTable() {
         </div>
       </div>
     </div>
-    </div>
+    // </div>
   );
 }
