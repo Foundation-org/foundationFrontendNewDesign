@@ -225,8 +225,8 @@ const MultipleChoice = () => {
         ...newTypedValues[index],
         // question: "",
         optionStatus: {
-          name: 'Rejected',
-          color: 'text-[#b00f0f]',
+          name: 'Duplicate',
+          color: 'text-[#EFD700]',
           tooltipName: 'Found Duplication!',
           tooltipStyle: 'tooltip-error',
           duplication: true,

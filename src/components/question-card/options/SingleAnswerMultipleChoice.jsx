@@ -1,10 +1,10 @@
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import React, { useEffect, useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import { Tooltip } from '../../../utils/Tooltip';
 import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
+
 import BasicModal from '../../BasicModal';
 import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 
@@ -95,8 +95,8 @@ const SingleAnswerMultipleChoice = (props) => {
     });
     if (answerExist) {
       return setCheckOptionStatus({
-        name: 'Rejected',
-        color: 'text-[#b00f0f]',
+        name: 'Duplicate',
+        color: 'text-[#EFD700]',
         tooltipName: 'Found Duplication!',
         tooltipStyle: 'tooltip-error',
         duplication: true,

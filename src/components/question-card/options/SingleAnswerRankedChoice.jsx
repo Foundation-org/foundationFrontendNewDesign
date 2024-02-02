@@ -77,8 +77,8 @@ const SingleAnswerRankedChoice = (props) => {
     });
     if (answerExist) {
       return setCheckOptionStatus({
-        name: 'Rejected',
-        color: 'text-[#b00f0f]',
+        name: 'Duplicate',
+        color: 'text-[#EFD700]',
         tooltipName: 'Found Duplication!',
         tooltipStyle: 'tooltip-error',
         duplication: true,

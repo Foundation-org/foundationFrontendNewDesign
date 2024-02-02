@@ -1,8 +1,5 @@
-// import React from "react";
 import { useSelector } from 'react-redux';
 import { Tooltip } from '../../../../../utils/Tooltip';
-// import "react-tooltip/dist/react-tooltip.css";
-// import { Tooltip } from "react-tooltip";
 
 const MultipleChoiceOptions = ({
   title,
@@ -13,7 +10,6 @@ const MultipleChoiceOptions = ({
   dragable,
   handleOptionChange,
   handleOptionSelect,
-  // isYes,
   allowInput,
   handleChange,
   typedValue,
@@ -77,14 +73,6 @@ const MultipleChoiceOptions = ({
             ) : null}
           </div>
           <div className="relative w-full">
-            {/* <input
-              type="text"
-              placeholder="option"
-              className="tablet:pr-45 w-full max-w-[838px] rounded-r-[5.387px] border-b-[1px] border-r-[1px] border-t-[1px] border-[#ACACAC] bg-white py-[4.56px] pl-[15.44px] pr-[55px] text-[10px] font-normal leading-[0px] text-[#435059] tablet:rounded-r-[11.284px] tablet:pb-[9.83px] tablet:pl-9 tablet:pt-[11.61px] tablet:text-[20.73px] laptop:rounded-r-2xl laptop:py-[18px] laptop:text-[30px] "
-              onChange={(e) => handleChange(e.target.value)}
-              onBlur={(e) => e.target.value.trim() !== "" && answerVerification(e.target.value.trim())}
-              value={typedValue}
-            /> */}
             <div className="flex w-full">
               <input
                 className="laptop:py-[18px] laptop:text-[1.875rem] w-full border-y-[1px] border-[#ACACAC] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:px-11 tablet:py-[11.6px] tablet:text-[1.296rem]"
@@ -124,50 +112,6 @@ const MultipleChoiceOptions = ({
                 <div className="border-l-[0.7px] px-[1.25rem] tablet:px-[2.4rem]">{optionStatus?.name}</div>
                 <Tooltip optionStatus={optionStatus} />
               </button>
-
-              {/* {optionStatus?.name === "Rejected" && (
-                  <div className="absolute -top-[36px] left-1/2 -translate-x-1/2 transform">
-                    <div class="relative mx-2 flex flex-col items-end">
-                      <svg
-                        className="h-2 w-2 "
-                        fill="#000000"
-                        version="1.1"
-                        id="Layer_1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        viewBox="0 0 512 512"
-                        xml:space="preserve"
-                      >
-                        <g>
-                          <g>
-                            <polygon
-                              points="512,59.076 452.922,0 256,196.922 59.076,0 0,59.076 196.922,256 0,452.922 59.076,512 256,315.076 452.922,512 
-			512,452.922 315.076,256 		"
-                            />
-                          </g>
-                        </g>
-                      </svg>
-                      <div class="bottom-full right-0 w-[7.3rem] rounded border-[0.533px] bg-[#FEDEDE] px-[0.35rem] py-[0.2rem] text-[0.3rem] font-normal text-[#F34141] dark:bg-[#3C1A20] dark:text-[#DB6262]">
-                        {optionStatus.tooltipName}
-                        <svg
-                          class="absolute left-0 top-full h-2 w-full text-[#FEDEDE] dark:text-[#3C1A20]"
-                          x="0px"
-                          y="0px"
-                          viewBox="0 0 255 255"
-                          xml:space="preserve"
-                        >
-                          <polygon
-                            class="fill-current"
-                            points="0,0 127.5,127.5 255,0"
-                            stroke="#F34141"
-                            stroke-width="16"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                )} */}
-              {/* </div> */}
             </div>
             <div className="absolute right-[60px] top-1/2 flex -translate-y-1/2 transform items-center">
               {options && (
@@ -199,41 +143,7 @@ const MultipleChoiceOptions = ({
                   )}
                 </>
               ) : null}
-              {/* {trash && optionsCount > 2 && (
-                <div
-                  onClick={() => {
-                    removeOption(number);
-                  }}
-                >
-                  <img
-                    src="/assets/svgs/dashboard/trash2.svg"
-                    alt="trash"
-                    className="h-[36px] cursor-pointer"
-                  />
-                </div>
-              )} */}
-
-              {/* <div className={`tooltip ${optionStatus.tooltipStyle}`} data-tip={optionStatus.tooltipName}>
-            <h1 className={`leading-0 border-none cursor-pointer px-6 text-[30px] font-semibold ${optionStatus?.color}`}>
-              {optionStatus?.name}
-            </h1>
-          </div> */}
             </div>
-            {/* <Tooltip
-              anchorSelect={`#test${number}`}
-              isOpen={optionStatus?.name === "Rejected" && true}
-              border="1px solid red"
-              style={{
-                backgroundColor: "#fbdfe4",
-                color: "#222",
-                border: "red",
-                width: "auto",
-                marginRight: "3rem",
-              }}
-              place="top"
-            >
-              {optionStatus.tooltipName}
-            </Tooltip> */}
           </div>
         </div>
       )}
