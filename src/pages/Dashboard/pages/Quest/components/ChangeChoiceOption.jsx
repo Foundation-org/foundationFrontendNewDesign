@@ -18,7 +18,7 @@ const ChangeChoiceOption = ({ changeState, setChangeState, setChangedOption, cha
           enabled={changeState}
           setEnabled={() => {
             setChangeState((prev) => !prev);
-            // setChangedOption('Anytime');
+            setChangedOption('Anytime');
           }}
         />
       </div>
