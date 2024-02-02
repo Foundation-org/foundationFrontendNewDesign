@@ -142,7 +142,7 @@ const AgreeDisagree = () => {
 
   useEffect(() => {
     console.log('our question status is yes', createQuestSlice.question);
-    setLoading(questionStatus.status);
+    // setLoading(questionStatus.status);
     if (createQuestSlice.question) {
       setQuestion(createQuestSlice.question);
     }

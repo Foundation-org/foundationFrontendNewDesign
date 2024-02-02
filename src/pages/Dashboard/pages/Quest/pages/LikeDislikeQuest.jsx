@@ -24,7 +24,7 @@ const LikeDislike = () => {
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
 
-  console.log("get your value is like", createQuestSlice);
+  console.log('get your value is like', createQuestSlice);
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
@@ -143,9 +143,9 @@ const LikeDislike = () => {
 
   useEffect(() => {
     // console.log("our question status is", questionStatus.status);
-    setLoading(questionStatus.status);
+    // setLoading(questionStatus.status);
     if (createQuestSlice.question) {
-      setQuestion(createQuestSlice.question)
+      setQuestion(createQuestSlice.question);
     }
   }, [questionStatus]);
 
@@ -155,8 +155,9 @@ const LikeDislike = () => {
         Make a statement that anyone can "Like" or "Dislike"
       </h4>
       <div
-        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
+        className={`${
+          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[25px]">
           Create a Statement
