@@ -158,8 +158,8 @@ export default function BasicTable() {
 
 
   return (
-    <>
-      <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
+    <div className='overflow-y-auto mb-[50px] tablet:mb-[124px]'>
+      <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px]  tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
         Ledger
       </h1>
       <div
@@ -321,19 +321,19 @@ export default function BasicTable() {
             {ledgerData?.data?.totalCount} entries
           </p> */}
           <p></p>
-          <div className="flex items-center">
+          <div className="flex items-center gap-2 tablet:gap-3.5 laptop:mr-[3.46rem]">
             <button
               onClick={() => handlePageClick(currentPage - 1)}
               disabled={currentPage === rangeStart && true}
               className="pagination-btn"
             >
               <img
-                className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px] "
+                className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px]"
                 src={'/assets/svgs/arrow-back.svg'}
                 alt=""
               />
             </button>
-            <div className=" flex items-center gap-[0.46rem] tablet:gap-4">
+            <div className=" flex items-center gap-[0.46rem] tablet:gap-4 ">
               {rangeStart > 1 && (
                 <button className="bg-white/0 text-[9px] font-medium text-black tablet:text-[16px] dark:text-[#B3B3B3]">
                   ...
@@ -376,6 +376,6 @@ export default function BasicTable() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
