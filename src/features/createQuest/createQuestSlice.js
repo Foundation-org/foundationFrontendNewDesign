@@ -231,9 +231,9 @@ export const createQuestSlice = createSlice({
                   question: result.validatedAnswer,
                   optionStatus: {
                     name: 'Ok',
-                    color: 'text-[#389CE3]',
-                    tooltipName: 'Please write something...',
-                    tooltipStyle: 'tooltip-info',
+                    color: 'text-[#0FB063]',
+                    tooltipName: 'Answer is Verified',
+                    tooltipStyle: 'tooltip-success',
                   },
                 }
               : option;
