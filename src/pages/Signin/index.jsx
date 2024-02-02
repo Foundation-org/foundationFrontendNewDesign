@@ -14,6 +14,8 @@ import '../../index.css';
 import api from '../../services/api/Axios';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../features/auth/authSlice';
+import BasicModal from '../../components/BasicModal';
+import ReferralCode from '../../components/ReferralCode';
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -26,8 +28,17 @@ export default function Signin() {
   const [capthaToken, setCaptchaToken] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isReferral, setIsReferral] = useState(false);
+  const [referralCode, setReferralCode] = useState(null);
+  const [uuid, setUuid] = useState();
+
   const persistedTheme = useSelector((state) => state.utils.theme);
   // console.log(provider, profile);
+
+  const handleReferralOpen = () => {
+    setIsReferral((prev) => !prev);
+  };
+  const handleReferralClose = () => setIsReferral(false);
 
   function onChange(value) {
     console.log('Captcha value:', value);
@@ -61,7 +72,7 @@ export default function Signin() {
       // });
 
       // if (recaptchaResp.success) {
-      if (capthaToken !== '') {
+      if (capthaToken === '') {
         const resp = await userSignin({ email, password });
 
         if (resp.status === 200) {
@@ -72,7 +83,6 @@ export default function Signin() {
           // localStorage.setItem("jwt", resp.data.token);
           setEmail('');
           setPassword('');
-          navigate('/dashboard');
         }
       } else {
         toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
@@ -92,8 +102,19 @@ export default function Signin() {
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
     onSuccess: (res) => {
+      setUuid(res.data?.uuid);
       console.log('User info fetched:', res.data);
-      dispatch(addUser(res.data));
+      if (res.data?.verification === true && res.data?.referral === false) {
+        handleReferralOpen();
+      }
+      if (res.data?.verification === false && res.data?.referral === false) {
+        toast.warning('Please check you email and verify your account first');
+        // email send krwani ha
+      }
+      if (res.data?.verification === true && res.data?.referral === true) {
+        dispatch(addUser(res.data));
+        navigate('/dashboard');
+      }
     },
     onError: (error) => {
       console.error('Error fetching user info:', error);
@@ -125,6 +146,16 @@ export default function Signin() {
     }
   }, [authO]);
 
+  const customModalStyle = {
+    backgroundColor: '#FCFCFD',
+    boxShadow: 'none',
+    border: '0px',
+    outline: 'none',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  };
+
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
       <div
@@ -134,7 +165,6 @@ export default function Signin() {
       >
         <img src="/assets/svgs/logo.svg" alt="logo" className="h-[45px] w-[58px]" />
       </div>
-
       <div className="flex h-screen w-full flex-col items-center bg-white md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle" className="text-center tablet:text-left">
@@ -179,6 +209,19 @@ export default function Signin() {
       <div className="hidden h-screen w-fit items-center px-32 lg:flex">
         <img src="/assets/svgs/logo.svg" alt="logo" className="h-[20vh] w-[23vw]" />
       </div>
+      <BasicModal
+        open={isReferral}
+        handleClose={handleReferralClose}
+        customStyle={customModalStyle}
+        customClasses="rounded-[10px] tablet:rounded-[26px]"
+      >
+        <ReferralCode
+          handleClose={handleReferralClose}
+          referralCode={referralCode}
+          setReferralCode={setReferralCode}
+          uuid={uuid}
+        />
+      </BasicModal>
     </div>
   );
 }

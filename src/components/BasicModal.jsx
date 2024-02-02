@@ -6,6 +6,7 @@ const BasicModal = ({ open, handleClose, children, customStyle, customClasses })
     position: 'absolute',
     width: 'fit-content',
     boxShadow: 5,
+    zIndex: 1000,
   };
 
   const mergedStyle = { ...defaultStyle, ...customStyle };
