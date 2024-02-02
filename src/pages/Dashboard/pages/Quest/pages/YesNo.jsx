@@ -96,7 +96,6 @@ const YesNo = () => {
   };
 
   const questionVerification = async (value) => {
-
     setQuestion(value.trim());
     if (prevValue === question.trim()) return;
     setPrevValue(value);
@@ -139,20 +138,21 @@ const YesNo = () => {
   }, [question, changedOption, changeState]);
 
   useEffect(() => {
-     console.log("our question status is yes", createQuestSlice.question);
-    setLoading(questionStatus.status);
+    console.log('our question status is yes', createQuestSlice.question);
+    // setLoading(questionStatus.status);
     if (createQuestSlice.question) {
-      setQuestion(createQuestSlice.question)
+      setQuestion(createQuestSlice.question);
     }
-  }, [questionStatus])
+  }, [questionStatus]);
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
         Ask a question that allows for a straightforward "Yes" or "No" response
       </h4>
       <div
-        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
+        className={`${
+          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] dark:bg-[#141618] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#D8D8D8] tablet:text-[22.81px] laptop:text-[25px]">
           Create a Poll

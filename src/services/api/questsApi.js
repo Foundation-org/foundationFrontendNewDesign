@@ -136,17 +136,15 @@ export const answerValidation = async ({ answer }) => {
   }
 };
 
-// export const checkAnswerExist = ({ answersArray, answer, index, startQuest }) => {
-//   console.log('2nd', answersArray, answer, index, startQuest);
-//   return answersArray.some((item, i) =>
-//     startQuest
-//       ? item.label.toLowerCase() === answer.toLowerCase() && i !== index
-//       : item?.question?.toLowerCase() === answer.toLowerCase() && i !== index,
-//   );
-// };
-export const checkAnswerExist = ({ answersArray, answer, index, startQuest }) => {
-  console.log('2nd', answersArray, answer, index, startQuest);
+export const checkAnswerExistCreateQuest = ({ answersArray, answer, index, startQuest }) => {
+  return answersArray.some((item, i) =>
+    startQuest
+      ? item.label.toLowerCase() === answer.toLowerCase() && i !== index
+      : item?.question?.toLowerCase() === answer.toLowerCase() && i !== index,
+  );
+};
 
+export const checkAnswerExist = ({ answersArray, answer, index, startQuest }) => {
   const lastIndex = answersArray.length - 1;
 
   return answersArray.some(

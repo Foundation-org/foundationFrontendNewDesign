@@ -313,7 +313,7 @@ const MultipleChoice = () => {
   };
 
   useEffect(() => {
-    setLoading(questionStatus.status);
+    // setLoading(questionStatus.status);
     if (createQuestSlice.question) {
       setQuestion(createQuestSlice.question);
     }
