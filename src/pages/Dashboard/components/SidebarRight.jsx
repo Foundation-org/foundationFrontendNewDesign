@@ -74,7 +74,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/working.png',
       alt: 'icon1',
       title: 'Agreement-Received',
-      value: (response && response?.selectionsOnAddedAns) || 0,
+      value: (response && response?.selectionsOnAddedAns) || 0, 
     },
     {
       id: 8,
@@ -106,24 +106,23 @@ const SidebarRight = () => {
     mutationFn: userInfo,
   });
 
-
   const handleUserInfo = async () => {
     try {
       const resp = await getUserInfo();
- 
+
       if (resp?.status === 200) {
         // Cookie Calling
-        if(resp.data){
+        if (resp.data) {
           dispath(addUser(resp?.data));
           // Set into local storage
-          if(!localStorage.getItem('uuid')){
-            localStorage.setItem('uuid', resp.data.uuid)
+          if (!localStorage.getItem('uuid')) {
+            localStorage.setItem('uuid', resp.data.uuid);
           }
         }
 
         // LocalStorage Calling
-        if(!resp.data){
-          const res = await userInfoById(localStorage.getItem('uuid'))
+        if (!resp.data) {
+          const res = await userInfoById(localStorage.getItem('uuid'));
           dispath(addUser(res?.data));
         }
 
