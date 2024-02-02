@@ -331,15 +331,15 @@ const VerificationBadges = () => {
           <div className="flex gap-[5px] tablet:gap-[10.59px] items-center justify-center">
             <img
               src="/assets/profile/Facebook-2x.png"
-              alt={'Facebook'}
-              className="h-[19.4px] w-[19.4px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
+              alt="Facebook"
+              className="min-h-[19.4px] min-w-[19.4px] h-[19.4px] w-[19.4px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
             />
             <div
               className={`${
                 persistedTheme === 'dark' ? 'dark-shadow-input' : 'shadow-inside'
               } mx-2  flex h-[5.8vw] min-w-[19.9vw] items-center justify-center rounded-[1.31vw] text-[1.73vw]  font-medium  leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA] `}
             >
-              <h1>{'Facebook'}</h1>
+              <h1>Facebook</h1>
             </div>
             {checkSocial('facebook') ? (
               <Button
