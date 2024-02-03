@@ -1,11 +1,11 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Anchor = ({ href, className, children, type }) => {
   let classes = `short:text-[12px] text-light-blue text-[8.158px] md:text-[16px] font-normal leading-[22px] ${className}`;
   return (
-    <a href={href} className={classes} type={type}>
+    <Link to={href} className={classes} type={type}>
       {children}
-    </a>
+    </Link>
   );
 };
 

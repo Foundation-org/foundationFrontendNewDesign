@@ -22,15 +22,17 @@ import Bookmark from '../pages/Dashboard/pages/Bookmark';
 import DashboardRedirect from '../pages/DashboardRedirect';
 import VerifyCode from '../pages/Signup/VerifyCode';
 import RequireAuth from './RequireAuth';
+import TermOfService from '../pages/Signup/pages/TermOfService';
+import PrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
   let auth = { persistedUser };
-  console.log("🚀 ~ Router ~ persistedUser:", persistedUser)
+  console.log('🚀 ~ Router ~ persistedUser:', persistedUser);
   // console.log("🚀 ~ Router ~ persistedUser:", persistedUser)
   // console.log("🚀 ~ Router ~ auth:", auth)
 
-  console.log("usr",persistedUser);
+  console.log('usr', persistedUser);
 
   return (
     <>
@@ -39,6 +41,8 @@ export function Router() {
         <Route element={<RequireAuth auth={auth} />}>
           <Route path="/" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/term-of-service" element={<TermOfService />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/verifycode" element={<VerifyCode />} />
           <Route path="/auth0" element={<DashboardRedirect />} />

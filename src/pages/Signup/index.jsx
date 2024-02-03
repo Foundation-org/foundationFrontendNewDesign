@@ -199,8 +199,9 @@ export default function Signup() {
               </label>
             </div>
             <label className="ml-4 text-[10.2px] text-gray-100 tablet:text-base 5xl:text-[22px] short:text-[12px] dark:text-white">
-              Creating an account means you have agreed with our <Anchor href="#">Terms of Service</Anchor> &{' '}
-              <Anchor href="#">Privacy Policy</Anchor>.         
+              Creating an account means you have agreed with our{' '}
+              <Anchor href="/term-of-service">Terms of Service</Anchor> &{' '}
+              <Anchor href="/privacy-policy">Privacy Policy</Anchor>.         
             </label>
           </div>
           <Button
