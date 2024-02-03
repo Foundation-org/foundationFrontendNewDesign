@@ -1,20 +1,23 @@
+import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import BasicModal from '../../BasicModal';
-import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
+import { useState, useEffect } from 'react';
+
 import { Tooltip } from '../../../utils/Tooltip';
 import { answerValidation, checkAnswerExist } from '../../../services/api/questsApi';
+
+import BasicModal from '../../BasicModal';
+import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
+import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
 
 const SingleAnswerRankedChoice = (props) => {
   const id = props.id;
-
+  const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [checkState, setCheckState] = useState(props.check);
   const [contendState, setContendState] = useState(props.contend);
-  const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [answer, setAnswer] = useState(props.answer);
   const reset = {
@@ -26,8 +29,6 @@ const SingleAnswerRankedChoice = (props) => {
   const [checkOptionStatus, setCheckOptionStatus] = useState(reset);
   const [prevValue, setPrevValue] = useState('');
 
-  const handleEditOpen = () => setEditModal(true);
-  const handleEditClose = () => setEditModal(false);
   const handleDeleteClose = () => setDeleteModal(false);
 
   useEffect(() => {
@@ -106,6 +107,17 @@ const SingleAnswerRankedChoice = (props) => {
     const newArr = props.rankedAnswers.map((item, index) => (index === id ? { ...item, label: answer.trim() } : item));
 
     props.setAnswerSelection(newArr);
+  };
+
+  const handleDeleteOption = () => {
+    toast.success('Item deleted');
+    setCheckOptionStatus(reset);
+
+    const newArr = props.rankedAnswers.filter((item, index) => index !== id);
+
+    props.setAnswerSelection(newArr);
+    dispatch(resetaddOptionLimit());
+    props.setAddOptionField(0);
   };
 
   const handleContendChange = () => {
