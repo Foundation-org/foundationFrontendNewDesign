@@ -424,9 +424,28 @@ const ButtonGroup = ({
               </Button>
             ) : (
               startStatus !== 'completed' && (
-                <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-                </Button>
+                <div className="flex w-full justify-between pl-7 tablet:pl-[3.19rem]">
+                  <Button onClick={handleOpen} variant={'addOption'}>
+                    {persistedTheme === 'dark' ? (
+                      <img
+                        src="/assets/svgs/dashboard/add-dark.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    ) : (
+                      <img
+                        src="/assets/svgs/dashboard/add.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    )}
+                    Add Option
+                  </Button>
+
+                  <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
+                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                  </Button>
+                </div>
               )
             )}
           </div>
