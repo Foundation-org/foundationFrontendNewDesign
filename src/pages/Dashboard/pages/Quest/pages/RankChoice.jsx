@@ -57,6 +57,7 @@ const RankChoice = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
+        setQuestion('');
         toast.success('Successfully Created');
         setTimeout(() => {
           setLoading(false);
@@ -66,6 +67,7 @@ const RankChoice = () => {
     },
     onError: (err) => {
       console.log('Mutation Error', err);
+      setQuestion('');
       setLoading(false);
     },
   });

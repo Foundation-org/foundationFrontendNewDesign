@@ -17,7 +17,6 @@ const YesNo = () => {
 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
-  console.log('get your value is yes', questionStatus.name);
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
@@ -25,12 +24,12 @@ const YesNo = () => {
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
 
-  const reset = {
-    name: 'Ok',
-    color: 'text-[#389CE3]',
-    tooltipName: 'Please write something...',
-    tooltipStyle: 'tooltip-info',
-  };
+  // const reset = {
+  //   name: 'Ok',
+  //   color: 'text-[#389CE3]',
+  //   tooltipName: 'Please write something...',
+  //   tooltipStyle: 'tooltip-info',
+  // };
 
   // const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
