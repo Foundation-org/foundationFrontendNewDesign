@@ -208,7 +208,7 @@ const SingleAnswerRankedChoice = (props) => {
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
               />
             ) : (
-              <h1 className="pb-[5.6px] pr-2 pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-normal text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
+              <h1 className="pb-[5.6px] pr-2 pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
                 {props.answer}
               </h1>
             )}
@@ -231,7 +231,7 @@ const SingleAnswerRankedChoice = (props) => {
         <div
           className={`${
             props.snapshot.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-          } flex min-h-[21.7px] h-full w-[35px] items-center justify-center rounded-r-[4.7px] bg-white dark:bg-[#0D1012] tablet:min-h-[47.8px] tablet:h-full tablet:rounded-r-[10px]`}
+          } flex min-h-[21.7px] h-full w-[35px] items-center justify-center rounded-r-[4.7px] bg-white dark:bg-[#0D1012] tablet:h-full tablet:rounded-r-[10px]`}
         >
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
         </div>
