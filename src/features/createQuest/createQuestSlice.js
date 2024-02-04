@@ -150,7 +150,7 @@ export const createQuestSlice = createSlice({
           state.questionReset = {
             name: 'Duplicate',
             color: 'text-[#EFD700]',
-            tooltipName: 'Found Duplication',
+            tooltipName: 'This post is not unique. A post like this already exists.',
             tooltipStyle: 'tooltip-error',
             duplication: true,
           };
@@ -158,7 +158,7 @@ export const createQuestSlice = createSlice({
           state.questionReset = {
             name: 'Rejected',
             color: 'text-[#b00f0f]',
-            tooltipName: 'Please review your text for proper grammarsss while keeping our code of conduct in mind.',
+            tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
             tooltipStyle: 'tooltip-error',
             status: true,
           };
