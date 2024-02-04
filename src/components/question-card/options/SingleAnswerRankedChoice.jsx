@@ -110,7 +110,7 @@ const SingleAnswerRankedChoice = (props) => {
   };
 
   const handleDeleteOption = () => {
-    toast.success('Item deleted');
+    // toast.success('Item deleted');
     setCheckOptionStatus(reset);
 
     const newArr = props.rankedAnswers.filter((item, index) => index !== id);

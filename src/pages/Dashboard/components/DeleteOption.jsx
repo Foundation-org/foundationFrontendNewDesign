@@ -12,7 +12,7 @@ const DeleteOption = (props) => {
 
     props.setAnswerSelection(newArr);
     dispatch(resetaddOptionLimit());
-    toast.success('Item deleted');
+    // toast.success('Item deleted');
     props.handleEditClose();
     props.handleDeleteClose();
   };

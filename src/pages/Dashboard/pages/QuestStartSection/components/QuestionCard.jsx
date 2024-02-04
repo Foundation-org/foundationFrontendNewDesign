@@ -37,6 +37,13 @@ const QuestionCard = (props) => {
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [questSelection, setQuestSelection] = useState(questSelectionInitial);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const reset = {
+    name: 'Ok',
+    color: 'text-[#389CE3]',
+    tooltipName: 'Please write something...',
+    tooltipStyle: 'tooltip-info',
+  };
+  const [checkOptionStatus, setCheckOptionStatus] = useState(reset);
 
   const handleQuestSelection = (actionPayload) => {
     setQuestSelection((prevState) => {
@@ -559,6 +566,8 @@ const QuestionCard = (props) => {
             loadingDetail={loadingDetail}
             questSelection={questSelection}
             cardSize={cardSize}
+            checkOptionStatus={checkOptionStatus}
+            setCheckOptionStatus={setCheckOptionStatus}
           />
           <ConditionalTextFullScreen questStartData={questStartData} show={true} />
         </>
@@ -573,7 +582,7 @@ const QuestionCard = (props) => {
   return (
     <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} handleStartTest={handleStartTest}>
       {renderQuestContent()}
-     
+
       <ButtonGroup
         questStartData={questStartData}
         handleToggleCheck={handleToggleCheck}
@@ -599,8 +608,9 @@ const QuestionCard = (props) => {
         handleSubmit={handleSubmit}
         loading={loading}
         startTest={startTest}
+        checkOptionStatus={checkOptionStatus}
       />
-    </QuestCardLayout >
+    </QuestCardLayout>
   );
 };
 

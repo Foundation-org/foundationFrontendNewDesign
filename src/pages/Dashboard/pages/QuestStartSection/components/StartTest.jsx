@@ -20,6 +20,8 @@ const StartTest = ({
   setAddOptionField,
   questSelection,
   cardSize,
+  checkOptionStatus,
+  setCheckOptionStatus,
 }) => {
   const { isFullScreen } = useParams();
 
@@ -52,6 +54,7 @@ const StartTest = ({
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
   };
+
   const handleContendChangeRanked = (index, contend) => {
     setRankedAnswers((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, contend } : answer)));
   };
@@ -220,6 +223,8 @@ const StartTest = ({
                         : (contend) => handleContendChangeSingle(index, contend)
                     }
                     setAddOptionField={setAddOptionField}
+                    checkOptionStatus={checkOptionStatus}
+                    setCheckOptionStatus={setCheckOptionStatus}
                   />
                 ))}
             </div>

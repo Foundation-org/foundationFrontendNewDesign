@@ -25,7 +25,8 @@ const SingleAnswerMultipleChoice = (props) => {
     tooltipName: 'Please write something...',
     tooltipStyle: 'tooltip-info',
   };
-  const [checkOptionStatus, setCheckOptionStatus] = useState(reset);
+  // const [props.checkOptionStatus, props.setCheckOptionStatus] = useState(reset);
+
   const [prevValue, setPrevValue] = useState('');
 
   const handleDeleteClose = () => setDeleteModal(false);
@@ -61,13 +62,13 @@ const SingleAnswerMultipleChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
-    setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
+    props.setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
   };
 
   const optionVerification = async (value) => {
     if (prevValue === answer) return;
     setPrevValue(value);
-    setCheckOptionStatus({
+    props.setCheckOptionStatus({
       name: 'Checking',
       color: 'text-[#0FB063]',
       tooltipName: 'Verifying your option. Please wait...',
@@ -79,7 +80,7 @@ const SingleAnswerMultipleChoice = (props) => {
     });
     // If any error captured
     if (errorMessage) {
-      return setCheckOptionStatus({
+      return props.setCheckOptionStatus({
         name: 'Rejected',
         color: 'text-[#b00f0f]',
         tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
@@ -94,7 +95,7 @@ const SingleAnswerMultipleChoice = (props) => {
       startQuest: true,
     });
     if (answerExist) {
-      return setCheckOptionStatus({
+      return props.setCheckOptionStatus({
         name: 'Duplicate',
         color: 'text-[#EFD700]',
         tooltipName: 'Found Duplication!',
@@ -105,7 +106,7 @@ const SingleAnswerMultipleChoice = (props) => {
     // Answer is validated and status is Ok
     if (validatedAnswer) {
       setAnswer(validatedAnswer);
-      setCheckOptionStatus({
+      props.setCheckOptionStatus({
         name: 'Ok',
         color: 'text-[#0FB063]',
         tooltipName: 'Answer is Verified',
@@ -127,8 +128,8 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   const handleDeleteOption = () => {
-    toast.success('Item deleted');
-    setCheckOptionStatus(reset);
+    // toast.success('Item deleted');
+    props.setCheckOptionStatus(reset);
 
     const newArr = props.answersSelection.filter((item, index) => index !== id);
 
@@ -201,12 +202,12 @@ const SingleAnswerMultipleChoice = (props) => {
             )}
             {props.deleteable && (
               <div
-                className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-[#0D1012] tablet:h-[43px] tablet:text-[1rem] laptop:text-[1.25rem] ${checkOptionStatus.color}`}
+                className={`relative flex items-center bg-white text-[0.5rem] font-semibold dark:bg-[#0D1012] tablet:h-[43px] tablet:text-[1rem] laptop:text-[1.25rem] ${props.checkOptionStatus.color}`}
               >
                 <div className="flex w-[45px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
-                  <span>{checkOptionStatus.name}</span>
+                  <span>{props.checkOptionStatus.name}</span>
                 </div>
-                <Tooltip optionStatus={checkOptionStatus} />
+                <Tooltip optionStatus={props.checkOptionStatus} />
               </div>
             )}
             <div

@@ -22,6 +22,7 @@ import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
+
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -37,6 +38,13 @@ const QuestionCardWithToggle = (props) => {
   const [viewResult, setViewResult] = useState('');
   const [questSelection, setQuestSelection] = useState(questSelectionInitial);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const reset = {
+    name: 'Ok',
+    color: 'text-[#389CE3]',
+    tooltipName: 'Please write something...',
+    tooltipStyle: 'tooltip-info',
+  };
+  const [checkOptionStatus, setCheckOptionStatus] = useState(reset);
 
   const handleQuestSelection = (actionPayload) => {
     setQuestSelection((prevState) => {
@@ -541,6 +549,8 @@ const QuestionCardWithToggle = (props) => {
             setAddOptionField={setAddOptionField}
             questSelection={questSelection}
             cardSize={cardSize}
+            checkOptionStatus={checkOptionStatus}
+            setCheckOptionStatus={setCheckOptionStatus}
           />
           <ConditionalTextFullScreen questStartData={questStartData} show={true} />
         </>
@@ -601,6 +611,7 @@ const QuestionCardWithToggle = (props) => {
         startTest={startTest}
         handleChange={handleChange}
         addOptionField={addOptionField}
+        checkOptionStatus={checkOptionStatus}
       />
     </QuestCardLayout>
   );
