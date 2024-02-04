@@ -114,6 +114,8 @@ const RankChoice = () => {
       return toast.warning('Option cannot be empty');
     }
     createQuest(params);
+
+    dispatch(createQuestAction.resetCreateQuest());
   };
 
   const questionVerification = async (value) => {

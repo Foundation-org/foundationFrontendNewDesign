@@ -10,6 +10,8 @@ import { calculateRemainingTime } from '../../utils';
 
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 import * as filterActions from '../../features/sidebar/filtersSlice';
+import * as filterBookmarkActions from '../../features/sidebar/bookmarkFilterSlice';
+import { useLocation } from 'react-router-dom';
 
 const ButtonGroup = ({
   usersAddTheirAns,
@@ -41,10 +43,19 @@ const ButtonGroup = ({
   checkOptionStatus,
 }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const filterState = useSelector(filterActions.getFilters);
+
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
+
+  let filterState;
+
+  if (location.pathname === '/dashboard/bookmark') {
+    filterState = useSelector(filterBookmarkActions.getFilters);
+  } else {
+    filterState = useSelector(filterActions.getFilters);
+  }
 
   const uuidExists = answers
     ? answers?.some((item) => item.uuid === persistedUserInfo?.uuid || item.uuid === localStorage.getItem('uId'))

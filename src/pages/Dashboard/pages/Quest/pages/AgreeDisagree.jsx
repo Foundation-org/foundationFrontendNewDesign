@@ -95,6 +95,8 @@ const AgreeDisagree = () => {
     };
 
     createQuest(params);
+
+    dispatch(createQuestAction.resetCreateQuest());
   };
 
   const questionVerification = async (value) => {
