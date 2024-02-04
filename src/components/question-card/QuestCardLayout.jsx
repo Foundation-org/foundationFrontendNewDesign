@@ -6,8 +6,10 @@ import CardTopbar from './CardTopbar';
 import QuestBottombar from './QuestBottombar';
 import * as HomepageApis from '../../services/api/homepageApis';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
+import { useLocation } from 'react-router-dom';
 
-const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, children }) => {
+const QuestCardLayout = ({ questStartData, isBookmarked, children }) => {
+  const location = useLocation();
   const queryClient = useQueryClient();
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
 
@@ -20,7 +22,6 @@ const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, childr
     onSuccess: (resp) => {
       // toast.success('Bookmarked Added');
       queryClient.invalidateQueries('FeedData');
-      handleStartTest(null);
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
@@ -31,10 +32,9 @@ const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, childr
     mutationFn: HomepageApis.deleteBookmarkById,
     onSuccess: (resp) => {
       // toast.success('Bookmark Removed ');
-      if (!isBookmarkTab) {
+      if (location.pathname === '/dashboard') {
         queryClient.invalidateQueries('FeedData');
       }
-      handleStartTest(null);
     },
     onError: (err) => {
       console.log(err);
@@ -71,14 +71,13 @@ const QuestCardLayout = ({ questStartData, isBookmarked, handleStartTest, childr
       />
       <div className="pb-[0.94rem] pt-[0.84rem] tablet:pb-5 tablet:pt-[0.94rem]">
         <div className="ml-[1.39rem] mr-[0.62rem] tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
-          <div className='flex gap-1.5 tablet:gap-3'>
-
-          <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-none">
-            {questStartData.Question?.endsWith('?') ? 'Q.' : 'S.'}
-          </h4>
-          <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-none">
-          {questStartData.Question}
-          </h4>
+          <div className="flex gap-1.5 tablet:gap-3">
+            <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-none">
+              {questStartData.Question?.endsWith('?') ? 'Q.' : 'S.'}
+            </h4>
+            <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-none">
+              {questStartData.Question}
+            </h4>
           </div>
         </div>
         {children}

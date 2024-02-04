@@ -28,9 +28,15 @@ const QuestionCardWithToggle = (props) => {
 
   const { questStartData, isBookmarked } = props;
 
+  const questData = questStartData.QuestAnswers?.some((answer) => {
+    return answer.uuid && answer.uuid === persistedUserInfo.uuid;
+  })
+    ? 1
+    : 0;
+
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
-  const [addOptionField, setAddOptionField] = useState(0);
-  const [addOptionLimit, setAddOptionLimit] = useState(0);
+  const [addOptionField, setAddOptionField] = useState(questData);
+
   const [openResults, setOpenResults] = useState(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -184,7 +190,6 @@ const QuestionCardWithToggle = (props) => {
     setAnswerSelection([...answersSelection, newOption]);
 
     setAddOptionField(!addOptionField);
-    setAddOptionLimit(1);
     dispatch(questUtilsActions.updateaddOptionLimit());
   };
 
@@ -583,7 +588,7 @@ const QuestionCardWithToggle = (props) => {
   };
 
   return (
-    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} handleStartTest={handleStartTest}>
+    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked}>
       {renderQuestContent()}
       <ButtonGroup
         questStartData={questStartData}

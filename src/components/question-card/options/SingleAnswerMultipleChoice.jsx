@@ -134,7 +134,6 @@ const SingleAnswerMultipleChoice = (props) => {
     const newArr = props.answersSelection.filter((item, index) => index !== id);
 
     props.setAnswerSelection(newArr);
-    // props.setAddOptionLimit(0);
     dispatch(resetaddOptionLimit());
     props.setAddOptionField(0);
   };
