@@ -83,7 +83,12 @@ export const Tooltip = ({ optionStatus }) => {
             </div>
 
             <div className="bottom-full right-0 rounded-md border-[0.533px] bg-[#FCF324] py-[0.2rem] text-[0.5rem] font-normal text-[#9B7A06] w-fit px-4 tablet:rounded-[15px] tablet:py-[18px] tablet:text-[1rem] dark:bg-[#FCF324] dark:text-[#9B7A06]">
-              {tooltipStatus?.tooltipName}
+              <div
+                className="tooltip-name"
+                style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+              >
+                {tooltipStatus?.tooltipName}
+              </div>
               <svg
                 className="absolute left-[27px] top-full -mt-[1px] h-2 w-full text-[#FCF324] tablet:left-[65px] tablet:h-[28px] laptop:left-[0px] dark:text-[#FCF324]"
                 x="0px"
