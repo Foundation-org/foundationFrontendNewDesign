@@ -1,6 +1,7 @@
 import * as questServices from '../../services/api/questsApi';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { checkAnswerExistCreateQuest } from '../../services/api/questsApi';
+
 export const checkQuestion = createAsyncThunk('createQuest/checkQuestion', async (value) => {
   const result = await questServices.questionValidation({
     question: value,
@@ -127,7 +128,6 @@ export const createQuestSlice = createSlice({
     handleChangeOption: (state, action) => {
       state.optionsValue = action.payload.newTypedValues;
     },
-
     resetCreateQuest: (state) => {
       Object.assign(state, initialState);
     },
@@ -146,7 +146,7 @@ export const createQuestSlice = createSlice({
     builder.addCase(checkQuestion.fulfilled, (state, action) => {
       const { validatedQuestion, errorMessage } = action.payload;
       if (errorMessage) {
-        if(errorMessage === "DUPLICATION"){
+        if (errorMessage === 'DUPLICATION') {
           state.questionReset = {
             name: 'Duplicate',
             color: 'text-[#EFD700]',
@@ -183,7 +183,6 @@ export const createQuestSlice = createSlice({
         tooltipStyle: 'tooltip-error',
       };
     });
-    // check question status end
 
     // check answer status start
     builder.addCase(checkAnswer.pending, (state, action) => {

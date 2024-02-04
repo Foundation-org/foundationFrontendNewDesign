@@ -17,7 +17,7 @@ const YesNo = () => {
 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
-  // console.log("get your value is yes", createQuestSlice);
+  console.log('get your value is yes', questionStatus.name);
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
@@ -32,9 +32,11 @@ const YesNo = () => {
     tooltipStyle: 'tooltip-info',
   };
 
-  const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
+  // const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  // console.log({ checkQuestionStatus });
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
@@ -66,7 +68,6 @@ const YesNo = () => {
       setLoading(false);
       return toast.warning('Post cannot be empty');
     }
-
 
     const { questTopic, errorMessage } = await questServices.getTopicOfValidatedQuestion({
       validatedQuestion: question,
@@ -156,10 +157,10 @@ const YesNo = () => {
             className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
             onChange={(e) => {
               setQuestion(e.target.value);
-              setCheckQuestionStatus({
-                name: 'Ok',
-                color: e.target.value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
-              });
+              // setCheckQuestionStatus({
+              //   name: 'Ok',
+              //   color: e.target.value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
+              // });
             }}
             onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             value={question}
@@ -207,7 +208,7 @@ const YesNo = () => {
           <button
             className="mr-7 mt-[10px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
             onClick={() => handleSubmit()}
-            disabled={loading === true || checkQuestionStatus.tooltipStyle === 'tooltip-error' ? true : false}
+            disabled={loading === true || questionStatus?.name === 'Ok' ? false : true}
           >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
           </button>
