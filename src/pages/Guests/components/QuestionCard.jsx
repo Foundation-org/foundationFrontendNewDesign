@@ -188,25 +188,36 @@ const QuestionCard = ({
       } else {
         startQuest(params);
       }
-    } else if (whichTypeQuestion === 'multiple choise') {
+    } else if (questStartData.whichTypeQuestion === 'multiple choise') {
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = '';
+      let addedAnswerUuidValue = '';
+      let isAddedAnsSelected=''
 
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
           if (answersSelection[i].addedOptionByUser) {
-            // If user Add his own option
-
             answerSelected.push({
               question: answersSelection[i].label,
               addedAnswerByUser: true,
+              uuid: answersSelection[i].uuid,
             });
             addedAnswerValue = answersSelection[i].label;
-            console.log('added ans value' + addedAnswerValue);
+            addedAnswerUuidValue = answersSelection[i].uuid;
+            isAddedAnsSelected=true;
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
+        } else if (answersSelection[i].check === false && answersSelection[i].addedOptionByUser === true) {
+          answerSelected.push({
+            question: answersSelection[i].label,
+            addedAnswerByUser: true,
+            uuid: answersSelection[i].uuid,
+          });
+          addedAnswerValue = answersSelection[i].label;
+          addedAnswerUuidValue = answersSelection[i].uuid;
+          isAddedAnsSelected=false;
         }
 
         if (answersSelection[i].contend) {
@@ -221,43 +232,86 @@ const QuestionCard = ({
       };
       const currentDate = new Date();
 
-      if (btnText === 'change answer') {
-        const timeInterval = validateInterval(usersChangeTheirAns);
-        // Check if enough time has passed
-        if (howManyTimesAnsChanged > 1 && currentDate - new Date(lastInteractedAt) < timeInterval) {
-          // Alert the user if the time condition is not met
-          toast.error(`You can change your selection again in ${usersChangeTheirAns}`);
+      if (questStartData.startStatus === 'change answer') {
+        const timeInterval = validateInterval(questStartData.usersChangeTheirAns);
+        if (howManyTimesAnsChanged > 1 && currentDate - new Date(questStartData.lastInteractedAt) < timeInterval) {
+          toast.error(`You can change your selection again in ${questStartData.usersChangeTheirAns}`);
+          setLoading(false);
         } else {
           const params = {
-            questId: id,
+            questId: questStartData._id,
             answer: dataToSend,
+            addedAnswer: addedAnswerValue,
+            addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid,
+            isAddedAnsSelected:isAddedAnsSelected,
           };
-          console.log('params', params);
+
+          const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
+
+          if (isEmptyQuestion) {
+            toast.error('You cannot leave the added option blank');
+            setLoading(false);
+            return;
+          }
+
+          let length;
+        if (addedAnswerValue!=='') {
+          length=params.answer.selected.length-1;
+        }
+        else{
+          length=params.answer.selected.length;
+        }
+
+
+        if (length !== 0) {
           changeAnswer(params);
+        } else {
+          toast.warning('You cannot submit without selecting an option');
+          setLoading(false);
+        }
         }
       } else {
         const params = {
-          questId: id,
+          questId: questStartData._id,
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
+          addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
+          isAddedAnsSelected:isAddedAnsSelected,
         };
 
-        // && params.answer.contended.length === 0
-        if (params.answer.selected.length === 0) {
-          toast.warning('You cannot submit without selecting an option');
+        const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
+
+        if (isEmptyQuestion) {
+          toast.error('You cannot leave the added option blank');
+          setLoading(false);
           return;
         }
 
-        console.log('params', params);
-        startQuest(params);
+        if (!isSubmit) setLoading(false);
+        let length;
+        if (addedAnswerValue!=='') {
+          length=params.answer.selected.length-1;
+        }
+        else{
+          length=params.answer.selected.length;
+        }
+
+
+        if (length !== 0) {
+          startQuest(params);
+        } else {
+          toast.warning('You cannot submit without selecting an option');
+          setLoading(false);
+        }
       }
-    }  else if (questStartData.whichTypeQuestion === 'ranked choise') {
+    } else if (questStartData.whichTypeQuestion === 'ranked choise') {
       let addedAnswerValue = '';
       let addedAnswerUuidValue = '';
       let answerSelected = [];
       let answerContended = [];
+      let isAddedAnsSelected=''
 
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {
@@ -266,10 +320,11 @@ const QuestionCard = ({
           answerSelected.push({
             question: rankedAnswers[i].label,
             addedAnswerByUser: true,
+            uuid: rankedAnswers[i].uuid,
           });
           addedAnswerValue = rankedAnswers[i].label;
-          addedAnswerUuidValue = answersSelection[i].uuid;
-          // console.log('added ans value' + addedAnswerValue);
+          addedAnswerUuidValue = rankedAnswers[i].uuid;
+          isAddedAnsSelected=true;
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
         }
@@ -297,9 +352,18 @@ const QuestionCard = ({
           const params = {
             questId: questStartData._id,
             answer: dataToSend,
+            addedAnswer: addedAnswerValue,
+            addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid,
+            isAddedAnsSelected:isAddedAnsSelected,
           };
-          console.log(params);
+          const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
+
+          if (isEmptyQuestion) {
+            toast.error('You cannot leave the added option blank');
+            setLoading(false);
+            return;
+          }
           changeAnswer(params);
         }
       } else {
@@ -309,9 +373,16 @@ const QuestionCard = ({
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
+          isAddedAnsSelected:isAddedAnsSelected,
         };
 
-        console.log(params);
+        const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
+
+        if (isEmptyQuestion) {
+          toast.error('You cannot leave the added option blank');
+          setLoading(false);
+          return;
+        }
         startQuest(params);
       }
     }

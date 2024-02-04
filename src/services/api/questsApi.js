@@ -6,8 +6,10 @@ export const updateChangeAnsStartQuest = async (data) => {
   return await api.post('/startQuest/updateChangeAnsStartQuest', {
     questId: data.questId,
     changeAnswerAddedObj: data.answer,
-    addedAnswer: data.addedAnswer || '',
+    addedAnswer: data.addedAnswer,
+    addedAnswerUuid: data.addedAnswerUuid,
     uuid: data.uuid,
+    isAddedAnsSelected:data.isAddedAnsSelected
   });
 };
 
@@ -19,6 +21,7 @@ export const createStartQuest = async (data) => {
     addedAnswer: data.addedAnswer,
     addedAnswerUuid: data.addedAnswerUuid,
     uuid: data.uuid,
+    isAddedAnsSelected:data.isAddedAnsSelected
   });
 };
 

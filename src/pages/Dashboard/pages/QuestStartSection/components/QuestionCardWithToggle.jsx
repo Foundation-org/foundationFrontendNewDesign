@@ -97,6 +97,7 @@ const QuestionCardWithToggle = (props) => {
     })),
   );
 
+
   useEffect(() => {
     setAnswerSelection(
       questStartData.QuestAnswers?.map((answer) => ({
@@ -114,7 +115,6 @@ const QuestionCardWithToggle = (props) => {
       ...item,
     })),
   );
-
   const cardSize = useMemo(() => {
     const limit = windowWidth >= 744 ? true : false;
     if (
@@ -359,6 +359,7 @@ const QuestionCardWithToggle = (props) => {
       let answerContended = [];
       let addedAnswerValue = '';
       let addedAnswerUuidValue = '';
+      let isAddedAnsSelected=''
 
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
@@ -370,12 +371,19 @@ const QuestionCardWithToggle = (props) => {
             });
             addedAnswerValue = answersSelection[i].label;
             addedAnswerUuidValue = answersSelection[i].uuid;
+            isAddedAnsSelected=true;
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
         } else if (answersSelection[i].check === false && answersSelection[i].addedOptionByUser === true) {
+          answerSelected.push({
+            question: answersSelection[i].label,
+            addedAnswerByUser: true,
+            uuid: answersSelection[i].uuid,
+          });
           addedAnswerValue = answersSelection[i].label;
           addedAnswerUuidValue = answersSelection[i].uuid;
+          isAddedAnsSelected=false;
         }
 
         if (answersSelection[i].contend) {
@@ -391,7 +399,7 @@ const QuestionCardWithToggle = (props) => {
       const currentDate = new Date();
 
       if (questStartData.startStatus === 'change answer') {
-        const timeInterval = validateInterval();
+        const timeInterval = validateInterval(questStartData.usersChangeTheirAns);
         if (howManyTimesAnsChanged > 1 && currentDate - new Date(questStartData.lastInteractedAt) < timeInterval) {
           toast.error(`You can change your selection again in ${questStartData.usersChangeTheirAns}`);
           setLoading(false);
@@ -399,15 +407,35 @@ const QuestionCardWithToggle = (props) => {
           const params = {
             questId: questStartData._id,
             answer: dataToSend,
+            addedAnswer: addedAnswerValue,
+            addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid,
+            isAddedAnsSelected:isAddedAnsSelected,
           };
 
-          if (params.answer.selected.length !== 0) {
-            changeAnswer(params);
-          } else {
-            toast.warning('You cannot submit without selecting an option');
+          const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
+
+          if (isEmptyQuestion) {
+            toast.error('You cannot leave the added option blank');
             setLoading(false);
+            return;
           }
+
+          let length;
+        if (addedAnswerValue!=='') {
+          length=params.answer.selected.length-1;
+        }
+        else{
+          length=params.answer.selected.length;
+        }
+
+
+        if (length !== 0) {
+          changeAnswer(params);
+        } else {
+          toast.warning('You cannot submit without selecting an option');
+          setLoading(false);
+        }
         }
       } else {
         const params = {
@@ -416,14 +444,9 @@ const QuestionCardWithToggle = (props) => {
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
+          isAddedAnsSelected:isAddedAnsSelected,
         };
 
-        // && params.answer.contended.length === 0
-        if (params.answer.selected.length === 0) {
-          toast.warning('You cannot submit without selecting an option');
-          setLoading(false);
-          return;
-        }
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
@@ -432,13 +455,29 @@ const QuestionCardWithToggle = (props) => {
           return;
         }
 
-        startQuest(params);
+        if (!isSubmit) setLoading(false);
+        let length;
+        if (addedAnswerValue!=='') {
+          length=params.answer.selected.length-1;
+        }
+        else{
+          length=params.answer.selected.length;
+        }
+
+
+        if (length !== 0) {
+          startQuest(params);
+        } else {
+          toast.warning('You cannot submit without selecting an option');
+          setLoading(false);
+        }
       }
     } else if (questStartData.whichTypeQuestion === 'ranked choise') {
       let addedAnswerValue = '';
       let addedAnswerUuidValue = '';
       let answerSelected = [];
       let answerContended = [];
+      let isAddedAnsSelected=''
 
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {
@@ -447,10 +486,11 @@ const QuestionCardWithToggle = (props) => {
           answerSelected.push({
             question: rankedAnswers[i].label,
             addedAnswerByUser: true,
+            uuid: rankedAnswers[i].uuid,
           });
           addedAnswerValue = rankedAnswers[i].label;
-          addedAnswerUuidValue = answersSelection[i].uuid;
-          // console.log('added ans value' + addedAnswerValue);
+          addedAnswerUuidValue = rankedAnswers[i].uuid;
+          isAddedAnsSelected=true;
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
         }
@@ -478,9 +518,18 @@ const QuestionCardWithToggle = (props) => {
           const params = {
             questId: questStartData._id,
             answer: dataToSend,
+            addedAnswer: addedAnswerValue,
+            addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid,
+            isAddedAnsSelected:isAddedAnsSelected,
           };
-          console.log(params);
+          const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
+
+          if (isEmptyQuestion) {
+            toast.error('You cannot leave the added option blank');
+            setLoading(false);
+            return;
+          }
           changeAnswer(params);
         }
       } else {
@@ -490,9 +539,16 @@ const QuestionCardWithToggle = (props) => {
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
+          isAddedAnsSelected:isAddedAnsSelected,
         };
 
-        console.log(params);
+        const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
+
+        if (isEmptyQuestion) {
+          toast.error('You cannot leave the added option blank');
+          setLoading(false);
+          return;
+        }
         startQuest(params);
       }
     }
