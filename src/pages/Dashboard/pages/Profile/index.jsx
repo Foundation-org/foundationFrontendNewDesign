@@ -41,7 +41,7 @@ const Profile = () => {
       <Topbar />
       {/* <div className="h-[calc(100vh-96px)] overflow-y-auto bg-[#F3F3F3] dark:bg-[#242424]"> */}
       <div className="h-screen overflow-y-scroll bg-[#F3F3F3] dark:bg-[#242424]">
-        <div className="laptop::mt-12 mr-5 mt-5 flex justify-end gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[109px]">
+        <div className="laptop::mt-12 mr-5 mt-5 flex justify-end items-center gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[109px]">
           <div
             style={{
               background: 'url(/assets/svgs/dashboard/MeBadge.svg)',
@@ -57,7 +57,8 @@ const Profile = () => {
           <div>
             <h4 className="heading">My Profile</h4>
             <div className="flex items-center gap-1 tablet:gap-[13px]">
-              <p className="text-[8px] dark:text-white tablet:text-[16px]">Light</p>
+              <p className="text-[15px] font-medium text-[#7C7C7C]">Version 1.0.0 </p>
+              {/* <p className="text-[8px] dark:text-white tablet:text-[16px]">Light</p>
               <Switch
                 checked={checkState}
                 onChange={handleTheme}
@@ -75,7 +76,7 @@ const Profile = () => {
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
                 />
               </Switch>
-              <p className="text-[8px] dark:text-white tablet:text-[16px]">Dark</p>
+              <p className="text-[8px] dark:text-white tablet:text-[16px]">Dark</p> */}
             </div>
           </div>
         </div>
