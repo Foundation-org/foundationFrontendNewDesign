@@ -109,7 +109,7 @@ export const questionValidation = async ({ question, queryType }) => {
       return { validatedQuestion: null, errorMessage: 'ERROR' };
     }
     // To check uniqueness of the question
-    const constraintResponse = await checkUniqueQuestion(question);
+    const constraintResponse = await checkUniqueQuestion(response.data.message);
     if (!constraintResponse.data.isUnique) {
       return { validatedQuestion: null, errorMessage: 'DUPLICATION' };
     }
