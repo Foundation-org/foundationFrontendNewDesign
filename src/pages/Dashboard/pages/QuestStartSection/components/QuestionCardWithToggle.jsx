@@ -25,6 +25,7 @@ const QuestionCardWithToggle = (props) => {
 
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   const { questStartData, isBookmarked } = props;
 
@@ -97,23 +98,13 @@ const QuestionCardWithToggle = (props) => {
     })),
   );
 
-  useEffect(() => {
-    setAnswerSelection(
-      questStartData.QuestAnswers?.map((answer) => ({
-        label: answer.question,
-        check: false,
-        contend: false,
-        uuid: answer.uuid,
-      })),
-    );
-  }, [questStartData.QuestAnswers]);
-
   const [rankedAnswers, setRankedAnswers] = useState(
     answersSelection?.map((item, index) => ({
       id: `unique-${index}`,
       ...item,
     })),
   );
+
   const cardSize = useMemo(() => {
     const limit = windowWidth >= 744 ? true : false;
     if (
@@ -188,7 +179,7 @@ const QuestionCardWithToggle = (props) => {
 
     setAnswerSelection([...answersSelection, newOption]);
 
-    setAddOptionField(!addOptionField);
+    setAddOptionField(1);
     dispatch(questUtilsActions.updateaddOptionLimit());
   };
 
@@ -258,10 +249,10 @@ const QuestionCardWithToggle = (props) => {
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
+      queryClient.invalidateQueries('FeedData');
       if (resp.data.message === 'Start Quest Created Successfully') {
         // toast.success('Successfully Completed');
         setLoading(false);
-        queryClient.invalidateQueries('FeedData');
       }
       handleViewResults(questStartData._id);
       userInfo(persistedUserInfo?.uuid).then((resp) => {
@@ -279,6 +270,7 @@ const QuestionCardWithToggle = (props) => {
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: questServices.updateChangeAnsStartQuest,
     onSuccess: (resp) => {
+      queryClient.invalidateQueries('FeedData');
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
         toast.warning('You have selected the same option as last time. Your option was not changed.');
@@ -297,7 +289,6 @@ const QuestionCardWithToggle = (props) => {
           dispatch(addUser(resp.data));
         }
       });
-      queryClient.invalidateQueries('FeedData');
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
@@ -362,7 +353,7 @@ const QuestionCardWithToggle = (props) => {
 
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
-          if (answersSelection[i].addedOptionByUser) {
+          if (answersSelection[i].addedOptionByUser && getQuestUtilsState.addOptionLimit === 1) {
             answerSelected.push({
               question: answersSelection[i].label,
               addedAnswerByUser: true,
@@ -374,7 +365,11 @@ const QuestionCardWithToggle = (props) => {
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
-        } else if (answersSelection[i].check === false && answersSelection[i].addedOptionByUser === true) {
+        } else if (
+          answersSelection[i].check === false &&
+          answersSelection[i].addedOptionByUser === true &&
+          getQuestUtilsState.addOptionLimit === 1
+        ) {
           answerSelected.push({
             question: answersSelection[i].label,
             addedAnswerByUser: true,
@@ -421,11 +416,11 @@ const QuestionCardWithToggle = (props) => {
           }
 
           let length;
-          if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
+          if (isAddedAnsSelected === true || isAddedAnsSelected === '') {
             length = params.answer.selected.length;
           } else {
-            length = params.answer.selected.length - 1;
-          }
+            length = params.answer.selected.length - 1;
+          }
 
           if (length !== 0) {
             changeAnswer(params);
@@ -452,13 +447,12 @@ const QuestionCardWithToggle = (props) => {
           return;
         }
 
-
         let length;
-          if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
-            length = params.answer.selected.length;
-          } else {
-            length = params.answer.selected.length - 1;
-          }
+        if (isAddedAnsSelected === true || isAddedAnsSelected === '') {
+          length = params.answer.selected.length;
+        } else {
+          length = params.answer.selected.length - 1;
+        }
 
         if (length !== 0) {
           console.log('🚀 ~ handleSubmit ~  i am here:');

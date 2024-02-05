@@ -41,6 +41,9 @@ const YesNo = () => {
     mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
+        setQuestion('');
+        setChangedOption('');
+        setChangeState(false);
         toast.success('Successfully Created');
         setTimeout(() => {
           setLoading(false);
@@ -51,6 +54,9 @@ const YesNo = () => {
     onError: (err) => {
       if (err.response) {
         toast.error(err.response.data.message.split(':')[1]);
+        setQuestion('');
+        setChangedOption('');
+        setChangeState(false);
       }
       setLoading(false);
     },

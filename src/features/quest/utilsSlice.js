@@ -9,7 +9,7 @@ export const utilsSlice = createSlice({
   initialState,
   reducers: {
     updateaddOptionLimit: (state) => {
-      state.addOptionLimit = state.addOptionLimit === 0 ? 1 : 0;
+      state.addOptionLimit = state.addOptionLimit + 1;
     },
     resetaddOptionLimit: (state) => {
       state.addOptionLimit = initialState.addOptionLimit;

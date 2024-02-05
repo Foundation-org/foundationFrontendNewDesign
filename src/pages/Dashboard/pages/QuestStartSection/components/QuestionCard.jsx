@@ -93,16 +93,16 @@ const QuestionCard = (props) => {
   //   console.log('answersSelection', answersSelection);
   // }, [answersSelection]);
 
-  useEffect(() => {
-    setAnswerSelection(
-      questStartData.QuestAnswers?.map((answer) => ({
-        label: answer.question,
-        check: false,
-        contend: false,
-        uuid: answer.uuid,
-      })),
-    );
-  }, [questStartData.QuestAnswers]);
+  // useEffect(() => {
+  //   setAnswerSelection(
+  //     questStartData.QuestAnswers?.map((answer) => ({
+  //       label: answer.question,
+  //       // check: false,
+  //       // contend: false,
+  //       uuid: answer.uuid,
+  //     })),
+  //   );
+  // }, [questStartData.QuestAnswers]);
 
   const [rankedAnswers, setRankedAnswers] = useState(
     answersSelection?.map((item, index) => ({
@@ -132,6 +132,7 @@ const QuestionCard = (props) => {
       }
     }
   }, [questStartData.QuestAnswers, windowWidth]);
+
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -428,11 +429,11 @@ const QuestionCard = (props) => {
           }
 
           let length;
-          if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
+          if (isAddedAnsSelected === true || isAddedAnsSelected === '') {
             length = params.answer.selected.length;
           } else {
-            length = params.answer.selected.length - 1;
-          }
+            length = params.answer.selected.length - 1;
+          }
 
           if (length !== 0) {
             changeAnswer(params);
@@ -460,11 +461,11 @@ const QuestionCard = (props) => {
         }
 
         let length;
-          if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
-            length = params.answer.selected.length;
-          } else {
-            length = params.answer.selected.length - 1;
-          }
+        if (isAddedAnsSelected === true || isAddedAnsSelected === '') {
+          length = params.answer.selected.length;
+        } else {
+          length = params.answer.selected.length - 1;
+        }
 
         if (length !== 0) {
           startQuest(params);

@@ -58,6 +58,10 @@ const RankChoice = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setQuestion('');
+        setAddOption(false);
+        setChangedOption('');
+        setChangeState(false);
+        setLoading(false);
         toast.success('Successfully Created');
         setTimeout(() => {
           setLoading(false);
@@ -68,6 +72,9 @@ const RankChoice = () => {
     onError: (err) => {
       console.log('Mutation Error', err);
       setQuestion('');
+      setAddOption(false);
+      setChangedOption('');
+      setChangeState(false);
       setLoading(false);
     },
   });

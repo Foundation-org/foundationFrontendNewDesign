@@ -175,7 +175,8 @@ const QuestStartSection = () => {
     setStartTest(null);
     setViewResult((prev) => (prev === testId ? null : testId));
   };
-  console.log({ allData });
+
+  console.log('🚀 ~ QuestStartSection ~ allData:', allData);
 
   return (
     <div className="flex w-full flex-col bg-white dark:bg-black laptop:flex-row">

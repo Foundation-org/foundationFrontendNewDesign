@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import Options from '../components/Options';
 import {
@@ -21,7 +21,7 @@ import { updateMultipleChoice } from '../../../../../features/createQuest/create
 const MultipleChoice = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const queryClient = useQueryClient();
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const optionsValue = useSelector(createQuestAction.optionsValue);
@@ -62,12 +62,18 @@ const MultipleChoice = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setQuestion('');
+        setMultipleOption(false);
+        setAddOption(false);
+        setChangedOption('');
+        setChangeState(false);
         toast.success('Successfully Created');
         setTimeout(() => {
           setLoading(false);
           navigate('/dashboard');
         }, 2000);
       }
+
+      queryClient.invalidateQueries('FeedData');
     },
 
     onError: (err) => {
@@ -75,6 +81,10 @@ const MultipleChoice = () => {
         toast.error(err.response.data.message.split(':')[1]);
       }
       setQuestion('');
+      setMultipleOption(false);
+      setAddOption(false);
+      setChangedOption('');
+      setChangeState(false);
       setLoading(false);
     },
   });
