@@ -366,7 +366,7 @@ const QuestionCard = (props) => {
       let answerContended = [];
       let addedAnswerValue = '';
       let addedAnswerUuidValue = '';
-      let isAddedAnsSelected=''
+      let isAddedAnsSelected = '';
 
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
@@ -378,7 +378,7 @@ const QuestionCard = (props) => {
             });
             addedAnswerValue = answersSelection[i].label;
             addedAnswerUuidValue = answersSelection[i].uuid;
-            isAddedAnsSelected=true;
+            isAddedAnsSelected = true;
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
@@ -390,7 +390,7 @@ const QuestionCard = (props) => {
           });
           addedAnswerValue = answersSelection[i].label;
           addedAnswerUuidValue = answersSelection[i].uuid;
-          isAddedAnsSelected=false;
+          isAddedAnsSelected = false;
         }
 
         if (answersSelection[i].contend) {
@@ -417,7 +417,7 @@ const QuestionCard = (props) => {
             addedAnswer: addedAnswerValue,
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid,
-            isAddedAnsSelected:isAddedAnsSelected,
+            isAddedAnsSelected: isAddedAnsSelected,
           };
 
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
@@ -429,20 +429,18 @@ const QuestionCard = (props) => {
           }
 
           let length;
-        if (addedAnswerValue!=='') {
-          length=params.answer.selected.length-1;
-        }
-        else{
-          length=params.answer.selected.length;
-        }
+          if (addedAnswerValue !== '') {
+            length = params.answer.selected.length - 1;
+          } else {
+            length = params.answer.selected.length;
+          }
 
-
-        if (length !== 0) {
-          changeAnswer(params);
-        } else {
-          toast.warning('You cannot submit without selecting an option');
-          setLoading(false);
-        }
+          if (length !== 0) {
+            changeAnswer(params);
+          } else {
+            toast.warning('You cannot submit without selecting an option');
+            setLoading(false);
+          }
         }
       } else {
         const params = {
@@ -451,7 +449,7 @@ const QuestionCard = (props) => {
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
-          isAddedAnsSelected:isAddedAnsSelected,
+          isAddedAnsSelected: isAddedAnsSelected,
         };
 
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
@@ -464,13 +462,11 @@ const QuestionCard = (props) => {
 
         if (!isSubmit) setLoading(false);
         let length;
-        if (addedAnswerValue!=='') {
-          length=params.answer.selected.length-1;
+        if (addedAnswerValue !== '') {
+          length = params.answer.selected.length - 1;
+        } else {
+          length = params.answer.selected.length;
         }
-        else{
-          length=params.answer.selected.length;
-        }
-
 
         if (length !== 0) {
           startQuest(params);
@@ -484,7 +480,7 @@ const QuestionCard = (props) => {
       let addedAnswerUuidValue = '';
       let answerSelected = [];
       let answerContended = [];
-      let isAddedAnsSelected=''
+      let isAddedAnsSelected = '';
 
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {
@@ -497,7 +493,7 @@ const QuestionCard = (props) => {
           });
           addedAnswerValue = rankedAnswers[i].label;
           addedAnswerUuidValue = rankedAnswers[i].uuid;
-          isAddedAnsSelected=true;
+          isAddedAnsSelected = true;
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
         }
@@ -528,7 +524,7 @@ const QuestionCard = (props) => {
             addedAnswer: addedAnswerValue,
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid,
-            isAddedAnsSelected:isAddedAnsSelected,
+            isAddedAnsSelected: isAddedAnsSelected,
           };
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
@@ -546,7 +542,7 @@ const QuestionCard = (props) => {
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
-          isAddedAnsSelected:isAddedAnsSelected,
+          isAddedAnsSelected: isAddedAnsSelected,
         };
 
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');

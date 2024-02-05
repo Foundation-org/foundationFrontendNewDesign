@@ -14,7 +14,7 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic, bookmarkStatu
             alt={alt}
             className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888px]"
           />
-          <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#7A7016] tablet:top-[40%] tablet:text-[15px]">
+          <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#7A7016] tablet:top-[40%] tablet:text-[12px]">
             {badgeCount}
           </p>
         </div>

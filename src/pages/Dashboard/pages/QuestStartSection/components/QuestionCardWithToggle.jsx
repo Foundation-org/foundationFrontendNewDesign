@@ -40,6 +40,7 @@ const QuestionCardWithToggle = (props) => {
   const [openResults, setOpenResults] = useState(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const [startTest, setStartTest] = useState('');
   const [viewResult, setViewResult] = useState('');
   const [questSelection, setQuestSelection] = useState(questSelectionInitial);
@@ -96,7 +97,6 @@ const QuestionCardWithToggle = (props) => {
       uuid: answer.uuid,
     })),
   );
-
 
   useEffect(() => {
     setAnswerSelection(
@@ -359,7 +359,7 @@ const QuestionCardWithToggle = (props) => {
       let answerContended = [];
       let addedAnswerValue = '';
       let addedAnswerUuidValue = '';
-      let isAddedAnsSelected=''
+      let isAddedAnsSelected = '';
 
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
@@ -371,7 +371,7 @@ const QuestionCardWithToggle = (props) => {
             });
             addedAnswerValue = answersSelection[i].label;
             addedAnswerUuidValue = answersSelection[i].uuid;
-            isAddedAnsSelected=true;
+            isAddedAnsSelected = true;
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
@@ -383,7 +383,7 @@ const QuestionCardWithToggle = (props) => {
           });
           addedAnswerValue = answersSelection[i].label;
           addedAnswerUuidValue = answersSelection[i].uuid;
-          isAddedAnsSelected=false;
+          isAddedAnsSelected = false;
         }
 
         if (answersSelection[i].contend) {
@@ -410,7 +410,7 @@ const QuestionCardWithToggle = (props) => {
             addedAnswer: addedAnswerValue,
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid,
-            isAddedAnsSelected:isAddedAnsSelected,
+            isAddedAnsSelected: isAddedAnsSelected,
           };
 
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
@@ -422,20 +422,18 @@ const QuestionCardWithToggle = (props) => {
           }
 
           let length;
-        if (addedAnswerValue!=='') {
-          length=params.answer.selected.length-1;
-        }
-        else{
-          length=params.answer.selected.length;
-        }
+          if (addedAnswerValue !== '') {
+            length = params.answer.selected.length - 1;
+          } else {
+            length = params.answer.selected.length;
+          }
 
-
-        if (length !== 0) {
-          changeAnswer(params);
-        } else {
-          toast.warning('You cannot submit without selecting an option');
-          setLoading(false);
-        }
+          if (length !== 0) {
+            changeAnswer(params);
+          } else {
+            toast.warning('You cannot submit without selecting an option');
+            setLoading(false);
+          }
         }
       } else {
         const params = {
@@ -444,7 +442,7 @@ const QuestionCardWithToggle = (props) => {
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
-          isAddedAnsSelected:isAddedAnsSelected,
+          isAddedAnsSelected: isAddedAnsSelected,
         };
 
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
@@ -457,15 +455,14 @@ const QuestionCardWithToggle = (props) => {
 
         if (!isSubmit) setLoading(false);
         let length;
-        if (addedAnswerValue!=='') {
-          length=params.answer.selected.length-1;
+        if (addedAnswerValue !== '') {
+          length = params.answer.selected.length - 1;
+        } else {
+          length = params.answer.selected.length;
         }
-        else{
-          length=params.answer.selected.length;
-        }
-
 
         if (length !== 0) {
+          console.log('🚀 ~ handleSubmit ~  i am here:');
           startQuest(params);
         } else {
           toast.warning('You cannot submit without selecting an option');
@@ -477,7 +474,7 @@ const QuestionCardWithToggle = (props) => {
       let addedAnswerUuidValue = '';
       let answerSelected = [];
       let answerContended = [];
-      let isAddedAnsSelected=''
+      let isAddedAnsSelected = '';
 
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {
@@ -490,7 +487,7 @@ const QuestionCardWithToggle = (props) => {
           });
           addedAnswerValue = rankedAnswers[i].label;
           addedAnswerUuidValue = rankedAnswers[i].uuid;
-          isAddedAnsSelected=true;
+          isAddedAnsSelected = true;
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
         }
@@ -521,7 +518,7 @@ const QuestionCardWithToggle = (props) => {
             addedAnswer: addedAnswerValue,
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid,
-            isAddedAnsSelected:isAddedAnsSelected,
+            isAddedAnsSelected: isAddedAnsSelected,
           };
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
@@ -539,7 +536,7 @@ const QuestionCardWithToggle = (props) => {
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
-          isAddedAnsSelected:isAddedAnsSelected,
+          isAddedAnsSelected: isAddedAnsSelected,
         };
 
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
@@ -612,6 +609,7 @@ const QuestionCardWithToggle = (props) => {
             cardSize={cardSize}
             checkOptionStatus={checkOptionStatus}
             setCheckOptionStatus={setCheckOptionStatus}
+            setIsSubmit={setIsSubmit}
           />
           <ConditionalTextFullScreen questStartData={questStartData} show={true} />
         </>
