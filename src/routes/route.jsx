@@ -28,11 +28,11 @@ import PrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
   let auth = { persistedUser };
-  console.log('🚀 ~ Router ~ persistedUser:', persistedUser);
+  // console.log('🚀 ~ Router ~ persistedUser:', persistedUser);
   // console.log("🚀 ~ Router ~ persistedUser:", persistedUser)
   // console.log("🚀 ~ Router ~ auth:", auth)
 
-  console.log('usr', persistedUser);
+  // console.log('usr', persistedUser);
 
   return (
     <>

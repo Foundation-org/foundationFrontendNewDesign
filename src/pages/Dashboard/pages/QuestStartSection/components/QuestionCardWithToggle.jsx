@@ -158,10 +158,10 @@ const QuestionCardWithToggle = (props) => {
 
   const handleChange = () => {
     setOpenResults(false);
-    const data = {
-      questForeignKey: questStartData._id,
-      uuid: persistedUserInfo.uuid,
-    };
+    // const data = {
+    //   questForeignKey: questStartData._id,
+    //   uuid: persistedUserInfo.uuid,
+    // };
 
     handleStartTest(questStartData._id);
   };
@@ -182,6 +182,8 @@ const QuestionCardWithToggle = (props) => {
     setAddOptionField(1);
     dispatch(questUtilsActions.updateaddOptionLimit());
   };
+
+  console.log('answerSelection', answersSelection);
 
   const handleToggleCheck = (label, option, check, id) => {
     const actionPayload = {
@@ -424,6 +426,19 @@ const QuestionCardWithToggle = (props) => {
 
           if (length !== 0) {
             changeAnswer(params);
+
+            const updatedArray = answersSelection.map((item, index) => {
+              if (index === answersSelection.length - 1) {
+                return {
+                  ...item,
+                  edit: false,
+                  delete: false,
+                };
+              }
+              return item;
+            });
+
+            setAnswerSelection(updatedArray);
           } else {
             toast.warning('You cannot submit without selecting an option');
             setLoading(false);
@@ -457,6 +472,19 @@ const QuestionCardWithToggle = (props) => {
         if (length !== 0) {
           console.log('🚀 ~ handleSubmit ~  i am here:');
           startQuest(params);
+
+          const updatedArray = answersSelection.map((item, index) => {
+            if (index === answersSelection.length - 1) {
+              return {
+                ...item,
+                edit: false,
+                delete: false,
+              };
+            }
+            return item;
+          });
+
+          setAnswerSelection(updatedArray);
         } else {
           toast.warning('You cannot submit without selecting an option');
           setLoading(false);
