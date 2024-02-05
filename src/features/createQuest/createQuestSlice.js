@@ -147,6 +147,7 @@ export const createQuestSlice = createSlice({
       const { validatedQuestion, errorMessage } = action.payload;
       if (errorMessage) {
         if (errorMessage === 'DUPLICATION') {
+          state.questions.question = validatedQuestion;
           state.questionReset = {
             name: 'Duplicate',
             color: 'text-[#EFD700]',

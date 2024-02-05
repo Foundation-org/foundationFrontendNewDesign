@@ -267,6 +267,18 @@ const QuestionCard = ({
 
         if (length !== 0) {
           changeAnswer(params);
+          const updatedArray = answersSelection.map((item, index) => {
+            if (index === answersSelection.length - 1) {
+              return {
+                ...item,
+                edit: false,
+                delete: false,
+              };
+            }
+            return item;
+          });
+
+          setAnswerSelection(updatedArray);
         } else {
           toast.warning('You cannot submit without selecting an option');
           setLoading(false);
@@ -300,6 +312,17 @@ const QuestionCard = ({
 
         if (length !== 0) {
           startQuest(params);
+          const updatedArray = answersSelection.map((item, index) => {
+            if (index === answersSelection.length - 1) {
+              return {
+                ...item,
+                edit: false,
+                delete: false,
+              };
+            }
+            return item;
+          });
+          setAnswerSelection(updatedArray);
         } else {
           toast.warning('You cannot submit without selecting an option');
           setLoading(false);
