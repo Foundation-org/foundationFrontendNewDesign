@@ -258,12 +258,11 @@ const QuestionCard = ({
           }
 
           let length;
-        if (addedAnswerValue!=='') {
-          length=params.answer.selected.length-1;
-        }
-        else{
-          length=params.answer.selected.length;
-        }
+          if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
+            length = params.answer.selected.length;
+          } else {
+            length = params.answer.selected.length - 1;
+          }
 
 
         if (length !== 0) {
@@ -291,14 +290,12 @@ const QuestionCard = ({
           return;
         }
 
-        if (!isSubmit) setLoading(false);
         let length;
-        if (addedAnswerValue!=='') {
-          length=params.answer.selected.length-1;
-        }
-        else{
-          length=params.answer.selected.length;
-        }
+        if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
+          length = params.answer.selected.length;
+        } else {
+          length = params.answer.selected.length - 1;
+          }
 
 
         if (length !== 0) {

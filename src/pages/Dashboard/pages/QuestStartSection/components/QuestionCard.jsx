@@ -33,7 +33,6 @@ const QuestionCard = (props) => {
   const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(false);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [questSelection, setQuestSelection] = useState(questSelectionInitial);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -429,11 +428,11 @@ const QuestionCard = (props) => {
           }
 
           let length;
-          if (addedAnswerValue !== '') {
-            length = params.answer.selected.length - 1;
-          } else {
+          if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
             length = params.answer.selected.length;
-          }
+          } else {
+            length = params.answer.selected.length - 1;
+          }
 
           if (length !== 0) {
             changeAnswer(params);
@@ -460,13 +459,12 @@ const QuestionCard = (props) => {
           return;
         }
 
-        if (!isSubmit) setLoading(false);
         let length;
-        if (addedAnswerValue !== '') {
-          length = params.answer.selected.length - 1;
-        } else {
-          length = params.answer.selected.length;
-        }
+          if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
+            length = params.answer.selected.length;
+          } else {
+            length = params.answer.selected.length - 1;
+          }
 
         if (length !== 0) {
           startQuest(params);
@@ -611,7 +609,6 @@ const QuestionCard = (props) => {
             setRankedAnswers={setRankedAnswers}
             setStartTest={setStartTest}
             loading={loading}
-            setIsSubmit={setIsSubmit}
             usersChangeTheirAns={questStartData.usersChangeTheirAns}
             howManyTimesAnsChanged={howManyTimesAnsChanged}
             loadingDetail={loadingDetail}

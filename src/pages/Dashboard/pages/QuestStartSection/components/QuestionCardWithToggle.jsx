@@ -40,7 +40,6 @@ const QuestionCardWithToggle = (props) => {
   const [openResults, setOpenResults] = useState(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(false);
   const [startTest, setStartTest] = useState('');
   const [viewResult, setViewResult] = useState('');
   const [questSelection, setQuestSelection] = useState(questSelectionInitial);
@@ -422,11 +421,11 @@ const QuestionCardWithToggle = (props) => {
           }
 
           let length;
-          if (addedAnswerValue !== '') {
-            length = params.answer.selected.length - 1;
-          } else {
+          if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
             length = params.answer.selected.length;
-          }
+          } else {
+            length = params.answer.selected.length - 1;
+          }
 
           if (length !== 0) {
             changeAnswer(params);
@@ -453,13 +452,13 @@ const QuestionCardWithToggle = (props) => {
           return;
         }
 
-        if (!isSubmit) setLoading(false);
+
         let length;
-        if (addedAnswerValue !== '') {
-          length = params.answer.selected.length - 1;
-        } else {
-          length = params.answer.selected.length;
-        }
+          if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
+            length = params.answer.selected.length;
+          } else {
+            length = params.answer.selected.length - 1;
+          }
 
         if (length !== 0) {
           console.log('🚀 ~ handleSubmit ~  i am here:');
@@ -609,7 +608,6 @@ const QuestionCardWithToggle = (props) => {
             cardSize={cardSize}
             checkOptionStatus={checkOptionStatus}
             setCheckOptionStatus={setCheckOptionStatus}
-            setIsSubmit={setIsSubmit}
           />
           <ConditionalTextFullScreen questStartData={questStartData} show={true} />
         </>
