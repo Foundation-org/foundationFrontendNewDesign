@@ -19,6 +19,7 @@ import ConditionalTextFullScreen from '../../../../../components/question-card/C
 
 import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
+import * as authActions from '../../../../../features/auth/authSlice';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -248,6 +249,24 @@ const QuestionCardWithToggle = (props) => {
     }
   }, [questStartData]);
 
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+    onSuccess: (resp) => {
+      if (resp?.status === 200) {
+        if (resp.data) {
+          dispatch(authActions.addUser(resp?.data));
+
+          if (!localStorage.getItem('uuid')) {
+            localStorage.setItem('uuid', resp.data.uuid);
+          }
+        }
+      }
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
@@ -255,13 +274,14 @@ const QuestionCardWithToggle = (props) => {
       if (resp.data.message === 'Start Quest Created Successfully') {
         // toast.success('Successfully Completed');
         setLoading(false);
+        getUserInfo();
       }
       handleViewResults(questStartData._id);
-      userInfo(persistedUserInfo?.uuid).then((resp) => {
-        if (resp.status === 200) {
-          dispatch(addUser(resp.data));
-        }
-      });
+      // userInfo(persistedUserInfo?.uuid).then((resp) => {
+      //   if (resp.status === 200) {
+      //     dispatch(addUser(resp.data));
+      //   }
+      // });
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
@@ -273,6 +293,7 @@ const QuestionCardWithToggle = (props) => {
     mutationFn: questServices.updateChangeAnsStartQuest,
     onSuccess: (resp) => {
       queryClient.invalidateQueries('FeedData');
+      getUserInfo();
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
         toast.warning('You have selected the same option as last time. Your option was not changed.');
@@ -425,7 +446,7 @@ const QuestionCardWithToggle = (props) => {
           }
 
           if (length !== 0) {
-            changeAnswer(params);
+            changeAnswer(params); // Change Answer API Call
 
             const updatedArray = answersSelection.map((item, index) => {
               if (index === answersSelection.length - 1) {
@@ -470,8 +491,7 @@ const QuestionCardWithToggle = (props) => {
         }
 
         if (length !== 0) {
-          console.log('🚀 ~ handleSubmit ~  i am here:');
-          startQuest(params);
+          startQuest(params); // Start Quest API CALL
 
           const updatedArray = answersSelection.map((item, index) => {
             if (index === answersSelection.length - 1) {

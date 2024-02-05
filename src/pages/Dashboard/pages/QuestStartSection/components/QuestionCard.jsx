@@ -18,6 +18,7 @@ import ConditionalTextFullScreen from '../../../../../components/question-card/C
 import * as questAction from '../../../../../features/quest/questsSlice';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import * as questServices from '../../../../../services/api/questsApi';
+import * as authActions from '../../../../../features/auth/authSlice';
 import { questSelectionInitial } from '../../../../../constants/quests';
 
 const QuestionCard = (props) => {
@@ -256,6 +257,24 @@ const QuestionCard = (props) => {
     setAnswerSelection((prevAnswers) => updateAnswersSelectionForRanked(prevAnswers, actionPayload));
   };
 
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+    onSuccess: (resp) => {
+      if (resp?.status === 200) {
+        if (resp.data) {
+          dispatch(authActions.addUser(resp?.data));
+
+          if (!localStorage.getItem('uuid')) {
+            localStorage.setItem('uuid', resp.data.uuid);
+          }
+        }
+      }
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
@@ -263,6 +282,7 @@ const QuestionCard = (props) => {
         // toast.success('Successfully Completed');
         setLoading(false);
         queryClient.invalidateQueries('FeedData');
+        getUserInfo();
       }
       handleViewResults(questStartData._id);
       userInfo(persistedUserInfo?.uuid).then((resp) => {
@@ -281,6 +301,7 @@ const QuestionCard = (props) => {
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: updateChangeAnsStartQuest,
     onSuccess: (resp) => {
+      getUserInfo();
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
         toast.warning('You have selected the same option as last time. Your option was not changed.');

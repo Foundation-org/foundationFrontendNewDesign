@@ -13,11 +13,13 @@ import EmailTypeModal from '../../../components/EmailTypeModal';
 const SidebarRight = () => {
   const dispath = useDispatch();
   const navigate = useNavigate();
-  const [response, setResponse] = useState();
+  // const [response, setResponse] = useState();
   const [treasuryAmount, setTreasuryAmount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  console.log('🚀 ~ SidebarRight ~ persistedUserInfo:', persistedUserInfo);
 
   const sidebarList = [
     {
@@ -26,7 +28,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon11.svg',
       alt: 'icon1',
       title: 'Posts-Created',
-      value: (response && response?.questsCreated) || 0,
+      value: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0,
     },
     {
       id: 2,
@@ -34,7 +36,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon12.svg',
       alt: 'icon1',
       title: 'Posts-Engaged',
-      value: (response && response?.usersAnswered) || 0,
+      value: (persistedUserInfo && persistedUserInfo?.usersAnswered) || 0,
     },
     // {
     //   id: 3,
@@ -58,7 +60,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon15.svg',
       alt: 'icon1',
       title: 'Selections-Changed',
-      value: (response && response?.changedAnswers) || 0,
+      value: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0,
     },
     {
       id: 6,
@@ -66,7 +68,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon16.svg',
       alt: 'icon1',
       title: 'Options-Added',
-      value: (response && response?.addedAnswers) || 0,
+      value: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0,
     },
     {
       id: 7,
@@ -74,7 +76,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/working.png',
       alt: 'icon1',
       title: 'Agreement-Received',
-      value: (response && response?.selectionsOnAddedAns) || 0, 
+      value: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0,
     },
     {
       id: 8,
@@ -82,7 +84,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon18.svg',
       alt: 'icon1',
       title: 'Objections-Received',
-      value: (response && response?.contentionsOnAddedAns) || 0,
+      value: (persistedUserInfo && persistedUserInfo?.contentionsOnAddedAns) || 0,
     },
     {
       id: 9,
@@ -90,7 +92,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon19.svg',
       alt: 'icon1',
       title: 'Objections-Given',
-      value: (response && response?.contentionsGiven) || 0,
+      value: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0,
     },
     {
       id: 10,
@@ -98,7 +100,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/icon20.svg',
       alt: 'icon1',
       title: 'Code of Conduct-Fails',
-      value: (response && response?.violationCounter) || 0,
+      value: (persistedUserInfo && persistedUserInfo?.violationCounter) || 0,
     },
   ];
 
@@ -131,7 +133,7 @@ const SidebarRight = () => {
         }
       }
 
-      setResponse(resp?.data);
+      // setResponse(resp?.data);
     } catch (e) {
       console.log({ e });
       toast.error(e.response.data.message.split(':')[1]);
