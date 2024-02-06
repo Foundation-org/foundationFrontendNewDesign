@@ -395,6 +395,20 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
                 Clear Search
               </button>
             </div>
+          ) : filterStates?.searchData ? (
+            <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+              <b>You are all caught up!</b>
+              <button
+                className={`${
+                  persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
+                onClick={() => {
+                  dispatch(filtersActions.resetSearchData());
+                }}
+              >
+                Clear Search
+              </button>
+            </div>
           ) : (
             <b>You are all caught up!</b>
           )}
