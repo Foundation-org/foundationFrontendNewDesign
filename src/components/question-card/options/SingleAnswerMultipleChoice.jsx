@@ -146,7 +146,7 @@ const SingleAnswerMultipleChoice = (props) => {
     >
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
-        props.addedAnswerUuid === persistedUserInfo.uuid ? (
+        props.addedAnswerUuid === persistedUserInfo?.uuid ? (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/addOptions/yellowBadge.svg"

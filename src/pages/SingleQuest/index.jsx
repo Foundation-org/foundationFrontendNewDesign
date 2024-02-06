@@ -18,8 +18,8 @@ import { addUser } from '../../features/auth/authSlice';
 const SingleQuest = () => {
   let { isFullScreen } = useParams();
   const location = useLocation();
-  const dispatch = useDispatch()
-  console.log({ location });
+  const dispatch = useDispatch();
+  // console.log({ location });
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [tab, setTab] = useState('Participate');
   const [startTest, setStartTest] = useState(null);
@@ -34,7 +34,7 @@ const SingleQuest = () => {
   //   }
   // }, [isFullScreen]);
 
-  console.log("🚀 ~ useEffect ~ persistedUserInfo:", persistedUserInfo)
+  console.log('🚀 ~ useEffect ~ persistedUserInfo:', persistedUserInfo);
 
   // const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state);
 
@@ -79,7 +79,7 @@ const SingleQuest = () => {
 
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
-    onSuccess: async(res) => {
+    onSuccess: async (res) => {
       console.log('User info fetched:', res.data);
       // const questById = await getQuestById(location.pathname.split('/').pop())
       // console.log("🚀 ~ onSuccess:async ~ questById:", questById./data.data[0])
@@ -94,20 +94,21 @@ const SingleQuest = () => {
     },
   });
 
-  const createGuestAccount = async() => {
+  const createGuestAccount = async () => {
     await createGuest();
     await getUserInfo();
     // console.log("🚀 ~ createGuestAccount ~ getUserData:", getUserData)
-    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop())
-    console.log("🚀 ~ createGuestAccount ~ getQuest:", getQuest.data.data[0])
-    setSingleQuestResp(getQuest.data.data[0])
-  }
+    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
+    console.log('🚀 ~ createGuestAccount ~ getQuest:', getQuest.data.data[0]);
+    setSingleQuestResp(getQuest.data.data[0]);
+  };
 
-  const questByUniqueShareLink = async() => {
-    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop())
-    console.log("🚀 ~ createGuestAccount ~ getQuest:", getQuest.data.data[0])
-    setSingleQuestResp(getQuest.data.data[0])
-  }
+  const questByUniqueShareLink = async () => {
+    await getUserInfo();
+    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
+    console.log('🚀 ~ createGuestAccount ~ getQuest:', getQuest.data.data[0]);
+    setSingleQuestResp(getQuest.data.data[0]);
+  };
 
   // useEffect(() => {
   //   if(userData){
@@ -119,14 +120,14 @@ const SingleQuest = () => {
   useEffect(() => {
     // If User not exist
     if (persistedUserInfo === null) {
-      createGuestAccount()
+      createGuestAccount();
     }
     // if User exist no matter guest/normal
-    if(persistedUserInfo) {
-      questByUniqueShareLink()
+    if (persistedUserInfo) {
+      questByUniqueShareLink();
     }
     // fetch the single quest only when the user exists (normal, guest)
-    console.log("if user exist outside.........");
+    console.log('if user exist outside.........');
     // if(persistedUserInfo){
     //   console.log("if user exist");
     //   setSingleQuestResp(useGetSingleQuest(persistedUserInfo?.uuid, location.state))
@@ -140,7 +141,7 @@ const SingleQuest = () => {
       <Topbar />
       <div className="flex h-[calc(100vh-90px)] bg-white dark:bg-[#242424]">
         <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
-          {isFullScreen !== 'isfullscreen' && (
+          {/* {isFullScreen !== 'isfullscreen' && (
             <div className="mb-7 flex justify-center gap-5 tablet:mb-[3.81rem] tablet:gap-[5.69rem]">
               <button
                 className="w-[81.8px] rounded-[7.1px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal text-white tablet:w-[250px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[23.63px]"
@@ -155,7 +156,7 @@ const SingleQuest = () => {
                 Result
               </button>
             </div>
-          )}
+          )} */}
           {singleQuestResp && (
             <div>
               {isFullScreen === 'isfullscreen' ? (

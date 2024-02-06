@@ -20,9 +20,11 @@ import ConditionalTextFullScreen from '../../../../../components/question-card/C
 import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import * as authActions from '../../../../../features/auth/authSlice';
+import { useLocation } from 'react-router-dom';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -30,11 +32,17 @@ const QuestionCardWithToggle = (props) => {
 
   const { questStartData, isBookmarked } = props;
 
-  const questData = questStartData.QuestAnswers?.some((answer) => {
-    return answer.uuid && answer.uuid === persistedUserInfo.uuid;
-  })
-    ? 1
-    : 0;
+  let questData;
+
+  if (location.pathname.startsWith('/p/')) {
+    questData = 0;
+  } else {
+    questData = questStartData.QuestAnswers?.some((answer) => {
+      return answer.uuid && answer.uuid === persistedUserInfo?.uuid;
+    })
+      ? 1
+      : 0;
+  }
 
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
   const [addOptionField, setAddOptionField] = useState(questData);
