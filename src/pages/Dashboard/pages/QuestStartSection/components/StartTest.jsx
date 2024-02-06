@@ -25,32 +25,6 @@ const StartTest = ({
 }) => {
   const { isFullScreen } = useParams();
 
-  // useEffect(() => {
-  //   localStorage.setItem('usersChangeTheirAns', questStartData.usersChangeTheirAns);
-  // }, [questStartData.usersChangeTheirAns]);
-
-  // useEffect(() => {
-  //   const updatedAnswersSelection = questStartData.QuestAnswers?.map((questAnswer) => ({
-  //     label: questAnswer.question,
-  //     check: false,
-  //     contend: false,
-  //     uuid: questAnswer.uuid,
-  //   }));
-
-  //   setAnswerSelection(updatedAnswersSelection);
-
-  //   setRankedAnswers(
-  //     updatedAnswersSelection?.map((item, index) => ({
-  //       ...item,
-  //       id: `unique-${index}`,
-  //     })),
-  //   );
-  // }, [questStartData.QuestAnswers]);
-
-  // useEffect(() => {
-  //   // Trigger a re-render when answersSelection is updated
-  // }, [answersSelection]);
-
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
   };

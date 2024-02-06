@@ -89,19 +89,30 @@ const Result = (props) => {
           updateAnswerSelection(res?.data.data[res.data.data.length - 1], props.answersSelection);
         }
         if (props.whichTypeQuestion === 'ranked choise') {
-          const updatedRankedAnswer = props.rankedAnswers.map((rankItem) => {
-            const matchingApiItem = res?.data.data[res.data.data.length - 1].contended.find(
-              (apiItem) => apiItem.question === rankItem.label,
+          const contendedQuestions = res?.data.data[res.data.data.length - 1].contended.map((item) => item.question);
+
+          const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
+            const correspondingRankedAnswer = props.rankedAnswers.find(
+              (rankedItem) => rankedItem.label === item.question,
             );
 
-            if (matchingApiItem) {
-              return { ...rankItem, contend: true };
-            } else {
-              return { ...rankItem, contend: false };
+            if (correspondingRankedAnswer) {
+              const isContended = contendedQuestions.includes(correspondingRankedAnswer.label);
+
+              return {
+                id: correspondingRankedAnswer.id,
+                label: correspondingRankedAnswer.label,
+                check: false,
+                contend: isContended,
+              };
             }
+
+            return null;
           });
 
-          props.setRankedAnswers(updatedRankedAnswer);
+          const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
+
+          props.setRankedAnswers(filteredRankedAnswers);
         }
       }
       setCheckLoading(false);
@@ -313,7 +324,6 @@ const Result = (props) => {
               isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]' : ''
             }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
-            {console.log('first', props.rankedAnswers)}
             {props.rankedAnswers?.map((item, index) => (
               <div key={index + 1}>
                 <RankedResult
