@@ -111,7 +111,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
           <p className="text-white text-[10px] tablet:text-[20px] font-medium">Preferences</p>
         </div>
 
-        <div onClick={handleClose}>
+        <div onClick={handleClose} className="cursor-pointer">
           <img src="/assets/preferences/close.png" alt="close" className="h-2 w-2 tablet:h-6 tablet:w-6" />
           {/* <Cross
             styles={
