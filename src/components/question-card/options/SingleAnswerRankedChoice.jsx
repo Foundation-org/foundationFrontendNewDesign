@@ -141,7 +141,7 @@ const SingleAnswerRankedChoice = (props) => {
             <img
               src="/assets/addOptions/yellowBadge.svg"
               alt="trash"
-              className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
+              className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />
           </div>
         ) : (
@@ -149,7 +149,7 @@ const SingleAnswerRankedChoice = (props) => {
             <img
               src="/assets/addOptions/blueBadge.svg"
               alt="trash"
-              className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
+              className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
             />
           </div>
         )
@@ -276,10 +276,7 @@ const SingleAnswerRankedChoice = (props) => {
               props.contendPercentages?.[props.answer.trim()] &&
               props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
                 <div className="flex items-center gap-1 tablet:gap-[10px]">
-                  <ContentionIcon
-                    classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                    checked={contendState}
-                  />
+                  <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={true} />
                   <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                     {props.contendPercentages[props.answer.trim()]}
                   </span>

@@ -468,7 +468,7 @@ const QuestionCard = (props) => {
               }
               return item;
             });
-  
+
             setAnswerSelection(updatedArray);
           } else {
             toast.warning('You cannot submit without selecting an option');

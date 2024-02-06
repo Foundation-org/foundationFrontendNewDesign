@@ -89,27 +89,19 @@ const Result = (props) => {
           updateAnswerSelection(res?.data.data[res.data.data.length - 1], props.answersSelection);
         }
         if (props.whichTypeQuestion === 'ranked choise') {
-          const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
-            const correspondingRankedAnswer = props.rankedAnswers.find(
-              (rankedItem) => rankedItem.label === item.question,
+          const updatedRankedAnswer = props.rankedAnswers.map((rankItem) => {
+            const matchingApiItem = res?.data.data[res.data.data.length - 1].contended.find(
+              (apiItem) => apiItem.question === rankItem.label,
             );
 
-            if (correspondingRankedAnswer) {
-              return {
-                id: correspondingRankedAnswer.id,
-                label: correspondingRankedAnswer.label,
-                check: false,
-                contend: false,
-              };
+            if (matchingApiItem) {
+              return { ...rankItem, contend: true };
+            } else {
+              return { ...rankItem, contend: false };
             }
-
-            return null;
           });
-          // Filter out any null values (items not found in rankedAnswers)
-          const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
 
-          // Update the state with the new array
-          props.setRankedAnswers(filteredRankedAnswers);
+          props.setRankedAnswers(updatedRankedAnswer);
         }
       }
       setCheckLoading(false);
@@ -321,6 +313,7 @@ const Result = (props) => {
               isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]' : ''
             }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
           >
+            {console.log('first', props.rankedAnswers)}
             {props.rankedAnswers?.map((item, index) => (
               <div key={index + 1}>
                 <RankedResult
@@ -340,7 +333,8 @@ const Result = (props) => {
                       ? props.questStartData.contendedPercentage[props.questStartData.contendedPercentage.length - 1]
                       : null
                   }
-                  checkInfo={false}
+                  // checkInfo={false}
+                  contend={findLabelContend(props.rankedAnswers, item.label)}
                   setAddOptionLimit={props.setAddOptionLimit}
                   btnText={'Results'}
                 />

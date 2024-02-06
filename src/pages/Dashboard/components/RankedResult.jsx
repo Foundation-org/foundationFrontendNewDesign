@@ -9,7 +9,7 @@ import ContentionIcon from '../../../assets/Quests/ContentionIcon';
 const RankedResult = (props) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [checkState, setCheckState] = useState(props.check);
+  const [checkState, setCheckState] = useState(props.contend);
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
@@ -19,15 +19,15 @@ const RankedResult = (props) => {
   const handleDeleteClose = () => setDeleteModal(false);
 
   useEffect(() => {
-    setCheckState(props.check);
-  }, [props.check]);
+    setCheckState(props.contend);
+  }, [props.contend]);
 
-  const handleCheckChange = () => {
-    setCheckState((prevState) => {
-      props.handleCheckChange(!prevState);
-      return !prevState;
-    });
-  };
+  // const handleCheckChange = () => {
+  //   setCheckState((prevState) => {
+  //     props.handleCheckChange(!prevState);
+  //     return !prevState;
+  //   });
+  // };
 
   return (
     <div className="flex items-center tablet:mr-[52px] tablet:pl-[1.75rem]">
@@ -158,7 +158,7 @@ const RankedResult = (props) => {
             props.contendPercentages?.[props.answer.trim()] &&
             props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
               <div className="flex items-center gap-1 tablet:gap-[10px]">
-                <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={true} />
+                <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={checkState} />
                 <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                   {props.contendPercentages[props.answer.trim()]}
                 </span>
