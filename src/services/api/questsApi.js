@@ -9,7 +9,7 @@ export const updateChangeAnsStartQuest = async (data) => {
     addedAnswer: data.addedAnswer,
     addedAnswerUuid: data.addedAnswerUuid,
     uuid: data.uuid,
-    isAddedAnsSelected:data.isAddedAnsSelected
+    isAddedAnsSelected: data.isAddedAnsSelected,
   });
 };
 
@@ -21,7 +21,7 @@ export const createStartQuest = async (data) => {
     addedAnswer: data.addedAnswer,
     addedAnswerUuid: data.addedAnswerUuid,
     uuid: data.uuid,
-    isAddedAnsSelected:data.isAddedAnsSelected
+    isAddedAnsSelected: data.isAddedAnsSelected,
   });
 };
 
@@ -97,6 +97,11 @@ export const getTopicOfValidatedQuestion = async ({ validatedQuestion }) => {
 // Question Validation by GPT-Server
 export const questionValidation = async ({ question, queryType }) => {
   try {
+    // To check uniqueness of the question
+    const constraintResponses = await checkUniqueQuestion(question);
+    if (!constraintResponses.data.isUnique) {
+      return { validatedQuestion: question, errorMessage: 'DUPLICATION' };
+    }
     var response = await api.get(`/ai-validation/1?userMessage=${question}&queryType=${queryType}`);
     if (response.data.status === 'VIOLATION') {
       await updateViolationCounterAPI();
