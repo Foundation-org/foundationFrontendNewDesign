@@ -1,22 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-// import { verifyCode } from '../../services/api/authentication';
-// import { useMutation } from '@tanstack/react-query';
-// import BasicModal from '../../components/BasicModal';
-// import ReferralCode from '../../components/ReferralCode';
+import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { url } from '../../services/api/Axios';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { userInfo } from '../../services/api/userAuth';
+import { addUser } from '../../features/auth/authSlice';
 
 const VerifyCode = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [urlQuery, seturlQuery] = useState('');
-
-  // const [isReferral, setIsReferral] = useState(false);
-  // const [referralCode, setReferralCode] = useState(null);
-  // const [uuid, setUuid] = useState();
-
-  // const handleReferralOpen = () => setIsReferral(true);
-  // const handleReferralClose = () => setIsReferral(false);
 
   useEffect(() => {
     let urlQuery = window.location.search.slice(1);
@@ -76,6 +70,18 @@ const VerifyCode = () => {
   //   },
   // });
 
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+    onSuccess: (res) => {
+      console.log('User info fetched:', res.data);
+      dispatch(addUser(res.data));
+    },
+    onError: (error) => {
+      console.error('Error fetching user info:', error);
+      localStorage.setItem('loggedIn', 'false');
+    },
+  });
+
   const handleVerify = async (urlQuery) => {
     const apiUrl = `${url}/user/verify?${urlQuery}`;
     const verificationCode = urlQuery.substr(urlQuery.length - 6);
@@ -90,32 +96,20 @@ const VerifyCode = () => {
         body: JSON.stringify({ verificationCode }),
       });
 
-      // console.log(response);
-
       if (response.status === 200) {
         toast.success('Email verified successfully.');
-        navigate('/dashboard');
-        // handleReferralOpen();
-      }
+        await getUserInfo();
 
-      // const data = await response.json();
-      // setUuid(data.uuid);
-      // console.log('first', data);
+        setTimeout(() => {
+          // navigate('/dashboard');
+          window.location.href = '/dashboard';
+        }, 2000);
+      }
     } catch (error) {
       console.log('Error during API request:', error.message);
       throw error;
     }
   };
-
-  // const customModalStyle = {
-  //   backgroundColor: '#FCFCFD',
-  //   boxShadow: 'none',
-  //   border: '0px',
-  //   outline: 'none',
-  //   top: '50%',
-  //   left: '50%',
-  //   transform: 'translate(-50%, -50%)',
-  // };
 
   return (
     <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12 bg-[#F3F3F3] px-4">
@@ -197,19 +191,6 @@ const VerifyCode = () => {
           </div>
         </div>
       </div>
-      {/* <BasicModal
-        open={isReferral}
-        handleClose={handleReferralClose}
-        customStyle={customModalStyle}
-        customClasses="rounded-[10px] tablet:rounded-[26px]"
-      >
-        <ReferralCode
-          handleClose={handleReferralClose}
-          referralCode={referralCode}
-          setReferralCode={setReferralCode}
-          uuid={uuid}
-        />
-      </BasicModal> */}
     </div>
   );
 };
