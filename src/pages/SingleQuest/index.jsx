@@ -33,6 +33,8 @@ const SingleQuest = () => {
   //     setViewResult(null);
   //   }
   // }, [isFullScreen]);
+  console.log("location",location);
+  console.log("id",location.pathname.split('/').pop());
 
   console.log("🚀 ~ useEffect ~ persistedUserInfo:", persistedUserInfo)
 
