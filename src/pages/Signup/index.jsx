@@ -30,13 +30,13 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState('');
   const [termConditionCheck, setTermConditionCheck] = useState(false);
-  // const [isReferral, setIsReferral] = useState(false);
-  // const [referralCode, setReferralCode] = useState(null);
+  const [isReferral, setIsReferral] = useState(false);
+  const [referralCode, setReferralCode] = useState(null);
 
   const persistedTheme = useSelector((state) => state.utils.theme);
 
-  // const handleReferralOpen = () => setIsReferral(true);
-  // const handleReferralClose = () => setIsReferral(false);
+  const handleReferralOpen = () => setIsReferral(true);
+  const handleReferralClose = () => setIsReferral(false);
 
   function onChange(value) {
     console.log('Captcha value:', value);
@@ -75,35 +75,28 @@ export default function Signup() {
     if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
 
-    setIsLoading(true);
-    try {
-      if (password === reTypePassword) {
-        const resp = await userSignup({ email, password });
+    handleReferralOpen();
 
-        if (resp.status === 200) {
-          // handleReferralOpen();
+    // setIsLoading(true);
 
-          toast.success('A verification email has been sent to your email address. Please check your inbox.');
+    // try {
+    //   if (password === reTypePassword) {
+    //     const resp = await userSignup({ email, password });
 
-          setEmail('');
-          setPassword('');
-          // navigate('/verifycode');
+    //     if (resp.status === 200) {
+    //       toast.success('A verification email has been sent to your email address. Please check your inbox.');
 
-          // if (referralCode === null) {
-          //   return toast.warning('Please enter the referral code to proceed.');
-          // } else {
-          //   // referral api to be come here
-          //   navigate('/verify-email');
-          // }
-        }
-      } else {
-        toast.warning('Password does not match');
-      }
-    } catch (e) {
-      toast.error(e.response.data.message.split(':')[1]);
-    } finally {
-      setIsLoading(false);
-    }
+    //       setEmail('');
+    //       setPassword('');
+    //     }
+    //   } else {
+    //     toast.warning('Password does not match');
+    //   }
+    // } catch (e) {
+    //   toast.error(e.response.data.message.split(':')[1]);
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
 
   const handleSignUpSocial = async (data) => {
@@ -139,15 +132,15 @@ export default function Signup() {
     }
   };
 
-  // const customModalStyle = {
-  //   backgroundColor: '#FCFCFD',
-  //   boxShadow: 'none',
-  //   border: '0px',
-  //   outline: 'none',
-  //   top: '50%',
-  //   left: '50%',
-  //   transform: 'translate(-50%, -50%)',
-  // };
+  const customModalStyle = {
+    backgroundColor: '#FCFCFD',
+    boxShadow: 'none',
+    border: '0px',
+    outline: 'none',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  };
 
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
@@ -226,14 +219,24 @@ export default function Signup() {
           </div>
         </div>
       </div>
-      {/* <BasicModal
+      <BasicModal
         open={isReferral}
         handleClose={handleReferralClose}
         customStyle={customModalStyle}
         customClasses="rounded-[10px] tablet:rounded-[26px]"
       >
-        <ReferralCode handleClose={handleReferralClose} referralCode={referralCode} setReferralCode={setReferralCode} />
-      </BasicModal> */}
+        <ReferralCode
+          handleClose={handleReferralClose}
+          setIsLoading={setIsLoading}
+          password={password}
+          reTypePassword={reTypePassword}
+          email={email}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          referralCode={referralCode}
+          setReferralCode={setReferralCode}
+        />
+      </BasicModal>
     </div>
   );
 }

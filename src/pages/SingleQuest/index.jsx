@@ -9,10 +9,10 @@ import { getQuestById, getQuestByUniqueShareLink } from '../../services/api/home
 // components
 import Topbar from '../Dashboard/components/Topbar';
 import SidebarRight from '../Dashboard/components/SidebarRight';
-import QuestionCard from './components/QuestionCard';
+// import QuestionCard from './components/QuestionCard';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { createGuestMode, userInfo } from '../../services/api/userAuth';
-import { useGetSingleQuest } from '../../services/queries/quest';
+// import { useGetSingleQuest } from '../../services/queries/quest';
 import { addUser } from '../../features/auth/authSlice';
 
 const SingleQuest = () => {
@@ -21,11 +21,11 @@ const SingleQuest = () => {
   const dispatch = useDispatch();
   // console.log({ location });
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [tab, setTab] = useState('Participate');
+  // const [tab, setTab] = useState('Participate');
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
   const [singleQuestResp, setSingleQuestResp] = useState(null);
-  const [userData, setUserData] = useState(null);
+  // const [userData, setUserData] = useState(null);
 
   // useEffect(() => {
   //   if (isFullScreen !== 'isfullscreen') {
@@ -33,8 +33,8 @@ const SingleQuest = () => {
   //     setViewResult(null);
   //   }
   // }, [isFullScreen]);
-  console.log("location",location);
-  console.log("id",location.pathname.split('/').slice(-2)[0])
+  // console.log('location', location);
+  // console.log('id', location.pathname.split('/').slice(-2)[0]);
 
   console.log('🚀 ~ useEffect ~ persistedUserInfo:', persistedUserInfo);
 
@@ -136,7 +136,7 @@ const SingleQuest = () => {
     // }
   }, []);
 
-  console.log(singleQuestResp, 'tesging..........................');
+  // console.log(singleQuestResp, 'tesging..........................');
 
   return (
     <>
@@ -161,7 +161,7 @@ const SingleQuest = () => {
           )} */}
           {singleQuestResp && (
             <div>
-              {isFullScreen === 'isfullscreen' ? (
+              {/* {isFullScreen === 'isfullscreen' ? (
                 <QuestionCard
                   tab={tab}
                   questStartData={singleQuestResp}
@@ -185,37 +185,37 @@ const SingleQuest = () => {
                   lastInteractedAt={singleQuestResp?.lastInteractedAt}
                   usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
                 />
-              ) : (
-                <div className="px-[25px] tablet:px-[86px]">
-                  <QuestionCardWithToggle
-                    questStartData={singleQuestResp}
-                    id={singleQuestResp?._id}
-                    img="/assets/svgs/dashboard/badge.svg"
-                    alt="badge"
-                    badgeCount={singleQuestResp.getUserBadge?.badges?.length}
-                    time={singleQuestResp?.createdAt}
-                    title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
-                    question={singleQuestResp?.Question}
-                    answers={singleQuestResp?.QuestAnswers}
-                    usersAddTheirAns={singleQuestResp?.usersAddTheirAns}
-                    whichTypeQuestion={singleQuestResp?.whichTypeQuestion}
-                    btnText={singleQuestResp?.startStatus}
-                    startTest={startTest}
-                    setStartTest={setStartTest}
-                    viewResult={viewResult}
-                    setViewResult={setViewResult}
-                    handleViewResults={handleViewResults}
-                    handleStartTest={handleStartTest}
-                    multipleOption={singleQuestResp?.userCanSelectMultiple}
-                    QuestTopic={singleQuestResp?.QuestTopic}
-                    createdBy={singleQuestResp?.uuid}
-                    lastInteractedAt={singleQuestResp?.lastInteractedAt}
-                    usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
-                    startStatus={singleQuestResp?.startStatus}
-                    expandedView={true}
-                  />
-                </div>
-              )}
+              ) : ( */}
+              <div className="px-[25px] tablet:px-[86px]">
+                <QuestionCardWithToggle
+                  questStartData={singleQuestResp}
+                  id={singleQuestResp?._id}
+                  img="/assets/svgs/dashboard/badge.svg"
+                  alt="badge"
+                  badgeCount={singleQuestResp.getUserBadge?.badges?.length}
+                  time={singleQuestResp?.createdAt}
+                  title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
+                  question={singleQuestResp?.Question}
+                  answers={singleQuestResp?.QuestAnswers}
+                  usersAddTheirAns={singleQuestResp?.usersAddTheirAns}
+                  whichTypeQuestion={singleQuestResp?.whichTypeQuestion}
+                  btnText={singleQuestResp?.startStatus}
+                  startTest={startTest}
+                  setStartTest={setStartTest}
+                  viewResult={viewResult}
+                  setViewResult={setViewResult}
+                  handleViewResults={handleViewResults}
+                  handleStartTest={handleStartTest}
+                  multipleOption={singleQuestResp?.userCanSelectMultiple}
+                  QuestTopic={singleQuestResp?.QuestTopic}
+                  createdBy={singleQuestResp?.uuid}
+                  lastInteractedAt={singleQuestResp?.lastInteractedAt}
+                  usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
+                  startStatus={singleQuestResp?.startStatus}
+                  expandedView={true}
+                />
+              </div>
+              {/* )} */}
             </div>
           )}
         </div>
