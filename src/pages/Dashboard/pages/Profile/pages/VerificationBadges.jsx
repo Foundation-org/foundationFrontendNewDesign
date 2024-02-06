@@ -332,7 +332,7 @@ const VerificationBadges = () => {
             <img
               src="/assets/profile/Facebook-2x.png"
               alt="Facebook"
-              className="min-h-[19.4px] min-w-[19.4px] h-[19.4px] w-[19.4px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
+              className="min-h-[19.4px] min-w-[19.4px] tablet:min-h-[40.6px] tablet:min-w-[40.6px] h-[19.4px] w-[19.4px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px] tablet:min-h-[40.6px] laptop:min-w-[74px] laptop:min-h-[74px]"
             />
             <div
               className={`${
