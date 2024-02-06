@@ -110,6 +110,12 @@ const AgreeDisagree = () => {
     if (prevValue === question.trim()) return;
     setPrevValue(value);
 
+    const constraintResponse = await checkUniqueQuestion(value);
+    if (!constraintResponse.data.isUnique) {
+      setLoading(false);
+      return toast.warning('This post is not unique. A similar post already exists.');
+    }
+
     dispatch(createQuestAction.checkQuestion(value));
     // setCheckQuestionStatus({
     //   name: 'Checking',

@@ -115,14 +115,11 @@ export default function Signin() {
     onSuccess: (res) => {
       setUuid(res.data?.uuid);
       console.log('User info fetched:', res.data);
-      if (res.data?.verification === true && res.data?.referral === false) {
-        handleReferralOpen();
-      }
-      if (res.data?.verification === false && res.data?.referral === false) {
+      if (res.data?.verification === false) {
         toast.warning('Please check you email and verify your account first');
         sendEmail({userEmail:res.data?.email});
       }
-      if (res.data?.verification === true && res.data?.referral === true) {
+      if (res.data?.verification === true ) {
         dispatch(addUser(res.data));
         navigate('/dashboard');
       }
