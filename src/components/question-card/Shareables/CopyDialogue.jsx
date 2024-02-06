@@ -5,7 +5,7 @@ import Copy from '../../../assets/optionbar/Copy';
 const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, badgeCount }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
-  let url = `${protocol}//${host}/quest/post/${uniqueShareLink}`;
+  let url = `${protocol}//${host}/p/${uniqueShareLink}`;
 
   const copyToClipboard = async () => {
     const textToCopy = url;

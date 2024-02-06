@@ -146,12 +146,12 @@ const SingleAnswerMultipleChoice = (props) => {
     >
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
-        props.addedAnswerUuid === persistedUserInfo.uuid ? (
+        props.addedAnswerUuid === persistedUserInfo?.uuid ? (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/addOptions/yellowBadge.svg"
               alt="optionMeBadge"
-              className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
+              className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
             />
           </div>
         ) : (
@@ -159,7 +159,7 @@ const SingleAnswerMultipleChoice = (props) => {
             <img
               src="/assets/addOptions/blueBadge.svg"
               alt="bluebadge"
-              className="h-5 w-[15px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
+              className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
             />
           </div>
         )
@@ -293,7 +293,10 @@ const SingleAnswerMultipleChoice = (props) => {
                 props.contendPercentages?.[props.answer.trim()] &&
                 props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
                   <div className="flex items-center gap-1 tablet:gap-[10px]">
-                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={true} />
+                    <ContentionIcon
+                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                      checked={contendState}
+                    />
                     <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                       {props.contendPercentages[props.answer.trim()]}
                     </span>

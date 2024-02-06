@@ -130,7 +130,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             open={openTopicPref}
             handleClose={handleTopicPref}
             customStyle={topicPreferencesModalStyle}
-            customClasses="rounded-[0.9375rem] tablet:rounded-[2.31rem] w-[75vw] h-[90vh] bg-[#FCFCFD] dark:bg-[#3E3E3E] border-[6px] border-[#F2F2F2] dark:border-[#8B8B8B]"
+            customClasses="rounded-[0.9375rem] tablet:rounded-[2.31rem] w-[75vw] h-fit tablet:h-fit tablet:w-fit bg-[#FCFCFD] dark:bg-[#3E3E3E]"
           >
             <TopicPreferences
               columns={columns}

@@ -46,7 +46,7 @@ export function Router() {
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/verifycode" element={<VerifyCode />} />
           <Route path="/auth0" element={<DashboardRedirect />} />
-          <Route path="/quest/post/:id" element={<SingleQuest />} />
+          <Route path="/p/:id" element={<SingleQuest />} />
         </Route>
 
         {/* private */}
@@ -63,7 +63,6 @@ export function Router() {
             <Route path="change-password" element={<ChangePassword />} />
           </Route>
           <Route path="/quest/:isFullScreen" element={<Guests />} />
-          {/* <Route path="/quest/post/:id" element={<SingleQuest />} /> */}
         </Route>
 
         {/* catch all */}
