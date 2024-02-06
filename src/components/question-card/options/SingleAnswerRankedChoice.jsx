@@ -276,7 +276,10 @@ const SingleAnswerRankedChoice = (props) => {
               props.contendPercentages?.[props.answer.trim()] &&
               props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
                 <div className="flex items-center gap-1 tablet:gap-[10px]">
-                  <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={true} />
+                  <ContentionIcon
+                    classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                    checked={contendState}
+                  />
                   <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                     {props.contendPercentages[props.answer.trim()]}
                   </span>
