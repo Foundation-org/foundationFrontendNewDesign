@@ -34,7 +34,7 @@ const SingleQuest = () => {
   //   }
   // }, [isFullScreen]);
   console.log("location",location);
-  console.log("id",location.pathname.split('/').pop());
+  console.log("id",location.pathname.split('/').slice(-2)[0])
 
   console.log('🚀 ~ useEffect ~ persistedUserInfo:', persistedUserInfo);
 
@@ -100,14 +100,14 @@ const SingleQuest = () => {
     await createGuest();
     await getUserInfo();
     // console.log("🚀 ~ createGuestAccount ~ getUserData:", getUserData)
-    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
+    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-2)[0]);
     console.log('🚀 ~ createGuestAccount ~ getQuest:', getQuest.data.data[0]);
     setSingleQuestResp(getQuest.data.data[0]);
   };
 
   const questByUniqueShareLink = async () => {
     await getUserInfo();
-    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
+    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-2)[0]);
     console.log('🚀 ~ createGuestAccount ~ getQuest:', getQuest.data.data[0]);
     setSingleQuestResp(getQuest.data.data[0]);
   };
