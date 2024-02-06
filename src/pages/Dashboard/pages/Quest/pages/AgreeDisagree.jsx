@@ -110,44 +110,7 @@ const AgreeDisagree = () => {
     if (prevValue === question.trim()) return;
     setPrevValue(value);
 
-    const constraintResponse = await checkUniqueQuestion(value);
-    if (!constraintResponse.data.isUnique) {
-      setLoading(false);
-      return toast.warning('This post is not unique. A similar post already exists.');
-    }
-
     dispatch(createQuestAction.checkQuestion(value));
-    // setCheckQuestionStatus({
-    //   name: 'Checking',
-    //   color: 'text-[#0FB063]',
-    //   tooltipName: 'Verifying your question. Please wait...',
-    //   tooltipStyle: 'tooltip-success',
-    // });
-    // // Question Validation
-    // const { validatedQuestion, errorMessage } = await questionValidation({
-    //   question: value,
-    //   queryType: 'agree/disagree',
-    // });
-    // // If any error captured
-    // if (errorMessage) {
-    //   setLoading(false);
-    //   return setCheckQuestionStatus({
-    //     name: 'Rejected',
-    //     color: 'text-[#b00f0f]',
-    //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-    //     tooltipStyle: 'tooltip-error',
-    //   });
-    // }
-    // // Question is validated and status is Ok
-    // setQuestion(validatedQuestion);
-    // setPrevValue(validatedQuestion);
-    // setCheckQuestionStatus({
-    //   name: 'Ok',
-    //   color: 'text-[#0FB063]',
-    //   tooltipName: 'Question is Verified',
-    //   tooltipStyle: 'tooltip-success',
-    //   isVerifiedQuestion: true,
-    // });
   };
 
   useEffect(() => {
@@ -155,8 +118,6 @@ const AgreeDisagree = () => {
   }, [question, changedOption, changeState]);
 
   useEffect(() => {
-    console.log('our question status is yes', createQuestSlice.question);
-    // setLoading(questionStatus.status);
     if (createQuestSlice.question) {
       setQuestion(createQuestSlice.question);
     }
