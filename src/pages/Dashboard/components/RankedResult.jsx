@@ -33,19 +33,19 @@ const RankedResult = (props) => {
     <div className="flex items-center tablet:mr-[52px] tablet:pl-[1.75rem]">
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid || localStorage.getItem('uId') ? (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#141618] tablet:w-[45.6px]">
             <img
               src="/assets/svgs/dashboard/optionMeBadge.svg"
               alt="trash"
-              className="h-4 w-[12px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
+              className="h-4 w-[12px] cursor-pointer tablet:h-[27px] tablet:w-[21px]"
             />
           </div>
         ) : (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#141618] tablet:w-[45.6px]">
             <img
               src="/assets/svgs/dashboard/bluebadge.svg"
               alt="trash"
-              className="h-4 w-[12px] cursor-pointer tablet:h-[33px] tablet:w-[26.48px]"
+              className="h-4 w-[12px] cursor-pointer tablet:h-[27px] tablet:w-[21px]"
             />
           </div>
         )

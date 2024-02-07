@@ -1,8 +1,8 @@
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { signUp } from '../../services/api/userAuth';
-import { useMutation } from '@tanstack/react-query';
+// import { signUp } from '../../services/api/userAuth';
+// import { useMutation } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from './components/Form';
 import Button from '../../components/Button';
@@ -15,6 +15,8 @@ import api from '../../services/api/Axios';
 import { FaSpinner } from 'react-icons/fa';
 import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
+import PopUp from '../../components/ui/PopUp';
+import { Button as UiButton } from '../../components/ui/Button';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -32,11 +34,15 @@ export default function Signup() {
   const [termConditionCheck, setTermConditionCheck] = useState(false);
   const [isReferral, setIsReferral] = useState(false);
   const [referralCode, setReferralCode] = useState(null);
+  const [isPopup, setIspopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const handleReferralOpen = () => setIsReferral(true);
   const handleReferralClose = () => setIsReferral(false);
+  const handlePopupOpen = () => setIspopup(true);
+  const handlePopupClose = () => setIspopup(false);
 
   function onChange(value) {
     console.log('Captcha value:', value);
@@ -63,9 +69,9 @@ export default function Signup() {
     setShowCnfmPassword(!showCnfmPassword);
   };
 
-  const { mutateAsync: userSignup } = useMutation({
-    mutationFn: signUp,
-  });
+  // const { mutateAsync: userSignup } = useMutation({
+  //   mutationFn: signUp,
+  // });
 
   const handleCancel = () => {
     setEmail('');
@@ -235,8 +241,21 @@ export default function Signup() {
           setPassword={setPassword}
           referralCode={referralCode}
           setReferralCode={setReferralCode}
+          setErrorMessage={setErrorMessage}
+          handlePopupOpen={handlePopupOpen}
         />
       </BasicModal>
+
+      <PopUp open={isPopup} handleClose={handlePopupClose} logo={'/assets/popup/googlelogo.svg'} title={'Google Email'}>
+        <div className="px-5 tablet:px-[60px] py-[14px] tablet:py-[25px]">
+          <p className="text-[9px] tablet:text-[20px] text-black font-medium">{errorMessage}</p>
+          <div className=" flex justify-end w-full">
+            <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
+              Continue
+            </UiButton>
+          </div>
+        </div>
+      </PopUp>
     </div>
   );
 }

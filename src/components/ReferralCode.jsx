@@ -14,6 +14,8 @@ const ReferralCode = ({
   setPassword,
   referralCode,
   setReferralCode,
+  handlePopupOpen,
+  setErrorMessage,
 }) => {
   const handleInputChange = (e) => {
     setReferralCode(e.target.value);
@@ -40,7 +42,9 @@ const ReferralCode = ({
         toast.warning('Password does not match');
       }
     } catch (e) {
-      toast.error(e.response.data.message.split(':')[1]);
+      setErrorMessage(e.response.data.message.split(':')[1]);
+      // toast.error(e.response.data.message.split(':')[1]);
+      handlePopupOpen();
     } finally {
       setIsLoading(false);
     }
