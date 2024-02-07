@@ -95,7 +95,7 @@ const VerificationBadges = () => {
     {
       image: '/assets/profile/LinkedIn-2x.png',
       title: 'LinkedIn',
-      ButtonColor: 'blue',
+      ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
       link: '/auth/linkedin',
