@@ -254,7 +254,10 @@ const SingleAnswerMultipleChoice = (props) => {
 
         {/* =============== To Display Contention and Trash Right of Option */}
         {props.btnText !== 'Results' ? (
-          <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]">
+          <div
+            className="flex w-12 min-w-[48px] items-center bg-white pl-1 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]"
+            onClick={handleContendChange}
+          >
             {props.deleteable ? (
               <img
                 src="/assets/svgs/dashboard/trash2.svg"
@@ -265,7 +268,7 @@ const SingleAnswerMultipleChoice = (props) => {
             ) : (
               <div className="flex items-center gap-1 laptop:gap-[18px]">
                 <div id="custom-yello-checkbox" className="flex h-full items-center ">
-                  <div className="cursor-pointer" onClick={handleContendChange}>
+                  <div className="cursor-pointer">
                     <ContentionIcon
                       classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
                       checked={contendState}

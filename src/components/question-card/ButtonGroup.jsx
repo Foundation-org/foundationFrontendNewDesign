@@ -211,9 +211,9 @@ const ButtonGroup = ({
 
           {/* Go back / Submit */}
           <div
-            className={`${
-              title === 'Multiple Choice' ? '' : addOptionField === 1 ? 'mt-[4rem] tablet:mt-[10rem]' : ''
-            }`}
+          // className={`${
+          //   title === 'Multiple Choice' ? '' : addOptionField === 1 ? 'mt-[4rem] tablet:mt-[10rem]' : ''
+          // }`}
           >
             <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
               {!filterState.expandedView ? (
@@ -284,9 +284,9 @@ const ButtonGroup = ({
                 <div></div>
               )}
               <div
-                className={`${
-                  title === 'Multiple Choice' ? '' : addOptionField === 1 ? 'mt-[4rem] tablet:mt-[10rem]' : ''
-                }`}
+              // className={`${
+              //   title === 'Multiple Choice' ? '' : addOptionField === 1 ? 'mt-[4rem] tablet:mt-[10rem]' : ''
+              // }`}
               >
                 <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
                   <Button
