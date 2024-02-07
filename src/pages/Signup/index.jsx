@@ -36,6 +36,7 @@ export default function Signup() {
   const [referralCode, setReferralCode] = useState(null);
   const [isPopup, setIspopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [socialAccount, setSocialAccount] = useState({ isSocial: false, data: null });
 
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -106,6 +107,9 @@ export default function Signup() {
   };
 
   const handleSignUpSocial = async (data) => {
+    setSocialAccount({ isSocial: true, data })
+    handleReferralOpen();
+    return
     try {
       const res = await api.post(`/user/signUpUser/social`, {
         data,
@@ -243,6 +247,7 @@ export default function Signup() {
           setReferralCode={setReferralCode}
           setErrorMessage={setErrorMessage}
           handlePopupOpen={handlePopupOpen}
+          socialAccount={socialAccount}
         />
       </BasicModal>
 

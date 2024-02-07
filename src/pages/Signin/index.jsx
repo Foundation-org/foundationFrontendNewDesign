@@ -137,10 +137,12 @@ export default function Signin() {
       });
       // if(res.data.required_action){
       if (res.status === 200) {
-        localStorage.setItem('uId', res.data.uuid);
-        localStorage.setItem('userLoggedIn', res.data.uuid);
-        localStorage.removeItem('isGuestMode');
-        localStorage.setItem('jwt', res.data.token);
+        localStorage.setItem('uuid', res.data.uuid);
+        // localStorage.setItem('userLoggedIn', res.data.uuid);
+        // localStorage.removeItem('isGuestMode');
+        // localStorage.setItem('jwt', res.data.token);
+        // navigate('/dashboard');
+        dispatch(addUser(res.data));
         navigate('/dashboard');
       }
     } catch (error) {

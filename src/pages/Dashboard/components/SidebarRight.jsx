@@ -124,6 +124,9 @@ const SidebarRight = () => {
         if (!resp.data) {
           const res = await userInfoById(localStorage.getItem('uuid'));
           dispath(addUser(res?.data));
+          if (res?.data?.requiredAction) {
+            setModalVisible(true);
+          }
         }
 
         if (resp?.data?.requiredAction) {
