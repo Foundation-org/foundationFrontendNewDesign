@@ -15,7 +15,7 @@ const SidebarRight = () => {
   const navigate = useNavigate();
   // const [response, setResponse] = useState();
   const [treasuryAmount, setTreasuryAmount] = useState(0);
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 

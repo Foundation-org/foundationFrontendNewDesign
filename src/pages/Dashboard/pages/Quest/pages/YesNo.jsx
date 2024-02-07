@@ -146,6 +146,7 @@ const YesNo = () => {
       setQuestion(createQuestSlice.question);
     }
   }, [questionStatus]);
+
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">

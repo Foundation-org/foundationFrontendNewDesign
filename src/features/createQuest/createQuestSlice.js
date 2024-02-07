@@ -78,7 +78,11 @@ export const createQuestSlice = createSlice({
   reducers: {
     updateQuestion: (state, action) => {
       const { question, changedOption, changeState } = action.payload;
-      return { ...state, questions: { ...state.questions, question, changedOption, changeState } };
+      return {
+        ...state,
+        questions: { ...state.questions, question, changedOption, changeState },
+        questionReset: initialState.questionReset,
+      };
     },
     updateMultipleChoice: (state, action) => {
       const { question, changedOption, changeState, multipleOption, addOption, optionsCount, options } = action.payload;
@@ -94,6 +98,7 @@ export const createQuestSlice = createSlice({
           optionsCount,
           options,
         },
+        questionReset: initialState.questionReset,
       };
     },
     updateRankedChoice: (state, action) => {
