@@ -23,6 +23,7 @@ const YesNo = () => {
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
+  const [hollow, setHollow] = useState(true);
 
   // const reset = {
   //   name: 'Ok',
@@ -31,11 +32,11 @@ const YesNo = () => {
   //   tooltipStyle: 'tooltip-info',
   // };
 
-  // const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
+  // const [questionStatus, setquestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  // console.log({ checkQuestionStatus });
+  // console.log({ questionStatus });
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
@@ -67,10 +68,8 @@ const YesNo = () => {
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
 
     if (question === '') {
-      setLoading(false);
       return toast.warning('Post cannot be empty');
     }
 
@@ -79,7 +78,6 @@ const YesNo = () => {
     });
     // If any error captured
     if (errorMessage) {
-      setLoading(false);
       return toast.error('Oops! Something Went Wrong.');
     }
 
@@ -92,9 +90,11 @@ const YesNo = () => {
       QuestTopic: questTopic,
     };
 
-    createQuest(params);
-
-    dispatch(createQuestAction.resetCreateQuest());
+    if(!checkHollow){
+      setLoading(true);
+      createQuest(params);
+      dispatch(createQuestAction.resetCreateQuest());
+    }
   };
 
   const questionVerification = async (value) => {
@@ -102,7 +102,7 @@ const YesNo = () => {
     if (prevValue === question.trim()) return;
     setPrevValue(value);
     dispatch(checkQuestion(value));
-    // setCheckQuestionStatus({
+    // setquestionStatus({
     //   name: 'Checking',
     //   color: 'text-[#0FB063]',
     //   tooltipName: 'Verifying your question. Please wait...',
@@ -116,7 +116,7 @@ const YesNo = () => {
     // If any error captured
     // if (errorMessage) {
     //   setLoading(false);
-    //   return setCheckQuestionStatus({
+    //   return setquestionStatus({
     //     name: 'Rejected',
     //     color: 'text-[#b00f0f]',
     //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
@@ -126,7 +126,7 @@ const YesNo = () => {
     // Question is validated and status is Ok
     // setQuestion(validatedQuestion);
     // setPrevValue(validatedQuestion);
-    // setCheckQuestionStatus({
+    // setquestionStatus({
     //   name: 'Ok',
     //   color: 'text-[#0FB063]',
     //   tooltipName: 'Question is Verified',
@@ -134,13 +134,27 @@ const YesNo = () => {
     //   isVerifiedQuestion: true,
     // });
   };
+  const checkHollow = () => {
+    if ((questionStatus.tooltipName === 'Question is Verified')) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  useEffect(() => {
+    if (!checkHollow() && question !== '') {
+      setHollow(false);
+    } else {
+      setHollow(true);
+    }
+  }, [question, questionStatus.tooltipName]);
 
   useEffect(() => {
     dispatch(updateQuestion({ question, changedOption, changeState }));
   }, [question, changedOption, changeState]);
 
   useEffect(() => {
-    console.log('our question status is yes', createQuestSlice.question);
+    console.log('our question status is yes', questionStatus);
     // setLoading(questionStatus.status);
     if (createQuestSlice.question) {
       setQuestion(createQuestSlice.question);
@@ -165,7 +179,7 @@ const YesNo = () => {
             className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
             onChange={(e) => {
               setQuestion(e.target.value);
-              // setCheckQuestionStatus({
+              // setquestionStatus({
               //   name: 'Ok',
               //   color: e.target.value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
               // });
@@ -213,13 +227,28 @@ const YesNo = () => {
           />
         </div>
         <div className="flex w-full justify-end">
-          <button
-            className="mr-7 mt-[10px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-            onClick={() => handleSubmit()}
-            disabled={loading === true || questionStatus?.name === 'Ok' ? false : true}
-          >
-            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-          </button>
+        {hollow ? (
+          <div className="flex w-full justify-end">
+            <button
+              className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
+              onClick={() => handleSubmit()}
+              disabled={loading === true }
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : <span style={{ opacity: 0 }}>Submit</span>}
+
+            </button>
+          </div>
+        ) : (
+          <div className="flex w-full justify-end">
+            <button
+              className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
+              onClick={() => handleSubmit()}
+              disabled={loading === true}
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+            </button>
+          </div>
+        )}
         </div>
       </div>
     </>

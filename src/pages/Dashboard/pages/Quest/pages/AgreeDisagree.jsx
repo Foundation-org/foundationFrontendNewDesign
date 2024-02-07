@@ -29,6 +29,7 @@ const AgreeDisagree = () => {
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
+  const [hollow, setHollow] = useState(true);
 
   const reset = {
     name: 'Ok',
@@ -70,16 +71,10 @@ const AgreeDisagree = () => {
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
     const constraintResponse = await checkUniqueQuestion(question);
 
     if (question === '') {
-      setLoading(false);
       return toast.warning('Post cannot be empty');
-    }
-    if (!constraintResponse.data.isUnique) {
-      setLoading(false);
-      return toast.warning('This post is not unique. A similar post already exists.');
     }
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
@@ -87,7 +82,6 @@ const AgreeDisagree = () => {
     });
     // If any error captured
     if (errorMessage) {
-      setLoading(false);
       return toast.error('Oops! Something Went Wrong.');
     }
 
@@ -100,9 +94,11 @@ const AgreeDisagree = () => {
       QuestTopic: questTopic,
     };
 
-    createQuest(params);
-
-    dispatch(createQuestAction.resetCreateQuest());
+    if(!checkHollow){
+      setLoading(true);
+      createQuest(params);
+      dispatch(createQuestAction.resetCreateQuest());
+    }
   };
 
   const questionVerification = async (value) => {
@@ -112,6 +108,20 @@ const AgreeDisagree = () => {
 
     dispatch(createQuestAction.checkQuestion(value));
   };
+  const checkHollow = () => {
+    if ((questionStatus.tooltipName === 'Question is Verified')) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  useEffect(() => {
+    if (!checkHollow() && question !== '') {
+      setHollow(false);
+    } else {
+      setHollow(true);
+    }
+  }, [question, questionStatus.tooltipName]);
 
   useEffect(() => {
     dispatch(updateQuestion({ question, changedOption, changeState }));
@@ -190,13 +200,28 @@ const AgreeDisagree = () => {
           />
         </div>
         <div className="flex w-full justify-end">
-          <button
-            className="mr-7 mt-[10px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[60px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-            onClick={() => handleSubmit()}
-            disabled={loading === true || questionStatus?.name === 'Ok' ? false : true}
-          >
-            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-          </button>
+        {hollow ? (
+          <div className="flex w-full justify-end">
+            <button
+              className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
+              onClick={() => handleSubmit()}
+              disabled={loading === true }
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : <span style={{ opacity: 0 }}>Submit</span>}
+
+            </button>
+          </div>
+        ) : (
+          <div className="flex w-full justify-end">
+            <button
+              className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
+              onClick={() => handleSubmit()}
+              disabled={loading === true}
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+            </button>
+          </div>
+        )}
         </div>
       </div>
     </>
