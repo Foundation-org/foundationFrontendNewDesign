@@ -25,7 +25,6 @@ const SingleAnswerMultipleChoice = (props) => {
     tooltipName: 'Please write something...',
     tooltipStyle: 'tooltip-info',
   };
-  // const [props.checkOptionStatus, props.setCheckOptionStatus] = useState(reset);
 
   const [prevValue, setPrevValue] = useState('');
 

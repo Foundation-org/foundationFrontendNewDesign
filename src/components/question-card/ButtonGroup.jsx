@@ -129,7 +129,8 @@ const ButtonGroup = ({
               id: correspondingRankedAnswer.id,
               label: correspondingRankedAnswer.label,
               check: false,
-              contend: isContended, // Set contend to true if the item is in the contendedQuestions array
+              contend: isContended,
+              uuid: correspondingRankedAnswer.uuid,
             };
           }
 
@@ -137,7 +138,7 @@ const ButtonGroup = ({
         });
 
         const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
-        console.log('aaa', filteredRankedAnswers);
+
         setRankedAnswers(filteredRankedAnswers);
         updateAnswerSelection(res?.data.data[res.data.data.length - 1], rankedAnswers);
       }
@@ -220,7 +221,6 @@ const ButtonGroup = ({
                   variant="cancel"
                   onClick={() => {
                     handleStartTest('');
-                    // setStartTest(null);
                   }}
                 >
                   Go Back

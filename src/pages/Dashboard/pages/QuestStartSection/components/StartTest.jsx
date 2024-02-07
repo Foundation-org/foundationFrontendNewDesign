@@ -253,6 +253,8 @@ const StartTest = ({
                                 handleCheckChange={(check) => handleCheckChange(index, check)}
                                 handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
                                 setAddOptionField={setAddOptionField}
+                                checkOptionStatus={checkOptionStatus}
+                                setCheckOptionStatus={setCheckOptionStatus}
                               />
                             </li>
                           )}

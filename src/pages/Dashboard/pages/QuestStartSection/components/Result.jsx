@@ -89,12 +89,13 @@ const Result = (props) => {
           updateAnswerSelection(res?.data.data[res.data.data.length - 1], props.answersSelection);
         }
         if (props.whichTypeQuestion === 'ranked choise') {
+          // console.log('hamza contendedQuestions', res?.data.data[res.data.data.length - 1].contended);
+          // console.log('hamzaselectedQuestions', res?.data.data[res.data.data.length - 1].selected);
+          // console.log('hamza rankedAnswers', props.rankedAnswers);
           const contendedQuestions = res?.data.data[res.data.data.length - 1].contended.map((item) => item.question);
 
-          const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
-            const correspondingRankedAnswer = props.rankedAnswers.find(
-              (rankedItem) => rankedItem.label === item.question,
-            );
+          const updatedRankedAnswers = props.rankedAnswers.map((item) => {
+            const correspondingRankedAnswer = props.rankedAnswers.find((rankedItem) => rankedItem.label === item.label);
 
             if (correspondingRankedAnswer) {
               const isContended = contendedQuestions.includes(correspondingRankedAnswer.label);
@@ -104,6 +105,7 @@ const Result = (props) => {
                 label: correspondingRankedAnswer.label,
                 check: false,
                 contend: isContended,
+                uuid: correspondingRankedAnswer.uuid,
               };
             }
 
@@ -111,7 +113,7 @@ const Result = (props) => {
           });
 
           const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
-
+          // console.log('hamza filteredRankedAnswers', filteredRankedAnswers);
           props.setRankedAnswers(filteredRankedAnswers);
         }
       }

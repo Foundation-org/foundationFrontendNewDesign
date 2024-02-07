@@ -112,6 +112,28 @@ const QuestionCard = (props) => {
     })),
   );
 
+  // const cardSize = useMemo(() => {
+  //   const limit = windowWidth >= 744 ? true : false;
+  //   if (
+  //     questStartData.whichTypeQuestion === 'agree/disagree' ||
+  //     questStartData.whichTypeQuestion === 'like/dislike' ||
+  //     questStartData.whichTypeQuestion === 'yes/no'
+  //   ) {
+  //     return limit ? 108 : 49;
+  //   } else {
+  //     let tempSize = 0;
+  //     questStartData.QuestAnswers.forEach((item, index) => {
+  //       // tempSize += index === 0 ? (limit ? 45 : 24) : limit ? 55 : 29.7;
+  //       tempSize += index === 0 ? (limit ? 49 : 24) : limit ? 59 : 29.7;
+  //     });
+  //     if (limit) {
+  //       return tempSize > 336 ? 336 : tempSize;
+  //     } else {
+  //       return tempSize > 187 ? 187 : tempSize;
+  //     }
+  //   }
+  // }, [questStartData.QuestAnswers, windowWidth]);
+
   const cardSize = useMemo(() => {
     const limit = windowWidth >= 744 ? true : false;
     if (
@@ -123,9 +145,15 @@ const QuestionCard = (props) => {
     } else {
       let tempSize = 0;
       questStartData.QuestAnswers.forEach((item, index) => {
-        // tempSize += index === 0 ? (limit ? 45 : 24) : limit ? 55 : 29.7;
         tempSize += index === 0 ? (limit ? 49 : 24) : limit ? 59 : 29.7;
       });
+
+      // Adjust tempSize if the number of elements is greater than 6
+      const maxElements = 6;
+      if (questStartData.QuestAnswers.length > maxElements) {
+        tempSize = maxElements * (limit ? 59 : 29.7);
+      }
+
       if (limit) {
         return tempSize > 336 ? 336 : tempSize;
       } else {

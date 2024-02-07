@@ -1,4 +1,4 @@
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
@@ -26,7 +26,7 @@ const SingleAnswerRankedChoice = (props) => {
     tooltipName: 'Please write something...',
     tooltipStyle: 'tooltip-info',
   };
-  const [checkOptionStatus, setCheckOptionStatus] = useState(reset);
+
   const [prevValue, setPrevValue] = useState('');
 
   const handleDeleteClose = () => setDeleteModal(false);
@@ -44,13 +44,13 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
-    setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
+    props.setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
   };
 
   const optionVerification = async (value) => {
     if (prevValue === answer) return;
     setPrevValue(value);
-    setCheckOptionStatus({
+    props.setCheckOptionStatus({
       name: 'Checking',
       color: 'text-[#0FB063]',
       tooltipName: 'Verifying your option. Please wait...',
@@ -62,7 +62,7 @@ const SingleAnswerRankedChoice = (props) => {
     });
     // If any error captured
     if (errorMessage) {
-      return setCheckOptionStatus({
+      return props.setCheckOptionStatus({
         name: 'Rejected',
         color: 'text-[#b00f0f]',
         tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
@@ -77,7 +77,7 @@ const SingleAnswerRankedChoice = (props) => {
       startQuest: true,
     });
     if (answerExist) {
-      return setCheckOptionStatus({
+      return props.setCheckOptionStatus({
         name: 'Duplicate',
         color: 'text-[#EFD700]',
         tooltipName: 'Found Duplication!',
@@ -89,7 +89,7 @@ const SingleAnswerRankedChoice = (props) => {
     if (validatedAnswer) {
       setAnswer(validatedAnswer);
 
-      setCheckOptionStatus({
+      props.setCheckOptionStatus({
         name: 'Ok',
         color: 'text-[#0FB063]',
         tooltipName: 'Answer is Verified',
@@ -111,7 +111,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleDeleteOption = () => {
     // toast.success('Item deleted');
-    setCheckOptionStatus(reset);
+    props.setCheckOptionStatus(reset);
 
     const newArr = props.rankedAnswers.filter((item, index) => index !== id);
 
@@ -217,13 +217,13 @@ const SingleAnswerRankedChoice = (props) => {
                 className={`${
                   props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012] ' : 'bg-white dark:bg-[#0D1012]'
                 } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:h-[43px] tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.25rem] ${
-                  checkOptionStatus.color
+                  props.checkOptionStatus.color
                 }`}
               >
                 <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
-                  <span>{checkOptionStatus.name}</span>
+                  <span>{props.checkOptionStatus.name}</span>
                 </div>
-                <Tooltip optionStatus={checkOptionStatus} />
+                <Tooltip optionStatus={props.checkOptionStatus} />
               </div>
             )}
           </div>
