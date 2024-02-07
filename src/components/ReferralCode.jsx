@@ -3,6 +3,8 @@ import { Button } from './ui/Button';
 import { signUp } from '../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 import { referral } from '../services/api/authentication';
+import api from '../services/api/Axios';
+import { useNavigate } from 'react-router-dom'
 
 const ReferralCode = ({
   handleClose,
@@ -16,7 +18,9 @@ const ReferralCode = ({
   setReferralCode,
   handlePopupOpen,
   setErrorMessage,
+  socialAccount
 }) => {
+  const navigate = useNavigate()
   const handleInputChange = (e) => {
     setReferralCode(e.target.value);
   };
@@ -50,12 +54,26 @@ const ReferralCode = ({
     }
   };
 
+  const handleSocialSignup = async() => {
+    try {
+      const res = await api.post(`/user/signUpUser/social`, socialAccount.data);
+      setIsLoading(true);
+      if (res.status === 200) {
+        localStorage.setItem('uuid', res.data.uuid);
+        // toast.success('A verification email has been sent to your email address. Please check your inbox.');
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+    }
+  }
+
   const { mutateAsync: handleReferral } = useMutation({
     mutationFn: referral,
     onSuccess: (resp) => {
       toast.success('Referral code verified');
       handleClose();
-      handleSignup();
+      socialAccount.isSocial ? handleSocialSignup() : handleSignup();
     },
     onError: (err) => {
       console.log(err);

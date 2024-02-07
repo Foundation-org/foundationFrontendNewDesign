@@ -50,7 +50,7 @@ const Topbar = () => {
                 alt="badge"
                 className="h-6 w-[19.8px] tablet:h-[51.5px] tablet:w-[42px]"
               />
-              <p className="transform-center absolute z-50 pb-1 text-[8.6px] font-normal leading-normal text-white">
+              <p className="transform-center absolute z-50 pb-1 text-[8.6px] tablet:text-[24px] font-normal tablet:font-semibold leading-normal text-white">
                 {persistedUserInfo?.badges?.length ? persistedUserInfo?.badges?.length : 'G'}
               </p>
             </div>

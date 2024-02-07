@@ -100,10 +100,9 @@ const VerifyCode = () => {
         toast.success('Email verified successfully.');
         await getUserInfo();
 
-        setTimeout(() => {
-          // navigate('/dashboard');
-          window.location.href = '/dashboard';
-        }, 2000);
+        const data = await response.json();
+        localStorage.setItem('uuid', data.uuid);
+        navigate('/dashboard');
       }
     } catch (error) {
       console.log('Error during API request:', error.message);
