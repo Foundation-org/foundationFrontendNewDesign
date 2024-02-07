@@ -1,21 +1,21 @@
-import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { createGuestMode, userInfo, userInfoById } from '../../../services/api/userAuth';
-import { useEffect } from 'react';
 import { toast } from 'sonner';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from '../../../features/auth/authSlice';
-import Anchor from '../../../components/Anchor';
+import { useState, useEffect } from 'react';
 import api from '../../../services/api/Axios';
-import EmailTypeModal from '../../../components/EmailTypeModal';
+import { useNavigate } from 'react-router-dom';
+import Anchor from '../../../components/Anchor';
+import PopUp from '../../../components/ui/PopUp';
+import { useMutation } from '@tanstack/react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '../../../components/ui/Button';
+import { addUser } from '../../../features/auth/authSlice';
+import { createGuestMode, userInfo, userInfoById } from '../../../services/api/userAuth';
 
 const SidebarRight = () => {
   const dispath = useDispatch();
   const navigate = useNavigate();
   // const [response, setResponse] = useState();
   const [treasuryAmount, setTreasuryAmount] = useState(0);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(true);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -199,7 +199,38 @@ const SidebarRight = () => {
   return (
     <>
       <div className="no-scrollbar hidden h-full pb-[10vh] min-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] dark:border-[#000] dark:bg-[#000] laptop:block">
-        <EmailTypeModal modalShow={modalVisible} email={persistedUserInfo?.email} handleEmailType={handleEmailType} />
+        <PopUp logo={'/assets/svgs/email.svg'} title={'Email'} open={modalVisible} closeIcon={true}>
+          <div className="pt-2 pb-[32px] flex flex-col items-center">
+            <p className="text-center text-[8px] tablet:text-[25px] font-semibold text-[#838383]">
+              {persistedUserInfo?.email}
+            </p>
+            <p className="text-center text-[10px] tablet:text-[25px] font-medium text-[#838383] mt-[10px] tablet:mt-[14px] mb-[10px] tablet:mb-[22px]">
+              Please select if this email is personal or professional.
+            </p>
+            <div className="flex gap-[30px] tablet:gap-[65px] items-center justify-center">
+              <Button
+                variant="personal-work"
+                className="gap-2 tablet:gap-[15px]"
+                onClick={() => handleEmailType('personal')}
+              >
+                <img
+                  className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10"
+                  src="/assets/svgs/personal.svg"
+                  alt="personal"
+                />
+                Personal
+              </Button>
+              <Button
+                variant="personal-work"
+                className="gap-2 tablet:gap-[15px]"
+                onClick={() => handleEmailType('work')}
+              >
+                <img className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10" src="/assets/svgs/work.svg" alt="work" />{' '}
+                Work
+              </Button>
+            </div>
+          </div>
+        </PopUp>
         <div className="mb-[3vh] flex gap-[15px]">
           <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" />
           <div>

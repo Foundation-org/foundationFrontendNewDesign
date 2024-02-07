@@ -1,7 +1,7 @@
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
-const PopUp = ({ open, handleClose, children, customStyle, customClasses, logo, title }) => {
+const PopUp = ({ open, handleClose, children, customStyle, customClasses, logo, title, closeIcon }) => {
   const defaultStyle = {
     boxShadow: 'none',
     position: 'absolute',
@@ -28,12 +28,14 @@ const PopUp = ({ open, handleClose, children, customStyle, customClasses, logo, 
             <img src={logo} alt="popup logo" className="w-6 h-6 tablet:w-[50px] tablet:h-[50px]" />
             <p className="text-[12px] font-bold tablet:text-[25px] tablet:font-medium text-white">{title}</p>
           </div>
-          <img
-            src="/assets/preferences/close.png"
-            alt="close"
-            className="cursor-pointer w-2 h-2"
-            onClick={handleClose}
-          />
+          {!closeIcon && (
+            <img
+              src="/assets/preferences/close.png"
+              alt="close"
+              className="cursor-pointer w-2 h-2"
+              onClick={handleClose}
+            />
+          )}
         </div>
         <div className="bg-white rounded-b-[9.76px] tablet:rounded-b-[26px]">{children}</div>
       </Box>
