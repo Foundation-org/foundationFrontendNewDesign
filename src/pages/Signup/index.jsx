@@ -17,6 +17,9 @@ import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
 import PopUp from '../../components/ui/PopUp';
 import { Button as UiButton } from '../../components/ui/Button';
+import { LoginSocialGoogle } from 'reactjs-social-login';
+
+const REDIRECT_URI = window.location.href;
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -107,9 +110,9 @@ export default function Signup() {
   };
 
   const handleSignUpSocial = async (data) => {
-    setSocialAccount({ isSocial: true, data })
+    setSocialAccount({ isSocial: true, data });
     handleReferralOpen();
-    return
+    return;
     try {
       const res = await api.post(`/user/signUpUser/social`, {
         data,
@@ -117,6 +120,42 @@ export default function Signup() {
       if (res.data.required_action) {
         setModalVisible(true);
         setResData(res.data);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+    }
+  };
+
+  const handleSignUpSocialAfterReferral = async (data) => {
+    setSocialAccount({ isSocial: true, data });
+
+    try {
+      const res = await api.post(`/user/signUpUser/social`, {
+        data,
+      });
+      if (res.data.required_action) {
+        setModalVisible(true);
+        setResData(res.data);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+    }
+  };
+
+  const handleSignInSocial = async (data) => {
+    try {
+      const res = await api.post(`/user/signInUser/social`, {
+        data,
+      });
+      // if(res.data.required_action){
+      if (res.status === 200) {
+        localStorage.setItem('uuid', res.data.uuid);
+        // localStorage.setItem('userLoggedIn', res.data.uuid);
+        // localStorage.removeItem('isGuestMode');
+        // localStorage.setItem('jwt', res.data.token);
+        // navigate('/dashboard');
+        dispatch(addUser(res.data));
+        navigate('/dashboard');
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -254,11 +293,36 @@ export default function Signup() {
       <PopUp open={isPopup} handleClose={handlePopupClose} logo={'/assets/popup/googlelogo.svg'} title={'Google Email'}>
         <div className="px-5 tablet:px-[60px] py-[14px] tablet:py-[25px]">
           <p className="text-[9px] tablet:text-[20px] text-black font-medium">{errorMessage}</p>
-          <div className=" flex justify-end w-full">
-            <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
+
+          {/* <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
               Continue
+            </UiButton> */}
+          <LoginSocialGoogle
+            // isOnlyGetToken
+            client_id={import.meta.env.VITE_GG_APP_ID}
+            redirect_uri={REDIRECT_URI}
+            scope="openid profile email"
+            iscoveryDocs="claims_supported"
+            // access_type="offline"
+            onResolve={({ provider, data }) => {
+              setProvider(provider);
+              setProfile(data);
+              data['provider'] = provider;
+              isLogin ? handleSignInSocial(data) : handleSignUpSocialAfterReferral(data);
+            }}
+            onReject={(err) => {
+              console.log(err);
+            }}
+            className="w-full flex justify-end mt-[25px]"
+          >
+            <UiButton
+              variant="social-btn"
+              // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
+            >
+              <img src="/assets/svgs/google.svg" className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] " /> Continue
+              with Google
             </UiButton>
-          </div>
+          </LoginSocialGoogle>
         </div>
       </PopUp>
     </div>

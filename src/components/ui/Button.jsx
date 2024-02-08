@@ -36,6 +36,10 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'personal-work'
         ? 'addoption-boxShadow w-[4.875rem] max-w-[10.8125rem] bg-[#4A8DBD] text-[0.625rem] font-medium text-white tablet:w-[10.8125rem] tablet:text-[20px] laptop:w-[12vw]'
         : '',
+      variant === 'social-btn'
+        ? 'px-2 text-[2.5vw] sm:text-[2.3vw] w-fit lg:text-[1vw] font-[500] text-center h-[36px] sm:h-[50px] lg:h-[60px] border-[1px] border-gray-200 dark:border-white whitespace-nowrap bg-white dark:bg-dark-gray text-black dark:text-white'
+        : '',
+
       className,
     )}
     {...props}
@@ -63,5 +67,6 @@ Button.propTypes = {
     'result-outline',
     'start',
     'personal-work',
+    'social-btn',
   ]),
 };
