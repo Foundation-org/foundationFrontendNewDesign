@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { QueryClient} from '@tanstack/react-query';
 
 // components
 import Dropdown2 from '../../../components/Dropdown2';
@@ -18,19 +17,60 @@ import * as bookmarkFiltersActions from '../../../features/sidebar/bookmarkFilte
 // icons
 import { GrClose } from 'react-icons/gr';
 import { topicPreferencesModalStyle } from '../../../assets/styles';
-import { setFilterStates } from '../../../services/api/userAuth';
+import { setFilterStates, userInfo } from '../../../services/api/userAuth';
+import { addUser } from '../../../features/auth/authSlice';
 
 const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
 
+  const queryClient = useQueryClient();
 
- 
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+  });
+
+  const handleUserInfo = async () => {
+    try {
+      const resp = await getUserInfo();
+
+      if (resp?.status === 200) {
+        // Cookie Calling
+        if (resp.data) {
+          dispatch(addUser(resp?.data));
+          // Set into local storage
+          if (!localStorage.getItem('uuid')) {
+            localStorage.setItem('uuid', resp.data.uuid);
+          }
+        }
+
+        // LocalStorage Calling
+        // if (!resp.data) {
+        //   const res = await userInfoById(localStorage.getItem('uuid'));
+        //   dispath(addUser(res?.data));
+        //   if (res?.data?.requiredAction) {
+        //     setModalVisible(true);
+        //   }
+        // }
+
+        if (resp?.data?.requiredAction) {
+          setModalVisible(true);
+        }
+      }
+
+      // setResponse(resp?.data);
+    } catch (e) {
+      console.log({ e });
+      // toast.error(e.response.data.message.split(':')[1]);
+    }
+  };
+
   const { mutateAsync: setFilters } = useMutation({
     mutationFn: setFilterStates,
     onSuccess: (resp) => {
       queryClient.invalidateQueries('FeedData');
+      handleUserInfo();
     },
     onError: (err) => {
       // toast.error(err.response.data.message.split(':')[1]);
@@ -39,7 +79,6 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
   });
 
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  
 
   let filtersActions;
   if (pathname === '/dashboard/bookmark') {
@@ -48,22 +87,21 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
     filtersActions = homeFilterActions;
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.setFilterByScope));
     dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
     dispatch(filtersActions.setFilterByStatus(persistedUserInfo.States.filterByStatus));
     dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
     dispatch(filtersActions.setExpandedView(persistedUserInfo.States.expandedView));
     dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
-  },[])
+  }, []);
 
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
-  
-  useEffect(()=>{
-     setFilters(filterStates);
-  },[filterStates])
 
+  useEffect(() => {
+    setFilters(filterStates);
+  }, [filterStates]);
 
   const [multipleOption, setMultipleOption] = useState(
     localStorage.getItem('filterByState') !== undefined

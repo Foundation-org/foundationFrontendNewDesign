@@ -1,3 +1,4 @@
+import { termsAndConditionsArray } from '../../../features/term-privacy/term-of-service';
 import TermsPrivacyLayout from '../components/TermsPrivacyLayout';
 
 const TableOfContent = [
@@ -72,55 +73,43 @@ const TableOfContent = [
 
 const TermOfService = () => {
   return (
-    <TermsPrivacyLayout>
-      <h1 className="text-[30px] font-semibold text-center">Terms Of Service</h1>
-      <p className="text-[19.36px] font-normal text-center">Last Updated: January 19, 2024</p>
-      <div>
-        <h4 className="text-[22px] font-semibold">Agreement to Our Legal Terms</h4>
-        <p className="text-[20px] font-normal">
+    <TermsPrivacyLayout title={'Terms Of Service'} timeStamp={'Last Updated: January 19, 2024'}>
+      <div className="term_policy_paragraph mt-[5px] tablet:mt-[15px]">
+        <h4 className="term_policy_heading">Agreement to Our Legal Terms</h4>
+        <p>
           Foundation Internet Organization, Inc., a Delaware-registered company located at 651 N. Broad Street Suite
           201, Middletown, DE 19709, United States, operates the website on.foundation and other related services.
-          Contact us at 7409738056, justin@foundation-io.com, or by mail at our address
+          Contact us at 7409738056, justin@foundation-io.com, or by mail at our address.
         </p>
-        <p className="text-[20px] font-normal">
+        <p>
           Your access and use of our services indicate your agreement to these Terms. If you do not agree, discontinue
           use immediately. We will notify you of any significant changes to the services or these Terms. Continued use
           after changes indicates your acceptance of the new terms.
         </p>
-        <p className="text-[20px] font-normal">
+        <p>
           The Services are intended for users aged 16 and above. We are not attorneys, nor do we specialize in law.
           Foundation Internet Organization is simply trying to create something special so by agreeing to these terms,
           you agree not to sue us unless we do something really bad on purpose.
         </p>
       </div>
-      <div className="flex">
-        <div className="border-[3px] border-[#DEE6F7] w-fit">
-          <h4 className="text-[22px] font-bold">Table of Contents</h4>
-          {TableOfContent.map((item) => (
-            <p>
-              {item.id}. {item.title}
-            </p>
-          ))}
-        </div>
-        <div>
-          <h4 className="text-[22px] font-semibold">Agreement to Our Legal Terms</h4>
-          <p className="text-[20px] font-normal">
-            Foundation Internet Organization, Inc., a Delaware-registered company located at 651 N. Broad Street Suite
-            201, Middletown, DE 19709, United States, operates the website on.foundation and other related services.
-            Contact us at 7409738056, justin@foundation-io.com, or by mail at our address
-          </p>
-          <p className="text-[20px] font-normal">
-            Your access and use of our services indicate your agreement to these Terms. If you do not agree, discontinue
-            use immediately. We will notify you of any significant changes to the services or these Terms. Continued use
-            after changes indicates your acceptance of the new terms.
-          </p>
-          <p className="text-[20px] font-normal">
-            The Services are intended for users aged 16 and above. We are not attorneys, nor do we specialize in law.
-            Foundation Internet Organization is simply trying to create something special so by agreeing to these terms,
-            you agree not to sue us unless we do something really bad on purpose.
-          </p>
-        </div>
-      </div>
+      <ul className="list-decimal">
+        {termsAndConditionsArray.map((section, index) => (
+          <li key={index}>
+            <h3 className="term_policy_subheading">{section.section}</h3>
+            <ul className="list-disc pl-2">
+              {section.content.map((content, contentIndex) => (
+                <li key={contentIndex} className="term_policy_paragraph">
+                  <h3 className="term_policy_subheading">{content.heading}</h3>
+                  {content.subHeading && <h3 className="term_policy_subheading">{content.subHeading}</h3>}
+                  <ul className="list-disc pl-6">{content.list && content.list.map((list) => <li>{list}</li>)}</ul>
+                  <p>{content.text}</p>
+                </li>
+              ))}
+            </ul>
+            {section.endText && <p className="term_policy_paragraph">{section.endText}</p>}
+          </li>
+        ))}
+      </ul>
     </TermsPrivacyLayout>
   );
 };
