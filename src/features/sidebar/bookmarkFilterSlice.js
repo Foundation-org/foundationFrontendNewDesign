@@ -35,6 +35,9 @@ export const bookmarkFiltersSlice = createSlice({
     toggleExapandedView: (state, action) => {
       state.expandedView = !state.expandedView;
     },
+    setExpandedView:(state, action)=>{
+      state.expandedView=action.payload;
+    },
     setSearchData: (state, action) => {
       state.searchData = action.payload;
     },
@@ -78,6 +81,7 @@ export const {
   resetFilters,
   resetSearchData,
   resetOtherFilters,
+  setExpandedView
 } = bookmarkFiltersSlice.actions;
 
 export default bookmarkFiltersSlice.reducer;
