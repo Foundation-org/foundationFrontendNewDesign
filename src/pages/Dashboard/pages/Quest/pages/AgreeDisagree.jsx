@@ -156,7 +156,7 @@ const AgreeDisagree = () => {
                 name: 'Ok',
                 color: e.target.value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
               });
-              dispatch(createQuestAction.handleQuestionReset(e.target.value))
+              dispatch(createQuestAction.handleQuestionReset(e.target.value));
             }}
             onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             value={question}
@@ -216,7 +216,7 @@ const AgreeDisagree = () => {
           {hollow ? (
             <div className="flex w-full justify-end pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
               <Button variant="hollow-submit" onClick={() => handleSubmit()} disabled={loading === true}>
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : <span>Submit</span>}
+                Submit
               </Button>
             </div>
           ) : (
