@@ -292,14 +292,14 @@ const SidebarRight = () => {
               <div>
                 <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Edit Profile</Anchor>
               </div>
-              <div className="mt-3 flex gap-1">
+              {/* <div className="mt-3 flex gap-1">
                 <div className="h-[9px] w-[19.5px] rounded-md bg-[#4A8DBD]"></div>
                 <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
                 <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
                 <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
                 <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
                 <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-              </div>
+              </div> */}
             </div>
           </div>
         )}

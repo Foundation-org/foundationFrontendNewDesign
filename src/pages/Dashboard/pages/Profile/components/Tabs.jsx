@@ -16,7 +16,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
       >
         Contributions
       </Link>
-      {/* <Link
+      <Link
         to={'verification-badges'}
         className={`${
           active === '/profile/verification-badges'
@@ -28,7 +28,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
         }}
       >
         Verfication Badges
-      </Link> */}
+      </Link>
       <Link
         to={'ledger'}
         className={`${

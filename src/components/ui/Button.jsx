@@ -15,8 +15,8 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'submit'
         ? 'addoption-boxShadow w-[4.875rem] max-w-[10.8125rem] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] text-[0.625rem] font-semibold text-white tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
         : '',
-        variant === 'hollow-submit'
-        ? 'addoption-boxShadow w-[4.875rem] max-w-[10.8125rem] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] text-[0.625rem] font-semibold text-white tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
+      variant === 'hollow-submit'
+        ? 'addoption-boxShadow w-[4.875rem] max-w-[10.8125rem] border-[1.428px] tablet:border-[3px] border-[#389CE3] text-[0.625rem] font-semibold text-[#389CE3] tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
         : '',
       variant === 'change'
         ? 'addoption-boxShadow w-[4.875rem]  bg-[#FDD503] text-[0.625rem] font-semibold text-white tablet:w-[10.8125rem] tablet:text-[1.25rem] disabled:bg-transparent disabled:border-[1.428px] disabled:border-[#FDD503] disabled:text-[#FDD503] disabled:dark:text-[#FDD503]'

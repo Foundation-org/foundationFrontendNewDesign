@@ -215,14 +215,14 @@ const StartTest = ({
                     ref={listContainerRef}
                     className={`${
                       isFullScreen === undefined
-                        ? 'quest-scrollbar max-h-[187px] md:max-h-[366px] min-h-fit overflow-auto'
+                        ? 'quest-scrollbar max-h-[187px] md:max-h-[366px] min-h-fit overflow-auto mr-[2px] tablet:mr-1'
                         : null
                     }`}
                   >
                     <ul
                       className={`${
                         isFullScreen === undefined ? ' tablet:max-h-[366px]' : ''
-                      }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+                      }  flex flex-col gap-[5.7px] tablet:gap-[10px]`}
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >

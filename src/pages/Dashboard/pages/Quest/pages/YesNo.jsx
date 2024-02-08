@@ -10,6 +10,7 @@ import YesNoOptions from '../components/YesNoOptions';
 import ChangeChoiceOption from '../components/ChangeChoiceOption';
 import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import { Button } from '../../../../../components/ui/Button';
 
 const YesNo = () => {
   const navigate = useNavigate();
@@ -68,7 +69,6 @@ const YesNo = () => {
   };
 
   const handleSubmit = async () => {
-
     if (question === '') {
       return toast.warning('Post cannot be empty');
     }
@@ -90,7 +90,7 @@ const YesNo = () => {
       QuestTopic: questTopic,
     };
 
-    if(!checkHollow){
+    if (!checkHollow) {
       setLoading(true);
       createQuest(params);
       dispatch(createQuestAction.resetCreateQuest());
@@ -135,7 +135,7 @@ const YesNo = () => {
     // });
   };
   const checkHollow = () => {
-    if ((questionStatus.tooltipName === 'Question is Verified')) {
+    if (questionStatus.tooltipName === 'Question is Verified') {
       return false;
     } else {
       return true;
@@ -227,28 +227,33 @@ const YesNo = () => {
           />
         </div>
         <div className="flex w-full justify-end">
-        {hollow ? (
-          <div className="flex w-full justify-end">
-            <button
-              className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-              onClick={() => handleSubmit()}
-              disabled={loading === true }
-            >
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : <span style={{ opacity: 0 }}>Submit</span>}
+          {hollow ? (
+            // <div className="flex w-full justify-end">
+            //   <button
+            //     className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
+            //     onClick={() => handleSubmit()}
+            //     disabled={loading === true }
+            //   >
+            //     {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : <span style={{ opacity: 0 }}>Submit</span>}
 
-            </button>
-          </div>
-        ) : (
-          <div className="flex w-full justify-end">
-            <button
-              className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-              onClick={() => handleSubmit()}
-              disabled={loading === true}
-            >
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-            </button>
-          </div>
-        )}
+            //   </button>
+            // </div>
+            <div className="flex w-full justify-end pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
+              <Button variant="hollow-submit" onClick={() => handleSubmit()} disabled={loading === true}>
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : <span>Submit</span>}
+              </Button>
+            </div>
+          ) : (
+            <div className="flex w-full justify-end">
+              <button
+                className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
+                onClick={() => handleSubmit()}
+                disabled={loading === true}
+              >
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

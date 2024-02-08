@@ -255,7 +255,7 @@ const SingleAnswerMultipleChoice = (props) => {
         {/* =============== To Display Contention and Trash Right of Option */}
         {props.btnText !== 'Results' ? (
           <div
-            className="flex w-12 min-w-[48px] items-center bg-white pl-1 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]"
+            className="flex w-12 min-w-[48px] items-center bg-white pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]"
             onClick={handleContendChange}
           >
             {props.deleteable ? (
