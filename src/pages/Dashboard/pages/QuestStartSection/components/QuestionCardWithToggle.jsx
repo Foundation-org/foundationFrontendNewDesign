@@ -38,7 +38,7 @@ const QuestionCardWithToggle = (props) => {
     questData = 0;
   } else {
     questData = questStartData.QuestAnswers?.some((answer) => {
-      return answer.uuid && answer.uuid === persistedUserInfo?.uuid || localStorage.getItem('uuid');
+      return answer.uuid && answer.uuid === persistedUserInfo?.uuid;
     })
       ? 1
       : 0;
@@ -106,6 +106,17 @@ const QuestionCardWithToggle = (props) => {
       uuid: answer.uuid,
     })),
   );
+
+  useEffect(() => {
+    setAnswerSelection(
+      questStartData.QuestAnswers?.map((answer) => ({
+        label: answer.question,
+        check: false,
+        contend: false,
+        uuid: answer.uuid,
+      })),
+    );
+  }, []);
 
   const [rankedAnswers, setRankedAnswers] = useState(
     answersSelection?.map((item, index) => ({

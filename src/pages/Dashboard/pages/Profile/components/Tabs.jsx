@@ -6,7 +6,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
       <Link
         to={''}
         className={`${
-          active === '/profile'
+          active === '/profile/'
             ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black'
             : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
         } tab-button`}
@@ -24,7 +24,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
             : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
         } tab-button`}
         onClick={() => {
-          handleSelectedTab('/profile/verification-badges');
+          handleSelectedTab('/profile/verification-badges/');
         }}
       >
         Verfication Badges
@@ -37,7 +37,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
             : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
         } tab-button`}
         onClick={() => {
-          handleSelectedTab('/profile/ledger');
+          handleSelectedTab('/profile/ledger/');
         }}
       >
         Ledger
