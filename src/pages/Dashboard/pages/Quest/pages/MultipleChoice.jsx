@@ -125,7 +125,8 @@ const MultipleChoice = () => {
       setLoading(false);
       return toast.warning('Option cannot be empty');
     }
-    if (!checkHollow) {
+    if (!checkHollow()) {
+      console.log("true");
       setLoading(true);
       createQuest(params);
       dispatch(createQuestAction.resetCreateQuest());

@@ -95,7 +95,7 @@ const AgreeDisagree = () => {
       QuestTopic: questTopic,
     };
 
-    if (!checkHollow) {
+    if (!checkHollow()) {
       setLoading(true);
       createQuest(params);
       dispatch(createQuestAction.resetCreateQuest());
