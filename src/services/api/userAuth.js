@@ -13,6 +13,7 @@ export const signIn = async (data) => {
 
 export const userInfo = async () => {
   return await api.post('/user/userInfo');
+  // return await api.post('/user/userInfo', { uuid: localStorage.getItem('uuid') });
 };
 export const userInfoById = async (uuid) => {
   return await api.post('/user/userInfoById', { uuid });

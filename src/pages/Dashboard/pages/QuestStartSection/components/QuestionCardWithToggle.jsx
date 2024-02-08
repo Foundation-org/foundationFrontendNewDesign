@@ -38,7 +38,7 @@ const QuestionCardWithToggle = (props) => {
     questData = 0;
   } else {
     questData = questStartData.QuestAnswers?.some((answer) => {
-      return answer.uuid && answer.uuid === persistedUserInfo?.uuid;
+      return answer.uuid && answer.uuid === persistedUserInfo?.uuid || localStorage.getItem('uuid');
     })
       ? 1
       : 0;
@@ -313,7 +313,7 @@ const QuestionCardWithToggle = (props) => {
         getUserInfo();
       }
       handleViewResults(questStartData._id);
-      // userInfo(persistedUserInfo?.uuid).then((resp) => {
+      // userInfo(persistedUserInfo?.uuid || localStorage.getItem('uuid')).then((resp) => {
       //   if (resp.status === 200) {
       //     dispatch(addUser(resp.data));
       //   }
@@ -343,7 +343,7 @@ const QuestionCardWithToggle = (props) => {
         setLoading(false);
         handleViewResults(questStartData._id);
       }
-      userInfo(persistedUserInfo?.uuid).then((resp) => {
+      userInfo(persistedUserInfo?.uuid || localStorage.getItem('uuid')).then((resp) => {
         if (resp.status === 200) {
           dispatch(addUser(resp.data));
         }
@@ -381,7 +381,7 @@ const QuestionCardWithToggle = (props) => {
         questId: questStartData._id,
         answer: ans,
         addedAnswer: '',
-        uuid: persistedUserInfo?.uuid,
+        uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
       };
 
       if (!params.answer.selected) {
@@ -462,7 +462,7 @@ const QuestionCardWithToggle = (props) => {
             answer: dataToSend,
             addedAnswer: addedAnswerValue,
             addedAnswerUuid: addedAnswerUuidValue,
-            uuid: persistedUserInfo?.uuid,
+            uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
             isAddedAnsSelected: isAddedAnsSelected,
           };
 
@@ -507,7 +507,7 @@ const QuestionCardWithToggle = (props) => {
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
-          uuid: persistedUserInfo?.uuid,
+          uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
           isAddedAnsSelected: isAddedAnsSelected,
         };
 
@@ -594,7 +594,7 @@ const QuestionCardWithToggle = (props) => {
             answer: dataToSend,
             addedAnswer: addedAnswerValue,
             addedAnswerUuid: addedAnswerUuidValue,
-            uuid: persistedUserInfo?.uuid,
+            uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
             isAddedAnsSelected: isAddedAnsSelected,
           };
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
@@ -612,7 +612,7 @@ const QuestionCardWithToggle = (props) => {
           answer: dataToSend,
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
-          uuid: persistedUserInfo?.uuid,
+          uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
           isAddedAnsSelected: isAddedAnsSelected,
         };
 
