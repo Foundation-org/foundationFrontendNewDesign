@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { QueryClient} from '@tanstack/react-query';
 
 // components
 import Dropdown2 from '../../../components/Dropdown2';
@@ -15,21 +18,52 @@ import * as bookmarkFiltersActions from '../../../features/sidebar/bookmarkFilte
 // icons
 import { GrClose } from 'react-icons/gr';
 import { topicPreferencesModalStyle } from '../../../assets/styles';
+import { setFilterStates } from '../../../services/api/userAuth';
 
 const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
-  let filtersActions;
 
+
+ 
+  const { mutateAsync: setFilters } = useMutation({
+    mutationFn: setFilterStates,
+    onSuccess: (resp) => {
+      queryClient.invalidateQueries('FeedData');
+    },
+    onError: (err) => {
+      // toast.error(err.response.data.message.split(':')[1]);
+      console.log(err);
+    },
+  });
+
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  
+
+  let filtersActions;
   if (pathname === '/dashboard/bookmark') {
     filtersActions = bookmarkFiltersActions;
   } else {
     filtersActions = homeFilterActions;
   }
 
+  useEffect(()=>{
+    dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.setFilterByScope));
+    dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
+    dispatch(filtersActions.setFilterByStatus(persistedUserInfo.States.filterByStatus));
+    dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
+    dispatch(filtersActions.setExpandedView(persistedUserInfo.States.expandedView));
+    dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
+  },[])
+
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
+  
+  useEffect(()=>{
+     setFilters(filterStates);
+  },[filterStates])
+
 
   const [multipleOption, setMultipleOption] = useState(
     localStorage.getItem('filterByState') !== undefined
