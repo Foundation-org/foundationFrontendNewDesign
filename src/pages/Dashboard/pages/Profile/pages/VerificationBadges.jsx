@@ -100,6 +100,7 @@ const VerificationBadges = () => {
       NoOfButton: 1,
       link: '/auth/linkedin',
       accountName: 'linkedin',
+      disabled: true,
     },
     // {
     //   image: '/assets/profile/Facebook-2x.png',
@@ -377,7 +378,10 @@ const VerificationBadges = () => {
         </div>
 
         {socials.map((item, index) => (
-          <div className="flex items-center justify-center gap-[5px] tablet:gap-[10.59px]" key={index}>
+          <div
+            className={`flex items-center justify-center gap-[5px] tablet:gap-[10.59px] ${item.disabled ? 'opacity-[60%]' : ''}`}
+            key={index}
+          >
             <img
               src={item.image}
               alt={item.title}
