@@ -81,7 +81,7 @@ export const createQuestSlice = createSlice({
       return {
         ...state,
         questions: { ...state.questions, question, changedOption, changeState },
-        questionReset: initialState.questionReset,
+        // questionReset: initialState.questionReset,
       };
     },
     updateMultipleChoice: (state, action) => {
@@ -98,7 +98,7 @@ export const createQuestSlice = createSlice({
           optionsCount,
           options,
         },
-        questionReset: initialState.questionReset,
+        // questionReset: initialState.questionReset,
       };
     },
     updateRankedChoice: (state, action) => {
@@ -136,6 +136,13 @@ export const createQuestSlice = createSlice({
     resetCreateQuest: (state) => {
       Object.assign(state, initialState);
     },
+    handleQuestionReset: (state, action) => {
+      return {
+        ...state,
+        questions: action.payload, 
+        questionReset: initialState.questionReset,
+      };
+    }
   },
   extraReducers: (builder) => {
     // check question status start
@@ -280,6 +287,7 @@ export const {
   updateMultipleChoice,
   updateRankedChoice,
   resetCreateQuest,
+  handleQuestionReset,
   addNewOption,
   delOption,
   drapAddDrop,

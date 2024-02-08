@@ -183,6 +183,7 @@ const YesNo = () => {
               //   name: 'Ok',
               //   color: e.target.value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
               // });
+              dispatch(createQuestAction.handleQuestionReset(e.target.value))
             }}
             onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             value={question}
