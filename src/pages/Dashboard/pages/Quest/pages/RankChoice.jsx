@@ -292,6 +292,7 @@ const RankChoice = () => {
     // setLoading(questionStatus.status);
     if (createQuestSlice.question) {
       setQuestion(createQuestSlice.question);
+      setPrevValue(createQuestSlice.question);
     }
   }, [questionStatus]);
 
