@@ -83,16 +83,15 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
   }
 
   useEffect(() => {
-
     if (pathname === '/dashboard/bookmark') {
-      dispatch(filtersActions.setFilterByScope(persistedUserInfo.bookmarkStates.setFilterByScope));
+      dispatch(filtersActions.setFilterByScope(persistedUserInfo.bookmarkStates.filterByScope));
       dispatch(filtersActions.setFilterBySort(persistedUserInfo.bookmarkStates.filterBySort));
       dispatch(filtersActions.setFilterByStatus(persistedUserInfo.bookmarkStates.filterByStatus));
       dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
       dispatch(filtersActions.setExpandedView(persistedUserInfo.bookmarkStates.expandedView));
       dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
     } else {
-      dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.setFilterByScope));
+      dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.filterByScope));
       dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
       dispatch(filtersActions.setFilterByStatus(persistedUserInfo.States.filterByStatus));
       dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
@@ -110,7 +109,6 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
     } else {
       setFilters(filterStates);
     }
-    
   }, [filterStates]);
 
   const [multipleOption, setMultipleOption] = useState(

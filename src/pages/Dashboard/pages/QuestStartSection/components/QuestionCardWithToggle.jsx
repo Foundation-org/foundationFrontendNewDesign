@@ -38,7 +38,7 @@ const QuestionCardWithToggle = (props) => {
     questData = 0;
   } else {
     questData = questStartData.QuestAnswers?.some((answer) => {
-      return (answer.uuid && answer.uuid === persistedUserInfo?.uuid) || localStorage.getItem('uuid');
+      return answer.uuid && answer.uuid === persistedUserInfo?.uuid;
     })
       ? 1
       : 0;
