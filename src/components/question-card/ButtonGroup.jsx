@@ -239,7 +239,15 @@ const ButtonGroup = ({
               <Button
                 variant="submit"
                 onClick={() => handleSubmit()}
-                disabled={loading === true ? true : false || checkOptionStatus.name === 'Ok' ? false : true}
+                disabled={
+                  loading === true
+                    ? true
+                    : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                      ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                        ? false
+                        : true
+                      : false
+                }
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               </Button>
@@ -300,7 +308,15 @@ const ButtonGroup = ({
                   <Button
                     variant="submit"
                     onClick={() => handleSubmit()}
-                    disabled={loading === true ? true : false || checkOptionStatus.name === 'Ok' ? false : true}
+                    disabled={
+                      loading === true
+                        ? true
+                        : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                          ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                            ? false
+                            : true
+                          : false
+                    }
                   >
                     {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                   </Button>
@@ -334,7 +350,15 @@ const ButtonGroup = ({
               <Button
                 variant="submit"
                 onClick={() => handleSubmit()}
-                disabled={loading === true ? true : false || checkOptionStatus.name === 'Ok' ? false : true}
+                disabled={
+                  loading === true
+                    ? true
+                    : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                      ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                        ? false
+                        : true
+                      : false
+                }
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               </Button>
@@ -474,7 +498,15 @@ const ButtonGroup = ({
                   <Button
                     variant="submit"
                     onClick={() => handleSubmit()}
-                    disabled={loading === true ? true : false || checkOptionStatus.name === 'Ok' ? false : true}
+                    disabled={
+                      loading === true
+                        ? true
+                        : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                          ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                            ? false
+                            : true
+                          : false
+                    }
                   >
                     {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                   </Button>
