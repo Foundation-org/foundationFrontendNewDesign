@@ -113,7 +113,7 @@ const RankChoice = () => {
     if (isEmptyAnswer) {
       return toast.warning('Option cannot be empty');
     }
-    if (!checkHollow) {
+    if (!checkHollow()) {
       setLoading(true);
       createQuest(params);
       dispatch(createQuestAction.resetCreateQuest());
