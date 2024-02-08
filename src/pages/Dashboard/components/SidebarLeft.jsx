@@ -17,7 +17,7 @@ import * as bookmarkFiltersActions from '../../../features/sidebar/bookmarkFilte
 // icons
 import { GrClose } from 'react-icons/gr';
 import { topicPreferencesModalStyle } from '../../../assets/styles';
-import { setFilterStates, userInfo } from '../../../services/api/userAuth';
+import { setBookmarkFilterStates, setFilterStates, userInfo } from '../../../services/api/userAuth';
 import { addUser } from '../../../features/auth/authSlice';
 
 const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross }) => {
@@ -44,36 +44,31 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             localStorage.setItem('uuid', resp.data.uuid);
           }
         }
-
-        // LocalStorage Calling
-        // if (!resp.data) {
-        //   const res = await userInfoById(localStorage.getItem('uuid'));
-        //   dispath(addUser(res?.data));
-        //   if (res?.data?.requiredAction) {
-        //     setModalVisible(true);
-        //   }
-        // }
-
         if (resp?.data?.requiredAction) {
           setModalVisible(true);
         }
       }
-
-      // setResponse(resp?.data);
     } catch (e) {
       console.log({ e });
-      // toast.error(e.response.data.message.split(':')[1]);
     }
   };
 
   const { mutateAsync: setFilters } = useMutation({
     mutationFn: setFilterStates,
     onSuccess: (resp) => {
-      queryClient.invalidateQueries('FeedData');
       handleUserInfo();
     },
     onError: (err) => {
-      // toast.error(err.response.data.message.split(':')[1]);
+      console.log(err);
+    },
+  });
+
+  const { mutateAsync: setBookmarkFilters } = useMutation({
+    mutationFn: setBookmarkFilterStates,
+    onSuccess: (resp) => {
+      handleUserInfo();
+    },
+    onError: (err) => {
       console.log(err);
     },
   });
@@ -88,19 +83,34 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
   }
 
   useEffect(() => {
-    dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.setFilterByScope));
-    dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
-    dispatch(filtersActions.setFilterByStatus(persistedUserInfo.States.filterByStatus));
-    dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
-    dispatch(filtersActions.setExpandedView(persistedUserInfo.States.expandedView));
-    dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
+
+    if (pathname === '/dashboard/bookmark') {
+      dispatch(filtersActions.setFilterByScope(persistedUserInfo.bookmarkStates.setFilterByScope));
+      dispatch(filtersActions.setFilterBySort(persistedUserInfo.bookmarkStates.filterBySort));
+      dispatch(filtersActions.setFilterByStatus(persistedUserInfo.bookmarkStates.filterByStatus));
+      dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
+      dispatch(filtersActions.setExpandedView(persistedUserInfo.bookmarkStates.expandedView));
+      dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
+    } else {
+      dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.setFilterByScope));
+      dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
+      dispatch(filtersActions.setFilterByStatus(persistedUserInfo.States.filterByStatus));
+      dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
+      dispatch(filtersActions.setExpandedView(persistedUserInfo.States.expandedView));
+      dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
+    }
   }, []);
 
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
 
   useEffect(() => {
-    setFilters(filterStates);
+    if (pathname === '/dashboard/bookmark') {
+      setBookmarkFilters(filterStates);
+    } else {
+      setFilters(filterStates);
+    }
+    
   }, [filterStates]);
 
   const [multipleOption, setMultipleOption] = useState(
