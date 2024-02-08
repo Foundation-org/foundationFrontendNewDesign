@@ -297,24 +297,26 @@ export default function Signup() {
           {/* <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
               Continue
             </UiButton> */}
-          <LoginSocialGoogle
-            // isOnlyGetToken
-            client_id={import.meta.env.VITE_GG_APP_ID}
-            redirect_uri={REDIRECT_URI}
-            scope="openid profile email"
-            iscoveryDocs="claims_supported"
-            // access_type="offline"
-            onResolve={({ provider, data }) => {
-              setProvider(provider);
-              setProfile(data);
-              data['provider'] = provider;
-              isLogin ? handleSignInSocial(data) : handleSignUpSocialAfterReferral(data);
-            }}
-            onReject={(err) => {
-              console.log(err);
-            }}
-            className="w-full flex justify-end mt-[25px]"
-          >
+            {errorMessage==="Email Already Exists"&&
+
+              <LoginSocialGoogle
+              // isOnlyGetToken
+              client_id={import.meta.env.VITE_GG_APP_ID}
+              redirect_uri={REDIRECT_URI}
+              scope="openid profile email"
+              iscoveryDocs="claims_supported"
+              // access_type="offline"
+              onResolve={({ provider, data }) => {
+                setProvider(provider);
+                setProfile(data);
+                data['provider'] = provider;
+                isLogin ? handleSignInSocial(data) : handleSignUpSocialAfterReferral(data);
+              }}
+              onReject={(err) => {
+                console.log(err);
+              }}
+              className="w-full flex justify-end mt-[25px]"
+              >
             <UiButton
               variant="social-btn"
               // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
@@ -323,6 +325,7 @@ export default function Signup() {
               with Google
             </UiButton>
           </LoginSocialGoogle>
+          }
         </div>
       </PopUp>
     </div>
