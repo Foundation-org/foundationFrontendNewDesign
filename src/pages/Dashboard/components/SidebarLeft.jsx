@@ -38,18 +38,31 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
       if (resp?.status === 200) {
         // Cookie Calling
         if (resp.data) {
-          dispatch(addUser(resp?.data));
+          dispath(addUser(resp?.data));
           // Set into local storage
           if (!localStorage.getItem('uuid')) {
             localStorage.setItem('uuid', resp.data.uuid);
           }
         }
+
+        // LocalStorage Calling
+        if (!resp.data) {
+          const res = await userInfoById(localStorage.getItem('uuid'));
+          dispath(addUser(res?.data));
+          if (res?.data?.requiredAction) {
+            setModalVisible(true);
+          }
+        }
+
         if (resp?.data?.requiredAction) {
           setModalVisible(true);
         }
       }
+
+      // setResponse(resp?.data);
     } catch (e) {
       console.log({ e });
+      toast.error(e.response.data.message.split(':')[1]);
     }
   };
 
