@@ -17,7 +17,7 @@ import * as bookmarkFiltersActions from '../../../features/sidebar/bookmarkFilte
 // icons
 import { GrClose } from 'react-icons/gr';
 import { topicPreferencesModalStyle } from '../../../assets/styles';
-import { setBookmarkFilterStates, setFilterStates, userInfo } from '../../../services/api/userAuth';
+import { setBookmarkFilterStates, setFilterStates, userInfo, userInfoById } from '../../../services/api/userAuth';
 import { addUser } from '../../../features/auth/authSlice';
 
 const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross }) => {
