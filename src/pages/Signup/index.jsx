@@ -82,7 +82,7 @@ export default function Signup() {
   };
 
   const handleSignup = async () => {
-    if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
+    if (captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
 
     handleReferralOpen();
@@ -296,10 +296,25 @@ export default function Signup() {
 
           {/* <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
               Continue
-            </UiButton> */}
-            {errorMessage==="Email Already Exists"&&
+            </UiButton> */
+            
+            console.log(errorMessage)
+            }
+          {errorMessage.trim() === "Email Already Exists" ? (
+            <div className="w-full flex justify-end mt-[25px]">
 
-              <LoginSocialGoogle
+            <UiButton
+            className="w-full flex justify-end mt-[25px]"
+            onClick={() => {
+              navigate('/');
+            }}
+            variant={'submit'}
+            >
+              Login
+            </UiButton>
+              </div>
+          ) : (
+            <LoginSocialGoogle
               // isOnlyGetToken
               client_id={import.meta.env.VITE_GG_APP_ID}
               redirect_uri={REDIRECT_URI}
@@ -316,16 +331,16 @@ export default function Signup() {
                 console.log(err);
               }}
               className="w-full flex justify-end mt-[25px]"
-              >
-            <UiButton
-              variant="social-btn"
-              // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
             >
-              <img src="/assets/svgs/google.svg" className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] " /> Continue
-              with Google
-            </UiButton>
-          </LoginSocialGoogle>
-          }
+              <UiButton
+                variant="social-btn"
+                // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
+              >
+                <img src="/assets/svgs/google.svg" className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] " /> Continue
+                with Google
+              </UiButton>
+            </LoginSocialGoogle>
+          )}
         </div>
       </PopUp>
     </div>
