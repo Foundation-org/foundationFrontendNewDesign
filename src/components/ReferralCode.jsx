@@ -4,7 +4,7 @@ import { signUp } from '../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 import { referral } from '../services/api/authentication';
 import api from '../services/api/Axios';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const ReferralCode = ({
   handleClose,
@@ -18,9 +18,9 @@ const ReferralCode = ({
   setReferralCode,
   handlePopupOpen,
   setErrorMessage,
-  socialAccount
+  socialAccount,
 }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
     setReferralCode(e.target.value);
   };
@@ -54,7 +54,7 @@ const ReferralCode = ({
     }
   };
 
-  const handleSocialSignup = async() => {
+  const handleSocialSignup = async () => {
     try {
       const res = await api.post(`/user/signUpUser/social`, socialAccount.data);
       setIsLoading(true);
@@ -66,7 +66,7 @@ const ReferralCode = ({
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
     }
-  }
+  };
 
   const { mutateAsync: handleReferral } = useMutation({
     mutationFn: referral,
@@ -77,6 +77,7 @@ const ReferralCode = ({
     },
     onError: (err) => {
       console.log(err);
+      toast.error('Referral code is not valid.');
     },
   });
 
