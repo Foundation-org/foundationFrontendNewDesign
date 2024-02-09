@@ -136,7 +136,7 @@ const SingleAnswerRankedChoice = (props) => {
     <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
-        props.addedAnswerUuid === persistedUserInfo?.uuid || localStorage.getItem('uId') ? (
+        props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId') ? (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/addOptions/yellowBadge.svg"
