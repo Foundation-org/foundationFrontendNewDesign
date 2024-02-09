@@ -123,6 +123,7 @@ const QuestStartSection = () => {
     }
     if (feedData && feedData.data) {
       if (allData.length === 0) {
+        setAllData([]);
         setAllData(feedData.data);
       } else {
         setAllData((prevData) => [...prevData, ...(feedData.data || [])]);
