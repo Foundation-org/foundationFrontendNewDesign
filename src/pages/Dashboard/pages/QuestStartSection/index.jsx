@@ -182,26 +182,27 @@ const QuestStartSection = () => {
           className="no-scrollbar"
         >
           <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
-            {allData?.map((item, index) => (
-              <div key={index + 1}>
-                {filterStates.expandedView ? (
-                  <QuestionCardWithToggle
-                    questStartData={item}
-                    isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                  />
-                ) : (
-                  <QuestionCard
-                    questStartData={item}
-                    startTest={startTest}
-                    setStartTest={setStartTest}
-                    viewResult={viewResult}
-                    handleViewResults={memoizedViewResults}
-                    handleStartTest={memoizedStartTest}
-                    isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                  />
-                )}
-              </div>
-            ))}
+            {allData &&
+              allData?.map((item, index) => (
+                <div key={index + 1}>
+                  {filterStates.expandedView ? (
+                    <QuestionCardWithToggle
+                      questStartData={item}
+                      isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                    />
+                  ) : (
+                    <QuestionCard
+                      questStartData={item}
+                      startTest={startTest}
+                      setStartTest={setStartTest}
+                      viewResult={viewResult}
+                      handleViewResults={memoizedViewResults}
+                      handleStartTest={memoizedStartTest}
+                      isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                    />
+                  )}
+                </div>
+              ))}
           </div>
         </InfiniteScroll>
       </div>
