@@ -82,7 +82,7 @@ export default function Signup() {
   };
 
   const handleSignup = async () => {
-    if (captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
+    if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
 
     handleReferralOpen();
@@ -294,25 +294,25 @@ export default function Signup() {
         <div className="px-5 tablet:px-[60px] py-[14px] tablet:py-[25px]">
           <p className="text-[9px] tablet:text-[20px] text-black font-medium">{errorMessage}</p>
 
-          {/* <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
+          {
+            /* <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
               Continue
             </UiButton> */
-            
-            console.log(errorMessage)
-            }
-          {errorMessage.trim() === "Email Already Exists" ? (
-            <div className="w-full flex justify-end mt-[25px]">
 
-            <UiButton
-            className="w-full flex justify-end mt-[25px]"
-            onClick={() => {
-              navigate('/');
-            }}
-            variant={'submit'}
-            >
-              Login
-            </UiButton>
-              </div>
+            console.log(errorMessage)
+          }
+          {errorMessage.trim() === 'Email Already Exists' ? (
+            <div className="w-full flex justify-end mt-[25px]">
+              <UiButton
+                className="w-full flex justify-end mt-[25px]"
+                onClick={() => {
+                  navigate('/');
+                }}
+                variant={'submit'}
+              >
+                Login
+              </UiButton>
+            </div>
           ) : (
             <LoginSocialGoogle
               // isOnlyGetToken

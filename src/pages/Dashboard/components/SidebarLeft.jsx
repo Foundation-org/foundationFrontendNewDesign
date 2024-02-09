@@ -38,7 +38,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
       if (resp?.status === 200) {
         // Cookie Calling
         if (resp.data) {
-          dispath(addUser(resp?.data));
+          dispatch(addUser(resp?.data));
           // Set into local storage
           if (!localStorage.getItem('uuid')) {
             localStorage.setItem('uuid', resp.data.uuid);
@@ -48,7 +48,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
         // LocalStorage Calling
         if (!resp.data) {
           const res = await userInfoById(localStorage.getItem('uuid'));
-          dispath(addUser(res?.data));
+          dispatch(addUser(res?.data));
           if (res?.data?.requiredAction) {
             setModalVisible(true);
           }
@@ -96,22 +96,24 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
   }
 
   useEffect(() => {
-    if (pathname === '/dashboard/bookmark') {
-      dispatch(filtersActions.setFilterByScope(persistedUserInfo.bookmarkStates.filterByScope));
-      dispatch(filtersActions.setFilterBySort(persistedUserInfo.bookmarkStates.filterBySort));
-      dispatch(filtersActions.setFilterByStatus(persistedUserInfo.bookmarkStates.filterByStatus));
-      dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
-      dispatch(filtersActions.setExpandedView(persistedUserInfo.bookmarkStates.expandedView));
-      dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
-    } else {
-      dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.filterByScope));
-      dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
-      dispatch(filtersActions.setFilterByStatus(persistedUserInfo.States.filterByStatus));
-      dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
-      dispatch(filtersActions.setExpandedView(persistedUserInfo.States.expandedView));
-      dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
+    if (persistedUserInfo) {
+      if (pathname === '/dashboard/bookmark') {
+        dispatch(filtersActions.setFilterByScope(persistedUserInfo.bookmarkStates.filterByScope));
+        dispatch(filtersActions.setFilterBySort(persistedUserInfo.bookmarkStates.filterBySort));
+        dispatch(filtersActions.setFilterByStatus(persistedUserInfo.bookmarkStates.filterByStatus));
+        dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
+        dispatch(filtersActions.setExpandedView(persistedUserInfo.bookmarkStates.expandedView));
+        dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
+      } else {
+        dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.filterByScope));
+        dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
+        dispatch(filtersActions.setFilterByStatus(persistedUserInfo.States.filterByStatus));
+        dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
+        dispatch(filtersActions.setExpandedView(persistedUserInfo.States.expandedView));
+        dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
+      }
     }
-  }, []);
+  }, [persistedUserInfo]);
 
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
