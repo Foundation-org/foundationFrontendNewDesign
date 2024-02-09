@@ -195,8 +195,7 @@ function matchFilters(filters, state) {
   return true;
 }
 
-export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates) => {
-  const dispatch = useDispatch();
+export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates, dispatch) => {
   const result = matchFilters(filtersInitialState, filterStates);
 
   return (
@@ -325,7 +324,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
           )}
         </div>
       ) : !filterStates.searchData && allData.length === 0 ? (
-        <>{printNoRecordsMessage(persistedTheme, isBookmarked, filterStates)}</>
+        <>{printNoRecordsMessage(persistedTheme, isBookmarked, filterStates, dispatch)}</>
       ) : !filterStates.searchData ? (
         <p className="text-center text-[4vw] tablet:text-[2vw]">
           {isBookmarked ? (

@@ -140,7 +140,6 @@ const ButtonGroup = ({
         const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
 
         setRankedAnswers(filteredRankedAnswers);
-        updateAnswerSelection(res?.data.data[res.data.data.length - 1], rankedAnswers);
       }
       setLoadingDetail(false);
     },

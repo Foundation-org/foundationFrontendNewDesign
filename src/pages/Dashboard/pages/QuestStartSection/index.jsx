@@ -1,68 +1,73 @@
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-// components
+// Components
 import QuestionCard from './components/QuestionCard';
 import SidebarLeft from '../../components/SidebarLeft';
 import SidebarRight from '../../components/SidebarRight';
 import QuestionCardWithToggle from './components/QuestionCardWithToggle';
 
-// extras
+// Utilities and Constants
 import { useDebounce } from '../../../../utils/useDebounce';
 import { printEndMessage } from '../../../../utils';
 import { initialColumns } from '../../../../constants/preferences';
 import * as QuestServices from '../../../../services/queries/quest';
 import * as filtersActions from '../../../../features/sidebar/filtersSlice';
 import * as prefActions from '../../../../features/preferences/prefSlice';
-import { filterDefault } from '../../../../constants/filterDefault';
+
 const QuestStartSection = () => {
+  // Redux State
   const getPreferences = useSelector(prefActions.getPrefs);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
+
+  // Debounce Search
   const debouncedSearch = useDebounce(filterStates.searchData, 1000);
 
-  // check them
+  // Pagination
   const pageLimit = 5;
   const [pagination, setPagination] = useState({
     page: 1,
     sliceStart: 0,
     sliceEnd: pageLimit,
   });
-  const [allData, setAllData] = useState([]);
-  // const [filterData, setFilterData] = useState([]);
 
-  let params = {
-    _page: pagination.page,
-    _limit: pageLimit,
-    start: pagination.sliceStart,
-    end: pagination.sliceEnd,
-    uuid: persistedUserInfo?.uuid,
-  };
+  // Data
+  const [allData, setAllData] = useState([]);
+
+  // Test and Result States
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
 
-  useEffect(() => {
-    if (filterStates.expandedView === false) {
-      setStartTest(null);
-      setViewResult(null);
-    }
-  }, [filterStates.expandedView]);
-
-  // preferences start
+  // Preferences
   const [columns, setColumns] = useState(initialColumns);
   const [itemsWithCross, setItemsWithCross] = useState([]);
 
+  // Quest Services
   const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
-
   const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
+  const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
+  const { data: feedData } = QuestServices.useGetFeedData(
+    filterStates,
+    filterStates.searchData === '' ? filterStates.searchData : debouncedSearch,
+    pagination,
+    columns,
+    {
+      _page: pagination.page,
+      _limit: pageLimit,
+      start: pagination.sliceStart,
+      end: pagination.sliceEnd,
+      uuid: persistedUserInfo?.uuid,
+    },
+  );
 
+  // Update Columns based on Preferences
   useEffect(() => {
     if (prefSearchRes?.length !== 0) {
       setColumns((prevColumns) => {
         const newList = prefSearchRes?.data.data || [];
-
         const filteredList = newList.filter(
           (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
         );
@@ -79,7 +84,6 @@ const QuestStartSection = () => {
       if (isSuccess) {
         setColumns((prevColumns) => {
           const newList = topicsData?.data.data || [];
-
           const filteredList = newList.filter(
             (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
           );
@@ -94,19 +98,9 @@ const QuestStartSection = () => {
         });
       }
     }
-  }, [topicsData, prefSearchRes]);
-  // preferences end
+  }, [topicsData, prefSearchRes, isSuccess]);
 
-  const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
-
-  const { data: feedData } = QuestServices.useGetFeedData(
-    filterStates,
-    filterStates.searchData === '' ? filterStates.searchData : debouncedSearch,
-    pagination,
-    columns,
-    params,
-  );
-
+  // Update Data on Filter Changes
   useEffect(() => {
     setPagination((prevPagination) => ({
       ...prevPagination,
@@ -117,33 +111,16 @@ const QuestStartSection = () => {
     setAllData([]);
   }, [filterStates, filterStates.searchData]);
 
+  // Update Data on FeedData Changes
   useEffect(() => {
     if (pagination.page === 1) {
-      setAllData([]);
+      setAllData(feedData?.data || []);
+    } else {
+      setAllData((prevData) => [...prevData, ...(feedData?.data || [])]);
     }
-    if (feedData && feedData.data) {
-      if (allData.length === 0) {
-        setAllData([]);
-        setAllData(feedData.data);
-      } else {
-        setAllData((prevData) => [...prevData, ...(feedData.data || [])]);
-      }
-    }
-  }, [feedData, filterStates]);
+  }, [feedData, filterStates, pagination.page]);
 
-  // useEffect(() => {
-  //   if (pagination.page === 1) {
-  //     setFilterData([]);
-  //   }
-  //   if (filterFeedData && filterFeedData.data) {
-  //     if (filterFeedData.length === 0) {
-  //       setFilterData(filterFeedData.data);
-  //     } else {
-  //       setFilterData((prevData) => [...prevData, ...(filterFeedData.data || [])]);
-  //     }
-  //   }
-  // }, [filterFeedData]);
-
+  // Update Pagination on Page Change
   useEffect(() => {
     if (pagination.page === 1) {
       setPagination((prevPagination) => ({
@@ -160,22 +137,30 @@ const QuestStartSection = () => {
     }
   }, [pagination.page]);
 
-  const fetchMoreData = () => {
+  // Fetch More Data on Infinite Scroll
+  const fetchMoreData = useCallback(() => {
     setPagination((prevPagination) => ({
       ...prevPagination,
       page: prevPagination.page + 1,
     }));
-  };
+  }, []);
 
-  const handleStartTest = (testId) => {
-    setViewResult(null);
-    setStartTest((prev) => (prev === testId ? null : testId));
-  };
+  // Memoized Callbacks
+  const memoizedStartTest = useCallback(
+    (testId) => {
+      setViewResult(null);
+      setStartTest((prev) => (prev === testId ? null : testId));
+    },
+    [setViewResult, setStartTest],
+  );
 
-  const handleViewResults = (testId) => {
-    setStartTest(null);
-    setViewResult((prev) => (prev === testId ? null : testId));
-  };
+  const memoizedViewResults = useCallback(
+    (testId) => {
+      setStartTest(null);
+      setViewResult((prev) => (prev === testId ? null : testId));
+    },
+    [setStartTest, setViewResult],
+  );
 
   console.log('🚀 ~ QuestStartSection ~ allData:', allData);
 
@@ -197,32 +182,26 @@ const QuestStartSection = () => {
           className="no-scrollbar"
         >
           <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
-            {filterStates.expandedView
-              ? allData?.map((item, index) => (
-                  <div key={index + 1}>
-                    <QuestionCardWithToggle
-                      questStartData={item}
-                      isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                        return bookmark.questForeignKey === item._id;
-                      })}
-                    />
-                  </div>
-                ))
-              : allData?.map((item, index) => (
-                  <div key={index + 1}>
-                    <QuestionCard
-                      questStartData={item}
-                      startTest={startTest}
-                      setStartTest={setStartTest}
-                      viewResult={viewResult}
-                      handleViewResults={handleViewResults}
-                      handleStartTest={handleStartTest}
-                      isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                        return bookmark.questForeignKey === item._id;
-                      })}
-                    />
-                  </div>
-                ))}
+            {allData?.map((item, index) => (
+              <div key={index + 1}>
+                {filterStates.expandedView ? (
+                  <QuestionCardWithToggle
+                    questStartData={item}
+                    isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                  />
+                ) : (
+                  <QuestionCard
+                    questStartData={item}
+                    startTest={startTest}
+                    setStartTest={setStartTest}
+                    viewResult={viewResult}
+                    handleViewResults={memoizedViewResults}
+                    handleStartTest={memoizedStartTest}
+                    isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                  />
+                )}
+              </div>
+            ))}
           </div>
         </InfiniteScroll>
       </div>

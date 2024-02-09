@@ -15,7 +15,6 @@ export const updateChangeAnsStartQuest = async (data) => {
 
 // start submit button
 export const createStartQuest = async (data) => {
-  console.log("🚀 ~ createStartQuest ~ data:", data)
   return await api.post('/startQuest/createStartQuest', {
     questForeignKey: data.questId,
     data: data.answer,
