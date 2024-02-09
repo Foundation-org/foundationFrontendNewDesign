@@ -36,6 +36,21 @@ const Result = (props) => {
     props.setAnswerSelection(answerSelectionArray);
   }
 
+  function updateRankSelection(apiResponse, answerSelectionArray) {
+    console.log('updateRankSelection', apiResponse, answerSelectionArray);
+
+    answerSelectionArray.forEach((item, index) => {
+      // Check in contended array
+      if (
+        apiResponse.contended &&
+        apiResponse.contended?.some((contendedItem) => contendedItem.question === item.label)
+      ) {
+        answerSelectionArray[index].contend = true;
+      }
+    });
+    props.setRankedAnswers(answerSelectionArray);
+  }
+
   useEffect(() => {
     const data = {
       questForeignKey: props.id,
@@ -84,37 +99,11 @@ const Result = (props) => {
             props.handleToggleCheck(res.data.data[res.data.data.length - 1].selected, true, false);
           }
         }
-
         if (props.whichTypeQuestion === 'multiple choise') {
           updateAnswerSelection(res?.data.data[res.data.data.length - 1], props.answersSelection);
         }
         if (props.whichTypeQuestion === 'ranked choise') {
-          // console.log('hamza contendedQuestions', res?.data.data[res.data.data.length - 1].contended);
-          // console.log('hamzaselectedQuestions', res?.data.data[res.data.data.length - 1].selected);
-          // console.log('hamza rankedAnswers', props.rankedAnswers);
-          const contendedQuestions = res?.data.data[res.data.data.length - 1].contended.map((item) => item.question);
-
-          const updatedRankedAnswers = props.rankedAnswers.map((item) => {
-            const correspondingRankedAnswer = props.rankedAnswers.find((rankedItem) => rankedItem.label === item.label);
-
-            if (correspondingRankedAnswer) {
-              const isContended = contendedQuestions.includes(correspondingRankedAnswer.label);
-
-              return {
-                id: correspondingRankedAnswer.id,
-                label: correspondingRankedAnswer.label,
-                check: false,
-                contend: isContended,
-                uuid: correspondingRankedAnswer.uuid,
-              };
-            }
-
-            return null;
-          });
-
-          const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
-          // console.log('hamza filteredRankedAnswers', filteredRankedAnswers);
-          props.setRankedAnswers(filteredRankedAnswers);
+          updateRankSelection(res?.data.data[res.data.data.length - 1], props.rankedAnswers);
         }
       }
       setCheckLoading(false);

@@ -231,7 +231,7 @@ const QuestionCardWithToggle = (props) => {
     dispatch(questUtilsActions.updateaddOptionLimit());
   };
 
-  console.log('answerSelection', answersSelection);
+  console.log('answerSelection', answersSelection, rankedAnswers, getQuestUtilsState.addOptionLimit);
 
   const handleToggleCheck = (label, option, check, id) => {
     const actionPayload = {
@@ -565,7 +565,7 @@ const QuestionCardWithToggle = (props) => {
       let isAddedAnsSelected = '';
 
       for (let i = 0; i < rankedAnswers.length; i++) {
-        if (rankedAnswers[i].addedOptionByUser) {
+        if (rankedAnswers[i].addedOptionByUser && getQuestUtilsState.addOptionLimit === 1) {
           // If user Add his own option
           console.log('added answer ran');
           answerSelected.push({
@@ -616,6 +616,19 @@ const QuestionCardWithToggle = (props) => {
             return;
           }
           changeAnswer(params);
+
+          const updatedArray = rankedAnswers.map((item, index) => {
+            if (item?.addedOptionByUser === true) {
+              return {
+                ...item,
+                edit: false,
+                delete: false,
+              };
+            }
+            return item;
+          });
+
+          setRankedAnswers(updatedArray);
         }
       } else {
         const params = {
@@ -635,6 +648,19 @@ const QuestionCardWithToggle = (props) => {
           return;
         }
         startQuest(params);
+
+        const updatedArray = rankedAnswers.map((item, index) => {
+          if (item?.addedOptionByUser === true) {
+            return {
+              ...item,
+              edit: false,
+              delete: false,
+            };
+          }
+          return item;
+        });
+
+        setRankedAnswers(updatedArray);
       }
     }
   };

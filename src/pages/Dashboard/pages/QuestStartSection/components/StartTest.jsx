@@ -248,8 +248,8 @@ const StartTest = ({
                                 rankedAnswers={rankedAnswers}
                                 title={getQuestionTitle(questStartData.whichTypeQuestion)}
                                 checkInfo={false}
-                                check={findLabelChecked(answersSelection, item.label)}
-                                contend={findLabelContend(answersSelection, item.label)}
+                                check={findLabelChecked(rankedAnswers, item.label)}
+                                contend={findLabelContend(rankedAnswers, item.label)}
                                 handleCheckChange={(check) => handleCheckChange(index, check)}
                                 handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
                                 setAddOptionField={setAddOptionField}

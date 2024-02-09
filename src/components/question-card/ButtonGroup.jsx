@@ -74,6 +74,21 @@ const ButtonGroup = ({
     setAnswerSelection(answerSelectionArray);
   }
 
+  function updateRankSelection(apiResponse, answerSelectionArray) {
+    console.log('updateRankSelection', apiResponse, answerSelectionArray);
+
+    answerSelectionArray.forEach((item, index) => {
+      // Check in contended array
+      if (
+        apiResponse.contended &&
+        apiResponse.contended?.some((contendedItem) => contendedItem.question === item.label)
+      ) {
+        answerSelectionArray[index].contend = true;
+      }
+    });
+    setRankedAnswers(answerSelectionArray);
+  }
+
   const { mutateAsync: getStartQuestDetail } = useMutation({
     mutationFn: getStartQuestInfo,
     onSuccess: (res) => {
@@ -116,30 +131,25 @@ const ButtonGroup = ({
         updateAnswerSelection(res?.data.data[res.data.data.length - 1], answersSelection);
       }
       if (whichTypeQuestion === 'ranked choise') {
-        const contendedQuestions = res?.data.data[res.data.data.length - 1].contended.map((item) => item.question);
-
-        const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
-          const correspondingRankedAnswer = rankedAnswers.find((rankedItem) => rankedItem.label === item.question);
-
-          if (correspondingRankedAnswer) {
-            const isContended = contendedQuestions.includes(correspondingRankedAnswer.label);
-            // Check if the current item is in the contendedQuestions array
-
-            return {
-              id: correspondingRankedAnswer.id,
-              label: correspondingRankedAnswer.label,
-              check: false,
-              contend: isContended,
-              uuid: correspondingRankedAnswer.uuid,
-            };
-          }
-
-          return null;
-        });
-
-        const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
-
-        setRankedAnswers(filteredRankedAnswers);
+        updateRankSelection(res?.data.data[res.data.data.length - 1], rankedAnswers);
+        // const contendedQuestions = res?.data.data[res.data.data.length - 1].contended.map((item) => item.question);
+        // const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
+        //   const correspondingRankedAnswer = rankedAnswers.find((rankedItem) => rankedItem.label === item.question);
+        //   if (correspondingRankedAnswer) {
+        //     const isContended = contendedQuestions.includes(correspondingRankedAnswer.label);
+        //     // Check if the current item is in the contendedQuestions array
+        //     return {
+        //       id: correspondingRankedAnswer.id,
+        //       label: correspondingRankedAnswer.label,
+        //       check: false,
+        //       contend: isContended,
+        //       uuid: correspondingRankedAnswer.uuid,
+        //     };
+        //   }
+        //   return null;
+        // });
+        // const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
+        // setRankedAnswers(filteredRankedAnswers);
       }
       setLoadingDetail(false);
     },
