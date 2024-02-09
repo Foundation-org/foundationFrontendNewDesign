@@ -98,14 +98,8 @@ const QuestionCardWithToggle = (props) => {
     });
   };
 
-  const [answersSelection, setAnswerSelection] = useState(
-    questStartData.QuestAnswers?.map((answer) => ({
-      label: answer.question,
-      check: false,
-      contend: false,
-      uuid: answer.uuid,
-    })),
-  );
+  const [answersSelection, setAnswerSelection] = useState([]);
+  const [rankedAnswers, setRankedAnswers] = useState([]);
 
   useEffect(() => {
     setAnswerSelection(
@@ -116,14 +110,7 @@ const QuestionCardWithToggle = (props) => {
         uuid: answer.uuid,
       })),
     );
-  }, []);
-
-  const [rankedAnswers, setRankedAnswers] = useState(
-    answersSelection?.map((item, index) => ({
-      id: `unique-${index}`,
-      ...item,
-    })),
-  );
+  }, [questStartData]);
 
   // const cardSize = useMemo(() => {
   //   const limit = windowWidth >= 744 ? true : false;

@@ -29,13 +29,11 @@ export const getAllLedgerData = async (page, limit, sort) => {
 };
 
 export const setFilterStates = async (state) => {
-  console.log("state",state);
-  return await api.post('/user/setStates',state);
+  return await api.post('/user/setStates', state);
 };
 
 export const setBookmarkFilterStates = async (state) => {
-  console.log("state",state);
-  return await api.post('/user/setBookmarkStates',state);
+  return await api.post('/user/setBookmarkStates', state);
 };
 
 export const searchLedger = async (page, limit, sort, term) => {
