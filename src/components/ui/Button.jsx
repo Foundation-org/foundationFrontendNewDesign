@@ -39,6 +39,9 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'social-btn'
         ? 'px-2 text-[2.5vw] sm:text-[2.3vw] w-fit lg:text-[1vw] font-[500] text-center h-[36px] sm:h-[50px] lg:h-[60px] border-[1px] border-gray-200 dark:border-white whitespace-nowrap bg-white dark:bg-dark-gray text-black dark:text-white'
         : '',
+      variant === 'getintouch'
+        ? 'addoption-boxShadow bg-[#4A8DBD] text-[10px] font-semibold text-white tablet:text-[1.25rem] px-3 rounded-[2.1px] text-nowrap'
+        : '',
 
       className,
     )}

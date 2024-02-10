@@ -24,7 +24,9 @@ import VerifyCode from '../pages/Signup/VerifyCode';
 import RequireAuth from './RequireAuth';
 import TermOfService from '../pages/Signup/pages/TermOfService';
 import PrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
-import AskUsAnything from '../pages/Dashboard/pages/AskUsAnything';
+import Faq from '../pages/Dashboard/pages/CustomerSupport/Faq';
+import ContactUs from '../pages/Dashboard/pages/CustomerSupport/ContactUs';
+import CustomerSupport from '../pages/Dashboard/pages/CustomerSupport';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -56,7 +58,10 @@ export function Router() {
             <Route path="" element={<QuestStartSection />} />
             <Route path="quest" element={<Quest />} />
             <Route path="bookmark" element={<Bookmark />} />
-            <Route path="ask-us-anything" element={<AskUsAnything />} />
+            <Route path="faq/" element={<CustomerSupport />}>
+              <Route path="" element={<Faq />} />
+              <Route path="contact-us" element={<ContactUs />} />
+            </Route>
           </Route>
           <Route path="/profile/" element={<Profile />}>
             <Route path="" element={<Contributions />} />

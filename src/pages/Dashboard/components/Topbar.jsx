@@ -118,6 +118,13 @@ const Topbar = () => {
               2
             </p>
           </div> */}
+          <Link to={'/dashboard/faq'} className="h-full flex items-center">
+            <img
+              src="/assets/navbar/faqlogo.png"
+              alt="arrow-right"
+              className="w-5 h-5 tablet:w-[36px] tablet:h-[36px]"
+            />
+          </Link>
           {localStorage.getItem('isGuestMode') ? (
             <div
               onClick={() => {
@@ -182,7 +189,7 @@ const Topbar = () => {
         ))}
       </ul>
       {/* logout btn */}
-      <div className="hidden w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
+      <div className="hidden h-full w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
         {/* <div
           className="relative"
           onClick={() => toast.error("err coming soon")}
@@ -195,7 +202,12 @@ const Topbar = () => {
             2
           </p>
         </div> */}
-
+        <Link
+          to={'/dashboard/faq'}
+          className={`${location.pathname === '/dashboard/faq' || location.pathname === '/dashboard/faq/contact-us' ? 'bg-[#2B85C5]' : ''} h-full flex items-center px-[30px]`}
+        >
+          <img src="/assets/navbar/faqlogo.png" alt="arrow-right" className="w-11 h-11" />
+        </Link>
         {localStorage.getItem('isGuestMode') ? (
           <div
             onClick={() => {
