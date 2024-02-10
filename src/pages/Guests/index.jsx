@@ -1,10 +1,7 @@
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@tanstack/react-query';
-
-// utils
-import { getQuestById } from '../../services/api/homepageApis';
+import { useMutation } from '@tanstack/react-query';
 
 // components
 import Topbar from '../Dashboard/components/Topbar';
@@ -13,11 +10,11 @@ import QuestionCard from './components/QuestionCard';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { createGuestMode } from '../../services/api/userAuth';
 import { useGetSingleQuest } from '../../services/queries/quest';
+import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 
 const Guests = () => {
   let { isFullScreen } = useParams();
   const location = useLocation();
-  console.log({ location });
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [tab, setTab] = useState('Participate');
   const [startTest, setStartTest] = useState(null);
@@ -30,36 +27,25 @@ const Guests = () => {
     }
   }, [isFullScreen]);
 
-  console.log(persistedUserInfo);
+  console.log({ persistedUserInfo });
 
   const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state);
 
-  function getQuestionTitle(whichTypeQuestion) {
-    switch (whichTypeQuestion) {
-      case 'like/dislike':
-        return 'Like/Dislike';
-      case 'agree/disagree':
-        return 'Agree/Disagree';
-      case 'multiple choise':
-        return 'Multiple Choice';
-      case 'ranked choise':
-        return 'Ranked Choice';
-      case 'yes/no':
-        return 'Yes/No';
-      default:
-        return null;
-    }
-  }
+  const handleStartTest = useCallback(
+    (testId) => {
+      setViewResult(null);
+      setStartTest((prev) => (prev === testId ? null : testId));
+    },
+    [setViewResult, setStartTest],
+  );
 
-  const handleStartTest = (testId) => {
-    setViewResult(null);
-    setStartTest((prev) => (prev === testId ? null : testId));
-  };
-
-  const handleViewResults = (testId) => {
-    setStartTest(null);
-    setViewResult((prev) => (prev === testId ? null : testId));
-  };
+  const handleViewResults = useCallback(
+    (testId) => {
+      setStartTest(null);
+      setViewResult((prev) => (prev === testId ? null : testId));
+    },
+    [setStartTest, setViewResult],
+  );
 
   const { mutateAsync: createGuest } = useMutation({
     mutationFn: createGuestMode,

@@ -9,6 +9,7 @@ import { addUser } from '../../../../../features/auth/authSlice';
 import { questSelectionInitial } from '../../../../../constants/quests';
 import { resetQuests } from '../../../../../features/quest/questsSlice';
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
+import { getQuestByUniqueShareLink } from '../../../../../services/api/homepageApis';
 
 import Result from './Result';
 import StartTest from './StartTest';
@@ -281,6 +282,11 @@ const QuestionCardWithToggle = (props) => {
     }
   }, [questStartData]);
 
+  const questByUniqueShareLink = async () => {
+    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-2)[0]);
+    props.setSingleQuestResp(getQuest.data.data[0]);
+  };
+
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
     onSuccess: (resp) => {
@@ -308,6 +314,11 @@ const QuestionCardWithToggle = (props) => {
         setLoading(false);
         getUserInfo();
       }
+
+      if (persistedUserInfo.role === 'guest') {
+        questByUniqueShareLink();
+      }
+
       handleViewResults(questStartData._id);
       // userInfo(persistedUserInfo?.uuid || localStorage.getItem('uuid')).then((resp) => {
       //   if (resp.status === 200) {

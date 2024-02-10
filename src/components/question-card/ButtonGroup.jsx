@@ -166,6 +166,30 @@ const ButtonGroup = ({
     questStartData.usersChangeTheirAns,
   );
 
+  if (persistedUserInfo?.role === 'guest') {
+    return (
+      <div className="flex justify-end w-full pl-7 tablet:pl-[3.19rem] pr-[14.4px] tablet:pr-[3.44rem]">
+        {btnText === '' && (
+          <Button
+            variant="submit"
+            onClick={() => handleSubmit()}
+            disabled={
+              loading === true
+                ? true
+                : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                  ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                    ? false
+                    : true
+                  : false
+            }
+          >
+            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+          </Button>
+        )}
+      </div>
+    );
+  }
+
   if (filterState.expandedView === false) {
     if (startTest === questStartData._id) {
       return (
@@ -251,7 +275,7 @@ const ButtonGroup = ({
     if (startTest === questStartData._id) {
       return (
         <div className="flex w-full justify-between gap-2 pl-7 pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
-          {/* Go back / Submit */}
+          {/* Add Option - Go back - Submit / add Option - Submit*/}
           {btnText === 'change answer' ? (
             <>
               {addOptionField === 0 ? (
@@ -452,6 +476,7 @@ const ButtonGroup = ({
             )}
           </div>
 
+          {/* Change Add Options Submit */}
           <div className="flex w-full justify-end pr-[14.4px] tablet:pr-[3.44rem]">
             {btnText === 'change answer' && viewResult === questStartData._id ? (
               <Button
