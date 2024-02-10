@@ -146,7 +146,7 @@ const SingleAnswerMultipleChoice = (props) => {
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid ? (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/addOptions/yellowBadge.svg"
               alt="optionMeBadge"
@@ -154,7 +154,7 @@ const SingleAnswerMultipleChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/addOptions/blueBadge.svg"
               alt="bluebadge"
@@ -163,7 +163,7 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+        <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
           &#x200B;
         </div>
       )}

@@ -137,7 +137,7 @@ const SingleAnswerRankedChoice = (props) => {
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId') ? (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/addOptions/yellowBadge.svg"
               alt="trash"
@@ -145,7 +145,7 @@ const SingleAnswerRankedChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
             <img
               src="/assets/addOptions/blueBadge.svg"
               alt="trash"
@@ -154,7 +154,7 @@ const SingleAnswerRankedChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+        <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
           &#x200B;
         </div>
       )}
