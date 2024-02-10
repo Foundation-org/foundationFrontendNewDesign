@@ -6,7 +6,7 @@ const Faq = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white w-full h-full overflow-y-auto pt-[12px] pb-[10rem] tablet:py-[25px] text-[#707175]">
+    <div className="bg-white w-full h-full overflow-y-auto pt-[12px] pb-[70px] tablet:py-[25px] text-[#707175]">
       <div className="px-5 tablet:px-[70px]">
         <div className="flex flex-col gap-1 tablet:gap-2">
           <p className="text-[7px] tablet:text-[11.77px] font-semibold text-center leading-none">FAQ</p>
