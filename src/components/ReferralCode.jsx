@@ -5,9 +5,11 @@ import { useMutation } from '@tanstack/react-query';
 import { referral } from '../services/api/authentication';
 import api from '../services/api/Axios';
 import { useNavigate } from 'react-router-dom';
+import { FaSpinner } from 'react-icons/fa';
 
 const ReferralCode = ({
   handleClose,
+  isLoading,
   setIsLoading,
   password,
   reTypePassword,
@@ -57,7 +59,7 @@ const ReferralCode = ({
   const handleSocialSignup = async () => {
     try {
       const res = await api.post(`/user/signUpUser/social`, socialAccount.data);
-      setIsLoading(true);
+      // setIsLoading(true);
       if (res.status === 200) {
         localStorage.setItem('uuid', res.data.uuid);
         // toast.success('A verification email has been sent to your email address. Please check your inbox.');
@@ -65,14 +67,17 @@ const ReferralCode = ({
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const { mutateAsync: handleReferral } = useMutation({
     mutationFn: referral,
     onSuccess: (resp) => {
+      setIsLoading(true);
       toast.success('Referral code verified');
-      handleClose();
+      // handleClose();
       socialAccount.isSocial ? handleSocialSignup() : handleSignup();
     },
     onError: (err) => {
@@ -137,7 +142,7 @@ const ReferralCode = ({
               handleReferral(data);
             }}
           >
-            Continue
+            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Continue'}
           </Button>
         </div>
       </div>

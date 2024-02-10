@@ -113,17 +113,17 @@ export default function Signup() {
     setSocialAccount({ isSocial: true, data });
     handleReferralOpen();
     return;
-    try {
-      const res = await api.post(`/user/signUpUser/social`, {
-        data,
-      });
-      if (res.data.required_action) {
-        setModalVisible(true);
-        setResData(res.data);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-    }
+    // try {
+    //   const res = await api.post(`/user/signUpUser/social`, {
+    //     data,
+    //   });
+    //   if (res.data.required_action) {
+    //     setModalVisible(true);
+    //     setResData(res.data);
+    //   }
+    // } catch (error) {
+    //   toast.error(error.response.data.message.split(':')[1]);
+    // }
   };
 
   const handleSignUpSocialAfterReferral = async (data) => {
@@ -254,7 +254,8 @@ export default function Signup() {
             }}
             disabled={isLoading === true ? true : false}
           >
-            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create Account'}
+            Create Account
+            {/* {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create Account'} */}
           </Button>
           <div className="mt-[10px] flex gap-3 tablet:mt-[23px]">
             <Typography variant="textBase" className="text-gray-100 dark:text-gray ">
@@ -276,6 +277,7 @@ export default function Signup() {
       >
         <ReferralCode
           handleClose={handleReferralClose}
+          isLoading={isLoading}
           setIsLoading={setIsLoading}
           password={password}
           reTypePassword={reTypePassword}

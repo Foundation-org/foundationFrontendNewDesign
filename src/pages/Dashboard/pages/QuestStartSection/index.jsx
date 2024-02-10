@@ -119,7 +119,7 @@ const QuestStartSection = () => {
       setAllData((prevData) => [...prevData, ...(feedData?.data || [])]);
     }
 
-    if (feedData && !feedData?.hasNextPage) {
+    if (feedData && feedData.data.length !== 0 && !feedData?.hasNextPage) {
       const newItem = { title: 'You are all caught up' };
       setAllData((prevData) => [...prevData, newItem]);
     }
@@ -152,8 +152,7 @@ const QuestStartSection = () => {
 
   // Reset pagination and fetch new data when hasNextPage is false
   useEffect(() => {
-    console.log('i am getting called', feedData);
-    if (feedData !== undefined && feedData?.hasNextPage === false) {
+    if (feedData !== undefined && feedData.data.length !== 0 && feedData?.hasNextPage === false) {
       setPagination({
         page: 1,
         sliceStart: 0,

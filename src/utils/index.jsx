@@ -361,9 +361,9 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
                 </button>
               )}
             </div>
-          ) : (
-            <b>You are all caught up!</b>
-          )}
+          ) : null
+          // <b>You are all caught up!</b>
+          }
         </p>
       ) : (
         <p className="text-center text-[4vw] tablet:text-[2vw]">
