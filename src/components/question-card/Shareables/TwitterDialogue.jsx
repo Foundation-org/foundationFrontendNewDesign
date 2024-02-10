@@ -59,7 +59,7 @@ const TwitterDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, 
           href={`https://twitter.com/intent/tweet?text=${url}`}
           target="_blank"
         >
-          Share this post
+          Share This Post
         </a>
         <button className="w-[212px] rounded-[5.56px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-[10px] font-semibold leading-normal text-white tablet:w-[341px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px]">
           Send in a Personal Message
