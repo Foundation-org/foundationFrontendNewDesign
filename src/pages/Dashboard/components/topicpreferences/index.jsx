@@ -168,7 +168,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                           col.id === 'All' ? 'rounded-t-[0.5rem]' : ''
                         } bg-[#DEE6F7] text-center text-[1rem] font-semibold text-[#535353] dark:bg-[#000] dark:text-white tablet:text-[1.4rem] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem]`}
                       >
-                        {col.id}
+                        {col.id === 'Preferences' ? 'Show Only' : col.id}
                       </h2>
                       <div className="h-full border-b-[3px] border-x-[3px] tablet:border-b-[6px] tablet:border-x-[6px] border-[#DEE6F7] bg-[#FCFCFD] pr-1 dark:border-[#212121] dark:bg-[#212121] laptop:rounded-b-[1.25rem]">
                         <div
