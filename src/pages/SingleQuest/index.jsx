@@ -15,7 +15,6 @@ import { createGuestMode, userInfo, userInfoById } from '../../services/api/user
 
 import { addUser } from '../../features/auth/authSlice';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
-import { useGetSingleQuestByShareLink } from '../../services/queries/quest';
 
 const SingleQuest = () => {
   let { isFullScreen } = useParams();
@@ -96,14 +95,6 @@ const SingleQuest = () => {
 
     setSingleQuestResp(getQuest.data.data[0]);
   };
-
-  // const { data: singleQuestData } = useGetSingleQuestByShareLink(location.pathname.split('/').slice(-2)[0]);
-
-  // useEffect(() => {
-  //   if (persistedUserInfo) {
-  //     setSingleQuestResp(singleQuestData);
-  //   }
-  // }, [singleQuestData]);
 
   useEffect(() => {
     // If User not exist
