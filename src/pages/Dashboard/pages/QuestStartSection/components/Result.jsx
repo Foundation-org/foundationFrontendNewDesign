@@ -171,6 +171,17 @@ const Result = (props) => {
             isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]' : ''
           }  mr-[2px] tablet:mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
         >
+          {/* {props.questStartData.QuestAnswers.sort(
+            (a, b) =>
+              parseInt(
+                props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1][b.question],
+                10,
+              ) -
+              parseInt(
+                props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1][a.question],
+                10,
+              ),
+          ).map((item, index) => ( */}
           {props.rankedAnswers?.map((item, index) => (
             <div key={index + 1}>
               <RankedResult

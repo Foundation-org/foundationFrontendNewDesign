@@ -132,24 +132,6 @@ const ButtonGroup = ({
       }
       if (whichTypeQuestion === 'ranked choise') {
         updateRankSelection(res?.data.data[res.data.data.length - 1], rankedAnswers);
-        // const contendedQuestions = res?.data.data[res.data.data.length - 1].contended.map((item) => item.question);
-        // const updatedRankedAnswers = res?.data.data[res.data.data.length - 1].selected.map((item) => {
-        //   const correspondingRankedAnswer = rankedAnswers.find((rankedItem) => rankedItem.label === item.question);
-        //   if (correspondingRankedAnswer) {
-        //     const isContended = contendedQuestions.includes(correspondingRankedAnswer.label);
-        //     // Check if the current item is in the contendedQuestions array
-        //     return {
-        //       id: correspondingRankedAnswer.id,
-        //       label: correspondingRankedAnswer.label,
-        //       check: false,
-        //       contend: isContended,
-        //       uuid: correspondingRankedAnswer.uuid,
-        //     };
-        //   }
-        //   return null;
-        // });
-        // const filteredRankedAnswers = updatedRankedAnswers.filter(Boolean);
-        // setRankedAnswers(filteredRankedAnswers);
       }
       setLoadingDetail(false);
     },

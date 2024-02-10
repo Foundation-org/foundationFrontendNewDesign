@@ -320,11 +320,11 @@ const MultipleChoice = () => {
   }, [question, changedOption, changeState, addOption, optionsCount, typedValues, multipleOption]);
 
   const handleTab = (index) => {
-    if (index < inputs?.length - 1) {
-      document.getElementById(`input-${index + 1}`).focus();
-    } else {
-      document.getElementById(`input-0`).focus();
-    }
+    // if (index < inputs?.length - 1) {
+    document.getElementById(`input-${index + 1}`).focus();
+    // } else {
+    //   document.getElementById(`input-0`).focus();
+    // }
   };
 
   useEffect(() => {
@@ -370,6 +370,7 @@ const MultipleChoice = () => {
             value={question}
             placeholder="Make a Statement or pose a question"
             tabIndex={1}
+            onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(0))}
           />
           <button
             id="new"
