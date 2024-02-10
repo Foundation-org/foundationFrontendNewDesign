@@ -6,19 +6,18 @@ const Faq = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white w-full h-full overflow-y-auto pt-[12px] pb-[50px] tablet:py-[25px] text-[#707175]">
-      <div className="px-5 tablet:px-[70px]">
-        <div className="flex flex-col gap-1 tablet:gap-2">
-          <p className="text-[7px] tablet:text-[11.77px] font-semibold text-center leading-none">FAQ</p>
-          <h1 className="text-[12px] tablet:text-[35.3px] font-semibold text-center -tracking-[2%] leading-none">
-            Ask us anything
-          </h1>
-          <p className="text-[8px] tablet:text-[14.71px] font-normal text-center leading-none">
-            Have any questions? We're here to assist you.
-          </p>
-        </div>
-
-        <div className="flex flex-col gap-[10px] tablet:gap-[26px] mt-2 tablet:mt-[15px]">
+    <div className="bg-white w-full h-full overflow-y-auto  text-[#707175]">
+      <div className="flex flex-col gap-1 tablet:gap-2 bg-[#4A8DBD]  text-[#E7E7E7] w-full py-3 tablet:py-[47px]">
+        <p className="text-[7px] tablet:text-[11.77px] font-semibold text-center leading-none">FAQ</p>
+        <h1 className="text-[12px] tablet:text-[35.3px] font-semibold text-center -tracking-[2%] leading-none text-white">
+          Ask us anything
+        </h1>
+        <p className="text-[8px] tablet:text-[14.71px] font-normal text-center leading-none">
+          Have any questions? We're here to assist you.
+        </p>
+      </div>
+      <div className="px-5 tablet:px-[70px] tablet:py-[25px]">
+        <div className="flex flex-col gap-[10px] tablet:gap-[26px] mt-3 tablet:mt-[15px]">
           {faqData.map((item) => (
             <div key={item.id} className="flex items-start gap-[10px] tablet:gap-[26px]">
               <div className="min-w-[20px] tablet:min-w-[50px] flex justify-center">
