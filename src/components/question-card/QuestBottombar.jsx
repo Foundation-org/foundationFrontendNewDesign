@@ -112,17 +112,17 @@ const QuestBottombar = ({ time, id, createdBy, img, alt, uniqueShareLink, badgeC
             badgeCount={badgeCount}
           />
         </BasicModal> */}
-        <div className="cursor-pointer" onClick={handleEmailOpen}>
+        {/* <div className="cursor-pointer" onClick={handleEmailOpen}>
           {persistedTheme === 'dark' ? <Mail /> : <Mail />}
-        </div>
-        <BasicModal
+        </div> */}
+        {/* <BasicModal
           open={emailModal}
           handleClose={handleEmailClose}
           customStyle={customModalStyle}
           customClasses="rounded-[10px] tablet:rounded-[26px]"
         >
           <EmailDialogue handleClose={handleEmailClose} id={id} />
-        </BasicModal>
+        </BasicModal> */}
         <div className="cursor-pointer" onClick={handleTwitterOpen}>
           {persistedTheme === 'dark' ? <Twitter /> : <Twitter />}
         </div>

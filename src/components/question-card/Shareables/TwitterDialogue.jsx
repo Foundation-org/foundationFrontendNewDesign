@@ -34,8 +34,8 @@ const TwitterDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, 
           </svg>
         </div>
       </div>
-      <div className="px-6 py-[17px] tablet:pt-7 tablet:px-[27px] border-[0.728px] tablet:border-2 border-[#D9D9D9] mt-1">
-        {/* QuestionCard Preview */}
+      {/* <div className="px-6 py-[17px] tablet:pt-7 tablet:px-[27px] border-[0.728px] tablet:border-2 border-[#D9D9D9] mt-1">
+
         <div className="w-full rounded-[9.8px] tablet:rounded-[15px] border-[0.728px] tablet:border-2 border-[#D9D9D9]">
           <CardTopbar badgeCount={5} QuestTopic="Technology" />
           <div className="pt-[12px] pb-4 tablet:pb-5 tablet:pt-[0.94rem]">
@@ -44,7 +44,6 @@ const TwitterDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, 
                 {question?.endsWith('?') ? 'Q.' : 'S.'} {question}
               </h4>
             </div>
-            {/* Children */}
           </div>
           <div className="my-2 tablet:my-[24px] pr-[10px] tablet:pr-[30px] flex w-full justify-end gap-[13px] tablet:gap-[42px]">
             <Button variant="start">Start</Button>
@@ -52,9 +51,9 @@ const TwitterDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, 
           </div>
           <QuestBottombar time={timeAgo} img={'/assets/svgs/dashboard/badge.svg'} alt={'badge'} badgeCount={5} />
         </div>
-      </div>
+      </div> */}
       {/* Share Buttons */}
-      <div className="my-[15px] flex flex-col items-center justify-center gap-2 tablet:my-5 laptop:flex-row laptop:gap-[43px]">
+      <div className="my-[15px] flex flex-col items-center justify-center gap-2 tablet:my-5 laptop:flex-row laptop:gap-[43px] tablet:py-6">
         <a
           className="w-[212px] rounded-[5.56px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-center text-[10px] font-semibold leading-normal text-white tablet:w-[341px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] laptop:w-[212px]"
           href={`https://twitter.com/intent/tweet?text=${url}`}
