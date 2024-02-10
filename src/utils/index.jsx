@@ -346,7 +346,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
             </div>
           ) : result === false ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-              <b>You are all caught up!</b>
+              {/* <b>You are all caught up!</b> */}
               {result === false && (
                 <button
                   className={`${
@@ -396,7 +396,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
             </div>
           ) : filterStates?.searchData ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-              <b>You are all caught up!</b>
+              {/* <b>You are all caught up!</b> */}
               <button
                 className={`${
                   persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'

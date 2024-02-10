@@ -113,10 +113,15 @@ const QuestStartSection = () => {
 
   // Update Data on FeedData Changes
   useEffect(() => {
-    if (pagination.page === 1) {
+    if (pagination.page === 1 && !allData?.some((item) => item?.title === 'You are all caught up')) {
       setAllData(feedData?.data || []);
     } else {
       setAllData((prevData) => [...prevData, ...(feedData?.data || [])]);
+    }
+
+    if (feedData && !feedData?.hasNextPage) {
+      const newItem = { title: 'You are all caught up' };
+      setAllData((prevData) => [...prevData, newItem]);
     }
   }, [feedData, filterStates, pagination.page]);
 
@@ -144,6 +149,18 @@ const QuestStartSection = () => {
       page: prevPagination.page + 1,
     }));
   }, []);
+
+  // Reset pagination and fetch new data when hasNextPage is false
+  useEffect(() => {
+    console.log('i am getting called', feedData);
+    if (feedData !== undefined && feedData?.hasNextPage === false) {
+      setPagination({
+        page: 1,
+        sliceStart: 0,
+        sliceEnd: pageLimit,
+      });
+    }
+  }, [feedData]);
 
   // Memoized Callbacks
   const memoizedStartTest = useCallback(
@@ -185,21 +202,27 @@ const QuestStartSection = () => {
             {allData &&
               allData?.map((item, index) => (
                 <div key={index + 1}>
-                  {filterStates.expandedView ? (
-                    <QuestionCardWithToggle
-                      questStartData={item}
-                      isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                    />
+                  {!item.title ? (
+                    filterStates.expandedView ? (
+                      <QuestionCardWithToggle
+                        questStartData={item}
+                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                      />
+                    ) : (
+                      <QuestionCard
+                        questStartData={item}
+                        startTest={startTest}
+                        setStartTest={setStartTest}
+                        viewResult={viewResult}
+                        handleViewResults={memoizedViewResults}
+                        handleStartTest={memoizedStartTest}
+                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                      />
+                    )
                   ) : (
-                    <QuestionCard
-                      questStartData={item}
-                      startTest={startTest}
-                      setStartTest={setStartTest}
-                      viewResult={viewResult}
-                      handleViewResults={memoizedViewResults}
-                      handleStartTest={memoizedStartTest}
-                      isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                    />
+                    <p className="text-center text-[4vw] tablet:text-[2vw]">
+                      <b>You are all caught up!</b>
+                    </p>
                   )}
                 </div>
               ))}

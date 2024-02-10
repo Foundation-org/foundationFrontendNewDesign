@@ -218,8 +218,6 @@ const QuestionCardWithToggle = (props) => {
     dispatch(questUtilsActions.updateaddOptionLimit());
   };
 
-  console.log('answerSelection', answersSelection, rankedAnswers, getQuestUtilsState.addOptionLimit);
-
   const handleToggleCheck = (label, option, check, id) => {
     const actionPayload = {
       label,
