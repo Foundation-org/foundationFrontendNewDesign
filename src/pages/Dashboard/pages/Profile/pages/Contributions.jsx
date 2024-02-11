@@ -23,6 +23,14 @@ const Contributions = () => {
     },
     {
       id: 3,
+      icon: '/assets/svgs/dashboard/your-post-engaged.svg',
+      iconLight: '/assets/svgs/dashboard/your-post-engaged.svg',
+      alt: 'your-post-engaged',
+      title: 'Your Posts-Engaged',
+      value: (persistedUserInfo && persistedUserInfo?.yourPostEngaged) || 0,
+    },
+    {
+      id: 4,
       icon: '/assets/svgs/dashboard/icon5.svg',
       iconLight: '/assets/svgs/dashboard/icon15.svg',
       alt: 'icon1',
@@ -30,7 +38,7 @@ const Contributions = () => {
       value: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0,
     },
     {
-      id: 4,
+      id: 5,
       icon: '/assets/svgs/dashboard/icon6.svg',
       iconLight: '/assets/svgs/dashboard/icon16.svg',
       alt: 'icon1',
@@ -38,7 +46,7 @@ const Contributions = () => {
       value: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0,
     },
     {
-      id: 5,
+      id: 6,
       icon: '/assets/svgs/dashboard/icon7.svg',
       iconLight: '/assets/svgs/dashboard/icon17.svg',
       alt: 'icon1',
@@ -46,7 +54,7 @@ const Contributions = () => {
       value: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0,
     },
     {
-      id: 6,
+      id: 7,
       icon: '/assets/svgs/dashboard/icon8.svg',
       iconLight: '/assets/svgs/dashboard/icon18.svg',
       alt: 'icon1',
@@ -54,7 +62,7 @@ const Contributions = () => {
       value: (persistedUserInfo && persistedUserInfo?.contentionsOnAddedAns) || 0,
     },
     {
-      id: 7,
+      id: 8,
       icon: '/assets/svgs/dashboard/icon9.svg',
       iconLight: '/assets/svgs/dashboard/icon19.svg',
       alt: 'icon1',
@@ -62,7 +70,7 @@ const Contributions = () => {
       value: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0,
     },
     {
-      id: 8,
+      id: 9,
       icon: '/assets/svgs/dashboard/last.svg',
       iconLight: '/assets/svgs/dashboard/icon20.svg',
       alt: 'icon1',
