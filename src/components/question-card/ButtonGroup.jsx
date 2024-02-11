@@ -173,27 +173,137 @@ const ButtonGroup = ({
   );
 
   if (persistedUserInfo?.role === 'guest') {
-    return (
-      <div className="flex justify-end w-full pl-7 tablet:pl-[3.19rem] pr-[14.4px] tablet:pr-[3.44rem]">
-        {btnText === '' && (
-          <Button
-            variant="submit"
-            onClick={() => handleSubmit()}
-            disabled={
-              loading === true
-                ? true
-                : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                  ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                    ? false
-                    : true
-                  : false
-            }
-          >
-            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-          </Button>
-        )}
-      </div>
-    );
+    if (location.pathname.includes('/p/') || location.pathname === '/quest/isfullscreen') {
+      return (
+        <div className="flex justify-end w-full pl-7 tablet:pl-[3.19rem] pr-[14.4px] tablet:pr-[3.44rem]">
+          {btnText === '' && (
+            <Button
+              variant="submit"
+              onClick={() => handleSubmit()}
+              disabled={
+                loading === true
+                  ? true
+                  : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                    ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                      ? false
+                      : true
+                    : false
+              }
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+            </Button>
+          )}
+        </div>
+      );
+    } else {
+      if (filterState.expandedView === true) {
+        return (
+          <div className="w-full flex justify-end pr-[0.87rem] tablet:pr-[3.44rem]">
+            {btnText === 'change answer' ? null : (
+              <Button
+                variant="submit"
+                onClick={() => handleSubmit()}
+                disabled={
+                  loading === true
+                    ? true
+                    : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                      ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                        ? false
+                        : true
+                      : false
+                }
+              >
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+              </Button>
+            )}
+          </div>
+        );
+      } else {
+        if (startTest === questStartData._id) {
+          return (
+            <div className="flex w-full justify-end gap-2 pl-7 pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+              {/* Go back / Submit */}
+              <div>
+                <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
+                  {!filterState.expandedView ? (
+                    <Button
+                      variant="cancel"
+                      onClick={() => {
+                        handleStartTest('');
+                      }}
+                    >
+                      Go Back
+                    </Button>
+                  ) : null}
+                  {startStatus === 'change answer' && viewResult === null && openResults === false && (
+                    <Button
+                      variant="cancel"
+                      onClick={() => {
+                        handleViewResults(questStartData._id), setOpenResults(true);
+                      }}
+                    >
+                      Go Back
+                    </Button>
+                  )}
+                  <Button
+                    variant="submit"
+                    onClick={() => handleSubmit()}
+                    disabled={
+                      loading === true
+                        ? true
+                        : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                          ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                            ? false
+                            : true
+                          : false
+                    }
+                  >
+                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          );
+        } else {
+          return (
+            <div className="w-full flex justify-end pr-[0.87rem] tablet:pr-[3.44rem]">
+              {btnText === '' ? (
+                <Button
+                  variant={`${result === ', you are good to go' ? getButtonVariants(btnText) : 'change-outline'}`}
+                  onClick={handleStartChange}
+                  disabled={result === ', you are good to go' ? false : true}
+                >
+                  {getButtonText(btnText)}
+                </Button>
+              ) : viewResult !== questStartData._id ? (
+                <Button
+                  variant="result"
+                  onClick={() => {
+                    if (btnText !== '') {
+                      handleViewResults(id);
+                    } else {
+                      toast.error('First give your response to see Results');
+                    }
+                  }}
+                >
+                  Results
+                </Button>
+              ) : (
+                <Button
+                  variant="cancel"
+                  onClick={() => {
+                    handleViewResults(questStartData._id);
+                    handleStartTest(false);
+                  }}
+                >
+                  Go Back
+                </Button>
+              )}
+            </div>
+          );
+        }
+      }
+    }
   }
 
   if (filterState.expandedView === false) {
