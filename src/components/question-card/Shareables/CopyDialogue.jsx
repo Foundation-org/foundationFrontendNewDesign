@@ -56,8 +56,8 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
           </svg>
         </div>
       </div>
-      <div className="flex flex-col justify-center px-[40px] laptop:px-[80px] pt-[25px] tablet:pt-4 pb-[21.37px] tablet:pb-[75px]">
-        {createdBy === persistedUserInfo?.uuid ? (
+      <div className="flex flex-col justify-center px-[40px] laptop:px-[80px] py-[15px] tablet:py-[44px]">
+        {/* {createdBy === persistedUserInfo?.uuid ? (
           <div className="relative flex h-fit w-full items-center justify-center pb-[4.11px] laptop:pb-[10px]">
             <img
               src="/assets/svgs/dashboard/MeBadge.svg"
@@ -78,8 +78,8 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
         )}
         <h1 className="mb-[1.15rem] text-center text-[12px] font-semibold text-[#5B5B5B] tablet:mb-5 tablet:text-[25px]">
           Say Thanks to Contributor
-        </h1>
-        <p className="mb-[0.48rem] ml-[26px] text-[10px] font-semibold text-[#5B5B5B] tablet:mb-[15px] tablet:text-[22px]">
+        </h1> */}
+        <p className="mb-[0.48rem] text-[10px] font-semibold text-[#5B5B5B] tablet:mb-[15px] tablet:text-[22px] text-center">
           Copy Post Address
         </p>
         <div className="flex">

@@ -35,7 +35,7 @@ const Faq = () => {
           ))}
         </div>
       </div>
-      <div className="w-full flex justify-center my-[30px]">
+      <div className="w-full flex justify-center mt-[30px] mb-[100px] tablet:my-[30px]">
         <div className="bg-[#F4F4F4] py-2 tablet:py-[42px] px-4 tablet:pl-[42px] tablet:pr-[30px] flex gap-4 tablet:gap-28 rounded-[11.77px] items-center">
           <div className="text-[#0B0B0B]">
             <h1 className="text-[10px] tablet:text-[20.88px] font-semibold">Still have questions?</h1>
