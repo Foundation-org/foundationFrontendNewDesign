@@ -75,8 +75,6 @@ const ButtonGroup = ({
   }
 
   function updateRankSelection(apiResponse, answerSelectionArray) {
-    console.log('updateRankSelection', apiResponse, answerSelectionArray);
-
     answerSelectionArray.forEach((item, index) => {
       // Check in contended array
       if (
@@ -86,6 +84,14 @@ const ButtonGroup = ({
         answerSelectionArray[index].contend = true;
       }
     });
+
+    answerSelectionArray.sort((a, b) => {
+      let percentageA = parseFloat(questStartData.selectedPercentage[0][a.label].replace('%', ''));
+      let percentageB = parseFloat(questStartData.selectedPercentage[0][b.label].replace('%', ''));
+
+      return percentageB - percentageA;
+    });
+
     setRankedAnswers(answerSelectionArray);
   }
 

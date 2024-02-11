@@ -22,13 +22,6 @@ const RankedResult = (props) => {
     setCheckState(props.contend);
   }, [props.contend]);
 
-  // const handleCheckChange = () => {
-  //   setCheckState((prevState) => {
-  //     props.handleCheckChange(!prevState);
-  //     return !prevState;
-  //   });
-  // };
-
   return (
     <div className="flex items-center tablet:mr-[44px] tablet:pl-[1.75rem]">
       {props.addedAnswerUuid ? (
