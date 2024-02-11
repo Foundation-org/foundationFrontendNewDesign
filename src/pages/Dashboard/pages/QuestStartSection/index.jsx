@@ -113,16 +113,17 @@ const QuestStartSection = () => {
 
   // Update Data on FeedData Changes
   useEffect(() => {
-    if (pagination.page === 1 && !allData?.some((item) => item?.title === 'You are all caught up')) {
+    // if (pagination.page === 1 && !allData?.some((item) => item?.title === 'You are all caught up')) {
+    if (pagination.page === 1) {
       setAllData(feedData?.data || []);
     } else {
       setAllData((prevData) => [...prevData, ...(feedData?.data || [])]);
     }
 
-    if (feedData && feedData.data.length !== 0 && !feedData?.hasNextPage) {
-      const newItem = { title: 'You are all caught up' };
-      setAllData((prevData) => [...prevData, newItem]);
-    }
+    // if (feedData && !feedData?.hasNextPage) {
+    //   const newItem = { title: 'You are all caught up' };
+    //   setAllData((prevData) => [...prevData, newItem]);
+    // }
   }, [feedData, filterStates, pagination.page]);
 
   // Update Pagination on Page Change
@@ -151,15 +152,16 @@ const QuestStartSection = () => {
   }, []);
 
   // Reset pagination and fetch new data when hasNextPage is false
-  useEffect(() => {
-    if (feedData !== undefined && feedData.data.length !== 0 && feedData?.hasNextPage === false) {
-      setPagination({
-        page: 1,
-        sliceStart: 0,
-        sliceEnd: pageLimit,
-      });
-    }
-  }, [feedData]);
+  // useEffect(() => {
+  //   console.log('i am getting called', feedData);
+  //   if (feedData !== undefined && feedData?.hasNextPage === false) {
+  //     setPagination({
+  //       page: 1,
+  //       sliceStart: 0,
+  //       sliceEnd: pageLimit,
+  //     });
+  //   }
+  // }, [feedData]);
 
   // Memoized Callbacks
   const memoizedStartTest = useCallback(
@@ -201,6 +203,29 @@ const QuestStartSection = () => {
             {allData &&
               allData?.map((item, index) => (
                 <div key={index + 1}>
+                  {filterStates.expandedView ? (
+                    <QuestionCardWithToggle
+                      questStartData={item}
+                      isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                    />
+                  ) : (
+                    <QuestionCard
+                      questStartData={item}
+                      startTest={startTest}
+                      setStartTest={setStartTest}
+                      viewResult={viewResult}
+                      handleViewResults={memoizedViewResults}
+                      handleStartTest={memoizedStartTest}
+                      isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                    />
+                  )}
+                </div>
+              ))}
+          </div>
+          {/* <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
+            {allData &&
+              allData?.map((item, index) => (
+                <div key={index + 1}>
                   {!item.title ? (
                     filterStates.expandedView ? (
                       <QuestionCardWithToggle
@@ -225,7 +250,7 @@ const QuestStartSection = () => {
                   )}
                 </div>
               ))}
-          </div>
+          </div> */}
         </InfiniteScroll>
       </div>
       <SidebarRight />
