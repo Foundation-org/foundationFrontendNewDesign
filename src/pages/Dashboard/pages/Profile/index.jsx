@@ -59,7 +59,7 @@ const Profile = () => {
             <h4 className="heading">My Profile</h4>
             <div className="flex items-center gap-1 tablet:gap-[13px]">
               <p className="text-[8px] tablet:text-[15px] leading-none font-medium text-[#616161] dark:text-white">
-                Version 1.1.0
+                Version 1.1.15
               </p>
               {/* <p className="text-[8px] dark:text-white tablet:text-[16px]">Light</p>
               <Switch
