@@ -174,11 +174,19 @@ const Result = (props) => {
           {props.questStartData.QuestAnswers.sort(
             (a, b) =>
               parseInt(
-                props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1][b.question],
+                props.questStartData?.selectedPercentage &&
+                  props.questStartData.selectedPercentage.length > 0 &&
+                  props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1][
+                    b.question
+                  ],
                 10,
               ) -
               parseInt(
-                props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1][a.question],
+                props.questStartData?.selectedPercentage &&
+                  props.questStartData.selectedPercentage.length > 0 &&
+                  props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1][
+                    a.question
+                  ],
                 10,
               ),
           ).map((item, index) => (
