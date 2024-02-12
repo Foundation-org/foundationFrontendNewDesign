@@ -26,7 +26,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
   const location = useLocation();
   const { pathname } = location;
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [search, setSearch] = useState(pathname === '/dashboard/bookmark'?persistedUserInfo.bookmarkStates.searchData:persistedUserInfo.States.searchData);
+  const [search, setSearch] = useState(pathname === '/dashboard/bookmark'?persistedUserInfo?.bookmarkStates.searchData:persistedUserInfo?.States.searchData);
   
   const queryClient = useQueryClient();
 
@@ -199,6 +199,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
                   id="floating_outlined"
                   className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] tablet:text-[18.23px]"
                   value={search}
+                  placeholder=''
                   onChange={handleSearch}
                 />
                 <label
