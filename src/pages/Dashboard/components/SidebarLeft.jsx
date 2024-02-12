@@ -19,11 +19,14 @@ import { GrClose } from 'react-icons/gr';
 import { topicPreferencesModalStyle } from '../../../assets/styles';
 import { setBookmarkFilterStates, setFilterStates, userInfo, userInfoById } from '../../../services/api/userAuth';
 import { addUser } from '../../../features/auth/authSlice';
+import { useDebounce } from '../../../utils/useDebounce';
 
 const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
+
+  const [search, setSearch] = useState('');
 
   const queryClient = useQueryClient();
 
@@ -163,8 +166,17 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
   };
 
   const handleSearch = (e) => {
-    dispatch(filtersActions.setSearchData(e.target.value));
+    setSearch(e.target.value);
+    // localStorage.setItem('searchTerm', e.target.value);
+    // dispatch(filtersActions.setSearchData(e.target.value));
   };
+
+  const debouncedSearch = useDebounce(search, 1000);
+
+  useEffect(() => {
+    console.log(debouncedSearch);
+    dispatch(filtersActions.setSearchData(debouncedSearch));
+  }, [debouncedSearch]);
 
   return (
     <>
@@ -183,8 +195,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
                   type="text"
                   id="floating_outlined"
                   className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] tablet:text-[18.23px]"
-                  placeholder=" "
-                  value={filterStates.searchData}
+                  value={search}
                   onChange={handleSearch}
                 />
                 <label
@@ -194,17 +205,18 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
                   Search
                 </label>
               </div>
-              {filterStates.searchData && (
+              {search && (
                 <button
                   className="absolute right-3 top-4"
                   onClick={() => {
                     dispatch(filtersActions.setSearchData(''));
+                    setSearch('');
                   }}
                 >
                   <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
                 </button>
               )}
-              {!filterStates.searchData && (
+              {!search && (
                 <img src="/assets/svgs/dashboard/search.svg" alt="search" className="absolute right-3 top-4 h-4 w-4" />
               )}
             </div>
@@ -298,20 +310,21 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
               type="text"
               placeholder="Search here...."
               className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8] tablet:h-[50.7px] tablet:text-[17.13px]"
-              value={filterStates.searchData}
+              value={search}
               onChange={handleSearch}
             />
-            {filterStates.searchData && (
+            {search && (
               <button
                 className="absolute right-3 top-[9px]"
                 onClick={() => {
                   dispatch(filtersActions.setSearchData(''));
+                  setSearch('');
                 }}
               >
                 <GrClose className="h-3 w-3 text-black dark:text-white" />
               </button>
             )}
-            {!filterStates.searchData && (
+            {!search && (
               <img
                 src="/assets/svgs/dashboard/search.svg"
                 alt="search"
