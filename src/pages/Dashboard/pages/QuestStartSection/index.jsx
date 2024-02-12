@@ -48,20 +48,14 @@ const QuestStartSection = () => {
   const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
   const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
-  const { data: feedData } = QuestServices.useGetFeedData(
-    filterStates,
-    filterStates.searchData,
-    pagination,
-    columns,
-    {
-      _page: pagination.page,
-      _limit: pageLimit,
-      start: pagination.sliceStart,
-      end: pagination.sliceEnd,
-      uuid: persistedUserInfo?.uuid,
-    },
-  );
- console.log("wamiq",allData);
+  const { data: feedData } = QuestServices.useGetFeedData(filterStates, filterStates.searchData, pagination, columns, {
+    _page: pagination.page,
+    _limit: pageLimit,
+    start: pagination.sliceStart,
+    end: pagination.sliceEnd,
+    uuid: persistedUserInfo?.uuid,
+  });
+  console.log('wamiq', allData);
   // Update Columns based on Preferences
   useEffect(() => {
     if (prefSearchRes?.length !== 0) {

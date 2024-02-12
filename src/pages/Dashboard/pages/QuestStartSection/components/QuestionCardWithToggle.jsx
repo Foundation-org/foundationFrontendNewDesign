@@ -33,6 +33,8 @@ const QuestionCardWithToggle = (props) => {
 
   const { questStartData, isBookmarked, setPagination } = props;
 
+  console.log('first', questStartData.Question);
+
   let questData;
 
   if (location.pathname.startsWith('/p/')) {
@@ -189,7 +191,7 @@ const QuestionCardWithToggle = (props) => {
 
   const handleViewResults = (testId) => {
     setStartTest('');
-    setViewResult((prev) => (prev === testId ? '' : testId));
+    setViewResult(testId);
   };
 
   const handleChange = () => {
@@ -684,7 +686,7 @@ const QuestionCardWithToggle = (props) => {
       setOpenResults(true);
       handleViewResults(questStartData._id);
     }
-  }, []);
+  }, [questStartData]);
 
   const updateAnswersSelectionForRanked = (prevAnswers, actionPayload) => {
     const { option, label } = actionPayload;
@@ -709,6 +711,8 @@ const QuestionCardWithToggle = (props) => {
 
     setAnswerSelection((prevAnswers) => updateAnswersSelectionForRanked(prevAnswers, actionPayload));
   };
+
+  // console.log('first', viewResult, questStartData._id, openResults);
 
   const renderQuestContent = () => {
     if (viewResult !== questStartData._id && openResults !== true) {
@@ -767,6 +771,7 @@ const QuestionCardWithToggle = (props) => {
         id={questStartData._id}
         btnText={questStartData.startStatus}
         handleStartTest={handleStartTest}
+        viewResult={viewResult}
         handleViewResults={handleViewResults}
         setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
         whichTypeQuestion={questStartData.whichTypeQuestion}
@@ -782,7 +787,6 @@ const QuestionCardWithToggle = (props) => {
         usersAddTheirAns={questStartData.usersAddTheirAns}
         answers={questStartData.QuestAnswers}
         title={getQuestionTitle(questStartData.whichTypeQuestion)}
-        viewResult={viewResult}
         handleSubmit={handleSubmit}
         loading={loading}
         startTest={startTest}
