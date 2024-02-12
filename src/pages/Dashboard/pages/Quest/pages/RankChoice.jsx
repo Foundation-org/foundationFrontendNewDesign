@@ -300,7 +300,16 @@ const RankChoice = () => {
   }, [question, changedOption, changeState, addOption, optionsCount, typedValues]);
 
   const handleTab = (index) => {
-    document.getElementById(`input-${index + 1}`).focus();
+    if (index === typedValues.length) {
+      if(hollow) {
+        document.getElementById('submitButton').focus();
+        document.getElementById(`input-${index}`).focus();
+      } else {
+        document.getElementById('submitButton2').focus();
+      }
+    } else {
+        document.getElementById(`input-${index + 1}`).focus();
+    }
   };
 
   useEffect(() => {
@@ -447,20 +456,20 @@ const RankChoice = () => {
             //   </button>
             // </div>
             <div className="flex w-full justify-end pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
-              <Button variant="hollow-submit" onClick={() => handleSubmit()} disabled={loading === true}>
-                Submit
-              </Button>
-            </div>
-          ) : (
-            <div className="flex w-full justify-end">
-              <button
-                className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-                onClick={() => handleSubmit()}
-                disabled={loading === true}
-              >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-              </button>
-            </div>
+            <Button variant="hollow-submit" id="submitButton" onClick={() => handleSubmit()} disabled={loading === true}>
+              Submit
+            </Button>
+          </div>
+        ) : (
+          <div className="flex w-full justify-end">
+            <button id="submitButton2"
+              className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
+              onClick={() => handleSubmit()}
+              // disabled={loading === true}
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+            </button>
+          </div>
           )}
         </div>
       </div>
