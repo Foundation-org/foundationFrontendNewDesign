@@ -30,6 +30,7 @@ const QuestionCard = (props) => {
   const { questStartData, setPagination } = props;
   const { handleStartTest, startTest, setStartTest } = props;
   const { isBookmarked, viewResult, handleViewResults } = props;
+  const { setSubmitResponse } = props;
 
   const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
@@ -308,12 +309,13 @@ const QuestionCard = (props) => {
     onSuccess: (resp) => {
       if (resp.data.message === 'Start Quest Created Successfully') {
         // toast.success('Successfully Completed');
+        setSubmitResponse(resp.data.data);
         setLoading(false);
-        setPagination(questStartData.pagination);
+        // setPagination(questStartData.pagination);
 
-        setTimeout(() => {
-          queryClient.invalidateQueries({ queryKey: ['FeedData'] });
-        }, 500);
+        // setTimeout(() => {
+        //   queryClient.invalidateQueries({ queryKey: ['FeedData'] });
+        // }, 500);
         getUserInfo();
       }
       handleViewResults(questStartData._id);
@@ -345,11 +347,12 @@ const QuestionCard = (props) => {
       if (resp.data.message === 'Start Quest Updated Successfully') {
         // toast.success('Successfully Changed');
         setLoading(false);
-        setPagination(questStartData.pagination);
+        setSubmitResponse(resp.data.data);
+        // setPagination(questStartData.pagination);
 
-        setTimeout(() => {
-          queryClient.invalidateQueries({ queryKey: ['FeedData'] });
-        }, 500);
+        // setTimeout(() => {
+        //   queryClient.invalidateQueries({ queryKey: ['FeedData'] });
+        // }, 500);
         handleViewResults(questStartData._id);
       }
       userInfo().then((resp) => {

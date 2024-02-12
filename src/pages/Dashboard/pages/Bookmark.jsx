@@ -354,6 +354,7 @@ const Bookmark = () => {
                                   : null
                       }
                       answers={item?.QuestAnswers}
+                      setSubmitResponse={setSubmitResponse}
                       time={item?.createdAt}
                       multipleOption={item?.userCanSelectMultiple}
                       question={item?.Question}
