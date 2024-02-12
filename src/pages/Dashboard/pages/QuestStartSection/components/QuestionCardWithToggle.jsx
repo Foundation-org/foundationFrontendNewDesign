@@ -32,8 +32,7 @@ const QuestionCardWithToggle = (props) => {
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   const { questStartData, isBookmarked, setPagination } = props;
-
-  console.log('first', questStartData.Question);
+  const { submitResponse, setSubmitResponse } = props;
 
   let questData;
 
@@ -310,11 +309,12 @@ const QuestionCardWithToggle = (props) => {
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
-      setPagination(questStartData.pagination);
+      setSubmitResponse(resp.data.data);
+      // setPagination(questStartData.pagination);
 
-      setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: ['FeedData'] });
-      }, 500);
+      // setTimeout(() => {
+      //   queryClient.invalidateQueries({ queryKey: ['FeedData'] });
+      // }, 500);
 
       if (resp.data.message === 'Start Quest Created Successfully') {
         // toast.success('Successfully Completed');
@@ -355,11 +355,12 @@ const QuestionCardWithToggle = (props) => {
         // toast.success('Successfully Changed');
         setLoading(false);
         handleViewResults(questStartData._id);
-        setPagination(questStartData.pagination);
+        setSubmitResponse(resp.data.data);
+        // setPagination(questStartData.pagination);
 
-        setTimeout(() => {
-          queryClient.invalidateQueries({ queryKey: ['FeedData'] });
-        }, 500);
+        // setTimeout(() => {
+        //   queryClient.invalidateQueries({ queryKey: ['FeedData'] });
+        // }, 500);
       }
       userInfo(persistedUserInfo?.uuid || localStorage.getItem('uuid')).then((resp) => {
         if (resp.status === 200) {

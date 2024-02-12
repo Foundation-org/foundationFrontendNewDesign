@@ -29,6 +29,7 @@ const Bookmark = () => {
     sliceStart: 0,
     sliceEnd: pageLimit,
   });
+  const [submitResponse, setSubmitResponse] = useState();
   const [allData, setAllData] = useState([]);
   let params = {
     _page: pagination.page,
@@ -136,16 +137,15 @@ const Bookmark = () => {
     // }
 
     if (pagination.page === 1) {
+      setPagination({
+        page: 1,
+        sliceStart: 0,
+        sliceEnd: pageLimit,
+      });
+
       setAllData((feedData?.data || []).map((item) => ({ ...item, pagination })));
     } else {
-      setAllData((prevData) => {
-        const newData = (feedData?.data || []).map((item) => ({ ...item, pagination }));
-
-        const uniqueIds = new Set(prevData.map((item) => item._id));
-        const filteredNewData = newData.filter((item) => !uniqueIds.has(item._id));
-
-        return [...prevData, ...filteredNewData];
-      });
+      setAllData((prevData) => [...prevData, ...(feedData?.data || []).map((item) => ({ ...item, pagination }))]);
     }
 
     // if (feedData && !feedData?.hasNextPage) {
@@ -197,6 +197,34 @@ const Bookmark = () => {
   //     </p>
   //   </div>
   // };
+
+  // Function to update allData based on submitResponse
+  const updateAllData = () => {
+    if (submitResponse) {
+      setAllData((prevData) => {
+        const newData = [...prevData];
+
+        // Find the index of the existing question in allData
+        const existingIndex = newData.findIndex((data) => data._id === submitResponse._id);
+
+        // If the question exists in allData, replace the whole object; otherwise, add it to the array
+        if (existingIndex !== -1) {
+          newData[existingIndex] = submitResponse;
+        } else {
+          newData.push(submitResponse);
+        }
+
+        return newData;
+      });
+    }
+  };
+
+  // Call the function whenever submitResponse changes
+  useEffect(() => {
+    if (submitResponse !== null) {
+      updateAllData();
+    }
+  }, [submitResponse]);
 
   console.log({ allData });
 
@@ -251,6 +279,8 @@ const Bookmark = () => {
                     <QuestionCardWithToggle
                       questStartData={item}
                       setPagination={setPagination}
+                      submitResponse={submitResponse}
+                      setSubmitResponse={setSubmitResponse}
                       id={item._id}
                       img="/assets/svgs/dashboard/badge.svg"
                       alt="badge"

@@ -34,6 +34,7 @@ const QuestStartSection = () => {
   });
 
   // Data
+  const [submitResponse, setSubmitResponse] = useState();
   const [allData, setAllData] = useState([]);
 
   // Test and Result States
@@ -121,15 +122,15 @@ const QuestStartSection = () => {
 
       setAllData((feedData?.data || []).map((item) => ({ ...item, pagination })));
     } else {
-      // setAllData((prevData) => [...prevData, ...(feedData?.data || []).map((item) => ({ ...item, pagination }))]);
-      setAllData((prevData) => {
-        const newData = (feedData?.data || []).map((item) => ({ ...item, pagination }));
+      setAllData((prevData) => [...prevData, ...(feedData?.data || []).map((item) => ({ ...item, pagination }))]);
+      // setAllData((prevData) => {
+      //   const newData = (feedData?.data || []).map((item) => ({ ...item, pagination }));
 
-        const uniqueIds = new Set(prevData.map((item) => item._id));
-        const filteredNewData = newData.filter((item) => !uniqueIds.has(item._id));
+      //   const uniqueIds = new Set(prevData.map((item) => item._id));
+      //   const filteredNewData = newData.filter((item) => !uniqueIds.has(item._id));
 
-        return [...prevData, ...filteredNewData];
-      });
+      //   return [...prevData, ...filteredNewData];
+      // });
     }
 
     // if (feedData && !feedData?.hasNextPage) {
@@ -192,6 +193,34 @@ const QuestStartSection = () => {
     [setStartTest, setViewResult],
   );
 
+  // Function to update allData based on submitResponse
+  const updateAllData = () => {
+    if (submitResponse) {
+      setAllData((prevData) => {
+        const newData = [...prevData];
+
+        // Find the index of the existing question in allData
+        const existingIndex = newData.findIndex((data) => data._id === submitResponse._id);
+
+        // If the question exists in allData, replace the whole object; otherwise, add it to the array
+        if (existingIndex !== -1) {
+          newData[existingIndex] = submitResponse;
+        } else {
+          newData.push(submitResponse);
+        }
+
+        return newData;
+      });
+    }
+  };
+
+  // Call the function whenever submitResponse changes
+  useEffect(() => {
+    if (submitResponse !== null) {
+      updateAllData();
+    }
+  }, [submitResponse]);
+
   console.log('🚀 ~ QuestStartSection ~ allData:', allData);
 
   return (
@@ -220,6 +249,8 @@ const QuestStartSection = () => {
                       questStartData={item}
                       isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
                       setPagination={setPagination}
+                      submitResponse={submitResponse}
+                      setSubmitResponse={setSubmitResponse}
                     />
                   ) : (
                     <QuestionCard
