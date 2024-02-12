@@ -93,6 +93,10 @@ const MultipleChoice = () => {
   const handleSubmit = async () => {
     const constraintResponse = await checkUniqueQuestion(question);
 
+    if (!checkHollow()) {
+      setLoading(true);
+    }
+
     if (question === '') {
       return toast.warning('Post cannot be empty');
     }
@@ -126,8 +130,6 @@ const MultipleChoice = () => {
       return toast.warning('Option cannot be empty');
     }
     if (!checkHollow()) {
-      console.log('true');
-      setLoading(true);
       createQuest(params);
       dispatch(createQuestAction.resetCreateQuest());
     }
@@ -305,9 +307,10 @@ const MultipleChoice = () => {
 
   const checkHollow = () => {
     const AllVerified = typedValues.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
-    if (checkQuestionStatus.tooltipName === 'Question is Verified' || AllVerified) {
+    if (questionStatus.tooltipName === 'Question is Verified' && AllVerified) {
       return false;
     } else {
+      setLoading(false);
       return true;
     }
   };

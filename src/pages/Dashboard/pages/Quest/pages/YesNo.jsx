@@ -69,6 +69,9 @@ const YesNo = () => {
   };
 
   const handleSubmit = async () => {
+    if (!checkHollow()) {
+      setLoading(true);
+    }
     if (question === '') {
       return toast.warning('Post cannot be empty');
     }
@@ -91,7 +94,6 @@ const YesNo = () => {
     };
 
     if (!checkHollow()) {
-      setLoading(true);
       createQuest(params);
       dispatch(createQuestAction.resetCreateQuest());
     }
@@ -138,6 +140,7 @@ const YesNo = () => {
     if (questionStatus.tooltipName === 'Question is Verified') {
       return false;
     } else {
+      setLoading(false);
       return true;
     }
   };

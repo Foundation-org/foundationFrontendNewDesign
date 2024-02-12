@@ -73,6 +73,10 @@ const AgreeDisagree = () => {
 
   const handleSubmit = async () => {
     const constraintResponse = await checkUniqueQuestion(question);
+    
+    if (!checkHollow()) {
+      setLoading(true);
+    }
 
     if (question === '') {
       return toast.warning('Post cannot be empty');
@@ -96,7 +100,6 @@ const AgreeDisagree = () => {
     };
 
     if (!checkHollow()) {
-      setLoading(true);
       createQuest(params);
       dispatch(createQuestAction.resetCreateQuest());
     }
@@ -113,6 +116,7 @@ const AgreeDisagree = () => {
     if (questionStatus.tooltipName === 'Question is Verified') {
       return false;
     } else {
+      setLoading(false);
       return true;
     }
   };
