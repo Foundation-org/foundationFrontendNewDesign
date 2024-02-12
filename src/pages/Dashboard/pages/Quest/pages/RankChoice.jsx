@@ -183,21 +183,38 @@ const RankChoice = () => {
 
   const handleChange = (index, value) => {
     if (optionWaiting) return;
-    const newTypedValues = [...typedValues];
-    newTypedValues[index] = {
-      ...newTypedValues[index],
-      question: value,
-      optionStatus:
-        value.trim() === ''
-          ? {
-              name: 'Ok',
-              color: 'text-[#389CE3]',
-              tooltipName: 'Please write something...',
-              tooltipStyle: 'tooltip-info',
-            }
-          : { name: 'Ok', color: 'text-[#b0a00f]' },
-    };
-    dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
+    
+    setTypedValues((prevValues) => {
+      const newTypedValues = [...prevValues];
+      newTypedValues[index] = {
+        ...newTypedValues[index],
+        question: value,
+        optionStatus: {
+          name: "Ok",
+          color: value.trim() === "" ? "text-[#389CE3]" : "text-[#b0a00f]",
+          tooltipName: value.trim() === "" ? "Please write something..." : "",
+          tooltipStyle: value.trim() === "" ? "tooltip-info" : "",
+        },
+      };
+      dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
+      return newTypedValues;
+    })
+
+    // const newTypedValues = [...typedValues];
+    // newTypedValues[index] = {
+    //   ...newTypedValues[index],
+    //   question: value,
+    //   optionStatus:
+    //     value.trim() === ''
+    //       ? {
+    //           name: 'Ok',
+    //           color: 'text-[#389CE3]',
+    //           tooltipName: 'Please write something...',
+    //           tooltipStyle: 'tooltip-info',
+    //         }
+    //       : { name: 'Ok', color: 'text-[#b0a00f]' },
+    // };
+    // dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
   };
 
   const handleOptionSelect = (index) => {
