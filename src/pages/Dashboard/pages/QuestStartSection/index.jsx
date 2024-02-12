@@ -61,7 +61,7 @@ const QuestStartSection = () => {
       uuid: persistedUserInfo?.uuid,
     },
   );
-
+ console.log("wamiq",allData);
   // Update Columns based on Preferences
   useEffect(() => {
     if (prefSearchRes?.length !== 0) {

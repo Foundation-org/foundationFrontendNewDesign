@@ -25,8 +25,8 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
-
-  const [search, setSearch] = useState('');
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [search, setSearch] = useState(persistedUserInfo.States.searchData);
 
   const queryClient = useQueryClient();
 
@@ -89,7 +89,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
     },
   });
 
-  const persistedUserInfo = useSelector((state) => state.auth.user);
+ 
 
   let filtersActions;
   if (pathname === '/dashboard/bookmark') {
@@ -312,13 +312,13 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             />
             {search && (
               <button
-                className="absolute right-3 top-[9px]"
+                className="absolute right-3 top-[50%] translate-y-[-50%]"
                 onClick={() => {
                   dispatch(filtersActions.setSearchData(''));
                   setSearch('');
                 }}
               >
-                <GrClose className="h-3 w-3 text-black dark:text-white" />
+                <GrClose className="h-2 w-2 text-black dark:text-white" />
               </button>
             )}
             {!search && (
