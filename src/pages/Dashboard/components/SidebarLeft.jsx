@@ -26,8 +26,8 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
   const location = useLocation();
   const { pathname } = location;
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [search, setSearch] = useState(persistedUserInfo.States.searchData);
-
+  const [search, setSearch] = useState(pathname === '/dashboard/bookmark'?persistedUserInfo.bookmarkStates.searchData:persistedUserInfo.States.searchData);
+  
   const queryClient = useQueryClient();
 
   const { mutateAsync: getUserInfo } = useMutation({

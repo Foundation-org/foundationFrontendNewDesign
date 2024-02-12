@@ -21,7 +21,6 @@ const Bookmark = () => {
   const getPreferences = useSelector(prefActions.getPrefs);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const filterStates = useSelector(filtersActions.getFilters);
-  const debouncedSearch = useDebounce(filterStates.searchData, 1000);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const pageLimit = 5;
   const isBookmarked = true;
@@ -99,7 +98,7 @@ const Bookmark = () => {
 
   const { data: feedData } = QuestServices.useGetBookmarkFeedData(
     filterStates,
-    filterStates.searchData === '' ? filterStates.searchData : debouncedSearch,
+    filterStates.searchData,
     pagination,
     columns,
     params,
