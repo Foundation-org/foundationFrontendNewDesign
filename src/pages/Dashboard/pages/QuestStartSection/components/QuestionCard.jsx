@@ -27,7 +27,7 @@ const QuestionCard = (props) => {
   const quests = useSelector(questAction.getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const { questStartData } = props;
+  const { questStartData, setPagination } = props;
   const { handleStartTest, startTest, setStartTest } = props;
   const { isBookmarked, viewResult, handleViewResults } = props;
 
@@ -309,7 +309,11 @@ const QuestionCard = (props) => {
       if (resp.data.message === 'Start Quest Created Successfully') {
         // toast.success('Successfully Completed');
         setLoading(false);
-        queryClient.invalidateQueries('FeedData');
+        setPagination(questStartData.pagination);
+
+        setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: ['FeedData'] });
+        }, 500);
         getUserInfo();
       }
       handleViewResults(questStartData._id);
@@ -341,7 +345,11 @@ const QuestionCard = (props) => {
       if (resp.data.message === 'Start Quest Updated Successfully') {
         // toast.success('Successfully Changed');
         setLoading(false);
-        queryClient.invalidateQueries('FeedData', 'ResultsData');
+        setPagination(questStartData.pagination);
+
+        setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: ['FeedData'] });
+        }, 500);
         handleViewResults(questStartData._id);
       }
       userInfo().then((resp) => {

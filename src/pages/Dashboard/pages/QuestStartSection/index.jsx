@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -114,10 +114,30 @@ const QuestStartSection = () => {
   // Update Data on FeedData Changes
   useEffect(() => {
     // if (pagination.page === 1 && !allData?.some((item) => item?.title === 'You are all caught up')) {
+    // if (pagination.page === 1) {
+    //   setAllData(feedData?.data || []);
+    // } else {
+    //   setAllData((prevData) => [...prevData, ...(feedData?.data || [])]);
+    // }
+
     if (pagination.page === 1) {
-      setAllData(feedData?.data || []);
+      setPagination({
+        page: 1,
+        sliceStart: 0,
+        sliceEnd: pageLimit,
+      });
+
+      setAllData((feedData?.data || []).map((item) => ({ ...item, pagination })));
     } else {
-      setAllData((prevData) => [...prevData, ...(feedData?.data || [])]);
+      // setAllData((prevData) => [...prevData, ...(feedData?.data || []).map((item) => ({ ...item, pagination }))]);
+      setAllData((prevData) => {
+        const newData = (feedData?.data || []).map((item) => ({ ...item, pagination }));
+
+        const uniqueIds = new Set(prevData.map((item) => item._id));
+        const filteredNewData = newData.filter((item) => !uniqueIds.has(item._id));
+
+        return [...prevData, ...filteredNewData];
+      });
     }
 
     // if (feedData && !feedData?.hasNextPage) {
@@ -207,6 +227,7 @@ const QuestStartSection = () => {
                     <QuestionCardWithToggle
                       questStartData={item}
                       isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                      setPagination={setPagination}
                     />
                   ) : (
                     <QuestionCard
@@ -217,6 +238,7 @@ const QuestStartSection = () => {
                       handleViewResults={memoizedViewResults}
                       handleStartTest={memoizedStartTest}
                       isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                      setPagination={setPagination}
                     />
                   )}
                 </div>

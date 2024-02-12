@@ -71,5 +71,6 @@ Button.propTypes = {
     'start',
     'personal-work',
     'social-btn',
+    'hollow-submit',
   ]),
 };

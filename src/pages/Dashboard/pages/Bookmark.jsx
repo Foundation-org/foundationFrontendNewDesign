@@ -99,7 +99,7 @@ const Bookmark = () => {
 
   const { data: feedData } = QuestServices.useGetBookmarkFeedData(
     filterStates,
-    filterStates.searchData===""?filterStates.searchData:debouncedSearch,
+    filterStates.searchData === '' ? filterStates.searchData : debouncedSearch,
     pagination,
     columns,
     params,
@@ -115,18 +115,45 @@ const Bookmark = () => {
     setAllData([]);
   }, [filterStates, filterStates.searchData]);
 
+  // useEffect(() => {
+  //   if (pagination.page === 1) {
+  //     setAllData([]);
+  //   }
+  //   if (feedData && feedData.data) {
+  //     if (allData.length === 0) {
+  //       setAllData(feedData.data);
+  //     } else {
+  //       setAllData((prevData) => [...prevData, ...(feedData.data || [])]);
+  //     }
+  //   }
+  // }, [feedData, filterStates]);
+
   useEffect(() => {
+    // if (pagination.page === 1 && !allData?.some((item) => item?.title === 'You are all caught up')) {
+    // if (pagination.page === 1) {
+    //   setAllData(feedData?.data || []);
+    // } else {
+    //   setAllData((prevData) => [...prevData, ...(feedData?.data || [])]);
+    // }
+
     if (pagination.page === 1) {
-      setAllData([]);
+      setAllData((feedData?.data || []).map((item) => ({ ...item, pagination })));
+    } else {
+      setAllData((prevData) => {
+        const newData = (feedData?.data || []).map((item) => ({ ...item, pagination }));
+
+        const uniqueIds = new Set(prevData.map((item) => item._id));
+        const filteredNewData = newData.filter((item) => !uniqueIds.has(item._id));
+
+        return [...prevData, ...filteredNewData];
+      });
     }
-    if (feedData && feedData.data) {
-      if (allData.length === 0) {
-        setAllData(feedData.data);
-      } else {
-        setAllData((prevData) => [...prevData, ...(feedData.data || [])]);
-      }
-    }
-  }, [feedData, filterStates]);
+
+    // if (feedData && !feedData?.hasNextPage) {
+    //   const newItem = { title: 'You are all caught up' };
+    //   setAllData((prevData) => [...prevData, newItem]);
+    // }
+  }, [feedData, filterStates, pagination.page]);
 
   useEffect(() => {
     if (pagination.page === 1) {
@@ -224,6 +251,7 @@ const Bookmark = () => {
                   <div key={index + 1}>
                     <QuestionCardWithToggle
                       questStartData={item}
+                      setPagination={setPagination}
                       id={item._id}
                       img="/assets/svgs/dashboard/badge.svg"
                       alt="badge"
@@ -278,6 +306,7 @@ const Bookmark = () => {
                   <div key={index + 1}>
                     <QuestionCard
                       questStartData={item}
+                      setPagination={setPagination}
                       id={item._id}
                       img="/assets/svgs/dashboard/badge.svg"
                       alt="badge"
