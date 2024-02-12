@@ -167,14 +167,11 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
-    // localStorage.setItem('searchTerm', e.target.value);
-    // dispatch(filtersActions.setSearchData(e.target.value));
   };
 
   const debouncedSearch = useDebounce(search, 1000);
 
   useEffect(() => {
-    console.log(debouncedSearch);
     dispatch(filtersActions.setSearchData(debouncedSearch));
   }, [debouncedSearch]);
 

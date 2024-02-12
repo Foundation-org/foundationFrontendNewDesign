@@ -24,7 +24,6 @@ const QuestStartSection = () => {
   const filterStates = useSelector(filtersActions.getFilters);
 
   // Debounce Search
-  const debouncedSearch = useDebounce(filterStates.searchData, 1000);
 
   // Pagination
   const pageLimit = 5;
@@ -51,7 +50,7 @@ const QuestStartSection = () => {
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
   const { data: feedData } = QuestServices.useGetFeedData(
     filterStates,
-    filterStates.searchData === '' ? filterStates.searchData : debouncedSearch,
+    filterStates.searchData,
     pagination,
     columns,
     {
