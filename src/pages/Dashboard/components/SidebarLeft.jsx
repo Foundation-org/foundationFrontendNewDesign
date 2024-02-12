@@ -175,6 +175,12 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
     dispatch(filtersActions.setSearchData(debouncedSearch));
   }, [debouncedSearch]);
 
+  useEffect(()=>{
+      if(filterStates.searchData===''){
+        setSearch('')
+      }
+  },[filterStates.searchData])
+
   return (
     <>
       <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between overflow-y-hidden border-r-4 border-[#F3F3F3] bg-white text-[#535353] dark:border-[#000] dark:bg-[#000] dark:text-white laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem]">
@@ -292,6 +298,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             }  inset-0 w-[192px] rounded-[0.938rem] px-5 py-2 text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
             onClick={() => {
               dispatch(filtersActions.resetFilters());
+              setSearch('')
               localStorage.setItem('filterByState', 'false');
             }}
           >
