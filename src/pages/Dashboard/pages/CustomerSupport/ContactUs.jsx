@@ -24,7 +24,7 @@ const ContactUs = () => {
   const { mutateAsync: userSendEmail } = useMutation({
     mutationFn: sendContactUsEmail,
     onSuccess: (resp) => {
-      toast.success(resp.data.message);
+      toast.success('Support request received!');
       setPayload({
         email: '',
         subject: 'Email Sent Through Contact Us Form',
