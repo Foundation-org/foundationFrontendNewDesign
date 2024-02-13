@@ -286,7 +286,7 @@ const ButtonGroup = ({
                       : false
                 }
               >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'SubmitAAA'}
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               </Button>
             )}
           </div>
