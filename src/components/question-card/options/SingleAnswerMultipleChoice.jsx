@@ -36,24 +36,22 @@ const SingleAnswerMultipleChoice = (props) => {
   }, [props.check, props.contend]);
 
   const handleCheckChange = () => {
+    if (contendState) {
+      setContendState(false);
+      props.handleContendChange(false);
+    }
     setCheckState((prevState) => {
-      if (contendState) {
-        setContendState(false);
-        props.handleContendChange(false);
-      }
-
       props.handleCheckChange(!prevState);
       return !prevState;
     });
   };
 
   const handleContendChange = () => {
+    if (checkState) {
+      handleCheckChange(false);
+      props.handleCheckChange(false);
+    }
     setContendState((prevState) => {
-      if (checkState) {
-        handleCheckChange(false);
-        props.handleCheckChange(false);
-      }
-
       props.handleContendChange(!prevState);
       return !prevState;
     });

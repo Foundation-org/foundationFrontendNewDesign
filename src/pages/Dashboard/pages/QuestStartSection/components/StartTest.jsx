@@ -24,7 +24,6 @@ const StartTest = ({
   setCheckOptionStatus,
 }) => {
   const { isFullScreen } = useParams();
-  console.log({answersSelection});
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
