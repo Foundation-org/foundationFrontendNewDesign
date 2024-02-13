@@ -24,6 +24,7 @@ const StartTest = ({
   setCheckOptionStatus,
 }) => {
   const { isFullScreen } = useParams();
+  console.log({answersSelection});
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
@@ -42,7 +43,7 @@ const StartTest = ({
   const handleCheckChangeSingle = (index) => {
     setAnswerSelection((prevAnswers) =>
       prevAnswers.map((answer, i) =>
-        i === index ? { ...answer, check: true, contend: false } : { ...answer, check: false },
+        i === index ? { ...answer, check: !answer.check, contend: false } : { ...answer, check: false },
       ),
     );
   };
@@ -50,7 +51,7 @@ const StartTest = ({
   const handleContendChangeSingle = (index) => {
     setAnswerSelection((prevAnswers) =>
       prevAnswers.map((answer, i) =>
-        i === index ? { ...answer, contend: true, check: false } : { ...answer, contend: false },
+        i === index ? { ...answer, contend: !answer.contend, check: false } : { ...answer, contend: false },
       ),
     );
   };
