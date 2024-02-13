@@ -137,6 +137,10 @@ const SingleAnswerMultipleChoice = (props) => {
     props.setAddOptionField(0);
   };
 
+  const handleTab = () => {
+    document.getElementById(`submit-${props.questStartData._id}`).focus();
+  };
+
   return (
     <div
       className={`flex items-center  tablet:gap-[10px] tablet:pl-[1.75rem] ${
@@ -192,6 +196,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
+                onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
               />
             ) : (
               <h1 className="pb-[5.7px] pr-2 pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">

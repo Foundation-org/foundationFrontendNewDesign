@@ -171,6 +171,7 @@ const StartTest = ({
               {answersSelection &&
                 [...answersSelection]?.map((item, index) => (
                   <SingleAnswerMultipleChoice
+                    questStartData={questStartData}
                     id={index}
                     key={index}
                     number={'#' + (index + 1)}

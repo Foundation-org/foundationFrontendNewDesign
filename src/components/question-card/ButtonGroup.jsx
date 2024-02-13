@@ -536,7 +536,7 @@ const ButtonGroup = ({
                     Go Back
                   </Button>
                   <Button
-                    tabIndex="0"
+                    id={`submit-${questStartData._id}`}
                     variant="submit"
                     onClick={() => handleSubmit()}
                     disabled={
