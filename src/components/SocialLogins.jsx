@@ -4,7 +4,14 @@ import Button from './Button';
 
 const REDIRECT_URI = window.location.href;
 
-const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial, handleSignInSocial, isLogin }) => {
+const SocialLogins = ({
+  setProvider,
+  setProfile,
+  handleSignUpSocial,
+  handleSignInSocial,
+  isLogin,
+  setIsLoadingSocial,
+}) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   return (
@@ -30,6 +37,9 @@ const SocialLogins = ({ setProvider, setProfile, handleSignUpSocial, handleSignI
         <Button
           size="login-btn"
           color="gray"
+          onClick={() => {
+            setIsLoadingSocial(true);
+          }}
           // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
         >
           <img src="/assets/svgs/google.svg" className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] " /> Continue with

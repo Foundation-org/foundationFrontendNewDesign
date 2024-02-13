@@ -17,6 +17,7 @@ import { addUser } from '../../features/auth/authSlice';
 import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
 import { sendVerificationEmail } from '../../services/api/authentication';
+import Loader from '../Signup/components/Loader';
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function Signin() {
   const [profile, setProfile] = useState(null);
   const [capthaToken, setCaptchaToken] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isLoadingSocial, setIsLoadingSocial] = useState(false);
   const [isReferral, setIsReferral] = useState(false);
   const [referralCode, setReferralCode] = useState(null);
   const [uuid, setUuid] = useState();
@@ -103,7 +104,7 @@ export default function Signin() {
   const { mutateAsync: sendEmail } = useMutation({
     mutationFn: sendVerificationEmail,
     onSuccess: (res) => {
-      console.log("Email sent");
+      console.log('Email sent');
     },
     onError: (error) => {
       console.error('Email not sent', error);
@@ -117,9 +118,9 @@ export default function Signin() {
       console.log('User info fetched:', res.data);
       if (res.data?.verification === false) {
         toast.warning('Please check you email and verify your account first');
-        sendEmail({userEmail:res.data?.email});
+        sendEmail({ userEmail: res.data?.email });
       }
-      if (res.data?.verification === true ) {
+      if (res.data?.verification === true) {
         dispatch(addUser(res.data));
         navigate('/dashboard');
       }
@@ -147,6 +148,8 @@ export default function Signin() {
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
+    } finally {
+      setIsLoadingSocial(false);
     }
   };
 
@@ -154,8 +157,8 @@ export default function Signin() {
     if (authO === 'auth0') {
       getUserInfo();
     }
-    if(localStorage.getItem('uuid')){
-      navigate('/dashboard')
+    if (localStorage.getItem('uuid')) {
+      navigate('/dashboard');
     }
   }, [authO]);
 
@@ -171,6 +174,7 @@ export default function Signin() {
 
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
+      {isLoadingSocial && <Loader />}
       <div
         className={`${
           persistedTheme === 'dark' ? 'bg-dark' : 'bg-blue'
@@ -188,6 +192,7 @@ export default function Signin() {
             setProfile={setProfile}
             handleSignInSocial={handleSignInSocial}
             isLogin={true}
+            setIsLoadingSocial={setIsLoadingSocial}
           />
           <Form onEmailChange={onEmailChange} onPassChange={onPassChange} handleCancel={handleCancel} email={email} />
           <div className="mb-4 mt-4 flex w-full items-start md:mb-10 laptop:mb-[5.5rem] laptop:mt-[2.5rem] taller:mb-[30px] taller:mt-[35px]">
