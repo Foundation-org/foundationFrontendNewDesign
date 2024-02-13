@@ -28,16 +28,17 @@ const helmetContext = {};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
-  <BrowserRouter>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <QueryClientProvider client={queryClient}>
-          <HelmetProvider context={helmetContext}>
+  <HelmetProvider context={helmetContext}>
+    <BrowserRouter>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <QueryClientProvider client={queryClient}>
             <App />
-          </HelmetProvider>
-        </QueryClientProvider>
-      </PersistGate>
-    </Provider>
-  </BrowserRouter>,
+          </QueryClientProvider>
+        </PersistGate>
+      </Provider>
+    </BrowserRouter>
+    ,
+  </HelmetProvider>,
   // </React.StrictMode>,
 );
