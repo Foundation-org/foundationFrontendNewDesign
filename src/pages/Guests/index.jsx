@@ -19,6 +19,7 @@ const Guests = () => {
   const [tab, setTab] = useState('Participate');
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
+  const [submitResponse, setSubmitResponse] = useState();
 
   useEffect(() => {
     if (isFullScreen !== 'isfullscreen') {
@@ -111,35 +112,37 @@ const Guests = () => {
                   createdBy={singleQuestResp?.uuid}
                   lastInteractedAt={singleQuestResp?.lastInteractedAt}
                   usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
+                  setSubmitResponse={setSubmitResponse}
                 />
               ) : (
                 <div className="px-[25px] tablet:px-[86px]">
                   <QuestionCardWithToggle
-                    questStartData={singleQuestResp}
-                    id={singleQuestResp?._id}
+                    questStartData={submitResponse ? submitResponse : singleQuestResp}
+                    // id={singleQuestResp?._id}
                     img="/assets/svgs/dashboard/badge.svg"
                     alt="badge"
-                    badgeCount={singleQuestResp.getUserBadge?.badges?.length}
-                    time={singleQuestResp?.createdAt}
-                    title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
-                    question={singleQuestResp?.Question}
-                    answers={singleQuestResp?.QuestAnswers}
-                    usersAddTheirAns={singleQuestResp?.usersAddTheirAns}
-                    whichTypeQuestion={singleQuestResp?.whichTypeQuestion}
-                    btnText={singleQuestResp?.startStatus}
+                    // badgeCount={singleQuestResp.getUserBadge?.badges?.length}
+                    // time={singleQuestResp?.createdAt}
+                    // title={getQuestionTitle(singleQuestResp?.whichTypeQuestion)}
+                    // question={singleQuestResp?.Question}
+                    // answers={singleQuestResp?.QuestAnswers}
+                    // usersAddTheirAns={singleQuestResp?.usersAddTheirAns}
+                    // whichTypeQuestion={singleQuestResp?.whichTypeQuestion}
+                    // btnText={singleQuestResp?.startStatus}
                     startTest={startTest}
                     setStartTest={setStartTest}
                     viewResult={viewResult}
                     setViewResult={setViewResult}
                     handleViewResults={handleViewResults}
                     handleStartTest={handleStartTest}
-                    multipleOption={singleQuestResp?.userCanSelectMultiple}
-                    QuestTopic={singleQuestResp?.QuestTopic}
-                    createdBy={singleQuestResp?.uuid}
-                    lastInteractedAt={singleQuestResp?.lastInteractedAt}
-                    usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
-                    startStatus={singleQuestResp?.startStatus}
+                    // multipleOption={singleQuestResp?.userCanSelectMultiple}
+                    // QuestTopic={singleQuestResp?.QuestTopic}
+                    // createdBy={singleQuestResp?.uuid}
+                    // lastInteractedAt={singleQuestResp?.lastInteractedAt}
+                    // usersChangeTheirAns={singleQuestResp?.usersChangeTheirAns}
+                    // startStatus={singleQuestResp?.startStatus}
                     expandedView={true}
+                    setSubmitResponse={setSubmitResponse}
                   />
                 </div>
               )}

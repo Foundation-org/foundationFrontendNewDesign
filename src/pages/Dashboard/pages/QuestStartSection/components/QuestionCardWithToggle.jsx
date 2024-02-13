@@ -370,6 +370,7 @@ const QuestionCardWithToggle = (props) => {
       });
     },
     onError: (err) => {
+      console.log('fhamza', err);
       toast.error(err.response.data.message.split(':')[1]);
       setLoading(false);
     },
