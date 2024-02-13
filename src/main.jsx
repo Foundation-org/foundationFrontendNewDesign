@@ -17,9 +17,14 @@ import { persistStore } from 'redux-persist';
 // Tanstack Query
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+// React Helmet for SEO
+import { HelmetProvider } from 'react-helmet-async';
+
 const queryClient = new QueryClient();
 
 let persistor = persistStore(store);
+
+const helmetContext = {};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
@@ -27,7 +32,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <QueryClientProvider client={queryClient}>
-          <App />
+          <HelmetProvider context={helmetContext}>
+            <App />
+          </HelmetProvider>
         </QueryClientProvider>
       </PersistGate>
     </Provider>

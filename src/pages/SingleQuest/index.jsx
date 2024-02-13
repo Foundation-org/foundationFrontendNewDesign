@@ -15,6 +15,7 @@ import { createGuestMode, userInfo, userInfoById } from '../../services/api/user
 
 import { addUser } from '../../features/auth/authSlice';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
+import SEO from '../../utils/SEO';
 
 const SingleQuest = () => {
   let { isFullScreen } = useParams();
@@ -110,6 +111,13 @@ const SingleQuest = () => {
 
   return (
     <>
+      <SEO
+        title="'Participate on foundation and have your voice heard' / 'Foundation rewards every user for their valuable insights'"
+        description="'Participate on foundation and have your voice heard' / 'Foundation rewards every user for their valuable insights'"
+        image="/fav96a.png"
+        type="Post"
+        url="https://on.foundation/"
+      />
       <Topbar />
       <div className="flex h-[calc(100vh-90px)] bg-white dark:bg-[#242424]">
         <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
