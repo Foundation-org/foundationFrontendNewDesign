@@ -385,15 +385,24 @@ const QuestionCardWithToggle = (props) => {
         created: new Date(),
       };
       if (questStartData.whichTypeQuestion === 'yes/no') {
-        ans.selected = questSelection['yes/no'].yes.check === true ? 'Yes' : 'No';
+        ans.selected =
+          questSelection['yes/no'].yes.check === true
+            ? 'Yes'
+            : (ans.selected = questSelection['yes/no'].no.check === true ? 'No' : '');
       }
 
       if (questStartData.whichTypeQuestion === 'agree/disagree') {
-        ans.selected = questSelection['agree/disagree'].agree.check === true ? 'Agree' : 'Disagree';
+        ans.selected =
+          questSelection['agree/disagree'].agree.check === true
+            ? 'Agree'
+            : (ans.selected = questSelection['agree/disagree'].disagree.check === true ? 'Disagree' : '');
       }
 
       if (questStartData.whichTypeQuestion === 'like/dislike') {
-        ans.selected = questSelection['like/dislike'].like.check === true ? 'Like' : 'Dislike';
+        ans.selected =
+          questSelection['like/dislike'].like.check === true
+            ? 'Like'
+            : (ans.selected = questSelection['like/dislike'].dislike.check === true ? 'Dislike' : '');
       }
 
       const params = {
@@ -404,7 +413,7 @@ const QuestionCardWithToggle = (props) => {
       };
 
       if (!params.answer.selected) {
-        toast.warning('You cannot submit without selecting an option');
+        toast.warning("Oops! You haven't selected anything yet.");
         setLoading(false);
         return;
       }
@@ -516,7 +525,7 @@ const QuestionCardWithToggle = (props) => {
 
             setAnswerSelection(updatedArray);
           } else {
-            toast.warning('You cannot submit without selecting an option');
+            toast.warning("Oops! You haven't selected anything yet.");
             setLoading(false);
           }
         }
@@ -561,7 +570,7 @@ const QuestionCardWithToggle = (props) => {
 
           setAnswerSelection(updatedArray);
         } else {
-          toast.warning('You cannot submit without selecting an option');
+          toast.warning("Oops! You haven't selected anything yet.");
           setLoading(false);
         }
       }

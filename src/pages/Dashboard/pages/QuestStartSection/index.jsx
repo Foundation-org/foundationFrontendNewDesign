@@ -221,7 +221,7 @@ const QuestStartSection = () => {
     }
   }, [submitResponse]);
 
-  console.log('🚀 ~ QuestStartSection ~ allData:', allData);
+  // console.log('🚀 ~ QuestStartSection ~ allData:', allData);
 
   return (
     <div className="flex w-full flex-col bg-white dark:bg-black laptop:flex-row">
