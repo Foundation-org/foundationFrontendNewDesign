@@ -134,7 +134,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleTab = () => {
     console.log('first', props.questStartData._id, document.getElementById(props.questStartData._id));
-    document.getElementById(props.questStartData._id).focus();
+    document.getElementById(`submit-${props.questStartData._id}`).focus();
   };
 
   return (
