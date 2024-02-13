@@ -175,6 +175,8 @@ const ButtonGroup = ({
     questStartData.usersChangeTheirAns,
   );
 
+  console.log('first', questStartData.Question, startTest, questStartData.usersAddTheirAns);
+
   if (persistedUserInfo?.role === 'guest') {
     if (location.pathname.includes('/p/') || location.pathname === '/quest/isfullscreen') {
       return (
@@ -270,7 +272,7 @@ const ButtonGroup = ({
                   </Button>
                 ) : null}
               </div>
-            ) : (
+            ) : btnText === 'completed' ? null : (
               <Button
                 variant="submit"
                 onClick={() => handleSubmit()}
@@ -284,7 +286,7 @@ const ButtonGroup = ({
                       : false
                 }
               >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'SubmitAAA'}
               </Button>
             )}
           </div>

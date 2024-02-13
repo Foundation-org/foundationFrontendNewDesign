@@ -185,7 +185,7 @@ const QuestionCardWithToggle = (props) => {
 
   const handleStartTest = (testId) => {
     setViewResult('');
-    setStartTest((prev) => (prev === testId ? '' : testId));
+    setStartTest(testId);
   };
 
   const handleViewResults = (testId) => {
