@@ -12,6 +12,22 @@ const Result = (props) => {
     return !!foundObject;
   }
 
+  const getRankedAnswers = (props) => {
+    return props.questStartData.QuestAnswers.sort((a, b) => {
+      const indexA = props.questStartData?.startQuestData?.data[
+        props.questStartData?.startQuestData?.data.length - 1
+      ].selected.findIndex((item) => item.question === a.question);
+
+      const indexB = props.questStartData?.startQuestData?.data[
+        props.questStartData?.startQuestData?.data.length - 1
+      ].selected.findIndex((item) => item.question === b.question);
+
+      return indexA !== -1 && indexB !== -1 ? indexA - indexB : 0;
+    });
+  };
+
+  const rankedNewData = getRankedAnswers(props);
+
   return (
     <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${props.cardSize}px ` }}>
       {props.title === 'Yes/No' || props.title === 'Agree/Disagree' || props.title === 'Like/Dislike' ? (
@@ -171,25 +187,7 @@ const Result = (props) => {
             isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]' : ''
           }  mr-[2px] tablet:mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
         >
-          {props.questStartData.QuestAnswers.sort(
-            (a, b) =>
-              parseInt(
-                props.questStartData?.selectedPercentage &&
-                  props.questStartData.selectedPercentage.length > 0 &&
-                  props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1][
-                    b.question
-                  ],
-                10,
-              ) -
-              parseInt(
-                props.questStartData?.selectedPercentage &&
-                  props.questStartData.selectedPercentage.length > 0 &&
-                  props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1][
-                    a.question
-                  ],
-                10,
-              ),
-          ).map((item, index) => (
+          {rankedNewData?.map((item, index) => (
             <div key={index + 1}>
               <RankedResult
                 number={'#' + (index + 1)}

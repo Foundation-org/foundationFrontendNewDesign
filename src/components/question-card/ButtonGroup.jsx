@@ -85,14 +85,17 @@ const ButtonGroup = ({
       }
     });
 
-    answerSelectionArray.sort((a, b) => {
-      let percentageA = parseFloat(questStartData.selectedPercentage[0][a.label].replace('%', ''));
-      let percentageB = parseFloat(questStartData.selectedPercentage[0][b.label].replace('%', ''));
-
-      return percentageB - percentageA;
+    const sortedAnswerSelection = [...answerSelectionArray].sort((a, b) => {
+      const indexA = questStartData?.startQuestData?.data[
+        questStartData?.startQuestData?.data.length - 1
+      ].selected?.findIndex((item) => item.question === a.label);
+      const indexB = questStartData?.startQuestData?.data[
+        questStartData?.startQuestData?.data.length - 1
+      ].selected?.findIndex((item) => item.question === b.label);
+      return indexA - indexB;
     });
 
-    setRankedAnswers(answerSelectionArray);
+    setRankedAnswers(sortedAnswerSelection);
   }
 
   const { mutateAsync: getStartQuestDetail } = useMutation({
@@ -533,7 +536,6 @@ const ButtonGroup = ({
                     Go Back
                   </Button>
                   <Button
-                   
                     tabIndex="0"
                     variant="submit"
                     onClick={() => handleSubmit()}
@@ -577,7 +579,7 @@ const ButtonGroup = ({
                 <div></div>
               )}
               <Button
-               id={`submit-${questStartData._id}`}
+                id={`submit-${questStartData._id}`}
                 variant="submit"
                 onClick={() => handleSubmit()}
                 disabled={
