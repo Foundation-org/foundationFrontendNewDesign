@@ -27,18 +27,17 @@ const SingleQuest = () => {
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
   const [singleQuestResp, setSingleQuestResp] = useState(null);
+  const [submitResponse, setSubmitResponse] = useState();
 
-  console.log('🚀 ~ useEffect ~ persistedUserInfo:', singleQuestResp);
+  // const handleStartTest = (testId) => {
+  //   setViewResult(null);
+  //   setStartTest((prev) => (prev === testId ? null : testId));
+  // };
 
-  const handleStartTest = (testId) => {
-    setViewResult(null);
-    setStartTest((prev) => (prev === testId ? null : testId));
-  };
-
-  const handleViewResults = (testId) => {
-    setStartTest(null);
-    setViewResult((prev) => (prev === testId ? null : testId));
-  };
+  // const handleViewResults = (testId) => {
+  //   setStartTest(null);
+  //   setViewResult((prev) => (prev === testId ? null : testId));
+  // };
 
   const { mutateAsync: createGuest } = useMutation({
     mutationFn: createGuestMode,
@@ -104,7 +103,6 @@ const SingleQuest = () => {
     }
     // if User exist no matter guest/normal
     if (persistedUserInfo) {
-      console.log('i am running');
       questByUniqueShareLink();
     }
   }, []);
@@ -124,9 +122,10 @@ const SingleQuest = () => {
           {singleQuestResp && (
             <div className="px-[25px] tablet:px-[86px]">
               <QuestionCardWithToggle
-                questStartData={singleQuestResp}
+                questStartData={submitResponse ? submitResponse : singleQuestResp}
                 isBookmarked={false}
                 setSingleQuestResp={setSingleQuestResp}
+                setSubmitResponse={setSubmitResponse}
               />
             </div>
           )}
