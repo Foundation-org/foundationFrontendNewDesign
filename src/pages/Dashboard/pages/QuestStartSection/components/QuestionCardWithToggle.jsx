@@ -713,8 +713,6 @@ const QuestionCardWithToggle = (props) => {
     setAnswerSelection((prevAnswers) => updateAnswersSelectionForRanked(prevAnswers, actionPayload));
   };
 
-  // console.log('first', viewResult, questStartData._id, openResults);
-
   const renderQuestContent = () => {
     if (viewResult !== questStartData._id && openResults !== true) {
       return (

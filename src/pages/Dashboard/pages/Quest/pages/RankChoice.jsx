@@ -246,6 +246,7 @@ const RankChoice = () => {
       return true;
     }
   };
+
   useEffect(() => {
     if (!checkHollow() && typedValues.every((value) => value.question !== '' && question !== '')) {
       setHollow(false);
@@ -270,7 +271,7 @@ const RankChoice = () => {
     );
   }, [question, changedOption, changeState, addOption, optionsCount, typedValues]);
 
-  const handleTab = (index) => {
+  const handleTab = (index, key) => {
     if (index === typedValues.length) {
       if (hollow) {
         document.getElementById('submitButton').focus();
@@ -279,13 +280,15 @@ const RankChoice = () => {
         document.getElementById('submitButton2').focus();
       }
     } else {
-      document.getElementById(`input-${index + 1}`).focus();
+      if (key === 'Enter') {
+        document.getElementById(`input-${index + 1}`).focus();
+      } else {
+        document.getElementById(`input-${index}`).focus();
+      }
     }
   };
 
   useEffect(() => {
-    // console.log('our question status is yes', createQuestSlice.question);
-    // setLoading(questionStatus.status);
     if (createQuestSlice.question) {
       setQuestion(createQuestSlice.question);
       setPrevValue(createQuestSlice.question);
@@ -297,6 +300,7 @@ const RankChoice = () => {
     const tempcheck = optionsValue.some((value) => value.optionStatus.name === 'Checking');
     setOptionWaiting(tempcheck);
   }, [optionsValue]);
+
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
@@ -327,7 +331,7 @@ const RankChoice = () => {
               dispatch(createQuestAction.handleQuestionReset(e.target.value));
             }}
             className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
-            onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(0))}
+            onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(0, 'Enter'))}
           />
           <button
             id="new"

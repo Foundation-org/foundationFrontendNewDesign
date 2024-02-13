@@ -132,6 +132,11 @@ const SingleAnswerRankedChoice = (props) => {
     });
   };
 
+  const handleTab = () => {
+    console.log('first', props.questStartData._id, document.getElementById(props.questStartData._id));
+    document.getElementById(props.questStartData._id).focus();
+  };
+
   return (
     <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
       {/* =============== To Display Badges on Left of Option */}
@@ -206,6 +211,7 @@ const SingleAnswerRankedChoice = (props) => {
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
+                onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
               />
             ) : (
               <h1 className="pb-[5.6px] pr-2 pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">

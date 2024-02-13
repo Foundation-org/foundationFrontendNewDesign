@@ -236,6 +236,7 @@ const StartTest = ({
                               className="w-full"
                             >
                               <SingleAnswerRankedChoice
+                                questStartData={questStartData}
                                 id={index}
                                 snapshot={snapshot}
                                 number={index + 1}

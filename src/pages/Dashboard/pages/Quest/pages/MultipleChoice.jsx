@@ -336,7 +336,7 @@ const MultipleChoice = () => {
     );
   }, [question, changedOption, changeState, addOption, optionsCount, typedValues, multipleOption]);
 
-  const handleTab = (index) => {
+  const handleTab = (index, key) => {
     if (index === typedValues.length) {
       if (hollow) {
         document.getElementById('submitButton').focus();
@@ -345,7 +345,11 @@ const MultipleChoice = () => {
         document.getElementById('submitButton2').focus();
       }
     } else {
-      document.getElementById(`input-${index + 1}`).focus();
+      if (key === 'Enter') {
+        document.getElementById(`input-${index + 1}`).focus();
+      } else {
+        document.getElementById(`input-${index}`).focus();
+      }
     }
   };
 
@@ -357,7 +361,6 @@ const MultipleChoice = () => {
   }, [questionStatus]);
 
   useEffect(() => {
-    console.log('our values are', optionsValue);
     setTypedValues(optionsValue);
     const tempcheck = optionsValue.some((value) => value.optionStatus.name === 'Checking');
     setOptionWaiting(tempcheck);
@@ -392,7 +395,7 @@ const MultipleChoice = () => {
             value={question}
             placeholder="Make a Statement or pose a question"
             tabIndex={1}
-            onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(0))}
+            onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(0, 'Enter'))}
           />
           <button
             id="new"

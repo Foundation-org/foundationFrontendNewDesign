@@ -100,7 +100,9 @@ const Options = ({
                 value={typedValue}
                 placeholder="Add your own option"
                 tabIndex={number + 1}
-                onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(number))}
+                onKeyDown={(e) =>
+                  (e.key === 'Tab' && handleTab(number)) || (e.key === 'Enter' && handleTab(number, 'Enter'))
+                }
               />
               <div
                 id={`test${number}`}
