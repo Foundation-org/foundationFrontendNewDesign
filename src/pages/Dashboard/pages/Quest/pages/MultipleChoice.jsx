@@ -41,13 +41,6 @@ const MultipleChoice = () => {
 
   const [typedValues, setTypedValues] = useState(optionsValue);
 
-  // Array.from({ length: optionsCount }, (_, index) => ({
-  //   id: `index-${index}`,
-  //   question: createQuestSlice.options[index],
-  //   selected: false,
-  //   optionStatus: optionStatus[index],
-  // })),
-
   const reset = {
     name: 'Ok',
     color: 'text-[#389CE3]',
@@ -91,6 +84,11 @@ const MultipleChoice = () => {
   });
 
   const handleSubmit = async () => {
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning('Please Signup to use this feature');
+      return;
+    }
+
     const constraintResponse = await checkUniqueQuestion(question);
 
     if (!checkHollow()) {
@@ -234,15 +232,15 @@ const MultipleChoice = () => {
         ...newTypedValues[index],
         question: value,
         optionStatus: {
-          name: "Ok",
-          color: value.trim() === "" ? "text-[#389CE3]" : "text-[#b0a00f]",
-          tooltipName: value.trim() === "" ? "Please write something..." : "",
-          tooltipStyle: value.trim() === "" ? "tooltip-info" : "",
+          name: 'Ok',
+          color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
+          tooltipName: value.trim() === '' ? 'Please write something...' : '',
+          tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
         },
       };
       dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
       return newTypedValues;
-    })
+    });
     // const newTypedValues = [...typedValues];
     // newTypedValues[index] = {
     //   ...newTypedValues[index],
@@ -340,14 +338,14 @@ const MultipleChoice = () => {
 
   const handleTab = (index) => {
     if (index === typedValues.length) {
-      if(hollow) {
+      if (hollow) {
         document.getElementById('submitButton').focus();
         document.getElementById(`input-${index}`).focus();
       } else {
         document.getElementById('submitButton2').focus();
       }
     } else {
-        document.getElementById(`input-${index + 1}`).focus();
+      document.getElementById(`input-${index + 1}`).focus();
     }
   };
 
@@ -499,13 +497,19 @@ const MultipleChoice = () => {
           //   </button>
           // </div>
           <div className="flex w-full justify-end pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
-            <Button variant="hollow-submit" id="submitButton" onClick={() => handleSubmit()} disabled={loading === true}>
+            <Button
+              variant="hollow-submit"
+              id="submitButton"
+              onClick={() => handleSubmit()}
+              disabled={loading === true}
+            >
               Submit
             </Button>
           </div>
         ) : (
           <div className="flex w-full justify-end">
-            <button id="submitButton2"
+            <button
+              id="submitButton2"
               className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
               onClick={() => handleSubmit()}
               // disabled={loading === true}

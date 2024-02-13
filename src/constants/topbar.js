@@ -10,7 +10,6 @@ export const TopbarItems = [
     title: 'Create',
     path: '/dashboard/quest',
     icon: '/assets/svgs/dashboard/create.svg',
-    notAllowedRole: 'guest',
   },
   {
     id: 3,

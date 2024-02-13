@@ -45,12 +45,7 @@ const RankChoice = () => {
     tooltipStyle: 'tooltip-info',
   };
   const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
-  // const [checkOptionStatus, setCheckOptionStatus] = useState({
-  //   name: 'Ok',
-  //   color: 'text-[#389CE3]',
-  //   tooltipName: 'Please write something...',
-  //   tooltipStyle: 'tooltip-info',
-  // });
+
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -81,11 +76,17 @@ const RankChoice = () => {
   });
 
   const handleSubmit = async () => {
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning('Please Signup to use this feature');
+      return;
+    }
+
     // To check uniqueness of the question
     const constraintResponse = await checkUniqueQuestion(question);
-    
+
     if (!checkHollow()) {
-      setLoading(true);}
+      setLoading(true);
+    }
 
     if (question === '') {
       return toast.warning('Post cannot be empty');
@@ -128,36 +129,6 @@ const RankChoice = () => {
     setPrevValue(value);
 
     dispatch(createQuestAction.checkQuestion(value));
-    // setCheckQuestionStatus({
-    //   name: 'Checking',
-    //   color: 'text-[#0FB063]',
-    //   tooltipName: 'Verifying your question. Please wait...',
-    //   tooltipStyle: 'tooltip-success',
-    // });
-    // // Question Validation
-    // const { validatedQuestion, errorMessage } = await questionValidation({
-    //   question: value,
-    //   queryType: 'rank choice',
-    // });
-    // // If any error captured
-    // if (errorMessage) {
-    //   return setCheckQuestionStatus({
-    //     name: 'Rejected',
-    //     color: 'text-[#b00f0f]',
-    //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-    //     tooltipStyle: 'tooltip-error',
-    //   });
-    // }
-    // // Question is validated and status is Ok
-    // setQuestion(validatedQuestion);
-    // setPrevValue(validatedQuestion);
-    // setCheckQuestionStatus({
-    //   name: 'Ok',
-    //   color: 'text-[#0FB063]',
-    //   tooltipName: 'Question is Verified',
-    //   tooltipStyle: 'tooltip-success',
-    //   isVerifiedQuestion: true,
-    // });
   };
 
   const answerVerification = async (id, index, value) => {
@@ -185,22 +156,22 @@ const RankChoice = () => {
 
   const handleChange = (index, value) => {
     if (optionWaiting) return;
-    
+
     setTypedValues((prevValues) => {
       const newTypedValues = [...prevValues];
       newTypedValues[index] = {
         ...newTypedValues[index],
         question: value,
         optionStatus: {
-          name: "Ok",
-          color: value.trim() === "" ? "text-[#389CE3]" : "text-[#b0a00f]",
-          tooltipName: value.trim() === "" ? "Please write something..." : "",
-          tooltipStyle: value.trim() === "" ? "tooltip-info" : "",
+          name: 'Ok',
+          color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
+          tooltipName: value.trim() === '' ? 'Please write something...' : '',
+          tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
         },
       };
       dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
       return newTypedValues;
-    })
+    });
 
     // const newTypedValues = [...typedValues];
     // newTypedValues[index] = {
@@ -301,14 +272,14 @@ const RankChoice = () => {
 
   const handleTab = (index) => {
     if (index === typedValues.length) {
-      if(hollow) {
+      if (hollow) {
         document.getElementById('submitButton').focus();
         document.getElementById(`input-${index}`).focus();
       } else {
         document.getElementById('submitButton2').focus();
       }
     } else {
-        document.getElementById(`input-${index + 1}`).focus();
+      document.getElementById(`input-${index + 1}`).focus();
     }
   };
 
@@ -456,20 +427,26 @@ const RankChoice = () => {
             //   </button>
             // </div>
             <div className="flex w-full justify-end pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
-            <Button variant="hollow-submit" id="submitButton" onClick={() => handleSubmit()} disabled={loading === true}>
-              Submit
-            </Button>
-          </div>
-        ) : (
-          <div className="flex w-full justify-end">
-            <button id="submitButton2"
-              className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-              onClick={() => handleSubmit()}
-              // disabled={loading === true}
-            >
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-            </button>
-          </div>
+              <Button
+                variant="hollow-submit"
+                id="submitButton"
+                onClick={() => handleSubmit()}
+                disabled={loading === true}
+              >
+                Submit
+              </Button>
+            </div>
+          ) : (
+            <div className="flex w-full justify-end">
+              <button
+                id="submitButton2"
+                className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
+                onClick={() => handleSubmit()}
+                // disabled={loading === true}
+              >
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+              </button>
+            </div>
           )}
         </div>
       </div>

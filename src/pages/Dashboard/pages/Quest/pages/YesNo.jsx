@@ -65,13 +65,12 @@ const YesNo = () => {
   });
 
   const handleTab = (index) => {
-      if(hollow) {
-        document.getElementById('submitButton').focus();
-        document.getElementById(`question`).focus();
-      } else {
-        document.getElementById('submitButton2').focus();
-      }
-    
+    if (hollow) {
+      document.getElementById('submitButton').focus();
+      document.getElementById(`question`).focus();
+    } else {
+      document.getElementById('submitButton2').focus();
+    }
   };
 
   const handleOptionChange = (option) => {
@@ -79,6 +78,11 @@ const YesNo = () => {
   };
 
   const handleSubmit = async () => {
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning('Please Signup to use this feature');
+      return;
+    }
+
     if (!checkHollow()) {
       setLoading(true);
     }
@@ -108,44 +112,14 @@ const YesNo = () => {
       dispatch(createQuestAction.resetCreateQuest());
     }
   };
-  
+
   const questionVerification = async (value) => {
     setQuestion(value.trim());
     if (prevValue === question.trim()) return;
     setPrevValue(value);
     dispatch(checkQuestion(value));
-    // setquestionStatus({
-    //   name: 'Checking',
-    //   color: 'text-[#0FB063]',
-    //   tooltipName: 'Verifying your question. Please wait...',
-    //   tooltipStyle: 'tooltip-success',
-    // });
-    // Question Validation
-    // const { validatedQuestion, errorMessage } = await questServices.questionValidation({
-    //   question: value,
-    //   queryType: 'yes/no',
-    // });
-    // If any error captured
-    // if (errorMessage) {
-    //   setLoading(false);
-    //   return setquestionStatus({
-    //     name: 'Rejected',
-    //     color: 'text-[#b00f0f]',
-    //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-    //     tooltipStyle: 'tooltip-error',
-    //   });
-    // }
-    // Question is validated and status is Ok
-    // setQuestion(validatedQuestion);
-    // setPrevValue(validatedQuestion);
-    // setquestionStatus({
-    //   name: 'Ok',
-    //   color: 'text-[#0FB063]',
-    //   tooltipName: 'Question is Verified',
-    //   tooltipStyle: 'tooltip-success',
-    //   isVerifiedQuestion: true,
-    // });
   };
+
   const checkHollow = () => {
     if (questionStatus.tooltipName === 'Question is Verified') {
       return false;
@@ -154,6 +128,7 @@ const YesNo = () => {
       return true;
     }
   };
+
   useEffect(() => {
     if (!checkHollow() && question !== '') {
       setHollow(false);
@@ -167,8 +142,6 @@ const YesNo = () => {
   }, [question, changedOption, changeState]);
 
   useEffect(() => {
-    console.log('our question status is yes', questionStatus);
-    // setLoading(questionStatus.status);
     if (createQuestSlice.question) {
       setQuestion(createQuestSlice.question);
       setPrevValue(createQuestSlice.question);
@@ -190,7 +163,7 @@ const YesNo = () => {
         </h1>
         <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-5 tablet:pb-[13px]">
           <input
-          id='question'
+            id="question"
             className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
             onChange={(e) => {
               setQuestion(e.target.value);
@@ -245,30 +218,26 @@ const YesNo = () => {
         </div>
         <div className="flex w-full justify-end">
           {hollow ? (
-            // <div className="flex w-full justify-end">
-            //   <button
-            //     className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-            //     onClick={() => handleSubmit()}
-            //     disabled={loading === true }
-            //   >
-            //     {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : <span style={{ opacity: 0 }}>Submit</span>}
-
-            //   </button>
-            // </div>
             <div className="flex w-full justify-end pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
-            <Button variant="hollow-submit" id="submitButton" onClick={() => handleSubmit()} disabled={loading === true}>
-              Submit
-            </Button>
-          </div>
-        ) : (
-          <div className="flex w-full justify-end">
-            <button id="submitButton2"
-              className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-              onClick={() => handleSubmit()}
-            >
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-            </button>
-          </div>
+              <Button
+                variant="hollow-submit"
+                id="submitButton"
+                onClick={() => handleSubmit()}
+                disabled={loading === true}
+              >
+                Submit
+              </Button>
+            </div>
+          ) : (
+            <div className="flex w-full justify-end">
+              <button
+                id="submitButton2"
+                className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
+                onClick={() => handleSubmit()}
+              >
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+              </button>
+            </div>
           )}
         </div>
       </div>

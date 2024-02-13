@@ -175,7 +175,34 @@ const ButtonGroup = ({
   if (persistedUserInfo?.role === 'guest') {
     if (location.pathname.includes('/p/') || location.pathname === '/quest/isfullscreen') {
       return (
-        <div className="flex justify-end w-full pl-7 tablet:pl-[3.19rem] pr-[14.4px] tablet:pr-[3.44rem]">
+        <div className="flex justify-between w-full pl-7 tablet:pl-[3.19rem] pr-[14.4px] tablet:pr-[3.44rem]">
+          {startTest === questStartData._id && questStartData.usersAddTheirAns ? (
+            title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+              <Button
+                onClick={() => {
+                  toast.warning('Please Signup to use this feature');
+                }}
+                variant={'addOption'}
+              >
+                {persistedTheme === 'dark' ? (
+                  <img
+                    src="/assets/svgs/dashboard/add-dark.svg"
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
+                ) : (
+                  <img
+                    src="/assets/svgs/dashboard/add.svg"
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
+                )}
+                Add Option
+              </Button>
+            )
+          ) : (
+            <div></div>
+          )}
           {btnText === '' && (
             <Button
               variant="submit"
@@ -198,8 +225,49 @@ const ButtonGroup = ({
     } else {
       if (filterState.expandedView === true) {
         return (
-          <div className="w-full flex justify-end pr-[0.87rem] tablet:pr-[3.44rem]">
-            {btnText === 'change answer' ? null : (
+          <div className="w-full flex justify-between pl-7 tablet:pl-[3.19rem] pr-[0.87rem] tablet:pr-[3.44rem]">
+            {startTest === questStartData._id && questStartData.usersAddTheirAns ? (
+              title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+                <Button
+                  onClick={() => {
+                    toast.warning('Please Signup to use this feature');
+                  }}
+                  variant={'addOption'}
+                >
+                  {persistedTheme === 'dark' ? (
+                    <img
+                      src="/assets/svgs/dashboard/add-dark.svg"
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  ) : (
+                    <img
+                      src="/assets/svgs/dashboard/add.svg"
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  )}
+                  Add Option
+                </Button>
+              )
+            ) : (
+              <div></div>
+            )}
+            {btnText === 'change answer' ? (
+              <div>
+                {btnText === 'change answer' && viewResult === questStartData._id ? (
+                  <Button
+                    variant={result === ', you are good to go' ? 'change' : 'change-outline'}
+                    disabled={result === ', you are good to go' ? false : true}
+                    onClick={() => {
+                      toast.warning('Please Signup to use this feature');
+                    }}
+                  >
+                    Change
+                  </Button>
+                ) : null}
+              </div>
+            ) : (
               <Button
                 variant="submit"
                 onClick={() => handleSubmit()}
@@ -221,7 +289,35 @@ const ButtonGroup = ({
       } else {
         if (startTest === questStartData._id) {
           return (
-            <div className="flex w-full justify-end gap-2 pl-7 pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+            <div className="flex w-full justify-between gap-2 pl-7 pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+              {questStartData.usersAddTheirAns ? (
+                title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+                  <Button
+                    onClick={() => {
+                      toast.warning('Please Signup to use this feature');
+                    }}
+                    variant={'addOption'}
+                  >
+                    {persistedTheme === 'dark' ? (
+                      <img
+                        src="/assets/svgs/dashboard/add-dark.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    ) : (
+                      <img
+                        src="/assets/svgs/dashboard/add.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    )}
+                    Add Option
+                  </Button>
+                )
+              ) : (
+                <div></div>
+              )}
+
               {/* Go back / Submit */}
               <div>
                 <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">

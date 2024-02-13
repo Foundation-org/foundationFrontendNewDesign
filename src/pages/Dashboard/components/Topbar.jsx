@@ -158,7 +158,7 @@ const Topbar = () => {
             } relative flex w-[85.8px] items-center justify-center tablet:w-[210px] `}
           >
             <Link
-              to={persistedUserInfo?.role === item.notAllowedRole ? '#' : item.path}
+              to={item.path}
               className={`flex items-center gap-1 text-[12px] font-semibold tablet:gap-[13.6px] tablet:text-[23.9px] laptop:gap-[10px] laptop:text-[30px] ${
                 location.pathname === item.path || location.pathname === `${item.path}/`
                   ? 'text-white'
