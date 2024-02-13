@@ -18,9 +18,9 @@ export default function SEO({ title, description, type, url, image }) {
       {/* <!-- Twitter --> */}
       <meta property="twitter:card" content={type} />
       <meta property="twitter:url" content={url} />
-      <meta property="twitter:title" content={title} />
-      <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={image} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
     </Helmet>
   );
 }
