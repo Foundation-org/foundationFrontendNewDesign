@@ -470,6 +470,10 @@ input.autofill_text_color:-webkit-autofill {
   -webkit-text-fill-color: black !important;
 }
 
+input.autofill_text_color-contact-us:-webkit-autofill {
+  -webkit-text-fill-color: #909090 !important;
+}
+
 .dark input.autofill_text_color:-webkit-autofill {
   -webkit-text-fill-color: white !important;
 }

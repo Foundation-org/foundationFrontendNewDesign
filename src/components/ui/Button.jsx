@@ -72,5 +72,6 @@ Button.propTypes = {
     'personal-work',
     'social-btn',
     'hollow-submit',
+    'getintouch',
   ]),
 };

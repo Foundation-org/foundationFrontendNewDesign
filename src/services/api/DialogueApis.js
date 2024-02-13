@@ -7,3 +7,11 @@ export const sendEmail = async (data) => {
     message: data.message,
   });
 };
+
+export const sendContactUsEmail = async (data) => {
+  return await api.post('/user/send/email', {
+    sender: data.email,
+    subject: data.subject,
+    message: data.message,
+  });
+};
