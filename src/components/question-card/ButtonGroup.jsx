@@ -180,52 +180,68 @@ const ButtonGroup = ({
   if (persistedUserInfo?.role === 'guest') {
     if (location.pathname.includes('/p/') || location.pathname === '/quest/isfullscreen') {
       return (
-        <div className="flex justify-between w-full pl-7 tablet:pl-[3.19rem] pr-[14.4px] tablet:pr-[3.44rem]">
-          {startTest === questStartData._id && questStartData.usersAddTheirAns ? (
-            title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+        <>
+          {btnText === '' ? (
+            <div className="flex justify-between w-full pl-7 tablet:pl-[3.19rem] pr-[14.4px] tablet:pr-[3.44rem]">
+              {startTest === questStartData._id && questStartData.usersAddTheirAns ? (
+                title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+                  <Button
+                    onClick={() => {
+                      toast.warning('Please Signup to use this feature');
+                    }}
+                    variant={'addOption'}
+                  >
+                    {persistedTheme === 'dark' ? (
+                      <img
+                        src="/assets/svgs/dashboard/add-dark.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    ) : (
+                      <img
+                        src="/assets/svgs/dashboard/add.svg"
+                        alt="add"
+                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                      />
+                    )}
+                    Add Option
+                  </Button>
+                )
+              ) : (
+                <div></div>
+              )}
               <Button
-                onClick={() => {
-                  toast.warning('Please Signup to use this feature');
-                }}
-                variant={'addOption'}
+                variant="submit"
+                onClick={() => handleSubmit()}
+                disabled={
+                  loading === true
+                    ? true
+                    : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                      ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                        ? false
+                        : true
+                      : false
+                }
               >
-                {persistedTheme === 'dark' ? (
-                  <img
-                    src="/assets/svgs/dashboard/add-dark.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                ) : (
-                  <img
-                    src="/assets/svgs/dashboard/add.svg"
-                    alt="add"
-                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                  />
-                )}
-                Add Option
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               </Button>
-            )
-          ) : (
-            <div></div>
-          )}
-          {btnText === '' && (
-            <Button
-              variant="submit"
-              onClick={() => handleSubmit()}
-              disabled={
-                loading === true
-                  ? true
-                  : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                    ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                      ? false
-                      : true
-                    : false
-              }
-            >
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-            </Button>
-          )}
-        </div>
+            </div>
+          ) : btnText === 'change answer' ? (
+            <div className="flex justify-end  pr-[14.4px] tablet:pr-[3.44rem]">
+              {btnText === 'change answer' && viewResult === questStartData._id ? (
+                <Button
+                  variant={result === ', you are good to go' ? 'change' : 'change-outline'}
+                  disabled={result === ', you are good to go' ? false : true}
+                  onClick={() => {
+                    toast.warning('Please Signup to use this feature');
+                  }}
+                >
+                  Change
+                </Button>
+              ) : null}
+            </div>
+          ) : null}
+        </>
       );
     } else {
       if (filterState.expandedView === true) {
