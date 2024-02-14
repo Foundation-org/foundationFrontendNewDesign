@@ -21,7 +21,7 @@ const VerifyCode = () => {
     let urlQuery = window.location.search.slice(1);
     seturlQuery(urlQuery);
 
-    fetch('http://localhost:7354/user/authenticateJWT', {
+    fetch(`${url}/user/authenticateJWT`, {
       method: 'POST',
       headers: {
         Authorization: `${urlQuery}`,
@@ -221,9 +221,7 @@ const VerifyCode = () => {
         </div>
       ) : (
         <div className="relative bg-white px-5 tablet:px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
-          <p className="text-[9px] tablet:text-[20px] text-black font-medium">
-            {msg}
-          </p>
+          <p className="text-[9px] tablet:text-[20px] text-black font-medium">{msg}</p>
           <div className="w-full flex justify-end mt-[25px]">
             <UiButton
               className="w-full flex justify-end mt-[25px]"
