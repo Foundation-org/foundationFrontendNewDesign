@@ -99,7 +99,7 @@ const VerificationBadges = () => {
       ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
-      link: '/auth/linkedin',
+      // link: '/auth/linkedin',
       accountName: 'linkedin',
       disabled: true,
     },
@@ -124,10 +124,10 @@ const VerificationBadges = () => {
     {
       image: '/assets/profile/Instagram-2x.png',
       title: 'Instagram',
-      ButtonColor: 'blue',
+      ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
-      link: '/auth/instagram',
+      // link: '/auth/instagram',
       accountName: 'instagram',
       disabled: true,
     },
@@ -294,16 +294,16 @@ const VerificationBadges = () => {
   const dataRef = useRef({ data: 'Initial Data' });
 
   const handleClickContactBadgeEmail = (type) => {
-    console.log("testing.....");
-    dataRef.current.data = type
+    console.log('testing.....');
+    dataRef.current.data = type;
     // Trigger a click event on the first element
     contactBadgeEmail.current.click();
 
-      // Force a re-render by updating a dummy state
-      setDummyState({});
+    // Force a re-render by updating a dummy state
+    setDummyState({});
   };
   // Dummy state to force re-render
-const [, setDummyState] = useState();
+  const [, setDummyState] = useState();
 
   // Handle Add Contact Badge
   const handleAddContactBadge = async (provider, data) => {
@@ -312,7 +312,7 @@ const [, setDummyState] = useState();
       data['type'] = dataRef.current.data;
       data['uuid'] = fetchUser.uuid || localStorage.getItem('uuid');
       const addBadge = await api.post(`/addBadge/contact`, {
-        ...data
+        ...data,
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
@@ -326,7 +326,7 @@ const [, setDummyState] = useState();
   return (
     <div className="pb-12">
       {isLoading && <Loader />}
-      <div className='hidden'>
+      <div className="hidden">
         <LoginSocialGoogle
           // isOnlyGetToken
           client_id={import.meta.env.VITE_GG_APP_ID}
@@ -336,7 +336,7 @@ const [, setDummyState] = useState();
           // access_type="offline"
           onResolve={({ provider, data }) => {
             console.log(fetchUser.uuid);
-            handleAddContactBadge(provider, data)
+            handleAddContactBadge(provider, data);
             // setProvider(provider);
             // setProfile(data);
             // data['provider'] = provider;
@@ -346,20 +346,20 @@ const [, setDummyState] = useState();
             console.log(err);
           }}
           className="w-full"
-          >
-            <div className='' ref={contactBadgeEmail}>
-              <Button
-                size="login-btn"
-                color=""
-                // onClick={() => {
-                //   setIsLoadingSocial(true);
-                // }}
-                // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
-              >
-                <img src="/assets/svgs/google.svg" className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] " /> Continue with
-                Google
-              </Button>
-            </div>
+        >
+          <div className="" ref={contactBadgeEmail}>
+            <Button
+              size="login-btn"
+              color=""
+              // onClick={() => {
+              //   setIsLoadingSocial(true);
+              // }}
+              // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
+            >
+              <img src="/assets/svgs/google.svg" className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] " /> Continue
+              with Google
+            </Button>
+          </div>
         </LoginSocialGoogle>
       </div>
       <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
@@ -382,7 +382,10 @@ const [, setDummyState] = useState();
           Contact
         </h1>
         {contacts.map((item, index) => (
-          <div className={`flex items-center justify-center gap-[5px] tablet:gap-[10.59px] ${item.disabled && 'opacity-[60%]'}`} key={index}>
+          <div
+            className={`flex items-center justify-center gap-[5px] tablet:gap-[10.59px] ${item.disabled && 'opacity-[60%]'}`}
+            key={index}
+          >
             <img
               src={item.image}
               alt={item.title}
@@ -395,7 +398,12 @@ const [, setDummyState] = useState();
             >
               <h1>{item.title}</h1>
             </div>
-            <Button color={checkPersonal(item.type) ? 'yellow' : item.ButtonColor} onClick={() => !checkPersonal(item.type) && item.ButtonColor !== "gray" && handleClickContactBadgeEmail(item.type)} >
+            <Button
+              color={checkPersonal(item.type) ? 'yellow' : item.ButtonColor}
+              onClick={() =>
+                !checkPersonal(item.type) && item.ButtonColor !== 'gray' && handleClickContactBadgeEmail(item.type)
+              }
+            >
               {checkPersonal(item.type) ? 'Added' : item.ButtonText}
             </Button>
           </div>
@@ -473,6 +481,7 @@ const [, setDummyState] = useState();
                 !checkSocial(item.accountName) && window.open(`${import.meta.env.VITE_API_URL}${item.link}`, '_self');
                 checkSocial(item.accountName) && handleRemoveBadge(item.accountName);
               }}
+              disabled={item.disabled}
             >
               {checkSocial(item.accountName) ? 'Remove' : item.ButtonText}
             </Button>
