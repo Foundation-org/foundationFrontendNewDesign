@@ -89,10 +89,12 @@ const ButtonGroup = ({
       const indexA = questStartData?.startQuestData?.data[
         questStartData?.startQuestData?.data.length - 1
       ].selected?.findIndex((item) => item.question === a.label);
+
       const indexB = questStartData?.startQuestData?.data[
         questStartData?.startQuestData?.data.length - 1
       ].selected?.findIndex((item) => item.question === b.label);
-      return indexA - indexB;
+
+      return indexA !== -1 && indexB !== -1 ? indexA - indexB : 0;
     });
 
     setRankedAnswers(sortedAnswerSelection);
@@ -174,8 +176,6 @@ const ButtonGroup = ({
     questStartData?.startQuestData && questStartData?.startQuestData.data.length,
     questStartData.usersChangeTheirAns,
   );
-
-  console.log('first', questStartData.Question, startTest, questStartData.usersAddTheirAns);
 
   if (persistedUserInfo?.role === 'guest') {
     if (location.pathname.includes('/p/') || location.pathname === '/quest/isfullscreen') {
