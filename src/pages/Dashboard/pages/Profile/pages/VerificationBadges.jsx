@@ -124,7 +124,7 @@ const VerificationBadges = () => {
     {
       image: '/assets/profile/Instagram-2x.png',
       title: 'Instagram',
-      ButtonColor: 'blue',
+      ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
       link: '/auth/instagram',
