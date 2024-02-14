@@ -41,9 +41,10 @@ const Profile = () => {
       <Topbar />
       <div className="h-screen overflow-y-scroll bg-[#F3F3F3] dark:bg-[#242424]">
         <div className="laptop::mt-12 mr-5 mt-5 flex justify-end items-center gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[109px]">
+          
           <div
             style={{
-              background: persistedUserInfo?.isGuestMode
+              background: persistedUserInfo?.role==="guest"
                 ? 'url(/assets/svgs/dashboard/guestBadge.svg)'
                 : 'url(/assets/svgs/dashboard/MeBadge.svg)',
               backgroundRepeat: 'no-repeat',
