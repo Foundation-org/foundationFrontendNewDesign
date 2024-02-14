@@ -216,7 +216,7 @@ const StartTest = ({
                     ref={listContainerRef}
                     className={`${
                       isFullScreen === undefined
-                        ? 'quest-scrollbar max-h-[187px] md:max-h-[366px] min-h-fit overflow-auto mr-[2px] tablet:mr-1'
+                        ? 'quest-scrollbar max-h-[187px] md:max-h-[366px] min-h-fit mr-[2px] tablet:mr-1'
                         : null
                     }`}
                   >
