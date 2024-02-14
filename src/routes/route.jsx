@@ -49,7 +49,7 @@ export function Router() {
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/verifycode" element={<VerifyCode />} />
           <Route path="/auth0" element={<DashboardRedirect />} />
-          <Route path="/p/:id/" element={<SingleQuest />} />
+          <Route path="/p/:id" element={<SingleQuest />} />
         </Route>
 
         {/* private */}
