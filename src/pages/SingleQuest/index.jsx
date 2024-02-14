@@ -84,14 +84,14 @@ const SingleQuest = () => {
     await createGuest();
     await handleUserInfo();
 
-    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-2)[0]);
+    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
 
     setSingleQuestResp(getQuest.data.data[0]);
   };
 
   const questByUniqueShareLink = async () => {
     await handleUserInfo();
-    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-2)[0]);
+    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
 
     setSingleQuestResp(getQuest.data.data[0]);
   };
