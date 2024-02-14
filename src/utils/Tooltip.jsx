@@ -12,9 +12,9 @@ export const Tooltip = ({ optionStatus }) => {
       {tooltipStatus?.name === 'Rejected' && (
         <div
           className={`absolute w-32 sm:w-[186px] md:w-52 xl:w-48 ${
-            tooltipStatus?.duplication ? '-top-[31px]' : '-top-[55px]'
+            tooltipStatus?.duplication ? '-top-[31px]' : '-top-[38px]'
           } left-0 -translate-x-1/2 transform tablet:-left-[12px] laptop:left-1/2 ${
-            tooltipStatus?.duplication ? 'tablet:-top-[100px]' : 'tablet:-top-[127px]'
+            tooltipStatus?.duplication ? 'tablet:-top-[100px]' : 'tablet:-top-[116px]'
           }`}
         >
           <div className="relative mx-2 flex flex-col items-end text-center">
