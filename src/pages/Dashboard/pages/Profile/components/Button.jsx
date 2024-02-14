@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-const Button = ({ children, type = 'button', color, onClick }) => {
+const Button = ({ children, type = 'button', color, onClick,disabled }) => {
   const buttonClasses = classNames(
     'w-[19.9vw] h-[5.8vw] rounded-[1.31vw] text-[1.73vw] font-semibold leading-normal tablet:mr-[18.5px]',
     {
@@ -15,7 +15,7 @@ const Button = ({ children, type = 'button', color, onClick }) => {
   );
 
   return (
-    <button type={type} className={buttonClasses} onClick={onClick}>
+    <button type={type} className={buttonClasses} onClick={onClick} disabled={disabled} >
       {children}
     </button>
   );
