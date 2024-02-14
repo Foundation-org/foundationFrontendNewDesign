@@ -268,6 +268,7 @@ const SidebarRight = () => {
               </div>
               <div
                 onClick={() => {
+                  localStorage.clear();
                   navigate('/signup');
                 }}
               >

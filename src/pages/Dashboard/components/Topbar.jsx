@@ -211,6 +211,7 @@ const Topbar = () => {
         {localStorage.getItem('isGuestMode') ? (
           <div
             onClick={() => {
+              localStorage.clear();
               navigate('/signup');
             }}
           >
