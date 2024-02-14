@@ -67,10 +67,7 @@ const YesNo = () => {
   const handleTab = (index) => {
     if (hollow) {
       document.getElementById('submitButton').focus();
-      document.getElementById(`question`).focus();
-    } else {
-      document.getElementById('submitButton2').focus();
-    }
+    } 
   };
 
   const handleOptionChange = (option) => {
