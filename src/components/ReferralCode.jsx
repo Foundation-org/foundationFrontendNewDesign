@@ -77,7 +77,7 @@ const ReferralCode = ({
     onSuccess: (resp) => {
       setIsLoading(true);
       toast.success('Referral code verified');
-      // handleClose();
+      handleClose();
       socialAccount.isSocial ? handleSocialSignup() : handleSignup();
     },
     onError: (err) => {
