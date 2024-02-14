@@ -244,7 +244,7 @@ const SingleAnswerRankedChoice = (props) => {
       </div>{' '}
       {props.btnText !== 'Results' ? (
         <div
-          className="flex w-[42px] min-w-[42px] items-center bg-white pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"
+          className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"
           onClick={handleContendChange}
         >
           {props.deleteable ? (

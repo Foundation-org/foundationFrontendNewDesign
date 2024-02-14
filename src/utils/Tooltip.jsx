@@ -8,7 +8,7 @@ export const Tooltip = ({ optionStatus }) => {
   }, [optionStatus]);
 
   return (
-    <div>
+    <>
       {tooltipStatus?.name === 'Rejected' && (
         <div
           className={`absolute w-32 sm:w-[186px] md:w-52 xl:w-48 ${
@@ -102,7 +102,7 @@ export const Tooltip = ({ optionStatus }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 // FEDEDE
