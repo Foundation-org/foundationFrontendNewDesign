@@ -44,7 +44,7 @@ const Profile = () => {
           
           <div
             style={{
-              background: persistedUserInfo?.role==="guest"
+              background: localStorage.getItem('isGuestMode')
                 ? 'url(/assets/svgs/dashboard/guestBadge.svg)'
                 : 'url(/assets/svgs/dashboard/MeBadge.svg)',
               backgroundRepeat: 'no-repeat',
