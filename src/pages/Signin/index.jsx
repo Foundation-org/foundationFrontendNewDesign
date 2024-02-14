@@ -95,7 +95,11 @@ export default function Signin() {
 
       // console.log(resp);
     } catch (e) {
-      toast.error(e.response.data.message.split(':')[1]);
+      if (e.response.data === 'Wrong Password') {
+        toast.error('Your typed password is incorrect.');
+      } else {
+        toast.error(e.response.data.message.split(':')[1]);
+      }
     } finally {
       setIsLoading(false);
     }
