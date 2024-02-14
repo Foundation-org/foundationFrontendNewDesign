@@ -149,13 +149,13 @@ const RankChoice = () => {
   };
 
   const handleAddOption = () => {
-    if (optionWaiting) return;
+    // if (optionWaiting) return;
     const optionsCount = typedValues.length;
     dispatch(createQuestAction.addNewOption({ optionsCount }));
   };
 
   const handleChange = (index, value) => {
-    if (optionWaiting) return;
+    // if (optionWaiting) return;
 
     setTypedValues((prevValues) => {
       const newTypedValues = [...prevValues];

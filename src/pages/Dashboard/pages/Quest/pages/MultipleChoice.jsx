@@ -203,7 +203,7 @@ const MultipleChoice = () => {
   };
 
   const handleAddOption = () => {
-    if (optionWaiting) return;
+    // if (optionWaiting) return;
     const optionsCount = typedValues.length;
     dispatch(createQuestAction.addNewOption({ optionsCount }));
     // setOptionsCount((prevCount) => prevCount + 1);
@@ -224,7 +224,7 @@ const MultipleChoice = () => {
   };
 
   const handleChange = (index, value) => {
-    if (optionWaiting) return;
+    // if (optionWaiting) return;
 
     setTypedValues((prevValues) => {
       const newTypedValues = [...prevValues];
