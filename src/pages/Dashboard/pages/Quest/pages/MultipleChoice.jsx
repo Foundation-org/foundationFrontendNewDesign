@@ -55,16 +55,17 @@ const MultipleChoice = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        setQuestion('');
-        setMultipleOption(false);
-        setAddOption(false);
-        setChangedOption('');
-        setChangeState(false);
-        toast.success('Successfully Created');
         setTimeout(() => {
-          setLoading(false);
           navigate('/dashboard');
-        }, 2000);
+          toast.success('Successfully Created');
+          setLoading(false);
+          setQuestion('');
+          setMultipleOption(false);
+          setAddOption(false);
+          setChangedOption('');
+          setChangeState(false);
+          dispatch(createQuestAction.resetCreateQuest());
+        }, 500);
       }
 
       queryClient.invalidateQueries('FeedData');
@@ -129,7 +130,6 @@ const MultipleChoice = () => {
     }
     if (!checkHollow()) {
       createQuest(params);
-      dispatch(createQuestAction.resetCreateQuest());
     }
   };
 
@@ -350,7 +350,7 @@ const MultipleChoice = () => {
         document.getElementById(`input-${index}`).focus();
       }
     }
-    
+
   };
 
   useEffect(() => {

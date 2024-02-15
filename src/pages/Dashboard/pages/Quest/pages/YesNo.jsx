@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation ,useQueryClient} from '@tanstack/react-query';
 import { Tooltip } from '../../../../../utils/Tooltip';
 import { updateQuestion, checkQuestion } from '../../../../../features/createQuest/createQuestSlice';
 import YesNoOptions from '../components/YesNoOptions';
@@ -20,6 +20,7 @@ const YesNo = () => {
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
+  const queryClient = useQueryClient();
   const [selectedOption, setSelectedOption] = useState(null);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
@@ -43,15 +44,17 @@ const YesNo = () => {
     mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
+        setTimeout(() => {
+        navigate('/dashboard');
+        toast.success('Successfully Created');
+        setLoading(false);
         setQuestion('');
         setChangedOption('');
         setChangeState(false);
-        toast.success('Successfully Created');
-        setTimeout(() => {
-          setLoading(false);
-          navigate('/dashboard');
-        }, 2000);
+        dispatch(createQuestAction.resetCreateQuest());
+        }, 500);
       }
+      queryClient.invalidateQueries('FeedData');
     },
     onError: (err) => {
       if (err.response) {
@@ -107,7 +110,6 @@ const YesNo = () => {
 
     if (!checkHollow()) {
       createQuest(params);
-      dispatch(createQuestAction.resetCreateQuest());
     }
   };
 
