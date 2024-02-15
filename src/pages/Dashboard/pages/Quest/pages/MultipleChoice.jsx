@@ -337,10 +337,11 @@ const MultipleChoice = () => {
   }, [question, changedOption, changeState, addOption, optionsCount, typedValues, multipleOption]);
 
   const handleTab = (index, key) => {
-    if (index === typedValues.length) {
-      document.getElementById('submitButton').focus();
 
+    if (index === typedValues.length) {
+      document.getElementById(`input-${index}`).blur();
     }
+
     else{
       
       if (key === 'Enter') {

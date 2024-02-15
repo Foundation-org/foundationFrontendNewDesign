@@ -109,10 +109,11 @@ const AgreeDisagree = () => {
     }
   };
 
-  const handleTab = (index) => {
-    if (hollow) {
-      document.getElementById('submitButton').focus();
-    } 
+  const handleTab = () => {
+    const settingElement = document.getElementById('question');
+    if (settingElement) {
+      settingElement.blur();
+    }
   };
 
 

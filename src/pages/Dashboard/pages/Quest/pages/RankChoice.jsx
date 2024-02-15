@@ -273,18 +273,14 @@ const RankChoice = () => {
 
   const handleTab = (index, key) => {
     if (index === typedValues.length) {
-      document.getElementById('submitButton').focus();
-
-    }
-    else{
-      
+      document.getElementById(`input-${index}`).blur();
+    } else {
       if (key === 'Enter') {
         document.getElementById(`input-${index + 1}`).focus();
       } else {
         document.getElementById(`input-${index}`).focus();
       }
     }
-    
   };
 
   useEffect(() => {
