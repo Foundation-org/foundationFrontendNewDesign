@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaSpinner } from 'react-icons/fa';
 import { addUser } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 const ReferralCode = ({
   handleClose,
@@ -27,6 +28,7 @@ const ReferralCode = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [refLoading,setRefLoading]=useState(false);
   const handleInputChange = (e) => {
     setReferralCode(e.target.value);
   };
@@ -63,32 +65,31 @@ const ReferralCode = ({
   const handleSocialSignup = async () => {
     try {
       const res = await api.post(`/user/signUpUser/social`, socialAccount.data);
-      // setIsLoading(true);
       if (res.status === 200) {
         localStorage.setItem('uuid', res.data.uuid);
-        // toast.success('A verification email has been sent to your email address. Please check your inbox.');
         dispatch(addUser(res.data));
         navigate('/dashboard');
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
     } finally {
-      setIsLoading(false);
+      setRefLoading(false);
     }
   };
 
   const { mutateAsync: handleReferral } = useMutation({
     mutationFn: referral,
     onSuccess: (resp) => {
-      // setIsLoading(true);
       setIsLoadingSocial(false);
+      setIsLoading(false);
       toast.success('Referral code verified');
+      setRefLoading(false);
       handleClose();
       socialAccount.isSocial ? handleSocialSignup() : handleSignup();
     },
     onError: (err) => {
       console.log(err);
-      setIsLoadingSocial(false);
+      setRefLoading(false);
       toast.error('Referral code is not valid.');
     },
   });
@@ -145,11 +146,12 @@ const ReferralCode = ({
           <Button
             variant="submit"
             onClick={() => {
+              setRefLoading(true);
               const data = { code: referralCode };
               handleReferral(data);
             }}
           >
-            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Continue'}
+            {refLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Continue'}
           </Button>
         </div>
       </div>
