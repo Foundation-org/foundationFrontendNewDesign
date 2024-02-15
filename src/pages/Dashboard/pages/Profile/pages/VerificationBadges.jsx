@@ -9,6 +9,8 @@ import api from '../../../../../services/api/Axios';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login';
+import PopUp from '../../../../../components/ui/PopUp';
+import VerificationPopups from '../components/VerificationPopups';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -17,6 +19,8 @@ const VerificationBadges = () => {
   const [searchParams] = useSearchParams();
   const [fetchUser, setFetchUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isPopup, setIsPopup] = useState(false);
+  const [seletedBadge, setSelectedBadge] = useState('');
 
   const handleUserInfo = async (id) => {
     try {
@@ -92,6 +96,7 @@ const VerificationBadges = () => {
       disabled: true,
     },
   ];
+
   const socials = [
     {
       image: '/assets/profile/LinkedIn-2x.png',
@@ -294,7 +299,9 @@ const VerificationBadges = () => {
   const dataRef = useRef({ data: 'Initial Data' });
 
   const handleClickContactBadgeEmail = (type) => {
-    console.log('testing.....');
+    setIsPopup(true);
+    setSelectedBadge(type);
+    // console.log('testing.....');
     dataRef.current.data = type;
     // Trigger a click event on the first element
     contactBadgeEmail.current.click();
@@ -302,6 +309,7 @@ const VerificationBadges = () => {
     // Force a re-render by updating a dummy state
     setDummyState({});
   };
+
   // Dummy state to force re-render
   const [, setDummyState] = useState();
 
@@ -326,7 +334,33 @@ const VerificationBadges = () => {
   return (
     <div className="pb-12">
       {isLoading && <Loader />}
-      <div className="hidden">
+      {isPopup &&
+        (seletedBadge === 'personal' ? (
+          <VerificationPopups
+            isPopup={isPopup}
+            setIsPopup={setIsPopup}
+            title="Personal Email"
+            logo="/assets/profile/Personal-Email-2xa.png"
+            placeholder="Personal email here"
+          />
+        ) : seletedBadge === 'work' ? (
+          <VerificationPopups
+            isPopup={isPopup}
+            setIsPopup={setIsPopup}
+            title="Work Email"
+            logo="/assets/profile/Work-Email-2xa.png"
+            placeholder="Work email here"
+          />
+        ) : seletedBadge === 'education' ? (
+          <VerificationPopups
+            isPopup={isPopup}
+            setIsPopup={setIsPopup}
+            title="Education Email"
+            logo="/assets/profile/Education-Email-2xa.png"
+            placeholder="Educational Email here"
+          />
+        ) : null)}
+      {/* <div className="hidden">
         <LoginSocialGoogle
           // isOnlyGetToken
           client_id={import.meta.env.VITE_GG_APP_ID}
@@ -361,7 +395,7 @@ const VerificationBadges = () => {
             </Button>
           </div>
         </LoginSocialGoogle>
-      </div>
+      </div> */}
       <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
         My Verification Badges
       </h1>
