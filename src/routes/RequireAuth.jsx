@@ -1,19 +1,15 @@
-import { useLocation, Navigate, Outlet } from "react-router-dom";
-// import useAuth from "../hooks/useAuth";
+import { useSelector } from 'react-redux';
+import { useLocation, Navigate, Outlet } from 'react-router-dom';
 
-const RequireAuth = ({ auth }) => {
-    // const persistedUser = auth;
-    const location = useLocation();
+const RequireAuth = ({ allowedRoles }) => {
+  const location = useLocation();
+  const persistedUser = useSelector((state) => state.auth.user);
 
-    return (
-        auth?.isGuestMode
-            ? <Navigate to={location.pathname} state={{ from: location }} replace />
-            : <Outlet />
-            // : auth?.user
+  console.log('Logged in as', persistedUser?.role, allowedRoles.includes(persistedUser?.role));
 
-                // ? <Navigate to="/unauthorized" state={{ from: location }} replace />
-                // : <Navigate to="/login" state={{ from: location }} replace />
-    );
-}
+  const isRoleAllowed = allowedRoles.includes(persistedUser?.role);
+
+  return isRoleAllowed ? <Outlet /> : <Navigate to="/" state={{ from: location }} replace />;
+};
 
 export default RequireAuth;

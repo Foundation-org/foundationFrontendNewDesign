@@ -203,7 +203,7 @@ const MultipleChoice = () => {
   };
 
   const handleAddOption = () => {
-    if (optionWaiting) return;
+    // if (optionWaiting) return;
     const optionsCount = typedValues.length;
     dispatch(createQuestAction.addNewOption({ optionsCount }));
     // setOptionsCount((prevCount) => prevCount + 1);
@@ -224,7 +224,7 @@ const MultipleChoice = () => {
   };
 
   const handleChange = (index, value) => {
-    if (optionWaiting) return;
+    // if (optionWaiting) return;
 
     setTypedValues((prevValues) => {
       const newTypedValues = [...prevValues];
@@ -337,20 +337,20 @@ const MultipleChoice = () => {
   }, [question, changedOption, changeState, addOption, optionsCount, typedValues, multipleOption]);
 
   const handleTab = (index, key) => {
+
     if (index === typedValues.length) {
-      if (hollow) {
-        document.getElementById('submitButton').focus();
-        document.getElementById(`input-${index}`).focus();
-      } else {
-        document.getElementById('submitButton2').focus();
-      }
-    } else {
+      document.getElementById(`input-${index}`).blur();
+    }
+
+    else{
+      
       if (key === 'Enter') {
         document.getElementById(`input-${index + 1}`).focus();
       } else {
         document.getElementById(`input-${index}`).focus();
       }
     }
+    
   };
 
   useEffect(() => {

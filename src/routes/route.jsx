@@ -1,8 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
-// import AppRoutes from './AppRoutes';
-import PrivateRoutes from './PrivateRoutes';
+import RequireAuth from './RequireAuth';
 
 // pages
 import Signin from '../pages/Signin';
@@ -21,60 +19,65 @@ import Quest from '../pages/Dashboard/pages/Quest/Quest';
 import Bookmark from '../pages/Dashboard/pages/Bookmark';
 import DashboardRedirect from '../pages/DashboardRedirect';
 import VerifyCode from '../pages/Signup/VerifyCode';
-import RequireAuth from './RequireAuth';
 import TermOfService from '../pages/Signup/pages/TermOfService';
 import PrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 import Faq from '../pages/Dashboard/pages/CustomerSupport/Faq';
 import ContactUs from '../pages/Dashboard/pages/CustomerSupport/ContactUs';
 import CustomerSupport from '../pages/Dashboard/pages/CustomerSupport';
+import { useSelector } from 'react-redux';
+import GuestRedirect from '../pages/DashboardRedirect/GuestRedirect';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
-  let auth = { persistedUser };
-  // console.log('🚀 ~ Router ~ persistedUser:', persistedUser);
-  // console.log("🚀 ~ Router ~ persistedUser:", persistedUser)
-  // console.log("🚀 ~ Router ~ auth:", auth)
-
-  // console.log('usr', persistedUser);
+  const ROLES = {
+    User: 'user',
+    Guest: 'guest',
+  };
 
   return (
     <>
-      <Routes>
-        {/* public */}
-        <Route element={<RequireAuth auth={auth} />}>
-          <Route path="/" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/term-of-service" element={<TermOfService />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/verify-email" element={<VerifyEmail />} />
-          <Route path="/verifycode" element={<VerifyCode />} />
-          <Route path="/auth0" element={<DashboardRedirect />} />
-          <Route path="/p/:id" element={<SingleQuest />} />
-        </Route>
-
-        {/* private */}
-        <Route element={<RequireAuth auth={auth} />}>
-          <Route path="/dashboard/" element={<Dashboard />}>
-            <Route path="" element={<QuestStartSection />} />
-            <Route path="quest" element={<Quest />} />
-            <Route path="bookmark" element={<Bookmark />} />
-            <Route path="faq/" element={<CustomerSupport />}>
-              <Route path="" element={<Faq />} />
-              <Route path="contact-us" element={<ContactUs />} />
+      {!persistedUser ? (
+        <>
+          {/* Public */}
+          <Routes>
+            <Route path="/" element={<Signin />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/term-of-service" element={<TermOfService />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/verifycode" element={<VerifyCode />} />
+            <Route path="/auth0" element={<DashboardRedirect />} />
+            <Route path="/p/:id" element={<GuestRedirect />} />
+            <Route path="*" element={persistedUser ? <Navigate to="/dashboard" /> : <Navigate to="/" />} />
+          </Routes>
+        </>
+      ) : (
+        <>
+          {/* Protected */}
+          <Routes>
+            <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
+              <Route path="/dashboard/" element={<Dashboard />}>
+                <Route path="" element={<QuestStartSection />} />
+                <Route path="quest" element={<Quest />} />
+                <Route path="bookmark" element={<Bookmark />} />
+                <Route path="faq/" element={<CustomerSupport />}>
+                  <Route path="" element={<Faq />} />
+                  <Route path="contact-us" element={<ContactUs />} />
+                </Route>
+              </Route>
+              <Route path="/profile/" element={<Profile />}>
+                <Route path="" element={<Contributions />} />
+                <Route path="verification-badges" element={<VerificationBadges />} />
+                <Route path="ledger" element={<BasicTable />} />
+                <Route path="change-password" element={<ChangePassword />} />
+              </Route>
+              <Route path="/quest/:isFullScreen" element={<Guests />} />
+              <Route path="/p/:id" element={<SingleQuest />} />
+              <Route path="*" element={persistedUser ? <Navigate to="/dashboard" /> : <Navigate to="/" />} />
             </Route>
-          </Route>
-          <Route path="/profile/" element={<Profile />}>
-            <Route path="" element={<Contributions />} />
-            <Route path="verification-badges" element={<VerificationBadges />} />
-            <Route path="ledger" element={<BasicTable />} />
-            <Route path="change-password" element={<ChangePassword />} />
-          </Route>
-          <Route path="/quest/:isFullScreen" element={<Guests />} />
-        </Route>
-
-        {/* catch all */}
-        {/* <Route path="*" element={auth.token ? <Navigate to="/dashboard" /> : <Navigate to="/" />} /> */}
-      </Routes>
+          </Routes>
+        </>
+      )}
     </>
   );
 }

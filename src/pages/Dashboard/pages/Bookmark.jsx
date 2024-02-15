@@ -22,6 +22,7 @@ const Bookmark = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const filterStates = useSelector(filtersActions.getFilters);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const [itemsWithCross, setItemsWithCross] = useState([]);
   const pageLimit = 5;
   const isBookmarked = true;
   const [pagination, setPagination] = useState({
@@ -230,7 +231,12 @@ const Bookmark = () => {
 
   return (
     <div className="flex w-full flex-col bg-white dark:bg-black laptop:flex-row">
-      <SidebarLeft columns={columns} setColumns={setColumns} />
+      <SidebarLeft
+        columns={columns}
+        setColumns={setColumns}
+        itemsWithCross={itemsWithCross}
+        setItemsWithCross={setItemsWithCross}
+      />
       <div className="no-scrollbar flex h-full w-full flex-col overflow-y-auto bg-[#F3F3F3] px-[1.13rem] pt-[0.63rem] pb-8 dark:bg-[#242424] tablet:min-h-[calc(100vh-92px)] tablet:pt-[0.94rem] tablet:pb-12">
         <InfiniteScroll
           dataLength={allData?.length}

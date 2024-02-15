@@ -29,6 +29,20 @@ const Topbar = () => {
     }
   };
 
+  const handleGuestLogout = async () => {
+    try {
+      const res = await api.post('user/logout');
+      if (res.status === 200) {
+        dispatch(filterActions.resetFilters());
+        localStorage.clear();
+        navigate('/signup');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message.split(':')[1]);
+    }
+  };
+
   return (
     <div
       className={`${
@@ -126,11 +140,7 @@ const Topbar = () => {
             />
           </Link>
           {localStorage.getItem('isGuestMode') ? (
-            <div
-              onClick={() => {
-                navigate('/signup');
-              }}
-            >
+            <div onClick={handleGuestLogout}>
               <img
                 src="/assets/svgs/dashboard/signupIcon.png"
                 alt="signup Icon"
@@ -209,12 +219,7 @@ const Topbar = () => {
           <img src="/assets/navbar/faqlogo.png" alt="arrow-right" className="w-11 h-11" />
         </Link>
         {localStorage.getItem('isGuestMode') ? (
-          <div
-            onClick={() => {
-              localStorage.clear();
-              navigate('/signup');
-            }}
-          >
+          <div onClick={handleGuestLogout}>
             <img src="/assets/svgs/dashboard/signupIcon.png" alt="signup Icon" />
           </div>
         ) : (
