@@ -12,7 +12,7 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder }) =
   return (
     <div>
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-        <div className="pt-[30px] pb-5">
+        <div className="pt-2 pb-[15px] tablet:pt-[30px] tablet:pb-5">
           <LoginSocialGoogle
             // isOnlyGetToken
             client_id={import.meta.env.VITE_GG_APP_ID}
@@ -39,15 +39,20 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder }) =
               with Google
             </Button>
           </LoginSocialGoogle>
-          <div className="px-[80px]">
-            <h1 className="text-[#707175] text-[25px] font-medium leading-[30px] text-center my-[15px]">-OR-</h1>
-            <label htmlFor="email" className="text-[#7C7C7C] text-[20px] leading-[24.2px] font-medium">
+          <div className="hidden px-5 tablet:px-[60px] laptop:px-[80px]">
+            <h1 className="text-[#707175] text-[10px] tablet:text-[25px] font-medium leading-[12.1px] tablet:leading-[30px] text-center my-2 tablet:my-[15px]">
+              -OR-
+            </h1>
+            <p
+              htmlFor="email"
+              className="text-[#7C7C7C] text-[9.28px] tablet:text-[20px] leading-[11.23px] tablet:leading-[24.2px] font-medium"
+            >
               {title}
-            </label>
+            </p>
             <input
               type="email"
               placeholder={placeholder}
-              className="w-full text-[18px] leading-[21px] font-medium text-[#B6B4B4] border-[3px] border-[#DEE6F7] bg-[#FBFBFB] rounded-[15px] py-[18px] px-[16px] focus:outline-none mt-[15px] mb-5"
+              className="w-full text-[9.28px] tablet:text-[18px] leading-[11.23px] tablet:leading-[21px] font-medium text-[#B6B4B4] border tablet:border-[3px] border-[#DEE6F7] bg-[#FBFBFB] rounded-[8.62px] tablet:rounded-[15px] py-2 tablet:py-[18px] px-[16px] focus:outline-none mt-1 tablet:mt-[15px] mb-[10px] tablet:mb-5"
             />
             <div className="flex justify-end">
               <Button variant="submit">Verify Email</Button>
