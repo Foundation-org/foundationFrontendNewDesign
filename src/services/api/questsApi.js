@@ -158,11 +158,9 @@ export const checkAnswerExistCreateQuest = ({ answersArray, answer, index, start
 };
 
 export const checkAnswerExist = ({ answersArray, answer, index, startQuest }) => {
-  const lastIndex = answersArray.length - 1;
-
   return answersArray.some(
     (item, i) =>
-      i !== lastIndex &&
+      i !== index &&
       ((startQuest && item.label.toLowerCase() === answer.toLowerCase()) ||
         (!startQuest && item?.question?.toLowerCase() === answer.toLowerCase())),
   );
