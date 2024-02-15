@@ -23,6 +23,7 @@ const ReferralCode = ({
   handlePopupOpen,
   setErrorMessage,
   socialAccount,
+  setIsLoadingSocial,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -79,13 +80,15 @@ const ReferralCode = ({
   const { mutateAsync: handleReferral } = useMutation({
     mutationFn: referral,
     onSuccess: (resp) => {
-      setIsLoading(true);
+      // setIsLoading(true);
+      setIsLoadingSocial(false);
       toast.success('Referral code verified');
       handleClose();
       socialAccount.isSocial ? handleSocialSignup() : handleSignup();
     },
     onError: (err) => {
       console.log(err);
+      setIsLoadingSocial(false);
       toast.error('Referral code is not valid.');
     },
   });
