@@ -19,6 +19,7 @@ import PopUp from '../../components/ui/PopUp';
 import { Button as UiButton } from '../../components/ui/Button';
 import { LoginSocialGoogle } from 'reactjs-social-login';
 import Loader from './components/Loader';
+import SocialLoginsDummy from './components/SocialLoginsDummy';
 
 const REDIRECT_URI = window.location.href;
 
@@ -205,19 +206,23 @@ export default function Signup() {
       >
         <img src="/assets/svgs/logo.svg" alt="logo" className="h-[45px] w-[58px]" />
       </div>
-
       <div className="hidden h-screen w-fit items-center px-[9.15vw] lg:flex">
         <img src="/assets/svgs/logo.svg" alt="logo" className="h-[20vh] w-[23vw]" />
       </div>
+
       <div className="flex h-screen w-full flex-col items-center bg-white md:justify-center lg:rounded-bl-[65px] lg:rounded-tl-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle">Create Account</Typography>
-          <SocialLogins
-            setProvider={setProvider}
-            setProfile={setProfile}
-            handleSignUpSocial={handleSignUpSocial}
-            setIsLoadingSocial={setIsLoadingSocial}
-          />
+          {isPopup ? (
+            <SocialLoginsDummy />
+          ) : (
+            <SocialLogins
+              setProvider={setProvider}
+              setProfile={setProfile}
+              handleSignUpSocial={handleSignUpSocial}
+              setIsLoadingSocial={setIsLoadingSocial}
+            />
+          )}
           <Form
             password={password}
             reTypePassword={reTypePassword}
@@ -264,7 +269,6 @@ export default function Signup() {
             disabled={isLoading === true ? true : false}
           >
             Create Account
-            {/* {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create Account'} */}
           </Button>
           <div className="mt-[10px] flex gap-3 tablet:mt-[23px]">
             <Typography variant="textBase" className="text-gray-100 dark:text-gray ">
