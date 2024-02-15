@@ -301,35 +301,35 @@ const VerificationBadges = () => {
   const handleClickContactBadgeEmail = (type) => {
     setIsPopup(true);
     setSelectedBadge(type);
-    // console.log('testing.....');
-    dataRef.current.data = type;
-    // Trigger a click event on the first element
-    contactBadgeEmail.current.click();
+    // // console.log('testing.....');
+    // dataRef.current.data = type;
+    // // Trigger a click event on the first element
+    // contactBadgeEmail.current.click();
 
-    // Force a re-render by updating a dummy state
-    setDummyState({});
+    // // Force a re-render by updating a dummy state
+    // setDummyState({});
   };
 
-  // Dummy state to force re-render
-  const [, setDummyState] = useState();
+  // // Dummy state to force re-render
+  // const [, setDummyState] = useState();
 
-  // Handle Add Contact Badge
-  const handleAddContactBadge = async (provider, data) => {
-    try {
-      data['provider'] = provider;
-      data['type'] = dataRef.current.data;
-      data['uuid'] = fetchUser.uuid || localStorage.getItem('uuid');
-      const addBadge = await api.post(`/addBadge/contact`, {
-        ...data,
-      });
-      if (addBadge.status === 200) {
-        toast.success('Badge Added Successfully!');
-        handleUserInfo();
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-    }
-  };
+  // // Handle Add Contact Badge
+  // const handleAddContactBadge = async (provider, data) => {
+  //   try {
+  //     data['provider'] = provider;
+  //     data['type'] = dataRef.current.data;
+  //     data['uuid'] = fetchUser.uuid || localStorage.getItem('uuid');
+  //     const addBadge = await api.post(`/addBadge/contact`, {
+  //       ...data,
+  //     });
+  //     if (addBadge.status === 200) {
+  //       toast.success('Badge Added Successfully!');
+  //       handleUserInfo();
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.response.data.message.split(':')[1]);
+  //   }
+  // };
 
   return (
     <div className="pb-12">
@@ -341,7 +341,9 @@ const VerificationBadges = () => {
             setIsPopup={setIsPopup}
             title="Personal Email"
             logo="/assets/profile/Personal-Email-2xa.png"
-            placeholder="Personal Email here"
+            placeholder="Personal email here"
+            selectedBadge={seletedBadge}
+            handleUserInfo={handleUserInfo}
           />
         ) : seletedBadge === 'work' ? (
           <VerificationPopups
@@ -349,7 +351,10 @@ const VerificationBadges = () => {
             setIsPopup={setIsPopup}
             title="Work Email"
             logo="/assets/profile/Work-Email-2xa.png"
-            placeholder="Work Email here"
+            placeholder="Work email here"
+            selectedBadge={seletedBadge}
+            handleUserInfo={handleUserInfo}
+
           />
         ) : seletedBadge === 'education' ? (
           <VerificationPopups
@@ -358,6 +363,8 @@ const VerificationBadges = () => {
             title="Education Email"
             logo="/assets/profile/Education-Email-2xa.png"
             placeholder="Educational Email here"
+            selectedBadge={seletedBadge}
+            handleUserInfo={handleUserInfo}
           />
         ) : null)}
       {/* <div className="hidden">
