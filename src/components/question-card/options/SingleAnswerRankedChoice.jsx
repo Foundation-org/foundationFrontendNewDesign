@@ -133,8 +133,9 @@ const SingleAnswerRankedChoice = (props) => {
   };
 
   const handleTab = () => {
-    document.getElementById(`submit-${props.questStartData._id}`).focus();
+    document.getElementById(`addedOption-${answer}`).blur();
   };
+
 
   return (
     <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
@@ -203,6 +204,7 @@ const SingleAnswerRankedChoice = (props) => {
           >
             {props.editable ? (
               <input
+                id={`addedOption-${answer}`}
                 type="text"
                 className={`${
                   props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
@@ -210,7 +212,7 @@ const SingleAnswerRankedChoice = (props) => {
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
-                onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
+                onKeyDown={(e) => (e.key === 'Tab') || (e.key === 'Enter' && handleTab())}
               />
             ) : (
               <h1 className="pb-[5.6px] pr-2 pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">

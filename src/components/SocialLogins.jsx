@@ -30,6 +30,7 @@ const SocialLogins = ({
           isLogin ? handleSignInSocial(data) : handleSignUpSocial(data);
         }}
         onReject={(err) => {
+          setIsLoadingSocial(false);
           console.log(err);
         }}
         className="w-full"

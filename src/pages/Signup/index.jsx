@@ -18,6 +18,8 @@ import ReferralCode from '../../components/ReferralCode';
 import PopUp from '../../components/ui/PopUp';
 import { Button as UiButton } from '../../components/ui/Button';
 import { LoginSocialGoogle } from 'reactjs-social-login';
+import Loader from './components/Loader';
+import SocialLoginsDummy from './components/SocialLoginsDummy';
 
 const REDIRECT_URI = window.location.href;
 
@@ -35,8 +37,9 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState('');
   const [termConditionCheck, setTermConditionCheck] = useState(false);
-  const [isReferral, setIsReferral] = useState(false);
   const [referralCode, setReferralCode] = useState(null);
+  const [isReferral, setIsReferral] = useState(false);
+  const [isLoadingSocial, setIsLoadingSocial] = useState(false);
   const [isPopup, setIspopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [socialAccount, setSocialAccount] = useState({ isSocial: false, data: null });
@@ -85,6 +88,7 @@ export default function Signup() {
     if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
 
+    setIsLoadingSocial(true);
     handleReferralOpen();
 
     // setIsLoading(true);
@@ -193,6 +197,7 @@ export default function Signup() {
 
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
+      {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div
         className={`${
@@ -201,14 +206,23 @@ export default function Signup() {
       >
         <img src="/assets/svgs/logo.svg" alt="logo" className="h-[45px] w-[58px]" />
       </div>
-
       <div className="hidden h-screen w-fit items-center px-[9.15vw] lg:flex">
         <img src="/assets/svgs/logo.svg" alt="logo" className="h-[20vh] w-[23vw]" />
       </div>
+
       <div className="flex h-screen w-full flex-col items-center bg-white md:justify-center lg:rounded-bl-[65px] lg:rounded-tl-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle">Create Account</Typography>
-          <SocialLogins setProvider={setProvider} setProfile={setProfile} handleSignUpSocial={handleSignUpSocial} />
+          {isPopup ? (
+            <SocialLoginsDummy />
+          ) : (
+            <SocialLogins
+              setProvider={setProvider}
+              setProfile={setProfile}
+              handleSignUpSocial={handleSignUpSocial}
+              setIsLoadingSocial={setIsLoadingSocial}
+            />
+          )}
           <Form
             password={password}
             reTypePassword={reTypePassword}
@@ -255,7 +269,6 @@ export default function Signup() {
             disabled={isLoading === true ? true : false}
           >
             Create Account
-            {/* {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create Account'} */}
           </Button>
           <div className="mt-[10px] flex gap-3 tablet:mt-[23px]">
             <Typography variant="textBase" className="text-gray-100 dark:text-gray ">
@@ -289,20 +302,20 @@ export default function Signup() {
           setErrorMessage={setErrorMessage}
           handlePopupOpen={handlePopupOpen}
           socialAccount={socialAccount}
+          setIsLoadingSocial={setIsLoadingSocial}
         />
       </BasicModal>
 
       <PopUp open={isPopup} handleClose={handlePopupClose} logo={'/assets/popup/googlelogo.svg'} title={'Google Email'}>
         <div className="px-5 tablet:px-[60px] py-[14px] tablet:py-[25px]">
           <p className="text-[9px] tablet:text-[20px] text-black font-medium">{errorMessage}</p>
-
-          {
-            /* <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
+          {/* {
+           <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
               Continue
-            </UiButton> */
+            </UiButton> 
 
             console.log(errorMessage)
-          }
+          } */}
           {errorMessage.trim() === 'Email Already Exists' ? (
             <div className="w-full flex justify-end mt-[25px]">
               <UiButton

@@ -64,12 +64,10 @@ const YesNo = () => {
     },
   });
 
-  const handleTab = (index) => {
-    if (hollow) {
-      document.getElementById('submitButton').focus();
-      document.getElementById(`question`).focus();
-    } else {
-      document.getElementById('submitButton2').focus();
+  const handleTab = () => {
+    const settingElement = document.getElementById('question');
+    if (settingElement) {
+      settingElement.blur();
     }
   };
 
@@ -205,8 +203,8 @@ const YesNo = () => {
         <p className="my-1 tablet:mt-5 tablet:mb-[10px] text-center text-[8px] font-normal leading-normal text-[#85898C] dark:text-[#D8D8D8] tablet:text-[16px]">
           &#x200B;
         </p>
-        <div className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
-          <h5 className="text-center text-[10px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[25px]">
+        <div  className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
+          <h5 id="setting" className="text-center text-[10px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[25px]">
             Settings
           </h5>
           <ChangeChoiceOption

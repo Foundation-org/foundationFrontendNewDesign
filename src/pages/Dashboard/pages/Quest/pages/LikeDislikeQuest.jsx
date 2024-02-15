@@ -73,14 +73,13 @@ const LikeDislike = () => {
     setSelectedOption(option);
   };
 
-  const handleTab = (index) => {
-    if (hollow) {
-      document.getElementById('submitButton').focus();
-      document.getElementById(`question`).focus();
-    } else {
-      document.getElementById('submitButton2').focus();
+  const handleTab = () => {
+    const settingElement = document.getElementById('question');
+    if (settingElement) {
+      settingElement.blur();
     }
   };
+
 
   const handleSubmit = async () => {
     if (persistedUserInfo?.role === 'guest') {

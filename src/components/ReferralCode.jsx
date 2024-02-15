@@ -6,6 +6,8 @@ import { referral } from '../services/api/authentication';
 import api from '../services/api/Axios';
 import { useNavigate } from 'react-router-dom';
 import { FaSpinner } from 'react-icons/fa';
+import { addUser } from '../features/auth/authSlice';
+import { useDispatch } from 'react-redux';
 
 const ReferralCode = ({
   handleClose,
@@ -21,7 +23,9 @@ const ReferralCode = ({
   handlePopupOpen,
   setErrorMessage,
   socialAccount,
+  setIsLoadingSocial,
 }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     setReferralCode(e.target.value);
@@ -63,6 +67,7 @@ const ReferralCode = ({
       if (res.status === 200) {
         localStorage.setItem('uuid', res.data.uuid);
         // toast.success('A verification email has been sent to your email address. Please check your inbox.');
+        dispatch(addUser(res.data));
         navigate('/dashboard');
       }
     } catch (error) {
@@ -75,13 +80,15 @@ const ReferralCode = ({
   const { mutateAsync: handleReferral } = useMutation({
     mutationFn: referral,
     onSuccess: (resp) => {
-      setIsLoading(true);
+      // setIsLoading(true);
+      setIsLoadingSocial(false);
       toast.success('Referral code verified');
       handleClose();
       socialAccount.isSocial ? handleSocialSignup() : handleSignup();
     },
     onError: (err) => {
       console.log(err);
+      setIsLoadingSocial(false);
       toast.error('Referral code is not valid.');
     },
   });
@@ -132,7 +139,7 @@ const ReferralCode = ({
           placeholder="Enter referal code"
           value={referralCode}
           onChange={handleInputChange}
-          className="hide_number_input_arrows hide_number_input_arrows2 autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-white pr-8 text-[10px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none tablet:text-[22.9px] short:py-0 dark:border-white dark:bg-dark dark:focus:border-white"
+          className="hide_number_input_arrows hide_number_input_arrows2 autofill_text_color peer w-full rounded-[2px] border-b-[1.4px] border-[#C0C0C0] bg-transparent pr-8 text-[10px] transition-colors focus:border-b-[1.4px] focus:border-[#C0C0C0] focus:outline-none tablet:text-[22.9px] short:py-0 dark:border-white dark:bg-dark dark:focus:border-white"
         />
         <div className="mt-2 tablet:mt-[25px] flex justify-end w-full">
           <Button

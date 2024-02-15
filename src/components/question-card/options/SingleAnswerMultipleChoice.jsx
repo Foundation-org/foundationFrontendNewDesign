@@ -136,7 +136,7 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   const handleTab = () => {
-    document.getElementById(`submit-${props.questStartData._id}`).focus();
+    document.getElementById(`addedOption-${answer}`).blur();
   };
 
   return (
@@ -189,6 +189,7 @@ const SingleAnswerMultipleChoice = (props) => {
             />
             {props.editable ? (
               <input
+              id={`addedOption-${answer}`}
                 type="text"
                 className="w-full rounded-[4.73px] bg-white pl-[18px] pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-[#435059] outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[18px] tablet:text-[19px]"
                 value={answer}
