@@ -111,6 +111,9 @@ const QuestionCardWithToggle = (props) => {
         uuid: answer.uuid,
       })),
     );
+    if(questData===0){
+      setAddOptionField(0);
+    }
   }, [questStartData]);
 
   // const cardSize = useMemo(() => {
