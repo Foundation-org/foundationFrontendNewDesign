@@ -18,14 +18,14 @@ import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import SEO from '../../utils/SEO';
 
 const SingleQuest = () => {
-  let { isFullScreen } = useParams();
+  // let { isFullScreen } = useParams();
   const location = useLocation();
   const dispatch = useDispatch();
 
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const [startTest, setStartTest] = useState(null);
-  const [viewResult, setViewResult] = useState(null);
+  // const [startTest, setStartTest] = useState(null);
+  // const [viewResult, setViewResult] = useState(null);
   const [singleQuestResp, setSingleQuestResp] = useState(null);
   const [submitResponse, setSubmitResponse] = useState();
 
@@ -71,8 +71,8 @@ const SingleQuest = () => {
         if (!resp.data) {
           const res = await userInfoById(localStorage.getItem('uuid'));
           dispatch(addUser(res?.data));
-          if (res?.data?.requiredAction) {
-          }
+          // if (res?.data?.requiredAction) {
+          // }
         }
       }
     } catch (e) {
@@ -132,7 +132,7 @@ const SingleQuest = () => {
       <Topbar />
       <div className="flex h-[calc(100vh-90px)] bg-white dark:bg-[#242424]">
         <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
-          {singleQuestResp && (
+          {(singleQuestResp || submitResponse) && (
             <div className="px-[25px] tablet:px-[86px]">
               <QuestionCardWithToggle
                 questStartData={submitResponse ? submitResponse : singleQuestResp}

@@ -9,9 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../components/ui/Button';
 import { addUser } from '../../../features/auth/authSlice';
 import { createGuestMode, userInfo, userInfoById } from '../../../services/api/userAuth';
+import * as filterActions from '../../../features/sidebar/filtersSlice';
 
 const SidebarRight = () => {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   // const [response, setResponse] = useState();
   const [treasuryAmount, setTreasuryAmount] = useState(0);
@@ -121,7 +122,7 @@ const SidebarRight = () => {
       if (resp?.status === 200) {
         // Cookie Calling
         if (resp.data) {
-          dispath(addUser(resp?.data));
+          dispatch(addUser(resp?.data));
           // Set into local storage
           if (!localStorage.getItem('uuid')) {
             localStorage.setItem('uuid', resp.data.uuid);
@@ -131,7 +132,7 @@ const SidebarRight = () => {
         // LocalStorage Calling
         if (!resp.data) {
           const res = await userInfoById(localStorage.getItem('uuid'));
-          dispath(addUser(res?.data));
+          dispatch(addUser(res?.data));
           if (res?.data?.requiredAction) {
             setModalVisible(true);
           }
@@ -207,6 +208,20 @@ const SidebarRight = () => {
     }
   };
 
+  const handleGuestLogout = async () => {
+    try {
+      const res = await api.post('user/logout');
+      if (res.status === 200) {
+        dispatch(filterActions.resetFilters());
+        localStorage.clear();
+        navigate('/signup');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message.split(':')[1]);
+    }
+  };
+
   return (
     <>
       <div className="no-scrollbar hidden h-full pb-[10vh] min-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] dark:border-[#000] dark:bg-[#000] laptop:block">
@@ -266,12 +281,7 @@ const SidebarRight = () => {
               <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
                 <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
               </div>
-              <div
-                onClick={() => {
-                  localStorage.clear();
-                  navigate('/signup');
-                }}
-              >
+              <div onClick={handleGuestLogout}>
                 <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Create Account</Anchor>
               </div>
             </div>

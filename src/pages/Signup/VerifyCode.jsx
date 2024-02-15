@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { url } from '../../services/api/Axios';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { userInfo } from '../../services/api/userAuth';
+// import { useMutation } from '@tanstack/react-query';
+// import { userInfo, userInfoById } from '../../services/api/userAuth';
 import { addUser } from '../../features/auth/authSlice';
-import PopUp from '../../components/ui/PopUp';
+// import PopUp from '../../components/ui/PopUp';
 import { Button as UiButton } from '../../components/ui/Button';
 
 const VerifyCode = () => {
@@ -92,17 +92,56 @@ const VerifyCode = () => {
   //   },
   // });
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-    onSuccess: (res) => {
-      console.log('User info fetched:', res.data);
-      dispatch(addUser(res.data));
-    },
-    onError: (error) => {
-      console.error('Error fetching user info:', error);
-      localStorage.setItem('loggedIn', 'false');
-    },
-  });
+  // const { mutateAsync: getUserInfo } = useMutation({
+  //   mutationFn: userInfo,
+  //   onSuccess: (res) => {
+  //     console.log('User info fetched:', res.data);
+  //     dispatch(addUser(res.data));
+  //   },
+  //   onError: (error) => {
+  //     console.error('Error fetching user info:', error);
+  //     localStorage.setItem('loggedIn', 'false');
+  //   },
+  // });
+
+  // const { mutateAsync: getUserInfo } = useMutation({
+  //   mutationFn: userInfo,
+  // });
+
+  // const handleUserInfo = async () => {
+  //   try {
+  //     const resp = await getUserInfo();
+
+  //     if (resp?.status === 200) {
+  //       // Cookie Calling
+  //       if (resp.data) {
+  //         dispatch(addUser(resp?.data));
+  //         // Set into local storage
+  //         if (!localStorage.getItem('uuid')) {
+  //           localStorage.setItem('uuid', resp.data.uuid);
+  //         }
+  //       }
+
+  //       // LocalStorage Calling
+  //       if (!resp.data) {
+  //         const res = await userInfoById(localStorage.getItem('uuid'));
+  //         dispatch(addUser(res?.data));
+  //         // if (res?.data?.requiredAction) {
+  //         //   setModalVisible(true);
+  //         // }
+  //       }
+
+  //       // if (resp?.data?.requiredAction) {
+  //       //   setModalVisible(true);
+  //       // }
+  //     }
+
+  //     // setResponse(resp?.data);
+  //   } catch (e) {
+  //     console.log({ e });
+  //     // toast.error(e.response.data.message.split(':')[1]);
+  //   }
+  // };
 
   const handleVerify = async (urlQuery) => {
     const apiUrl = `${url}/user/verify?${urlQuery}`;
@@ -120,9 +159,11 @@ const VerifyCode = () => {
 
       if (response.status === 200) {
         toast.success('Email verified successfully.');
-        await getUserInfo();
+
+        // await handleUserInfo();
 
         const data = await response.json();
+        dispatch(addUser(data));
         localStorage.setItem('uuid', data.uuid);
         navigate('/dashboard');
       }
