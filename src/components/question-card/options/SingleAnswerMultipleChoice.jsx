@@ -88,7 +88,7 @@ const SingleAnswerMultipleChoice = (props) => {
     let answerExist = questServices.checkAnswerExist({
       answersArray: props.answersSelection,
       answer: validatedAnswer,
-      index: 0,
+      index: id,
       startQuest: true,
     });
     if (answerExist) {
