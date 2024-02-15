@@ -7,7 +7,7 @@ import {
   getTopicOfValidatedQuestion,
   questionValidation,
 } from '../../../../../services/api/questsApi';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation ,useQueryClient} from '@tanstack/react-query';
 import AgreeDisagreeOptions from '../components/AgreeDisagreeOptions';
 import { Tooltip } from '../../../../../utils/Tooltip';
 
@@ -32,6 +32,7 @@ const LikeDislike = () => {
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
+  const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [hollow, setHollow] = useState(true);
 
@@ -48,15 +49,18 @@ const LikeDislike = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
+        setTimeout(() => {
+        navigate('/dashboard');
+        toast.success('Successfully Created');
+        setLoading(false);
         setQuestion('');
         setChangedOption('');
         setChangeState(false);
-        toast.success('Successfully Created');
-        setTimeout(() => {
-          setLoading(false);
-          navigate('/dashboard');
-        }, 2000);
+        dispatch(createQuestAction.resetCreateQuest());
+        }, 500);
       }
+      queryClient.invalidateQueries('FeedData');
+
     },
     onError: (err) => {
       if (err.response) {
@@ -116,7 +120,6 @@ const LikeDislike = () => {
 
     if (!checkHollow()) {
       createQuest(params);
-      dispatch(createQuestAction.resetCreateQuest());
     }
   };
 

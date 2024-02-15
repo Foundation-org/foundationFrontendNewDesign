@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   checkUniqueQuestion,
   createInfoQuest,
@@ -25,7 +25,7 @@ const RankChoice = () => {
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const optionsValue = useSelector(createQuestAction.optionsValue);
-
+  const queryClient = useQueryClient();
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
@@ -53,17 +53,18 @@ const RankChoice = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        setQuestion('');
-        setAddOption(false);
-        setChangedOption('');
-        setChangeState(false);
-        setLoading(false);
-        toast.success('Successfully Created');
         setTimeout(() => {
-          setLoading(false);
           navigate('/dashboard');
-        }, 2000);
+          toast.success('Successfully Created');
+          setLoading(false);
+          setQuestion('');
+          setAddOption(false);
+          setChangedOption('');
+          setChangeState(false);
+          dispatch(createQuestAction.resetCreateQuest());
+        }, 500);
       }
+      queryClient.invalidateQueries('FeedData');
     },
     onError: (err) => {
       console.log('Mutation Error', err);
@@ -119,7 +120,6 @@ const RankChoice = () => {
     }
     if (!checkHollow()) {
       createQuest(params);
-      dispatch(createQuestAction.resetCreateQuest());
     }
   };
 

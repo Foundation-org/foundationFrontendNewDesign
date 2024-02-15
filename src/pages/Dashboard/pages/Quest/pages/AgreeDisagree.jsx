@@ -2,7 +2,7 @@ import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation ,useQueryClient} from '@tanstack/react-query';
 import {
   checkUniqueQuestion,
   createInfoQuest,
@@ -26,6 +26,7 @@ const AgreeDisagree = () => {
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
+  const queryClient = useQueryClient();
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
@@ -45,15 +46,17 @@ const AgreeDisagree = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
+        setTimeout(() => {
+        navigate('/dashboard');
         toast.success('Successfully Created');
+        setLoading(false);
         setQuestion('');
         setChangedOption('');
         setChangeState(false);
-        setTimeout(() => {
-          setLoading(false);
-          navigate('/dashboard');
-        }, 2000);
+        dispatch(createQuestAction.resetCreateQuest());
+        }, 500);
       }
+      queryClient.invalidateQueries('FeedData');
     },
     onError: (err) => {
       if (err.response) {
@@ -105,7 +108,6 @@ const AgreeDisagree = () => {
 
     if (!checkHollow()) {
       createQuest(params);
-      dispatch(createQuestAction.resetCreateQuest());
     }
   };
 
