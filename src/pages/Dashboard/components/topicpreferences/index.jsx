@@ -185,7 +185,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
-                                    className={`flex h-[19.7px] items-center tablet:h-[1.78rem] laptop:h-[2.78rem] ${
+                                    className={`flex h-[19.7px] items-center tablet:h-[1.78rem] laptop:h-[2.78rem] w-fit ${
                                       snapshot.isDragging ? '' : ''
                                     }`}
                                   >
@@ -218,12 +218,14 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                                       } flex h-[19.7px] w-fit select-none items-center gap-[5px] truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] dark:text-white tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px]`}
                                     >
                                       {text}
-                                      <GrClose
-                                        className={`${
-                                          itemsWithCross.includes(text) ? 'block' : 'hidden'
-                                        } h-[9.4px] w-[9.4px] cursor-pointer text-[#C9C8C8] dark:text-white tablet:h-[16px] tablet:w-[16px] laptop:h-[20px] laptop:w-[20px]`}
-                                        onClick={() => handleRemoveItemFromList(text, col.id)}
-                                      />
+                                      {col.id !== 'All' && (
+                                        <GrClose
+                                          className={`${
+                                            itemsWithCross?.includes(text) ? 'block' : 'hidden'
+                                          } h-[9.4px] w-[9.4px] cursor-pointer text-[#C9C8C8] dark:text-white tablet:h-[16px] tablet:w-[16px] laptop:h-[20px] laptop:w-[20px]`}
+                                          onClick={() => handleRemoveItemFromList(text, col.id)}
+                                        />
+                                      )}
                                     </p>
                                   </div>
                                 )}

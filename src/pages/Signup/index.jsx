@@ -85,7 +85,7 @@ export default function Signup() {
   };
 
   const handleSignup = async () => {
-    // if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
+    if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
 
     setIsLoadingSocial(true);
