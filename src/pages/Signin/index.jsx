@@ -74,7 +74,7 @@ export default function Signin() {
       // });
 
       // if (recaptchaResp.success) {
-      if (capthaToken !== '') {
+      if (capthaToken === '') {
         const resp = await userSignin({ email, password });
 
         if (resp.status === 200) {
@@ -95,7 +95,12 @@ export default function Signin() {
 
       // console.log(resp);
     } catch (e) {
+      console.log(e);
       if (e.response.data === 'Wrong Password') {
+        toast.error('Your typed password is incorrect.');
+      } else if (
+        e.response.data.message === 'An error occurred while signInUser Auth: data and hash arguments required'
+      ) {
         toast.error('Your typed password is incorrect.');
       } else {
         toast.error(e.response.data.message.split(':')[1]);
