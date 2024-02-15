@@ -41,7 +41,6 @@ const Profile = () => {
       <Topbar />
       <div className="h-screen overflow-y-scroll bg-[#F3F3F3] dark:bg-[#242424]">
         <div className="laptop::mt-12 mr-5 mt-5 flex justify-end items-center gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[109px]">
-          
           <div
             style={{
               background: localStorage.getItem('isGuestMode')
@@ -60,7 +59,7 @@ const Profile = () => {
             <h4 className="heading">My Profile</h4>
             <div className="flex items-center gap-1 tablet:gap-[13px]">
               <p className="text-[8px] tablet:text-[15px] leading-none font-medium text-[#616161] dark:text-white">
-                Version 1.2.0
+                Version 1.3.0
               </p>
               {/* <p className="text-[8px] dark:text-white tablet:text-[16px]">Light</p>
               <Switch

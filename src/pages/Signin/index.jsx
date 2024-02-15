@@ -102,6 +102,8 @@ export default function Signin() {
         e.response.data.message === 'An error occurred while signInUser Auth: data and hash arguments required'
       ) {
         toast.error('Your typed password is incorrect.');
+      } else if (e.response.data.message === 'An error occurred while signInUser Auth: User not Found') {
+        toast.error('Oops! User not found');
       } else {
         toast.error(e.response.data.message.split(':')[1]);
       }

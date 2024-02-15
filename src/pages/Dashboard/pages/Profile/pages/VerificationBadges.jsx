@@ -341,7 +341,7 @@ const VerificationBadges = () => {
             setIsPopup={setIsPopup}
             title="Personal Email"
             logo="/assets/profile/Personal-Email-2xa.png"
-            placeholder="Personal email here"
+            placeholder="Personal Email here"
           />
         ) : seletedBadge === 'work' ? (
           <VerificationPopups
@@ -349,7 +349,7 @@ const VerificationBadges = () => {
             setIsPopup={setIsPopup}
             title="Work Email"
             logo="/assets/profile/Work-Email-2xa.png"
-            placeholder="Work email here"
+            placeholder="Work Email here"
           />
         ) : seletedBadge === 'education' ? (
           <VerificationPopups
