@@ -103,23 +103,20 @@ export default function Signup() {
     try {
       if (password === reTypePassword) {
         const resp = await guestSignup({ email, password, uuid: localStorage.getItem('uuid') });
-
         if (resp.status === 200) {
-          toast.success('Account Created Successfully');
-          dispatch(addUser(resp.data));
-          localStorage.setItem('isGuestMode', false);
+          toast.success('A verification email has been sent to your email address. Please check your inbox.');
+
           setEmail('');
           setPassword('');
-          navigate('/dashboard');
+          setIsLoading(false);
         }
       } else {
         toast.warning('Password does not match');
+        setIsLoading(false);
       }
     } catch (e) {
-      console.log(e);
-      // setErrorMessage(e.response.data.message.split(':')[1]);
-      // toast.error(e.response.data.message.split(':')[1]);
-      // handlePopupOpen();
+      setErrorMessage(e.response.data.message.split(':')[1]);
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
@@ -136,22 +133,33 @@ export default function Signup() {
       handleReferralOpen();
     }
   };
+  const handleSignUpSocialGuest = async (data) => {
+    try {
+      data.uuid=localStorage.getItem('uuid');
+      const res = await api.post(`/user/signUpSocial/guestMode`, data);
+      if (res.status === 200) {
+        dispatch(addUser(res.data));
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+      setIsLoading(false);
+      setIsLoadingSocial(false);
+    } finally {
+ 
+    }
+  };
 
   const handleSignUpSocial = async (data) => {
     setSocialAccount({ isSocial: true, data });
-    handleReferralOpen();
-    return;
-    // try {
-    //   const res = await api.post(`/user/signUpUser/social`, {
-    //     data,
-    //   });
-    //   if (res.data.required_action) {
-    //     setModalVisible(true);
-    //     setResData(res.data);
-    //   }
-    // } catch (error) {
-    //   toast.error(error.response.data.message.split(':')[1]);
-    // }
+    if (localStorage.getItem('isGuestMode')) {
+      handleSignUpSocialGuest(data);
+    }
+    else{
+
+      handleReferralOpen();
+      return;
+    }
   };
 
   const handleSignUpSocialAfterReferral = async (data) => {

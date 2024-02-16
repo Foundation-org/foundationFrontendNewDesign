@@ -51,7 +51,7 @@ export function Router() {
             <Route path="/verifycode" element={<VerifyCode />} />
             <Route path="/auth0" element={<DashboardRedirect />} />
             <Route path="/p/:id" element={<GuestRedirect />} />
-            <Route path="*" element={persistedUser ? <Navigate to="/dashboard" /> : <Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </>
       ) : (
@@ -77,9 +77,10 @@ export function Router() {
               <Route path="/quest/:isFullScreen" element={<Guests />} />
               <Route path="/p/:id" element={<SingleQuest />} />
               <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
               <Route path="/guest-signup" element={<Signup />} />
               <Route path="/verifycode" element={<VerifyCode />} />
-              {/* <Route path="*" element={persistedUser ? <Navigate to="/dashboard" /> : <Navigate to="/" />} /> */}
+              <Route path="*" element={<Navigate to="/dashboard" />} />
             </Route>
           </Routes>
         </>
