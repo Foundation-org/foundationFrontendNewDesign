@@ -52,6 +52,7 @@ export function useGetBookmarkData() {
   });
 }
 
+// GET ALL PREFERENCES
 export function useGetAllTopics() {
   return useQuery({
     queryFn: () => HomepageAPIs.getAllTopics(),
@@ -59,6 +60,7 @@ export function useGetAllTopics() {
   });
 }
 
+// SEARCH PREFERENCES
 export function useSearchTopics(getPreferences) {
   return useQuery({
     queryFn: async () => {

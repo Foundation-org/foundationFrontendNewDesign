@@ -7,6 +7,7 @@ const resetState = {
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
+  isColumns: false,
   clearFilter: false,
 };
 
@@ -15,6 +16,7 @@ const resetOtherStates = {
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
+  isColumns: false,
   clearFilter: false,
 };
 
@@ -25,6 +27,8 @@ const initialState = {
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
+  isColumns: localStorage.getItem('bookmarkColumns') ? true : false,
+  itemsWithCross: [],
   clearFilter: false,
 };
 
@@ -35,8 +39,8 @@ export const bookmarkFiltersSlice = createSlice({
     toggleExapandedView: (state, action) => {
       state.expandedView = !state.expandedView;
     },
-    setExpandedView:(state, action)=>{
-      state.expandedView=action.payload;
+    setExpandedView: (state, action) => {
+      state.expandedView = action.payload;
     },
     setSearchData: (state, action) => {
       state.searchData = action.payload;
@@ -59,13 +63,21 @@ export const bookmarkFiltersSlice = createSlice({
     setFilterBySort: (state, action) => {
       state.filterBySort = action.payload;
     },
+    setItemWithCross: (state, action) => {
+      state.itemsWithCross = action.payload;
+    },
+    setIsColumn: (state, action) => {
+      state.isColumns = true;
+    },
     resetFilters: (state) => {
+      localStorage.removeItem('columns');
       Object.assign(state, resetState);
     },
     resetSearchData: (state) => {
       state.searchData = '';
     },
     resetOtherFilters: (state) => {
+      localStorage.removeItem('columns');
       Object.assign(state, resetOtherStates);
     },
   },
@@ -78,10 +90,12 @@ export const {
   setFilterByType,
   setFilterByScope,
   setFilterBySort,
+  setItemWithCross,
+  setIsColumn,
   resetFilters,
   resetSearchData,
   resetOtherFilters,
-  setExpandedView
+  setExpandedView,
 } = bookmarkFiltersSlice.actions;
 
 export default bookmarkFiltersSlice.reducer;
