@@ -47,7 +47,11 @@ export default function Signup() {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const handleReferralOpen = () => setIsReferral(true);
-  const handleReferralClose = () => setIsReferral(false);
+  const handleReferralClose = () => {
+    setIsReferral(false);
+    setIsLoading(false);
+    setIsLoadingSocial(false);
+  }
   const handlePopupOpen = () => setIspopup(true);
   const handlePopupClose = () => setIspopup(false);
 
