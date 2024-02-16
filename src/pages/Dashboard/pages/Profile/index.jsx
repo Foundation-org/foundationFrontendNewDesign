@@ -43,9 +43,10 @@ const Profile = () => {
         <div className="laptop::mt-12 mr-5 mt-5 flex justify-end items-center gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[109px]">
           <div
             style={{
-              background: localStorage.getItem('isGuestMode')
-                ? 'url(/assets/svgs/dashboard/guestBadge.svg)'
-                : 'url(/assets/svgs/dashboard/MeBadge.svg)',
+              background:
+                persistedUserInfo.role !== 'user'
+                  ? 'url(/assets/svgs/dashboard/guestBadge.svg)'
+                  : 'url(/assets/svgs/dashboard/MeBadge.svg)',
               backgroundRepeat: 'no-repeat',
               backgroundSize: '100% 100%', // This will make the background image cover the entire div
             }}

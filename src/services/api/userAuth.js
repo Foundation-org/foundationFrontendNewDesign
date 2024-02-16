@@ -7,6 +7,14 @@ export const signUp = async (data) => {
   });
 };
 
+export const signUpGuest = async (data) => {
+  return await api.post('/user/signUp/guestMode', {
+    email: data.email,
+    password: data.password,
+    uuid: data.uuid,
+  });
+};
+
 export const signIn = async (data) => {
   return await api.post('/user/signInUser', data);
 };

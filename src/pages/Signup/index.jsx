@@ -20,11 +20,16 @@ import { Button as UiButton } from '../../components/ui/Button';
 import { LoginSocialGoogle } from 'reactjs-social-login';
 import Loader from './components/Loader';
 import SocialLoginsDummy from './components/SocialLoginsDummy';
+import { signUpGuest } from '../../services/api/userAuth';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../features/auth/authSlice';
+import { useMutation } from '@tanstack/react-query';
 
 const REDIRECT_URI = window.location.href;
 
 export default function Signup() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [reTypePassword, setReTypePassword] = useState('');
@@ -51,7 +56,7 @@ export default function Signup() {
     setIsReferral(false);
     setIsLoading(false);
     setIsLoadingSocial(false);
-  }
+  };
   const handlePopupOpen = () => setIspopup(true);
   const handlePopupClose = () => setIspopup(false);
 
@@ -88,33 +93,48 @@ export default function Signup() {
     setEmail('');
   };
 
+  const { mutateAsync: guestSignup } = useMutation({
+    mutationFn: signUpGuest,
+  });
+
+  const handleGuestSignup = async () => {
+    setIsLoading(true);
+
+    try {
+      if (password === reTypePassword) {
+        const resp = await guestSignup({ email, password, uuid: localStorage.getItem('uuid') });
+
+        if (resp.status === 200) {
+          toast.success('Account Created Successfully');
+          dispatch(addUser(resp.data));
+          localStorage.setItem('isGuestMode', false);
+          setEmail('');
+          setPassword('');
+          navigate('/dashboard');
+        }
+      } else {
+        toast.warning('Password does not match');
+      }
+    } catch (e) {
+      console.log(e);
+      // setErrorMessage(e.response.data.message.split(':')[1]);
+      // toast.error(e.response.data.message.split(':')[1]);
+      // handlePopupOpen();
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSignup = async () => {
     if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
 
     setIsLoadingSocial(true);
-    handleReferralOpen();
-
-    // setIsLoading(true);
-
-    // try {
-    //   if (password === reTypePassword) {
-    //     const resp = await userSignup({ email, password });
-
-    //     if (resp.status === 200) {
-    //       toast.success('A verification email has been sent to your email address. Please check your inbox.');
-
-    //       setEmail('');
-    //       setPassword('');
-    //     }
-    //   } else {
-    //     toast.warning('Password does not match');
-    //   }
-    // } catch (e) {
-    //   toast.error(e.response.data.message.split(':')[1]);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    if (localStorage.getItem('isGuestMode')) {
+      handleGuestSignup();
+    } else {
+      handleReferralOpen();
+    }
   };
 
   const handleSignUpSocial = async (data) => {
