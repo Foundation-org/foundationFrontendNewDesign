@@ -82,7 +82,7 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
               with Google
             </Button>
           </LoginSocialGoogle>
-          <div className="hidden px-5 tablet:px-[60px] laptop:px-[80px]">
+          <div className=" px-5 tablet:px-[60px] laptop:px-[80px]">
             <h1 className="text-[#707175] text-[10px] tablet:text-[25px] font-medium leading-[12.1px] tablet:leading-[30px] text-center my-2 tablet:my-[15px]">
               -OR-
             </h1>
