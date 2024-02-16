@@ -233,12 +233,13 @@ const StartTest = ({
                             <li
                               ref={provided.innerRef}
                               {...provided.draggableProps}
-                              {...provided.dragHandleProps}
+                              // {...provided.dragHandleProps}
                               className="w-full"
                             >
                               <SingleAnswerRankedChoice
                                 questStartData={questStartData}
                                 id={index}
+                                dragHandleProps={provided.dragHandleProps}
                                 snapshot={snapshot}
                                 number={index + 1}
                                 editable={item.edit}

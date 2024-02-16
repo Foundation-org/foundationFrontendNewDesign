@@ -162,9 +162,9 @@ const SingleAnswerRankedChoice = (props) => {
           &#x200B;
         </div>
       )}
-      {/* six dots */}
       {/* =============== To Display Option */}
       <div
+        {...props.dragHandleProps}
         className={`${
           props.snapshot.isDragging
             ? 'border-[#5FA3D5]'
@@ -241,8 +241,8 @@ const SingleAnswerRankedChoice = (props) => {
         >
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
         </div>
-        {/* =============== To Display Contention and Trash Right of Option */}
-      </div>{' '}
+      </div>
+      {/* =============== To Display Contention and Trash Right of Option */}
       {props.btnText !== 'Results' ? (
         <div
           className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"
