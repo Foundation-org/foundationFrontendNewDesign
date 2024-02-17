@@ -40,7 +40,7 @@ const Profile = () => {
     <div>
       <Topbar />
       <div className="h-screen overflow-y-scroll bg-[#F3F3F3] dark:bg-[#242424]">
-        <div className="laptop::mt-12 mr-5 mt-5 flex justify-end items-center gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[109px]">
+        <div className="mr-5 mt-4 laptop:mt-12 flex justify-end items-center gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[109px]">
           <div
             style={{
               background:

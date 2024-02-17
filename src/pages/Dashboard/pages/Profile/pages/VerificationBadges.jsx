@@ -354,7 +354,6 @@ const VerificationBadges = () => {
             placeholder="Work email here"
             selectedBadge={seletedBadge}
             handleUserInfo={handleUserInfo}
-
           />
         ) : seletedBadge === 'education' ? (
           <VerificationPopups
@@ -403,13 +402,13 @@ const VerificationBadges = () => {
           </div>
         </LoginSocialGoogle>
       </div> */}
-      <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
+      <h1 className="ml-[32px] text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
         My Verification Badges
       </h1>
       <div
         className={`${
-          persistedTheme === 'dark' ? 'dark-shadow-inside' : 'shadow-inside bg-white'
-        } relative mx-6 mb-[10rem] tablet:mb-[10rem] mt-4 flex flex-col gap-[5.91px] rounded-[11.918px] px-[14.3px] pb-[17.57px] pt-[23px] tablet:mx-6 tablet:my-[54px] tablet:gap-[23px] tablet:rounded-[24.8px] tablet:px-[29.7px] tablet:py-[48.4px] laptop:mx-[106px] laptop:rounded-[45px] laptop:px-[60px] laptop:pb-[66.8px] laptop:pt-[104px]`}
+          persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
+        } relative mx-6 mb-[10rem] tablet:mb-[10rem] mt-[10px] flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-6 tablet:my-[54px] tablet:gap-[23px] tablet:rounded-[24.8px] tablet:px-[29.7px] tablet:py-[48.4px] laptop:mx-[106px] laptop:rounded-[45px] laptop:px-[60px] laptop:pb-[66.8px] laptop:pt-[104px]`}
       >
         {/* <div className="absolute -top-[1px] left-[50%] mx-auto flex w-[90%] -translate-x-[50%] transform justify-center gap-[21px] tablet:-top-1 tablet:w-[90%] laptop:w-[95%]">
           <div className="h-[2.94px] w-full rounded-[100px] bg-[#4A8DBD] tablet:h-[11.1px]" />
@@ -419,23 +418,23 @@ const VerificationBadges = () => {
           <div className="h-[2.94px]  w-full rounded-[100px] bg-[#D9D9D9] tablet:h-[11.1px]" />
           <div className="h-[2.94px]  w-full rounded-[100px] bg-[#D9D9D9] tablet:h-[11.1px]" />
         </div> */}
-        <h1 className="font-500 font-Inter ml-[3.5vw] text-[2.22vw] font-normal text-[#000] dark:text-white">
+        <h1 className="font-500 font-Inter text-[9.74px] tablet:text-[2.22vw] font-medium text-[#000] dark:text-white mb-[3px]">
           Contact
         </h1>
         {contacts.map((item, index) => (
           <div
-            className={`flex items-center justify-center gap-[5px] tablet:gap-[10.59px] ${item.disabled && 'opacity-[60%]'}`}
+            className={`flex items-center justify-center tablet:gap-[10.59px] ${item.disabled && 'opacity-[60%]'}`}
             key={index}
           >
             <img
               src={item.image}
               alt={item.title}
-              className="h-[19.4px] w-[19.4px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
+              className="h-[23px] w-[23px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
             />
             <div
               className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : 'shadow-inside'
-              } mx-2  flex h-[5.8vw] w-[19.9vw] items-center justify-center rounded-[1.31vw] text-[1.73vw]  font-medium  leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA] `}
+                persistedTheme === 'dark' ? 'dark-shadow-input' : 'verification-badge-boxShadow'
+              } ml-[10px] mr-2 flex h-[7.3vw] tablet:h-[5.8vw] w-[24vw] tablet:w-[19.9vw] items-center justify-center rounded-[1.31vw] text-[2.11vw] tablet:text-[1.73vw] font-medium leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA]`}
             >
               <h1>{item.title}</h1>
             </div>
@@ -449,18 +448,20 @@ const VerificationBadges = () => {
             </Button>
           </div>
         ))}
-        <h1 className="font-500 font-Inter ml-[3.5vw] text-[2.22vw] font-normal text-[#000] dark:text-white">Social</h1>
+        <h1 className="font-500 font-Inter text-[9.74px] tablet:text-[2.22vw] font-medium text-[#000] dark:text-white my-[3px]">
+          Social
+        </h1>
         <div className="flex items-center justify-center">
           <div className="flex gap-[5px] tablet:gap-[10.59px] items-center justify-center">
             <img
               src="/assets/profile/Facebook-2x.png"
               alt="Facebook"
-              className="min-h-[19.4px] min-w-[19.4px] tablet:min-h-[40.6px] tablet:min-w-[40.6px] h-[19.4px] w-[19.4px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px] tablet:min-h-[40.6px] laptop:min-w-[74px] laptop:min-h-[74px]"
+              className="min-h-[23px] min-w-[23px] tablet:min-h-[40.6px] tablet:min-w-[40.6px] h-[23px] w-[23px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px] laptop:min-w-[74px] laptop:min-h-[74px]"
             />
             <div
               className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : 'shadow-inside'
-              } mx-2  flex h-[5.8vw] min-w-[19.9vw] items-center justify-center rounded-[1.31vw] text-[1.73vw]  font-medium  leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA] `}
+                persistedTheme === 'dark' ? 'dark-shadow-input' : 'verification-badge-boxShadow'
+              } mx-2 flex h-[7.3vw] tablet:h-[5.8vw] min-w-[24vw] items-center justify-center rounded-[1.31vw] text-[2.11vw] tablet:text-[1.73vw]  font-medium  leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA] `}
             >
               <h1>Facebook</h1>
             </div>
@@ -507,12 +508,12 @@ const VerificationBadges = () => {
             <img
               src={item.image}
               alt={item.title}
-              className="h-[19.4px] w-[19.4px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
+              className="h-[23px] w-[23px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
             />
             <div
               className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : 'shadow-inside'
-              } mx-2  flex h-[5.8vw] w-[19.9vw] items-center justify-center rounded-[1.31vw] text-[1.73vw]  font-medium  leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA] `}
+                persistedTheme === 'dark' ? 'dark-shadow-input' : 'verification-badge-boxShadow'
+              } ml-[10px] mr-2 flex h-[7.3vw] tablet:h-[5.8vw] w-[24vw] tablet:w-[19.9vw] items-center justify-center rounded-[1.31vw] text-[2.11vw] tablet:text-[1.73vw] font-medium leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA]`}
             >
               <h1>{item.title}</h1>
             </div>
@@ -528,25 +529,27 @@ const VerificationBadges = () => {
             </Button>
           </div>
         ))}
-        <h1 className="font-500 font-Inter ml-[3.5vw] text-[2.22vw] font-normal text-[#000] dark:text-white">Web 3</h1>
+        <h1 className="font-500 font-Inter text-[9.74px] tablet:text-[2.22vw] font-medium text-[#000] dark:text-white my-[3px]">
+          Web 3
+        </h1>
         {web3.map((item, index) => (
           <div className="flex items-center justify-center gap-[5px] tablet:gap-[10.59px] opacity-[60%]" key={index}>
             <img
               src={item.image}
               alt={item.title}
-              className="h-[19.4px] w-[19.4px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
+              className="h-[23px] w-[23px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
             />
             <div
               className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : 'shadow-inside'
-              } mx-2  flex h-[5.8vw] w-[19.9vw] items-center justify-center rounded-[1.31vw] text-[1.73vw]  font-medium  leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA] `}
+                persistedTheme === 'dark' ? 'dark-shadow-input' : 'verification-badge-boxShadow'
+              } ml-[10px] mr-2 flex h-[7.3vw] tablet:h-[5.8vw] w-[24vw] tablet:w-[19.9vw] items-center justify-center rounded-[1.31vw] text-[2.11vw] tablet:text-[1.73vw] font-medium leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA]`}
             >
               <h1>{item.title}</h1>
             </div>
             <Button color={item.ButtonColor}>{item.ButtonText}</Button>
           </div>
         ))}
-        <h1 className="font-500 font-Inter ml-[3.5vw] text-[2.22vw] font-normal text-[#000] dark:text-white ">
+        <h1 className="font-500 font-Inter text-[9.74px] tablet:text-[2.22vw] font-medium text-[#000] dark:text-white my-[3px]">
           Personal
         </h1>
         {personal.map((item, index) => (
@@ -554,12 +557,12 @@ const VerificationBadges = () => {
             <img
               src={item.image}
               alt={item.title}
-              className="h-[19.4px] w-[19.4px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
+              className="h-[23px] w-[23px] tablet:h-[40.6px] tablet:w-[40.6px] laptop:h-[74px] laptop:w-[74px]"
             />
             <div
               className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : 'shadow-inside'
-              } mx-2  flex h-[5.8vw] w-[19.9vw] items-center justify-center rounded-[1.31vw] text-[1.73vw]  font-medium  leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA] `}
+                persistedTheme === 'dark' ? 'dark-shadow-input' : 'verification-badge-boxShadow'
+              } ml-[10px] mr-2 flex h-[7.3vw] tablet:h-[5.8vw] w-[24vw] tablet:w-[19.9vw] items-center justify-center rounded-[1.31vw] text-[2.11vw] tablet:text-[1.73vw] font-medium leading-normal text-[#000] tablet:mx-[2px] laptop:mx-[30px] dark:text-[#CACACA]`}
             >
               <h1>{item.title}</h1>
             </div>

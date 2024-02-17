@@ -130,6 +130,16 @@ iframe {
   background: #0fb063;
 }
 
+.verification-badge-boxShadow {
+  box-shadow: 0px 0px 1.83px 0px #00000040 inset;
+}
+
+@media only screen and (min-width: 744px) {
+  .verification-badge-boxShadow {
+    box-shadow: 0px 0px 6px 0px #00000040 inset;
+  }
+}
+
 .shadow-inside {
   box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
 }
