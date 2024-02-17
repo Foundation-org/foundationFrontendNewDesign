@@ -230,12 +230,7 @@ const StartTest = ({
                       {rankedAnswers?.map((item, index) => (
                         <Draggable key={item.id} draggableId={item.id} index={index}>
                           {(provided, snapshot) => (
-                            <li
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              // {...provided.dragHandleProps}
-                              className="w-full"
-                            >
+                            <li ref={provided.innerRef} {...provided.draggableProps} className="w-full">
                               <SingleAnswerRankedChoice
                                 questStartData={questStartData}
                                 id={index}
