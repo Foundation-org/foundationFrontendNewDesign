@@ -3,6 +3,7 @@ import { Tooltip } from '../../../../../utils/Tooltip';
 
 const Options = ({
   snapshot,
+  id,
   title,
   answer,
   options,
@@ -129,7 +130,7 @@ const Options = ({
                       {optionsCount > 3 && (
                         <div
                           onClick={() => {
-                            removeOption(number);
+                            removeOption(id, number);
                           }}
                         >
                           <img

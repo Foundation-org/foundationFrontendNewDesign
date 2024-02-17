@@ -139,10 +139,10 @@ export const createQuestSlice = createSlice({
     handleQuestionReset: (state, action) => {
       return {
         ...state,
-        questions: action.payload, 
+        questions: action.payload,
         questionReset: initialState.questionReset,
       };
-    }
+    },
   },
   extraReducers: (builder) => {
     // check question status start

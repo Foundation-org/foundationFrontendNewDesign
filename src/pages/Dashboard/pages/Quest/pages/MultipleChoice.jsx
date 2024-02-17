@@ -90,7 +90,7 @@ const MultipleChoice = () => {
       return;
     }
 
-    const constraintResponse = await checkUniqueQuestion(question);
+    // const constraintResponse = await checkUniqueQuestion(question);
 
     if (!checkHollow()) {
       setLoading(true);
@@ -149,6 +149,7 @@ const MultipleChoice = () => {
       question: value.trim(),
     };
     setTypedValues(newTypedValue);
+
     // Check if Prev Value exist
     if (prevValueArr[index]?.value === value.trim()) return;
     setPrevValueArr((prev) => {
@@ -156,71 +157,13 @@ const MultipleChoice = () => {
       updatedArray[index] = { value: value.trim() };
       return [...updatedArray];
     });
-    //
+
     dispatch(createQuestAction.checkAnswer({ id, value, index }));
-    // Answer Validation
-    // const { validatedAnswer, errorMessage } = await answerValidation({
-    //   answer: value,
-    // });
-    // If any error captured
-    // if (errorMessage) {
-    //   const newTypedValues = [...typedValues];
-    //   newTypedValues[index] = {
-    //     ...newTypedValues[index],
-    //     optionStatus: {
-    //       name: 'Rejected',
-    //       color: 'text-[#b00f0f]',
-    //       tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-    //       tooltipStyle: 'tooltip-error',
-    //     },
-    //   };
-    //   return setTypedValues(newTypedValues);
-    // }
-
-    // Check Answer is unique
-
-    // Answer is validated and status is Ok
-    // if (validatedAnswer) {
-    //   setPrevValueArr((prev) => {
-    //     const updatedArray = [...prev];
-    //     updatedArray[index] = { value: validatedAnswer };
-    //     return [...updatedArray];
-    //   });
-    //   const newTypedValues = [...typedValues];
-    //   newTypedValues[index] = {
-    //     ...newTypedValues[index],
-    //     question: validatedAnswer,
-    //     optionStatus: {
-    //       name: 'Ok',
-    //       color: 'text-[#0FB063]',
-    //       tooltipName: 'Answer is Verified',
-    //       tooltipStyle: 'tooltip-success',
-    //       isVerifiedAnswer: true,
-    //     },
-    //   };
-    //   setTypedValues(newTypedValues);
-    // }
   };
 
   const handleAddOption = () => {
-    // if (optionWaiting) return;
     const optionsCount = typedValues.length;
     dispatch(createQuestAction.addNewOption({ optionsCount }));
-    // setOptionsCount((prevCount) => prevCount + 1);
-    // setTypedValues((prevValues) => [
-    //   ...prevValues,
-    //   {
-    //     id: `index-${optionsCount}`,
-    //     question: '',
-    //     selected: false,
-    //     optionStatus: {
-    //       name: 'Ok',
-    //       color: 'text-[#389CE3]',
-    //       tooltipName: 'Please write something...',
-    //       tooltipStyle: 'tooltip-info',
-    //     },
-    //   },
-    // ]);
   };
 
   const handleChange = (index, value) => {
@@ -241,22 +184,6 @@ const MultipleChoice = () => {
       dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
       return newTypedValues;
     });
-    // const newTypedValues = [...typedValues];
-    // newTypedValues[index] = {
-    //   ...newTypedValues[index],
-    //   question: value,
-    //   optionStatus:
-    //     value.trim() === ''
-    //       ? {
-    //           name: 'Ok',
-    //           color: 'text-[#389CE3]',
-    //           tooltipName: 'Please write something...',
-    //           tooltipStyle: 'tooltip-info',
-    //         }
-    //       : { name: 'Ok', color: 'text-[#b0a00f]' },
-    // };
-
-    // setTypedValues(newTypedValues);
   };
 
   const handleOptionSelect = (index) => {
@@ -285,7 +212,11 @@ const MultipleChoice = () => {
     }
   };
 
-  const removeOption = (id) => {
+  const removeOption = (id, number) => {
+    setPrevValueArr((prevArr) => {
+      const newArr = prevArr.filter((_, index) => index !== number - 1);
+      return newArr;
+    });
     dispatch(createQuestAction.delOption({ id }));
   };
 
@@ -312,6 +243,7 @@ const MultipleChoice = () => {
       return true;
     }
   };
+
   useEffect(() => {
     if (!checkHollow() && typedValues.every((value) => value.question !== '' && question !== '')) {
       setHollow(false);
@@ -319,6 +251,7 @@ const MultipleChoice = () => {
       setHollow(true);
     }
   }, [typedValues, question, checkQuestionStatus.tooltipName]);
+
   useEffect(() => {
     let tempOptions = typedValues.map((item) => {
       return item.question;
@@ -337,20 +270,15 @@ const MultipleChoice = () => {
   }, [question, changedOption, changeState, addOption, optionsCount, typedValues, multipleOption]);
 
   const handleTab = (index, key) => {
-
     if (index === typedValues.length) {
       document.getElementById(`input-${index}`).blur();
-    }
-
-    else{
-      
+    } else {
       if (key === 'Enter') {
         document.getElementById(`input-${index + 1}`).focus();
       } else {
         document.getElementById(`input-${index}`).focus();
       }
     }
-
   };
 
   useEffect(() => {
@@ -428,6 +356,7 @@ const MultipleChoice = () => {
                         <Options
                           snapshot={snapshot}
                           key={index}
+                          id={item.id}
                           title="MultipleChoice"
                           allowInput={true}
                           label={`Option ${index + 1} #`}
@@ -439,7 +368,7 @@ const MultipleChoice = () => {
                           typedValue={item.question}
                           isSelected={item.selected}
                           optionsCount={typedValues.length}
-                          removeOption={() => removeOption(item.id)}
+                          removeOption={removeOption}
                           number={index + 1}
                           optionStatus={typedValues[index].optionStatus}
                           answerVerification={(value) => answerVerification(item.id, index, value)}
