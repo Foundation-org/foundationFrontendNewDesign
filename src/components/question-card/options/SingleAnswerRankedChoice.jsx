@@ -44,6 +44,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
+    setPrevValue('');
     props.setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
   };
 
