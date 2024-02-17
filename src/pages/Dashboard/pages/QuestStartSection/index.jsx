@@ -88,38 +88,53 @@ const QuestStartSection = () => {
 
   // Update Data on FeedData Changes
   useEffect(() => {
-    // if (pagination.page === 1 && !allData?.some((item) => item?.title === 'You are all caught up')) {
-    // if (pagination.page === 1) {
-    //   setAllData(feedData?.data || []);
-    // } else {
-    //   setAllData((prevData) => [...prevData, ...(feedData?.data || [])]);
-    // }
-
     if (pagination.page === 1) {
-      setPagination({
-        page: 1,
-        sliceStart: 0,
-        sliceEnd: pageLimit,
-      });
-
-      setAllData((feedData?.data || []).map((item) => ({ ...item, pagination })));
+      setAllData(feedData?.data || []);
     } else {
-      setAllData((prevData) => [...prevData, ...(feedData?.data || []).map((item) => ({ ...item, pagination }))]);
-      // setAllData((prevData) => {
-      //   const newData = (feedData?.data || []).map((item) => ({ ...item, pagination }));
+      setAllData((prevData) => {
+        const newData = [...prevData, ...(feedData?.data || [])];
 
-      //   const uniqueIds = new Set(prevData.map((item) => item._id));
-      //   const filteredNewData = newData.filter((item) => !uniqueIds.has(item._id));
+        const uniqueData = newData.filter(
+          (item, index, array) => array.findIndex((data) => data._id === item._id) === index,
+        );
 
-      //   return [...prevData, ...filteredNewData];
-      // });
+        return uniqueData;
+      });
     }
-
-    // if (feedData && !feedData?.hasNextPage) {
-    //   const newItem = { title: 'You are all caught up' };
-    //   setAllData((prevData) => [...prevData, newItem]);
-    // }
   }, [feedData, filterStates, pagination.page]);
+  // useEffect(() => {
+  // if (pagination.page === 1 && !allData?.some((item) => item?.title === 'You are all caught up')) {
+  // if (pagination.page === 1) {
+  //   setAllData(feedData?.data || []);
+  // } else {
+  //   setAllData((prevData) => [...prevData, ...(feedData?.data || [])]);
+  // }
+
+  // if (pagination.page === 1) {
+  //   setPagination({
+  //     page: 1,
+  //     sliceStart: 0,
+  //     sliceEnd: pageLimit,
+  //   });
+
+  // setAllData((feedData?.data || []).map((item) => ({ ...item, pagination })));
+  // } else {
+  // setAllData((prevData) => [...prevData, ...(feedData?.data || []).map((item) => ({ ...item, pagination }))]);
+  // setAllData((prevData) => {
+  //   const newData = (feedData?.data || []).map((item) => ({ ...item, pagination }));
+
+  //   const uniqueIds = new Set(prevData.map((item) => item._id));
+  //   const filteredNewData = newData.filter((item) => !uniqueIds.has(item._id));
+
+  //   return [...prevData, ...filteredNewData];
+  // });
+  // }
+
+  // if (feedData && !feedData?.hasNextPage) {
+  //   const newItem = { title: 'You are all caught up' };
+  //   setAllData((prevData) => [...prevData, newItem]);
+  // }
+  // }, [feedData, filterStates, pagination.page]);
 
   // Update Pagination on Page Change
   useEffect(() => {

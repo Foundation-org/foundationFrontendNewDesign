@@ -52,7 +52,7 @@ const Profile = () => {
             }}
             className="flex h-[26.8px] w-[21.8px] items-center justify-center bg-cover bg-no-repeat tablet:h-[85px] tablet:w-[69px]"
           >
-            <p className="h-[80%] text-[9.2px] font-normal leading-normal text-[#7A7016] tablet:text-[30px]">
+            <p className="h-[80%] text-[9.2px] font-medium leading-normal text-[#7A7016] tablet:text-[30px]">
               {persistedUserInfo?.badges?.length}
             </p>
           </div>
@@ -60,7 +60,7 @@ const Profile = () => {
             <h4 className="heading">My Profile</h4>
             <div className="flex items-center gap-1 tablet:gap-[13px]">
               <p className="text-[8px] tablet:text-[15px] leading-none font-medium text-[#616161] dark:text-white">
-                Version 1.3.0
+                Version 1.3.18
               </p>
               {/* <p className="text-[8px] dark:text-white tablet:text-[16px]">Light</p>
               <Switch

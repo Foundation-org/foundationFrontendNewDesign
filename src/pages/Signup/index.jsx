@@ -135,7 +135,7 @@ export default function Signup() {
   };
   const handleSignUpSocialGuest = async (data) => {
     try {
-      data.uuid=localStorage.getItem('uuid');
+      data.uuid = localStorage.getItem('uuid');
       const res = await api.post(`/user/signUpSocial/guestMode`, data);
       if (res.status === 200) {
         dispatch(addUser(res.data));
@@ -146,7 +146,6 @@ export default function Signup() {
       setIsLoading(false);
       setIsLoadingSocial(false);
     } finally {
- 
     }
   };
 
@@ -154,9 +153,7 @@ export default function Signup() {
     setSocialAccount({ isSocial: true, data });
     if (localStorage.getItem('isGuestMode')) {
       handleSignUpSocialGuest(data);
-    }
-    else{
-
+    } else {
       handleReferralOpen();
       return;
     }

@@ -105,17 +105,32 @@ const Bookmark = () => {
   // Update Data on FeedData Changes
   useEffect(() => {
     if (pagination.page === 1) {
-      setPagination({
-        page: 1,
-        sliceStart: 0,
-        sliceEnd: pageLimit,
-      });
-
-      setAllData((feedData?.data || []).map((item) => ({ ...item, pagination })));
+      setAllData(feedData?.data || []);
     } else {
-      setAllData((prevData) => [...prevData, ...(feedData?.data || []).map((item) => ({ ...item, pagination }))]);
+      setAllData((prevData) => {
+        const newData = [...prevData, ...(feedData?.data || [])];
+
+        const uniqueData = newData.filter(
+          (item, index, array) => array.findIndex((data) => data._id === item._id) === index,
+        );
+
+        return uniqueData;
+      });
     }
   }, [feedData, filterStates, pagination.page]);
+  // useEffect(() => {
+  //   if (pagination.page === 1) {
+  //     setPagination({
+  //       page: 1,
+  //       sliceStart: 0,
+  //       sliceEnd: pageLimit,
+  //     });
+
+  //     setAllData((feedData?.data || []).map((item) => ({ ...item, pagination })));
+  //   } else {
+  //     setAllData((prevData) => [...prevData, ...(feedData?.data || []).map((item) => ({ ...item, pagination }))]);
+  //   }
+  // }, [feedData, filterStates, pagination.page]);
 
   // Update Pagination on Page Change
   useEffect(() => {
