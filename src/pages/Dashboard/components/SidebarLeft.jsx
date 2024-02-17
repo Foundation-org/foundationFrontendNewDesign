@@ -26,8 +26,12 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
   const location = useLocation();
   const { pathname } = location;
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [search, setSearch] = useState(pathname === '/dashboard/bookmark'?persistedUserInfo?.bookmarkStates.searchData:persistedUserInfo?.States.searchData);
-  
+  const [search, setSearch] = useState(
+    pathname === '/dashboard/bookmark'
+      ? persistedUserInfo?.bookmarkStates.searchData
+      : persistedUserInfo?.States.searchData,
+  );
+
   const queryClient = useQueryClient();
 
   const { mutateAsync: getUserInfo } = useMutation({
@@ -89,8 +93,6 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
     },
   });
 
- 
-
   let filtersActions;
   if (pathname === '/dashboard/bookmark') {
     filtersActions = bookmarkFiltersActions;
@@ -125,7 +127,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
     if (pathname === '/dashboard/bookmark') {
       setBookmarkFilters(filterStates);
     } else {
-      setFilters(filterStates);
+      setFilters(filterStates, columns);
     }
   }, [filterStates]);
 
@@ -175,11 +177,11 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
     dispatch(filtersActions.setSearchData(debouncedSearch));
   }, [debouncedSearch]);
 
-  useEffect(()=>{
-      if(filterStates.searchData===''){
-        setSearch('')
-      }
-  },[filterStates.searchData])
+  useEffect(() => {
+    if (filterStates.searchData === '') {
+      setSearch('');
+    }
+  }, [filterStates.searchData]);
 
   return (
     <>
@@ -199,7 +201,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
                   id="floating_outlined"
                   className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] tablet:text-[18.23px]"
                   value={search}
-                  placeholder=''
+                  placeholder=""
                   onChange={handleSearch}
                 />
                 <label
@@ -299,7 +301,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             }  inset-0 w-[192px] rounded-[0.938rem] px-5 py-2 text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
             onClick={() => {
               dispatch(filtersActions.resetFilters());
-              setSearch('')
+              setSearch('');
               localStorage.setItem('filterByState', 'false');
             }}
           >

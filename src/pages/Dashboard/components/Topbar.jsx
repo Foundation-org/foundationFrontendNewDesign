@@ -30,17 +30,7 @@ const Topbar = () => {
   };
 
   const handleGuestLogout = async () => {
-    try {
-      const res = await api.post('user/logout');
-      if (res.status === 200) {
-        dispatch(filterActions.resetFilters());
-        localStorage.clear();
-        navigate('/signup');
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message.split(':')[1]);
-    }
+    navigate('/guest-signup');
   };
 
   return (
@@ -51,7 +41,7 @@ const Topbar = () => {
     >
       {/* logo */}
       <div className="relative flex w-full items-center justify-between px-[17px] py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
-        {localStorage.getItem('isGuestMode') ? (
+        {persistedUserInfo.role !== 'user' ? (
           <div
             className="flex h-full items-center justify-center space-x-2 laptop:hidden"
             onClick={() => {
@@ -218,7 +208,7 @@ const Topbar = () => {
         >
           <img src="/assets/navbar/faqlogo.png" alt="arrow-right" className="w-11 h-11" />
         </Link>
-        {localStorage.getItem('isGuestMode') ? (
+        {persistedUserInfo.role !== 'user' ? (
           <div onClick={handleGuestLogout}>
             <img src="/assets/svgs/dashboard/signupIcon.png" alt="signup Icon" />
           </div>

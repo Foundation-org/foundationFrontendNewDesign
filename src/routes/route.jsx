@@ -19,6 +19,7 @@ import Quest from '../pages/Dashboard/pages/Quest/Quest';
 import Bookmark from '../pages/Dashboard/pages/Bookmark';
 import DashboardRedirect from '../pages/DashboardRedirect';
 import VerifyCode from '../pages/Signup/VerifyCode';
+import BadgeVerifyCode from '../pages/Signup/BadgeVerifyCode';
 import TermOfService from '../pages/Signup/pages/TermOfService';
 import PrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 import Faq from '../pages/Dashboard/pages/CustomerSupport/Faq';
@@ -34,6 +35,8 @@ export function Router() {
     Guest: 'guest',
   };
 
+  console.log({ persistedUser });
+
   return (
     <>
       {!persistedUser ? (
@@ -48,7 +51,7 @@ export function Router() {
             <Route path="/verifycode" element={<VerifyCode />} />
             <Route path="/auth0" element={<DashboardRedirect />} />
             <Route path="/p/:id" element={<GuestRedirect />} />
-            <Route path="*" element={persistedUser ? <Navigate to="/dashboard" /> : <Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </>
       ) : (
@@ -73,7 +76,11 @@ export function Router() {
               </Route>
               <Route path="/quest/:isFullScreen" element={<Guests />} />
               <Route path="/p/:id" element={<SingleQuest />} />
-              <Route path="*" element={persistedUser ? <Navigate to="/dashboard" /> : <Navigate to="/" />} />
+              <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route path="/guest-signup" element={<Signup />} />
+              <Route path="/verifycode" element={<VerifyCode />} />
+              <Route path="*" element={<Navigate to="/dashboard" />} />
             </Route>
           </Routes>
         </>

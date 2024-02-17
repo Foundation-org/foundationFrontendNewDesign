@@ -1,18 +1,57 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+
+import * as QuestServices from '../../../../services/queries/quest';
 import * as prefActions from '../../../../features/preferences/prefSlice';
 
 // icons
 import { IoClose } from 'react-icons/io5';
 import { GrClose } from 'react-icons/gr';
-import Cross from '../../../../assets/preferences/Cross';
 
 const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, setItemsWithCross }) => {
   const dispatch = useDispatch();
-  // const [columns, setColumns] = useState();
   const getPreferences = useSelector(prefActions.getPrefs);
   const persistedTheme = useSelector((state) => state.utils.theme);
+
+  const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
+  const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
+
+  useEffect(() => {
+    if (prefSearchRes?.length !== 0) {
+      setColumns((prevColumns) => {
+        const newList = prefSearchRes?.data.data || [];
+        const filteredList = newList.filter(
+          (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
+        );
+
+        return {
+          ...prevColumns,
+          All: {
+            ...prevColumns.All,
+            list: filteredList || [],
+          },
+        };
+      });
+    } else {
+      if (isSuccess) {
+        setColumns((prevColumns) => {
+          const newList = topicsData?.data.data || [];
+          const filteredList = newList.filter(
+            (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
+          );
+
+          return {
+            ...prevColumns,
+            All: {
+              ...prevColumns.All,
+              list: filteredList || [],
+            },
+          };
+        });
+      }
+    }
+  }, [topicsData, prefSearchRes, isSuccess]);
 
   const handleSearch = (e) => {
     dispatch(prefActions.setTopicSearch(e.target.value));
@@ -113,11 +152,6 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
 
         <div onClick={handleClose} className="cursor-pointer">
           <img src="/assets/preferences/close.png" alt="close" className="h-2 w-2 tablet:h-6 tablet:w-6" />
-          {/* <Cross
-            styles={
-              'w-[0.8rem] text-white h-[0.8rem] tablet:w-5 tablet:h-5 laptop:w-[27px] laptop:h-[27px] absolute top-[0.38rem] right-[0.32rem] tablet:right-[18px] tablet:top-[15px] laptop:right-[1.28rem] laptop:top-[1.44rem] cursor-pointer'
-            }
-          /> */}
         </div>
       </div>
       <div className="relative h-full w-[90vw] px-[1.19rem] py-[12px] tablet:w-fit tablet:px-[35px] tablet:py-[25px] border-b-2 border-x-2 tablet:border-b-[6px] tablet:border-x-[6px] border-[#DEE6F7] dark:border-[#8B8B8B] rounded-b-[0.9375rem] tablet:rounded-b-[37px]">
@@ -246,7 +280,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
             </div>
           </DragDropContext>
         </div>
-      </div>{' '}
+      </div>
     </div>
   );
 };

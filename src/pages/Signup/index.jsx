@@ -20,11 +20,16 @@ import { Button as UiButton } from '../../components/ui/Button';
 import { LoginSocialGoogle } from 'reactjs-social-login';
 import Loader from './components/Loader';
 import SocialLoginsDummy from './components/SocialLoginsDummy';
+import { signUpGuest } from '../../services/api/userAuth';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../features/auth/authSlice';
+import { useMutation } from '@tanstack/react-query';
 
 const REDIRECT_URI = window.location.href;
 
 export default function Signup() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [reTypePassword, setReTypePassword] = useState('');
@@ -47,7 +52,11 @@ export default function Signup() {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const handleReferralOpen = () => setIsReferral(true);
-  const handleReferralClose = () => setIsReferral(false);
+  const handleReferralClose = () => {
+    setIsReferral(false);
+    setIsLoading(false);
+    setIsLoadingSocial(false);
+  };
   const handlePopupOpen = () => setIspopup(true);
   const handlePopupClose = () => setIspopup(false);
 
@@ -84,50 +93,70 @@ export default function Signup() {
     setEmail('');
   };
 
+  const { mutateAsync: guestSignup } = useMutation({
+    mutationFn: signUpGuest,
+  });
+
+  const handleGuestSignup = async () => {
+    setIsLoading(true);
+
+    try {
+      if (password === reTypePassword) {
+        const resp = await guestSignup({ email, password, uuid: localStorage.getItem('uuid') });
+        if (resp.status === 200) {
+          toast.success('A verification email has been sent to your email address. Please check your inbox.');
+
+          setEmail('');
+          setPassword('');
+          setIsLoading(false);
+        }
+      } else {
+        toast.warning('Password does not match');
+        setIsLoading(false);
+      }
+    } catch (e) {
+      setErrorMessage(e.response.data.message.split(':')[1]);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSignup = async () => {
     if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
 
     setIsLoadingSocial(true);
-    handleReferralOpen();
-
-    // setIsLoading(true);
-
-    // try {
-    //   if (password === reTypePassword) {
-    //     const resp = await userSignup({ email, password });
-
-    //     if (resp.status === 200) {
-    //       toast.success('A verification email has been sent to your email address. Please check your inbox.');
-
-    //       setEmail('');
-    //       setPassword('');
-    //     }
-    //   } else {
-    //     toast.warning('Password does not match');
-    //   }
-    // } catch (e) {
-    //   toast.error(e.response.data.message.split(':')[1]);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    if (localStorage.getItem('isGuestMode')) {
+      handleGuestSignup();
+    } else {
+      handleReferralOpen();
+    }
+  };
+  const handleSignUpSocialGuest = async (data) => {
+    try {
+      data.uuid = localStorage.getItem('uuid');
+      const res = await api.post(`/user/signUpSocial/guestMode`, data);
+      if (res.status === 200) {
+        dispatch(addUser(res.data));
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+      setIsLoading(false);
+      setIsLoadingSocial(false);
+    } finally {
+    }
   };
 
   const handleSignUpSocial = async (data) => {
     setSocialAccount({ isSocial: true, data });
-    handleReferralOpen();
-    return;
-    // try {
-    //   const res = await api.post(`/user/signUpUser/social`, {
-    //     data,
-    //   });
-    //   if (res.data.required_action) {
-    //     setModalVisible(true);
-    //     setResData(res.data);
-    //   }
-    // } catch (error) {
-    //   toast.error(error.response.data.message.split(':')[1]);
-    // }
+    if (localStorage.getItem('isGuestMode')) {
+      handleSignUpSocialGuest(data);
+    } else {
+      handleReferralOpen();
+      return;
+    }
   };
 
   const handleSignUpSocialAfterReferral = async (data) => {

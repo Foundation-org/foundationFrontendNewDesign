@@ -209,17 +209,7 @@ const SidebarRight = () => {
   };
 
   const handleGuestLogout = async () => {
-    try {
-      const res = await api.post('user/logout');
-      if (res.status === 200) {
-        dispatch(filterActions.resetFilters());
-        localStorage.clear();
-        navigate('/signup');
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message.split(':')[1]);
-    }
+    navigate('/guest-signup');
   };
 
   return (
@@ -266,7 +256,7 @@ const SidebarRight = () => {
             </p>
           </div>
         </div>
-        {localStorage.getItem('isGuestMode') ? (
+        {persistedUserInfo.role !== 'user' ? (
           <div className="mb-[5vh] flex items-center gap-6">
             <div className="relative h-fit w-fit">
               <img
