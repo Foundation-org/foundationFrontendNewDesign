@@ -452,7 +452,7 @@ const VerificationBadges = () => {
           Social
         </h1>
         <div className="flex items-center justify-center">
-          <div className="flex gap-[5px] tablet:gap-[10.59px] items-center justify-center">
+          <div className="flex tablet:gap-[10.59px] items-center justify-center">
             <img
               src="/assets/profile/Facebook-2x.png"
               alt="Facebook"
@@ -502,7 +502,7 @@ const VerificationBadges = () => {
 
         {socials.map((item, index) => (
           <div
-            className={`flex items-center justify-center gap-[5px] tablet:gap-[10.59px] ${item.disabled ? 'opacity-[60%]' : ''}`}
+            className={`flex items-center justify-center tablet:gap-[10.59px] ${item.disabled ? 'opacity-[60%]' : ''}`}
             key={index}
           >
             <img
@@ -533,7 +533,7 @@ const VerificationBadges = () => {
           Web 3
         </h1>
         {web3.map((item, index) => (
-          <div className="flex items-center justify-center gap-[5px] tablet:gap-[10.59px] opacity-[60%]" key={index}>
+          <div className="flex items-center justify-center tablet:gap-[10.59px] opacity-[60%]" key={index}>
             <img
               src={item.image}
               alt={item.title}
@@ -553,7 +553,7 @@ const VerificationBadges = () => {
           Personal
         </h1>
         {personal.map((item, index) => (
-          <div className="flex items-center justify-center gap-[5px] tablet:gap-[10.59px]  opacity-[60%]" key={index}>
+          <div className="flex items-center justify-center tablet:gap-[10.59px]  opacity-[60%]" key={index}>
             <img
               src={item.image}
               alt={item.title}
