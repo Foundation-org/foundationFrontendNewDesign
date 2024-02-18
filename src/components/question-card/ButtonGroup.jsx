@@ -187,7 +187,7 @@ const ButtonGroup = ({
                 title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button
                     onClick={() => {
-                      toast.warning('Please Signup to use this feature');
+                      toast.warning('Please create an account to unlock this feature');
                     }}
                     variant={'addOption'}
                   >
@@ -233,7 +233,7 @@ const ButtonGroup = ({
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
                   onClick={() => {
-                    toast.warning('Please Signup to use this feature');
+                    toast.warning('Please create an account to unlock this feature');
                   }}
                 >
                   Change
@@ -251,7 +251,7 @@ const ButtonGroup = ({
               title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                 <Button
                   onClick={() => {
-                    toast.warning('Please Signup to use this feature');
+                    toast.warning('Please create an account to unlock this feature');
                   }}
                   variant={'addOption'}
                 >
@@ -281,7 +281,7 @@ const ButtonGroup = ({
                     variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                     disabled={result === ', you are good to go' ? false : true}
                     onClick={() => {
-                      toast.warning('Please Signup to use this feature');
+                      toast.warning('Please create an account to unlock this feature');
                     }}
                   >
                     Change
@@ -315,7 +315,7 @@ const ButtonGroup = ({
                 title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button
                     onClick={() => {
-                      toast.warning('Please Signup to use this feature');
+                      toast.warning('Please create an account to unlock this feature');
                     }}
                     variant={'addOption'}
                   >

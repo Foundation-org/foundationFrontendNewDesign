@@ -86,7 +86,7 @@ const MultipleChoice = () => {
 
   const handleSubmit = async () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning('Please Signup to use this feature');
+      toast.warning('Please create an account to unlock this feature');
       return;
     }
 

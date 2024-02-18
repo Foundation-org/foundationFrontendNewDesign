@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useMutation ,useQueryClient} from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Tooltip } from '../../../../../utils/Tooltip';
 import { updateQuestion, checkQuestion } from '../../../../../features/createQuest/createQuestSlice';
 import YesNoOptions from '../components/YesNoOptions';
@@ -45,13 +45,13 @@ const YesNo = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
-        navigate('/dashboard');
-        toast.success('Successfully Created');
-        setLoading(false);
-        setQuestion('');
-        setChangedOption('');
-        setChangeState(false);
-        dispatch(createQuestAction.resetCreateQuest());
+          navigate('/dashboard');
+          toast.success('Successfully Created');
+          setLoading(false);
+          setQuestion('');
+          setChangedOption('');
+          setChangeState(false);
+          dispatch(createQuestAction.resetCreateQuest());
         }, 500);
       }
       queryClient.invalidateQueries('FeedData');
@@ -80,7 +80,7 @@ const YesNo = () => {
 
   const handleSubmit = async () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning('Please Signup to use this feature');
+      toast.warning('Please create an account to unlock this feature');
       return;
     }
 
@@ -205,8 +205,11 @@ const YesNo = () => {
         <p className="my-1 tablet:mt-5 tablet:mb-[10px] text-center text-[8px] font-normal leading-normal text-[#85898C] dark:text-[#D8D8D8] tablet:text-[16px]">
           &#x200B;
         </p>
-        <div  className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
-          <h5 id="setting" className="text-center text-[10px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[25px]">
+        <div className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
+          <h5
+            id="setting"
+            className="text-center text-[10px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[25px]"
+          >
             Settings
           </h5>
           <ChangeChoiceOption

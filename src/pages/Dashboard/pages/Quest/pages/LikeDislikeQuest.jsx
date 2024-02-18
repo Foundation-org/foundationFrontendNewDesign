@@ -7,7 +7,7 @@ import {
   getTopicOfValidatedQuestion,
   questionValidation,
 } from '../../../../../services/api/questsApi';
-import { useMutation ,useQueryClient} from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import AgreeDisagreeOptions from '../components/AgreeDisagreeOptions';
 import { Tooltip } from '../../../../../utils/Tooltip';
 
@@ -50,17 +50,16 @@ const LikeDislike = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
-        navigate('/dashboard');
-        toast.success('Successfully Created');
-        setLoading(false);
-        setQuestion('');
-        setChangedOption('');
-        setChangeState(false);
-        dispatch(createQuestAction.resetCreateQuest());
+          navigate('/dashboard');
+          toast.success('Successfully Created');
+          setLoading(false);
+          setQuestion('');
+          setChangedOption('');
+          setChangeState(false);
+          dispatch(createQuestAction.resetCreateQuest());
         }, 500);
       }
       queryClient.invalidateQueries('FeedData');
-
     },
     onError: (err) => {
       if (err.response) {
@@ -84,10 +83,9 @@ const LikeDislike = () => {
     }
   };
 
-
   const handleSubmit = async () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning('Please Signup to use this feature');
+      toast.warning('Please create an account to unlock this feature');
       return;
     }
 
