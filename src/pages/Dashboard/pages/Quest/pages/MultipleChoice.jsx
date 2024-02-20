@@ -4,20 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import Options from '../components/Options';
-import {
-  checkUniqueQuestion,
-  createInfoQuest,
-  getTopicOfValidatedQuestion,
-} from '../../../../../services/api/questsApi';
+import { createInfoQuest, getTopicOfValidatedQuestion } from '../../../../../services/api/questsApi';
 import CustomSwitch from '../../../../../components/CustomSwitch';
 import { Tooltip } from '../../../../../utils/Tooltip';
 import ChangeChoiceOption from '../components/ChangeChoiceOption';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../../../components/ui/Button';
-import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import { updateMultipleChoice } from '../../../../../features/createQuest/createQuestSlice';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+
+import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -290,10 +287,25 @@ const MultipleChoice = () => {
   }, [questionStatus]);
 
   useEffect(() => {
-    setTypedValues(optionsValue);
-    const tempcheck = optionsValue.some((value) => value.optionStatus.name === 'Checking');
-    setOptionWaiting(tempcheck);
-  }, [optionsValue]);
+    let debounceTimer;
+
+    const updateTypedValuesWithDelay = (value) => {
+      if (debounceTimer) {
+        clearTimeout(debounceTimer);
+      }
+
+      debounceTimer = setTimeout(() => {
+        setTypedValues(value);
+      }, 500);
+    };
+
+    updateTypedValuesWithDelay(optionsValue);
+
+    // Cleanup
+    return () => {
+      clearTimeout(debounceTimer);
+    };
+  }, [optionsValue, setTypedValues]);
 
   return (
     <>
