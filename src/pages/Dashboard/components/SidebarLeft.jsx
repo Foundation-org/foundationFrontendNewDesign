@@ -258,7 +258,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             <Dropdown2
               label={'Status'}
               title={filterStates.filterByStatus ? filterStates.filterByStatus : 'All'}
-              items={['All', 'Never Participated', 'Participated']}
+              items={['All', 'Not Participated', 'Participated']}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterByStatus(item));
               }}
@@ -359,7 +359,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
           <Dropdown2
             label={'Status'}
             title={filterStates.filterByStatus ? filterStates.filterByStatus : 'All'}
-            items={['All', 'Never Participated', 'Participated']}
+            items={['All', 'Not Participated', 'Participated']}
             handleSelect={(item) => {
               dispatch(filtersActions.setFilterByStatus(item));
             }}
