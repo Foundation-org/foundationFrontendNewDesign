@@ -272,6 +272,7 @@ const MultipleChoice = () => {
       document.getElementById(`input-${index}`).blur();
     } else {
       if (key === 'Enter') {
+        event.preventDefault();
         document.getElementById(`input-${index + 1}`).focus();
       } else {
         document.getElementById(`input-${index}`).focus();
