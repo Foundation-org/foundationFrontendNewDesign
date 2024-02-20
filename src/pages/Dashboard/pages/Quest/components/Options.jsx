@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Tooltip } from '../../../../../utils/Tooltip';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 
 const Options = ({
   snapshot,
@@ -89,7 +90,7 @@ const Options = ({
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
                 } h-[24.8px] w-5 min-w-5 border-y tablet:border-y-[3px] tablet:h-[50.19px] laptop:h-[45px]`}
               ></div>
-              <input
+              {/* <input
                 id={`input-${number}`}
                 className={`${
                   snapshot.isDragging
@@ -104,6 +105,22 @@ const Options = ({
                 onKeyDown={(e) =>
                   (e.key === 'Tab' && handleTab(number)) || (e.key === 'Enter' && handleTab(number, 'Enter'))
                 }
+              /> */}
+              <TextareaAutosize
+                id={`input-${number}`}
+                onChange={(e) => handleChange(e.target.value)}
+                onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value.trim())}
+                value={typedValue}
+                placeholder="Add your own option"
+                tabIndex={number + 1}
+                onKeyDown={(e) =>
+                  (e.key === 'Tab' && handleTab(number)) || (e.key === 'Enter' && handleTab(number, 'Enter'))
+                }
+                className={`${
+                  snapshot.isDragging
+                    ? 'border-[#5FA3D5] bg-[#F2F6FF]'
+                    : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
+                } w-full resize-none border-y tablet:border-y-[3px] h-[24.8px] tablet:h-[51px] laptop:h-[45px] text-[0.625rem] font-normal text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:pt-[6px] tablet:pb-[7px] tablet:text-[1.296rem] laptop:leading-none laptop:text-[18px]`}
               />
               <div
                 id={`test${number}`}
