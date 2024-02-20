@@ -28,9 +28,9 @@ export const applyFilters = (params, filterStates, columns) => {
 
 export const fetchDataByStatus = async (params, filterStates) => {
   switch (filterStates.filterByStatus) {
-    case 'Unanswered':
+    case 'Never Participated':
       return await HomepageAPIs.getAllUnanswered(params);
-    case 'Answered':
+    case 'Participated':
       return await HomepageAPIs.getAllAnswered(params);
     case 'Completed':
       return await HomepageAPIs.getAllCompleted(params);

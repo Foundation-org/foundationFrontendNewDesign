@@ -20,6 +20,7 @@ import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import * as questServices from '../../../../../services/api/questsApi';
 import * as authActions from '../../../../../features/auth/authSlice';
 import { questSelectionInitial } from '../../../../../constants/quests';
+import Spacing from '../../../../../components/question-card/Spacing';
 
 const QuestionCard = (props) => {
   const dispatch = useDispatch();
@@ -665,7 +666,7 @@ const QuestionCard = (props) => {
     if (viewResult === questStartData._id) {
       return (
         <>
-          <QuestInfoText questStartData={questStartData} show={false} questType={questStartData.whichTypeQuestion} />
+          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
           <Result
             questStartData={questStartData}
             id={questStartData._id}
@@ -686,7 +687,8 @@ const QuestionCard = (props) => {
             questSelection={questSelection}
             cardSize={cardSize}
           />
-          <ConditionalTextFullScreen questStartData={questStartData} show={false} />
+          <QuestInfoText questStartData={questStartData} show={false} questType={questStartData.whichTypeQuestion} />
+          {/* <ConditionalTextFullScreen questStartData={questStartData} show={false} /> */}
         </>
       );
     }
@@ -694,7 +696,8 @@ const QuestionCard = (props) => {
     if (startTest === questStartData._id) {
       return (
         <>
-          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -723,7 +726,8 @@ const QuestionCard = (props) => {
             checkOptionStatus={checkOptionStatus}
             setCheckOptionStatus={setCheckOptionStatus}
           />
-          <ConditionalTextFullScreen questStartData={questStartData} show={true} />
+          {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
+          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
         </>
       );
     } else {

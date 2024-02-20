@@ -406,12 +406,12 @@ const RankChoice = () => {
             </h5>
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
-          <ChangeChoiceOption
+          {/* <ChangeChoiceOption
             changedOption={changedOption}
             changeState={changeState}
             setChangeState={setChangeState}
             setChangedOption={setChangedOption}
-          />
+          /> */}
         </div>
         <div className="flex w-full justify-end">
           {hollow ? (
