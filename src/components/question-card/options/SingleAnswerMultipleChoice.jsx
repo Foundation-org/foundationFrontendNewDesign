@@ -10,11 +10,13 @@ import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 
 import * as questServices from '../../../services/api/questsApi';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
+import ObjectionPopUp from '../../ObjectionPopUp';
 
 const SingleAnswerMultipleChoice = (props) => {
   const id = props.id;
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [modalVisible, setModalVisible] = useState(false);
   const [checkState, setCheckState] = useState(props.check);
   const [contendState, setContendState] = useState(props.contend);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -29,6 +31,9 @@ const SingleAnswerMultipleChoice = (props) => {
   const [prevValue, setPrevValue] = useState('');
 
   const handleDeleteClose = () => setDeleteModal(false);
+
+  const handlePopUpOpen = () => setModalVisible(true);
+  const handlePopUpClose = () => setModalVisible(false);
 
   useEffect(() => {
     setCheckState(props.check);
@@ -46,15 +51,24 @@ const SingleAnswerMultipleChoice = (props) => {
     });
   };
 
-  const handleContendChange = () => {
+  // const handleContendChange = () => {
+  //   if (checkState) {
+  //     handleCheckChange(false);
+  //     props.handleCheckChange(false);
+  //   }
+  //   setContendState((prevState) => {
+  //     props.handleContendChange(!prevState);
+  //     return !prevState;
+  //   });
+  // };
+
+  const handleContendChange = (state) => {
     if (checkState) {
       handleCheckChange(false);
       props.handleCheckChange(false);
     }
-    setContendState((prevState) => {
-      props.handleContendChange(!prevState);
-      return !prevState;
-    });
+    props.handleContendChange(state);
+    setContendState(state);
   };
 
   const handleInputChange = (e) => {
@@ -260,7 +274,7 @@ const SingleAnswerMultipleChoice = (props) => {
         {props.btnText !== 'Results' ? (
           <div
             className="flex w-12 min-w-[48px] items-center bg-white pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]"
-            onClick={handleContendChange}
+            onClick={handlePopUpOpen}
           >
             {props.deleteable ? (
               <img
@@ -318,6 +332,14 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         )}
       </div>
+
+      {/* =============== Objection PopUp */}
+      <ObjectionPopUp
+        modalVisible={modalVisible}
+        handleClose={handlePopUpClose}
+        handleContendChange={handleContendChange}
+        option={props.answer}
+      />
     </div>
   );
 };

@@ -10,12 +10,14 @@ import BasicModal from '../../BasicModal';
 import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
 import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
+import ObjectionPopUp from '../../ObjectionPopUp';
 
 const SingleAnswerRankedChoice = (props) => {
   const id = props.id;
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [modalVisible, setModalVisible] = useState(false);
   const [checkState, setCheckState] = useState(props.check);
   const [contendState, setContendState] = useState(props.contend);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -30,6 +32,9 @@ const SingleAnswerRankedChoice = (props) => {
   const [prevValue, setPrevValue] = useState('');
 
   const handleDeleteClose = () => setDeleteModal(false);
+
+  const handlePopUpOpen = () => setModalVisible(true);
+  const handlePopUpClose = () => setModalVisible(false);
 
   useEffect(() => {
     setCheckState(props.check);
@@ -121,16 +126,21 @@ const SingleAnswerRankedChoice = (props) => {
     props.setAddOptionField(0);
   };
 
-  const handleContendChange = () => {
-    setContendState((prevState) => {
-      if (checkState) {
-        handleCheckChange(false);
-        props.handleCheckChange(false);
-      }
-
-      props.handleContendChange(!prevState);
-      return !prevState;
-    });
+  const handleContendChange = (state) => {
+    // setContendState((prevState) => {
+    //   if (checkState) {
+    //     handleCheckChange(false);
+    //     props.handleCheckChange(false);
+    //   }
+    //   props.handleContendChange(!prevState);
+    //   return !prevState;
+    // });
+    if (checkState) {
+      handleCheckChange(false);
+      props.handleCheckChange(false);
+    }
+    props.handleContendChange(state);
+    setContendState(state);
   };
 
   const handleTab = () => {
@@ -247,7 +257,7 @@ const SingleAnswerRankedChoice = (props) => {
       {props.btnText !== 'Results' ? (
         <div
           className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"
-          onClick={handleContendChange}
+          onClick={handlePopUpOpen}
         >
           {props.deleteable ? (
             <img
@@ -301,6 +311,14 @@ const SingleAnswerRankedChoice = (props) => {
           ) : null}
         </div>
       )}
+
+      {/* =============== Objection PopUp */}
+      <ObjectionPopUp
+        modalVisible={modalVisible}
+        handleClose={handlePopUpClose}
+        handleContendChange={handleContendChange}
+        option={props.answer}
+      />
     </div>
   );
 };
