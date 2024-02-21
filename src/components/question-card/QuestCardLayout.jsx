@@ -7,7 +7,7 @@ import QuestBottombar from './QuestBottombar';
 import * as HomepageApis from '../../services/api/homepageApis';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import { useLocation } from 'react-router-dom';
-import ShowHidePostPopup from './ShowHidePostPopup';
+import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
 
 const QuestCardLayout = ({ questStartData, isBookmarked, children }) => {
   const location = useLocation();

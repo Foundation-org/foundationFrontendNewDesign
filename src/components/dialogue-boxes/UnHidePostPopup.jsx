@@ -1,7 +1,7 @@
 import { Button } from '../ui/Button';
 import PopUp from '../ui/PopUp';
 
-export default function UnhindPost({ handleClose, modalVisible }) {
+export default function UnHidePostPopup({ handleClose, modalVisible }) {
   return (
     <PopUp logo={'/assets/dialoguebox/unhide.svg'} title={'Unhide Post'} open={modalVisible} handleClose={handleClose}>
       <div className="px-[18px] py-[10px] tablet:py-[25px] tablet:px-[55px]">

@@ -499,7 +499,7 @@ const ButtonGroup = ({
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                 {btnText !== 'change answer' && (
-                  <span className="text-[7px] tablet:text-[13px] font-semibold leading-[8.4px] tablet:leading-[15.7px] pl-[5px] tablet:pl-[10px]">
+                  <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px]  pl-[5px] tablet:pl-[10px]">
                     (+0.96 FDX)
                   </span>
                 )}
@@ -617,7 +617,7 @@ const ButtonGroup = ({
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                 {btnText !== 'change answer' && (
-                  <span className="text-[7px] tablet:text-[13px] font-semibold leading-[8.4px] tablet:leading-[15.7px] pl-[5px] tablet:pl-[10px]">
+                  <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px]  pl-[5px] tablet:pl-[10px]">
                     (+0.96 FDX)
                   </span>
                 )}

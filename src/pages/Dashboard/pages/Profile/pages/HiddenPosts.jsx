@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { GrClose } from 'react-icons/gr';
-import UnhindPost from '../../../../../components/dialogue-boxes/UnhindPost';
+import UnHidePostPopup from '../../../../../components/dialogue-boxes/UnHidePostPopup';
 import { Button } from '../../../../../components/ui/Button';
 
 export default function HiddenPosts() {
@@ -58,7 +58,7 @@ export default function HiddenPosts() {
       <Button variant={'submit'} onClick={showHidePostOpen}>
         Open Dialogue
       </Button>
-      <UnhindPost handleClose={showHidePostClose} modalVisible={modalVisible} />
+      <UnHidePostPopup handleClose={showHidePostClose} modalVisible={modalVisible} />
     </div>
   );
 }

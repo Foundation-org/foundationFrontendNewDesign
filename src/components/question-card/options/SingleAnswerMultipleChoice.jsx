@@ -71,6 +71,19 @@ const SingleAnswerMultipleChoice = (props) => {
     setContendState(state);
   };
 
+  const handleContendPopup = () => {
+    if (contendState) {
+      if (checkState) {
+        handleCheckChange(false);
+        props.handleCheckChange(false);
+      }
+      props.handleContendChange(false);
+      setContendState(false);
+    } else {
+      handlePopUpOpen();
+    }
+  };
+
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
     props.setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
@@ -212,7 +225,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
               />
             ) : (
-              <h1 className="pb-[5.7px] pr-2 pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
+              <h1 className="pb-[5.7px] px-2 tablet:pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
                 {props.answer}
               </h1>
             )}
@@ -274,7 +287,7 @@ const SingleAnswerMultipleChoice = (props) => {
         {props.btnText !== 'Results' ? (
           <div
             className="flex w-12 min-w-[48px] items-center bg-white pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]"
-            onClick={handlePopUpOpen}
+            onClick={handleContendPopup}
           >
             {props.deleteable ? (
               <img

@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { hideQuest } from '../../services/api/questsApi';
 import { Button } from '../ui/Button';
+import { toast } from 'sonner';
 import PopUp from '../ui/PopUp';
 
 const customStyle = {
@@ -27,13 +30,28 @@ const data = [
 ];
 
 export default function ShowHidePostPopup({ handleClose, modalVisible }) {
-  const [checkboxStates, setCheckboxStates] = useState(data.map(() => true));
+  const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
+  const [selectedTitle, setSelectedTitle] = useState(null);
 
   const handleCheckboxChange = (index) => {
-    const newCheckboxStates = [...checkboxStates];
-    newCheckboxStates[index] = !newCheckboxStates[index];
+    const newCheckboxStates = new Array(data.length).fill(false);
+    newCheckboxStates[index] = true;
     setCheckboxStates(newCheckboxStates);
+
+    setSelectedTitle(data[index].title);
   };
+
+  const { mutateAsync: hidePost } = useMutation({
+    mutationFn: hideQuest,
+    onSuccess: (resp) => {
+      toast.success('Post hide successfully');
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  console.log('selectedTitle', selectedTitle);
 
   return (
     <PopUp
@@ -66,10 +84,17 @@ export default function ShowHidePostPopup({ handleClose, modalVisible }) {
           ))}
         </div>
         <div className="mt-[10px] tablet:mt-[27px] flex justify-center gap-4">
-          <Button variant={'danger'} className={'rounded-[7.58px] laptop:w-[139px]'} onClick={handleClose}>
+          <Button
+            variant={'danger'}
+            className={'rounded-[7.58px] min-w-[68.2px] max-w-[68.2px] tablet:min-w-[139px] tablet:max-w-[139px]'}
+            onClick={handleClose}
+          >
             Cancel
           </Button>
-          <Button variant={'submit'} className={'rounded-[7.58px] laptop:w-[139px]'}>
+          <Button
+            variant={'submit'}
+            className={'rounded-[7.58px] min-w-[68.2px] max-w-[68.2px] tablet:min-w-[139px] tablet:max-w-[139px]'}
+          >
             Submit
           </Button>
         </div>

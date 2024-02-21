@@ -286,8 +286,8 @@ const LikeDislike = () => {
             <div className="pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
               <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()}>
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-                <span className="text-[7px] tablet:text-[13px] font-semibold leading-[8.4px] tablet:leading-[15.7px] pl-[5px] tablet:pl-[10px]">
-                  (-0.5 FDX)
+                <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px]  pl-[5px] tablet:pl-[10px]">
+                  (-0.1 FDX)
                 </span>
               </Button>
             </div>

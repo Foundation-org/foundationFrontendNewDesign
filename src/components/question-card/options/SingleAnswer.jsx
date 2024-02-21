@@ -24,7 +24,7 @@ const SingleAnswer = (props) => {
               width: props.percentage,
             }}
           />
-          <h1 className="pb-[5.7px] pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
+          <h1 className="pb-[5.7px] pl-2 tablet:pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
             {props.answer}
           </h1>
         </div>

@@ -48,7 +48,7 @@ const RankedResult = (props) => {
 
       <div className="rounded-s-[5.387px] flex w-full justify-between rounded-r-[4.73px] border-y border-l-0 border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:rounded-s-[10px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]">
         <div className="flex w-full items-center">
-          <div className="flex h-full min-h-[24px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:min-h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:min-w-[25px] laptop:w-[25px]">
+          <div className="flex h-full min-h-[24px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:min-h-[43px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:min-w-[25px] laptop:w-[25px]">
             &#x200B;
           </div>
           {props.btnText !== 'Results' && (
@@ -67,7 +67,7 @@ const RankedResult = (props) => {
                 width: props?.selectedPercentages && props?.selectedPercentages[props?.answer.trim()],
               }}
             />
-            <h1 className="w-full pb-[6.8px] pl-[18px] pt-[6.7px] pr-[10.8px] tablet:pr-5 laptop:pr-[34px] text-[8.5px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
+            <h1 className="w-full pb-[6.8px] px-2 tablet:pl-[18px] pt-[6.7px] tablet:pr-5 laptop:pr-[34px] text-[8.5px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
               {props.answer}
             </h1>
             <div className="flex items-center gap-[19px]">

@@ -474,8 +474,8 @@ const RankChoice = () => {
                 className="mr-7 mt-[10px] tablet:mt-[30px] tablet:mr-[70px]"
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-                <span className="text-[7px] tablet:text-[13px] font-semibold leading-[8.4px] tablet:leading-[15.7px] pl-[5px] tablet:pl-[10px]">
-                  (-0.5 FDX)
+                <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[10px]">
+                  (-0.1 FDX)
                 </span>
               </Button>
               {/* <button

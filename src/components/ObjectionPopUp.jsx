@@ -24,10 +24,7 @@ export default function ObjectionPopUp({ modalVisible, handleClose, handleConten
               handleClose();
             }}
           >
-            Object{' '}
-            <span className="text-[6px] tablet:text-[15px] leading-[8px] tablet:leading-[18px] pl-1 tablet:pl-2 ">
-              (-0.1 FDX)
-            </span>
+            Object <span className="text-[6px] tablet:text-[15px] leading-[0px] pl-1 tablet:pl-2 ">(-0.1 FDX)</span>
           </Button>
           <Button
             variant="cancel"
