@@ -28,13 +28,6 @@ const YesNo = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
 
-  // const reset = {
-  //   name: 'Ok',
-  //   color: 'text-[#389CE3]',
-  //   tooltipName: 'Please write something...',
-  //   tooltipStyle: 'tooltip-info',
-  // };
-
   // const [questionStatus, setquestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -235,7 +228,7 @@ const YesNo = () => {
         </div> */}
         <div className="flex w-full justify-end">
           {hollow ? (
-            <div className="flex w-full justify-end pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
+            <div className="pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
               <Button
                 variant="hollow-submit"
                 id="submitButton"
@@ -246,14 +239,10 @@ const YesNo = () => {
               </Button>
             </div>
           ) : (
-            <div className="flex w-full justify-end">
-              <button
-                id="submitButton2"
-                className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-                onClick={() => handleSubmit()}
-              >
+            <div className="pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
+              <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()} className="laptop:px-[65px]">
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-              </button>
+              </Button>
             </div>
           )}
         </div>
