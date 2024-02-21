@@ -42,7 +42,9 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'getintouch'
         ? 'addoption-boxShadow bg-[#4A8DBD] text-[10px] font-semibold text-white tablet:text-[1.25rem] px-3 rounded-[2.1px] text-nowrap'
         : '',
-
+      variant === 'danger'
+        ? 'addoption-boxShadow w-[4.875rem] max-w-[10.8125rem] bg-[#DC1010] text-[0.625rem] font-semibold text-white tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
+        : '',
       className,
     )}
     {...props}

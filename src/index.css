@@ -224,6 +224,48 @@ iframe {
   margin-top: 1px;
 }
 
+/* Custom Checkbox for popup */
+#custom-checkbox-popup .checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid #0fb063;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+  outline: none;
+}
+
+#custom-checkbox-popup .checkbox:focus-within {
+  outline: none;
+}
+
+#custom-checkbox-popup .checkbox:checked {
+  background: #0fb063;
+}
+
+#custom-checkbox-popup .checkbox::after {
+  content: url('/assets/svgs/checkmark-small.svg');
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+@media only screen and (min-width: 744px) {
+  #custom-checkbox-popup .checkbox::after {
+    content: url('/assets/svgs/checkmark-tablet.svg');
+    display: none;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+#custom-checkbox-popup .checkbox:checked::after {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #custom-yello-checkbox .checkbox {
   appearance: none;
   -webkit-appearance: none;

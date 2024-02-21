@@ -45,6 +45,14 @@ const SidebarRight = () => {
       title: 'Your Posts-Engaged',
       value: (persistedUserInfo && persistedUserInfo?.usersAnswered) || 0,
     },
+    {
+      id: 4,
+      icon: '/assets/svgs/dashboard/couter-eye.svg',
+      iconLight: '/assets/svgs/dashboard/couter-eye.svg',
+      alt: 'your-post-hidden',
+      title: 'Your Posts-Hidden',
+      value: (persistedUserInfo && persistedUserInfo?.postsHidden) || 0,
+    },
     // {
     //   id: 3,
     //   icon: "/assets/svgs/dashboard/wronganswers.svg",

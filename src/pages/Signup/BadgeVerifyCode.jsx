@@ -3,16 +3,13 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { url } from '../../services/api/Axios';
 import { useNavigate } from 'react-router-dom';
-// import { useMutation } from '@tanstack/react-query';
-// import { userInfo, userInfoById } from '../../services/api/userAuth';
 import { addUser } from '../../features/auth/authSlice';
-// import PopUp from '../../components/ui/PopUp';
 import { Button as UiButton } from '../../components/ui/Button';
 
 const BadgeVerifyCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [urlQuery, seturlQuery] = useState({token: "", badge: ""});
+  const [urlQuery, seturlQuery] = useState({ token: '', badge: '' });
   const [showDialogBox, setShowDialogBox] = useState(false);
   const [verificationCode, setVerificationCode] = useState([]);
   const [msg, setMsg] = useState('');
@@ -21,9 +18,9 @@ const BadgeVerifyCode = () => {
     let queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
 
-    const token = urlParams.get('token')
-    const badge = urlParams.get('badge')
-    seturlQuery({token, badge});
+    const token = urlParams.get('token');
+    const badge = urlParams.get('badge');
+    seturlQuery({ token, badge });
     fetch(`${url}/addBadge/contact/verify`, {
       method: 'POST',
       headers: {
@@ -62,11 +59,11 @@ const BadgeVerifyCode = () => {
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      handleVerify({token: urlQuery.token});
+      handleVerify({ token: urlQuery.token });
     }
   };
 
-  const handleVerify = async ({token}) => {
+  const handleVerify = async ({ token }) => {
     const apiUrl = `${url}/addBadge/contact/add`;
     const verificationCode = token.substr(token.length - 6);
 
@@ -90,7 +87,7 @@ const BadgeVerifyCode = () => {
       }
     } catch (error) {
       console.log('Error during API request:', error.message);
-      console.log("🚀 ~ useEffect ~ error:", error)
+      console.log('🚀 ~ useEffect ~ error:', error);
       toast.error(error.response.data.message.split(':')[1]);
     }
   };
@@ -171,7 +168,7 @@ const BadgeVerifyCode = () => {
                     <button
                       className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-[#389CE3] border-none text-white text-sm shadow-sm"
                       onClick={() => {
-                        handleVerify({token: urlQuery.token});
+                        handleVerify({ token: urlQuery.token });
                       }}
                     >
                       Verify Account
@@ -203,4 +200,3 @@ const BadgeVerifyCode = () => {
 };
 
 export default BadgeVerifyCode;
-

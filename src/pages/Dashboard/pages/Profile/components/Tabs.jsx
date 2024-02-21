@@ -42,6 +42,19 @@ const Tabs = ({ handleSelectedTab, active }) => {
       >
         Ledger
       </Link>
+      <Link
+        to={'hidden-posts'}
+        className={`${
+          active === '/profile/hidden-posts/' || active === '/profile/hidden-posts'
+            ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black'
+            : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
+        } tab-button`}
+        onClick={() => {
+          handleSelectedTab('/profile/hidden-posts');
+        }}
+      >
+        Hidden Post
+      </Link>
       {/* <Link
         to={"change-password"}
         className={`${
