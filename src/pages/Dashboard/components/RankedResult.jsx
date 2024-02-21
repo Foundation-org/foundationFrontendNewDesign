@@ -67,7 +67,7 @@ const RankedResult = (props) => {
                 width: props?.selectedPercentages && props?.selectedPercentages[props?.answer.trim()],
               }}
             />
-            <h1 className="w-full pb-[6.8px] pl-[18px] pt-[6.7px] text-[8.5px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
+            <h1 className="w-full pb-[6.8px] pl-[18px] pt-[6.7px] pr-[10.8px] tablet:pr-5 laptop:pr-[34px] text-[8.5px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
               {props.answer}
             </h1>
             <div className="flex items-center gap-[19px]">
