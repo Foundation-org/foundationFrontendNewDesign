@@ -4,7 +4,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import * as QuestServices from '../../../../services/queries/quest';
 import * as prefActions from '../../../../features/preferences/prefSlice';
-import {Button} from '../../../../components/ui/Button';
+import { Button } from '../../../../components/ui/Button';
 // icons
 import { IoClose } from 'react-icons/io5';
 import { GrClose } from 'react-icons/gr';
@@ -24,9 +24,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
         // const filteredList = newList.filter(
         //   (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
         // );
-        const filteredList = newList.filter(
-          (item) => !prevColumns.Block.list.includes(item) ,
-        );
+        const filteredList = newList.filter((item) => !prevColumns.Block.list.includes(item));
 
         return {
           ...prevColumns,
@@ -44,9 +42,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
           //   (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
           // );
 
-          const filteredList = newList.filter(
-            (item) => !prevColumns.Block.list.includes(item),
-          );
+          const filteredList = newList.filter((item) => !prevColumns.Block.list.includes(item));
 
           return {
             ...prevColumns,
@@ -209,11 +205,11 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                           col.id === 'All' ? 'rounded-t-[0.5rem]' : ''
                         } bg-[#DEE6F7] text-center text-[1rem] font-semibold text-[#535353] dark:bg-[#000] dark:text-white tablet:text-[1.4rem] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem]`}
                       >
-                        {col.id === 'Preferences' ? 'Show Only' : col.id === 'Block'?'Hide': col.id}
+                        {col.id === 'Preferences' ? 'Show Only' : col.id === 'Block' ? 'Hide' : col.id}
                       </h2>
                       <div className="h-full border-b-[3px] border-x-[3px] tablet:border-b-[6px] tablet:border-x-[6px] border-[#DEE6F7] bg-[#FCFCFD] pr-1 dark:border-[#212121] dark:bg-[#212121] laptop:rounded-b-[1.25rem]">
                         <div
-                          className="custom-scrollbar overflow-x-hidden flex h-[18vh] min-h-[19vh] flex-col gap-[0.4rem] overflow-y-auto bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] dark:bg-[#212121] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem]"
+                          className="custom-scrollbar overflow-x-hidden flex h-[25vh] min-h-[25vh] flex-col gap-[0.4rem] overflow-y-auto bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] dark:bg-[#212121] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem]"
                           {...provided.droppableProps}
                           ref={provided.innerRef}
                           s
@@ -287,11 +283,14 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
             </div>
           </DragDropContext>
         </div>
-        <div className='flex justify-center items-center mt-4'>
-          <Button variant={'submit'}  onClick={() => {
+        <div className="flex justify-center items-center mt-4">
+          <Button
+            variant={'submit'}
+            onClick={() => {
               handleClose();
-            }}>
-                 Done
+            }}
+          >
+            Done
           </Button>
         </div>
       </div>
