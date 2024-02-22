@@ -42,6 +42,7 @@ const QuestStartSection = () => {
   const columnsData = localStorage.getItem('columns');
   const parsedColumns = JSON.parse(columnsData);
   const [columns, setColumns] = useState(parsedColumns || initialColumns);
+  console.log('column', parsedColumns);
   const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
   // Quest Services

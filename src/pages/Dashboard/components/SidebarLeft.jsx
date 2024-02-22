@@ -109,6 +109,8 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
         dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
         dispatch(filtersActions.setExpandedView(persistedUserInfo.bookmarkStates.expandedView));
         dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
+        const stateString = JSON.stringify(persistedUserInfo?.bookmarkStates?.columns);
+        localStorage.setItem('bookmarkColumns', stateString);
       } else {
         dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.filterByScope));
         dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
@@ -116,6 +118,8 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
         dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
         dispatch(filtersActions.setExpandedView(persistedUserInfo.States.expandedView));
         dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
+        const stateString = JSON.stringify(persistedUserInfo?.States?.columns);
+        localStorage.setItem('columns', stateString);
       }
     }
   }, [persistedUserInfo]);
@@ -127,9 +131,12 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
     if (pathname === '/dashboard/bookmark') {
       setBookmarkFilters(filterStates);
     } else {
-      setFilters(filterStates, columns);
+      setFilters({
+        ...filterStates,
+        columns: columns,
+      });
     }
-  }, [filterStates]);
+  }, [filterStates, columns]);
 
   const [multipleOption, setMultipleOption] = useState(
     localStorage.getItem('filterByState') !== undefined
@@ -269,14 +276,22 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
                 filterStates.filterByType && filterStates.filterByType === 'Multiple Choise'
                   ? 'Multiple Choice'
                   : filterStates.filterByType === 'Open Choice'
-                  ? 'Open Choice'
-                  : filterStates.filterByType === 'Ranked Choise'
-                    ? 'Ranked Choice'
-                    : filterStates.filterByType
-                      ? filterStates.filterByType
-                      : 'All'
+                    ? 'Open Choice'
+                    : filterStates.filterByType === 'Ranked Choise'
+                      ? 'Ranked Choice'
+                      : filterStates.filterByType
+                        ? filterStates.filterByType
+                        : 'All'
               }
-              items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choice','Open Choice','Ranked Choice']}
+              items={[
+                'All',
+                'Yes/No',
+                'Agree/Disagree',
+                'Like/Dislike',
+                'Multiple Choice',
+                'Open Choice',
+                'Ranked Choice',
+              ]}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterByType(item));
               }}
@@ -372,14 +387,22 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
               filterStates.filterByType && filterStates.filterByType === 'Multiple Choise'
                 ? 'Multiple Choice'
                 : filterStates.filterByType === 'Open Choice'
-                ? 'Open Choice'
-                : filterStates.filterByType === 'Ranked Choise'
-                  ? 'Ranked Choice'
-                  : filterStates.filterByType
-                    ? filterStates.filterByType
-                    : 'All'
+                  ? 'Open Choice'
+                  : filterStates.filterByType === 'Ranked Choise'
+                    ? 'Ranked Choice'
+                    : filterStates.filterByType
+                      ? filterStates.filterByType
+                      : 'All'
             }
-            items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choice','Open Choice', 'Ranked Choice']}
+            items={[
+              'All',
+              'Yes/No',
+              'Agree/Disagree',
+              'Like/Dislike',
+              'Multiple Choice',
+              'Open Choice',
+              'Ranked Choice',
+            ]}
             handleSelect={(item) => {
               dispatch(filtersActions.setFilterByType(item));
             }}
