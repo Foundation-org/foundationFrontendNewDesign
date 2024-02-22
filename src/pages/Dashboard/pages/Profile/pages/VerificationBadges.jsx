@@ -406,6 +406,9 @@ const VerificationBadges = () => {
               }
             >
               {checkPersonal(item.type) ? 'Added' : item.ButtonText}
+              <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                {checkPersonal(item.type) ? '' : '(+0.96 FDX)'}
+              </span>
             </Button>
           </div>
         ))}
@@ -434,6 +437,9 @@ const VerificationBadges = () => {
                 }}
               >
                 {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
+                <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                  {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
+                </span>
               </Button>
             ) : (
               <LoginSocialFacebook
@@ -455,6 +461,9 @@ const VerificationBadges = () => {
                   }}
                 >
                   {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
+                  <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                    {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
+                  </span>
                 </Button>
               </LoginSocialFacebook>
             )}
@@ -484,6 +493,9 @@ const VerificationBadges = () => {
               disabled={item.disabled}
             >
               {checkSocial(item.accountName) ? 'Remove' : item.ButtonText}
+              <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                {checkSocial(item.accountName) ? '' : '(+0.96 FDX)'}
+              </span>
             </Button>
           </div>
         ))}
@@ -504,7 +516,12 @@ const VerificationBadges = () => {
             >
               <h1>{item.title}</h1>
             </div>
-            <Button color={item.ButtonColor}>{item.ButtonText}</Button>
+            <Button color={item.ButtonColor}>
+              {item.ButtonText}{' '}
+              <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                (+0.96 FDX)
+              </span>
+            </Button>
           </div>
         ))}
         <h1 className="font-500 font-Inter text-[9.74px] tablet:text-[1.7vw] font-medium text-[#000] dark:text-white my-[3px]">
@@ -536,7 +553,12 @@ const VerificationBadges = () => {
             ) : (
               <Button color={item.ButtonColor}>{item.ButtonText}</Button>
             )} */}
-            <Button color={item.ButtonColor}>{item.ButtonText}</Button>
+            <Button color={item.ButtonColor}>
+              {item.ButtonText}
+              <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                (+0.96 FDX)
+              </span>
+            </Button>
           </div>
         ))}
       </div>

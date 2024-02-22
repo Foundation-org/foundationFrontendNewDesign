@@ -228,7 +228,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                                         snapshot.isDragging
                                           ? 'border-[#5FA3D5]'
                                           : 'border-[#DEE6F7] dark:border-[#282828]'
-                                      } flex h-[19.7px] w-[0.6rem] min-w-[0.6rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] dark:bg-[#8E8E8E] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
+                                      } flex h-6 w-[0.7rem] min-w-[0.7rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] dark:bg-[#8E8E8E] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
                                     >
                                       {persistedTheme === 'dark' ? (
                                         <img
@@ -249,7 +249,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                                         snapshot.isDragging
                                           ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                                           : 'border-[#ACACAC] bg-[#FCFCFD] dark:bg-[#282828]'
-                                      } flex h-[19.7px] w-fit select-none items-center gap-[5px] truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] dark:text-white tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px]`}
+                                      } flex h-6 w-fit select-none items-center gap-[5px] truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] dark:text-white tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px]`}
                                     >
                                       {text}
                                       {col.id !== 'All' && (

@@ -53,7 +53,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
           handleSelectedTab('/profile/hidden-posts');
         }}
       >
-        Hidden Post
+        Hidden Posts
       </Link>
       {/* <Link
         to={"change-password"}

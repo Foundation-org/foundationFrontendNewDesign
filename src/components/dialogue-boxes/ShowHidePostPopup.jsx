@@ -67,7 +67,8 @@ export default function ShowHidePostPopup({ handleClose, modalVisible }) {
           {data.map((item, index) => (
             <div
               id={item.id}
-              className="border-[1.52px] tablet:border-[3px] border-[#DEE6F7] rounded-[5.05px] tablet:rounded-[10px] w-full py-[5px] px-[10px] tablet:py-3 min-w-[183px] tablet:min-w-[364px] flex items-center gap-2"
+              className="border-[1.52px] tablet:border-[3px] border-[#DEE6F7] rounded-[5.05px] tablet:rounded-[10px] w-full py-[5px] px-[10px] tablet:py-3 min-w-[183px] tablet:min-w-[364px] flex items-center gap-2 cursor-pointer"
+              onClick={() => handleCheckboxChange(index)}
             >
               <div id="custom-checkbox-popup" className="flex h-full items-center">
                 <input

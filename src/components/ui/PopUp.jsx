@@ -34,7 +34,7 @@ const PopUp = ({ open, handleClose, children, customStyle, customClasses, logo, 
             <img
               src="/assets/preferences/close.png"
               alt="close"
-              className="cursor-pointer w-2 h-2 tablet:w-[22px] tablet:h-[22.7px]"
+              className="cursor-pointer w-[10px] h-[10px] tablet:w-[22px] tablet:h-[22.7px]"
               onClick={handleClose}
             />
           )}
