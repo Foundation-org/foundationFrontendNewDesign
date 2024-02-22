@@ -3,10 +3,10 @@ export const initialColumns = {
     id: 'All',
     list: [],
   },
-  Preferences: {
-    id: 'Preferences',
-    list: [],
-  },
+// Preferences: {
+//     id: 'Preferences',
+//     list: [],
+//   },
   Block: {
     id: 'Block',
     list: [],
