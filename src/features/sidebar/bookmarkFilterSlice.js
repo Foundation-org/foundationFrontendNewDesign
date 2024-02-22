@@ -53,7 +53,7 @@ export const bookmarkFiltersSlice = createSlice({
         state.filterByType = 'Multiple Choise';
       } else if (action.payload === 'Ranked Choice') {
         state.filterByType = 'Ranked Choise';
-      }else if (action.payload === 'Open Choice') {
+      } else if (action.payload === 'Open Choice') {
         state.filterByType = 'Open Choice';
       } else {
         state.filterByType = action.payload;
@@ -72,14 +72,14 @@ export const bookmarkFiltersSlice = createSlice({
       state.isColumns = true;
     },
     resetFilters: (state) => {
-      localStorage.removeItem('columns');
+      localStorage.removeItem('bookmarkColumns');
       Object.assign(state, resetState);
     },
     resetSearchData: (state) => {
       state.searchData = '';
     },
     resetOtherFilters: (state) => {
-      localStorage.removeItem('columns');
+      localStorage.removeItem('bookmarkColumns');
       Object.assign(state, resetOtherStates);
     },
   },

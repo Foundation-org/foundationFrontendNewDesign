@@ -154,7 +154,12 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
         </div>
 
         <div className="cursor-pointer">
-          {/* <img src="/assets/preferences/close.png" alt="close" className="h-2 w-2 tablet:h-6 tablet:w-6" /> */}
+          <img
+            src="/assets/preferences/close.png"
+            alt="close"
+            className="h-2 w-2 tablet:h-6 tablet:w-6"
+            onClick={handleClose}
+          />
         </div>
       </div>
       <div className="relative h-full w-[90vw] px-[1.19rem] py-[12px] tablet:w-fit tablet:px-[35px] tablet:py-[25px] border-b-2 border-x-2 tablet:border-b-[6px] tablet:border-x-[6px] border-[#DEE6F7] dark:border-[#8B8B8B] rounded-b-[0.9375rem] tablet:rounded-b-[37px]">

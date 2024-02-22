@@ -266,12 +266,12 @@ const Bookmark = () => {
                             : item?.whichTypeQuestion === 'multiple choise'
                               ? 'Multiple Choice'
                               : item?.whichTypeQuestion === 'open choice'
-                              ? 'Open Choice'
-                              : item?.whichTypeQuestion === 'ranked choise'
-                                ? 'Ranked Choice'
-                                : item?.whichTypeQuestion === 'yes/no'
-                                  ? 'Yes/No'
-                                  : null
+                                ? 'Open Choice'
+                                : item?.whichTypeQuestion === 'ranked choise'
+                                  ? 'Ranked Choice'
+                                  : item?.whichTypeQuestion === 'yes/no'
+                                    ? 'Yes/No'
+                                    : null
                       }
                       answers={item?.QuestAnswers}
                       time={item?.createdAt}
@@ -323,12 +323,12 @@ const Bookmark = () => {
                             : item?.whichTypeQuestion === 'multiple choise'
                               ? 'Multiple Choice'
                               : item?.whichTypeQuestion === 'open choice'
-                              ? 'Open Choice'
-                              : item?.whichTypeQuestion === 'ranked choise'
-                                ? 'Ranked Choice'
-                                : item?.whichTypeQuestion === 'yes/no'
-                                  ? 'Yes/No'
-                                  : null
+                                ? 'Open Choice'
+                                : item?.whichTypeQuestion === 'ranked choise'
+                                  ? 'Ranked Choice'
+                                  : item?.whichTypeQuestion === 'yes/no'
+                                    ? 'Yes/No'
+                                    : null
                       }
                       answers={item?.QuestAnswers}
                       setSubmitResponse={setSubmitResponse}
