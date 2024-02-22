@@ -311,7 +311,7 @@ const MultipleChoice = () => {
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
-        Ask a question that allows for diverse responses and multiple answer options
+        Ask a question where anyone can select a single option from a list of choices
       </h4>
       <div
         className={`${
