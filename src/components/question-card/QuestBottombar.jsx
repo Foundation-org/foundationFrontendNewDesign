@@ -183,8 +183,9 @@ const QuestBottombar = ({
         </div>
       )}
 
-      {isQuestHidden !== 'HiddenPosts' && (
+      {(isQuestHidden !== 'HiddenPosts' && !window.location.href.includes("/p/")) && (
         <div className="min-w-[70px] tablet:min-w-[160px] flex justify-center">
+         
           {isFullScreen === undefined ? (
             <div
               className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
