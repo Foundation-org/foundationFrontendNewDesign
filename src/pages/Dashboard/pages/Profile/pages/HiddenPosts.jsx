@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
 import { GrClose } from 'react-icons/gr';
-import * as QuestServices from '../../../../../services/queries/quest';
-import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
+import { FaSpinner } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
+import { useCallback, useEffect, useState } from 'react';
 import { initialColumns } from '../../../../../constants/preferences';
+
 import InfiniteScroll from 'react-infinite-scroll-component';
 import QuestionCard from '../../QuestStartSection/components/QuestionCard';
-import { FaSpinner } from 'react-icons/fa';
-import { printNoRecordsMessage } from '../../../../../utils';
+
+import * as QuestServices from '../../../../../services/queries/quest';
 
 export default function HiddenPosts() {
   const pageLimit = 5;
@@ -247,20 +247,22 @@ export default function HiddenPosts() {
         >
           <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
             {allData &&
-              allData?.map((item, index) => (
-                <div key={index + 1}>
-                  <QuestionCard
-                    isQuestHidden={'HiddenPosts'}
-                    questStartData={item}
-                    startTest={startTest}
-                    setStartTest={setStartTest}
-                    viewResult={viewResult}
-                    handleViewResults={memoizedViewResults}
-                    handleStartTest={memoizedStartTest}
-                    setPagination={setPagination}
-                  />
-                </div>
-              ))}
+              allData
+                ?.filter((item) => item?.userQuestSetting?.hidden === true)
+                .map((item, index) => (
+                  <div key={index + 1}>
+                    <QuestionCard
+                      isQuestHidden={'HiddenPosts'}
+                      questStartData={item}
+                      startTest={startTest}
+                      setStartTest={setStartTest}
+                      viewResult={viewResult}
+                      handleViewResults={memoizedViewResults}
+                      handleStartTest={memoizedStartTest}
+                      setPagination={setPagination}
+                    />
+                  </div>
+                ))}
           </div>
         </InfiniteScroll>
       </div>
