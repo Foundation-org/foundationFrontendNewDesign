@@ -37,12 +37,13 @@ export default function HiddenPosts() {
     }));
   };
 
-  const { data: feedData } = QuestServices.useGetFeedData(
+  const { data: feedData } = QuestServices.useGetHiddenFeedData(
     filterStates,
     filterStates.searchData,
     pagination,
     initialColumns,
     {
+      Page: 'Hidden',
       _page: pagination.page,
       _limit: pageLimit,
       start: pagination.sliceStart,
@@ -247,22 +248,20 @@ export default function HiddenPosts() {
         >
           <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
             {allData &&
-              allData
-                ?.filter((item) => item?.userQuestSetting?.hidden === true)
-                .map((item, index) => (
-                  <div key={index + 1}>
-                    <QuestionCard
-                      isQuestHidden={'HiddenPosts'}
-                      questStartData={item}
-                      startTest={startTest}
-                      setStartTest={setStartTest}
-                      viewResult={viewResult}
-                      handleViewResults={memoizedViewResults}
-                      handleStartTest={memoizedStartTest}
-                      setPagination={setPagination}
-                    />
-                  </div>
-                ))}
+              allData.map((item, index) => (
+                <div key={index + 1}>
+                  <QuestionCard
+                    isQuestHidden={'HiddenPosts'}
+                    questStartData={item}
+                    startTest={startTest}
+                    setStartTest={setStartTest}
+                    viewResult={viewResult}
+                    handleViewResults={memoizedViewResults}
+                    handleStartTest={memoizedStartTest}
+                    setPagination={setPagination}
+                  />
+                </div>
+              ))}
           </div>
         </InfiniteScroll>
       </div>
