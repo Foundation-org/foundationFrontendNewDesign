@@ -9,7 +9,7 @@ import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import { useLocation } from 'react-router-dom';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
 
-const QuestCardLayout = ({ questStartData, isBookmarked, children }) => {
+const QuestCardLayout = ({ questStartData, isBookmarked, isQuestHidden, children }) => {
   const location = useLocation();
   const queryClient = useQueryClient();
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
@@ -66,6 +66,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, children }) => {
   return (
     <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-white dark:border-white dark:bg-[#000] tablet:rounded-[15px]">
       <CardTopbar
+        questStartData={questStartData}
         QuestTopic={questStartData.QuestTopic}
         img={'assets/svgs/dashboard/badge.svg'}
         alt={'badge'}
@@ -73,6 +74,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, children }) => {
         createdBy={questStartData.uuid}
         bookmarkStatus={bookmarkStatus}
         handleBookmark={handleBookmark}
+        isQuestHidden={isQuestHidden}
       />
       <div className="pb-[0.94rem] pt-[0.84rem] tablet:pb-5 tablet:pt-[0.94rem]">
         <div className="ml-[1.39rem] mr-[0.62rem] tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem] flex items-start justify-between">
@@ -84,12 +86,14 @@ const QuestCardLayout = ({ questStartData, isBookmarked, children }) => {
               {questStartData.Question}
             </h4>
           </div>
-          <img
-            src="/assets/svgs/eye-latest.svg"
-            alt="eye-latest"
-            className="cursor-pointer w-[15px] h-[15px] tablet:w-[30px] tablet:h-[30px]"
-            onClick={showHidePostOpen}
-          />
+          {isQuestHidden !== 'HiddenPosts' && (
+            <img
+              src="/assets/svgs/eye-latest.svg"
+              alt="eye-latest"
+              className="cursor-pointer w-[15px] h-[15px] tablet:w-[30px] tablet:h-[30px]"
+              onClick={showHidePostOpen}
+            />
+          )}
         </div>
         {children}
       </div>
@@ -104,8 +108,9 @@ const QuestCardLayout = ({ questStartData, isBookmarked, children }) => {
         alt={'badge'}
         badgeCount={questStartData.getUserBadge?.badges?.length}
         questStartData={questStartData}
+        isQuestHidden={isQuestHidden}
       />
-      <ShowHidePostPopup handleClose={showHidePostClose} modalVisible={modalVisible} />
+      <ShowHidePostPopup handleClose={showHidePostClose} modalVisible={modalVisible} questStartData={questStartData} />
     </div>
   );
 };

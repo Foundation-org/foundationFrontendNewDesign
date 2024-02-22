@@ -183,16 +183,18 @@ export default updateViolationCounterAPI;
 // HIDE POST API CALLS
 export const hideQuest = async (data) => {
   return await api.post('/userQuestSetting/create', {
-    userId: data.userId,
-    questId: data.questId,
-    // hidden: data.hidden,
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
+    hidden: data.hidden,
+    hiddenMessage: data.hiddenMessage,
   });
 };
 
 export const updateHiddenQuest = async (data) => {
   return await api.post('/userQuestSetting/update', {
-    userId: data.userId,
-    questId: data.questId,
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
     hidden: data.hidden,
+    hiddenMessage: data.hiddenMessage,
   });
 };

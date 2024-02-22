@@ -31,7 +31,7 @@ const QuestionCard = (props) => {
   const { questStartData, setPagination } = props;
   const { handleStartTest, startTest, setStartTest } = props;
   const { isBookmarked, viewResult, handleViewResults } = props;
-  const { setSubmitResponse } = props;
+  const { setSubmitResponse, isQuestHidden } = props;
 
   const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
@@ -443,7 +443,10 @@ const QuestionCard = (props) => {
       } else {
         startQuest(params);
       }
-    } else if (questStartData.whichTypeQuestion === 'multiple choise'  || questStartData.whichTypeQuestion === 'open choice') {
+    } else if (
+      questStartData.whichTypeQuestion === 'multiple choise' ||
+      questStartData.whichTypeQuestion === 'open choice'
+    ) {
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = '';
@@ -697,7 +700,6 @@ const QuestionCard = (props) => {
       return (
         <>
           <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
-
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -725,6 +727,7 @@ const QuestionCard = (props) => {
             cardSize={cardSize}
             checkOptionStatus={checkOptionStatus}
             setCheckOptionStatus={setCheckOptionStatus}
+            isQuestHidden={isQuestHidden}
           />
           {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
           <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
@@ -738,10 +741,16 @@ const QuestionCard = (props) => {
   };
 
   return (
-    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} handleStartTest={handleStartTest}>
+    <QuestCardLayout
+      questStartData={questStartData}
+      isBookmarked={isBookmarked}
+      handleStartTest={handleStartTest}
+      isQuestHidden={isQuestHidden}
+    >
       {renderQuestContent()}
 
       <ButtonGroup
+        isQuestHidden={isQuestHidden}
         questStartData={questStartData}
         handleToggleCheck={handleToggleCheck}
         id={questStartData._id}

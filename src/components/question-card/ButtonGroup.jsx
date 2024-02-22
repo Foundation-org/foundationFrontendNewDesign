@@ -1,17 +1,19 @@
 import { toast } from 'sonner';
-import { useMutation } from '@tanstack/react-query';
-import { useDispatch, useSelector } from 'react-redux';
-import { getStartQuestInfo } from '../../services/api/questsApi';
-import { resetQuests } from '../../features/quest/questsSlice';
-import { getButtonText, getButtonVariants } from '../../utils/questionCard/SingleQuestCard';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import { calculateRemainingTime } from '../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetQuests } from '../../features/quest/questsSlice';
+import { getStartQuestInfo } from '../../services/api/questsApi';
+import { getButtonText, getButtonVariants } from '../../utils/questionCard/SingleQuestCard';
 
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 import * as filterActions from '../../features/sidebar/filtersSlice';
 import * as filterBookmarkActions from '../../features/sidebar/bookmarkFilterSlice';
-import { useLocation } from 'react-router-dom';
+import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
+import { useState } from 'react';
 
 const ButtonGroup = ({
   usersAddTheirAns,
@@ -41,12 +43,13 @@ const ButtonGroup = ({
   startTest,
   handleChange,
   checkOptionStatus,
+  isQuestHidden,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
-
+  const [modalVisible, setModalVisible] = useState(false);
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   let filterState;
@@ -171,11 +174,60 @@ const ButtonGroup = ({
     }
   };
 
+  const startHiddenTest = () => {
+    dispatch(questUtilsActions.resetaddOptionLimit());
+    dispatch(resetQuests());
+    handleStartTest(id);
+  };
+
   const result = calculateRemainingTime(
     questStartData?.updatedAt,
     questStartData?.startQuestData && questStartData?.startQuestData.data.length,
     questStartData.usersChangeTheirAns,
   );
+
+  const showHidePostOpen = () => setModalVisible(true);
+  const showHidePostClose = () => setModalVisible(false);
+
+  if (isQuestHidden === 'HiddenPosts') {
+    return (
+      <div>
+        {startTest !== questStartData._id ? (
+          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+            {getButtonText(btnText) !== 'Completed' ? (
+              <Button
+                variant={'submit'}
+                onClick={startHiddenTest}
+                className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
+              >
+                View
+              </Button>
+            ) : null}
+            <Button variant="danger" onClick={showHidePostOpen} className={'bg-[#FF4057]'}>
+              Remove
+            </Button>
+            <UnHidePostPopup
+              handleClose={showHidePostClose}
+              modalVisible={modalVisible}
+              questStartData={questStartData}
+            />
+          </div>
+        ) : (
+          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+            <Button
+              variant="cancel"
+              onClick={() => {
+                handleViewResults(null);
+                handleStartTest('');
+              }}
+            >
+              Go Back
+            </Button>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   if (persistedUserInfo?.role === 'guest') {
     if (location.pathname.includes('/p/') || location.pathname === '/quest/isfullscreen') {

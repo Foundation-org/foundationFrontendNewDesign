@@ -1,7 +1,17 @@
 import { useSelector } from 'react-redux';
 import BookmarkIcon from '../../pages/Dashboard/pages/QuestStartSection/components/BookmarkIcon';
 
-const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic, bookmarkStatus, handleBookmark }) => {
+const CardTopbar = ({
+  questStartData,
+  img,
+  alt,
+  badgeCount,
+  createdBy,
+  QuestTopic,
+  bookmarkStatus,
+  handleBookmark,
+  isQuestHidden,
+}) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -30,10 +40,29 @@ const CardTopbar = ({ img, alt, badgeCount, createdBy, QuestTopic, bookmarkStatu
           </p>
         </div>
       )}
-      <h1 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">
-        {QuestTopic}
-      </h1>
-      <BookmarkIcon bookmarkStatus={bookmarkStatus} persistedTheme={persistedTheme} handleBookmark={handleBookmark} />
+      {isQuestHidden === 'HiddenPosts' ? (
+        <div className="flex items-center gap-3">
+          <h1 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">
+            {questStartData?.userQuestSetting?.hiddenMessage}
+          </h1>
+          <img
+            src="/assets/svgs/eye-latest-cut.svg"
+            alt="eye-cut"
+            className="w-[15.24px] tablet:w-[30px] h-[10.67px] tablet:h-[26.6px]"
+          />
+        </div>
+      ) : (
+        <>
+          <h1 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">
+            {QuestTopic}
+          </h1>
+          <BookmarkIcon
+            bookmarkStatus={bookmarkStatus}
+            persistedTheme={persistedTheme}
+            handleBookmark={handleBookmark}
+          />
+        </>
+      )}
     </div>
   );
 };

@@ -267,7 +267,9 @@ const SingleAnswerRankedChoice = (props) => {
         </div>
       </div>
       {/* =============== To Display Contention and Trash Right of Option */}
-      {props.btnText !== 'Results' ? (
+      {props.isQuestHidden === 'HiddenPosts' ? (
+        <div className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
+      ) : props.btnText !== 'Results' ? (
         <div
           className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"
           onClick={handleContendPopup}

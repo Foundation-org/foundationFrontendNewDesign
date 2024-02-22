@@ -4,6 +4,7 @@ import { hideQuest } from '../../services/api/questsApi';
 import { Button } from '../ui/Button';
 import { toast } from 'sonner';
 import PopUp from '../ui/PopUp';
+import { useSelector } from 'react-redux';
 
 const customStyle = {
   width: 'fit-content',
@@ -29,7 +30,8 @@ const data = [
   },
 ];
 
-export default function ShowHidePostPopup({ handleClose, modalVisible }) {
+export default function ShowHidePostPopup({ handleClose, modalVisible, questStartData }) {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
   const [selectedTitle, setSelectedTitle] = useState(null);
 
@@ -45,13 +47,12 @@ export default function ShowHidePostPopup({ handleClose, modalVisible }) {
     mutationFn: hideQuest,
     onSuccess: (resp) => {
       toast.success('Post hide successfully');
+      handleClose();
     },
     onError: (err) => {
       console.log(err);
     },
   });
-
-  console.log('selectedTitle', selectedTitle);
 
   return (
     <PopUp
@@ -95,6 +96,14 @@ export default function ShowHidePostPopup({ handleClose, modalVisible }) {
           <Button
             variant={'submit'}
             className={'rounded-[7.58px] min-w-[68.2px] max-w-[68.2px] tablet:min-w-[139px] tablet:max-w-[139px]'}
+            onClick={() => {
+              hidePost({
+                uuid: persistedUserInfo?.uuid,
+                questForeignKey: questStartData._id,
+                hidden: true,
+                hiddenMessage: selectedTitle,
+              });
+            }}
           >
             Submit
           </Button>

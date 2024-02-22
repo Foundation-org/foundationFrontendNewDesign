@@ -22,6 +22,7 @@ const StartTest = ({
   cardSize,
   checkOptionStatus,
   setCheckOptionStatus,
+  isQuestHidden,
 }) => {
   const { isFullScreen } = useParams();
 
@@ -110,6 +111,7 @@ const StartTest = ({
                   contend={questSelection['yes/no'].yes.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
                 <SingleAnswer
                   number={'#2'}
@@ -118,6 +120,7 @@ const StartTest = ({
                   contend={questSelection['yes/no'].no.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
               </>
             ) : getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ? (
@@ -129,6 +132,7 @@ const StartTest = ({
                   contend={questSelection['agree/disagree'].agree.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
                 <SingleAnswer
                   number={'#2'}
@@ -137,6 +141,7 @@ const StartTest = ({
                   contend={questSelection['agree/disagree'].disagree.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
               </>
             ) : (
@@ -148,6 +153,7 @@ const StartTest = ({
                   contend={questSelection['like/dislike'].like.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
                 <SingleAnswer
                   number={'#2'}
@@ -156,13 +162,17 @@ const StartTest = ({
                   contend={questSelection['like/dislike'].dislike.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
               </>
             )}
           </>
         );
       }
-      if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Multiple Choice' || getQuestionTitle(questStartData.whichTypeQuestion) === 'Open Choice') {
+      if (
+        getQuestionTitle(questStartData.whichTypeQuestion) === 'Multiple Choice' ||
+        getQuestionTitle(questStartData.whichTypeQuestion) === 'Open Choice'
+      ) {
         return (
           <div className="flex flex-col overflow-auto">
             <div
@@ -205,6 +215,7 @@ const StartTest = ({
                     setAddOptionField={setAddOptionField}
                     checkOptionStatus={checkOptionStatus}
                     setCheckOptionStatus={setCheckOptionStatus}
+                    isQuestHidden={isQuestHidden}
                   />
                 ))}
             </div>
@@ -258,6 +269,7 @@ const StartTest = ({
                                 setAddOptionField={setAddOptionField}
                                 checkOptionStatus={checkOptionStatus}
                                 setCheckOptionStatus={setCheckOptionStatus}
+                                isQuestHidden={isQuestHidden}
                               />
                             </li>
                           )}

@@ -200,7 +200,7 @@ const SingleAnswerMultipleChoice = (props) => {
       {/* =============== To Display Option */}
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
         <div
-          className={`flex w-full items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px] ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
+          className={`flex w-full items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px] ${props.btnText === 'Results' || props.isQuestHidden === 'HiddenPosts' ? 'pointer-events-none' : 'cursor-pointer'}`}
           onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
         >
           <div className="flex min-h-[21.8px] h-full tablet:min-h-[49px] tablet:h-full w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
@@ -252,39 +252,46 @@ const SingleAnswerMultipleChoice = (props) => {
             />
           </div>
         </div>
-        <div
-          className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px]  text-[9.238px] dark:border-[#DEE6F7] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
-            props.btnText === 'Results' ? 'pointer-events-none' : ''
-          }`}
-          onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
-        >
-          <div className="flex items-center gap-1 laptop:gap-[18px]">
-            <div id="custom-checkbox" className="flex h-full items-center">
-              <input
-                id="small-checkbox"
-                type="checkbox"
-                className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                checked={checkState}
-                readOnly
-              />
-            </div>
+        {props?.isQuestHidden === 'HiddenPosts' ? (
+          <div className="flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px]  text-[9.238px] dark:border-[#DEE6F7] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px]"></div>
+        ) : (
+          <div
+            className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px]  text-[9.238px] dark:border-[#DEE6F7] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
+              props.btnText === 'Results' ? 'pointer-events-none' : ''
+            }`}
+            onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
+          >
+            <div className="flex items-center gap-1 laptop:gap-[18px]">
+              <div id="custom-checkbox" className="flex h-full items-center">
+                <input
+                  id="small-checkbox"
+                  type="checkbox"
+                  className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                  checked={checkState}
+                  readOnly
+                />
+              </div>
 
-            {props.btnText === 'Results' ? (
-              <>
-                {props.selectedPercentages && props.selectedPercentages?.[props.answer.trim()] ? (
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                    {props.selectedPercentages[props.answer.trim()]}
-                  </span>
-                ) : (
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
-                )}
-              </>
-            ) : null}
+              {props.btnText === 'Results' ? (
+                <>
+                  {props.selectedPercentages && props.selectedPercentages?.[props.answer.trim()] ? (
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                      {props.selectedPercentages[props.answer.trim()]}
+                    </span>
+                  ) : (
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                  )}
+                </>
+              ) : null}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* =============== To Display Contention and Trash Right of Option */}
-        {props.btnText !== 'Results' ? (
+
+        {props.isQuestHidden === 'HiddenPosts' ? (
+          <div className="flex w-12 min-w-[48px] items-center bg-white pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]"></div>
+        ) : props.btnText !== 'Results' ? (
           <div
             className="flex w-12 min-w-[48px] items-center bg-white pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]"
             onClick={handleContendPopup}
