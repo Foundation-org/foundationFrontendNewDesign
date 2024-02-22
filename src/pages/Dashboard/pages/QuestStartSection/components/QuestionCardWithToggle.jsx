@@ -436,7 +436,7 @@ const QuestionCardWithToggle = (props) => {
       } else {
         startQuest(params);
       }
-    } else if (questStartData.whichTypeQuestion === 'multiple choise') {
+    } else if (questStartData.whichTypeQuestion === 'multiple choise'  || questStartData.whichTypeQuestion === 'open choice') {
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = '';

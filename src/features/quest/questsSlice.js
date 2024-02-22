@@ -108,7 +108,7 @@ export const questsSlice = createSlice({
           state['likeDislike']['like'].contend = false;
         }
       }
-      if (option === 'Multiple Choice') {
+      if (option === 'Multiple Choice' || option === 'Open Choice') {
         const foundItem = state.multipleChoice.find((item) => item.label === label);
 
         if (foundItem) {

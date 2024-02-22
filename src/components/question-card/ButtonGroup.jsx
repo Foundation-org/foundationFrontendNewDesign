@@ -138,7 +138,7 @@ const ButtonGroup = ({
           handleToggleCheck(res.data.data[res.data.data.length - 1].selected, true, false);
         }
       }
-      if (whichTypeQuestion === 'multiple choise') {
+      if (whichTypeQuestion === 'multiple choise' || whichTypeQuestion === 'open choice') {
         updateAnswerSelection(res?.data.data[res.data.data.length - 1], answersSelection);
       }
       if (whichTypeQuestion === 'ranked choise') {

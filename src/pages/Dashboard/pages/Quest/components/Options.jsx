@@ -137,7 +137,7 @@ const Options = ({
                 </div>
                 <Tooltip optionStatus={optionStatus} />
               </div>
-              {(title === 'RankChoice' || title === 'MultipleChoice') && trash && (
+              {(title === 'RankChoice' || title === 'MultipleChoice' || title === 'OpenChoice') && trash && (
                 <div
                   id={`test${number}`}
                   className={`flex h-[24.8px] items-center text-[0.5rem] font-semibold dark:bg-[#141618] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[45px] ${optionStatus?.color} py-[0.29rem]`}

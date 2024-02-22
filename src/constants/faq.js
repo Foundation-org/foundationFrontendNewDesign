@@ -63,7 +63,7 @@ export const faqData = [
     id: 11,
     img: '/assets/faq/10.png',
     title: 'How do I object to an option in a post?',
-    desc: 'If the post is Multiple Choice or Rank Choice, you can click the exclamation point next to the option. It costs 0.1 FDX to object to an option. If you remove the objection in the future, the same amount is returned to you.',
+    desc: 'If the post is Multiple Choice,Open Choice or Rank Choice, you can click the exclamation point next to the option. It costs 0.1 FDX to object to an option. If you remove the objection in the future, the same amount is returned to you.',
   },
   {
     id: 12,

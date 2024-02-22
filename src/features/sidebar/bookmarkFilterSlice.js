@@ -53,6 +53,8 @@ export const bookmarkFiltersSlice = createSlice({
         state.filterByType = 'Multiple Choise';
       } else if (action.payload === 'Ranked Choice') {
         state.filterByType = 'Ranked Choise';
+      }else if (action.payload === 'Open Choice') {
+        state.filterByType = 'Open Choice';
       } else {
         state.filterByType = action.payload;
       }

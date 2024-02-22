@@ -268,13 +268,15 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
               title={
                 filterStates.filterByType && filterStates.filterByType === 'Multiple Choise'
                   ? 'Multiple Choice'
+                  : filterStates.filterByType === 'Open Choice'
+                  ? 'Open Choice'
                   : filterStates.filterByType === 'Ranked Choise'
                     ? 'Ranked Choice'
                     : filterStates.filterByType
                       ? filterStates.filterByType
                       : 'All'
               }
-              items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choice', 'Ranked Choice']}
+              items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choice','Open Choice','Ranked Choice']}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterByType(item));
               }}
@@ -369,13 +371,15 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             title={
               filterStates.filterByType && filterStates.filterByType === 'Multiple Choise'
                 ? 'Multiple Choice'
+                : filterStates.filterByType === 'Open Choice'
+                ? 'Open Choice'
                 : filterStates.filterByType === 'Ranked Choise'
                   ? 'Ranked Choice'
                   : filterStates.filterByType
                     ? filterStates.filterByType
                     : 'All'
             }
-            items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choice', 'Ranked Choice']}
+            items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choice','Open Choice', 'Ranked Choice']}
             handleSelect={(item) => {
               dispatch(filtersActions.setFilterByType(item));
             }}

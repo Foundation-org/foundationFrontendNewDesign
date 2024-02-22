@@ -162,7 +162,7 @@ const StartTest = ({
           </>
         );
       }
-      if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Multiple Choice') {
+      if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Multiple Choice' || getQuestionTitle(questStartData.whichTypeQuestion) === 'Open Choice') {
         return (
           <div className="flex flex-col overflow-auto">
             <div

@@ -136,7 +136,7 @@ const Result = (props) => {
             </>
           ) : null}
         </>
-      ) : props.title === 'Multiple Choice' ? (
+      ) : props.title === 'Multiple Choice' || props.title === 'Open Choice' ? (
         <div
           className={`${
             isFullScreen === undefined ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]' : ''

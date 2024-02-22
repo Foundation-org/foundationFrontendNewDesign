@@ -38,7 +38,7 @@
 }
 
 .quest-topbar {
-  @apply rounded-[4.619px] border-[0.95px] px-[5.6px] py-[4.311px] text-[8px] font-semibold leading-normal laptop:leading-none tablet:rounded-[9.675px] tablet:border-[3px] tablet:px-[16px] tablet:py-[9.03px] tablet:text-[12px] laptop:rounded-[15px] laptop:px-[22px] laptop:py-[14px] laptop:text-[25px];
+  @apply rounded-[4.619px] border-[0.95px] px-[5.6px] py-[4.311px] text-[6px] font-semibold leading-normal laptop:leading-none tablet:rounded-[9.675px] tablet:border-[3px] tablet:px-[16px] tablet:py-[9.03px] tablet:text-[12px] laptop:rounded-[15px] laptop:px-[22px] laptop:py-[14px] laptop:text-[25px];
 }
 
 .pagination-btn {
