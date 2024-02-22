@@ -1,4 +1,5 @@
 const QuestInfoText = ({ questStartData, questType, show }) => {
+  console.log({ questType });
   const renderQuestInfoText = () => {
     if (show) {
       return (
@@ -7,13 +8,19 @@ const QuestInfoText = ({ questStartData, questType, show }) => {
             <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal text-[#85898C] tablet:py-[10px] tablet:text-[1rem]">
               Drag and drop options in your order of preference
             </h4>
-          ) : (questType === 'multiple choise' || questType==='open choice') && questStartData.userCanSelectMultiple ? (
-            <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal text-[#85898C] tablet:py-[10px] tablet:text-[1rem]">
-              You can select multiple options
-            </h4>
+          ) : questType === 'multiple choise' || questType === 'open choice' ? (
+            questStartData.userCanSelectMultiple ? (
+              <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal text-[#85898C] tablet:py-[10px] tablet:text-[1rem]">
+                You can select multiple options
+              </h4>
+            ) : (
+              <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal text-[#85898C] tablet:py-[10px] tablet:text-[1rem]">
+                You can select only one option
+              </h4>
+            )
           ) : (
             <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal text-[#85898C] tablet:py-[10px] tablet:text-[1rem]">
-              You can select only one option
+              &#x200B;
             </h4>
           )}
         </>
@@ -28,8 +35,8 @@ const QuestInfoText = ({ questStartData, questType, show }) => {
             </h4>
           ) : (
             <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal text-[#85898C] tablet:py-[10px] tablet:text-[1rem]">
-              {/* &#x200B; */}
-              You can select only one option
+              &#x200B;
+              {/* You can select only one option */}
             </h4>
           )}
         </>
