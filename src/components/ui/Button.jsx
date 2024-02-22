@@ -75,5 +75,6 @@ Button.propTypes = {
     'social-btn',
     'hollow-submit',
     'getintouch',
+    'danger',
   ]),
 };
