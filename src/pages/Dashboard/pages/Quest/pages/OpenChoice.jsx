@@ -293,7 +293,7 @@ const OpenChoice = () => {
 
       debounceTimer = setTimeout(() => {
         setTypedValues(value);
-      }, 500);
+      }, 100);
     };
 
     updateTypedValuesWithDelay(optionsValue);
@@ -307,7 +307,7 @@ const OpenChoice = () => {
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
-      Ask a question where anyone can select multiple options from a list of choices
+        Ask a question where anyone can select multiple options from a list of choices
       </h4>
       <div
         className={`${

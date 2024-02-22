@@ -302,7 +302,7 @@ const RankChoice = () => {
 
       debounceTimer = setTimeout(() => {
         setTypedValues(value);
-      }, 500);
+      }, 100);
     };
 
     updateTypedValuesWithDelay(optionsValue);

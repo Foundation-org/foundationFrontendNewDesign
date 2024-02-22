@@ -219,7 +219,6 @@ const MultipleChoice = () => {
   };
 
   const handleOnDragEnd = (result) => {
-    // console.log(result);
     if (!result.destination) {
       return;
     }
@@ -297,7 +296,7 @@ const MultipleChoice = () => {
 
       debounceTimer = setTimeout(() => {
         setTypedValues(value);
-      }, 500);
+      }, 100);
     };
 
     updateTypedValuesWithDelay(optionsValue);
