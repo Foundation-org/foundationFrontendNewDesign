@@ -5,7 +5,7 @@ const RequireAuth = ({ allowedRoles }) => {
   // const location = useLocation();
   const persistedUser = useSelector((state) => state.auth.user);
 
-  console.log('Logged in as', persistedUser?.role, allowedRoles.includes(persistedUser?.role));
+  // console.log('Logged in as', persistedUser?.role, allowedRoles.includes(persistedUser?.role));
 
   const isRoleAllowed = allowedRoles.includes(persistedUser?.role);
 

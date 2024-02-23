@@ -44,6 +44,9 @@ const QuestStartSection = () => {
   const [columns, setColumns] = useState(parsedColumns || initialColumns);
   const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
+  console.log('column', columns);
+  console.log('columnInitial', initialColumns);
+
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
   const { data: feedData } = QuestServices.useGetFeedData(filterStates, filterStates.searchData, pagination, columns, {

@@ -128,7 +128,6 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
   const filterStates = useSelector(filtersActions.getFilters);
 
   useEffect(() => {
-    console.log('first', columns);
     if (pathname === '/dashboard/bookmark') {
       setBookmarkFilters({ ...filterStates, columns: columns });
     } else {
