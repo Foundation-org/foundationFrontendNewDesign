@@ -187,6 +187,7 @@ export const hideQuest = async (data) => {
     questForeignKey: data.questForeignKey,
     hidden: data.hidden,
     hiddenMessage: data.hiddenMessage,
+    Question: data.Question,
   });
 };
 

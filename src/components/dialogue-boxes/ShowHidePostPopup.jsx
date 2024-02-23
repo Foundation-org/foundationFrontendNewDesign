@@ -102,6 +102,7 @@ export default function ShowHidePostPopup({ handleClose, modalVisible, questStar
                 questForeignKey: questStartData._id,
                 hidden: true,
                 hiddenMessage: selectedTitle,
+                Question: questStartData.Question,
               });
             }}
           >
