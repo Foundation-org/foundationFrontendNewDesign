@@ -5,6 +5,9 @@ import { Button } from '../ui/Button';
 import { toast } from 'sonner';
 import PopUp from '../ui/PopUp';
 import { useSelector } from 'react-redux';
+import { userInfo } from '../../services/api/userAuth';
+import { useDispatch } from 'react-redux';
+import * as authActions from '../../features/auth/authSlice';
 
 const customStyle = {
   width: 'fit-content',
@@ -31,6 +34,7 @@ const data = [
 ];
 
 export default function ShowHidePostPopup({ handleClose, modalVisible, questStartData }) {
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
@@ -44,10 +48,29 @@ export default function ShowHidePostPopup({ handleClose, modalVisible, questStar
     setSelectedTitle(data[index].title);
   };
 
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+    onSuccess: (resp) => {
+      if (resp?.status === 200) {
+        if (resp.data) {
+          dispatch(authActions.addUser(resp?.data));
+
+          if (!localStorage.getItem('uuid')) {
+            localStorage.setItem('uuid', resp.data.uuid);
+          }
+        }
+      }
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   const { mutateAsync: hidePost } = useMutation({
     mutationFn: hideQuest,
     onSuccess: (resp) => {
       toast.success('Post hidden successfully');
+      getUserInfo();
       queryClient.invalidateQueries('FeedData');
       handleClose();
     },
@@ -60,6 +83,7 @@ export default function ShowHidePostPopup({ handleClose, modalVisible, questStar
     mutationFn: updateHiddenQuest,
     onSuccess: (resp) => {
       toast.success('Post unhidden successfully');
+      getUserInfo();
       queryClient.invalidateQueries('FeedData');
       handleClose();
     },
