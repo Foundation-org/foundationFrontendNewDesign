@@ -47,7 +47,7 @@ export default function ShowHidePostPopup({ handleClose, modalVisible, questStar
   const { mutateAsync: hidePost } = useMutation({
     mutationFn: hideQuest,
     onSuccess: (resp) => {
-      toast.success('Post hide successfully');
+      toast.success('Post hidden successfully');
       queryClient.invalidateQueries('FeedData');
       handleClose();
     },
@@ -59,7 +59,7 @@ export default function ShowHidePostPopup({ handleClose, modalVisible, questStar
   const { mutateAsync: updateHiddenPost } = useMutation({
     mutationFn: updateHiddenQuest,
     onSuccess: (resp) => {
-      toast.success('Post removed successfully');
+      toast.success('Post unhidden successfully');
       queryClient.invalidateQueries('FeedData');
       handleClose();
     },
