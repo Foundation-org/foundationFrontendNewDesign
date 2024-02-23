@@ -26,7 +26,7 @@ const MultipleChoice = () => {
 
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
-  const [multipleOption, setMultipleOption] = useState(createQuestSlice.multipleOption);
+  const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
@@ -58,10 +58,6 @@ const MultipleChoice = () => {
           toast.success('Successfully Created');
           setLoading(false);
           setQuestion('');
-          setMultipleOption(false);
-          setAddOption(false);
-          setChangedOption('');
-          setChangeState(false);
           dispatch(createQuestAction.resetCreateQuest());
         }, 500);
       }
