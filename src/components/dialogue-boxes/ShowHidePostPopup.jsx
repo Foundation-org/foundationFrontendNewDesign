@@ -100,6 +100,7 @@ export default function ShowHidePostPopup({ handleClose, modalVisible, questStar
         <div className="flex flex-col gap-[5px] tablet:gap-3">
           {data.map((item, index) => (
             <div
+              key={index + 1}
               id={item.id}
               className="border-[1.52px] tablet:border-[3px] border-[#DEE6F7] rounded-[5.05px] tablet:rounded-[10px] w-full py-[5px] px-[10px] tablet:py-3 min-w-[183px] tablet:min-w-[364px] flex items-center gap-2 cursor-pointer"
               onClick={() => handleCheckboxChange(index)}
