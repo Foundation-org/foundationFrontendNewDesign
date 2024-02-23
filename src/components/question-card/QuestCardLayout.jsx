@@ -88,7 +88,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, isQuestHidden, children
           </div>
           {isQuestHidden !== 'HiddenPosts' && (
             <img
-              src="/assets/hiddenposts/unhide/icon1.webp"
+              src="/assets/hiddenposts/unhide/icon1.png"
               alt="eye-latest"
               className="cursor-pointer w-[12.5px] h-[8.75px] tablet:w-[25px] tablet:h-[17px]"
               onClick={showHidePostOpen}

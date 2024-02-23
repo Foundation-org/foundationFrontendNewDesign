@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { hideQuest } from '../../services/api/questsApi';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
 import { Button } from '../ui/Button';
 import { toast } from 'sonner';
 import PopUp from '../ui/PopUp';
@@ -31,6 +31,7 @@ const data = [
 ];
 
 export default function ShowHidePostPopup({ handleClose, modalVisible, questStartData }) {
+  const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
   const [selectedTitle, setSelectedTitle] = useState(null);
@@ -47,12 +48,44 @@ export default function ShowHidePostPopup({ handleClose, modalVisible, questStar
     mutationFn: hideQuest,
     onSuccess: (resp) => {
       toast.success('Post hide successfully');
+      queryClient.invalidateQueries('FeedData');
       handleClose();
     },
     onError: (err) => {
       console.log(err);
     },
   });
+
+  const { mutateAsync: updateHiddenPost } = useMutation({
+    mutationFn: updateHiddenQuest,
+    onSuccess: (resp) => {
+      toast.success('Post removed successfully');
+      queryClient.invalidateQueries('FeedData');
+      handleClose();
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const handleHiddenPostApiCall = () => {
+    if (questStartData?.userQuestSetting) {
+      updateHiddenPost({
+        uuid: persistedUserInfo?.uuid,
+        questForeignKey: questStartData._id,
+        hidden: true,
+        hiddenMessage: selectedTitle,
+      });
+    } else {
+      hidePost({
+        uuid: persistedUserInfo?.uuid,
+        questForeignKey: questStartData._id,
+        hidden: true,
+        hiddenMessage: selectedTitle,
+        Question: questStartData.Question,
+      });
+    }
+  };
 
   return (
     <PopUp
@@ -97,13 +130,7 @@ export default function ShowHidePostPopup({ handleClose, modalVisible, questStar
             variant={'submit'}
             className={'rounded-[7.58px] min-w-[68.2px] max-w-[68.2px] tablet:min-w-[139px] tablet:max-w-[139px]'}
             onClick={() => {
-              hidePost({
-                uuid: persistedUserInfo?.uuid,
-                questForeignKey: questStartData._id,
-                hidden: true,
-                hiddenMessage: selectedTitle,
-                Question: questStartData.Question,
-              });
+              handleHiddenPostApiCall();
             }}
           >
             Submit
