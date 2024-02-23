@@ -1,17 +1,19 @@
 import PopUp from '../ui/PopUp';
 import { Button } from '../ui/Button';
 import { useSelector } from 'react-redux';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateHiddenQuest } from '../../services/api/questsApi';
 import { toast } from 'sonner';
 
 export default function UnHidePostPopup({ handleClose, modalVisible, questStartData }) {
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const queryClient = useQueryClient();
 
   const { mutateAsync: hidePost } = useMutation({
     mutationFn: updateHiddenQuest,
     onSuccess: (resp) => {
       toast.success('Post removed successfully');
+      queryClient.invalidateQueries('FeedData');
       handleClose();
     },
     onError: (err) => {
