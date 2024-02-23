@@ -44,9 +44,6 @@ const QuestStartSection = () => {
   const [columns, setColumns] = useState(parsedColumns || initialColumns);
   const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
-  console.log('column', columns);
-  console.log('columnInitial', initialColumns);
-
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
   const { data: feedData } = QuestServices.useGetFeedData(filterStates, filterStates.searchData, pagination, columns, {
@@ -60,9 +57,27 @@ const QuestStartSection = () => {
   // Reset Preferences
   useEffect(() => {
     if (!filterStates.isColumns) {
-      const stateString = JSON.stringify(initialColumns);
+      const stateString = JSON.stringify({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
       localStorage.setItem('columns', stateString);
-      setColumns(initialColumns);
+      setColumns({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
     }
   }, [filterStates.isColumns]);
 

@@ -65,9 +65,27 @@ const Bookmark = () => {
   // Reset Preferences
   useEffect(() => {
     if (!filterStates.isColumns) {
-      const stateString = JSON.stringify(initialColumns);
+      const stateString = JSON.stringify({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
       localStorage.setItem('bookmarkColumns', stateString);
-      setColumns(initialColumns);
+      setColumns({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
     }
   }, [filterStates.isColumns]);
 
