@@ -1,5 +1,4 @@
 const QuestInfoText = ({ questStartData, questType, show }) => {
-  console.log({ questType });
   const renderQuestInfoText = () => {
     if (show) {
       return (

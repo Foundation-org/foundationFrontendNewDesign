@@ -283,24 +283,36 @@ const OpenChoice = () => {
     }
   }, [questionStatus]);
 
+  // useEffect(() => {
+  //   let debounceTimer;
+
+  //   const updateTypedValuesWithDelay = (value) => {
+  //     if (debounceTimer) {
+  //       clearTimeout(debounceTimer);
+  //     }
+
+  //     debounceTimer = setTimeout(() => {
+  //       setTypedValues(value);
+  //     }, 100);
+  //   };
+
+  //   updateTypedValuesWithDelay(optionsValue);
+
+  //   // Cleanup
+  //   return () => {
+  //     clearTimeout(debounceTimer);
+  //   };
+  // }, [optionsValue, setTypedValues]);
+
   useEffect(() => {
-    let debounceTimer;
-
     const updateTypedValuesWithDelay = (value) => {
-      if (debounceTimer) {
-        clearTimeout(debounceTimer);
-      }
-
-      debounceTimer = setTimeout(() => {
-        setTypedValues(value);
-      }, 100);
+      setTypedValues(value);
     };
 
     updateTypedValuesWithDelay(optionsValue);
 
-    // Cleanup
     return () => {
-      clearTimeout(debounceTimer);
+      setTypedValues((prev) => prev);
     };
   }, [optionsValue, setTypedValues]);
 
