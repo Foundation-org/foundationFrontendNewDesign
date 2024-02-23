@@ -56,8 +56,6 @@ const OpenChoice = () => {
           toast.success('Successfully Created');
           setLoading(false);
           setQuestion('');
-          setMultipleOption(true);
-          setAddOption(true);
           dispatch(createQuestAction.resetCreateQuest());
         }, 500);
       }
