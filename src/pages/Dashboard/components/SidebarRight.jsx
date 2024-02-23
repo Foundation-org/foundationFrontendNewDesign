@@ -51,7 +51,7 @@ const SidebarRight = () => {
       iconLight: '/assets/svgs/dashboard/couter-eye.svg',
       alt: 'your-post-hidden',
       title: 'Your Posts-Hidden',
-      value: (persistedUserInfo && persistedUserInfo?.postsHidden) || 0,
+      value: (persistedUserInfo && persistedUserInfo?.yourHiddenPostCounter) || 0,
     },
     // {
     //   id: 3,
