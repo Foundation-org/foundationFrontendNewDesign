@@ -204,7 +204,7 @@ const ButtonGroup = ({
               </Button>
             ) : null}
             <Button variant="danger" onClick={showHidePostOpen} className={'bg-[#FF4057]'}>
-              Remove
+              Unhide
             </Button>
             <UnHidePostPopup
               handleClose={showHidePostClose}
