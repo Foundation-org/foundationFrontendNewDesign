@@ -167,7 +167,7 @@ const Topbar = () => {
                     : 'text-[#BEDEF4]'
               }`}
               onClick={() => {
-                (item.id == 1 || item.id === 3) && dispatch(createQuestActions.resetCreateQuest());
+                dispatch(createQuestActions.resetCreateQuest());
               }}
             >
               {location.pathname === item.path || location.pathname === `${item.path}/` ? (
