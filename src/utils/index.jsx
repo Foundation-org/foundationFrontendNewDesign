@@ -335,7 +335,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
         <p className="text-center text-[4vw] tablet:text-[2vw]">
           {isBookmarked ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-              <b>No more bookmarks!</b>{' '}
+              <b>{!resultPreferencesForBookmark ? 'No more matching bookmarks found!' : 'No more bookmarks!'}</b>
               {(result === false || !resultPreferencesForBookmark) && (
                 <button
                   className={`${
@@ -353,7 +353,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
           ) : result === false || !resultPreferences ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
               {/* comment it out for infinite */}
-              <b>You are all caught up!</b>
+              <b>{!resultPreferences ? 'No more matching posts found!' : 'You are all aaacaught up!'}</b>
               {(result === false || !resultPreferences) && (
                 <button
                   className={`${

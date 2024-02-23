@@ -42,7 +42,6 @@ const QuestStartSection = () => {
   const columnsData = localStorage.getItem('columns');
   const parsedColumns = JSON.parse(columnsData);
   const [columns, setColumns] = useState(parsedColumns || initialColumns);
-  console.log('column', parsedColumns);
   const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
   // Quest Services
@@ -58,7 +57,7 @@ const QuestStartSection = () => {
   // Reset Preferences
   useEffect(() => {
     if (!filterStates.isColumns) {
-      const stateString = JSON.stringify(columns);
+      const stateString = JSON.stringify(initialColumns);
       localStorage.setItem('columns', stateString);
       setColumns(initialColumns);
     }
