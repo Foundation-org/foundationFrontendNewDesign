@@ -474,7 +474,7 @@ const RankChoice = () => {
                 onClick={() => handleSubmit()}
                 disabled={loading === true}
               >
-                Submit
+                Create
               </Button>
             </div>
           ) : (
@@ -485,7 +485,7 @@ const RankChoice = () => {
                 onClick={() => handleSubmit()}
                 className="mr-7 mt-[10px] tablet:mt-[30px] tablet:mr-[70px]"
               >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
                 <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[10px]">
                   (-0.1 FDX)
                 </span>

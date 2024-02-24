@@ -353,7 +353,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
           ) : result === false || !resultPreferences ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
               {/* comment it out for infinite */}
-              <b>{!resultPreferences ? 'No more matching posts found!' : 'You are all aaacaught up!'}</b>
+              <b>{!resultPreferences ? 'No more matching posts found!' : 'You are all caught up!'}</b>
               {(result === false || !resultPreferences) && (
                 <button
                   className={`${
