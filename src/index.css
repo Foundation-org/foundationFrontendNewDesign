@@ -46,7 +46,7 @@
 }
 
 .dragIconWrapper {
-  @apply mb-[0.5px] flex w-[19px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:w-[28px] tablet:rounded-l-[10px] tablet:py-[10px] laptop:min-w-[25.2px] laptop:w-[25.2px];
+  @apply flex w-[19px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:w-[28px] tablet:rounded-l-[10px] tablet:py-[10px] laptop:min-w-[25.2px] laptop:w-[25.2px];
 }
 
 .term_policy_heading {
