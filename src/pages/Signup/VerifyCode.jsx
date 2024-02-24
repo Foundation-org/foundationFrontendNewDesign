@@ -3,10 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { url } from '../../services/api/Axios';
 import { useNavigate } from 'react-router-dom';
-// import { useMutation } from '@tanstack/react-query';
-// import { userInfo, userInfoById } from '../../services/api/userAuth';
 import { addUser } from '../../features/auth/authSlice';
-// import PopUp from '../../components/ui/PopUp';
 import { Button as UiButton } from '../../components/ui/Button';
 
 const VerifyCode = () => {

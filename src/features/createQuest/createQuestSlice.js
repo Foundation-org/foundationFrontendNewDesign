@@ -20,10 +20,10 @@ export const checkAnswer = createAsyncThunk('createQuest/checkAnswer', async ({ 
 const initialState = {
   questions: {
     question: '',
-    changedOption: '',
-    changeState: false,
+    changedOption: 'Anytime',
+    changeState: true,
     multipleOption: false,
-    addOption: false,
+    addOption: true,
     optionsCount: 3,
     options: [],
   },

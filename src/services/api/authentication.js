@@ -6,14 +6,14 @@ export const verifyCode = async (urlQuery) => {
   });
 };
 
-export const referral = async ({code, uuid}) => {
+export const referral = async ({ code, uuid }) => {
   return await api.post('user/referral', {
     code,
     uuid,
   });
 };
 
-export const sendVerificationEmail = async ({userEmail}) => {
+export const sendVerificationEmail = async ({ userEmail }) => {
   return await api.post('user/sendVerifyEmail', {
     userEmail,
   });

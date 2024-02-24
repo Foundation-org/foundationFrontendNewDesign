@@ -65,9 +65,27 @@ const Bookmark = () => {
   // Reset Preferences
   useEffect(() => {
     if (!filterStates.isColumns) {
-      const stateString = JSON.stringify(columns);
+      const stateString = JSON.stringify({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
       localStorage.setItem('bookmarkColumns', stateString);
-      setColumns(initialColumns);
+      setColumns({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
     }
   }, [filterStates.isColumns]);
 
@@ -265,11 +283,13 @@ const Bookmark = () => {
                             ? 'Like/Dislike'
                             : item?.whichTypeQuestion === 'multiple choise'
                               ? 'Multiple Choice'
-                              : item?.whichTypeQuestion === 'ranked choise'
-                                ? 'Ranked Choice'
-                                : item?.whichTypeQuestion === 'yes/no'
-                                  ? 'Yes/No'
-                                  : null
+                              : item?.whichTypeQuestion === 'open choice'
+                                ? 'Open Choice'
+                                : item?.whichTypeQuestion === 'ranked choise'
+                                  ? 'Ranked Choice'
+                                  : item?.whichTypeQuestion === 'yes/no'
+                                    ? 'Yes/No'
+                                    : null
                       }
                       answers={item?.QuestAnswers}
                       time={item?.createdAt}
@@ -320,11 +340,13 @@ const Bookmark = () => {
                             ? 'Like/Dislike'
                             : item?.whichTypeQuestion === 'multiple choise'
                               ? 'Multiple Choice'
-                              : item?.whichTypeQuestion === 'ranked choise'
-                                ? 'Ranked Choice'
-                                : item?.whichTypeQuestion === 'yes/no'
-                                  ? 'Yes/No'
-                                  : null
+                              : item?.whichTypeQuestion === 'open choice'
+                                ? 'Open Choice'
+                                : item?.whichTypeQuestion === 'ranked choise'
+                                  ? 'Ranked Choice'
+                                  : item?.whichTypeQuestion === 'yes/no'
+                                    ? 'Yes/No'
+                                    : null
                       }
                       answers={item?.QuestAnswers}
                       setSubmitResponse={setSubmitResponse}

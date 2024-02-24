@@ -12,6 +12,8 @@ export function getQuestionTitle(whichTypeQuestion) {
       return 'Ranked Choice';
     case 'yes/no':
       return 'Yes/No';
+    case 'open choice':
+      return 'Open Choice'
     default:
       return null;
   }

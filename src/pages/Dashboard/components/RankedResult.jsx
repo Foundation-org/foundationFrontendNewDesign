@@ -45,21 +45,21 @@ const RankedResult = (props) => {
       ) : (
         <div className="flex w-7 min-w-[28px] items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]"></div>
       )}
-      <div className="flex min-h-[24px] h-[24px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:h-[49px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:min-w-[25px] laptop:w-[25px]">
-        &#x200B;
-      </div>
-      <div className="tablet:rounded-l-0 rounded-l-0 flex w-full justify-between rounded-r-[4.73px] border-y border-l-0 border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]">
+
+      <div className="rounded-s-[5.387px] flex w-full justify-between rounded-r-[4.73px] border-l-0 border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:rounded-s-[10px] tablet:rounded-r-[10px] tablet:border-r-[3px]">
         <div className="flex w-full items-center">
+          <div className="flex h-full min-h-[24px] w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:min-h-[43px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:min-w-[25px] laptop:w-[25px]">
+            &#x200B;
+          </div>
           {props.btnText !== 'Results' && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
               {persistedTheme === 'dark' ? (
                 <img src="/assets/svgs/dashboard/six-dots-dark.svg" alt="six dots" />
               ) : (
-                <img src="/assets/svgs/dashboard/six-dots.svg" alt="six dots" />
+                <img src="/assets/svgs/dashboard/six-do ts.svg" alt="six dots" />
               )}
             </div>
           )}
-
           <div className="relative flex w-full justify-between">
             <div
               className="block h-[5px] tablet:h-[10px] absolute top-0 bg-[#4DD896]"
@@ -67,7 +67,7 @@ const RankedResult = (props) => {
                 width: props?.selectedPercentages && props?.selectedPercentages[props?.answer.trim()],
               }}
             />
-            <h1 className="w-full pb-[6.8px] pl-[18px] pt-[6.7px] text-[8.5px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
+            <h1 className="w-full pb-[6.8px] px-2 border-y tablet:border-y-[3px] border-[#DEE6F7] tablet:pl-[18px] pt-[6.7px] tablet:pr-5 laptop:pr-[34px] text-[8.5px] font-normal leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
               {props.answer}
             </h1>
             <div className="flex items-center gap-[19px]">
@@ -124,7 +124,7 @@ const RankedResult = (props) => {
           </div>
         </div>
         {/* to show ranked and multiple choice options */}
-        <div className="mr-[10.63px] flex items-center gap-[19px] text-[9.238px] tablet:mr-[11px] tablet:text-[16px] ">
+        <div className="pr-[10.63px] flex items-center gap-[19px] text-[9.238px] tablet:pr-[11px] tablet:text-[16px] border-y tablet:border-y-[3px] border-[#DEE6F7] rounded-e-[5.387px]">
           {props.btnText === 'Results' ? (
             <>
               {props?.selectedPercentages && props.selectedPercentages[props.answer.trim()] ? (

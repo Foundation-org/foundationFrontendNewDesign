@@ -15,6 +15,7 @@ import Result from './Result';
 import StartTest from './StartTest';
 import ButtonGroup from '../../../../../components/question-card/ButtonGroup';
 import QuestInfoText from '../../../../../components/question-card/QuestInfoText';
+import Spacing from '../../../../../components/question-card/Spacing.jsx';
 import QuestCardLayout from '../../../../../components/question-card/QuestCardLayout';
 import ConditionalTextFullScreen from '../../../../../components/question-card/ConditionalTextFullScreen';
 
@@ -435,7 +436,7 @@ const QuestionCardWithToggle = (props) => {
       } else {
         startQuest(params);
       }
-    } else if (questStartData.whichTypeQuestion === 'multiple choise') {
+    } else if (questStartData.whichTypeQuestion === 'multiple choise'  || questStartData.whichTypeQuestion === 'open choice') {
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = '';
@@ -730,7 +731,7 @@ const QuestionCardWithToggle = (props) => {
     if (viewResult !== questStartData._id && openResults !== true) {
       return (
         <>
-          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+        <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -745,13 +746,14 @@ const QuestionCardWithToggle = (props) => {
             checkOptionStatus={checkOptionStatus}
             setCheckOptionStatus={setCheckOptionStatus}
           />
-          <ConditionalTextFullScreen questStartData={questStartData} show={true} />
+        <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
         </>
       );
     } else {
       return (
         <>
-          <QuestInfoText questStartData={questStartData} show={false} questType={questStartData.whichTypeQuestion} />
+        <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
           <Result
             questStartData={questStartData}
             id={questStartData._id}
@@ -769,7 +771,9 @@ const QuestionCardWithToggle = (props) => {
             questSelection={questSelection}
             cardSize={cardSize}
           />
-          <ConditionalTextFullScreen questStartData={questStartData} show={true} />
+          {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
+          <QuestInfoText questStartData={questStartData} show={false} questType={questStartData.whichTypeQuestion} />
+
         </>
       );
     }

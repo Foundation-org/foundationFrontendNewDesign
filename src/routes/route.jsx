@@ -12,6 +12,7 @@ import VerifyEmail from '../pages/Signup/VerifyEmail';
 import Profile from '../pages/Dashboard/pages/Profile';
 import Contributions from '../pages/Dashboard/pages/Profile/pages/Contributions';
 import VerificationBadges from '../pages/Dashboard/pages/Profile/pages/VerificationBadges';
+import HiddenPosts from '../pages/Dashboard/pages/Profile/pages/HiddenPosts';
 import BasicTable from '../pages/Dashboard/pages/Profile/pages/Ledger';
 import ChangePassword from '../pages/Dashboard/pages/Profile/pages/ChangePassword';
 import QuestStartSection from '../pages/Dashboard/pages/QuestStartSection';
@@ -25,8 +26,8 @@ import PrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 import Faq from '../pages/Dashboard/pages/CustomerSupport/Faq';
 import ContactUs from '../pages/Dashboard/pages/CustomerSupport/ContactUs';
 import CustomerSupport from '../pages/Dashboard/pages/CustomerSupport';
-import { useSelector } from 'react-redux';
 import GuestRedirect from '../pages/DashboardRedirect/GuestRedirect';
+import { useSelector } from 'react-redux';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -35,7 +36,7 @@ export function Router() {
     Guest: 'guest',
   };
 
-  console.log({ persistedUser });
+  // console.log({ persistedUser });
 
   return (
     <>
@@ -72,6 +73,7 @@ export function Router() {
                 <Route path="" element={<Contributions />} />
                 <Route path="verification-badges" element={<VerificationBadges />} />
                 <Route path="ledger" element={<BasicTable />} />
+                <Route path="hidden-posts" element={<HiddenPosts />} />
                 <Route path="change-password" element={<ChangePassword />} />
               </Route>
               <Route path="/quest/:isFullScreen" element={<Guests />} />

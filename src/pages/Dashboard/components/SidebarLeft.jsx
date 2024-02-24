@@ -109,6 +109,8 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
         dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
         dispatch(filtersActions.setExpandedView(persistedUserInfo.bookmarkStates.expandedView));
         dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
+        const stateString = JSON.stringify(persistedUserInfo?.bookmarkStates?.columns);
+        localStorage.setItem('bookmarkColumns', stateString);
       } else {
         dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.filterByScope));
         dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
@@ -116,6 +118,8 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
         dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
         dispatch(filtersActions.setExpandedView(persistedUserInfo.States.expandedView));
         dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
+        const stateString = JSON.stringify(persistedUserInfo?.States?.columns);
+        localStorage.setItem('columns', stateString);
       }
     }
   }, [persistedUserInfo]);
@@ -125,11 +129,11 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
 
   useEffect(() => {
     if (pathname === '/dashboard/bookmark') {
-      setBookmarkFilters(filterStates);
+      setBookmarkFilters({ ...filterStates, columns: columns });
     } else {
-      setFilters(filterStates, columns);
+      setFilters({ ...filterStates, columns: columns });
     }
-  }, [filterStates]);
+  }, [filterStates, columns]);
 
   const [multipleOption, setMultipleOption] = useState(
     localStorage.getItem('filterByState') !== undefined
@@ -237,7 +241,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
               persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             }  h-[45px] w-[212px] rounded-[10px] px-5 py-2 text-[18px] font-medium text-white focus:outline-none dark:text-[#707175]`}
           >
-            Topic Preferences
+            Topics
           </button>
           <BasicModal
             open={openTopicPref}
@@ -258,7 +262,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             <Dropdown2
               label={'Status'}
               title={filterStates.filterByStatus ? filterStates.filterByStatus : 'All'}
-              items={['All', 'Unanswered', 'Answered', 'Completed', 'Changeable']}
+              items={['All', 'Not Participated', 'Participated']}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterByStatus(item));
               }}
@@ -268,13 +272,23 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
               title={
                 filterStates.filterByType && filterStates.filterByType === 'Multiple Choise'
                   ? 'Multiple Choice'
-                  : filterStates.filterByType === 'Ranked Choise'
-                    ? 'Ranked Choice'
-                    : filterStates.filterByType
-                      ? filterStates.filterByType
-                      : 'All'
+                  : filterStates.filterByType === 'Open Choice'
+                    ? 'Open Choice'
+                    : filterStates.filterByType === 'Ranked Choise'
+                      ? 'Ranked Choice'
+                      : filterStates.filterByType
+                        ? filterStates.filterByType
+                        : 'All'
               }
-              items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choice', 'Ranked Choice']}
+              items={[
+                'All',
+                'Yes/No',
+                'Agree/Disagree',
+                'Like/Dislike',
+                'Multiple Choice',
+                'Open Choice',
+                'Ranked Choice',
+              ]}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterByType(item));
               }}
@@ -359,7 +373,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
           <Dropdown2
             label={'Status'}
             title={filterStates.filterByStatus ? filterStates.filterByStatus : 'All'}
-            items={['All', 'Unanswered', 'Answered', 'Completed', 'Changeable']}
+            items={['All', 'Not Participated', 'Participated']}
             handleSelect={(item) => {
               dispatch(filtersActions.setFilterByStatus(item));
             }}
@@ -369,13 +383,23 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             title={
               filterStates.filterByType && filterStates.filterByType === 'Multiple Choise'
                 ? 'Multiple Choice'
-                : filterStates.filterByType === 'Ranked Choise'
-                  ? 'Ranked Choice'
-                  : filterStates.filterByType
-                    ? filterStates.filterByType
-                    : 'All'
+                : filterStates.filterByType === 'Open Choice'
+                  ? 'Open Choice'
+                  : filterStates.filterByType === 'Ranked Choise'
+                    ? 'Ranked Choice'
+                    : filterStates.filterByType
+                      ? filterStates.filterByType
+                      : 'All'
             }
-            items={['All', 'Yes/No', 'Agree/Disagree', 'Like/Dislike', 'Multiple Choice', 'Ranked Choice']}
+            items={[
+              'All',
+              'Yes/No',
+              'Agree/Disagree',
+              'Like/Dislike',
+              'Multiple Choice',
+              'Open Choice',
+              'Ranked Choice',
+            ]}
             handleSelect={(item) => {
               dispatch(filtersActions.setFilterByType(item));
             }}
@@ -407,7 +431,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             }  inset-0 w-4/6 rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
             onClick={handleTopicPref}
           >
-            Preferences
+            Topics
           </button>
           <div className="flex w-full items-center justify-center gap-[6px]">
             <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] dark:text-white tablet:text-[15px]">

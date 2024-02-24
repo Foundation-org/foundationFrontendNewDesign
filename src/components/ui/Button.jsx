@@ -13,7 +13,7 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
         ? 'addoption-boxShadow w-[4.875rem] max-w-[10.8125rem] bg-[#707175] text-[0.625rem] font-semibold text-white tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
         : '',
       variant === 'submit'
-        ? 'addoption-boxShadow w-[4.875rem] max-w-[10.8125rem] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] text-[0.625rem] font-semibold text-white tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
+        ? 'addoption-boxShadow min-w-[4.875rem] tablet:min-w-[10.8125rem] px-[6.63px] laptop:px-[17px]  bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] text-[0.625rem] font-semibold text-white tablet:text-[1.25rem] '
         : '',
       variant === 'hollow-submit'
         ? 'w-fit rounded-[7.28px] bg-gradient-to-tr border-[1.428px] tablet:border-[3px] border-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-[#389CE3] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]'
@@ -42,7 +42,9 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'getintouch'
         ? 'addoption-boxShadow bg-[#4A8DBD] text-[10px] font-semibold text-white tablet:text-[1.25rem] px-3 rounded-[2.1px] text-nowrap'
         : '',
-
+      variant === 'danger'
+        ? 'addoption-boxShadow w-[4.875rem] max-w-[10.8125rem] bg-[#DC1010] text-[0.625rem] font-semibold text-white tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
+        : '',
       className,
     )}
     {...props}
@@ -73,5 +75,6 @@ Button.propTypes = {
     'social-btn',
     'hollow-submit',
     'getintouch',
+    'danger',
   ]),
 };

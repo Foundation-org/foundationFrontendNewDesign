@@ -4,7 +4,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import * as QuestServices from '../../../../services/queries/quest';
 import * as prefActions from '../../../../features/preferences/prefSlice';
-
+import { Button } from '../../../../components/ui/Button';
 // icons
 import { IoClose } from 'react-icons/io5';
 import { GrClose } from 'react-icons/gr';
@@ -21,9 +21,10 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
     if (prefSearchRes?.length !== 0) {
       setColumns((prevColumns) => {
         const newList = prefSearchRes?.data.data || [];
-        const filteredList = newList.filter(
-          (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
-        );
+        // const filteredList = newList.filter(
+        //   (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
+        // );
+        const filteredList = newList.filter((item) => !prevColumns.Block.list.includes(item));
 
         return {
           ...prevColumns,
@@ -37,9 +38,11 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
       if (isSuccess) {
         setColumns((prevColumns) => {
           const newList = topicsData?.data.data || [];
-          const filteredList = newList.filter(
-            (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
-          );
+          // const filteredList = newList.filter(
+          //   (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
+          // );
+
+          const filteredList = newList.filter((item) => !prevColumns.Block.list.includes(item));
 
           return {
             ...prevColumns,
@@ -147,11 +150,16 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
             alt="preferencesLogo"
             className="h-[24px] w-[24px] tablet:h-[50px] tablet:w-[50px]"
           />
-          <p className="text-white text-[10px] tablet:text-[20px] font-medium">Preferences</p>
+          <p className="text-white text-[10px] tablet:text-[20px] font-medium">Topics</p>
         </div>
 
-        <div onClick={handleClose} className="cursor-pointer">
-          <img src="/assets/preferences/close.png" alt="close" className="h-2 w-2 tablet:h-6 tablet:w-6" />
+        <div className="cursor-pointer">
+          <img
+            src="/assets/preferences/close.png"
+            alt="close"
+            className="h-2 w-2 tablet:h-6 tablet:w-6"
+            onClick={handleClose}
+          />
         </div>
       </div>
       <div className="relative h-full w-[90vw] px-[1.19rem] py-[12px] tablet:w-fit tablet:px-[35px] tablet:py-[25px] border-b-2 border-x-2 tablet:border-b-[6px] tablet:border-x-[6px] border-[#DEE6F7] dark:border-[#8B8B8B] rounded-b-[0.9375rem] tablet:rounded-b-[37px]">
@@ -187,7 +195,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
           </div>
         </div>
         <h1 className="py-2 text-center text-[7px] font-normal leading-normal text-[#707175] dark:text-white tablet:text-[1.2rem] laptop:py-[15px] laptop:text-[16px]">
-          Drag and drop to set your preferences and blocks
+          Drag and drop to hide the topics
         </h1>
         {/* columns */}
         <div className="h-full tablet:mt-0 laptop:h-[80%]">
@@ -202,11 +210,11 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                           col.id === 'All' ? 'rounded-t-[0.5rem]' : ''
                         } bg-[#DEE6F7] text-center text-[1rem] font-semibold text-[#535353] dark:bg-[#000] dark:text-white tablet:text-[1.4rem] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem]`}
                       >
-                        {col.id === 'Preferences' ? 'Show Only' : col.id}
+                        {col.id === 'Preferences' ? 'Show Only' : col.id === 'Block' ? 'Hide' : col.id}
                       </h2>
                       <div className="h-full border-b-[3px] border-x-[3px] tablet:border-b-[6px] tablet:border-x-[6px] border-[#DEE6F7] bg-[#FCFCFD] pr-1 dark:border-[#212121] dark:bg-[#212121] laptop:rounded-b-[1.25rem]">
                         <div
-                          className="custom-scrollbar overflow-x-hidden flex h-[18vh] min-h-[19vh] flex-col gap-[0.4rem] overflow-y-auto bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] dark:bg-[#212121] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem]"
+                          className="custom-scrollbar overflow-x-hidden flex h-[25vh] min-h-[25vh] flex-col gap-[0.4rem] overflow-y-auto bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] dark:bg-[#212121] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem]"
                           {...provided.droppableProps}
                           ref={provided.innerRef}
                           s
@@ -228,7 +236,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                                         snapshot.isDragging
                                           ? 'border-[#5FA3D5]'
                                           : 'border-[#DEE6F7] dark:border-[#282828]'
-                                      } flex h-[19.7px] w-[0.6rem] min-w-[0.6rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] dark:bg-[#8E8E8E] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
+                                      } flex h-6 w-[0.7rem] min-w-[0.7rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] dark:bg-[#8E8E8E] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
                                     >
                                       {persistedTheme === 'dark' ? (
                                         <img
@@ -249,7 +257,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                                         snapshot.isDragging
                                           ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                                           : 'border-[#ACACAC] bg-[#FCFCFD] dark:bg-[#282828]'
-                                      } flex h-[19.7px] w-fit select-none items-center gap-[5px] truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] dark:text-white tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px]`}
+                                      } flex h-6 w-fit select-none items-center gap-[5px] truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] dark:text-white tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px]`}
                                     >
                                       {text}
                                       {col.id !== 'All' && (
@@ -279,6 +287,16 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
               ))}
             </div>
           </DragDropContext>
+        </div>
+        <div className="flex justify-center items-center mt-4">
+          <Button
+            variant={'submit'}
+            onClick={() => {
+              handleClose();
+            }}
+          >
+            Done
+          </Button>
         </div>
       </div>
     </div>

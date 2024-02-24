@@ -39,6 +39,14 @@ const Contributions = () => {
     },
     {
       id: 5,
+      icon: '/assets/svgs/dashboard/couter-eye.svg',
+      iconLight: '/assets/svgs/dashboard/couter-eye.svg',
+      alt: 'icon5',
+      title: 'Your Posts-Hidden',
+      value: (persistedUserInfo && persistedUserInfo?.yourHiddenPostCounter) || 0,
+    },
+    {
+      id: 6,
       icon: '/assets/svgs/dashboard/icon6.svg',
       iconLight: '/assets/svgs/dashboard/icon16.svg',
       alt: 'icon1',
@@ -46,7 +54,7 @@ const Contributions = () => {
       value: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0,
     },
     {
-      id: 6,
+      id: 7,
       icon: '/assets/svgs/dashboard/icon7.svg',
       iconLight: '/assets/svgs/dashboard/icon17.svg',
       alt: 'icon1',
@@ -54,7 +62,7 @@ const Contributions = () => {
       value: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0,
     },
     {
-      id: 7,
+      id: 8,
       icon: '/assets/svgs/dashboard/icon8.svg',
       iconLight: '/assets/svgs/dashboard/icon18.svg',
       alt: 'icon1',
@@ -62,7 +70,7 @@ const Contributions = () => {
       value: (persistedUserInfo && persistedUserInfo?.contentionsOnAddedAns) || 0,
     },
     {
-      id: 8,
+      id: 9,
       icon: '/assets/svgs/dashboard/icon9.svg',
       iconLight: '/assets/svgs/dashboard/icon19.svg',
       alt: 'icon1',
@@ -70,11 +78,11 @@ const Contributions = () => {
       value: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0,
     },
     {
-      id: 9,
+      id: 10,
       icon: '/assets/svgs/dashboard/last.svg',
       iconLight: '/assets/svgs/dashboard/icon20.svg',
       alt: 'icon1',
-      title: 'Code of Conduct-Fails',
+      title: 'Code of-Conduct Fails',
       value: (persistedUserInfo && persistedUserInfo?.violationCounter) || 0,
     },
   ];
@@ -90,22 +98,24 @@ const Contributions = () => {
       <div
         className={`${
           persistedTheme === 'dark' ? 'dark-shadow-inside border-2 border-[#858585] dark:border-white' : 'shadow-inside'
-        } relative mx-[86px] hidden h-[183px] rounded-[45px] laptop:block bg-white`}
+        } relative ml-[42px] mr-[59px] hidden h-[183px] rounded-[45px] laptop:block`}
       >
-        <div className="absolute -top-7 left-[50%] flex w-full -translate-x-[50%] transform px-[40px]">
+        <div className="absolute -top-7 left-[50%] flex gap-[10px] w-full -translate-x-[50%] transform px-[10px] 2xl:justify-center">
           {list?.map((item) => (
             <div className="w-full" key={item.id}>
               <div className="flex flex-col items-center justify-center text-[#7C7C7C] dark:text-white">
                 <img
                   src={persistedTheme === 'dark' ? item.icon : item.iconLight}
                   alt={item.alt}
-                  className="mb-[18px] h-[60px] w-[50px]"
+                  className="mb-3 h-[49px] w-[49px]"
                 />
-                <h4 className="text-center text-[18px] font-semibold leading-normal">{item.title.split('-')[0]}</h4>
-                <h4 className="mb-6 text-center text-[18px] font-semibold leading-normal">
+                <h4 className="text-center text-[14.72px] font-semibold leading-[17.8px]">
+                  {item.title.split('-')[0]}
+                </h4>
+                <h4 className="mb-6 text-center text-[14.72px] font-semibold leading-[17.8px]">
                   {item.title.split('-')[1]}
                 </h4>
-                <h1 className="text-center text-[24px] font-semibold leading-[14px]">{item.value}</h1>
+                <h1 className="text-center text-[28px] font-semibold leading-[11.45px]">{item.value}</h1>
               </div>
             </div>
           ))}
@@ -115,21 +125,21 @@ const Contributions = () => {
         <div
           className={`${
             persistedTheme === 'dark' ? 'dark-shadow-inside border-[1px] border-[#858585]' : 'shadow-inside'
-          } relative mx-6 h-[82px] rounded-[11.4px] border-[#858585] tablet:mx-[106px] tablet:h-[183px] tablet:rounded-[45px] tablet:border-[2px]`}
+          } relative mx-[18px] h-[82px] rounded-[11.4px] border-[#858585] tablet:mx-[42px] tablet:h-[183px] tablet:rounded-[45px] tablet:border-[2px]`}
         >
-          <div className="absolute -top-4 left-[50%] flex w-full -translate-x-[50%] transform tablet:-top-7">
+          <div className="absolute -top-3 left-[50%] flex gap-2 w-full -translate-x-[50%] transform tablet:-top-7 px-[10px]">
             {firstHalf?.map((item) => (
               <div className="w-full" key={item.id}>
                 <div className="flex flex-col items-center justify-center">
                   <img
                     src={persistedTheme === 'dark' ? item.icon : item.iconLight}
                     alt={item.alt}
-                    className="mb-[7px] h-[30px] w-8 tablet:mb-[18px] tablet:h-[60px] tablet:w-[50px]"
+                    className="mb-[7px] h-[23px] w-[23px] tablet:mb-[18px] tablet:h-[60px] tablet:w-[50px]"
                   />
-                  <h4 className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:text-[18px]">
+                  <h4 className="text-center text-[8px] font-semibold leading-[9.68px] tablet:leading-[25px] text-[#7C7C7C] dark:text-[#B8B8B8] tablet:text-[18px]">
                     {item.title.split('-')[0]}
                   </h4>
-                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:mb-6 tablet:text-[18px]">
+                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-[9.68px] tablet:leading-[25px] text-[#7C7C7C] dark:text-[#B8B8B8] tablet:mb-6 tablet:text-[18px]">
                     {item.title.split('-')[1]}
                   </h4>
                   <h1 className="text-center text-[16px] font-semibold leading-[14px] text-[#7C7C7C] dark:text-[#B8B8B8] 2xl:text-[35px] tablet:text-[24px]">
@@ -143,21 +153,21 @@ const Contributions = () => {
         <div
           className={`${
             persistedTheme === 'dark' ? 'dark-shadow-inside border-[1px] border-[#858585]' : 'shadow-inside'
-          } relative mx-6 h-[82px] rounded-[11.4px] border-[#858585] tablet:mx-[106px] tablet:h-[183px] tablet:rounded-[45px] tablet:border-[2px]`}
+          } relative mx-[18px] h-[82px] rounded-[11.4px] border-[#858585] tablet:mx-[42px] tablet:h-[183px] tablet:rounded-[45px] tablet:border-[2px]`}
         >
-          <div className="absolute -top-4 left-[50%] flex w-full -translate-x-[50%] transform tablet:-top-7">
+          <div className="absolute -top-3 left-[50%] flex gap-2 w-full -translate-x-[50%] transform tablet:-top-7 px-[10px]">
             {secondHalf?.map((item) => (
               <div className="w-full" key={item.id}>
                 <div className="flex flex-col items-center justify-center">
                   <img
                     src={persistedTheme === 'dark' ? item.icon : item.iconLight}
                     alt={item.alt}
-                    className="mb-[7px] h-[30px] w-8 tablet:mb-[18px] tablet:h-[60px] tablet:w-[50px]"
+                    className="mb-[7px] h-[23px] w-[23px] tablet:mb-[18px] tablet:h-[60px] tablet:w-[50px]"
                   />
-                  <h4 className="text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:text-[18px]">
+                  <h4 className="text-center text-[8px] font-semibold leading-[9.68px] tablet:leading-[25px] text-[#7C7C7C] dark:text-[#B8B8B8] tablet:text-[18px]">
                     {item.title.split('-')[0]}
                   </h4>
-                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:mb-6 tablet:text-[18px]">
+                  <h4 className="mb-[10px] text-center text-[8px] font-semibold leading-[9.68px] tablet:leading-[25px] text-[#7C7C7C] dark:text-[#B8B8B8] tablet:mb-6 tablet:text-[18px]">
                     {item.title.split('-')[1]}
                   </h4>
                   <h1 className="text-center text-[16px] font-semibold leading-[14px] text-[#7C7C7C] dark:text-[#B8B8B8] 2xl:text-[35px] tablet:text-[24px]">

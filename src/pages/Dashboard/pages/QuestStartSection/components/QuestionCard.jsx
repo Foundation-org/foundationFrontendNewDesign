@@ -20,6 +20,7 @@ import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import * as questServices from '../../../../../services/api/questsApi';
 import * as authActions from '../../../../../features/auth/authSlice';
 import { questSelectionInitial } from '../../../../../constants/quests';
+import Spacing from '../../../../../components/question-card/Spacing';
 
 const QuestionCard = (props) => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const QuestionCard = (props) => {
   const { questStartData, setPagination } = props;
   const { handleStartTest, startTest, setStartTest } = props;
   const { isBookmarked, viewResult, handleViewResults } = props;
-  const { setSubmitResponse } = props;
+  const { setSubmitResponse, isQuestHidden } = props;
 
   const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
@@ -442,7 +443,10 @@ const QuestionCard = (props) => {
       } else {
         startQuest(params);
       }
-    } else if (questStartData.whichTypeQuestion === 'multiple choise') {
+    } else if (
+      questStartData.whichTypeQuestion === 'multiple choise' ||
+      questStartData.whichTypeQuestion === 'open choice'
+    ) {
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = '';
@@ -665,7 +669,7 @@ const QuestionCard = (props) => {
     if (viewResult === questStartData._id) {
       return (
         <>
-          <QuestInfoText questStartData={questStartData} show={false} questType={questStartData.whichTypeQuestion} />
+          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
           <Result
             questStartData={questStartData}
             id={questStartData._id}
@@ -686,7 +690,8 @@ const QuestionCard = (props) => {
             questSelection={questSelection}
             cardSize={cardSize}
           />
-          <ConditionalTextFullScreen questStartData={questStartData} show={false} />
+          <QuestInfoText questStartData={questStartData} show={false} questType={questStartData.whichTypeQuestion} />
+          {/* <ConditionalTextFullScreen questStartData={questStartData} show={false} /> */}
         </>
       );
     }
@@ -694,7 +699,7 @@ const QuestionCard = (props) => {
     if (startTest === questStartData._id) {
       return (
         <>
-          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -722,8 +727,10 @@ const QuestionCard = (props) => {
             cardSize={cardSize}
             checkOptionStatus={checkOptionStatus}
             setCheckOptionStatus={setCheckOptionStatus}
+            isQuestHidden={isQuestHidden}
           />
-          <ConditionalTextFullScreen questStartData={questStartData} show={true} />
+          {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
+          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
         </>
       );
     } else {
@@ -734,10 +741,16 @@ const QuestionCard = (props) => {
   };
 
   return (
-    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} handleStartTest={handleStartTest}>
+    <QuestCardLayout
+      questStartData={questStartData}
+      isBookmarked={isBookmarked}
+      handleStartTest={handleStartTest}
+      isQuestHidden={isQuestHidden}
+    >
       {renderQuestContent()}
 
       <ButtonGroup
+        isQuestHidden={isQuestHidden}
         questStartData={questStartData}
         handleToggleCheck={handleToggleCheck}
         id={questStartData._id}

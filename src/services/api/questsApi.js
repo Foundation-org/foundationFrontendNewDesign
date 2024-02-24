@@ -179,3 +179,23 @@ const updateViolationCounterAPI = async () => {
   return response.data;
 };
 export default updateViolationCounterAPI;
+
+// HIDE POST API CALLS
+export const hideQuest = async (data) => {
+  return await api.post('/userQuestSetting/create', {
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
+    hidden: data.hidden,
+    hiddenMessage: data.hiddenMessage,
+    Question: data.Question,
+  });
+};
+
+export const updateHiddenQuest = async (data) => {
+  return await api.post('/userQuestSetting/update', {
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
+    hidden: data.hidden,
+    hiddenMessage: data.hiddenMessage,
+  });
+};

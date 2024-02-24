@@ -5,6 +5,7 @@ import AgreeDisagree from './pages/AgreeDisagree';
 import LikeDislike from './pages/LikeDislikeQuest';
 import MultipleChoice from './pages/MultipleChoice';
 import RankChoice from './pages/RankChoice';
+import OpenChoice from './pages/OpenChoice';
 
 const Quest = () => {
   const [tab, setTab] = useState(0);
@@ -17,6 +18,7 @@ const Quest = () => {
       {tab === 0 && <YesNo />}
       {tab === 1 && <MultipleChoice />}
       {tab === 2 && <RankChoice />}
+      {tab === 5 && <OpenChoice />}
       {tab === 4 && <LikeDislike />}
       {tab === 3 && <AgreeDisagree />}
     </div>
