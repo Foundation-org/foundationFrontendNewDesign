@@ -82,7 +82,7 @@ export default function ShowHidePostPopup({ handleClose, modalVisible, questStar
   const { mutateAsync: updateHiddenPost } = useMutation({
     mutationFn: updateHiddenQuest,
     onSuccess: (resp) => {
-      toast.success('Post unhidden successfully');
+      toast.success('Post hidden successfully');
       getUserInfo();
       queryClient.invalidateQueries('FeedData');
       handleClose();
