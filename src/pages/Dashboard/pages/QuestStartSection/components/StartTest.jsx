@@ -179,7 +179,7 @@ const StartTest = ({
               ref={listContainerRef}
               className={`${
                 isFullScreen === undefined
-                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[366px]'
+                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[336px]'
                   : ''
               } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
@@ -232,13 +232,13 @@ const StartTest = ({
                     ref={listContainerRef}
                     className={`${
                       isFullScreen === undefined
-                        ? 'quest-scrollbar max-h-[178.2px] md:max-h-[366px] overflow-auto min-h-fit mr-[2px] tablet:mr-1'
+                        ? 'quest-scrollbar max-h-[178.2px] md:max-h-[336px] overflow-auto min-h-fit mr-[2px] tablet:mr-1'
                         : null
                     }`}
                   >
                     <ul
                       className={`${
-                        isFullScreen === undefined ? ' tablet:max-h-[366px]' : ''
+                        isFullScreen === undefined ? ' tablet:max-h-[336px]' : ''
                       }  flex flex-col gap-[5.7px] tablet:gap-[10px]`}
                       {...provided.droppableProps}
                       ref={provided.innerRef}

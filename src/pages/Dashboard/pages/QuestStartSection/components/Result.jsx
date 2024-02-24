@@ -139,7 +139,7 @@ const Result = (props) => {
       ) : props.title === 'Multiple Choice' || props.title === 'Open Choice' ? (
         <div
           className={`${
-            isFullScreen === undefined ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[366px]' : ''
+            isFullScreen === undefined ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[336px]' : ''
           }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
         >
           {props.answers?.map((item, index) => (
@@ -184,7 +184,7 @@ const Result = (props) => {
       ) : props.title === 'Ranked Choice' ? (
         <div
           className={`${
-            isFullScreen === undefined ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[366px]' : ''
+            isFullScreen === undefined ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[336px]' : ''
           }  mr-[2px] tablet:mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
         >
           {rankedNewData?.map((item, index) => (
