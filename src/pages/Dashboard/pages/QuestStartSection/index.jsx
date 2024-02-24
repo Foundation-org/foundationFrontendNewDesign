@@ -252,7 +252,7 @@ const QuestStartSection = () => {
           next={fetchMoreData}
           hasMore={feedData?.hasNextPage}
           endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme)}
-          height={'calc(100vh - 92px)'}
+          height={'calc(100vh - 184.455px)'}
           className="no-scrollbar"
         >
           <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
