@@ -179,7 +179,7 @@ const StartTest = ({
               ref={listContainerRef}
               className={`${
                 isFullScreen === undefined
-                  ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]'
+                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[366px]'
                   : ''
               } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
@@ -232,7 +232,7 @@ const StartTest = ({
                     ref={listContainerRef}
                     className={`${
                       isFullScreen === undefined
-                        ? 'quest-scrollbar max-h-[187px] md:max-h-[366px] overflow-auto min-h-fit mr-[2px] tablet:mr-1'
+                        ? 'quest-scrollbar max-h-[178.2px] md:max-h-[366px] overflow-auto min-h-fit mr-[2px] tablet:mr-1'
                         : null
                     }`}
                   >
