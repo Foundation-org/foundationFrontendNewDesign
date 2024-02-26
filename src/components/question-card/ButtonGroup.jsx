@@ -68,12 +68,17 @@ const ButtonGroup = ({
     answerSelectionArray.forEach((item, index) => {
       if (apiResponse.selected.some((selectedItem) => selectedItem.question === item.label)) {
         answerSelectionArray[index].check = true;
+      } else {
+        answerSelectionArray[index].check = false;
       }
 
       if (apiResponse.contended.some((contendedItem) => contendedItem.question === item.label)) {
         answerSelectionArray[index].contend = true;
+      } else {
+        answerSelectionArray[index].contend = false;
       }
     });
+
     setAnswerSelection(answerSelectionArray);
   }
 
