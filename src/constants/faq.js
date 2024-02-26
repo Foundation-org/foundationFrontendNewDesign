@@ -3,7 +3,7 @@ export const faqData = [
     id: 1,
     img: '/assets/faq/1.png',
     title: 'How does Foundation work for Users?',
-    desc: 'Sign up to share your thoughts anonymously, guaranteeing utmost privacy. Unlock rewards by providing valuable insights, adding verification badges, and participating in posts. Customize your experience with our Filters & Preferences features, allowing you to tailor information and seek insights based on your preferences.',
+    desc: 'Sign up to share your thoughts anonymously, guaranteeing utmost privacy. Unlock rewards by providing valuable insights, adding verification badges, and participating in posts. Customize your experience with our Filters & Topics features, allowing you to tailor information and seek insights based on your preferences.',
   },
   {
     id: 2,
@@ -26,20 +26,20 @@ export const faqData = [
   {
     id: 5,
     img: '/assets/faq/4.png',
-    title: 'How does the filtering and preferences system work?',
+    title: 'How does the filtering and topics system work?',
     desc: 'Our filtering system is constantly advancing and designed to give you full control over what you see in your feed. These settings are always remembered and can only be adjusted and reset by you.',
   },
   {
     id: 6,
     img: '/assets/faq/5.png',
     title: 'How do I create a post?',
-    desc: 'Click "Create," select your post type, fill in the fields and submit it. It will immediately appear in everyone\'s feed. It costs 0.1 FDX to create a post.',
+    desc: 'Click "Create," select your post type, fill in the fields and submit it. It will immediately appear in everyone\'s feed. It costs 0.1 FDX to create a post. You will earn 0.1 FDX for every user that participates in your posts.',
   },
   {
     id: 7,
     img: '/assets/faq/6.png',
     title: 'How do I participate in a post?',
-    desc: 'Scroll through the main feed, select your option(s), and submit. You can also change your selection based on post settings and add your own options if allowed by the post creator. You are rewarded 0.96 FDX tokens for every post your participate in.',
+    desc: 'Scroll through the main feed, select your option(s), and submit. You can also change your selection anytime. Participants can add their own options if allowed by the post creator. You are rewarded 0.96 FDX tokens for every post your participate in.',
   },
   {
     id: 8,
@@ -63,7 +63,7 @@ export const faqData = [
     id: 11,
     img: '/assets/faq/10.png',
     title: 'How do I object to an option in a post?',
-    desc: 'If the post is Multiple Choice or Rank Choice, you can click the exclamation point next to the option. It costs 0.1 FDX to object to an option. If you remove the objection in the future, the same amount is returned to you.',
+    desc: 'If the post is Multiple Choice,Open Choice or Rank Choice, you can click the exclamation point next to the option. It costs 0.1 FDX to object to an option. If you remove the objection in the future, the same amount is returned to you.',
   },
   {
     id: 12,

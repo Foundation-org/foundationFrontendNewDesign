@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux';
 import { Tooltip } from '../../../../../utils/Tooltip';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 
 const Options = ({
   snapshot,
+  id,
   title,
   answer,
   options,
@@ -86,9 +88,9 @@ const Options = ({
                   snapshot.isDragging
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                } h-[24.8px] w-5 min-w-5 border-y tablet:border-y-[3px] tablet:h-[50.19px] laptop:h-[45px]`}
+                } w-5 min-w-5 border-y tablet:border-y-[3px]`}
               ></div>
-              <input
+              {/* <input
                 id={`input-${number}`}
                 className={`${
                   snapshot.isDragging
@@ -103,6 +105,23 @@ const Options = ({
                 onKeyDown={(e) =>
                   (e.key === 'Tab' && handleTab(number)) || (e.key === 'Enter' && handleTab(number, 'Enter'))
                 }
+              /> */}
+              <TextareaAutosize
+                id={`input-${number}`}
+                onChange={(e) => handleChange(e.target.value)}
+                onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value.trim())}
+                value={typedValue}
+                placeholder="Add your own option"
+                tabIndex={number + 1}
+                onKeyDown={(e) =>
+                  (e.key === 'Tab' && handleTab(number)) || (e.key === 'Enter' && handleTab(number, 'Enter'))
+                }
+                className={`${
+                  snapshot.isDragging
+                    ? 'border-[#5FA3D5] bg-[#F2F6FF]'
+                    : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
+                } box-border w-full resize-none border-y tablet:border-y-[3px] h-[24.8px] tablet:h-[51px] laptop:h-[45px] pt-[4px] pb-[5px] text-[0.625rem] font-normal text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:py-[8px] tablet:text-[1.296rem] laptop:py-[11px] laptop:leading-none laptop:text-[18px]`}
+                style={{ minHeight: '100%', height: '100%' }}
               />
               <div
                 id={`test${number}`}
@@ -110,16 +129,16 @@ const Options = ({
                   snapshot.isDragging
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                } relative flex h-[24.8px] items-center rounded-r-[0.33rem] border-y tablet:border-y-[3px] border-r tablet:border-r-[3px] text-[0.5rem] font-semibold tablet:h-[50.19px] tablet:rounded-r-[10.3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:h-[45px] laptop:rounded-r-[10px] leading-none ${
+                } relative flex items-center rounded-r-[0.33rem] border-y tablet:border-y-[3px] border-r tablet:border-r-[3px] text-[0.5rem] font-semibold tablet:rounded-r-[10.3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[10px] leading-none ${
                   optionStatus.color
                 }`}
               >
-                <div className="flex w-[50px] items-center justify-center border-l tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[99.58px] laptop:w-[134px]">
+                <div className="flex w-[50px] h-[75%] items-center justify-center border-l tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[99.58px] laptop:w-[134px]">
                   <span>{optionStatus.name}</span>
                 </div>
                 <Tooltip optionStatus={optionStatus} />
               </div>
-              {(title === 'RankChoice' || title === 'MultipleChoice') && trash && (
+              {(title === 'RankChoice' || title === 'MultipleChoice' || title === 'OpenChoice') && trash && (
                 <div
                   id={`test${number}`}
                   className={`flex h-[24.8px] items-center text-[0.5rem] font-semibold dark:bg-[#141618] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[45px] ${optionStatus?.color} py-[0.29rem]`}
@@ -129,7 +148,7 @@ const Options = ({
                       {optionsCount > 3 && (
                         <div
                           onClick={() => {
-                            removeOption(number);
+                            removeOption(id, number);
                           }}
                         >
                           <img

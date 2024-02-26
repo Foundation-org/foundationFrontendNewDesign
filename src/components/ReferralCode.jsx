@@ -28,7 +28,7 @@ const ReferralCode = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [refLoading,setRefLoading]=useState(false);
+  const [refLoading, setRefLoading] = useState(false);
   const handleInputChange = (e) => {
     setReferralCode(e.target.value);
   };

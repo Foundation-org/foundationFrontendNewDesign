@@ -198,6 +198,9 @@ function matchFilters(filters, state) {
 export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates, dispatch) => {
   const result = matchFilters(filtersInitialState, filterStates);
 
+  const resultPreferences = JSON.parse(localStorage.getItem('columns'))?.Block.list.length == 0;
+  const resultPreferencesForBookmark = JSON.parse(localStorage.getItem('bookmarkColumns'))?.Block.list.length == 0;
+
   return (
     <div className="my-[15vh] flex  flex-col justify-center items-center">
       {persistedTheme === 'dark' ? (
@@ -210,7 +213,7 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
           <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
             No bookmarks found!
           </p>
-          {result === false && (
+          {(result === false || !resultPreferencesForBookmark) && (
             <button
               className={`${
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
@@ -229,7 +232,7 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
           <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
             No matching posts found!
           </p>
-          {result === false && (
+          {(result === false || !resultPreferences) && (
             <button
               className={`${
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
@@ -253,6 +256,9 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
 
   const result = matchFilters(filtersInitialState, filterStates);
 
+  const resultPreferences = JSON.parse(localStorage.getItem('columns'))?.Block.list.length == 0;
+  const resultPreferencesForBookmark = JSON.parse(localStorage.getItem('bookmarkColumns'))?.Block.list.length == 0;
+
   return feedData?.hasNextPage === false ? (
     <div className="flex justify-between gap-4 px-4 pt-3 pb-[5rem] tablet:py-[27px]">
       <div></div>
@@ -268,7 +274,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
               <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
                 No bookmarks found!
               </p>
-              {result === false && (
+              {(result === false || !resultPreferencesForBookmark) && (
                 <button
                   className={`${
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
@@ -297,7 +303,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
               <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
                 No matching posts found!
               </p>
-              {result === false && (
+              {(result === false || !resultPreferences) && (
                 <button
                   className={`${
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
@@ -329,8 +335,8 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
         <p className="text-center text-[4vw] tablet:text-[2vw]">
           {isBookmarked ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-              <b>No more bookmarks!</b>{' '}
-              {result === false && (
+              <b>{!resultPreferencesForBookmark ? 'No more matching bookmarks found!' : 'No more bookmarks!'}</b>
+              {(result === false || !resultPreferencesForBookmark) && (
                 <button
                   className={`${
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
@@ -344,11 +350,11 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
                 </button>
               )}
             </div>
-          ) : result === false ? (
+          ) : result === false || !resultPreferences ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
               {/* comment it out for infinite */}
-              <b>You are all caught up!</b>
-              {result === false && (
+              <b>{!resultPreferences ? 'No more matching posts found!' : 'You are all caught up!'}</b>
+              {(result === false || !resultPreferences) && (
                 <button
                   className={`${
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
@@ -371,7 +377,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
           {isBookmarked ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
               <b>No more bookmarks!</b>{' '}
-              {result === false && (
+              {(result === false || !resultPreferencesForBookmark) && (
                 <button
                   className={`${
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'

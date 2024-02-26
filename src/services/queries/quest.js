@@ -19,6 +19,23 @@ export function useGetFeedData(filterStates, debouncedSearch, pagination, column
   });
 }
 
+export function useGetHiddenFeedData(filterStates, debouncedSearch, pagination, columns, params) {
+  params = applyFilters(params, filterStates, columns);
+  return useQuery({
+    queryFn: async () => {
+      if (debouncedSearch === '') {
+        const result = await fetchDataByStatus(params, filterStates);
+        return result.data;
+      } else {
+        const result = await HomepageAPIs.searchHiddenQuestions(debouncedSearch);
+        return result;
+      }
+    },
+    queryKey: ['HiddenFeedData', filterStates, debouncedSearch, pagination, columns],
+    staleTime: 0,
+  });
+}
+
 export function useGetBookmarkFeedData(filterStates, debouncedSearch, pagination, columns, params) {
   params = applyFilters(params, filterStates, columns);
   return useQuery({
@@ -52,6 +69,7 @@ export function useGetBookmarkData() {
   });
 }
 
+// GET ALL PREFERENCES
 export function useGetAllTopics() {
   return useQuery({
     queryFn: () => HomepageAPIs.getAllTopics(),
@@ -59,6 +77,7 @@ export function useGetAllTopics() {
   });
 }
 
+// SEARCH PREFERENCES
 export function useSearchTopics(getPreferences) {
   return useQuery({
     queryFn: async () => {

@@ -10,12 +10,14 @@ import BasicModal from '../../BasicModal';
 import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
 import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
+import ObjectionPopUp from '../../ObjectionPopUp';
 
 const SingleAnswerRankedChoice = (props) => {
   const id = props.id;
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [modalVisible, setModalVisible] = useState(false);
   const [checkState, setCheckState] = useState(props.check);
   const [contendState, setContendState] = useState(props.contend);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -31,6 +33,9 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleDeleteClose = () => setDeleteModal(false);
 
+  const handlePopUpOpen = () => setModalVisible(true);
+  const handlePopUpClose = () => setModalVisible(false);
+
   useEffect(() => {
     setCheckState(props.check);
   }, [props.check]);
@@ -44,6 +49,7 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
+    setPrevValue('');
     props.setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
   };
 
@@ -73,7 +79,7 @@ const SingleAnswerRankedChoice = (props) => {
     let answerExist = checkAnswerExist({
       answersArray: props.answersSelection,
       answer: validatedAnswer,
-      index: 0,
+      index: id,
       startQuest: true,
     });
     if (answerExist) {
@@ -120,22 +126,39 @@ const SingleAnswerRankedChoice = (props) => {
     props.setAddOptionField(0);
   };
 
-  const handleContendChange = () => {
-    setContendState((prevState) => {
+  const handleContendChange = (state) => {
+    // setContendState((prevState) => {
+    //   if (checkState) {
+    //     handleCheckChange(false);
+    //     props.handleCheckChange(false);
+    //   }
+    //   props.handleContendChange(!prevState);
+    //   return !prevState;
+    // });
+    if (checkState) {
+      handleCheckChange(false);
+      props.handleCheckChange(false);
+    }
+    props.handleContendChange(state);
+    setContendState(state);
+  };
+
+  const handleContendPopup = () => {
+    if (contendState) {
       if (checkState) {
         handleCheckChange(false);
         props.handleCheckChange(false);
       }
-
-      props.handleContendChange(!prevState);
-      return !prevState;
-    });
+      props.handleContendChange(false);
+      setContendState(false);
+    } else {
+      handlePopUpOpen();
+    }
   };
 
   const handleTab = () => {
     document.getElementById(`addedOption-${answer}`).blur();
   };
-
 
   return (
     <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
@@ -163,9 +186,9 @@ const SingleAnswerRankedChoice = (props) => {
           &#x200B;
         </div>
       )}
-      {/* six dots */}
       {/* =============== To Display Option */}
       <div
+        {...props.dragHandleProps}
         className={`${
           props.snapshot.isDragging
             ? 'border-[#5FA3D5]'
@@ -212,10 +235,10 @@ const SingleAnswerRankedChoice = (props) => {
                 value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
-                onKeyDown={(e) => (e.key === 'Tab') || (e.key === 'Enter' && handleTab())}
+                onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
               />
             ) : (
-              <h1 className="pb-[5.6px] pr-2 pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
+              <h1 className="pb-[5.6px] px-2 tablet:pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
                 {props.answer}
               </h1>
             )}
@@ -242,12 +265,14 @@ const SingleAnswerRankedChoice = (props) => {
         >
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
         </div>
-        {/* =============== To Display Contention and Trash Right of Option */}
-      </div>{' '}
-      {props.btnText !== 'Results' ? (
+      </div>
+      {/* =============== To Display Contention and Trash Right of Option */}
+      {props.isQuestHidden === 'HiddenPosts' ? (
+        <div className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
+      ) : props.btnText !== 'Results' ? (
         <div
           className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"
-          onClick={handleContendChange}
+          onClick={handleContendPopup}
         >
           {props.deleteable ? (
             <img
@@ -301,6 +326,14 @@ const SingleAnswerRankedChoice = (props) => {
           ) : null}
         </div>
       )}
+
+      {/* =============== Objection PopUp */}
+      <ObjectionPopUp
+        modalVisible={modalVisible}
+        handleClose={handlePopUpClose}
+        handleContendChange={handleContendChange}
+        option={props.answer}
+      />
     </div>
   );
 };

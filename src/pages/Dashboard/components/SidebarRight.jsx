@@ -45,6 +45,14 @@ const SidebarRight = () => {
       title: 'Your Posts-Engaged',
       value: (persistedUserInfo && persistedUserInfo?.usersAnswered) || 0,
     },
+    {
+      id: 4,
+      icon: '/assets/svgs/dashboard/couter-eye.svg',
+      iconLight: '/assets/svgs/dashboard/couter-eye.svg',
+      alt: 'your-post-hidden',
+      title: 'Your Posts-Hidden',
+      value: (persistedUserInfo && persistedUserInfo?.yourHiddenPostCounter) || 0,
+    },
     // {
     //   id: 3,
     //   icon: "/assets/svgs/dashboard/wronganswers.svg",
@@ -209,17 +217,7 @@ const SidebarRight = () => {
   };
 
   const handleGuestLogout = async () => {
-    try {
-      const res = await api.post('user/logout');
-      if (res.status === 200) {
-        dispatch(filterActions.resetFilters());
-        localStorage.clear();
-        navigate('/signup');
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message.split(':')[1]);
-    }
+    navigate('/guest-signup');
   };
 
   return (
@@ -266,7 +264,7 @@ const SidebarRight = () => {
             </p>
           </div>
         </div>
-        {localStorage.getItem('isGuestMode') ? (
+        {persistedUserInfo.role !== 'user' ? (
           <div className="mb-[5vh] flex items-center gap-6">
             <div className="relative h-fit w-fit">
               <img
@@ -309,7 +307,7 @@ const SidebarRight = () => {
                 <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
               </div>
               <div>
-                <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Edit Profile</Anchor>
+                <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">My Account</Anchor>
               </div>
               {/* <div className="mt-3 flex gap-1">
                 <div className="h-[9px] w-[19.5px] rounded-md bg-[#4A8DBD]"></div>

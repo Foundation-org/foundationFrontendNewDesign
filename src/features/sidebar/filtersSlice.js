@@ -1,19 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialColumns = {
-  All: {
-    id: 'All',
-    list: [],
-  },
-  Preferences: {
-    id: 'Preferences',
-    list: [],
-  },
-  Block: {
-    id: 'Block',
-    list: [],
-  },
-};
 const resetState = {
   // expandedView: false,
   searchData: '',
@@ -21,7 +7,7 @@ const resetState = {
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
-  columns: initialColumns,
+  isColumns: false,
   clearFilter: false,
 };
 
@@ -30,7 +16,7 @@ const resetOtherStates = {
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
-  columns: initialColumns,
+  isColumns: false,
   clearFilter: false,
 };
 
@@ -41,7 +27,8 @@ const initialState = {
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
-  columns: initialColumns,
+  isColumns: JSON.parse(localStorage.getItem('columns')).Block.list.length > 0 ? true : false,
+  itemsWithCross: [],
   clearFilter: false,
 };
 
@@ -66,6 +53,8 @@ export const filtersSlice = createSlice({
         state.filterByType = 'Multiple Choise';
       } else if (action.payload === 'Ranked Choice') {
         state.filterByType = 'Ranked Choise';
+      } else if (action.payload === 'Open Choice') {
+        state.filterByType = 'Open Choice';
       } else {
         state.filterByType = action.payload;
       }
@@ -76,39 +65,47 @@ export const filtersSlice = createSlice({
     setFilterBySort: (state, action) => {
       state.filterBySort = action.payload;
     },
-    setAllColumn: (state, action) => {
-      const newList = action.payload?.data.data || [];
-
-      const filteredList = newList?.filter(
-        (item) => !state.columns.Block.list.includes(item) && !state.columns.Preferences.list.includes(item),
-      );
-
-      state.columns.All = {
-        ...state.columns.All,
-        list: filteredList,
-      };
+    setItemWithCross: (state, action) => {
+      state.itemsWithCross = action.payload;
     },
-    setColumns: (state, action) => {
-      if (action.payload.check === true) {
-        state.columns = {
-          ...state.columns,
-          [action.payload.newColId.id]: action.payload.newCol.list,
-        };
+    setIsColumn: (state, action) => {
+      if (JSON.parse(localStorage.getItem('columns')).Block.list.length > 0) {
+        state.isColumns = true;
       } else {
-        state.columns = {
-          ...state.columns,
-          [action.payload.newStartColId.id]: action.payload.newStartCol.list,
-          [action.payload.newEndColId.id]: action.payload.newEndCol.list,
-        };
+        state.isColumns = false;
       }
     },
     resetFilters: (state) => {
+      const stateString = JSON.stringify({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
+      localStorage.setItem('columns', stateString);
+      // localStorage.removeItem('columns');
       Object.assign(state, resetState);
     },
     resetSearchData: (state) => {
       state.searchData = '';
     },
     resetOtherFilters: (state) => {
+      const stateString = JSON.stringify({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
+      localStorage.setItem('columns', stateString);
+      // localStorage.removeItem('columns');
       Object.assign(state, resetOtherStates);
     },
   },
@@ -121,8 +118,8 @@ export const {
   setFilterByType,
   setFilterByScope,
   setFilterBySort,
-  setAllColumn,
-  setColumns,
+  setItemWithCross,
+  setIsColumn,
   resetFilters,
   resetSearchData,
   resetOtherFilters,

@@ -40,18 +40,19 @@ const Profile = () => {
     <div>
       <Topbar />
       <div className="h-screen overflow-y-scroll bg-[#F3F3F3] dark:bg-[#242424]">
-        <div className="laptop::mt-12 mr-5 mt-5 flex justify-end items-center gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[109px]">
+        <div className="mr-5 mt-4 laptop:mt-[35px] flex justify-end items-center gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[77px]">
           <div
             style={{
-              background: localStorage.getItem('isGuestMode')
-                ? 'url(/assets/svgs/dashboard/guestBadge.svg)'
-                : 'url(/assets/svgs/dashboard/MeBadge.svg)',
+              background:
+                persistedUserInfo.role !== 'user'
+                  ? 'url(/assets/svgs/dashboard/guestBadge.svg)'
+                  : 'url(/assets/svgs/dashboard/MeBadge.svg)',
               backgroundRepeat: 'no-repeat',
               backgroundSize: '100% 100%', // This will make the background image cover the entire div
             }}
             className="flex h-[26.8px] w-[21.8px] items-center justify-center bg-cover bg-no-repeat tablet:h-[85px] tablet:w-[69px]"
           >
-            <p className="h-[80%] text-[9.2px] font-normal leading-normal text-[#7A7016] tablet:text-[30px]">
+            <p className="h-[80%] text-[9.2px] font-medium leading-normal text-[#7A7016] tablet:text-[30px]">
               {persistedUserInfo?.badges?.length}
             </p>
           </div>
@@ -59,7 +60,7 @@ const Profile = () => {
             <h4 className="heading">My Profile</h4>
             <div className="flex items-center gap-1 tablet:gap-[13px]">
               <p className="text-[8px] tablet:text-[15px] leading-none font-medium text-[#616161] dark:text-white">
-                Version 1.3.0
+                Version 1.4.28
               </p>
               {/* <p className="text-[8px] dark:text-white tablet:text-[16px]">Light</p>
               <Switch

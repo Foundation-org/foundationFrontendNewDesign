@@ -158,11 +158,9 @@ export const checkAnswerExistCreateQuest = ({ answersArray, answer, index, start
 };
 
 export const checkAnswerExist = ({ answersArray, answer, index, startQuest }) => {
-  const lastIndex = answersArray.length - 1;
-
   return answersArray.some(
     (item, i) =>
-      i !== lastIndex &&
+      i !== index &&
       ((startQuest && item.label.toLowerCase() === answer.toLowerCase()) ||
         (!startQuest && item?.question?.toLowerCase() === answer.toLowerCase())),
   );
@@ -181,3 +179,23 @@ const updateViolationCounterAPI = async () => {
   return response.data;
 };
 export default updateViolationCounterAPI;
+
+// HIDE POST API CALLS
+export const hideQuest = async (data) => {
+  return await api.post('/userQuestSetting/create', {
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
+    hidden: data.hidden,
+    hiddenMessage: data.hiddenMessage,
+    Question: data.Question,
+  });
+};
+
+export const updateHiddenQuest = async (data) => {
+  return await api.post('/userQuestSetting/update', {
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
+    hidden: data.hidden,
+    hiddenMessage: data.hiddenMessage,
+  });
+};

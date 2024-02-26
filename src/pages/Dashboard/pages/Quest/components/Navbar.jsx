@@ -44,6 +44,18 @@ const Navbar = ({ handleTab, tab }) => {
           </button>
           <button
             className={`${
+              tab === 5
+                ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
+                : 'border-[#BABABA] dark:border-[#5F5F5F] bg-white text-[#ACACAC] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
+            } quest-topbar`}
+            onClick={() => {
+              handleTab(5);
+            }}
+          >
+            Open Choice
+          </button>
+          <button
+            className={`${
               tab === 2
                 ? 'bg-[#459EDE] text-white dark:bg-white dark:text-black'
                 : 'border-[#BABABA] dark:border-[#5F5F5F] bg-white text-[#ACACAC] dark:bg-[#5F5F5F] dark:text-[#D9D9D9]'
@@ -54,6 +66,7 @@ const Navbar = ({ handleTab, tab }) => {
           >
             Rank Choice
           </button>
+         
         </div>
       </div>
 

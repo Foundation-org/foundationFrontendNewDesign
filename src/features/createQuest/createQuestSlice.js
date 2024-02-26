@@ -20,10 +20,10 @@ export const checkAnswer = createAsyncThunk('createQuest/checkAnswer', async ({ 
 const initialState = {
   questions: {
     question: '',
-    changedOption: '',
-    changeState: false,
+    changedOption: 'Anytime',
+    changeState: true,
     multipleOption: false,
-    addOption: false,
+    addOption: true,
     optionsCount: 3,
     options: [],
   },
@@ -139,10 +139,10 @@ export const createQuestSlice = createSlice({
     handleQuestionReset: (state, action) => {
       return {
         ...state,
-        questions: action.payload, 
+        questions: action.payload,
         questionReset: initialState.questionReset,
       };
-    }
+    },
   },
   extraReducers: (builder) => {
     // check question status start

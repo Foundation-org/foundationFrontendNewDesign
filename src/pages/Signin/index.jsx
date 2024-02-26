@@ -40,8 +40,11 @@ export default function Signin() {
   const handleReferralOpen = () => {
     setIsReferral((prev) => !prev);
   };
-  const handleReferralClose = () => setIsReferral(false);
-
+  const handleReferralClose = () => {
+    setIsReferral(false);
+    setIsLoading(false);
+    setIsLoadingSocial(false);
+  }
   function onChange(value) {
     console.log('Captcha value:', value);
     setCaptchaToken(value);

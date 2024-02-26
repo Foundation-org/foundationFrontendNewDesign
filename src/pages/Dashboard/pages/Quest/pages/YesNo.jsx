@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Tooltip } from '../../../../../utils/Tooltip';
 import { updateQuestion, checkQuestion } from '../../../../../features/createQuest/createQuestSlice';
 import YesNoOptions from '../components/YesNoOptions';
@@ -11,6 +11,7 @@ import ChangeChoiceOption from '../components/ChangeChoiceOption';
 import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import { Button } from '../../../../../components/ui/Button';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 
 const YesNo = () => {
   const navigate = useNavigate();
@@ -20,18 +21,12 @@ const YesNo = () => {
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
+  const queryClient = useQueryClient();
   const [selectedOption, setSelectedOption] = useState(null);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-
-  // const reset = {
-  //   name: 'Ok',
-  //   color: 'text-[#389CE3]',
-  //   tooltipName: 'Please write something...',
-  //   tooltipStyle: 'tooltip-info',
-  // };
 
   // const [questionStatus, setquestionStatus] = useState(reset);
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -43,15 +38,17 @@ const YesNo = () => {
     mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        setQuestion('');
-        setChangedOption('');
-        setChangeState(false);
-        toast.success('Successfully Created');
         setTimeout(() => {
-          setLoading(false);
           navigate('/dashboard');
-        }, 2000);
+          toast.success('Successfully Created');
+          setLoading(false);
+          setQuestion('');
+          setChangedOption('');
+          setChangeState(false);
+          dispatch(createQuestAction.resetCreateQuest());
+        }, 500);
       }
+      queryClient.invalidateQueries('FeedData');
     },
     onError: (err) => {
       if (err.response) {
@@ -77,7 +74,7 @@ const YesNo = () => {
 
   const handleSubmit = async () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning('Please Signup to use this feature');
+      toast.warning('Please create an account to unlock this feature');
       return;
     }
 
@@ -107,7 +104,6 @@ const YesNo = () => {
 
     if (!checkHollow()) {
       createQuest(params);
-      dispatch(createQuestAction.resetCreateQuest());
     }
   };
 
@@ -160,7 +156,7 @@ const YesNo = () => {
           Create a Poll
         </h1>
         <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-5 tablet:pb-[13px]">
-          <input
+          {/* <input
             id="question"
             className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
             onChange={(e) => {
@@ -175,12 +171,26 @@ const YesNo = () => {
             value={question}
             placeholder="Pose a question"
             onKeyDown={(e) => (e.key === 'Tab' && handleTab(0)) || (e.key === 'Enter' && handleTab(0))}
+          /> */}
+          <TextareaAutosize
+            id="question"
+            aria-label="empty textarea"
+            onChange={(e) => {
+              setQuestion(e.target.value);
+              dispatch(createQuestAction.handleQuestionReset(e.target.value));
+            }}
+            onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
+            value={question}
+            placeholder="Pose a question"
+            onKeyDown={(e) => (e.key === 'Tab' && handleTab(0)) || (e.key === 'Enter' && handleTab(0))}
+            className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pt-[6px] pb-2 text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
+            style={{ minHeight: '100%', height: '100%' }}
           />
           <div
             id="test"
             className={`relative flex items-center leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${questionStatus.color}`}
           >
-            <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[100px] laptop:w-[134px]">
+            <div className="flex w-[50px] h-[75%] items-center justify-center border-l-[0.7px] tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[100px] laptop:w-[134px]">
               {questionStatus.name}
             </div>
             <Tooltip optionStatus={questionStatus} />
@@ -203,8 +213,11 @@ const YesNo = () => {
         <p className="my-1 tablet:mt-5 tablet:mb-[10px] text-center text-[8px] font-normal leading-normal text-[#85898C] dark:text-[#D8D8D8] tablet:text-[16px]">
           &#x200B;
         </p>
-        <div  className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
-          <h5 id="setting" className="text-center text-[10px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[25px]">
+        {/* <div className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
+          <h5
+            id="setting"
+            className="text-center text-[10px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[25px]"
+          >
             Settings
           </h5>
           <ChangeChoiceOption
@@ -213,28 +226,27 @@ const YesNo = () => {
             setChangeState={setChangeState}
             setChangedOption={setChangedOption}
           />
-        </div>
+        </div> */}
         <div className="flex w-full justify-end">
           {hollow ? (
-            <div className="flex w-full justify-end pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
+            <div className="pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
               <Button
                 variant="hollow-submit"
                 id="submitButton"
                 onClick={() => handleSubmit()}
                 disabled={loading === true}
               >
-                Submit
+                Create
               </Button>
             </div>
           ) : (
-            <div className="flex w-full justify-end">
-              <button
-                id="submitButton2"
-                className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-                onClick={() => handleSubmit()}
-              >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-              </button>
+            <div className="pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
+              <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()}>
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}{' '}
+                <span className="text-[7px] tablet:text-[13px] font-semibold leading-[0px] pl-[5px] tablet:pl-[10px]">
+                  (-0.1 FDX)
+                </span>
+              </Button>
             </div>
           )}
         </div>

@@ -8,6 +8,14 @@ export const searchQuestions = async (term) => {
   }
 };
 
+// For Search hidden Posts
+export const searchHiddenQuestions = async (term) => {
+  if (term !== '') {
+    const response = await api.post(`/search/searchHiddenQuest?term=${term}`);
+    return response.data;
+  }
+};
+
 // To get all topics of preferences
 export const getAllTopics = async () => {
   return await api.get('/preferences/getAllTopic');

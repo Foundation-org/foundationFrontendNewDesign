@@ -22,6 +22,7 @@ const StartTest = ({
   cardSize,
   checkOptionStatus,
   setCheckOptionStatus,
+  isQuestHidden,
 }) => {
   const { isFullScreen } = useParams();
 
@@ -47,12 +48,17 @@ const StartTest = ({
     );
   };
 
-  const handleContendChangeSingle = (index) => {
+  const handleContendChangeSingle = (index, contend) => {
     setAnswerSelection((prevAnswers) =>
       prevAnswers.map((answer, i) =>
-        i === index ? { ...answer, contend: !answer.contend, check: false } : { ...answer, contend: false },
+        i === index ? { ...answer, contend: contend, check: false } : { ...answer, contend: false },
       ),
     );
+    // setAnswerSelection((prevAnswers) =>
+    //   prevAnswers.map((answer, i) =>
+    //     i === index ? { ...answer, contend: !answer.contend, check: false } : { ...answer, contend: false },
+    //   ),
+    // );
   };
 
   function findLabelChecked(array, labelToFind) {
@@ -105,6 +111,7 @@ const StartTest = ({
                   contend={questSelection['yes/no'].yes.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
                 <SingleAnswer
                   number={'#2'}
@@ -113,6 +120,7 @@ const StartTest = ({
                   contend={questSelection['yes/no'].no.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
               </>
             ) : getQuestionTitle(questStartData.whichTypeQuestion) === 'Agree/Disagree' ? (
@@ -124,6 +132,7 @@ const StartTest = ({
                   contend={questSelection['agree/disagree'].agree.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
                 <SingleAnswer
                   number={'#2'}
@@ -132,6 +141,7 @@ const StartTest = ({
                   contend={questSelection['agree/disagree'].disagree.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
               </>
             ) : (
@@ -143,6 +153,7 @@ const StartTest = ({
                   contend={questSelection['like/dislike'].like.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
                 <SingleAnswer
                   number={'#2'}
@@ -151,20 +162,24 @@ const StartTest = ({
                   contend={questSelection['like/dislike'].dislike.check}
                   handleToggleCheck={handleToggleCheck}
                   questStartData={questStartData}
+                  isQuestHidden={isQuestHidden}
                 />
               </>
             )}
           </>
         );
       }
-      if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Multiple Choice') {
+      if (
+        getQuestionTitle(questStartData.whichTypeQuestion) === 'Multiple Choice' ||
+        getQuestionTitle(questStartData.whichTypeQuestion) === 'Open Choice'
+      ) {
         return (
           <div className="flex flex-col overflow-auto">
             <div
               ref={listContainerRef}
               className={`${
                 isFullScreen === undefined
-                  ? 'quest-scrollbar max-h-[187px] min-h-fit overflow-auto md:max-h-[366px]'
+                  ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[336px]'
                   : ''
               } mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
             >
@@ -200,6 +215,7 @@ const StartTest = ({
                     setAddOptionField={setAddOptionField}
                     checkOptionStatus={checkOptionStatus}
                     setCheckOptionStatus={setCheckOptionStatus}
+                    isQuestHidden={isQuestHidden}
                   />
                 ))}
             </div>
@@ -216,13 +232,13 @@ const StartTest = ({
                     ref={listContainerRef}
                     className={`${
                       isFullScreen === undefined
-                        ? 'quest-scrollbar max-h-[187px] md:max-h-[366px] overflow-auto min-h-fit mr-[2px] tablet:mr-1'
+                        ? 'quest-scrollbar max-h-[178.2px] md:max-h-[336px] overflow-auto min-h-fit mr-[2px] tablet:mr-1'
                         : null
                     }`}
                   >
                     <ul
                       className={`${
-                        isFullScreen === undefined ? ' tablet:max-h-[366px]' : ''
+                        isFullScreen === undefined ? ' tablet:max-h-[336px]' : ''
                       }  flex flex-col gap-[5.7px] tablet:gap-[10px]`}
                       {...provided.droppableProps}
                       ref={provided.innerRef}
@@ -230,15 +246,11 @@ const StartTest = ({
                       {rankedAnswers?.map((item, index) => (
                         <Draggable key={item.id} draggableId={item.id} index={index}>
                           {(provided, snapshot) => (
-                            <li
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className="w-full"
-                            >
+                            <li ref={provided.innerRef} {...provided.draggableProps} className="w-full">
                               <SingleAnswerRankedChoice
                                 questStartData={questStartData}
                                 id={index}
+                                dragHandleProps={provided.dragHandleProps}
                                 snapshot={snapshot}
                                 number={index + 1}
                                 editable={item.edit}
@@ -257,6 +269,7 @@ const StartTest = ({
                                 setAddOptionField={setAddOptionField}
                                 checkOptionStatus={checkOptionStatus}
                                 setCheckOptionStatus={setCheckOptionStatus}
+                                isQuestHidden={isQuestHidden}
                               />
                             </li>
                           )}

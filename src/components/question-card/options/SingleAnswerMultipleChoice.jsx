@@ -10,11 +10,13 @@ import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 
 import * as questServices from '../../../services/api/questsApi';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
+import ObjectionPopUp from '../../ObjectionPopUp';
 
 const SingleAnswerMultipleChoice = (props) => {
   const id = props.id;
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [modalVisible, setModalVisible] = useState(false);
   const [checkState, setCheckState] = useState(props.check);
   const [contendState, setContendState] = useState(props.contend);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -29,6 +31,9 @@ const SingleAnswerMultipleChoice = (props) => {
   const [prevValue, setPrevValue] = useState('');
 
   const handleDeleteClose = () => setDeleteModal(false);
+
+  const handlePopUpOpen = () => setModalVisible(true);
+  const handlePopUpClose = () => setModalVisible(false);
 
   useEffect(() => {
     setCheckState(props.check);
@@ -46,15 +51,37 @@ const SingleAnswerMultipleChoice = (props) => {
     });
   };
 
-  const handleContendChange = () => {
+  // const handleContendChange = () => {
+  //   if (checkState) {
+  //     handleCheckChange(false);
+  //     props.handleCheckChange(false);
+  //   }
+  //   setContendState((prevState) => {
+  //     props.handleContendChange(!prevState);
+  //     return !prevState;
+  //   });
+  // };
+
+  const handleContendChange = (state) => {
     if (checkState) {
       handleCheckChange(false);
       props.handleCheckChange(false);
     }
-    setContendState((prevState) => {
-      props.handleContendChange(!prevState);
-      return !prevState;
-    });
+    props.handleContendChange(state);
+    setContendState(state);
+  };
+
+  const handleContendPopup = () => {
+    if (contendState) {
+      if (checkState) {
+        handleCheckChange(false);
+        props.handleCheckChange(false);
+      }
+      props.handleContendChange(false);
+      setContendState(false);
+    } else {
+      handlePopUpOpen();
+    }
   };
 
   const handleInputChange = (e) => {
@@ -88,7 +115,7 @@ const SingleAnswerMultipleChoice = (props) => {
     let answerExist = questServices.checkAnswerExist({
       answersArray: props.answersSelection,
       answer: validatedAnswer,
-      index: 0,
+      index: id,
       startQuest: true,
     });
     if (answerExist) {
@@ -173,7 +200,7 @@ const SingleAnswerMultipleChoice = (props) => {
       {/* =============== To Display Option */}
       <div className="flex w-full justify-between rounded-[4.7px] tablet:rounded-[10px]">
         <div
-          className={`flex w-full items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px] ${props.btnText === 'Results' ? 'pointer-events-none' : 'cursor-pointer'}`}
+          className={`flex w-full items-center rounded-l-[5.387px] bg-white dark:bg-[#0D1012] tablet:rounded-l-[10px] ${props.btnText === 'Results' || props.isQuestHidden === 'HiddenPosts' ? 'pointer-events-none' : 'cursor-pointer'}`}
           onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
         >
           <div className="flex min-h-[21.8px] h-full tablet:min-h-[49px] tablet:h-full w-3 min-w-[12px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px]"></div>
@@ -189,7 +216,7 @@ const SingleAnswerMultipleChoice = (props) => {
             />
             {props.editable ? (
               <input
-              id={`addedOption-${answer}`}
+                id={`addedOption-${answer}`}
                 type="text"
                 className="w-full rounded-[4.73px] bg-white pl-[18px] pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-[#435059] outline-none dark:bg-[#0D1012] dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[18px] tablet:text-[19px]"
                 value={answer}
@@ -198,7 +225,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
               />
             ) : (
-              <h1 className="pb-[5.7px] pr-2 pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
+              <h1 className="pb-[5.7px] px-2 tablet:pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
                 {props.answer}
               </h1>
             )}
@@ -225,42 +252,49 @@ const SingleAnswerMultipleChoice = (props) => {
             />
           </div>
         </div>
-        <div
-          className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px]  text-[9.238px] dark:border-[#DEE6F7] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
-            props.btnText === 'Results' ? 'pointer-events-none' : ''
-          }`}
-          onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
-        >
-          <div className="flex items-center gap-1 laptop:gap-[18px]">
-            <div id="custom-checkbox" className="flex h-full items-center">
-              <input
-                id="small-checkbox"
-                type="checkbox"
-                className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                checked={checkState}
-                readOnly
-              />
-            </div>
+        {props?.isQuestHidden === 'HiddenPosts' ? (
+          <div className="flex items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px]  text-[9.238px] dark:border-[#DEE6F7] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px]"></div>
+        ) : (
+          <div
+            className={`flex cursor-pointer items-center gap-[10.03px] rounded-r-[4.7px] border-y border-r border-[#DEE6F7] bg-white pr-[10px]  text-[9.238px] dark:border-[#DEE6F7] dark:bg-[#0D1012] tablet:gap-[19px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[16px] ${
+              props.btnText === 'Results' ? 'pointer-events-none' : ''
+            }`}
+            onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
+          >
+            <div className="flex items-center gap-1 laptop:gap-[18px]">
+              <div id="custom-checkbox" className="flex h-full items-center">
+                <input
+                  id="small-checkbox"
+                  type="checkbox"
+                  className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                  checked={checkState}
+                  readOnly
+                />
+              </div>
 
-            {props.btnText === 'Results' ? (
-              <>
-                {props.selectedPercentages && props.selectedPercentages?.[props.answer.trim()] ? (
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
-                    {props.selectedPercentages[props.answer.trim()]}
-                  </span>
-                ) : (
-                  <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
-                )}
-              </>
-            ) : null}
+              {props.btnText === 'Results' ? (
+                <>
+                  {props.selectedPercentages && props.selectedPercentages?.[props.answer.trim()] ? (
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
+                      {props.selectedPercentages[props.answer.trim()]}
+                    </span>
+                  ) : (
+                    <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
+                  )}
+                </>
+              ) : null}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* =============== To Display Contention and Trash Right of Option */}
-        {props.btnText !== 'Results' ? (
+
+        {props.isQuestHidden === 'HiddenPosts' ? (
+          <div className="flex w-12 min-w-[48px] items-center bg-white pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]"></div>
+        ) : props.btnText !== 'Results' ? (
           <div
             className="flex w-12 min-w-[48px] items-center bg-white pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[15px]"
-            onClick={handleContendChange}
+            onClick={handleContendPopup}
           >
             {props.deleteable ? (
               <img
@@ -318,6 +352,14 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         )}
       </div>
+
+      {/* =============== Objection PopUp */}
+      <ObjectionPopUp
+        modalVisible={modalVisible}
+        handleClose={handlePopUpClose}
+        handleContendChange={handleContendChange}
+        option={props.answer}
+      />
     </div>
   );
 };

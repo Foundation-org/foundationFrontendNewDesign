@@ -15,9 +15,9 @@ export const applyFilters = (params, filterStates, columns) => {
     params = { ...params, filter: true };
   }
 
-  if (columns.Preferences.list.length !== 0) {
-    params = { ...params, terms: columns.Preferences.list };
-  }
+  // if (columns.Preferences.list.length !== 0) {
+  //   params = { ...params, terms: columns.Preferences.list };
+  // }
 
   if (columns.Block.list.length !== 0) {
     params = { ...params, blockedTerms: columns.Block.list };
@@ -28,9 +28,9 @@ export const applyFilters = (params, filterStates, columns) => {
 
 export const fetchDataByStatus = async (params, filterStates) => {
   switch (filterStates.filterByStatus) {
-    case 'Unanswered':
+    case 'Not Participated':
       return await HomepageAPIs.getAllUnanswered(params);
-    case 'Answered':
+    case 'Participated':
       return await HomepageAPIs.getAllAnswered(params);
     case 'Completed':
       return await HomepageAPIs.getAllCompleted(params);

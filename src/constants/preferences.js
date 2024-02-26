@@ -1,14 +1,15 @@
-export const initialColumns = {
+export const initialColumns = Object.freeze({
   All: {
     id: 'All',
-    list: [],
-  },
-  Preferences: {
-    id: 'Preferences',
     list: [],
   },
   Block: {
     id: 'Block',
     list: [],
   },
-};
+});
+
+// Preferences: {
+//     id: 'Preferences',
+//     list: [],
+//   },

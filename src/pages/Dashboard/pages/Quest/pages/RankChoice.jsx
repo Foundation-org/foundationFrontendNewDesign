@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   checkUniqueQuestion,
   createInfoQuest,
@@ -17,6 +17,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../../../components/ui/Button';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import { updateRankedChoice } from '../../../../../features/createQuest/createQuestSlice';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const RankChoice = () => {
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const optionsValue = useSelector(createQuestAction.optionsValue);
-
+  const queryClient = useQueryClient();
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
@@ -53,17 +54,18 @@ const RankChoice = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        setQuestion('');
-        setAddOption(false);
-        setChangedOption('');
-        setChangeState(false);
-        setLoading(false);
-        toast.success('Successfully Created');
         setTimeout(() => {
-          setLoading(false);
           navigate('/dashboard');
-        }, 2000);
+          toast.success('Successfully Created');
+          setLoading(false);
+          setQuestion('');
+          setAddOption(false);
+          setChangedOption('');
+          setChangeState(false);
+          dispatch(createQuestAction.resetCreateQuest());
+        }, 500);
       }
+      queryClient.invalidateQueries('FeedData');
     },
     onError: (err) => {
       console.log('Mutation Error', err);
@@ -77,7 +79,7 @@ const RankChoice = () => {
 
   const handleSubmit = async () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning('Please Signup to use this feature');
+      toast.warning('Please create an account to unlock this feature');
       return;
     }
 
@@ -119,7 +121,6 @@ const RankChoice = () => {
     }
     if (!checkHollow()) {
       createQuest(params);
-      dispatch(createQuestAction.resetCreateQuest());
     }
   };
 
@@ -276,6 +277,7 @@ const RankChoice = () => {
       document.getElementById(`input-${index}`).blur();
     } else {
       if (key === 'Enter') {
+        event.preventDefault();
         document.getElementById(`input-${index + 1}`).focus();
       } else {
         document.getElementById(`input-${index}`).focus();
@@ -290,11 +292,38 @@ const RankChoice = () => {
     }
   }, [questionStatus]);
 
+  // useEffect(() => {
+  //   let debounceTimer;
+
+  //   const updateTypedValuesWithDelay = (value) => {
+  //     if (debounceTimer) {
+  //       clearTimeout(debounceTimer);
+  //     }
+
+  //     debounceTimer = setTimeout(() => {
+  //       setTypedValues(value);
+  //     }, 100);
+  //   };
+
+  //   updateTypedValuesWithDelay(optionsValue);
+
+  //   // Cleanup
+  //   return () => {
+  //     clearTimeout(debounceTimer);
+  //   };
+  // }, [optionsValue, setTypedValues]);
+
   useEffect(() => {
-    setTypedValues(optionsValue);
-    const tempcheck = optionsValue.some((value) => value.optionStatus.name === 'Checking');
-    setOptionWaiting(tempcheck);
-  }, [optionsValue]);
+    const updateTypedValuesWithDelay = (value) => {
+      setTypedValues(value);
+    };
+
+    updateTypedValuesWithDelay(optionsValue);
+
+    return () => {
+      setTypedValues((prev) => prev);
+    };
+  }, [optionsValue, setTypedValues]);
 
   return (
     <>
@@ -310,7 +339,7 @@ const RankChoice = () => {
           Create a Poll
         </h1>
         <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-5 tablet:pb-[13px]">
-          <input
+          {/* <input
             id="input-0"
             type="text"
             tabIndex={1}
@@ -327,13 +356,27 @@ const RankChoice = () => {
             }}
             className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
             onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(0, 'Enter'))}
+          /> */}
+          <TextareaAutosize
+            id="input-0"
+            onChange={(e) => {
+              setQuestion(e.target.value);
+              dispatch(createQuestAction.handleQuestionReset(e.target.value));
+            }}
+            onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
+            value={question}
+            placeholder="Make a Statement or pose a question"
+            tabIndex={1}
+            onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(0, 'Enter'))}
+            className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pt-[6px] pb-2 text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
+            style={{ minHeight: '100%', height: '100%' }}
           />
           <button
             id="new"
             data-tooltip-offset={-25}
             className={`relative leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${questionStatus.color}`}
           >
-            <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[100px] laptop:w-[134px]">
+            <div className="flex w-[50px] h-[75%] items-center justify-center border-l-[0.7px] tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[100px] laptop:w-[134px]">
               {questionStatus.name}
             </div>
             <Tooltip optionStatus={questionStatus} />
@@ -406,12 +449,12 @@ const RankChoice = () => {
             </h5>
             <CustomSwitch enabled={addOption} setEnabled={setAddOption} />
           </div>
-          <ChangeChoiceOption
+          {/* <ChangeChoiceOption
             changedOption={changedOption}
             changeState={changeState}
             setChangeState={setChangeState}
             setChangedOption={setChangedOption}
-          />
+          /> */}
         </div>
         <div className="flex w-full justify-end">
           {hollow ? (
@@ -432,19 +475,30 @@ const RankChoice = () => {
                 onClick={() => handleSubmit()}
                 disabled={loading === true}
               >
-                Submit
+                Create
               </Button>
             </div>
           ) : (
             <div className="flex w-full justify-end">
-              <button
+              <Button
+                id="submitButton2"
+                variant="submit"
+                onClick={() => handleSubmit()}
+                className="mr-7 mt-[10px] tablet:mt-[30px] tablet:mr-[70px]"
+              >
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
+                <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[10px]">
+                  (-0.1 FDX)
+                </span>
+              </Button>
+              {/* <button
                 id="submitButton2"
                 className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
                 onClick={() => handleSubmit()}
-                // disabled={loading === true}
+                disabled={loading === true}
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-              </button>
+              </button> */}
             </div>
           )}
         </div>

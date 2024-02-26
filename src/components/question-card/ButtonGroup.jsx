@@ -1,17 +1,19 @@
 import { toast } from 'sonner';
-import { useMutation } from '@tanstack/react-query';
-import { useDispatch, useSelector } from 'react-redux';
-import { getStartQuestInfo } from '../../services/api/questsApi';
-import { resetQuests } from '../../features/quest/questsSlice';
-import { getButtonText, getButtonVariants } from '../../utils/questionCard/SingleQuestCard';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
+import { useLocation } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import { calculateRemainingTime } from '../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetQuests } from '../../features/quest/questsSlice';
+import { getStartQuestInfo } from '../../services/api/questsApi';
+import { getButtonText, getButtonVariants } from '../../utils/questionCard/SingleQuestCard';
 
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 import * as filterActions from '../../features/sidebar/filtersSlice';
 import * as filterBookmarkActions from '../../features/sidebar/bookmarkFilterSlice';
-import { useLocation } from 'react-router-dom';
+import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
+import { useState } from 'react';
 
 const ButtonGroup = ({
   usersAddTheirAns,
@@ -41,12 +43,13 @@ const ButtonGroup = ({
   startTest,
   handleChange,
   checkOptionStatus,
+  isQuestHidden,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
-
+  const [modalVisible, setModalVisible] = useState(false);
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   let filterState;
@@ -65,12 +68,17 @@ const ButtonGroup = ({
     answerSelectionArray.forEach((item, index) => {
       if (apiResponse.selected.some((selectedItem) => selectedItem.question === item.label)) {
         answerSelectionArray[index].check = true;
+      } else {
+        answerSelectionArray[index].check = false;
       }
 
       if (apiResponse.contended.some((contendedItem) => contendedItem.question === item.label)) {
         answerSelectionArray[index].contend = true;
+      } else {
+        answerSelectionArray[index].contend = false;
       }
     });
+
     setAnswerSelection(answerSelectionArray);
   }
 
@@ -85,19 +93,18 @@ const ButtonGroup = ({
       }
     });
 
-    const sortedAnswerSelection = [...answerSelectionArray].sort((a, b) => {
-      const indexA = questStartData?.startQuestData?.data[
-        questStartData?.startQuestData?.data.length - 1
-      ].selected?.findIndex((item) => item.question === a.label);
+    const sortedAnswers = answerSelectionArray.sort((a, b) => {
+      if (a.label === '') return 1;
+      if (b.label === '') return -1;
 
-      const indexB = questStartData?.startQuestData?.data[
-        questStartData?.startQuestData?.data.length - 1
-      ].selected?.findIndex((item) => item.question === b.label);
+      const indexA = apiResponse.selected.findIndex((item) => item.question === a.label);
+      const indexB = apiResponse.selected.findIndex((item) => item.question === b.label);
 
-      return indexA !== -1 && indexB !== -1 ? indexA - indexB : 0;
+      return indexA - indexB;
     });
 
-    setRankedAnswers(sortedAnswerSelection);
+    setAnswerSelection(sortedAnswers);
+    setRankedAnswers(sortedAnswers);
   }
 
   const { mutateAsync: getStartQuestDetail } = useMutation({
@@ -138,18 +145,18 @@ const ButtonGroup = ({
           handleToggleCheck(res.data.data[res.data.data.length - 1].selected, true, false);
         }
       }
-      if (whichTypeQuestion === 'multiple choise') {
+      if (whichTypeQuestion === 'multiple choise' || whichTypeQuestion === 'open choice') {
         updateAnswerSelection(res?.data.data[res.data.data.length - 1], answersSelection);
       }
       if (whichTypeQuestion === 'ranked choise') {
         updateRankSelection(res?.data.data[res.data.data.length - 1], rankedAnswers);
       }
-      setLoadingDetail(false);
+      // setLoadingDetail(false);
     },
     onError: (err) => {
       toast.error(err.response?.data);
       console.log('Mutation Error', err);
-      setLoadingDetail(false);
+      // setLoadingDetail(false);
     },
   });
 
@@ -160,15 +167,21 @@ const ButtonGroup = ({
       handleStartTest(id);
     }
     if (btnText === 'change answer') {
-      setLoadingDetail(true);
+      // setLoadingDetail(true);
       const data = { questForeignKey: id, uuid: persistedUserInfo?.uuid };
       getStartQuestDetail(data);
       handleStartTest(id);
     }
     if (btnText === 'completed') {
-      setLoadingDetail(true);
+      // setLoadingDetail(true);
       handleViewResults(id);
     }
+  };
+
+  const startHiddenTest = () => {
+    dispatch(questUtilsActions.resetaddOptionLimit());
+    dispatch(resetQuests());
+    handleStartTest(id);
   };
 
   const result = calculateRemainingTime(
@@ -176,6 +189,49 @@ const ButtonGroup = ({
     questStartData?.startQuestData && questStartData?.startQuestData.data.length,
     questStartData.usersChangeTheirAns,
   );
+
+  const showHidePostOpen = () => setModalVisible(true);
+  const showHidePostClose = () => setModalVisible(false);
+
+  if (isQuestHidden === 'HiddenPosts') {
+    return (
+      <div>
+        {startTest !== questStartData._id ? (
+          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+            {getButtonText(btnText) !== 'Completed' ? (
+              <Button
+                variant={'submit'}
+                onClick={startHiddenTest}
+                className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
+              >
+                View
+              </Button>
+            ) : null}
+            <Button variant="danger" onClick={showHidePostOpen} className={'bg-[#FF4057]'}>
+              Unhide
+            </Button>
+            <UnHidePostPopup
+              handleClose={showHidePostClose}
+              modalVisible={modalVisible}
+              questStartData={questStartData}
+            />
+          </div>
+        ) : (
+          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+            <Button
+              variant="cancel"
+              onClick={() => {
+                handleViewResults(null);
+                handleStartTest('');
+              }}
+            >
+              Go Back
+            </Button>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   if (persistedUserInfo?.role === 'guest') {
     if (location.pathname.includes('/p/') || location.pathname === '/quest/isfullscreen') {
@@ -187,7 +243,7 @@ const ButtonGroup = ({
                 title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button
                     onClick={() => {
-                      toast.warning('Please Signup to use this feature');
+                      toast.warning('Please create an account to unlock this feature');
                     }}
                     variant={'addOption'}
                   >
@@ -233,7 +289,7 @@ const ButtonGroup = ({
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
                   onClick={() => {
-                    toast.warning('Please Signup to use this feature');
+                    toast.warning('Please create an account to unlock this feature');
                   }}
                 >
                   Change
@@ -251,7 +307,7 @@ const ButtonGroup = ({
               title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                 <Button
                   onClick={() => {
-                    toast.warning('Please Signup to use this feature');
+                    toast.warning('Please create an account to unlock this feature');
                   }}
                   variant={'addOption'}
                 >
@@ -281,7 +337,7 @@ const ButtonGroup = ({
                     variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                     disabled={result === ', you are good to go' ? false : true}
                     onClick={() => {
-                      toast.warning('Please Signup to use this feature');
+                      toast.warning('Please create an account to unlock this feature');
                     }}
                   >
                     Change
@@ -315,7 +371,7 @@ const ButtonGroup = ({
                 title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button
                     onClick={() => {
-                      toast.warning('Please Signup to use this feature');
+                      toast.warning('Please create an account to unlock this feature');
                     }}
                     variant={'addOption'}
                   >
@@ -498,6 +554,11 @@ const ButtonGroup = ({
                 }
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                {btnText !== 'change answer' && (
+                  <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px]  pl-[5px] tablet:pl-[10px]">
+                    (+0.96 FDX)
+                  </span>
+                )}
               </Button>
             </div>
           </div>
@@ -611,6 +672,11 @@ const ButtonGroup = ({
                 }
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                {btnText !== 'change answer' && (
+                  <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px]  pl-[5px] tablet:pl-[10px]">
+                    (+0.96 FDX)
+                  </span>
+                )}
               </Button>
             </div>
           )}

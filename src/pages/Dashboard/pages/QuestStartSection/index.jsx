@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 // Components
@@ -9,21 +9,18 @@ import SidebarRight from '../../components/SidebarRight';
 import QuestionCardWithToggle from './components/QuestionCardWithToggle';
 
 // Utilities and Constants
-import { useDebounce } from '../../../../utils/useDebounce';
 import { printEndMessage } from '../../../../utils';
 import { initialColumns } from '../../../../constants/preferences';
 import * as QuestServices from '../../../../services/queries/quest';
 import * as filtersActions from '../../../../features/sidebar/filtersSlice';
-import * as prefActions from '../../../../features/preferences/prefSlice';
 
 const QuestStartSection = () => {
+  const dispatch = useDispatch();
+
   // Redux State
-  const getPreferences = useSelector(prefActions.getPrefs);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
-
-  // Debounce Search
 
   // Pagination
   const pageLimit = 5;
@@ -42,12 +39,12 @@ const QuestStartSection = () => {
   const [viewResult, setViewResult] = useState(null);
 
   // Preferences
-  const [columns, setColumns] = useState(initialColumns);
-  const [itemsWithCross, setItemsWithCross] = useState([]);
+  const columnsData = localStorage.getItem('columns');
+  const parsedColumns = JSON.parse(columnsData);
+  const [columns, setColumns] = useState(parsedColumns || initialColumns);
+  const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
   // Quest Services
-  const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
-  const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
   const { data: feedData } = QuestServices.useGetFeedData(filterStates, filterStates.searchData, pagination, columns, {
     _page: pagination.page,
@@ -56,42 +53,44 @@ const QuestStartSection = () => {
     end: pagination.sliceEnd,
     uuid: persistedUserInfo?.uuid,
   });
+
+  // Reset Preferences
+  useEffect(() => {
+    if (!filterStates.isColumns) {
+      const currentColumns = { ...columns };
+
+      const stateString = JSON.stringify({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
+      localStorage.setItem('columns', stateString);
+
+      currentColumns.Block = {
+        id: 'Block',
+        list: [],
+      };
+
+      setColumns(currentColumns);
+    }
+  }, [filterStates.isColumns]);
+
+  // Update Preferences Columns in redux
+  useEffect(() => {
+    const stateString = JSON.stringify(columns);
+    localStorage.setItem('columns', stateString);
+    dispatch(filtersActions.setIsColumn());
+  }, [columns]);
+
   // Update Columns based on Preferences
   useEffect(() => {
-    if (prefSearchRes?.length !== 0) {
-      setColumns((prevColumns) => {
-        const newList = prefSearchRes?.data.data || [];
-        const filteredList = newList.filter(
-          (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
-        );
-
-        return {
-          ...prevColumns,
-          All: {
-            ...prevColumns.All,
-            list: filteredList || [],
-          },
-        };
-      });
-    } else {
-      if (isSuccess) {
-        setColumns((prevColumns) => {
-          const newList = topicsData?.data.data || [];
-          const filteredList = newList.filter(
-            (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
-          );
-
-          return {
-            ...prevColumns,
-            All: {
-              ...prevColumns.All,
-              list: filteredList || [],
-            },
-          };
-        });
-      }
-    }
-  }, [topicsData, prefSearchRes, isSuccess]);
+    dispatch(filtersActions.setItemWithCross(itemsWithCross));
+  }, [itemsWithCross]);
 
   // Update Data on Filter Changes
   useEffect(() => {
@@ -106,38 +105,53 @@ const QuestStartSection = () => {
 
   // Update Data on FeedData Changes
   useEffect(() => {
-    // if (pagination.page === 1 && !allData?.some((item) => item?.title === 'You are all caught up')) {
-    // if (pagination.page === 1) {
-    //   setAllData(feedData?.data || []);
-    // } else {
-    //   setAllData((prevData) => [...prevData, ...(feedData?.data || [])]);
-    // }
-
     if (pagination.page === 1) {
-      setPagination({
-        page: 1,
-        sliceStart: 0,
-        sliceEnd: pageLimit,
-      });
-
-      setAllData((feedData?.data || []).map((item) => ({ ...item, pagination })));
+      setAllData(feedData?.data || []);
     } else {
-      setAllData((prevData) => [...prevData, ...(feedData?.data || []).map((item) => ({ ...item, pagination }))]);
-      // setAllData((prevData) => {
-      //   const newData = (feedData?.data || []).map((item) => ({ ...item, pagination }));
+      setAllData((prevData) => {
+        const newData = [...prevData, ...(feedData?.data || [])];
 
-      //   const uniqueIds = new Set(prevData.map((item) => item._id));
-      //   const filteredNewData = newData.filter((item) => !uniqueIds.has(item._id));
+        const uniqueData = newData.filter(
+          (item, index, array) => array.findIndex((data) => data._id === item._id) === index,
+        );
 
-      //   return [...prevData, ...filteredNewData];
-      // });
+        return uniqueData;
+      });
     }
-
-    // if (feedData && !feedData?.hasNextPage) {
-    //   const newItem = { title: 'You are all caught up' };
-    //   setAllData((prevData) => [...prevData, newItem]);
-    // }
   }, [feedData, filterStates, pagination.page]);
+  // useEffect(() => {
+  // if (pagination.page === 1 && !allData?.some((item) => item?.title === 'You are all caught up')) {
+  // if (pagination.page === 1) {
+  //   setAllData(feedData?.data || []);
+  // } else {
+  //   setAllData((prevData) => [...prevData, ...(feedData?.data || [])]);
+  // }
+
+  // if (pagination.page === 1) {
+  //   setPagination({
+  //     page: 1,
+  //     sliceStart: 0,
+  //     sliceEnd: pageLimit,
+  //   });
+
+  // setAllData((feedData?.data || []).map((item) => ({ ...item, pagination })));
+  // } else {
+  // setAllData((prevData) => [...prevData, ...(feedData?.data || []).map((item) => ({ ...item, pagination }))]);
+  // setAllData((prevData) => {
+  //   const newData = (feedData?.data || []).map((item) => ({ ...item, pagination }));
+
+  //   const uniqueIds = new Set(prevData.map((item) => item._id));
+  //   const filteredNewData = newData.filter((item) => !uniqueIds.has(item._id));
+
+  //   return [...prevData, ...filteredNewData];
+  // });
+  // }
+
+  // if (feedData && !feedData?.hasNextPage) {
+  //   const newItem = { title: 'You are all caught up' };
+  //   setAllData((prevData) => [...prevData, newItem]);
+  // }
+  // }, [feedData, filterStates, pagination.page]);
 
   // Update Pagination on Page Change
   useEffect(() => {
