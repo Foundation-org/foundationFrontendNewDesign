@@ -27,7 +27,7 @@ const initialState = {
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
-  isColumns: localStorage.getItem('columns') ? true : false,
+  isColumns: JSON.parse(localStorage.getItem('columns')).Block.list.length > 0 ? true : false,
   itemsWithCross: [],
   clearFilter: false,
 };
@@ -69,17 +69,43 @@ export const filtersSlice = createSlice({
       state.itemsWithCross = action.payload;
     },
     setIsColumn: (state, action) => {
-      state.isColumns = true;
+      if (JSON.parse(localStorage.getItem('columns')).Block.list.length > 0) {
+        state.isColumns = true;
+      } else {
+        state.isColumns = false;
+      }
     },
     resetFilters: (state) => {
-      localStorage.removeItem('columns');
+      const stateString = JSON.stringify({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
+      localStorage.setItem('columns', stateString);
+      // localStorage.removeItem('columns');
       Object.assign(state, resetState);
     },
     resetSearchData: (state) => {
       state.searchData = '';
     },
     resetOtherFilters: (state) => {
-      localStorage.removeItem('columns');
+      const stateString = JSON.stringify({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
+      localStorage.setItem('columns', stateString);
+      // localStorage.removeItem('columns');
       Object.assign(state, resetOtherStates);
     },
   },

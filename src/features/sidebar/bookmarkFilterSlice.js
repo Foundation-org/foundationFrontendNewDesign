@@ -27,7 +27,7 @@ const initialState = {
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
-  isColumns: localStorage.getItem('bookmarkColumns') ? true : false,
+  isColumns: JSON.parse(localStorage.getItem('bookmarkColumns')).Block.list.length > 0 ? true : false,
   itemsWithCross: [],
   clearFilter: false,
 };
@@ -69,17 +69,41 @@ export const bookmarkFiltersSlice = createSlice({
       state.itemsWithCross = action.payload;
     },
     setIsColumn: (state, action) => {
-      state.isColumns = true;
+      if (JSON.parse(localStorage.getItem('bookmarkColumns')).Block.list.length > 0) {
+        state.isColumns = true;
+      } else {
+        state.isColumns = false;
+      }
     },
     resetFilters: (state) => {
-      localStorage.removeItem('bookmarkColumns');
+      const stateString = JSON.stringify({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
+      localStorage.setItem('bookmarkColumns', stateString);
       Object.assign(state, resetState);
     },
     resetSearchData: (state) => {
       state.searchData = '';
     },
     resetOtherFilters: (state) => {
-      localStorage.removeItem('bookmarkColumns');
+      const stateString = JSON.stringify({
+        All: {
+          id: 'All',
+          list: [],
+        },
+        Block: {
+          id: 'Block',
+          list: [],
+        },
+      });
+      localStorage.setItem('bookmarkColumns', stateString);
       Object.assign(state, resetOtherStates);
     },
   },
