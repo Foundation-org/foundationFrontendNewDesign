@@ -217,7 +217,6 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                           className="custom-scrollbar overflow-x-hidden flex h-[25vh] min-h-[25vh] flex-col gap-[0.4rem] overflow-y-auto bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] dark:bg-[#212121] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem]"
                           {...provided.droppableProps}
                           ref={provided.innerRef}
-                          s
                         >
                           {col.list?.length >= 1 ? (
                             col.list.sort().map((text, index) => (
@@ -257,14 +256,14 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                                         snapshot.isDragging
                                           ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                                           : 'border-[#ACACAC] bg-[#FCFCFD] dark:bg-[#282828]'
-                                      } flex h-6 w-fit select-none items-center gap-[5px] truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] dark:text-white tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px]`}
+                                      } flex h-6 w-fit select-none items-center gap-3 truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] dark:text-white tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px]`}
                                     >
                                       {text}
                                       {col.id !== 'All' && (
                                         <GrClose
                                           className={`${
                                             itemsWithCross?.includes(text) ? 'block' : 'hidden'
-                                          } h-[9.4px] w-[9.4px] cursor-pointer text-[#C9C8C8] dark:text-white tablet:h-[16px] tablet:w-[16px] laptop:h-[20px] laptop:w-[20px]`}
+                                          } h-3 w-3 cursor-pointer text-[#C9C8C8] dark:text-white tablet:h-[16px] tablet:w-[16px] laptop:h-[20px] laptop:w-[20px]`}
                                           onClick={() => handleRemoveItemFromList(text, col.id)}
                                         />
                                       )}

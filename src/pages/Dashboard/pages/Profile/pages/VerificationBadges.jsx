@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login';
 import PopUp from '../../../../../components/ui/PopUp';
 import VerificationPopups from '../components/VerificationPopups';
+import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -21,6 +22,10 @@ const VerificationBadges = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isPopup, setIsPopup] = useState(false);
   const [seletedBadge, setSelectedBadge] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [deleteModalState, setDeleteModalState] = useState(false);
+
+  const handleBadgesClose = () => setModalVisible(false);
 
   const handleUserInfo = async (id) => {
     try {
@@ -331,6 +336,11 @@ const VerificationBadges = () => {
   //   }
   // };
 
+  const handleRemoveBadgePopup = (item) => {
+    setDeleteModalState(item);
+    setModalVisible(true);
+  };
+
   return (
     <div className="pb-12">
       {isLoading && <Loader />}
@@ -366,6 +376,20 @@ const VerificationBadges = () => {
             handleUserInfo={handleUserInfo}
           />
         ) : null)}
+
+      {/* DELETE MODAL POPUP */}
+      {modalVisible && (
+        <BadgeRemovePopup
+          handleClose={handleBadgesClose}
+          modalVisible={modalVisible}
+          title={deleteModalState.title}
+          image={deleteModalState.image}
+          accountName={deleteModalState.accountName}
+          fetchUser={fetchUser}
+          setFetchUser={setFetchUser}
+        />
+      )}
+
       <h1 className="ml-[32px] text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:leading-[30px] tablet:font-semibold tablet:ml-[97px] tablet:text-[25px] dark:text-[#B8B8B8]">
         My Verification Badges
       </h1>
@@ -430,17 +454,28 @@ const VerificationBadges = () => {
               <h1>Facebook</h1>
             </div>
             {checkSocial('facebook') ? (
-              <Button
-                color={checkSocial('facebook') ? 'red' : 'blue'}
-                onClick={() => {
-                  checkSocial('facebook') && handleRemoveBadge('facebook');
-                }}
-              >
-                {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
-                <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
-                  {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
-                </span>
-              </Button>
+              <>
+                <Button
+                  color={checkSocial('facebook') ? 'red' : 'blue'}
+                  onClick={() => {
+                    checkSocial('facebook') && setModalVisible(true);
+                  }}
+                >
+                  {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
+                  <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                    {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
+                  </span>
+                </Button>
+                <BadgeRemovePopup
+                  handleClose={handleBadgesClose}
+                  modalVisible={modalVisible}
+                  title={'Facebook'}
+                  image={'/assets/profile/Facebook-2x.png'}
+                  accountName={'facebook'}
+                  fetchUser={fetchUser}
+                  setFetchUser={setFetchUser}
+                />
+              </>
             ) : (
               <LoginSocialFacebook
                 // isOnlyGetToken
@@ -488,7 +523,7 @@ const VerificationBadges = () => {
               color={checkSocial(item.accountName) ? 'red' : item.ButtonColor}
               onClick={() => {
                 !checkSocial(item.accountName) && window.open(`${import.meta.env.VITE_API_URL}${item.link}`, '_self');
-                checkSocial(item.accountName) && handleRemoveBadge(item.accountName);
+                checkSocial(item.accountName) && handleRemoveBadgePopup(item);
               }}
               disabled={item.disabled}
             >

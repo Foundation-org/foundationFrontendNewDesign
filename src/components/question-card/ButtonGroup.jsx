@@ -68,12 +68,17 @@ const ButtonGroup = ({
     answerSelectionArray.forEach((item, index) => {
       if (apiResponse.selected.some((selectedItem) => selectedItem.question === item.label)) {
         answerSelectionArray[index].check = true;
+      } else {
+        answerSelectionArray[index].check = false;
       }
 
       if (apiResponse.contended.some((contendedItem) => contendedItem.question === item.label)) {
         answerSelectionArray[index].contend = true;
+      } else {
+        answerSelectionArray[index].contend = false;
       }
     });
+
     setAnswerSelection(answerSelectionArray);
   }
 
@@ -88,19 +93,18 @@ const ButtonGroup = ({
       }
     });
 
-    const sortedAnswerSelection = [...answerSelectionArray].sort((a, b) => {
-      const indexA = questStartData?.startQuestData?.data[
-        questStartData?.startQuestData?.data.length - 1
-      ].selected?.findIndex((item) => item.question === a.label);
+    const sortedAnswers = answerSelectionArray.sort((a, b) => {
+      if (a.label === '') return 1;
+      if (b.label === '') return -1;
 
-      const indexB = questStartData?.startQuestData?.data[
-        questStartData?.startQuestData?.data.length - 1
-      ].selected?.findIndex((item) => item.question === b.label);
+      const indexA = apiResponse.selected.findIndex((item) => item.question === a.label);
+      const indexB = apiResponse.selected.findIndex((item) => item.question === b.label);
 
-      return indexA !== -1 && indexB !== -1 ? indexA - indexB : 0;
+      return indexA - indexB;
     });
 
-    setRankedAnswers(sortedAnswerSelection);
+    setAnswerSelection(sortedAnswers);
+    setRankedAnswers(sortedAnswers);
   }
 
   const { mutateAsync: getStartQuestDetail } = useMutation({
@@ -147,12 +151,12 @@ const ButtonGroup = ({
       if (whichTypeQuestion === 'ranked choise') {
         updateRankSelection(res?.data.data[res.data.data.length - 1], rankedAnswers);
       }
-      setLoadingDetail(false);
+      // setLoadingDetail(false);
     },
     onError: (err) => {
       toast.error(err.response?.data);
       console.log('Mutation Error', err);
-      setLoadingDetail(false);
+      // setLoadingDetail(false);
     },
   });
 
@@ -163,13 +167,13 @@ const ButtonGroup = ({
       handleStartTest(id);
     }
     if (btnText === 'change answer') {
-      setLoadingDetail(true);
+      // setLoadingDetail(true);
       const data = { questForeignKey: id, uuid: persistedUserInfo?.uuid };
       getStartQuestDetail(data);
       handleStartTest(id);
     }
     if (btnText === 'completed') {
-      setLoadingDetail(true);
+      // setLoadingDetail(true);
       handleViewResults(id);
     }
   };

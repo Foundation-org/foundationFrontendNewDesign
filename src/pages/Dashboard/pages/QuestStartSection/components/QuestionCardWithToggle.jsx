@@ -112,7 +112,7 @@ const QuestionCardWithToggle = (props) => {
         uuid: answer.uuid,
       })),
     );
-    if(questData===0){
+    if (questData === 0) {
       setAddOptionField(0);
     }
   }, [questStartData]);
@@ -373,7 +373,6 @@ const QuestionCardWithToggle = (props) => {
       });
     },
     onError: (err) => {
-      console.log('fhamza', err);
       toast.error(err.response.data.message.split(':')[1]);
       setLoading(false);
     },
@@ -436,7 +435,10 @@ const QuestionCardWithToggle = (props) => {
       } else {
         startQuest(params);
       }
-    } else if (questStartData.whichTypeQuestion === 'multiple choise'  || questStartData.whichTypeQuestion === 'open choice') {
+    } else if (
+      questStartData.whichTypeQuestion === 'multiple choise' ||
+      questStartData.whichTypeQuestion === 'open choice'
+    ) {
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = '';
@@ -731,7 +733,7 @@ const QuestionCardWithToggle = (props) => {
     if (viewResult !== questStartData._id && openResults !== true) {
       return (
         <>
-        <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -746,14 +748,14 @@ const QuestionCardWithToggle = (props) => {
             checkOptionStatus={checkOptionStatus}
             setCheckOptionStatus={setCheckOptionStatus}
           />
-        <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
           {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
         </>
       );
     } else {
       return (
         <>
-        <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
           <Result
             questStartData={questStartData}
             id={questStartData._id}
@@ -772,8 +774,7 @@ const QuestionCardWithToggle = (props) => {
             cardSize={cardSize}
           />
           {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
-          <QuestInfoText questStartData={questStartData} show={false} questType={questStartData.whichTypeQuestion} />
-
+          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
         </>
       );
     }
