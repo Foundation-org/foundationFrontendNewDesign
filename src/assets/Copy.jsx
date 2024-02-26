@@ -1,7 +1,8 @@
 const Copy = ({ color, h, w }) => {
   return (
     <div className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] ">
-      <svg
+      <img src="/assets/svgs/copylg.png" alt="copy" className="h-3 w-3 tablet:h-[23px] tablet:w-[23px]" />
+      {/* <svg
         className="h-3 w-3 md:h-[1.024rem] md:w-[1.024rem] tablet:h-[23px] tablet:w-5 "
         style={{ height: h, width: w }}
         xmlns="http://www.w3.org/2000/svg"
@@ -16,8 +17,8 @@ const Copy = ({ color, h, w }) => {
           d="M7.18823 3.59422H17.7844C17.5608 2.96408 17.1477 2.41856 16.6017 2.03251C16.0558 1.64646 15.4038 1.43878 14.7351 1.43797H4.67261C3.8148 1.43797 2.99212 1.77874 2.38556 2.3853C1.779 2.99186 1.43823 3.81454 1.43823 4.67235V14.7348C1.43904 15.4035 1.64671 16.0555 2.03277 16.6015C2.41882 17.1474 2.96434 17.5605 3.59448 17.7841V7.18797C3.59448 6.23485 3.97311 5.32077 4.64707 4.64681C5.32103 3.97285 6.23511 3.59422 7.18823 3.59422Z"
           fill={color ? color : '#A3A3A3'}
         />
-      </svg>
-      <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem] laptop:text-[1.25rem]">Copy</p>
+      </svg> */}
+      <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem] laptop:text-[1.25rem]">Share</p>
     </div>
   );
 };
