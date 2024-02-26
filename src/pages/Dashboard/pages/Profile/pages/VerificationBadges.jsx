@@ -23,10 +23,10 @@ const VerificationBadges = () => {
   const [isPopup, setIsPopup] = useState(false);
   const [seletedBadge, setSelectedBadge] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const handleBadgesClose = () => {
-    setModalVisible(false);
-    console.log('running');
-  }
+  const [deleteModalState, setDeleteModalState] = useState(false);
+
+  const handleBadgesClose = () => setModalVisible(false);
+
   const handleUserInfo = async (id) => {
     try {
       const resp = await userInfo(id);
@@ -336,6 +336,11 @@ const VerificationBadges = () => {
   //   }
   // };
 
+  const handleRemoveBadgePopup = (item) => {
+    setDeleteModalState(item);
+    setModalVisible(true);
+  };
+
   return (
     <div className="pb-12">
       {isLoading && <Loader />}
@@ -371,6 +376,20 @@ const VerificationBadges = () => {
             handleUserInfo={handleUserInfo}
           />
         ) : null)}
+
+      {/* DELETE MODAL POPUP */}
+      {modalVisible && (
+        <BadgeRemovePopup
+          handleClose={handleBadgesClose}
+          modalVisible={modalVisible}
+          title={deleteModalState.title}
+          image={deleteModalState.image}
+          accountName={deleteModalState.accountName}
+          fetchUser={fetchUser}
+          setFetchUser={setFetchUser}
+        />
+      )}
+
       <h1 className="ml-[32px] text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:leading-[30px] tablet:font-semibold tablet:ml-[97px] tablet:text-[25px] dark:text-[#B8B8B8]">
         My Verification Badges
       </h1>
@@ -436,27 +455,27 @@ const VerificationBadges = () => {
             </div>
             {checkSocial('facebook') ? (
               <>
-              <Button
-                color={checkSocial('facebook') ? 'red' : 'blue'}
-                onClick={() => {
-                  checkSocial('facebook') && setModalVisible(true);
-                }}
-              >
-                {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
-                <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
-                  {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
-                </span>
-              </Button>
-               <BadgeRemovePopup
-               handleClose={handleBadgesClose}
-               modalVisible={modalVisible}
-               title={'Facebook'}
-               image={'/assets/profile/Facebook-2x.png'}
-               accountName={'facebook'}
-               fetchUser={fetchUser}
-               setFetchUser={setFetchUser}
-               />
-               </>
+                <Button
+                  color={checkSocial('facebook') ? 'red' : 'blue'}
+                  onClick={() => {
+                    checkSocial('facebook') && setModalVisible(true);
+                  }}
+                >
+                  {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
+                  <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                    {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
+                  </span>
+                </Button>
+                <BadgeRemovePopup
+                  handleClose={handleBadgesClose}
+                  modalVisible={modalVisible}
+                  title={'Facebook'}
+                  image={'/assets/profile/Facebook-2x.png'}
+                  accountName={'facebook'}
+                  fetchUser={fetchUser}
+                  setFetchUser={setFetchUser}
+                />
+              </>
             ) : (
               <LoginSocialFacebook
                 // isOnlyGetToken
@@ -481,7 +500,6 @@ const VerificationBadges = () => {
                     {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
                   </span>
                 </Button>
-                
               </LoginSocialFacebook>
             )}
           </div>
@@ -505,25 +523,15 @@ const VerificationBadges = () => {
               color={checkSocial(item.accountName) ? 'red' : item.ButtonColor}
               onClick={() => {
                 !checkSocial(item.accountName) && window.open(`${import.meta.env.VITE_API_URL}${item.link}`, '_self');
-                checkSocial(item.accountName) && setModalVisible(true);
+                checkSocial(item.accountName) && handleRemoveBadgePopup(item);
               }}
               disabled={item.disabled}
             >
-              
               {checkSocial(item.accountName) ? 'Remove' : item.ButtonText}
               <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
                 {checkSocial(item.accountName) ? '' : '(+0.96 FDX)'}
               </span>
             </Button>
-            <BadgeRemovePopup
-               handleClose={handleBadgesClose}
-               modalVisible={modalVisible}
-               title={item.title}
-               image={item.image}
-               accountName={item.accountName}
-               fetchUser={fetchUser}
-               setFetchUser={setFetchUser}
-               />
           </div>
         ))}
         <h1 className="font-500 font-Inter text-[9.74px] tablet:text-[1.7vw] font-medium text-[#000] dark:text-white my-[3px]">
