@@ -14,8 +14,14 @@ const customStyle = {
   minWidth: 'auto',
 };
 
-
-export default function ShowHidePostPopup({ handleClose, modalVisible, questStartData,checkboxStates,setCheckboxStates,data }) {
+export default function ShowHidePostPopup({
+  handleClose,
+  modalVisible,
+  questStartData,
+  checkboxStates,
+  setCheckboxStates,
+  data,
+}) {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -119,7 +125,7 @@ export default function ShowHidePostPopup({ handleClose, modalVisible, questStar
                   onChange={() => handleCheckboxChange(index)}
                 />
               </div>
-              <p className="text-[10px] tablet:text-[19px] font-normal leading-[12px] tablet:leading-[23px] text-[#435059]">
+              <p className="text-[10px] tablet:text-[19px] font-normal leading-[12px] tablet:leading-[23px] text-[#435059] text-nowrap">
                 {item.title}
               </p>
             </div>
