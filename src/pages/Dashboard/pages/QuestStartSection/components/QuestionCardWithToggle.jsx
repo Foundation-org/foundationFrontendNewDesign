@@ -772,7 +772,7 @@ const QuestionCardWithToggle = (props) => {
             cardSize={cardSize}
           />
           {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
-          <QuestInfoText questStartData={questStartData} show={false} questType={questStartData.whichTypeQuestion} />
+          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
 
         </>
       );

@@ -11,7 +11,7 @@ export default function ObjectionPopUp({ modalVisible, handleClose, handleConten
     >
       <div className="px-[17px] tablet:px-[80px] py-[10px] tablet:py-[25px]">
         <h1 className="text-[10px] tablet:text-[20px] font-medium leading-[12px] tablet:leading-[24.2px] text-[#707175]">
-          Are you sure you want to object to this option.
+          Are you sure you want to object to this option:
         </h1>
         <p className="mt-2 tablet:mt-[14px] text-[11px] tablet:text-[22px] font-semibold leading-[12.5px] tablet:leading-[25.63px] text-[#707175] text-center">
           "{option}"

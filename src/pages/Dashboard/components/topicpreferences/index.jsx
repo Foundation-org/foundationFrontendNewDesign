@@ -157,7 +157,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
           <img
             src="/assets/preferences/close.png"
             alt="close"
-            className="h-2 w-2 tablet:h-6 tablet:w-6"
+            className="h-4 w-4 tablet:h-6 tablet:w-6"
             onClick={handleClose}
           />
         </div>

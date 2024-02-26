@@ -14,30 +14,12 @@ const customStyle = {
   minWidth: 'auto',
 };
 
-const data = [
-  {
-    id: 1,
-    title: 'Does not apply to me',
-  },
-  {
-    id: 2,
-    title: 'Not interested',
-  },
-  {
-    id: 3,
-    title: 'Offensive',
-  },
-  {
-    id: 4,
-    title: 'Spam',
-  },
-];
 
-export default function ShowHidePostPopup({ handleClose, modalVisible, questStartData }) {
+export default function ShowHidePostPopup({ handleClose, modalVisible, questStartData,checkboxStates,setCheckboxStates,data }) {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
+
   const [selectedTitle, setSelectedTitle] = useState(null);
 
   const handleCheckboxChange = (index) => {

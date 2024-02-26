@@ -8,15 +8,52 @@ import * as HomepageApis from '../../services/api/homepageApis';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import { useLocation } from 'react-router-dom';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
+const data = [
+  {
+    id: 1,
+    title: 'Does not apply to me',
+  },
+  {
+    id: 2,
+    title: 'Not interested',
+  },
+  {
+    id: 3,
+    title: 'Has Mistakes or Errors',
+  },
+  {
+    id: 4,
+    title: 'Needs More Options',
+  },
+  {
+    id: 5,
+    title: 'Unclear / Doesn’t make Sense',
+  },
+  {
+    id: 6,
+    title: 'Offensive',
+  },
+  {
+    id: 7,
+    title: 'Spam',
+  },
+
+];
 
 const QuestCardLayout = ({ questStartData, isBookmarked, isQuestHidden, children }) => {
   const location = useLocation();
   const queryClient = useQueryClient();
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
+  const showHidePostOpen = () => {
+    setCheckboxStates(data.map(() => false));
+    setModalVisible(true);
+  };
 
-  const showHidePostOpen = () => setModalVisible(true);
-  const showHidePostClose = () => setModalVisible(false);
+  const showHidePostClose = () => {
+    setModalVisible(false);
+  };
 
   useEffect(() => {
     setbookmarkStatus(isBookmarked);
@@ -110,7 +147,14 @@ const QuestCardLayout = ({ questStartData, isBookmarked, isQuestHidden, children
         questStartData={questStartData}
         isQuestHidden={isQuestHidden}
       />
-      <ShowHidePostPopup handleClose={showHidePostClose} modalVisible={modalVisible} questStartData={questStartData} />
+      <ShowHidePostPopup
+        handleClose={showHidePostClose}
+        setCheckboxStates={setCheckboxStates}
+        checkboxStates={checkboxStates}
+        data={data}
+        modalVisible={modalVisible}
+        questStartData={questStartData}
+      />
     </div>
   );
 };
