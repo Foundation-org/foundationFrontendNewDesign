@@ -147,12 +147,12 @@ const ButtonGroup = ({
       if (whichTypeQuestion === 'ranked choise') {
         updateRankSelection(res?.data.data[res.data.data.length - 1], rankedAnswers);
       }
-      setLoadingDetail(false);
+      // setLoadingDetail(false);
     },
     onError: (err) => {
       toast.error(err.response?.data);
       console.log('Mutation Error', err);
-      setLoadingDetail(false);
+      // setLoadingDetail(false);
     },
   });
 
@@ -163,13 +163,13 @@ const ButtonGroup = ({
       handleStartTest(id);
     }
     if (btnText === 'change answer') {
-      setLoadingDetail(true);
+      // setLoadingDetail(true);
       const data = { questForeignKey: id, uuid: persistedUserInfo?.uuid };
       getStartQuestDetail(data);
       handleStartTest(id);
     }
     if (btnText === 'completed') {
-      setLoadingDetail(true);
+      // setLoadingDetail(true);
       handleViewResults(id);
     }
   };
