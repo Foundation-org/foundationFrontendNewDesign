@@ -57,6 +57,8 @@ const QuestStartSection = () => {
   // Reset Preferences
   useEffect(() => {
     if (!filterStates.isColumns) {
+      const currentColumns = { ...columns };
+
       const stateString = JSON.stringify({
         All: {
           id: 'All',
@@ -68,16 +70,13 @@ const QuestStartSection = () => {
         },
       });
       localStorage.setItem('columns', stateString);
-      setColumns({
-        All: {
-          id: 'All',
-          list: [],
-        },
-        Block: {
-          id: 'Block',
-          list: [],
-        },
-      });
+
+      currentColumns.Block = {
+        id: 'Block',
+        list: [],
+      };
+
+      setColumns(currentColumns);
     }
   }, [filterStates.isColumns]);
 
