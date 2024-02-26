@@ -94,27 +94,15 @@ const ButtonGroup = ({
     });
 
     const sortedAnswers = answerSelectionArray.sort((a, b) => {
+      if (a.label === '') return 1;
+      if (b.label === '') return -1;
+
       const indexA = apiResponse.selected.findIndex((item) => item.question === a.label);
       const indexB = apiResponse.selected.findIndex((item) => item.question === b.label);
 
       return indexA - indexB;
     });
 
-    // console.log('before', sortedAnswers);
-
-    // const sortedAnswerSelection = [...answerSelectionArray].sort((a, b) => {
-    //   const indexA = questStartData?.startQuestData?.data[
-    //     questStartData?.startQuestData?.data.length - 1
-    //   ].selected?.findIndex((item) => item.question === a.label);
-
-    //   const indexB = questStartData?.startQuestData?.data[
-    //     questStartData?.startQuestData?.data.length - 1
-    //   ].selected?.findIndex((item) => item.question === b.label);
-
-    //   return indexA !== -1 && indexB !== -1 ? indexA - indexB : 0;
-    // });
-
-    // console.log('after', sortedAnswerSelection);
     setAnswerSelection(sortedAnswers);
     setRankedAnswers(sortedAnswers);
   }
