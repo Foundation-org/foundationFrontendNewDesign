@@ -2,7 +2,7 @@ const Copy = ({ color, h, w }) => {
   return (
     <div className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] ">
       <svg
-        className="h-3 w-3 md:h-[1.024rem] md:w-[1.024rem] tablet:h-[1.28rem] tablet:w-[1.28rem] "
+        className="h-3 w-3 md:h-[1.024rem] md:w-[1.024rem] tablet:h-[23px] tablet:w-5 "
         style={{ height: h, width: w }}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 23 23"
