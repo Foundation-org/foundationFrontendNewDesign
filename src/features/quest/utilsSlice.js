@@ -18,10 +18,13 @@ export const utilsSlice = createSlice({
     addHiddenPosts: (state, action) => {
       state.hiddenPosts.push(action.payload);
     },
+    removeHiddenPosts: (state, action) => {
+      state.hiddenPosts = state.hiddenPosts.filter((item) => item !== action.payload);
+    },
   },
 });
 
-export const { updateaddOptionLimit, resetaddOptionLimit, addHiddenPosts } = utilsSlice.actions;
+export const { updateaddOptionLimit, resetaddOptionLimit, addHiddenPosts, removeHiddenPosts } = utilsSlice.actions;
 
 export default utilsSlice.reducer;
 

@@ -4,8 +4,11 @@ import { useSelector } from 'react-redux';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateHiddenQuest } from '../../services/api/questsApi';
 import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { removeHiddenPosts } from '../../features/quest/utilsSlice';
 
 export default function UnHidePostPopup({ handleClose, modalVisible, questStartData }) {
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const queryClient = useQueryClient();
 
@@ -37,6 +40,7 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
                 hidden: false,
                 hiddenMessage: '',
               });
+              dispatch(removeHiddenPosts(questStartData._id));
             }}
           >
             Yes
