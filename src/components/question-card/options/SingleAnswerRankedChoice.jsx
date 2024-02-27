@@ -270,10 +270,7 @@ const SingleAnswerRankedChoice = (props) => {
       {props.isQuestHidden === 'HiddenPosts' ? (
         <div className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
       ) : props.btnText !== 'Results' ? (
-        <div
-          className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"
-          onClick={handleContendPopup}
-        >
+        <div className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]">
           {props.deleteable ? (
             <img
               src="/assets/svgs/dashboard/trash2.svg"
@@ -282,7 +279,7 @@ const SingleAnswerRankedChoice = (props) => {
               onClick={() => handleDeleteOption(props.number)}
             />
           ) : (
-            <div className="flex items-center gap-1 laptop:gap-[18px]">
+            <div className="flex items-center gap-1 laptop:gap-[18px]" onClick={handleContendPopup}>
               <div id="custom-yello-checkbox" className="flex h-full items-center ">
                 <div className="cursor-pointer">
                   <ContentionIcon

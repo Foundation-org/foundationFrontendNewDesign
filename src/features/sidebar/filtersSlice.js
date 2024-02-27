@@ -27,7 +27,7 @@ const initialState = {
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
-  isColumns: JSON.parse(localStorage.getItem('columns')).Block.list.length > 0 ? true : false,
+  isColumns: JSON.parse(localStorage.getItem('columns'))?.Block.list.length > 0 ? true : false,
   itemsWithCross: [],
   clearFilter: false,
 };
@@ -69,7 +69,7 @@ export const filtersSlice = createSlice({
       state.itemsWithCross = action.payload;
     },
     setIsColumn: (state, action) => {
-      if (JSON.parse(localStorage.getItem('columns')).Block.list.length > 0) {
+      if (JSON.parse(localStorage.getItem('columns'))?.Block.list.length > 0) {
         state.isColumns = true;
       } else {
         state.isColumns = false;
