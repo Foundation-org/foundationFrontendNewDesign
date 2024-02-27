@@ -44,6 +44,7 @@ const ButtonGroup = ({
   handleChange,
   checkOptionStatus,
   isQuestHidden,
+  setAddOptionField,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -65,14 +66,16 @@ const ButtonGroup = ({
     : false;
 
   function updateAnswerSelection(apiResponse, answerSelectionArray) {
+    const data = apiResponse?.startQuestData.data[apiResponse?.startQuestData.data.length - 1];
+
     answerSelectionArray.forEach((item, index) => {
-      if (apiResponse.selected.some((selectedItem) => selectedItem.question === item.label)) {
+      if (data.selected.some((selectedItem) => selectedItem.question === item.label)) {
         answerSelectionArray[index].check = true;
       } else {
         answerSelectionArray[index].check = false;
       }
 
-      if (apiResponse.contended.some((contendedItem) => contendedItem.question === item.label)) {
+      if (data.contended.some((contendedItem) => contendedItem.question === item.label)) {
         answerSelectionArray[index].contend = true;
       } else {
         answerSelectionArray[index].contend = false;
@@ -83,12 +86,10 @@ const ButtonGroup = ({
   }
 
   function updateRankSelection(apiResponse, answerSelectionArray) {
+    const data = apiResponse?.startQuestData.data[apiResponse?.startQuestData.data.length - 1];
+
     answerSelectionArray.forEach((item, index) => {
-      // Check in contended array
-      if (
-        apiResponse.contended &&
-        apiResponse.contended?.some((contendedItem) => contendedItem.question === item.label)
-      ) {
+      if (data.contended && data.contended?.some((contendedItem) => contendedItem.question === item.label)) {
         answerSelectionArray[index].contend = true;
       }
     });
@@ -97,8 +98,8 @@ const ButtonGroup = ({
       if (a.label === '') return 1;
       if (b.label === '') return -1;
 
-      const indexA = apiResponse.selected.findIndex((item) => item.question === a.label);
-      const indexB = apiResponse.selected.findIndex((item) => item.question === b.label);
+      const indexA = data.selected.findIndex((item) => item.question === a.label);
+      const indexB = data.selected.findIndex((item) => item.question === b.label);
 
       return indexA - indexB;
     });
@@ -107,58 +108,64 @@ const ButtonGroup = ({
     setRankedAnswers(sortedAnswers);
   }
 
-  const { mutateAsync: getStartQuestDetail } = useMutation({
-    mutationFn: getStartQuestInfo,
-    onSuccess: (res) => {
-      setHowManyTimesAnsChanged(res.data.data.length);
-      if (
-        whichTypeQuestion === 'agree/disagree' ||
-        whichTypeQuestion === 'yes/no' ||
-        whichTypeQuestion === 'like/dislike'
-      ) {
-        if (
-          res?.data.data[res.data.data.length - 1].selected === 'Agree' ||
-          res?.data.data[res.data.data.length - 1].selected === 'Yes' ||
-          res?.data.data[res.data.data.length - 1].selected === 'Like'
-        ) {
-          handleToggleCheck(res.data.data[res.data.data.length - 1].selected, true, false);
-        }
-        if (
-          res?.data.data[res.data.data.length - 1].contended === 'Agree' ||
-          res?.data.data[res.data.data.length - 1].contended === 'Yes' ||
-          res?.data.data[res.data.data.length - 1].contended === 'Like'
-        ) {
-          handleToggleCheck(res.data.data[res.data.data.length - 1].contended, false, true);
-        }
-        if (
-          res?.data.data[res.data.data.length - 1].contended === 'Disagree' ||
-          res?.data.data[res.data.data.length - 1].contended === 'No' ||
-          res?.data.data[res.data.data.length - 1].contended === 'Dislike'
-        ) {
-          handleToggleCheck(res.data.data[res.data.data.length - 1].contended, false, true);
-        }
-        if (
-          res?.data.data[res.data.data.length - 1].selected === 'Disagree' ||
-          res?.data.data[res.data.data.length - 1].selected === 'No' ||
-          res?.data.data[res.data.data.length - 1].selected === 'Dislike'
-        ) {
-          handleToggleCheck(res.data.data[res.data.data.length - 1].selected, true, false);
-        }
-      }
-      if (whichTypeQuestion === 'multiple choise' || whichTypeQuestion === 'open choice') {
-        updateAnswerSelection(res?.data.data[res.data.data.length - 1], answersSelection);
-      }
-      if (whichTypeQuestion === 'ranked choise') {
-        updateRankSelection(res?.data.data[res.data.data.length - 1], rankedAnswers);
-      }
-      // setLoadingDetail(false);
-    },
-    onError: (err) => {
-      toast.error(err.response?.data);
-      console.log('Mutation Error', err);
-      // setLoadingDetail(false);
-    },
-  });
+  // const { mutateAsync: getStartQuestDetail } = useMutation({
+  //   mutationFn: getStartQuestInfo,
+  //   onSuccess: (res) => {
+  //     setHowManyTimesAnsChanged(res.data.data.length);
+  //     if (
+  //       whichTypeQuestion === 'agree/disagree' ||
+  //       whichTypeQuestion === 'yes/no' ||
+  //       whichTypeQuestion === 'like/dislike'
+  //     ) {
+  //       if (
+  //         res?.data.data[res.data.data.length - 1].selected === 'Agree' ||
+  //         res?.data.data[res.data.data.length - 1].selected === 'Yes' ||
+  //         res?.data.data[res.data.data.length - 1].selected === 'Like'
+  //       ) {
+  //         handleToggleCheck(res.data.data[res.data.data.length - 1].selected, true, false);
+  //       }
+  //       if (
+  //         res?.data.data[res.data.data.length - 1].contended === 'Agree' ||
+  //         res?.data.data[res.data.data.length - 1].contended === 'Yes' ||
+  //         res?.data.data[res.data.data.length - 1].contended === 'Like'
+  //       ) {
+  //         handleToggleCheck(res.data.data[res.data.data.length - 1].contended, false, true);
+  //       }
+  //       if (
+  //         res?.data.data[res.data.data.length - 1].contended === 'Disagree' ||
+  //         res?.data.data[res.data.data.length - 1].contended === 'No' ||
+  //         res?.data.data[res.data.data.length - 1].contended === 'Dislike'
+  //       ) {
+  //         handleToggleCheck(res.data.data[res.data.data.length - 1].contended, false, true);
+  //       }
+  //       if (
+  //         res?.data.data[res.data.data.length - 1].selected === 'Disagree' ||
+  //         res?.data.data[res.data.data.length - 1].selected === 'No' ||
+  //         res?.data.data[res.data.data.length - 1].selected === 'Dislike'
+  //       ) {
+  //         handleToggleCheck(res.data.data[res.data.data.length - 1].selected, true, false);
+  //       }
+  //     }
+  //     if (whichTypeQuestion === 'multiple choise' || whichTypeQuestion === 'open choice') {
+  //       updateAnswerSelection(res?.data.data[res.data.data.length - 1], answersSelection);
+  //     }
+  //     if (whichTypeQuestion === 'ranked choise') {
+  //       updateRankSelection(res?.data.data[res.data.data.length - 1], rankedAnswers);
+  //     }
+  //     // setLoadingDetail(false);
+  //   },
+  //   onError: (err) => {
+  //     toast.error(err.response?.data);
+  //     console.log('Mutation Error', err);
+  //     // setLoadingDetail(false);
+  //   },
+  // });
+
+  const handleRemoveItem = () => {
+    const updatedAnswerSelection = answersSelection.filter((item) => !item.addedOptionByUser);
+    setAnswerSelection([...updatedAnswerSelection]);
+    setAddOptionField(0);
+  };
 
   const handleStartChange = () => {
     dispatch(questUtilsActions.resetaddOptionLimit());
@@ -167,13 +174,36 @@ const ButtonGroup = ({
       handleStartTest(id);
     }
     if (btnText === 'change answer') {
-      // setLoadingDetail(true);
-      const data = { questForeignKey: id, uuid: persistedUserInfo?.uuid };
-      getStartQuestDetail(data);
+      setHowManyTimesAnsChanged(questStartData?.startQuestData.data.length);
+      const data = questStartData?.startQuestData.data[questStartData?.startQuestData.data.length - 1];
+
+      if (
+        whichTypeQuestion === 'agree/disagree' ||
+        whichTypeQuestion === 'yes/no' ||
+        whichTypeQuestion === 'like/dislike'
+      ) {
+        if (data.selected === 'Agree' || data.selected === 'Yes' || data.selected === 'Like') {
+          handleToggleCheck(data.selected, true, false);
+        }
+        if (data.contended === 'Agree' || data.contended === 'Yes' || data.contended === 'Like') {
+          handleToggleCheck(data.contended, false, true);
+        }
+        if (data.contended === 'Disagree' || data.contended === 'No' || data.contended === 'Dislike') {
+          handleToggleCheck(data.contended, false, true);
+        }
+        if (data.selected === 'Disagree' || data.selected === 'No' || data.selected === 'Dislike') {
+          handleToggleCheck(data.selected, true, false);
+        }
+      }
+      if (whichTypeQuestion === 'multiple choise' || whichTypeQuestion === 'open choice') {
+        updateAnswerSelection(questStartData, answersSelection);
+      }
+      if (whichTypeQuestion === 'ranked choise') {
+        updateRankSelection(questStartData, answersSelection);
+      }
       handleStartTest(id);
     }
     if (btnText === 'completed') {
-      // setLoadingDetail(true);
       handleViewResults(id);
     }
   };
@@ -525,6 +555,7 @@ const ButtonGroup = ({
                   variant="cancel"
                   onClick={() => {
                     handleStartTest('');
+                    handleRemoveItem();
                   }}
                 >
                   Go Back
@@ -610,6 +641,7 @@ const ButtonGroup = ({
                     variant="cancel"
                     onClick={() => {
                       handleViewResults(questStartData._id);
+                      handleRemoveItem();
                     }}
                   >
                     Go Back

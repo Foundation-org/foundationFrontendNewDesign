@@ -28,7 +28,6 @@ export default function BasicTable() {
   const { data } = useQuery({
     queryFn: () => {
       if (debouncedSearch === '') {
-        console.log('inside... calling');
         return getAllLedgerData(currentPage, itemsPerPage, sort);
       } else {
         return searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);

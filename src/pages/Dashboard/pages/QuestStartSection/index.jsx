@@ -13,6 +13,7 @@ import { printEndMessage } from '../../../../utils';
 import { initialColumns } from '../../../../constants/preferences';
 import * as QuestServices from '../../../../services/queries/quest';
 import * as filtersActions from '../../../../features/sidebar/filtersSlice';
+import * as questUtilsActions from '../../../../features/quest/utilsSlice';
 
 const QuestStartSection = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const QuestStartSection = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
+  const questUtils = useSelector(questUtilsActions.getQuestUtils);
 
   // Pagination
   const pageLimit = 5;
@@ -235,7 +237,10 @@ const QuestStartSection = () => {
     }
   }, [submitResponse]);
 
-  // console.log('🚀 ~ QuestStartSection ~ allData:', allData);
+  // console.log(
+  //   '🚀 ~ QuestStartSection ~ allData:',
+  //   allData.filter((item) => !questUtils.hiddenPosts.includes(item._id)),
+  // );
 
   return (
     <div className="flex w-full flex-col bg-white dark:bg-black laptop:flex-row">
@@ -256,31 +261,32 @@ const QuestStartSection = () => {
         >
           <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
             {allData &&
-              allData?.map((item, index) => (
-                <div key={index + 1}>
-                  {filterStates.expandedView ? (
-                    <QuestionCardWithToggle
-                      questStartData={item}
-                      isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                      setPagination={setPagination}
-                      submitResponse={submitResponse}
-                      setSubmitResponse={setSubmitResponse}
-                    />
-                  ) : (
-                    <QuestionCard
-                      questStartData={item}
-                      startTest={startTest}
-                      setStartTest={setStartTest}
-                      viewResult={viewResult}
-                      handleViewResults={memoizedViewResults}
-                      handleStartTest={memoizedStartTest}
-                      isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                      setPagination={setPagination}
-                      setSubmitResponse={setSubmitResponse}
-                    />
-                  )}
-                </div>
-              ))}
+              allData
+                .filter((item) => !questUtils.hiddenPosts.includes(item._id))
+                ?.map((item, index) => (
+                  <div key={index + 1}>
+                    {filterStates.expandedView ? (
+                      <QuestionCardWithToggle
+                        questStartData={item}
+                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                        setPagination={setPagination}
+                        setSubmitResponse={setSubmitResponse}
+                      />
+                    ) : (
+                      <QuestionCard
+                        questStartData={item}
+                        startTest={startTest}
+                        setStartTest={setStartTest}
+                        viewResult={viewResult}
+                        handleViewResults={memoizedViewResults}
+                        handleStartTest={memoizedStartTest}
+                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                        setPagination={setPagination}
+                        setSubmitResponse={setSubmitResponse}
+                      />
+                    )}
+                  </div>
+                ))}
           </div>
           {/* <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
             {allData &&

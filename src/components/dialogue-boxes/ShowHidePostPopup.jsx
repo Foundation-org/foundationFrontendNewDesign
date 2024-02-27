@@ -7,7 +7,9 @@ import PopUp from '../ui/PopUp';
 import { useSelector } from 'react-redux';
 import { userInfo } from '../../services/api/userAuth';
 import { useDispatch } from 'react-redux';
+
 import * as authActions from '../../features/auth/authSlice';
+import * as questsActions from '../../features/quest/utilsSlice';
 
 const customStyle = {
   width: 'fit-content',
@@ -57,6 +59,7 @@ export default function ShowHidePostPopup({
   const { mutateAsync: hidePost } = useMutation({
     mutationFn: hideQuest,
     onSuccess: (resp) => {
+      dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
       getUserInfo();
       queryClient.invalidateQueries('FeedData');
@@ -70,6 +73,7 @@ export default function ShowHidePostPopup({
   const { mutateAsync: updateHiddenPost } = useMutation({
     mutationFn: updateHiddenQuest,
     onSuccess: (resp) => {
+      dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
       getUserInfo();
       queryClient.invalidateQueries('FeedData');
