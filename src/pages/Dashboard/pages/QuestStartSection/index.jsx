@@ -263,7 +263,6 @@ const QuestStartSection = () => {
                       questStartData={item}
                       isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
                       setPagination={setPagination}
-                      submitResponse={submitResponse}
                       setSubmitResponse={setSubmitResponse}
                     />
                   ) : (
