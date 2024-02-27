@@ -13,6 +13,7 @@ import { initialColumns } from '../../../constants/preferences';
 import { printEndMessage } from '../../../utils';
 import * as QuestServices from '../../../services/queries/quest';
 import * as filtersActions from '../../../features/sidebar/bookmarkFilterSlice';
+import * as questUtilsActions from '../../../features/quest/utilsSlice';
 
 const Bookmark = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const Bookmark = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
+  const questUtils = useSelector(questUtilsActions.getQuestUtils);
 
   // Pagination
   const pageLimit = 5;
