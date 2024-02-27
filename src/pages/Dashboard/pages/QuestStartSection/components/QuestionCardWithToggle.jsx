@@ -809,6 +809,7 @@ const QuestionCardWithToggle = (props) => {
         startTest={startTest}
         handleChange={handleChange}
         addOptionField={addOptionField}
+        setAddOptionField={setAddOptionField}
         checkOptionStatus={checkOptionStatus}
       />
     </QuestCardLayout>

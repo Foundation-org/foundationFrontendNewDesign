@@ -44,6 +44,7 @@ const ButtonGroup = ({
   handleChange,
   checkOptionStatus,
   isQuestHidden,
+  setAddOptionField,
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -159,6 +160,12 @@ const ButtonGroup = ({
   //     // setLoadingDetail(false);
   //   },
   // });
+
+  const handleRemoveItem = () => {
+    const updatedAnswerSelection = answersSelection.filter((item) => !item.addedOptionByUser);
+    setAnswerSelection([...updatedAnswerSelection]);
+    setAddOptionField(0);
+  };
 
   const handleStartChange = () => {
     dispatch(questUtilsActions.resetaddOptionLimit());
@@ -548,6 +555,7 @@ const ButtonGroup = ({
                   variant="cancel"
                   onClick={() => {
                     handleStartTest('');
+                    handleRemoveItem();
                   }}
                 >
                   Go Back
@@ -633,6 +641,7 @@ const ButtonGroup = ({
                     variant="cancel"
                     onClick={() => {
                       handleViewResults(questStartData._id);
+                      handleRemoveItem();
                     }}
                   >
                     Go Back
