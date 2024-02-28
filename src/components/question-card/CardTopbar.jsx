@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import BookmarkIcon from '../../pages/Dashboard/pages/QuestStartSection/components/BookmarkIcon';
 
@@ -14,6 +15,19 @@ const CardTopbar = ({
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  const { protocol, host } = window.location;
+  let url = `${protocol}//${host}/p/${questStartData?.uniqueShareLink}`;
+
+  const copyToClipboard = async () => {
+    const textToCopy = url;
+
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+    } catch (err) {
+      console.error('Unable to copy text to clipboard:', err);
+    }
+  };
 
   return (
     <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-2 py-1 tablet:px-5 tablet:py-[0.63rem] laptop:px-4">
@@ -42,9 +56,7 @@ const CardTopbar = ({
           </div>
         )}
         {postProperties === 'SharedLinks' && (
-          <h1 className="text-[10px] tablet:text-[20px] text-[#707175] font-semibold tablet:font-medium">
-            Https://foundation/post101;
-          </h1>
+          <h1 className="text-[10px] tablet:text-[20px] text-[#707175] font-semibold tablet:font-medium">{url}</h1>
         )}
       </div>
       {postProperties === 'HiddenPosts' ? (
@@ -59,7 +71,13 @@ const CardTopbar = ({
           />
         </div>
       ) : postProperties === 'SharedLinks' ? (
-        <div className="flex items-center gap-[4.8px] tablet:gap-3">
+        <div
+          className="flex items-center gap-[4.8px] tablet:gap-3 cursor-pointer"
+          onClick={() => {
+            copyToClipboard();
+            toast.success('Link Copied!');
+          }}
+        >
           <img
             src="/assets/svgs/copylinkblue.png"
             alt="eye-cut"
