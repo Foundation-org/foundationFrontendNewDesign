@@ -1,18 +1,18 @@
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
-import Copy from '../../../assets/optionbar/Copy';
 import { useEffect, useState } from 'react';
-import { uniqueLinkPostCreated, uniqueLinkPostUpdated } from '../../../services/api/questsApi';
+import { useDispatch } from 'react-redux';
+import { createUpdateUniqueLink } from '../../../services/api/questsApi';
+import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
+import Copy from '../../../assets/optionbar/Copy';
 
 const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, badgeCount, questStartData }) => {
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
-  const [postLink, setPostLink ] = useState(questStartData?.userQuestSetting?.link || "" )
+  const [postLink, setPostLink] = useState(questStartData?.userQuestSetting?.link || '');
   let url = `${protocol}//${host}/p/`;
-  
-  // console.log("🚀 ~ CopyDialogue ~ questStartData:", questStartData)
-  // console.log("🚀 ~ CopyDialogue ~ questStartData:", questStartData?.userQuestSetting?.link)
-  
+
   const copyToClipboard = async () => {
     const textToCopy = url;
 
@@ -23,34 +23,35 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
     }
   };
 
-  const uniqueLinkQuestSetting = async() => {
-    // create
-    // if (empty or not exist )questStartData?.userQuestSetting
+  const uniqueLinkQuestSetting = async () => {
     const data = {
       uuid: persistedUserInfo?.uuid,
       questForeignKey: questStartData._id,
-      Question: questStartData.Question
-    }
-    if(!questStartData?.userQuestSetting){
-      const resp = await uniqueLinkPostCreated(data)
-      if(resp.status === 201) {
+      Question: questStartData.Question,
+    };
+
+    if (!questStartData?.userQuestSetting) {
+      data.isGenerateLink = true;
+      const resp = await createUpdateUniqueLink(data);
+
+      if (resp.status === 201) {
         setPostLink(resp.data.data.link);
+        dispatch(addSharedLinkPost(resp.data.data));
       }
-      console.log("🚀 ~ uniqueLinkQuestSetting ~ resp.data:", resp.data.data.link)
-    } else if(questStartData?.userQuestSetting && !questStartData?.userQuestSetting?.link) {
-      const resp = await uniqueLinkPostUpdated(data)
-      console.log("🚀 ~ uniqueLinkQuestSetting ~ resp.data:", resp.data.data.link)
-      if(resp.status === 200) {
+    } else if (questStartData?.userQuestSetting && !questStartData?.userQuestSetting?.link) {
+      data.isGenerateLink = true;
+      const resp = await createUpdateUniqueLink(data);
+
+      if (resp.status === 201) {
         setPostLink(resp.data.data.link);
+        dispatch(addSharedLinkPost(resp.data.data));
       }
     }
-    // update
-    // questStartData?.userQuestSetting && questStartData?.userQuestSetting?.link 
-  }
+  };
 
   useEffect(() => {
-    uniqueLinkQuestSetting()
-  }, [])
+    uniqueLinkQuestSetting();
+  }, []);
 
   return (
     <div className="relative w-[90vw] laptop:w-[52.6rem]">
