@@ -43,7 +43,7 @@ export default function SharedLinks() {
     pagination,
     initialColumns,
     {
-      Page: 'Hidden',
+      Page: 'SharedLink',
       _page: pagination.page,
       _limit: pageLimit,
       start: pagination.sliceStart,
@@ -209,7 +209,7 @@ export default function SharedLinks() {
                   </div>
                 ) : !filterStates.searchData && allData.length === 0 ? (
                   <p className="text-center text-[4vw] tablet:text-[2vw]">
-                    <b>No hidden posts!</b>
+                    <b>No Shared posts!</b>
                   </p>
                 ) : !filterStates.searchData ? (
                   <p className="text-center text-[4vw] tablet:text-[2vw]">

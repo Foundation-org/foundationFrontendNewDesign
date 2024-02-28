@@ -17,7 +17,7 @@ const CardTopbar = ({
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const { protocol, host } = window.location;
-  let url = `${protocol}//${host}/p/${questStartData?.uniqueShareLink}`;
+  let url = `${protocol}//${host}/p/${questStartData?.userQuestSetting?.link}`;
 
   const copyToClipboard = async () => {
     const textToCopy = url;
