@@ -10,7 +10,7 @@ import QuestionCard from '../../QuestStartSection/components/QuestionCard';
 import * as QuestServices from '../../../../../services/queries/quest';
 
 export default function SharedLinks() {
-  const pageLimit = 5;
+  const pageLimit = 1000;
   const [pagination, setPagination] = useState({
     page: 1,
     sliceStart: 0,
