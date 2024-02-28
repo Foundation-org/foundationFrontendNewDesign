@@ -199,3 +199,25 @@ export const updateHiddenQuest = async (data) => {
     hiddenMessage: data.hiddenMessage,
   });
 };
+
+// HIDE POST API CALLS
+export const uniqueLinkPostCreated = async (data) => {
+  return await api.post('/userQuestSetting/create', {
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
+    uniqueLink: true,
+    // hidden: data.hidden,
+    // hiddenMessage: data.hiddenMessage,
+    Question: data.Question,
+  });
+};
+
+export const uniqueLinkPostUpdated = async (data) => {
+  return await api.post('/userQuestSetting/update', {
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
+    uniqueLink: true,
+    // hidden: data.hidden,
+    // hiddenMessage: data.hiddenMessage,
+  });
+};

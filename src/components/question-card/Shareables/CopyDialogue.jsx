@@ -1,12 +1,18 @@
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import Copy from '../../../assets/optionbar/Copy';
+import { useEffect, useState } from 'react';
+import { uniqueLinkPostCreated, uniqueLinkPostUpdated } from '../../../services/api/questsApi';
 
-const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, badgeCount }) => {
+const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, badgeCount, questStartData }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
-  let url = `${protocol}//${host}/p/${uniqueShareLink}`;
-
+  const [postLink, setPostLink ] = useState(questStartData?.userQuestSetting?.link || "" )
+  let url = `${protocol}//${host}/p/`;
+  
+  // console.log("🚀 ~ CopyDialogue ~ questStartData:", questStartData)
+  // console.log("🚀 ~ CopyDialogue ~ questStartData:", questStartData?.userQuestSetting?.link)
+  
   const copyToClipboard = async () => {
     const textToCopy = url;
 
@@ -16,6 +22,35 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
       console.error('Unable to copy text to clipboard:', err);
     }
   };
+
+  const uniqueLinkQuestSetting = async() => {
+    // create
+    // if (empty or not exist )questStartData?.userQuestSetting
+    const data = {
+      uuid: persistedUserInfo?.uuid,
+      questForeignKey: questStartData._id,
+      Question: questStartData.Question
+    }
+    if(!questStartData?.userQuestSetting){
+      const resp = await uniqueLinkPostCreated(data)
+      if(resp.status === 201) {
+        setPostLink(resp.data.data.link);
+      }
+      console.log("🚀 ~ uniqueLinkQuestSetting ~ resp.data:", resp.data.data.link)
+    } else if(questStartData?.userQuestSetting && !questStartData?.userQuestSetting?.link) {
+      const resp = await uniqueLinkPostUpdated(data)
+      console.log("🚀 ~ uniqueLinkQuestSetting ~ resp.data:", resp.data.data.link)
+      if(resp.status === 200) {
+        setPostLink(resp.data.data.link);
+      }
+    }
+    // update
+    // questStartData?.userQuestSetting && questStartData?.userQuestSetting?.link 
+  }
+
+  useEffect(() => {
+    uniqueLinkQuestSetting()
+  }, [])
 
   return (
     <div className="relative w-[90vw] laptop:w-[52.6rem]">
@@ -84,7 +119,7 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
         <div className="flex">
           <div className="w-full rounded-l-[9.42px] bg-[#F3F3F3] py-[10.51px] pl-[9.43px] pr-[1.58rem] tablet:py-[30px] tablet:pl-[26px] laptop:rounded-l-[26px] laptop:pr-[70px] tablet:leading-[30px]">
             <p className="w-[48vw] truncate text-[9.42px] font-normal text-[#435059] tablet:text-[26px] laptop:w-[32.7vw] desktop:w-[32rem]">
-              {url}
+              {url + postLink}
             </p>
           </div>
           <button

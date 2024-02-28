@@ -108,6 +108,7 @@ const QuestBottombar = ({
               handleClose={handleCopyClose}
               id={id}
               uniqueShareLink={uniqueShareLink}
+              questStartData={questStartData}
               createdBy={createdBy}
               img={img}
               alt={alt}
