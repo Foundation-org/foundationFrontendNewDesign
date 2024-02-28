@@ -238,6 +238,49 @@ const RankChoice = () => {
     dispatch(createQuestAction.drapAddDrop({ newTypedValues }));
   };
 
+  useEffect(() => {
+    let tempOptions = typedValues.map((item) => {
+      return item.question;
+    });
+    dispatch(
+      updateRankedChoice({
+        question,
+        changedOption,
+        changeState,
+        optionsCount,
+        addOption,
+        options: tempOptions,
+      }),
+    );
+  }, [question, changedOption, changeState, addOption, optionsCount, typedValues]);
+
+  useEffect(() => {
+    if (createQuestSlice.question) {
+      setQuestion(createQuestSlice.question);
+      setPrevValue(createQuestSlice.question);
+    }
+  }, [questionStatus]);
+
+  // Update local Option State when api update the status
+  if (optionsValue !== typedValues) {
+    setTypedValues(optionsValue);
+  }
+
+  // Pressing Tab and Enter key will move cursor to next field
+  const handleTab = (index, key) => {
+    if (index === typedValues.length) {
+      document.getElementById(`input-${index}`).blur();
+    } else {
+      if (key === 'Enter') {
+        event.preventDefault();
+        document.getElementById(`input-${index + 1}`).focus();
+      } else {
+        document.getElementById(`input-${index}`).focus();
+      }
+    }
+  };
+
+  // To Handle The submit button being hollow or not
   const checkHollow = () => {
     const AllVerified = typedValues.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
     if (questionStatus.tooltipName === 'Question is Verified' && AllVerified) {
@@ -255,75 +298,6 @@ const RankChoice = () => {
       setHollow(true);
     }
   }, [typedValues, question, checkQuestionStatus.tooltipName]);
-
-  useEffect(() => {
-    let tempOptions = typedValues.map((item) => {
-      return item.question;
-    });
-    dispatch(
-      updateRankedChoice({
-        question,
-        changedOption,
-        changeState,
-        optionsCount,
-        addOption,
-        options: tempOptions,
-      }),
-    );
-  }, [question, changedOption, changeState, addOption, optionsCount, typedValues]);
-
-  const handleTab = (index, key) => {
-    if (index === typedValues.length) {
-      document.getElementById(`input-${index}`).blur();
-    } else {
-      if (key === 'Enter') {
-        event.preventDefault();
-        document.getElementById(`input-${index + 1}`).focus();
-      } else {
-        document.getElementById(`input-${index}`).focus();
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (createQuestSlice.question) {
-      setQuestion(createQuestSlice.question);
-      setPrevValue(createQuestSlice.question);
-    }
-  }, [questionStatus]);
-
-  // useEffect(() => {
-  //   let debounceTimer;
-
-  //   const updateTypedValuesWithDelay = (value) => {
-  //     if (debounceTimer) {
-  //       clearTimeout(debounceTimer);
-  //     }
-
-  //     debounceTimer = setTimeout(() => {
-  //       setTypedValues(value);
-  //     }, 100);
-  //   };
-
-  //   updateTypedValuesWithDelay(optionsValue);
-
-  //   // Cleanup
-  //   return () => {
-  //     clearTimeout(debounceTimer);
-  //   };
-  // }, [optionsValue, setTypedValues]);
-
-  useEffect(() => {
-    const updateTypedValuesWithDelay = (value) => {
-      setTypedValues(value);
-    };
-
-    updateTypedValuesWithDelay(optionsValue);
-
-    return () => {
-      setTypedValues((prev) => prev);
-    };
-  }, [optionsValue, setTypedValues]);
 
   return (
     <>
