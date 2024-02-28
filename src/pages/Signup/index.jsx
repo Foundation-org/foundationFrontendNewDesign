@@ -123,7 +123,7 @@ export default function Signup() {
   };
 
   const handleSignup = async () => {
-    if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
+    // if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
 
     setIsLoadingSocial(true);
@@ -265,7 +265,7 @@ export default function Signup() {
             handleCancel={handleCancel}
             email={email}
           />
-          <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-4 taller:mt-4">
+          <div className="mb-4 mt-4 hidden w-full items-start md:mb-10 taller:mb-4 taller:mt-4">
             {persistedTheme === 'dark' ? (
               <ReCAPTCHA sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY} onChange={onChange} theme="dark" />
             ) : (

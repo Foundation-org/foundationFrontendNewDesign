@@ -44,7 +44,7 @@ export default function Signin() {
     setIsReferral(false);
     setIsLoading(false);
     setIsLoadingSocial(false);
-  }
+  };
   function onChange(value) {
     console.log('Captcha value:', value);
     setCaptchaToken(value);
@@ -77,7 +77,8 @@ export default function Signin() {
       // });
 
       // if (recaptchaResp.success) {
-      if (capthaToken !== '') {
+      // if (capthaToken !== '') {
+      if (capthaToken === '') {
         const resp = await userSignin({ email, password });
 
         if (resp.status === 200) {
@@ -209,7 +210,7 @@ export default function Signin() {
             setIsLoadingSocial={setIsLoadingSocial}
           />
           <Form onEmailChange={onEmailChange} onPassChange={onPassChange} handleCancel={handleCancel} email={email} />
-          <div className="mb-4 mt-4 flex w-full items-start md:mb-10 laptop:mb-[5.5rem] laptop:mt-[2.5rem] taller:mb-[30px] taller:mt-[35px]">
+          <div className="mb-4 mt-4 hidden w-full items-start md:mb-10 laptop:mb-[5.5rem] laptop:mt-[2.5rem] taller:mb-[30px] taller:mt-[35px]">
             {persistedTheme === 'dark' ? (
               <ReCAPTCHA sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY} onChange={onChange} theme="dark" />
             ) : (

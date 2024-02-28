@@ -9,7 +9,7 @@ import QuestionCard from '../../QuestStartSection/components/QuestionCard';
 
 import * as QuestServices from '../../../../../services/queries/quest';
 
-export default function HiddenPosts() {
+export default function SharedLinks() {
   const pageLimit = 1000;
   const [pagination, setPagination] = useState({
     page: 1,
@@ -43,7 +43,7 @@ export default function HiddenPosts() {
     pagination,
     initialColumns,
     {
-      Page: 'Hidden',
+      Page: 'SharedLink',
       _page: pagination.page,
       _limit: pageLimit,
       start: pagination.sliceStart,
@@ -126,7 +126,7 @@ export default function HiddenPosts() {
     <div>
       <div className="pt-[5px] ml-[32px] mr-4 tablet:ml-[97px] tablet:mr-[70px] flex justify-between">
         <h1 className=" text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:leading-[30px] tablet:font-semibold  tablet:text-[25px] dark:text-[#B8B8B8]">
-          Hidden Posts
+          Shared Links
         </h1>
         <div className="relative">
           <div className="relative h-[15.96px] tablet:h-[45px] w-[128px] tablet:w-[337px]">
@@ -209,11 +209,11 @@ export default function HiddenPosts() {
                   </div>
                 ) : !filterStates.searchData && allData.length === 0 ? (
                   <p className="text-center text-[4vw] tablet:text-[2vw]">
-                    <b>No hidden posts!</b>
+                    <b>No Shared posts!</b>
                   </p>
                 ) : !filterStates.searchData ? (
                   <p className="text-center text-[4vw] tablet:text-[2vw]">
-                    <b>No more hidden posts!</b>
+                    <b>No more shared posts!</b>
                   </p>
                 ) : (
                   <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
@@ -251,7 +251,7 @@ export default function HiddenPosts() {
               allData.map((item, index) => (
                 <div key={index + 1}>
                   <QuestionCard
-                    postProperties={'HiddenPosts'}
+                    postProperties={'SharedLinks'}
                     questStartData={item}
                     startTest={startTest}
                     setStartTest={setStartTest}

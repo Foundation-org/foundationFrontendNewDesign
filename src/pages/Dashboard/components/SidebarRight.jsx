@@ -10,6 +10,7 @@ import { Button } from '../../../components/ui/Button';
 import { addUser } from '../../../features/auth/authSlice';
 import { createGuestMode, userInfo, userInfoById } from '../../../services/api/userAuth';
 import * as filterActions from '../../../features/sidebar/filtersSlice';
+import { formatCountNumber } from '../../../utils/utils';
 
 const SidebarRight = () => {
   const dispatch = useDispatch();
@@ -333,7 +334,7 @@ const SidebarRight = () => {
                 <h5>{item.title?.split('-')[0]}</h5>
                 <h5>{item.title?.split('-')[1]}</h5>
               </div>
-              <h5 className="text-[22px] font-semibold">{item.value}</h5>
+              <h5 className="text-[22px] font-semibold">{formatCountNumber(item.value)}</h5>
             </div>
           </div>
         ))}

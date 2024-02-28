@@ -213,6 +213,27 @@ const Bookmark = () => {
     }
   }, [submitResponse]);
 
+  function addSharedLinkObjById() {
+    const updatedArray = allData.map((item) => {
+      if (item._id === questUtils?.sharedLinkPost.questForeignKey) {
+        return {
+          ...item,
+          userQuestSetting: questUtils?.sharedLinkPost,
+        };
+      }
+      return item;
+    });
+
+    setAllData(updatedArray);
+  }
+
+  // Call the function whenever submitResponse changes of sharedLink
+  useEffect(() => {
+    if (questUtils?.sharedLinkPost !== null) {
+      addSharedLinkObjById();
+    }
+  }, [questUtils?.sharedLinkPost]);
+
   // console.log('🚀 ~ Bookmark ~ allData:', allData);
 
   return (

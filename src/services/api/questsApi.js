@@ -199,3 +199,15 @@ export const updateHiddenQuest = async (data) => {
     hiddenMessage: data.hiddenMessage,
   });
 };
+
+// HIDE POST API CALLS
+export const createUpdateUniqueLink = async (data) => {
+  return await api.post('/userQuestSetting/link', {
+    uuid: data.uuid,
+    questForeignKey: data.questForeignKey,
+    uniqueLink: true,
+    Question: data.Question,
+    linkStatus: 'Enable',
+    isGenerateLink: data.isGenerateLink,
+  });
+};

@@ -238,6 +238,49 @@ const RankChoice = () => {
     dispatch(createQuestAction.drapAddDrop({ newTypedValues }));
   };
 
+  useEffect(() => {
+    let tempOptions = typedValues.map((item) => {
+      return item.question;
+    });
+    dispatch(
+      updateRankedChoice({
+        question,
+        changedOption,
+        changeState,
+        optionsCount,
+        addOption,
+        options: tempOptions,
+      }),
+    );
+  }, [question, changedOption, changeState, addOption, optionsCount, typedValues]);
+
+  useEffect(() => {
+    if (createQuestSlice.question) {
+      setQuestion(createQuestSlice.question);
+      setPrevValue(createQuestSlice.question);
+    }
+  }, [questionStatus]);
+
+  // Update local Option State when api update the status
+  if (optionsValue !== typedValues) {
+    setTypedValues(optionsValue);
+  }
+
+  // Pressing Tab and Enter key will move cursor to next field
+  const handleTab = (index, key) => {
+    if (index === typedValues.length) {
+      document.getElementById(`input-${index}`).blur();
+    } else {
+      if (key === 'Enter') {
+        event.preventDefault();
+        document.getElementById(`input-${index + 1}`).focus();
+      } else {
+        document.getElementById(`input-${index}`).focus();
+      }
+    }
+  };
+
+  // To Handle The submit button being hollow or not
   const checkHollow = () => {
     const AllVerified = typedValues.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
     if (questionStatus.tooltipName === 'Question is Verified' && AllVerified) {
@@ -255,75 +298,6 @@ const RankChoice = () => {
       setHollow(true);
     }
   }, [typedValues, question, checkQuestionStatus.tooltipName]);
-
-  useEffect(() => {
-    let tempOptions = typedValues.map((item) => {
-      return item.question;
-    });
-    dispatch(
-      updateRankedChoice({
-        question,
-        changedOption,
-        changeState,
-        optionsCount,
-        addOption,
-        options: tempOptions,
-      }),
-    );
-  }, [question, changedOption, changeState, addOption, optionsCount, typedValues]);
-
-  const handleTab = (index, key) => {
-    if (index === typedValues.length) {
-      document.getElementById(`input-${index}`).blur();
-    } else {
-      if (key === 'Enter') {
-        event.preventDefault();
-        document.getElementById(`input-${index + 1}`).focus();
-      } else {
-        document.getElementById(`input-${index}`).focus();
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (createQuestSlice.question) {
-      setQuestion(createQuestSlice.question);
-      setPrevValue(createQuestSlice.question);
-    }
-  }, [questionStatus]);
-
-  // useEffect(() => {
-  //   let debounceTimer;
-
-  //   const updateTypedValuesWithDelay = (value) => {
-  //     if (debounceTimer) {
-  //       clearTimeout(debounceTimer);
-  //     }
-
-  //     debounceTimer = setTimeout(() => {
-  //       setTypedValues(value);
-  //     }, 100);
-  //   };
-
-  //   updateTypedValuesWithDelay(optionsValue);
-
-  //   // Cleanup
-  //   return () => {
-  //     clearTimeout(debounceTimer);
-  //   };
-  // }, [optionsValue, setTypedValues]);
-
-  useEffect(() => {
-    const updateTypedValuesWithDelay = (value) => {
-      setTypedValues(value);
-    };
-
-    updateTypedValuesWithDelay(optionsValue);
-
-    return () => {
-      setTypedValues((prev) => prev);
-    };
-  }, [optionsValue, setTypedValues]);
 
   return (
     <>
@@ -368,7 +342,7 @@ const RankChoice = () => {
             placeholder="Make a Statement or pose a question"
             tabIndex={1}
             onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(0, 'Enter'))}
-            className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pt-[7px] pb-2 text-[0.625rem] font-medium leading-[1] text-[#7C7C7C] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
+            className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pt-[7px] pb-2 text-[0.625rem] font-medium leading-[13px] tablet:leading-[23px] text-[#7C7C7C] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
           />
           <button
             id="new"
