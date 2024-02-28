@@ -115,10 +115,10 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
       <div className="pb-[0.94rem] pt-[0.84rem] tablet:pb-5 tablet:pt-[0.94rem]">
         <div className="ml-[1.39rem] mr-[0.62rem] tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem] flex items-start justify-between">
           <div className="flex gap-1.5 tablet:gap-3 pr-5 tablet:pr-6">
-            <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-none">
+            <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-[15px] tablet:leading-[23px]">
               {questStartData.Question?.endsWith('?') ? 'Q.' : 'S.'}
             </h4>
-            <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-none">
+            <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-[15px] tablet:leading-[23px]">
               {questStartData.Question}
             </h4>
           </div>
