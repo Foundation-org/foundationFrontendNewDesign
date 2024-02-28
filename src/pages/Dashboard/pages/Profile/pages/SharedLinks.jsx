@@ -213,7 +213,7 @@ export default function SharedLinks() {
                   </p>
                 ) : !filterStates.searchData ? (
                   <p className="text-center text-[4vw] tablet:text-[2vw]">
-                    <b>No more hidden posts!</b>
+                    <b>No more shared posts!</b>
                   </p>
                 ) : (
                   <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
