@@ -13,6 +13,7 @@ import Profile from '../pages/Dashboard/pages/Profile';
 import Contributions from '../pages/Dashboard/pages/Profile/pages/Contributions';
 import VerificationBadges from '../pages/Dashboard/pages/Profile/pages/VerificationBadges';
 import HiddenPosts from '../pages/Dashboard/pages/Profile/pages/HiddenPosts';
+import SharedLinks from '../pages/Dashboard/pages/Profile/pages/SharedLinks';
 import BasicTable from '../pages/Dashboard/pages/Profile/pages/Ledger';
 import ChangePassword from '../pages/Dashboard/pages/Profile/pages/ChangePassword';
 import QuestStartSection from '../pages/Dashboard/pages/QuestStartSection';
@@ -74,6 +75,7 @@ export function Router() {
                 <Route path="verification-badges" element={<VerificationBadges />} />
                 <Route path="ledger" element={<BasicTable />} />
                 <Route path="hidden-posts" element={<HiddenPosts />} />
+                <Route path="shared-links" element={<SharedLinks />} />
                 <Route path="change-password" element={<ChangePassword />} />
               </Route>
               <Route path="/quest/:isFullScreen" element={<Guests />} />

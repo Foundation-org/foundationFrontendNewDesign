@@ -43,7 +43,7 @@ const ButtonGroup = ({
   startTest,
   handleChange,
   checkOptionStatus,
-  isQuestHidden,
+  postProperties,
   setAddOptionField,
 }) => {
   const dispatch = useDispatch();
@@ -223,7 +223,7 @@ const ButtonGroup = ({
   const showHidePostOpen = () => setModalVisible(true);
   const showHidePostClose = () => setModalVisible(false);
 
-  if (isQuestHidden === 'HiddenPosts') {
+  if (postProperties === 'HiddenPosts') {
     return (
       <div>
         {startTest !== questStartData._id ? (
@@ -239,6 +239,46 @@ const ButtonGroup = ({
             ) : null}
             <Button variant="danger" onClick={showHidePostOpen} className={'bg-[#FF4057]'}>
               Unhide
+            </Button>
+            <UnHidePostPopup
+              handleClose={showHidePostClose}
+              modalVisible={modalVisible}
+              questStartData={questStartData}
+            />
+          </div>
+        ) : (
+          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+            <Button
+              variant="cancel"
+              onClick={() => {
+                handleViewResults(null);
+                handleStartTest('');
+              }}
+            >
+              Go Back
+            </Button>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  if (postProperties === 'SharedLinks') {
+    return (
+      <div>
+        {startTest !== questStartData._id ? (
+          <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+            {getButtonText(btnText) !== 'Completed' ? (
+              <Button
+                variant={'submit-green'}
+                onClick={() => toast.info('Feature coming soon!')}
+                className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
+              >
+                Show My Link Results
+              </Button>
+            ) : null}
+            <Button variant="danger" onClick={() => toast.info('Feature coming soon!')} className={'bg-[#DC1010]'}>
+              Disable Link
             </Button>
             <UnHidePostPopup
               handleClose={showHidePostClose}

@@ -31,7 +31,7 @@ const QuestionCard = (props) => {
   const { questStartData, setPagination } = props;
   const { handleStartTest, startTest, setStartTest } = props;
   const { isBookmarked, viewResult, handleViewResults } = props;
-  const { setSubmitResponse, isQuestHidden } = props;
+  const { setSubmitResponse, postProperties } = props;
 
   const [open, setOpen] = useState(false);
   const [howManyTimesAnsChanged, setHowManyTimesAnsChanged] = useState(0);
@@ -727,7 +727,7 @@ const QuestionCard = (props) => {
             cardSize={cardSize}
             checkOptionStatus={checkOptionStatus}
             setCheckOptionStatus={setCheckOptionStatus}
-            isQuestHidden={isQuestHidden}
+            postProperties={postProperties}
           />
           {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
           <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
@@ -735,7 +735,12 @@ const QuestionCard = (props) => {
       );
     } else {
       return (
-        <QuestInfoText questStartData={questStartData} show={false} questType={questStartData.whichTypeQuestion} />
+        <QuestInfoText
+          questStartData={questStartData}
+          show={false}
+          questType={questStartData.whichTypeQuestion}
+          postProperties={postProperties}
+        />
       );
     }
   };
@@ -745,12 +750,12 @@ const QuestionCard = (props) => {
       questStartData={questStartData}
       isBookmarked={isBookmarked}
       handleStartTest={handleStartTest}
-      isQuestHidden={isQuestHidden}
+      postProperties={postProperties}
     >
       {renderQuestContent()}
 
       <ButtonGroup
-        isQuestHidden={isQuestHidden}
+        postProperties={postProperties}
         questStartData={questStartData}
         handleToggleCheck={handleToggleCheck}
         id={questStartData._id}

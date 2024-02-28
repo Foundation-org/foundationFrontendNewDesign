@@ -28,7 +28,7 @@ const SingleAnswer = (props) => {
             {props.answer}
           </h1>
         </div>
-        {props?.isQuestHidden !== 'HiddenPosts' && (
+        {props?.postProperties !== 'HiddenPosts' && (
           <div
             className={`flex items-center gap-[10.3px] pr-[10px] text-[9.2px] tablet:gap-[22px] tablet:text-[16px] ${
               props.btnText === 'Results' ? 'pointer-events-none' : ''

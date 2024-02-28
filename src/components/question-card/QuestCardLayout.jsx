@@ -39,7 +39,7 @@ const data = [
   },
 ];
 
-const QuestCardLayout = ({ questStartData, isBookmarked, isQuestHidden, children }) => {
+const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, children }) => {
   const location = useLocation();
   const queryClient = useQueryClient();
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
@@ -110,7 +110,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, isQuestHidden, children
         createdBy={questStartData.uuid}
         bookmarkStatus={bookmarkStatus}
         handleBookmark={handleBookmark}
-        isQuestHidden={isQuestHidden}
+        postProperties={postProperties}
       />
       <div className="pb-[0.94rem] pt-[0.84rem] tablet:pb-5 tablet:pt-[0.94rem]">
         <div className="ml-[1.39rem] mr-[0.62rem] tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem] flex items-start justify-between">
@@ -122,7 +122,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, isQuestHidden, children
               {questStartData.Question}
             </h4>
           </div>
-          {isQuestHidden !== 'HiddenPosts' && (
+          {postProperties === 'HiddenPosts' ? null : postProperties === 'SharedLinks' ? null : (
             <img
               src="/assets/hiddenposts/unhide/icon1.png"
               alt="eye-latest"
@@ -144,7 +144,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, isQuestHidden, children
         alt={'badge'}
         badgeCount={questStartData.getUserBadge?.badges?.length}
         questStartData={questStartData}
-        isQuestHidden={isQuestHidden}
+        postProperties={postProperties}
       />
       <ShowHidePostPopup
         handleClose={showHidePostClose}
