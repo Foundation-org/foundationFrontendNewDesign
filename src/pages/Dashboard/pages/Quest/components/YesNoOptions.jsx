@@ -35,7 +35,7 @@ const YesNoOptions = ({
                   )
                 ) : null}
               </div>
-              <div className="flex h-[26px] pb-[1px] w-full items-center justify-between rounded-r-[4.89px] border-y border-r border-[#DEE6F7] dark:border-[#0D1012] tablet:h-[51px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] laptop:h-[45px]">
+              <div className="flex h-[26px] pb-[1px] w-full items-center justify-between rounded-r-[4.89px] border-y border-r border-[#DEE6F7] dark:border-[#0D1012] tablet:h-[51px] tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px]">
                 <h1 className="w-full pl-5 text-[0.625rem] font-normal leading-normal text-[#7C7C7C] dark:text-[#D3D3D3] tablet:pl-5 tablet:text-[20.7px] laptop:text-[18px]">
                   {answer}
                 </h1>
