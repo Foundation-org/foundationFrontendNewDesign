@@ -30,11 +30,15 @@ const data = [
     title: 'Unclear / Doesn’t make Sense',
   },
   {
-    id: 6,
-    title: 'Offensive',
+    id:6,
+    title: 'Duplicate / Similar Post',
   },
   {
     id: 7,
+    title: 'Offensive',
+  },
+  {
+    id: 8,
     title: 'Spam',
   },
 ];
