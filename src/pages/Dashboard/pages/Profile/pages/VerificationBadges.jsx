@@ -12,6 +12,7 @@ import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login';
 import PopUp from '../../../../../components/ui/PopUp';
 import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
+import FirstNamePopup from '../../../../../components/dialogue-boxes/FirstNamePopup';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -25,6 +26,10 @@ const VerificationBadges = () => {
   const [seletedBadge, setSelectedBadge] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState(false);
+
+  // personalBadges
+  const [isPersonalPopup, setIsPersonalPopup] = useState(false);
+  const [seletedPersonalBadge, setSelectedPersonalBadge] = useState('');
 
   const handleBadgesClose = () => setModalVisible(false);
 
@@ -182,17 +187,30 @@ const VerificationBadges = () => {
     {
       image: '/assets/profile/firstname.png',
       title: 'First Name',
-      ButtonColor: 'gray',
+      ButtonColor: 'blue',
       NoOfButton: 1,
       // NoOfButton: 2,
       ButtonText: 'Add New Badge',
+      type: 'FirstName',
+      disabled: false,
     },
     {
       image: '/assets/profile/lastname.svg',
       title: 'Last Name',
-      ButtonColor: 'gray',
+      ButtonColor: 'blue',
       NoOfButton: 1,
       ButtonText: 'Add New Badge',
+      type: 'LastName',
+      disabled: false,
+    },
+    {
+      image: '/assets/profile/dob.svg',
+      title: 'Date of Birth',
+      ButtonColor: 'blue',
+      NoOfButton: 1,
+      ButtonText: 'Add New Badge',
+      type: 'DOB',
+      disabled: false,
     },
     {
       image: '/assets/profile/currentcity-1.png',
@@ -200,6 +218,7 @@ const VerificationBadges = () => {
       ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
+      disabled: true,
     },
     {
       image: '/assets/profile/hometown.svg',
@@ -207,6 +226,7 @@ const VerificationBadges = () => {
       ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
+      disabled: true,
     },
     {
       image: '/assets/profile/relationaship-1.png',
@@ -214,6 +234,7 @@ const VerificationBadges = () => {
       ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
+      disabled: true,
     },
     {
       image: '/assets/profile/work-a.png',
@@ -221,6 +242,7 @@ const VerificationBadges = () => {
       ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
+      disabled: true,
     },
     {
       image: '/assets/profile/education-1.png',
@@ -228,6 +250,7 @@ const VerificationBadges = () => {
       ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
+      disabled: true,
     },
     {
       image: '/assets/profile/Identity-2x-1.png',
@@ -235,6 +258,7 @@ const VerificationBadges = () => {
       ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
+      disabled: true,
     },
     {
       image: '/assets/profile/Geolocation-2x-1.png',
@@ -242,6 +266,7 @@ const VerificationBadges = () => {
       ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
+      disabled: true,
     },
     {
       image: '/assets/profile/securityquestion-a.png',
@@ -249,10 +274,9 @@ const VerificationBadges = () => {
       ButtonColor: 'gray',
       ButtonText: 'Add New Badge',
       NoOfButton: 1,
+      disabled: true,
     },
   ];
-
-  const checkPersonal = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
 
   // const checkSocial = (itemType) => {
   //   console.log("🚀 ~ checkSocial ~ itemType:", itemType)
@@ -260,6 +284,7 @@ const VerificationBadges = () => {
   //   console.log("🚀 ~ checkSocial ~ check:", check)
   // }
 
+  const checkPersonal = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
   const checkSocial = (itemType) => fetchUser?.badges?.some((i) => i.accountName === itemType);
 
   // Handle Remove Badge
@@ -329,6 +354,24 @@ const VerificationBadges = () => {
     // setDummyState({});
   };
 
+  const handleClickPesonalBadges = (type) => {
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="text-[#389CE3] underline cursor-pointer" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
+      return;
+    } else {
+      setIsPersonalPopup(true);
+      setSelectedPersonalBadge(type);
+    }
+  };
+
   // // Dummy state to force re-render
   // const [, setDummyState] = useState();
 
@@ -354,6 +397,8 @@ const VerificationBadges = () => {
     setDeleteModalState(item);
     setModalVisible(true);
   };
+
+  console.log('first', isPersonalPopup, seletedPersonalBadge);
 
   return (
     <div className="pb-12">
@@ -388,6 +433,34 @@ const VerificationBadges = () => {
             placeholder="Educational Email here"
             selectedBadge={seletedBadge}
             handleUserInfo={handleUserInfo}
+          />
+        ) : null)}
+
+      {/* Personal Badges Popup */}
+      {isPersonalPopup &&
+        (seletedPersonalBadge === 'FirstName' ? (
+          <FirstNamePopup
+            isPopup={isPersonalPopup}
+            setIsPopup={setIsPersonalPopup}
+            title="First Name"
+            logo="/assets/profile/firstname.png"
+            placeholder="First Name here"
+          />
+        ) : seletedPersonalBadge === 'LastName' ? (
+          <FirstNamePopup
+            isPopup={isPersonalPopup}
+            setIsPopup={setIsPersonalPopup}
+            title="Last Name"
+            logo="/assets/profile/lastname.png"
+            placeholder="Last Name here"
+          />
+        ) : seletedPersonalBadge === 'DOB' ? (
+          <FirstNamePopup
+            isPopup={isPersonalPopup}
+            setIsPopup={setIsPersonalPopup}
+            title="Date of Birth"
+            logo="/assets/profile/dob.svg"
+            placeholder="MM/DD/YYYY"
           />
         ) : null)}
 
@@ -558,7 +631,6 @@ const VerificationBadges = () => {
             )}
           </div>
         </div>
-
         {socials.map((item, index) => (
           <div className={`flex items-center justify-center  ${item.disabled ? 'opacity-[60%]' : ''}`} key={index}>
             <img
@@ -633,7 +705,7 @@ const VerificationBadges = () => {
           Personal
         </h1>
         {personal.map((item, index) => (
-          <div className="flex items-center justify-center   opacity-[60%]" key={index}>
+          <div className={`flex items-center justify-center  ${item.disabled ? 'opacity-[60%]' : ''}`} key={index}>
             <img
               src={item.image}
               alt={item.title}
@@ -658,7 +730,12 @@ const VerificationBadges = () => {
             ) : (
               <Button color={item.ButtonColor}>{item.ButtonText}</Button>
             )} */}
-            <Button color={item.ButtonColor}>
+            <Button
+              color={item.ButtonColor}
+              onClick={() =>
+                !checkPersonal(item.type) && item.ButtonColor !== 'gray' && handleClickPesonalBadges(item.type)
+              }
+            >
               {item.ButtonText}
               <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
                 (+0.96 FDX)
