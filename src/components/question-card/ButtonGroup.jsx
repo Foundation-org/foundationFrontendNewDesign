@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { calculateRemainingTime } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,6 +47,7 @@ const ButtonGroup = ({
   setAddOptionField,
 }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -313,7 +314,18 @@ const ButtonGroup = ({
                 title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button
                     onClick={() => {
-                      toast.warning('Please create an account to unlock this feature');
+                      toast.warning(
+                        <p>
+                          Please{' '}
+                          <span
+                            className="text-[#389CE3] underline cursor-pointer"
+                            onClick={() => navigate('/guest-signup')}
+                          >
+                            Create an Account
+                          </span>{' '}
+                          to unlock this feature
+                        </p>,
+                      );
                     }}
                     variant={'addOption'}
                   >
@@ -359,7 +371,18 @@ const ButtonGroup = ({
                   variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                   disabled={result === ', you are good to go' ? false : true}
                   onClick={() => {
-                    toast.warning('Please create an account to unlock this feature');
+                    toast.warning(
+                      <p>
+                        Please{' '}
+                        <span
+                          className="text-[#389CE3] underline cursor-pointer"
+                          onClick={() => navigate('/guest-signup')}
+                        >
+                          Create an Account
+                        </span>{' '}
+                        to unlock this feature
+                      </p>,
+                    );
                   }}
                 >
                   Change
@@ -377,7 +400,18 @@ const ButtonGroup = ({
               title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                 <Button
                   onClick={() => {
-                    toast.warning('Please create an account to unlock this feature');
+                    toast.warning(
+                      <p>
+                        Please{' '}
+                        <span
+                          className="text-[#389CE3] underline cursor-pointer"
+                          onClick={() => navigate('/guest-signup')}
+                        >
+                          Create an Account
+                        </span>{' '}
+                        to unlock this feature
+                      </p>,
+                    );
                   }}
                   variant={'addOption'}
                 >
@@ -407,7 +441,18 @@ const ButtonGroup = ({
                     variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                     disabled={result === ', you are good to go' ? false : true}
                     onClick={() => {
-                      toast.warning('Please create an account to unlock this feature');
+                      toast.warning(
+                        <p>
+                          Please{' '}
+                          <span
+                            className="text-[#389CE3] underline cursor-pointer"
+                            onClick={() => navigate('/guest-signup')}
+                          >
+                            Create an Account
+                          </span>{' '}
+                          to unlock this feature
+                        </p>,
+                      );
                     }}
                   >
                     Change
@@ -441,7 +486,18 @@ const ButtonGroup = ({
                 title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button
                     onClick={() => {
-                      toast.warning('Please create an account to unlock this feature');
+                      toast.warning(
+                        <p>
+                          Please{' '}
+                          <span
+                            className="text-[#389CE3] underline cursor-pointer"
+                            onClick={() => navigate('/guest-signup')}
+                          >
+                            Create an Account
+                          </span>{' '}
+                          to unlock this feature
+                        </p>,
+                      );
                     }}
                     variant={'addOption'}
                   >

@@ -14,7 +14,7 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
   let url = `${protocol}//${host}/p/`;
 
   const copyToClipboard = async () => {
-    const textToCopy = url;
+    const textToCopy = url + postLink;
 
     try {
       await navigator.clipboard.writeText(textToCopy);

@@ -1,7 +1,13 @@
+import { toast } from 'sonner';
 import { Button } from './ui/Button';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import PopUp from './ui/PopUp';
 
 export default function ObjectionPopUp({ modalVisible, handleClose, handleContendChange, option }) {
+  const navigate = useNavigate();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+
   return (
     <PopUp
       logo={'/assets/svgs/dashboard/icon19.svg'}
@@ -20,14 +26,27 @@ export default function ObjectionPopUp({ modalVisible, handleClose, handleConten
           <Button
             variant="submit"
             onClick={() => {
-              handleContendChange(true);
-              handleClose();
+              if (persistedUserInfo?.role === 'guest') {
+                toast.warning(
+                  <p>
+                    Please{' '}
+                    <span className="text-[#389CE3] underline cursor-pointer" onClick={() => navigate('/guest-signup')}>
+                      Create an Account
+                    </span>{' '}
+                    to unlock this feature
+                  </p>,
+                );
+                return;
+              } else {
+                handleContendChange(true);
+                handleClose();
+              }
             }}
           >
             Object <span className="text-[6px] tablet:text-[15px] leading-[0px] pl-1 tablet:pl-2 ">(-0.1 FDX)</span>
           </Button>
           <Button
-            variant="cancel"
+            variant="danger"
             onClick={() => {
               handleContendChange(false);
               handleClose();
