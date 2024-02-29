@@ -129,42 +129,28 @@ const LikeDislike = () => {
     }
   };
 
+  const handleQuestionChange = (e) => {
+    setQuestion(e.target.value);
+  };
+
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      if (prevValue === inputValue.trim()) {
+        setQuestion(inputValue);
+      } else {
+        setQuestion(inputValue);
+        dispatch(createQuestAction.handleQuestionReset(inputValue));
+      }
+    }, 500);
+
+    return () => clearTimeout(debounceTimer);
+  }, [question]);
+
   const questionVerification = async (value) => {
-    setQuestion(value.trim());
     if (prevValue === question.trim()) return;
+
     setPrevValue(value);
     dispatch(checkQuestion(value));
-    // setCheckQuestionStatus({
-    //   name: 'Checking',
-    //   color: 'text-[#0FB063]',
-    //   tooltipName: 'Verifying your question. Please wait...',
-    //   tooltipStyle: 'tooltip-success',
-    // });
-    // Question Validation
-    // const { validatedQuestion, errorMessage } = await questionValidation({
-    //   question: value,
-    //   queryType: 'like/dislike',
-    // });
-    // If any error captured
-    // if (errorMessage) {
-    //   setLoading(false);
-    //   return setCheckQuestionStatus({
-    //     name: 'Rejected',
-    //     color: 'text-[#b00f0f]',
-    //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-    //     tooltipStyle: 'tooltip-error',
-    //   });
-    // }
-    // Question is validated and status is Ok
-    // setQuestion(validatedQuestion);
-    // setPrevValue(validatedQuestion);
-    // setCheckQuestionStatus({
-    //   name: 'Ok',
-    //   color: 'text-[#0FB063]',
-    //   tooltipName: 'Question is Verified',
-    //   tooltipStyle: 'tooltip-success',
-    //   isVerifiedQuestion: true,
-    // });
   };
 
   const checkHollow = () => {
@@ -189,8 +175,6 @@ const LikeDislike = () => {
   }, [question, changedOption, changeState]);
 
   useEffect(() => {
-    // console.log("our question status is", questionStatus.status);
-    // setLoading(questionStatus.status);
     if (createQuestSlice.question) {
       setQuestion(createQuestSlice.question);
       setPrevValue(createQuestSlice.question);
@@ -211,28 +195,9 @@ const LikeDislike = () => {
           Create a Statement
         </h1>
         <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-5 tablet:pb-[13px]">
-          {/* <input
-            id="question"
-            className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
-            onChange={(e) => {
-              setQuestion(e.target.value);
-              setCheckQuestionStatus({
-                name: 'Ok',
-                color: e.target.value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
-              });
-              dispatch(createQuestAction.handleQuestionReset(e.target.value));
-            }}
-            onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
-            value={question}
-            placeholder="Make a Statement"
-            onKeyDown={(e) => (e.key === 'Tab' && handleTab(0)) || (e.key === 'Enter' && handleTab(0))}
-          /> */}
           <TextareaAutosize
             id="question"
-            onChange={(e) => {
-              setQuestion(e.target.value);
-              dispatch(createQuestAction.handleQuestionReset(e.target.value));
-            }}
+            onChange={handleQuestionChange}
             onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             value={question}
             placeholder="Make a Statement"
