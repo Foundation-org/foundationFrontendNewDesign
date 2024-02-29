@@ -506,6 +506,30 @@ const VerificationBadges = () => {
                   setFetchUser={setFetchUser}
                 />
               </>
+            ) : persistedUserInfo?.role === 'guest' ? (
+              <Button
+                color={checkSocial('facebook') ? 'red' : 'blue'}
+                onClick={() => {
+                  toast.warning(
+                    <p>
+                      Please{' '}
+                      <span
+                        className="text-[#389CE3] underline cursor-pointer"
+                        onClick={() => navigate('/guest-signup')}
+                      >
+                        Create an Account
+                      </span>{' '}
+                      to unlock this feature
+                    </p>,
+                  );
+                  return;
+                }}
+              >
+                {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
+                <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                  {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
+                </span>
+              </Button>
             ) : (
               <LoginSocialFacebook
                 // isOnlyGetToken
