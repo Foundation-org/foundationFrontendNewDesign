@@ -8,7 +8,7 @@ import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login';
+import { LoginSocialFacebook,LoginSocialInstagram,LoginSocialLinkedin,LoginSocialTwitter, LoginSocialGithub} from 'reactjs-social-login';
 import PopUp from '../../../../../components/ui/PopUp';
 import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
@@ -526,6 +526,7 @@ const VerificationBadges = () => {
         <h1 className="font-500 font-Inter text-[9.74px] tablet:text-[1.7vw] font-medium text-[#000] dark:text-white my-[3px]">
           Social
         </h1>
+        {/* ...........................Facebook......................  */}
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center">
             <img
@@ -631,7 +632,434 @@ const VerificationBadges = () => {
             )}
           </div>
         </div>
-        {socials.map((item, index) => (
+        {/* ...........................LinkedIn......................  */}
+        <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center">
+            <img
+              src="/assets/profile/LinkedIn-2x.png"
+              alt="LinkedIn"
+              className="min-h-[6.389vw] min-w-[6.389vw] h-[23px] w-[23px] tablet:h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw] tablet:min-h-[3.48vw]"
+            />
+            <div
+              className={`${
+                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+              } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] tablet:h-[3.48vw] tablet:min-w-[19.9vw] items-center justify-center rounded-[1.31vw] tablet:rounded-[8px] laptop:rounded-[15px] text-[2.11vw] tablet:text-[1.38vw] tablet:w-[19.9vw] font-medium  leading-normal text-[#000] tablet:mx-[30px] dark:text-[#CACACA] border tablet:border-[3px] border-[#DEE6F7]`}
+            >
+              <h1>Linked In</h1>
+            </div>
+            {checkSocial('linkedin') ? (
+              <>
+                <Button
+                  color={checkSocial('linkedin') ? 'red' : 'blue'}
+                  onClick={() => {
+                    if (persistedUserInfo?.role === 'guest') {
+                      toast.warning(
+                        <p>
+                          Please{' '}
+                          <span
+                            className="text-[#389CE3] underline cursor-pointer"
+                            onClick={() => navigate('/guest-signup')}
+                          >
+                            Create an Account
+                          </span>{' '}
+                          to unlock this feature
+                        </p>,
+                      );
+                      return;
+                    } else {
+                      checkSocial('linkedin') && setModalVisible(true);
+                    }
+                  }}
+                >
+                  {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
+                  <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                    {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
+                  </span>
+                </Button>
+                <BadgeRemovePopup
+                  handleClose={handleBadgesClose}
+                  modalVisible={modalVisible}
+                  title={'LinkedIn'}
+                  image={'/assets/profile/LinkedIn-2x.png'}
+                  accountName={'linkedin'}
+                  fetchUser={fetchUser}
+                  setFetchUser={setFetchUser}
+                />
+              </>
+            ) : persistedUserInfo?.role === 'guest' ? (
+              <Button
+                color={checkSocial('facebook') ? 'red' : 'blue'}
+                onClick={() => {
+                  toast.warning(
+                    <p>
+                      Please{' '}
+                      <span
+                        className="text-[#389CE3] underline cursor-pointer"
+                        onClick={() => navigate('/guest-signup')}
+                      >
+                        Create an Account
+                      </span>{' '}
+                      to unlock this feature
+                    </p>,
+                  );
+                  return;
+                }}
+              >
+                {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
+                <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                  {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
+                </span>
+              </Button>
+            ) : (
+           
+              <LoginSocialLinkedin
+                // isOnlyGetToken
+                client_id={import.meta.env.VITE_LINKEDIN_KEY}
+                client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
+                onResolve={({ provider, data }) => {
+                  handleAddBadge(provider, data);
+                }}
+                redirect_uri={window.location.href}
+                onReject={(err) => {
+                  console.log(err);
+                }}
+                className="container w-full flex"
+              >
+                <Button
+                  color={checkSocial('linkedin') ? 'red' : 'blue'}
+                  onClick={() => {
+                    checkSocial('linkedin') && handleRemoveBadge('linkedin');
+                  }}
+                  >
+                    {console.log(import.meta.env.VITE_LINKEDIN_KEY)}
+                  {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
+                  <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                    {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
+                  </span>
+                </Button>
+              </LoginSocialLinkedin>
+            )}
+          </div>
+        </div>
+         {/* ...........................Twitter......................  */}
+         <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center">
+            <img
+              src="/assets/profile/Twitter-2x.png"
+              alt="Twitter"
+              className="min-h-[6.389vw] min-w-[6.389vw] h-[23px] w-[23px] tablet:h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw] tablet:min-h-[3.48vw]"
+            />
+            <div
+              className={`${
+                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+              } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] tablet:h-[3.48vw] tablet:min-w-[19.9vw] items-center justify-center rounded-[1.31vw] tablet:rounded-[8px] laptop:rounded-[15px] text-[2.11vw] tablet:text-[1.38vw] tablet:w-[19.9vw] font-medium  leading-normal text-[#000] tablet:mx-[30px] dark:text-[#CACACA] border tablet:border-[3px] border-[#DEE6F7]`}
+            >
+              <h1>Twitter</h1>
+            </div>
+            {checkSocial('twitter') ? (
+              <>
+                <Button
+                  color={checkSocial('twitter') ? 'red' : 'blue'}
+                  onClick={() => {
+                    if (persistedUserInfo?.role === 'guest') {
+                      toast.warning(
+                        <p>
+                          Please{' '}
+                          <span
+                            className="text-[#389CE3] underline cursor-pointer"
+                            onClick={() => navigate('/guest-signup')}
+                          >
+                            Create an Account
+                          </span>{' '}
+                          to unlock this feature
+                        </p>,
+                      );
+                      return;
+                    } else {
+                      checkSocial('twitter') && setModalVisible(true);
+                    }
+                  }}
+                >
+                  {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
+                  <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                    {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
+                  </span>
+                </Button>
+                <BadgeRemovePopup
+                  handleClose={handleBadgesClose}
+                  modalVisible={modalVisible}
+                  title={'Twitter'}
+                  image={'/assets/profile/Twitter-2x.png'}
+                  accountName={'twitter'}
+                  fetchUser={fetchUser}
+                  setFetchUser={setFetchUser}
+                />
+              </>
+            ) : persistedUserInfo?.role === 'guest' ? (
+              <Button
+                color={checkSocial('twitter') ? 'red' : 'blue'}
+                onClick={() => {
+                  toast.warning(
+                    <p>
+                      Please{' '}
+                      <span
+                        className="text-[#389CE3] underline cursor-pointer"
+                        onClick={() => navigate('/guest-signup')}
+                      >
+                        Create an Account
+                      </span>{' '}
+                      to unlock this feature
+                    </p>,
+                  );
+                  return;
+                }}
+              >
+                {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
+                <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                  {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
+                </span>
+              </Button>
+            ) : (
+              <LoginSocialTwitter
+                // isOnlyGetToken
+                client_id={import.meta.env.VITE_TWITTER_CONSUMER_KEY}
+                onResolve={({ provider, data }) => {
+                  handleAddBadge(provider, data);
+                }}
+                redirect_uri={window.location.href}
+                onReject={(err) => {
+                  console.log(err);
+                }}
+                className="container w-full flex"
+              >
+                <Button
+                  color={checkSocial('twitter') ? 'red' : 'blue'}
+                  onClick={() => {
+                    checkSocial('twitter') && handleRemoveBadge('twitter');
+                  }}
+                >
+                  {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
+                  <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                    {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
+                  </span>
+                </Button>
+              </LoginSocialTwitter>
+            )}
+          </div>
+        </div>
+         {/* ...........................Instagram......................  */}
+         <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center">
+            <img
+              src="/assets/profile/Instagram-2x.png"
+              alt="Instagram"
+              className="min-h-[6.389vw] min-w-[6.389vw] h-[23px] w-[23px] tablet:h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw] tablet:min-h-[3.48vw]"
+            />
+            <div
+              className={`${
+                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+              } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] tablet:h-[3.48vw] tablet:min-w-[19.9vw] items-center justify-center rounded-[1.31vw] tablet:rounded-[8px] laptop:rounded-[15px] text-[2.11vw] tablet:text-[1.38vw] tablet:w-[19.9vw] font-medium  leading-normal text-[#000] tablet:mx-[30px] dark:text-[#CACACA] border tablet:border-[3px] border-[#DEE6F7]`}
+            >
+              <h1>Instagram</h1>
+            </div>
+            {checkSocial('instagram') ? (
+              <>
+                <Button
+                  color={checkSocial('instagram') ? 'red' : 'blue'}
+                  onClick={() => {
+                    if (persistedUserInfo?.role === 'guest') {
+                      toast.warning(
+                        <p>
+                          Please{' '}
+                          <span
+                            className="text-[#389CE3] underline cursor-pointer"
+                            onClick={() => navigate('/guest-signup')}
+                          >
+                            Create an Account
+                          </span>{' '}
+                          to unlock this feature
+                        </p>,
+                      );
+                      return;
+                    } else {
+                      checkSocial('instagram') && setModalVisible(true);
+                    }
+                  }}
+                >
+                  {checkSocial('instagram') ? 'Remove' : 'Add New Badge'}
+                  <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                    {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
+                  </span>
+                </Button>
+                <BadgeRemovePopup
+                  handleClose={handleBadgesClose}
+                  modalVisible={modalVisible}
+                  title={'Instagram'}
+                  image={'/assets/profile/Instagram-2x.png'}
+                  accountName={'instagram'}
+                  fetchUser={fetchUser}
+                  setFetchUser={setFetchUser}
+                />
+              </>
+            ) : persistedUserInfo?.role === 'guest' ? (
+              <Button
+                color={checkSocial('instagram') ? 'red' : 'blue'}
+                onClick={() => {
+                  toast.warning(
+                    <p>
+                      Please{' '}
+                      <span
+                        className="text-[#389CE3] underline cursor-pointer"
+                        onClick={() => navigate('/guest-signup')}
+                      >
+                        Create an Account
+                      </span>{' '}
+                      to unlock this feature
+                    </p>,
+                  );
+                  return;
+                }}
+              >
+                {checkSocial('instagram') ? 'Remove' : 'Add New Badge'}
+                <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                  {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
+                </span>
+              </Button>
+            ) : (
+              <LoginSocialInstagram
+              client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
+              client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
+                onResolve={({ provider, data }) => {
+                  handleAddBadge(provider, data);
+                }}
+                redirect_uri={window.location.href}
+                onReject={(err) => {
+                  console.log(err);
+                }}
+                className="container w-full flex"
+              >
+                <Button
+                  color={checkSocial('instagram') ? 'red' : 'blue'}
+                  onClick={() => {
+                    checkSocial('instagram') && handleRemoveBadge('instagram');
+                  }}
+                >
+                  {checkSocial('instagram') ? 'Remove' : 'Add New Badge'}
+                  <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                    {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
+                  </span>
+                </Button>
+              </LoginSocialInstagram>
+            )}
+          </div>
+        </div>
+        {/* ...................................5......................... */}
+        <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center">
+            <img
+              src="/assets/profile/Github-2x.png"
+              alt="Github"
+              className="min-h-[6.389vw] min-w-[6.389vw] h-[23px] w-[23px] tablet:h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw] tablet:min-h-[3.48vw]"
+            />
+            <div
+              className={`${
+                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+              } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] tablet:h-[3.48vw] tablet:min-w-[19.9vw] items-center justify-center rounded-[1.31vw] tablet:rounded-[8px] laptop:rounded-[15px] text-[2.11vw] tablet:text-[1.38vw] tablet:w-[19.9vw] font-medium  leading-normal text-[#000] tablet:mx-[30px] dark:text-[#CACACA] border tablet:border-[3px] border-[#DEE6F7]`}
+            >
+              <h1>Github</h1>
+            </div>
+            {checkSocial('github') ? (
+              <>
+                <Button
+                  color={checkSocial('github') ? 'red' : 'blue'}
+                  onClick={() => {
+                    if (persistedUserInfo?.role === 'guest') {
+                      toast.warning(
+                        <p>
+                          Please{' '}
+                          <span
+                            className="text-[#389CE3] underline cursor-pointer"
+                            onClick={() => navigate('/guest-signup')}
+                          >
+                            Create an Account
+                          </span>{' '}
+                          to unlock this feature
+                        </p>,
+                      );
+                      return;
+                    } else {
+                      checkSocial('github') && setModalVisible(true);
+                    }
+                  }}
+                >
+                  {checkSocial('github') ? 'Remove' : 'Add New Badge'}
+                  <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                    {checkSocial('github') ? '' : '(+0.96 FDX)'}
+                  </span>
+                </Button>
+                <BadgeRemovePopup
+                  handleClose={handleBadgesClose}
+                  modalVisible={modalVisible}
+                  title={'Github'}
+                  image={'/assets/profile/Github-2x.png'}
+                  accountName={'github'}
+                  fetchUser={fetchUser}
+                  setFetchUser={setFetchUser}
+                />
+              </>
+            ) : persistedUserInfo?.role === 'guest' ? (
+              <Button
+                color={checkSocial('github') ? 'red' : 'blue'}
+                onClick={() => {
+                  toast.warning(
+                    <p>
+                      Please{' '}
+                      <span
+                        className="text-[#389CE3] underline cursor-pointer"
+                        onClick={() => navigate('/guest-signup')}
+                      >
+                        Create an Account
+                      </span>{' '}
+                      to unlock this feature
+                    </p>,
+                  );
+                  return;
+                }}
+              >
+                {checkSocial('github') ? 'Remove' : 'Add New Badge'}
+                <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                  {checkSocial('github') ? '' : '(+0.96 FDX)'}
+                </span>
+              </Button>
+            ) : (
+              <LoginSocialGithub
+                client_id={import.meta.env.VITE_GITHUB_CLIENT_ID}
+                client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
+                onResolve={({ provider, data }) => {
+                  handleAddBadge(provider, data);
+                }}
+                redirect_uri={window.location.href}
+                onReject={(err) => {
+                  console.log(err);
+                }}
+                className="container w-full flex"
+              >
+                <Button
+                  color={checkSocial('github') ? 'red' : 'blue'}
+                  onClick={() => {
+                    checkSocial('github') && handleRemoveBadge('github');
+                  }}
+                >
+                  {checkSocial('github') ? 'Remove' : 'Add New Badge'}
+                  <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                    {checkSocial('github') ? '' : '(+0.96 FDX)'}
+                  </span>
+                </Button>
+              </LoginSocialGithub>
+            )}
+          </div>
+        </div>
+        {/* {socials.map((item, index) => (
           <div className={`flex items-center justify-center  ${item.disabled ? 'opacity-[60%]' : ''}`} key={index}>
             <img
               src={item.image}
@@ -675,7 +1103,7 @@ const VerificationBadges = () => {
               </span>
             </Button>
           </div>
-        ))}
+        ))} */}
         <h1 className="font-500 font-Inter text-[9.74px] tablet:text-[1.7vw] font-medium text-[#000] dark:text-white my-[3px]">
           Web 3
         </h1>
