@@ -132,13 +132,52 @@ const RankChoice = () => {
     dispatch(createQuestAction.checkQuestion(value));
   };
 
+  const handleAddOption = () => {
+    // if (optionWaiting) return;
+    const optionsCount = typedValues.length;
+    dispatch(createQuestAction.addNewOption({ optionsCount }));
+  };
+
+  const handleChange = (index, value) => {
+    setTypedValues((prevValues) => {
+      const newTypedValues = [...prevValues];
+      const prevOptionStatus = prevValues[index]?.optionStatus || {};
+
+      if (prevOptionStatus.name === 'Ok') {
+        newTypedValues[index] = {
+          ...newTypedValues[index],
+          question: value,
+          optionStatus: {
+            ...prevOptionStatus,
+          },
+        };
+      } else {
+        newTypedValues[index] = {
+          ...newTypedValues[index],
+          question: value,
+          optionStatus: {
+            name: 'Ok',
+            color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
+            tooltipName: value.trim() === '' ? 'Please write something...' : '',
+            tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
+          },
+        };
+      }
+
+      dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
+      return newTypedValues;
+    });
+  };
+
   const answerVerification = async (id, index, value) => {
+    setOptionWaiting(true);
     const newTypedValue = [...typedValues];
     newTypedValue[index] = {
       ...newTypedValue[index],
       question: value.trim(),
     };
     setTypedValues(newTypedValue);
+
     if (prevValueArr[index]?.value === value.trim()) return;
     setPrevValueArr((prev) => {
       const updatedArray = [...prev];
@@ -147,48 +186,6 @@ const RankChoice = () => {
     });
 
     dispatch(createQuestAction.checkAnswer({ id, value, index }));
-  };
-
-  const handleAddOption = () => {
-    // if (optionWaiting) return;
-    const optionsCount = typedValues.length;
-    dispatch(createQuestAction.addNewOption({ optionsCount }));
-  };
-
-  const handleChange = (index, value) => {
-    // if (optionWaiting) return;
-
-    setTypedValues((prevValues) => {
-      const newTypedValues = [...prevValues];
-      newTypedValues[index] = {
-        ...newTypedValues[index],
-        question: value,
-        optionStatus: {
-          name: 'Ok',
-          color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
-          tooltipName: value.trim() === '' ? 'Please write something...' : '',
-          tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
-        },
-      };
-      dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
-      return newTypedValues;
-    });
-
-    // const newTypedValues = [...typedValues];
-    // newTypedValues[index] = {
-    //   ...newTypedValues[index],
-    //   question: value,
-    //   optionStatus:
-    //     value.trim() === ''
-    //       ? {
-    //           name: 'Ok',
-    //           color: 'text-[#389CE3]',
-    //           tooltipName: 'Please write something...',
-    //           tooltipStyle: 'tooltip-info',
-    //         }
-    //       : { name: 'Ok', color: 'text-[#b0a00f]' },
-    // };
-    // dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
   };
 
   const handleOptionSelect = (index) => {
@@ -220,10 +217,6 @@ const RankChoice = () => {
   const removeOption = (id) => {
     dispatch(createQuestAction.delOption({ id }));
   };
-
-  // const handleOnSortEnd = (sortedItems) => {
-  //   setTypedValues(sortedItems.items);
-  // };
 
   const handleOnDragEnd = (result) => {
     console.log(result);

@@ -135,6 +135,42 @@ const MultipleChoice = () => {
     dispatch(createQuestAction.checkQuestion(value));
   };
 
+  const handleAddOption = () => {
+    const optionsCount = typedValues.length;
+    dispatch(createQuestAction.addNewOption({ optionsCount }));
+  };
+
+  const handleChange = (index, value) => {
+    setTypedValues((prevValues) => {
+      const newTypedValues = [...prevValues];
+      const prevOptionStatus = prevValues[index]?.optionStatus || {};
+
+      if (prevOptionStatus.name === 'Ok') {
+        newTypedValues[index] = {
+          ...newTypedValues[index],
+          question: value,
+          optionStatus: {
+            ...prevOptionStatus,
+          },
+        };
+      } else {
+        newTypedValues[index] = {
+          ...newTypedValues[index],
+          question: value,
+          optionStatus: {
+            name: 'Ok',
+            color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
+            tooltipName: value.trim() === '' ? 'Please write something...' : '',
+            tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
+          },
+        };
+      }
+
+      dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
+      return newTypedValues;
+    });
+  };
+
   const answerVerification = async (id, index, value) => {
     setOptionWaiting(true);
     const newTypedValue = [...typedValues];
@@ -144,7 +180,6 @@ const MultipleChoice = () => {
     };
     setTypedValues(newTypedValue);
 
-    // Check if Prev Value exist
     if (prevValueArr[index]?.value === value.trim()) return;
     setPrevValueArr((prev) => {
       const updatedArray = [...prev];
@@ -153,31 +188,6 @@ const MultipleChoice = () => {
     });
 
     dispatch(createQuestAction.checkAnswer({ id, value, index }));
-  };
-
-  const handleAddOption = () => {
-    const optionsCount = typedValues.length;
-    dispatch(createQuestAction.addNewOption({ optionsCount }));
-  };
-
-  const handleChange = (index, value) => {
-    // if (optionWaiting) return;
-
-    setTypedValues((prevValues) => {
-      const newTypedValues = [...prevValues];
-      newTypedValues[index] = {
-        ...newTypedValues[index],
-        question: value,
-        optionStatus: {
-          name: 'Ok',
-          color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
-          tooltipName: value.trim() === '' ? 'Please write something...' : '',
-          tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
-        },
-      };
-      dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
-      return newTypedValues;
-    });
   };
 
   const handleOptionSelect = (index) => {
