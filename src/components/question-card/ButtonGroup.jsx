@@ -462,7 +462,20 @@ const ButtonGroup = ({
             ) : btnText === 'completed' ? null : (
               <Button
                 variant="submit"
-                onClick={() => handleSubmit()}
+                onClick={() => {
+                  toast.warning(
+                    <p>
+                      Please{' '}
+                      <span
+                        className="text-[#389CE3] underline cursor-pointer"
+                        onClick={() => navigate('/guest-signup')}
+                      >
+                        Create an Account
+                      </span>{' '}
+                      to unlock this feature
+                    </p>,
+                  );
+                }}
                 disabled={
                   loading === true
                     ? true
