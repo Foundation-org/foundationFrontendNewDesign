@@ -13,6 +13,8 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
   const [postLink, setPostLink] = useState(questStartData?.userQuestSetting?.link || '');
   let url = `${protocol}//${host}/p/`;
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const copyToClipboard = async () => {
     const textToCopy = url + postLink;
 
@@ -24,6 +26,7 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
   };
 
   const uniqueLinkQuestSetting = async () => {
+    setIsLoading(true);
     const data = {
       uuid: persistedUserInfo?.uuid,
       questForeignKey: questStartData._id,
@@ -37,6 +40,7 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
       if (resp.status === 201) {
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
+        setIsLoading(false);
       }
     } else if (questStartData?.userQuestSetting && !questStartData?.userQuestSetting?.link) {
       data.isGenerateLink = true;
@@ -45,6 +49,7 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
       if (resp.status === 201) {
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
+        setIsLoading(false);
       }
     }
   };
@@ -120,7 +125,7 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
         <div className="flex">
           <div className="w-full rounded-l-[9.42px] bg-[#F3F3F3] py-[10.51px] pl-[9.43px] pr-[1.58rem] tablet:py-[30px] tablet:pl-[26px] laptop:rounded-l-[26px] laptop:pr-[70px] tablet:leading-[30px]">
             <p className="w-[48vw] truncate text-[9.42px] font-normal text-[#435059] tablet:text-[26px] laptop:w-[32.7vw] desktop:w-[32rem]">
-              {url + postLink}
+              {isLoading ? <p className="italic">Generating link..</p> : url + postLink}
             </p>
           </div>
           <button
