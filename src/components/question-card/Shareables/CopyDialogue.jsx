@@ -51,6 +51,8 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
       }
+    } else {
+      setIsLoading(false);
     }
   };
 
