@@ -12,6 +12,7 @@ import EmailDialogue from '../question-card/Shareables/EmailDialogue';
 import TwitterDialogue from '../question-card/Shareables/TwitterDialogue';
 import FbDialogue from '../question-card/Shareables/FbDialogue';
 import { useParams, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const QuestBottombar = ({
   time,
@@ -30,6 +31,7 @@ const QuestBottombar = ({
 
   const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const [timeAgo, setTimeAgo] = useState('');
   const [copyModal, setCopyModal] = useState(false);
@@ -38,7 +40,22 @@ const QuestBottombar = ({
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
 
-  const handleCopyOpen = () => setCopyModal(true);
+  const handleCopyOpen = () => {
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="text-[#389CE3] underline cursor-pointer" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
+      return;
+    } else {
+      setCopyModal(true);
+    }
+  };
   const handleCopyClose = () => setCopyModal(false);
   const handleLinkOpen = () => setLinkModal(true);
   const handleLinkClose = () => setLinkModal(false);

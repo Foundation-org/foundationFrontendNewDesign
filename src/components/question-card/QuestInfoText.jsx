@@ -33,7 +33,7 @@ const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
                 <div className="flex gap-[1px] tablet:gap-2 items-center">
                   <img src="/assets/svgs/clicks.svg" alt="clicks" className="w-2 h-2 tablet:w-6 tablet:h-6" />
                   <h2 className="text-[8px] tablet:text-[18px] font-semibold text-[#707175] leading-[9.68px] tablet:leading-[21.78px]">
-                    0 Clicks
+                    0 Impressions
                   </h2>
                 </div>
                 <div className="flex gap-[1px] tablet:gap-2 items-center">
@@ -43,7 +43,7 @@ const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
                     className="w-3 h-2 tablet:w-[34px] tablet:h-[26px]"
                   />
                   <h2 className="text-[8px] tablet:text-[18px] font-semibold text-[#707175] leading-[9.68px] tablet:leading-[21.78px]">
-                    0 Participations
+                    0 Completed
                   </h2>
                 </div>
               </div>
@@ -60,7 +60,7 @@ const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
                   <div className="flex gap-[1px] tablet:gap-2 items-center">
                     <img src="/assets/svgs/clicks.svg" alt="clicks" className="w-2 h-2 tablet:w-6 tablet:h-6" />
                     <h2 className="text-[8px] tablet:text-[18px] font-semibold text-[#707175] leading-[9.68px] tablet:leading-[21.78px]">
-                      0 Clicks
+                      0 Impressions
                     </h2>
                   </div>
                   <div className="flex gap-[1px] tablet:gap-2 items-center">
@@ -70,7 +70,7 @@ const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
                       className="w-3 h-2 tablet:w-[34px] tablet:h-[26px]"
                     />
                     <h2 className="text-[8px] tablet:text-[18px] font-semibold text-[#707175] leading-[9.68px] tablet:leading-[21.78px]">
-                      0 Participations
+                      0 Completed
                     </h2>
                   </div>
                 </div>

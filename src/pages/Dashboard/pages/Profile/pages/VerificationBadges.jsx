@@ -15,8 +15,9 @@ import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemo
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
-  const persistedTheme = useSelector((state) => state.utils.theme);
   const dispatch = useDispatch();
+  const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [searchParams] = useSearchParams();
   const [fetchUser, setFetchUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -304,8 +305,21 @@ const VerificationBadges = () => {
   const dataRef = useRef({ data: 'Initial Data' });
 
   const handleClickContactBadgeEmail = (type) => {
-    setIsPopup(true);
-    setSelectedBadge(type);
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="text-[#389CE3] underline cursor-pointer" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
+      return;
+    } else {
+      setIsPopup(true);
+      setSelectedBadge(type);
+    }
     // // console.log('testing.....');
     // dataRef.current.data = type;
     // // Trigger a click event on the first element
@@ -458,7 +472,23 @@ const VerificationBadges = () => {
                 <Button
                   color={checkSocial('facebook') ? 'red' : 'blue'}
                   onClick={() => {
-                    checkSocial('facebook') && setModalVisible(true);
+                    if (persistedUserInfo?.role === 'guest') {
+                      toast.warning(
+                        <p>
+                          Please{' '}
+                          <span
+                            className="text-[#389CE3] underline cursor-pointer"
+                            onClick={() => navigate('/guest-signup')}
+                          >
+                            Create an Account
+                          </span>{' '}
+                          to unlock this feature
+                        </p>,
+                      );
+                      return;
+                    } else {
+                      checkSocial('facebook') && setModalVisible(true);
+                    }
                   }}
                 >
                   {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
@@ -476,6 +506,30 @@ const VerificationBadges = () => {
                   setFetchUser={setFetchUser}
                 />
               </>
+            ) : persistedUserInfo?.role === 'guest' ? (
+              <Button
+                color={checkSocial('facebook') ? 'red' : 'blue'}
+                onClick={() => {
+                  toast.warning(
+                    <p>
+                      Please{' '}
+                      <span
+                        className="text-[#389CE3] underline cursor-pointer"
+                        onClick={() => navigate('/guest-signup')}
+                      >
+                        Create an Account
+                      </span>{' '}
+                      to unlock this feature
+                    </p>,
+                  );
+                  return;
+                }}
+              >
+                {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
+                <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
+                  {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
+                </span>
+              </Button>
             ) : (
               <LoginSocialFacebook
                 // isOnlyGetToken
@@ -522,8 +576,24 @@ const VerificationBadges = () => {
             <Button
               color={checkSocial(item.accountName) ? 'red' : item.ButtonColor}
               onClick={() => {
-                !checkSocial(item.accountName) && window.open(`${import.meta.env.VITE_API_URL}${item.link}`, '_self');
-                checkSocial(item.accountName) && handleRemoveBadgePopup(item);
+                if (persistedUserInfo?.role === 'guest') {
+                  toast.warning(
+                    <p>
+                      Please{' '}
+                      <span
+                        className="text-[#389CE3] underline cursor-pointer"
+                        onClick={() => navigate('/guest-signup')}
+                      >
+                        Create an Account
+                      </span>{' '}
+                      to unlock this feature
+                    </p>,
+                  );
+                  return;
+                } else {
+                  !checkSocial(item.accountName) && window.open(`${import.meta.env.VITE_API_URL}${item.link}`, '_self');
+                  checkSocial(item.accountName) && handleRemoveBadgePopup(item);
+                }
               }}
               disabled={item.disabled}
             >

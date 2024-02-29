@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 
 import * as authActions from '../../features/auth/authSlice';
 import * as questsActions from '../../features/quest/utilsSlice';
+import { useNavigate } from 'react-router-dom';
 
 const customStyle = {
   width: 'fit-content',
@@ -25,6 +26,7 @@ export default function ShowHidePostPopup({
   data,
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -85,21 +87,34 @@ export default function ShowHidePostPopup({
   });
 
   const handleHiddenPostApiCall = () => {
-    if (questStartData?.userQuestSetting) {
-      updateHiddenPost({
-        uuid: persistedUserInfo?.uuid,
-        questForeignKey: questStartData._id,
-        hidden: true,
-        hiddenMessage: selectedTitle,
-      });
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="text-[#389CE3] underline cursor-pointer" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
+      return;
     } else {
-      hidePost({
-        uuid: persistedUserInfo?.uuid,
-        questForeignKey: questStartData._id,
-        hidden: true,
-        hiddenMessage: selectedTitle,
-        Question: questStartData.Question,
-      });
+      if (questStartData?.userQuestSetting) {
+        updateHiddenPost({
+          uuid: persistedUserInfo?.uuid,
+          questForeignKey: questStartData._id,
+          hidden: true,
+          hiddenMessage: selectedTitle,
+        });
+      } else {
+        hidePost({
+          uuid: persistedUserInfo?.uuid,
+          questForeignKey: questStartData._id,
+          hidden: true,
+          hiddenMessage: selectedTitle,
+          Question: questStartData.Question,
+        });
+      }
     }
   };
 

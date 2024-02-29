@@ -78,7 +78,15 @@ const OpenChoice = () => {
 
   const handleSubmit = async () => {
     if (persistedUserInfo?.role === 'guest') {
-      toast.warning('Please create an account to unlock this feature');
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="text-[#389CE3] underline cursor-pointer" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
       return;
     }
 
@@ -125,12 +133,64 @@ const OpenChoice = () => {
     }
   };
 
-  const questionVerification = async (value) => {
-    setQuestion(value.trim());
-    if (prevValue === question.trim()) return;
-    setPrevValue(value);
+  const handleQuestionChange = (e) => {
+    setQuestion(e.target.value);
+  };
 
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      if (prevValue === inputValue.trim()) {
+        setQuestion(inputValue);
+      } else {
+        setQuestion(inputValue);
+        dispatch(createQuestAction.handleQuestionReset(inputValue));
+      }
+    }, 500);
+
+    return () => clearTimeout(debounceTimer);
+  }, [question]);
+
+  const questionVerification = async (value) => {
+    if (prevValue === question.trim()) return;
+
+    setPrevValue(value);
     dispatch(createQuestAction.checkQuestion(value));
+  };
+
+  const handleAddOption = () => {
+    const optionsCount = typedValues.length;
+    dispatch(createQuestAction.addNewOption({ optionsCount }));
+  };
+
+  const handleChange = (index, value) => {
+    setTypedValues((prevValues) => {
+      const newTypedValues = [...prevValues];
+      const prevOptionStatus = prevValues[index]?.optionStatus || {};
+
+      if (prevOptionStatus.name === 'Ok') {
+        newTypedValues[index] = {
+          ...newTypedValues[index],
+          question: value,
+          optionStatus: {
+            ...prevOptionStatus,
+          },
+        };
+      } else {
+        newTypedValues[index] = {
+          ...newTypedValues[index],
+          question: value,
+          optionStatus: {
+            name: 'Ok',
+            color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
+            tooltipName: value.trim() === '' ? 'Please write something...' : '',
+            tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
+          },
+        };
+      }
+
+      dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
+      return newTypedValues;
+    });
   };
 
   const answerVerification = async (id, index, value) => {
@@ -142,7 +202,6 @@ const OpenChoice = () => {
     };
     setTypedValues(newTypedValue);
 
-    // Check if Prev Value exist
     if (prevValueArr[index]?.value === value.trim()) return;
     setPrevValueArr((prev) => {
       const updatedArray = [...prev];
@@ -151,31 +210,6 @@ const OpenChoice = () => {
     });
 
     dispatch(createQuestAction.checkAnswer({ id, value, index }));
-  };
-
-  const handleAddOption = () => {
-    const optionsCount = typedValues.length;
-    dispatch(createQuestAction.addNewOption({ optionsCount }));
-  };
-
-  const handleChange = (index, value) => {
-    // if (optionWaiting) return;
-
-    setTypedValues((prevValues) => {
-      const newTypedValues = [...prevValues];
-      newTypedValues[index] = {
-        ...newTypedValues[index],
-        question: value,
-        optionStatus: {
-          name: 'Ok',
-          color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
-          tooltipName: value.trim() === '' ? 'Please write something...' : '',
-          tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
-        },
-      };
-      dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
-      return newTypedValues;
-    });
   };
 
   const handleOptionSelect = (index) => {
@@ -302,30 +336,10 @@ const OpenChoice = () => {
           Create a Poll
         </h1>
         <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-5 tablet:pb-[13px]">
-          {/* <input
-            id="input-0"
-            className="w-full rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[0.35rem] text-[0.625rem] font-normal leading-[1] text-[#435059] focus-visible:outline-none dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem]"
-            onChange={(e) => {
-              setQuestion(e.target.value);
-              // setCheckQuestionStatus({
-              //   name: 'Ok',
-              //   color: e.target.value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
-              // });
-              dispatch(createQuestAction.handleQuestionReset(e.target.value));
-            }}
-            onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
-            value={question}
-             placeholder="Pose a question"
-            tabIndex={1}
-            onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(0, 'Enter'))}
-          /> */}
           <TextareaAutosize
             id="input-0"
             aria-label="empty textarea"
-            onChange={(e) => {
-              setQuestion(e.target.value);
-              dispatch(createQuestAction.handleQuestionReset(e.target.value));
-            }}
+            onChange={handleQuestionChange}
             onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             value={question}
             placeholder="Pose a question"
