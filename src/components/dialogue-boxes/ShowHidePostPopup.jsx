@@ -5,6 +5,7 @@ import { Button } from '../ui/Button';
 import { toast } from 'sonner';
 import PopUp from '../ui/PopUp';
 import { useSelector } from 'react-redux';
+import { FaSpinner } from 'react-icons/fa';
 import { userInfo } from '../../services/api/userAuth';
 import { useDispatch } from 'react-redux';
 
@@ -31,6 +32,7 @@ export default function ShowHidePostPopup({
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const [selectedTitle, setSelectedTitle] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCheckboxChange = (index) => {
     const newCheckboxStates = new Array(data.length).fill(false);
@@ -65,9 +67,11 @@ export default function ShowHidePostPopup({
       toast.success('Post hidden successfully');
       getUserInfo();
       queryClient.invalidateQueries('FeedData');
+      setIsLoading(false);
       handleClose();
     },
     onError: (err) => {
+      setIsLoading(false);
       console.log(err);
     },
   });
@@ -79,14 +83,17 @@ export default function ShowHidePostPopup({
       toast.success('Post hidden successfully');
       getUserInfo();
       queryClient.invalidateQueries('FeedData');
+      setIsLoading(false);
       handleClose();
     },
     onError: (err) => {
+      setIsLoading(false);
       console.log(err);
     },
   });
 
   const handleHiddenPostApiCall = () => {
+    setIsLoading(true);
     if (persistedUserInfo?.role === 'guest') {
       toast.warning(
         <p>
@@ -97,6 +104,7 @@ export default function ShowHidePostPopup({
           to unlock this feature
         </p>,
       );
+      setIsLoading(false);
       return;
     } else {
       if (questStartData?.userQuestSetting) {
@@ -165,7 +173,7 @@ export default function ShowHidePostPopup({
               handleHiddenPostApiCall();
             }}
           >
-            Submit
+            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
           </Button>
         </div>
       </div>
