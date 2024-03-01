@@ -36,16 +36,19 @@ const MultipleChoice = () => {
   const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-  const [optionWaiting, setOptionWaiting] = useState(false);
+  // const [optionWaiting, setOptionWaiting] = useState(false);
 
   const [typedValues, setTypedValues] = useState(optionsValue);
 
-  const reset = {
-    name: 'Ok',
-    color: 'text-[#389CE3]',
-    tooltipName: 'Please write something...',
-    tooltipStyle: 'tooltip-info',
-  };
+  console.log('optionsValue', optionsValue);
+  // console.log('prevValueArr', prevValueArr);
+
+  // const reset = {
+  //   name: 'Ok',
+  //   color: 'text-[#389CE3]',
+  //   tooltipName: 'Please write something...',
+  //   tooltipStyle: 'tooltip-info',
+  // };
   const [questionStatusApi, setquestionStatusApi] = useState(questionStatus);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -136,11 +139,19 @@ const MultipleChoice = () => {
     }
   };
 
+  // To Type Question
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
     dispatch(createQuestAction.handleQuestionReset(e.target.value));
+
+    if (prevValue === e.target.value.trim()) {
+      setquestionStatusApi(prevStatus);
+    } else {
+      setquestionStatusApi(questionStatus);
+    }
   };
 
+  // To Verify Question
   const questionVerification = async (value) => {
     if (prevValue === question.trim()) {
       setquestionStatusApi(prevStatus);
@@ -156,47 +167,89 @@ const MultipleChoice = () => {
     dispatch(createQuestAction.addNewOption({ optionsCount }));
   };
 
+  // To Type Options
+  // const handleChange = (index, value) => {
+  //   setTypedValues((prevValues) => {
+  //     const newTypedValues = [...prevValues];
+  //     const prevOptionStatus = prevValues[index]?.optionStatus || {};
+
+  //     console.log('newTypedValues', newTypedValues);
+  //     console.log('prevOptionStatus', prevOptionStatus);
+
+  //     if (prevOptionStatus.name === 'Ok') {
+  //       newTypedValues[index] = {
+  //         ...newTypedValues[index],
+  //         question: value,
+  //         optionStatus: {
+  //           ...prevOptionStatus,
+  //         },
+  //       };
+  //     } else {
+  //       newTypedValues[index] = {
+  //         ...newTypedValues[index],
+  //         question: value,
+  //         optionStatus: {
+  //           name: 'Ok',
+  //           color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
+  //           tooltipName: value.trim() === '' ? 'Please write something...' : '',
+  //           tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
+  //         },
+  //       };
+  //     }
+
+  //     dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
+  //     return newTypedValues;
+  //   });
+  // };
   const handleChange = (index, value) => {
     setTypedValues((prevValues) => {
       const newTypedValues = [...prevValues];
-      const prevOptionStatus = prevValues[index]?.optionStatus || {};
-
-      if (prevOptionStatus.name === 'Ok') {
-        newTypedValues[index] = {
-          ...newTypedValues[index],
-          question: value,
-          optionStatus: {
-            ...prevOptionStatus,
-          },
-        };
-      } else {
-        newTypedValues[index] = {
-          ...newTypedValues[index],
-          question: value,
-          optionStatus: {
-            name: 'Ok',
-            color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
-            tooltipName: value.trim() === '' ? 'Please write something...' : '',
-            tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
-          },
-        };
-      }
-
+      newTypedValues[index] = {
+        ...newTypedValues[index],
+        question: value,
+        optionStatus: {
+          name: 'Ok',
+          color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
+          tooltipName: value.trim() === '' ? 'Please write something...' : '',
+          tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
+        },
+      };
       dispatch(createQuestAction.handleChangeOption({ newTypedValues }));
       return newTypedValues;
     });
+
+    // console.log('prevVal', prevValueArr, value);
+    // if (prevValueArr[index]?.value === value.trim()) {
+    //   console.log('first');
+    //   const newTypedStatus = [...typedValues];
+    //   newTypedStatus[index] = {
+    //     ...newTypedStatus[index],
+    //     optionStatus: newTypedStatus[index].chatgptOptionStatus,
+    //   };
+    //   setTypedValues(newTypedStatus);
+    //   return;
+    // }
   };
 
+  // To Verify Options
   const answerVerification = async (id, index, value) => {
-    setOptionWaiting(true);
     const newTypedValue = [...typedValues];
     newTypedValue[index] = {
       ...newTypedValue[index],
       question: value.trim(),
     };
     setTypedValues(newTypedValue);
-
     if (prevValueArr[index]?.value === value.trim()) return;
+
+    // if (prevValueArr[index]?.value === value.trim()) {
+    //   console.log('first');
+    //   const newTypedStatus = [...typedValues];
+    //   newTypedStatus[index] = {
+    //     ...newTypedStatus[index],
+    //     optionStatus: newTypedStatus[index].chatgptOptionStatus,
+    //   };
+    //   setTypedValues(newTypedStatus);
+    // }
     setPrevValueArr((prev) => {
       const updatedArray = [...prev];
       updatedArray[index] = { value: value.trim() };
@@ -253,6 +306,7 @@ const MultipleChoice = () => {
     // setTypedValues(newTypedValues);
   };
 
+  // Update Whole Multiple choice state in Redux
   useEffect(() => {
     let tempOptions = typedValues.map((item) => {
       return item.question;
@@ -270,6 +324,7 @@ const MultipleChoice = () => {
     );
   }, [question, changedOption, changeState, addOption, optionsCount, typedValues, multipleOption]);
 
+  // Question State updated
   useEffect(() => {
     if (createQuestSlice.question) {
       setQuestion(createQuestSlice.question);
@@ -277,13 +332,28 @@ const MultipleChoice = () => {
     }
 
     setquestionStatusApi(questionStatus);
-  }, [questionStatus, question]);
+  }, [questionStatus]);
 
+  // Question previous Status handled
   useEffect(() => {
     if (chatgptQuestionStatus) {
       setPrevStatus(chatgptQuestionStatus);
     }
   }, [chatgptQuestionStatus]);
+
+  // Options previous Status handled
+  useEffect(() => {
+    if (optionsValue) {
+      setPrevValueArr((prev) => {
+        const updatedArray = [...prev];
+        const finalArr = updatedArray.map(
+          (item, index) => (updatedArray[index] = { value: optionsValue[index].question }),
+        );
+        console.log({ finalArr });
+        return [...finalArr];
+      });
+    }
+  }, [optionsValue]);
 
   // Update local Option State when api update the status
   if (optionsValue !== typedValues) {
@@ -315,6 +385,7 @@ const MultipleChoice = () => {
     }
   };
 
+  // To Handle The submit button being hollow or not
   useEffect(() => {
     if (!checkHollow() && typedValues.every((value) => value.question !== '' && question !== '')) {
       setHollow(false);

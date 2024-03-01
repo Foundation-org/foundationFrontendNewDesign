@@ -52,6 +52,12 @@ const initialState = {
         tooltipName: 'Please write something...',
         tooltipStyle: 'tooltip-info',
       },
+      chatgptOptionStatus: {
+        name: 'Ok',
+        color: 'text-[#389CE3]',
+        tooltipName: 'Please write something...',
+        tooltipStyle: 'tooltip-info',
+      },
     },
     {
       id: 'index-1',
@@ -63,12 +69,24 @@ const initialState = {
         tooltipName: 'Please write something...',
         tooltipStyle: 'tooltip-info',
       },
+      chatgptOptionStatus: {
+        name: 'Ok',
+        color: 'text-[#389CE3]',
+        tooltipName: 'Please write something...',
+        tooltipStyle: 'tooltip-info',
+      },
     },
     {
       selected: false,
       id: 'index-2',
       question: '',
       optionStatus: {
+        name: 'Ok',
+        color: 'text-[#389CE3]',
+        tooltipName: 'Please write something...',
+        tooltipStyle: 'tooltip-info',
+      },
+      chatgptOptionStatus: {
         name: 'Ok',
         color: 'text-[#389CE3]',
         tooltipName: 'Please write something...',
@@ -254,6 +272,12 @@ export const createQuestSlice = createSlice({
                 tooltipName: 'Verifying your answer. Please wait...',
                 tooltipStyle: 'tooltip-success',
               },
+              chatgptOptionStatus: {
+                name: 'Checking',
+                color: 'text-[#0FB063]',
+                tooltipName: 'Verifying your answer. Please wait...',
+                tooltipStyle: 'tooltip-success',
+              },
             }
           : option;
       });
@@ -283,6 +307,13 @@ export const createQuestSlice = createSlice({
                     tooltipStyle: 'tooltip-error',
                     duplication: true,
                   },
+                  chatgptOptionStatus: {
+                    name: 'Duplicate',
+                    color: 'text-[#EFD700]',
+                    tooltipName: 'Found Duplication!',
+                    tooltipStyle: 'tooltip-error',
+                    duplication: true,
+                  },
                 }
               : option;
           });
@@ -299,6 +330,12 @@ export const createQuestSlice = createSlice({
                     tooltipName: 'Answer is Verified',
                     tooltipStyle: 'tooltip-success',
                   },
+                  chatgptOptionStatus: {
+                    name: 'Ok',
+                    color: 'text-[#0FB063]',
+                    tooltipName: 'Answer is Verified',
+                    tooltipStyle: 'tooltip-success',
+                  },
                 }
               : option;
           });
@@ -310,6 +347,12 @@ export const createQuestSlice = createSlice({
             ? {
                 ...option,
                 optionStatus: {
+                  name: 'Rejected',
+                  color: 'text-[#b00f0f]',
+                  tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+                  tooltipStyle: 'tooltip-error',
+                },
+                chatgptOptionStatus: {
                   name: 'Rejected',
                   color: 'text-[#b00f0f]',
                   tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
