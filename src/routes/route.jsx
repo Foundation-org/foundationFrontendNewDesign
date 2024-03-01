@@ -29,6 +29,7 @@ import ContactUs from '../pages/Dashboard/pages/CustomerSupport/ContactUs';
 import CustomerSupport from '../pages/Dashboard/pages/CustomerSupport';
 import GuestRedirect from '../pages/DashboardRedirect/GuestRedirect';
 import { useSelector } from 'react-redux';
+import Maintenance from '../pages/Maintenance/maintenance';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -45,6 +46,7 @@ export function Router() {
         <>
           {/* Public */}
           <Routes>
+            <Route path="/maintenance" element={<Maintenance />} />
             <Route path="/" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/term-of-service" element={<TermOfService />} />
@@ -61,6 +63,7 @@ export function Router() {
           {/* Protected */}
           <Routes>
             <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
+              <Route path="/maintenance" element={<Maintenance />} />
               <Route path="/dashboard/" element={<Dashboard />}>
                 <Route path="" element={<QuestStartSection />} />
                 <Route path="quest" element={<Quest />} />
