@@ -86,8 +86,20 @@ const SingleAnswerMultipleChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
-    props.setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
   };
+
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      if (prevValue === answer.trim()) {
+        setAnswer(answer);
+      } else {
+        setAnswer(answer);
+        props.setCheckOptionStatus(answer.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
+      }
+    }, 500);
+
+    return () => clearTimeout(debounceTimer);
+  }, [answer]);
 
   const optionVerification = async (value) => {
     if (prevValue === answer) return;
@@ -130,6 +142,7 @@ const SingleAnswerMultipleChoice = (props) => {
     // Answer is validated and status is Ok
     if (validatedAnswer) {
       setAnswer(validatedAnswer);
+      setPrevValue(validatedAnswer);
       props.setCheckOptionStatus({
         name: 'Ok',
         color: 'text-[#0FB063]',
