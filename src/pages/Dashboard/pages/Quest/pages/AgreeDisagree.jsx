@@ -24,6 +24,8 @@ const AgreeDisagree = () => {
 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
+  const chatgptQuestionStatus = useSelector(createQuestAction.questionChatgptStatus);
+  const [prevStatus, setPrevStatus] = useState(chatgptQuestionStatus);
   const [question, setQuestion] = useState(createQuestSlice.question);
   const [prevValue, setPrevValue] = useState('');
   const [selectedOption, setSelectedOption] = useState(null);
@@ -39,7 +41,7 @@ const AgreeDisagree = () => {
     tooltipName: 'Please write something...',
     tooltipStyle: 'tooltip-info',
   };
-  const [checkQuestionStatus, setCheckQuestionStatus] = useState(reset);
+  const [questionStatusApi, setquestionStatusApi] = useState(questionStatus);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -129,27 +131,17 @@ const AgreeDisagree = () => {
 
   const handleQuestionChange = (e) => {
     setQuestion(e.target.value);
+    dispatch(createQuestAction.handleQuestionReset(e.target.value));
   };
 
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      if (prevValue === inputValue.trim()) {
-        setQuestion(inputValue);
-      } else {
-        setQuestion(inputValue);
-        dispatch(createQuestAction.handleQuestionReset(inputValue));
-      }
-    }, 500);
-
-    return () => clearTimeout(debounceTimer);
-  }, [question]);
-
   const questionVerification = async (value) => {
-    if (prevValue === question.trim()) return;
-
-    setPrevValue(value);
+    if (prevValue === question.trim()) {
+      setquestionStatusApi(prevStatus);
+      return;
+    }
 
     dispatch(createQuestAction.checkQuestion(value));
+    setPrevValue(value);
   };
 
   const checkHollow = () => {
@@ -178,7 +170,15 @@ const AgreeDisagree = () => {
       setQuestion(createQuestSlice.question);
       setPrevValue(createQuestSlice.question);
     }
-  }, [questionStatus]);
+
+    setquestionStatusApi(questionStatus);
+  }, [questionStatus, question]);
+
+  useEffect(() => {
+    if (chatgptQuestionStatus) {
+      setPrevStatus(chatgptQuestionStatus);
+    }
+  }, [chatgptQuestionStatus]);
 
   return (
     <>
@@ -205,13 +205,12 @@ const AgreeDisagree = () => {
           />
           <div
             id="test"
-            className={`relative flex items-center leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${questionStatus.color}`}
+            className={`relative flex items-center leading-none rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold dark:border-[#0D1012] dark:bg-[#0D1012] tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[0.625rem] ${questionStatusApi.color}`}
           >
             <div className="flex w-[50px] h-[75%] items-center justify-center border-l-[0.7px] tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[100px] laptop:w-[134px]">
-              {questionStatus.name}
-              {/* {checkQuestionStatus.name} */}
+              {questionStatusApi.name}
             </div>
-            <Tooltip optionStatus={questionStatus} />
+            <Tooltip optionStatus={questionStatusApi} />
           </div>
         </div>
         <div className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5">

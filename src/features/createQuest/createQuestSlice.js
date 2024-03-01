@@ -34,6 +34,13 @@ const initialState = {
     tooltipStyle: 'tooltip-info',
     status: false,
   },
+  chatgptStatus: {
+    name: 'Ok',
+    color: 'text-[#389CE3]',
+    tooltipName: 'Please write something...',
+    tooltipStyle: 'tooltip-info',
+    status: false,
+  },
   optionsValue: [
     {
       id: 'index-0',
@@ -154,6 +161,13 @@ export const createQuestSlice = createSlice({
         tooltipStyle: 'tooltip-success',
         status: false,
       };
+      state.chatgptStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+      };
     });
     builder.addCase(checkQuestion.fulfilled, (state, action) => {
       const { validatedQuestion, errorMessage } = action.payload;
@@ -167,8 +181,22 @@ export const createQuestSlice = createSlice({
             tooltipStyle: 'tooltip-error',
             duplication: true,
           };
+          state.chatgptStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+          };
         } else {
           state.questionReset = {
+            name: 'Rejected',
+            color: 'text-[#b00f0f]',
+            tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+            tooltipStyle: 'tooltip-error',
+            status: true,
+          };
+          state.chatgptStatus = {
             name: 'Rejected',
             color: 'text-[#b00f0f]',
             tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
@@ -186,10 +214,24 @@ export const createQuestSlice = createSlice({
           isVerifiedQuestion: true,
           status: false,
         };
+        state.chatgptStatus = {
+          name: 'Ok',
+          color: 'text-[#0FB063]',
+          tooltipName: 'Question is Verified',
+          tooltipStyle: 'tooltip-success',
+          isVerifiedQuestion: true,
+          status: false,
+        };
       }
     });
     builder.addCase(checkQuestion.rejected, (state, action) => {
       state.questionReset = {
+        name: 'Rejected',
+        color: 'text-[#b00f0f]',
+        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+        tooltipStyle: 'tooltip-error',
+      };
+      state.chatgptStatus = {
         name: 'Rejected',
         color: 'text-[#b00f0f]',
         tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
@@ -298,4 +340,5 @@ export default createQuestSlice.reducer;
 
 export const getCreate = (state) => state.createQuest.questions;
 export const questionStatus = (state) => state.createQuest.questionReset;
+export const questionChatgptStatus = (state) => state.createQuest.chatgptStatus;
 export const optionsValue = (state) => state.createQuest.optionsValue;
