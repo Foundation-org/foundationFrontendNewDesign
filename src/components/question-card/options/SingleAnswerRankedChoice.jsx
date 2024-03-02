@@ -1,15 +1,14 @@
 // import { toast } from 'sonner';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-
 import { Tooltip } from '../../../utils/Tooltip';
+import { useDispatch, useSelector } from 'react-redux';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
 import { answerValidation, checkAnswerExist } from '../../../services/api/questsApi';
 
 import BasicModal from '../../BasicModal';
 import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
-import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
 import ObjectionPopUp from '../../ObjectionPopUp';
 
 const SingleAnswerRankedChoice = (props) => {
@@ -30,6 +29,7 @@ const SingleAnswerRankedChoice = (props) => {
   };
 
   const [prevValue, setPrevValue] = useState('');
+  const [prevStatus, setPrevStatus] = useState(props.checkOptionStatus);
 
   const handleDeleteClose = () => setDeleteModal(false);
 
@@ -49,8 +49,12 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
-    setPrevValue('');
-    props.setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
+
+    if (prevValue === e.target.value.trim()) {
+      props.setCheckOptionStatus(prevStatus);
+    } else {
+      props.setCheckOptionStatus(reset);
+    }
   };
 
   const optionVerification = async (value) => {
@@ -62,12 +66,24 @@ const SingleAnswerRankedChoice = (props) => {
       tooltipName: 'Verifying your option. Please wait...',
       tooltipStyle: 'tooltip-success',
     });
+    setPrevStatus({
+      name: 'Checking',
+      color: 'text-[#0FB063]',
+      tooltipName: 'Verifying your option. Please wait...',
+      tooltipStyle: 'tooltip-success',
+    });
     // option Validation
     const { validatedAnswer, errorMessage } = await answerValidation({
       answer: value,
     });
     // If any error captured
     if (errorMessage) {
+      setPrevStatus({
+        name: 'Rejected',
+        color: 'text-[#b00f0f]',
+        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+        tooltipStyle: 'tooltip-error',
+      });
       return props.setCheckOptionStatus({
         name: 'Rejected',
         color: 'text-[#b00f0f]',
@@ -83,6 +99,13 @@ const SingleAnswerRankedChoice = (props) => {
       startQuest: true,
     });
     if (answerExist) {
+      setPrevStatus({
+        name: 'Duplicate',
+        color: 'text-[#EFD700]',
+        tooltipName: 'Found Duplication!',
+        tooltipStyle: 'tooltip-error',
+        duplication: true,
+      });
       return props.setCheckOptionStatus({
         name: 'Duplicate',
         color: 'text-[#EFD700]',
@@ -94,7 +117,14 @@ const SingleAnswerRankedChoice = (props) => {
     // Answer is validated and status is Ok
     if (validatedAnswer) {
       setAnswer(validatedAnswer);
-
+      setPrevValue(validatedAnswer);
+      setPrevStatus({
+        name: 'Ok',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Answer is Verified',
+        tooltipStyle: 'tooltip-success',
+        isVerifiedAnswer: true,
+      });
       props.setCheckOptionStatus({
         name: 'Ok',
         color: 'text-[#0FB063]',
@@ -226,16 +256,15 @@ const SingleAnswerRankedChoice = (props) => {
             } flex w-full justify-between bg-white dark:bg-[#0D1012]`}
           >
             {props.editable ? (
-              <input
+              <TextareaAutosize
                 id={`addedOption-${answer}`}
-                type="text"
-                className={`${
-                  props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
-                } w-full rounded-[4.73px] px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-[9px] tablet:pl-[18px] tablet:text-[19px]`}
-                value={answer}
                 onChange={handleInputChange}
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
+                value={answer}
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
+                className={`${
+                  props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
+                } w-full rounded-[4.73px] px-2 py-[5.6px] text-[8.52px] font-normal leading-none tablet:leading-[19px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] resize-none`}
               />
             ) : (
               <h1 className="pb-[5.6px] px-2 tablet:pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
@@ -246,11 +275,11 @@ const SingleAnswerRankedChoice = (props) => {
               <div
                 className={`${
                   props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012] ' : 'bg-white dark:bg-[#0D1012]'
-                } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:h-[43px] tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.25rem] ${
+                } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.25rem] ${
                   props.checkOptionStatus.color
                 }`}
               >
-                <div className="flex w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
+                <div className="flex w-[50px] h-[75%] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
                   <span>{props.checkOptionStatus.name}</span>
                 </div>
                 <Tooltip optionStatus={props.checkOptionStatus} />

@@ -12,7 +12,7 @@ export const Tooltip = ({ optionStatus }) => {
       {tooltipStatus?.name === 'Rejected' && (
         <div
           className={`absolute w-32 sm:w-[186px] md:w-52 xl:w-48 ${
-            tooltipStatus?.duplication ? '-top-[31px]' : '-top-[38px]'
+            tooltipStatus?.duplication ? '-top-[31px]' : '-top-[62px] tablet:-top-[124px]'
           } left-0 -translate-x-1/2 transform tablet:-left-[12px] laptop:left-1/2 ${
             tooltipStatus?.duplication ? 'tablet:-top-[100px]' : 'tablet:-top-[116px]'
           }`}
@@ -28,7 +28,7 @@ export const Tooltip = ({ optionStatus }) => {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="h-[8px] w-[8px] text-white tablet:h-4 tablet:w-4 laptop:h-6 laptop:w-6"
+                className="h-3 w-3 text-white tablet:h-4 tablet:w-4 laptop:h-6 laptop:w-6"
               >
                 <path
                   fillRule="evenodd"
@@ -72,7 +72,7 @@ export const Tooltip = ({ optionStatus }) => {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="h-[8px] w-[8px] text-white tablet:h-4 tablet:w-4 laptop:h-6 laptop:w-6"
+                className="h-3 w-3 text-white tablet:h-4 tablet:w-4 laptop:h-6 laptop:w-6"
               >
                 <path
                   fillRule="evenodd"
