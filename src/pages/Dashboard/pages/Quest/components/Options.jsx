@@ -90,22 +90,6 @@ const Options = ({
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
                 } w-5 min-w-5 border-y tablet:border-y-[3px]`}
               ></div>
-              {/* <input
-                id={`input-${number}`}
-                className={`${
-                  snapshot.isDragging
-                    ? 'border-[#5FA3D5] bg-[#F2F6FF]'
-                    : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                } w-full border-y tablet:border-y-[3px] h-[24.8px] tablet:h-[51px] laptop:h-[45px] text-[0.625rem] font-normal text-black focus-visible:outline-none dark:text-[#7C7C7C] tablet:pt-[6px] tablet:pb-[7px] tablet:text-[1.296rem] laptop:leading-none laptop:text-[18px]`}
-                onChange={(e) => handleChange(e.target.value)}
-                onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value.trim())}
-                value={typedValue}
-                placeholder="Add your own option"
-                tabIndex={number + 1}
-                onKeyDown={(e) =>
-                  (e.key === 'Tab' && handleTab(number)) || (e.key === 'Enter' && handleTab(number, 'Enter'))
-                }
-              /> */}
               <TextareaAutosize
                 id={`input-${number}`}
                 onChange={(e) => handleChange(e.target.value)}
@@ -120,7 +104,7 @@ const Options = ({
                   snapshot.isDragging
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                } box-border w-full resize-none border-y tablet:border-y-[3px] h-[24.8px] tablet:h-[51px] laptop:h-[45px] py-[5px] text-[0.625rem] leading-[13px] tablet:leading-[23px] font-normal text-[#7C7C7C] focus-visible:outline-none dark:text-[#7C7C7C] tablet:text-[1.296rem] tablet:py-[11px] laptop:text-[18px]`}
+                } box-border w-full resize-none border-y tablet:border-y-[3px] min-h-[25px] h-[25px] tablet:h-[51px] laptop:h-[45px] text-[0.625rem] leading-[25px] tablet:leading-[23px] font-normal text-[#7C7C7C] focus-visible:outline-none dark:text-[#7C7C7C] tablet:text-[1.296rem] tablet:py-[11px] laptop:text-[18px]`}
               />
               <div
                 id={`test${number}`}
