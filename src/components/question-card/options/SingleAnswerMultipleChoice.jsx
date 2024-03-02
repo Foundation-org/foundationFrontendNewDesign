@@ -1,8 +1,7 @@
-import { toast } from 'sonner';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+// import { toast } from 'sonner';
+import { useState, useEffect } from 'react';
 import { Tooltip } from '../../../utils/Tooltip';
+import { useDispatch, useSelector } from 'react-redux';
 import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
 
 import BasicModal from '../../BasicModal';
@@ -29,6 +28,7 @@ const SingleAnswerMultipleChoice = (props) => {
   };
 
   const [prevValue, setPrevValue] = useState('');
+  const [prevStatus, setPrevStatus] = useState(props.checkOptionStatus);
 
   const handleDeleteClose = () => setDeleteModal(false);
 
@@ -86,25 +86,24 @@ const SingleAnswerMultipleChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
+
+    if (prevValue === e.target.value.trim()) {
+      props.setCheckOptionStatus(prevStatus);
+    } else {
+      props.setCheckOptionStatus(reset);
+    }
   };
-
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      if (prevValue === answer.trim()) {
-        setAnswer(answer);
-      } else {
-        setAnswer(answer);
-        props.setCheckOptionStatus(answer.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
-      }
-    }, 500);
-
-    return () => clearTimeout(debounceTimer);
-  }, [answer]);
 
   const optionVerification = async (value) => {
     if (prevValue === answer) return;
     setPrevValue(value);
     props.setCheckOptionStatus({
+      name: 'Checking',
+      color: 'text-[#0FB063]',
+      tooltipName: 'Verifying your option. Please wait...',
+      tooltipStyle: 'tooltip-success',
+    });
+    setPrevStatus({
       name: 'Checking',
       color: 'text-[#0FB063]',
       tooltipName: 'Verifying your option. Please wait...',
@@ -116,6 +115,12 @@ const SingleAnswerMultipleChoice = (props) => {
     });
     // If any error captured
     if (errorMessage) {
+      setPrevStatus({
+        name: 'Rejected',
+        color: 'text-[#b00f0f]',
+        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+        tooltipStyle: 'tooltip-error',
+      });
       return props.setCheckOptionStatus({
         name: 'Rejected',
         color: 'text-[#b00f0f]',
@@ -131,6 +136,13 @@ const SingleAnswerMultipleChoice = (props) => {
       startQuest: true,
     });
     if (answerExist) {
+      setPrevStatus({
+        name: 'Duplicate',
+        color: 'text-[#EFD700]',
+        tooltipName: 'Found Duplication!',
+        tooltipStyle: 'tooltip-error',
+        duplication: true,
+      });
       return props.setCheckOptionStatus({
         name: 'Duplicate',
         color: 'text-[#EFD700]',
@@ -143,6 +155,13 @@ const SingleAnswerMultipleChoice = (props) => {
     if (validatedAnswer) {
       setAnswer(validatedAnswer);
       setPrevValue(validatedAnswer);
+      setPrevStatus({
+        name: 'Ok',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Answer is Verified',
+        tooltipStyle: 'tooltip-success',
+        isVerifiedAnswer: true,
+      });
       props.setCheckOptionStatus({
         name: 'Ok',
         color: 'text-[#0FB063]',

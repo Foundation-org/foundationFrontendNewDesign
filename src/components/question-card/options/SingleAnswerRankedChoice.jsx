@@ -1,15 +1,13 @@
 // import { toast } from 'sonner';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-
 import { Tooltip } from '../../../utils/Tooltip';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
 import { answerValidation, checkAnswerExist } from '../../../services/api/questsApi';
 
 import BasicModal from '../../BasicModal';
 import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
-import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
 import ObjectionPopUp from '../../ObjectionPopUp';
 
 const SingleAnswerRankedChoice = (props) => {
@@ -30,6 +28,7 @@ const SingleAnswerRankedChoice = (props) => {
   };
 
   const [prevValue, setPrevValue] = useState('');
+  const [prevStatus, setPrevStatus] = useState(props.checkOptionStatus);
 
   const handleDeleteClose = () => setDeleteModal(false);
 
@@ -49,28 +48,24 @@ const SingleAnswerRankedChoice = (props) => {
 
   const handleInputChange = (e) => {
     setAnswer(e.target.value);
+
+    if (prevValue === e.target.value.trim()) {
+      props.setCheckOptionStatus(prevStatus);
+    } else {
+      props.setCheckOptionStatus(reset);
+    }
   };
-
-  // setPrevValue('');
-  // props.setCheckOptionStatus(e.target.value.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
-
-  useEffect(() => {
-    const debounceTimer = setTimeout(() => {
-      if (prevValue === answer.trim()) {
-        setAnswer(answer);
-      } else {
-        setAnswer(answer);
-        props.setCheckOptionStatus(answer.trim() === '' ? reset : { name: 'Ok', color: 'text-[#b0a00f]' });
-      }
-    }, 500);
-
-    return () => clearTimeout(debounceTimer);
-  }, [answer]);
 
   const optionVerification = async (value) => {
     if (prevValue === answer) return;
     setPrevValue(value);
     props.setCheckOptionStatus({
+      name: 'Checking',
+      color: 'text-[#0FB063]',
+      tooltipName: 'Verifying your option. Please wait...',
+      tooltipStyle: 'tooltip-success',
+    });
+    setPrevStatus({
       name: 'Checking',
       color: 'text-[#0FB063]',
       tooltipName: 'Verifying your option. Please wait...',
@@ -82,6 +77,12 @@ const SingleAnswerRankedChoice = (props) => {
     });
     // If any error captured
     if (errorMessage) {
+      setPrevStatus({
+        name: 'Rejected',
+        color: 'text-[#b00f0f]',
+        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+        tooltipStyle: 'tooltip-error',
+      });
       return props.setCheckOptionStatus({
         name: 'Rejected',
         color: 'text-[#b00f0f]',
@@ -97,6 +98,13 @@ const SingleAnswerRankedChoice = (props) => {
       startQuest: true,
     });
     if (answerExist) {
+      setPrevStatus({
+        name: 'Duplicate',
+        color: 'text-[#EFD700]',
+        tooltipName: 'Found Duplication!',
+        tooltipStyle: 'tooltip-error',
+        duplication: true,
+      });
       return props.setCheckOptionStatus({
         name: 'Duplicate',
         color: 'text-[#EFD700]',
@@ -109,6 +117,13 @@ const SingleAnswerRankedChoice = (props) => {
     if (validatedAnswer) {
       setAnswer(validatedAnswer);
       setPrevValue(validatedAnswer);
+      setPrevStatus({
+        name: 'Ok',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Answer is Verified',
+        tooltipStyle: 'tooltip-success',
+        isVerifiedAnswer: true,
+      });
       props.setCheckOptionStatus({
         name: 'Ok',
         color: 'text-[#0FB063]',
