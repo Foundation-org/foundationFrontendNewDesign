@@ -8,11 +8,17 @@ import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-import { LoginSocialFacebook,LoginSocialInstagram,LoginSocialLinkedin,LoginSocialTwitter, LoginSocialGithub} from 'reactjs-social-login';
+import {
+  LoginSocialFacebook,
+  LoginSocialInstagram,
+  LoginSocialLinkedin,
+  LoginSocialTwitter,
+  LoginSocialGithub,
+} from 'reactjs-social-login';
 import PopUp from '../../../../../components/ui/PopUp';
 import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
-import FirstNamePopup from '../../../../../components/dialogue-boxes/FirstNamePopup';
+import PersonalBadgesPopup from '../../../../../components/dialogue-boxes/PersonalBadgesPopup';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -191,7 +197,7 @@ const VerificationBadges = () => {
       NoOfButton: 1,
       // NoOfButton: 2,
       ButtonText: 'Add New Badge',
-      type: 'FirstName',
+      type: 'firstName',
       disabled: false,
     },
     {
@@ -200,7 +206,7 @@ const VerificationBadges = () => {
       ButtonColor: 'blue',
       NoOfButton: 1,
       ButtonText: 'Add New Badge',
-      type: 'LastName',
+      type: 'lastName',
       disabled: false,
     },
     {
@@ -209,7 +215,7 @@ const VerificationBadges = () => {
       ButtonColor: 'blue',
       NoOfButton: 1,
       ButtonText: 'Add New Badge',
-      type: 'DOB',
+      type: 'dateOfBirth',
       disabled: false,
     },
     {
@@ -286,6 +292,9 @@ const VerificationBadges = () => {
 
   const checkPersonal = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
   const checkSocial = (itemType) => fetchUser?.badges?.some((i) => i.accountName === itemType);
+  const checkPersonalBadge = (itemType) => 
+  fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
+
 
   // Handle Remove Badge
   const handleRemoveBadge = async (accountName) => {
@@ -439,26 +448,29 @@ const VerificationBadges = () => {
       {/* Personal Badges Popup */}
       {isPersonalPopup &&
         (seletedPersonalBadge === 'FirstName' ? (
-          <FirstNamePopup
+          <PersonalBadgesPopup
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
             title="First Name"
+            type={'FirstName'}
             logo="/assets/profile/firstname.png"
             placeholder="First Name here"
           />
         ) : seletedPersonalBadge === 'LastName' ? (
-          <FirstNamePopup
+          <PersonalBadgesPopup
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
             title="Last Name"
+            type={'LastName'}
             logo="/assets/profile/lastname.png"
             placeholder="Last Name here"
           />
         ) : seletedPersonalBadge === 'DOB' ? (
-          <FirstNamePopup
+          <PersonalBadgesPopup
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
             title="Date of Birth"
+            type={'dateOfBirth'}
             logo="/assets/profile/dob.svg"
             placeholder="MM/DD/YYYY"
           />
@@ -711,7 +723,6 @@ const VerificationBadges = () => {
                 </span>
               </Button>
             ) : (
-           
               <LoginSocialLinkedin
                 // isOnlyGetToken
                 client_id={import.meta.env.VITE_LINKEDIN_KEY}
@@ -730,8 +741,8 @@ const VerificationBadges = () => {
                   onClick={() => {
                     checkSocial('linkedin') && handleRemoveBadge('linkedin');
                   }}
-                  >
-                    {console.log(import.meta.env.VITE_LINKEDIN_KEY)}
+                >
+                  {console.log(import.meta.env.VITE_LINKEDIN_KEY)}
                   {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
                   <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
                     {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
@@ -741,8 +752,8 @@ const VerificationBadges = () => {
             )}
           </div>
         </div>
-         {/* ...........................Twitter......................  */}
-         <div className="flex items-center justify-center">
+        {/* ...........................Twitter......................  */}
+        <div className="flex items-center justify-center">
           <div className="flex items-center justify-center">
             <img
               src="/assets/profile/Twitter-2x.png"
@@ -847,8 +858,8 @@ const VerificationBadges = () => {
             )}
           </div>
         </div>
-         {/* ...........................Instagram......................  */}
-         <div className="flex items-center justify-center">
+        {/* ...........................Instagram......................  */}
+        <div className="flex items-center justify-center">
           <div className="flex items-center justify-center">
             <img
               src="/assets/profile/Instagram-2x.png"
@@ -927,8 +938,8 @@ const VerificationBadges = () => {
               </Button>
             ) : (
               <LoginSocialInstagram
-              client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-              client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
+                client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
+                client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
                 onResolve={({ provider, data }) => {
                   handleAddBadge(provider, data);
                 }}
@@ -1159,12 +1170,13 @@ const VerificationBadges = () => {
               <Button color={item.ButtonColor}>{item.ButtonText}</Button>
             )} */}
             <Button
-              color={item.ButtonColor}
+              color={checkPersonalBadge(item.type) ? 'yellow' : item.ButtonColor}
               onClick={() =>
                 !checkPersonal(item.type) && item.ButtonColor !== 'gray' && handleClickPesonalBadges(item.type)
               }
             >
-              {item.ButtonText}
+              {console.log(item.type)}
+              {checkPersonalBadge(item.type) ? 'Added' : item.ButtonText}
               <span className="text-[7px] laptop:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[3px] laptop:pl-[10px]">
                 (+0.96 FDX)
               </span>
