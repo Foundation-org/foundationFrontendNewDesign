@@ -876,7 +876,7 @@ const VerificationBadges = () => {
         <h1 className="font-500 font-Inter my-[3px] text-[9.74px] font-medium text-[#000] tablet:text-[1.7vw] dark:text-white">
           Personal
         </h1>
-        <Personal fetchUser={fetchUser} />
+        <Personal handleUserInfo={handleUserInfo} fetchUser={fetchUser} />
       </div>
     </div>
   );

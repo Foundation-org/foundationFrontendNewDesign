@@ -5,7 +5,7 @@ import Button from '../../components/Button';
 import PersonalBadgesPopup from '../../../../../../components/dialogue-boxes/PersonalBadgesPopup';
 import WorkEducationBadgePopup from '../../../../../../components/dialogue-boxes/WorkEducationBadgePopup';
 
-export default function Personal({ fetchUser }) {
+export default function Personal({ handleUserInfo, fetchUser }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -49,6 +49,7 @@ export default function Personal({ fetchUser }) {
             type={'firstName'}
             logo="/assets/profile/firstname.png"
             placeholder="First Name here"
+            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -61,6 +62,7 @@ export default function Personal({ fetchUser }) {
             type={'lastName'}
             logo="/assets/profile/lastname.png"
             placeholder="Last Name here"
+            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -73,6 +75,7 @@ export default function Personal({ fetchUser }) {
             type={'dateOfBirth'}
             logo="/assets/profile/dob.svg"
             placeholder="MM/DD/YYYY"
+            handleUserInfo={handleUserInfo}
           />
         );
 

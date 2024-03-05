@@ -33,6 +33,7 @@ export const contacts = [
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     disabled: true,
+    type: 'cell-phone',
   },
 ];
 

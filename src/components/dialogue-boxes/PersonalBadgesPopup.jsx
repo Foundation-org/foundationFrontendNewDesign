@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Button } from '../ui/Button';
 import { useQuery } from '@tanstack/react-query';
 import { validation } from '../../services/api/badgesApi';
-
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
@@ -13,7 +12,7 @@ const data = [
   { id: 2, name: 'Item 2' },
 ];
 
-const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placeholder }) => {
+const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, handleUserInfo }) => {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
 
@@ -22,22 +21,8 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const handleNameChange = (e) => setName(e.target.value);
 
   const handleDateChange = (event) => {
-    let inputValue = event.target.value.replace(/\D/g, '');
-    let formattedValue = '';
-
-    if (inputValue.length > 2) {
-      formattedValue += inputValue.substring(0, 2) + '/';
-      if (inputValue.length > 4) {
-        formattedValue += inputValue.substring(2, 4) + '/';
-        formattedValue += inputValue.substring(4, 8);
-      } else {
-        formattedValue += inputValue.substring(2);
-      }
-    } else {
-      formattedValue = inputValue;
-    }
-
-    setDate(formattedValue.substring(0, 10));
+    const selectedDate = event.target.value;
+    setDate(selectedDate);
   };
 
   const { data: apiResp } = useQuery({
@@ -54,8 +39,10 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     }
 
     if (value === '') {
-      toast.warning('');
+      toast.warning('Field cannot be empty!');
+      return;
     }
+
     try {
       const addBadge = await api.post(`/addBadge/personal/add`, {
         personal: {
@@ -65,6 +52,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
+        handleUserInfo();
         handleClose();
       }
     } catch (error) {
@@ -129,15 +117,13 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       {title === 'Date of Birth' && (
         <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
           <input
-            type="text"
+            type="date"
             id="dateInput"
             value={date}
-            maxLength="10"
             onChange={handleDateChange}
-            placeholder="MM/DD/YYYY"
-            className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
+            className="revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
           />
-          <div className="flex justify-end">
+          <div className="mt-[10px] flex justify-end tablet:mt-5">
             <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
               Add
             </Button>
