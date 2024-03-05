@@ -52,6 +52,10 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     } else {
       value = name;
     }
+
+    if (value === '') {
+      toast.warning('');
+    }
     try {
       const addBadge = await api.post(`/addBadge/personal/add`, {
         personal: {
@@ -89,8 +93,10 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
               )}
             </div>
-            <div className="mt-[10px] flex justify-end tablet:mt-5" onClick={() => handleAddPersonalBadge()}>
-              <Button variant="submit">Add</Button>
+            <div className="mt-[10px] flex justify-end tablet:mt-5">
+              <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
+                Add
+              </Button>
             </div>
           </>
         ) : (
@@ -105,8 +111,10 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             {isError && (
               <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
             )}
-            <div className="mt-[10px] flex justify-end tablet:mt-5" onClick={() => handleAddPersonalBadge()}>
-              <Button variant="submit">Add</Button>
+            <div className="mt-[10px] flex justify-end tablet:mt-5">
+              <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
+                Add
+              </Button>
             </div>
           </div>
         )}
@@ -129,8 +137,10 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             placeholder="MM/DD/YYYY"
             className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
           />
-          <div className="flex justify-end" onClick={() => handleAddPersonalBadge()}>
-            <Button variant="submit">Add</Button>
+          <div className="flex justify-end">
+            <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
+              Add
+            </Button>
           </div>
         </div>
       )}
