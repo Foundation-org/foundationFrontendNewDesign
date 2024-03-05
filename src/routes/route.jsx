@@ -30,6 +30,7 @@ import CustomerSupport from '../pages/Dashboard/pages/CustomerSupport';
 import GuestRedirect from '../pages/DashboardRedirect/GuestRedirect';
 import { useSelector } from 'react-redux';
 import Maintenance from '../pages/Maintenance/maintenance';
+import Welcome from '../pages/Welcome/welcome';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -56,6 +57,7 @@ export function Router() {
             <Route path="/auth0" element={<DashboardRedirect />} />
             <Route path="/p/:id" element={<GuestRedirect />} />
             <Route path="*" element={<Navigate to="/" />} />
+            <Route path='/welcome' element={<Welcome/>}/>
           </Routes>
         </>
       ) : (

@@ -33,14 +33,7 @@ const data = [
     id:6,
     title: 'Duplicate / Similar Post',
   },
-  {
-    id: 7,
-    title: 'Offensive',
-  },
-  {
-    id: 8,
-    title: 'Spam',
-  },
+  
 ];
 
 const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, children }) => {
