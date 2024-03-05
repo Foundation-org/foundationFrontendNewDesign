@@ -14,7 +14,7 @@
 }
 
 .heading {
-  @apply text-[12px] font-semibold leading-normal text-[#616161] dark:text-white 2xl:text-[30px] tablet:text-[26.9px] laptop:text-[25px];
+  @apply text-[12px] font-semibold leading-normal text-[#616161] 2xl:text-[30px] tablet:text-[26.9px] laptop:text-[25px] dark:text-white;
 }
 
 .green-select {
@@ -38,31 +38,31 @@
 }
 
 .quest-topbar {
-  @apply rounded-[4.619px] border-[0.95px] px-[5.6px] py-[4.311px] text-[6px] font-semibold leading-normal laptop:leading-none tablet:rounded-[9.675px] tablet:border-[3px] tablet:px-1 tablet:py-[9.03px] tablet:text-[12px] laptop:rounded-[15px] laptop:px-[9px] laptop:py-[14px] laptop:text-[25px];
+  @apply rounded-[4.619px] border-[0.95px] px-[5.6px] py-[4.311px] text-[6px] font-semibold leading-normal tablet:rounded-[9.675px] tablet:border-[3px] tablet:px-1 tablet:py-[9.03px] tablet:text-[12px] laptop:rounded-[15px] laptop:px-[9px] laptop:py-[14px] laptop:text-[25px] laptop:leading-none;
 }
 
 .pagination-btn {
-  @apply flex h-[0.9rem] w-[0.9rem] items-center justify-center rounded-[0.15rem] border border-solid border-[#EEEEEE] bg-[#F5F5F5] dark:bg-[#A5A5A5] tablet:h-7 tablet:w-[27px] tablet:rounded-md;
+  @apply flex h-[0.9rem] w-[0.9rem] items-center justify-center rounded-[0.15rem] border border-solid border-[#EEEEEE] bg-[#F5F5F5] tablet:h-7 tablet:w-[27px] tablet:rounded-md dark:bg-[#A5A5A5];
 }
 
 .dragIconWrapper {
-  @apply flex min-w-[12.28px] w-[12.28px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] dark:bg-[#9E9E9E] tablet:w-[28px] tablet:rounded-l-[10px] tablet:py-[10px] laptop:min-w-[25.2px] laptop:w-[25.2px];
+  @apply flex w-[12.28px] min-w-[12.28px] items-center justify-center rounded-l-[5.387px] bg-[#DEE6F7] py-[6.84px] tablet:w-[28px] tablet:rounded-l-[10px] tablet:py-[10px] laptop:w-[25.2px] laptop:min-w-[25.2px] dark:bg-[#9E9E9E];
 }
 
 .term_policy_heading {
-  @apply text-[10px] tablet:text-[20px] font-semibold tablet:font-bold leading-[146%] tracking-[3%];
+  @apply text-[10px] font-semibold leading-[146%] tracking-[3%] tablet:text-[20px] tablet:font-bold;
 }
 
 .term_policy_subheading {
-  @apply text-[10px] tablet:text-[20px] font-semibold leading-[146%] tracking-[3%];
+  @apply text-[10px] font-semibold leading-[146%] tracking-[3%] tablet:text-[20px];
 }
 
 .term_policy_paragraph {
-  @apply text-[8px] tablet:text-[20px] font-normal tablet:font-medium leading-[146%] tablet:leading-[29.2px] tracking-[3%];
+  @apply text-[8px] font-normal leading-[146%] tracking-[3%] tablet:text-[20px] tablet:font-medium tablet:leading-[29.2px];
 }
 
 .list-decimal li::marker {
-  @apply font-semibold tablet:font-bold text-[10px] tablet:text-[20px];
+  @apply text-[10px] font-semibold tablet:text-[20px] tablet:font-bold;
 }
 
 .kqFNyH {
@@ -534,4 +534,8 @@ input.hide_number_input_arrows::-webkit-outer-spin-button,
 input.hide_number_input_arrows2::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.revert-calender-color[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* This will invert the color, change it to your desired color or styling */
 }
