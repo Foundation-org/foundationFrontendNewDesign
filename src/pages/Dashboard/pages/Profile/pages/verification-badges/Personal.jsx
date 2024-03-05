@@ -144,25 +144,25 @@ export default function Personal({ fetchUser }) {
             title="ID / Passport"
             type={'id-passport'}
             logo="/assets/profile/Identity-2x-1.png"
-            placeholder="Relationship here"
+            placeholder="ID / Passport here"
           />
         );
 
       case 'geolocation':
         return (
-          <WorkEducationBadgePopup
+          <PersonalBadgesPopup
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
-            title="Education"
+            title="Geolocation"
             type={'geolocation'}
             logo="/assets/profile/education-1.png"
-            placeholder="Relationship here"
+            placeholder="Geolocation"
           />
         );
 
       case 'security-question':
         return (
-          <WorkEducationBadgePopup
+          <PersonalBadgesPopup
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
             title="Security Question"

@@ -201,7 +201,7 @@ export const personal = [
     ButtonColor: 'gray',
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
-    type: 'education',
+    type: 'geolocation',
     disabled: false,
   },
   {

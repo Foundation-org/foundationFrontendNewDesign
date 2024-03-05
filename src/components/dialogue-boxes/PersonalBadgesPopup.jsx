@@ -6,6 +6,12 @@ import { validation } from '../../services/api/badgesApi';
 
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
+import CustomCombobox from '../ui/Combobox';
+
+const data = [
+  { id: 1, name: 'Item 1' },
+  { id: 2, name: 'Item 2' },
+];
 
 const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placeholder }) => {
   const [name, setName] = useState('');
@@ -41,7 +47,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   const handleAddPersonalBadge = async () => {
     let value;
-    if (type.trim() === "dateOfBirth") {
+    if (type.trim() === 'dateOfBirth') {
       value = date;
     } else {
       value = name;
@@ -63,24 +69,47 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     }
   };
 
-  const renderInputField = (title, name, handleNameChange, placeholder, apiResp) => {
+  const renderInputField = (title, name, handleNameChange, placeholder, apiResp, data) => {
     const isError = apiResp?.data?.message === 'No';
 
     return (
-      <div className="px-5 pb-[15px] pt-2 tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-        <div>
-          <input
-            type="text"
-            value={name}
-            onChange={handleNameChange}
-            placeholder={placeholder}
-            className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px] ${isError && 'mb-[10px] tablet:mb-5'}`}
-          />
-          {isError && <p className="text-red ml-1 text-[6.8px] tablet:text-[14px]">{`Invalid ${title}!`}</p>}
-          <div className="flex justify-end" onClick={() => handleAddPersonalBadge()}>
-            <Button variant="submit">Add</Button>
+      <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+        {data && data.length >= 1 ? (
+          <>
+            <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
+              <CustomCombobox items={data} />
+              <input
+                type="text"
+                value={name}
+                onChange={handleNameChange}
+                placeholder={placeholder}
+                className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
+              />
+              {isError && (
+                <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
+              )}
+            </div>
+            <div className="mt-[10px] flex justify-end tablet:mt-5" onClick={() => handleAddPersonalBadge()}>
+              <Button variant="submit">Add</Button>
+            </div>
+          </>
+        ) : (
+          <div className="relative">
+            <input
+              type="text"
+              value={name}
+              onChange={handleNameChange}
+              placeholder={placeholder}
+              className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
+            />
+            {isError && (
+              <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
+            )}
+            <div className="mt-[10px] flex justify-end tablet:mt-5" onClick={() => handleAddPersonalBadge()}>
+              <Button variant="submit">Add</Button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   };
@@ -90,7 +119,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       {title === 'First Name' && renderInputField('First Name', name, handleNameChange, placeholder, apiResp)}
       {title === 'Last Name' && renderInputField('Last Name', name, handleNameChange, placeholder, apiResp)}
       {title === 'Date of Birth' && (
-        <div>
+        <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
           <input
             type="text"
             id="dateInput"
@@ -98,7 +127,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             maxLength="10"
             onChange={handleDateChange}
             placeholder="MM/DD/YYYY"
-            className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px] ${apiResp?.data?.message !== 'No' && 'mb-[10px] tablet:mb-5'}  `}
+            className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
           />
           <div className="flex justify-end" onClick={() => handleAddPersonalBadge()}>
             <Button variant="submit">Add</Button>
@@ -110,6 +139,9 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       {title === 'Relationship Status' &&
         renderInputField('Relationship Status', name, handleNameChange, placeholder, apiResp)}
       {title === 'ID / Passport' && renderInputField('ID / Passport', name, handleNameChange, placeholder, apiResp)}
+      {title === 'Geolocation' && renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp)}
+      {title === 'Security Question' &&
+        renderInputField('Security Question', name, handleNameChange, placeholder, apiResp, data)}
     </PopUp>
   );
 };
