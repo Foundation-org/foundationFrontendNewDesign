@@ -41,7 +41,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   const handleAddPersonalBadge = async () => {
     let value;
-    if (type === 'dataOfBirth') {
+    if (type.trim() === "dateOfBirth") {
       value = date;
     } else {
       value = name;
@@ -55,10 +55,6 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
-        handleClose();
-      }
-      if (addBadge.status === 201) {
-        toast.success('Email Send Successfully!');
         handleClose();
       }
     } catch (error) {
@@ -104,9 +100,6 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             placeholder="MM/DD/YYYY"
             className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px] ${apiResp?.data?.message !== 'No' && 'mb-[10px] tablet:mb-5'}  `}
           />
-          {apiResp?.data?.message === 'No' && (
-            <p className="text-red ml-1 text-[6.8px]  tablet:text-[14px]">Invalid Date of Birth!</p>
-          )}
           <div className="flex justify-end" onClick={() => handleAddPersonalBadge()}>
             <Button variant="submit">Add</Button>
           </div>

@@ -12,7 +12,7 @@ export default function Personal({ fetchUser }) {
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
   const [seletedPersonalBadge, setSelectedPersonalBadge] = useState('');
 
-  const checkPersonal = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
+  // const checkPersonal = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
   const checkPersonalBadge = (itemType) =>
     fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
 
@@ -34,8 +34,6 @@ export default function Personal({ fetchUser }) {
     }
   };
 
-  console.log(isPersonalPopup, seletedPersonalBadge);
-
   const renderPersonalBadgesPopup = () => {
     if (!isPersonalPopup) {
       return null;
@@ -48,7 +46,7 @@ export default function Personal({ fetchUser }) {
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
             title="First Name"
-            type={'FirstName'}
+            type={'firstName'}
             logo="/assets/profile/firstname.png"
             placeholder="First Name here"
           />
@@ -60,7 +58,7 @@ export default function Personal({ fetchUser }) {
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
             title="Last Name"
-            type={'LastName'}
+            type={'lastName'}
             logo="/assets/profile/lastname.png"
             placeholder="Last Name here"
           />
@@ -214,14 +212,14 @@ export default function Personal({ fetchUser }) {
               onClick={() => {
                 handleClickPesonalBadges(item.type);
               }}
-              //   onClick={() =>
-              //     !checkPersonal(item.type) && item.ButtonColor !== 'gray' && handleClickPesonalBadges(item.type)
-              //   }
+              disabled={checkPersonalBadge(item.type)}
             >
               {checkPersonalBadge(item.type) ? 'Added' : item.ButtonText}
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                (+0.96 FDX)
-              </span>
+              {!checkPersonalBadge(item.type) && (
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                  (+0.96 FDX)
+                </span>
+              )}
             </Button>
           </div>
         ))}
