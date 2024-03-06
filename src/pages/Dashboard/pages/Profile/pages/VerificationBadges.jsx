@@ -35,7 +35,7 @@ const VerificationBadges = () => {
 
   const handleBadgesClose = () => setModalVisible(false);
   const checkWeb3Badge = (itemType) =>
-  fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
+    fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
 
   const handleUserInfo = async (id) => {
     try {
@@ -50,9 +50,6 @@ const VerificationBadges = () => {
       toast.error(e.response.data.message.split(':')[1]);
     }
   };
-
-
-
 
   useEffect(() => {
     handleUserInfo();
@@ -163,21 +160,21 @@ const VerificationBadges = () => {
     setModalVisible(true);
   };
 
-  const handleWeb3 = async (title,type) => {
+  const handleWeb3 = async (title, type) => {
     let value;
     if (title === 'Ethereum Wallet') {
-      if (window.ethereum) {  
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-      const _walletAddress = await signer.getAddress();
-      value=_walletAddress;
-    } else {
-      console.log('Wallet not detected');
-      toast.warning("Please install an Etherium wallet");
+      if (window.ethereum) {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+        const _walletAddress = await signer.getAddress();
+        value = _walletAddress;
+      } else {
+        console.log('Wallet not detected');
+        toast.warning('Please install an Etherium wallet');
+        return;
+      }
     }
-
-    }
-    if(value===''){
+    if (value === '') {
       return;
     }
     try {
@@ -889,9 +886,9 @@ const VerificationBadges = () => {
               <h1>{item.title}</h1>
             </div>
             <Button
-               color={checkWeb3Badge(item.type) ? 'yellow' : item.ButtonColor}
+              color={checkWeb3Badge(item.type) ? 'yellow' : item.ButtonColor}
               onClick={() => {
-                handleWeb3(item?.title,item?.type);
+                handleWeb3(item?.title, item?.type);
               }}
               disabled={checkWeb3Badge(item.type)}
             >
