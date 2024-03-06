@@ -483,6 +483,7 @@ const VerificationBadges = () => {
                 onResolve={({ provider, data }) => {
                   handleAddBadge(provider, data);
                 }}
+                scope='profile,email,openid'
                 redirect_uri={window.location.href}
                 onReject={(err) => {
                   console.log(err);
