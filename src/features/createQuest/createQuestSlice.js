@@ -58,6 +58,7 @@ const initialState = {
         tooltipName: 'Please write something...',
         tooltipStyle: 'tooltip-info',
       },
+      isTyping: true,
     },
     {
       id: 'index-1',
@@ -75,6 +76,7 @@ const initialState = {
         tooltipName: 'Please write something...',
         tooltipStyle: 'tooltip-info',
       },
+      isTyping: true,
     },
     {
       selected: false,
@@ -92,6 +94,7 @@ const initialState = {
         tooltipName: 'Please write something...',
         tooltipStyle: 'tooltip-info',
       },
+      isTyping: true,
     },
   ],
   optionslength: 3,
@@ -278,6 +281,7 @@ export const createQuestSlice = createSlice({
                 tooltipName: 'Verifying your answer. Please wait...',
                 tooltipStyle: 'tooltip-success',
               },
+              isTyping: false,
             }
           : option;
       });
@@ -314,6 +318,7 @@ export const createQuestSlice = createSlice({
                     tooltipStyle: 'tooltip-error',
                     duplication: true,
                   },
+                  isTyping: false,
                 }
               : option;
           });
@@ -336,6 +341,7 @@ export const createQuestSlice = createSlice({
                     tooltipName: 'Answer is Verified',
                     tooltipStyle: 'tooltip-success',
                   },
+                  isTyping: false,
                 }
               : option;
           });
@@ -358,6 +364,7 @@ export const createQuestSlice = createSlice({
                   tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
                   tooltipStyle: 'tooltip-error',
                 },
+                isTyping: false,
               }
             : option;
         });

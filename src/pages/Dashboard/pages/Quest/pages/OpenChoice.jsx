@@ -129,7 +129,7 @@ const OpenChoice = () => {
           ...newTypedValues[index],
           question: value,
           optionStatus: optionsValue[index].chatgptOptionStatus,
-          isTyping: true,
+          isTyping: false,
         };
 
         return newTypedValues;
@@ -162,6 +162,7 @@ const OpenChoice = () => {
           newTypedValues[index] = {
             ...newTypedValues[index],
             optionStatus: optionsValue[index].chatgptOptionStatus,
+            isTyping: false,
           };
 
           return newTypedValues;
@@ -305,20 +306,6 @@ const OpenChoice = () => {
       setHollow(true);
     }
   }, [typedValues, question]);
-
-  useEffect(() => {
-    const typingTimer = setTimeout(() => {
-      setTypedValues((prevValues) => {
-        const newTypedValues = prevValues.map((typedValue) => ({
-          ...typedValue,
-          isTyping: false,
-        }));
-        return newTypedValues;
-      });
-    }, 1000);
-
-    return () => clearTimeout(typingTimer);
-  }, [typedValues]);
 
   return (
     <CreateQuestWrapper

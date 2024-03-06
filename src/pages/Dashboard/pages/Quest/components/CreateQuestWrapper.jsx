@@ -15,7 +15,7 @@ export default function CreateQuestWrapper({ question, setQuestion, type, handle
   const [prevValue, setPrevValue] = useState('');
   const [questionStatusApi, setquestionStatusApi] = useState(questionStatus);
   const [prevStatus, setPrevStatus] = useState(chatgptQuestionStatus);
-  const [isTyping, setIsTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(true);
 
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
@@ -27,6 +27,7 @@ export default function CreateQuestWrapper({ question, setQuestion, type, handle
     }
 
     if (prevValue === e.target.value.trim()) {
+      setIsTyping(false);
       setquestionStatusApi(prevStatus);
     } else {
       setquestionStatusApi(questionStatus);
@@ -40,6 +41,7 @@ export default function CreateQuestWrapper({ question, setQuestion, type, handle
       return;
     }
 
+    setIsTyping(false);
     dispatch(createQuestAction.checkQuestion(value));
     setPrevValue(value);
   };
@@ -60,15 +62,6 @@ export default function CreateQuestWrapper({ question, setQuestion, type, handle
       setPrevStatus(chatgptQuestionStatus);
     }
   }, [chatgptQuestionStatus]);
-
-  // Reset the typing counter to false when stop typing
-  useEffect(() => {
-    const typingTimer = setTimeout(() => {
-      setIsTyping(false);
-    }, 1000);
-
-    return () => clearTimeout(typingTimer);
-  }, [question]);
 
   return (
     <>
