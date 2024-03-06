@@ -22,6 +22,7 @@ const Options = ({
   answerVerification,
   optionStatus,
   handleTab,
+  isTyping,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -71,7 +72,7 @@ const Options = ({
               <div
                 className={`${
                   snapshot.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-                } dragIconWrapper border-y tablet:border-y-[3px] border-s tablet:border-s-[3px]`}
+                } dragIconWrapper border-y border-s tablet:border-y-[3px] tablet:border-s-[3px]`}
               >
                 {persistedTheme === 'dark' ? (
                   <img
@@ -104,7 +105,7 @@ const Options = ({
                   snapshot.isDragging
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                } box-border w-full resize-none border-y tablet:border-y-[3px] min-h-[25px] h-[25px] tablet:h-[51px] laptop:h-[45px] text-[0.625rem] leading-[25px] tablet:leading-[23px] font-normal text-[#7C7C7C] focus-visible:outline-none dark:text-[#7C7C7C] tablet:text-[1.296rem] tablet:py-[11px] laptop:text-[18px]`}
+                } box-border h-[25px] min-h-[25px] w-full resize-none border-y text-[0.625rem] font-normal leading-[25px] text-[#7C7C7C] focus-visible:outline-none tablet:h-[51px] tablet:border-y-[3px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:h-[45px] laptop:text-[18px] dark:text-[#7C7C7C]`}
               />
               <div
                 id={`test${number}`}
@@ -112,19 +113,19 @@ const Options = ({
                   snapshot.isDragging
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                } relative flex items-center rounded-r-[0.33rem] border-y tablet:border-y-[3px] border-r tablet:border-r-[3px] text-[0.5rem] font-semibold tablet:rounded-r-[10.3px] tablet:text-[1rem] laptop:text-[1.25rem] laptop:rounded-r-[10px] leading-none ${
+                } relative flex items-center rounded-r-[0.33rem] border-y border-r text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[10px] laptop:text-[1.25rem] ${
                   optionStatus.color
                 }`}
               >
-                <div className="flex w-[50px] h-[75%] items-center justify-center border-l tablet:border-l-[3px] border-[#DEE6F7] tablet:w-[99.58px] laptop:w-[134px]">
-                  <span>{optionStatus.name}</span>
+                <div className="flex h-[75%] w-[50px] items-center justify-center border-l border-[#DEE6F7] tablet:w-[99.58px] tablet:border-l-[3px] laptop:w-[134px]">
+                  <span> {isTyping ? `${typedValue.length}/350` : optionStatus.name} </span>
                 </div>
                 <Tooltip optionStatus={optionStatus} />
               </div>
               {(title === 'RankChoice' || title === 'MultipleChoice' || title === 'OpenChoice') && trash && (
                 <div
                   id={`test${number}`}
-                  className={`flex h-[24.8px] items-center text-[0.5rem] font-semibold dark:bg-[#141618] xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[45px] ${optionStatus?.color} py-[0.29rem]`}
+                  className={`flex h-[24.8px] items-center text-[0.5rem] font-semibold xl:text-[1.875rem] tablet:h-[50.19px] tablet:text-[17.54px] laptop:h-[45px] dark:bg-[#141618] ${optionStatus?.color} py-[0.29rem]`}
                 >
                   <div className="flex w-5 items-center justify-center tablet:w-[52.78px]">
                     <>

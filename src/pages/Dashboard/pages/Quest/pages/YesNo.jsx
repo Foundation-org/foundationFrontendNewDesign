@@ -65,7 +65,7 @@ const YesNo = () => {
       toast.warning(
         <p>
           Please{' '}
-          <span className="text-[#389CE3] underline cursor-pointer" onClick={() => navigate('/guest-signup')}>
+          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
             Create an Account
           </span>{' '}
           to unlock this feature
@@ -136,7 +136,7 @@ const YesNo = () => {
         <YesNoOptions answer={'Yes'} />
         <YesNoOptions answer={'No'} />
       </div>
-      <p className="my-1 tablet:mt-5 tablet:mb-[10px] text-center text-[8px] font-normal leading-normal text-[#85898C] dark:text-[#D8D8D8] tablet:text-[16px]">
+      <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] tablet:mb-[10px] tablet:mt-5 tablet:text-[16px] dark:text-[#D8D8D8]">
         &#x200B;
       </p>
       {/* <div className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
@@ -155,7 +155,7 @@ const YesNo = () => {
         </div> */}
       <div className="flex w-full justify-end">
         {hollow ? (
-          <div className="pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
+          <div className="pr-7 pt-[10px] tablet:pr-[70px] tablet:pt-[30px] ">
             <Button
               variant="hollow-submit"
               id="submitButton"
@@ -166,10 +166,10 @@ const YesNo = () => {
             </Button>
           </div>
         ) : (
-          <div className="pt-[10px] tablet:pt-[30px] pr-7 tablet:pr-[70px] ">
+          <div className="pr-7 pt-[10px] tablet:pr-[70px] tablet:pt-[30px] ">
             <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()}>
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}{' '}
-              <span className="text-[7px] tablet:text-[13px] font-semibold leading-[0px] pl-[5px] tablet:pl-[10px]">
+              <span className="pl-[5px] text-[7px] font-semibold leading-[0px] tablet:pl-[10px] tablet:text-[13px]">
                 (-0.1 FDX)
               </span>
             </Button>
