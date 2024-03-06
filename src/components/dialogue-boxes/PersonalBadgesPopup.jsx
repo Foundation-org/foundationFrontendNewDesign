@@ -8,11 +8,13 @@ import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
 
 const data = [
-  { id: 1, name: 'Item 1' },
-  { id: 2, name: 'Item 2' },
+  { id: 1, name: 'In what city were you born?' },
+  { id: 2, name: 'What is the name of your first pet?' },
+  { id: 2, name: 'What is the last name of your favorite teacher?' },
 ];
 
 const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, handleUserInfo }) => {
+  const [selected, setSelected] = useState();
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
 
@@ -24,13 +26,11 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     const selectedDate = event.target.value;
     setDate(selectedDate);
   };
-  const handleSecurityQuestionChange = (event) => {
-  };
-  
+  const handleSecurityQuestionChange = (event) => {};
 
   const { data: apiResp } = useQuery({
-    queryKey: ['validate-name',(title === 'First Name' || title==='Last Name') && 'name'],
-    queryFn: () => validation(title === 'First Name' ? 5 : title==='Last Name' && 6 , name),
+    queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && 'name'],
+    queryFn: () => validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name),
   });
 
   const handleAddPersonalBadge = async () => {
@@ -64,6 +64,8 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     }
   };
 
+  console.log('first', { name, selected: selected.name });
+
   const renderInputField = (title, name, handleNameChange, placeholder, apiResp, data) => {
     const isError = apiResp?.data?.message === 'No';
 
@@ -72,11 +74,13 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         {data && data.length >= 1 ? (
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-              <CustomCombobox items={data} />
+              <CustomCombobox items={data} selected={selected} setSelected={setSelected} />
               <input
                 type="text"
                 value={name}
-                onChange={handleNameChange}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
                 placeholder={placeholder}
                 className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
               />
@@ -140,7 +144,14 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       {title === 'ID / Passport' && renderInputField('ID / Passport', name, handleNameChange, placeholder, apiResp)}
       {title === 'Geolocation' && renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp)}
       {title === 'Security Question' &&
-        renderInputField('Security Question', name, handleSecurityQuestionChange, placeholder, apiResp, data)}
+        renderInputField(
+          'Security Question',
+          name,
+          handleSecurityQuestionChange,
+          'Enter your answer here',
+          apiResp,
+          data,
+        )}
     </PopUp>
   );
 };

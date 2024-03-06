@@ -1,8 +1,7 @@
 import { Fragment, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 
-const CustomCombobox = ({ items, initialSelected, placeholder }) => {
-  const [selected, setSelected] = useState(initialSelected);
+const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSelected }) => {
   const [query, setQuery] = useState('');
 
   const filteredItems =
