@@ -24,10 +24,13 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     const selectedDate = event.target.value;
     setDate(selectedDate);
   };
+  const handleSecurityQuestionChange = (event) => {
+  };
+  
 
   const { data: apiResp } = useQuery({
-    queryKey: ['validate-name', { name }],
-    queryFn: () => validation(title === 'First Name' ? 5 : 6, name),
+    queryKey: ['validate-name',(title === 'First Name' || title==='Last Name') && 'name'],
+    queryFn: () => validation(title === 'First Name' ? 5 : title==='Last Name' && 6 , name),
   });
 
   const handleAddPersonalBadge = async () => {
@@ -56,7 +59,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         handleClose();
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      console.log(error);
       handleClose();
     }
   };
@@ -137,7 +140,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       {title === 'ID / Passport' && renderInputField('ID / Passport', name, handleNameChange, placeholder, apiResp)}
       {title === 'Geolocation' && renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp)}
       {title === 'Security Question' &&
-        renderInputField('Security Question', name, handleNameChange, placeholder, apiResp, data)}
+        renderInputField('Security Question', name, handleSecurityQuestionChange, placeholder, apiResp, data)}
     </PopUp>
   );
 };

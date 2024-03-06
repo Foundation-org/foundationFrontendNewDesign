@@ -95,6 +95,7 @@ export const web3 = [
     ButtonColor: 'gray',
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
+    type: 'etherium-wallet'
   },
   {
     image: '/assets/profile/WebAuth-Desktop-2x.png',

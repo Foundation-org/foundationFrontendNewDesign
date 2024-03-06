@@ -7,6 +7,7 @@ import { addUser } from '../../../../../features/auth/authSlice';
 import Button from '../components/Button';
 import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
+import { ethers } from 'ethers';
 import {
   LoginSocialFacebook,
   LoginSocialInstagram,
@@ -48,21 +49,8 @@ const VerificationBadges = () => {
     }
   };
 
-  const handleSocialBadges = async () => {
-    try {
-      setIsLoading(true);
-      const resp = await api.post('/addBadge/social');
-      if (resp.status === 200) {
-        handleUserInfo();
-        navigate('/profile/verification-badges');
-      }
-      setIsLoading(false);
-    } catch (e) {
-      setIsLoading(false);
-      navigate('/profile/verification-badges');
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
+
+
 
   useEffect(() => {
     handleUserInfo();
@@ -171,6 +159,37 @@ const VerificationBadges = () => {
   const handleRemoveBadgePopup = (item) => {
     setDeleteModalState(item);
     setModalVisible(true);
+  };
+
+  const handleWeb3 = async (title,type) => {
+    let value;
+    if (title === 'Ethereum Wallet') {
+      if (window.ethereum) {  
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const _walletAddress = await signer.getAddress();
+      value=_walletAddress;
+    } else {
+      console.log('Wallet not detected');
+      toast.warning("Please install an Etherium wallet");
+    }
+
+    }
+
+    try {
+      const addBadge = await api.post(`/addBadge/web3/add`, {
+        web3: {
+          [type]: value,
+        },
+        uuid: fetchUser.uuid,
+      });
+      if (addBadge.status === 200) {
+        toast.success('Badge Added Successfully!');
+        handleUserInfo();
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+    }
   };
 
   return (
@@ -865,7 +884,12 @@ const VerificationBadges = () => {
             >
               <h1>{item.title}</h1>
             </div>
-            <Button color={item.ButtonColor}>
+            <Button
+              color={item.ButtonColor}
+              onClick={() => {
+                handleWeb3(item?.title,item?.type);
+              }}
+            >
               {item.ButtonText}{' '}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                 (+0.96 FDX)
