@@ -4,7 +4,7 @@ name: s3-depl
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
+  # Triggers the workflow on push or pull request events but only for the development branch
   push:
     branches: [ development ]
 
@@ -15,20 +15,20 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env:
-      VITE_GG_APP_ID:839809470929-8iitl90m69dml67s1ur3b6tc03cp5i8u.apps.googleusercontent.com
-      VITE_FB_APP_ID:406934521663087
-      VITE_GOOGLE_RECAPTCH_SITE_KEY:6Le14QUpAAAAAKWPIYdnLEKQW5xuZp7GrI7Cg1ON    
-      VITE_API_URL:https://api.staging.on.foundation
-      VITE_GITHUB_CLIENT_ID:60b36812844e8b44dfbb
-      VITE_GITHUB_CLIENT_SECRET:5a0fb5cdf6a9e89d8df7186b018e1dc89db0bdf4
-      VITE_LINKEDIN_KEY:77f1zj09v4ilh7
-      VITE_LINKEDIN_SECRET:SQEmvNi8ZDnuJgmo
-      VITE_TWITTER_CONSUMER_KEY:81AEqfxXTBis0VdFsFAkTBCeq
-      VITE_TWITTER_CONSUMER_SECRET:drEFyuoKfvjIUNvE3nbyDe2dFRhlNGPRP56jSChtxswXeNGnWO    
-      VITE_FACEBOOK_APP_ID:882916076242427
-      VITE_FACEBOOK_APP_SECRET:5a6af75fdb11fa22c911e57ae0d374df
-      VITE_INSTAGRAM_CLIENT_ID:343379541856647
-      VITE_INSTAGRAM_CLIENT_SECRET:f2b57190abc6da76b70609802471ca81
+      VITE_GG_APP_ID: 839809470929-8iitl90m69dml67s1ur3b6tc03cp5i8u.apps.googleusercontent.com
+      VITE_FB_APP_ID: 406934521663087
+      VITE_GOOGLE_RECAPTCH_SITE_KEY: 6Le14QUpAAAAAKWPIYdnLEKQW5xuZp7GrI7Cg1ON    
+      VITE_API_URL: https://api.staging.on.foundation
+      VITE_GITHUB_CLIENT_ID: 60b36812844e8b44dfbb
+      VITE_GITHUB_CLIENT_SECRET: 5a0fb5cdf6a9e89d8df7186b018e1dc89db0bdf4
+      VITE_LINKEDIN_KEY: 77f1zj09v4ilh7
+      VITE_LINKEDIN_SECRET: SQEmvNi8ZDnuJgmo
+      VITE_TWITTER_CONSUMER_KEY: 81AEqfxXTBis0VdFsFAkTBCeq
+      VITE_TWITTER_CONSUMER_SECRET: drEFyuoKfvjIUNvE3nbyDe2dFRhlNGPRP56jSChtxswXeNGnWO    
+      VITE_FACEBOOK_APP_ID: 882916076242427
+      VITE_FACEBOOK_APP_SECRET: 5a6af75fdb11fa22c911e57ae0d374df
+      VITE_INSTAGRAM_CLIENT_ID: 343379541856647
+      VITE_INSTAGRAM_CLIENT_SECRET: f2b57190abc6da76b70609802471ca81
     
     strategy:
       matrix:
