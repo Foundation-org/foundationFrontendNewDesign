@@ -12,6 +12,7 @@ import EmailDialogue from '../question-card/Shareables/EmailDialogue';
 import TwitterDialogue from '../question-card/Shareables/TwitterDialogue';
 import FbDialogue from '../question-card/Shareables/FbDialogue';
 import { useParams, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const QuestBottombar = ({
   time,
@@ -24,12 +25,13 @@ const QuestBottombar = ({
   title,
   question,
   questStartData,
-  isQuestHidden,
+  postProperties,
 }) => {
   const navigate = useNavigate();
 
   const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const [timeAgo, setTimeAgo] = useState('');
   const [copyModal, setCopyModal] = useState(false);
@@ -38,7 +40,22 @@ const QuestBottombar = ({
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
 
-  const handleCopyOpen = () => setCopyModal(true);
+  const handleCopyOpen = () => {
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="text-[#389CE3] underline cursor-pointer" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
+      return;
+    } else {
+      setCopyModal(true);
+    }
+  };
   const handleCopyClose = () => setCopyModal(false);
   const handleLinkOpen = () => setLinkModal(true);
   const handleLinkClose = () => setLinkModal(false);
@@ -91,9 +108,9 @@ const QuestBottombar = ({
 
   return (
     <div
-      className={`flex items-center border-t-2 border-[#D9D9D9] px-[0.57rem] py-2 tablet:px-5 tablet:py-[0.63rem] ${isQuestHidden === 'HiddenPosts' ? 'justify-end' : 'justify-between'}`}
+      className={`flex items-center border-t-2 border-[#D9D9D9] px-[0.57rem] py-2 tablet:px-5 tablet:py-[0.63rem] ${postProperties === 'HiddenPosts' ? 'justify-end' : 'justify-between'}`}
     >
-      {isQuestHidden !== 'HiddenPosts' && (
+      {postProperties !== 'HiddenPosts' && (
         <div className="flex items-center gap-[0.17rem] tablet:gap-[6px] min-w-[70px] tablet:min-w-[160px]">
           <div onClick={handleCopyOpen} className="cursor-pointer">
             {persistedTheme === 'dark' ? <Copy /> : <Copy />}
@@ -108,6 +125,7 @@ const QuestBottombar = ({
               handleClose={handleCopyClose}
               id={id}
               uniqueShareLink={uniqueShareLink}
+              questStartData={questStartData}
               createdBy={createdBy}
               img={img}
               alt={alt}
@@ -183,38 +201,39 @@ const QuestBottombar = ({
         </div>
       )}
 
-      {(isQuestHidden !== 'HiddenPosts' && !window.location.href.includes("/p/")) && (
-        <div className="min-w-[70px] tablet:min-w-[160px] flex justify-center">
-         
-          {isFullScreen === undefined ? (
-            <div
-              className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
-              onClick={() => {
-                navigate('/quest/isfullscreen', {
-                  state: questStartData._id,
-                });
-              }}
-            >
-              <svg
-                className="h-3 w-3 tablet:h-[23px] tablet:w-5"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 23"
-                fill="none"
+      {postProperties !== 'HiddenPosts' &&
+        postProperties !== 'SharedLinks' &&
+        !window.location.href.includes('/p/') && (
+          <div className="min-w-[70px] tablet:min-w-[160px] flex justify-center">
+            {isFullScreen === undefined ? (
+              <div
+                className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
+                onClick={() => {
+                  navigate('/quest/isfullscreen', {
+                    state: questStartData._id,
+                  });
+                }}
               >
-                <path
-                  d="M6.30165 0H0.943359C0.422241 0 0 0.477316 0 1.06641V7.10938C0 7.69846 0.422241 8.17578 0.943359 8.17578C1.46448 8.17578 1.88672 7.69846 1.88672 7.10938V2.13281H6.30165C6.82277 2.13281 7.24501 1.6555 7.24501 1.06641C7.24501 0.477316 6.82277 0 6.30165 0ZM18.5527 13.8633C18.0316 13.8633 17.6094 14.3406 17.6094 14.9297V19.9062H13.2258C12.7046 19.9062 12.2824 20.3836 12.2824 20.9727C12.2824 21.5617 12.7046 22.0391 13.2258 22.0391H18.5527C19.0739 22.0391 19.4961 21.5617 19.4961 20.9727V14.9297C19.4961 14.3406 19.0739 13.8633 18.5527 13.8633ZM6.30165 19.9062H1.88672V14.9297C1.88672 14.3406 1.46448 13.8633 0.943359 13.8633C0.422241 13.8633 0 14.3406 0 14.9297V20.9727C0 21.5617 0.422241 22.0391 0.943359 22.0391H6.30165C6.82277 22.0391 7.24501 21.5617 7.24501 20.9727C7.24501 20.3836 6.82277 19.9062 6.30165 19.9062ZM18.5527 0H13.2258C12.7046 0 12.2824 0.477316 12.2824 1.06641C12.2824 1.6555 12.7046 2.13281 13.2258 2.13281H17.6094V7.10938C17.6094 7.69846 18.0316 8.17578 18.5527 8.17578C19.0739 8.17578 19.4961 7.69846 19.4961 7.10938V1.06641C19.4961 0.477316 19.0739 0 18.5527 0Z"
-                  fill="#85898C"
-                />
-              </svg>
-              <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem] laptop:text-[1.25rem]">
-                Full Screen
-              </p>
-            </div>
-          ) : (
-            <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem]">&#x200B;</p>
-          )}
-        </div>
-      )}
+                <svg
+                  className="h-3 w-3 tablet:h-[23px] tablet:w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 23"
+                  fill="none"
+                >
+                  <path
+                    d="M6.30165 0H0.943359C0.422241 0 0 0.477316 0 1.06641V7.10938C0 7.69846 0.422241 8.17578 0.943359 8.17578C1.46448 8.17578 1.88672 7.69846 1.88672 7.10938V2.13281H6.30165C6.82277 2.13281 7.24501 1.6555 7.24501 1.06641C7.24501 0.477316 6.82277 0 6.30165 0ZM18.5527 13.8633C18.0316 13.8633 17.6094 14.3406 17.6094 14.9297V19.9062H13.2258C12.7046 19.9062 12.2824 20.3836 12.2824 20.9727C12.2824 21.5617 12.7046 22.0391 13.2258 22.0391H18.5527C19.0739 22.0391 19.4961 21.5617 19.4961 20.9727V14.9297C19.4961 14.3406 19.0739 13.8633 18.5527 13.8633ZM6.30165 19.9062H1.88672V14.9297C1.88672 14.3406 1.46448 13.8633 0.943359 13.8633C0.422241 13.8633 0 14.3406 0 14.9297V20.9727C0 21.5617 0.422241 22.0391 0.943359 22.0391H6.30165C6.82277 22.0391 7.24501 21.5617 7.24501 20.9727C7.24501 20.3836 6.82277 19.9062 6.30165 19.9062ZM18.5527 0H13.2258C12.7046 0 12.2824 0.477316 12.2824 1.06641C12.2824 1.6555 12.7046 2.13281 13.2258 2.13281H17.6094V7.10938C17.6094 7.69846 18.0316 8.17578 18.5527 8.17578C19.0739 8.17578 19.4961 7.69846 19.4961 7.10938V1.06641C19.4961 0.477316 19.0739 0 18.5527 0Z"
+                    fill="#85898C"
+                  />
+                </svg>
+                <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem] laptop:text-[1.25rem]">
+                  Full Screen
+                </p>
+              </div>
+            ) : (
+              <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem]">&#x200B;</p>
+            )}
+          </div>
+        )}
 
       {/* <div className="border-l border-[#D9D9D9] tablet:pl-5 min-w-[70px] tablet:min-w-[160px]"> */}
       <div className="min-w-[70px] tablet:min-w-[160px] flex justify-end">

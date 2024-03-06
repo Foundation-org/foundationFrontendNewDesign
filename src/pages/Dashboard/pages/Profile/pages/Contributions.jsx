@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { formatCountNumber } from '../../../../../utils/utils';
 
 const Contributions = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -115,7 +116,9 @@ const Contributions = () => {
                 <h4 className="mb-6 text-center text-[14.72px] font-semibold leading-[17.8px]">
                   {item.title.split('-')[1]}
                 </h4>
-                <h1 className="text-center text-[28px] font-semibold leading-[11.45px]">{item.value}</h1>
+                <h1 className="text-center text-[28px] font-semibold leading-[11.45px]">
+                  {formatCountNumber(item.value)}
+                </h1>
               </div>
             </div>
           ))}
@@ -143,7 +146,7 @@ const Contributions = () => {
                     {item.title.split('-')[1]}
                   </h4>
                   <h1 className="text-center text-[16px] font-semibold leading-[14px] text-[#7C7C7C] dark:text-[#B8B8B8] 2xl:text-[35px] tablet:text-[24px]">
-                    {item.value}
+                    {formatCountNumber(item.value)}
                   </h1>
                 </div>
               </div>
@@ -171,7 +174,7 @@ const Contributions = () => {
                     {item.title.split('-')[1]}
                   </h4>
                   <h1 className="text-center text-[16px] font-semibold leading-[14px] text-[#7C7C7C] dark:text-[#B8B8B8] 2xl:text-[35px] tablet:text-[24px]">
-                    {item.value}
+                    {formatCountNumber(item.value)}
                   </h1>
                 </div>
               </div>

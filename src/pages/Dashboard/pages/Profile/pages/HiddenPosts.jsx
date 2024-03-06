@@ -7,10 +7,11 @@ import { initialColumns } from '../../../../../constants/preferences';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import QuestionCard from '../../QuestStartSection/components/QuestionCard';
 
-import * as QuestServices from '../../../../../services/queries/quest';
+import { applyFilters, fetchDataByStatus } from '../../../../../utils/questionCard';
+import * as HomepageAPIs from '../../../../../services/api/homepageApis';
 
 export default function HiddenPosts() {
-  const pageLimit = 1000;
+  const pageLimit = 5;
   const [pagination, setPagination] = useState({
     page: 1,
     sliceStart: 0,
@@ -21,6 +22,7 @@ export default function HiddenPosts() {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const [allData, setAllData] = useState([]);
+  const [feedData, setFeedData] = useState();
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
   const [filterStates, setFilterStates] = useState({
@@ -37,20 +39,33 @@ export default function HiddenPosts() {
     }));
   };
 
-  const { data: feedData } = QuestServices.useGetHiddenFeedData(
-    filterStates,
-    filterStates.searchData,
-    pagination,
-    initialColumns,
-    {
+  const getHiddenFeedData = async (filterStates, debouncedSearch, pagination, columns, params) => {
+    const updatedParams = applyFilters(params, filterStates, columns);
+
+    try {
+      if (debouncedSearch === '') {
+        const result = await fetchDataByStatus(updatedParams, filterStates);
+        setFeedData(result.data);
+      } else {
+        const result = await HomepageAPIs.searchHiddenQuestions(debouncedSearch);
+        setFeedData(result.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    getHiddenFeedData(filterStates, filterStates.searchData, pagination, initialColumns, {
       Page: 'Hidden',
       _page: pagination.page,
       _limit: pageLimit,
       start: pagination.sliceStart,
       end: pagination.sliceEnd,
       uuid: persistedUserInfo?.uuid,
-    },
-  );
+    });
+  }, [filterStates.searchData, pagination]);
 
   // Update Data on Filter Changes
   useEffect(() => {
@@ -124,29 +139,29 @@ export default function HiddenPosts() {
 
   return (
     <div>
-      <div className="pt-[5px] ml-[32px] mr-4 tablet:ml-[97px] tablet:mr-[70px] flex justify-between">
-        <h1 className=" text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:leading-[30px] tablet:font-semibold  tablet:text-[25px] dark:text-[#B8B8B8]">
+      <div className="ml-[32px] mr-4 flex justify-between pt-[5px] tablet:ml-[97px] tablet:mr-[70px]">
+        <h1 className=" text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
           Hidden Posts
         </h1>
         <div className="relative">
-          <div className="relative h-[15.96px] tablet:h-[45px] w-[128px] tablet:w-[337px]">
+          <div className="relative h-[15.96px] w-[128px] tablet:h-[45px] tablet:w-[337px]">
             <input
               type="text"
               id="floating_outlined"
-              className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[3.55px] tablet:rounded-[10px] border-[0.71px] tablet:border-2 border-[#707175] bg-transparent py-2 pl-2 tablet:pl-5 pr-8 leading-[7.25px] text-[#707175] focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-[#707175] text-[6px] tablet:text-[18.23px]"
+              className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[3.55px] border-[0.71px] border-[#707175] bg-transparent py-2 pl-2 pr-8 text-[6px] leading-[7.25px] text-[#707175] focus:outline-none focus:ring-0 tablet:rounded-[10px] tablet:border-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
               value={filterStates.searchData}
               placeholder=""
               onChange={handleSearch}
             />
             <label
               htmlFor="floating_outlined"
-              className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 text-[8.33px] leading-[10px] absolute left-[15px] start-1 top-[10px] tablet:top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F3F3F3] px-2  text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C] tablet:text-[18px] tablet:leading-[21.78px]"
+              className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 absolute left-[15px] start-1 top-[10px] z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F3F3F3] px-2 text-[8.33px] leading-[10px] text-[#707175]  duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:top-2 tablet:text-[18px] tablet:leading-[21.78px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
             >
               Search
             </label>
             {filterStates.searchData && (
               <button
-                className="absolute right-1.5 tablet:right-3 top-[55%] tablet:top-1/2 transform -translate-y-1/2 "
+                className="absolute right-1.5 top-[55%] -translate-y-1/2 transform tablet:right-3 tablet:top-1/2 "
                 onClick={() => {
                   setFilterStates((prevState) => ({
                     ...prevState,
@@ -154,48 +169,48 @@ export default function HiddenPosts() {
                   }));
                 }}
               >
-                <GrClose className="h-2 w-2 tablet:h-4 tablet:w-4 text-[#ACACAC] dark:text-white" />
+                <GrClose className="h-2 w-2 text-[#ACACAC] tablet:h-4 tablet:w-4 dark:text-white" />
               </button>
             )}
             {!filterStates.searchData && (
               <img
                 src="/assets/svgs/dashboard/search.svg"
                 alt="search"
-                className="absolute right-1.5 tablet:right-3 top-[55%] tablet:top-1/2 transform -translate-y-1/2 h-2 w-2 tablet:h-4 tablet:w-4"
+                className="absolute right-1.5 top-[55%] h-2 w-2 -translate-y-1/2 transform tablet:right-3 tablet:top-1/2 tablet:h-4 tablet:w-4"
               />
             )}
           </div>
         </div>
       </div>
 
-      <div className="no-scrollbar flex h-full w-[91.67%] tablet:w-[73.6%] mx-auto mt-5 flex-col overflow-y-auto bg-[#F3F3F3] dark:bg-[#242424] pb-[3rem] tablet:pt-[0.94rem] tablet:pb-[6rem]">
+      <div className="no-scrollbar mx-auto mt-5 flex h-full w-[91.67%] flex-col overflow-y-auto bg-[#F3F3F3] pb-[3rem] tablet:w-[73.6%] tablet:pb-[6rem] tablet:pt-[0.94rem] dark:bg-[#242424]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
           hasMore={feedData?.hasNextPage}
           endMessage={
             feedData?.hasNextPage === false ? (
-              <div className="flex justify-between gap-4 px-4 pt-3 pb-[5rem] tablet:py-[27px]">
+              <div className="flex justify-between gap-4 px-4 pb-[5rem] pt-3 tablet:py-[27px]">
                 <div></div>
                 {filterStates.searchData && allData.length == 0 ? (
-                  <div className="my-[15vh] flex  flex-col justify-center items-center">
+                  <div className="my-[15vh] flex  flex-col items-center justify-center">
                     {persistedTheme === 'dark' ? (
                       <img src="/assets/svgs/dashboard/noMatchingDark.svg" alt="noposts image" />
                     ) : (
                       <img
                         src="/assets/svgs/dashboard/noMatchingLight.svg"
                         alt="noposts image"
-                        className="w-[160px] h-[173px]"
+                        className="h-[173px] w-[160px]"
                       />
                     )}
                     <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-                      <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
+                      <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray">
                         No matching posts found!
                       </p>
                       <button
                         className={`${
                           persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                        }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
+                        }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                         onClick={() => {
                           setFilterStates((prevState) => ({
                             ...prevState,
@@ -217,13 +232,13 @@ export default function HiddenPosts() {
                   </p>
                 ) : (
                   <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-                    <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] tablet:text-[2.083vw] text-[#9F9F9F] dark:text-gray font-bold">
+                    <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray">
                       You are all caught up!
                     </p>
                     <button
                       className={`${
                         persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                      }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner dark:text-[#EAEAEA] tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem]`}
+                      }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                       onClick={() => {
                         setFilterStates((prevState) => ({
                           ...prevState,
@@ -251,7 +266,7 @@ export default function HiddenPosts() {
               allData.map((item, index) => (
                 <div key={index + 1}>
                   <QuestionCard
-                    isQuestHidden={'HiddenPosts'}
+                    postProperties={'HiddenPosts'}
                     questStartData={item}
                     startTest={startTest}
                     setStartTest={setStartTest}

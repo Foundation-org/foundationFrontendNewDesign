@@ -21,7 +21,7 @@ const Topbar = () => {
       if (res.status === 200) {
         dispatch(filterActions.resetFilters());
         localStorage.clear();
-        navigate('/');
+        navigate('/signin');
       }
     } catch (error) {
       console.log(error);
@@ -54,20 +54,20 @@ const Topbar = () => {
                 alt="badge"
                 className="h-6 w-[19.8px] tablet:h-[51.5px] tablet:w-[42px]"
               />
-              <p className="transform-center absolute z-50 pb-1 text-[8.6px] tablet:text-[19px] font-normal tablet:font-semibold leading-normal text-white">
+              <p className="transform-center absolute z-50 pb-1 text-[8.6px] font-normal leading-normal text-white tablet:text-[19px] tablet:font-semibold">
                 {persistedUserInfo?.badges?.length ? persistedUserInfo?.badges?.length : 'G'}
               </p>
             </div>
             <div className="text-blue-100 flex flex-col ">
               <h3
-                className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] dark:text-white tablet:text-[20px]"
+                className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] tablet:text-[20px] dark:text-white"
                 onClick={() => {
                   navigate('/profile');
                 }}
               >
                 Guest User
               </h3>
-              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
+              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] tablet:text-[12px] dark:text-white">
                 {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
               </h3>
             </div>
@@ -85,15 +85,15 @@ const Topbar = () => {
                 alt="badge"
                 className="h-6 w-[19.8px] tablet:h-[51.5px] tablet:w-[42px]"
               />
-              <p className="transform-center absolute z-50 pb-1 text-[8.6px] tablet:text-[19px] font-normal tablet:font-semibold leading-normal text-[#7A7016]">
+              <p className="transform-center absolute z-50 pb-1 text-[8.6px] font-normal leading-normal text-[#7A7016] tablet:text-[19px] tablet:font-semibold">
                 {persistedUserInfo?.badges?.length}
               </p>
             </div>
             <div className="text-blue-100 flex flex-col ">
-              <h3 className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] dark:text-white tablet:text-[20px]">
+              <h3 className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] tablet:text-[20px] dark:text-white">
                 My Profile
               </h3>
-              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] dark:text-white tablet:text-[12px]">
+              <h3 className="font-inter font-small text-[7px] text-[#E9F6FF] tablet:text-[12px] dark:text-white">
                 {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
               </h3>
             </div>
@@ -122,11 +122,11 @@ const Topbar = () => {
               2
             </p>
           </div> */}
-          <Link to={'/dashboard/faq'} className="h-full flex items-center">
+          <Link to={'/dashboard/faq'} className="flex h-full items-center">
             <img
               src="/assets/navbar/faqlogo.png"
               alt="arrow-right"
-              className="w-5 h-5 tablet:w-[36px] tablet:h-[36px]"
+              className="h-5 w-5 tablet:h-[36px] tablet:w-[36px]"
             />
           </Link>
           {localStorage.getItem('isGuestMode') ? (
@@ -204,9 +204,9 @@ const Topbar = () => {
         </div> */}
         <Link
           to={'/dashboard/faq'}
-          className={`${location.pathname === '/dashboard/faq' || location.pathname === '/dashboard/faq/contact-us' ? 'bg-[#2B85C5]' : ''} h-full flex items-center px-[30px]`}
+          className={`${location.pathname === '/dashboard/faq' || location.pathname === '/dashboard/faq/contact-us' ? 'bg-[#2B85C5]' : ''} flex h-full items-center px-[30px]`}
         >
-          <img src="/assets/navbar/faqlogo.png" alt="arrow-right" className="w-11 h-11" />
+          <img src="/assets/navbar/faqlogo.png" alt="arrow-right" className="h-11 w-11" />
         </Link>
         {persistedUserInfo.role !== 'user' ? (
           <div onClick={handleGuestLogout}>

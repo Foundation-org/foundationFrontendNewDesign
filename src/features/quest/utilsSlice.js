@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   addOptionLimit: 0,
+  hiddenPosts: [],
+  sharedLinkPost: null,
 };
 
 export const utilsSlice = createSlice({
@@ -14,10 +16,20 @@ export const utilsSlice = createSlice({
     resetaddOptionLimit: (state) => {
       state.addOptionLimit = initialState.addOptionLimit;
     },
+    addHiddenPosts: (state, action) => {
+      state.hiddenPosts.push(action.payload);
+    },
+    removeHiddenPosts: (state, action) => {
+      state.hiddenPosts = state.hiddenPosts.filter((item) => item !== action.payload);
+    },
+    addSharedLinkPost: (state, action) => {
+      state.sharedLinkPost = action.payload;
+    },
   },
 });
 
-export const { updateaddOptionLimit, resetaddOptionLimit } = utilsSlice.actions;
+export const { updateaddOptionLimit, resetaddOptionLimit, addHiddenPosts, removeHiddenPosts, addSharedLinkPost } =
+  utilsSlice.actions;
 
 export default utilsSlice.reducer;
 

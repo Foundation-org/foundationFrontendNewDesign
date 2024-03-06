@@ -13,6 +13,7 @@ import Profile from '../pages/Dashboard/pages/Profile';
 import Contributions from '../pages/Dashboard/pages/Profile/pages/Contributions';
 import VerificationBadges from '../pages/Dashboard/pages/Profile/pages/VerificationBadges';
 import HiddenPosts from '../pages/Dashboard/pages/Profile/pages/HiddenPosts';
+import SharedLinks from '../pages/Dashboard/pages/Profile/pages/SharedLinks';
 import BasicTable from '../pages/Dashboard/pages/Profile/pages/Ledger';
 import ChangePassword from '../pages/Dashboard/pages/Profile/pages/ChangePassword';
 import QuestStartSection from '../pages/Dashboard/pages/QuestStartSection';
@@ -28,6 +29,8 @@ import ContactUs from '../pages/Dashboard/pages/CustomerSupport/ContactUs';
 import CustomerSupport from '../pages/Dashboard/pages/CustomerSupport';
 import GuestRedirect from '../pages/DashboardRedirect/GuestRedirect';
 import { useSelector } from 'react-redux';
+import Maintenance from '../pages/Maintenance/maintenance';
+import Welcome from '../pages/Welcome/welcome';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -44,7 +47,9 @@ export function Router() {
         <>
           {/* Public */}
           <Routes>
-            <Route path="/" element={<Signin />} />
+            <Route path="/maintenance" element={<Maintenance />} />
+            <Route path="/" element={<Welcome />} />
+            <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/term-of-service" element={<TermOfService />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -52,7 +57,7 @@ export function Router() {
             <Route path="/verifycode" element={<VerifyCode />} />
             <Route path="/auth0" element={<DashboardRedirect />} />
             <Route path="/p/:id" element={<GuestRedirect />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/signin" />} />
           </Routes>
         </>
       ) : (
@@ -60,6 +65,7 @@ export function Router() {
           {/* Protected */}
           <Routes>
             <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
+              <Route path="/maintenance" element={<Maintenance />} />
               <Route path="/dashboard/" element={<Dashboard />}>
                 <Route path="" element={<QuestStartSection />} />
                 <Route path="quest" element={<Quest />} />
@@ -74,6 +80,7 @@ export function Router() {
                 <Route path="verification-badges" element={<VerificationBadges />} />
                 <Route path="ledger" element={<BasicTable />} />
                 <Route path="hidden-posts" element={<HiddenPosts />} />
+                <Route path="shared-links" element={<SharedLinks />} />
                 <Route path="change-password" element={<ChangePassword />} />
               </Route>
               <Route path="/quest/:isFullScreen" element={<Guests />} />

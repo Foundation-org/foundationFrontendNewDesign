@@ -123,7 +123,7 @@ export default function Signup() {
   };
 
   const handleSignup = async () => {
-    if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
+    // if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
 
     setIsLoadingSocial(true);
@@ -265,7 +265,7 @@ export default function Signup() {
             handleCancel={handleCancel}
             email={email}
           />
-          <div className="mb-4 mt-4 flex w-full items-start md:mb-10 taller:mb-4 taller:mt-4">
+          <div className="mb-4 mt-4 hidden w-full items-start md:mb-10 taller:mb-4 taller:mt-4">
             {persistedTheme === 'dark' ? (
               <ReCAPTCHA sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY} onChange={onChange} theme="dark" />
             ) : (
@@ -303,7 +303,7 @@ export default function Signup() {
             <Typography variant="textBase" className="text-gray-100 dark:text-gray ">
               Already have an account?
             </Typography>
-            <Link to="/">
+            <Link to="/signin">
               <Typography variant="textBase" className="text-blue dark:text-white">
                 Sign in
               </Typography>
@@ -336,8 +336,8 @@ export default function Signup() {
       </BasicModal>
 
       <PopUp open={isPopup} handleClose={handlePopupClose} logo={'/assets/popup/googlelogo.svg'} title={'Google Email'}>
-        <div className="px-5 tablet:px-[60px] py-[14px] tablet:py-[25px]">
-          <p className="text-[9px] tablet:text-[20px] text-black font-medium">{errorMessage}</p>
+        <div className="px-5 py-[14px] tablet:px-[60px] tablet:py-[25px]">
+          <p className="text-[9px] font-medium text-black tablet:text-[20px]">{errorMessage}</p>
           {/* {
            <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
               Continue
@@ -346,11 +346,11 @@ export default function Signup() {
             console.log(errorMessage)
           } */}
           {errorMessage.trim() === 'Email Already Exists' ? (
-            <div className="w-full flex justify-end mt-[25px]">
+            <div className="mt-[25px] flex w-full justify-end">
               <UiButton
-                className="w-full flex justify-end mt-[25px]"
+                className="mt-[25px] flex w-full justify-end"
                 onClick={() => {
-                  navigate('/');
+                  navigate('/signin');
                 }}
                 variant={'submit'}
               >
@@ -374,7 +374,7 @@ export default function Signup() {
               onReject={(err) => {
                 console.log(err);
               }}
-              className="w-full flex justify-end mt-[25px]"
+              className="mt-[25px] flex w-full justify-end"
             >
               <UiButton
                 variant="social-btn"

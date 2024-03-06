@@ -21,25 +21,25 @@ const PopUp = ({ open, handleClose, children, customStyle, customClasses, logo, 
     >
       <Box
         sx={mergedStyle}
-        className={`${customClasses} border-none outline-none z-[1000] max-w-[676px] laptop:max-w-[845px] min-w-[334px] w-fit tablet:w-full `}
+        className={`${customClasses} z-[1000] w-fit min-w-[334px] max-w-[676px] border-none outline-none tablet:w-full laptop:max-w-[845px] `}
       >
-        <div className="bg-blue-gradiant flex justify-between items-center py-1 tablet:py-2 px-[15px] tablet:px-[30px] rounded-t-[9.76px] tablet:rounded-t-[26px]">
+        <div className="bg-blue-gradiant flex items-center justify-between rounded-t-[9.76px] px-[15px] py-1 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-2">
           <div className="flex items-center gap-[10px] tablet:gap-[17px]">
-            <div className={` ${isBackground ? 'bg-white rounded-full' : ''} `}>
-              <img src={logo} alt="popup logo" className="w-6 h-6 tablet:w-[50px] tablet:h-[50px]" />
+            <div className={` ${isBackground ? 'rounded-full bg-white p-1 tablet:p-2' : ''} `}>
+              <img src={logo} alt="popup logo" className="h-6 w-6 tablet:h-[50px] tablet:w-[50px]" />
             </div>
-            <p className="text-[12px] font-bold tablet:text-[25px] tablet:font-medium text-white">{title}</p>
+            <p className="text-[12px] font-bold text-white tablet:text-[25px] tablet:font-medium">{title}</p>
           </div>
           {!closeIcon && (
             <img
               src="/assets/preferences/close.png"
               alt="close"
-              className="cursor-pointer w-[10px] h-[10px] tablet:w-[22px] tablet:h-[22.7px]"
+              className="h-[10px] w-[10px] cursor-pointer tablet:h-[22.7px] tablet:w-[22px]"
               onClick={handleClose}
             />
           )}
         </div>
-        <div className="bg-white rounded-b-[9.76px] tablet:rounded-b-[26px]">{children}</div>
+        <div className="rounded-b-[9.76px] bg-white tablet:rounded-b-[26px]">{children}</div>
       </Box>
     </Modal>
   );

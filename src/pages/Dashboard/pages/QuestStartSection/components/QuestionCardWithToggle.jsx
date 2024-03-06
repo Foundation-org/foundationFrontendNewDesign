@@ -33,7 +33,7 @@ const QuestionCardWithToggle = (props) => {
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   const { questStartData, isBookmarked, setPagination } = props;
-  const { submitResponse, setSubmitResponse } = props;
+  const { setSubmitResponse } = props;
 
   let questData;
 
@@ -809,6 +809,7 @@ const QuestionCardWithToggle = (props) => {
         startTest={startTest}
         handleChange={handleChange}
         addOptionField={addOptionField}
+        setAddOptionField={setAddOptionField}
         checkOptionStatus={checkOptionStatus}
       />
     </QuestCardLayout>

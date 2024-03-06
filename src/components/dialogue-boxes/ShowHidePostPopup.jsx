@@ -5,9 +5,13 @@ import { Button } from '../ui/Button';
 import { toast } from 'sonner';
 import PopUp from '../ui/PopUp';
 import { useSelector } from 'react-redux';
+import { FaSpinner } from 'react-icons/fa';
 import { userInfo } from '../../services/api/userAuth';
 import { useDispatch } from 'react-redux';
+
 import * as authActions from '../../features/auth/authSlice';
+import * as questsActions from '../../features/quest/utilsSlice';
+import { useNavigate } from 'react-router-dom';
 
 const customStyle = {
   width: 'fit-content',
@@ -23,10 +27,12 @@ export default function ShowHidePostPopup({
   data,
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const [selectedTitle, setSelectedTitle] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCheckboxChange = (index) => {
     const newCheckboxStates = new Array(data.length).fill(false);
@@ -57,12 +63,15 @@ export default function ShowHidePostPopup({
   const { mutateAsync: hidePost } = useMutation({
     mutationFn: hideQuest,
     onSuccess: (resp) => {
+      dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
       getUserInfo();
       queryClient.invalidateQueries('FeedData');
+      setIsLoading(false);
       handleClose();
     },
     onError: (err) => {
+      setIsLoading(false);
       console.log(err);
     },
   });
@@ -70,32 +79,50 @@ export default function ShowHidePostPopup({
   const { mutateAsync: updateHiddenPost } = useMutation({
     mutationFn: updateHiddenQuest,
     onSuccess: (resp) => {
+      dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
       getUserInfo();
       queryClient.invalidateQueries('FeedData');
+      setIsLoading(false);
       handleClose();
     },
     onError: (err) => {
+      setIsLoading(false);
       console.log(err);
     },
   });
 
   const handleHiddenPostApiCall = () => {
-    if (questStartData?.userQuestSetting) {
-      updateHiddenPost({
-        uuid: persistedUserInfo?.uuid,
-        questForeignKey: questStartData._id,
-        hidden: true,
-        hiddenMessage: selectedTitle,
-      });
+    setIsLoading(true);
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="text-[#389CE3] underline cursor-pointer" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
+      setIsLoading(false);
+      return;
     } else {
-      hidePost({
-        uuid: persistedUserInfo?.uuid,
-        questForeignKey: questStartData._id,
-        hidden: true,
-        hiddenMessage: selectedTitle,
-        Question: questStartData.Question,
-      });
+      if (questStartData?.userQuestSetting) {
+        updateHiddenPost({
+          uuid: persistedUserInfo?.uuid,
+          questForeignKey: questStartData._id,
+          hidden: true,
+          hiddenMessage: selectedTitle,
+        });
+      } else {
+        hidePost({
+          uuid: persistedUserInfo?.uuid,
+          questForeignKey: questStartData._id,
+          hidden: true,
+          hiddenMessage: selectedTitle,
+          Question: questStartData.Question,
+        });
+      }
     }
   };
 
@@ -146,7 +173,7 @@ export default function ShowHidePostPopup({
               handleHiddenPostApiCall();
             }}
           >
-            Submit
+            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
           </Button>
         </div>
       </div>
