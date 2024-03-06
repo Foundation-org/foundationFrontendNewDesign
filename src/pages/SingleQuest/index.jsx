@@ -16,6 +16,7 @@ import { createGuestMode, userInfo, userInfoById } from '../../services/api/user
 import { addUser } from '../../features/auth/authSlice';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import SEO from '../../utils/SEO';
+import WelcomePopup from '../../components/dialogue-boxes/WelcomePopup';
 
 const SingleQuest = () => {
   // let { isFullScreen } = useParams();
@@ -28,7 +29,10 @@ const SingleQuest = () => {
   // const [viewResult, setViewResult] = useState(null);
   const [singleQuestResp, setSingleQuestResp] = useState(null);
   const [submitResponse, setSubmitResponse] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
 
+  const openWelcomeDialogue = () => setModalVisible(true);
+  const closeWelcomeDialogue = () => setModalVisible(false);
   // const handleStartTest = (testId) => {
   //   setViewResult(null);
   //   setStartTest((prev) => (prev === testId ? null : testId));
@@ -107,8 +111,18 @@ const SingleQuest = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const hasGuestVisitedBefore = localStorage.getItem('hasGuestVisitedBefore');
+
+    if (!hasGuestVisitedBefore) {
+      openWelcomeDialogue();
+      localStorage.setItem('hasGuestVisitedBefore', true);
+    }
+  }, []);
+
   return (
     <>
+      <WelcomePopup modalVisible={modalVisible} handleClose={closeWelcomeDialogue} />
       {/* <SEO
         title="'Participate on foundation and have your voice heard' / 'Foundation rewards every user for their valuable insights'"
         description="'Participate on foundation and have your voice heard' / 'Foundation rewards every user for their valuable insights'"

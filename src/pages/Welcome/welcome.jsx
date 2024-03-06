@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { Button } from '../../components/ui/Button';
@@ -5,6 +6,16 @@ import { Button } from '../../components/ui/Button';
 export default function Signup() {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
+
+    if (hasVisitedBefore) {
+      navigate('/signin');
+    } else {
+      localStorage.setItem('hasVisitedBefore', true);
+    }
+  }, []);
 
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white xl:flex-row dark:bg-black-200">
@@ -39,7 +50,7 @@ export default function Signup() {
           </p>
 
           <div className="flex w-full flex-col gap-[22.96px] tablet:h-[165px] tablet:w-[600px] tablet:gap-[15px]">
-            <Button variant="submit-welcome" className={'max-w-[600px]'} onClick={() => navigate('/')}>
+            <Button variant="submit-welcome" className={'max-w-[600px]'} onClick={() => navigate('/signin')}>
               Create an Account
             </Button>
             <Button variant="hollow-welcome" className={'max-w-[600px]'} onClick={() => navigate('/signup')}>

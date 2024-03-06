@@ -93,12 +93,12 @@ const BadgeVerifyCode = () => {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12 bg-[#F3F3F3] px-4">
+    <div className="bg-gray-50 relative flex min-h-screen flex-col justify-center overflow-hidden bg-[#F3F3F3] px-4 py-12">
       {showDialogBox ? (
-        <div className="relative bg-white px-5 tablet:px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
+        <div className="relative mx-auto w-full max-w-lg rounded-2xl bg-white px-5 pb-9 pt-10 shadow-xl tablet:px-6">
           <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
-            <div className="flex flex-col items-center justify-center text-center space-y-2">
-              <div className="font-semibold text-3xl">
+            <div className="flex flex-col items-center justify-center space-y-2 text-center">
+              <div className="text-3xl font-semibold">
                 <p>Verify your account</p>
               </div>
               <div className="flex flex-row text-sm font-medium text-gray-400">
@@ -107,55 +107,55 @@ const BadgeVerifyCode = () => {
             </div>
             <div>
               <div className="flex flex-col space-y-16">
-                <div className="flex flex-row items-center justify-between mx-auto w-full max-w-[25rem]">
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                <div className="mx-auto flex w-full max-w-[25rem] flex-row items-center justify-between">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="istBox"
                       value={verificationCode[0]}
                     />
                   </div>
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                      className="tablet:px-5outline-none focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg focus:ring-1"
                       type="text"
                       name=""
                       id="sndBox"
                       value={verificationCode[1]}
                     />
                   </div>
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="trdBox"
                       value={verificationCode[2]}
                     />
                   </div>
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="frtBox"
                       value={verificationCode[3]}
                     />
                   </div>
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="fifBox"
                       value={verificationCode[4]}
                     />
                   </div>
-                  <div className="w-11 h-11 tablet:w-16 tablet:h-16 ">
+                  <div className="h-11 w-11 tablet:h-16 tablet:w-16 ">
                     <input
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-1 tablet:px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                      className="focus:bg-gray-50 ring-blue-700 flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white px-1 text-center text-lg outline-none focus:ring-1 tablet:px-5"
                       type="text"
                       name=""
                       id="sixBox"
@@ -166,7 +166,7 @@ const BadgeVerifyCode = () => {
                 <div className="flex flex-col space-y-5">
                   <div>
                     <button
-                      className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-[#389CE3] border-none text-white text-sm shadow-sm"
+                      className="flex w-full flex-row items-center justify-center rounded-xl border border-none bg-[#389CE3] py-5 text-center text-sm text-white shadow-sm outline-none"
                       onClick={() => {
                         handleVerify({ token: urlQuery.token });
                       }}
@@ -180,13 +180,13 @@ const BadgeVerifyCode = () => {
           </div>
         </div>
       ) : (
-        <div className="relative bg-white px-5 tablet:px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
-          <p className="text-[9px] tablet:text-[20px] text-black font-medium">{msg}</p>
-          <div className="w-full flex justify-end mt-[25px]">
+        <div className="relative mx-auto w-full max-w-lg rounded-2xl bg-white px-5 pb-9 pt-10 shadow-xl tablet:px-6">
+          <p className="text-[9px] font-medium text-black tablet:text-[20px]">{msg}</p>
+          <div className="mt-[25px] flex w-full justify-end">
             <UiButton
-              className="w-full flex justify-end mt-[25px]"
+              className="mt-[25px] flex w-full justify-end"
               onClick={() => {
-                navigate('/');
+                navigate('/signin');
               }}
               variant={'submit'}
             >

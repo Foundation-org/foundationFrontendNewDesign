@@ -48,7 +48,8 @@ export function Router() {
           {/* Public */}
           <Routes>
             <Route path="/maintenance" element={<Maintenance />} />
-            <Route path="/" element={<Signin />} />
+            <Route path="/" element={<Welcome />} />
+            <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/term-of-service" element={<TermOfService />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -56,8 +57,7 @@ export function Router() {
             <Route path="/verifycode" element={<VerifyCode />} />
             <Route path="/auth0" element={<DashboardRedirect />} />
             <Route path="/p/:id" element={<GuestRedirect />} />
-            <Route path="*" element={<Navigate to="/" />} />
-            <Route path='/welcome' element={<Welcome/>}/>
+            <Route path="*" element={<Navigate to="/signin" />} />
           </Routes>
         </>
       ) : (
