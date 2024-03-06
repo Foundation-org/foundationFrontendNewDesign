@@ -34,6 +34,8 @@ const VerificationBadges = () => {
   const [deleteModalState, setDeleteModalState] = useState(false);
 
   const handleBadgesClose = () => setModalVisible(false);
+  const checkWeb3Badge = (itemType) =>
+  fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
 
   const handleUserInfo = async (id) => {
     try {
@@ -175,7 +177,9 @@ const VerificationBadges = () => {
     }
 
     }
-
+    if(value===''){
+      return;
+    }
     try {
       const addBadge = await api.post(`/addBadge/web3/add`, {
         web3: {
@@ -871,7 +875,7 @@ const VerificationBadges = () => {
           Web 3
         </h1>
         {web3.map((item, index) => (
-          <div className="flex items-center justify-center  opacity-[60%]" key={index}>
+          <div className="flex items-center justify-center" key={index}>
             <img
               src={item.image}
               alt={item.title}
@@ -885,15 +889,18 @@ const VerificationBadges = () => {
               <h1>{item.title}</h1>
             </div>
             <Button
-              color={item.ButtonColor}
+               color={checkWeb3Badge(item.type) ? 'yellow' : item.ButtonColor}
               onClick={() => {
                 handleWeb3(item?.title,item?.type);
               }}
+              disabled={checkWeb3Badge(item.type)}
             >
-              {item.ButtonText}{' '}
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                (+0.96 FDX)
-              </span>
+              {checkWeb3Badge(item.type) ? 'Added' : item.ButtonText}
+              {!checkWeb3Badge(item.type) && (
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                  (+0.96 FDX)
+                </span>
+              )}
             </Button>
           </div>
         ))}

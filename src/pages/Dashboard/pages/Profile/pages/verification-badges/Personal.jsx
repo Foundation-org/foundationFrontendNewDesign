@@ -88,6 +88,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             type={'currentCity'}
             logo="/assets/profile/currentcity-1.png"
             placeholder="Current City here"
+            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -100,6 +101,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             type={'homeTown'}
             logo="/assets/profile/hometown.svg"
             placeholder="First Name here"
+            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -112,6 +114,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             type={'relationshipStatus'}
             logo="/assets/profile/relationaship-1.png"
             placeholder="Relationship here"
+            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -124,6 +127,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             type={'work'}
             logo="/assets/profile/work-a.png"
             placeholder="Relationship here"
+            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -136,6 +140,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             type={'education'}
             logo="/assets/profile/education-1.png"
             placeholder="Relationship here"
+            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -148,6 +153,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             type={'id-passport'}
             logo="/assets/profile/Identity-2x-1.png"
             placeholder="ID / Passport here"
+            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -160,6 +166,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             type={'geolocation'}
             logo="/assets/profile/education-1.png"
             placeholder="Geolocation"
+            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -172,6 +179,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             type={'security-question'}
             logo="/assets/profile/securityquestion-a.png"
             placeholder="Relationship here"
+            handleUserInfo={handleUserInfo}
           />
         );
 
