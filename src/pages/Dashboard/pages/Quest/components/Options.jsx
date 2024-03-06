@@ -104,7 +104,7 @@ const Options = ({
                   snapshot.isDragging
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                } box-border w-full resize-none border-y tablet:border-y-[3px] min-h-[25px] h-[25px] tablet:h-[51px] laptop:h-[45px] text-[0.625rem] leading-[25px] tablet:leading-[23px] font-normal text-[#7C7C7C] focus-visible:outline-none dark:text-[#7C7C7C] tablet:text-[1.296rem] tablet:py-[11px] laptop:text-[18px]`}
+                } box-border flex w-full resize-none items-center border-y py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:h-[51px] tablet:border-y-[3px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:h-[45px] laptop:text-[18px] dark:text-[#7C7C7C]`}
               />
               <div
                 id={`test${number}`}
