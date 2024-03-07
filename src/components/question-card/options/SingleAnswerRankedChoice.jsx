@@ -52,7 +52,7 @@ const SingleAnswerRankedChoice = (props) => {
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
-    if (inputValue.length <= 350) {
+    if (inputValue.length <= 200) {
       setIsTyping(true);
       setAnswer(inputValue);
 
@@ -290,7 +290,7 @@ const SingleAnswerRankedChoice = (props) => {
                 }`}
               >
                 <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
-                  <span> {isTyping ? `${answer.length}/350` : props.checkOptionStatus.name}</span>
+                  <span> {isTyping ? `${answer.length}/200` : props.checkOptionStatus.name}</span>
                 </div>
                 <Tooltip optionStatus={props.checkOptionStatus} />
               </div>

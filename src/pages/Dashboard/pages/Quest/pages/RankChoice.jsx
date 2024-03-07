@@ -117,7 +117,7 @@ const RankChoice = () => {
   };
 
   const handleChange = (index, value) => {
-    if (value.length <= 350) {
+    if (value.length <= 200) {
       if (prevValueArr[index]?.value === value.trim()) {
         setTypedValues((prevValues) => {
           const newTypedValues = [...prevValues];
