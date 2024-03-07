@@ -21,6 +21,8 @@ const SingleAnswerRankedChoice = (props) => {
   const [contendState, setContendState] = useState(props.contend);
   const [deleteModal, setDeleteModal] = useState(false);
   const [answer, setAnswer] = useState(props.answer);
+  const [isTyping, setIsTyping] = useState(true);
+
   const reset = {
     name: 'Ok',
     color: 'text-[#389CE3]',
@@ -48,17 +50,25 @@ const SingleAnswerRankedChoice = (props) => {
   };
 
   const handleInputChange = (e) => {
-    setAnswer(e.target.value);
+    const inputValue = e.target.value;
 
-    if (prevValue === e.target.value.trim()) {
-      props.setCheckOptionStatus(prevStatus);
-    } else {
-      props.setCheckOptionStatus(reset);
+    if (inputValue.length <= 350) {
+      setIsTyping(true);
+      setAnswer(inputValue);
+
+      if (prevValue === inputValue.trim()) {
+        setIsTyping(false);
+        props.setCheckOptionStatus(prevStatus);
+      } else {
+        props.setCheckOptionStatus(reset);
+      }
     }
   };
 
   const optionVerification = async (value) => {
     if (prevValue === answer) return;
+
+    setIsTyping(false);
     setPrevValue(value);
     props.setCheckOptionStatus({
       name: 'Checking',
@@ -195,7 +205,7 @@ const SingleAnswerRankedChoice = (props) => {
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId') ? (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#000]">
             <img
               src="/assets/addOptions/yellowBadge.svg"
               alt="trash"
@@ -203,7 +213,7 @@ const SingleAnswerRankedChoice = (props) => {
             />
           </div>
         ) : (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#000]">
             <img
               src="/assets/addOptions/blueBadge.svg"
               alt="trash"
@@ -212,7 +222,7 @@ const SingleAnswerRankedChoice = (props) => {
           </div>
         )
       ) : (
-        <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent dark:bg-[#000] tablet:h-[33px] tablet:w-[26.48px]">
+        <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#000]">
           &#x200B;
         </div>
       )}
@@ -222,8 +232,8 @@ const SingleAnswerRankedChoice = (props) => {
         className={`${
           props.snapshot.isDragging
             ? 'border-[#5FA3D5]'
-            : 'border-[#DEE6F7] dark:border-[#D9D9D9] bg-white dark:bg-[#0D1012]'
-        } flex w-full items-center rounded-[4.7px] tablet:rounded-[10px] border tablet:border-[3px]`}
+            : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
+        } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
       >
         <div className="flex w-full items-center rounded-l-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
           {props.btnText !== 'Results' && (
@@ -264,10 +274,10 @@ const SingleAnswerRankedChoice = (props) => {
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
                 className={`${
                   props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
-                } w-full rounded-[4.73px] px-2 py-[5.6px] text-[8.52px] font-normal leading-none tablet:leading-[19px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:rounded-[10.949px] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] resize-none`}
+                } w-full resize-none rounded-[4.73px] px-2 py-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none tablet:rounded-[10.949px] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]`}
               />
             ) : (
-              <h1 className="pb-[5.6px] px-2 tablet:pl-[18px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] tablet:leading-[19px] text-[#435059] outline-none dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
+              <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
                 {props.answer}
               </h1>
             )}
@@ -279,8 +289,8 @@ const SingleAnswerRankedChoice = (props) => {
                   props.checkOptionStatus.color
                 }`}
               >
-                <div className="flex w-[50px] h-[75%] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
-                  <span>{props.checkOptionStatus.name}</span>
+                <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
+                  <span> {isTyping ? `${answer.length}/350` : props.checkOptionStatus.name}</span>
                 </div>
                 <Tooltip optionStatus={props.checkOptionStatus} />
               </div>
@@ -290,19 +300,16 @@ const SingleAnswerRankedChoice = (props) => {
         <div
           className={`${
             props.snapshot.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-          } flex min-h-[21.7px] h-full w-[35px] items-center justify-center rounded-r-[4.7px] bg-white dark:bg-[#0D1012] tablet:h-full tablet:rounded-r-[10px]`}
+          } flex h-full min-h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] bg-white tablet:h-full tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
         >
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
         </div>
       </div>
       {/* =============== To Display Contention and Trash Right of Option */}
       {props.postProperties === 'HiddenPosts' ? (
-        <div className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"></div>
+        <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px] dark:bg-[#000]"></div>
       ) : props.btnText !== 'Results' ? (
-        <div
-          className="flex w-[42px] min-w-[42px] items-center pl-2 dark:bg-[#000] tablet:w-8 tablet:justify-center tablet:pl-[5px]"
-          onClick={handleContendPopup}
-        >
+        <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px] dark:bg-[#000]">
           {props.deleteable ? (
             <img
               src="/assets/svgs/dashboard/trash2.svg"
@@ -311,7 +318,7 @@ const SingleAnswerRankedChoice = (props) => {
               onClick={() => handleDeleteOption(props.number)}
             />
           ) : (
-            <div className="flex items-center gap-1 laptop:gap-[18px]">
+            <div className="flex items-center gap-1 laptop:gap-[18px]" onClick={handleContendPopup}>
               <div id="custom-yello-checkbox" className="flex h-full items-center ">
                 <div className="cursor-pointer">
                   <ContentionIcon
@@ -333,7 +340,7 @@ const SingleAnswerRankedChoice = (props) => {
           </BasicModal>
         </div>
       ) : (
-        <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] dark:bg-[#000] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
+        <div className="flex w-12 min-w-[48px] items-center bg-white pl-1 text-[9.238px] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px] dark:bg-[#000]">
           {props.btnText === 'Results' ? (
             <>
               {props.contendPercentages &&
