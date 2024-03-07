@@ -67,7 +67,7 @@ export default function HiddenPosts() {
       end: pagination.sliceEnd,
       uuid: persistedUserInfo?.uuid,
     });
-  }, [filterStates.searchData, pagination, questUtils.hiddenPostId]);
+  }, [filterStates.searchData, pagination]);
 
   // Update Data on Filter Changes
   useEffect(() => {
@@ -265,20 +265,22 @@ export default function HiddenPosts() {
         >
           <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
             {allData &&
-              allData.map((item, index) => (
-                <div key={index + 1}>
-                  <QuestionCard
-                    postProperties={'HiddenPosts'}
-                    questStartData={item}
-                    startTest={startTest}
-                    setStartTest={setStartTest}
-                    viewResult={viewResult}
-                    handleViewResults={memoizedViewResults}
-                    handleStartTest={memoizedStartTest}
-                    setPagination={setPagination}
-                  />
-                </div>
-              ))}
+              allData
+                .filter((item) => questUtils.hiddenPosts.includes(item._id))
+                .map((item, index) => (
+                  <div key={index + 1}>
+                    <QuestionCard
+                      postProperties={'HiddenPosts'}
+                      questStartData={item}
+                      startTest={startTest}
+                      setStartTest={setStartTest}
+                      viewResult={viewResult}
+                      handleViewResults={memoizedViewResults}
+                      handleStartTest={memoizedStartTest}
+                      setPagination={setPagination}
+                    />
+                  </div>
+                ))}
           </div>
         </InfiniteScroll>
       </div>
