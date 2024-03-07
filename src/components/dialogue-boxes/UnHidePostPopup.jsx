@@ -9,6 +9,8 @@ import { removeHiddenPosts } from '../../features/quest/utilsSlice';
 import { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 
+import * as questUtilsActions from '../../features/quest/utilsSlice';
+
 export default function UnHidePostPopup({ handleClose, modalVisible, questStartData }) {
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -22,6 +24,7 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
       toast.success('Post unhidden successfully');
       queryClient.invalidateQueries('FeedData');
       setIsLoading(false);
+      dispatch(questUtilsActions.addHiddenPostId(resp.data.data.questForeignKey));
       handleClose();
     },
     onError: (err) => {

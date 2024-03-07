@@ -9,6 +9,7 @@ import QuestionCard from '../../QuestStartSection/components/QuestionCard';
 
 import { applyFilters, fetchDataByStatus } from '../../../../../utils/questionCard';
 import * as HomepageAPIs from '../../../../../services/api/homepageApis';
+import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 
 export default function HiddenPosts() {
   const pageLimit = 5;
@@ -20,6 +21,7 @@ export default function HiddenPosts() {
 
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const questUtils = useSelector(questUtilsActions.getQuestUtils);
 
   const [allData, setAllData] = useState([]);
   const [feedData, setFeedData] = useState();
@@ -65,7 +67,7 @@ export default function HiddenPosts() {
       end: pagination.sliceEnd,
       uuid: persistedUserInfo?.uuid,
     });
-  }, [filterStates.searchData, pagination]);
+  }, [filterStates.searchData, pagination, questUtils.hiddenPostId]);
 
   // Update Data on Filter Changes
   useEffect(() => {

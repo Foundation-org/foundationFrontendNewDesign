@@ -4,6 +4,7 @@ const initialState = {
   addOptionLimit: 0,
   hiddenPosts: [],
   sharedLinkPost: null,
+  hiddenPostId: null,
 };
 
 export const utilsSlice = createSlice({
@@ -25,11 +26,20 @@ export const utilsSlice = createSlice({
     addSharedLinkPost: (state, action) => {
       state.sharedLinkPost = action.payload;
     },
+    addHiddenPostId: (state, action) => {
+      state.hiddenPostId = action.payload;
+    },
   },
 });
 
-export const { updateaddOptionLimit, resetaddOptionLimit, addHiddenPosts, removeHiddenPosts, addSharedLinkPost } =
-  utilsSlice.actions;
+export const {
+  updateaddOptionLimit,
+  resetaddOptionLimit,
+  addHiddenPosts,
+  removeHiddenPosts,
+  addSharedLinkPost,
+  addHiddenPostId,
+} = utilsSlice.actions;
 
 export default utilsSlice.reducer;
 
