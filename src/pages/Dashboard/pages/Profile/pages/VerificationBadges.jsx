@@ -89,11 +89,25 @@ const VerificationBadges = () => {
   };
   // Handle Add Badge
   const handleAddBadge = async (provider, data) => {
+    console.log("came");
     try {
+    let id;
+    if(provider==="linkedin"){
+      id=provider;
+    }
+    else if(provider==="instagram"){
+      id=data.user_id;
+    }
+    else if(provider==="twitter" || provider==="facebook"){
+      id=data.userID;
+    }
+    else if(provider==="github"){
+      id=data.email;
+    }
       const addBadge = await api.post(`/addBadge`, {
         data,
         provider,
-        badgeAccountId: data.userID,
+        badgeAccountId: id,
         uuid: fetchUser.uuid,
       });
       if (addBadge.status === 200) {
@@ -161,8 +175,9 @@ const VerificationBadges = () => {
   };
 
   const handleWeb3 = async (title, type) => {
+    try {
     let value;
-    if (title === 'Ethereum Wallet') {
+    if (title.trim() === 'Ethereum Wallet') {
       if (window.ethereum) {
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
@@ -170,14 +185,13 @@ const VerificationBadges = () => {
         value = _walletAddress;
       } else {
         console.log('Wallet not detected');
-        toast.warning('Please install an Etherium wallet');
+        toast.warning('Please install an Ethereum wallet');
         return;
       }
     }
     if (value === '') {
       return;
     }
-    try {
       const addBadge = await api.post(`/addBadge/web3/add`, {
         web3: {
           [type]: value,
@@ -189,7 +203,7 @@ const VerificationBadges = () => {
         handleUserInfo();
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      console.log(error);
     }
   };
 
@@ -482,8 +496,9 @@ const VerificationBadges = () => {
                 client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
                 onResolve={({ provider, data }) => {
                   handleAddBadge(provider, data);
+                  console.log("linkedin",provider,data);
                 }}
-                scope='profile,email,openid'
+                scope='email'
                 redirect_uri={window.location.href}
                 onReject={(err) => {
                   console.log(err);
@@ -496,7 +511,6 @@ const VerificationBadges = () => {
                     checkSocial('linkedin') && handleRemoveBadge('linkedin');
                   }}
                 >
-                  {console.log(import.meta.env.VITE_LINKEDIN_KEY)}
                   {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                     {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
@@ -800,7 +814,9 @@ const VerificationBadges = () => {
               <LoginSocialGithub
                 client_id={import.meta.env.VITE_GITHUB_CLIENT_ID}
                 client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
+                scope='user,email'
                 onResolve={({ provider, data }) => {
+                  console.log(provider,data);
                   handleAddBadge(provider, data);
                 }}
                 redirect_uri={window.location.href}
