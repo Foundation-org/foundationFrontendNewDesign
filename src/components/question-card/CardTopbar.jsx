@@ -59,7 +59,7 @@ const CardTopbar = ({
         {postProperties === 'SharedLinks' && (
           <div className="lgTablet:max-w-[28rem] max-w-48 tablet:max-w-[16rem] laptop:max-w-fit">
             <h1 className="truncate text-wrap text-[10px] font-semibold text-[#707175] tablet:text-[20px] tablet:font-medium">
-              {url}aaaaaaaaaaaaaaaaaaaaaaaaa
+              {url}
             </h1>
           </div>
         )}
