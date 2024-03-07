@@ -15,20 +15,18 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     env:
-      VITE_GG_APP_ID: 839809470929-8iitl90m69dml67s1ur3b6tc03cp5i8u.apps.googleusercontent.com
-      VITE_FB_APP_ID: 406934521663087
-      VITE_GOOGLE_RECAPTCH_SITE_KEY: 6Le14QUpAAAAAKWPIYdnLEKQW5xuZp7GrI7Cg1ON    
-      VITE_API_URL: https://api.staging.on.foundation
-      VITE_GITHUB_CLIENT_ID: 60b36812844e8b44dfbb
-      VITE_GITHUB_CLIENT_SECRET: 5a0fb5cdf6a9e89d8df7186b018e1dc89db0bdf4
-      VITE_LINKEDIN_KEY: 77f1zj09v4ilh7
-      VITE_LINKEDIN_SECRET: SQEmvNi8ZDnuJgmo
-      VITE_TWITTER_CONSUMER_KEY: 81AEqfxXTBis0VdFsFAkTBCeq
-      VITE_TWITTER_CONSUMER_SECRET: drEFyuoKfvjIUNvE3nbyDe2dFRhlNGPRP56jSChtxswXeNGnWO    
-      VITE_FACEBOOK_APP_ID: 882916076242427
-      VITE_FACEBOOK_APP_SECRET: 5a6af75fdb11fa22c911e57ae0d374df
-      VITE_INSTAGRAM_CLIENT_ID: 343379541856647
-      VITE_INSTAGRAM_CLIENT_SECRET: f2b57190abc6da76b70609802471ca81
+      VITE_GG_APP_ID: ${{ vars.VITE_GG_APP_ID }}
+      VITE_FB_APP_ID: ${{ vars.VITE_FB_APP_ID }}
+      VITE_GOOGLE_RECAPTCH_SITE_KEY: ${{ vars.VITE_GOOGLE_RECAPTCH_SITE_KEY }}
+      VITE_API_URL: ${{ vars.VITE_DEVELOPMENT_API_URL }}
+      VITE_CLIENT_URL: ${{ vars.VITE_DEVELOPMENT_CLIENT_URL }}
+      VITE_GITHUB_CLIENT_ID: ${{ vars.VITE_DEVELOPMENT_GITHUB_CLIENT_ID }}
+      VITE_GITHUB_CLIENT_SECRET: ${{ vars.VITE_DEVELOPMENT_GITHUB_CLIENT_SECRET }}
+      VITE_LINKEDIN_KEY: ${{ vars.VITE_LINKEDIN_KEY }}
+      VITE_LINKEDIN_SECRET: ${{ vars.VITE_LINKEDIN_SECRET }}
+      VITE_TWITTER_CONSUMER_KEY: ${{ vars.VITE_TWITTER_CONSUMER_KEY }}
+      VITE_INSTAGRAM_CLIENT_ID: ${{ vars.VITE_INSTAGRAM_CLIENT_ID }}
+      VITE_INSTAGRAM_CLIENT_SECRET: ${{ vars.VITE_INSTAGRAM_CLIENT_SECRET }}
     
     strategy:
       matrix:
@@ -41,12 +39,12 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: AKIAYAVZB4KPZCJCVHHT
-          aws-secret-access-key: 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
-          aws-region: us-east-2
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
       - name: Build React App
         run: npm install && npm run build
         env: 
             CI: false
       - name: Deploy app build to S3 bucket
-        run: aws s3 sync ./dist/ s3://on.foundation --delete && aws cloudfront create-invalidation --distribution-id E3VYWU0RJPITG1 --paths /*
+        run: aws s3 sync ./dist/ s3://on.foundation --delete && aws cloudfront create-invalidation --distribution-id "${{ secrets.DISTRIBUTION_ID }}" --paths /*
