@@ -6,7 +6,7 @@ name: s3-depl
 on:
   # Triggers the workflow on push or pull request events but only for the development branch
   push:
-    branches: [ development ]
+    branches: [ staging ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -18,10 +18,10 @@ jobs:
       VITE_GG_APP_ID: ${{ vars.VITE_GG_APP_ID }}
       VITE_FB_APP_ID: ${{ vars.VITE_FB_APP_ID }}
       VITE_GOOGLE_RECAPTCH_SITE_KEY: ${{ vars.VITE_GOOGLE_RECAPTCH_SITE_KEY }}
-      VITE_API_URL: ${{ vars.VITE_DEVELOPMENT_API_URL }}
-      VITE_CLIENT_URL: ${{ vars.VITE_DEVELOPMENT_CLIENT_URL }}
-      VITE_GITHUB_CLIENT_ID: ${{ vars.VITE_DEVELOPMENT_GITHUB_CLIENT_ID }}
-      VITE_GITHUB_CLIENT_SECRET: ${{ vars.VITE_DEVELOPMENT_GITHUB_CLIENT_SECRET }}
+      VITE_API_URL: ${{ vars.VITE_STAGING_API_URL }}
+      VITE_CLIENT_URL: ${{ vars.VITE_STAGING_CLIENT_URL }}
+      VITE_GITHUB_CLIENT_ID: ${{ vars.VITE_STAGING_GITHUB_CLIENT_ID }}
+      VITE_GITHUB_CLIENT_SECRET: ${{ vars.VITE_STAGING_GITHUB_CLIENT_SECRET }}
       VITE_LINKEDIN_KEY: ${{ vars.VITE_LINKEDIN_KEY }}
       VITE_LINKEDIN_SECRET: ${{ vars.VITE_LINKEDIN_SECRET }}
       VITE_TWITTER_CONSUMER_KEY: ${{ vars.VITE_TWITTER_CONSUMER_KEY }}
@@ -47,4 +47,4 @@ jobs:
         env: 
             CI: false
       - name: Deploy app build to S3 bucket
-        run: aws s3 sync ./dist/ s3://development.on.foundation --delete && aws cloudfront create-invalidation --distribution-id "${{ secrets.DISTRIBUTION_ID }}" --paths "/*"
+        run: aws s3 sync ./dist/ s3://staging.on.foundation --delete && aws cloudfront create-invalidation --distribution-id "${{ secrets.STAGING_DISTRIBUTION_ID }}" --paths "/*"
