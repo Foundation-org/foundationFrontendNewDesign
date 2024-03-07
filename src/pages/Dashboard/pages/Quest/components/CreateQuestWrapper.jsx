@@ -63,6 +63,12 @@ export default function CreateQuestWrapper({ question, setQuestion, type, handle
     }
   }, [chatgptQuestionStatus]);
 
+  useEffect(() => {
+    if (questionStatus.tooltipName === 'Question is Verified') {
+      setIsTyping(false);
+    }
+  }, [questionStatus.tooltipName]);
+
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
