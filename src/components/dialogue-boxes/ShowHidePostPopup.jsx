@@ -31,7 +31,7 @@ export default function ShowHidePostPopup({
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const [selectedTitle, setSelectedTitle] = useState(null);
+  const [selectedTitle, setSelectedTitle] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCheckboxChange = (index) => {
@@ -98,7 +98,7 @@ export default function ShowHidePostPopup({
       toast.warning(
         <p>
           Please{' '}
-          <span className="text-[#389CE3] underline cursor-pointer" onClick={() => navigate('/guest-signup')}>
+          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
             Create an Account
           </span>{' '}
           to unlock this feature
@@ -107,21 +107,27 @@ export default function ShowHidePostPopup({
       setIsLoading(false);
       return;
     } else {
-      if (questStartData?.userQuestSetting) {
-        updateHiddenPost({
-          uuid: persistedUserInfo?.uuid,
-          questForeignKey: questStartData._id,
-          hidden: true,
-          hiddenMessage: selectedTitle,
-        });
+      if (selectedTitle === '') {
+        toast.warning('You must select a reason before submitting.');
+        setIsLoading(false);
+        return;
       } else {
-        hidePost({
-          uuid: persistedUserInfo?.uuid,
-          questForeignKey: questStartData._id,
-          hidden: true,
-          hiddenMessage: selectedTitle,
-          Question: questStartData.Question,
-        });
+        if (questStartData?.userQuestSetting) {
+          updateHiddenPost({
+            uuid: persistedUserInfo?.uuid,
+            questForeignKey: questStartData._id,
+            hidden: true,
+            hiddenMessage: selectedTitle,
+          });
+        } else {
+          hidePost({
+            uuid: persistedUserInfo?.uuid,
+            questForeignKey: questStartData._id,
+            hidden: true,
+            hiddenMessage: selectedTitle,
+            Question: questStartData.Question,
+          });
+        }
       }
     }
   };
@@ -135,40 +141,40 @@ export default function ShowHidePostPopup({
       isBackground={true}
       customStyle={customStyle}
     >
-      <div className="px-[25px] py-[13px] tablet:py-[27px] tablet:px-[50px]">
+      <div className="px-[25px] py-[13px] tablet:px-[50px] tablet:py-[27px]">
         <div className="flex flex-col gap-[5px] tablet:gap-3">
           {data.map((item, index) => (
             <div
               key={index + 1}
               id={item.id}
-              className="border-[1.52px] tablet:border-[3px] border-[#DEE6F7] rounded-[5.05px] tablet:rounded-[10px] w-full py-[5px] px-[10px] tablet:py-3 min-w-[183px] tablet:min-w-[364px] flex items-center gap-2 cursor-pointer"
+              className="flex w-full min-w-[183px] cursor-pointer items-center gap-2 rounded-[5.05px] border-[1.52px] border-[#DEE6F7] px-[10px] py-[5px] tablet:min-w-[364px] tablet:rounded-[10px] tablet:border-[3px] tablet:py-3"
               onClick={() => handleCheckboxChange(index)}
             >
               <div id="custom-checkbox-popup" className="flex h-full items-center">
                 <input
                   type="checkbox"
-                  className="checkbox h-[12.63px] w-[12.63px] rounded-full tablet:h-[25px] tablet:w-[25px] after:mt-[-2px] tablet:after:mt-[1px]"
+                  className="checkbox h-[12.63px] w-[12.63px] rounded-full after:mt-[-2px] tablet:h-[25px] tablet:w-[25px] tablet:after:mt-[1px]"
                   checked={checkboxStates[index]}
                   onChange={() => handleCheckboxChange(index)}
                 />
               </div>
-              <p className="text-[10px] tablet:text-[19px] font-normal leading-[12px] tablet:leading-[23px] text-[#435059] text-nowrap">
+              <p className="text-nowrap text-[10px] font-normal leading-[12px] text-[#435059] tablet:text-[19px] tablet:leading-[23px]">
                 {item.title}
               </p>
             </div>
           ))}
         </div>
-        <div className="mt-[10px] tablet:mt-[27px] flex justify-center gap-4">
+        <div className="mt-[10px] flex justify-center gap-4 tablet:mt-[27px]">
           <Button
             variant={'danger'}
-            className={'rounded-[7.58px] min-w-[68.2px] max-w-[68.2px] tablet:min-w-[139px] tablet:max-w-[139px]'}
+            className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
             onClick={handleClose}
           >
             Cancel
           </Button>
           <Button
             variant={'submit'}
-            className={'rounded-[7.58px] min-w-[68.2px] max-w-[68.2px] tablet:min-w-[139px] tablet:max-w-[139px]'}
+            className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
             onClick={() => {
               handleHiddenPostApiCall();
             }}
