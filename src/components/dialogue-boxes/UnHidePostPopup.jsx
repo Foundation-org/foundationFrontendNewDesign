@@ -23,6 +23,7 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
     onSuccess: (resp) => {
       toast.success('Post unhidden successfully');
       queryClient.invalidateQueries('FeedData');
+      dispatch(questUtilsActions.addHiddenPostId(resp.data.data.questForeignKey));
       setIsLoading(false);
       handleClose();
     },

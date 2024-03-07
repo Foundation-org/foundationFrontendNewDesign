@@ -93,6 +93,7 @@ export default function ShowHidePostPopup({
   });
 
   const handleHiddenPostApiCall = () => {
+    dispatch(questsActions.addHiddenPostId(null));
     setIsLoading(true);
     if (persistedUserInfo?.role === 'guest') {
       toast.warning(

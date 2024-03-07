@@ -139,6 +139,16 @@ export default function HiddenPosts() {
     [setStartTest, setViewResult],
   );
 
+  useEffect(() => {
+    const indexToRemove = allData.findIndex((item) => item._id === questUtils.hiddenPostId);
+
+    if (indexToRemove !== -1) {
+      const updatedAllData = [...allData.slice(0, indexToRemove), ...allData.slice(indexToRemove + 1)];
+
+      setAllData(updatedAllData);
+    }
+  }, [questUtils.hiddenPostId]);
+
   return (
     <div>
       <div className="ml-[32px] mr-4 flex justify-between pt-[5px] tablet:ml-[97px] tablet:mr-[70px]">
@@ -265,22 +275,20 @@ export default function HiddenPosts() {
         >
           <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
             {allData &&
-              allData
-                .filter((item) => questUtils.hiddenPosts.includes(item._id))
-                .map((item, index) => (
-                  <div key={index + 1}>
-                    <QuestionCard
-                      postProperties={'HiddenPosts'}
-                      questStartData={item}
-                      startTest={startTest}
-                      setStartTest={setStartTest}
-                      viewResult={viewResult}
-                      handleViewResults={memoizedViewResults}
-                      handleStartTest={memoizedStartTest}
-                      setPagination={setPagination}
-                    />
-                  </div>
-                ))}
+              allData.map((item, index) => (
+                <div key={index + 1}>
+                  <QuestionCard
+                    postProperties={'HiddenPosts'}
+                    questStartData={item}
+                    startTest={startTest}
+                    setStartTest={setStartTest}
+                    viewResult={viewResult}
+                    handleViewResults={memoizedViewResults}
+                    handleStartTest={memoizedStartTest}
+                    setPagination={setPagination}
+                  />
+                </div>
+              ))}
           </div>
         </InfiniteScroll>
       </div>
