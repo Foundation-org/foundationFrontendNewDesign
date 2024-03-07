@@ -56,7 +56,11 @@ const CardTopbar = ({
           </div>
         )}
         {postProperties === 'SharedLinks' && (
-          <h1 className="text-[10px] tablet:text-[20px] text-[#707175] font-semibold tablet:font-medium">{url}</h1>
+          <div className="max-w-48">
+            <h1 className="truncate text-wrap text-[10px] font-semibold text-[#707175] tablet:text-[20px] tablet:font-medium">
+              {url}
+            </h1>
+          </div>
         )}
       </div>
       {postProperties === 'HiddenPosts' ? (
@@ -67,12 +71,12 @@ const CardTopbar = ({
           <img
             src="/assets/svgs/eye-latest-cut.svg"
             alt="eye-cut"
-            className="w-[15.24px] tablet:w-[30px] h-[10.67px] tablet:h-[26.6px]"
+            className="h-[10.67px] w-[15.24px] tablet:h-[26.6px] tablet:w-[30px]"
           />
         </div>
       ) : postProperties === 'SharedLinks' ? (
         <div
-          className="flex items-center gap-[4.8px] tablet:gap-3 cursor-pointer"
+          className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
           onClick={() => {
             copyToClipboard();
             toast.success('Link Copied!');
@@ -81,7 +85,7 @@ const CardTopbar = ({
           <img
             src="/assets/svgs/copylinkblue.png"
             alt="eye-cut"
-            className="w-3 tablet:w-[19.79px] h-3 tablet:h-[22.92px]"
+            className="h-3 w-3 tablet:h-[22.92px] tablet:w-[19.79px]"
           />
           <h1 className="text-[10.45px] font-semibold text-[#6BA5CF] tablet:text-[20px]">Copy Link</h1>
         </div>
