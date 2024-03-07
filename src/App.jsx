@@ -9,6 +9,20 @@ function App() {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   useEffect(() => {
+    // Function to handle the event
+    const handlePreloadError = (event) => {
+      // Perform the desired action on preload error
+      window.location.reload(); // Correct method to reload the page
+    };
+    // Add event listener when the component mounts
+    window.addEventListener('vite:preloadError', handlePreloadError);
+    // Remove event listener when the component unmounts
+    return () => {
+      window.removeEventListener('vite:preloadError', handlePreloadError);
+    };
+  }, []);
+
+  useEffect(() => {
     if (persistedTheme === 'dark') {
       setTheme('dark');
     } else {

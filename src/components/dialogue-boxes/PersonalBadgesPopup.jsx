@@ -37,7 +37,13 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     let value;
     if (type.trim() === 'dateOfBirth') {
       value = date;
-    } else {
+    }
+     else if (type.trim() === 'security-question') {
+      value = {
+        [selected.name]: name,
+      };
+    } 
+    else {
       value = name;
     }
 
@@ -64,7 +70,6 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     }
   };
 
-  console.log('first', { name, selected: selected.name });
 
   const renderInputField = (title, name, handleNameChange, placeholder, apiResp, data) => {
     const isError = apiResp?.data?.message === 'No';

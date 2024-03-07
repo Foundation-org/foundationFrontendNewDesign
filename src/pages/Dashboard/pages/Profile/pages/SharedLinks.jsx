@@ -48,7 +48,7 @@ export default function SharedLinks() {
         setFeedData(result.data);
       } else {
         const result = await HomepageAPIs.searchHiddenQuestions(debouncedSearch);
-        setFeedData(result.data);
+        setFeedData(result);
       }
     } catch (error) {
       console.error('Error fetching data:', error);

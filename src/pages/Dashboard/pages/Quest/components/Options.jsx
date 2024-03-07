@@ -118,7 +118,7 @@ const Options = ({
                 }`}
               >
                 <div className="flex h-[75%] w-[50px] items-center justify-center border-l border-[#DEE6F7] tablet:w-[99.58px] tablet:border-l-[3px] laptop:w-[134px]">
-                  <span> {isTyping ? `${typedValue.length}/350` : optionStatus.name} </span>
+                  <span> {isTyping ? `${typedValue.length}/200` : optionStatus.name} </span>
                 </div>
                 <Tooltip optionStatus={optionStatus} />
               </div>
