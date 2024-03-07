@@ -31,6 +31,7 @@ export default {
     extend: {
       screens: {
         tablet: '744px',
+        lgTablet: '1024px',
         laptop: '1280px',
         desktop: '1440px',
         '2xl': '1440px',

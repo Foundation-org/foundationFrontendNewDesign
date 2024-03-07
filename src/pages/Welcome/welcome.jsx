@@ -39,11 +39,11 @@ export default function Signup() {
           </p>
 
           <div className="flex w-full flex-col gap-[22.96px] tablet:h-[165px] tablet:w-[600px] tablet:gap-[15px]">
-            <Button variant="submit-welcome" className={'max-w-[600px]'} onClick={() => navigate('/signup')}>
-              Create an Account
-            </Button>
             <Button variant="hollow-welcome" className={'max-w-[600px]'} onClick={() => navigate('/signin')}>
               Sign In
+            </Button>
+            <Button variant="submit-welcome" className={'max-w-[600px]'} onClick={() => navigate('/signup')}>
+              Create an Account
             </Button>
           </div>
         </div>

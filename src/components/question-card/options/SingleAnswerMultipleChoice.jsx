@@ -89,7 +89,7 @@ const SingleAnswerMultipleChoice = (props) => {
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
 
-    if (inputValue.length <= 350) {
+    if (inputValue.length <= 200) {
       setIsTyping(true);
       setAnswer(inputValue);
 
@@ -275,7 +275,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 className={`relative flex items-center bg-white text-[0.5rem] font-semibold tablet:text-[1rem] laptop:text-[1.25rem] dark:bg-[#0D1012] ${props.checkOptionStatus.color}`}
               >
                 <div className="flex h-[75%] w-[45px] items-center justify-center border-l-[0.7px] tablet:w-[99.58px] laptop:w-[7rem]">
-                  <span> {isTyping ? `${answer.length}/350` : props.checkOptionStatus.name}</span>
+                  <span> {isTyping ? `${answer.length}/200` : props.checkOptionStatus.name}</span>
                 </div>
                 <Tooltip optionStatus={props.checkOptionStatus} />
               </div>

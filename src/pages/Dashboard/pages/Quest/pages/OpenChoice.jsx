@@ -122,35 +122,37 @@ const OpenChoice = () => {
   };
 
   const handleChange = (index, value) => {
-    if (prevValueArr[index]?.value === value.trim()) {
-      setTypedValues((prevValues) => {
-        const newTypedValues = [...prevValues];
-        newTypedValues[index] = {
-          ...newTypedValues[index],
-          question: value,
-          optionStatus: optionsValue[index].chatgptOptionStatus,
-          isTyping: false,
-        };
+    if (value.length <= 200) {
+      if (prevValueArr[index]?.value === value.trim()) {
+        setTypedValues((prevValues) => {
+          const newTypedValues = [...prevValues];
+          newTypedValues[index] = {
+            ...newTypedValues[index],
+            question: value,
+            optionStatus: optionsValue[index].chatgptOptionStatus,
+            isTyping: false,
+          };
 
-        return newTypedValues;
-      });
-    } else {
-      setTypedValues((prevValues) => {
-        const newTypedValues = [...prevValues];
-        newTypedValues[index] = {
-          ...newTypedValues[index],
-          question: value,
-          optionStatus: {
-            name: 'Ok',
-            color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
-            tooltipName: value.trim() === '' ? 'Please write something...' : '',
-            tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
-          },
-          isTyping: true,
-        };
+          return newTypedValues;
+        });
+      } else {
+        setTypedValues((prevValues) => {
+          const newTypedValues = [...prevValues];
+          newTypedValues[index] = {
+            ...newTypedValues[index],
+            question: value,
+            optionStatus: {
+              name: 'Ok',
+              color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
+              tooltipName: value.trim() === '' ? 'Please write something...' : '',
+              tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
+            },
+            isTyping: true,
+          };
 
-        return newTypedValues;
-      });
+          return newTypedValues;
+        });
+      }
     }
   };
 
