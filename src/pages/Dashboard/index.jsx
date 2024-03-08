@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <>
       <Topbar />
-      <div className="mt-[66.8px] flex justify-between">
+      <div className="mt-[66.8px] flex h-screen justify-between">
         <Outlet />
       </div>
     </>
