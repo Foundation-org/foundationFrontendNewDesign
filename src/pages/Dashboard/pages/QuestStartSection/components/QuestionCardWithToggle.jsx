@@ -33,7 +33,7 @@ const QuestionCardWithToggle = (props) => {
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   const { questStartData, isBookmarked, setPagination } = props;
-  const { setSubmitResponse } = props;
+  const { setSubmitResponse, isSingleQuest } = props;
 
   let questData;
 
@@ -414,7 +414,7 @@ const QuestionCardWithToggle = (props) => {
         answer: ans,
         addedAnswer: '',
         uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
-        isSharedLinkAns: true,
+        ...(isSingleQuest && { isSharedLinkAns: true }),
       };
 
       if (!params.answer.selected) {
@@ -544,7 +544,7 @@ const QuestionCardWithToggle = (props) => {
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
-          isSharedLinkAns: true,
+          ...(isSingleQuest && { isSharedLinkAns: true }),
           isAddedAnsSelected: isAddedAnsSelected,
         };
 
@@ -663,7 +663,7 @@ const QuestionCardWithToggle = (props) => {
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
-          isSharedLinkAns: true,
+          ...(isSingleQuest && { isSharedLinkAns: true }),
           isAddedAnsSelected: isAddedAnsSelected,
         };
 

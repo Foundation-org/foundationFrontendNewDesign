@@ -111,7 +111,7 @@ const SingleQuest = () => {
       questByUniqueShareLink();
     }
 
-    questImpression(id)
+    questImpression(id);
   }, []);
 
   useEffect(() => {
@@ -156,6 +156,7 @@ const SingleQuest = () => {
                 isBookmarked={false}
                 setSingleQuestResp={setSingleQuestResp}
                 setSubmitResponse={setSubmitResponse}
+                isSingleQuest={location.pathname.includes('/p/') ? true : false}
               />
             </div>
           )}
