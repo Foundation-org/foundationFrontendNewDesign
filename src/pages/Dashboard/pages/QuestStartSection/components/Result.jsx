@@ -21,20 +21,20 @@ const Result = (props) => {
       const nextOption = prevOption === 3 ? 1 : prevOption + 1;
 
       if (nextOption === 1) {
-        if (props.questStartData?.whichTypeQuestion === 'multiple choise') {
-          setSortedAnswers(props.questStartData.QuestAnswers);
+        if (
+          props.questStartData?.whichTypeQuestion === 'multiple choise' ||
+          props.questStartData?.whichTypeQuestion === 'open choice'
+        ) {
+          setSortedAnswers(props.questStartData?.QuestAnswers);
         } else {
-          const questData = props;
-          const rankedNewData = getRankedAnswers(questData);
+          const rankedNewData = getRankedAnswers(props);
           setSortedAnswers(rankedNewData);
         }
       } else if (nextOption === 2) {
-        const questData = props;
-        const rankedNewData = sortAnswersByAscDesc(questData, 'descending');
+        const rankedNewData = sortAnswersByAscDesc(props, 'descending');
         setSortedAnswers(rankedNewData);
       } else if (nextOption === 3) {
-        const questData = props;
-        const rankedNewData = sortAnswersByAscDesc(questData, 'ascending');
+        const rankedNewData = sortAnswersByAscDesc(props, 'ascending');
         setSortedAnswers(rankedNewData);
       }
 
@@ -43,7 +43,8 @@ const Result = (props) => {
   };
 
   const getRankedAnswers = (props) => {
-    return props.questStartData.QuestAnswers.sort((a, b) => {
+    const questAnswersCopy = [...props.questStartData.QuestAnswers];
+    return questAnswersCopy.sort((a, b) => {
       const indexA = props.questStartData?.startQuestData?.data[
         props.questStartData?.startQuestData?.data.length - 1
       ].selected.findIndex((item) => item.question === a.question);
@@ -57,16 +58,25 @@ const Result = (props) => {
   };
 
   const sortAnswersByAscDesc = (data, order) => {
-    return data.questStartData.QuestAnswers.sort((a, b) => {
+    const questAnswersCopy = [...data.questStartData.QuestAnswers];
+    return questAnswersCopy.sort((a, b) => {
       const percentageA = parseFloat(
         data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
           a.question
-        ]?.replace('%', ''),
+        ]?.replace('%', '')
+          ? data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
+              a.question
+            ]?.replace('%', '')
+          : 0,
       );
       const percentageB = parseFloat(
         data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
           b.question
-        ]?.replace('%', ''),
+        ]?.replace('%', '')
+          ? data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
+              b.question
+            ]?.replace('%', '')
+          : 0,
       );
 
       if (order === 'ascending') {
@@ -79,28 +89,26 @@ const Result = (props) => {
 
   useEffect(() => {
     if (selectedOption === 1) {
-      if (props.questStartData?.whichTypeQuestion === 'multiple choise') {
-        console.log('hn bhai', props.answersSelection);
+      if (
+        props.questStartData?.whichTypeQuestion === 'multiple choise' ||
+        props.questStartData?.whichTypeQuestion === 'open choice'
+      ) {
         setSortedAnswers(props?.questStartData?.QuestAnswers);
       } else {
-        const questData = props;
-        const rankedNewData = getRankedAnswers(questData);
+        const rankedNewData = getRankedAnswers(props);
         setSortedAnswers(rankedNewData);
       }
     }
 
     if (selectedOption === 2) {
-      const questData = props;
-      const rankedNewData = sortAnswersByAscDesc(questData, 'descending');
+      const rankedNewData = sortAnswersByAscDesc(props, 'descending');
       setSortedAnswers(rankedNewData);
     }
 
     if (selectedOption === 3) {
-      const questData = props;
-      const rankedNewData = sortAnswersByAscDesc(questData, 'ascending');
+      const rankedNewData = sortAnswersByAscDesc(props, 'ascending');
       setSortedAnswers(rankedNewData);
     }
-    console.log('first', selectedOption, props.questStartData.QuestAnswers);
   }, [selectedOption, props.questStartData]);
 
   return (
