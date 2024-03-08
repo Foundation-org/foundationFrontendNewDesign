@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import SingleAnswer from '../../../../../components/question-card/options/SingleAnswer';
 import SingleAnswerMultipleChoice from '../../../../../components/question-card/options/SingleAnswerMultipleChoice';
 import RankedResult from '../../../components/RankedResult';
+import SortIcon from '../../../../../assets/SortIcon';
 
 const Result = (props) => {
   const { isFullScreen } = useParams();
@@ -19,23 +20,23 @@ const Result = (props) => {
     setSelectedOption((prevOption) => {
       // Toggle between 1, 2, and 3 for each click
       const nextOption = prevOption === 3 ? 1 : prevOption + 1;
-      
+
       // Set the sorted data immediately after clicking
       if (nextOption === 1) {
         const rankedNewData = getRankedAnswers(props);
         setSortRankedAns(rankedNewData);
       } else if (nextOption === 2) {
-        const rankedNewData = getSortedRankedAnswers(props, 'ascending');
-        setSortRankedAns(rankedNewData);
-      } else if (nextOption === 3) {
         const rankedNewData = getSortedRankedAnswers(props, 'descending');
         setSortRankedAns(rankedNewData);
+      } else if (nextOption === 3) {
+        const rankedNewData = getSortedRankedAnswers(props, 'ascending');
+        setSortRankedAns(rankedNewData);
       }
-      
+
       return nextOption;
     });
   };
-  
+
   const getRankedAnswers = (props) => {
     return props.questStartData.QuestAnswers.sort((a, b) => {
       const indexA = props.questStartData?.startQuestData?.data[
@@ -78,12 +79,12 @@ const Result = (props) => {
     }
 
     if (selectedOption === 2) {
-      const rankedNewData = getSortedRankedAnswers(props, 'ascending');
+      const rankedNewData = getSortedRankedAnswers(props, 'descending');
       setSortRankedAns(rankedNewData);
     }
 
     if (selectedOption === 3) {
-      const rankedNewData = getSortedRankedAnswers(props, 'descending');
+      const rankedNewData = getSortedRankedAnswers(props, 'ascending');
       setSortRankedAns(rankedNewData);
     }
   }, [selectedOption, props.questStartData]);
@@ -245,18 +246,23 @@ const Result = (props) => {
         </div>
       ) : props.title === 'Ranked Choice' ? (
         <div className="relative">
-          <div className="absolute -top-4 right-[30px] flex gap-[34px] tablet:-top-7 tablet:right-20 tablet:gap-14">
-            <img
+          {/* <div className="absolute -top-4 right-[30px] flex gap-[34px] tablet:-top-7 tablet:right-20 tablet:gap-14"> */}
+          <div className="absolute -top-[21px] right-[73px] tablet:-top-7 tablet:right-[152px]">
+            <button onClick={handleSortIconClick}>
+              <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
+            </button>
+
+            {/* <img
               src="/assets/svgs/sortIcon.svg"
               alt="sortIcon"
               className="h-[11.561px] w-[7.593px] cursor-pointer tablet:h-5 tablet:w-[13.12px]"
               onClick={handleSortIconClick}
-            />
-            <img
+            /> */}
+            {/* <img
               src="/assets/svgs/sortIcon.svg"
               alt="sortIcon"
               className="h-[11.561px] w-[7.593px] cursor-pointer tablet:h-5 tablet:w-[13.12px]"
-            />
+            /> */}
           </div>
           <div
             className={`${
