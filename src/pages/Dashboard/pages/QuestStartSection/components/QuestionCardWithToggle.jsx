@@ -110,7 +110,6 @@ const QuestionCardWithToggle = (props) => {
         check: false,
         contend: false,
         uuid: answer.uuid,
-        isSharedLinkAns : true
       })),
     );
     if (questData === 0) {
@@ -216,7 +215,6 @@ const QuestionCardWithToggle = (props) => {
       edit: true,
       delete: true,
       uuid: persistedUserInfo.uuid,
-      isSharedLinkAns : true
     };
 
     setAnswerSelection([...answersSelection, newOption]);
@@ -416,7 +414,7 @@ const QuestionCardWithToggle = (props) => {
         answer: ans,
         addedAnswer: '',
         uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
-        isSharedLinkAns : true
+        isSharedLinkAns: true,
       };
 
       if (!params.answer.selected) {
@@ -455,7 +453,6 @@ const QuestionCardWithToggle = (props) => {
               question: answersSelection[i].label,
               addedAnswerByUser: true,
               uuid: answersSelection[i].uuid,
-              isSharedLinkAns : true
             });
             addedAnswerValue = answersSelection[i].label;
             addedAnswerUuidValue = answersSelection[i].uuid;
@@ -472,7 +469,6 @@ const QuestionCardWithToggle = (props) => {
             question: answersSelection[i].label,
             addedAnswerByUser: true,
             uuid: answersSelection[i].uuid,
-            isSharedLinkAns : true
           });
           addedAnswerValue = answersSelection[i].label;
           addedAnswerUuidValue = answersSelection[i].uuid;
@@ -503,7 +499,6 @@ const QuestionCardWithToggle = (props) => {
             addedAnswer: addedAnswerValue,
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
-            isSharedLinkAns : true,
             isAddedAnsSelected: isAddedAnsSelected,
           };
 
@@ -549,7 +544,7 @@ const QuestionCardWithToggle = (props) => {
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
-          isSharedLinkAns : true,
+          isSharedLinkAns: true,
           isAddedAnsSelected: isAddedAnsSelected,
         };
 
@@ -603,7 +598,6 @@ const QuestionCardWithToggle = (props) => {
             question: rankedAnswers[i].label,
             addedAnswerByUser: true,
             uuid: rankedAnswers[i].uuid,
-            isSharedLinkAns : true
           });
           addedAnswerValue = rankedAnswers[i].label;
           addedAnswerUuidValue = rankedAnswers[i].uuid;
@@ -639,7 +633,6 @@ const QuestionCardWithToggle = (props) => {
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
             isAddedAnsSelected: isAddedAnsSelected,
-            isSharedLinkAns : true
           };
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
@@ -670,7 +663,7 @@ const QuestionCardWithToggle = (props) => {
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid || localStorage.getItem('uuid'),
-          isSharedLinkAns : true,
+          isSharedLinkAns: true,
           isAddedAnsSelected: isAddedAnsSelected,
         };
 
