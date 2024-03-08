@@ -9,7 +9,7 @@ import SortIcon from '../../../../../assets/SortIcon';
 const Result = (props) => {
   const { isFullScreen } = useParams();
   const [selectedOption, setSelectedOption] = useState(1);
-  const [sortRankedAns, setSortRankedAns] = useState();
+  const [sortedAnswers, setSortedAnswers] = useState();
 
   function findSelectionContentionCheck(array, labelToFind) {
     const foundObject = array.find((obj) => obj.question === labelToFind);
@@ -18,19 +18,24 @@ const Result = (props) => {
 
   const handleSortIconClick = () => {
     setSelectedOption((prevOption) => {
-      // Toggle between 1, 2, and 3 for each click
       const nextOption = prevOption === 3 ? 1 : prevOption + 1;
 
-      // Set the sorted data immediately after clicking
       if (nextOption === 1) {
-        const rankedNewData = getRankedAnswers(props);
-        setSortRankedAns(rankedNewData);
+        if (props.questStartData?.whichTypeQuestion === 'multiple choise') {
+          setSortedAnswers(props.questStartData.QuestAnswers);
+        } else {
+          const questData = props;
+          const rankedNewData = getRankedAnswers(questData);
+          setSortedAnswers(rankedNewData);
+        }
       } else if (nextOption === 2) {
-        const rankedNewData = getSortedRankedAnswers(props, 'descending');
-        setSortRankedAns(rankedNewData);
+        const questData = props;
+        const rankedNewData = sortAnswersByAscDesc(questData, 'descending');
+        setSortedAnswers(rankedNewData);
       } else if (nextOption === 3) {
-        const rankedNewData = getSortedRankedAnswers(props, 'ascending');
-        setSortRankedAns(rankedNewData);
+        const questData = props;
+        const rankedNewData = sortAnswersByAscDesc(questData, 'ascending');
+        setSortedAnswers(rankedNewData);
       }
 
       return nextOption;
@@ -51,15 +56,15 @@ const Result = (props) => {
     });
   };
 
-  const getSortedRankedAnswers = (props, order) => {
-    return props.questStartData.QuestAnswers.sort((a, b) => {
+  const sortAnswersByAscDesc = (data, order) => {
+    return data.questStartData.QuestAnswers.sort((a, b) => {
       const percentageA = parseFloat(
-        props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1][
+        data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
           a.question
         ]?.replace('%', ''),
       );
       const percentageB = parseFloat(
-        props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1][
+        data.questStartData?.selectedPercentage[data.questStartData?.selectedPercentage.length - 1][
           b.question
         ]?.replace('%', ''),
       );
@@ -74,22 +79,29 @@ const Result = (props) => {
 
   useEffect(() => {
     if (selectedOption === 1) {
-      const rankedNewData = getRankedAnswers(props);
-      setSortRankedAns(rankedNewData);
+      if (props.questStartData?.whichTypeQuestion === 'multiple choise') {
+        console.log('hn bhai', props.answersSelection);
+        setSortedAnswers(props?.questStartData?.QuestAnswers);
+      } else {
+        const questData = props;
+        const rankedNewData = getRankedAnswers(questData);
+        setSortedAnswers(rankedNewData);
+      }
     }
 
     if (selectedOption === 2) {
-      const rankedNewData = getSortedRankedAnswers(props, 'descending');
-      setSortRankedAns(rankedNewData);
+      const questData = props;
+      const rankedNewData = sortAnswersByAscDesc(questData, 'descending');
+      setSortedAnswers(rankedNewData);
     }
 
     if (selectedOption === 3) {
-      const rankedNewData = getSortedRankedAnswers(props, 'ascending');
-      setSortRankedAns(rankedNewData);
+      const questData = props;
+      const rankedNewData = sortAnswersByAscDesc(questData, 'ascending');
+      setSortedAnswers(rankedNewData);
     }
+    console.log('first', selectedOption, props.questStartData.QuestAnswers);
   }, [selectedOption, props.questStartData]);
-
-  console.log('first', selectedOption, sortRankedAns);
 
   return (
     <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${props.cardSize}px ` }}>
@@ -200,49 +212,70 @@ const Result = (props) => {
           ) : null}
         </>
       ) : props.title === 'Multiple Choice' || props.title === 'Open Choice' ? (
-        <div
-          className={`${
-            isFullScreen === undefined ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[336px]' : ''
-          }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-        >
-          {props.answers?.map((item, index) => (
-            <div key={index + 1}>
-              <SingleAnswerMultipleChoice
-                number={'#' + (index + 1)}
-                answer={item.question}
-                addedAnswerUuid={item.uuid}
-                title={props.title}
-                checkInfo={true}
-                selectedPercentages={
-                  props.questStartData?.selectedPercentage && props.questStartData.selectedPercentage.length > 0
-                    ? props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1]
-                    : null
-                }
-                contendPercentages={
-                  props.questStartData?.contendedPercentage && props.questStartData.contendedPercentage.length > 0
-                    ? props.questStartData.contendedPercentage[props.questStartData.contendedPercentage.length - 1]
-                    : null
-                }
-                check={findSelectionContentionCheck(
-                  props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
-                    ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
-                        .selected
-                    : [],
-                  item.question,
-                )}
-                contend={findSelectionContentionCheck(
-                  props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
-                    ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
-                        .contended
-                    : [],
-                  item.question,
-                )}
-                btnText={'Results'}
-                answersSelection={props.answersSelection}
-                setAnswerSelection={props.setAnswerSelection}
-              />
-            </div>
-          ))}
+        <div className="relative">
+          <div className="absolute -top-[21px] right-[73px] tablet:-top-7 tablet:right-[129px]">
+            <button onClick={handleSortIconClick}>
+              <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
+            </button>
+
+            {/* <img
+              src="/assets/svgs/sortIcon.svg"
+              alt="sortIcon"
+              className="h-[11.561px] w-[7.593px] cursor-pointer tablet:h-5 tablet:w-[13.12px]"
+              onClick={handleSortIconClick}
+            /> */}
+            {/* <img
+              src="/assets/svgs/sortIcon.svg"
+              alt="sortIcon"
+              className="h-[11.561px] w-[7.593px] cursor-pointer tablet:h-5 tablet:w-[13.12px]"
+            /> */}
+          </div>
+          <div
+            className={`${
+              isFullScreen === undefined
+                ? 'quest-scrollbar max-h-[178.2px] min-h-fit overflow-auto md:max-h-[336px]'
+                : ''
+            }  mr-1 flex flex-col gap-[5.7px] tablet:gap-[10px]`}
+          >
+            {sortedAnswers?.map((item, index) => (
+              <div key={index + 1}>
+                <SingleAnswerMultipleChoice
+                  number={'#' + (index + 1)}
+                  answer={item.question}
+                  addedAnswerUuid={item.uuid}
+                  title={props.title}
+                  checkInfo={true}
+                  selectedPercentages={
+                    props.questStartData?.selectedPercentage && props.questStartData.selectedPercentage.length > 0
+                      ? props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1]
+                      : null
+                  }
+                  contendPercentages={
+                    props.questStartData?.contendedPercentage && props.questStartData.contendedPercentage.length > 0
+                      ? props.questStartData.contendedPercentage[props.questStartData.contendedPercentage.length - 1]
+                      : null
+                  }
+                  check={findSelectionContentionCheck(
+                    props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
+                      ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
+                          .selected
+                      : [],
+                    item.question,
+                  )}
+                  contend={findSelectionContentionCheck(
+                    props.questStartData?.startQuestData && props.questStartData.startQuestData.data.length > 0
+                      ? props.questStartData?.startQuestData.data[props.questStartData.startQuestData.data.length - 1]
+                          .contended
+                      : [],
+                    item.question,
+                  )}
+                  btnText={'Results'}
+                  answersSelection={props.answersSelection}
+                  setAnswerSelection={props.setAnswerSelection}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       ) : props.title === 'Ranked Choice' ? (
         <div className="relative">
@@ -271,7 +304,7 @@ const Result = (props) => {
                 : ''
             }  mr-[2px] flex flex-col gap-[5.7px] tablet:mr-1 tablet:gap-[10px]`}
           >
-            {sortRankedAns?.map((item, index) => (
+            {sortedAnswers?.map((item, index) => (
               <div key={index + 1}>
                 <RankedResult
                   number={'#' + (index + 1)}
