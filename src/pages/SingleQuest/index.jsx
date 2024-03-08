@@ -110,22 +110,18 @@ const SingleQuest = () => {
   return (
     <>
       {/* <SEO
-        title="'Participate on foundation and have your voice heard' / 'Foundation rewards every user for their valuable insights'"
-        description="'Participate on foundation and have your voice heard' / 'Foundation rewards every user for their valuable insights'"
-        image="/fav96a.png"
-        type="Post"
-        url="https://on.foundation/"
+        title={'Foundation'}
+          description={singleQuestResp?.Question}
+          url={import.meta.env.VITE_CLIENT_URL}
+          image={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
+          type={'website'}
       /> */}
       {singleQuestResp && (
         <SEO
-          title={
-            'Participate on foundation and have your voice heard / Foundation rewards every user for their valuable insights'
-          }
+          title={'Foundation'}
           description={singleQuestResp?.Question}
           url={import.meta.env.VITE_CLIENT_URL}
-          image={
-            'https://ogcdn.net/e4b8c678-7bd5-445d-ba03-bfaad510c686/v3/development.on.foundation/Foundation/https%3A%2F%2Fopengraph.b-cdn.net%2Fproduction%2Fdocuments%2F4a15bdca-57e7-4915-89e0-beebefb33798.jpg%3Ftoken%3DrRMvgkH4adxq8RhFvD14Hn1Ytn9YYw11nLcXmPnet-I%26height%3D200%26width%3D200%26expires%3D33243832830/og.png'
-          }
+          image={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
           type={'website'}
         />
       )}
