@@ -271,13 +271,13 @@ const QuestStartSection = () => {
         itemsWithCross={itemsWithCross}
         setItemsWithCross={setItemsWithCross}
       />
-      <div className="no-scrollbar flex h-full w-full flex-col overflow-y-auto bg-[#F3F3F3] px-[1.13rem] py-[0.63rem] tablet:min-h-[calc(100vh-92px)] tablet:py-[0.94rem] dark:bg-[#242424]">
+      <div className="no-scrollbar flex h-[calc(100vh-182.3px)] max-h-[calc(100vh-182.3px)] min-h-[calc(100vh-182.3px)] w-full flex-col overflow-y-auto bg-[#F3F3F3] px-[1.13rem] py-[0.63rem] tablet:min-h-[calc(100vh-92px)] tablet:py-[0.94rem] dark:bg-[#242424]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
           hasMore={feedData?.hasNextPage}
           endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme)}
-          height={'calc(100vh - 92px)'}
+          height={'calc(100vh - 182.3px)'}
           className="no-scrollbar"
         >
           <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
