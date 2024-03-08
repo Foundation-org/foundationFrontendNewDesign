@@ -223,7 +223,8 @@ export default function Personal({ handleUserInfo, fetchUser }) {
               onClick={() => {
                 handleClickPesonalBadges(item.type);
               }}
-              disabled={checkPersonalBadge(item.type)}
+              // disabled={checkPersonalBadge(item.type)}
+              disabled={true}
             >
               {checkPersonalBadge(item.type) ? 'Added' : item.ButtonText}
               {!checkPersonalBadge(item.type) && (

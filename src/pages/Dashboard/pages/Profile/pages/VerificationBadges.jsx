@@ -42,6 +42,7 @@ const VerificationBadges = () => {
       const resp = await userInfo(id);
 
       if (resp.status === 200) {
+        setIsLoading(false);
         dispatch(addUser(resp.data));
       }
 
@@ -89,7 +90,6 @@ const VerificationBadges = () => {
   };
   // Handle Add Badge
   const handleAddBadge = async (provider, data) => {
-    console.log("came");
     try {
     let id;
     if(provider==="linkedin"){
@@ -104,6 +104,7 @@ const VerificationBadges = () => {
     else if(provider==="github"){
       id=data.email;
     }
+ 
       const addBadge = await api.post(`/addBadge`, {
         data,
         provider,
@@ -112,7 +113,9 @@ const VerificationBadges = () => {
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
+        console.log("2",isLoading);
         handleUserInfo();
+        
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -209,7 +212,7 @@ const VerificationBadges = () => {
 
   return (
     <div className="pb-12">
-      {isLoading && <Loader />}
+      
       {isPopup &&
         (seletedBadge === 'personal' ? (
           <VerificationPopups
@@ -255,7 +258,7 @@ const VerificationBadges = () => {
           setFetchUser={setFetchUser}
         />
       )}
-
+        {isLoading && <Loader />}
       <h1 className="ml-[32px] text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:ml-[97px] tablet:text-[25px] tablet:font-semibold tablet:leading-[30px] dark:text-[#B8B8B8]">
         My Verification Badges
       </h1>
@@ -392,6 +395,8 @@ const VerificationBadges = () => {
                 }}
                 redirect_uri={window.location.href}
                 onReject={(err) => {
+                  toast.error("An error occured while adding badge")
+                  setIsLoading(false);
                   console.log(err);
                 }}
                 className="container flex w-full"
@@ -399,6 +404,7 @@ const VerificationBadges = () => {
                 <Button
                   color={checkSocial('facebook') ? 'red' : 'blue'}
                   onClick={() => {
+                    setIsLoading(true);
                     checkSocial('facebook') && handleRemoveBadge('facebook');
                   }}
                 >
@@ -467,7 +473,7 @@ const VerificationBadges = () => {
               </>
             ) : persistedUserInfo?.role === 'guest' ? (
               <Button
-                color={checkSocial('facebook') ? 'red' : 'blue'}
+                color={checkSocial('linkedin') ? 'red' : 'blue'}
                 onClick={() => {
                   toast.warning(
                     <p>
@@ -498,9 +504,10 @@ const VerificationBadges = () => {
                   handleAddBadge(provider, data);
                   console.log("linkedin",provider,data);
                 }}
-                scope='email'
                 redirect_uri={window.location.href}
                 onReject={(err) => {
+                  toast.error("An error occured while adding badge")
+                  setIsLoading(false);
                   console.log(err);
                 }}
                 className="container flex w-full"
@@ -508,6 +515,7 @@ const VerificationBadges = () => {
                 <Button
                   color={checkSocial('linkedin') ? 'red' : 'blue'}
                   onClick={() => {
+                    setIsLoading(true);
                     checkSocial('linkedin') && handleRemoveBadge('linkedin');
                   }}
                 >
@@ -606,7 +614,10 @@ const VerificationBadges = () => {
                   handleAddBadge(provider, data);
                 }}
                 redirect_uri={window.location.href}
+                scope='users.read%20tweet.read'
                 onReject={(err) => {
+                  toast.error("An error occured while adding badge")
+                  setIsLoading(false);
                   console.log(err);
                 }}
                 className="container flex w-full"
@@ -614,6 +625,7 @@ const VerificationBadges = () => {
                 <Button
                   color={checkSocial('twitter') ? 'red' : 'blue'}
                   onClick={() => {
+                    setIsLoading(true);
                     checkSocial('twitter') && handleRemoveBadge('twitter');
                   }}
                 >
@@ -713,6 +725,8 @@ const VerificationBadges = () => {
                 }}
                 redirect_uri={window.location.href}
                 onReject={(err) => {
+                  toast.error("An error occured while adding badge")
+                  setIsLoading(false);
                   console.log(err);
                 }}
                 className="container flex w-full"
@@ -720,6 +734,7 @@ const VerificationBadges = () => {
                 <Button
                   color={checkSocial('instagram') ? 'red' : 'blue'}
                   onClick={() => {
+                    setIsLoading(true);
                     checkSocial('instagram') && handleRemoveBadge('instagram');
                   }}
                 >
@@ -821,6 +836,8 @@ const VerificationBadges = () => {
                 }}
                 redirect_uri={window.location.href}
                 onReject={(err) => {
+                  toast.error("An error occured while adding badge")
+                  setIsLoading(false);
                   console.log(err);
                 }}
                 className="container flex w-full"
@@ -828,6 +845,7 @@ const VerificationBadges = () => {
                 <Button
                   color={checkSocial('github') ? 'red' : 'blue'}
                   onClick={() => {
+                    setIsLoading(true);
                     checkSocial('github') && handleRemoveBadge('github');
                   }}
                 >
@@ -907,7 +925,8 @@ const VerificationBadges = () => {
               onClick={() => {
                 handleWeb3(item?.title, item?.type);
               }}
-              disabled={checkWeb3Badge(item.type)}
+              // disabled={checkWeb3Badge(item.type)}
+              disabled={true}
             >
               {checkWeb3Badge(item.type) ? 'Added' : item.ButtonText}
               {!checkWeb3Badge(item.type) && (
