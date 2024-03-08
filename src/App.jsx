@@ -39,7 +39,7 @@ function App() {
   }, [theme]);
 
   return (
-    <div className="h-dvh overflow-hidden">
+    <div className="h-screen overflow-hidden">
       {/* <SEO
         title={'Foundation'}
         description={'Participate on foundation and have your voice heard / Foundation rewards every user for their valuable insights'}
