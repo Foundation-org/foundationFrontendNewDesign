@@ -17,9 +17,10 @@ import { addUser } from '../../features/auth/authSlice';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import SEO from '../../utils/SEO';
 import WelcomePopup from '../../components/dialogue-boxes/WelcomePopup';
+import { questImpression } from '../../services/api/questsApi';
 
 const SingleQuest = () => {
-  // let { isFullScreen } = useParams();
+  let { id } = useParams();
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -109,6 +110,8 @@ const SingleQuest = () => {
     if (persistedUserInfo) {
       questByUniqueShareLink();
     }
+
+    questImpression(id)
   }, []);
 
   useEffect(() => {

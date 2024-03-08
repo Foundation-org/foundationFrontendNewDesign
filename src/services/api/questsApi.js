@@ -15,6 +15,7 @@ export const updateChangeAnsStartQuest = async (data) => {
 
 // start submit button
 export const createStartQuest = async (data) => {
+  console.log('data', data)
   return await api.post('/startQuest/createStartQuest', {
     questForeignKey: data.questId,
     data: data.answer,
@@ -22,6 +23,7 @@ export const createStartQuest = async (data) => {
     addedAnswerUuid: data.addedAnswerUuid,
     uuid: data.uuid,
     isAddedAnsSelected: data.isAddedAnsSelected,
+    isSharedLinkAns: data.isSharedLinkAns
   });
 };
 
@@ -210,4 +212,8 @@ export const createUpdateUniqueLink = async (data) => {
     linkStatus: 'Enable',
     isGenerateLink: data.isGenerateLink,
   });
+};
+
+export const questImpression = async (data) => {
+  return await api.post(`/userQuestImpression/${data}`);
 };
