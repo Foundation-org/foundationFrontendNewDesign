@@ -1,16 +1,15 @@
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
 
 // components
 import Topbar from '../Dashboard/components/Topbar';
 import SidebarRight from '../Dashboard/components/SidebarRight';
 import QuestionCard from './components/QuestionCard';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
-import { createGuestMode } from '../../services/api/userAuth';
 import { useGetSingleQuest } from '../../services/queries/quest';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
+import Loader from '../../components/ui/Loader';
 
 const Guests = () => {
   let { isFullScreen } = useParams();
@@ -20,6 +19,7 @@ const Guests = () => {
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
   const [submitResponse, setSubmitResponse] = useState();
+  const [loading,setLoading]=useState(true);
 
   useEffect(() => {
     if (isFullScreen !== 'isfullscreen') {
@@ -29,6 +29,7 @@ const Guests = () => {
   }, [isFullScreen]);
 
   const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state);
+  console.log("wamniq",singleQuestResp);
 
   const handleStartTest = useCallback(
     (testId) => {
@@ -45,24 +46,6 @@ const Guests = () => {
     },
     [setStartTest, setViewResult],
   );
-
-  const { mutateAsync: createGuest } = useMutation({
-    mutationFn: createGuestMode,
-    onSuccess: (resp) => {
-      localStorage.setItem('isGuestMode', resp.data.isGuestMode);
-      localStorage.setItem('jwt', resp.data.token);
-      localStorage.setItem('uId', resp.data.uuid);
-    },
-    onError: (err) => {
-      toast.error(err.response.data);
-    },
-  });
-
-  useEffect(() => {
-    if (persistedUserInfo === null) {
-      createGuest();
-    }
-  }, []);
 
   return (
     <>
@@ -85,7 +68,8 @@ const Guests = () => {
               </button>
             </div>
           )}
-          {singleQuestResp && (
+           
+          {singleQuestResp ? (
             <div>
               {isFullScreen !== 'isfullscreen' ? (
                 <QuestionCard
@@ -145,7 +129,7 @@ const Guests = () => {
                 </div>
               )}
             </div>
-          )}
+          ):<Loader/>}
         </div>
         <SidebarRight />
       </div>
