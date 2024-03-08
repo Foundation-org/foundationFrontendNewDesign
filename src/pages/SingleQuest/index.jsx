@@ -16,6 +16,7 @@ import { createGuestMode, userInfo, userInfoById } from '../../services/api/user
 import { addUser } from '../../features/auth/authSlice';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import SEO from '../../utils/SEO';
+import { Helmet } from 'react-helmet-async';
 
 const SingleQuest = () => {
   // let { isFullScreen } = useParams();
@@ -116,7 +117,7 @@ const SingleQuest = () => {
           image={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
           type={'website'}
       /> */}
-      {singleQuestResp && (
+      {/* {singleQuestResp && (
         <SEO
           title={'Foundation'}
           description={singleQuestResp?.Question}
@@ -124,7 +125,44 @@ const SingleQuest = () => {
           image={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
           type={'website'}
         />
-      )}
+      )} */}
+      <Helmet>
+        <script>
+          {`
+            window.prerenderReady = false;
+          `}
+        </script>
+        {/* // Metaprop */}
+        <title>Foundation</title>
+        <meta name="description" content={singleQuestResp.Question} />
+        //OG
+        <meta property="og:title" content="Foundation" />
+        <meta property="og:description" content={singleQuestResp.Question} />
+        <meta property="og:type" content="website" />
+        {/* <meta name="theme-color" content={seoMeta.color} />
+        <meta property="og:video" content={seoMeta.video} />
+        <meta property="og:video:width" content={seoMeta.videoWidth} />
+        <meta property="og:video:height" content={seoMeta.videoHeight} />
+        <meta property="og:video:type" content={seoMeta.videoType} /> */}
+        {/* Show Image Meta Tags */}
+        <meta property="og:image" itemprop="image" content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`} />
+        <meta
+          property="og:image:secure_url"
+          itemprop="image"
+          content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
+        />
+        <meta property="og:image:type" content="image/svg" />
+        {/* <meta property="og:audio" content={seoMeta.preview} />
+        <meta property="og:audio:type" content="audio/vnd.facebook.bridge" />
+        <meta property="og:audio:type" content="audio/mpeg" /> */}
+        //Note // Twitter
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="Foundation" />
+        <meta property="twitter:description" content={singleQuestResp.Question} />
+        <meta property="twitter:domain" content="on.foundation" />
+        <meta property="twitter:image" content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`} />
+        <meta name="google" content="notranslate"></meta>
+      </Helmet>
       <Topbar />
       <div className="flex h-[calc(100vh-90px)] bg-white dark:bg-[#242424]">
         <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
