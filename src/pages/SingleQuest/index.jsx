@@ -134,10 +134,10 @@ const SingleQuest = () => {
         </script>
         {/* // Metaprop */}
         <title>Foundation</title>
-        <meta name="description" content={singleQuestResp.Question} />
+        <meta name="description" content={singleQuestResp?.Question} />
         //OG
         <meta property="og:title" content="Foundation" />
-        <meta property="og:description" content={singleQuestResp.Question} />
+        <meta property="og:description" content={singleQuestResp?.Question} />
         <meta property="og:type" content="website" />
         {/* <meta name="theme-color" content={seoMeta.color} />
         <meta property="og:video" content={seoMeta.video} />
@@ -158,7 +158,7 @@ const SingleQuest = () => {
         //Note // Twitter
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:title" content="Foundation" />
-        <meta property="twitter:description" content={singleQuestResp.Question} />
+        <meta property="twitter:description" content={singleQuestResp?.Question} />
         <meta property="twitter:domain" content="on.foundation" />
         <meta property="twitter:image" content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`} />
         <meta name="google" content="notranslate"></meta>
