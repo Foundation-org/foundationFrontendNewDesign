@@ -16,9 +16,26 @@ const Result = (props) => {
   }
 
   const handleSortIconClick = () => {
-    setSelectedOption((prevOption) => (prevOption % 3) + 1);
+    setSelectedOption((prevOption) => {
+      // Toggle between 1, 2, and 3 for each click
+      const nextOption = prevOption === 3 ? 1 : prevOption + 1;
+      
+      // Set the sorted data immediately after clicking
+      if (nextOption === 1) {
+        const rankedNewData = getRankedAnswers(props);
+        setSortRankedAns(rankedNewData);
+      } else if (nextOption === 2) {
+        const rankedNewData = getSortedRankedAnswers(props, 'ascending');
+        setSortRankedAns(rankedNewData);
+      } else if (nextOption === 3) {
+        const rankedNewData = getSortedRankedAnswers(props, 'descending');
+        setSortRankedAns(rankedNewData);
+      }
+      
+      return nextOption;
+    });
   };
-
+  
   const getRankedAnswers = (props) => {
     return props.questStartData.QuestAnswers.sort((a, b) => {
       const indexA = props.questStartData?.startQuestData?.data[
@@ -69,7 +86,7 @@ const Result = (props) => {
       const rankedNewData = getSortedRankedAnswers(props, 'descending');
       setSortRankedAns(rankedNewData);
     }
-  }, [selectedOption]);
+  }, [selectedOption, props.questStartData]);
 
   console.log('first', selectedOption, sortRankedAns);
 
