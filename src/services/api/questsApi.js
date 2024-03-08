@@ -15,7 +15,6 @@ export const updateChangeAnsStartQuest = async (data) => {
 
 // start submit button
 export const createStartQuest = async (data) => {
-  console.log('data', data)
   return await api.post('/startQuest/createStartQuest', {
     questForeignKey: data.questId,
     data: data.answer,
@@ -23,7 +22,8 @@ export const createStartQuest = async (data) => {
     addedAnswerUuid: data.addedAnswerUuid,
     uuid: data.uuid,
     isAddedAnsSelected: data.isAddedAnsSelected,
-    isSharedLinkAns: data.isSharedLinkAns
+    isSharedLinkAns: data.isSharedLinkAns,
+    postLink: data.postLink
   });
 };
 

@@ -110,8 +110,9 @@ const SingleQuest = () => {
     if (persistedUserInfo) {
       questByUniqueShareLink();
     }
-
-    questImpression(id);
+    if (id) {
+      questImpression(id);
+    }
   }, []);
 
   useEffect(() => {
@@ -157,6 +158,7 @@ const SingleQuest = () => {
                 setSingleQuestResp={setSingleQuestResp}
                 setSubmitResponse={setSubmitResponse}
                 isSingleQuest={location.pathname.includes('/p/') ? true : false}
+                postLink={id}
               />
             </div>
           )}
