@@ -151,7 +151,7 @@ const SingleQuest = () => {
           itemprop="image"
           content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
         />
-        <meta property="og:image:type" content="image/svg" />
+        {/* <meta property="og:image:type" content="image/svg" /> */}
         {/* <meta property="og:audio" content={seoMeta.preview} />
         <meta property="og:audio:type" content="audio/vnd.facebook.bridge" />
         <meta property="og:audio:type" content="audio/mpeg" /> */}
