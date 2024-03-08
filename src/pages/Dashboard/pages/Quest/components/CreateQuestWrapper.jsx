@@ -20,7 +20,7 @@ export default function CreateQuestWrapper({ question, setQuestion, type, handle
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
 
-    if (inputValue.length <= 250) {
+    if (inputValue.length <= 350) {
       setQuestion(inputValue);
       setIsTyping(true);
       dispatch(createQuestAction.handleQuestionReset(inputValue));
@@ -99,7 +99,7 @@ export default function CreateQuestWrapper({ question, setQuestion, type, handle
             className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${questionStatusApi.color}`}
           >
             <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
-              {isTyping ? `${question.length}/250` : questionStatusApi.name}
+              {isTyping ? `${question.length}/350` : questionStatusApi.name}
             </div>
             <Tooltip optionStatus={questionStatusApi} />
           </button>
