@@ -54,7 +54,7 @@ const LikeDislike = () => {
   });
 
   const handleTab = () => {
-    const settingElement = document.getElementById('question');
+    const settingElement = document.getElementById('input-0');
     if (settingElement) {
       settingElement.blur();
     }

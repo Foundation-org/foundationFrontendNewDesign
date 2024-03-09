@@ -504,7 +504,7 @@ const ButtonGroup = ({
       } else {
         if (startTest === questStartData._id) {
           return (
-            <div className="flex w-full justify-between gap-2 pl-7 pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+            <div className="flex w-full justify-between gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
               {questStartData.usersAddTheirAns ? (
                 title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button
@@ -631,7 +631,7 @@ const ButtonGroup = ({
   if (filterState.expandedView === false) {
     if (startTest === questStartData._id) {
       return (
-        <div className="flex w-full justify-between gap-2 pl-7 pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+        <div className="flex w-full justify-between gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
           {/* Add Options */}
           {getQuestUtilsState.addOptionLimit === 0 ? (
             <div className="flex items-center justify-center">
@@ -718,7 +718,7 @@ const ButtonGroup = ({
   } else {
     if (startTest === questStartData._id) {
       return (
-        <div className="flex w-full justify-between gap-2 pl-7 pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+        <div className="flex w-full justify-between gap-2  pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
           {/* Add Option - Go back - Submit / add Option - Submit*/}
           {btnText === 'change answer' ? (
             <>

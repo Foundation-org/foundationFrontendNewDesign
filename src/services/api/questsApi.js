@@ -22,6 +22,8 @@ export const createStartQuest = async (data) => {
     addedAnswerUuid: data.addedAnswerUuid,
     uuid: data.uuid,
     isAddedAnsSelected: data.isAddedAnsSelected,
+    isSharedLinkAns: data.isSharedLinkAns,
+    postLink: data.postLink
   });
 };
 
@@ -210,4 +212,8 @@ export const createUpdateUniqueLink = async (data) => {
     linkStatus: 'Enable',
     isGenerateLink: data.isGenerateLink,
   });
+};
+
+export const questImpression = async (data) => {
+  return await api.post(`/userQuestImpression/${data}`);
 };

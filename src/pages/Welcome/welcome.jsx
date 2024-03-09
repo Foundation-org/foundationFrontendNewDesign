@@ -30,7 +30,7 @@ export default function Signup() {
             Welcome to Foundation !
           </h1>
 
-          <p className="font-Inter mb-[23px] max-w-[751px] text-center text-[12px] font-normal leading-[17.54px] text-[#707175] tablet:mb-[45px] tablet:text-[23px] tablet:leading-[33px]">
+          <p className="font-Inter mb-[23px] max-w-[751px] text-center text-[12px] font-normal leading-[17.54px] text-[#707175] tablet:mb-[39px] tablet:text-[23px] tablet:leading-[33px]">
             You're about to embark on a journey where you can build and monetize an anonymous online identity that's
             entirely under your control. As you share your insights by participating and adding verification badges, you
             enhance your ability to monetize your data, all while contributing to a community that values genuine voices
@@ -38,7 +38,7 @@ export default function Signup() {
             shine without fear of social backlash.
           </p>
 
-          <div className="flex w-full flex-col gap-[22.96px] tablet:h-[165px] tablet:w-[600px] tablet:gap-[15px]">
+          <div className="flex w-[16rem] flex-col gap-[15px] tablet:h-[165px] tablet:w-[446px]">
             <Button variant="hollow-welcome" className={'max-w-[600px]'} onClick={() => navigate('/signin')}>
               Sign In
             </Button>

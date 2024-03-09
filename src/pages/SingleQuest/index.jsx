@@ -18,9 +18,10 @@ import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import SEO from '../../utils/SEO';
 import { Helmet } from 'react-helmet-async';
 import WelcomePopup from '../../components/dialogue-boxes/WelcomePopup';
+import { questImpression } from '../../services/api/questsApi';
 
 const SingleQuest = () => {
-  // let { isFullScreen } = useParams();
+  let { id } = useParams();
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -110,6 +111,9 @@ const SingleQuest = () => {
     if (persistedUserInfo) {
       questByUniqueShareLink();
     }
+    if (id) {
+      questImpression(id);
+    }
   }, []);
 
   useEffect(() => {
@@ -187,6 +191,8 @@ const SingleQuest = () => {
                 isBookmarked={false}
                 setSingleQuestResp={setSingleQuestResp}
                 setSubmitResponse={setSubmitResponse}
+                isSingleQuest={location.pathname.includes('/p/') ? true : false}
+                postLink={id}
               />
             </div>
           )}

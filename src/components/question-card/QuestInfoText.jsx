@@ -29,21 +29,21 @@ const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
         <>
           {questType === 'ranked choise' ? (
             postProperties === 'SharedLinks' ? (
-              <div className="my-2 tablet:my-5 ml-10 tablet:ml-[86px] flex gap-1 tablet:gap-20">
-                <div className="flex gap-[1px] tablet:gap-2 items-center">
-                  <img src="/assets/svgs/clicks.svg" alt="clicks" className="w-2 h-2 tablet:w-6 tablet:h-6" />
-                  <h2 className="text-[8px] tablet:text-[18px] font-semibold text-[#707175] leading-[9.68px] tablet:leading-[21.78px]">
-                    0 Impressions
+              <div className="my-2 ml-10 flex gap-1 tablet:my-5 tablet:ml-[86px] tablet:gap-20">
+                <div className="flex items-center gap-[1px] tablet:gap-2">
+                  <img src="/assets/svgs/clicks.svg" alt="clicks" className="h-2 w-2 tablet:h-6 tablet:w-6" />
+                  <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
+                    {questStartData.userQuestSetting.questImpression} Impressions{' '}
                   </h2>
                 </div>
-                <div className="flex gap-[1px] tablet:gap-2 items-center">
+                <div className="flex items-center gap-[1px] tablet:gap-2">
                   <img
                     src="/assets/svgs/participants.svg"
                     alt="participants"
-                    className="w-3 h-2 tablet:w-[34px] tablet:h-[26px]"
+                    className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
                   />
-                  <h2 className="text-[8px] tablet:text-[18px] font-semibold text-[#707175] leading-[9.68px] tablet:leading-[21.78px]">
-                    0 Completed
+                  <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
+                    {questStartData.userQuestSetting.questsCompleted} Completed{' '}
                   </h2>
                 </div>
               </div>
@@ -56,21 +56,21 @@ const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
           ) : (
             <>
               {postProperties === 'SharedLinks' ? (
-                <div className="my-2 tablet:my-5 ml-10 tablet:ml-[86px] flex gap-1 tablet:gap-20">
-                  <div className="flex gap-[1px] tablet:gap-2 items-center">
-                    <img src="/assets/svgs/clicks.svg" alt="clicks" className="w-2 h-2 tablet:w-6 tablet:h-6" />
-                    <h2 className="text-[8px] tablet:text-[18px] font-semibold text-[#707175] leading-[9.68px] tablet:leading-[21.78px]">
-                      0 Impressions
+                <div className="my-2 ml-10 flex gap-1 tablet:my-5 tablet:ml-[86px] tablet:gap-20">
+                  <div className="flex items-center gap-[1px] tablet:gap-2">
+                    <img src="/assets/svgs/clicks.svg" alt="clicks" className="h-2 w-2 tablet:h-6 tablet:w-6" />
+                    <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
+                      {questStartData.userQuestSetting.questImpression} Impressions{' '}
                     </h2>
                   </div>
-                  <div className="flex gap-[1px] tablet:gap-2 items-center">
+                  <div className="flex items-center gap-[1px] tablet:gap-2">
                     <img
                       src="/assets/svgs/participants.svg"
                       alt="participants"
-                      className="w-3 h-2 tablet:w-[34px] tablet:h-[26px]"
+                      className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
                     />
-                    <h2 className="text-[8px] tablet:text-[18px] font-semibold text-[#707175] leading-[9.68px] tablet:leading-[21.78px]">
-                      0 Completed
+                    <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
+                      {questStartData.userQuestSetting.questsCompleted} Completed{' '}
                     </h2>
                   </div>
                 </div>
