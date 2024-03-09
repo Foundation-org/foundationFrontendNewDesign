@@ -1,10 +1,13 @@
 # This is a basic workflow to help you get started with Actions
+
 name: s3-depl
+
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the development branch
   push:
-    branches: [ staging ]
+    branches: [ master ]  
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called build
@@ -15,18 +18,20 @@ jobs:
       VITE_GG_APP_ID: ${{ vars.VITE_GG_APP_ID }}
       VITE_FB_APP_ID: ${{ vars.VITE_FB_APP_ID }}
       VITE_GOOGLE_RECAPTCH_SITE_KEY: ${{ vars.VITE_GOOGLE_RECAPTCH_SITE_KEY }}
-      VITE_API_URL: ${{ vars.VITE_STAGING_API_URL }}
-      VITE_CLIENT_URL: ${{ vars.VITE_STAGING_CLIENT_URL }}
-      VITE_GITHUB_CLIENT_ID: ${{ vars.VITE_STAGING_GITHUB_CLIENT_ID }}
-      VITE_GITHUB_CLIENT_SECRET: ${{ vars.VITE_STAGING_GITHUB_CLIENT_SECRET }}
+      VITE_API_URL: ${{ vars.VITE_PRODUCTION_API_URL }}
+      VITE_CLIENT_URL: ${{ vars.VITE_PRODUCTION_CLIENT_URL }}
+      VITE_GITHUB_CLIENT_ID: ${{ vars.VITE_PRODUCTION_GITHUB_CLIENT_ID }}
+      VITE_GITHUB_CLIENT_SECRET: ${{ vars.VITE_PRODUCTION_GITHUB_CLIENT_SECRET }}
       VITE_LINKEDIN_KEY: ${{ vars.VITE_LINKEDIN_KEY }}
       VITE_LINKEDIN_SECRET: ${{ vars.VITE_LINKEDIN_SECRET }}
       VITE_TWITTER_CONSUMER_KEY: ${{ vars.VITE_TWITTER_CONSUMER_KEY }}
       VITE_INSTAGRAM_CLIENT_ID: ${{ vars.VITE_INSTAGRAM_CLIENT_ID }}
       VITE_INSTAGRAM_CLIENT_SECRET: ${{ vars.VITE_INSTAGRAM_CLIENT_SECRET }}
+    
     strategy:
       matrix:
         node-version: [20.x]
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -39,7 +44,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Build React App
         run: npm install && npm run build
-        env:
+        env: 
             CI: false
       - name: Deploy app build to S3 bucket
-        run: aws s3 sync ./dist/ s3://staging.on.foundation --delete && aws cloudfront create-invalidation --distribution-id "${{ secrets.STAGING_DISTRIBUTION_ID }}" --paths "/*"
+        run: aws s3 sync ./dist/ s3://on.foundation --delete && aws cloudfront create-invalidation --distribution-id "${{ secrets.PRODUCTION_DISTRIBUTION_ID }}" --paths "/*"
