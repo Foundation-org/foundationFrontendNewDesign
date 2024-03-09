@@ -616,7 +616,7 @@ const VerificationBadges = () => {
                 onResolve={({ provider, data }) => {
                   handleAddBadge(provider, data);
                 }}
-                redirect_uri="https://development.on.foundation/profile/verification-badges"
+                redirect_uri="https://development.on.foundation/profile/verification-badges/"
                 scope='users.read%20tweet.read'
                 onReject={(err) => {
                   toast.error("An error occured while adding badge")
