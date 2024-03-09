@@ -16,6 +16,7 @@ import { createGuestMode, userInfo, userInfoById } from '../../services/api/user
 import { addUser } from '../../features/auth/authSlice';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import SEO from '../../utils/SEO';
+import { Helmet } from 'react-helmet-async';
 import WelcomePopup from '../../components/dialogue-boxes/WelcomePopup';
 
 const SingleQuest = () => {
@@ -124,25 +125,58 @@ const SingleQuest = () => {
     <>
       <WelcomePopup modalVisible={modalVisible} handleClose={closeWelcomeDialogue} />
       {/* <SEO
-        title="'Participate on foundation and have your voice heard' / 'Foundation rewards every user for their valuable insights'"
-        description="'Participate on foundation and have your voice heard' / 'Foundation rewards every user for their valuable insights'"
-        image="/fav96a.png"
-        type="Post"
-        url="https://on.foundation/"
-      /> */}
-      {singleQuestResp && (
-        <SEO
-          title={
-            'Participate on foundation and have your voice heard / Foundation rewards every user for their valuable insights'
-          }
+        title={'Foundation'}
           description={singleQuestResp?.Question}
           url={import.meta.env.VITE_CLIENT_URL}
-          image={
-            'https://ogcdn.net/e4b8c678-7bd5-445d-ba03-bfaad510c686/v3/development.on.foundation/Foundation/https%3A%2F%2Fopengraph.b-cdn.net%2Fproduction%2Fdocuments%2F4a15bdca-57e7-4915-89e0-beebefb33798.jpg%3Ftoken%3DrRMvgkH4adxq8RhFvD14Hn1Ytn9YYw11nLcXmPnet-I%26height%3D200%26width%3D200%26expires%3D33243832830/og.png'
-          }
+          image={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
+          type={'website'}
+      /> */}
+      {/* {singleQuestResp && (
+        <SEO
+          title={'Foundation'}
+          description={singleQuestResp?.Question}
+          url={import.meta.env.VITE_CLIENT_URL}
+          image={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
           type={'website'}
         />
-      )}
+      )} */}
+      <Helmet>
+        <script>
+          {`
+            window.prerenderReady = false;
+          `}
+        </script>
+        {/* // Metaprop */}
+        <title>Foundation</title>
+        <meta name="description" content={singleQuestResp?.Question} />
+        //OG
+        <meta property="og:title" content="Foundation" />
+        <meta property="og:description" content={singleQuestResp?.Question} />
+        <meta property="og:type" content="website" />
+        {/* <meta name="theme-color" content={seoMeta.color} />
+        <meta property="og:video" content={seoMeta.video} />
+        <meta property="og:video:width" content={seoMeta.videoWidth} />
+        <meta property="og:video:height" content={seoMeta.videoHeight} />
+        <meta property="og:video:type" content={seoMeta.videoType} /> */}
+        {/* Show Image Meta Tags */}
+        <meta property="og:image" itemprop="image" content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`} />
+        <meta
+          property="og:image:secure_url"
+          itemprop="image"
+          content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
+        />
+        {/* <meta property="og:image:type" content="image/svg" /> */}
+        {/* <meta property="og:audio" content={seoMeta.preview} />
+        <meta property="og:audio:type" content="audio/vnd.facebook.bridge" />
+        <meta property="og:audio:type" content="audio/mpeg" /> */}
+        //Note // Twitter
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="Foundation" />
+        <meta property="twitter:description" content={singleQuestResp?.Question} />
+        <meta property="twitter:domain" content="on.foundation" />
+        <meta property="twitter:image" content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`} />
+        <meta name="google" content="notranslate"></meta>
+      </Helmet>
       <Topbar />
       <div className="flex h-[calc(100vh-90px)] bg-white dark:bg-[#242424]">
         <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
