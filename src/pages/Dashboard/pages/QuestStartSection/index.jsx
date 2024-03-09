@@ -24,6 +24,8 @@ const QuestStartSection = () => {
   const filterStates = useSelector(filtersActions.getFilters);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
 
+  const [scrollHeight, setScrollHeight] = useState('calc(100vh - 182.3)');
+
   // Pagination
   const pageLimit = 5;
   const [pagination, setPagination] = useState({
@@ -263,6 +265,28 @@ const QuestStartSection = () => {
   //   allData.filter((item) => !questUtils.hiddenPosts.includes(item._id)),
   // );
 
+  useEffect(() => {
+    const handleResize = () => {
+      // Adjust the height based on screen width
+      if (window.innerWidth >= 744) {
+        setScrollHeight('calc(100vh - 92px)');
+      } else {
+        setScrollHeight('calc(100vh - 182.3)');
+      }
+    };
+
+    // Set initial height
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div className="flex w-full flex-col bg-white laptop:flex-row dark:bg-black">
       <SidebarLeft
@@ -271,45 +295,46 @@ const QuestStartSection = () => {
         itemsWithCross={itemsWithCross}
         setItemsWithCross={setItemsWithCross}
       />
-      <div className="no-scrollbar flex h-full w-full flex-col overflow-y-auto bg-[#F3F3F3] px-[1.13rem] py-[0.63rem] tablet:min-h-[calc(100vh-92px)] tablet:py-[0.94rem] dark:bg-[#242424]">
-        <InfiniteScroll
-          dataLength={allData?.length}
-          next={fetchMoreData}
-          hasMore={feedData?.hasNextPage}
-          endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme)}
-          height={'calc(100vh - 92px)'}
-          className="no-scrollbar"
-        >
-          <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
-            {allData &&
-              allData
-                .filter((item) => !questUtils.hiddenPosts.includes(item._id))
-                ?.map((item, index) => (
-                  <div key={index + 1}>
-                    {filterStates.expandedView ? (
-                      <QuestionCardWithToggle
-                        questStartData={item}
-                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                        setPagination={setPagination}
-                        setSubmitResponse={setSubmitResponse}
-                      />
-                    ) : (
-                      <QuestionCard
-                        questStartData={item}
-                        startTest={startTest}
-                        setStartTest={setStartTest}
-                        viewResult={viewResult}
-                        handleViewResults={memoizedViewResults}
-                        handleStartTest={memoizedStartTest}
-                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                        setPagination={setPagination}
-                        setSubmitResponse={setSubmitResponse}
-                      />
-                    )}
-                  </div>
-                ))}
-          </div>
-          {/* <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
+      {/* <div className="no-scrollbar flex h-full w-full flex-col overflow-y-auto bg-[#F3F3F3] px-[1.13rem] py-[0.63rem] tablet:min-h-[calc(100vh-92px)] tablet:py-[0.94rem] dark:bg-[#242424]"> */}
+      <InfiniteScroll
+        dataLength={allData?.length}
+        next={fetchMoreData}
+        hasMore={feedData?.hasNextPage}
+        endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme)}
+        // height={'calc(100vh - 92px)'}
+        style={{ height: scrollHeight }}
+        className="no-scrollbar w-full"
+      >
+        <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
+          {allData &&
+            allData
+              .filter((item) => !questUtils.hiddenPosts.includes(item._id))
+              ?.map((item, index) => (
+                <div key={index + 1}>
+                  {filterStates.expandedView ? (
+                    <QuestionCardWithToggle
+                      questStartData={item}
+                      isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                      setPagination={setPagination}
+                      setSubmitResponse={setSubmitResponse}
+                    />
+                  ) : (
+                    <QuestionCard
+                      questStartData={item}
+                      startTest={startTest}
+                      setStartTest={setStartTest}
+                      viewResult={viewResult}
+                      handleViewResults={memoizedViewResults}
+                      handleStartTest={memoizedStartTest}
+                      isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                      setPagination={setPagination}
+                      setSubmitResponse={setSubmitResponse}
+                    />
+                  )}
+                </div>
+              ))}
+        </div>
+        {/* <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
             {allData &&
               allData?.map((item, index) => (
                 <div key={index + 1}>
@@ -338,8 +363,8 @@ const QuestStartSection = () => {
                 </div>
               ))}
           </div> */}
-        </InfiniteScroll>
-      </div>
+      </InfiniteScroll>
+      {/* </div> */}
       <SidebarRight />
     </div>
   );
