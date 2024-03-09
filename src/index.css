@@ -539,3 +539,7 @@ input.hide_number_input_arrows2::-webkit-inner-spin-button {
 .revert-calender-color[type='date']::-webkit-calendar-picker-indicator {
   filter: invert(1); /* This will invert the color, change it to your desired color or styling */
 }
+
+.infinite-scroll-component__outerdiv {
+  width: 100%;
+}
