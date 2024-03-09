@@ -24,7 +24,7 @@ const QuestStartSection = () => {
   const filterStates = useSelector(filtersActions.getFilters);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
 
-  const [scrollHeight, setScrollHeight] = useState('calc(100vh - 182.3)');
+  const [scrollHeight, setScrollHeight] = useState('calc(100vh - 182.3px)');
 
   // Pagination
   const pageLimit = 5;
@@ -271,7 +271,7 @@ const QuestStartSection = () => {
       if (window.innerWidth >= 744) {
         setScrollHeight('calc(100vh - 92px)');
       } else {
-        setScrollHeight('calc(100vh - 182.3)');
+        setScrollHeight('calc(100vh - 182.3px)');
       }
     };
 
