@@ -514,7 +514,9 @@ const VerificationBadges = () => {
                 className="container flex w-full"
               >
                 <Button
-                  color={checkSocial('linkedin') ? 'red' : 'blue'}
+                  // color={checkSocial('linkedin') ? 'red' : 'blue'}
+                  disabled={true}
+                  color="gray"
                   onClick={() => {
                     setIsLoading(true);
                     checkSocial('linkedin') && handleRemoveBadge('linkedin');
@@ -626,11 +628,13 @@ const VerificationBadges = () => {
                 className="container flex w-full"
               >
                 <Button
-                  color={checkSocial('twitter') ? 'red' : 'blue'}
+                  // color={checkSocial('twitter') ? 'red' : 'blue'}
                   onClick={() => {
                     setIsLoading(true);
                     checkSocial('twitter') && handleRemoveBadge('twitter');
                   }}
+                  disabled={true}
+                  color="gray"
                 >
                   {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
