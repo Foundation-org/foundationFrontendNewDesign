@@ -48,7 +48,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             title="First Name"
             type={'firstName'}
             logo="/assets/profile/firstname.png"
-            placeholder="First Name here"
+            placeholder="First Name Here"
             handleUserInfo={handleUserInfo}
           />
         );
@@ -61,7 +61,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             title="Last Name"
             type={'lastName'}
             logo="/assets/profile/lastname.png"
-            placeholder="Last Name here"
+            placeholder="Last Name Here"
             handleUserInfo={handleUserInfo}
           />
         );
@@ -100,7 +100,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             title="Home Town"
             type={'homeTown'}
             logo="/assets/profile/hometown.svg"
-            placeholder="First Name here"
+            placeholder="Hometown Here"
             handleUserInfo={handleUserInfo}
           />
         );
@@ -113,7 +113,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             title="Relationship Status"
             type={'relationshipStatus'}
             logo="/assets/profile/relationaship-1.png"
-            placeholder="Relationship here"
+            placeholder="Relationship Here"
             handleUserInfo={handleUserInfo}
           />
         );
@@ -126,7 +126,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             title="Work"
             type={'work'}
             logo="/assets/profile/work-a.png"
-            placeholder="Relationship here"
+            placeholder="Work Here"
             handleUserInfo={handleUserInfo}
           />
         );
@@ -139,7 +139,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             title="Education"
             type={'education'}
             logo="/assets/profile/education-1.png"
-            placeholder="Relationship here"
+            placeholder="Education Here"
             handleUserInfo={handleUserInfo}
           />
         );
@@ -152,7 +152,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             title="ID / Passport"
             type={'id-passport'}
             logo="/assets/profile/Identity-2x-1.png"
-            placeholder="ID / Passport here"
+            placeholder="ID / Passport Here"
             handleUserInfo={handleUserInfo}
           />
         );
@@ -178,7 +178,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             title="Security Question"
             type={'security-question'}
             logo="/assets/profile/securityquestion-a.png"
-            placeholder="Relationship here"
+            placeholder="Answer Here"
             handleUserInfo={handleUserInfo}
           />
         );

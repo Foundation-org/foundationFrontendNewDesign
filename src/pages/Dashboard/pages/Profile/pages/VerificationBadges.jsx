@@ -119,6 +119,7 @@ const VerificationBadges = () => {
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
+      setIsLoading(false);
     }
   };
 
