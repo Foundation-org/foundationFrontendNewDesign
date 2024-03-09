@@ -221,7 +221,7 @@ const Result = (props) => {
         </>
       ) : props.title === 'Multiple Choice' || props.title === 'Open Choice' ? (
         <div className="relative">
-          <div className="absolute -top-[21px] right-[73px] tablet:-top-7 tablet:right-[129px]">
+          <div className="absolute -top-[21px] right-[73px] tablet:-top-7 tablet:right-[140px]">
             <button onClick={handleSortIconClick}>
               <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
             </button>
@@ -288,7 +288,7 @@ const Result = (props) => {
       ) : props.title === 'Ranked Choice' ? (
         <div className="relative">
           {/* <div className="absolute -top-4 right-[30px] flex gap-[34px] tablet:-top-7 tablet:right-20 tablet:gap-14"> */}
-          <div className="absolute -top-[21px] right-[73px] tablet:-top-7 tablet:right-[152px]">
+          <div className="absolute -top-[21px] right-[73px] tablet:-top-7 tablet:right-[146px]">
             <button onClick={handleSortIconClick}>
               <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
             </button>
