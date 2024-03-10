@@ -117,7 +117,7 @@ export const personal = [
   {
     image: '/assets/profile/firstname.png',
     title: 'First Name',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     NoOfButton: 1,
     // NoOfButton: 2,
     ButtonText: 'Add New Badge',
@@ -127,7 +127,7 @@ export const personal = [
   {
     image: '/assets/profile/lastname.svg',
     title: 'Last Name',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     NoOfButton: 1,
     ButtonText: 'Add New Badge',
     type: 'lastName',
@@ -136,7 +136,7 @@ export const personal = [
   {
     image: '/assets/profile/dob.svg',
     title: 'Date of Birth',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     NoOfButton: 1,
     ButtonText: 'Add New Badge',
     type: 'dateOfBirth',
