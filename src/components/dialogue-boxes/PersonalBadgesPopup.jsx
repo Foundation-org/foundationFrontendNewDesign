@@ -29,7 +29,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const handleSecurityQuestionChange = (event) => {};
 
   const { data: apiResp } = useQuery({
-    queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && 'name'],
+    queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && name],
     queryFn: () => validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name),
   });
 
@@ -37,13 +37,11 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     let value;
     if (type.trim() === 'dateOfBirth') {
       value = date;
-    }
-     else if (type.trim() === 'security-question') {
+    } else if (type.trim() === 'security-question') {
       value = {
         [selected.name]: name,
       };
-    } 
-    else {
+    } else {
       value = name;
     }
 
@@ -70,6 +68,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     }
   };
 
+  console.log('first', title, name);
 
   const renderInputField = (title, name, handleNameChange, placeholder, apiResp, data) => {
     const isError = apiResp?.data?.message === 'No';
