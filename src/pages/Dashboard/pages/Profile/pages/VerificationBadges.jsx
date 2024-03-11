@@ -355,61 +355,19 @@ const VerificationBadges = () => {
                   <h1>Facebook</h1>
                 </div>
                 {checkSocial('facebook') ? (
-                  <>
-                    <Button
-                      color={checkSocial('facebook') ? 'red' : 'blue'}
-                      onClick={() => {
-                        if (persistedUserInfo?.role === 'guest') {
-                          toast.warning(
-                            <p>
-                              Please{' '}
-                              <span
-                                className="cursor-pointer text-[#389CE3] underline"
-                                onClick={() => navigate('/guest-signup')}
-                              >
-                                Create an Account
-                              </span>{' '}
-                              to unlock this feature
-                            </p>,
-                          );
-                          return;
-                        } else {
-                          checkSocial('facebook') && setModalVisible(true);
-                        }
-                      }}
-                    >
-                      {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
-                      </span>
-                    </Button>
-                    <BadgeRemovePopup
-                      handleClose={handleBadgesClose}
-                      modalVisible={modalVisible}
-                      title={'Facebook'}
-                      image={'/assets/profile/Facebook-2x.png'}
-                      accountName={'facebook'}
-                      fetchUser={fetchUser}
-                      setFetchUser={setFetchUser}
-                    />
-                  </>
-                ) : persistedUserInfo?.role === 'guest' ? (
                   <Button
                     color={checkSocial('facebook') ? 'red' : 'blue'}
                     onClick={() => {
-                      toast.warning(
-                        <p>
-                          Please{' '}
-                          <span
-                            className="cursor-pointer text-[#389CE3] underline"
-                            onClick={() => navigate('/guest-signup')}
-                          >
-                            Create an Account
-                          </span>{' '}
-                          to unlock this feature
-                        </p>,
-                      );
-                      return;
+                      if (persistedUserInfo?.role === 'guest') {
+                        handleGuestBadgeAdd();
+                      } else {
+                        checkSocial('facebook') &&
+                          handleRemoveBadgePopup({
+                            title: 'facebook',
+                            image: '/assets/profile/Facebook-2x.png',
+                            accountName: 'facebook',
+                          });
+                      }
                     }}
                   >
                     {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
@@ -417,9 +375,15 @@ const VerificationBadges = () => {
                       {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
+                ) : persistedUserInfo?.role === 'guest' ? (
+                  <Button color={checkSocial('github') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
+                    {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
+                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
+                    </span>
+                  </Button>
                 ) : (
                   <LoginSocialFacebook
-                    // isOnlyGetToken
                     appId={import.meta.env.VITE_FB_APP_ID}
                     onResolve={({ provider, data }) => {
                       console.log(provider, data);
@@ -434,13 +398,8 @@ const VerificationBadges = () => {
                     }}
                     className="container flex w-full"
                   >
-                    <Button
-                      color={checkSocial('facebook') ? 'red' : 'blue'}
-                      onClick={() => {
-                        checkSocial('facebook') && handleRemoveBadge('facebook');
-                      }}
-                    >
-                      {checkSocial('facebook') ? 'Remove' : 'Add New Badge'}
+                    <Button color={checkSocial('facebook') ? 'red' : 'blue'}>
+                      {checkSocial('facebook') ? '' : 'Add New Badge'}
                       <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                         {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
                       </span>
