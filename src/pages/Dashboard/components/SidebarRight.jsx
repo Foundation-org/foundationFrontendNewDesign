@@ -223,16 +223,16 @@ const SidebarRight = () => {
 
   return (
     <>
-      <div className="no-scrollbar hidden h-full pb-[10vh] min-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pl-[1.3rem] pr-[2.1rem] pt-[4vh] dark:border-[#000] dark:bg-[#000] laptop:block">
+      <div className="no-scrollbar hidden h-full min-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto border-l-4 border-[#F3F3F3] bg-white pb-[10vh] pl-[1.3rem] pr-[2.1rem] pt-[4vh] laptop:block dark:border-[#000] dark:bg-[#000]">
         <PopUp logo={'/assets/svgs/email.svg'} title={'Email'} open={modalVisible} closeIcon={true}>
-          <div className="pt-2 pb-[32px] flex flex-col items-center">
-            <p className="text-center text-[8px] tablet:text-[25px] font-semibold text-[#838383]">
+          <div className="flex flex-col items-center pb-[32px] pt-2">
+            <p className="text-center text-[8px] font-semibold text-[#838383] tablet:text-[25px]">
               {persistedUserInfo?.email}
             </p>
-            <p className="text-center text-[10px] tablet:text-[25px] font-medium text-[#838383] mt-[10px] tablet:mt-[14px] mb-[10px] tablet:mb-[22px]">
+            <p className="mb-[10px] mt-[10px] text-center text-[10px] font-medium text-[#838383] tablet:mb-[22px] tablet:mt-[14px] tablet:text-[25px]">
               Please select if this email is personal or professional.
             </p>
-            <div className="flex gap-[30px] tablet:gap-[65px] items-center justify-center">
+            <div className="flex items-center justify-center gap-[30px] tablet:gap-[65px]">
               <Button
                 variant="personal-work"
                 className="gap-2 tablet:gap-[15px]"
@@ -261,7 +261,7 @@ const SidebarRight = () => {
           <div>
             <h4 className="heading">Treasury</h4>
             <p className="whitespace-nowrap text-[20px] font-medium text-[#616161] dark:text-white">
-              <span>{treasuryAmount} FDX</span>
+              <span>{treasuryAmount?.toFixed(2)} FDX</span>
             </p>
           </div>
         </div>
@@ -277,7 +277,7 @@ const SidebarRight = () => {
             </div>
             <div>
               <h4 className="heading">Guest User</h4>
-              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
+              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] tablet:text-[17px] laptop:text-[20px] dark:text-[#D2D2D2]">
                 <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
               </div>
               <div onClick={handleGuestLogout}>
@@ -304,7 +304,7 @@ const SidebarRight = () => {
             </div>
             <div>
               <h4 className="heading">My Profile</h4>
-              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] dark:text-[#D2D2D2] tablet:text-[17px] laptop:text-[20px]">
+              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] tablet:text-[17px] laptop:text-[20px] dark:text-[#D2D2D2]">
                 <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
               </div>
               <div>
