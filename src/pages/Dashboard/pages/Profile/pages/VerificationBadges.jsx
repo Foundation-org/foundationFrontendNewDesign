@@ -13,13 +13,15 @@ import {
   LoginSocialInstagram,
   LoginSocialLinkedin,
   LoginSocialGithub,
+  LoginSocialTwitter
 } from 'reactjs-social-login';
 import { contacts, web3 } from '../../../../../constants/varification-badges';
 import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
 import Personal from './verification-badges/Personal';
-import LoginSocialTwitter from './verification-badges/LoginSocialTwitter';
 import { FaSpinner } from 'react-icons/fa';
+import { TwitterAuthProvider, signInWithPopup } from "firebase/auth";
+import { authentication } from "./firebase-config";
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -34,6 +36,17 @@ const VerificationBadges = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+
+  const loginWithTwitter = () => {
+    const provider = new TwitterAuthProvider();
+    signInWithPopup(authentication, provider)
+    .then((data)=>{
+      handleAddBadge('twitter',data)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
 
   const handleBadgesClose = () => setModalVisible(false);
   const checkWeb3Badge = (itemType) =>
@@ -111,8 +124,10 @@ const VerificationBadges = () => {
         id = provider;
       } else if (provider === 'instagram') {
         id = data.user_id;
-      } else if (provider === 'twitter' || provider === 'facebook') {
+      } else if ( provider === 'facebook') {
         id = data.userID;
+      }else if ( provider === 'twitter') {
+        id = data.user.uid;
       } else if (provider === 'github') {
         id = data.email;
       }
@@ -628,54 +643,11 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 ) : (
-                  // <LoginSocialTwitter
-                  //   // isOnlyGetToken
-                  //   client_id={import.meta.env.VITE_TWITTER_CONSUMER_KEY}
-                  //   onResolve={({ provider, data }) => {
-                  //     handleAddBadge(provider, data);
-                  //   }}
-                  //   redirect_uri={window.location.href}
-                  //   scope="users.read%20tweet.read"
-                  //   onReject={(err) => {
-                  //     toast.error('An error occured while adding badge');
-                  //     setIsLoading(false);
-                  //     console.log(err);
-                  //   }}
-                  //   className="container flex w-full"
-                  // >
-                  //   <Button
-                  //     // color={checkSocial('twitter') ? 'red' : 'blue'}
-                  //     onClick={() => {
-                  //       // setIsLoading(true);
-                  //       checkSocial('twitter') && handleRemoveBadge('twitter');
-                  //     }}
-                  //     disabled={true}
-                  //     color="gray"
-                  //   >
-                  //     {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
-                  //     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                  //       {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
-                  //     </span>
-                  //   </Button>
-                  // </LoginSocialTwitter>
-                  <LoginSocialTwitter
-                    client_id={import.meta.env.VITE_TWITTER_CONSUMER_KEY}
-                    redirect_uri={window.location.href}
-                    onResolve={({ provider, data }) => {
-                      console.log(provider,data);
-                      setIsLoading(true);
-                      handleAddBadge(provider, data);
-                    }}
-                    onReject={(err) => {
-                      toast.error('An error occured while adding badge');
-                      setIsLoading(false);
-                      console.log(err);
-                    }}
-                  >
+   
                     <Button
                       color={checkSocial('twitter') ? 'red' : 'blue'}
                       onClick={() => {
-                        checkSocial('twitter') && handleRemoveBadge('twitter');
+                       loginWithTwitter()
                       }}
                     >
                       {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
@@ -683,7 +655,7 @@ const VerificationBadges = () => {
                         {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
-                  </LoginSocialTwitter>
+               
                 )}
               </div>
             </div>
