@@ -41,6 +41,7 @@ const VerificationBadges = () => {
     const provider = new TwitterAuthProvider();
     signInWithPopup(authentication, provider)
     .then((data)=>{
+      setIsLoading(true);
       handleAddBadge('twitter',data)
     })
     .catch((err)=>{
