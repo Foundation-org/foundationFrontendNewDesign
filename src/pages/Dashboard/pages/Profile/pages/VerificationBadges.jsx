@@ -32,7 +32,7 @@ const VerificationBadges = () => {
   const [isPopup, setIsPopup] = useState(false);
   const [seletedBadge, setSelectedBadge] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [deleteModalState, setDeleteModalState] = useState(false);
+  const [deleteModalState, setDeleteModalState] = useState();
   const [pageLoading, setPageLoading] = useState(true);
 
   const handleBadgesClose = () => setModalVisible(false);
@@ -223,6 +223,19 @@ const VerificationBadges = () => {
     }
   };
 
+  const handleGuestBadgeAdd = () => {
+    toast.warning(
+      <p>
+        Please{' '}
+        <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+          Create an Account
+        </span>{' '}
+        to unlock this feature
+      </p>,
+    );
+    return;
+  };
+
   return (
     <>
       {pageLoading ? (
@@ -409,7 +422,7 @@ const VerificationBadges = () => {
                     // isOnlyGetToken
                     appId={import.meta.env.VITE_FB_APP_ID}
                     onResolve={({ provider, data }) => {
-                      console.log(provider,data);
+                      console.log(provider, data);
                       setIsLoading(true);
                       handleAddBadge(provider, data);
                     }}
@@ -520,7 +533,7 @@ const VerificationBadges = () => {
                     client_id={import.meta.env.VITE_LINKEDIN_KEY}
                     client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
                     onResolve={({ provider, data }) => {
-                      console.log(provider,data);
+                      console.log(provider, data);
                       setIsLoading(true);
                       handleAddBadge(provider, data);
                     }}
@@ -662,7 +675,7 @@ const VerificationBadges = () => {
                     client_id={import.meta.env.VITE_TWITTER_CONSUMER_KEY}
                     redirect_uri={window.location.href}
                     onResolve={({ provider, data }) => {
-                      console.log(provider,data);
+                      console.log(provider, data);
                       setIsLoading(true);
                       handleAddBadge(provider, data);
                     }}
@@ -708,21 +721,14 @@ const VerificationBadges = () => {
                       color={checkSocial('instagram') ? 'red' : 'blue'}
                       onClick={() => {
                         if (persistedUserInfo?.role === 'guest') {
-                          toast.warning(
-                            <p>
-                              Please{' '}
-                              <span
-                                className="cursor-pointer text-[#389CE3] underline"
-                                onClick={() => navigate('/guest-signup')}
-                              >
-                                Create an Account
-                              </span>{' '}
-                              to unlock this feature
-                            </p>,
-                          );
-                          return;
+                          handleGuestBadgeAdd();
                         } else {
-                          checkSocial('instagram') && setModalVisible(true);
+                          checkSocial('instagram') &&
+                            handleRemoveBadgePopup({
+                              title: 'instagram',
+                              image: '/assets/profile/Instagram-2x.png',
+                              accountName: 'instagram',
+                            });
                         }
                       }}
                     >
@@ -731,35 +737,9 @@ const VerificationBadges = () => {
                         {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
-                    <BadgeRemovePopup
-                      handleClose={handleBadgesClose}
-                      modalVisible={modalVisible}
-                      title={'Instagram'}
-                      image={'/assets/profile/Instagram-2x.png'}
-                      accountName={'instagram'}
-                      fetchUser={fetchUser}
-                      setFetchUser={setFetchUser}
-                    />
                   </>
                 ) : persistedUserInfo?.role === 'guest' ? (
-                  <Button
-                    color={checkSocial('instagram') ? 'red' : 'blue'}
-                    onClick={() => {
-                      toast.warning(
-                        <p>
-                          Please{' '}
-                          <span
-                            className="cursor-pointer text-[#389CE3] underline"
-                            onClick={() => navigate('/guest-signup')}
-                          >
-                            Create an Account
-                          </span>{' '}
-                          to unlock this feature
-                        </p>,
-                      );
-                      return;
-                    }}
-                  >
+                  <Button color={checkSocial('instagram') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                     {checkSocial('instagram') ? 'Remove' : 'Add New Badge'}
                     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                       {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
@@ -770,7 +750,7 @@ const VerificationBadges = () => {
                     client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
                     client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
                     onResolve={({ provider, data }) => {
-                      console.log(provider,data);
+                      console.log(provider, data);
                       setIsLoading(true);
                       handleAddBadge(provider, data);
                     }}
@@ -782,13 +762,8 @@ const VerificationBadges = () => {
                     }}
                     className="container flex w-full"
                   >
-                    <Button
-                      color={checkSocial('instagram') ? 'red' : 'blue'}
-                      onClick={() => {
-                        checkSocial('instagram') && handleRemoveBadge('instagram');
-                      }}
-                    >
-                      {checkSocial('instagram') ? 'Remove' : 'Add New Badge'}
+                    <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
+                      {checkSocial('instagram') ? '' : 'Add New Badge'}
                       <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                         {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                       </span>
@@ -813,63 +788,28 @@ const VerificationBadges = () => {
                   <h1>Github</h1>
                 </div>
                 {checkSocial('github') ? (
-                  <>
-                    <Button
-                      color={checkSocial('github') ? 'red' : 'blue'}
-                      onClick={() => {
-                        if (persistedUserInfo?.role === 'guest') {
-                          toast.warning(
-                            <p>
-                              Please{' '}
-                              <span
-                                className="cursor-pointer text-[#389CE3] underline"
-                                onClick={() => navigate('/guest-signup')}
-                              >
-                                Create an Account
-                              </span>{' '}
-                              to unlock this feature
-                            </p>,
-                          );
-                          return;
-                        } else {
-                          checkSocial('github') && setModalVisible(true);
-                        }
-                      }}
-                    >
-                      {checkSocial('github') ? 'Remove' : 'Add New Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkSocial('github') ? '' : '(+0.96 FDX)'}
-                      </span>
-                    </Button>
-                    <BadgeRemovePopup
-                      handleClose={handleBadgesClose}
-                      modalVisible={modalVisible}
-                      title={'Github'}
-                      image={'/assets/profile/Github-2x.png'}
-                      accountName={'github'}
-                      fetchUser={fetchUser}
-                      setFetchUser={setFetchUser}
-                    />
-                  </>
-                ) : persistedUserInfo?.role === 'guest' ? (
                   <Button
                     color={checkSocial('github') ? 'red' : 'blue'}
                     onClick={() => {
-                      toast.warning(
-                        <p>
-                          Please{' '}
-                          <span
-                            className="cursor-pointer text-[#389CE3] underline"
-                            onClick={() => navigate('/guest-signup')}
-                          >
-                            Create an Account
-                          </span>{' '}
-                          to unlock this feature
-                        </p>,
-                      );
-                      return;
+                      if (persistedUserInfo?.role === 'guest') {
+                        handleGuestBadgeAdd();
+                      } else {
+                        checkSocial('github') &&
+                          handleRemoveBadgePopup({
+                            title: 'github',
+                            image: '/assets/profile/Github-2x.png',
+                            accountName: 'github',
+                          });
+                      }
                     }}
                   >
+                    {checkSocial('github') ? 'Remove' : 'Add New Badge'}
+                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      {checkSocial('github') ? '' : '(+0.96 FDX)'}
+                    </span>
+                  </Button>
+                ) : persistedUserInfo?.role === 'guest' ? (
+                  <Button color={checkSocial('github') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                     {checkSocial('github') ? 'Remove' : 'Add New Badge'}
                     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                       {checkSocial('github') ? '' : '(+0.96 FDX)'}
@@ -881,8 +821,6 @@ const VerificationBadges = () => {
                     client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
                     scope="user,email"
                     onResolve={({ provider, data }) => {
-                      console.log(provider,data);
-                      setIsLoading(true);
                       handleAddBadge(provider, data);
                     }}
                     redirect_uri={window.location.href}
@@ -893,13 +831,8 @@ const VerificationBadges = () => {
                     }}
                     className="container flex w-full"
                   >
-                    <Button
-                      color={checkSocial('github') ? 'red' : 'blue'}
-                      onClick={() => {
-                        checkSocial('github') && handleRemoveBadge('github');
-                      }}
-                    >
-                      {checkSocial('github') ? 'Remove' : 'Add New Badge'}
+                    <Button color={checkSocial('github') ? 'red' : 'blue'}>
+                      {checkSocial('github') ? '' : 'Add New Badge'}
                       <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                         {checkSocial('github') ? '' : '(+0.96 FDX)'}
                       </span>
