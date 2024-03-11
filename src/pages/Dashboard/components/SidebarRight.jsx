@@ -261,7 +261,7 @@ const SidebarRight = () => {
           <div>
             <h4 className="heading">Treasury</h4>
             <p className="whitespace-nowrap text-[20px] font-medium text-[#616161] dark:text-white">
-              <span>{(treasuryAmount * 1)?.toFixed(2)} FDX</span>
+              <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
             </p>
           </div>
         </div>

@@ -1,27 +1,27 @@
 import { toast } from 'sonner';
-import { useEffect, useRef, useState } from 'react';
+import { FaSpinner } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useEffect, useState } from 'react';
 import { userInfo } from '../../../../../services/api/userAuth';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { addUser } from '../../../../../features/auth/authSlice';
 import Button from '../components/Button';
 import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
-import { ethers } from 'ethers';
+
 import {
   LoginSocialFacebook,
   LoginSocialInstagram,
   LoginSocialLinkedin,
   LoginSocialGithub,
-  LoginSocialTwitter
 } from 'reactjs-social-login';
-import { contacts, web3 } from '../../../../../constants/varification-badges';
+import { contacts } from '../../../../../constants/varification-badges';
 import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
+import { TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
+import { authentication } from './firebase-config';
 import Personal from './verification-badges/Personal';
-import { FaSpinner } from 'react-icons/fa';
-import { TwitterAuthProvider, signInWithPopup } from "firebase/auth";
-import { authentication } from "./firebase-config";
+import Web3 from './verification-badges/Web3';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -40,18 +40,16 @@ const VerificationBadges = () => {
   const loginWithTwitter = () => {
     const provider = new TwitterAuthProvider();
     signInWithPopup(authentication, provider)
-    .then((data)=>{
-      setIsLoading(true);
-      handleAddBadge('twitter',data)
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-  }
+      .then((data) => {
+        setIsLoading(true);
+        handleAddBadge('twitter', data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleBadgesClose = () => setModalVisible(false);
-  const checkWeb3Badge = (itemType) =>
-    fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
 
   const onResolve = ({ provider, data }) => {
     // Handle successful login
@@ -63,6 +61,10 @@ const VerificationBadges = () => {
     // Handle login rejection
     console.error('Login rejected', error);
   };
+
+  const onLoginStart = useCallback(() => {
+    console.log('login start');
+  }, []);
 
   const handleUserInfo = async (id) => {
     try {
@@ -87,12 +89,6 @@ const VerificationBadges = () => {
       handleSocialBadges();
     }
   }, []);
-
-  // const checkSocial = (itemType) => {
-  //   console.log("🚀 ~ checkSocial ~ itemType:", itemType)
-  //   const check = fetchUser?.badges?.some(i => i.accountName === itemType)
-  //   console.log("🚀 ~ checkSocial ~ check:", check)
-  // }
 
   const checkPersonal = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
   const checkSocial = (itemType) => fetchUser?.badges?.some((i) => i.accountName === itemType);
@@ -125,9 +121,9 @@ const VerificationBadges = () => {
         id = provider;
       } else if (provider === 'instagram') {
         id = data.user_id;
-      } else if ( provider === 'facebook') {
+      } else if (provider === 'facebook') {
         id = data.userID;
-      }else if ( provider === 'twitter') {
+      } else if (provider === 'twitter') {
         id = data.user.uid;
       } else if (provider === 'github') {
         id = data.email;
@@ -151,94 +147,6 @@ const VerificationBadges = () => {
     }
   };
 
-  const contactBadgeEmail = useRef(null);
-  // Use useRef to create a mutable object
-  const dataRef = useRef({ data: 'Initial Data' });
-
-  const handleClickContactBadgeEmail = (type) => {
-    if (persistedUserInfo?.role === 'guest') {
-      toast.warning(
-        <p>
-          Please{' '}
-          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-            Create an Account
-          </span>{' '}
-          to unlock this feature
-        </p>,
-      );
-      return;
-    } else {
-      setIsPopup(true);
-      setSelectedBadge(type);
-    }
-    // // console.log('testing.....');
-    // dataRef.current.data = type;
-    // // Trigger a click event on the first element
-    // contactBadgeEmail.current.click();
-
-    // // Force a re-render by updating a dummy state
-    // setDummyState({});
-  };
-
-  // // Dummy state to force re-render
-  // const [, setDummyState] = useState();
-
-  // // Handle Add Contact Badge
-  // const handleAddContactBadge = async (provider, data) => {
-  //   try {
-  //     data['provider'] = provider;
-  //     data['type'] = dataRef.current.data;
-  //     data['uuid'] = fetchUser.uuid || localStorage.getItem('uuid');
-  //     const addBadge = await api.post(`/addBadge/contact`, {
-  //       ...data,
-  //     });
-  //     if (addBadge.status === 200) {
-  //       toast.success('Badge Added Successfully!');
-  //       handleUserInfo();
-  //     }
-  //   } catch (error) {
-  //     toast.error(error.response.data.message.split(':')[1]);
-  //   }
-  // };
-
-  const handleRemoveBadgePopup = (item) => {
-    setDeleteModalState(item);
-    setModalVisible(true);
-  };
-
-  const handleWeb3 = async (title, type) => {
-    try {
-      let value;
-      if (title.trim() === 'Ethereum Wallet') {
-        if (window.ethereum) {
-          const provider = new ethers.BrowserProvider(window.ethereum);
-          const signer = await provider.getSigner();
-          const _walletAddress = await signer.getAddress();
-          value = _walletAddress;
-        } else {
-          console.log('Wallet not detected');
-          toast.warning('Please install an Ethereum wallet');
-          return;
-        }
-      }
-      if (value === '') {
-        return;
-      }
-      const addBadge = await api.post(`/addBadge/web3/add`, {
-        web3: {
-          [type]: value,
-        },
-        uuid: fetchUser.uuid,
-      });
-      if (addBadge.status === 200) {
-        toast.success('Badge Added Successfully!');
-        handleUserInfo();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleGuestBadgeAdd = () => {
     toast.warning(
       <p>
@@ -250,6 +158,20 @@ const VerificationBadges = () => {
       </p>,
     );
     return;
+  };
+
+  const handleClickContactBadgeEmail = (type) => {
+    if (persistedUserInfo?.role === 'guest') {
+      handleGuestBadgeAdd();
+    } else {
+      setIsPopup(true);
+      setSelectedBadge(type);
+    }
+  };
+
+  const handleRemoveBadgePopup = (item) => {
+    setDeleteModalState(item);
+    setModalVisible(true);
   };
 
   return (
@@ -572,7 +494,12 @@ const VerificationBadges = () => {
                           );
                           return;
                         } else {
-                          checkSocial('twitter') && handleRemoveBadgePopup({title:"facebook",image:"/assets/profile/Twitter-2x.png",accountName:"facebook"});
+                          checkSocial('twitter') &&
+                            handleRemoveBadgePopup({
+                              title: 'facebook',
+                              image: '/assets/profile/Twitter-2x.png',
+                              accountName: 'facebook',
+                            });
                         }
                       }}
                     >
@@ -616,19 +543,17 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 ) : (
-   
-                    <Button
-                      color={checkSocial('twitter') ? 'red' : 'blue'}
-                      onClick={() => {
-                       loginWithTwitter()
-                      }}
-                    >
-                      {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
-                      </span>
-                    </Button>
-               
+                  <Button
+                    color={checkSocial('twitter') ? 'red' : 'blue'}
+                    onClick={() => {
+                      loginWithTwitter();
+                    }}
+                  >
+                    {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
+                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
+                    </span>
+                  </Button>
                 )}
               </div>
             </div>
@@ -681,12 +606,12 @@ const VerificationBadges = () => {
                   <LoginSocialInstagram
                     client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
                     client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
+                    redirect_uri={window.location.href}
+                    onLoginStart={onLoginStart}
                     onResolve={({ provider, data }) => {
-                      console.log(provider, data);
                       setIsLoading(true);
                       handleAddBadge(provider, data);
                     }}
-                    redirect_uri={window.location.href}
                     onReject={(err) => {
                       toast.error('An error occured while adding badge');
                       setIsLoading(false);
@@ -751,11 +676,11 @@ const VerificationBadges = () => {
                   <LoginSocialGithub
                     client_id={import.meta.env.VITE_GITHUB_CLIENT_ID}
                     client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
-                    scope="user,email"
+                    redirect_uri={window.location.href}
+                    onLoginStart={onLoginStart}
                     onResolve={({ provider, data }) => {
                       handleAddBadge(provider, data);
                     }}
-                    redirect_uri={window.location.href}
                     onReject={(err) => {
                       toast.error('An error occured while adding badge');
                       setIsLoading(false);
@@ -821,37 +746,7 @@ const VerificationBadges = () => {
             <h1 className="font-500 font-Inter my-[3px] text-[9.74px] font-medium text-[#000] tablet:text-[1.7vw] dark:text-white">
               Web 3
             </h1>
-            {web3.map((item, index) => (
-              <div className={`flex items-center justify-center  ${item.disabled ? 'opacity-[60%]' : ''}`} key={index}>
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-[6.389vw] w-[6.389vw] tablet:h-[3.48vw] tablet:w-[3.48vw]"
-                />
-                <div
-                  className={`${
-                    persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                  } ml-[10px] mr-2 flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw] tablet:w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
-                >
-                  <h1>{item.title}</h1>
-                </div>
-                <Button
-                  color={checkWeb3Badge(item.type) ? 'yellow' : item.ButtonColor}
-                  onClick={() => {
-                    handleWeb3(item?.title, item?.type);
-                  }}
-                  // disabled={checkWeb3Badge(item.type)}
-                  disabled={true}
-                >
-                  {checkWeb3Badge(item.type) ? 'Added' : item.ButtonText}
-                  {!checkWeb3Badge(item.type) && (
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                      (+0.96 FDX)
-                    </span>
-                  )}
-                </Button>
-              </div>
-            ))}
+            <Web3 handleUserInfo={handleUserInfo} fetchUser={fetchUser} />
             <h1 className="font-500 font-Inter my-[3px] text-[9.74px] font-medium text-[#000] tablet:text-[1.7vw] dark:text-white">
               Personal
             </h1>
