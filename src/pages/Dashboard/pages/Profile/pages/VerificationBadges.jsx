@@ -93,7 +93,6 @@ const VerificationBadges = () => {
   const checkPersonal = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
   const checkSocial = (itemType) => fetchUser?.badges?.some((i) => i.accountName === itemType);
 
-  // Handle Remove Badge
   const handleRemoveBadge = async (accountName) => {
     const findBadge = fetchUser.badges.filter((item) => {
       if (item.accountName === accountName) {
@@ -113,7 +112,7 @@ const VerificationBadges = () => {
       toast.error(e.response.data.message.split(':')[1]);
     }
   };
-  // Handle Add Badge
+
   const handleAddBadge = async (provider, data) => {
     try {
       let id;
@@ -703,11 +702,11 @@ const VerificationBadges = () => {
             </Button>
           </div>
         ))} */}
-            <h1 className="font-500 font-Inter my-[3px] text-[9.74px] font-medium text-[#000] tablet:text-[1.7vw] dark:text-white">
+            <h1 className="font-500 font-Inter my-[3px] text-[9.74px] font-medium text-black tablet:text-[1.7vw] dark:text-white">
               Web 3
             </h1>
             <Web3 handleUserInfo={handleUserInfo} fetchUser={fetchUser} />
-            <h1 className="font-500 font-Inter my-[3px] text-[9.74px] font-medium text-[#000] tablet:text-[1.7vw] dark:text-white">
+            <h1 className="font-500 font-Inter my-[3px] text-[9.74px] font-medium text-black tablet:text-[1.7vw] dark:text-white">
               Personal
             </h1>
             <Personal handleUserInfo={handleUserInfo} fetchUser={fetchUser} />

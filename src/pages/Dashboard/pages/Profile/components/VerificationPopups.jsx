@@ -1,12 +1,14 @@
-import { LoginSocialGoogle } from 'reactjs-social-login';
-import PopUp from '../../../../../components/ui/PopUp';
-import { Button } from '../../../../../components/ui/Button';
-import api from '../../../../../services/api/Axios';
 import { toast } from 'sonner';
 import { useState } from 'react';
+import { FaSpinner } from 'react-icons/fa';
+import { LoginSocialGoogle } from 'reactjs-social-login';
+import { Button } from '../../../../../components/ui/Button';
+import api from '../../../../../services/api/Axios';
+import PopUp from '../../../../../components/ui/PopUp';
 
 const REDIRECT_URI = window.location.href;
 const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, selectedBadge, handleUserInfo }) => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const handleClose = () => {
     setIsPopup(false);
@@ -14,6 +16,7 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
 
   // Handle Add Contact Badge
   const handleAddContactBadge = async ({ provider, data, legacy }) => {
+    setLoading(true);
     try {
       let addBadge;
       if (legacy) {
@@ -48,6 +51,8 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
       toast.error(error.response.data.message.split(':')[1]);
       handleClose();
       setEmail('');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -100,7 +105,9 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
               className="mb-[10px] mt-1 w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:mb-5 tablet:mt-[15px] tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
             />
             <div className="flex justify-end" onClick={() => handleAddContactBadge({ legacy: true })}>
-              <Button variant="submit">Verify Email</Button>
+              <Button variant="submit" disabled={loading}>
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Verify Email'}
+              </Button>
             </div>
           </div>
         </div>
