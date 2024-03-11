@@ -409,6 +409,8 @@ const VerificationBadges = () => {
                     // isOnlyGetToken
                     appId={import.meta.env.VITE_FB_APP_ID}
                     onResolve={({ provider, data }) => {
+                      console.log(provider,data);
+                      setIsLoading(true);
                       handleAddBadge(provider, data);
                     }}
                     redirect_uri={window.location.href}
@@ -422,7 +424,6 @@ const VerificationBadges = () => {
                     <Button
                       color={checkSocial('facebook') ? 'red' : 'blue'}
                       onClick={() => {
-                        setIsLoading(true);
                         checkSocial('facebook') && handleRemoveBadge('facebook');
                       }}
                     >
@@ -519,8 +520,9 @@ const VerificationBadges = () => {
                     client_id={import.meta.env.VITE_LINKEDIN_KEY}
                     client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
                     onResolve={({ provider, data }) => {
+                      console.log(provider,data);
+                      setIsLoading(true);
                       handleAddBadge(provider, data);
-                      console.log('linkedin', provider, data);
                     }}
                     redirect_uri={window.location.href}
                     onReject={(err) => {
@@ -535,7 +537,6 @@ const VerificationBadges = () => {
                       disabled={true}
                       color="gray"
                       onClick={() => {
-                        setIsLoading(true);
                         checkSocial('linkedin') && handleRemoveBadge('linkedin');
                       }}
                     >
@@ -660,13 +661,20 @@ const VerificationBadges = () => {
                   <LoginSocialTwitter
                     client_id={import.meta.env.VITE_TWITTER_CONSUMER_KEY}
                     redirect_uri={window.location.href}
-                    onResolve={onResolve}
-                    onReject={onReject}
+                    onResolve={({ provider, data }) => {
+                      console.log(provider,data);
+                      setIsLoading(true);
+                      handleAddBadge(provider, data);
+                    }}
+                    onReject={(err) => {
+                      toast.error('An error occured while adding badge');
+                      setIsLoading(false);
+                      console.log(err);
+                    }}
                   >
                     <Button
                       color={checkSocial('twitter') ? 'red' : 'blue'}
                       onClick={() => {
-                        // setIsLoading(true);
                         checkSocial('twitter') && handleRemoveBadge('twitter');
                       }}
                     >
@@ -762,6 +770,8 @@ const VerificationBadges = () => {
                     client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
                     client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
                     onResolve={({ provider, data }) => {
+                      console.log(provider,data);
+                      setIsLoading(true);
                       handleAddBadge(provider, data);
                     }}
                     redirect_uri={window.location.href}
@@ -775,7 +785,6 @@ const VerificationBadges = () => {
                     <Button
                       color={checkSocial('instagram') ? 'red' : 'blue'}
                       onClick={() => {
-                        setIsLoading(true);
                         checkSocial('instagram') && handleRemoveBadge('instagram');
                       }}
                     >
@@ -872,7 +881,8 @@ const VerificationBadges = () => {
                     client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
                     scope="user,email"
                     onResolve={({ provider, data }) => {
-                      console.log(provider, data);
+                      console.log(provider,data);
+                      setIsLoading(true);
                       handleAddBadge(provider, data);
                     }}
                     redirect_uri={window.location.href}
@@ -886,7 +896,6 @@ const VerificationBadges = () => {
                     <Button
                       color={checkSocial('github') ? 'red' : 'blue'}
                       onClick={() => {
-                        setIsLoading(true);
                         checkSocial('github') && handleRemoveBadge('github');
                       }}
                     >
