@@ -30,10 +30,9 @@ const data = [
     title: 'Unclear / Doesn’t make Sense',
   },
   {
-    id:6,
+    id: 6,
     title: 'Duplicate / Similar Post',
   },
-  
 ];
 
 const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, children }) => {
@@ -97,7 +96,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
   };
 
   return (
-    <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-white dark:border-white dark:bg-[#000] tablet:rounded-[15px]">
+    <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000]">
       <CardTopbar
         questStartData={questStartData}
         QuestTopic={questStartData.QuestTopic}
@@ -110,12 +109,12 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
         postProperties={postProperties}
       />
       <div className="pb-[0.94rem] pt-[0.84rem] tablet:pb-5 tablet:pt-[0.94rem]">
-        <div className="ml-[1.39rem] mr-[0.62rem] tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem] flex items-start justify-between">
-          <div className="flex gap-1.5 tablet:gap-3 pr-5 tablet:pr-6">
-            <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-[15px] tablet:leading-[23px]">
+        <div className="ml-[1.39rem] mr-[0.62rem] flex items-start justify-between tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
+          <div className="flex gap-1.5 pr-5 tablet:gap-3 tablet:pr-6">
+            {/* <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
               {questStartData.Question?.endsWith('?') ? 'Q.' : 'S.'}
-            </h4>
-            <h4 className="text-[0.75rem] font-semibold text-[#7C7C7C] tablet:text-[1.25rem] leading-[15px] tablet:leading-[23px]">
+            </h4> */}
+            <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
               {questStartData.Question}
             </h4>
           </div>
@@ -123,7 +122,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
             <img
               src="/assets/hiddenposts/unhide/icon1.png"
               alt="eye-latest"
-              className="cursor-pointer w-[12.5px] h-[8.75px] tablet:w-[25px] tablet:h-[17px]"
+              className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
               onClick={showHidePostOpen}
             />
           )}
