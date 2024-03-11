@@ -5,16 +5,28 @@ import { getAuth } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCzAyRTYgtxP8oBP84Q1pEJUn9jaNtkCnU",
-  authDomain: "foundation-twitter-auth.firebaseapp.com",
-  projectId: "foundation-twitter-auth",
-  storageBucket: "foundation-twitter-auth.appspot.com",
-  messagingSenderId: "784112635351",
-  appId: "1:784112635351:web:e467c990db949c7991cf92",
-  measurementId: "G-0ERWS559S9"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain:import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ,
+  projectId:import.meta.env.VITE_FIREBASE_PROJECT_ID ,
+  storageBucket:import.meta.env.VITE_FIREBASE_STORAGE_BUCKET ,
+  messagingSenderId:import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID ,
+  appId:import.meta.env.VITE_FIREBASE_APP_ID ,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
+
+// Sameer fireabase config
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBaptMvzItp_JlVSbDPZgKnjmpBl-gxACs",
+//   authDomain: "foundation-9fb14.firebaseapp.com",
+//   projectId: "foundation-9fb14",
+//   storageBucket: "foundation-9fb14.appspot.com",
+//   messagingSenderId: "798728354679",
+//   appId: "1:798728354679:web:7e8d0109d9bfe01d47ff72",
+//   measurementId: "G-91XYMWD8ZB"
+// };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

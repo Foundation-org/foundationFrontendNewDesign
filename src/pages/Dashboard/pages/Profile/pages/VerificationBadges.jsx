@@ -13,12 +13,11 @@ import {
   LoginSocialFacebook,
   LoginSocialInstagram,
   LoginSocialLinkedin,
-  LoginSocialGithub,
 } from 'reactjs-social-login';
 import { contacts } from '../../../../../constants/varification-badges';
 import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
-import { TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
+import { TwitterAuthProvider,GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { authentication } from './firebase-config';
 import Personal from './verification-badges/Personal';
 import Web3 from './verification-badges/Web3';
@@ -39,10 +38,22 @@ const VerificationBadges = () => {
 
   const loginWithTwitter = () => {
     const provider = new TwitterAuthProvider();
+    console.log(authentication);
     signInWithPopup(authentication, provider)
       .then((data) => {
         setIsLoading(true);
         handleAddBadge('twitter', data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const loginWithGithub = () => {
+    const provider = new GithubAuthProvider();
+    signInWithPopup(authentication, provider)
+      .then((data) => {
+        setIsLoading(true);
+        handleAddBadge('github', data);
       })
       .catch((err) => {
         console.log(err);
@@ -125,7 +136,7 @@ const VerificationBadges = () => {
       } else if (provider === 'twitter') {
         id = data.user.uid;
       } else if (provider === 'github') {
-        id = data.email;
+        id = data.user.email;
       }
 
       const addBadge = await api.post(`/addBadge`, {
@@ -632,28 +643,39 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 ) : (
-                  <LoginSocialGithub
-                    client_id={import.meta.env.VITE_GITHUB_CLIENT_ID}
-                    client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
-                    redirect_uri={window.location.href}
-                    onLoginStart={onLoginStart}
-                    onResolve={({ provider, data }) => {
-                      handleAddBadge(provider, data);
-                    }}
-                    onReject={(err) => {
-                      toast.error('An error occured while adding badge');
-                      setIsLoading(false);
-                      console.log(err);
-                    }}
-                    className="container flex w-full"
-                  >
-                    <Button color={checkSocial('github') ? 'red' : 'blue'}>
-                      {checkSocial('github') ? '' : 'Add New Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkSocial('github') ? '' : '(+0.96 FDX)'}
-                      </span>
-                    </Button>
-                  </LoginSocialGithub>
+                  // <LoginSocialGithub
+                  //   client_id={import.meta.env.VITE_GITHUB_CLIENT_ID}
+                  //   client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
+                  //   redirect_uri={window.location.href}
+                  //   onLoginStart={onLoginStart}
+                  //   onResolve={({ provider, data }) => {
+                  //     handleAddBadge(provider, data);
+                  //   }}
+                  //   onReject={(err) => {
+                  //     toast.error('An error occured while adding badge');
+                  //     setIsLoading(false);
+                  //     console.log(err);
+                  //   }}
+                  //   className="container flex w-full"
+                  // >
+                  //   <Button color={checkSocial('github') ? 'red' : 'blue'}>
+                  //     {checkSocial('github') ? '' : 'Add New Badge'}
+                  //     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                  //       {checkSocial('github') ? '' : '(+0.96 FDX)'}
+                  //     </span>
+                  //   </Button>
+                  // </LoginSocialGithub>
+                  <Button
+                  color={checkSocial('github') ? 'red' : 'blue'}
+                  onClick={() => {
+                    loginWithGithub();
+                  }}
+                >
+                  {checkSocial('github') ? 'Remove' : 'Add New Badge'}
+                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    {checkSocial('github') ? '' : '(+0.96 FDX)'}
+                  </span>
+                </Button>
                 )}
               </div>
             </div>
