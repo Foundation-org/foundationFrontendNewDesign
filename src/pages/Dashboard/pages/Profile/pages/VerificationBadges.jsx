@@ -91,20 +91,20 @@ const VerificationBadges = () => {
   // Handle Add Badge
   const handleAddBadge = async (provider, data) => {
     try {
-    let id;
-    if(provider==="linkedin"){
-      id=provider;
-    }
-    else if(provider==="instagram"){
-      id=data.user_id;
-    }
-    else if(provider==="twitter" || provider==="facebook"){
-      id=data.userID;
-    }
-    else if(provider==="github"){
-      id=data.email;
-    }
- 
+      let id;
+      if (provider === "linkedin") {
+        id = provider;
+      }
+      else if (provider === "instagram") {
+        id = data.user_id;
+      }
+      else if (provider === "twitter" || provider === "facebook") {
+        id = data.userID;
+      }
+      else if (provider === "github") {
+        id = data.email;
+      }
+
       const addBadge = await api.post(`/addBadge`, {
         data,
         provider,
@@ -113,9 +113,9 @@ const VerificationBadges = () => {
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
-        console.log("2",isLoading);
+        console.log("2", isLoading);
         handleUserInfo();
-        
+
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -180,22 +180,22 @@ const VerificationBadges = () => {
 
   const handleWeb3 = async (title, type) => {
     try {
-    let value;
-    if (title.trim() === 'Ethereum Wallet') {
-      if (window.ethereum) {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        const _walletAddress = await signer.getAddress();
-        value = _walletAddress;
-      } else {
-        console.log('Wallet not detected');
-        toast.warning('Please install an Ethereum wallet');
+      let value;
+      if (title.trim() === 'Ethereum Wallet') {
+        if (window.ethereum) {
+          const provider = new ethers.BrowserProvider(window.ethereum);
+          const signer = await provider.getSigner();
+          const _walletAddress = await signer.getAddress();
+          value = _walletAddress;
+        } else {
+          console.log('Wallet not detected');
+          toast.warning('Please install an Ethereum wallet');
+          return;
+        }
+      }
+      if (value === '') {
         return;
       }
-    }
-    if (value === '') {
-      return;
-    }
       const addBadge = await api.post(`/addBadge/web3/add`, {
         web3: {
           [type]: value,
@@ -213,7 +213,7 @@ const VerificationBadges = () => {
 
   return (
     <div className="pb-12">
-      
+
       {isPopup &&
         (seletedBadge === 'personal' ? (
           <VerificationPopups
@@ -259,14 +259,13 @@ const VerificationBadges = () => {
           setFetchUser={setFetchUser}
         />
       )}
-        {isLoading && <Loader />}
+      {isLoading && <Loader />}
       <h1 className="ml-[32px] text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:ml-[97px] tablet:text-[25px] tablet:font-semibold tablet:leading-[30px] dark:text-[#B8B8B8]">
         My Verification Badges
       </h1>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
-        } relative mx-6 mb-[140px] mt-[10px] flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-[97px] tablet:mb-[10rem] tablet:mt-[35px] tablet:gap-4 tablet:rounded-[45px] tablet:px-[90px] tablet:py-[30px] laptop:gap-5`}
+        className={`${persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
+          } relative mx-6 mb-[140px] mt-[10px] flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-[97px] tablet:mb-[10rem] tablet:mt-[35px] tablet:gap-4 tablet:rounded-[45px] tablet:px-[90px] tablet:py-[30px] laptop:gap-5`}
       >
         {/* <div className="absolute -top-[1px] left-[50%] mx-auto flex w-[90%] -translate-x-[50%] transform justify-center gap-[21px] tablet:-top-1 tablet:w-[90%] laptop:w-[95%]">
           <div className="h-[2.94px] w-full rounded-[100px] bg-[#4A8DBD] tablet:h-[11.1px]" />
@@ -287,9 +286,8 @@ const VerificationBadges = () => {
               className="h-[6.389vw] w-[6.389vw] tablet:h-[3.48vw] tablet:w-[3.48vw]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              } ml-[10px] mr-2 flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[2px] tablet:ml-[30px] tablet:mr-[20px] tablet:h-[3.48vw] tablet:w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:ml-[40px] laptop:mr-[30px] laptop:rounded-[15px] dark:text-[#CACACA]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                } ml-[10px] mr-2 flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[2px] tablet:ml-[30px] tablet:mr-[20px] tablet:h-[3.48vw] tablet:w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:ml-[40px] laptop:mr-[30px] laptop:rounded-[15px] dark:text-[#CACACA]`}
             >
               <h1>{item.title}</h1>
             </div>
@@ -318,9 +316,8 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw]  tablet:w-[19.9vw] tablet:min-w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw]  tablet:w-[19.9vw] tablet:min-w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
             >
               <h1>Facebook</h1>
             </div>
@@ -427,9 +424,8 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw]  tablet:w-[19.9vw] tablet:min-w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw]  tablet:w-[19.9vw] tablet:min-w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
             >
               <h1>Linked In</h1>
             </div>
@@ -503,7 +499,7 @@ const VerificationBadges = () => {
                 client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
                 onResolve={({ provider, data }) => {
                   handleAddBadge(provider, data);
-                  console.log("linkedin",provider,data);
+                  console.log("linkedin", provider, data);
                 }}
                 redirect_uri={window.location.href}
                 onReject={(err) => {
@@ -540,9 +536,8 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw]  tablet:w-[19.9vw] tablet:min-w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw]  tablet:w-[19.9vw] tablet:min-w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
             >
               <h1>Twitter</h1>
             </div>
@@ -611,14 +606,14 @@ const VerificationBadges = () => {
               </Button>
             ) : (
 
-        
+
               <LoginSocialTwitter
                 // isOnlyGetToken
-                client_id="SlRWNHJxamp6Z0J0bXpQN3VhLWk6MTpjaQ"
+                client_id={import.meta.env.VITE_TWITTER_CONSUMER_KEY}
                 onResolve={({ provider, data }) => {
                   handleAddBadge(provider, data);
                 }}
-                redirect_uri="https://development.on.foundation/profile/verification-badges/"
+                redirect_uri={window.location.href}
                 scope='users.read%20tweet.read'
                 onReject={(err) => {
                   toast.error("An error occured while adding badge")
@@ -630,10 +625,10 @@ const VerificationBadges = () => {
                 <Button
                   // color={checkSocial('twitter') ? 'red' : 'blue'}
                   onClick={() => {
-                    setIsLoading(true);
+                    // setIsLoading(true);
                     checkSocial('twitter') && handleRemoveBadge('twitter');
                   }}
-                  disabled={true}
+                  // disabled={true}
                   color="gray"
                 >
                   {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
@@ -654,9 +649,8 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw]  tablet:w-[19.9vw] tablet:min-w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw]  tablet:w-[19.9vw] tablet:min-w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
             >
               <h1>Instagram</h1>
             </div>
@@ -763,9 +757,8 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw]  tablet:w-[19.9vw] tablet:min-w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                } mx-2 flex h-[7.3vw] w-[24vw] min-w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw]  tablet:w-[19.9vw] tablet:min-w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
             >
               <h1>Github</h1>
             </div>
@@ -838,7 +831,7 @@ const VerificationBadges = () => {
                 client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
                 scope='user,email'
                 onResolve={({ provider, data }) => {
-                  console.log(provider,data);
+                  console.log(provider, data);
                   handleAddBadge(provider, data);
                 }}
                 redirect_uri={window.location.href}
@@ -921,9 +914,8 @@ const VerificationBadges = () => {
               className="h-[6.389vw] w-[6.389vw] tablet:h-[3.48vw] tablet:w-[3.48vw]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              } ml-[10px] mr-2 flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw] tablet:w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                } ml-[10px] mr-2 flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw] tablet:w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
             >
               <h1>{item.title}</h1>
             </div>
