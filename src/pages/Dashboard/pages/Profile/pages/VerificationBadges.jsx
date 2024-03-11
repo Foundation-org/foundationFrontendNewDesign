@@ -475,68 +475,28 @@ const VerificationBadges = () => {
                   <h1>Twitter</h1>
                 </div>
                 {checkSocial('twitter') ? (
-                  <>
-                    <Button
-                      color={checkSocial('twitter') ? 'red' : 'blue'}
-                      onClick={() => {
-                        if (persistedUserInfo?.role === 'guest') {
-                          toast.warning(
-                            <p>
-                              Please{' '}
-                              <span
-                                className="cursor-pointer text-[#389CE3] underline"
-                                onClick={() => navigate('/guest-signup')}
-                              >
-                                Create an Account
-                              </span>{' '}
-                              to unlock this feature
-                            </p>,
-                          );
-                          return;
-                        } else {
-                          checkSocial('twitter') &&
-                            handleRemoveBadgePopup({
-                              title: 'facebook',
-                              image: '/assets/profile/Twitter-2x.png',
-                              accountName: 'facebook',
-                            });
-                        }
-                      }}
-                    >
-                      {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
-                      </span>
-                    </Button>
-                    <BadgeRemovePopup
-                      handleClose={handleBadgesClose}
-                      modalVisible={modalVisible}
-                      title={'Twitter'}
-                      image={'/assets/profile/Twitter-2x.png'}
-                      accountName={'twitter'}
-                      fetchUser={fetchUser}
-                      setFetchUser={setFetchUser}
-                    />
-                  </>
-                ) : persistedUserInfo?.role === 'guest' ? (
                   <Button
                     color={checkSocial('twitter') ? 'red' : 'blue'}
                     onClick={() => {
-                      toast.warning(
-                        <p>
-                          Please{' '}
-                          <span
-                            className="cursor-pointer text-[#389CE3] underline"
-                            onClick={() => navigate('/guest-signup')}
-                          >
-                            Create an Account
-                          </span>{' '}
-                          to unlock this feature
-                        </p>,
-                      );
-                      return;
+                      if (persistedUserInfo?.role === 'guest') {
+                        handleGuestBadgeAdd();
+                      } else {
+                        checkSocial('twitter') &&
+                          handleRemoveBadgePopup({
+                            title: 'twitter',
+                            image: '/assets/profile/Twitter-2x.png',
+                            accountName: 'twitter',
+                          });
+                      }
                     }}
                   >
+                    {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
+                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
+                    </span>
+                  </Button>
+                ) : persistedUserInfo?.role === 'guest' ? (
+                  <Button color={checkSocial('twitter') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                     {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
                     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                       {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
