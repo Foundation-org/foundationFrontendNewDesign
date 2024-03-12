@@ -33,6 +33,26 @@ const VerificationBadges = () => {
   const [deleteModalState, setDeleteModalState] = useState();
   const [pageLoading, setPageLoading] = useState(true);
 
+  const loginInWithInsta = async (response) => {
+    const accessToken = response;
+
+    try {
+      const profileResponse = await fetch(
+        `https://graph.instagram.com/v12.0/me?fields=id,username&access_token=${accessToken}`,
+      );
+
+      if (!profileResponse.ok) {
+        const errorData = await profileResponse.json();
+        console.log(errorData);
+      }
+
+      const profileData = await profileResponse.json();
+      console.log('Instagram Profile:', profileData);
+    } catch (error) {
+      console.error('Error fetching Instagram profile:', error.message);
+    }
+  };
+
   const loginWithTwitter = () => {
     const provider = new TwitterAuthProvider();
     console.log(authentication);
@@ -570,37 +590,21 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 ) : (
-                  <LoginSocialInstagram
-                    client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-                    client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
-                    redirect_uri={window.location.href}
-                    onLoginStart={onLoginStart}
-                    onResolve={({ provider, data }) => {
-                      setIsLoading(true);
-                      handleAddBadge(provider, data);
-                    }}
-                    onReject={(err) => {
-                      toast.error('An error occured while adding badge');
-                      setIsLoading(false);
-                      console.log(err);
-                    }}
-                    className="container flex w-full"
-                  >
-                    <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
-                      {checkSocial('instagram') ? '' : 'Add New Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
-                      </span>
-                    </Button>
-                  </LoginSocialInstagram>
-                  // <InstagramLogin
-                  //   clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-                  //   // buttonText="Login"
-                  //   onSuccess={(resp) => console.log('success', resp)}
-                  //   onFailure={(err) => console.log('error', err)}
-                  //   redirectUri={window.location.href}
-                  //   cssClass={'hideBack'}
-                  //   scope="user_profile"
+                  // <LoginSocialInstagram
+                  //   client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
+                  //   client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
+                  //   redirect_uri={window.location.href}
+                  //   onLoginStart={onLoginStart}
+                  //   onResolve={({ provider, data }) => {
+                  //     setIsLoading(true);
+                  //     handleAddBadge(provider, data);
+                  //   }}
+                  //   onReject={(err) => {
+                  //     toast.error('An error occured while adding badge');
+                  //     setIsLoading(false);
+                  //     console.log(err);
+                  //   }}
+                  //   className="container flex w-full"
                   // >
                   //   <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
                   //     {checkSocial('instagram') ? '' : 'Add New Badge'}
@@ -608,7 +612,25 @@ const VerificationBadges = () => {
                   //       {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                   //     </span>
                   //   </Button>
-                  // </InstagramLogin>
+                  // </LoginSocialInstagram>
+                  <InstagramLogin
+                    clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
+                    onSuccess={(resp) => {
+                      console.log(resp), loginInWithInsta(resp);
+                    }}
+                    onFailure={(err) => console.log('error', err)}
+                    redirectUri={window.location.href}
+                    cssClass={'hideBack'}
+                    implicitAuth={true}
+                    scope="user_profile"
+                  >
+                    <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
+                      {checkSocial('instagram') ? '' : 'Add New Badge'}
+                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                        {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
+                      </span>
+                    </Button>
+                  </InstagramLogin>
                 )}
               </div>
             </div>
