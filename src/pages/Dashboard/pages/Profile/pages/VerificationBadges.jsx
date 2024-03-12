@@ -33,21 +33,12 @@ const VerificationBadges = () => {
   const [deleteModalState, setDeleteModalState] = useState();
   const [pageLoading, setPageLoading] = useState(true);
 
-  const loginInWithInsta = async (response) => {
-    const accessToken = response;
-
+  const loginInWithInsta = async (code) => {
     try {
-      const profileResponse = await fetch(
-        `https://graph.instagram.com/v12.0/me?fields=id,username&access_token=${accessToken}`,
+      const resp = await fetch(
+        `https://graph.facebook.com/v11.0/oauth/access_token?client_id=${import.meta.env.VITE_INSTAGRAM_CLIENT_ID}&redirect_uri=${window.location.href}&client_secret=${import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}&code=${code}`,
       );
-
-      if (!profileResponse.ok) {
-        const errorData = await profileResponse.json();
-        console.log(errorData);
-      }
-
-      const profileData = await profileResponse.json();
-      console.log('Instagram Profile:', profileData);
+      console.log('Insta Response:', resp);
     } catch (error) {
       console.error('Error fetching Instagram profile:', error.message);
     }
@@ -615,14 +606,12 @@ const VerificationBadges = () => {
                   // </LoginSocialInstagram>
                   <InstagramLogin
                     clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-                    onSuccess={(resp) => {
-                      console.log(resp), loginInWithInsta(resp);
+                    onSuccess={(code) => {
+                      console.log(code), loginInWithInsta(code);
                     }}
                     onFailure={(err) => console.log('error', err)}
                     redirectUri={window.location.href}
                     cssClass={'hideBack'}
-                    implicitAuth={true}
-                    scope="user_profile"
                   >
                     <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
                       {checkSocial('instagram') ? '' : 'Add New Badge'}
