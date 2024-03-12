@@ -49,10 +49,10 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
       logo={'/assets/svgs/link.svg'}
       title={
         questUtils.sharedQuestStatus.type === 'Delete'
-          ? 'Delete Link'
+          ? 'Delete Shared Link'
           : questUtils.sharedQuestStatus.type === 'Enable'
-            ? 'Enabled Link'
-            : 'Disabled Link'
+            ? 'Enable Shared Link'
+            : 'Disable Shared Link'
       }
       open={modalVisible}
       handleClose={handleClose}
@@ -61,23 +61,24 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           {questUtils.sharedQuestStatus.type === 'Delete' ? (
             <span>
-              it will say 'Are you sure you want to delete this Shared Link? The link will no longer work and all
-              related results and statistics will be lost.'
+              Are you sure you want to delete this Shared Link? The link will no longer work and all related results and
+              statistics will be lost.
             </span>
           ) : questUtils.sharedQuestStatus.type === 'Enable' ? (
-            <span>
-              The link has been successfully enabled and is now functioning properly across all user accounts.
-            </span>
+            <span>Are you sure you want to Enable this link? You can disable it again anytime.</span>
           ) : (
             <span>
-              Please note that upon disabling the link, it will become inactive. However, you have the option to enable
-              it at any time in the future.
+              Are you sure you want to disable this link? It will no longer be publicly available. You can enable it
+              again in the future.
             </span>
           )}
         </h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button variant={'submit'} disabled={isLoading} onClick={handleLinkStatusApi}>
-            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Ok'}
+            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
+          </Button>{' '}
+          <Button variant={'cancel'} onClick={handleClose}>
+            No
           </Button>
         </div>
       </div>
