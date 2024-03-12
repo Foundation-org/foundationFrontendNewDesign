@@ -31,6 +31,7 @@ const SingleQuest = () => {
   const [singleQuestResp, setSingleQuestResp] = useState(null);
   const [submitResponse, setSubmitResponse] = useState();
   const [modalVisible, setModalVisible] = useState(false);
+  const [error, setError] = useState('');
 
   const openWelcomeDialogue = () => setModalVisible(true);
   const closeWelcomeDialogue = () => setModalVisible(false);
@@ -91,14 +92,18 @@ const SingleQuest = () => {
 
     const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
 
-    setSingleQuestResp(getQuest.data.data[0]);
+    setSingleQuestResp(getQuest.response.data.data[0]);
   };
 
   const questByUniqueShareLink = async () => {
     await handleUserInfo();
     const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
-
-    setSingleQuestResp(getQuest.data.data[0]);
+    console.log('2nd', getQuest);
+    if (getQuest.error === 'This link is not active') {
+      setError(getQuest.error);
+    } else {
+      setSingleQuestResp(getQuest.response.data.data[0]);
+    }
   };
 
   useEffect(() => {
@@ -123,6 +128,8 @@ const SingleQuest = () => {
       localStorage.setItem('hasGuestVisitedBefore', true);
     }
   }, []);
+
+  console.log('first', singleQuestResp);
 
   return (
     <>
@@ -149,9 +156,10 @@ const SingleQuest = () => {
       )}
       <Topbar />
       <div className="flex h-[calc(100vh-90px)] bg-white dark:bg-[#242424]">
-        <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
+        <div className="quest-scrollbar w-full overflow-y-auto bg-[#F3F3F3] py-7 tablet:py-[3.81rem]">
+          {error !== '' ? <p className="text-center text-[24px] font-bold tablet:text-[25px]">{error}</p> : null}
           {(singleQuestResp || submitResponse) && (
-            <div className="px-[25px] tablet:px-[86px]">
+            <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px] ">
               <QuestionCardWithToggle
                 questStartData={submitResponse ? submitResponse : singleQuestResp}
                 isBookmarked={false}
