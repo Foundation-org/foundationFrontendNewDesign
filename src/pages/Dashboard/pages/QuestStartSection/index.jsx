@@ -46,6 +46,8 @@ const QuestStartSection = () => {
   const [columns, setColumns] = useState(parsedColumns || initialColumns);
   const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
+  const [height, setHeight] = useState('calc(100vh - 92px)');
+
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
   const { data: feedData } = QuestServices.useGetFeedData(filterStates, filterStates.searchData, pagination, columns, {
@@ -258,58 +260,75 @@ const QuestStartSection = () => {
     }
   }, [questUtils?.sharedLinkPost]);
 
+  useEffect(() => {
+    const updateHeight = () => {
+      console.log('first', window.innerWidth);
+      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 182.3px)' : 'calc(100vh - 92px)';
+      setHeight(newHeight);
+    };
+
+    updateHeight();
+
+    window.addEventListener('resize', updateHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []);
+
   // console.log(
   //   '🚀 ~ QuestStartSection ~ allData:',
   //   allData.filter((item) => !questUtils.hiddenPosts.includes(item._id)),
   // );
 
   return (
-    <div className="flex w-full flex-col bg-white laptop:flex-row dark:bg-black">
-      <SidebarLeft
-        columns={columns}
-        setColumns={setColumns}
-        itemsWithCross={itemsWithCross}
-        setItemsWithCross={setItemsWithCross}
-      />
-      <div className="no-scrollbar flex h-full w-full flex-col overflow-y-auto bg-[#F3F3F3] px-[1.13rem] py-[0.63rem] tablet:min-h-[calc(100vh-92px)] tablet:py-[0.94rem] dark:bg-[#242424]">
-        <InfiniteScroll
-          dataLength={allData?.length}
-          next={fetchMoreData}
-          hasMore={feedData?.hasNextPage}
-          endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme)}
-          height={'calc(100vh - 92px)'}
-          className="no-scrollbar"
-        >
-          <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
-            {allData &&
-              allData
-                .filter((item) => !questUtils.hiddenPosts.includes(item._id))
-                ?.map((item, index) => (
-                  <div key={index + 1}>
-                    {filterStates.expandedView ? (
-                      <QuestionCardWithToggle
-                        questStartData={item}
-                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                        setPagination={setPagination}
-                        setSubmitResponse={setSubmitResponse}
-                      />
-                    ) : (
-                      <QuestionCard
-                        questStartData={item}
-                        startTest={startTest}
-                        setStartTest={setStartTest}
-                        viewResult={viewResult}
-                        handleViewResults={memoizedViewResults}
-                        handleStartTest={memoizedStartTest}
-                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                        setPagination={setPagination}
-                        setSubmitResponse={setSubmitResponse}
-                      />
-                    )}
-                  </div>
-                ))}
-          </div>
-          {/* <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
+    <div className="w-full bg-[#F3F3F3] dark:bg-black">
+      <div className="mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
+        <SidebarLeft
+          columns={columns}
+          setColumns={setColumns}
+          itemsWithCross={itemsWithCross}
+          setItemsWithCross={setItemsWithCross}
+        />
+        <div className="no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:min-h-[calc(100vh-92px)] dark:bg-[#242424]">
+          <InfiniteScroll
+            dataLength={allData?.length}
+            next={fetchMoreData}
+            hasMore={feedData?.hasNextPage}
+            endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme)}
+            height={height}
+            className="no-scrollbar px-4 py-[10px] tablet:px-6 tablet:py-5"
+          >
+            <div id="section-1" className="flex flex-col gap-2 tablet:gap-5">
+              {allData &&
+                allData
+                  .filter((item) => !questUtils.hiddenPosts.includes(item._id))
+                  ?.map((item, index) => (
+                    <div key={index + 1}>
+                      {filterStates.expandedView ? (
+                        <QuestionCardWithToggle
+                          questStartData={item}
+                          isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                          setPagination={setPagination}
+                          setSubmitResponse={setSubmitResponse}
+                        />
+                      ) : (
+                        <QuestionCard
+                          questStartData={item}
+                          startTest={startTest}
+                          setStartTest={setStartTest}
+                          viewResult={viewResult}
+                          handleViewResults={memoizedViewResults}
+                          handleStartTest={memoizedStartTest}
+                          isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                          setPagination={setPagination}
+                          setSubmitResponse={setSubmitResponse}
+                        />
+                      )}
+                    </div>
+                  ))}
+            </div>
+            {/* <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
             {allData &&
               allData?.map((item, index) => (
                 <div key={index + 1}>
@@ -338,9 +357,10 @@ const QuestStartSection = () => {
                 </div>
               ))}
           </div> */}
-        </InfiniteScroll>
+          </InfiniteScroll>
+        </div>
+        <SidebarRight />
       </div>
-      <SidebarRight />
     </div>
   );
 };

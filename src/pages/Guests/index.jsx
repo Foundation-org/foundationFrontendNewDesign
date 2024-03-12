@@ -19,7 +19,7 @@ const Guests = () => {
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
   const [submitResponse, setSubmitResponse] = useState();
-  const [loading,setLoading]=useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (isFullScreen !== 'isfullscreen') {
@@ -29,7 +29,7 @@ const Guests = () => {
   }, [isFullScreen]);
 
   const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state);
-  console.log("wamniq",singleQuestResp);
+  console.log('wamniq', singleQuestResp);
 
   const handleStartTest = useCallback(
     (testId) => {
@@ -50,7 +50,7 @@ const Guests = () => {
   return (
     <>
       <Topbar />
-      <div className="flex h-[calc(100vh-90px)] bg-white dark:bg-[#242424]">
+      <div className="flex h-[calc(100vh-90px)] bg-[#F3F3F3] dark:bg-[#242424]">
         <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
           {isFullScreen !== 'isfullscreen' && (
             <div className="mb-7 flex justify-center gap-5 tablet:mb-[3.81rem] tablet:gap-[5.69rem]">
@@ -68,7 +68,7 @@ const Guests = () => {
               </button>
             </div>
           )}
-           
+
           {singleQuestResp ? (
             <div>
               {isFullScreen !== 'isfullscreen' ? (
@@ -97,7 +97,7 @@ const Guests = () => {
                   setSubmitResponse={setSubmitResponse}
                 />
               ) : (
-                <div className="px-[25px] tablet:px-[86px]">
+                <div className="mx-auto max-w-[730px]">
                   <QuestionCardWithToggle
                     questStartData={submitResponse ? submitResponse : singleQuestResp}
                     // id={singleQuestResp?._id}
@@ -129,7 +129,9 @@ const Guests = () => {
                 </div>
               )}
             </div>
-          ):<Loader/>}
+          ) : (
+            <Loader />
+          )}
         </div>
         <SidebarRight />
       </div>
