@@ -38,8 +38,17 @@ export const getQuestById = async (id, qId) => {
 };
 
 // Get Quest By uniqueShareLink
+// export const getQuestByUniqueShareLink = async (uniqueShareLink) => {
+//   return await api.get(`/infoquestions/getQuest/${uniqueShareLink}`);
+// };
 export const getQuestByUniqueShareLink = async (uniqueShareLink) => {
-  return await api.get(`/infoquestions/getQuest/${uniqueShareLink}`);
+  try {
+    const response = await api.get(`/infoquestions/getQuest/${uniqueShareLink}`);
+    return { response, error: null };
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || 'An error occurred while fetching the quest.';
+    return { data: null, error: errorMessage };
+  }
 };
 
 // For Unanswered

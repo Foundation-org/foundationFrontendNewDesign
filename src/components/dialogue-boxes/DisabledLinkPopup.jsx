@@ -24,6 +24,12 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
       if (questUtils.sharedQuestStatus.type === 'Delete') {
         dispatch(questUtilsActions.addHiddenPostId(questUtils.sharedQuestStatus.id));
       }
+      if (questUtils.sharedQuestStatus.type === 'Disable') {
+        dispatch(questUtilsActions.addDisabledPostId(questUtils.sharedQuestStatus.id));
+      }
+      if (questUtils.sharedQuestStatus.type === 'Enable') {
+        dispatch(questUtilsActions.addEnablePostId(questUtils.sharedQuestStatus.id));
+      }
       setIsLoading(false);
       handleClose();
     },

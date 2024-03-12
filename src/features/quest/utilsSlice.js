@@ -12,6 +12,8 @@ const initialState = {
   hiddenPosts: [],
   sharedLinkPost: null,
   hiddenPostId: null,
+  DisabledPostId: null,
+  enablePostId: null,
 };
 
 export const utilsSlice = createSlice({
@@ -43,6 +45,12 @@ export const utilsSlice = createSlice({
     addHiddenPostId: (state, action) => {
       state.hiddenPostId = action.payload;
     },
+    addDisabledPostId: (state, action) => {
+      state.DisabledPostId = action.payload;
+    },
+    addEnablePostId: (state, action) => {
+      state.enablePostId = action.payload;
+    },
   },
 });
 
@@ -54,6 +62,8 @@ export const {
   removeHiddenPosts,
   addSharedLinkPost,
   addHiddenPostId,
+  addDisabledPostId,
+  addEnablePostId,
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;

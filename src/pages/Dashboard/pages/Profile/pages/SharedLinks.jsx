@@ -146,6 +146,7 @@ export default function SharedLinks() {
     [setStartTest, setViewResult],
   );
 
+  // Remove Item from array if Deleted
   useEffect(() => {
     const indexToRemove = allData.findIndex((item) => item._id === questUtils.hiddenPostId);
 
@@ -155,6 +156,35 @@ export default function SharedLinks() {
       setAllData(updatedAllData);
     }
   }, [questUtils.hiddenPostId]);
+
+  // Change Status to Disabled
+  useEffect(() => {
+    const questIndex = allData.findIndex((quest) => quest._id === questUtils.DisabledPostId);
+
+    if (questIndex !== -1) {
+      setAllData((prevQuestData) => {
+        const updatedQuestData = [...prevQuestData];
+        updatedQuestData[questIndex].userQuestSetting.linkStatus = 'Disable';
+        return updatedQuestData;
+      });
+    }
+  }, [questUtils.DisabledPostId]);
+
+  // Change Status to Enabled
+  useEffect(() => {
+    const questIndex = allData.findIndex((quest) => quest._id === questUtils.enablePostId);
+
+    if (questIndex !== -1) {
+      setAllData((prevQuestData) => {
+        const updatedQuestData = [...prevQuestData];
+        updatedQuestData[questIndex].userQuestSetting.linkStatus = 'Enable';
+        return updatedQuestData;
+      });
+    }
+  }, [questUtils.enablePostId]);
+
+  console.log({ allData });
+  console.log('utils', questUtils);
 
   return (
     <div>

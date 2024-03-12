@@ -19,7 +19,6 @@ const Guests = () => {
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
   const [submitResponse, setSubmitResponse] = useState();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (isFullScreen !== 'isfullscreen') {
@@ -29,7 +28,6 @@ const Guests = () => {
   }, [isFullScreen]);
 
   const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state);
-  console.log('wamniq', singleQuestResp);
 
   const handleStartTest = useCallback(
     (testId) => {
@@ -97,7 +95,7 @@ const Guests = () => {
                   setSubmitResponse={setSubmitResponse}
                 />
               ) : (
-                <div className="mx-auto max-w-[730px]">
+                <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px]">
                   <QuestionCardWithToggle
                     questStartData={submitResponse ? submitResponse : singleQuestResp}
                     // id={singleQuestResp?._id}

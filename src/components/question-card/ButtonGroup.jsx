@@ -225,9 +225,22 @@ const ButtonGroup = ({
   const showHidePostClose = () => setModalVisible(false);
 
   const showDisableSharedLinkPopup = () => {
+    dispatch(questUtilsActions.addDisabledPostId(null)),
+      dispatch(
+        questUtilsActions.updateDialogueBox({
+          type: 'Disable',
+          status: true,
+          link: questStartData.userQuestSetting.link,
+          id: questStartData._id,
+        }),
+      );
+  };
+
+  const showEnableSharedLinkPopup = () => {
+    dispatch(questUtilsActions.addEnablePostId(null));
     dispatch(
       questUtilsActions.updateDialogueBox({
-        type: 'Disable',
+        type: 'Enable',
         status: true,
         link: questStartData.userQuestSetting.link,
         id: questStartData._id,
@@ -289,9 +302,15 @@ const ButtonGroup = ({
                 Show My Link Results
               </Button>
             ) : null}
-            <Button variant="danger" onClick={showDisableSharedLinkPopup} className={'bg-[#DC1010]'}>
-              Disable Link
-            </Button>
+            {questStartData.userQuestSetting.linkStatus === 'Enable' ? (
+              <Button variant="danger" onClick={showDisableSharedLinkPopup} className={'bg-[#DC1010]'}>
+                Disable Link
+              </Button>
+            ) : (
+              <Button variant="submit" onClick={showEnableSharedLinkPopup}>
+                Enable Link
+              </Button>
+            )}
             <UnHidePostPopup
               handleClose={showHidePostClose}
               modalVisible={modalVisible}
