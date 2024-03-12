@@ -127,7 +127,7 @@ const WorkEducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, place
         handleClose();
       }
       if (addBadge.status === 201) {
-        toast.success('Email Send Successfully!');
+        toast.success('Please check your Email to verify');
         handleClose();
       }
     } catch (error) {

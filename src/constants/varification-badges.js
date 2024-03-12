@@ -65,6 +65,7 @@ export const socials = [
     NoOfButton: 1,
     link: '/auth/twitter',
     accountName: 'twitter',
+    disabled: true,
   },
   {
     image: '/assets/profile/Instagram-2x.png',
@@ -74,7 +75,7 @@ export const socials = [
     NoOfButton: 1,
     // link: '/auth/instagram',
     accountName: 'instagram',
-    disabled: true,
+    disabled: false,
   },
 
   {
@@ -85,6 +86,7 @@ export const socials = [
     NoOfButton: 1,
     link: '/auth/github',
     accountName: 'github',
+    disabled: false,
   },
 ];
 
@@ -96,19 +98,22 @@ export const web3 = [
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'etherium-wallet',
+    disabled: true,
   },
   {
-    image: '/assets/profile/WebAuth-Desktop-2x.png',
-    title: 'WebAuth Desktop',
+    image: '/assets/verification-badges/passkey-desktop.svg',
+    title: 'Passkey Desktop',
     ButtonColor: 'gray',
     ButtonText: 'Add New Badge',
+    disabled: true,
     NoOfButton: 1,
   },
   {
-    image: '/assets/profile/WebAuth-Mobile-2x.png',
-    title: 'WebAuth Mobile',
+    image: '/assets/verification-badges/passkey.svg',
+    title: 'Passkey Mobile',
     ButtonColor: 'gray',
     ButtonText: 'Add New Badge',
+    disabled: true,
     NoOfButton: 1,
   },
 ];

@@ -49,7 +49,7 @@ const Dropdown2 = ({ label, title, items, handleSelect }) => {
                 handleSelect(item);
                 setIsOpen(!open);
               }}
-              className="rounded-[10px] text-[#9D9D9D] hover:bg-[#ecf0f0] dark:text-white dark:hover:bg-[black]  "
+              className="w-full rounded-[10px] text-[#9D9D9D] hover:bg-[#ecf0f0] dark:text-white dark:hover:bg-[black] "
             >
               <a className="px-2 py-0.5 tablet:px-4 tablet:py-2">{item}</a>
             </li>

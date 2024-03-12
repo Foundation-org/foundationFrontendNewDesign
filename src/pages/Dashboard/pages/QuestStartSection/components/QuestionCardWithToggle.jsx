@@ -32,7 +32,7 @@ const QuestionCardWithToggle = (props) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
-  const { questStartData, isBookmarked, setPagination } = props;
+  const { questStartData, isBookmarked, postProperties } = props;
   const { setSubmitResponse, isSingleQuest, postLink } = props;
 
   let questData;
@@ -814,6 +814,7 @@ const QuestionCardWithToggle = (props) => {
         addOptionField={addOptionField}
         setAddOptionField={setAddOptionField}
         checkOptionStatus={checkOptionStatus}
+        postProperties={postProperties}
       />
     </QuestCardLayout>
   );

@@ -219,13 +219,13 @@ export default function Personal({ handleUserInfo, fetchUser }) {
         <Button color={item.ButtonColor}>{item.ButtonText}</Button>
       )} */}
             <Button
-              color={checkPersonalBadge(item.type) ? 'yellow' : item.ButtonColor}
+              color={checkPersonalBadge(item.type) ? 'red' : item.ButtonColor}
               onClick={() => {
                 handleClickPesonalBadges(item.type);
               }}
               disabled={item.disabled || checkPersonalBadge(item.type)}
             >
-              {checkPersonalBadge(item.type) ? 'Added' : item.ButtonText}
+              {checkPersonalBadge(item.type) ? 'Remove' : item.ButtonText}
               {!checkPersonalBadge(item.type) && (
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                   (+0.96 FDX)

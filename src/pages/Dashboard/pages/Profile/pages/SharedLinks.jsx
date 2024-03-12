@@ -9,6 +9,9 @@ import QuestionCard from '../../QuestStartSection/components/QuestionCard';
 
 import { applyFilters, fetchDataByStatus } from '../../../../../utils/questionCard';
 import * as HomepageAPIs from '../../../../../services/api/homepageApis';
+import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
+import DisabledLinkPopup from '../../../../../components/dialogue-boxes/DisabledLinkPopup';
+import { useDispatch } from 'react-redux';
 
 export default function SharedLinks() {
   const pageLimit = 5;
@@ -18,8 +21,10 @@ export default function SharedLinks() {
     sliceEnd: pageLimit,
   });
 
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const questUtils = useSelector(questUtilsActions.getQuestUtils);
 
   const [allData, setAllData] = useState([]);
   const [feedData, setFeedData] = useState();
@@ -30,6 +35,10 @@ export default function SharedLinks() {
     filterByType: '',
     searchData: '',
   });
+
+  const showHidePostClose = () => {
+    dispatch(questUtilsActions.updateDialogueBox({ type: null, status: false, link: null, id: null }));
+  };
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value;
@@ -137,11 +146,47 @@ export default function SharedLinks() {
     [setStartTest, setViewResult],
   );
 
-  console.log('allData', allData);
+  // Remove Item from array if Deleted
+  useEffect(() => {
+    const indexToRemove = allData.findIndex((item) => item._id === questUtils.hiddenPostId);
+
+    if (indexToRemove !== -1) {
+      const updatedAllData = [...allData.slice(0, indexToRemove), ...allData.slice(indexToRemove + 1)];
+
+      setAllData(updatedAllData);
+    }
+  }, [questUtils.hiddenPostId]);
+
+  // Change Status to Disabled
+  useEffect(() => {
+    const questIndex = allData.findIndex((quest) => quest._id === questUtils.DisabledPostId);
+
+    if (questIndex !== -1) {
+      setAllData((prevQuestData) => {
+        const updatedQuestData = [...prevQuestData];
+        updatedQuestData[questIndex].userQuestSetting.linkStatus = 'Disable';
+        return updatedQuestData;
+      });
+    }
+  }, [questUtils.DisabledPostId]);
+
+  // Change Status to Enabled
+  useEffect(() => {
+    const questIndex = allData.findIndex((quest) => quest._id === questUtils.enablePostId);
+
+    if (questIndex !== -1) {
+      setAllData((prevQuestData) => {
+        const updatedQuestData = [...prevQuestData];
+        updatedQuestData[questIndex].userQuestSetting.linkStatus = 'Enable';
+        return updatedQuestData;
+      });
+    }
+  }, [questUtils.enablePostId]);
 
   return (
     <div>
       <div className="ml-[32px] mr-4 flex justify-between pt-[5px] tablet:ml-[97px] tablet:mr-[70px]">
+        <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} />
         <h1 className=" text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
           Shared Links
         </h1>
@@ -185,7 +230,7 @@ export default function SharedLinks() {
         </div>
       </div>
 
-      <div className="no-scrollbar mx-auto mt-5 flex h-full w-[91.67%] flex-col overflow-y-auto bg-[#F3F3F3] pb-[3rem] tablet:w-[73.6%] tablet:pb-[6rem] tablet:pt-[0.94rem] dark:bg-[#242424]">
+      <div className="no-scrollbar mx-auto mt-5 flex h-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] pb-[3rem] tablet:w-[73.6%] tablet:pb-[6rem] tablet:pt-[0.94rem] dark:bg-[#242424]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -261,9 +306,9 @@ export default function SharedLinks() {
             )
           }
           height={'calc(100vh - 92px)'}
-          className="no-scrollbar"
+          className="no-scrollbar px-4 py-[10px] tablet:px-6 tablet:py-5"
         >
-          <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
+          <div id="section-1" className="flex flex-col gap-2 tablet:gap-5">
             {allData &&
               allData.map((item, index) => (
                 <div key={index + 1}>
