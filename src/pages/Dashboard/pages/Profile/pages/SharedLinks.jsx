@@ -183,9 +183,6 @@ export default function SharedLinks() {
     }
   }, [questUtils.enablePostId]);
 
-  console.log({ allData });
-  console.log('utils', questUtils);
-
   return (
     <div>
       <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} />

@@ -296,7 +296,11 @@ const ButtonGroup = ({
             {getButtonText(btnText) !== 'Completed' ? (
               <Button
                 variant={'submit-green'}
-                onClick={() => toast.info('Feature coming soon!')}
+                onClick={() => {
+                  navigate('/shared-links/result', {
+                    state: questStartData._id,
+                  });
+                }}
                 className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
               >
                 Show My Link Results
@@ -330,6 +334,21 @@ const ButtonGroup = ({
             </Button>
           </div>
         )}
+      </div>
+    );
+  }
+
+  if (postProperties === 'sharedlink-results') {
+    return (
+      <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+        <Button
+          variant="cancel"
+          onClick={() => {
+            navigate('/profile/shared-links');
+          }}
+        >
+          Go Back
+        </Button>
       </div>
     );
   }
