@@ -8,7 +8,7 @@ import { addUser } from '../../../../../features/auth/authSlice';
 import Button from '../components/Button';
 import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
-import React, { useRef } from 'react';
+
 import { LoginSocialFacebook, LoginSocialInstagram, LoginSocialLinkedin } from 'reactjs-social-login';
 import { contacts } from '../../../../../constants/varification-badges';
 import VerificationPopups from '../components/VerificationPopups';
@@ -32,22 +32,6 @@ const VerificationBadges = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
   const [pageLoading, setPageLoading] = useState(true);
-
-  const loginSocialRef = useRef(null);
-
-  const handleResolve = ({ provider, data }) => {
-    console.log(provider, data);
-    setIsLoading(true);
-    handleAddBadge(provider, data);
-
-    // Trigger click event on LoginSocialInstagram component
-    if (loginSocialRef.current) {
-      console.log("before click");
-      loginSocialRef.current.click();
-      console.log("after click");
-    }
-  };
-
 
   const loginWithTwitter = () => {
     const provider = new TwitterAuthProvider();
@@ -587,14 +571,16 @@ const VerificationBadges = () => {
                   </Button>
                 ) : (
                   <LoginSocialInstagram
-                    ref={loginSocialRef}
                     client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
                     client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
                     redirect_uri={window.location.href}
                     onLoginStart={onLoginStart}
-                    onResolve={handleResolve}
+                    onResolve={({ provider, data }) => {
+                      setIsLoading(true);
+                      handleAddBadge(provider, data);
+                    }}
                     onReject={(err) => {
-                      toast.error('An error occurred while adding badge');
+                      toast.error('An error occured while adding badge');
                       setIsLoading(false);
                       console.log(err);
                     }}
@@ -607,6 +593,22 @@ const VerificationBadges = () => {
                       </span>
                     </Button>
                   </LoginSocialInstagram>
+                  // <InstagramLogin
+                  //   clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
+                  //   // buttonText="Login"
+                  //   onSuccess={(resp) => console.log('success', resp)}
+                  //   onFailure={(err) => console.log('error', err)}
+                  //   redirectUri={window.location.href}
+                  //   cssClass={'hideBack'}
+                  //   scope="user_profile"
+                  // >
+                  //   <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
+                  //     {checkSocial('instagram') ? '' : 'Add New Badge'}
+                  //     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                  //       {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
+                  //     </span>
+                  //   </Button>
+                  // </InstagramLogin>
                 )}
               </div>
             </div>
