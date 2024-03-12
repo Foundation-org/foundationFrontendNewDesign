@@ -34,30 +34,31 @@ const VerificationBadges = () => {
   const [pageLoading, setPageLoading] = useState(true);
 
   const loginInWithInsta = async (code) => {
-  try {
-    const resp = await fetch('https://api.instagram.com/oauth/access_token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        client_id: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
-        client_secret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
-        grant_type: 'authorization_code',
-        redirect_uri: window.location.href,
-        code: code,
-      }),
-    });
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/user/get-insta-token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Set the correct Content-Type
+        },
+        body: JSON.stringify({
+          clientId: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
+          clientSecret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
+          redirectUri: window.location.href,
+          code: code,
+        }),
+      });
   
-    if (resp.ok) {
-      const data = await resp.json();
-      console.log('Insta Response:', data);
-    } else {
-      console.error('Error fetching Instagram profile:', resp.statusText);
+      if (response.ok) {
+        const data = await response.json();
+        handleAddBadge("instagram",data)
+      } else {
+        console.error('Error fetching Instagram profile:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching Instagram profile:', error.message);
     }
-  } catch (error) {
-    console.error('Error fetching Instagram profile:', error.message);
-  }}
+  };
+  
 
   const loginWithTwitter = () => {
     const provider = new TwitterAuthProvider();
