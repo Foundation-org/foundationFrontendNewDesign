@@ -6,6 +6,7 @@ import { validation } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
+import { FaSpinner } from 'react-icons/fa';
 
 const data = [
   { id: 1, name: 'In what city were you born?' },
@@ -17,6 +18,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [selected, setSelected] = useState();
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleClose = () => setIsPopup(false);
 
@@ -29,21 +31,20 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const handleSecurityQuestionChange = (event) => {};
 
   const { data: apiResp } = useQuery({
-    queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && 'name'],
+    queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && name],
     queryFn: () => validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name),
   });
 
   const handleAddPersonalBadge = async () => {
+    setLoading(true);
     let value;
     if (type.trim() === 'dateOfBirth') {
       value = date;
-    }
-     else if (type.trim() === 'security-question') {
+    } else if (type.trim() === 'security-question') {
       value = {
         [selected.name]: name,
       };
-    } 
-    else {
+    } else {
       value = name;
     }
 
@@ -67,13 +68,14 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     } catch (error) {
       console.log(error);
       handleClose();
+    } finally {
+      setLoading(false);
     }
   };
 
-
   const renderInputField = (title, name, handleNameChange, placeholder, apiResp, data) => {
     const isError = apiResp?.data?.message === 'No';
-
+    console.log('isError', isError);
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
         {data && data.length >= 1 ? (
@@ -94,8 +96,8 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               )}
             </div>
             <div className="mt-[10px] flex justify-end tablet:mt-5">
-              <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
-                Add
+              <Button variant="submit" disabled={isError} onClick={() => handleAddPersonalBadge()}>
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
               </Button>
             </div>
           </>
@@ -112,8 +114,8 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
             )}
             <div className="mt-[10px] flex justify-end tablet:mt-5">
-              <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
-                Add
+              <Button variant="submit" disabled={isError} onClick={() => handleAddPersonalBadge()}>
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
               </Button>
             </div>
           </div>
@@ -137,7 +139,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
           />
           <div className="mt-[10px] flex justify-end tablet:mt-5">
             <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
-              Add
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
             </Button>
           </div>
         </div>

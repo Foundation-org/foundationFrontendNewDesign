@@ -65,6 +65,7 @@ export const socials = [
     NoOfButton: 1,
     link: '/auth/twitter',
     accountName: 'twitter',
+    disabled: true,
   },
   {
     image: '/assets/profile/Instagram-2x.png',
@@ -74,7 +75,7 @@ export const socials = [
     NoOfButton: 1,
     // link: '/auth/instagram',
     accountName: 'instagram',
-    disabled: true,
+    disabled: false,
   },
 
   {
@@ -85,6 +86,7 @@ export const socials = [
     NoOfButton: 1,
     link: '/auth/github',
     accountName: 'github',
+    disabled: false,
   },
 ];
 
@@ -95,20 +97,23 @@ export const web3 = [
     ButtonColor: 'gray',
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
-    type: 'etherium-wallet'
+    type: 'etherium-wallet',
+    disabled: true,
   },
   {
-    image: '/assets/profile/WebAuth-Desktop-2x.png',
-    title: 'WebAuth Desktop',
+    image: '/assets/verification-badges/passkey-desktop.svg',
+    title: 'Passkey Desktop',
     ButtonColor: 'gray',
     ButtonText: 'Add New Badge',
+    disabled: true,
     NoOfButton: 1,
   },
   {
-    image: '/assets/profile/WebAuth-Mobile-2x.png',
-    title: 'WebAuth Mobile',
+    image: '/assets/verification-badges/passkey.svg',
+    title: 'Passkey Mobile',
     ButtonColor: 'gray',
     ButtonText: 'Add New Badge',
+    disabled: true,
     NoOfButton: 1,
   },
 ];
@@ -117,7 +122,7 @@ export const personal = [
   {
     image: '/assets/profile/firstname.png',
     title: 'First Name',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     NoOfButton: 1,
     // NoOfButton: 2,
     ButtonText: 'Add New Badge',
@@ -127,7 +132,7 @@ export const personal = [
   {
     image: '/assets/profile/lastname.svg',
     title: 'Last Name',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     NoOfButton: 1,
     ButtonText: 'Add New Badge',
     type: 'lastName',
@@ -136,7 +141,7 @@ export const personal = [
   {
     image: '/assets/profile/dob.svg',
     title: 'Date of Birth',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     NoOfButton: 1,
     ButtonText: 'Add New Badge',
     type: 'dateOfBirth',
@@ -149,7 +154,7 @@ export const personal = [
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'currentCity',
-    disabled: false,
+    disabled: true,
   },
   {
     image: '/assets/profile/hometown.svg',
@@ -158,7 +163,7 @@ export const personal = [
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'homeTown',
-    disabled: false,
+    disabled: true,
   },
   {
     image: '/assets/profile/relationaship-1.png',
@@ -167,7 +172,7 @@ export const personal = [
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'relationshipStatus',
-    disabled: false,
+    disabled: true,
   },
   {
     image: '/assets/profile/work-a.png',
@@ -176,7 +181,7 @@ export const personal = [
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'work',
-    disabled: false,
+    disabled: true,
   },
   {
     image: '/assets/profile/education-1.png',
@@ -185,7 +190,7 @@ export const personal = [
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'education',
-    disabled: false,
+    disabled: true,
   },
   {
     image: '/assets/profile/Identity-2x-1.png',
@@ -195,7 +200,7 @@ export const personal = [
     NoOfButton: 1,
     disabled: true,
     type: 'id-passport',
-    disabled: false,
+    disabled: true,
   },
   {
     image: '/assets/profile/Geolocation-2x-1.png',
@@ -204,7 +209,7 @@ export const personal = [
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'geolocation',
-    disabled: false,
+    disabled: true,
   },
   {
     image: '/assets/profile/securityquestion-a.png',
@@ -213,6 +218,6 @@ export const personal = [
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'security-question',
-    disabled: false,
+    disabled: true,
   },
 ];

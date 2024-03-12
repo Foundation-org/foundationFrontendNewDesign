@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { addUser } from '../../features/auth/authSlice';
 import { toast } from 'sonner';
 import api from '../../services/api/Axios';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function BadgeRemovePopup({
   handleClose,
@@ -17,6 +18,7 @@ export default function BadgeRemovePopup({
   setFetchUser,
 }) {
   const dispatch = useDispatch();
+  const [loading,setIsLoading]=useState(false);
 
   const handleUserInfo = async () => {
     try {
@@ -32,6 +34,7 @@ export default function BadgeRemovePopup({
   };
 
   const handleRemoveBadge = async () => {
+    setIsLoading(true);
     const findBadge = fetchUser.badges.filter((item) => {
       if (item.accountName === accountName) {
         return item;
@@ -49,6 +52,8 @@ export default function BadgeRemovePopup({
         toast.success('Badge Removed Successfully!');
         handleUserInfo();
         handleClose();
+        setIsLoading(false);
+
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -57,14 +62,14 @@ export default function BadgeRemovePopup({
 
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
-      <div className="px-[18px] py-[10px] tablet:py-[25px] tablet:px-[55px]">
-        <h1 className="text-[10px] tablet:text-[20px] font-medium leading-[12px] tablet:leading-[24.2px] text-[#707175]">
+      <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           Are you sure you want to remove this badge? 'If you remove this badge, you will not be able to add it again
           for 30 days.
         </h1>
-        <div className="flex gap-[15px] tablet:gap-[34px] justify-end mt-[10px] tablet:mt-[25px]">
+        <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button variant={'submit'} onClick={handleRemoveBadge}>
-            Yes
+             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" />:"Yes"}
           </Button>
           <Button variant={'cancel'} onClick={handleClose}>
             No

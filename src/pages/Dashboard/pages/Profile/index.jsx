@@ -40,7 +40,7 @@ const Profile = () => {
     <div>
       <Topbar />
       <div className="h-screen overflow-y-scroll bg-[#F3F3F3] dark:bg-[#242424]">
-        <div className="mr-5 mt-4 laptop:mt-[35px] flex justify-end items-center gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[77px]">
+        <div className="mr-5 mt-4 flex items-center justify-end gap-[5.16px] tablet:mr-11 tablet:mt-[14px] tablet:gap-[19.4px] laptop:mr-[77px] laptop:mt-[35px]">
           <div
             style={{
               background:
@@ -59,8 +59,8 @@ const Profile = () => {
           <div>
             <h4 className="heading">My Profile</h4>
             <div className="flex items-center gap-1 tablet:gap-[13px]">
-              <p className="text-[8px] tablet:text-[15px] leading-none font-medium text-[#616161] dark:text-white">
-                Version 1.4.69
+              <p className="text-[8px] font-medium leading-none text-[#616161] tablet:text-[15px] dark:text-white">
+                Version 1.5.17
               </p>
               {/* <p className="text-[8px] dark:text-white tablet:text-[16px]">Light</p>
               <Switch

@@ -543,3 +543,7 @@ input.hide_number_input_arrows2::-webkit-inner-spin-button {
 .infinite-scroll-component__outerdiv {
   width: 100%;
 }
+
+.hideBack {
+  background: none !important;
+}

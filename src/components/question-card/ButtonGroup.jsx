@@ -224,6 +224,30 @@ const ButtonGroup = ({
   const showHidePostOpen = () => setModalVisible(true);
   const showHidePostClose = () => setModalVisible(false);
 
+  const showDisableSharedLinkPopup = () => {
+    dispatch(questUtilsActions.addDisabledPostId(null)),
+      dispatch(
+        questUtilsActions.updateDialogueBox({
+          type: 'Disable',
+          status: true,
+          link: questStartData.userQuestSetting.link,
+          id: questStartData._id,
+        }),
+      );
+  };
+
+  const showEnableSharedLinkPopup = () => {
+    dispatch(questUtilsActions.addEnablePostId(null));
+    dispatch(
+      questUtilsActions.updateDialogueBox({
+        type: 'Enable',
+        status: true,
+        link: questStartData.userQuestSetting.link,
+        id: questStartData._id,
+      }),
+    );
+  };
+
   if (postProperties === 'HiddenPosts') {
     return (
       <div>
@@ -272,15 +296,25 @@ const ButtonGroup = ({
             {getButtonText(btnText) !== 'Completed' ? (
               <Button
                 variant={'submit-green'}
-                onClick={() => toast.info('Feature coming soon!')}
+                onClick={() => {
+                  navigate('/shared-links/result', {
+                    state: questStartData._id,
+                  });
+                }}
                 className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
               >
                 Show My Link Results
               </Button>
             ) : null}
-            <Button variant="danger" onClick={() => toast.info('Feature coming soon!')} className={'bg-[#DC1010]'}>
-              Disable Link
-            </Button>
+            {questStartData.userQuestSetting.linkStatus === 'Enable' ? (
+              <Button variant="danger" onClick={showDisableSharedLinkPopup} className={'bg-[#DC1010]'}>
+                Disable Link
+              </Button>
+            ) : (
+              <Button variant="submit" onClick={showEnableSharedLinkPopup}>
+                Enable Link
+              </Button>
+            )}
             <UnHidePostPopup
               handleClose={showHidePostClose}
               modalVisible={modalVisible}
@@ -304,12 +338,27 @@ const ButtonGroup = ({
     );
   }
 
+  if (postProperties === 'sharedlink-results') {
+    return (
+      <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
+        <Button
+          variant="cancel"
+          onClick={() => {
+            navigate('/profile/shared-links');
+          }}
+        >
+          Go Back
+        </Button>
+      </div>
+    );
+  }
+
   if (persistedUserInfo?.role === 'guest') {
     if (location.pathname.includes('/p/') || location.pathname === '/quest/isfullscreen') {
       return (
         <>
           {btnText === '' ? (
-            <div className="flex justify-between w-full pl-7 tablet:pl-[3.19rem] pr-[14.4px] tablet:pr-[3.44rem]">
+            <div className="flex w-full justify-between pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
               {startTest === questStartData._id && questStartData.usersAddTheirAns ? (
                 title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button
@@ -318,7 +367,7 @@ const ButtonGroup = ({
                         <p>
                           Please{' '}
                           <span
-                            className="text-[#389CE3] underline cursor-pointer"
+                            className="cursor-pointer text-[#389CE3] underline"
                             onClick={() => navigate('/guest-signup')}
                           >
                             Create an Account
@@ -363,7 +412,7 @@ const ButtonGroup = ({
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                 {btnText !== 'change answer' && (
-                  <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[10px]">
+                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                     (+0.96 FDX)
                   </span>
                 )}
@@ -380,7 +429,7 @@ const ButtonGroup = ({
                       <p>
                         Please{' '}
                         <span
-                          className="text-[#389CE3] underline cursor-pointer"
+                          className="cursor-pointer text-[#389CE3] underline"
                           onClick={() => navigate('/guest-signup')}
                         >
                           Create an Account
@@ -400,7 +449,7 @@ const ButtonGroup = ({
     } else {
       if (filterState.expandedView === true) {
         return (
-          <div className="w-full flex justify-between pl-7 tablet:pl-[3.19rem] pr-[0.87rem] tablet:pr-[3.44rem]">
+          <div className="flex w-full justify-between pl-7 pr-[0.87rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
             {startTest === questStartData._id && questStartData.usersAddTheirAns ? (
               title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                 <Button
@@ -409,7 +458,7 @@ const ButtonGroup = ({
                       <p>
                         Please{' '}
                         <span
-                          className="text-[#389CE3] underline cursor-pointer"
+                          className="cursor-pointer text-[#389CE3] underline"
                           onClick={() => navigate('/guest-signup')}
                         >
                           Create an Account
@@ -450,7 +499,7 @@ const ButtonGroup = ({
                         <p>
                           Please{' '}
                           <span
-                            className="text-[#389CE3] underline cursor-pointer"
+                            className="cursor-pointer text-[#389CE3] underline"
                             onClick={() => navigate('/guest-signup')}
                           >
                             Create an Account
@@ -472,7 +521,7 @@ const ButtonGroup = ({
                     <p>
                       Please{' '}
                       <span
-                        className="text-[#389CE3] underline cursor-pointer"
+                        className="cursor-pointer text-[#389CE3] underline"
                         onClick={() => navigate('/guest-signup')}
                       >
                         Create an Account
@@ -493,7 +542,7 @@ const ButtonGroup = ({
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}{' '}
                 {btnText !== 'change answer' && (
-                  <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[10px]">
+                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                     (+0.96 FDX)
                   </span>
                 )}
@@ -513,7 +562,7 @@ const ButtonGroup = ({
                         <p>
                           Please{' '}
                           <span
-                            className="text-[#389CE3] underline cursor-pointer"
+                            className="cursor-pointer text-[#389CE3] underline"
                             onClick={() => navigate('/guest-signup')}
                           >
                             Create an Account
@@ -588,7 +637,7 @@ const ButtonGroup = ({
           );
         } else {
           return (
-            <div className="w-full flex justify-end pr-[0.87rem] tablet:pr-[3.44rem]">
+            <div className="flex w-full justify-end pr-[0.87rem] tablet:pr-[3.44rem]">
               {btnText === '' ? (
                 <Button
                   variant={`${result === ', you are good to go' ? getButtonVariants(btnText) : 'change-outline'}`}
@@ -705,7 +754,7 @@ const ButtonGroup = ({
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                 {btnText !== 'change answer' && (
-                  <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px] pl-[5px] tablet:pl-[10px]">
+                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                     (+0.96 FDX)
                   </span>
                 )}
@@ -785,7 +834,7 @@ const ButtonGroup = ({
               </div>
             </>
           ) : (
-            <div className="flex justify-between w-full">
+            <div className="flex w-full justify-between">
               {questStartData.usersAddTheirAns && addOptionField === 0 ? (
                 title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
                   <Button onClick={handleOpen} variant={'addOption'}>
@@ -824,7 +873,7 @@ const ButtonGroup = ({
               >
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                 {btnText !== 'change answer' && (
-                  <span className="text-[7px] tablet:text-[13px] font-semibold leading-[1px]  pl-[5px] tablet:pl-[10px]">
+                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
                     (+0.96 FDX)
                   </span>
                 )}
