@@ -31,7 +31,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
       ? persistedUserInfo?.bookmarkStates.searchData
       : persistedUserInfo?.States.searchData,
   );
-
+  const [treasuryAmount, setTreasuryAmount] = useState(0);
   const queryClient = useQueryClient();
 
   const { mutateAsync: getUserInfo } = useMutation({
@@ -186,6 +186,23 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
       setSearch('');
     }
   }, [filterStates.searchData]);
+
+  const getTreasuryAmount = async () => {
+    try {
+      const res = await api.get(`/treasury/get`);
+      if (res.status === 200) {
+        localStorage.setItem('treasuryAmount', res.data.data);
+        setTreasuryAmount(res.data.data);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+    }
+  };
+
+  useEffect(() => {
+    handleUserInfo();
+    getTreasuryAmount();
+  }, []);
 
   return (
     <>
@@ -364,12 +381,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
                 Treasury
               </h4>
               <p className="whitespace-nowrap text-[6.227px] text-[#616161] tablet:text-[12.651px] dark:text-[#BDBCBC]">
-                <span>
-                  {localStorage.getItem('treasuryAmount') === undefined
-                    ? (localStorage.getItem('treasuryAmount') * 1)?.toFixed(2)
-                    : 0}{' '}
-                  FDX
-                </span>
+                <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
               </p>
             </div>
           </div>
