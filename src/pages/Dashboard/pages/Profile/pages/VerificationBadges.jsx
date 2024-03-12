@@ -9,18 +9,15 @@ import Button from '../components/Button';
 import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
 
-import {
-  LoginSocialFacebook,
-  LoginSocialInstagram,
-  LoginSocialLinkedin,
-} from 'reactjs-social-login';
+import { LoginSocialFacebook, LoginSocialInstagram, LoginSocialLinkedin } from 'reactjs-social-login';
 import { contacts } from '../../../../../constants/varification-badges';
 import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
-import { TwitterAuthProvider,GithubAuthProvider, signInWithPopup } from 'firebase/auth';
+import { TwitterAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { authentication } from './firebase-config';
 import Personal from './verification-badges/Personal';
 import Web3 from './verification-badges/Web3';
+import { InstagramLogin } from '@amraneze/react-instagram-login';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -573,21 +570,36 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 ) : (
-                  <LoginSocialInstagram
-                    client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-                    client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
-                    redirect_uri={window.location.href}
-                    onLoginStart={onLoginStart}
-                    onResolve={({ provider, data }) => {
-                      setIsLoading(true);
-                      handleAddBadge(provider, data);
-                    }}
-                    onReject={(err) => {
-                      toast.error('An error occured while adding badge');
-                      setIsLoading(false);
-                      console.log(err);
-                    }}
-                    className="container flex w-full"
+                  // <LoginSocialInstagram
+                  //   client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
+                  //   client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
+                  //   redirect_uri={window.location.href}
+                  //   onLoginStart={onLoginStart}
+                  //   onResolve={({ provider, data }) => {
+                  //     setIsLoading(true);
+                  //     handleAddBadge(provider, data);
+                  //   }}
+                  //   onReject={(err) => {
+                  //     toast.error('An error occured while adding badge');
+                  //     setIsLoading(false);
+                  //     console.log(err);
+                  //   }}
+                  //   className="container flex w-full"
+                  // >
+                  //   <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
+                  //     {checkSocial('instagram') ? '' : 'Add New Badge'}
+                  //     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                  //       {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
+                  //     </span>
+                  //   </Button>
+                  // </LoginSocialInstagram>
+                  <InstagramLogin
+                    clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
+                    // buttonText="Login"
+                    onSuccess={(resp) => console.log('success', resp)}
+                    onFailure={(err) => console.log('error', err)}
+                    redirectUri={window.location.href}
+                    cssClass={'hideBack'}
                   >
                     <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
                       {checkSocial('instagram') ? '' : 'Add New Badge'}
@@ -595,7 +607,7 @@ const VerificationBadges = () => {
                         {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
-                  </LoginSocialInstagram>
+                  </InstagramLogin>
                 )}
               </div>
             </div>
@@ -666,16 +678,16 @@ const VerificationBadges = () => {
                   //   </Button>
                   // </LoginSocialGithub>
                   <Button
-                  color={checkSocial('github') ? 'red' : 'blue'}
-                  onClick={() => {
-                    loginWithGithub();
-                  }}
-                >
-                  {checkSocial('github') ? 'Remove' : 'Add New Badge'}
-                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                    {checkSocial('github') ? '' : '(+0.96 FDX)'}
-                  </span>
-                </Button>
+                    color={checkSocial('github') ? 'red' : 'blue'}
+                    onClick={() => {
+                      loginWithGithub();
+                    }}
+                  >
+                    {checkSocial('github') ? 'Remove' : 'Add New Badge'}
+                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      {checkSocial('github') ? '' : '(+0.96 FDX)'}
+                    </span>
+                  </Button>
                 )}
               </div>
             </div>
