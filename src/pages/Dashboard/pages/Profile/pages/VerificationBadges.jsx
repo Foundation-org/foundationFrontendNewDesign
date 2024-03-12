@@ -599,7 +599,7 @@ const VerificationBadges = () => {
                     onFailure={(err) => console.log('error', err)}
                     redirectUri={window.location.href}
                     cssClass={'hideBack'}
-                    scope="instagram_basic"
+                    scope="user_profile"
                    
                   >
                     <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
