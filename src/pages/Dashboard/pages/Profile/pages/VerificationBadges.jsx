@@ -36,7 +36,7 @@ const VerificationBadges = () => {
   const loginInWithInsta = async (code) => {
     try {
       const resp = await fetch(
-        `https://api.instagram.com/oauth/oauth/access_token?client_id=${import.meta.env.VITE_INSTAGRAM_CLIENT_ID}&grant_type=authorization_code&redirect_uri=${window.location.href}&client_secret=${import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}&code=${code}`,
+        `https://api.instagram.com/oauth/access_token?client_id=${import.meta.env.VITE_INSTAGRAM_CLIENT_ID}&grant_type=authorization_code&redirect_uri=${window.location.href}&client_secret=${import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}&code=${code}`,
       );
       console.log('Insta Response:', resp);
     } catch (error) {
