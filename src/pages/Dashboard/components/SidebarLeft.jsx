@@ -364,7 +364,12 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
                 Treasury
               </h4>
               <p className="whitespace-nowrap text-[6.227px] text-[#616161] tablet:text-[12.651px] dark:text-[#BDBCBC]">
-                <span>{localStorage.getItem('treasuryAmount')} FDX</span>
+                <span>
+                  {localStorage.getItem('treasuryAmount') === undefined
+                    ? (localStorage.getItem('treasuryAmount') * 1)?.toFixed(2)
+                    : 0}{' '}
+                  FDX
+                </span>
               </p>
             </div>
           </div>
