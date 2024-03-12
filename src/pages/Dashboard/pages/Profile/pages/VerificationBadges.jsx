@@ -601,6 +601,8 @@ const VerificationBadges = () => {
                     redirectUri={window.location.href}
                     cssClass={'hideBack'}
                     scope="user_profile"
+                    implicitAuth={true}
+                    useRedirect={true}
                   >
                     <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
                       {checkSocial('instagram') ? '' : 'Add New Badge'}
