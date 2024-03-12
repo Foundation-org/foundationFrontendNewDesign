@@ -595,14 +595,12 @@ const VerificationBadges = () => {
                   // </LoginSocialInstagram>
                   <InstagramLogin
                     clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-                    // buttonText="Login"
                     onSuccess={(resp) => console.log('success', resp)}
                     onFailure={(err) => console.log('error', err)}
                     redirectUri={window.location.href}
                     cssClass={'hideBack'}
-                    scope="user_profile"
-                    implicitAuth={true}
-                    useRedirect={true}
+                    scope="instagram_basic"
+                   
                   >
                     <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
                       {checkSocial('instagram') ? '' : 'Add New Badge'}
