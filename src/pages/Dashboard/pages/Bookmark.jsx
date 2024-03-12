@@ -47,6 +47,8 @@ const Bookmark = () => {
   const [columns, setColumns] = useState(parsedColumns || initialColumns);
   const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
+  const [height, setHeight] = useState('calc(100vh - 92px)');
+
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
   const { data: feedData } = QuestServices.useGetBookmarkFeedData(
@@ -234,68 +236,110 @@ const Bookmark = () => {
     }
   }, [questUtils?.sharedLinkPost]);
 
+  useEffect(() => {
+    const updateHeight = () => {
+      console.log('first', window.innerWidth);
+      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 182.3px)' : 'calc(100vh - 92px)';
+      setHeight(newHeight);
+    };
+
+    updateHeight();
+
+    window.addEventListener('resize', updateHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []);
+
   // console.log('🚀 ~ Bookmark ~ allData:', allData);
 
   return (
-    <div className="flex w-full flex-col bg-white dark:bg-black laptop:flex-row">
-      <SidebarLeft
-        columns={columns}
-        setColumns={setColumns}
-        itemsWithCross={itemsWithCross}
-        setItemsWithCross={setItemsWithCross}
-      />
-      <div className="no-scrollbar flex h-full w-full flex-col overflow-y-auto bg-[#F3F3F3] px-[1.13rem] pt-[0.63rem] pb-8 dark:bg-[#242424] tablet:min-h-[calc(100vh-92px)] tablet:pt-[0.94rem] tablet:pb-12">
-        <InfiniteScroll
-          dataLength={allData?.length}
-          next={fetchMoreData}
-          hasMore={feedData?.hasNextPage}
-          endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme, isBookmarked)}
-          // endMessage={
-          //   feedData?.hasNextPage === false ? (
-          //     <div className="flex justify-between gap-4 px-4 py-3 tablet:py-[27px]">
-          //       <div></div>
-          //       {filterStates.searchData && allData.length == 0 ? (
-          //         <div className="my-[15vh] flex  flex-col justify-center">
-          //           {persistedTheme === 'dark' ? (
-          //             <img src="../../../../../public/assets/svgs/dashboard/noposts.png" alt="noposts image" />
-          //           ) : (
-          //             <img src="../../../../../public/assets/svgs/dashboard/noposts.png" alt="noposts image" />
-          //           )}
-          //           <p className="text-[#9F9F9F]-600 font-inter mt-[1.319vw] text-center text-[2.083vw] dark:text-gray">
-          //             No Matching Posts Found
-          //           </p>
-          //         </div>
-          //       ) : !filterStates.searchData && allData.length === 0 ? (
-          //         <>{printNoRecords(persistedTheme)}</>
-          //       ) : (
-          //         !filterStates.searchData && (
-          //           <p className="text-center  text-[2vw] dark:text-gray">
-          //             <b>No more bookmarks!</b>
-          //           </p>
-          //         )
-          //       )}
-          //       <div></div>
-          //     </div>
-          //   ) : (
-          //     <div className="flex items-center justify-center">
-          //       <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
-          //     </div>
-          //   )
-          // }
-          height={'88vh'}
-          className="no-scrollbar "
-        >
-          <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
-            {filterStates.expandedView
-              ? allData
-                  .filter((item) => !questUtils.hiddenPosts.includes(item._id))
-                  ?.map((item, index) => (
+    <div className="w-full bg-[#F3F3F3] dark:bg-black">
+      <div className="mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
+        <SidebarLeft
+          columns={columns}
+          setColumns={setColumns}
+          itemsWithCross={itemsWithCross}
+          setItemsWithCross={setItemsWithCross}
+        />
+        <div className="no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:min-h-[calc(100vh-92px)] dark:bg-[#242424]">
+          <InfiniteScroll
+            dataLength={allData?.length}
+            next={fetchMoreData}
+            hasMore={feedData?.hasNextPage}
+            endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme, isBookmarked)}
+            height={height}
+            className="no-scrollbar px-4 py-[10px] tablet:px-6 tablet:py-5"
+          >
+            <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
+              {filterStates.expandedView
+                ? allData
+                    .filter((item) => !questUtils.hiddenPosts.includes(item._id))
+                    ?.map((item, index) => (
+                      <div key={index + 1}>
+                        <QuestionCardWithToggle
+                          questStartData={item}
+                          setPagination={setPagination}
+                          submitResponse={submitResponse}
+                          setSubmitResponse={setSubmitResponse}
+                          id={item._id}
+                          img="/assets/svgs/dashboard/badge.svg"
+                          alt="badge"
+                          badgeCount="5"
+                          title={
+                            item?.whichTypeQuestion === 'agree/disagree'
+                              ? 'Agree/Disagree'
+                              : item?.whichTypeQuestion === 'like/dislike'
+                                ? 'Like/Dislike'
+                                : item?.whichTypeQuestion === 'multiple choise'
+                                  ? 'Multiple Choice'
+                                  : item?.whichTypeQuestion === 'open choice'
+                                    ? 'Open Choice'
+                                    : item?.whichTypeQuestion === 'ranked choise'
+                                      ? 'Ranked Choice'
+                                      : item?.whichTypeQuestion === 'yes/no'
+                                        ? 'Yes/No'
+                                        : null
+                          }
+                          answers={item?.QuestAnswers}
+                          time={item?.createdAt}
+                          multipleOption={item?.userCanSelectMultiple}
+                          question={item?.Question}
+                          whichTypeQuestion={item?.whichTypeQuestion}
+                          startTest={startTest}
+                          setStartTest={setStartTest}
+                          viewResult={viewResult}
+                          setViewResult={setViewResult}
+                          handleViewResults={handleViewResults}
+                          handleStartTest={handleStartTest}
+                          usersAddTheirAns={item?.usersAddTheirAns}
+                          startStatus={item?.startStatus}
+                          createdBy={item?.uuid}
+                          btnColor={
+                            item?.startStatus === 'completed'
+                              ? 'bg-[#4ABD71]'
+                              : item?.startStatus === 'change answer'
+                                ? 'bg-[#FDD503]'
+                                : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                          }
+                          btnText={item?.startStatus}
+                          isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                            return bookmark.questForeignKey === item._id;
+                          })}
+                          lastInteractedAt={item.lastInteractedAt}
+                          usersChangeTheirAns={item.usersChangeTheirAns}
+                          expandedView={filterStates.expandedView}
+                          QuestTopic={item.QuestTopic}
+                          isBookmarkTab={true}
+                        />
+                      </div>
+                    ))
+                : allData?.map((item, index) => (
                     <div key={index + 1}>
-                      <QuestionCardWithToggle
+                      <QuestionCard
                         questStartData={item}
                         setPagination={setPagination}
-                        submitResponse={submitResponse}
-                        setSubmitResponse={setSubmitResponse}
                         id={item._id}
                         img="/assets/svgs/dashboard/badge.svg"
                         alt="badge"
@@ -316,6 +360,7 @@ const Bookmark = () => {
                                       : null
                         }
                         answers={item?.QuestAnswers}
+                        setSubmitResponse={setSubmitResponse}
                         time={item?.createdAt}
                         multipleOption={item?.userCanSelectMultiple}
                         question={item?.Question}
@@ -323,10 +368,9 @@ const Bookmark = () => {
                         startTest={startTest}
                         setStartTest={setStartTest}
                         viewResult={viewResult}
-                        setViewResult={setViewResult}
+                        usersAddTheirAns={item?.usersAddTheirAns}
                         handleViewResults={handleViewResults}
                         handleStartTest={handleStartTest}
-                        usersAddTheirAns={item?.usersAddTheirAns}
                         startStatus={item?.startStatus}
                         createdBy={item?.uuid}
                         btnColor={
@@ -347,68 +391,12 @@ const Bookmark = () => {
                         isBookmarkTab={true}
                       />
                     </div>
-                  ))
-              : allData?.map((item, index) => (
-                  <div key={index + 1}>
-                    <QuestionCard
-                      questStartData={item}
-                      setPagination={setPagination}
-                      id={item._id}
-                      img="/assets/svgs/dashboard/badge.svg"
-                      alt="badge"
-                      badgeCount="5"
-                      title={
-                        item?.whichTypeQuestion === 'agree/disagree'
-                          ? 'Agree/Disagree'
-                          : item?.whichTypeQuestion === 'like/dislike'
-                            ? 'Like/Dislike'
-                            : item?.whichTypeQuestion === 'multiple choise'
-                              ? 'Multiple Choice'
-                              : item?.whichTypeQuestion === 'open choice'
-                                ? 'Open Choice'
-                                : item?.whichTypeQuestion === 'ranked choise'
-                                  ? 'Ranked Choice'
-                                  : item?.whichTypeQuestion === 'yes/no'
-                                    ? 'Yes/No'
-                                    : null
-                      }
-                      answers={item?.QuestAnswers}
-                      setSubmitResponse={setSubmitResponse}
-                      time={item?.createdAt}
-                      multipleOption={item?.userCanSelectMultiple}
-                      question={item?.Question}
-                      whichTypeQuestion={item?.whichTypeQuestion}
-                      startTest={startTest}
-                      setStartTest={setStartTest}
-                      viewResult={viewResult}
-                      usersAddTheirAns={item?.usersAddTheirAns}
-                      handleViewResults={handleViewResults}
-                      handleStartTest={handleStartTest}
-                      startStatus={item?.startStatus}
-                      createdBy={item?.uuid}
-                      btnColor={
-                        item?.startStatus === 'completed'
-                          ? 'bg-[#4ABD71]'
-                          : item?.startStatus === 'change answer'
-                            ? 'bg-[#FDD503]'
-                            : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                      }
-                      btnText={item?.startStatus}
-                      isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                        return bookmark.questForeignKey === item._id;
-                      })}
-                      lastInteractedAt={item.lastInteractedAt}
-                      usersChangeTheirAns={item.usersChangeTheirAns}
-                      expandedView={filterStates.expandedView}
-                      QuestTopic={item.QuestTopic}
-                      isBookmarkTab={true}
-                    />
-                  </div>
-                ))}
-          </div>
-        </InfiniteScroll>
+                  ))}
+            </div>
+          </InfiniteScroll>
+        </div>
+        <SidebarRight />
       </div>
-      <SidebarRight />
     </div>
   );
 };

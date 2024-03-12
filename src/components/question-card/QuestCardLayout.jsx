@@ -110,7 +110,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
   };
 
   return (
-    <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000]">
+    <div className="max-w-[730px] rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000]">
       <CardTopbar
         questStartData={questStartData}
         QuestTopic={questStartData.QuestTopic}

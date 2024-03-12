@@ -204,7 +204,7 @@ export default function SharedLinks() {
         </div>
       </div>
 
-      <div className="no-scrollbar mx-auto mt-5 flex h-full w-[91.67%] flex-col overflow-y-auto bg-[#F3F3F3] pb-[3rem] tablet:w-[73.6%] tablet:pb-[6rem] tablet:pt-[0.94rem] dark:bg-[#242424]">
+      <div className="no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:min-h-[calc(100vh-92px)] dark:bg-[#242424]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -280,9 +280,9 @@ export default function SharedLinks() {
             )
           }
           height={'calc(100vh - 92px)'}
-          className="no-scrollbar"
+          className="no-scrollbar px-4 py-[10px] tablet:px-6 tablet:py-5"
         >
-          <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
+          <div id="section-1" className="flex flex-col gap-2 tablet:gap-5">
             {allData &&
               allData.map((item, index) => (
                 <div key={index + 1}>
