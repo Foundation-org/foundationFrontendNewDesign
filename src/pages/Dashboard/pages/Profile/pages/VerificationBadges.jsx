@@ -570,37 +570,21 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 ) : (
-                  // <LoginSocialInstagram
-                  //   client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-                  //   client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
-                  //   redirect_uri={window.location.href}
-                  //   onLoginStart={onLoginStart}
-                  //   onResolve={({ provider, data }) => {
-                  //     setIsLoading(true);
-                  //     handleAddBadge(provider, data);
-                  //   }}
-                  //   onReject={(err) => {
-                  //     toast.error('An error occured while adding badge');
-                  //     setIsLoading(false);
-                  //     console.log(err);
-                  //   }}
-                  //   className="container flex w-full"
-                  // >
-                  //   <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
-                  //     {checkSocial('instagram') ? '' : 'Add New Badge'}
-                  //     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                  //       {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
-                  //     </span>
-                  //   </Button>
-                  // </LoginSocialInstagram>
-                  <InstagramLogin
-                    clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-                    onSuccess={(resp) => console.log('success', resp)}
-                    onFailure={(err) => console.log('error', err)}
-                    redirectUri={window.location.href}
-                    cssClass={'hideBack'}
-                    scope="user_profile"
-                   
+                  <LoginSocialInstagram
+                    client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
+                    client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
+                    redirect_uri={window.location.href}
+                    onLoginStart={onLoginStart}
+                    onResolve={({ provider, data }) => {
+                      setIsLoading(true);
+                      handleAddBadge(provider, data);
+                    }}
+                    onReject={(err) => {
+                      toast.error('An error occured while adding badge');
+                      setIsLoading(false);
+                      console.log(err);
+                    }}
+                    className="container flex w-full"
                   >
                     <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
                       {checkSocial('instagram') ? '' : 'Add New Badge'}
@@ -608,7 +592,7 @@ const VerificationBadges = () => {
                         {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
-                  </InstagramLogin>
+                  </LoginSocialInstagram>
                 )}
               </div>
             </div>
