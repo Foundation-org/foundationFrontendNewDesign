@@ -33,25 +33,31 @@ const VerificationBadges = () => {
   const [deleteModalState, setDeleteModalState] = useState();
   const [pageLoading, setPageLoading] = useState(true);
 
-  const loginInWithInsta = async (response) => {
-    const accessToken = response;
-
-    try {
-      const profileResponse = await fetch(
-        `https://graph.instagram.com/v12.0/me?fields=id,username&access_token=${accessToken}`,
-      );
-
-      if (!profileResponse.ok) {
-        const errorData = await profileResponse.json();
-        console.log(errorData);
-      }
-
-      const profileData = await profileResponse.json();
-      console.log('Instagram Profile:', profileData);
-    } catch (error) {
-      console.error('Error fetching Instagram profile:', error.message);
+  const loginInWithInsta = async (code) => {
+  try {
+    const resp = await fetch('https://api.instagram.com/oauth/access_token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        client_id: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
+        client_secret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
+        grant_type: 'authorization_code',
+        redirect_uri: window.location.href,
+        code: code,
+      }),
+    });
+  
+    if (resp.ok) {
+      const data = await resp.json();
+      console.log('Insta Response:', data);
+    } else {
+      console.error('Error fetching Instagram profile:', resp.statusText);
     }
-  };
+  } catch (error) {
+    console.error('Error fetching Instagram profile:', error.message);
+  }}
 
   const loginWithTwitter = () => {
     const provider = new TwitterAuthProvider();
@@ -615,14 +621,12 @@ const VerificationBadges = () => {
                   // </LoginSocialInstagram>
                   <InstagramLogin
                     clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-                    onSuccess={(resp) => {
-                      console.log(resp), loginInWithInsta(resp);
+                    onSuccess={(code) => {
+                      console.log(code), loginInWithInsta(code);
                     }}
                     onFailure={(err) => console.log('error', err)}
                     redirectUri={window.location.href}
                     cssClass={'hideBack'}
-                    implicitAuth={true}
-                    scope="user_profile"
                   >
                     <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
                       {checkSocial('instagram') ? '' : 'Add New Badge'}
