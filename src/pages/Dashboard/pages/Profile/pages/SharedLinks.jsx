@@ -185,9 +185,8 @@ export default function SharedLinks() {
 
   return (
     <div>
-      <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} />
-
       <div className="ml-[32px] mr-4 flex justify-between pt-[5px] tablet:ml-[97px] tablet:mr-[70px]">
+        <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} />
         <h1 className=" text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
           Shared Links
         </h1>
