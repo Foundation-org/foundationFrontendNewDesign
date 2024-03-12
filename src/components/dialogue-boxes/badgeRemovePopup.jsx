@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { addUser } from '../../features/auth/authSlice';
 import { toast } from 'sonner';
 import api from '../../services/api/Axios';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function BadgeRemovePopup({
   handleClose,
@@ -17,6 +18,7 @@ export default function BadgeRemovePopup({
   setFetchUser,
 }) {
   const dispatch = useDispatch();
+  const [loading,setIsLoading]=useState(false);
 
   const handleUserInfo = async () => {
     try {
@@ -32,6 +34,7 @@ export default function BadgeRemovePopup({
   };
 
   const handleRemoveBadge = async () => {
+    setIsLoading(true);
     const findBadge = fetchUser.badges.filter((item) => {
       if (item.accountName === accountName) {
         return item;
@@ -49,6 +52,8 @@ export default function BadgeRemovePopup({
         toast.success('Badge Removed Successfully!');
         handleUserInfo();
         handleClose();
+        setIsLoading(false);
+
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -64,7 +69,7 @@ export default function BadgeRemovePopup({
         </h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button variant={'submit'} onClick={handleRemoveBadge}>
-            Yes
+             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" />:"Yes"}
           </Button>
           <Button variant={'cancel'} onClick={handleClose}>
             No
