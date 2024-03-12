@@ -8,6 +8,8 @@ import * as HomepageApis from '../../services/api/homepageApis';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import { useLocation } from 'react-router-dom';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
+import { updateDialogueBox } from '../../features/quest/utilsSlice';
+import { useDispatch } from 'react-redux';
 const data = [
   {
     id: 1,
@@ -36,6 +38,7 @@ const data = [
 ];
 
 const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, children }) => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const queryClient = useQueryClient();
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
@@ -95,6 +98,17 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
     }
   };
 
+  const showDisableSharedLinkPopup = () => {
+    dispatch(
+      updateDialogueBox({
+        type: 'Delete',
+        status: true,
+        link: questStartData.userQuestSetting.link,
+        id: questStartData._id,
+      }),
+    );
+  };
+
   return (
     <div className="rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000]">
       <CardTopbar
@@ -108,6 +122,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
         handleBookmark={handleBookmark}
         postProperties={postProperties}
       />
+
       <div className="pb-[0.94rem] pt-[0.84rem] tablet:pb-5 tablet:pt-[0.94rem]">
         <div className="ml-[1.39rem] mr-[0.62rem] flex items-start justify-between tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
           <div className="flex gap-1.5 pr-5 tablet:gap-3 tablet:pr-6">
@@ -126,6 +141,14 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
               onClick={showHidePostOpen}
             />
           )}
+          {postProperties === 'SharedLinks' ? (
+            <img
+              src="/assets/svgs/dashboard/trash2.svg"
+              alt="trash"
+              className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
+              onClick={showDisableSharedLinkPopup}
+            />
+          ) : null}
         </div>
         {children}
       </div>

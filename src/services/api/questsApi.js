@@ -23,7 +23,7 @@ export const createStartQuest = async (data) => {
     uuid: data.uuid,
     isAddedAnsSelected: data.isAddedAnsSelected,
     isSharedLinkAns: data.isSharedLinkAns,
-    postLink: data.postLink
+    postLink: data.postLink,
   });
 };
 
@@ -216,4 +216,12 @@ export const createUpdateUniqueLink = async (data) => {
 
 export const questImpression = async (data) => {
   return await api.post(`/userQuestImpression/${data}`);
+};
+
+// UPDATE SHAREDLINK STATUS
+export const updateSharedLinkStatus = async ({ link, data }) => {
+  console.log('api', link, data);
+  return await api.post(`/linkStatus/${link}`, {
+    status: data,
+  });
 };

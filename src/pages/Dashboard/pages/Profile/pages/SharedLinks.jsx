@@ -9,6 +9,9 @@ import QuestionCard from '../../QuestStartSection/components/QuestionCard';
 
 import { applyFilters, fetchDataByStatus } from '../../../../../utils/questionCard';
 import * as HomepageAPIs from '../../../../../services/api/homepageApis';
+import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
+import DisabledLinkPopup from '../../../../../components/dialogue-boxes/DisabledLinkPopup';
+import { useDispatch } from 'react-redux';
 
 export default function SharedLinks() {
   const pageLimit = 5;
@@ -18,8 +21,10 @@ export default function SharedLinks() {
     sliceEnd: pageLimit,
   });
 
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const questUtils = useSelector(questUtilsActions.getQuestUtils);
 
   const [allData, setAllData] = useState([]);
   const [feedData, setFeedData] = useState();
@@ -30,6 +35,10 @@ export default function SharedLinks() {
     filterByType: '',
     searchData: '',
   });
+
+  const showHidePostClose = () => {
+    dispatch(questUtilsActions.updateDialogueBox({ type: null, status: false, link: null, id: null }));
+  };
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value;
@@ -137,10 +146,20 @@ export default function SharedLinks() {
     [setStartTest, setViewResult],
   );
 
-  console.log('allData', allData);
+  useEffect(() => {
+    const indexToRemove = allData.findIndex((item) => item._id === questUtils.hiddenPostId);
+
+    if (indexToRemove !== -1) {
+      const updatedAllData = [...allData.slice(0, indexToRemove), ...allData.slice(indexToRemove + 1)];
+
+      setAllData(updatedAllData);
+    }
+  }, [questUtils.hiddenPostId]);
 
   return (
     <div>
+      <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} />
+
       <div className="ml-[32px] mr-4 flex justify-between pt-[5px] tablet:ml-[97px] tablet:mr-[70px]">
         <h1 className=" text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
           Shared Links

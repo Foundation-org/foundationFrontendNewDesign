@@ -1,6 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  sharedQuestStatus: {
+    type: null,
+    isDialogueBox: false,
+    link: null,
+    id: null,
+  },
+  isDialogueBox: false,
   addOptionLimit: 0,
   hiddenPosts: [],
   sharedLinkPost: null,
@@ -11,6 +18,13 @@ export const utilsSlice = createSlice({
   name: 'questUtils',
   initialState,
   reducers: {
+    updateDialogueBox: (state, action) => {
+      const { type, status, link, id } = action.payload;
+      state.sharedQuestStatus.type = type;
+      state.sharedQuestStatus.isDialogueBox = status;
+      state.sharedQuestStatus.link = link;
+      state.sharedQuestStatus.id = id;
+    },
     updateaddOptionLimit: (state) => {
       state.addOptionLimit = state.addOptionLimit + 1;
     },
@@ -33,6 +47,7 @@ export const utilsSlice = createSlice({
 });
 
 export const {
+  updateDialogueBox,
   updateaddOptionLimit,
   resetaddOptionLimit,
   addHiddenPosts,
