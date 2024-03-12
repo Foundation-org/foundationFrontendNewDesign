@@ -34,15 +34,30 @@ const VerificationBadges = () => {
   const [pageLoading, setPageLoading] = useState(true);
 
   const loginInWithInsta = async (code) => {
-    try {
-      const resp = await fetch(
-        `https://api.instagram.com/oauth/access_token?client_id=${import.meta.env.VITE_INSTAGRAM_CLIENT_ID}&grant_type=authorization_code&redirect_uri=${window.location.href}&client_secret=${import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}&code=${code}`,
-      );
-      console.log('Insta Response:', resp);
-    } catch (error) {
-      console.error('Error fetching Instagram profile:', error.message);
+  try {
+    const resp = await fetch('https://api.instagram.com/oauth/access_token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        client_id: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
+        client_secret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
+        grant_type: 'authorization_code',
+        redirect_uri: window.location.href,
+        code: code,
+      }),
+    });
+  
+    if (resp.ok) {
+      const data = await resp.json();
+      console.log('Insta Response:', data);
+    } else {
+      console.error('Error fetching Instagram profile:', resp.statusText);
     }
-  };
+  } catch (error) {
+    console.error('Error fetching Instagram profile:', error.message);
+  }}
 
   const loginWithTwitter = () => {
     const provider = new TwitterAuthProvider();
