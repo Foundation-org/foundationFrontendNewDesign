@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 // components
@@ -31,8 +31,6 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
       ? persistedUserInfo?.bookmarkStates.searchData
       : persistedUserInfo?.States.searchData,
   );
-  const [treasuryAmount, setTreasuryAmount] = useState(0);
-  const queryClient = useQueryClient();
 
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
@@ -187,34 +185,17 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
     }
   }, [filterStates.searchData]);
 
-  const getTreasuryAmount = async () => {
-    try {
-      const res = await api.get(`/treasury/get`);
-      if (res.status === 200) {
-        localStorage.setItem('treasuryAmount', res.data.data);
-        setTreasuryAmount(res.data.data);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-    }
-  };
-
-  useEffect(() => {
-    handleUserInfo();
-    getTreasuryAmount();
-  }, []);
-
   return (
     <>
       <div className="no-scrollbar mt-5 hidden h-full max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between overflow-y-hidden rounded-[17.928px] bg-white pb-14 pt-8 text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:bg-[#000] dark:text-white">
         <div className="flex flex-col items-center">
           <div className="flex w-full flex-col items-center justify-center gap-[4vh] border-b-[1.32px] border-[#9C9C9C] pb-[3vh] ">
-            <div className="flex items-center justify-center gap-[25px]">
+            {/* <div className="flex items-center justify-center gap-[25px]">
               <h1 className="ml-[5px] flex items-center gap-2 text-[20px] font-medium leading-normal text-[#707175] dark:text-white">
                 Expanded View
               </h1>
               <CustomSwitch2 enabled={filterStates.expandedView} setEnabled={handleExpendedView} />
-            </div>
+            </div> */}
             <div className="relative">
               <div className="relative h-[45px] w-[212px]">
                 <input
@@ -256,9 +237,9 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             onClick={handleTopicPref}
             className={`${
               persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-            }  h-[45px] w-[212px] rounded-[10px] px-5 py-2 text-[18px] font-medium text-white focus:outline-none dark:text-[#707175]`}
+            } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
           >
-            Topics
+            Rating Preferences
           </button>
           <BasicModal
             open={openTopicPref}
@@ -310,26 +291,26 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
                 dispatch(filtersActions.setFilterByType(item));
               }}
             />
-            <Dropdown2
+            {/* <Dropdown2
               label={'Sort'}
               title={filterStates.filterBySort ? filterStates.filterBySort : 'Newest First'}
               items={['Most Popular', 'Last Updated', 'Oldest First', 'Newest First']}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterBySort(item));
               }}
-            />
+            /> */}
           </div>
 
-          <div className="flex w-full items-center justify-center gap-[17px] py-[3vh]">
+          {/* <div className="flex w-full items-center justify-center gap-[17px] py-[3vh]">
             <h1 className="flex items-center gap-2 text-[14px] font-medium leading-normal text-[#707175] dark:text-white">
               Show Only My Posts
             </h1>
             <CustomSwitch2 enabled={localMe} setEnabled={handleSwitchChange} />
-          </div>
+          </div> */}
           <button
             className={`${
               persistedTheme === 'dark' ? 'bg-[#F0F0F0]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-            }  inset-0 w-[192px] rounded-[0.938rem] px-5 py-2 text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
+            }  inset-0 mt-7 w-[192px] rounded-[14px] px-5 py-[6px] text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
             onClick={() => {
               dispatch(filtersActions.resetFilters());
               setSearch('');
@@ -342,51 +323,15 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
       </div>
       {/* sidebar mobile */}
       <div className="block border-b-4 border-[#F3F3F3] bg-white px-[15px] py-[10px] tablet:px-[37px] tablet:py-[26px] laptop:hidden dark:bg-[#0A0A0C]">
-        <div className="flex items-center justify-between gap-2 tablet:gap-[13px]">
-          <div className="relative w-full">
-            <input
-              type="text"
-              placeholder="Search here...."
-              className="h-[25px] w-full min-w-[215px] rounded-[8px] border-[1px] border-white bg-[#F6F6F6] px-3 text-[8.4px] text-gray-400 focus:outline-none tablet:h-[50.7px] tablet:text-[17.13px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
-              value={search}
-              onChange={handleSearch}
-            />
-            {search && (
-              <button
-                className="absolute right-3 top-[50%] translate-y-[-50%]"
-                onClick={() => {
-                  dispatch(filtersActions.setSearchData(''));
-                  setSearch('');
-                }}
-              >
-                <GrClose className="h-2 w-2 text-black dark:text-white" />
-              </button>
-            )}
-            {!search && (
-              <img
-                src="/assets/svgs/dashboard/search.svg"
-                alt="search"
-                className="absolute right-[12px] top-[9px] h-3 w-3 tablet:top-3 tablet:h-[26.4px] tablet:w-[24.3px]"
-              />
-            )}
-          </div>
-          <div className="mr-1 flex w-[8rem] gap-[6px] tablet:w-[19rem]">
-            <img
-              src="/assets/svgs/dashboard/treasure.svg"
-              alt="badge"
-              className="h-[23px] w-[23px] tablet:h-[46.8px] tablet:w-[46.8px]"
-            />
-            <div>
-              <h4 className="text-[9.3px] font-semibold text-[#616161] tablet:text-[18.9px] dark:text-[#D4D5D7]">
-                Treasury
-              </h4>
-              <p className="whitespace-nowrap text-[6.227px] text-[#616161] tablet:text-[12.651px] dark:text-[#BDBCBC]">
-                <span>{(treasuryAmount * 1)?.toFixed(2)} FDX</span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="mt-3 flex items-end justify-between gap-[6px] tablet:mt-[21px]">
+        <div className="mt-[10px] flex items-end justify-between gap-[6px]">
+          <button
+            className={`${
+              persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+            }  inset-0 w-4/6 rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+            onClick={handleTopicPref}
+          >
+            Ratings
+          </button>
           <Dropdown2
             label={'Status'}
             title={filterStates.filterByStatus ? filterStates.filterByStatus : 'All'}
@@ -421,14 +366,14 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
               dispatch(filtersActions.setFilterByType(item));
             }}
           />
-          <Dropdown2
+          {/* <Dropdown2
             label={'Sort'}
             title={filterStates.filterBySort ? filterStates.filterBySort : 'Newest First'}
             items={['Most Popular', 'Last Updated', 'Oldest First', 'Newest First']}
             handleSelect={(item) => {
               dispatch(filtersActions.setFilterBySort(item));
             }}
-          />
+          /> */}
           <button
             className={`${
               persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
@@ -441,7 +386,36 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             Clear Filters
           </button>
         </div>
-        <div className="mt-[9px] flex items-center justify-between gap-[4px] tablet:mt-[21px]">
+        <div className="mt-3 flex items-center justify-between gap-2 tablet:mt-[21px] tablet:gap-[13px]">
+          <div className="relative w-full">
+            <input
+              type="text"
+              placeholder="Search here...."
+              className="h-[30px] w-full min-w-[215px] rounded-[8px] border-[0.59px] border-[#707175] bg-[#F6F6F6] px-[10px] text-[9px] font-normal text-[#858585] focus:outline-none tablet:h-[50.7px] tablet:text-[17.13px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
+              value={search}
+              onChange={handleSearch}
+            />
+            {search && (
+              <button
+                className="absolute right-3 top-[50%] translate-y-[-50%]"
+                onClick={() => {
+                  dispatch(filtersActions.setSearchData(''));
+                  setSearch('');
+                }}
+              >
+                <GrClose className="h-2 w-2 text-black dark:text-white" />
+              </button>
+            )}
+            {!search && (
+              <img
+                src="/assets/svgs/dashboard/search.svg"
+                alt="search"
+                className="absolute right-[12px] top-[9px] h-3 w-3 tablet:top-3 tablet:h-[26.4px] tablet:w-[24.3px]"
+              />
+            )}
+          </div>
+        </div>
+        {/* <div className="mt-[9px] flex items-center justify-between gap-[4px] tablet:mt-[21px]">
           <button
             className={`${
               persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
@@ -462,7 +436,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             </h1>
             <CustomSwitch2 enabled={localMe} setEnabled={handleSwitchChange} />
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
