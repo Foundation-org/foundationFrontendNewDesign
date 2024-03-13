@@ -223,7 +223,7 @@ const SidebarRight = () => {
 
   return (
     <>
-      <div className="no-scrollbar mt-5 hidden h-full max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto rounded-[15px] bg-white py-8 pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+      <div className="no-scrollbar mt-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto rounded-[15px] bg-white py-8 pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
         <PopUp logo={'/assets/svgs/email.svg'} title={'Email'} open={modalVisible} closeIcon={true}>
           <div className="flex flex-col items-center pb-[32px] pt-2">
             <p className="text-center text-[8px] font-semibold text-[#838383] tablet:text-[25px]">
@@ -256,7 +256,8 @@ const SidebarRight = () => {
             </div>
           </div>
         </PopUp>
-        <div className="mb-[3vh] flex gap-[15px]">
+        {/* //Teasury Icon and val
+         <div className="mb-[3vh] flex gap-[15px]">
           <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" className="h-[60px] w-[60px]" />
           <div>
             <h4 className="heading">Treasury</h4>
@@ -264,16 +265,18 @@ const SidebarRight = () => {
               <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
             </p>
           </div>
-        </div>
+        </div> */}
         {persistedUserInfo.role !== 'user' ? (
-          <div className="mb-[5vh] flex items-center gap-6">
+          <div className="mb-[35px] flex items-center gap-6">
             <div className="relative h-fit w-fit">
               <img
                 src="/assets/svgs/dashboard/guestBadge.svg"
                 alt="badge"
-                className="tablet:h-[5.43rem] tablet:w-[4.36rem]"
+                className="tablet:h-[74px] tablet:w-[60px]"
               />
-              <p className="transform-center absolute z-50 pb-5 text-[35px] font-bold leading-normal text-white">G</p>
+              <p className="transform-center absolute z-50 pb-5 text-[32.25px] font-bold leading-normal text-white">
+                G
+              </p>
             </div>
             <div>
               <h4 className="heading">Guest User</h4>

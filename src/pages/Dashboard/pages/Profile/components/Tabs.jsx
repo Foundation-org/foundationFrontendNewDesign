@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Tabs = ({ handleSelectedTab, active }) => {
   return (
-    <div className="mb-[10px] mt-[15px] flex justify-center gap-[5px] tablet:my-[26px] tablet:gap-[19.9px] laptop:my-[35px] laptop:gap-[35px]">
+    <div className="mb-[10px] mt-[15px] flex justify-center gap-[5px] tablet:mb-7 tablet:mt-[26px] tablet:gap-[19.9px] laptop:gap-[35px]">
       <Link
         to={''}
         className={`${

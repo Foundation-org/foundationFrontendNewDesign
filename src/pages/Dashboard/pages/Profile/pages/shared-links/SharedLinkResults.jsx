@@ -17,7 +17,7 @@ export default function SharedLinkResults() {
 
   const getAllResult = async () => {
     try {
-      const response = await getQuestById(persistedUserInfo?.uuid, location.state);
+      const response = await getQuestById(persistedUserInfo?.uuid, location.state.questId);
       setQuestData(response.data.data[0]);
     } catch (error) {
       console.error('API call failed:', error);
@@ -29,7 +29,12 @@ export default function SharedLinkResults() {
   const getSharedResult = async () => {
     try {
       const sharedLink = 'SharedLink';
-      const response = await getQuestById(persistedUserInfo?.uuid, location.state, sharedLink);
+      const response = await getQuestById(
+        persistedUserInfo?.uuid,
+        location.state.questId,
+        sharedLink,
+        location.state.link,
+      );
       setQuestData(response.data.data[0]);
     } catch (error) {
       console.error('API call failed:', error);
@@ -74,7 +79,7 @@ export default function SharedLinkResults() {
           ) : (
             questData && (
               <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px]">
-                <QuestionCardWithToggle questStartData={questData} postProperties={'sharedlink-results'} />
+                <QuestionCardWithToggle questStartData={questData} postProperties={tab==='My Link Results'?'sharedlink-results':""} SharedLinkButton={"shared-links-results-button"} />
               </div>
             )
           )}

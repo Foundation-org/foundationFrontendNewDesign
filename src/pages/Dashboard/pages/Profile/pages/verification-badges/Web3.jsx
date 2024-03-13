@@ -46,7 +46,10 @@ export default function Web3({ handleUserInfo, fetchUser }) {
   return (
     <>
       {web3.map((item, index) => (
-        <div className={`flex items-center justify-center  ${item.disabled ? 'opacity-[60%]' : ''}`} key={index}>
+        <div
+          className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5  ${item.disabled ? 'opacity-[60%]' : ''}`}
+          key={index}
+        >
           <img
             src={item.image}
             alt={item.title}
@@ -55,7 +58,7 @@ export default function Web3({ handleUserInfo, fetchUser }) {
           <div
             className={`${
               persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-            } ml-[10px] mr-2 flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:mx-[30px] tablet:h-[3.48vw] tablet:w-[19.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+            } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000]  tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
           >
             <h1>{item.title}</h1>
           </div>
