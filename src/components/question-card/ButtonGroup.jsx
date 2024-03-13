@@ -297,9 +297,10 @@ const ButtonGroup = ({
               <Button
                 variant={'submit-green'}
                 onClick={() => {
-                  navigate('/shared-links/result', {
-                    state: questStartData._id,
-                  });
+                  toast.info('Feature coming soon!')
+                  // navigate('/shared-links/result', {
+                  //   state: questStartData._id,
+                  // });
                 }}
                 className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
               >
