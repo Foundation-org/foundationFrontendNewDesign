@@ -143,14 +143,14 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
 
   return (
     <div>
-      <div className="bg-blue-gradiant flex gap-[18px] items-center justify-between py-1 tablet:py-2 px-[10px] tablet:px-6 rounded-t-[0.9375rem] tablet:rounded-t-[37px] drop-shadow-lg">
-        <div className="flex gap-2 tablet:gap-[18px] items-center">
+      <div className="bg-blue-gradiant flex items-center justify-between gap-[18px] rounded-t-[0.9375rem] px-[10px] py-1 drop-shadow-lg tablet:rounded-t-[37px] tablet:px-6 tablet:py-2">
+        <div className="flex items-center gap-2 tablet:gap-[18px]">
           <img
             src="/assets/preferences/preferencesLogo.png"
             alt="preferencesLogo"
             className="h-[24px] w-[24px] tablet:h-[50px] tablet:w-[50px]"
           />
-          <p className="text-white text-[10px] tablet:text-[20px] font-medium">Topics</p>
+          <p className="text-[10px] font-medium text-white tablet:text-[20px]">Rating Preferences</p>
         </div>
 
         <div className="cursor-pointer">
@@ -162,16 +162,16 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
           />
         </div>
       </div>
-      <div className="relative h-full w-[90vw] px-[1.19rem] py-[12px] tablet:w-fit tablet:px-[35px] tablet:py-[25px] border-b-2 border-x-2 tablet:border-b-[6px] tablet:border-x-[6px] border-[#DEE6F7] dark:border-[#8B8B8B] rounded-b-[0.9375rem] tablet:rounded-b-[37px]">
+      <div className="relative h-full w-[90vw] rounded-b-[0.9375rem] border-x-2 border-b-2 border-[#DEE6F7] px-[1.19rem] py-[12px] tablet:w-fit tablet:rounded-b-[37px] tablet:border-x-[6px] tablet:border-b-[6px] tablet:px-[35px] tablet:py-[25px] dark:border-[#8B8B8B]">
         <div className="max-[100%] mx-auto flex items-center gap-2 tablet:gap-[12.6px] laptop:max-w-[80%]">
-          <h1 className="text-[10px] tablet:text-[22px] font-medium leading-normal text-[#535353] dark:text-white">
+          <h1 className="text-[10px] font-medium leading-normal text-[#535353] tablet:text-[22px] dark:text-white">
             Topic
           </h1>
           <div className="relative w-full">
             <input
               type="text"
               placeholder="Search here...."
-              className="h-[25px] w-full min-w-[215px] rounded-[5px] border-[1px] tablet:border-[3px] border-[#DEE6F7] bg-white px-3 text-[8.4px] text-[#435059] focus:outline-none dark:border-[#151515] dark:bg-[#151515] dark:text-white tablet:h-[38px] tablet:text-[18px] laptop:h-[57px] laptop:rounded-[10px] laptop:pl-5 laptop:pr-[60px] laptop:text-[20px]"
+              className="h-[25px] w-full min-w-[215px] rounded-[5px] border-[1px] border-[#DEE6F7] bg-white px-3 text-[8.4px] text-[#435059] focus:outline-none tablet:h-[38px] tablet:border-[3px] tablet:text-[18px] laptop:h-[57px] laptop:rounded-[10px] laptop:pl-5 laptop:pr-[60px] laptop:text-[20px] dark:border-[#151515] dark:bg-[#151515] dark:text-white"
               value={getPreferences?.topicSearch}
               onChange={handleSearch}
             />
@@ -182,7 +182,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                   dispatch(prefActions.setTopicSearch(''));
                 }}
               >
-                <IoClose className="h-3 w-3 text-[#C9C8C8] dark:text-white laptop:h-[27px] laptop:w-[27px]" />
+                <IoClose className="h-3 w-3 text-[#C9C8C8] laptop:h-[27px] laptop:w-[27px] dark:text-white" />
               </button>
             )}
             {!getPreferences?.topicSearch && (
@@ -194,7 +194,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
             )}
           </div>
         </div>
-        <h1 className="py-2 text-center text-[7px] font-normal leading-normal text-[#707175] dark:text-white tablet:text-[1.2rem] laptop:py-[15px] laptop:text-[16px]">
+        <h1 className="py-2 text-center text-[7px] font-normal leading-normal text-[#707175] tablet:text-[1.2rem] laptop:py-[15px] laptop:text-[16px] dark:text-white">
           Drag and drop to hide the topics
         </h1>
         {/* columns */}
@@ -208,13 +208,13 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                       <h2
                         className={`flex h-[2rem] w-full items-center justify-center laptop:h-[4.18rem] ${
                           col.id === 'All' ? 'rounded-t-[0.5rem]' : ''
-                        } bg-[#DEE6F7] text-center text-[1rem] font-semibold text-[#535353] dark:bg-[#000] dark:text-white tablet:text-[1.4rem] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem]`}
+                        } bg-[#DEE6F7] text-center text-[1rem] font-semibold text-[#535353] tablet:text-[1.4rem] laptop:rounded-t-[1.4rem] laptop:text-[1.75rem] dark:bg-[#000] dark:text-white`}
                       >
                         {col.id === 'Preferences' ? 'Show Only' : col.id === 'Block' ? 'Hide' : col.id}
                       </h2>
-                      <div className="h-full border-b-[3px] border-x-[3px] tablet:border-b-[6px] tablet:border-x-[6px] border-[#DEE6F7] bg-[#FCFCFD] pr-1 dark:border-[#212121] dark:bg-[#212121] laptop:rounded-b-[1.25rem]">
+                      <div className="h-full border-x-[3px] border-b-[3px] border-[#DEE6F7] bg-[#FCFCFD] pr-1 tablet:border-x-[6px] tablet:border-b-[6px] laptop:rounded-b-[1.25rem] dark:border-[#212121] dark:bg-[#212121]">
                         <div
-                          className="custom-scrollbar overflow-x-hidden flex h-[25vh] min-h-[25vh] flex-col gap-[0.4rem] overflow-y-auto bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] dark:bg-[#212121] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem]"
+                          className="custom-scrollbar flex h-[25vh] min-h-[25vh] flex-col gap-[0.4rem] overflow-y-auto overflow-x-hidden bg-[#FCFCFD] px-[1.31rem] py-[0.44rem] tablet:gap-[0.6rem] tablet:py-[1.19rem] tablet:pl-[1.7rem] laptop:h-[55vh] laptop:gap-[0.94rem] dark:bg-[#212121]"
                           {...provided.droppableProps}
                           ref={provided.innerRef}
                         >
@@ -226,7 +226,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
-                                    className={`flex h-[19.7px] items-center tablet:h-[1.78rem] laptop:h-[2.78rem] w-fit ${
+                                    className={`flex h-[19.7px] w-fit items-center tablet:h-[1.78rem] laptop:h-[2.78rem] ${
                                       snapshot.isDragging ? '' : ''
                                     }`}
                                   >
@@ -235,7 +235,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                                         snapshot.isDragging
                                           ? 'border-[#5FA3D5]'
                                           : 'border-[#DEE6F7] dark:border-[#282828]'
-                                      } flex h-6 w-[0.7rem] min-w-[0.7rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] dark:bg-[#8E8E8E] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem]`}
+                                      } flex h-6 w-[0.7rem] min-w-[0.7rem] items-center justify-center rounded-s-[0.28rem] border-y-[0.847px] border-s-[0.847px] bg-[#DEE6F7] tablet:h-[1.78rem] tablet:min-w-[1rem] laptop:h-full laptop:w-[1.31rem] laptop:min-w-[1.31rem] laptop:rounded-s-[0.625rem] dark:bg-[#8E8E8E]`}
                                     >
                                       {persistedTheme === 'dark' ? (
                                         <img
@@ -256,14 +256,14 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                                         snapshot.isDragging
                                           ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                                           : 'border-[#ACACAC] bg-[#FCFCFD] dark:bg-[#282828]'
-                                      } flex h-6 w-fit select-none items-center gap-3 truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] dark:text-white tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px]`}
+                                      } flex h-6 w-fit select-none items-center gap-3 truncate rounded-r-[0.2rem] border-y-[0.847px] border-e-[0.847px] px-2 py-[3px] text-[0.6rem] font-normal leading-[1.22] text-[#435059] tablet:h-[28.47px] tablet:gap-4 tablet:px-3 tablet:text-[1rem] laptop:h-[2.78rem] laptop:rounded-r-[0.625rem] laptop:py-[6px] laptop:text-[18px] dark:text-white`}
                                     >
                                       {text}
                                       {col.id !== 'All' && (
                                         <GrClose
                                           className={`${
                                             itemsWithCross?.includes(text) ? 'block' : 'hidden'
-                                          } h-3 w-3 cursor-pointer text-[#C9C8C8] dark:text-white tablet:h-[16px] tablet:w-[16px] laptop:h-[20px] laptop:w-[20px]`}
+                                          } h-3 w-3 cursor-pointer text-[#C9C8C8] tablet:h-[16px] tablet:w-[16px] laptop:h-[20px] laptop:w-[20px] dark:text-white`}
                                           onClick={() => handleRemoveItemFromList(text, col.id)}
                                         />
                                       )}
@@ -287,7 +287,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
             </div>
           </DragDropContext>
         </div>
-        <div className="flex justify-center items-center mt-4">
+        <div className="mt-4 flex items-center justify-center">
           <Button
             variant={'submit'}
             onClick={() => {

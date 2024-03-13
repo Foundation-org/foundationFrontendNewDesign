@@ -330,7 +330,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             }  inset-0 w-4/6 rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
             onClick={handleTopicPref}
           >
-            Ratings
+            Rating
           </button>
           <Dropdown2
             label={'Status'}
