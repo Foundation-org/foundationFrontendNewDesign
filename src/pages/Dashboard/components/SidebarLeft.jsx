@@ -239,7 +239,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
               persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
           >
-            Rating Preferences
+            Topics
           </button>
           <BasicModal
             open={openTopicPref}

@@ -150,7 +150,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
             alt="preferencesLogo"
             className="h-[24px] w-[24px] tablet:h-[50px] tablet:w-[50px]"
           />
-          <p className="text-[10px] font-medium text-white tablet:text-[20px]">Rating Preferences</p>
+          <p className="text-[10px] font-medium text-white tablet:text-[20px]">Topics</p>
         </div>
 
         <div className="cursor-pointer">
