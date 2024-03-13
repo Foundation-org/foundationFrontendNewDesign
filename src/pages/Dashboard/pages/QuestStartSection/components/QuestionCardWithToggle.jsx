@@ -750,6 +750,7 @@ const QuestionCardWithToggle = (props) => {
             cardSize={cardSize}
             checkOptionStatus={checkOptionStatus}
             setCheckOptionStatus={setCheckOptionStatus}
+            postProperties={postProperties}
           />
           <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
           {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}

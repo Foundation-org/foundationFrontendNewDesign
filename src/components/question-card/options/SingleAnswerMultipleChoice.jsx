@@ -347,6 +347,7 @@ const SingleAnswerMultipleChoice = (props) => {
               />
             ) : (
               <div className="flex items-center gap-1 laptop:gap-[18px]">
+                  {props?.postProperties !== 'sharedlink-results' && (
                 <div id="custom-yello-checkbox" className="flex h-full items-center ">
                   <div className="cursor-pointer">
                     <ContentionIcon
@@ -354,7 +355,7 @@ const SingleAnswerMultipleChoice = (props) => {
                       checked={contendState}
                     />
                   </div>
-                </div>
+                </div>)}
               </div>
             )}
             <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
