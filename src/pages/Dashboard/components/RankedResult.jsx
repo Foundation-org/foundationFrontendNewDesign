@@ -151,14 +151,16 @@ const RankedResult = (props) => {
             props.contendPercentages?.[props.answer.trim()] &&
             props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
               <div className="flex items-center gap-1 tablet:gap-[10px]">
-                <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={checkState} />
+                 {props?.postProperties !== 'sharedlink-results' && (
+                <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={checkState} />)}
                 <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                   {props.contendPercentages[props.answer.trim()]}
                 </span>
               </div>
             ) : (
               <div className="flex items-center gap-1 tablet:gap-[10px]">
-                <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
+                 {props?.postProperties !== 'sharedlink-results' && (
+                <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />)}
                 <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
               </div>
             )}

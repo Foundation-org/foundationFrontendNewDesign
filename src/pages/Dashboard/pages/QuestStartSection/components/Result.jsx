@@ -214,6 +214,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
               <SingleAnswer
                 number={'#2'}
@@ -229,6 +230,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
             </>
           ) : props.title === 'Agree/Disagree' ? (
@@ -248,6 +250,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
               <SingleAnswer
                 number={'#2'}
@@ -264,6 +267,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
             </>
           ) : props.title === 'Like/Dislike' ? (
@@ -282,6 +286,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
               <SingleAnswer
                 number={'#2'}
@@ -298,6 +303,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
             </>
           ) : null}
@@ -360,6 +366,7 @@ const Result = (props) => {
                   btnText={'Results'}
                   answersSelection={props.answersSelection}
                   setAnswerSelection={props.setAnswerSelection}
+                  postProperties={props.postProperties}
                 />
               </div>
             ))}
@@ -417,6 +424,7 @@ const Result = (props) => {
                   )}
                   setAddOptionLimit={props.setAddOptionLimit}
                   btnText={'Results'}
+                  postProperties={props.postProperties}
                 />
               </div>
             ))}

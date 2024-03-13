@@ -775,6 +775,7 @@ const QuestionCardWithToggle = (props) => {
             setRankedAnswers={setRankedAnswers}
             questSelection={questSelection}
             cardSize={cardSize}
+            postProperties={postProperties}
           />
           {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
           <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />

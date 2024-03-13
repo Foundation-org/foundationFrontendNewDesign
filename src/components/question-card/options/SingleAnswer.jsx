@@ -35,7 +35,9 @@ const SingleAnswer = (props) => {
             }`}
           >
             <div className="flex items-center gap-1 laptop:gap-[18px]">
+            {props?.postProperties !== 'sharedlink-results' && (
               <div id="custom-checkbox" className="flex h-full items-center">
+
                 <input
                   id="small-checkbox"
                   type="checkbox"
@@ -43,7 +45,7 @@ const SingleAnswer = (props) => {
                   checked={props.check}
                   readOnly
                 />
-              </div>
+              </div>)}
               {props.btnText === 'Results' ? (
                 props.percentage === undefined ? (
                   <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>

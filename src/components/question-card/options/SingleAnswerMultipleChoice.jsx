@@ -303,6 +303,7 @@ const SingleAnswerMultipleChoice = (props) => {
             onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
           >
             <div className="flex items-center gap-1 laptop:gap-[18px]">
+            {props?.postProperties !== 'sharedlink-results' && (
               <div id="custom-checkbox" className="flex h-full items-center">
                 <input
                   id="small-checkbox"
@@ -311,7 +312,7 @@ const SingleAnswerMultipleChoice = (props) => {
                   checked={checkState}
                   readOnly
                 />
-              </div>
+              </div>)}
 
               {props.btnText === 'Results' ? (
                 <>
@@ -374,17 +375,20 @@ const SingleAnswerMultipleChoice = (props) => {
                 props.contendPercentages?.[props.answer.trim()] &&
                 props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
                   <div className="flex items-center gap-1 tablet:gap-[10px]">
+                     {props?.postProperties !== 'sharedlink-results' && (
                     <ContentionIcon
                       classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
                       checked={contendState}
-                    />
+                    />)}
                     <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                       {props.contendPercentages[props.answer.trim()]}
                     </span>
                   </div>
                 ) : (
                   <div className="flex items-center gap-1 tablet:gap-[10px]">
+                  {props?.postProperties !== 'sharedlink-results' && (
                     <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
+                    )}
                     <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
                   </div>
                 )}
