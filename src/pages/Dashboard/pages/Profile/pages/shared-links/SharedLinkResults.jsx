@@ -79,7 +79,7 @@ export default function SharedLinkResults() {
           ) : (
             questData && (
               <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px]">
-                <QuestionCardWithToggle questStartData={questData} postProperties={tab==='My Link Results'?'sharedlink-results':""} />
+                <QuestionCardWithToggle questStartData={questData} postProperties={tab==='My Link Results'?'sharedlink-results':""} SharedLinkButton={"shared-links-results-button"} />
               </div>
             )
           )}

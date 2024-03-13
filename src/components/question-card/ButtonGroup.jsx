@@ -45,6 +45,7 @@ const ButtonGroup = ({
   checkOptionStatus,
   postProperties,
   setAddOptionField,
+  SharedLinkButton
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -338,7 +339,7 @@ const ButtonGroup = ({
     );
   }
 
-  if (postProperties === 'sharedlink-results') {
+  if ( SharedLinkButton === 'shared-links-results-button') {
     return (
       <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
         <Button
