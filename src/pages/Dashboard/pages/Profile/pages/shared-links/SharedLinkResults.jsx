@@ -17,7 +17,7 @@ export default function SharedLinkResults() {
 
   const getAllResult = async () => {
     try {
-      const response = await getQuestById(persistedUserInfo?.uuid, location.state);
+      const response = await getQuestById(persistedUserInfo?.uuid, location.state.questId);
       setQuestData(response.data.data[0]);
     } catch (error) {
       console.error('API call failed:', error);
@@ -29,7 +29,12 @@ export default function SharedLinkResults() {
   const getSharedResult = async () => {
     try {
       const sharedLink = 'SharedLink';
-      const response = await getQuestById(persistedUserInfo?.uuid, location.state, sharedLink);
+      const response = await getQuestById(
+        persistedUserInfo?.uuid,
+        location.state.questId,
+        sharedLink,
+        location.state.link,
+      );
       setQuestData(response.data.data[0]);
     } catch (error) {
       console.error('API call failed:', error);
