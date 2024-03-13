@@ -32,7 +32,7 @@ const QuestionCardWithToggle = (props) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
-  const { questStartData, isBookmarked, postProperties } = props;
+  const { questStartData, isBookmarked, postProperties, SharedLinkButton } = props;
   const { setSubmitResponse, isSingleQuest, postLink } = props;
 
   let questData;
@@ -775,6 +775,7 @@ const QuestionCardWithToggle = (props) => {
             setRankedAnswers={setRankedAnswers}
             questSelection={questSelection}
             cardSize={cardSize}
+            postProperties={postProperties}
           />
           {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
           <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
@@ -815,6 +816,7 @@ const QuestionCardWithToggle = (props) => {
         setAddOptionField={setAddOptionField}
         checkOptionStatus={checkOptionStatus}
         postProperties={postProperties}
+        SharedLinkButton={ SharedLinkButton}
       />
     </QuestCardLayout>
   );

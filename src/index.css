@@ -10,11 +10,11 @@
 }
 
 .tab-button {
-  @apply rounded-[5px] border-[1px] px-[10px] py-1 text-[1.9vw] font-semibold leading-normal 2xl:px-[24px] tablet:rounded-[10.4px] tablet:px-[21px] tablet:py-2 laptop:rounded-[20.93px] laptop:px-8 laptop:py-3;
+  @apply rounded-[5px] border-[1px] px-[10px] py-1 text-[1.9vw] font-semibold leading-normal 2xl:px-[24px] tablet:rounded-[10px] tablet:px-4 tablet:py-2 tablet:leading-[24px] laptop:rounded-[15px] laptop:px-[26px] laptop:py-4 laptop:text-[24px];
 }
 
 .heading {
-  @apply text-[12px] font-semibold leading-normal text-[#616161] 2xl:text-[30px] tablet:text-[26.9px] laptop:text-[25px] dark:text-white;
+  @apply text-[12px] font-semibold leading-normal text-[#616161] 2xl:text-[30px] tablet:text-[16.9px] laptop:text-[25px] dark:text-white;
 }
 
 .green-select {

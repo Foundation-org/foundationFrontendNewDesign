@@ -9,6 +9,7 @@ import SortIcon from '../../../../../assets/SortIcon';
 const Result = (props) => {
   const { isFullScreen } = useParams();
   const [selectedOption, setSelectedOption] = useState(1);
+  const [contendedOption, setCcontendedOption] = useState(1);
   const [sortedAnswers, setSortedAnswers] = useState();
 
   function findSelectionContentionCheck(array, labelToFind) {
@@ -17,6 +18,7 @@ const Result = (props) => {
   }
 
   const handleSortIconClick = () => {
+    setCcontendedOption(1);
     setSelectedOption((prevOption) => {
       const nextOption = prevOption === 3 ? 1 : prevOption + 1;
 
@@ -35,6 +37,33 @@ const Result = (props) => {
         setSortedAnswers(rankedNewData);
       } else if (nextOption === 3) {
         const rankedNewData = sortAnswersByAscDesc(props, 'ascending');
+        setSortedAnswers(rankedNewData);
+      }
+
+      return nextOption;
+    });
+  };
+
+  const handleContendedSortIconClick = () => {
+    setSelectedOption(1);
+    setCcontendedOption((prevOption) => {
+      const nextOption = prevOption === 3 ? 1 : prevOption + 1;
+
+      if (nextOption === 1) {
+        if (
+          props.questStartData?.whichTypeQuestion === 'multiple choise' ||
+          props.questStartData?.whichTypeQuestion === 'open choice'
+        ) {
+          setSortedAnswers(props.questStartData?.QuestAnswers);
+        } else {
+          const rankedNewData = getRankedAnswers(props);
+          setSortedAnswers(rankedNewData);
+        }
+      } else if (nextOption === 2) {
+        const rankedNewData = sortContendedAnswersByAscDesc(props, 'descending');
+        setSortedAnswers(rankedNewData);
+      } else if (nextOption === 3) {
+        const rankedNewData = sortContendedAnswersByAscDesc(props, 'ascending');
         setSortedAnswers(rankedNewData);
       }
 
@@ -87,6 +116,36 @@ const Result = (props) => {
     });
   };
 
+  const sortContendedAnswersByAscDesc = (data, order) => {
+    const questAnswersCopy = [...data.questStartData.QuestAnswers];
+    return questAnswersCopy.sort((a, b) => {
+      const percentageA = parseFloat(
+        data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
+          a.question
+        ]?.replace('%', '')
+          ? data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
+              a.question
+            ]?.replace('%', '')
+          : 0,
+      );
+      const percentageB = parseFloat(
+        data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
+          b.question
+        ]?.replace('%', '')
+          ? data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
+              b.question
+            ]?.replace('%', '')
+          : 0,
+      );
+
+      if (order === 'ascending') {
+        return percentageA - percentageB;
+      } else {
+        return percentageB - percentageA;
+      }
+    });
+  };
+
   useEffect(() => {
     if (selectedOption === 1) {
       if (
@@ -111,6 +170,30 @@ const Result = (props) => {
     }
   }, [selectedOption, props.questStartData]);
 
+  useEffect(() => {
+    if (contendedOption === 1) {
+      if (
+        props.questStartData?.whichTypeQuestion === 'multiple choise' ||
+        props.questStartData?.whichTypeQuestion === 'open choice'
+      ) {
+        setSortedAnswers(props?.questStartData?.QuestAnswers);
+      } else {
+        const rankedNewData = getRankedAnswers(props);
+        setSortedAnswers(rankedNewData);
+      }
+    }
+
+    if (contendedOption === 2) {
+      const rankedNewData = sortContendedAnswersByAscDesc(props, 'descending');
+      setSortedAnswers(rankedNewData);
+    }
+
+    if (contendedOption === 3) {
+      const rankedNewData = sortContendedAnswersByAscDesc(props, 'ascending');
+      setSortedAnswers(rankedNewData);
+    }
+  }, [contendedOption, props.questStartData]);
+
   return (
     <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${props.cardSize}px ` }}>
       {props.title === 'Yes/No' || props.title === 'Agree/Disagree' || props.title === 'Like/Dislike' ? (
@@ -131,6 +214,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
               <SingleAnswer
                 number={'#2'}
@@ -146,6 +230,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
             </>
           ) : props.title === 'Agree/Disagree' ? (
@@ -165,6 +250,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
               <SingleAnswer
                 number={'#2'}
@@ -181,6 +267,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
             </>
           ) : props.title === 'Like/Dislike' ? (
@@ -199,6 +286,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
               <SingleAnswer
                 number={'#2'}
@@ -215,6 +303,7 @@ const Result = (props) => {
                 handleToggleCheck={props.handleToggleCheck}
                 btnText={'Results'}
                 questStartData={props.questStartData}
+                postProperties={props.postProperties}
               />
             </>
           ) : null}
@@ -225,18 +314,15 @@ const Result = (props) => {
             <button onClick={handleSortIconClick}>
               <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
             </button>
-
-            {/* <img
-              src="/assets/svgs/sortIcon.svg"
-              alt="sortIcon"
-              className="h-[11.561px] w-[7.593px] cursor-pointer tablet:h-5 tablet:w-[13.12px]"
-              onClick={handleSortIconClick}
-            /> */}
-            {/* <img
-              src="/assets/svgs/sortIcon.svg"
-              alt="sortIcon"
-              className="h-[11.561px] w-[7.593px] cursor-pointer tablet:h-5 tablet:w-[13.12px]"
-            /> */}
+          </div>
+          <div className="absolute -top-[21px] right-8 tablet:-top-7 tablet:right-[64px]">
+            <button onClick={handleContendedSortIconClick}>
+              <SortIcon
+                type={'contended'}
+                ass={contendedOption === 3 ? true : false}
+                des={contendedOption === 2 ? true : false}
+              />
+            </button>
           </div>
           <div
             className={`${
@@ -280,6 +366,7 @@ const Result = (props) => {
                   btnText={'Results'}
                   answersSelection={props.answersSelection}
                   setAnswerSelection={props.setAnswerSelection}
+                  postProperties={props.postProperties}
                 />
               </div>
             ))}
@@ -288,22 +375,19 @@ const Result = (props) => {
       ) : props.title === 'Ranked Choice' ? (
         <div className="relative">
           {/* <div className="absolute -top-4 right-[30px] flex gap-[34px] tablet:-top-7 tablet:right-20 tablet:gap-14"> */}
-          <div className="absolute -top-[21px] right-[73px] tablet:-top-7 tablet:right-[145px]">
+          <div className="absolute -top-[21px] right-[69px] tablet:-top-7 tablet:right-[145px]">
             <button onClick={handleSortIconClick}>
               <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
             </button>
-
-            {/* <img
-              src="/assets/svgs/sortIcon.svg"
-              alt="sortIcon"
-              className="h-[11.561px] w-[7.593px] cursor-pointer tablet:h-5 tablet:w-[13.12px]"
-              onClick={handleSortIconClick}
-            /> */}
-            {/* <img
-              src="/assets/svgs/sortIcon.svg"
-              alt="sortIcon"
-              className="h-[11.561px] w-[7.593px] cursor-pointer tablet:h-5 tablet:w-[13.12px]"
-            /> */}
+          </div>
+          <div className="absolute -top-[21px] right-6 tablet:-top-7 tablet:right-[70px]">
+            <button onClick={handleContendedSortIconClick}>
+              <SortIcon
+                type={'contended'}
+                ass={contendedOption === 3 ? true : false}
+                des={contendedOption === 2 ? true : false}
+              />
+            </button>
           </div>
           <div
             className={`${
@@ -340,6 +424,7 @@ const Result = (props) => {
                   )}
                   setAddOptionLimit={props.setAddOptionLimit}
                   btnText={'Results'}
+                  postProperties={props.postProperties}
                 />
               </div>
             ))}
