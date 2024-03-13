@@ -105,7 +105,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="flex gap-[15px]">
+          <div className="flex gap-[5.16px] tablet:gap-[15px]">
             <img
               src="/assets/svgs/dashboard/treasure.svg"
               alt="badge"
