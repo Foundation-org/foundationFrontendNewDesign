@@ -241,7 +241,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
           >
             {/* Topics */}
-            Rating Preferences
+            Ratings
           </button>
           <BasicModal
             open={openTopicPref}

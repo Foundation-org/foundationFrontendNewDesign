@@ -14,6 +14,7 @@ import { printEndMessage } from '../../../utils';
 import * as QuestServices from '../../../services/queries/quest';
 import * as filtersActions from '../../../features/sidebar/bookmarkFilterSlice';
 import * as questUtilsActions from '../../../features/quest/utilsSlice';
+import Slider from '../../../components/Slider';
 
 const Bookmark = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const Bookmark = () => {
   const [columns, setColumns] = useState(parsedColumns || initialColumns);
   const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
-  const [height, setHeight] = useState('calc(100vh - 92px)');
+  const [height, setHeight] = useState('calc(100vh - 140px)');
 
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
@@ -238,7 +239,7 @@ const Bookmark = () => {
 
   useEffect(() => {
     const updateHeight = () => {
-      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 182.3px)' : 'calc(100vh - 92px)';
+      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 182.3px)' : 'calc(100vh - 140px)';
       setHeight(newHeight);
     };
 
@@ -252,7 +253,7 @@ const Bookmark = () => {
   }, []);
 
   // console.log('🚀 ~ Bookmark ~ allData:', allData);
-
+  console.log('first', columns);
   return (
     <div className="w-full bg-[#F3F3F3] dark:bg-black">
       <div className="mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
@@ -263,13 +264,14 @@ const Bookmark = () => {
           setItemsWithCross={setItemsWithCross}
         />
         <div className="no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:min-h-[calc(100vh-92px)] dark:bg-[#242424]">
+          <Slider columns={columns} setColumns={setColumns} />
           <InfiniteScroll
             dataLength={allData?.length}
             next={fetchMoreData}
             hasMore={feedData?.hasNextPage}
             endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme, isBookmarked)}
             height={height}
-            className="no-scrollbar px-4 py-[10px] tablet:px-6 tablet:py-5"
+            className="no-scrollbar px-4 pb-[10px] tablet:px-6 tablet:pb-5"
           >
             <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
               {filterStates.expandedView

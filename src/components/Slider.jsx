@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 function Slider({ columns, setColumns }) {
+  console.log('first', columns);
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -84,50 +85,54 @@ function Slider({ columns, setColumns }) {
   };
 
   return (
-    <div className="mx-4 my-[7px] flex items-center gap-[6.75px] tablet:mx-6 tablet:my-[14.82px] tablet:gap-[13.82px]">
-      <div className="flex gap-[6.75px] border-r-[1.221px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px]">
-        <Button variant={'topics'} className={'bg-white text-[#ABABAB]'}>
-          New!
-        </Button>
-        <Button variant={'topics'} className={'bg-white text-[#ABABAB]'}>
-          Trending!
-        </Button>
-        <Button
-          variant={'topics'}
-          className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
-          onClick={handleMyPosts}
-        >
-          My Posts
-        </Button>
-      </div>
-      <button
-        onClick={handleLeftArrowClick}
-        className="h-[10px] w-[20px] rotate-180 tablet:h-[21px] tablet:w-[42px] "
-        style={{
-          background: 'url(/assets/svgs/arrow-right.svg',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '100% 100%',
-        }}
-      ></button>
+    <div className="mx-4 my-[7px] flex items-center tablet:mx-6 tablet:my-[14.82px]">
+      {scrollPosition > 0 && (
+        <button
+          onClick={handleLeftArrowClick}
+          className="h-[10px] w-[20px] rotate-180 tablet:h-[21px] tablet:w-[42px] "
+          style={{
+            background: 'url(/assets/svgs/arrow-right.svg',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '100% 100%',
+          }}
+        ></button>
+      )}
       <div
-        className="no-scrollbar flex gap-[6.75px] overflow-x-auto overflow-y-hidden tablet:gap-[13.82px]"
+        className="no-scrollbar mx-[5px] flex items-center gap-[6.75px] overflow-x-auto tablet:mx-[0px] tablet:gap-[13.82px]"
         id="buttonContainer"
       >
-        {columns?.All.list.map((item, index) => {
-          const isItemBlocked = columns?.Block.list.includes(item);
-          return (
-            <Button
-              variant={'topics'}
-              className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'}`}
-              key={index + 1}
-              onClick={() => {
-                handleSelectTopic(item);
-              }}
-            >
-              {item}
-            </Button>
-          );
-        })}
+        <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px]">
+          <Button variant={'topics'} className={'bg-white text-[#ABABAB]'}>
+            New!
+          </Button>
+          <Button variant={'topics'} className={'bg-white text-[#ABABAB]'}>
+            Trending!
+          </Button>
+          <Button
+            variant={'topics'}
+            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            onClick={handleMyPosts}
+          >
+            My Posts
+          </Button>
+        </div>
+        <div className="flex gap-[6.75px]  tablet:gap-[13.82px]">
+          {columns?.All.list.map((item, index) => {
+            const isItemBlocked = columns?.Block.list.includes(item);
+            return (
+              <Button
+                variant={'topics'}
+                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'}`}
+                key={index + 1}
+                onClick={() => {
+                  handleSelectTopic(item);
+                }}
+              >
+                {item}
+              </Button>
+            );
+          })}
+        </div>
       </div>
       <button
         onClick={handleRightArrowClick}
@@ -137,7 +142,7 @@ function Slider({ columns, setColumns }) {
           backgroundRepeat: 'no-repeat',
           backgroundSize: '100% 100%',
         }}
-      ></button>
+      ></button>{' '}
     </div>
   );
 }
