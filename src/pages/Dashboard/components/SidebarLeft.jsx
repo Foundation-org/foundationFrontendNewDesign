@@ -234,12 +234,14 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             Filters
           </h1>
           <button
-            onClick={handleTopicPref}
+            // onClick={handleTopicPref}
+            onClick={() => toast.success('Feature coming soon')}
             className={`${
               persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
           >
-            Topics
+            {/* Topics */}
+            Rating Preferences
           </button>
           <BasicModal
             open={openTopicPref}
@@ -328,9 +330,10 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             className={`${
               persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             }  inset-0 w-4/6 rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
-            onClick={handleTopicPref}
+            // onClick={handleTopicPref}
+            onClick={() => toast.success('Feature coming soon')}
           >
-            Topics
+            Ratings
           </button>
           <Dropdown2
             label={'Status'}

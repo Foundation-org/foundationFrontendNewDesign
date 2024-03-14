@@ -7,6 +7,7 @@ import QuestionCard from './components/QuestionCard';
 import SidebarLeft from '../../components/SidebarLeft';
 import SidebarRight from '../../components/SidebarRight';
 import QuestionCardWithToggle from './components/QuestionCardWithToggle';
+import Slider from '../../../../components/Slider';
 
 // Utilities and Constants
 import { printEndMessage } from '../../../../utils';
@@ -290,6 +291,7 @@ const QuestStartSection = () => {
           setItemsWithCross={setItemsWithCross}
         />
         <div className="no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:min-h-[calc(100vh-92px)] dark:bg-[#242424]">
+          <Slider columns={columns} setColumns={setColumns} />
           <InfiniteScroll
             dataLength={allData?.length}
             next={fetchMoreData}
