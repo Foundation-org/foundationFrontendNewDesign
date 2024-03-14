@@ -46,7 +46,7 @@ export function Router() {
     <>
       {!persistedUser ? (
         <>
-          {/* Public */}
+          {/* Public */} 
           <Routes>
             <Route path="/maintenance" element={<Maintenance />} />
             <Route path="/" element={<Welcome />} />
