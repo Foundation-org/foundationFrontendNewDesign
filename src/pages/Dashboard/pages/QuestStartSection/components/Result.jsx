@@ -12,10 +12,60 @@ const Result = (props) => {
   const [contendedOption, setCcontendedOption] = useState(1);
   const [sortedAnswers, setSortedAnswers] = useState();
 
+  const getAnswerData = (answer, type, index) => {
+    const percentage =
+      props.questStartData.selectedPercentage && props.questStartData.selectedPercentage.length > 0
+        ? props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1][answer]
+        : null;
+
+    return {
+      number: `#${index + 1}`,
+      answer,
+      percentage,
+      check: props.questSelection[type][answer.toLowerCase()].check,
+      contend: props.questSelection[type][answer.toLowerCase()].check,
+    };
+  };
+
+  const getQuestionData = () => {
+    switch (props.questStartData.whichTypeQuestion) {
+      case 'yes/no':
+        return ['Yes', 'No'].map((answer, index) => getAnswerData(answer, 'yes/no', index));
+      case 'agree/disagree':
+        return ['Agree', 'Disagree'].map((answer, index) => getAnswerData(answer, 'agree/disagree', index));
+      case 'like/dislike':
+        return ['Like', 'Dislike'].map((answer, index) => getAnswerData(answer, 'like/dislike', index));
+      default:
+        return [];
+    }
+  };
+
+  const [answersData, setAnswersData] = useState(getQuestionData());
+
   function findSelectionContentionCheck(array, labelToFind) {
     const foundObject = array.find((obj) => obj.question === labelToFind);
     return !!foundObject;
   }
+
+  const handleSortSingleType = () => {
+    setCcontendedOption(1);
+    setSelectedOption((prevOption) => {
+      const nextOption = prevOption === 3 ? 1 : prevOption + 1;
+
+      if (nextOption === 1) {
+        const sortedNormalByPercentage = sortAnswersDataByPercentage(answersData, 'normal');
+        setAnswersData(sortedNormalByPercentage);
+      } else if (nextOption === 2) {
+        const sortedDescendingByPercentage = sortAnswersDataByPercentage(answersData, 'descending');
+        setAnswersData(sortedDescendingByPercentage);
+      } else if (nextOption === 3) {
+        const sortedAscendingByPercentage = sortAnswersDataByPercentage(answersData, 'ascending');
+        setAnswersData(sortedAscendingByPercentage);
+      }
+
+      return nextOption;
+    });
+  };
 
   const handleSortIconClick = () => {
     setCcontendedOption(1);
@@ -194,114 +244,57 @@ const Result = (props) => {
     }
   }, [contendedOption, props.questStartData]);
 
+  function sortAnswersDataByPercentage(answersData, sortOrder) {
+    const data = [...answersData];
+
+    return data.sort((a, b) => {
+      let percentageA = parseFloat(a.percentage);
+      let percentageB = parseFloat(b.percentage);
+
+      if (sortOrder === 'ascending') {
+        return percentageA - percentageB;
+      } else if (sortOrder === 'descending') {
+        return percentageB - percentageA;
+      } else {
+        let val1 = parseInt(a.number.slice(1));
+        let val2 = parseInt(b.number.slice(1));
+        return val1 - val2;
+      }
+    });
+  }
+
+  useEffect(() => {
+    setSelectedOption(1);
+    setAnswersData(getQuestionData());
+  }, [props.questStartData]);
+
   return (
     <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${props.cardSize}px ` }}>
       {props.title === 'Yes/No' || props.title === 'Agree/Disagree' || props.title === 'Like/Dislike' ? (
-        <>
-          {props.title === 'Yes/No' ? (
-            <>
-              <SingleAnswer
-                number={'#1'}
-                answer={'Yes'}
-                percentage={
-                  props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
-                    ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1].Yes
-                    : null
-                }
-                check={props.questSelection['yes/no'].yes.check}
-                contend={props.questSelection['yes/no'].yes.check}
-                handleToggleCheck={props.handleToggleCheck}
-                btnText={'Results'}
-                questStartData={props.questStartData}
-                postProperties={props.postProperties}
-              />
-              <SingleAnswer
-                number={'#2'}
-                answer={'No'}
-                percentage={
-                  props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
-                    ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1].No
-                    : null
-                }
-                check={props.questSelection['yes/no'].no.check}
-                contend={props.questSelection['yes/no'].no.check}
-                handleToggleCheck={props.handleToggleCheck}
-                btnText={'Results'}
-                questStartData={props.questStartData}
-                postProperties={props.postProperties}
-              />
-            </>
-          ) : props.title === 'Agree/Disagree' ? (
-            <>
-              <SingleAnswer
-                number={'#1'}
-                answer={'Agree'}
-                percentage={
-                  props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
-                    ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1]
-                        .Agree
-                    : null
-                }
-                check={props.questSelection['agree/disagree'].agree.check}
-                contend={props.questSelection['agree/disagree'].agree.check}
-                handleToggleCheck={props.handleToggleCheck}
-                btnText={'Results'}
-                questStartData={props.questStartData}
-                postProperties={props.postProperties}
-              />
-              <SingleAnswer
-                number={'#2'}
-                answer={'Disagree'}
-                percentage={
-                  props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
-                    ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1]
-                        .Disagree
-                    : null
-                }
-                check={props.questSelection['agree/disagree'].disagree.check}
-                contend={props.questSelection['agree/disagree'].disagree.check}
-                handleToggleCheck={props.handleToggleCheck}
-                btnText={'Results'}
-                questStartData={props.questStartData}
-                postProperties={props.postProperties}
-              />
-            </>
-          ) : props.title === 'Like/Dislike' ? (
-            <>
-              <SingleAnswer
-                number={'#1'}
-                answer={'Like'}
-                percentage={
-                  props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
-                    ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1].Like
-                    : null
-                }
-                check={props.questSelection['like/dislike'].like.check}
-                contend={props.questSelection['like/dislike'].like.check}
-                handleToggleCheck={props.handleToggleCheck}
-                btnText={'Results'}
-                questStartData={props.questStartData}
-                postProperties={props.postProperties}
-              />
-              <SingleAnswer
-                number={'#2'}
-                answer={'Dislike'}
-                percentage={
-                  props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
-                    ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1]
-                        .Dislike
-                    : null
-                }
-                check={props.questSelection['like/dislike'].dislike.check}
-                contend={props.questSelection['like/dislike'].dislike.check}
-                handleToggleCheck={props.handleToggleCheck}
-                btnText={'Results'}
-                questStartData={props.questStartData}
-                postProperties={props.postProperties}
-              />
-            </>
-          ) : null}
-        </>
+        <div
+          className="relative flex flex-col gap-[5.7px] tablet:gap-[10px]"
+          style={{ minHeight: `${props.cardSize}px ` }}
+        >
+          <div className="absolute -top-[21px] right-[73px] tablet:-top-7 tablet:right-[135px]">
+            <button onClick={handleSortSingleType}>
+              <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
+            </button>
+          </div>
+          {answersData?.map((item) => (
+            <SingleAnswer
+              key={item.number}
+              number={item.number}
+              answer={item.answer}
+              percentage={item.percentage}
+              check={item.check}
+              contend={item.check}
+              handleToggleCheck={props.handleToggleCheck}
+              btnText={'Results'}
+              questStartData={props.questStartData}
+              postProperties={props.postProperties}
+            />
+          ))}
+        </div>
       ) : props.title === 'Multiple Choice' || props.title === 'Open Choice' ? (
         <div className="relative">
           <div className="absolute -top-[21px] right-[73px] tablet:-top-7 tablet:right-[135px]">

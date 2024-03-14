@@ -238,7 +238,6 @@ const Bookmark = () => {
 
   useEffect(() => {
     const updateHeight = () => {
-      console.log('first', window.innerWidth);
       const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 182.3px)' : 'calc(100vh - 92px)';
       setHeight(newHeight);
     };
