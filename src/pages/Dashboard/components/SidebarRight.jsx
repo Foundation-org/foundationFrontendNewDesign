@@ -204,6 +204,7 @@ const SidebarRight = () => {
       setModalVisible(false);
       const res = await api.patch(`/updateBadge/${persistedUserInfo._id}/${persistedUserInfo.badges[0]._id}`, {
         type: value,
+        primary:true
       });
       if (res.status === 200) {
         localStorage.setItem('uId', res.data.uuid);

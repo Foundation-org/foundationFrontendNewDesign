@@ -16,6 +16,8 @@ export default function BadgeRemovePopup({
   accountName,
   fetchUser,
   setFetchUser,
+  type,
+  badgeType
 }) {
   const dispatch = useDispatch();
   const [loading,setIsLoading]=useState(false);
@@ -36,17 +38,34 @@ export default function BadgeRemovePopup({
   const handleRemoveBadge = async () => {
     setIsLoading(true);
     const findBadge = fetchUser.badges.filter((item) => {
-      if (item.accountName === accountName) {
-        return item;
+      if(badgeType==="contact"){
+           if(item.type===type){
+            return item;
+           }
+      }else{
+
+        if (item.accountName === accountName) {
+          return item;
+        }
       }
     });
     console.log(findBadge);
     console.log(fetchUser);
     try {
-      const removeBadge = await api.post(`/removeBadge`, {
-        badgeAccountId: findBadge[0].accountId,
-        uuid: fetchUser.uuid,
+      let removeBadge;
+      
+      if(badgeType==="contact"){
+         removeBadge = await api.post(`/removeContactBadge`, {
+          type: findBadge[0].type,
+          uuid: fetchUser.uuid,
+        });
+   }else{
+    
+      removeBadge = await api.post(`/removeBadge`, {
+       badgeAccountId: findBadge[0].accountId,
+       uuid: fetchUser.uuid,
       });
+    }
 
       if (removeBadge.status === 200) {
         toast.success('Badge Removed Successfully!');

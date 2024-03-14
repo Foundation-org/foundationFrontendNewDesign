@@ -125,8 +125,9 @@ const VerificationBadges = () => {
     }
   }, []);
 
-  const checkPersonal = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
-  const checkSocial = (itemType) => fetchUser?.badges?.some((i) => i.accountName === itemType);
+  const checkContact = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
+  const checkPrimary = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType && i.primary===true);
+  const checkSocial = (name) => fetchUser?.badges?.some((i) => i.accountName === name);
 
   const handleRemoveBadge = async (accountName) => {
     const findBadge = fetchUser.badges.filter((item) => {
@@ -194,12 +195,28 @@ const VerificationBadges = () => {
     return;
   };
 
-  const handleClickContactBadgeEmail = (type) => {
+  const handleClickContactBadgeEmail = (type,title,image) => {
     if (persistedUserInfo?.role === 'guest') {
       handleGuestBadgeAdd();
     } else {
-      setIsPopup(true);
-      setSelectedBadge(type);
+      if(!checkContact(type)){
+
+        setIsPopup(true);
+        setSelectedBadge(type);
+      }
+      else if(checkContact(type) && !checkPrimary(type))
+      {
+        handleRemoveBadgePopup({
+          title:title,
+          image:image,
+          type:type,
+          badgeType:"contact"
+
+
+        })
+          
+      }
+     
     }
   };
 
@@ -257,6 +274,8 @@ const VerificationBadges = () => {
               title={deleteModalState.title}
               image={deleteModalState.image}
               accountName={deleteModalState.accountName}
+              type={deleteModalState.type}
+              badgeType={deleteModalState.badgeType}
               fetchUser={fetchUser}
               setFetchUser={setFetchUser}
             />
@@ -293,16 +312,15 @@ const VerificationBadges = () => {
                       <h1>{item.title}</h1>
                     </div>
                     <Button
-                      color={checkPersonal(item.type) ? 'yellow' : item.ButtonColor}
+                      color={checkContact(item.type) ? checkPrimary(item.type)?'yellow':'red' : item.ButtonColor}
                       onClick={() =>
-                        !checkPersonal(item.type) &&
                         item.ButtonColor !== 'gray' &&
-                        handleClickContactBadgeEmail(item.type)
+                        handleClickContactBadgeEmail(item.type,item.title,item.image)
                       }
                     >
-                      {checkPersonal(item.type) ? 'Added' : item.ButtonText}
+                      {checkContact(item.type) ? checkPrimary(item.type)?'Added':'Remove' : item.ButtonText}
                       <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkPersonal(item.type) ? '' : '(+0.96 FDX)'}
+                        {checkContact(item.type) ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
                   </div>

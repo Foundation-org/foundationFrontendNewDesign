@@ -201,6 +201,7 @@ export default function Signup() {
       setModalVisible(false);
       const res = await api.patch(`/updateBadge/${resData.userId}/${resData.badgeId}`, {
         type: value,
+        primary:true,
       });
       if (res.status === 200) {
         localStorage.setItem('uId', res.data.uuid);
