@@ -817,7 +817,7 @@ const QuestionCardWithToggle = (props) => {
         setAddOptionField={setAddOptionField}
         checkOptionStatus={checkOptionStatus}
         postProperties={postProperties}
-        SharedLinkButton={ SharedLinkButton}
+        SharedLinkButton={SharedLinkButton}
       />
     </QuestCardLayout>
   );

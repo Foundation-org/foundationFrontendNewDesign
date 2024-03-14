@@ -203,7 +203,6 @@ const Result = (props) => {
               <SingleAnswer
                 number={'#1'}
                 answer={'Yes'}
-                checkInfo={true}
                 percentage={
                   props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
                     ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1].Yes
@@ -219,7 +218,6 @@ const Result = (props) => {
               <SingleAnswer
                 number={'#2'}
                 answer={'No'}
-                checkInfo={true}
                 percentage={
                   props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
                     ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1].No
@@ -238,7 +236,6 @@ const Result = (props) => {
               <SingleAnswer
                 number={'#1'}
                 answer={'Agree'}
-                checkInfo={true}
                 percentage={
                   props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
                     ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1]
@@ -255,7 +252,6 @@ const Result = (props) => {
               <SingleAnswer
                 number={'#2'}
                 answer={'Disagree'}
-                checkInfo={true}
                 percentage={
                   props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
                     ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1]
@@ -275,7 +271,6 @@ const Result = (props) => {
               <SingleAnswer
                 number={'#1'}
                 answer={'Like'}
-                checkInfo={true}
                 percentage={
                   props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
                     ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1].Like
@@ -291,7 +286,6 @@ const Result = (props) => {
               <SingleAnswer
                 number={'#2'}
                 answer={'Dislike'}
-                checkInfo={true}
                 percentage={
                   props.questStartData.selectedPercentage && props.questStartData?.selectedPercentage.length > 0
                     ? props.questStartData?.selectedPercentage[props.questStartData?.selectedPercentage.length - 1]
