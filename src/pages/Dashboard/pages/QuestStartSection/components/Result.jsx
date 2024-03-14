@@ -16,7 +16,7 @@ const Result = (props) => {
     const percentage =
       props.questStartData.selectedPercentage && props.questStartData.selectedPercentage.length > 0
         ? props.questStartData.selectedPercentage[props.questStartData.selectedPercentage.length - 1][answer]
-        : null;
+        : '0%';
 
     return {
       number: `#${index + 1}`,

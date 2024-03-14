@@ -135,7 +135,7 @@ const RankedResult = (props) => {
                   </span>
                 </div>
               ) : (
-                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0.00%</span>
+                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
               )}
             </>
           ) : null}
