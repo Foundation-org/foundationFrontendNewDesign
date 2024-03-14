@@ -7,6 +7,7 @@ import api from '../../../services/api/Axios';
 import * as filterActions from '../../../features/sidebar/filtersSlice';
 import { useDispatch } from 'react-redux';
 import * as createQuestActions from '../../../features/createQuest/createQuestSlice';
+import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
 
 const Topbar = () => {
   const location = useLocation();
@@ -165,6 +166,7 @@ const Topbar = () => {
                 }`}
                 onClick={() => {
                   dispatch(createQuestActions.resetCreateQuest());
+                  dispatch(addSharedLinkPost(null));
                 }}
               >
                 {location.pathname === item.path || location.pathname === `${item.path}/` ? (
