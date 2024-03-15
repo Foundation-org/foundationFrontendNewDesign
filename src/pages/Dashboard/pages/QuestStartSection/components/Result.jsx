@@ -168,32 +168,37 @@ const Result = (props) => {
 
   const sortContendedAnswersByAscDesc = (data, order) => {
     const questAnswersCopy = [...data.questStartData.QuestAnswers];
-    return questAnswersCopy.sort((a, b) => {
-      const percentageA = parseFloat(
-        data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
-          a.question
-        ]?.replace('%', '')
-          ? data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
-              a.question
-            ]?.replace('%', '')
-          : 0,
-      );
-      const percentageB = parseFloat(
-        data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
-          b.question
-        ]?.replace('%', '')
-          ? data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
-              b.question
-            ]?.replace('%', '')
-          : 0,
-      );
+    console.log('first', data.questStartData);
+    if (data.questStartData?.contendedPercentage.length > 0 && data.questStartData?.contendedPercentage[0] !== null) {
+      return questAnswersCopy.sort((a, b) => {
+        const percentageA = parseFloat(
+          data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
+            a.question
+          ]?.replace('%', '')
+            ? data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
+                a.question
+              ]?.replace('%', '')
+            : 0,
+        );
+        const percentageB = parseFloat(
+          data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
+            b.question
+          ]?.replace('%', '')
+            ? data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][
+                b.question
+              ]?.replace('%', '')
+            : 0,
+        );
 
-      if (order === 'ascending') {
-        return percentageA - percentageB;
-      } else {
-        return percentageB - percentageA;
-      }
-    });
+        if (order === 'ascending') {
+          return percentageA - percentageB;
+        } else {
+          return percentageB - percentageA;
+        }
+      });
+    } else {
+      return questAnswersCopy;
+    }
   };
 
   useEffect(() => {
