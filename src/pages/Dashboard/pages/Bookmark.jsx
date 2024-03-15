@@ -285,7 +285,7 @@ const Bookmark = () => {
                           submitResponse={submitResponse}
                           setSubmitResponse={setSubmitResponse}
                           id={item._id}
-                          img="/assets/svgs/dashboard/badge.svg"
+                          img={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
                           alt="badge"
                           badgeCount="5"
                           title={
@@ -342,7 +342,7 @@ const Bookmark = () => {
                         questStartData={item}
                         setPagination={setPagination}
                         id={item._id}
-                        img="/assets/svgs/dashboard/badge.svg"
+                        img={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
                         alt="badge"
                         badgeCount="5"
                         title={

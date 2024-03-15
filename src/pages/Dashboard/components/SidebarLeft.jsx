@@ -225,12 +225,20 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
                 </button>
               )}
               {!search && (
-                <img src="/assets/svgs/dashboard/search.svg" alt="search" className="absolute right-3 top-4 h-4 w-4" />
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
+                  alt="search"
+                  className="absolute right-3 top-4 h-4 w-4"
+                />
               )}
             </div>
           </div>
           <h1 className="flex w-[212px] items-center gap-2 py-[3vh] text-[22px] font-[500] leading-none text-[#888] dark:text-white">
-            <img src="/assets/svgs/dashboard/filter.svg" alt="filter" className="h-[1.188rem] w-[1.188rem]" />
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/filter.svg`}
+              alt="filter"
+              className="h-[1.188rem] w-[1.188rem]"
+            />
             Filters
           </h1>
           <button
@@ -411,7 +419,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             )}
             {!search && (
               <img
-                src="/assets/svgs/dashboard/search.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
                 alt="search"
                 className="absolute right-[12px] top-[9px] h-3 w-3 tablet:top-3 tablet:h-[26.4px] tablet:w-[24.3px]"
               />

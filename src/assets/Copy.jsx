@@ -1,7 +1,11 @@
 const Copy = ({ color, h, w }) => {
   return (
-    <div className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] ">
-      <img src="/assets/svgs/copylg.png" alt="copy" className="h-3 w-3 tablet:h-[23px] tablet:w-[23px]" />
+    <div className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] ">
+      <img
+        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copylg.png`}
+        alt="copy"
+        className="h-3 w-3 tablet:h-[23px] tablet:w-[23px]"
+      />
       {/* <svg
         className="h-3 w-3 md:h-[1.024rem] md:w-[1.024rem] tablet:h-[23px] tablet:w-5 "
         style={{ height: h, width: w }}

@@ -107,7 +107,7 @@ const Profile = () => {
           </div>
           <div className="flex gap-[5.16px] tablet:gap-[15px]">
             <img
-              src="/assets/svgs/dashboard/treasure.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
               alt="badge"
               className="h-[26px] w-[26px] tablet:h-12 tablet:w-12 laptop:h-16  laptop:w-16"
             />

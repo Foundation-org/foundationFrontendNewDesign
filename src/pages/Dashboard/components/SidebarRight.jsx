@@ -24,96 +24,96 @@ const SidebarRight = () => {
   const sidebarList = [
     {
       id: 1,
-      icon: '/assets/svgs/dashboard/icon1.svg',
-      iconLight: '/assets/svgs/dashboard/icon11.svg',
+      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon1.svg`,
+      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon11.svg`,
       alt: 'icon1',
       title: 'Posts-Created',
       value: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0,
     },
     {
       id: 2,
-      icon: '/assets/svgs/dashboard/icon2.svg',
-      iconLight: '/assets/svgs/dashboard/icon12.svg',
+      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon2.svg`,
+      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon12.svg`,
       alt: 'icon1',
       title: 'Posts-Engaged',
       value: (persistedUserInfo && persistedUserInfo?.yourPostEngaged) || 0,
     },
     {
       id: 3,
-      icon: '/assets/svgs/dashboard/your-post-engaged.svg',
-      iconLight: '/assets/svgs/dashboard/your-post-engaged.svg',
+      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/your-post-engaged.svg`,
+      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/your-post-engaged.svg`,
       alt: 'your-post-engaged',
       title: 'Your Posts-Engaged',
       value: (persistedUserInfo && persistedUserInfo?.usersAnswered) || 0,
     },
     {
       id: 4,
-      icon: '/assets/svgs/dashboard/couter-eye.svg',
-      iconLight: '/assets/svgs/dashboard/couter-eye.svg',
+      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/couter-eye.svg`,
+      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/couter-eye.svg`,
       alt: 'your-post-hidden',
       title: 'Your Posts-Hidden',
       value: (persistedUserInfo && persistedUserInfo?.yourHiddenPostCounter) || 0,
     },
     // {
     //   id: 3,
-    //   icon: "/assets/svgs/dashboard/wronganswers.svg",
-    //   iconLight: "/assets/svgs/dashboard/correntans.svg",
+    //   icon: {`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/wronganswers.svg`},
+    //   iconLight: {`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/correntans.svg`},
     //   alt: "icon1",
     //   title: "Correct Answers",
     //   value: (response && response?.correctAnswer) || 0,
     // },
     // {
     //   id: 4,
-    //   icon: "/assets/svgs/dashboard/correctanswers.svg",
-    //   iconLight: "/assets/svgs/dashboard/wrongans.svg",
+    //   icon: {`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/correctanswers.svg`},
+    //   iconLight: {`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/wrongans.svg`},
     //   alt: "icon1",
     //   title: "Wrong Answers",
     //   value: (response && response?.wrongAnswers) || 0,
     // },
     {
       id: 5,
-      icon: '/assets/svgs/dashboard/icon5.svg',
-      iconLight: '/assets/svgs/dashboard/icon15.svg',
+      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon5.svg`,
+      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon15.svg`,
       alt: 'icon1',
       title: 'Selections-Changed',
       value: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0,
     },
     {
       id: 6,
-      icon: '/assets/svgs/dashboard/icon6.svg',
-      iconLight: '/assets/svgs/dashboard/icon16.svg',
+      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon6.svg`,
+      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon16.svg`,
       alt: 'icon1',
       title: 'Options-Added',
       value: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0,
     },
     {
       id: 7,
-      icon: '/assets/svgs/dashboard/icon7.svg',
-      iconLight: '/assets/svgs/dashboard/working.png',
+      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon7.svg`,
+      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/working.png`,
       alt: 'icon1',
       title: 'Agreement-Received',
       value: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0,
     },
     {
       id: 8,
-      icon: '/assets/svgs/dashboard/icon8.svg',
-      iconLight: '/assets/svgs/dashboard/icon18.svg',
+      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon8.svg`,
+      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon18.svg`,
       alt: 'icon1',
       title: 'Objections-Received',
       value: (persistedUserInfo && persistedUserInfo?.contentionsOnAddedAns) || 0,
     },
     {
       id: 9,
-      icon: '/assets/svgs/dashboard/icon9.svg',
-      iconLight: '/assets/svgs/dashboard/icon19.svg',
+      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon9.svg`,
+      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon19.svg`,
       alt: 'icon1',
       title: 'Objections-Given',
       value: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0,
     },
     {
       id: 10,
-      icon: '/assets/svgs/dashboard/last.svg',
-      iconLight: '/assets/svgs/dashboard/icon20.svg',
+      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/last.svg`,
+      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon20.svg`,
       alt: 'icon1',
       title: 'Code of Conduct-Fails',
       value: (persistedUserInfo && persistedUserInfo?.violationCounter) || 0,
@@ -204,7 +204,7 @@ const SidebarRight = () => {
       setModalVisible(false);
       const res = await api.patch(`/updateBadge/${persistedUserInfo._id}/${persistedUserInfo.badges[0]._id}`, {
         type: value,
-        primary:true
+        primary: true,
       });
       if (res.status === 200) {
         localStorage.setItem('uId', res.data.uuid);
@@ -225,7 +225,12 @@ const SidebarRight = () => {
   return (
     <>
       <div className="no-scrollbar mt-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto rounded-[15px] bg-white py-8 pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
-        <PopUp logo={'/assets/svgs/email.svg'} title={'Email'} open={modalVisible} closeIcon={true}>
+        <PopUp
+          logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email.svg`}
+          title={'Email'}
+          open={modalVisible}
+          closeIcon={true}
+        >
           <div className="flex flex-col items-center pb-[32px] pt-2">
             <p className="text-center text-[8px] font-semibold text-[#838383] tablet:text-[25px]">
               {persistedUserInfo?.email}
@@ -241,7 +246,7 @@ const SidebarRight = () => {
               >
                 <img
                   className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10"
-                  src="/assets/svgs/personal.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/personal.svg`}
                   alt="personal"
                 />
                 Personal
@@ -251,7 +256,11 @@ const SidebarRight = () => {
                 className="gap-2 tablet:gap-[15px]"
                 onClick={() => handleEmailType('work')}
               >
-                <img className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10" src="/assets/svgs/work.svg" alt="work" />{' '}
+                <img
+                  className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/work.svg`}
+                  alt="work"
+                />{' '}
                 Work
               </Button>
             </div>
@@ -259,7 +268,7 @@ const SidebarRight = () => {
         </PopUp>
         {/* //Teasury Icon and val
          <div className="mb-[3vh] flex gap-[15px]">
-          <img src="/assets/svgs/dashboard/treasure.svg" alt="badge" className="h-[60px] w-[60px]" />
+          <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`} alt="badge" className="h-[60px] w-[60px]" />
           <div>
             <h4 className="heading">Treasury</h4>
             <p className="whitespace-nowrap text-[20px] font-medium text-[#616161] dark:text-white">
@@ -271,7 +280,7 @@ const SidebarRight = () => {
           <div className="mb-[35px] flex items-center gap-6">
             <div className="relative h-fit w-fit">
               <img
-                src="/assets/svgs/dashboard/guestBadge.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
                 alt="badge"
                 className="tablet:h-[74px] tablet:w-[60px]"
               />
@@ -297,7 +306,11 @@ const SidebarRight = () => {
             }}
           >
             <div className="relative h-fit w-fit">
-              <img src="/assets/svgs/dashboard/MeBadge.svg" alt="badge" className="tablet:h-[74px] tablet:w-[60px]" />
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
+                alt="badge"
+                className="tablet:h-[74px] tablet:w-[60px]"
+              />
               <p className="transform-center absolute z-50 pb-5 text-[32.25px] font-medium leading-normal text-[#7A7016]">
                 {persistedUserInfo?.badges?.length}
               </p>

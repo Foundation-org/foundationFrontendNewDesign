@@ -187,7 +187,7 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
             )}
             {!getPreferences?.topicSearch && (
               <img
-                src="/assets/svgs/dashboard/search.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
                 alt="search"
                 className="absolute right-[12px] top-1/2 h-3 w-3 -translate-y-1/2 laptop:top-1/2 laptop:h-[26.4px] laptop:w-[24.3px] laptop:-translate-x-1/2 laptop:-translate-y-1/2"
               />
@@ -239,13 +239,13 @@ const TopicPreferences = ({ columns, setColumns, handleClose, itemsWithCross, se
                                     >
                                       {persistedTheme === 'dark' ? (
                                         <img
-                                          src="/assets/svgs/dashboard/six-dots-dark.svg"
+                                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`}
                                           alt="six dots"
                                           className="h-2 tablet:h-3 laptop:h-auto"
                                         />
                                       ) : (
                                         <img
-                                          src="/assets/svgs/dashboard/six-dots.svg"
+                                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`}
                                           alt="six dots"
                                           className="h-2 tablet:h-3 laptop:h-auto"
                                         />

@@ -13,16 +13,24 @@ export default function Signup() {
           persistedTheme === 'dark' ? 'bg-dark' : 'bg-blue'
         } flex h-[65px] w-full items-center justify-center bg-[#202329] xl:hidden`}
       >
-        <img src="/assets/svgs/logo.svg" alt="logo" className="h-[45px] w-[58px]" />
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
+          alt="logo"
+          className="h-[45px] w-[58px]"
+        />
       </div>
       <div className="hidden h-screen w-fit items-center px-[9.15vw] xl:flex">
-        <img src="/assets/svgs/logo.svg" alt="logo" className="h-[20vh] w-[23vw]" />
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
+          alt="logo"
+          className="h-[20vh] w-[23vw]"
+        />
       </div>
 
       <div className="flex h-screen w-full flex-col items-center bg-white md:justify-center xl:rounded-bl-[65px] xl:rounded-tl-[65px] dark:bg-dark">
         <div className="flex h-full flex-col items-center px-[30px]  pb-[174px] pt-5 tablet:justify-center tablet:px-[95px] tablet:pt-[94px]">
           <img
-            src="/assets/welcomePage/welcome.svg"
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/welcomePage/welcome.svg`}
             alt="welcome logo"
             className="mb-[17px] h-20 w-20 tablet:mb-[39px] tablet:h-[178.2px] tablet:w-[178.2px]"
           />

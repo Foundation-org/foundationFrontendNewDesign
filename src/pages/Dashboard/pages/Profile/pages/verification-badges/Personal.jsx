@@ -47,7 +47,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             setIsPopup={setIsPersonalPopup}
             title="First Name"
             type={'firstName'}
-            logo="/assets/profile/firstname.png"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/firstname.png`}
             placeholder="First Name Here"
             handleUserInfo={handleUserInfo}
           />
@@ -60,7 +60,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             setIsPopup={setIsPersonalPopup}
             title="Last Name"
             type={'lastName'}
-            logo="/assets/profile/lastname.png"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/lastname.png`}
             placeholder="Last Name Here"
             handleUserInfo={handleUserInfo}
           />
@@ -73,7 +73,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             setIsPopup={setIsPersonalPopup}
             title="Date of Birth"
             type={'dateOfBirth'}
-            logo="/assets/profile/dob.svg"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/dob.svg`}
             placeholder="MM/DD/YYYY"
             handleUserInfo={handleUserInfo}
           />
@@ -86,7 +86,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             setIsPopup={setIsPersonalPopup}
             title="Current City"
             type={'currentCity'}
-            logo="/assets/profile/currentcity-1.png"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/currentcity-1.png`}
             placeholder="Current City here"
             handleUserInfo={handleUserInfo}
           />
@@ -99,7 +99,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             setIsPopup={setIsPersonalPopup}
             title="Home Town"
             type={'homeTown'}
-            logo="/assets/profile/hometown.svg"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/hometown.svg`}
             placeholder="Hometown Here"
             handleUserInfo={handleUserInfo}
           />
@@ -112,7 +112,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             setIsPopup={setIsPersonalPopup}
             title="Relationship Status"
             type={'relationshipStatus'}
-            logo="/assets/profile/relationaship-1.png"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`}
             placeholder="Relationship Here"
             handleUserInfo={handleUserInfo}
           />
@@ -125,7 +125,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             setIsPopup={setIsPersonalPopup}
             title="Work"
             type={'work'}
-            logo="/assets/profile/work-a.png"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`}
             placeholder="Work Here"
             handleUserInfo={handleUserInfo}
           />
@@ -138,7 +138,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             setIsPopup={setIsPersonalPopup}
             title="Education"
             type={'education'}
-            logo="/assets/profile/education-1.png"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`}
             placeholder="Education Here"
             handleUserInfo={handleUserInfo}
           />
@@ -151,7 +151,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             setIsPopup={setIsPersonalPopup}
             title="ID / Passport"
             type={'id-passport'}
-            logo="/assets/profile/Identity-2x-1.png"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Identity-2x-1.png`}
             placeholder="ID / Passport Here"
             handleUserInfo={handleUserInfo}
           />
@@ -164,7 +164,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             setIsPopup={setIsPersonalPopup}
             title="Geolocation"
             type={'geolocation'}
-            logo="/assets/profile/education-1.png"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`}
             placeholder="Geolocation"
             handleUserInfo={handleUserInfo}
           />
@@ -177,7 +177,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             setIsPopup={setIsPersonalPopup}
             title="Security Question"
             type={'security-question'}
-            logo="/assets/profile/securityquestion-a.png"
+            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/securityquestion-a.png`}
             placeholder="Answer Here"
             handleUserInfo={handleUserInfo}
           />

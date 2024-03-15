@@ -34,7 +34,12 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
   });
 
   return (
-    <PopUp logo={'/assets/dialoguebox/unhide.svg'} title={'Unhide Post'} open={modalVisible} handleClose={handleClose}>
+    <PopUp
+      logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/dialoguebox/unhide.svg`}
+      title={'Unhide Post'}
+      open={modalVisible}
+      handleClose={handleClose}
+    >
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           Are you sure you want to unhide this post? It will appear on your home feed.

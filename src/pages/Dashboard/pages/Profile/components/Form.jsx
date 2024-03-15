@@ -40,14 +40,14 @@ const Form = ({
             {!showCrntPass ? (
               persistedTheme === 'dark' ? (
                 <img
-                  src="/assets/svgs/blind.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/blind.svg`}
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                   onClick={toggleVisibilityCrntPass}
                 />
               ) : (
                 <img
-                  src="/assets/svgs/eye-white.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-white.svg`}
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                   onClick={toggleVisibilityCrntPass}
@@ -55,14 +55,14 @@ const Form = ({
               )
             ) : persistedTheme === 'dark' ? (
               <img
-                src="/assets/svgs/eye.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye.svg`}
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                 onClick={toggleVisibilityCrntPass}
               />
             ) : (
               <img
-                src="/assets/svgs/eyeLight.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eyeLight.svg`}
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                 onClick={toggleVisibilityCrntPass}
@@ -84,14 +84,14 @@ const Form = ({
             {!showNewPass ? (
               persistedTheme === 'dark' ? (
                 <img
-                  src="/assets/svgs/blind.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/blind.svg`}
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                   onClick={toggleVisibilityNewPass}
                 />
               ) : (
                 <img
-                  src="/assets/svgs/eye-white.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-white.svg`}
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                   onClick={toggleVisibilityNewPass}
@@ -99,14 +99,14 @@ const Form = ({
               )
             ) : persistedTheme === 'dark' ? (
               <img
-                src="/assets/svgs/eye.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye.svg`}
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                 onClick={toggleVisibilityNewPass}
               />
             ) : (
               <img
-                src="/assets/svgs/eyeLight.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eyeLight.svg`}
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                 onClick={toggleVisibilityNewPass}
@@ -128,14 +128,14 @@ const Form = ({
             {!showNewCnfrmPass ? (
               persistedTheme === 'dark' ? (
                 <img
-                  src="/assets/svgs/blind.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/blind.svg`}
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                   onClick={toggleVisibilityNewCnfrmPass}
                 />
               ) : (
                 <img
-                  src="/assets/svgs/eye-white.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-white.svg`}
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                   onClick={toggleVisibilityNewCnfrmPass}
@@ -143,14 +143,14 @@ const Form = ({
               )
             ) : persistedTheme === 'dark' ? (
               <img
-                src="/assets/svgs/eye.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye.svg`}
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                 onClick={toggleVisibilityNewCnfrmPass}
               />
             ) : (
               <img
-                src="/assets/svgs/eyeLight.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eyeLight.svg`}
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                 onClick={toggleVisibilityNewCnfrmPass}

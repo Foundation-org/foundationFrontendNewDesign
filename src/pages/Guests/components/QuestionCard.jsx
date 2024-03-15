@@ -188,12 +188,15 @@ const QuestionCard = ({
       } else {
         startQuest(params);
       }
-    } else if (questStartData.whichTypeQuestion === 'multiple choise'  || questStartData.whichTypeQuestion === 'open choice') {
+    } else if (
+      questStartData.whichTypeQuestion === 'multiple choise' ||
+      questStartData.whichTypeQuestion === 'open choice'
+    ) {
       let answerSelected = [];
       let answerContended = [];
       let addedAnswerValue = '';
       let addedAnswerUuidValue = '';
-      let isAddedAnsSelected=''
+      let isAddedAnsSelected = '';
 
       for (let i = 0; i < answersSelection.length; i++) {
         if (answersSelection[i].check) {
@@ -205,7 +208,7 @@ const QuestionCard = ({
             });
             addedAnswerValue = answersSelection[i].label;
             addedAnswerUuidValue = answersSelection[i].uuid;
-            isAddedAnsSelected=true;
+            isAddedAnsSelected = true;
           } else {
             answerSelected.push({ question: answersSelection[i].label });
           }
@@ -217,7 +220,7 @@ const QuestionCard = ({
           });
           addedAnswerValue = answersSelection[i].label;
           addedAnswerUuidValue = answersSelection[i].uuid;
-          isAddedAnsSelected=false;
+          isAddedAnsSelected = false;
         }
 
         if (answersSelection[i].contend) {
@@ -244,7 +247,7 @@ const QuestionCard = ({
             addedAnswer: addedAnswerValue,
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid,
-            isAddedAnsSelected:isAddedAnsSelected,
+            isAddedAnsSelected: isAddedAnsSelected,
           };
 
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
@@ -255,31 +258,30 @@ const QuestionCard = ({
             return;
           }
           let length;
-          if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
+          if (isAddedAnsSelected === true || isAddedAnsSelected === '') {
             length = params.answer.selected.length;
           } else {
-            length = params.answer.selected.length - 1;
-          }
+            length = params.answer.selected.length - 1;
+          }
 
+          if (length !== 0) {
+            changeAnswer(params);
+            const updatedArray = answersSelection.map((item, index) => {
+              if (index === answersSelection.length - 1) {
+                return {
+                  ...item,
+                  edit: false,
+                  delete: false,
+                };
+              }
+              return item;
+            });
 
-        if (length !== 0) {
-          changeAnswer(params);
-          const updatedArray = answersSelection.map((item, index) => {
-            if (index === answersSelection.length - 1) {
-              return {
-                ...item,
-                edit: false,
-                delete: false,
-              };
-            }
-            return item;
-          });
-
-          setAnswerSelection(updatedArray);
-        } else {
-          toast.warning('You cannot submit without selecting an option');
-          setLoading(false);
-        }
+            setAnswerSelection(updatedArray);
+          } else {
+            toast.warning('You cannot submit without selecting an option');
+            setLoading(false);
+          }
         }
       } else {
         const params = {
@@ -288,7 +290,7 @@ const QuestionCard = ({
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
-          isAddedAnsSelected:isAddedAnsSelected,
+          isAddedAnsSelected: isAddedAnsSelected,
         };
 
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
@@ -300,12 +302,11 @@ const QuestionCard = ({
         }
 
         let length;
-        if (isAddedAnsSelected === true || isAddedAnsSelected==='') {
+        if (isAddedAnsSelected === true || isAddedAnsSelected === '') {
           length = params.answer.selected.length;
         } else {
-          length = params.answer.selected.length - 1;
-          }
-
+          length = params.answer.selected.length - 1;
+        }
 
         if (length !== 0) {
           startQuest(params);
@@ -331,7 +332,7 @@ const QuestionCard = ({
       let addedAnswerUuidValue = '';
       let answerSelected = [];
       let answerContended = [];
-      let isAddedAnsSelected=''
+      let isAddedAnsSelected = '';
 
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {
@@ -344,7 +345,7 @@ const QuestionCard = ({
           });
           addedAnswerValue = rankedAnswers[i].label;
           addedAnswerUuidValue = rankedAnswers[i].uuid;
-          isAddedAnsSelected=true;
+          isAddedAnsSelected = true;
         } else {
           answerSelected.push({ question: rankedAnswers[i].label });
         }
@@ -375,7 +376,7 @@ const QuestionCard = ({
             addedAnswer: addedAnswerValue,
             addedAnswerUuid: addedAnswerUuidValue,
             uuid: persistedUserInfo?.uuid,
-            isAddedAnsSelected:isAddedAnsSelected,
+            isAddedAnsSelected: isAddedAnsSelected,
           };
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
@@ -393,7 +394,7 @@ const QuestionCard = ({
           addedAnswer: addedAnswerValue,
           addedAnswerUuid: addedAnswerUuidValue,
           uuid: persistedUserInfo?.uuid,
-          isAddedAnsSelected:isAddedAnsSelected,
+          isAddedAnsSelected: isAddedAnsSelected,
         };
 
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
@@ -433,7 +434,7 @@ const QuestionCard = ({
 
   return (
     <div className="flex justify-center">
-      <div className="mx-[15px] w-full rounded-[12.3px] bg-[#F3F3F3] dark:bg-[#141618] tablet:mx-[30px] tablet:rounded-[1.625rem] laptop:mx-[5.25rem]">
+      <div className="mx-[15px] w-full rounded-[12.3px] bg-[#F3F3F3] tablet:mx-[30px] tablet:rounded-[1.625rem] laptop:mx-[5.25rem] dark:bg-[#141618]">
         <GuestTopbar
           title={title}
           badgeCount={badgeCount}
@@ -443,27 +444,27 @@ const QuestionCard = ({
           createdBy={createdBy}
         />
         <div className="ml-6 mr-[1.38rem] mt-[2.25rem] flex items-center justify-between tablet:ml-[4.5rem]">
-          <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] dark:text-[#B8B8B8] tablet:text-[28px]">
+          <h1 className="text-[11.83px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[28px] dark:text-[#B8B8B8]">
             {question?.endsWith('?') ? 'Q.' : 'S.'} {question}
           </h1>
           <div>
             {bookmarkStatus ? (
               persistedTheme !== 'dark' ? (
                 <img
-                  src="/assets/bookmark/bookmark.png"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/bookmark/bookmark.png`}
                   alt="save icon"
                   className="h-[17px] w-[12.7px] cursor-pointer tablet:h-[39px] tablet:w-[28px]"
                 />
               ) : (
                 <img
-                  src="/assets/bookmark/darkbookmark.png"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/bookmark/darkbookmark.png`}
                   alt="save icon"
                   className="h-[17px] w-[12.7px] cursor-pointer tablet:h-[39px] tablet:w-[28px]"
                 />
               )
             ) : (
               <img
-                src="/assets/bookmark/disablebookmark.png"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/bookmark/disablebookmark.png`}
                 alt="save icon"
                 className="h-[17px] w-[12.7px] cursor-pointer tablet:h-[39px] tablet:w-[28px]"
               />

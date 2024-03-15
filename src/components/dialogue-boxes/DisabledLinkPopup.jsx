@@ -46,7 +46,7 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
 
   return (
     <PopUp
-      logo={'/assets/svgs/link.svg'}
+      logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/link.svg`}
       title={
         questUtils.sharedQuestStatus.type === 'Delete'
           ? 'Delete Shared Link'

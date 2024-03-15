@@ -31,14 +31,18 @@ const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
             postProperties === 'SharedLinks' ? (
               <div className="my-2 ml-10 flex gap-1 tablet:my-5 tablet:ml-[86px] tablet:gap-20">
                 <div className="flex items-center gap-[1px] tablet:gap-2">
-                  <img src="/assets/svgs/clicks.svg" alt="clicks" className="h-2 w-2 tablet:h-6 tablet:w-6" />
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/clicks.svg`}
+                    alt="clicks"
+                    className="h-2 w-2 tablet:h-6 tablet:w-6"
+                  />
                   <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
                     {questStartData.userQuestSetting.questImpression} Impressions{' '}
                   </h2>
                 </div>
                 <div className="flex items-center gap-[1px] tablet:gap-2">
                   <img
-                    src="/assets/svgs/participants.svg"
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/participants.svg`}
                     alt="participants"
                     className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
                   />
@@ -58,14 +62,18 @@ const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
               {postProperties === 'SharedLinks' ? (
                 <div className="my-2 ml-10 flex gap-1 tablet:my-5 tablet:ml-[86px] tablet:gap-20">
                   <div className="flex items-center gap-[1px] tablet:gap-2">
-                    <img src="/assets/svgs/clicks.svg" alt="clicks" className="h-2 w-2 tablet:h-6 tablet:w-6" />
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/clicks.svg`}
+                      alt="clicks"
+                      className="h-2 w-2 tablet:h-6 tablet:w-6"
+                    />
                     <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
                       {questStartData.userQuestSetting.questImpression} Impressions{' '}
                     </h2>
                   </div>
                   <div className="flex items-center gap-[1px] tablet:gap-2">
                     <img
-                      src="/assets/svgs/participants.svg"
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/participants.svg`}
                       alt="participants"
                       className="h-2 w-3 tablet:h-[26px] tablet:w-[34px]"
                     />

@@ -135,7 +135,7 @@ export default function ShowHidePostPopup({
 
   return (
     <PopUp
-      logo={'/assets/svgs/eye-latest-cut.svg'}
+      logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-latest-cut.svg`}
       title={'Hide Post'}
       open={modalVisible}
       handleClose={handleClose}

@@ -7,7 +7,7 @@ const GuestTopbar = ({ createdBy, badgeCount, QuestTopic, img }) => {
       {createdBy === persistedUserInfo?.uuid ? (
         <div className="relative h-fit w-fit">
           <img
-            src="/assets/svgs/dashboard/MeBadge.svg"
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
             alt="Me Badge"
             className="h-[28.379px] w-[22.722px] tablet:h-[47px] tablet:w-[38px]"
           />

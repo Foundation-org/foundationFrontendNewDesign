@@ -91,7 +91,7 @@ function Slider({ columns, setColumns }) {
           onClick={handleLeftArrowClick}
           className="h-[10px] w-[20px] rotate-180 tablet:h-[21px] tablet:w-[42px] "
           style={{
-            background: 'url(/assets/svgs/arrow-right.svg',
+            background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
             backgroundRepeat: 'no-repeat',
             backgroundSize: '100% 100%',
           }}
@@ -138,7 +138,7 @@ function Slider({ columns, setColumns }) {
         onClick={handleRightArrowClick}
         className="h-[10px] w-[20px] tablet:h-[21px] tablet:w-[42px] "
         style={{
-          background: 'url(/assets/svgs/arrow-right.svg',
+          background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: '100% 100%',
         }}
