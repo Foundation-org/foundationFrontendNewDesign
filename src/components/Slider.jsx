@@ -30,7 +30,6 @@ function Slider({ columns, setColumns }) {
         : false
       : false,
   );
-  console.log('multipleOption', multipleOption);
   const [localMe, setLocalMe] = useState(multipleOption);
 
   const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
@@ -61,13 +60,14 @@ function Slider({ columns, setColumns }) {
           //   (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
           // );
 
-          const filteredList = newList.filter((item) => !prevColumns.Block.list.includes(item));
+          // const filteredList = newList.filter((item) => !prevColumns.Block.list.includes(item));
 
           return {
             ...prevColumns,
             All: {
               ...prevColumns.All,
-              list: filteredList || [],
+              list: newList || [],
+              // list: filteredList || [],
             },
           };
         });
@@ -167,8 +167,6 @@ function Slider({ columns, setColumns }) {
       handleClearMyPosts();
     }
   };
-  console.log('filterStates', filterStates);
-  console.log('localMe', localMe);
 
   return (
     <div className="mx-4 my-[7px] flex items-center tablet:mx-6 tablet:my-[14.82px]">
