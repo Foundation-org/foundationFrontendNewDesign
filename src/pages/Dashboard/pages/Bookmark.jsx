@@ -264,14 +264,14 @@ const Bookmark = () => {
           setItemsWithCross={setItemsWithCross}
         />
         <div className="no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:min-h-[calc(100vh-92px)] dark:bg-[#242424]">
-          <Slider columns={columns} setColumns={setColumns} />
+          {/* <Slider columns={columns} setColumns={setColumns} /> */}
           <InfiniteScroll
             dataLength={allData?.length}
             next={fetchMoreData}
             hasMore={feedData?.hasNextPage}
             endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme, isBookmarked)}
             height={height}
-            className="no-scrollbar px-4 pb-[10px] tablet:px-6 tablet:pb-5"
+            className="no-scrollbar px-4 py-[10px] tablet:px-6 tablet:py-5"
           >
             <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
               {

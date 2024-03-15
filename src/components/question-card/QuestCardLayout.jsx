@@ -137,7 +137,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
             <img
               src="/assets/hiddenposts/unhide/icon1.png"
               alt="eye-latest"
-              className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
+              className="mt-[3px] h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
               onClick={showHidePostOpen}
             />
           )}
