@@ -90,6 +90,13 @@ const QuestStartSection = () => {
     const stateString = JSON.stringify(columns);
     localStorage.setItem('columns', stateString);
     dispatch(filtersActions.setIsColumn());
+
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      sliceStart: 0,
+      sliceEnd: pageLimit,
+      page: 1,
+    }));
   }, [columns]);
 
   // Update Columns based on Preferences
