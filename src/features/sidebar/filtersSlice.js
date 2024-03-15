@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const resetState = {
-  // expandedView: false,
+  // expandedView: true,
   searchData: '',
   filterByStatus: '',
   filterByType: '',
@@ -21,7 +21,7 @@ const resetOtherStates = {
 };
 
 const initialState = {
-  expandedView: localStorage.getItem('expandedView') === 'true' ? true : false,
+  expandedView:  true,
   searchData: '',
   filterByStatus: '',
   filterByType: '',
