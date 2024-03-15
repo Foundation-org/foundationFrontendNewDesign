@@ -167,7 +167,7 @@ export const personal = [
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`,
-    title: 'Relationship Status',
+    title: 'Relationship',
     ButtonColor: 'gray',
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
