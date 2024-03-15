@@ -297,14 +297,10 @@ const ButtonGroup = ({
             {getButtonText(btnText) !== 'Completed' ? (
               <Button
                 variant={'submit-green'}
-                // onClick={() => {
-                //   navigate('/shared-links/result', {
-                //     state: { questId: questStartData._id, link: questStartData.userQuestSetting.link },
-                //   });
-                // }}
                 onClick={() => {
-                  toast.success("Feature coming soon")
-                  
+                  navigate('/shared-links/result', {
+                    state: { questId: questStartData._id, link: questStartData.userQuestSetting.link },
+                  });
                 }}
                 className={'tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
               >
