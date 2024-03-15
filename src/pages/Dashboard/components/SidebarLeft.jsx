@@ -105,7 +105,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
         dispatch(filtersActions.setFilterBySort(persistedUserInfo.bookmarkStates.filterBySort));
         dispatch(filtersActions.setFilterByStatus(persistedUserInfo.bookmarkStates.filterByStatus));
         dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
-        dispatch(filtersActions.setExpandedView(persistedUserInfo.bookmarkStates.expandedView));
+        dispatch(filtersActions.setExpandedView(true));
         dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
         const stateString = JSON.stringify(persistedUserInfo?.bookmarkStates?.columns);
         localStorage.setItem('bookmarkColumns', stateString);
@@ -114,7 +114,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
         dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
         dispatch(filtersActions.setFilterByStatus(persistedUserInfo.States.filterByStatus));
         dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
-        dispatch(filtersActions.setExpandedView(persistedUserInfo.States.expandedView));
+        dispatch(filtersActions.setExpandedView(true));
         dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
         const stateString = JSON.stringify(persistedUserInfo?.States?.columns);
         localStorage.setItem('columns', stateString);

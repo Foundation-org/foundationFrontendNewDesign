@@ -448,7 +448,7 @@ const ButtonGroup = ({
         </>
       );
     } else {
-      if (filterState.expandedView === true) {
+      // if (filterState.expandedView === true) {
         return (
           <div className="flex w-full justify-between pl-7 pr-[0.87rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
             {startTest === questStartData._id && questStartData.usersAddTheirAns ? (
@@ -551,221 +551,222 @@ const ButtonGroup = ({
             )}
           </div>
         );
-      } else {
-        if (startTest === questStartData._id) {
-          return (
-            <div className="flex w-full justify-between gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
-              {questStartData.usersAddTheirAns ? (
-                title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                  <Button
-                    onClick={() => {
-                      toast.warning(
-                        <p>
-                          Please{' '}
-                          <span
-                            className="cursor-pointer text-[#389CE3] underline"
-                            onClick={() => navigate('/guest-signup')}
-                          >
-                            Create an Account
-                          </span>{' '}
-                          to unlock this feature
-                        </p>,
-                      );
-                    }}
-                    variant={'addOption'}
-                  >
-                    {persistedTheme === 'dark' ? (
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
-                    ) : (
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
-                    )}
-                    Add Option
-                  </Button>
-                )
-              ) : (
-                <div></div>
-              )}
+      // }
+      //  else {
+      //   if (startTest === questStartData._id) {
+      //     return (
+      //       <div className="flex w-full justify-between gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
+      //         {questStartData.usersAddTheirAns ? (
+      //           title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+      //             <Button
+      //               onClick={() => {
+      //                 toast.warning(
+      //                   <p>
+      //                     Please{' '}
+      //                     <span
+      //                       className="cursor-pointer text-[#389CE3] underline"
+      //                       onClick={() => navigate('/guest-signup')}
+      //                     >
+      //                       Create an Account
+      //                     </span>{' '}
+      //                     to unlock this feature
+      //                   </p>,
+      //                 );
+      //               }}
+      //               variant={'addOption'}
+      //             >
+      //               {persistedTheme === 'dark' ? (
+      //                 <img
+      //                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
+      //                   alt="add"
+      //                   className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+      //                 />
+      //               ) : (
+      //                 <img
+      //                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
+      //                   alt="add"
+      //                   className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+      //                 />
+      //               )}
+      //               Add Option
+      //             </Button>
+      //           )
+      //         ) : (
+      //           <div></div>
+      //         )}
 
-              {/* Go back / Submit */}
-              <div>
-                <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
-                  {!filterState.expandedView ? (
-                    <Button
-                      variant="cancel"
-                      onClick={() => {
-                        handleStartTest('');
-                      }}
-                    >
-                      Go Back
-                    </Button>
-                  ) : null}
-                  {startStatus === 'change answer' && viewResult === null && openResults === false && (
-                    <Button
-                      variant="cancel"
-                      onClick={() => {
-                        handleViewResults(questStartData._id), setOpenResults(true);
-                      }}
-                    >
-                      Go Back
-                    </Button>
-                  )}
-                  <Button
-                    variant="submit"
-                    onClick={() => handleSubmit()}
-                    disabled={
-                      loading === true
-                        ? true
-                        : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                          ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                            ? false
-                            : true
-                          : false
-                    }
-                  >
-                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-                  </Button>
-                </div>
-              </div>
-            </div>
-          );
-        } else {
-          return (
-            <div className="flex w-full justify-end pr-[0.87rem] tablet:pr-[3.44rem]">
-              {btnText === '' ? (
-                <Button
-                  variant={`${result === ', you are good to go' ? getButtonVariants(btnText) : 'change-outline'}`}
-                  onClick={handleStartChange}
-                  disabled={result === ', you are good to go' ? false : true}
-                >
-                  {getButtonText(btnText)}
-                </Button>
-              ) : viewResult !== questStartData._id ? (
-                <Button
-                  variant="result"
-                  onClick={() => {
-                    if (btnText !== '') {
-                      handleViewResults(id);
-                    } else {
-                      toast.error('First give your response to see Results');
-                    }
-                  }}
-                >
-                  Results
-                </Button>
-              ) : (
-                <Button
-                  variant="cancel"
-                  onClick={() => {
-                    handleViewResults(questStartData._id);
-                    handleStartTest(false);
-                  }}
-                >
-                  Go Back
-                </Button>
-              )}
-            </div>
-          );
-        }
-      }
+      //         {/* Go back / Submit */}
+      //         <div>
+      //           <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
+      //             {!filterState.expandedView ? (
+      //               <Button
+      //                 variant="cancel"
+      //                 onClick={() => {
+      //                   handleStartTest('');
+      //                 }}
+      //               >
+      //                 Go Back
+      //               </Button>
+      //             ) : null}
+      //             {startStatus === 'change answer' && viewResult === null && openResults === false && (
+      //               <Button
+      //                 variant="cancel"
+      //                 onClick={() => {
+      //                   handleViewResults(questStartData._id), setOpenResults(true);
+      //                 }}
+      //               >
+      //                 Go Back
+      //               </Button>
+      //             )}
+      //             <Button
+      //               variant="submit"
+      //               onClick={() => handleSubmit()}
+      //               disabled={
+      //                 loading === true
+      //                   ? true
+      //                   : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+      //                     ? checkOptionStatus.tooltipName === 'Answer is Verified'
+      //                       ? false
+      //                       : true
+      //                     : false
+      //               }
+      //             >
+      //               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+      //             </Button>
+      //           </div>
+      //         </div>
+      //       </div>
+      //     );
+      //   } else {
+      //     return (
+      //       <div className="flex w-full justify-end pr-[0.87rem] tablet:pr-[3.44rem]">
+      //         {btnText === '' ? (
+      //           <Button
+      //             variant={`${result === ', you are good to go' ? getButtonVariants(btnText) : 'change-outline'}`}
+      //             onClick={handleStartChange}
+      //             disabled={result === ', you are good to go' ? false : true}
+      //           >
+      //             {getButtonText(btnText)}
+      //           </Button>
+      //         ) : viewResult !== questStartData._id ? (
+      //           <Button
+      //             variant="result"
+      //             onClick={() => {
+      //               if (btnText !== '') {
+      //                 handleViewResults(id);
+      //               } else {
+      //                 toast.error('First give your response to see Results');
+      //               }
+      //             }}
+      //           >
+      //             Results
+      //           </Button>
+      //         ) : (
+      //           <Button
+      //             variant="cancel"
+      //             onClick={() => {
+      //               handleViewResults(questStartData._id);
+      //               handleStartTest(false);
+      //             }}
+      //           >
+      //             Go Back
+      //           </Button>
+      //         )}
+      //       </div>
+      //     );
+      //   }
+      // }
     }
   }
 
-  if (filterState.expandedView === false) {
-    if (startTest === questStartData._id) {
-      return (
-        <div className="flex w-full justify-between gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
-          {/* Add Options */}
-          {getQuestUtilsState.addOptionLimit === 0 ? (
-            <div className="flex items-center justify-center">
-              {usersAddTheirAns && uuidExists === false ? (
-                <div>
-                  {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                    <Button onClick={handleOpen} variant={'addOption'}>
-                      {persistedTheme === 'dark' ? (
-                        <img
-                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                          alt="add"
-                          className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                        />
-                      ) : (
-                        <img
-                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                          alt="add"
-                          className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                        />
-                      )}
-                      Add Option
-                    </Button>
-                  )}
-                </div>
-              ) : null}
-            </div>
-          ) : (
-            <div></div>
-          )}
+  // if (filterState.expandedView === false) {
+  //   if (startTest === questStartData._id) {
+  //     return (
+  //       <div className="flex w-full justify-between gap-2 pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
+  //         {/* Add Options */}
+  //         {getQuestUtilsState.addOptionLimit === 0 ? (
+  //           <div className="flex items-center justify-center">
+  //             {usersAddTheirAns && uuidExists === false ? (
+  //               <div>
+  //                 {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+  //                   <Button onClick={handleOpen} variant={'addOption'}>
+  //                     {persistedTheme === 'dark' ? (
+  //                       <img
+  //                         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
+  //                         alt="add"
+  //                         className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+  //                       />
+  //                     ) : (
+  //                       <img
+  //                         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
+  //                         alt="add"
+  //                         className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+  //                       />
+  //                     )}
+  //                     Add Option
+  //                   </Button>
+  //                 )}
+  //               </div>
+  //             ) : null}
+  //           </div>
+  //         ) : (
+  //           <div></div>
+  //         )}
 
-          {/* Go back / Submit */}
-          <div
-          // className={`${
-          //   title === 'Multiple Choice' ? '' : addOptionField === 1 ? 'mt-[4rem] tablet:mt-[10rem]' : ''
-          // }`}
-          >
-            <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
-              {!filterState.expandedView ? (
-                <Button
-                  variant="cancel"
-                  onClick={() => {
-                    handleStartTest('');
-                    handleRemoveItem();
-                  }}
-                >
-                  Go Back
-                </Button>
-              ) : null}
-              {startStatus === 'change answer' && viewResult === null && openResults === false && (
-                <Button
-                  variant="cancel"
-                  onClick={() => {
-                    handleViewResults(questStartData._id), setOpenResults(true);
-                  }}
-                >
-                  Go Back
-                </Button>
-              )}
-              <Button
-                variant="submit"
-                onClick={() => handleSubmit()}
-                disabled={
-                  loading === true
-                    ? true
-                    : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                      ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                        ? false
-                        : true
-                      : false
-                }
-              >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-                {btnText !== 'change answer' && (
-                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                    (+0.96 FDX)
-                  </span>
-                )}
-              </Button>
-            </div>
-          </div>
-        </div>
-      );
-    }
-  } else {
+  //         {/* Go back / Submit */}
+  //         <div
+  //         // className={`${
+  //         //   title === 'Multiple Choice' ? '' : addOptionField === 1 ? 'mt-[4rem] tablet:mt-[10rem]' : ''
+  //         // }`}
+  //         >
+  //           <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
+  //             {!filterState.expandedView ? (
+  //               <Button
+  //                 variant="cancel"
+  //                 onClick={() => {
+  //                   handleStartTest('');
+  //                   handleRemoveItem();
+  //                 }}
+  //               >
+  //                 Go Back
+  //               </Button>
+  //             ) : null}
+  //             {startStatus === 'change answer' && viewResult === null && openResults === false && (
+  //               <Button
+  //                 variant="cancel"
+  //                 onClick={() => {
+  //                   handleViewResults(questStartData._id), setOpenResults(true);
+  //                 }}
+  //               >
+  //                 Go Back
+  //               </Button>
+  //             )}
+  //             <Button
+  //               variant="submit"
+  //               onClick={() => handleSubmit()}
+  //               disabled={
+  //                 loading === true
+  //                   ? true
+  //                   : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+  //                     ? checkOptionStatus.tooltipName === 'Answer is Verified'
+  //                       ? false
+  //                       : true
+  //                     : false
+  //               }
+  //             >
+  //               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+  //               {btnText !== 'change answer' && (
+  //                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+  //                   (+0.96 FDX)
+  //                 </span>
+  //               )}
+  //             </Button>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     );
+  //   }
+  // } else {
     if (startTest === questStartData._id) {
       return (
         <div className="flex w-full justify-between gap-2  pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
@@ -884,12 +885,12 @@ const ButtonGroup = ({
         </div>
       );
     }
-  }
+  // }
 
   return (
     <>
       {/* Start / Change and  Result / Result Outline*/}
-      {filterState.expandedView === false ? (
+      {/* {filterState.expandedView === false ? (
         viewResult !== questStartData._id ? (
           <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
             {getButtonText(btnText) !== 'Completed' ? (
@@ -935,7 +936,7 @@ const ButtonGroup = ({
             </Button>
           </div>
         )
-      ) : (
+      ) : ( */}
         <>
           <div className="flex">
             {/* Add Options / Go Back / Submit */}
@@ -1033,7 +1034,7 @@ const ButtonGroup = ({
             )}
           </div>
         </>
-      )}
+      {/* )} */}
     </>
   );
 };

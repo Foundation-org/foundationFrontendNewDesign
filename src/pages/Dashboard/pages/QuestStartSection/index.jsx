@@ -306,14 +306,14 @@ const QuestStartSection = () => {
                   .filter((item) => !questUtils.hiddenPosts.includes(item._id))
                   ?.map((item, index) => (
                     <div key={index + 1}>
-                      {filterStates.expandedView ? (
+                      {/* {filterStates.expandedView ? ( */}
                         <QuestionCardWithToggle
                           questStartData={item}
                           isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
                           setPagination={setPagination}
                           setSubmitResponse={setSubmitResponse}
                         />
-                      ) : (
+                      {/* ) : (
                         <QuestionCard
                           questStartData={item}
                           startTest={startTest}
@@ -325,7 +325,7 @@ const QuestStartSection = () => {
                           setPagination={setPagination}
                           setSubmitResponse={setSubmitResponse}
                         />
-                      )}
+                      )} */}
                     </div>
                   ))}
             </div>
