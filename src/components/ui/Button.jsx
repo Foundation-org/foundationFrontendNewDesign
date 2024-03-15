@@ -4,7 +4,7 @@ import classNames from 'classnames';
 export const Button = ({ className, children, rounded, variant, ...props }) => (
   <button
     className={classNames(
-      'flex cursor-pointer select-none items-center justify-center rounded-[0.28688rem] [outline:none] focus:ring-[1px] disabled:cursor-not-allowed tablet:rounded-[0.9375rem]',
+      'flex cursor-pointer select-none items-center justify-center rounded-[0.28688rem] [outline:none] disabled:cursor-not-allowed tablet:rounded-[0.9375rem]',
       rounded ? 'rounded' : '',
       variant === 'addOption'
         ? 'addoption-boxShadow h-[1.375rem] w-[5.1rem] max-w-[10.8125rem] gap-[0.27rem] bg-[#D9D9D9] text-[0.625rem] font-normal text-[#435059]  tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
@@ -57,6 +57,9 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'submit-green'
         ? 'addoption-boxShadow h-[1.375rem] min-w-[4.875rem] bg-[#0FB063] px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:text-[1.25rem] laptop:px-[17px] '
         : '',
+      variant === 'topics'
+        ? 'text-nowrap px-[4.9px] py-[6.5px] text-[0.57944rem] font-semibold focus:outline-none focus:ring-0 tablet:px-[12px] tablet:py-[12px] tablet:text-[20px] tablet:leading-[24px]'
+        : '',
       className,
     )}
     {...props}
@@ -89,5 +92,6 @@ Button.propTypes = {
     'getintouch',
     'danger',
     'submit-green',
+    'topics',
   ]),
 };

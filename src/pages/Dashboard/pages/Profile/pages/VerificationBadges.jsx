@@ -125,8 +125,9 @@ const VerificationBadges = () => {
     }
   }, []);
 
-  const checkPersonal = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
-  const checkSocial = (itemType) => fetchUser?.badges?.some((i) => i.accountName === itemType);
+  const checkContact = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
+  const checkPrimary = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType && i.primary === true);
+  const checkSocial = (name) => fetchUser?.badges?.some((i) => i.accountName === name);
 
   const handleRemoveBadge = async (accountName) => {
     const findBadge = fetchUser.badges.filter((item) => {
@@ -194,12 +195,21 @@ const VerificationBadges = () => {
     return;
   };
 
-  const handleClickContactBadgeEmail = (type) => {
+  const handleClickContactBadgeEmail = (type, title, image) => {
     if (persistedUserInfo?.role === 'guest') {
       handleGuestBadgeAdd();
     } else {
-      setIsPopup(true);
-      setSelectedBadge(type);
+      if (!checkContact(type)) {
+        setIsPopup(true);
+        setSelectedBadge(type);
+      } else if (checkContact(type) && !checkPrimary(type)) {
+        handleRemoveBadgePopup({
+          title: title,
+          image: image,
+          type: type,
+          badgeType: 'contact',
+        });
+      }
     }
   };
 
@@ -222,7 +232,7 @@ const VerificationBadges = () => {
                 isPopup={isPopup}
                 setIsPopup={setIsPopup}
                 title="Personal Email"
-                logo="/assets/profile/Personal-Email-2xa.png"
+                logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Personal-Email-2xa.png`}
                 placeholder="Personal email here"
                 selectedBadge={seletedBadge}
                 handleUserInfo={handleUserInfo}
@@ -232,7 +242,7 @@ const VerificationBadges = () => {
                 isPopup={isPopup}
                 setIsPopup={setIsPopup}
                 title="Work Email"
-                logo="/assets/profile/Work-Email-2xa.png"
+                logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Work-Email-2xa.png`}
                 placeholder="Work email here"
                 selectedBadge={seletedBadge}
                 handleUserInfo={handleUserInfo}
@@ -242,7 +252,7 @@ const VerificationBadges = () => {
                 isPopup={isPopup}
                 setIsPopup={setIsPopup}
                 title="Education Email"
-                logo="/assets/profile/Education-Email-2xa.png"
+                logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Education-Email-2xa.png`}
                 placeholder="Educational Email here"
                 selectedBadge={seletedBadge}
                 handleUserInfo={handleUserInfo}
@@ -257,6 +267,8 @@ const VerificationBadges = () => {
               title={deleteModalState.title}
               image={deleteModalState.image}
               accountName={deleteModalState.accountName}
+              type={deleteModalState.type}
+              badgeType={deleteModalState.badgeType}
               fetchUser={fetchUser}
               setFetchUser={setFetchUser}
             />
@@ -288,21 +300,20 @@ const VerificationBadges = () => {
                     <div
                       className={`${
                         persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                      } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                      } flex h-[7.3vw] w-[24vw] items-center  justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                     >
                       <h1>{item.title}</h1>
                     </div>
                     <Button
-                      color={checkPersonal(item.type) ? 'yellow' : item.ButtonColor}
+                      color={checkContact(item.type) ? (checkPrimary(item.type) ? 'yellow' : 'red') : item.ButtonColor}
                       onClick={() =>
-                        !checkPersonal(item.type) &&
-                        item.ButtonColor !== 'gray' &&
-                        handleClickContactBadgeEmail(item.type)
+                        item.ButtonColor !== 'gray' && handleClickContactBadgeEmail(item.type, item.title, item.image)
                       }
+                      disabled={checkPrimary(item.type)}
                     >
-                      {checkPersonal(item.type) ? 'Added' : item.ButtonText}
+                      {checkContact(item.type) ? (checkPrimary(item.type) ? 'Added' : 'Remove') : item.ButtonText}
                       <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkPersonal(item.type) ? '' : '(+0.96 FDX)'}
+                        {checkContact(item.type) ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
                   </div>
@@ -322,7 +333,7 @@ const VerificationBadges = () => {
                 {/* ...........................Facebook......................  */}
                 <div className="flex items-center justify-center gap-[10px] tablet:justify-end laptop:gap-5">
                   <img
-                    src="/assets/profile/Facebook-2x.png"
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`}
                     alt="Facebook"
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
@@ -343,7 +354,7 @@ const VerificationBadges = () => {
                           checkSocial('facebook') &&
                             handleRemoveBadgePopup({
                               title: 'facebook',
-                              image: '/assets/profile/Facebook-2x.png',
+                              image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
                               accountName: 'facebook',
                             });
                         }
@@ -389,7 +400,7 @@ const VerificationBadges = () => {
                 {/* ...........................LinkedIn......................  */}
                 <div className="flex items-center justify-center gap-[10px] opacity-[60%] tablet:justify-end laptop:gap-5">
                   <img
-                    src="/assets/profile/LinkedIn-2x.png"
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
                     alt="LinkedIn"
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
@@ -433,7 +444,7 @@ const VerificationBadges = () => {
                         handleClose={handleBadgesClose}
                         modalVisible={modalVisible}
                         title={'LinkedIn'}
-                        image={'/assets/profile/LinkedIn-2x.png'}
+                        image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
                         accountName={'linkedin'}
                         fetchUser={fetchUser}
                         setFetchUser={setFetchUser}
@@ -500,7 +511,7 @@ const VerificationBadges = () => {
                 {/* ...........................Twitter......................  */}
                 <div className="flex items-center justify-center gap-[10px] tablet:justify-end laptop:gap-5">
                   <img
-                    src="/assets/profile/Twitter-2x.png"
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`}
                     alt="Twitter"
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
@@ -521,7 +532,7 @@ const VerificationBadges = () => {
                           checkSocial('twitter') &&
                             handleRemoveBadgePopup({
                               title: 'twitter',
-                              image: '/assets/profile/Twitter-2x.png',
+                              image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`,
                               accountName: 'twitter',
                             });
                         }
@@ -557,7 +568,7 @@ const VerificationBadges = () => {
                 {/* ...........................Instagram......................  */}
                 <div className="flex items-center justify-center gap-[10px] tablet:justify-end laptop:gap-5">
                   <img
-                    src="/assets/profile/Instagram-2x.png"
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`}
                     alt="Instagram"
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
@@ -579,7 +590,7 @@ const VerificationBadges = () => {
                             checkSocial('instagram') &&
                               handleRemoveBadgePopup({
                                 title: 'instagram',
-                                image: '/assets/profile/Instagram-2x.png',
+                                image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
                                 accountName: 'instagram',
                               });
                           }
@@ -644,7 +655,7 @@ const VerificationBadges = () => {
                 {/* ............................Github......................... */}
                 <div className="flex items-center justify-center gap-[10px] tablet:justify-end laptop:gap-5">
                   <img
-                    src="/assets/profile/Github-2x.png"
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`}
                     alt="Github"
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
@@ -665,7 +676,7 @@ const VerificationBadges = () => {
                           checkSocial('github') &&
                             handleRemoveBadgePopup({
                               title: 'github',
-                              image: '/assets/profile/Github-2x.png',
+                              image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`,
                               accountName: 'github',
                             });
                         }

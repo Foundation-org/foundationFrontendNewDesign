@@ -204,9 +204,16 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
   return (
     <div className="my-[15vh] flex  flex-col items-center justify-center">
       {persistedTheme === 'dark' ? (
-        <img src="/assets/svgs/dashboard/noMatchingDark.svg" alt="noposts image" />
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingDark.svg`}
+          alt="noposts image"
+        />
       ) : (
-        <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" className="h-[173px] w-[160px]" />
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingLight.svg`}
+          alt="noposts image"
+          className="h-[173px] w-[160px]"
+        />
       )}
       {isBookmarked ? (
         <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
@@ -265,9 +272,16 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
       {filterStates.searchData && allData.length == 0 ? (
         <div className="my-[15vh] flex  flex-col items-center justify-center">
           {persistedTheme === 'dark' ? (
-            <img src="/assets/svgs/dashboard/noMatchingDark.svg" alt="noposts image" />
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingDark.svg`}
+              alt="noposts image"
+            />
           ) : (
-            <img src="/assets/svgs/dashboard/noMatchingLight.svg" alt="noposts image" className="h-[173px] w-[160px]" />
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingLight.svg`}
+              alt="noposts image"
+              className="h-[173px] w-[160px]"
+            />
           )}
           {isBookmarked ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">

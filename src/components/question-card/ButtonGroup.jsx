@@ -45,7 +45,7 @@ const ButtonGroup = ({
   checkOptionStatus,
   postProperties,
   setAddOptionField,
-  SharedLinkButton
+  SharedLinkButton,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -343,7 +343,7 @@ const ButtonGroup = ({
     );
   }
 
-  if ( SharedLinkButton === 'shared-links-results-button') {
+  if (SharedLinkButton === 'shared-links-results-button') {
     return (
       <div className="flex w-full justify-end gap-2 pr-[14.4px] tablet:gap-[0.75rem] tablet:pr-[3.44rem]">
         <Button
@@ -385,13 +385,13 @@ const ButtonGroup = ({
                   >
                     {persistedTheme === 'dark' ? (
                       <img
-                        src="/assets/svgs/dashboard/add-dark.svg"
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
                         alt="add"
                         className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                       />
                     ) : (
                       <img
-                        src="/assets/svgs/dashboard/add.svg"
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
                         alt="add"
                         className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                       />
@@ -476,13 +476,13 @@ const ButtonGroup = ({
                 >
                   {persistedTheme === 'dark' ? (
                     <img
-                      src="/assets/svgs/dashboard/add-dark.svg"
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
                       alt="add"
                       className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                     />
                   ) : (
                     <img
-                      src="/assets/svgs/dashboard/add.svg"
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
                       alt="add"
                       className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                     />
@@ -580,13 +580,13 @@ const ButtonGroup = ({
                   >
                     {persistedTheme === 'dark' ? (
                       <img
-                        src="/assets/svgs/dashboard/add-dark.svg"
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
                         alt="add"
                         className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                       />
                     ) : (
                       <img
-                        src="/assets/svgs/dashboard/add.svg"
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
                         alt="add"
                         className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                       />
@@ -695,13 +695,13 @@ const ButtonGroup = ({
                     <Button onClick={handleOpen} variant={'addOption'}>
                       {persistedTheme === 'dark' ? (
                         <img
-                          src="/assets/svgs/dashboard/add-dark.svg"
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
                           alt="add"
                           className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                         />
                       ) : (
                         <img
-                          src="/assets/svgs/dashboard/add.svg"
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
                           alt="add"
                           className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                         />
@@ -784,13 +784,13 @@ const ButtonGroup = ({
                         <Button onClick={handleOpen} variant={'addOption'}>
                           {persistedTheme === 'dark' ? (
                             <img
-                              src="/assets/svgs/dashboard/add-dark.svg"
+                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
                               alt="add"
                               className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                             />
                           ) : (
                             <img
-                              src="/assets/svgs/dashboard/add.svg"
+                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
                               alt="add"
                               className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                             />
@@ -845,13 +845,13 @@ const ButtonGroup = ({
                   <Button onClick={handleOpen} variant={'addOption'}>
                     {persistedTheme === 'dark' ? (
                       <img
-                        src="/assets/svgs/dashboard/add-dark.svg"
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
                         alt="add"
                         className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                       />
                     ) : (
                       <img
-                        src="/assets/svgs/dashboard/add.svg"
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
                         alt="add"
                         className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                       />
@@ -948,13 +948,13 @@ const ButtonGroup = ({
                 <Button onClick={handleOpen} variant={'addOption'}>
                   {persistedTheme === 'dark' ? (
                     <img
-                      src="/assets/svgs/dashboard/add-dark.svg"
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
                       alt="add"
                       className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                     />
                   ) : (
                     <img
-                      src="/assets/svgs/dashboard/add.svg"
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
                       alt="add"
                       className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                     />
@@ -1000,13 +1000,13 @@ const ButtonGroup = ({
                       <Button onClick={handleOpen} variant={'addOption'}>
                         {persistedTheme === 'dark' ? (
                           <img
-                            src="/assets/svgs/dashboard/add-dark.svg"
+                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
                             alt="add"
                             className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                           />
                         ) : (
                           <img
-                            src="/assets/svgs/dashboard/add.svg"
+                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
                             alt="add"
                             className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
                           />

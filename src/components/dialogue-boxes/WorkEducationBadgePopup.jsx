@@ -162,12 +162,12 @@ const WorkEducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, place
             <div className="flex flex-col justify-between">
               <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
                 <img
-                  src="/assets/svgs/editIcon.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
                   alt="Edit Icon"
                   className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
                 />
                 <img
-                  src="/assets/svgs/dashboard/trash2.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                   alt="Edit Icon"
                   className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
                 />

@@ -7,7 +7,7 @@ export default function WelcomePopup({ modalVisible, handleClose }) {
 
   return (
     <PopUp
-      logo={'/assets/welcomePage/logo_black.svg'}
+      logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/welcomePage/logo_black.svg`}
       title={'Foundation'}
       open={modalVisible}
       handleClose={handleClose}
@@ -16,7 +16,7 @@ export default function WelcomePopup({ modalVisible, handleClose }) {
       <div className="flex w-full flex-col items-center rounded-b-[9.26px] bg-white md:justify-center xl:rounded-b-[65px] xl:rounded-tl-[65px] dark:bg-dark">
         <div className="flex h-full flex-col items-center px-4 pb-[17px] pt-3 tablet:justify-center tablet:px-20 tablet:pb-[52px] tablet:pt-8">
           <img
-            src="/assets/welcomePage/welcome.svg"
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/welcomePage/welcome.svg`}
             alt="welcome logo"
             className="mb-1 h-[49px] w-[49px] tablet:mb-[10px] tablet:h-[105.932px] tablet:w-[105.932px]"
           />

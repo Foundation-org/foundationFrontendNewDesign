@@ -195,7 +195,11 @@ export default function Signin() {
           persistedTheme === 'dark' ? 'bg-dark' : 'bg-blue'
         } flex h-[65px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
-        <img src="/assets/svgs/logo.svg" alt="logo" className="h-[45px] w-[58px]" />
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
+          alt="logo"
+          className="h-[45px] w-[58px]"
+        />
       </div>
       <div className="flex h-screen w-full flex-col items-center bg-white md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
@@ -240,7 +244,11 @@ export default function Signin() {
         </div>
       </div>
       <div className="hidden h-screen w-fit items-center px-32 lg:flex">
-        <img src="/assets/svgs/logo.svg" alt="logo" className="h-[20vh] w-[23vw]" />
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
+          alt="logo"
+          className="h-[20vh] w-[23vw]"
+        />
       </div>
       <BasicModal
         open={isReferral}

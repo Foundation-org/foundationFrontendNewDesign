@@ -147,7 +147,7 @@ export default function BasicTable() {
   }, [columnSizes, table]);
 
   return (
-    <div className="overflow-y-auto mb-[50px] tablet:mb-[124px]">
+    <div className="mb-[50px] overflow-y-auto tablet:mb-[124px]">
       <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px]  tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
         Ledger
       </h1>
@@ -319,7 +319,7 @@ export default function BasicTable() {
             >
               <img
                 className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px]"
-                src={'/assets/svgs/arrow-back.svg'}
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-back.svg`}
                 alt=""
               />
             </button>
@@ -360,7 +360,7 @@ export default function BasicTable() {
             >
               <img
                 className="h-[0.43rem] w-[0.31rem] tablet:h-[14px] tablet:w-[9px] "
-                src={'/assets/svgs/arrow-forward.svg'}
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-forward.svg`}
                 alt=""
               />
             </button>

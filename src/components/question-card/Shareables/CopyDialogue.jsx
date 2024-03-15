@@ -105,7 +105,7 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
         {/* {createdBy === persistedUserInfo?.uuid ? (
           <div className="relative flex h-fit w-full items-center justify-center pb-[4.11px] laptop:pb-[10px]">
             <img
-              src="/assets/svgs/dashboard/MeBadge.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
               alt={alt}
               className="h-[50px] w-[48px] tablet:h-[80px] tablet:w-[64px]"
             />

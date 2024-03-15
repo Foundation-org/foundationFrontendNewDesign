@@ -693,18 +693,23 @@ const QuestionCardWithToggle = (props) => {
   };
 
   useEffect(() => {
-    if (questStartData.startStatus === '') {
-      dispatch(resetQuests());
-      setOpenResults(false);
-      handleStartTest(questStartData._id);
-    }
-    if (questStartData.startStatus === 'change answer') {
-      setOpenResults(false);
-      handleViewResults(questStartData._id);
-    }
-    if (questStartData.startStatus === 'completed') {
+    if (SharedLinkButton === 'shared-links-results-button') {
       setOpenResults(true);
       handleViewResults(questStartData._id);
+    } else {
+      if (questStartData.startStatus === '') {
+        dispatch(resetQuests());
+        setOpenResults(false);
+        handleStartTest(questStartData._id);
+      }
+      if (questStartData.startStatus === 'change answer') {
+        setOpenResults(false);
+        handleViewResults(questStartData._id);
+      }
+      if (questStartData.startStatus === 'completed') {
+        setOpenResults(true);
+        handleViewResults(questStartData._id);
+      }
     }
   }, [questStartData]);
 
@@ -750,6 +755,7 @@ const QuestionCardWithToggle = (props) => {
             cardSize={cardSize}
             checkOptionStatus={checkOptionStatus}
             setCheckOptionStatus={setCheckOptionStatus}
+            postProperties={postProperties}
           />
           <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
           {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
@@ -816,7 +822,7 @@ const QuestionCardWithToggle = (props) => {
         setAddOptionField={setAddOptionField}
         checkOptionStatus={checkOptionStatus}
         postProperties={postProperties}
-        SharedLinkButton={ SharedLinkButton}
+        SharedLinkButton={SharedLinkButton}
       />
     </QuestCardLayout>
   );

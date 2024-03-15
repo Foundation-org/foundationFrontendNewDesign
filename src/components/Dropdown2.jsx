@@ -23,7 +23,7 @@ const Dropdown2 = ({ label, title, items, handleSelect }) => {
             }`}
           />
           {/* <img
-            src="/assets/svgs/dashboard/down-arrow.svg"
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/down-arrow.svg`}
             alt="down-arrow"
             className={`h-[2px] w-[4.71px] tablet:h-[6px] tablet:w-[14px] ${
               isOpen

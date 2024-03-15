@@ -35,7 +35,7 @@ const CardTopbar = ({
         {createdBy === persistedUserInfo?.uuid ? (
           <div className="relative h-fit w-fit">
             <img
-              src="/assets/svgs/dashboard/MeBadge.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
               alt={alt}
               className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888px]"
             />
@@ -46,7 +46,7 @@ const CardTopbar = ({
         ) : (
           <div className="relative z-50 h-fit w-fit">
             <img
-              src={'/assets/svgs/dashboard/badge.svg'}
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
               alt={alt}
               className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888px]"
             />
@@ -57,7 +57,7 @@ const CardTopbar = ({
         )}
 
         {postProperties === 'SharedLinks' && (
-          <div className="lgTablet:max-w-[28rem] max-w-48 tablet:max-w-[16rem] laptop:max-w-fit">
+          <div className="max-w-48 tablet:max-w-[16rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
             <h1 className="truncate text-wrap text-[10px] font-semibold text-[#707175] tablet:text-[20px] tablet:font-medium">
               {url}
             </h1>
@@ -70,7 +70,7 @@ const CardTopbar = ({
             {questStartData?.userQuestSetting?.hiddenMessage}
           </h1>
           <img
-            src="/assets/svgs/eye-latest-cut.svg"
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-latest-cut.svg`}
             alt="eye-cut"
             className="h-[10.67px] w-[15.24px] tablet:h-[26.6px] tablet:w-[30px]"
           />
@@ -84,7 +84,7 @@ const CardTopbar = ({
           }}
         >
           <img
-            src="/assets/svgs/copylinkblue.png"
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copylinkblue.png`}
             alt="eye-cut"
             className="h-3 w-3 tablet:h-[22.92px] tablet:w-[19.79px]"
           />

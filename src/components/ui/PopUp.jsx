@@ -32,7 +32,7 @@ const PopUp = ({ open, handleClose, children, customStyle, customClasses, logo, 
           </div>
           {!closeIcon && (
             <img
-              src="/assets/preferences/close.png"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/preferences/close.png`}
               alt="close"
               className="h-[10px] w-[10px] cursor-pointer tablet:h-[22.7px] tablet:w-[22px]"
               onClick={handleClose}

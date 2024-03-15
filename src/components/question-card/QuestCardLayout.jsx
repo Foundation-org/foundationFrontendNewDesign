@@ -143,7 +143,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
           )}
           {postProperties === 'SharedLinks' ? (
             <img
-              src="/assets/svgs/dashboard/trash2.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
               alt="trash"
               className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
               onClick={showDisableSharedLinkPopup}
@@ -159,7 +159,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
         createdBy={questStartData.uuid}
         title={getQuestionTitle(questStartData.whichTypeQuestion)}
         question={questStartData.Question}
-        img={'/assets/svgs/dashboard/badge.svg'}
+        img={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
         alt={'badge'}
         badgeCount={questStartData.getUserBadge?.badges?.length}
         questStartData={questStartData}

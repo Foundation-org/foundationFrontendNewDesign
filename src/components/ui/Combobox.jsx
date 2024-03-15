@@ -23,7 +23,7 @@ const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSele
           />
           <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
             <img
-              src="/assets/svgs/downArrow.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/downArrow.svg`}
               alt="down-arrow"
               className={`h-[6.3px] w-[10.3px] tablet:h-[10px] tablet:w-[16px] `}
             />

@@ -225,21 +225,31 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
                 </button>
               )}
               {!search && (
-                <img src="/assets/svgs/dashboard/search.svg" alt="search" className="absolute right-3 top-4 h-4 w-4" />
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
+                  alt="search"
+                  className="absolute right-3 top-4 h-4 w-4"
+                />
               )}
             </div>
           </div>
           <h1 className="flex w-[212px] items-center gap-2 py-[3vh] text-[22px] font-[500] leading-none text-[#888] dark:text-white">
-            <img src="/assets/svgs/dashboard/filter.svg" alt="filter" className="h-[1.188rem] w-[1.188rem]" />
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/filter.svg`}
+              alt="filter"
+              className="h-[1.188rem] w-[1.188rem]"
+            />
             Filters
           </h1>
           <button
-            onClick={handleTopicPref}
+            // onClick={handleTopicPref}
+            onClick={() => toast.success('Feature coming soon')}
             className={`${
               persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
           >
-            Topics
+            {/* Topics */}
+            Ratings
           </button>
           <BasicModal
             open={openTopicPref}
@@ -328,9 +338,10 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             className={`${
               persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             }  inset-0 w-4/6 rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
-            onClick={handleTopicPref}
+            // onClick={handleTopicPref}
+            onClick={() => toast.success('Feature coming soon')}
           >
-            Rating
+            Ratings
           </button>
           <Dropdown2
             label={'Status'}
@@ -408,7 +419,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             )}
             {!search && (
               <img
-                src="/assets/svgs/dashboard/search.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
                 alt="search"
                 className="absolute right-[12px] top-[9px] h-3 w-3 tablet:top-3 tablet:h-[26.4px] tablet:w-[24.3px]"
               />

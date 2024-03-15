@@ -25,7 +25,7 @@ export default function SharedLinks() {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
-
+  const [height, setHeight] = useState('calc(100vh - 300px)');
   const [allData, setAllData] = useState([]);
   const [feedData, setFeedData] = useState();
   const [startTest, setStartTest] = useState(null);
@@ -183,6 +183,21 @@ export default function SharedLinks() {
     }
   }, [questUtils.enablePostId]);
 
+  useEffect(() => {
+    const updateHeight = () => {
+      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 155px)' : 'calc(100vh - 300px)';
+      setHeight(newHeight);
+    };
+
+    updateHeight();
+
+    window.addEventListener('resize', updateHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []);
+
   return (
     <div>
       <div className="ml-[32px] mr-4 flex justify-between pt-[5px] tablet:ml-[97px] tablet:mr-[70px]">
@@ -221,7 +236,7 @@ export default function SharedLinks() {
             )}
             {!filterStates.searchData && (
               <img
-                src="/assets/svgs/dashboard/search.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
                 alt="search"
                 className="absolute right-1.5 top-[55%] h-2 w-2 -translate-y-1/2 transform tablet:right-3 tablet:top-1/2 tablet:h-4 tablet:w-4"
               />
@@ -230,7 +245,7 @@ export default function SharedLinks() {
         </div>
       </div>
 
-      <div className="no-scrollbar mx-auto mt-5 flex h-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] pb-[3rem] tablet:w-[73.6%] tablet:pb-[6rem] tablet:pt-[0.94rem] dark:bg-[#242424]">
+      <div className="no-scrollbar mx-auto mt-5 flex h-full max-w-full flex-col overflow-y-auto bg-[#F3F3F3] pb-[3rem] tablet:w-full tablet:pb-[6rem] tablet:pt-[0.94rem] dark:bg-[#242424]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -242,10 +257,13 @@ export default function SharedLinks() {
                 {filterStates.searchData && allData.length == 0 ? (
                   <div className="my-[15vh] flex  flex-col items-center justify-center">
                     {persistedTheme === 'dark' ? (
-                      <img src="/assets/svgs/dashboard/noMatchingDark.svg" alt="noposts image" />
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingDark.svg`}
+                        alt="noposts image"
+                      />
                     ) : (
                       <img
-                        src="/assets/svgs/dashboard/noMatchingLight.svg"
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingLight.svg`}
                         alt="noposts image"
                         className="h-[173px] w-[160px]"
                       />
@@ -305,13 +323,16 @@ export default function SharedLinks() {
               </div>
             )
           }
-          height={'calc(100vh - 92px)'}
-          className="no-scrollbar px-4 py-[10px] tablet:px-6 tablet:py-5"
+          height={height}
+          className="no-scrollbar px-4 py-[10px]  tablet:py-5"
         >
-          <div id="section-1" className="flex flex-col gap-2 tablet:gap-5">
+          <div
+            id="section-1"
+            className="flex flex-col justify-center gap-2 tablet:flex-row tablet:flex-wrap tablet:gap-5"
+          >
             {allData &&
               allData.map((item, index) => (
-                <div key={index + 1}>
+                <div key={index + 1} className="max-w-[730px] tablet:min-w-[730px]">
                   <QuestionCard
                     postProperties={'SharedLinks'}
                     questStartData={item}

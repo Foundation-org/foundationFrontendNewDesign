@@ -43,8 +43,11 @@ const SocialLogins = ({
           }}
           // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
         >
-          <img src="/assets/svgs/google.svg" className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] " /> Continue with
-          Google
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
+            className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] "
+          />
+          Continue with Google
         </Button>
       </LoginSocialGoogle>
       <LoginSocialFacebook
@@ -66,10 +69,13 @@ const SocialLogins = ({
           // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/facebook`, '_self')}
         >
           {persistedTheme === 'dark' ? (
-            <img src="/assets/svgs/facebook.svg" className="mr-1 h-[22px] w-[22px] md:h-12 md:w-[32px] 2xl:mr-3" />
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/facebook.svg`}
+              className="mr-1 h-[22px] w-[22px] md:h-12 md:w-[32px] 2xl:mr-3"
+            />
           ) : (
             <img
-              src="/assets/svgs/facebook-white.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/facebook-white.svg`}
               className="mr-1 h-[22px] w-[22px] md:h-12 md:w-[32px] 2xl:mr-3"
             />
           )}

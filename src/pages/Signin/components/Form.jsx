@@ -27,14 +27,14 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
         {email ? (
           persistedTheme === 'dark' ? (
             <img
-              src="/assets/svgs/cancelDark.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/cancelDark.svg`}
               alt="blind"
               className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
               onClick={handleCancel}
             />
           ) : (
             <img
-              src="/assets/svgs/cancelLight.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/cancelLight.svg`}
               alt="blind"
               className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
               onClick={handleCancel}
@@ -57,14 +57,14 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
             {!showPassword ? (
               persistedTheme === 'dark' ? (
                 <img
-                  src="/assets/svgs/blind.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/blind.svg`}
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                   onClick={togglePasswordVisibility}
                 />
               ) : (
                 <img
-                  src="/assets/svgs/eye-white.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-white.svg`}
                   alt="blind"
                   className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                   onClick={togglePasswordVisibility}
@@ -72,14 +72,14 @@ const Form = ({ onEmailChange, onPassChange, handleCancel, email }) => {
               )
             ) : persistedTheme === 'dark' ? (
               <img
-                src="/assets/svgs/eye.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye.svg`}
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                 onClick={togglePasswordVisibility}
               />
             ) : (
               <img
-                src="/assets/svgs/eyeLight.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eyeLight.svg`}
                 alt="blind"
                 className="absolute right-2 h-[17px] w-[17px] cursor-pointer  2xl:h-[24px] 2xl:w-[24px] 3xl:h-[30px] 3xl:w-[30px]"
                 onClick={togglePasswordVisibility}

@@ -38,9 +38,17 @@ const Options = ({
             <div className="flex h-full w-[38px] items-center justify-center rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
               {dragable ? (
                 persistedTheme === 'dark' ? (
-                  <img src="/assets/svgs/dashboard/six-dots-dark.svg" alt="six dots" className="h-7" />
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`}
+                    alt="six dots"
+                    className="h-7"
+                  />
                 ) : (
-                  <img src="/assets/svgs/dashboard/six-dots.svg" alt="six dots" className="h-7" />
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`}
+                    alt="six dots"
+                    className="h-7"
+                  />
                 )
               ) : null}
             </div>
@@ -60,7 +68,9 @@ const Options = ({
                     />
                   </div>
                 )}
-                {trash && <img src="/assets/svgs/dashboard/trash2.svg" alt="trash" />}
+                {trash && (
+                  <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`} alt="trash" />
+                )}
               </div>
             </div>
           </div>
@@ -76,12 +86,16 @@ const Options = ({
               >
                 {persistedTheme === 'dark' ? (
                   <img
-                    src="/assets/svgs/dashboard/six-dots-dark.svg"
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`}
                     alt="six dots"
                     className="h-[8.8px] tablet:h-[18px]"
                   />
                 ) : (
-                  <img src="/assets/svgs/dashboard/six-dots.svg" alt="six dots" className="h-[8.8px] tablet:h-[18px]" />
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`}
+                    alt="six dots"
+                    className="h-[8.8px] tablet:h-[18px]"
+                  />
                 )}
               </div>
               <div
@@ -136,7 +150,7 @@ const Options = ({
                           }}
                         >
                           <img
-                            src="/assets/svgs/dashboard/trash2.svg"
+                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                             alt="trash"
                             className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
                           />

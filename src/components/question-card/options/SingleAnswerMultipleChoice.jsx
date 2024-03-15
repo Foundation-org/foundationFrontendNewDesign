@@ -219,7 +219,7 @@ const SingleAnswerMultipleChoice = (props) => {
         props.addedAnswerUuid === persistedUserInfo?.uuid ? (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#000]">
             <img
-              src="/assets/addOptions/yellowBadge.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/yellowBadge.svg`}
               alt="optionMeBadge"
               className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
             />
@@ -227,7 +227,7 @@ const SingleAnswerMultipleChoice = (props) => {
         ) : (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#000]">
             <img
-              src="/assets/addOptions/blueBadge.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/blueBadge.svg`}
               alt="bluebadge"
               className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
             />
@@ -303,16 +303,17 @@ const SingleAnswerMultipleChoice = (props) => {
             onClick={() => (props.btnText === 'Results' ? null : handleCheckChange())}
           >
             <div className="flex items-center gap-1 laptop:gap-[18px]">
-            {props?.postProperties !== 'sharedlink-results' && (
-              <div id="custom-checkbox" className="flex h-full items-center">
-                <input
-                  id="small-checkbox"
-                  type="checkbox"
-                  className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                  checked={checkState}
-                  readOnly
-                />
-              </div>)}
+              {props?.postProperties !== 'sharedlink-results' && (
+                <div id="custom-checkbox" className="flex h-full items-center">
+                  <input
+                    id="small-checkbox"
+                    type="checkbox"
+                    className="checkbox h-[11.4px] w-[11.4px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                    checked={checkState}
+                    readOnly
+                  />
+                </div>
+              )}
 
               {props.btnText === 'Results' ? (
                 <>
@@ -340,21 +341,23 @@ const SingleAnswerMultipleChoice = (props) => {
           >
             {props.deleteable ? (
               <img
-                src="/assets/svgs/dashboard/trash2.svg"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                 alt="trash"
                 className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
                 onClick={() => handleDeleteOption(props.number)}
               />
             ) : (
               <div className="flex items-center gap-1 laptop:gap-[18px]">
-                <div id="custom-yello-checkbox" className="flex h-full items-center ">
-                  <div className="cursor-pointer">
-                    <ContentionIcon
-                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                      checked={contendState}
-                    />
+                {props?.postProperties !== 'sharedlink-results' && (
+                  <div id="custom-yello-checkbox" className="flex h-full items-center ">
+                    <div className="cursor-pointer">
+                      <ContentionIcon
+                        classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                        checked={contendState}
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             )}
             <BasicModal open={deleteModal} handleClose={handleDeleteClose}>
@@ -375,19 +378,20 @@ const SingleAnswerMultipleChoice = (props) => {
                 props.contendPercentages?.[props.answer.trim()] &&
                 props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
                   <div className="flex items-center gap-1 tablet:gap-[10px]">
-                     {props?.postProperties !== 'sharedlink-results' && (
-                    <ContentionIcon
-                      classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
-                      checked={contendState}
-                    />)}
+                    {props?.postProperties !== 'sharedlink-results' && (
+                      <ContentionIcon
+                        classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                        checked={contendState}
+                      />
+                    )}
                     <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                       {props.contendPercentages[props.answer.trim()]}
                     </span>
                   </div>
                 ) : (
                   <div className="flex items-center gap-1 tablet:gap-[10px]">
-                  {props?.postProperties !== 'sharedlink-results' && (
-                    <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
+                    {props?.postProperties !== 'sharedlink-results' && (
+                      <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
                     )}
                     <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
                   </div>

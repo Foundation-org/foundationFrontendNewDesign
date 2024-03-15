@@ -7,6 +7,7 @@ import QuestionCard from './components/QuestionCard';
 import SidebarLeft from '../../components/SidebarLeft';
 import SidebarRight from '../../components/SidebarRight';
 import QuestionCardWithToggle from './components/QuestionCardWithToggle';
+import Slider from '../../../../components/Slider';
 
 // Utilities and Constants
 import { printEndMessage } from '../../../../utils';
@@ -46,7 +47,7 @@ const QuestStartSection = () => {
   const [columns, setColumns] = useState(parsedColumns || initialColumns);
   const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
-  const [height, setHeight] = useState('calc(100vh - 92px)');
+  const [height, setHeight] = useState('calc(100vh - 140px)');
 
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
@@ -262,8 +263,7 @@ const QuestStartSection = () => {
 
   useEffect(() => {
     const updateHeight = () => {
-      console.log('first', window.innerWidth);
-      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 182.3px)' : 'calc(100vh - 92px)';
+      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 182.3px)' : 'calc(100vh - 140px)';
       setHeight(newHeight);
     };
 
@@ -291,13 +291,14 @@ const QuestStartSection = () => {
           setItemsWithCross={setItemsWithCross}
         />
         <div className="no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:min-h-[calc(100vh-92px)] dark:bg-[#242424]">
+          <Slider columns={columns} setColumns={setColumns} />
           <InfiniteScroll
             dataLength={allData?.length}
             next={fetchMoreData}
             hasMore={feedData?.hasNextPage}
             endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme)}
             height={height}
-            className="no-scrollbar px-4 py-[10px] tablet:px-6 tablet:py-5"
+            className="no-scrollbar px-4 pb-[10px] tablet:px-6 tablet:pb-5"
           >
             <div id="section-1" className="flex flex-col gap-2 tablet:gap-5">
               {allData &&

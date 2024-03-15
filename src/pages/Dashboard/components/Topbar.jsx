@@ -7,6 +7,7 @@ import api from '../../../services/api/Axios';
 import * as filterActions from '../../../features/sidebar/filtersSlice';
 import { useDispatch } from 'react-redux';
 import * as createQuestActions from '../../../features/createQuest/createQuestSlice';
+import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
 
 const Topbar = () => {
   const location = useLocation();
@@ -47,7 +48,7 @@ const Topbar = () => {
             >
               <div className="relative block h-fit w-fit laptop:hidden">
                 <img
-                  src="/assets/svgs/dashboard/guestBadge.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
                   alt="badge"
                   className="h-6 w-[19.8px] tablet:h-[51.5px] tablet:w-[42px]"
                 />
@@ -78,7 +79,7 @@ const Topbar = () => {
             >
               <div className="relative block h-fit w-fit laptop:hidden">
                 <img
-                  src="/assets/svgs/dashboard/MeBadge.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
                   alt="badge"
                   className="h-6 w-[19.8px] tablet:h-[51.5px] tablet:w-[42px]"
                 />
@@ -103,7 +104,11 @@ const Topbar = () => {
               dispatch(createQuestActions.resetCreateQuest());
             }}
           >
-            <img src="/assets/svgs/logo.svg" alt="logo" className="w-[34.5px] tablet:w-[69.2px] laptop:w-[5.75rem]" />
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
+              alt="logo"
+              className="w-[34.5px] tablet:w-[69.2px] laptop:w-[5.75rem]"
+            />
           </Link>
           <div className="flex w-[85.81px] items-center justify-end gap-4 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
             {/* <div
@@ -111,7 +116,7 @@ const Topbar = () => {
             onClick={() => toast.error("err coming soon")}
           >
             <img
-              src="/assets/svgs/dashboard/notification_icon.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/notification_icon.svg`}
               alt="arrow-right"
               className="h-[18px] w-[15.3px] tablet:h-[32px] tablet:w-6"
             />
@@ -129,7 +134,7 @@ const Topbar = () => {
             {localStorage.getItem('isGuestMode') ? (
               <div onClick={handleGuestLogout}>
                 <img
-                  src="/assets/svgs/dashboard/signupIcon.png"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/signupIcon.png`}
                   alt="signup Icon"
                   className="h-[18px] w-[16.2px] cursor-pointer tablet:h-[36px] tablet:w-[28px]"
                 />
@@ -137,7 +142,7 @@ const Topbar = () => {
             ) : (
               <div onClick={handleLogout}>
                 <img
-                  src="/assets/svgs/dashboard/arrow-right-outline.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/arrow-right-outline.svg`}
                   alt="arrow-right"
                   className="h-[18px] w-[16.2px] cursor-pointer tablet:h-[36px] tablet:w-[28px]"
                 />
@@ -165,6 +170,7 @@ const Topbar = () => {
                 }`}
                 onClick={() => {
                   dispatch(createQuestActions.resetCreateQuest());
+                  dispatch(addSharedLinkPost(null));
                 }}
               >
                 {location.pathname === item.path || location.pathname === `${item.path}/` ? (
@@ -192,7 +198,7 @@ const Topbar = () => {
           onClick={() => toast.error("err coming soon")}
         >
           <img
-            src="/assets/svgs/dashboard/notification_icon.svg"
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/notification_icon.svg`}
             alt="arrow-right"
           />
           <p className="absolute right-0 top-0 h-5 w-5 rounded-full bg-[#FF2C2C] text-center text-[14px] font-medium">
@@ -207,11 +213,17 @@ const Topbar = () => {
           </Link>
           {persistedUserInfo.role !== 'user' ? (
             <div onClick={handleGuestLogout}>
-              <img src="/assets/svgs/dashboard/signupIcon.png" alt="signup Icon" />
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/signupIcon.png`}
+                alt="signup Icon"
+              />
             </div>
           ) : (
             <div onClick={handleLogout}>
-              <img src="/assets/svgs/dashboard/arrow-right-outline.svg" alt="arrow-right" />
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/arrow-right-outline.svg`}
+                alt="arrow-right"
+              />
             </div>
           )}
         </div>

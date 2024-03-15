@@ -201,6 +201,7 @@ export default function Signup() {
       setModalVisible(false);
       const res = await api.patch(`/updateBadge/${resData.userId}/${resData.badgeId}`, {
         type: value,
+        primary: true,
       });
       if (res.status === 200) {
         localStorage.setItem('uId', res.data.uuid);
@@ -233,10 +234,18 @@ export default function Signup() {
           persistedTheme === 'dark' ? 'bg-dark' : 'bg-blue'
         } flex h-[65px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
-        <img src="/assets/svgs/logo.svg" alt="logo" className="h-[45px] w-[58px]" />
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
+          alt="logo"
+          className="h-[45px] w-[58px]"
+        />
       </div>
       <div className="hidden h-screen w-fit items-center px-[9.15vw] lg:flex">
-        <img src="/assets/svgs/logo.svg" alt="logo" className="h-[20vh] w-[23vw]" />
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
+          alt="logo"
+          className="h-[20vh] w-[23vw]"
+        />
       </div>
 
       <div className="flex h-screen w-full flex-col items-center bg-white md:justify-center lg:rounded-bl-[65px] lg:rounded-tl-[65px] dark:bg-dark">
@@ -335,7 +344,12 @@ export default function Signup() {
         />
       </BasicModal>
 
-      <PopUp open={isPopup} handleClose={handlePopupClose} logo={'/assets/popup/googlelogo.svg'} title={'Google Email'}>
+      <PopUp
+        open={isPopup}
+        handleClose={handlePopupClose}
+        logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/popup/googlelogo.svg`}
+        title={'Google Email'}
+      >
         <div className="px-5 py-[14px] tablet:px-[60px] tablet:py-[25px]">
           <p className="text-[9px] font-medium text-black tablet:text-[20px]">{errorMessage}</p>
           {/* {
@@ -380,8 +394,11 @@ export default function Signup() {
                 variant="social-btn"
                 // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
               >
-                <img src="/assets/svgs/google.svg" className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] " /> Continue
-                with Google
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
+                  className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] "
+                />{' '}
+                Continue with Google
               </UiButton>
             </LoginSocialGoogle>
           )}

@@ -32,9 +32,12 @@ const EditNewOption = (props) => {
         <div className="flex items-center">
           <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
             {persistedTheme === 'dark' ? (
-              <img src="/assets/svgs/dashboard/six-dots-dark.svg" alt="six dots" />
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`}
+                alt="six dots"
+              />
             ) : (
-              <img src="/assets/svgs/dashboard/six-dots.svg" alt="six dots" />
+              <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`} alt="six dots" />
             )}
           </div>
           <input

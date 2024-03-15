@@ -45,7 +45,7 @@ const QuestBottombar = ({
       toast.warning(
         <p>
           Please{' '}
-          <span className="text-[#389CE3] underline cursor-pointer" onClick={() => navigate('/guest-signup')}>
+          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
             Create an Account
           </span>{' '}
           to unlock this feature
@@ -111,7 +111,7 @@ const QuestBottombar = ({
       className={`flex items-center border-t-2 border-[#D9D9D9] px-[0.57rem] py-2 tablet:px-5 tablet:py-[0.63rem] ${postProperties === 'HiddenPosts' ? 'justify-end' : 'justify-between'}`}
     >
       {postProperties !== 'HiddenPosts' && (
-        <div className="flex items-center gap-[0.17rem] tablet:gap-[6px] min-w-[70px] tablet:min-w-[160px]">
+        <div className="flex min-w-[70px] items-center gap-[0.17rem] tablet:min-w-[160px] tablet:gap-[6px]">
           <div onClick={handleCopyOpen} className="cursor-pointer">
             {persistedTheme === 'dark' ? <Copy /> : <Copy />}
           </div>
@@ -204,10 +204,10 @@ const QuestBottombar = ({
       {postProperties !== 'HiddenPosts' &&
         postProperties !== 'SharedLinks' &&
         !window.location.href.includes('/p/') && (
-          <div className="min-w-[70px] tablet:min-w-[160px] flex justify-center">
+          <div className="flex min-w-[70px] justify-center tablet:min-w-[160px]">
             {isFullScreen === undefined ? (
               <div
-                className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] dark:text-[#ACACAC] tablet:gap-[0.66rem] "
+                className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
                 onClick={() => {
                   navigate('/quest/isfullscreen', {
                     state: questStartData._id,
@@ -236,7 +236,7 @@ const QuestBottombar = ({
         )}
 
       {/* <div className="border-l border-[#D9D9D9] tablet:pl-5 min-w-[70px] tablet:min-w-[160px]"> */}
-      <div className="min-w-[70px] tablet:min-w-[160px] flex justify-end">
+      <div className="flex min-w-[70px] justify-end tablet:min-w-[160px]">
         <div className="flex h-4 w-fit items-center gap-[0.44rem] rounded-[0.625rem] md:h-[1.75rem]">
           {persistedTheme === 'dark' ? (
             <svg
@@ -252,13 +252,13 @@ const QuestBottombar = ({
             </svg>
           ) : (
             <img
-              src="/assets/svgs/dashboard/clock-outline.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/clock-outline.svg`}
               alt="clock"
               className="h-[8.64px] w-[8.64px] tablet:h-[20.5px] tablet:w-[20.4px]"
             />
           )}
 
-          <h4 className="whitespace-nowrap text-[0.51638rem] font-normal text-[#9C9C9C] dark:text-white tablet:text-[1.13531rem] laptop:text-[1.32569rem]">
+          <h4 className="whitespace-nowrap text-[0.51638rem] font-normal text-[#9C9C9C] tablet:text-[1.13531rem] laptop:text-[1.32569rem] dark:text-white">
             {timeAgo}
           </h4>
         </div>

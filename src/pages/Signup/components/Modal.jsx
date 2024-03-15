@@ -79,7 +79,7 @@ export default function MyModal({ modalShow, email, handleEmailType }) {
                       <div>
                         <img
                           className="h-7 w-7 tablet:h-10 tablet:w-10"
-                          src="/assets/svgs/personal.svg"
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/personal.svg`}
                           alt="personal"
                         />
                       </div>
@@ -100,7 +100,11 @@ export default function MyModal({ modalShow, email, handleEmailType }) {
                       } border-[3px]`}
                     >
                       <div>
-                        <img className="h-7 w-7 tablet:h-10 tablet:w-10" src="/assets/svgs/work.svg" alt="work" />
+                        <img
+                          className="h-7 w-7 tablet:h-10 tablet:w-10"
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/work.svg`}
+                          alt="work"
+                        />
                       </div>
                       <p className="text-lg font-medium text-white">Work</p>
                     </label>

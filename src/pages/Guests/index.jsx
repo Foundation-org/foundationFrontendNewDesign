@@ -74,7 +74,7 @@ const Guests = () => {
                   tab={tab}
                   questStartData={singleQuestResp}
                   id={singleQuestResp?._id}
-                  img="/assets/svgs/dashboard/badge.svg"
+                  img={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
                   alt="badge"
                   badgeCount={singleQuestResp.getUserBadge?.badges?.length}
                   time={singleQuestResp?.createdAt}
@@ -99,7 +99,7 @@ const Guests = () => {
                   <QuestionCardWithToggle
                     questStartData={submitResponse ? submitResponse : singleQuestResp}
                     // id={singleQuestResp?._id}
-                    img="/assets/svgs/dashboard/badge.svg"
+                    img={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
                     alt="badge"
                     // badgeCount={singleQuestResp.getUserBadge?.badges?.length}
                     // time={singleQuestResp?.createdAt}

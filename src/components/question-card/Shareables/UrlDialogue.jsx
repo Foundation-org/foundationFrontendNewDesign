@@ -8,7 +8,7 @@ const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
   return (
     <div className="relative w-[90vw] pb-[21.37px] pt-3 tablet:pb-[75px] tablet:pt-[37px] laptop:w-[52.6rem]">
       <img
-        src="/assets/svgs/close.svg"
+        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/close.svg`}
         alt="close icon"
         className="absolute right-[11px] top-[10px] h-[0.48rem] w-[0.48rem] cursor-pointer tablet:right-[20px] tablet:top-[17px] tablet:h-[1.37rem] tablet:w-[1.37rem] laptop:right-[26px] laptop:top-[29px]"
         onClick={handleClose}
@@ -17,7 +17,7 @@ const UrlDialogue = ({ handleClose, id, createdBy, img, alt, badgeCount }) => {
         {createdBy === persistedUserInfo?.uuid ? (
           <div className="relative flex h-fit w-full items-center justify-center pb-[15px] laptop:pb-[15px]">
             <img
-              src="/assets/svgs/dashboard/MeBadge.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
               alt={alt}
               className="h-[28.379px] w-[22.722px] tablet:h-[106px] tablet:w-[85px]"
             />

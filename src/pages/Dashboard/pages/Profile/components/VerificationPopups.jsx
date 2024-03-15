@@ -83,8 +83,11 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
               variant="social-btn"
               // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
             >
-              <img src="/assets/svgs/google.svg" className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] " /> Continue
-              with Google
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
+                className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] "
+              />{' '}
+              Continue with Google
             </Button>
           </LoginSocialGoogle>
           <div className=" px-5 tablet:px-[60px] laptop:px-[80px]">

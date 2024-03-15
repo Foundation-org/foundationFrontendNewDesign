@@ -26,61 +26,67 @@ const RankedResult = (props) => {
     <div className="flex items-center tablet:mr-[44px] tablet:pl-[1.75rem]">
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId') ? (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#141618] tablet:w-[45.6px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white tablet:w-[45.6px] dark:bg-[#141618]">
             <img
-              src="/assets/svgs/dashboard/optionMeBadge.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/optionMeBadge.svg`}
               alt="trash"
               className="h-4 w-[12px] cursor-pointer tablet:h-[27px] tablet:w-[21px]"
             />
           </div>
         ) : (
-          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white dark:bg-[#141618] tablet:w-[45.6px]">
+          <div className="flex w-7 min-w-[28px] items-center justify-center bg-white tablet:w-[45.6px] dark:bg-[#141618]">
             <img
-              src="/assets/svgs/dashboard/bluebadge.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/bluebadge.svg`}
               alt="trash"
               className="h-4 w-[12px] cursor-pointer tablet:h-[27px] tablet:w-[21px]"
             />
           </div>
         )
       ) : (
-        <div className="flex w-7 min-w-[28px] items-center justify-center bg-[#F3F3F3] dark:bg-[#141618] tablet:w-[45.6px]"></div>
+        <div className="flex w-7 min-w-[28px] items-center justify-center bg-[#F3F3F3] tablet:w-[45.6px] dark:bg-[#141618]"></div>
       )}
 
-      <div className="rounded-s-[5.387px] flex w-full justify-between rounded-r-[4.73px] border-l-0 border-r border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012] tablet:rounded-s-[10px] tablet:rounded-r-[10px] tablet:border-r-[3px]">
+      <div className="flex w-full justify-between rounded-r-[4.73px] rounded-s-[5.387px] border-l-0 border-r border-[#DEE6F7] bg-white tablet:rounded-r-[10px] tablet:rounded-s-[10px] tablet:border-r-[3px] dark:border-[#D9D9D9] dark:bg-[#0D1012]">
         <div className="flex w-full items-center">
-          <div className="flex h-full min-h-[24px] w-3 min-w-[12.5px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] dark:bg-[#D9D9D9] tablet:min-h-[43px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:min-w-[25px] laptop:w-[25px]">
+          <div className="flex h-full min-h-[24px] w-3 min-w-[12.5px] items-center justify-center rounded-l-[5.387px]  bg-[#DEE6F7] tablet:min-h-[43px] tablet:w-[27px] tablet:rounded-l-[10px] laptop:w-[25px] laptop:min-w-[25px] dark:bg-[#D9D9D9]">
             &#x200B;
           </div>
           {props.btnText !== 'Results' && (
             <div className="h-full w-fit rounded-l-[10px] bg-[#DEE6F7] px-[7px] pb-[13px] pt-[14px] dark:bg-[#9E9E9E]">
               {persistedTheme === 'dark' ? (
-                <img src="/assets/svgs/dashboard/six-dots-dark.svg" alt="six dots" />
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`}
+                  alt="six dots"
+                />
               ) : (
-                <img src="/assets/svgs/dashboard/six-do ts.svg" alt="six dots" />
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-do ts.svg`}
+                  alt="six dots"
+                />
               )}
             </div>
           )}
           <div className="relative flex w-full justify-between">
             <div
-              className="block h-[5px] tablet:h-[10px] absolute top-0 bg-[#4DD896]"
+              className="absolute top-0 block h-[5px] bg-[#4DD896] tablet:h-[10px]"
               style={{
                 width: props?.selectedPercentages && props?.selectedPercentages[props?.answer.trim()],
               }}
             />
-            <h1 className="w-full py-[6px] px-2 leading-[10px] border-y tablet:border-y-[3px] border-[#DEE6F7] tablet:pl-[18px] tablet:pr-5 laptop:pr-[34px] text-[8.5px] font-normal tablet:leading-none text-[#435059] dark:text-[#D3D3D3] tablet:py-3 tablet:text-[19px]">
+            <h1 className="w-full border-y border-[#DEE6F7] px-2 py-[6px] text-[8.5px] font-normal leading-[10px] text-[#435059] tablet:border-y-[3px] tablet:py-3 tablet:pl-[18px] tablet:pr-5 tablet:text-[19px] tablet:leading-none laptop:pr-[34px] dark:text-[#D3D3D3]">
               {props.answer}
             </h1>
             <div className="flex items-center gap-[19px]">
               {props.editable ? (
                 <img
-                  src="/assets/svgs/dashboard/edit.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/edit.svg`}
                   className="h-[19px] w-4 cursor-pointer"
                   onClick={handleEditOpen}
                 />
               ) : null}
               {props.deleteable ? (
                 <img
-                  src="/assets/svgs/dashboard/trash.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash.svg`}
                   className="h-[19px] w-4 cursor-pointer"
                   onClick={handleDeleteOpen}
                 />
@@ -111,7 +117,7 @@ const RankedResult = (props) => {
               }}
             /> */}
             <div
-              className={`block h-[5px] tablet:h-[10px] absolute bottom-0 bg-[#FDD503B2]`}
+              className={`absolute bottom-0 block h-[5px] bg-[#FDD503B2] tablet:h-[10px]`}
               style={{
                 width:
                   props.contendPercentages &&
@@ -124,7 +130,7 @@ const RankedResult = (props) => {
           </div>
         </div>
         {/* to show ranked and multiple choice options */}
-        <div className="pr-[10.63px] flex items-center gap-[19px] text-[9.238px] tablet:pr-[11px] tablet:text-[16px] border-y tablet:border-y-[3px] border-[#DEE6F7] rounded-e-[5.387px]">
+        <div className="flex items-center gap-[19px] rounded-e-[5.387px] border-y border-[#DEE6F7] pr-[10.63px] text-[9.238px] tablet:border-y-[3px] tablet:pr-[11px] tablet:text-[16px]">
           {props.btnText === 'Results' ? (
             <>
               {props?.selectedPercentages && props.selectedPercentages[props.answer.trim()] ? (
@@ -135,7 +141,7 @@ const RankedResult = (props) => {
                   </span>
                 </div>
               ) : (
-                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0.00%</span>
+                <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
               )}
             </>
           ) : null}
@@ -144,23 +150,28 @@ const RankedResult = (props) => {
 
       {/* =============== To Display Contention and Trash Right of Option */}
 
-      <div className="flex w-[42px] min-w-[42px] items-center bg-white pl-1 text-[9.238px] dark:bg-[#000] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px]">
+      <div className="flex w-[42px] min-w-[42px] items-center bg-white pl-1 text-[9.238px] tablet:w-[66px] tablet:justify-center tablet:pl-[11px] tablet:text-[16px] dark:bg-[#000]">
         {props.btnText === 'Results' ? (
           <>
             {props.contendPercentages &&
             props.contendPercentages?.[props.answer.trim()] &&
             props.contendPercentages?.[props.answer.trim()] !== '0%' ? (
               <div className="flex items-center gap-1 tablet:gap-[10px]">
-                 {props?.postProperties !== 'sharedlink-results' && (
-                <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={checkState} />)}
+                {props?.postProperties !== 'sharedlink-results' && (
+                  <ContentionIcon
+                    classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5"
+                    checked={checkState}
+                  />
+                )}
                 <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">
                   {props.contendPercentages[props.answer.trim()]}
                 </span>
               </div>
             ) : (
               <div className="flex items-center gap-1 tablet:gap-[10px]">
-                 {props?.postProperties !== 'sharedlink-results' && (
-                <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />)}
+                {props?.postProperties !== 'sharedlink-results' && (
+                  <ContentionIcon classNames="w-[2.578px] h-[10.313px] tablet:w-[5px] tablet:h-5" checked={false} />
+                )}
                 <span className="w-[4ch] whitespace-nowrap text-black dark:text-white">0%</span>
               </div>
             )}

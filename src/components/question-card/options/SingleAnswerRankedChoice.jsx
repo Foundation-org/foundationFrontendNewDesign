@@ -207,7 +207,7 @@ const SingleAnswerRankedChoice = (props) => {
         props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId') ? (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#000]">
             <img
-              src="/assets/addOptions/yellowBadge.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/yellowBadge.svg`}
               alt="trash"
               className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
             />
@@ -215,7 +215,7 @@ const SingleAnswerRankedChoice = (props) => {
         ) : (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#000]">
             <img
-              src="/assets/addOptions/blueBadge.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/blueBadge.svg`}
               alt="trash"
               className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
             />
@@ -244,13 +244,13 @@ const SingleAnswerRankedChoice = (props) => {
             >
               {persistedTheme === 'dark' ? (
                 <img
-                  src="/assets/svgs/dashboard/six-dots-dark.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`}
                   alt="six dots"
                   className="h-[8.5px] w-[5.2px] tablet:h-auto tablet:w-auto"
                 />
               ) : (
                 <img
-                  src="/assets/svgs/dashboard/six-dots.svg"
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`}
                   alt="six dots"
                   className="h-[8.5px] w-[5.2px] tablet:h-auto tablet:w-auto"
                 />
@@ -312,7 +312,7 @@ const SingleAnswerRankedChoice = (props) => {
         <div className="flex w-[42px] min-w-[42px] items-center pl-2 tablet:w-8 tablet:justify-center tablet:pl-[5px] dark:bg-[#000]">
           {props.deleteable ? (
             <img
-              src="/assets/svgs/dashboard/trash2.svg"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
               alt="trash"
               className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
               onClick={() => handleDeleteOption(props.number)}
