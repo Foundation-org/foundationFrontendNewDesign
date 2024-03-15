@@ -253,7 +253,7 @@ const Bookmark = () => {
   }, []);
 
   // console.log('🚀 ~ Bookmark ~ allData:', allData);
-  console.log('first', columns);
+
   return (
     <div className="w-full bg-[#F3F3F3] dark:bg-black">
       <div className="mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">

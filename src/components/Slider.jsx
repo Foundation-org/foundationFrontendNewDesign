@@ -3,11 +3,13 @@ import { Button } from './ui/Button';
 
 import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice';
+import * as QuestServices from '../services/queries/quest';
+import * as prefActions from '../features/preferences/prefSlice';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function Slider({ columns, setColumns }) {
-  console.log('first', columns);
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -18,8 +20,9 @@ function Slider({ columns, setColumns }) {
     filtersActions = homeFilterActions;
   }
 
+  const getPreferences = useSelector(prefActions.getPrefs);
+  const filterStates = useSelector(filtersActions.getFilters);
   const [scrollPosition, setScrollPosition] = useState(0);
-
   const [multipleOption, setMultipleOption] = useState(
     localStorage.getItem('filterByState') !== undefined
       ? localStorage.getItem('filterByState') === 'true'
@@ -27,13 +30,63 @@ function Slider({ columns, setColumns }) {
         : false
       : false,
   );
+  console.log('multipleOption', multipleOption);
   const [localMe, setLocalMe] = useState(multipleOption);
+
+  const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
+  const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
+
+  useEffect(() => {
+    if (prefSearchRes?.length !== 0) {
+      setColumns((prevColumns) => {
+        const newList = prefSearchRes?.data.data || [];
+        // const filteredList = newList.filter(
+        //   (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
+        // );
+        const filteredList = newList.filter((item) => !prevColumns.Block.list.includes(item));
+
+        return {
+          ...prevColumns,
+          All: {
+            ...prevColumns.All,
+            list: filteredList || [],
+          },
+        };
+      });
+    } else {
+      if (isSuccess) {
+        setColumns((prevColumns) => {
+          const newList = topicsData?.data.data || [];
+          // const filteredList = newList.filter(
+          //   (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
+          // );
+
+          const filteredList = newList.filter((item) => !prevColumns.Block.list.includes(item));
+
+          return {
+            ...prevColumns,
+            All: {
+              ...prevColumns.All,
+              list: filteredList || [],
+            },
+          };
+        });
+      }
+    }
+  }, [topicsData, prefSearchRes, isSuccess]);
 
   const handleMyPosts = () => {
     setLocalMe(!multipleOption);
     dispatch(filtersActions.setFilterByScope(multipleOption ? 'All' : 'Me'));
     localStorage.setItem('filterByState', !multipleOption ? 'true' : 'false');
     setMultipleOption(!multipleOption);
+  };
+
+  const handleClearMyPosts = () => {
+    setLocalMe(false);
+    dispatch(filtersActions.setFilterByScope('All'));
+    localStorage.setItem('filterByState', 'false');
+    setMultipleOption(false);
   };
 
   useEffect(() => {
@@ -66,6 +119,14 @@ function Slider({ columns, setColumns }) {
     });
   };
 
+  const clearBlockList = () => {
+    setColumns((prevColumns) => {
+      const updatedColumns = { ...prevColumns }; // Create a shallow copy of the columns object
+      updatedColumns['Block'].list = []; // Set the list property of the Block column to an empty array
+      return updatedColumns; // Return the updated columns object
+    });
+  };
+
   const handleSelectTopic = (item) => {
     setColumns((prevColumns) => {
       const updatedColumns = { ...prevColumns }; // Create a shallow copy of the columns object
@@ -75,14 +136,39 @@ function Slider({ columns, setColumns }) {
       if (itemIndex !== -1) {
         // If the item exists, remove it from the Block list
         blockList.splice(itemIndex, 1);
-      } else {
-        // If the item does not exist, add it to the Block list
-        blockList.push(item);
       }
+
+      // Clear the blockList and add the new item
+      updatedColumns['Block'].list = [item];
 
       return updatedColumns; // Return the updated columns object
     });
   };
+
+  const handleButtonSelection = (type, data) => {
+    if (type === 'newest-first') {
+      clearBlockList();
+      handleClearMyPosts();
+      dispatch(filtersActions.setFilterBySort('Newest First'));
+    }
+    if (type === 'most-popular') {
+      clearBlockList();
+      handleClearMyPosts();
+      dispatch(filtersActions.setFilterBySort('Most Popular'));
+    }
+    if (type === 'my-posts') {
+      clearBlockList();
+      handleMyPosts();
+      dispatch(filtersActions.setFilterBySort(''));
+    }
+    if (type === 'topics') {
+      handleSelectTopic(data);
+      dispatch(filtersActions.setFilterBySort(''));
+      handleClearMyPosts();
+    }
+  };
+  console.log('filterStates', filterStates);
+  console.log('localMe', localMe);
 
   return (
     <div className="mx-4 my-[7px] flex items-center tablet:mx-6 tablet:my-[14.82px]">
@@ -102,16 +188,30 @@ function Slider({ columns, setColumns }) {
         id="buttonContainer"
       >
         <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px]">
-          <Button variant={'topics'} className={'bg-white text-[#ABABAB]'}>
+          <Button
+            variant={'topics'}
+            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            onClick={() => {
+              handleButtonSelection('newest-first');
+            }}
+          >
             New!
           </Button>
-          <Button variant={'topics'} className={'bg-white text-[#ABABAB]'}>
+          <Button
+            variant={'topics'}
+            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            onClick={() => {
+              handleButtonSelection('most-popular');
+            }}
+          >
             Trending!
           </Button>
           <Button
             variant={'topics'}
             className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
-            onClick={handleMyPosts}
+            onClick={() => {
+              handleButtonSelection('my-posts');
+            }}
           >
             My Posts
           </Button>
@@ -125,7 +225,7 @@ function Slider({ columns, setColumns }) {
                 className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'}`}
                 key={index + 1}
                 onClick={() => {
-                  handleSelectTopic(item);
+                  handleButtonSelection('topics', item);
                 }}
               >
                 {item}
