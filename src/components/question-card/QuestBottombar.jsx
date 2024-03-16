@@ -203,6 +203,8 @@ const QuestBottombar = ({
 
       {postProperties !== 'HiddenPosts' &&
         postProperties !== 'SharedLinks' &&
+        postProperties !== 'sharedlink-results' &&
+        postProperties !=='actual-results'&&
         !window.location.href.includes('/p/') && (
           <div className="flex min-w-[70px] justify-center tablet:min-w-[160px]">
             {isFullScreen === undefined ? (

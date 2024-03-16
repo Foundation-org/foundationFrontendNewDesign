@@ -791,7 +791,7 @@ const QuestionCardWithToggle = (props) => {
   };
 
   return (
-    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked}>
+    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} postProperties={postProperties}>
       {renderQuestContent()}
       <ButtonGroup
         questStartData={questStartData}
