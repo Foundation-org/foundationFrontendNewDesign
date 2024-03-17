@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-function Slider({ columns, setColumns }) {
+function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -146,20 +146,27 @@ function Slider({ columns, setColumns }) {
   };
 
   const handleButtonSelection = (type, data) => {
+    setSliderloading(true);
     if (type === 'newest-first') {
-      clearBlockList();
-      handleClearMyPosts();
-      dispatch(filtersActions.setFilterBySort('Newest First'));
+      if (filterStates.filterBySort !== 'Newest First') {
+        clearBlockList();
+        handleClearMyPosts();
+        dispatch(filtersActions.setFilterBySort('Newest First'));
+      }
     }
     if (type === 'most-popular') {
-      clearBlockList();
-      handleClearMyPosts();
-      dispatch(filtersActions.setFilterBySort('Most Popular'));
+      if (filterStates.filterBySort !== 'Most Popular') {
+        handleClearMyPosts();
+        clearBlockList();
+        dispatch(filtersActions.setFilterBySort('Most Popular'));
+      }
     }
     if (type === 'my-posts') {
-      clearBlockList();
-      handleMyPosts();
-      dispatch(filtersActions.setFilterBySort(''));
+      if (!localMe) {
+        clearBlockList();
+        dispatch(filtersActions.setFilterBySort(''));
+        handleMyPosts();
+      }
     }
     if (type === 'topics') {
       handleSelectTopic(data);
@@ -167,7 +174,6 @@ function Slider({ columns, setColumns }) {
       handleClearMyPosts();
     }
   };
-
   return (
     <div className="mx-4 my-[7px] flex items-center tablet:mx-6 tablet:my-[14.82px]">
       {scrollPosition > 0 && (
@@ -192,6 +198,7 @@ function Slider({ columns, setColumns }) {
             onClick={() => {
               handleButtonSelection('newest-first');
             }}
+            disabled={sliderLoading || feedData===undefined}
           >
             New!
           </Button>
@@ -201,6 +208,7 @@ function Slider({ columns, setColumns }) {
             onClick={() => {
               handleButtonSelection('most-popular');
             }}
+            disabled={sliderLoading || feedData===undefined}
           >
             Trending!
           </Button>
@@ -210,6 +218,7 @@ function Slider({ columns, setColumns }) {
             onClick={() => {
               handleButtonSelection('my-posts');
             }}
+            disabled={sliderLoading || feedData===undefined}
           >
             My Posts
           </Button>
@@ -225,6 +234,7 @@ function Slider({ columns, setColumns }) {
                 onClick={() => {
                   handleButtonSelection('topics', item);
                 }}
+                disabled={sliderLoading || feedData===undefined}
               >
                 {item}
               </Button>
