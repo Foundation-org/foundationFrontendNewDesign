@@ -86,7 +86,7 @@ const ButtonGroup = ({
 
     const newOption = {
       label: '',
-      check: true,
+      check: false,
       contend: false,
       addedOptionByUser: true,
       edit: true,
@@ -125,7 +125,7 @@ const ButtonGroup = ({
 
     const newOption = {
       label: '',
-      check: true,
+      check: false,
       contend: false,
       addedOptionByUser: true,
       edit: true,

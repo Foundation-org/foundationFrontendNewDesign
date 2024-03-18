@@ -271,6 +271,7 @@ const SingleAnswerRankedChoice = (props) => {
                 onChange={handleInputChange}
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
                 value={answer}
+                autoFocus
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
                 className={`${
                   props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
