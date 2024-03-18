@@ -31,6 +31,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
       : false,
   );
   const [localMe, setLocalMe] = useState(multipleOption);
+  const [sortedList, setSortedList] = useState([]);
 
   const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
   const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
@@ -216,6 +217,16 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
     }
   };
 
+  useEffect(() => {
+    if (columns) {
+      const commonItems = columns?.All.list.filter((item) => columns?.Block.list.includes(item));
+      const remainingItems = columns?.All.list.filter((item) => !columns?.Block.list.includes(item));
+      const sortedItems = [...commonItems, ...remainingItems];
+
+      setSortedList(sortedItems);
+    }
+  }, []);
+
   return (
     <div className="mx-4 my-[7px] flex items-center tablet:mx-6 tablet:my-[14.82px]">
       {scrollPosition > 0 && (
@@ -268,8 +279,25 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
           </Button>
         </div>
         <div className="flex gap-[6.75px]  tablet:gap-[13.82px]">
-          {columns?.All.list.map((item, index) => {
+          {/* {columns?.All.list.map((item, index) => {
             const isItemBlocked = columns?.Block.list.includes(item);
+            return (
+              <Button
+                variant={'topics'}
+                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+                key={index + 1}
+                onClick={() => {
+                  handleButtonSelection('topics', item);
+                }}
+                disabled={sliderLoading || feedData === undefined}
+              >
+                {item}
+              </Button>
+            );
+          })} */}
+          {sortedList.map((item, index) => {
+            const isItemBlocked = columns?.Block.list.includes(item);
+
             return (
               <Button
                 variant={'topics'}
