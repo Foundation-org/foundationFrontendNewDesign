@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/Button';
 
 import * as homeFilterActions from '../features/sidebar/filtersSlice';
@@ -19,7 +19,7 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
   } else {
     filtersActions = homeFilterActions;
   }
-
+  const containerRef = useRef(null);
   const getPreferences = useSelector(prefActions.getPrefs);
   const filterStates = useSelector(filtersActions.getFilters);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -75,6 +75,34 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
     }
   }, [topicsData, prefSearchRes, isSuccess]);
 
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    const container = containerRef.current;
+
+    if (!container) return;
+
+    const startX = e.pageX;
+    const initialScrollLeft = container.scrollLeft;
+
+    const handleMouseMove = (e) => {
+      const dx = e.pageX - startX;
+      container.scrollLeft = initialScrollLeft - dx;
+      if (dx < 0) {
+        setScrollPosition(startX - e.pageX);
+      } else {
+        setScrollPosition(e.pageX - startX);
+      }
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
   const handleMyPosts = () => {
     setLocalMe(!multipleOption);
     dispatch(filtersActions.setFilterByScope(multipleOption ? 'All' : 'Me'));
@@ -101,7 +129,7 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
 
   const handleRightArrowClick = () => {
     const container = document.getElementById('buttonContainer');
-    const scrollAmount = container.clientWidth;
+    const scrollAmount = container.clientWidth / 2;
     setScrollPosition(scrollPosition + scrollAmount);
     container.scrollTo({
       left: scrollPosition + scrollAmount,
@@ -111,7 +139,7 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
 
   const handleLeftArrowClick = () => {
     const container = document.getElementById('buttonContainer');
-    const scrollAmount = container.clientWidth;
+    const scrollAmount = container.clientWidth / 2;
     setScrollPosition(scrollPosition - scrollAmount);
     container.scrollTo({
       left: scrollPosition - scrollAmount,
@@ -179,7 +207,7 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
       {scrollPosition > 0 && (
         <button
           onClick={handleLeftArrowClick}
-          className="h-[10px] w-[20px] rotate-180 tablet:h-[21px] tablet:w-[42px] "
+          className="h-[10px] w-[20px] rotate-180 tablet:h-[21px] tablet:w-14"
           style={{
             background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
             backgroundRepeat: 'no-repeat',
@@ -188,10 +216,12 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
         ></button>
       )}
       <div
-        className="no-scrollbar mx-[5px] flex items-center gap-[6.75px] overflow-x-auto tablet:mx-[0px] tablet:gap-[13.82px]"
+        className="no-scrollbar mx-[5px] flex items-center gap-[6.75px] overflow-x-scroll tablet:mx-4 tablet:gap-[13.82px]"
         id="buttonContainer"
+        ref={containerRef}
+        onMouseDown={handleMouseDown}
       >
-        <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px]">
+        <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
           <Button
             variant={'topics'}
             className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
@@ -244,7 +274,7 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
       </div>
       <button
         onClick={handleRightArrowClick}
-        className="h-[10px] w-[20px] tablet:h-[21px] tablet:w-[42px] "
+        className="h-[10px] w-[20px] tablet:h-[21px] tablet:w-14"
         style={{
           background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
           backgroundRepeat: 'no-repeat',
