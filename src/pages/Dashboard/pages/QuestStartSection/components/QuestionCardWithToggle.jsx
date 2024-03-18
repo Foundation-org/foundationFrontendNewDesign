@@ -209,7 +209,7 @@ const QuestionCardWithToggle = (props) => {
   const handleAddOption = () => {
     const newOption = {
       label: '',
-      check: true,
+      check: false,
       contend: false,
       addedOptionByUser: true,
       edit: true,
@@ -791,7 +791,7 @@ const QuestionCardWithToggle = (props) => {
   };
 
   return (
-    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked}>
+    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} postProperties={postProperties}>
       {renderQuestContent()}
       <ButtonGroup
         questStartData={questStartData}

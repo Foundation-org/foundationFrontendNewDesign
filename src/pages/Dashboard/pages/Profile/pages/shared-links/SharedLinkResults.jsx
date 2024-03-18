@@ -13,16 +13,17 @@ export default function SharedLinkResults() {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [tab, setTab] = useState('My Link Results');
   const [questData, setQuestData] = useState();
+  const [allQuestData, setAllQuestData] = useState();
   const [loading, setLoading] = useState(false);
 
   const getAllResult = async () => {
     try {
       const response = await getQuestById(persistedUserInfo?.uuid, location.state.questId);
-      setQuestData(response.data.data[0]);
+      setAllQuestData(response.data.data[0]);
     } catch (error) {
       console.error('API call failed:', error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -39,20 +40,19 @@ export default function SharedLinkResults() {
     } catch (error) {
       console.error('API call failed:', error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
+  const render = async () => {
+    setLoading(true);
+    await getSharedResult();
+    await getAllResult();
+    setLoading(false);
+  };
   useEffect(() => {
-    if (tab === 'All Results') {
-      setLoading(true);
-      getAllResult();
-    }
-    if (tab === 'My Link Results') {
-      setLoading(true);
-      getSharedResult();
-    }
-  }, [tab]);
+    render();
+  }, []);
 
   return (
     <>
@@ -76,10 +76,24 @@ export default function SharedLinkResults() {
 
           {loading ? (
             <Loader />
-          ) : (
+          ) : tab === 'My Link Results' ? (
             questData && (
               <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px]">
-                <QuestionCardWithToggle questStartData={questData} postProperties={tab==='My Link Results'?'sharedlink-results':""} SharedLinkButton={"shared-links-results-button"} />
+                <QuestionCardWithToggle
+                  questStartData={questData}
+                  postProperties={'sharedlink-results'}
+                  SharedLinkButton={'shared-links-results-button'}
+                />
+              </div>
+            )
+          ) : (
+            allQuestData && (
+              <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px]">
+                <QuestionCardWithToggle
+                  questStartData={allQuestData}
+                  postProperties={'actual-results'}
+                  SharedLinkButton={'shared-links-results-button'}
+                />
               </div>
             )
           )}

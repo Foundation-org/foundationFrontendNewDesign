@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { isEqual } from 'lodash';
+// import { isEqual } from 'lodash';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -198,11 +198,11 @@ const OpenChoice = () => {
     }
   }, [typedValues]);
 
-  useEffect(() => {
-    if (!isEqual(optionsValue, typedValues)) {
-      setTypedValues(optionsValue);
-    }
-  }, [optionsValue]);
+  // useEffect(() => {
+  //   if (!isEqual(optionsValue, typedValues)) {
+  //     setTypedValues(optionsValue);
+  //   }
+  // }, [optionsValue]);
 
   const handleAddOption = () => {
     const optionsCount = typedValues.length;

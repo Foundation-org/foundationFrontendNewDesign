@@ -10,11 +10,11 @@ const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
           ) : questType === 'multiple choise' || questType === 'open choice' ? (
             questStartData.userCanSelectMultiple ? (
               <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal text-[#85898C] tablet:py-[10px] tablet:text-[1rem]">
-                You can select multiple options
+                You can select <strong>multiple</strong> options
               </h4>
             ) : (
               <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal text-[#85898C] tablet:py-[10px] tablet:text-[1rem]">
-                You can select only one option
+                You can select only <strong>one</strong> option
               </h4>
             )
           ) : (

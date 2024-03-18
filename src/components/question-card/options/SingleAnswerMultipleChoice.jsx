@@ -262,6 +262,7 @@ const SingleAnswerMultipleChoice = (props) => {
                 onChange={handleInputChange}
                 onBlur={(e) => e.target.value.trim() !== '' && optionVerification(e.target.value.trim())}
                 value={answer}
+                autoFocus
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
                 className="w-full resize-none rounded-[4.73px] bg-white px-2 pb-[5.7px] pt-[5.6px] text-[8.5px] font-normal leading-none text-[#435059] outline-none tablet:rounded-[10.949px] tablet:py-[10px] tablet:pl-[18px] tablet:text-[19px] dark:bg-[#0D1012] dark:text-[#D3D3D3]"
               />

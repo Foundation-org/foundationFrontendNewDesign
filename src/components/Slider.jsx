@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/Button';
 
 import * as homeFilterActions from '../features/sidebar/filtersSlice';
@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-function Slider({ columns, setColumns }) {
+function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -19,7 +19,7 @@ function Slider({ columns, setColumns }) {
   } else {
     filtersActions = homeFilterActions;
   }
-
+  const containerRef = useRef(null);
   const getPreferences = useSelector(prefActions.getPrefs);
   const filterStates = useSelector(filtersActions.getFilters);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -31,6 +31,7 @@ function Slider({ columns, setColumns }) {
       : false,
   );
   const [localMe, setLocalMe] = useState(multipleOption);
+  const [sortedList, setSortedList] = useState([]);
 
   const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
   const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
@@ -75,6 +76,34 @@ function Slider({ columns, setColumns }) {
     }
   }, [topicsData, prefSearchRes, isSuccess]);
 
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    const container = containerRef.current;
+
+    if (!container) return;
+
+    const startX = e.pageX;
+    const initialScrollLeft = container.scrollLeft;
+
+    const handleMouseMove = (e) => {
+      const dx = e.pageX - startX;
+      container.scrollLeft = initialScrollLeft - dx;
+      if (dx < 0) {
+        setScrollPosition(startX - e.pageX);
+      } else {
+        setScrollPosition(e.pageX - startX);
+      }
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
   const handleMyPosts = () => {
     setLocalMe(!multipleOption);
     dispatch(filtersActions.setFilterByScope(multipleOption ? 'All' : 'Me'));
@@ -99,9 +128,18 @@ function Slider({ columns, setColumns }) {
     }
   }, [localStorage.getItem('filterByState')]);
 
+  useEffect(() => {
+    setScrollPosition(0);
+    const container = document.getElementById('buttonContainer');
+    container.scrollTo({
+      left: 0,
+      behavior: 'smooth',
+    });
+  }, [filterStates.clearFilter]);
+
   const handleRightArrowClick = () => {
     const container = document.getElementById('buttonContainer');
-    const scrollAmount = container.clientWidth;
+    const scrollAmount = container.clientWidth / 2;
     setScrollPosition(scrollPosition + scrollAmount);
     container.scrollTo({
       left: scrollPosition + scrollAmount,
@@ -111,7 +149,7 @@ function Slider({ columns, setColumns }) {
 
   const handleLeftArrowClick = () => {
     const container = document.getElementById('buttonContainer');
-    const scrollAmount = container.clientWidth;
+    const scrollAmount = container.clientWidth / 2;
     setScrollPosition(scrollPosition - scrollAmount);
     container.scrollTo({
       left: scrollPosition - scrollAmount,
@@ -128,6 +166,8 @@ function Slider({ columns, setColumns }) {
   };
 
   const handleSelectTopic = (item) => {
+    if (columns['Block'].list && columns['Block'].list.includes(item)) return;
+
     setColumns((prevColumns) => {
       const updatedColumns = { ...prevColumns }; // Create a shallow copy of the columns object
       const blockList = updatedColumns['Block'].list;
@@ -147,19 +187,28 @@ function Slider({ columns, setColumns }) {
 
   const handleButtonSelection = (type, data) => {
     if (type === 'newest-first') {
-      clearBlockList();
-      handleClearMyPosts();
-      dispatch(filtersActions.setFilterBySort('Newest First'));
+      if (filterStates.filterBySort !== 'Newest First') {
+        setSliderloading(true);
+        clearBlockList();
+        handleClearMyPosts();
+        dispatch(filtersActions.setFilterBySort('Newest First'));
+      }
     }
     if (type === 'most-popular') {
-      clearBlockList();
-      handleClearMyPosts();
-      dispatch(filtersActions.setFilterBySort('Most Popular'));
+      if (filterStates.filterBySort !== 'Most Popular') {
+        setSliderloading(true);
+        handleClearMyPosts();
+        clearBlockList();
+        dispatch(filtersActions.setFilterBySort('Most Popular'));
+      }
     }
     if (type === 'my-posts') {
-      clearBlockList();
-      handleMyPosts();
-      dispatch(filtersActions.setFilterBySort(''));
+      if (!localMe) {
+        setSliderloading(true);
+        clearBlockList();
+        dispatch(filtersActions.setFilterBySort(''));
+        handleMyPosts();
+      }
     }
     if (type === 'topics') {
       handleSelectTopic(data);
@@ -168,12 +217,22 @@ function Slider({ columns, setColumns }) {
     }
   };
 
+  useEffect(() => {
+    if (columns) {
+      const commonItems = columns?.All.list.filter((item) => columns?.Block.list.includes(item));
+      const remainingItems = columns?.All.list.filter((item) => !columns?.Block.list.includes(item));
+      const sortedItems = [...commonItems, ...remainingItems];
+
+      setSortedList(sortedItems);
+    }
+  }, []);
+
   return (
     <div className="mx-4 my-[7px] flex items-center tablet:mx-6 tablet:my-[14.82px]">
       {scrollPosition > 0 && (
         <button
           onClick={handleLeftArrowClick}
-          className="h-[10px] w-[20px] rotate-180 tablet:h-[21px] tablet:w-[42px] "
+          className="h-[10px] w-[20px] rotate-180 tablet:h-[21px] tablet:w-14"
           style={{
             background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
             backgroundRepeat: 'no-repeat',
@@ -182,49 +241,72 @@ function Slider({ columns, setColumns }) {
         ></button>
       )}
       <div
-        className="no-scrollbar mx-[5px] flex items-center gap-[6.75px] overflow-x-auto tablet:mx-[0px] tablet:gap-[13.82px]"
+        className="no-scrollbar mx-[5px] flex items-center gap-[6.75px] overflow-x-scroll tablet:mx-4 tablet:gap-[13.82px]"
         id="buttonContainer"
+        ref={containerRef}
+        onMouseDown={handleMouseDown}
       >
-        <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px]">
+        <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
               handleButtonSelection('newest-first');
             }}
+            disabled={sliderLoading || feedData === undefined}
           >
             New!
           </Button>
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
               handleButtonSelection('most-popular');
             }}
+            disabled={sliderLoading || feedData === undefined}
           >
             Trending!
           </Button>
           <Button
             variant={'topics'}
-            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} text-nowrap ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
               handleButtonSelection('my-posts');
             }}
+            disabled={sliderLoading || feedData === undefined}
           >
             My Posts
           </Button>
         </div>
         <div className="flex gap-[6.75px]  tablet:gap-[13.82px]">
-          {columns?.All.list.map((item, index) => {
+          {/* {columns?.All.list.map((item, index) => {
             const isItemBlocked = columns?.Block.list.includes(item);
             return (
               <Button
                 variant={'topics'}
-                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'}`}
+                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
                 key={index + 1}
                 onClick={() => {
                   handleButtonSelection('topics', item);
                 }}
+                disabled={sliderLoading || feedData === undefined}
+              >
+                {item}
+              </Button>
+            );
+          })} */}
+          {sortedList.map((item, index) => {
+            const isItemBlocked = columns?.Block.list.includes(item);
+
+            return (
+              <Button
+                variant={'topics'}
+                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+                key={index + 1}
+                onClick={() => {
+                  handleButtonSelection('topics', item);
+                }}
+                disabled={sliderLoading || feedData === undefined}
               >
                 {item}
               </Button>
@@ -234,7 +316,7 @@ function Slider({ columns, setColumns }) {
       </div>
       <button
         onClick={handleRightArrowClick}
-        className="h-[10px] w-[20px] tablet:h-[21px] tablet:w-[42px] "
+        className="h-[10px] w-[20px] tablet:h-[21px] tablet:w-14"
         style={{
           background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
           backgroundRepeat: 'no-repeat',

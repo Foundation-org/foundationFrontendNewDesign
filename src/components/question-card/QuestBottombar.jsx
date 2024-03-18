@@ -108,9 +108,9 @@ const QuestBottombar = ({
 
   return (
     <div
-      className={`flex items-center border-t-2 border-[#D9D9D9] px-[0.57rem] py-2 tablet:px-5 tablet:py-[0.63rem] ${postProperties === 'HiddenPosts' ? 'justify-end' : 'justify-between'}`}
+      className={`flex items-center border-t-2 border-[#D9D9D9] px-[0.57rem] py-2 tablet:px-5 tablet:py-[0.63rem] ${postProperties === 'HiddenPosts' || postProperties === 'SharedLinks' ? 'justify-end' : 'justify-between'}`}
     >
-      {postProperties !== 'HiddenPosts' && (
+      {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
         <div className="flex min-w-[70px] items-center gap-[0.17rem] tablet:min-w-[160px] tablet:gap-[6px]">
           <div onClick={handleCopyOpen} className="cursor-pointer">
             {persistedTheme === 'dark' ? <Copy /> : <Copy />}
@@ -203,6 +203,8 @@ const QuestBottombar = ({
 
       {postProperties !== 'HiddenPosts' &&
         postProperties !== 'SharedLinks' &&
+        postProperties !== 'sharedlink-results' &&
+        postProperties !=='actual-results'&&
         !window.location.href.includes('/p/') && (
           <div className="flex min-w-[70px] justify-center tablet:min-w-[160px]">
             {isFullScreen === undefined ? (

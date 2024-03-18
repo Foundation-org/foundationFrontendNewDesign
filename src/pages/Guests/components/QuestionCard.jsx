@@ -87,7 +87,7 @@ const QuestionCard = ({
   const handleAddOption = () => {
     const newOption = {
       label: '',
-      check: true,
+      check: false,
       contend: false,
       addedOptionByUser: true,
       edit: true,
