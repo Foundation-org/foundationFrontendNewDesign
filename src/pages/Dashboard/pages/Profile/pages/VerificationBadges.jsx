@@ -308,7 +308,7 @@ const VerificationBadges = () => {
                 </div>
 
                 {/* ...........................LinkedIn......................  */}
-                <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
+                <div className="flex items-center gap-[10px] opacity-[100%] laptop:gap-5">
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
                     alt="LinkedIn"
@@ -395,6 +395,7 @@ const VerificationBadges = () => {
                         handleAddBadge(provider, data);
                       }}
                       redirect_uri={window.location.href}
+                      scope="email,openid,profile,w_member_social"
                       onReject={(err) => {
                         toast.error('An error occured while adding badge');
                         setIsLoading(false);
@@ -402,9 +403,9 @@ const VerificationBadges = () => {
                       }}
                     >
                       <Button
-                        // color={checkSocial('linkedin') ? 'red' : 'blue'}
-                        disabled={true}
-                        color="gray"
+                        color={checkSocial('linkedin') ? 'red' : 'blue'}
+                        // disabled={true}
+                        // color="gray"
                         onClick={() => {
                           checkSocial('linkedin') && handleRemoveBadge('linkedin');
                         }}
