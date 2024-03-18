@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading }) {
+function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -127,6 +127,15 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
     }
   }, [localStorage.getItem('filterByState')]);
 
+  useEffect(() => {
+    setScrollPosition(0);
+    const container = document.getElementById('buttonContainer');
+    container.scrollTo({
+      left: 0,
+      behavior: 'smooth',
+    });
+  }, [filterStates.clearFilter]);
+
   const handleRightArrowClick = () => {
     const container = document.getElementById('buttonContainer');
     const scrollAmount = container.clientWidth / 2;
@@ -202,6 +211,7 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
       handleClearMyPosts();
     }
   };
+
   return (
     <div className="mx-4 my-[7px] flex items-center tablet:mx-6 tablet:my-[14.82px]">
       {scrollPosition > 0 && (
@@ -228,7 +238,7 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
             onClick={() => {
               handleButtonSelection('newest-first');
             }}
-            disabled={sliderLoading || feedData===undefined}
+            disabled={sliderLoading || feedData === undefined}
           >
             New!
           </Button>
@@ -238,7 +248,7 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
             onClick={() => {
               handleButtonSelection('most-popular');
             }}
-            disabled={sliderLoading || feedData===undefined}
+            disabled={sliderLoading || feedData === undefined}
           >
             Trending!
           </Button>
@@ -248,7 +258,7 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
             onClick={() => {
               handleButtonSelection('my-posts');
             }}
-            disabled={sliderLoading || feedData===undefined}
+            disabled={sliderLoading || feedData === undefined}
           >
             My Posts
           </Button>
@@ -264,7 +274,7 @@ function Slider({ columns, setColumns,feedData,sliderLoading,setSliderloading })
                 onClick={() => {
                   handleButtonSelection('topics', item);
                 }}
-                disabled={sliderLoading || feedData===undefined}
+                disabled={sliderLoading || feedData === undefined}
               >
                 {item}
               </Button>

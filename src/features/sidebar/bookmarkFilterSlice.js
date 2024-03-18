@@ -47,6 +47,7 @@ export const bookmarkFiltersSlice = createSlice({
     },
     setFilterByStatus: (state, action) => {
       state.filterByStatus = action.payload;
+      state.clearFilter = true;
     },
     setFilterByType: (state, action) => {
       if (action.payload === 'Multiple Choice') {
@@ -58,12 +59,15 @@ export const bookmarkFiltersSlice = createSlice({
       } else {
         state.filterByType = action.payload;
       }
+      state.clearFilter = true;
     },
     setFilterByScope: (state, action) => {
       state.filterByScope = action.payload;
+      state.clearFilter = true;
     },
     setFilterBySort: (state, action) => {
       state.filterBySort = action.payload;
+      state.clearFilter = true;
     },
     setItemWithCross: (state, action) => {
       state.itemsWithCross = action.payload;
@@ -74,6 +78,7 @@ export const bookmarkFiltersSlice = createSlice({
       } else {
         state.isColumns = false;
       }
+      state.clearFilter = true;
     },
     resetFilters: (state) => {
       const stateString = JSON.stringify({
