@@ -183,9 +183,9 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
   };
 
   const handleButtonSelection = (type, data) => {
-    setSliderloading(true);
     if (type === 'newest-first') {
       if (filterStates.filterBySort !== 'Newest First') {
+        setSliderloading(true);
         clearBlockList();
         handleClearMyPosts();
         dispatch(filtersActions.setFilterBySort('Newest First'));
@@ -193,6 +193,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
     }
     if (type === 'most-popular') {
       if (filterStates.filterBySort !== 'Most Popular') {
+        setSliderloading(true);
         handleClearMyPosts();
         clearBlockList();
         dispatch(filtersActions.setFilterBySort('Most Popular'));
@@ -200,6 +201,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
     }
     if (type === 'my-posts') {
       if (!localMe) {
+        setSliderloading(true);
         clearBlockList();
         dispatch(filtersActions.setFilterBySort(''));
         handleMyPosts();
