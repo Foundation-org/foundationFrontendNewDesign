@@ -18,7 +18,7 @@ const AddNewOption = ({ setAnswerSelection, answersSelection, handleClose, setAd
 
     const newOption = {
       label: temp.trim(),
-      check: true,
+      check: false,
       contend: false,
       addedOptionByUser: true,
       edit: true,
