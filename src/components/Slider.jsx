@@ -254,7 +254,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
           </Button>
           <Button
             variant={'topics'}
-            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} text-nowrap`}
             onClick={() => {
               handleButtonSelection('my-posts');
             }}
