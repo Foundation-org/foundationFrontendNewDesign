@@ -165,6 +165,8 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
   };
 
   const handleSelectTopic = (item) => {
+    if (columns['Block'].list && columns['Block'].list.includes(item)) return;
+
     setColumns((prevColumns) => {
       const updatedColumns = { ...prevColumns }; // Create a shallow copy of the columns object
       const blockList = updatedColumns['Block'].list;
@@ -236,7 +238,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
         <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${(sliderLoading || feedData === undefined)?'opacity-[60%]':'opacity-[100%]'}`}
+            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
               handleButtonSelection('newest-first');
             }}
@@ -246,7 +248,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
           </Button>
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${(sliderLoading || feedData === undefined)?'opacity-[60%]':'opacity-[100%]'}`}
+            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
               handleButtonSelection('most-popular');
             }}
@@ -256,7 +258,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
           </Button>
           <Button
             variant={'topics'}
-            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} text-nowrap ${(sliderLoading || feedData === undefined)?'opacity-[60%]':'opacity-[100%]'}`}
+            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} text-nowrap ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
               handleButtonSelection('my-posts');
             }}
@@ -271,7 +273,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
             return (
               <Button
                 variant={'topics'}
-                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${(sliderLoading || feedData === undefined)?'opacity-[60%]':'opacity-[100%]'}`}
+                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
                 key={index + 1}
                 onClick={() => {
                   handleButtonSelection('topics', item);
