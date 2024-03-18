@@ -87,7 +87,7 @@ const ButtonGroup = ({
     setAnswerSelection(answerSelectionArray);
   }
 
-  function updateRankSelection(apiResponse, answerSelectionArray) {
+  function updateRankSelection(apiResponse, answerSelectionArray, type) {
     const data = apiResponse?.startQuestData.data[apiResponse?.startQuestData.data.length - 1];
 
     answerSelectionArray.forEach((item, index) => {
@@ -106,8 +106,25 @@ const ButtonGroup = ({
       return indexA - indexB;
     });
 
-    setAnswerSelection(sortedAnswers);
-    setRankedAnswers(sortedAnswers);
+    const newOption = {
+      label: '',
+      check: true,
+      contend: false,
+      addedOptionByUser: true,
+      edit: true,
+      delete: true,
+      uuid: persistedUserInfo.uuid,
+    };
+
+    if (type === 'addOption') {
+      setAnswerSelection([...sortedAnswers, newOption]);
+      setRankedAnswers([...sortedAnswers, newOption]);
+      setAddOptionField(1);
+      dispatch(questUtilsActions.updateaddOptionLimit());
+    } else {
+      setAnswerSelection(sortedAnswers);
+      setRankedAnswers(sortedAnswers);
+    }
   }
 
   // const { mutateAsync: getStartQuestDetail } = useMutation({
@@ -169,7 +186,7 @@ const ButtonGroup = ({
     setAddOptionField(0);
   };
 
-  const handleStartChange = () => {
+  const handleStartChange = (type) => {
     dispatch(questUtilsActions.resetaddOptionLimit());
     if (btnText === '') {
       dispatch(resetQuests());
@@ -201,7 +218,7 @@ const ButtonGroup = ({
         updateAnswerSelection(questStartData, answersSelection);
       }
       if (whichTypeQuestion === 'ranked choise') {
-        updateRankSelection(questStartData, answersSelection);
+        updateRankSelection(questStartData, answersSelection, type);
       }
       handleStartTest(id);
     }
@@ -449,74 +466,11 @@ const ButtonGroup = ({
       );
     } else {
       // if (filterState.expandedView === true) {
-        return (
-          <div className="flex w-full justify-between pl-7 pr-[0.87rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
-            {startTest === questStartData._id && questStartData.usersAddTheirAns ? (
-              title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                <Button
-                  onClick={() => {
-                    toast.warning(
-                      <p>
-                        Please{' '}
-                        <span
-                          className="cursor-pointer text-[#389CE3] underline"
-                          onClick={() => navigate('/guest-signup')}
-                        >
-                          Create an Account
-                        </span>{' '}
-                        to unlock this feature
-                      </p>,
-                    );
-                  }}
-                  variant={'addOption'}
-                >
-                  {persistedTheme === 'dark' ? (
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  ) : (
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  )}
-                  Add Option
-                </Button>
-              )
-            ) : (
-              <div></div>
-            )}
-            {btnText === 'change answer' ? (
-              <div>
-                {btnText === 'change answer' && viewResult === questStartData._id ? (
-                  <Button
-                    variant={result === ', you are good to go' ? 'change' : 'change-outline'}
-                    disabled={result === ', you are good to go' ? false : true}
-                    onClick={() => {
-                      toast.warning(
-                        <p>
-                          Please{' '}
-                          <span
-                            className="cursor-pointer text-[#389CE3] underline"
-                            onClick={() => navigate('/guest-signup')}
-                          >
-                            Create an Account
-                          </span>{' '}
-                          to unlock this feature
-                        </p>,
-                      );
-                    }}
-                  >
-                    Change
-                  </Button>
-                ) : null}
-              </div>
-            ) : btnText === 'completed' ? null : (
+      return (
+        <div className="flex w-full justify-between pl-7 pr-[0.87rem] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+          {startTest === questStartData._id && questStartData.usersAddTheirAns ? (
+            title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
               <Button
-                variant="submit"
                 onClick={() => {
                   toast.warning(
                     <p>
@@ -531,26 +485,86 @@ const ButtonGroup = ({
                     </p>,
                   );
                 }}
-                disabled={
-                  loading === true
-                    ? true
-                    : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                      ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                        ? false
-                        : true
-                      : false
-                }
+                variant={'addOption'}
               >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}{' '}
-                {btnText !== 'change answer' && (
-                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                    (+0.96 FDX)
-                  </span>
+                {persistedTheme === 'dark' ? (
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
+                ) : (
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
                 )}
+                Add Option
               </Button>
-            )}
-          </div>
-        );
+            )
+          ) : (
+            <div></div>
+          )}
+          {btnText === 'change answer' ? (
+            <div>
+              {btnText === 'change answer' && viewResult === questStartData._id ? (
+                <Button
+                  variant={result === ', you are good to go' ? 'change' : 'change-outline'}
+                  disabled={result === ', you are good to go' ? false : true}
+                  onClick={() => {
+                    toast.warning(
+                      <p>
+                        Please{' '}
+                        <span
+                          className="cursor-pointer text-[#389CE3] underline"
+                          onClick={() => navigate('/guest-signup')}
+                        >
+                          Create an Account
+                        </span>{' '}
+                        to unlock this feature
+                      </p>,
+                    );
+                  }}
+                >
+                  Change
+                </Button>
+              ) : null}
+            </div>
+          ) : btnText === 'completed' ? null : (
+            <Button
+              variant="submit"
+              onClick={() => {
+                toast.warning(
+                  <p>
+                    Please{' '}
+                    <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+                      Create an Account
+                    </span>{' '}
+                    to unlock this feature
+                  </p>,
+                );
+              }}
+              disabled={
+                loading === true
+                  ? true
+                  : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                    ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                      ? false
+                      : true
+                    : false
+              }
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}{' '}
+              {btnText !== 'change answer' && (
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                  (+0.96 FDX)
+                </span>
+              )}
+            </Button>
+          )}
+        </div>
+      );
       // }
       //  else {
       //   if (startTest === questStartData._id) {
@@ -767,124 +781,124 @@ const ButtonGroup = ({
   //     );
   //   }
   // } else {
-    if (startTest === questStartData._id) {
-      return (
-        <div className="flex w-full justify-between gap-2  pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
-          {/* Add Option - Go back - Submit / add Option - Submit*/}
-          {btnText === 'change answer' ? (
-            <>
-              {addOptionField === 0 ? (
-                <div className="flex items-center justify-center">
-                  {usersAddTheirAns && uuidExists === false ? (
-                    <div>
-                      {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                        <Button onClick={handleOpen} variant={'addOption'}>
-                          {persistedTheme === 'dark' ? (
-                            <img
-                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                              alt="add"
-                              className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                            />
-                          ) : (
-                            <img
-                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                              alt="add"
-                              className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                            />
-                          )}
-                          Add Option
-                        </Button>
-                      )}
-                    </div>
-                  ) : null}
-                </div>
-              ) : (
-                <div></div>
-              )}
-              <div
-              // className={`${
-              //   title === 'Multiple Choice' ? '' : addOptionField === 1 ? 'mt-[4rem] tablet:mt-[10rem]' : ''
-              // }`}
-              >
-                <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
-                  <Button
-                    variant="cancel"
-                    onClick={() => {
-                      handleViewResults(questStartData._id);
-                      handleRemoveItem();
-                    }}
-                  >
-                    Go Back
-                  </Button>
-                  <Button
-                    id={`submit-${questStartData._id}`}
-                    variant="submit"
-                    onClick={() => handleSubmit()}
-                    disabled={
-                      loading === true
-                        ? true
-                        : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                          ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                            ? false
-                            : true
-                          : false
-                    }
-                  >
-                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-                  </Button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="flex w-full justify-between">
-              {questStartData.usersAddTheirAns && addOptionField === 0 ? (
-                title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                  <Button onClick={handleOpen} variant={'addOption'}>
-                    {persistedTheme === 'dark' ? (
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
-                    ) : (
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                        alt="add"
-                        className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                      />
+  if (startTest === questStartData._id) {
+    return (
+      <div className="flex w-full justify-between gap-2  pl-[0.87rem] pr-[0.87rem] tablet:gap-[0.75rem] tablet:pl-[3.44rem] tablet:pr-[3.44rem]">
+        {/* Add Option - Go back - Submit / add Option - Submit*/}
+        {btnText === 'change answer' ? (
+          <>
+            {addOptionField === 0 ? (
+              <div className="flex items-center justify-center">
+                {usersAddTheirAns && uuidExists === false ? (
+                  <div>
+                    {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+                      <Button onClick={handleOpen} variant={'addOption'}>
+                        {persistedTheme === 'dark' ? (
+                          <img
+                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
+                            alt="add"
+                            className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                          />
+                        ) : (
+                          <img
+                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
+                            alt="add"
+                            className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                          />
+                        )}
+                        Add Option
+                      </Button>
                     )}
-                    Add Option
-                  </Button>
-                )
-              ) : (
-                <div></div>
-              )}
-              <Button
-                id={`submit-${questStartData._id}`}
-                variant="submit"
-                onClick={() => handleSubmit()}
-                disabled={
-                  loading === true
-                    ? true
-                    : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                      ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                        ? false
-                        : true
-                      : false
-                }
-              >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-                {btnText !== 'change answer' && (
-                  <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-                    (+0.96 FDX)
-                  </span>
-                )}
-              </Button>
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              <div></div>
+            )}
+            <div
+            // className={`${
+            //   title === 'Multiple Choice' ? '' : addOptionField === 1 ? 'mt-[4rem] tablet:mt-[10rem]' : ''
+            // }`}
+            >
+              <div className="flex gap-[0.69rem] tablet:gap-[0.75rem]">
+                <Button
+                  variant="cancel"
+                  onClick={() => {
+                    handleViewResults(questStartData._id);
+                    handleRemoveItem();
+                  }}
+                >
+                  Go Back
+                </Button>
+                <Button
+                  id={`submit-${questStartData._id}`}
+                  variant="submit"
+                  onClick={() => handleSubmit()}
+                  disabled={
+                    loading === true
+                      ? true
+                      : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                        ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                          ? false
+                          : true
+                        : false
+                  }
+                >
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                </Button>
+              </div>
             </div>
-          )}
-        </div>
-      );
-    }
+          </>
+        ) : (
+          <div className="flex w-full justify-between">
+            {questStartData.usersAddTheirAns && addOptionField === 0 ? (
+              title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+                <Button onClick={handleOpen} variant={'addOption'}>
+                  {persistedTheme === 'dark' ? (
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  ) : (
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
+                      alt="add"
+                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                    />
+                  )}
+                  Add Option
+                </Button>
+              )
+            ) : (
+              <div></div>
+            )}
+            <Button
+              id={`submit-${questStartData._id}`}
+              variant="submit"
+              onClick={() => handleSubmit()}
+              disabled={
+                loading === true
+                  ? true
+                  : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                    ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                      ? false
+                      : true
+                    : false
+              }
+            >
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+              {btnText !== 'change answer' && (
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
+                  (+0.96 FDX)
+                </span>
+              )}
+            </Button>
+          </div>
+        )}
+      </div>
+    );
+  }
   // }
 
   return (
@@ -937,51 +951,87 @@ const ButtonGroup = ({
           </div>
         )
       ) : ( */}
-        <>
-          <div className="flex">
-            {/* Add Options / Go Back / Submit */}
-            {btnText === 'change answer' && startTest === questStartData._id && (
-              <div className="flex w-full justify-between pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
-                <Button onClick={handleOpen} variant={'addOption'}>
-                  {persistedTheme === 'dark' ? (
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  ) : (
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                      alt="add"
-                      className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                    />
-                  )}
-                  Add Option
+      <>
+        <div className="flex">
+          {/* Add Options / Go Back / Submit */}
+          {btnText === 'change answer' && startTest === questStartData._id && (
+            <div className="flex w-full justify-between pl-7 pr-[14.4px] tablet:pl-[3.19rem] tablet:pr-[3.44rem]">
+              <Button onClick={handleOpen} variant={'addOption'}>
+                {persistedTheme === 'dark' ? (
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
+                ) : (
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
+                    alt="add"
+                    className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                  />
+                )}
+                Add Option
+              </Button>
+
+              <div className="flex gap-2">
+                <Button
+                  variant="cancel"
+                  onClick={() => {
+                    handleViewResults(questStartData._id);
+                    handleStartTest(false);
+                  }}
+                >
+                  Go Back
                 </Button>
-
-                <div className="flex gap-2">
-                  <Button
-                    variant="cancel"
-                    onClick={() => {
-                      handleViewResults(questStartData._id);
-                      handleStartTest(false);
-                    }}
-                  >
-                    Go Back
+                {viewResult !== questStartData._id && (
+                  <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
+                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                   </Button>
-                  {viewResult !== questStartData._id && (
-                    <Button variant="submit" onClick={() => handleSubmit()} disabled={loading === true ? true : false}>
-                      {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-                    </Button>
-                  )}
-                </div>
+                )}
               </div>
-            )}
-          </div>
+            </div>
+          )}
+        </div>
 
-          {/* Change Add Options Submit */}
-          <div className="flex w-full justify-end pr-[14.4px] tablet:pr-[3.44rem]">
-            {btnText === 'change answer' && viewResult === questStartData._id ? (
+        {/* Change Add Options Submit */}
+        <div className="flex w-full justify-end px-[14.4px] tablet:px-[3.44rem]">
+          {btnText === 'change answer' && viewResult === questStartData._id ? (
+            <div className="flex w-full justify-between">
+              {addOptionField === 0 ? (
+                <div className="flex items-center justify-center">
+                  {usersAddTheirAns && uuidExists === false ? (
+                    <div>
+                      {title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+                        <Button
+                          onClick={() => {
+                            handleStartChange('addOption');
+                            // handleOpen();
+                          }}
+                          variant={'addOption'}
+                        >
+                          {persistedTheme === 'dark' ? (
+                            <img
+                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
+                              alt="add"
+                              className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                            />
+                          ) : (
+                            <img
+                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
+                              alt="add"
+                              className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                            />
+                          )}
+                          Add Option
+                        </Button>
+                      )}
+                    </div>
+                  ) : null}
+                </div>
+              ) : (
+                <div></div>
+              )}
+
               <Button
                 variant={result === ', you are good to go' ? 'change' : 'change-outline'}
                 disabled={result === ', you are good to go' ? false : true}
@@ -989,51 +1039,52 @@ const ButtonGroup = ({
               >
                 Change
               </Button>
-            ) : (
-              startStatus !== 'completed' && (
-                <div className="flex w-full justify-between pl-7 tablet:pl-[3.19rem]">
-                  {questStartData.usersAddTheirAns && addOptionField === 0 ? (
-                    title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
-                      <Button onClick={handleOpen} variant={'addOption'}>
-                        {persistedTheme === 'dark' ? (
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
-                            alt="add"
-                            className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                          />
-                        ) : (
-                          <img
-                            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
-                            alt="add"
-                            className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
-                          />
-                        )}
-                        Add Option
-                      </Button>
-                    )
-                  ) : (
-                    <div></div>
-                  )}
-                  <Button
-                    variant="submit"
-                    onClick={() => handleSubmit()}
-                    disabled={
-                      loading === true
-                        ? true
-                        : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
-                          ? checkOptionStatus.tooltipName === 'Answer is Verified'
-                            ? false
-                            : true
-                          : false
-                    }
-                  >
-                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-                  </Button>
-                </div>
-              )
-            )}
-          </div>
-        </>
+            </div>
+          ) : (
+            startStatus !== 'completed' && (
+              <div className="flex w-full justify-between pl-7 tablet:pl-[3.19rem]">
+                {questStartData.usersAddTheirAns && addOptionField === 0 ? (
+                  title === 'Yes/No' || title === 'Agree/Disagree' || title === 'Like/Dislike' ? null : (
+                    <Button onClick={handleOpen} variant={'addOption'}>
+                      {persistedTheme === 'dark' ? (
+                        <img
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add-dark.svg`}
+                          alt="add"
+                          className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                        />
+                      ) : (
+                        <img
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/add.svg`}
+                          alt="add"
+                          className="h-[7.398px] w-[7.398px] tablet:h-[15.6px] tablet:w-[15.6px]"
+                        />
+                      )}
+                      Add Option
+                    </Button>
+                  )
+                ) : (
+                  <div></div>
+                )}
+                <Button
+                  variant="submit"
+                  onClick={() => handleSubmit()}
+                  disabled={
+                    loading === true
+                      ? true
+                      : false || answersSelection.some((item) => item.addedOptionByUser === true) === true
+                        ? checkOptionStatus.tooltipName === 'Answer is Verified'
+                          ? false
+                          : true
+                        : false
+                  }
+                >
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                </Button>
+              </div>
+            )
+          )}
+        </div>
+      </>
       {/* )} */}
     </>
   );
