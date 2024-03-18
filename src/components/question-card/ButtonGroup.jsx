@@ -67,7 +67,7 @@ const ButtonGroup = ({
     ? answers?.some((item) => item.uuid === persistedUserInfo?.uuid || item.uuid === localStorage.getItem('uId'))
     : false;
 
-  function updateAnswerSelection(apiResponse, answerSelectionArray) {
+  function updateAnswerSelection(apiResponse, answerSelectionArray, type) {
     const data = apiResponse?.startQuestData.data[apiResponse?.startQuestData.data.length - 1];
 
     answerSelectionArray.forEach((item, index) => {
@@ -84,7 +84,24 @@ const ButtonGroup = ({
       }
     });
 
-    setAnswerSelection(answerSelectionArray);
+    const newOption = {
+      label: '',
+      check: true,
+      contend: false,
+      addedOptionByUser: true,
+      edit: true,
+      delete: true,
+      uuid: persistedUserInfo.uuid,
+    };
+
+    if (type === 'addOption') {
+      setAnswerSelection([...answerSelectionArray, newOption]);
+
+      setAddOptionField(1);
+      dispatch(questUtilsActions.updateaddOptionLimit());
+    } else {
+      setAnswerSelection(answerSelectionArray);
+    }
   }
 
   function updateRankSelection(apiResponse, answerSelectionArray, type) {
@@ -215,7 +232,7 @@ const ButtonGroup = ({
         }
       }
       if (whichTypeQuestion === 'multiple choise' || whichTypeQuestion === 'open choice') {
-        updateAnswerSelection(questStartData, answersSelection);
+        updateAnswerSelection(questStartData, answersSelection, type);
       }
       if (whichTypeQuestion === 'ranked choise') {
         updateRankSelection(questStartData, answersSelection, type);
