@@ -29,7 +29,7 @@ const MultipleChoice = () => {
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
-  const [selectedValues, setSelectedValues] = useState([]);
+  // const [selectedValues, setSelectedValues] = useState([]);
   const [optionsCount, setOptionsCount] = useState(createQuestSlice.optionsCount);
   const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -164,6 +164,7 @@ const MultipleChoice = () => {
           const newTypedValues = [...prevValues];
           newTypedValues[index] = {
             ...newTypedValues[index],
+            question: optionsValue[index].question,
             optionStatus: optionsValue[index].chatgptOptionStatus,
             isTyping: false,
           };
@@ -207,37 +208,55 @@ const MultipleChoice = () => {
 
   const handleAddOption = () => {
     const optionsCount = typedValues.length;
+    const newOption = {
+      id: `index-${optionsCount}`,
+      question: '',
+      selected: false,
+      optionStatus: {
+        name: 'Ok',
+        color: 'text-[#389CE3]',
+        tooltipName: 'Please write something...',
+        tooltipStyle: 'tooltip-info',
+      },
+      isTyping: true,
+    };
+
+    setTypedValues((prev) => [...prev, newOption]);
     dispatch(createQuestAction.addNewOption({ optionsCount }));
   };
 
-  const handleOptionSelect = (index) => {
-    const newTypedValues = [...typedValues];
-    newTypedValues[index].selected = !newTypedValues[index].selected;
-    setTypedValues(newTypedValues);
+  // const handleOptionSelect = (index) => {
+  //   const newTypedValues = [...typedValues];
+  //   newTypedValues[index].selected = !newTypedValues[index].selected;
+  //   setTypedValues(newTypedValues);
 
-    if (!multipleOption) {
-      newTypedValues.forEach((item, i) => {
-        if (i !== index) {
-          item.selected = false;
-        }
-      });
-      setTypedValues(newTypedValues);
+  //   if (!multipleOption) {
+  //     newTypedValues.forEach((item, i) => {
+  //       if (i !== index) {
+  //         item.selected = false;
+  //       }
+  //     });
+  //     setTypedValues(newTypedValues);
 
-      const selectedOption = newTypedValues[index].selected ? [{ answers: newTypedValues[index].question }] : [];
-      setSelectedValues(selectedOption);
-    } else {
-      const selectedOption = { answers: newTypedValues[index].question };
+  //     const selectedOption = newTypedValues[index].selected ? [{ answers: newTypedValues[index].question }] : [];
+  //     setSelectedValues(selectedOption);
+  //   } else {
+  //     const selectedOption = { answers: newTypedValues[index].question };
 
-      if (newTypedValues[index].selected) {
-        setSelectedValues((prevValues) => [...prevValues, selectedOption]);
-      } else {
-        setSelectedValues((prevValues) => prevValues.filter((item) => item.answers !== selectedOption.answers));
-      }
-    }
-  };
+  //     if (newTypedValues[index].selected) {
+  //       setSelectedValues((prevValues) => [...prevValues, selectedOption]);
+  //     } else {
+  //       setSelectedValues((prevValues) => prevValues.filter((item) => item.answers !== selectedOption.answers));
+  //     }
+  //   }
+  // };
 
   const removeOption = (id, number) => {
     setPrevValueArr((prevArr) => {
+      const newArr = prevArr.filter((_, index) => index !== number - 1);
+      return newArr;
+    });
+    setTypedValues((prevArr) => {
       const newArr = prevArr.filter((_, index) => index !== number - 1);
       return newArr;
     });
@@ -345,7 +364,7 @@ const MultipleChoice = () => {
                         options={false}
                         dragable={true}
                         handleChange={(value) => handleChange(index, value, optionsValue)}
-                        handleOptionSelect={() => handleOptionSelect(index)}
+                        // handleOptionSelect={() => handleOptionSelect(index)}
                         typedValue={item.question}
                         isTyping={item?.isTyping}
                         isSelected={item.selected}
