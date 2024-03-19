@@ -190,9 +190,11 @@ export default function Personal({ handleUserInfo, fetchUser }) {
 
   return (
     <>
+      <h1 className="font-500 font-Inter my-[5px] text-[9.74px] font-medium text-black tablet:text-[1.7vw] dark:text-white">
+        Personal
+      </h1>
       {renderPersonalBadgesPopup()}
-
-      <div className="hidden flex-col justify-between gap-[7px] tablet:flex tablet:flex-row tablet:gap-5 laptop:gap-6">
+      <div className="hidden flex-col justify-between gap-[7px] rounded-2xl border-[3px] border-[#DEE6F7] p-[17px] tablet:flex tablet:flex-row tablet:gap-5 laptop:gap-6">
         <div className="flex flex-col gap-[10px] tablet:gap-4 laptop:gap-5">
           {personal.slice(0, Math.ceil(personal.length / 2)).map((item, index) => (
             <div
@@ -229,6 +231,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             </div>
           ))}
         </div>
+        <div className="w-2 rounded-[16px] border-[3px] border-[#DEE6F7] bg-[#FDFDFD]" />
         <div className="flex flex-col gap-7 tablet:gap-4 laptop:gap-5">
           {personal.slice(Math.ceil(personal.length / 2)).map((item, index) => (
             <div
