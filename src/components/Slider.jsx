@@ -140,7 +140,7 @@ function Slider({ columns, setColumns,nextPage, feedData, sliderLoading, setSlid
   }, [localStorage.getItem('filterByState')]);
 
   useEffect(() => {
-    if(filterStates.clearFilter===false){
+   
 
       setScrollPosition(0);
       const container = document.getElementById('buttonContainer');
@@ -149,7 +149,7 @@ function Slider({ columns, setColumns,nextPage, feedData, sliderLoading, setSlid
         left: 0,
         behavior: 'smooth',
       });
-    }
+    
   }, [filterStates.clearFilter]);
 
   const handleRightArrowClick = () => {
@@ -239,7 +239,6 @@ function Slider({ columns, setColumns,nextPage, feedData, sliderLoading, setSlid
       handleClearMyPosts();
     }
   };
-console.log(nextPage);
 
   return (
     <div className="mx-4 my-[7px] flex items-center tablet:mx-6 tablet:my-[14.82px]">
