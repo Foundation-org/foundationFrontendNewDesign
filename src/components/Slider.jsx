@@ -144,7 +144,7 @@ function Slider({ columns, setColumns,nextPage, feedData, sliderLoading, setSlid
 
       setScrollPosition(0);
       const container = document.getElementById('buttonContainer');
-      localStorage.setItem('sliderScrollPosition',0)
+      localStorage.setItem("selectedButtonId",'newButton')
       container.scrollTo({
         left: 0,
         behavior: 'smooth',
