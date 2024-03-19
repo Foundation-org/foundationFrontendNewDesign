@@ -292,14 +292,28 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
         <div className="flex gap-[6.75px]  tablet:gap-[13.82px]">
           {columns?.All.list.map((item, index) => {
             const isItemBlocked = columns?.Block.list.includes(item);
+            let startX = 0;
+            let startY = 0;
+
+            const handleMouseDown = (e) => {
+              startX = e.clientX;
+              startY = e.clientY;
+            };
+
+            const handleMouseUp = (e) => {
+              const distance = Math.sqrt((e.clientX - startX) ** 2 + (e.clientY - startY) ** 2);
+              if (distance < 5) {
+                handleButtonSelection('topics', item, `topic-${index}`);
+              }
+            };
+
             return (
               <Button
                 variant={'topics'}
                 className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${sliderLoading || (feedData.length === 0 && nextPage) ? 'opacity-[60%]' : 'opacity-[100%]'}`}
                 key={index + 1}
-                onClick={(e) => {
-                  handleButtonSelection('topics', item, `topic-${index}`);
-                }}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
                 disabled={sliderLoading || (feedData.length === 0 && nextPage)}
                 id={`topic-${index}`}
               >
@@ -308,6 +322,7 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
             );
           })}
         </div>
+
       </div>
       <button
         onClick={handleRightArrowClick}
