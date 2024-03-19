@@ -8,12 +8,14 @@ import Tabs from './components/Tabs';
 import { toast } from 'sonner';
 import api from '../../../../services/api/Axios';
 import FallBack from '../../../ErrorBoundry/FallBack';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary, useErrorBoundary } from 'react-error-boundary';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
+  const { showBoundary } = useErrorBoundary();
+
   const [checkState, setCheckState] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -49,6 +51,7 @@ const Profile = () => {
         setTreasuryAmount(res.data.data);
       }
     } catch (error) {
+      showBoundary(error);
       toast.error(error.response.data.message.split(':')[1]);
     }
   };
