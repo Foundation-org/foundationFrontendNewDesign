@@ -40,7 +40,7 @@ const QuestStartSection = () => {
   // Test and Result States
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
-  const [sliderLoading,setSliderloading]=useState(false);
+  const [sliderLoading, setSliderloading] = useState(false);
 
   // Preferences
   const columnsData = localStorage.getItem('columns');
@@ -283,14 +283,14 @@ const QuestStartSection = () => {
       window.removeEventListener('resize', updateHeight);
     };
   }, []);
-  
-  useEffect(()=>{
-    if(sliderLoading){
+
+  useEffect(() => {
+    if (sliderLoading) {
       setTimeout(() => {
         setSliderloading(false);
-      }, 700);
+      }, 1000);
     }
-  },[sliderLoading])
+  }, [sliderLoading]);
 
   // console.log(
   //   '🚀 ~ QuestStartSection ~ allData:',
@@ -307,7 +307,14 @@ const QuestStartSection = () => {
           setItemsWithCross={setItemsWithCross}
         />
         <div className="no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:min-h-[calc(100vh-92px)] dark:bg-[#242424]">
-          <Slider columns={columns} setColumns={setColumns} feedData={feedData} sliderLoading={sliderLoading} setSliderloading={setSliderloading} />
+          <Slider
+            columns={columns}
+            setColumns={setColumns}
+            feedData={allData}
+            nextPage={feedData?.hasNextPage}
+            sliderLoading={sliderLoading}
+            setSliderloading={setSliderloading}
+          />
           <InfiniteScroll
             dataLength={allData?.length}
             next={fetchMoreData}
@@ -323,12 +330,12 @@ const QuestStartSection = () => {
                   ?.map((item, index) => (
                     <div key={index + 1}>
                       {/* {filterStates.expandedView ? ( */}
-                        <QuestionCardWithToggle
-                          questStartData={item}
-                          isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                          setPagination={setPagination}
-                          setSubmitResponse={setSubmitResponse}
-                        />
+                      <QuestionCardWithToggle
+                        questStartData={item}
+                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                        setPagination={setPagination}
+                        setSubmitResponse={setSubmitResponse}
+                      />
                       {/* ) : (
                         <QuestionCard
                           questStartData={item}

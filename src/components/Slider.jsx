@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading }) {
+function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSliderloading }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -31,10 +31,17 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
       : false,
   );
   const [localMe, setLocalMe] = useState(multipleOption);
-  const [sortedList, setSortedList] = useState([]);
 
   const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
   const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
+
+  useEffect(() => {
+    const selectedButtonId = localStorage.getItem('selectedButtonId');
+    const selectedButton = document.getElementById(selectedButtonId);
+    if (selectedButton) {
+      selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [columns]);
 
   useEffect(() => {
     if (prefSearchRes?.length !== 0) {
@@ -90,8 +97,10 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
       container.scrollLeft = initialScrollLeft - dx;
       if (dx < 0) {
         setScrollPosition(startX - e.pageX);
+        localStorage.setItem('sliderScrollPosition', startX - e.pageX);
       } else {
         setScrollPosition(e.pageX - startX);
+        localStorage.setItem('sliderScrollPosition', e.pageX - startX);
       }
     };
 
@@ -131,6 +140,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
   useEffect(() => {
     setScrollPosition(0);
     const container = document.getElementById('buttonContainer');
+
     container.scrollTo({
       left: 0,
       behavior: 'smooth',
@@ -141,6 +151,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
     const container = document.getElementById('buttonContainer');
     const scrollAmount = container.clientWidth / 2;
     setScrollPosition(scrollPosition + scrollAmount);
+    localStorage.setItem('sliderScrollPosition', scrollPosition + scrollAmount);
     container.scrollTo({
       left: scrollPosition + scrollAmount,
       behavior: 'smooth',
@@ -151,6 +162,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
     const container = document.getElementById('buttonContainer');
     const scrollAmount = container.clientWidth / 2;
     setScrollPosition(scrollPosition - scrollAmount);
+    localStorage.setItem('sliderScrollPosition', scrollPosition - scrollAmount);
     container.scrollTo({
       left: scrollPosition - scrollAmount,
       behavior: 'smooth',
@@ -185,7 +197,13 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
     });
   };
 
-  const handleButtonSelection = (type, data) => {
+  const handleButtonSelection = (type, data, id) => {
+    //save the id of selected button in localStorage for scrolling it into view
+    localStorage.setItem('selectedButtonId', id);
+    const selectedButton = document.getElementById(id);
+    if (selectedButton) {
+      selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
     if (type === 'newest-first') {
       if (filterStates.filterBySort !== 'Newest First') {
         setSliderloading(true);
@@ -217,16 +235,6 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
     }
   };
 
-  useEffect(() => {
-    if (columns) {
-      const commonItems = columns?.All.list.filter((item) => columns?.Block.list.includes(item));
-      const remainingItems = columns?.All.list.filter((item) => !columns?.Block.list.includes(item));
-      const sortedItems = [...commonItems, ...remainingItems];
-
-      setSortedList(sortedItems);
-    }
-  }, []);
-
   return (
     <div className="mx-4 my-[7px] flex items-center tablet:mx-6 tablet:my-[14.82px]">
       {scrollPosition > 0 && (
@@ -249,64 +257,51 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
         <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || (feedData.length === 0 && nextPage) ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
-              handleButtonSelection('newest-first');
+              handleButtonSelection('newest-first', null, 'newButton');
             }}
-            disabled={sliderLoading || feedData === undefined}
+            disabled={sliderLoading || (feedData.length === 0 && nextPage)}
+            id={'newButton'}
           >
             New!
           </Button>
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || (feedData.length === 0 && nextPage) ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
-              handleButtonSelection('most-popular');
+              handleButtonSelection('most-popular', null, 'trendingButton');
             }}
-            disabled={sliderLoading || feedData === undefined}
+            disabled={sliderLoading || (feedData.length === 0 && nextPage)}
+            id={'trendingButton'}
           >
             Trending!
           </Button>
           <Button
             variant={'topics'}
-            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} text-nowrap ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} text-nowrap ${sliderLoading || (feedData.length === 0 && nextPage) === 0 ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
-              handleButtonSelection('my-posts');
+              handleButtonSelection('my-posts', null, 'myPostButton');
             }}
-            disabled={sliderLoading || feedData === undefined}
+            disabled={sliderLoading || (feedData.length === 0 && nextPage)}
+            id={'myPostButton'}
           >
             My Posts
           </Button>
         </div>
         <div className="flex gap-[6.75px]  tablet:gap-[13.82px]">
-          {/* {columns?.All.list.map((item, index) => {
+          {columns?.All.list.map((item, index) => {
             const isItemBlocked = columns?.Block.list.includes(item);
             return (
               <Button
                 variant={'topics'}
-                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${sliderLoading || (feedData.length === 0 && nextPage) ? 'opacity-[60%]' : 'opacity-[100%]'}`}
                 key={index + 1}
-                onClick={() => {
-                  handleButtonSelection('topics', item);
+                onClick={(e) => {
+                  handleButtonSelection('topics', item, `topic-${index}`);
                 }}
-                disabled={sliderLoading || feedData === undefined}
-              >
-                {item}
-              </Button>
-            );
-          })} */}
-          {sortedList.map((item, index) => {
-            const isItemBlocked = columns?.Block.list.includes(item);
-
-            return (
-              <Button
-                variant={'topics'}
-                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
-                key={index + 1}
-                onClick={() => {
-                  handleButtonSelection('topics', item);
-                }}
-                disabled={sliderLoading || feedData === undefined}
+                disabled={sliderLoading || (feedData.length === 0 && nextPage)}
+                id={`topic-${index}`}
               >
                 {item}
               </Button>

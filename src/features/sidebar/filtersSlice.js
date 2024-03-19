@@ -81,6 +81,7 @@ export const filtersSlice = createSlice({
       state.clearFilter = true;
     },
     resetFilters: (state) => {
+      localStorage.setItem('selectedButtonId', 'newButton');
       const stateString = JSON.stringify({
         All: {
           id: 'All',

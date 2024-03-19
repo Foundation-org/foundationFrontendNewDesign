@@ -31,7 +31,7 @@ export default function WelcomePopup({ modalVisible, handleClose }) {
             preferences.
           </p>
 
-          <div className="flex flex-col gap-[22.96px] tablet:gap-[15px]">
+          <div className="flex gap-[6.96px] tablet:gap-[15px]">
             <Button
               variant={'submit'}
               onClick={() => {
@@ -39,6 +39,9 @@ export default function WelcomePopup({ modalVisible, handleClose }) {
               }}
             >
               Join Now
+            </Button>
+            <Button variant={'addOption'} onClick={handleClose}>
+              Maybe Later
             </Button>
           </div>
         </div>
