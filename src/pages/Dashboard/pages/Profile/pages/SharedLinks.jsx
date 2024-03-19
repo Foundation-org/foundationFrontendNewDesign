@@ -25,7 +25,7 @@ export default function SharedLinks() {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
-  const [height, setHeight] = useState('calc(100vh - 300px)');
+  const [height, setHeight] = useState('calc(100vh - 200px)');
   const [allData, setAllData] = useState([]);
   const [feedData, setFeedData] = useState();
   const [startTest, setStartTest] = useState(null);
@@ -185,7 +185,12 @@ export default function SharedLinks() {
 
   useEffect(() => {
     const updateHeight = () => {
-      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 155px)' : 'calc(100vh - 300px)';
+      const newHeight =
+        window.innerWidth <= 744
+          ? 'calc(100vh - 200px)'
+          : window.innerWidth <= 1280
+            ? 'calc(100vh - 370px)'
+            : 'calc(100vh - 380px)';
       setHeight(newHeight);
     };
 
@@ -245,7 +250,7 @@ export default function SharedLinks() {
         </div>
       </div>
 
-      <div className="no-scrollbar mx-auto mt-5 flex h-full max-w-full flex-col overflow-y-auto bg-[#F3F3F3] pb-[3rem] tablet:w-full tablet:pb-[6rem] tablet:pt-[0.94rem] dark:bg-[#242424]">
+      <div className="no-scrollbar tablet:w-fulls mx-auto mt-5 flex h-full max-w-full flex-col overflow-y-auto bg-[#F3F3F3] tablet:pt-[0.94rem] dark:bg-[#242424]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}

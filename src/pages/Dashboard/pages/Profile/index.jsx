@@ -58,7 +58,7 @@ const Profile = () => {
   return (
     <div>
       <Topbar />
-      <div className="h-screen overflow-y-scroll bg-[#F3F3F3] dark:bg-[#242424]">
+      <div className="h-[calc(100vh-66.88px)] overflow-y-scroll bg-[#F3F3F3] tablet:h-[calc(100vh-92px)] dark:bg-[#242424]">
         <div className="mx-3 mt-5 flex items-center justify-between tablet:mx-8 tablet:mt-[25px] laptop:mx-[110px]">
           <div className="flex items-center gap-[5.16px] tablet:gap-[15px] laptop:gap-[19.4px]">
             <div
