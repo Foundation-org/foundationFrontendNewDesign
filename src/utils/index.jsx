@@ -200,7 +200,7 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
 
   const resultPreferences = JSON.parse(localStorage.getItem('columns'))?.Block.list.length == 0;
   const resultPreferencesForBookmark = JSON.parse(localStorage.getItem('bookmarkColumns'))?.Block.list.length == 0;
-
+  const isOtherCategory = JSON.parse(localStorage.getItem('columns'))?.Block.list[0];
   return (
     <div className="my-[15vh] flex  flex-col items-center justify-center">
       {persistedTheme === 'dark' ? (
@@ -239,7 +239,7 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
           <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray">
             No matching posts found!
           </p>
-          {(result === false || !resultPreferences) && (
+          {(result === false || !resultPreferences) && isOtherCategory !== 'Other' && (
             <button
               className={`${
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
