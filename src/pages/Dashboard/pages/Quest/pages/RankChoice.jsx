@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-// import { isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -158,7 +158,6 @@ const RankChoice = () => {
           const newTypedValues = [...prevValues];
           newTypedValues[index] = {
             ...newTypedValues[index],
-            question: optionsValue[index].question,
             optionStatus: optionsValue[index].chatgptOptionStatus,
             isTyping: false,
           };
@@ -194,62 +193,44 @@ const RankChoice = () => {
     }
   }, [typedValues]);
 
-  // useEffect(() => {
-  //   if (!isEqual(optionsValue, typedValues)) {
-  //     setTypedValues(optionsValue);
-  //   }
-  // }, [optionsValue]);
+  useEffect(() => {
+    if (!isEqual(optionsValue, typedValues)) {
+      setTypedValues(optionsValue);
+    }
+  }, [optionsValue]);
 
   const handleAddOption = () => {
     const optionsCount = typedValues.length;
-    const newOption = {
-      id: `index-${optionsCount}`,
-      question: '',
-      selected: false,
-      optionStatus: {
-        name: 'Ok',
-        color: 'text-[#389CE3]',
-        tooltipName: 'Please write something...',
-        tooltipStyle: 'tooltip-info',
-      },
-      isTyping: true,
-    };
-
-    setTypedValues((prev) => [...prev, newOption]);
     dispatch(createQuestAction.addNewOption({ optionsCount }));
   };
 
-  // const handleOptionSelect = (index) => {
-  //   const newTypedValues = [...typedValues];
-  //   newTypedValues[index].selected = !newTypedValues[index].selected;
-  //   setTypedValues(newTypedValues);
+  const handleOptionSelect = (index) => {
+    const newTypedValues = [...typedValues];
+    newTypedValues[index].selected = !newTypedValues[index].selected;
+    setTypedValues(newTypedValues);
 
-  //   if (!multipleOption) {
-  //     newTypedValues.forEach((item, i) => {
-  //       if (i !== index) {
-  //         item.selected = false;
-  //       }
-  //     });
-  //     setTypedValues(newTypedValues);
+    if (!multipleOption) {
+      newTypedValues.forEach((item, i) => {
+        if (i !== index) {
+          item.selected = false;
+        }
+      });
+      setTypedValues(newTypedValues);
 
-  //     const ChangedOption = newTypedValues[index].selected ? [{ answers: newTypedValues[index].question }] : [];
-  //     setSelectedValues(ChangedOption);
-  //   } else {
-  //     const ChangedOption = { answers: newTypedValues[index].question };
+      const ChangedOption = newTypedValues[index].selected ? [{ answers: newTypedValues[index].question }] : [];
+      setSelectedValues(ChangedOption);
+    } else {
+      const ChangedOption = { answers: newTypedValues[index].question };
 
-  //     if (newTypedValues[index].selected) {
-  //       setSelectedValues((prevValues) => [...prevValues, ChangedOption]);
-  //     } else {
-  //       setSelectedValues((prevValues) => prevValues.filter((item) => item.answers !== ChangedOption.answers));
-  //     }
-  //   }
-  // };
+      if (newTypedValues[index].selected) {
+        setSelectedValues((prevValues) => [...prevValues, ChangedOption]);
+      } else {
+        setSelectedValues((prevValues) => prevValues.filter((item) => item.answers !== ChangedOption.answers));
+      }
+    }
+  };
 
   const removeOption = (id) => {
-    setTypedValues((prevArr) => {
-      const newArr = prevArr.filter((item) => item.id !== id);
-      return newArr;
-    });
     dispatch(createQuestAction.delOption({ id }));
   };
 
@@ -351,7 +332,7 @@ const RankChoice = () => {
                         trash={true}
                         dragable={true}
                         handleChange={(value) => handleChange(index, value)}
-                        // handleOptionSelect={() => handleOptionSelect(index)}
+                        handleOptionSelect={() => handleOptionSelect(index)}
                         typedValue={item.question}
                         isTyping={item?.isTyping}
                         isSelected={item.selected}
