@@ -124,7 +124,7 @@ export default function Web3({ handleUserInfo, fetchUser }) {
         </div>
       </div>
 
-      <div className="block tablet:hidden">
+      <div className="flex flex-col items-center gap-[7px] tablet:hidden tablet:gap-4 laptop:gap-5">
         {web3.map((item, index) => (
           <div
             className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5  ${item.disabled ? 'opacity-[60%]' : ''}`}
