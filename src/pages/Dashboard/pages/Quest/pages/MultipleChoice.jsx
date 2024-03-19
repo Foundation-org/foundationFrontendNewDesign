@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-// import { isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -200,28 +200,29 @@ const MultipleChoice = () => {
     }
   }, [typedValues]);
 
-  // useEffect(() => {
-  //   if (!isEqual(optionsValue, typedValues)) {
-  //     setTypedValues(optionsValue);
-  //   }
-  // }, [optionsValue]);
+  useEffect(() => {
+    if (!isEqual(optionsValue, typedValues)) {
+      setTypedValues(optionsValue);
+    }
+  }, [optionsValue]);
 
   const handleAddOption = () => {
     const optionsCount = typedValues.length;
-    const newOption = {
-      id: `index-${optionsCount}`,
-      question: '',
-      selected: false,
-      optionStatus: {
-        name: 'Ok',
-        color: 'text-[#389CE3]',
-        tooltipName: 'Please write something...',
-        tooltipStyle: 'tooltip-info',
-      },
-      isTyping: true,
-    };
+    // const newOption = {
+    //   id: `index-${optionsCount}`,
+    //   question: '',
+    //   selected: false,
+    //   optionStatus: {
+    //     name: 'Ok',
+    //     color: 'text-[#389CE3]',
+    //     tooltipName: 'Please write something...',
+    //     tooltipStyle: 'tooltip-info',
+    //   },
+    //   isTyping: true,
+    // };
 
-    setTypedValues((prev) => [...prev, newOption]);
+    // setTypedValues((prev) => [...prev, newOption]);
+
     dispatch(createQuestAction.addNewOption({ optionsCount }));
   };
 
@@ -256,10 +257,10 @@ const MultipleChoice = () => {
       const newArr = prevArr.filter((_, index) => index !== number - 1);
       return newArr;
     });
-    setTypedValues((prevArr) => {
-      const newArr = prevArr.filter((_, index) => index !== number - 1);
-      return newArr;
-    });
+    // setTypedValues((prevArr) => {
+    //   const newArr = prevArr.filter((_, index) => index !== number - 1);
+    //   return newArr;
+    // });
     dispatch(createQuestAction.delOption({ id }));
   };
 
