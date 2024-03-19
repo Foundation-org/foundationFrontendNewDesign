@@ -281,7 +281,7 @@ const QuestStartSection = () => {
     if (sliderLoading) {
       setTimeout(() => {
         setSliderloading(false);
-      }, 700);
+      }, 1000);
     }
   }, [sliderLoading]);
 
@@ -303,7 +303,8 @@ const QuestStartSection = () => {
           <Slider
             columns={columns}
             setColumns={setColumns}
-            feedData={feedData}
+            feedData={allData}
+            nextPage={feedData?.hasNextPage}
             sliderLoading={sliderLoading}
             setSliderloading={setSliderloading}
           />

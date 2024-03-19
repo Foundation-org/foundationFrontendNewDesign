@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
-function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading }) {
+function Slider({ columns, setColumns,nextPage, feedData, sliderLoading, setSliderloading }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -41,7 +41,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
     if (selectedButton) {
       selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-  }, []);
+  }, [columns]);
 
 
   useEffect(() => {
@@ -138,8 +138,6 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
       setLocalMe(false);
     }
   }, [localStorage.getItem('filterByState')]);
-
-  console.log(columns);
 
   useEffect(() => {
     if(filterStates.clearFilter===false){
@@ -241,7 +239,7 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
       handleClearMyPosts();
     }
   };
-
+console.log(nextPage);
 
   return (
     <div className="mx-4 my-[7px] flex items-center tablet:mx-6 tablet:my-[14.82px]">
@@ -265,31 +263,34 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
         <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || (feedData.length === 0 && nextPage) ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
-              handleButtonSelection('newest-first');
+              handleButtonSelection('newest-first',null,'newButton');
             }}
-            disabled={sliderLoading || feedData === undefined}
+            disabled={sliderLoading || (feedData.length === 0 && nextPage)}
+            id={'newButton'}
           >
             New!
           </Button>
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || (feedData.length === 0 && nextPage) ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
-              handleButtonSelection('most-popular');
+              handleButtonSelection('most-popular',null,'trendingButton');
             }}
-            disabled={sliderLoading || feedData === undefined}
+            disabled={sliderLoading || (feedData.length === 0 && nextPage)}
+            id={'trendingButton'}
           >
             Trending!
           </Button>
           <Button
             variant={'topics'}
-            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} text-nowrap ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} text-nowrap ${sliderLoading || (feedData.length === 0 && nextPage) === 0 ? 'opacity-[60%]' : 'opacity-[100%]'}`}
             onClick={() => {
-              handleButtonSelection('my-posts');
+              handleButtonSelection('my-posts',null,'myPostButton');
             }}
-            disabled={sliderLoading || feedData === undefined}
+            disabled={sliderLoading || (feedData.length === 0 && nextPage)}
+            id={'myPostButton'}
           >
             My Posts
           </Button>
@@ -300,12 +301,12 @@ function Slider({ columns, setColumns, feedData, sliderLoading, setSliderloading
             return (
               <Button
                 variant={'topics'}
-                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${sliderLoading || feedData === undefined ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${sliderLoading || (feedData.length === 0 && nextPage) ? 'opacity-[60%]' : 'opacity-[100%]'}`}
                 key={index + 1}
                 onClick={(e) => {
                   handleButtonSelection('topics', item,`topic-${index}`);
                 }}
-                disabled={sliderLoading || feedData === undefined}
+                disabled={sliderLoading || (feedData.length === 0 && nextPage)}
                 id={`topic-${index}`}
               >
                 {item}
