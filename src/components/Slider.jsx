@@ -229,6 +229,7 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
       }
     }
     if (type === 'topics') {
+      setSliderloading(true);
       handleSelectTopic(data);
       dispatch(filtersActions.setFilterBySort(''));
       handleClearMyPosts();
