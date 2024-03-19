@@ -32,6 +32,8 @@ import { useSelector } from 'react-redux';
 import Maintenance from '../pages/Maintenance/maintenance';
 import Welcome from '../pages/Welcome/welcome';
 import SharedLinkResults from '../pages/Dashboard/pages/Profile/pages/shared-links/SharedLinkResults';
+import { ErrorBoundary } from 'react-error-boundary';
+import FallBack from '../pages/ErrorBoundry/FallBack';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -76,7 +78,19 @@ export function Router() {
                   <Route path="contact-us" element={<ContactUs />} />
                 </Route>
               </Route>
-              <Route path="/profile/" element={<Profile />}>
+              <Route
+                path="/profile/"
+                element={
+                  <ErrorBoundary
+                    FallbackComponent={FallBack}
+                    onError={(error, errorInfo) => {
+                      console.log('error', errorInfo);
+                    }}
+                  >
+                    <Profile />
+                  </ErrorBoundary>
+                }
+              >
                 <Route path="" element={<Contributions />} />
                 <Route path="verification-badges" element={<VerificationBadges />} />
                 <Route path="ledger" element={<BasicTable />} />
