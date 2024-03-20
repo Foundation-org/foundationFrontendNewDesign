@@ -68,7 +68,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       value = {
         [selected.name]: name,
       };
-    } else if (type.trim() === 'currentCity' || type.trim() === 'homeTown') {
+    }else if (type.trim() === 'currentCity' || type.trim() === 'homeTown' || type.trim() === 'relationshipStatus') {
       value = selected.name;
     } else {
       value = name;
