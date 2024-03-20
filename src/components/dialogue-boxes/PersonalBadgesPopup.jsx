@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
 import { useQuery } from '@tanstack/react-query';
 import { validation } from '../../services/api/badgesApi';
@@ -9,7 +9,7 @@ import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
 import { useErrorBoundary } from 'react-error-boundary';
 
-const citiesData = [
+const data = [
   { id: 1, name: 'In what city were you born?' },
   { id: 2, name: 'What is the name of your first pet?' },
   { id: 2, name: 'What is the last name of your favorite teacher?' },
@@ -21,6 +21,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [loading, setLoading] = useState(false);
+  const [cities,setCities]=useState([]);
 
   const handleClose = () => setIsPopup(false);
 
@@ -32,11 +33,31 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   };
 
   const handleSecurityQuestionChange = (event) => {};
+  const [query, setQuery] = useState('');
 
   const { data: apiResp } = useQuery({
     queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && name],
     queryFn: () => validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name),
   });
+ 
+  const searchCities = async () => {
+  
+      const cities=await api.post(`search/searchCities/?name=${query}`);
+      console.log(cities.data);
+
+      setCities(cities.data);
+
+
+
+  }
+
+  useEffect(()=>{
+    if((type.trim()==='currentCity' || type.trim()==='homeTown') && query!=='')
+    {
+      searchCities()
+    }
+  },[query])
+
 
   const handleAddPersonalBadge = async () => {
     setLoading(true);
@@ -47,6 +68,8 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       value = {
         [selected.name]: name,
       };
+    }else if(type.trim()==='currentCity' || type.trim()==='homeTown'){
+       value=selected.name;
     } else {
       value = name;
     }
@@ -84,7 +107,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         {data && data.length >= 1 ? (
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-              <CustomCombobox items={data} selected={selected} setSelected={setSelected} />
+              <CustomCombobox items={data} selected={selected} setSelected={setSelected} query={query} setQuery={setQuery} />
               <input
                 type="text"
                 value={name}
@@ -132,7 +155,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-          <CustomCombobox items={citiesData} selected={selected} setSelected={setSelected} placeholder={placeholder} />
+          <CustomCombobox items={cities} selected={selected} setSelected={setSelected} placeholder={placeholder} query={query} setQuery={setQuery} />
           {isError && (
             <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
           )}
@@ -167,13 +190,13 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         </div>
       )}
       {title === 'Current City' && renderCurrentCity('Current City', name, handleNameChange, placeholder, apiResp)}
-      {title === 'Home Town' && renderInputField('Home Town', name, handleNameChange, placeholder, apiResp)}
+      {title === 'Home Town' && renderCurrentCity('Home Town', name, handleNameChange, placeholder, apiResp)}
       {title === 'Relationship Status' &&
         renderInputField('Relationship Status', name, handleNameChange, placeholder, apiResp)}
       {title === 'ID / Passport' && renderInputField('ID / Passport', name, handleNameChange, placeholder, apiResp)}
       {title === 'Geolocation' && renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp)}
       {title === 'Security Question' &&
-        renderCurrentCity(
+        renderInputField(
           'Security Question',
           name,
           handleSecurityQuestionChange,

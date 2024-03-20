@@ -73,10 +73,9 @@ export default function Web3({ handleUserInfo, fetchUser }) {
               <Button
                 color={checkWeb3Badge(item.type) ? 'yellow' : item.ButtonColor}
                 onClick={() => {
-                  handleWeb3(item?.title, item?.type);
+                  !checkWeb3Badge(item.type) && handleWeb3(item?.title, item?.type);
                 }}
-                // disabled={checkWeb3Badge(item.type)}
-                disabled={true}
+                disabled={item.disabled}
               >
                 {checkWeb3Badge(item.type) ? 'Added' : item.ButtonText}
                 {!checkWeb3Badge(item.type) && (
@@ -110,10 +109,9 @@ export default function Web3({ handleUserInfo, fetchUser }) {
               <Button
                 color={checkWeb3Badge(item.type) ? 'yellow' : item.ButtonColor}
                 onClick={() => {
-                  handleWeb3(item?.title, item?.type);
+                  !checkWeb3Badge(item.type) && handleWeb3(item?.title, item?.type);
                 }}
-                // disabled={checkWeb3Badge(item.type)}
-                disabled={true}
+                disabled={item.disabled}
               >
                 {checkWeb3Badge(item.type) ? 'Added' : item.ButtonText}
                 {!checkWeb3Badge(item.type) && (
@@ -148,10 +146,9 @@ export default function Web3({ handleUserInfo, fetchUser }) {
             <Button
               color={checkWeb3Badge(item.type) ? 'yellow' : item.ButtonColor}
               onClick={() => {
-                handleWeb3(item?.title, item?.type);
+                !checkWeb3Badge(item.type) && handleWeb3(item?.title, item?.type);
               }}
-              // disabled={checkWeb3Badge(item.type)}
-              disabled={true}
+              disabled={item.disabled}
             >
               {checkWeb3Badge(item.type) ? 'Added' : item.ButtonText}
               {!checkWeb3Badge(item.type) && (

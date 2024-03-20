@@ -31,6 +31,13 @@ const VerificationBadges = () => {
   const [deleteModalState, setDeleteModalState] = useState();
   const [pageLoading, setPageLoading] = useState(true);
 
+  const handleLinkedIn=async()=>{
+   const resp=await fetch(`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${import.meta.env.VITE_LINKEDIN_KEY}&redirect_uri=${window.location.href}&state=foobar&scope=liteprofile%20emailaddress%20w_member_social`);
+   console.log(resp);
+  }
+  // const handleSoundCloud=()=>{
+  //   window.location.href = `https://secure.soundcloud.com/authorize?client_id=${'clientId'}&redirect_uri=${'redirectUri'}&response_type=code`;
+  // }
   const loginInWithInsta = async (code) => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/user/get-insta-token`, {
@@ -88,6 +95,7 @@ const VerificationBadges = () => {
 
   const handleBadgesClose = () => setModalVisible(false);
 
+
   const handleUserInfo = async (id) => {
     try {
       const resp = await userInfo(id);
@@ -130,9 +138,8 @@ const VerificationBadges = () => {
         toast.success('Badge Removed Successfully!');
         handleUserInfo();
       }
-    } catch (error) {
-      showBoundary(error);
-      toast.error(e.response.data.message.split(':')[1]);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -376,29 +383,13 @@ const VerificationBadges = () => {
                       </span>
                     </Button>
                   ) : (
-                    <LoginSocialLinkedin
-                      // isOnlyGetToken
-                      client_id={import.meta.env.VITE_LINKEDIN_KEY}
-                      client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
-                      onResolve={({ provider, data }) => {
-                        console.log(provider, data);
-                        setIsLoading(true);
-                        handleAddBadge(provider, data);
-                      }}
-                      redirect_uri={window.location.href}
-                      scope="email,openid,profile,w_member_social"
-                      onReject={(err) => {
-                        toast.error('An error occured while adding badge');
-                        setIsLoading(false);
-                        console.log(err);
-                      }}
-                    >
+
                       <Button
                         // color={checkSocial('linkedin') ? 'red' : 'blue'}
                         disabled={true}
                         color="gray"
                         onClick={() => {
-                          checkSocial('linkedin') && handleRemoveBadge('linkedin');
+                          checkSocial('linkedin') ? handleRemoveBadge('linkedin'): handleLinkedIn();
                         }}
                       >
                         {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
@@ -406,7 +397,6 @@ const VerificationBadges = () => {
                           {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
-                    </LoginSocialLinkedin>
                   )}
                 </div>
 
@@ -514,29 +504,6 @@ const VerificationBadges = () => {
                       </span>
                     </Button>
                   ) : (
-                    // <LoginSocialInstagram
-                    //   client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-                    //   client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
-                    //   redirect_uri={window.location.href}
-                    //   onLoginStart={onLoginStart}
-                    //   onResolve={({ provider, data }) => {
-                    //     setIsLoading(true);
-                    //     handleAddBadge(provider, data);
-                    //   }}
-                    //   onReject={(err) => {
-                    //     toast.error('An error occured while adding badge');
-                    //     setIsLoading(false);
-                    //     console.log(err);
-                    //   }}
-                    //   className="container flex w-full"
-                    // >
-                    //   <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
-                    //     {checkSocial('instagram') ? '' : 'Add New Badge'}
-                    //     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                    //       {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
-                    //     </span>
-                    //   </Button>
-                    // </LoginSocialInstagram>
                     <InstagramLogin
                       clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
                       onSuccess={(code) => {
@@ -555,6 +522,62 @@ const VerificationBadges = () => {
                     </InstagramLogin>
                   )}
                 </div>
+                 {/* SoundCloud */}
+
+                {/* <div className="flex items-center gap-[10px] laptop:gap-5">
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/soundCloud.svg`}
+                    alt="Sound Cloud"
+                    className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
+                  />
+                  <div
+                    className={`${
+                      persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  >
+                    <h1>Sound Cloud</h1>
+                  </div>
+                  {checkSocial('soundcloud') ? (
+                    <>
+                      <Button
+                        color={checkSocial('soundcloud') ? 'red' : 'blue'}
+                        onClick={() => {
+                          if (persistedUserInfo?.role === 'guest') {
+                            handleGuestBadgeAdd();
+                          } else {
+                            checkSocial('soundcloud') &&
+                              handleRemoveBadgePopup({
+                                title: 'soundcloud',
+                                image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/soundCloud.png`,
+                                accountName: 'soundcloud',
+                              });
+                          }
+                        }}
+                      >
+                        {checkSocial('soundcloud') ? 'Remove' : 'Add New Badge'}
+                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                          {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
+                        </span>
+                      </Button>
+                    </>
+                  ) : persistedUserInfo?.role === 'guest' ? (
+                    <Button color={checkSocial('soundcloud') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
+                      {checkSocial('soundcloud') ? 'Remove' : 'Add New Badge'}
+                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                        {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
+                      </span>
+                    </Button>
+                  ) : (
+                   
+                      <Button color={checkSocial('soundcloud') ? 'red' : 'blue'} onClick={handleSoundCloud}>
+                        {checkSocial('soundcloud') ? '' : 'Add New Badge'}
+                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                          {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
+                        </span>
+                      </Button>
+                   
+                  )}
+                </div> */}
 
                 {/* ............................Github......................... */}
                 <div className="flex items-center gap-[10px] laptop:gap-5">
@@ -599,28 +622,7 @@ const VerificationBadges = () => {
                       </span>
                     </Button>
                   ) : (
-                    // <LoginSocialGithub
-                    //   client_id={import.meta.env.VITE_GITHUB_CLIENT_ID}
-                    //   client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
-                    //   redirect_uri={window.location.href}
-                    //   onLoginStart={onLoginStart}
-                    //   onResolve={({ provider, data }) => {
-                    //     handleAddBadge(provider, data);
-                    //   }}
-                    //   onReject={(err) => {
-                    //     toast.error('An error occured while adding badge');
-                    //     setIsLoading(false);
-                    //     console.log(err);
-                    //   }}
-                    //   className="container flex w-full"
-                    // >
-                    //   <Button color={checkSocial('github') ? 'red' : 'blue'}>
-                    //     {checkSocial('github') ? '' : 'Add New Badge'}
-                    //     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                    //       {checkSocial('github') ? '' : '(+0.96 FDX)'}
-                    //     </span>
-                    //   </Button>
-                    // </LoginSocialGithub>
+
                     <Button
                       color={checkSocial('github') ? 'red' : 'blue'}
                       onClick={() => {
@@ -784,27 +786,9 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 ) : (
-                  <LoginSocialLinkedin
-                    // isOnlyGetToken
-                    client_id={import.meta.env.VITE_LINKEDIN_KEY}
-                    client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
-                    onResolve={({ provider, data }) => {
-                      console.log(provider, data);
-                      setIsLoading(true);
-                      handleAddBadge(provider, data);
-                    }}
-                    redirect_uri={window.location.href}
-                    scope="email,openid,profile,w_member_social"
-                    onReject={(err) => {
-                      toast.error('An error occured while adding badge');
-                      setIsLoading(false);
-                      console.log(err);
-                    }}
-                  >
+                
                     <Button
                       color={checkSocial('linkedin') ? 'red' : 'blue'}
-                      // disabled={true}
-                      // color="gray"
                       onClick={() => {
                         checkSocial('linkedin') && handleRemoveBadge('linkedin');
                       }}
@@ -814,7 +798,6 @@ const VerificationBadges = () => {
                         {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
-                  </LoginSocialLinkedin>
                 )}
               </div>
 
@@ -920,29 +903,6 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 ) : (
-                  // <LoginSocialInstagram
-                  //   client_id={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-                  //   client_secret={import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET}
-                  //   redirect_uri={window.location.href}
-                  //   onLoginStart={onLoginStart}
-                  //   onResolve={({ provider, data }) => {
-                  //     setIsLoading(true);
-                  //     handleAddBadge(provider, data);
-                  //   }}
-                  //   onReject={(err) => {
-                  //     toast.error('An error occured while adding badge');
-                  //     setIsLoading(false);
-                  //     console.log(err);
-                  //   }}
-                  //   className="container flex w-full"
-                  // >
-                  //   <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
-                  //     {checkSocial('instagram') ? '' : 'Add New Badge'}
-                  //     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                  //       {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
-                  //     </span>
-                  //   </Button>
-                  // </LoginSocialInstagram>
                   <InstagramLogin
                     clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
                     onSuccess={(code) => {
@@ -1005,28 +965,6 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 ) : (
-                  // <LoginSocialGithub
-                  //   client_id={import.meta.env.VITE_GITHUB_CLIENT_ID}
-                  //   client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
-                  //   redirect_uri={window.location.href}
-                  //   onLoginStart={onLoginStart}
-                  //   onResolve={({ provider, data }) => {
-                  //     handleAddBadge(provider, data);
-                  //   }}
-                  //   onReject={(err) => {
-                  //     toast.error('An error occured while adding badge');
-                  //     setIsLoading(false);
-                  //     console.log(err);
-                  //   }}
-                  //   className="container flex w-full"
-                  // >
-                  //   <Button color={checkSocial('github') ? 'red' : 'blue'}>
-                  //     {checkSocial('github') ? '' : 'Add New Badge'}
-                  //     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                  //       {checkSocial('github') ? '' : '(+0.96 FDX)'}
-                  //     </span>
-                  //   </Button>
-                  // </LoginSocialGithub>
                   <Button
                     color={checkSocial('github') ? 'red' : 'blue'}
                     onClick={() => {
@@ -1043,7 +981,7 @@ const VerificationBadges = () => {
             </div>
 
             <Web3 handleUserInfo={handleUserInfo} fetchUser={fetchUser} />
-            <Personal handleUserInfo={handleUserInfo} fetchUser={fetchUser} />
+            <Personal handleUserInfo={handleUserInfo} fetchUser={fetchUser} handleRemoveBadgePopup={handleRemoveBadgePopup} />
           </div>
         </div>
       )}

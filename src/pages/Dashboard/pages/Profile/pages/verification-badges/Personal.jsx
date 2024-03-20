@@ -4,15 +4,36 @@ import { personal } from '../../../../../../constants/varification-badges';
 import Button from '../../components/Button';
 import PersonalBadgesPopup from '../../../../../../components/dialogue-boxes/PersonalBadgesPopup';
 import WorkEducationBadgePopup from '../../../../../../components/dialogue-boxes/WorkEducationBadgePopup';
+import { toast } from 'sonner';
+import api from '../../../../../../services/api/Axios';
 
-export default function Personal({ handleUserInfo, fetchUser }) {
+export default function Personal({ handleUserInfo, fetchUser,handleRemoveBadgePopup }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+
+
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
   const [seletedPersonalBadge, setSelectedPersonalBadge] = useState('');
 
   const checkPersonalBadge = (itemType) =>
     fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
+
+  
+
+  const handleRemovePersonalBadge = async (type) => {
+    try {
+      const removeBadge = await api.post(`/removePersonalBadge`, {
+        type: type,
+        uuid: fetchUser.uuid,
+      });
+      if (removeBadge.status === 200) {
+        toast.success('Badge Removed Successfully!');
+        handleUserInfo();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleClickPesonalBadges = (type) => {
     if (persistedUserInfo?.role === 'guest') {
@@ -215,9 +236,16 @@ export default function Personal({ handleUserInfo, fetchUser }) {
               <Button
                 color={checkPersonalBadge(item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
-                  handleClickPesonalBadges(item.type);
+                  checkPersonalBadge(item.type)
+                    ? handleRemoveBadgePopup({
+                        title: item.type,
+                        image: item.image,
+                        type: item.type,
+                        badgeType:'personal'
+                      })
+                    : handleClickPesonalBadges(item.type);
                 }}
-                // disabled={item.disabled || checkPersonalBadge(item.type)}
+                disabled={item.disabled}
               >
                 {checkPersonalBadge(item.type) ? 'Remove' : item.ButtonText}
                 {!checkPersonalBadge(item.type) && (
@@ -252,10 +280,17 @@ export default function Personal({ handleUserInfo, fetchUser }) {
               <Button
                 color={checkPersonalBadge(item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
-                  handleClickPesonalBadges(item.type);
+                  checkPersonalBadge(item.type)
+                    ? handleRemoveBadgePopup({
+                        title: item.type,
+                        image: item.image,
+                        type: item.type,
+                        badgeType:'personal'
+                      })
+                    : handleClickPesonalBadges(item.type);
                 }}
-                // disabled={item.disabled || checkPersonalBadge(item.type)}
-              >
+                disabled={item.disabled}
+                >
                 {checkPersonalBadge(item.type) ? 'Remove' : item.ButtonText}
                 {!checkPersonalBadge(item.type) && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
@@ -297,9 +332,16 @@ export default function Personal({ handleUserInfo, fetchUser }) {
             <Button
               color={checkPersonalBadge(item.type) ? 'red' : item.ButtonColor}
               onClick={() => {
-                handleClickPesonalBadges(item.type);
+                checkPersonalBadge(item.type)
+                  ? handleRemoveBadgePopup({
+                      title: item.type,
+                      image: item.image,
+                      type: item.type,
+                      badgeType:'personal'
+                    })
+                  : handleClickPesonalBadges(item.type);
               }}
-              disabled={item.disabled || checkPersonalBadge(item.type)}
+              disabled={item.disabled}
             >
               {checkPersonalBadge(item.type) ? 'Remove' : item.ButtonText}
               {!checkPersonalBadge(item.type) && (

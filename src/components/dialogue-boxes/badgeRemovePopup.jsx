@@ -17,10 +17,10 @@ export default function BadgeRemovePopup({
   fetchUser,
   setFetchUser,
   type,
-  badgeType
+  badgeType,
 }) {
   const dispatch = useDispatch();
-  const [loading,setIsLoading]=useState(false);
+  const [loading, setIsLoading] = useState(false);
 
   const handleUserInfo = async () => {
     try {
@@ -37,42 +37,37 @@ export default function BadgeRemovePopup({
 
   const handleRemoveBadge = async () => {
     setIsLoading(true);
-    const findBadge = fetchUser.badges.filter((item) => {
-      if(badgeType==="contact"){
-           if(item.type===type){
-            return item;
-           }
-      }else{
 
-        if (item.accountName === accountName) {
-          return item;
-        }
-      }
-    });
-    console.log(findBadge);
-    console.log(fetchUser);
     try {
       let removeBadge;
-      
-      if(badgeType==="contact"){
-         removeBadge = await api.post(`/removeContactBadge`, {
-          type: findBadge[0].type,
+
+      if (badgeType === 'contact') {
+        removeBadge = await api.post(`/removeContactBadge`, {
+          type: type,
           uuid: fetchUser.uuid,
         });
-   }else{
-    
-      removeBadge = await api.post(`/removeBadge`, {
-       badgeAccountId: findBadge[0].accountId,
-       uuid: fetchUser.uuid,
-      });
-    }
+      } else if (badgeType === 'personal') {
+        removeBadge = await api.post(`/removePersonalBadge`, {
+          type: type,
+          uuid: fetchUser.uuid,
+        });
+      } else {
+        const findBadge = fetchUser.badges.filter((item) => {
+          if (item.accountName === accountName) {
+            return item;
+          }
+        });
+        removeBadge = await api.post(`/removeBadge`, {
+          badgeAccountId: findBadge[0].accountId,
+          uuid: fetchUser.uuid,
+        });
+      }
 
       if (removeBadge.status === 200) {
         toast.success('Badge Removed Successfully!');
         handleUserInfo();
         handleClose();
         setIsLoading(false);
-
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -88,7 +83,7 @@ export default function BadgeRemovePopup({
         </h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button variant={'submit'} onClick={handleRemoveBadge}>
-             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" />:"Yes"}
+            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
           </Button>
           <Button variant={'cancel'} onClick={handleClose}>
             No
