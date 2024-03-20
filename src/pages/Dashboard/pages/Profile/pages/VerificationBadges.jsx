@@ -980,7 +980,7 @@ const VerificationBadges = () => {
               </div>
             </div>
 
-            <Web3 handleUserInfo={handleUserInfo} fetchUser={fetchUser} />
+            <Web3 handleUserInfo={handleUserInfo} fetchUser={fetchUser}  handleRemoveBadgePopup={handleRemoveBadgePopup} />
             <Personal handleUserInfo={handleUserInfo} fetchUser={fetchUser} handleRemoveBadgePopup={handleRemoveBadgePopup} />
           </div>
         </div>

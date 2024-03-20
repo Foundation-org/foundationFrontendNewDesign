@@ -6,7 +6,7 @@ import Button from '../../components/Button';
 import { useErrorBoundary } from 'react-error-boundary';
 import api from '../../../../../../services/api/Axios';
 
-export default function Web3({ handleUserInfo, fetchUser }) {
+export default function Web3({ handleUserInfo, fetchUser ,handleRemoveBadgePopup}) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const { showBoundary } = useErrorBoundary();
 
@@ -72,13 +72,19 @@ export default function Web3({ handleUserInfo, fetchUser }) {
                 <h1>{item.title}</h1>
               </div>
               <Button
-                color={checkWeb3Badge(item.type) ? 'yellow' : item.ButtonColor}
+                color={checkWeb3Badge(item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
-                  !checkWeb3Badge(item.type) && handleWeb3(item?.title, item?.type);
+                  checkWeb3Badge(item.type) ? handleRemoveBadgePopup({
+                    title: item.type,
+                    image: item.image,
+                    type: item.type,
+                    badgeType:'web3'
+                  })
+                :handleWeb3(item?.title, item?.type);
                 }}
                 disabled={item.disabled}
               >
-                {checkWeb3Badge(item.type) ? 'Added' : item.ButtonText}
+                {checkWeb3Badge(item.type) ? 'Remove' : item.ButtonText}
                 {!checkWeb3Badge(item.type) && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                     (+0.96 FDX)
@@ -108,13 +114,19 @@ export default function Web3({ handleUserInfo, fetchUser }) {
                 <h1>{item.title}</h1>
               </div>
               <Button
-                color={checkWeb3Badge(item.type) ? 'yellow' : item.ButtonColor}
+                color={checkWeb3Badge(item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
-                  !checkWeb3Badge(item.type) && handleWeb3(item?.title, item?.type);
+                  checkWeb3Badge(item.type) ? handleRemoveBadgePopup({
+                    title: item.type,
+                    image: item.image,
+                    type: item.type,
+                    badgeType:'web3'
+                  })
+                :handleWeb3(item?.title, item?.type);
                 }}
                 disabled={item.disabled}
               >
-                {checkWeb3Badge(item.type) ? 'Added' : item.ButtonText}
+                {checkWeb3Badge(item.type) ? 'Remove' : item.ButtonText}
                 {!checkWeb3Badge(item.type) && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                     (+0.96 FDX)
@@ -145,13 +157,19 @@ export default function Web3({ handleUserInfo, fetchUser }) {
               <h1>{item.title}</h1>
             </div>
             <Button
-              color={checkWeb3Badge(item.type) ? 'yellow' : item.ButtonColor}
+              color={checkWeb3Badge(item.type) ? 'red' : item.ButtonColor}
               onClick={() => {
-                !checkWeb3Badge(item.type) && handleWeb3(item?.title, item?.type);
+                checkWeb3Badge(item.type) ? handleRemoveBadgePopup({
+                  title: item.type,
+                  image: item.image,
+                  type: item.type,
+                  badgeType:'web3'
+                })
+              :handleWeb3(item?.title, item?.type);
               }}
               disabled={item.disabled}
             >
-              {checkWeb3Badge(item.type) ? 'Added' : item.ButtonText}
+              {checkWeb3Badge(item.type) ? 'Remove' : item.ButtonText}
               {!checkWeb3Badge(item.type) && (
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                   (+0.96 FDX)

@@ -51,7 +51,12 @@ export default function BadgeRemovePopup({
           type: type,
           uuid: fetchUser.uuid,
         });
-      } else {
+      }else if (badgeType === 'web3') {
+        removeBadge = await api.post(`/removeWeb3Badge`, {
+          type: type,
+          uuid: fetchUser.uuid,
+        });}
+       else {
         const findBadge = fetchUser.badges.filter((item) => {
           if (item.accountName === accountName) {
             return item;
