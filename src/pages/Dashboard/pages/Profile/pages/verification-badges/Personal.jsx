@@ -8,11 +8,9 @@ import WorkEducationBadgePopup from '../../../../../../components/dialogue-boxes
 export default function Personal({ handleUserInfo, fetchUser }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
   const [seletedPersonalBadge, setSelectedPersonalBadge] = useState('');
 
-  // const checkPersonal = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
   const checkPersonalBadge = (itemType) =>
     fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
 

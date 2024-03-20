@@ -10,6 +10,7 @@ import QuestionCard from '../../QuestStartSection/components/QuestionCard';
 import { applyFilters, fetchDataByStatus } from '../../../../../utils/questionCard';
 import * as HomepageAPIs from '../../../../../services/api/homepageApis';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
+import { useErrorBoundary } from 'react-error-boundary';
 
 export default function HiddenPosts() {
   const pageLimit = 5;
@@ -18,7 +19,7 @@ export default function HiddenPosts() {
     sliceStart: 0,
     sliceEnd: pageLimit,
   });
-
+  const { showBoundary } = useErrorBoundary();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
@@ -53,6 +54,7 @@ export default function HiddenPosts() {
         setFeedData(result);
       }
     } catch (error) {
+      showBoundary(error);
       console.error('Error fetching data:', error);
       throw error;
     }

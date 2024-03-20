@@ -3,9 +3,11 @@ import { ethers } from 'ethers';
 import { useSelector } from 'react-redux';
 import { web3 } from '../../../../../../constants/varification-badges';
 import Button from '../../components/Button';
+import { useErrorBoundary } from 'react-error-boundary';
 
 export default function Web3({ handleUserInfo, fetchUser }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const { showBoundary } = useErrorBoundary();
 
   const checkWeb3Badge = (itemType) =>
     fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
@@ -39,6 +41,7 @@ export default function Web3({ handleUserInfo, fetchUser }) {
         handleUserInfo();
       }
     } catch (error) {
+      showBoundary(error);
       console.log(error);
     }
   };

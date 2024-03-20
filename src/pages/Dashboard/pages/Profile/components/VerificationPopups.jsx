@@ -5,9 +5,11 @@ import { LoginSocialGoogle } from 'reactjs-social-login';
 import { Button } from '../../../../../components/ui/Button';
 import api from '../../../../../services/api/Axios';
 import PopUp from '../../../../../components/ui/PopUp';
+import { useErrorBoundary } from 'react-error-boundary';
 
 const REDIRECT_URI = window.location.href;
 const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, selectedBadge, handleUserInfo }) => {
+  const { showBoundary } = useErrorBoundary();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const handleClose = () => {
@@ -48,6 +50,7 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
         setEmail('');
       }
     } catch (error) {
+      showBoundary(error);
       toast.error(error.response.data.message.split(':')[1]);
       handleClose();
       setEmail('');

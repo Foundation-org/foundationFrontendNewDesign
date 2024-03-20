@@ -12,6 +12,7 @@ import * as HomepageAPIs from '../../../../../services/api/homepageApis';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import DisabledLinkPopup from '../../../../../components/dialogue-boxes/DisabledLinkPopup';
 import { useDispatch } from 'react-redux';
+import { useErrorBoundary } from 'react-error-boundary';
 
 export default function SharedLinks() {
   const pageLimit = 5;
@@ -20,8 +21,8 @@ export default function SharedLinks() {
     sliceStart: 0,
     sliceEnd: pageLimit,
   });
-
   const dispatch = useDispatch();
+  const { showBoundary } = useErrorBoundary();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
@@ -60,6 +61,7 @@ export default function SharedLinks() {
         setFeedData(result);
       }
     } catch (error) {
+      showBoundary(error);
       console.error('Error fetching data:', error);
       throw error;
     }

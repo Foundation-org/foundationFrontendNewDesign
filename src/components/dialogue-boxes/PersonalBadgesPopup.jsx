@@ -7,6 +7,7 @@ import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
+import { useErrorBoundary } from 'react-error-boundary';
 
 const data = [
   { id: 1, name: 'In what city were you born?' },
@@ -15,6 +16,7 @@ const data = [
 ];
 
 const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, handleUserInfo }) => {
+  const { showBoundary } = useErrorBoundary();
   const [selected, setSelected] = useState();
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
@@ -28,6 +30,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     const selectedDate = event.target.value;
     setDate(selectedDate);
   };
+
   const handleSecurityQuestionChange = (event) => {};
 
   const { data: apiResp } = useQuery({
@@ -66,6 +69,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         handleClose();
       }
     } catch (error) {
+      showBoundary(error);
       console.log(error);
       handleClose();
     } finally {
@@ -75,7 +79,6 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   const renderInputField = (title, name, handleNameChange, placeholder, apiResp, data) => {
     const isError = apiResp?.data?.message === 'No';
-    console.log('isError', isError);
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
         {data && data.length >= 1 ? (

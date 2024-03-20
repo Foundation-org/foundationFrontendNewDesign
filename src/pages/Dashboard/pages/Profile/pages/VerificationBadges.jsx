@@ -1,17 +1,14 @@
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { userInfo } from '../../../../../services/api/userAuth';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { addUser } from '../../../../../features/auth/authSlice';
 import Button from '../components/Button';
 import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
-
-import { LoginSocialFacebook, LoginSocialInstagram, LoginSocialLinkedin } from 'reactjs-social-login';
-import { contacts } from '../../../../../constants/varification-badges';
-import VerificationPopups from '../components/VerificationPopups';
+import { LoginSocialFacebook, LoginSocialLinkedin } from 'reactjs-social-login';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
 import { TwitterAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { authentication } from './firebase-config';
@@ -19,10 +16,12 @@ import Personal from './verification-badges/Personal';
 import Web3 from './verification-badges/Web3';
 import { InstagramLogin } from '@amraneze/react-instagram-login';
 import Contact from './verification-badges/Contact';
+import { useErrorBoundary } from 'react-error-boundary';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { showBoundary } = useErrorBoundary();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [searchParams] = useSearchParams();
@@ -51,9 +50,11 @@ const VerificationBadges = () => {
         const data = await response.json();
         handleAddBadge('instagram', data);
       } else {
+        showBoundary(response.statusText);
         console.error('Error fetching Instagram profile:', response.statusText);
       }
     } catch (error) {
+      showBoundary(error);
       console.error('Error fetching Instagram profile:', error.message);
     }
   };
@@ -67,6 +68,7 @@ const VerificationBadges = () => {
         handleAddBadge('twitter', data);
       })
       .catch((err) => {
+        showBoundary(err);
         console.log(err);
       });
   };
@@ -79,26 +81,12 @@ const VerificationBadges = () => {
         handleAddBadge('github', data);
       })
       .catch((err) => {
+        showBoundary(err);
         console.log(err);
       });
   };
 
   const handleBadgesClose = () => setModalVisible(false);
-
-  const onResolve = ({ provider, data }) => {
-    // Handle successful login
-    handleAddBadge(provider, data);
-    console.log(`Login resolved for ${provider}`, data);
-  };
-
-  const onReject = (error) => {
-    // Handle login rejection
-    console.error('Login rejected', error);
-  };
-
-  const onLoginStart = useCallback(() => {
-    console.log('login start');
-  }, []);
 
   const handleUserInfo = async (id) => {
     try {
@@ -111,6 +99,7 @@ const VerificationBadges = () => {
 
       setFetchUser(resp.data);
     } catch (e) {
+      showBoundary(e);
       toast.error(e.response.data.message.split(':')[1]);
     } finally {
       setPageLoading(false);
@@ -142,6 +131,7 @@ const VerificationBadges = () => {
         handleUserInfo();
       }
     } catch (error) {
+      showBoundary(error);
       toast.error(e.response.data.message.split(':')[1]);
     }
   };
@@ -173,6 +163,7 @@ const VerificationBadges = () => {
         handleUserInfo();
       }
     } catch (error) {
+      showBoundary(error);
       toast.error(error.response.data.message.split(':')[1]);
     } finally {
       setIsLoading(false);

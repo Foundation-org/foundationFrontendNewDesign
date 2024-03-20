@@ -32,8 +32,7 @@ import { useSelector } from 'react-redux';
 import Maintenance from '../pages/Maintenance/maintenance';
 import Welcome from '../pages/Welcome/welcome';
 import SharedLinkResults from '../pages/Dashboard/pages/Profile/pages/shared-links/SharedLinkResults';
-import { ErrorBoundary } from 'react-error-boundary';
-import FallBack from '../pages/ErrorBoundry/FallBack';
+import { ErrorBoundary } from '../components/providers/ErrorBoundry';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -48,7 +47,7 @@ export function Router() {
     <>
       {!persistedUser ? (
         <>
-          {/* Public */} 
+          {/* Public */}
           <Routes>
             <Route path="/maintenance" element={<Maintenance />} />
             <Route path="/" element={<Welcome />} />
@@ -81,21 +80,51 @@ export function Router() {
               <Route
                 path="/profile/"
                 element={
-                  <ErrorBoundary
-                    FallbackComponent={FallBack}
-                    onError={(error, errorInfo) => {
-                      console.log('error', errorInfo);
-                    }}
-                  >
+                  <ErrorBoundary>
                     <Profile />
                   </ErrorBoundary>
                 }
               >
-                <Route path="" element={<Contributions />} />
-                <Route path="verification-badges" element={<VerificationBadges />} />
-                <Route path="ledger" element={<BasicTable />} />
-                <Route path="hidden-posts" element={<HiddenPosts />} />
-                <Route path="shared-links" element={<SharedLinks />} />
+                <Route
+                  path=""
+                  element={
+                    <ErrorBoundary>
+                      <Contributions />
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="verification-badges"
+                  element={
+                    <ErrorBoundary>
+                      <VerificationBadges />
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="ledger"
+                  element={
+                    <ErrorBoundary>
+                      <BasicTable />
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="hidden-posts"
+                  element={
+                    <ErrorBoundary>
+                      <HiddenPosts />
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="shared-links"
+                  element={
+                    <ErrorBoundary>
+                      <SharedLinks />
+                    </ErrorBoundary>
+                  }
+                />
                 <Route path="change-password" element={<ChangePassword />} />
               </Route>
               <Route path="/shared-links/result" element={<SharedLinkResults />} />

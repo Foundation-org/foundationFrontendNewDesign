@@ -8,12 +8,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import LedgerTableTopbar from '../components/LedgerTableTopbar';
 import { format } from 'date-fns';
 import { updateColumnSize } from '../../../../../features/profile/legerSlice';
+import { useErrorBoundary } from 'react-error-boundary';
+
 export default function BasicTable() {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const columnSizes = useSelector((state) => state.ledger);
-
+  const { showBoundary } = useErrorBoundary();
   const itemsPerPage = 10;
   const rowsPerPage = 10;
   const [totalPages, setTotalPages] = useState(null);
@@ -25,29 +27,37 @@ export default function BasicTable() {
   const [ledgerData, setLedgerData] = useState([]);
   // const [pagination, setPagination] = useState('')
 
-  const { data } = useQuery({
-    queryFn: () => {
-      if (debouncedSearch === '') {
-        return getAllLedgerData(currentPage, itemsPerPage, sort);
-      } else {
-        return searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
-      }
-    },
-    queryKey: ['ledgerData', sort, debouncedSearch],
-  });
+  // const { data } = useQuery({
+  //   queryFn: () => {
+  //     if (debouncedSearch === '') {
+  //       return getAllLedgerData(currentPage, itemsPerPage, sort);
+  //     } else {
+  //       return searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
+  //     }
+  //   },
+  //   queryKey: ['ledgerData', sort, debouncedSearch],
+  // });
 
   // let ledgerData;
   const fetchData = async () => {
-    const data = await getAllLedgerData(currentPage, itemsPerPage, sort);
-    if (data) {
-      setLedgerData(data);
+    try {
+      const data = await getAllLedgerData(currentPage, itemsPerPage, sort);
+      if (data) {
+        setLedgerData(data);
+      }
+    } catch (err) {
+      showBoundary(err);
     }
   };
 
   const findingLedger = async () => {
-    const data = await searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
-    if (data) {
-      setLedgerData(data);
+    try {
+      const data = await searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
+      if (data) {
+        setLedgerData(data);
+      }
+    } catch (err) {
+      showBoundary(err);
     }
   };
 
