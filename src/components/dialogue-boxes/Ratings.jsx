@@ -56,7 +56,7 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Rating according to your age group
         </h1>
-        <div className="mt-16">
+        <div className="mt-6 tablet:mt-16">
           <Slider
             getAriaLabel={() => 'Ratings range'}
             value={value}
@@ -64,29 +64,42 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
             valueLabelDisplay="auto"
             getAriaValueText={valuetext}
           />
-          <div className="flex justify-between">
+          <div className="mt-1 flex justify-between tablet:mt-[18px]">
             {rangeVal.map((item, index) => (
-              <p key={index + 1} className="text-[#9E9E9E]text-[18px] font-semibold leading-normal">
-                {item}
-              </p>
+              <div>
+                <p
+                  key={index + 1}
+                  className="text-[8px] font-semibold leading-normal text-[#9E9E9E] tablet:text-[18px]"
+                >
+                  {item}
+                </p>
+                {item === 0 && (
+                  <p className="-ml-1 mt-[6px] flex h-[13px] w-[14px] items-center justify-center rounded-[1.56px] border-[0.52px] border-[#0F5634] bg-[#0FB063] text-[10.4px] font-normal leading-[1px] text-white tablet:-ml-[10px] tablet:mt-3 tablet:h-[35px] tablet:w-[35px] tablet:rounded-[4.2px] tablet:border-[1.4px] tablet:text-[28px]">
+                    G
+                  </p>
+                )}
+                {item === 20 && (
+                  <p className="-ml-1 mt-[6px] flex h-[13px] w-[17px] items-center justify-center rounded-[1.56px] border-[0.52px] border-[#9F9F4E] bg-[#F7F71E] text-[10.4px] font-normal leading-[1px] text-[#4A472B] tablet:-ml-[10px] tablet:mt-3 tablet:h-[35px] tablet:w-[46.2px] tablet:rounded-[4.2px] tablet:border-[1.4px] tablet:text-[28px]">
+                    PG
+                  </p>
+                )}
+                {item === 40 && (
+                  <p className="-ml-[2px] mt-[6px] flex h-[13px] w-[14px] items-center justify-center rounded-[1.56px] border-[0.52px] border-[#1E1111] bg-[#DB0000] text-[10.4px] font-normal leading-[1px] text-white tablet:-ml-[4px] tablet:mt-3 tablet:h-[35px] tablet:w-[35px] tablet:rounded-[4.2px] tablet:border-[1.4px] tablet:text-[28px]">
+                    R
+                  </p>
+                )}
+                {item === 60 && (
+                  <p className="-ml-1 mt-[6px] flex h-[13px] w-[19.5px] items-center justify-center rounded-[1.56px] border-[0.52px] border-[#0670AB] bg-[#26B8F6] text-[10.4px] font-normal leading-[1px] text-white  tablet:-ml-[10px] tablet:mt-3 tablet:h-[35px] tablet:w-[52.5px] tablet:rounded-[4.2px] tablet:border-[1.4px] tablet:text-[28px]">
+                    NC
+                  </p>
+                )}
+                {item === 80 && (
+                  <p className="-ml-[2px] mt-[6px] flex h-[13px] w-[14px] items-center justify-center rounded-[1.56px] border-[0.52px] border-[#696969] bg-[#0F0F0F] text-[10.4px] font-normal leading-[1px] text-white tablet:mt-3 tablet:h-[35px] tablet:w-[35px] tablet:rounded-[4.2px] tablet:border-[1.4px] tablet:text-[28px]">
+                    X
+                  </p>
+                )}
+              </div>
             ))}
-          </div>
-          <div className="mt-3 flex max-w-[80%] justify-between">
-            <p className="flex h-[35px] w-[35px] items-center justify-center rounded-[4.2px] border-[1.4px] border-[#0F5634] bg-[#0FB063] text-[28px] font-normal leading-[1px] text-white">
-              G
-            </p>
-            <p className="flex h-[35px] w-[46.2px] items-center justify-center rounded-[4.2px] border-[1.4px] border-[#9F9F4E] bg-[#F7F71E] text-[28px] font-normal leading-[1px] text-[#4A472B]">
-              PG
-            </p>
-            <p className="flex h-[35px] w-[35px] items-center justify-center rounded-[4.2px] border-[1.4px] border-[#1E1111] bg-[#DB0000] text-[28px] font-normal leading-[1px] text-white">
-              R
-            </p>
-            <p className="flex h-[35px] w-[52.5px] items-center justify-center rounded-[4.2px] border-[1.4px] border-[#0670AB] bg-[#26B8F6] text-[28px] font-normal leading-[1px] text-white">
-              NC
-            </p>
-            <p className="flex h-[35px] w-[35px] items-center justify-center rounded-[4.2px] border-[1.4px] border-[#696969] bg-[#0F0F0F] text-[28px] font-normal leading-[1px] text-white">
-              X
-            </p>
           </div>
         </div>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
