@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { web3 } from '../../../../../../constants/varification-badges';
 import Button from '../../components/Button';
 import { useErrorBoundary } from 'react-error-boundary';
+import api from '../../../../../../services/api/Axios';
 
 export default function Web3({ handleUserInfo, fetchUser }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
