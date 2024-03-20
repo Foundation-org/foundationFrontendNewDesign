@@ -42,8 +42,8 @@ export default function Web3({ handleUserInfo, fetchUser }) {
         handleUserInfo();
       }
     } catch (error) {
-      showBoundary(error);
-      console.log(error);
+      // showBoundary(error);
+      console.error(error);
     }
   };
 

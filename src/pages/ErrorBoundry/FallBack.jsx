@@ -10,10 +10,10 @@ export default function FallBack({ error }) {
   //   }, []);
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center gap-4 text-2xl font-bold">
-      <div className="flex items-center">
+    <div className="flex h-screen flex-col items-center justify-center gap-4 text-wrap px-20 text-2xl font-bold">
+      <div className="flex flex-col items-center gap-3">
         <p>Something went wrong:</p>
-        <pre style={{ color: 'red' }}> {error && error.toString()}</pre>
+        <p style={{ color: 'red' }}> {error && error.toString()}</p>
       </div>
       {/* <p>Reloading the site in 5sec...</p> */}
     </div>
