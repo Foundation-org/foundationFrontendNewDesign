@@ -154,10 +154,12 @@ const RankChoice = () => {
   useEffect(() => {
     typedValues.map((_, index) => {
       if (prevValueArr[index]?.value === typedValues[index].question) {
+        console.log('first', optionsValue);
         setTypedValues((prevValues) => {
           const newTypedValues = [...prevValues];
           newTypedValues[index] = {
             ...newTypedValues[index],
+            question: optionsValue[index].question,
             optionStatus: optionsValue[index].chatgptOptionStatus,
             isTyping: false,
           };
@@ -193,8 +195,22 @@ const RankChoice = () => {
     }
   }, [typedValues]);
 
+  // useEffect(() => {
+  //   if (!isEqual(optionsValue, typedValues)) {
+  //     setTypedValues(optionsValue);
+  //   }
+  // }, [optionsValue]);
+
   useEffect(() => {
-    if (!isEqual(optionsValue, typedValues)) {
+    // Find the index of the object in typedValues where optionStatus.name === 'Checking'
+    const checkingIndex = typedValues.findIndex((obj) => obj.optionStatus.name === 'Checking');
+
+    if (checkingIndex !== -1 && !isEqual(optionsValue[checkingIndex], typedValues[checkingIndex])) {
+      // Replace the object at checkingIndex in typedValues with the object from optionsValue at the same index
+      const updatedTypedValues = [...typedValues];
+      updatedTypedValues[checkingIndex] = optionsValue[checkingIndex];
+      setTypedValues(updatedTypedValues);
+    } else {
       setTypedValues(optionsValue);
     }
   }, [optionsValue]);
@@ -204,33 +220,38 @@ const RankChoice = () => {
     dispatch(createQuestAction.addNewOption({ optionsCount }));
   };
 
-  const handleOptionSelect = (index) => {
-    const newTypedValues = [...typedValues];
-    newTypedValues[index].selected = !newTypedValues[index].selected;
-    setTypedValues(newTypedValues);
+  // const handleOptionSelect = (index) => {
+  //   const newTypedValues = [...typedValues];
+  //   newTypedValues[index].selected = !newTypedValues[index].selected;
+  //   setTypedValues(newTypedValues);
 
-    if (!multipleOption) {
-      newTypedValues.forEach((item, i) => {
-        if (i !== index) {
-          item.selected = false;
-        }
-      });
-      setTypedValues(newTypedValues);
+  //   if (!multipleOption) {
+  //     newTypedValues.forEach((item, i) => {
+  //       if (i !== index) {
+  //         item.selected = false;
+  //       }
+  //     });
+  //     setTypedValues(newTypedValues);
 
-      const ChangedOption = newTypedValues[index].selected ? [{ answers: newTypedValues[index].question }] : [];
-      setSelectedValues(ChangedOption);
-    } else {
-      const ChangedOption = { answers: newTypedValues[index].question };
+  //     const ChangedOption = newTypedValues[index].selected ? [{ answers: newTypedValues[index].question }] : [];
+  //     setSelectedValues(ChangedOption);
+  //   } else {
+  //     const ChangedOption = { answers: newTypedValues[index].question };
 
-      if (newTypedValues[index].selected) {
-        setSelectedValues((prevValues) => [...prevValues, ChangedOption]);
-      } else {
-        setSelectedValues((prevValues) => prevValues.filter((item) => item.answers !== ChangedOption.answers));
-      }
-    }
-  };
+  //     if (newTypedValues[index].selected) {
+  //       setSelectedValues((prevValues) => [...prevValues, ChangedOption]);
+  //     } else {
+  //       setSelectedValues((prevValues) => prevValues.filter((item) => item.answers !== ChangedOption.answers));
+  //     }
+  //   }
+  // };
 
-  const removeOption = (id) => {
+  const removeOption = (id, number) => {
+    setPrevValueArr((prevArr) => {
+      const newArr = prevArr.filter((_, index) => index !== number - 1);
+      return newArr;
+    });
+
     dispatch(createQuestAction.delOption({ id }));
   };
 
@@ -327,6 +348,7 @@ const RankChoice = () => {
                         snapshot={snapshot}
                         key={index}
                         title="RankChoice"
+                        id={item.id}
                         allowInput={true}
                         label={`Option ${index + 1} #`}
                         trash={true}
@@ -337,7 +359,7 @@ const RankChoice = () => {
                         isTyping={item?.isTyping}
                         isSelected={item.selected}
                         optionsCount={typedValues.length}
-                        removeOption={() => removeOption(item.id)}
+                        removeOption={removeOption}
                         number={index + 1}
                         optionStatus={typedValues[index].optionStatus}
                         answerVerification={(value) => answerVerification(item.id, index, value)}

@@ -163,6 +163,7 @@ const OpenChoice = () => {
           const newTypedValues = [...prevValues];
           newTypedValues[index] = {
             ...newTypedValues[index],
+            question: optionsValue[index].question,
             optionStatus: optionsValue[index].chatgptOptionStatus,
             isTyping: false,
           };
@@ -198,8 +199,22 @@ const OpenChoice = () => {
     }
   }, [typedValues]);
 
+  // useEffect(() => {
+  //   if (!isEqual(optionsValue, typedValues)) {
+  //     setTypedValues(optionsValue);
+  //   }
+  // }, [optionsValue]);
+
   useEffect(() => {
-    if (!isEqual(optionsValue, typedValues)) {
+    // Find the index of the object in typedValues where optionStatus.name === 'Checking'
+    const checkingIndex = typedValues.findIndex((obj) => obj.optionStatus.name === 'Checking');
+
+    if (checkingIndex !== -1 && !isEqual(optionsValue[checkingIndex], typedValues[checkingIndex])) {
+      // Replace the object at checkingIndex in typedValues with the object from optionsValue at the same index
+      const updatedTypedValues = [...typedValues];
+      updatedTypedValues[checkingIndex] = optionsValue[checkingIndex];
+      setTypedValues(updatedTypedValues);
+    } else {
       setTypedValues(optionsValue);
     }
   }, [optionsValue]);
@@ -209,31 +224,31 @@ const OpenChoice = () => {
     dispatch(createQuestAction.addNewOption({ optionsCount }));
   };
 
-  const handleOptionSelect = (index) => {
-    const newTypedValues = [...typedValues];
-    newTypedValues[index].selected = !newTypedValues[index].selected;
-    setTypedValues(newTypedValues);
+  // const handleOptionSelect = (index) => {
+  //   const newTypedValues = [...typedValues];
+  //   newTypedValues[index].selected = !newTypedValues[index].selected;
+  //   setTypedValues(newTypedValues);
 
-    if (!multipleOption) {
-      newTypedValues.forEach((item, i) => {
-        if (i !== index) {
-          item.selected = false;
-        }
-      });
-      setTypedValues(newTypedValues);
+  //   if (!multipleOption) {
+  //     newTypedValues.forEach((item, i) => {
+  //       if (i !== index) {
+  //         item.selected = false;
+  //       }
+  //     });
+  //     setTypedValues(newTypedValues);
 
-      const selectedOption = newTypedValues[index].selected ? [{ answers: newTypedValues[index].question }] : [];
-      setSelectedValues(selectedOption);
-    } else {
-      const selectedOption = { answers: newTypedValues[index].question };
+  //     const selectedOption = newTypedValues[index].selected ? [{ answers: newTypedValues[index].question }] : [];
+  //     setSelectedValues(selectedOption);
+  //   } else {
+  //     const selectedOption = { answers: newTypedValues[index].question };
 
-      if (newTypedValues[index].selected) {
-        setSelectedValues((prevValues) => [...prevValues, selectedOption]);
-      } else {
-        setSelectedValues((prevValues) => prevValues.filter((item) => item.answers !== selectedOption.answers));
-      }
-    }
-  };
+  //     if (newTypedValues[index].selected) {
+  //       setSelectedValues((prevValues) => [...prevValues, selectedOption]);
+  //     } else {
+  //       setSelectedValues((prevValues) => prevValues.filter((item) => item.answers !== selectedOption.answers));
+  //     }
+  //   }
+  // };
 
   const removeOption = (id, number) => {
     setPrevValueArr((prevArr) => {
@@ -244,7 +259,6 @@ const OpenChoice = () => {
   };
 
   const handleOnDragEnd = (result) => {
-    // console.log(result);
     if (!result.destination) {
       return;
     }
@@ -254,7 +268,6 @@ const OpenChoice = () => {
     newTypedValues.splice(result.destination.index, 0, removed);
 
     dispatch(createQuestAction.drapAddDrop({ newTypedValues }));
-    // setTypedValues(newTypedValues);
   };
 
   // Update Whole Multiple choice state in Redux
@@ -345,7 +358,7 @@ const OpenChoice = () => {
                         options={false}
                         dragable={true}
                         handleChange={(value) => handleChange(index, value)}
-                        handleOptionSelect={() => handleOptionSelect(index)}
+                        // handleOptionSelect={() => handleOptionSelect(index)}
                         typedValue={item.question}
                         isTyping={item?.isTyping}
                         isSelected={item.selected}

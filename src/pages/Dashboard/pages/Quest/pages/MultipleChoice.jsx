@@ -200,29 +200,28 @@ const MultipleChoice = () => {
     }
   }, [typedValues]);
 
+  // useEffect(() => {
+  //   if (!isEqual(optionsValue, typedValues)) {
+  //     setTypedValues(optionsValue);
+  //   }
+  // }, [optionsValue]);
+
   useEffect(() => {
-    if (!isEqual(optionsValue, typedValues)) {
+    // Find the index of the object in typedValues where optionStatus.name === 'Checking'
+    const checkingIndex = typedValues.findIndex((obj) => obj.optionStatus.name === 'Checking');
+
+    if (checkingIndex !== -1 && !isEqual(optionsValue[checkingIndex], typedValues[checkingIndex])) {
+      // Replace the object at checkingIndex in typedValues with the object from optionsValue at the same index
+      const updatedTypedValues = [...typedValues];
+      updatedTypedValues[checkingIndex] = optionsValue[checkingIndex];
+      setTypedValues(updatedTypedValues);
+    } else {
       setTypedValues(optionsValue);
     }
   }, [optionsValue]);
 
   const handleAddOption = () => {
     const optionsCount = typedValues.length;
-    // const newOption = {
-    //   id: `index-${optionsCount}`,
-    //   question: '',
-    //   selected: false,
-    //   optionStatus: {
-    //     name: 'Ok',
-    //     color: 'text-[#389CE3]',
-    //     tooltipName: 'Please write something...',
-    //     tooltipStyle: 'tooltip-info',
-    //   },
-    //   isTyping: true,
-    // };
-
-    // setTypedValues((prev) => [...prev, newOption]);
-
     dispatch(createQuestAction.addNewOption({ optionsCount }));
   };
 
@@ -257,10 +256,7 @@ const MultipleChoice = () => {
       const newArr = prevArr.filter((_, index) => index !== number - 1);
       return newArr;
     });
-    // setTypedValues((prevArr) => {
-    //   const newArr = prevArr.filter((_, index) => index !== number - 1);
-    //   return newArr;
-    // });
+
     dispatch(createQuestAction.delOption({ id }));
   };
 
@@ -274,7 +270,6 @@ const MultipleChoice = () => {
     newTypedValues.splice(result.destination.index, 0, removed);
 
     dispatch(createQuestAction.drapAddDrop({ newTypedValues }));
-    // setTypedValues(newTypedValues);
   };
 
   // Update Whole Multiple choice state in Redux
@@ -328,6 +323,9 @@ const MultipleChoice = () => {
       setHollow(true);
     }
   }, [typedValues, question]);
+
+  console.log('optionsValue', optionsValue);
+  console.log('typedValues', typedValues);
 
   return (
     <CreateQuestWrapper

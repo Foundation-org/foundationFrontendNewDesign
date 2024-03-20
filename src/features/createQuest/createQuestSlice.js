@@ -147,6 +147,7 @@ export const createQuestSlice = createSlice({
           tooltipName: 'Please write something...',
           tooltipStyle: 'tooltip-info',
         },
+        isTyping: true,
       };
       state.optionsValue.push(newOption);
       state.optionslength += 1;
