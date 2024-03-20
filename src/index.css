@@ -547,3 +547,36 @@ input.hide_number_input_arrows2::-webkit-inner-spin-button {
 .hideBack {
   background: none !important;
 }
+
+/* Min and Max Range Slider Start*/
+.css-14pt78w-MuiSlider-rail {
+  background: #c7c7c7 !important;
+  height: 12px !important;
+}
+
+.css-1gv0vcd-MuiSlider-track {
+  height: 12px !important;
+  background-color: '#4A8DBD' !important;
+}
+
+.MuiSlider-root span {
+  background-color: #4a8dbd;
+}
+
+.MuiSlider-thumb {
+  height: 35px !important;
+  width: 35px !important;
+  border: 5px solid #dee6f7 !important;
+  background-color: #4a8dbd !important;
+}
+
+.MuiSlider-valueLabel {
+  background: #4a8dbd !important;
+  border-radius: 5.382px !important;
+  color: var(--white, #fff);
+  font-size: 25px !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+}
+
+/* Min and Max Range Slider End*/

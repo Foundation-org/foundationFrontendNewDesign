@@ -20,6 +20,7 @@ import { topicPreferencesModalStyle } from '../../../assets/styles';
 import { setBookmarkFilterStates, setFilterStates, userInfo, userInfoById } from '../../../services/api/userAuth';
 import { addUser } from '../../../features/auth/authSlice';
 import { useDebounce } from '../../../utils/useDebounce';
+import Ratings from '../../../components/dialogue-boxes/Ratings';
 
 const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross }) => {
   const dispatch = useDispatch();
@@ -31,6 +32,10 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
       ? persistedUserInfo?.bookmarkStates.searchData
       : persistedUserInfo?.States.searchData,
   );
+  const [ratingsDialogue, setRatingsDialogue] = useState(false);
+
+  const showRatingDialogue = () => setRatingsDialogue(true);
+  const hideRatingDialogue = () => setRatingsDialogue(false);
 
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
@@ -187,6 +192,7 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
 
   return (
     <>
+      <Ratings modalVisible={ratingsDialogue} handleClose={hideRatingDialogue} />
       <div className="no-scrollbar mt-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between rounded-[17.928px] bg-white pb-14 pt-8 text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:bg-[#000] dark:text-white">
         <div className="flex flex-col items-center">
           <div className="flex w-full flex-col items-center justify-center gap-[4vh] border-b-[1.32px] border-[#9C9C9C] pb-[3vh] ">
@@ -243,7 +249,8 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
           </h1>
           <button
             // onClick={handleTopicPref}
-            onClick={() => toast.success('Feature coming soon')}
+            // onClick={() => toast.success('Feature coming soon')}
+            onClick={showRatingDialogue}
             className={`${
               persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
@@ -339,7 +346,8 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
               persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             }  inset-0 w-4/6 rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
             // onClick={handleTopicPref}
-            onClick={() => toast.success('Feature coming soon')}
+            // onClick={() => toast.success('Feature coming soon')}
+            onClick={showRatingDialogue}
           >
             Ratings
           </button>
