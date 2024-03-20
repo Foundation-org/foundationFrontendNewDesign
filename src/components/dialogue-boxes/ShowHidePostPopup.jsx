@@ -66,7 +66,7 @@ export default function ShowHidePostPopup({
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
       getUserInfo();
-      queryClient.invalidateQueries('FeedData');
+      // queryClient.invalidateQueries('FeedData');
       setIsLoading(false);
       handleClose();
     },
@@ -82,7 +82,7 @@ export default function ShowHidePostPopup({
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
       getUserInfo();
-      queryClient.invalidateQueries('FeedData');
+      // queryClient.invalidateQueries('FeedData');
       setIsLoading(false);
       handleClose();
     },
