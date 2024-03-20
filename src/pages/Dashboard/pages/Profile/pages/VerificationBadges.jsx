@@ -8,7 +8,11 @@ import { addUser } from '../../../../../features/auth/authSlice';
 import Button from '../components/Button';
 import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
-import { LoginSocialFacebook, LoginSocialLinkedin } from 'reactjs-social-login';
+
+import { LoginSocialFacebook } from 'reactjs-social-login';
+import { LoginSocialLinkedin } from './ReactLinkedIn'
+import { contacts } from '../../../../../constants/varification-badges';
+import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
 import { TwitterAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
 import { authentication } from './firebase-config';
@@ -40,6 +44,7 @@ const VerificationBadges = () => {
   // }
   const loginInWithInsta = async (code) => {
     try {
+      // return
       const response = await fetch(`${import.meta.env.VITE_API_URL}/user/get-insta-token`, {
         method: 'POST',
         headers: {
@@ -147,7 +152,7 @@ const VerificationBadges = () => {
     try {
       let id;
       if (provider === 'linkedin') {
-        id = provider;
+        id = data.sub;
       } else if (provider === 'instagram') {
         id = data.user_id;
       } else if (provider === 'facebook') {
@@ -208,11 +213,11 @@ const VerificationBadges = () => {
             <BadgeRemovePopup
               handleClose={handleBadgesClose}
               modalVisible={modalVisible}
-              title={deleteModalState.title}
-              image={deleteModalState.image}
-              accountName={deleteModalState.accountName}
-              type={deleteModalState.type}
-              badgeType={deleteModalState.badgeType}
+              title={deleteModalState?.title}
+              image={deleteModalState?.image}
+              accountName={deleteModalState?.accountName}
+              type={deleteModalState?.type}
+              badgeType={deleteModalState?.badgeType}
               fetchUser={fetchUser}
               setFetchUser={setFetchUser}
             />
@@ -306,7 +311,7 @@ const VerificationBadges = () => {
                 </div>
 
                 {/* ...........................LinkedIn......................  */}
-                <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
+                <div className="flex items-center gap-[10px] opacity-[100%] laptop:gap-5">
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
                     alt="LinkedIn"
@@ -383,11 +388,27 @@ const VerificationBadges = () => {
                       </span>
                     </Button>
                   ) : (
-
+                    <LoginSocialLinkedin
+                      // isOnlyGetToken
+                      client_id={import.meta.env.VITE_LINKEDIN_KEY}
+                      client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
+                      onResolve={({ provider, data }) => {
+                        console.log(provider, data);
+                        setIsLoading(true);
+                        handleAddBadge(provider, data);
+                      }}
+                      redirect_uri={window.location.href}
+                      // scope="email,openid,profile,w_member_social"
+                      onReject={(err) => {
+                        toast.error('An error occured while adding badge');
+                        setIsLoading(false);
+                        console.log(err);
+                      }}
+                    >
                       <Button
-                        // color={checkSocial('linkedin') ? 'red' : 'blue'}
-                        disabled={true}
-                        color="gray"
+                        color={checkSocial('linkedin') ? 'red' : 'blue'}
+                        // disabled={true}
+                        // color="gray"
                         onClick={() => {
                           checkSocial('linkedin') ? handleRemoveBadge('linkedin'): handleLinkedIn();
                         }}
@@ -397,6 +418,7 @@ const VerificationBadges = () => {
                           {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
+                      </LoginSocialLinkedin>
                   )}
                 </div>
 
@@ -786,9 +808,27 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 ) : (
-                
+                  <LoginSocialLinkedin
+                    // isOnlyGetToken
+                    client_id={import.meta.env.VITE_LINKEDIN_KEY}
+                    client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
+                    onResolve={({ provider, data }) => {
+                      console.log(provider, data);
+                      setIsLoading(true);
+                      handleAddBadge(provider, data);
+                    }}
+                    redirect_uri={window.location.href}
+                    // scope="email,openid,profile,w_member_social"
+                    onReject={(err) => {
+                      toast.error('An error occured while adding badge');
+                      setIsLoading(false);
+                      console.log(err);
+                    }}
+                  >
                     <Button
                       color={checkSocial('linkedin') ? 'red' : 'blue'}
+                      // disabled={true}
+                      // color="gray"
                       onClick={() => {
                         checkSocial('linkedin') && handleRemoveBadge('linkedin');
                       }}
@@ -798,6 +838,7 @@ const VerificationBadges = () => {
                         {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
+                  </LoginSocialLinkedin>
                 )}
               </div>
 
