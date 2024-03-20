@@ -217,7 +217,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
                 onClick={() => {
                   handleClickPesonalBadges(item.type);
                 }}
-                disabled={item.disabled || checkPersonalBadge(item.type)}
+                // disabled={item.disabled || checkPersonalBadge(item.type)}
               >
                 {checkPersonalBadge(item.type) ? 'Remove' : item.ButtonText}
                 {!checkPersonalBadge(item.type) && (
@@ -254,7 +254,7 @@ export default function Personal({ handleUserInfo, fetchUser }) {
                 onClick={() => {
                   handleClickPesonalBadges(item.type);
                 }}
-                disabled={item.disabled || checkPersonalBadge(item.type)}
+                // disabled={item.disabled || checkPersonalBadge(item.type)}
               >
                 {checkPersonalBadge(item.type) ? 'Remove' : item.ButtonText}
                 {!checkPersonalBadge(item.type) && (

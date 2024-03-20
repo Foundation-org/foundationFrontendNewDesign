@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 
-const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSelected }) => {
+const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSelected, isArrow }) => {
   const [query, setQuery] = useState('');
 
   const filteredItems =
@@ -21,13 +21,15 @@ const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSele
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
           />
-          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/downArrow.svg`}
-              alt="down-arrow"
-              className={`h-[6.3px] w-[10.3px] tablet:h-[10px] tablet:w-[16px] `}
-            />
-          </Combobox.Button>
+          {isArrow && (
+            <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/downArrow.svg`}
+                alt="down-arrow"
+                className={`h-[6.3px] w-[10.3px] tablet:h-[10px] tablet:w-[16px] `}
+              />
+            </Combobox.Button>
+          )}
         </div>
         <Transition
           as={Fragment}

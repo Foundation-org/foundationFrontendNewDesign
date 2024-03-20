@@ -9,7 +9,7 @@ import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
 import { useErrorBoundary } from 'react-error-boundary';
 
-const data = [
+const citiesData = [
   { id: 1, name: 'In what city were you born?' },
   { id: 2, name: 'What is the name of your first pet?' },
   { id: 2, name: 'What is the last name of your favorite teacher?' },
@@ -127,6 +127,25 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     );
   };
 
+  const renderCurrentCity = (title, name, handleNameChange, placeholder, apiResp, data) => {
+    const isError = apiResp?.data?.message === 'No';
+    return (
+      <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+        <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
+          <CustomCombobox items={citiesData} selected={selected} setSelected={setSelected} placeholder={placeholder} />
+          {isError && (
+            <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
+          )}
+        </div>
+        <div className="mt-[10px] flex justify-end tablet:mt-5">
+          <Button variant="submit" disabled={isError} onClick={() => handleAddPersonalBadge()}>
+            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
       {title === 'First Name' && renderInputField('First Name', name, handleNameChange, placeholder, apiResp)}
@@ -147,14 +166,14 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
           </div>
         </div>
       )}
-      {title === 'Current City' && renderInputField('Current City', name, handleNameChange, placeholder, apiResp)}
+      {title === 'Current City' && renderCurrentCity('Current City', name, handleNameChange, placeholder, apiResp)}
       {title === 'Home Town' && renderInputField('Home Town', name, handleNameChange, placeholder, apiResp)}
       {title === 'Relationship Status' &&
         renderInputField('Relationship Status', name, handleNameChange, placeholder, apiResp)}
       {title === 'ID / Passport' && renderInputField('ID / Passport', name, handleNameChange, placeholder, apiResp)}
       {title === 'Geolocation' && renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp)}
       {title === 'Security Question' &&
-        renderInputField(
+        renderCurrentCity(
           'Security Question',
           name,
           handleSecurityQuestionChange,
