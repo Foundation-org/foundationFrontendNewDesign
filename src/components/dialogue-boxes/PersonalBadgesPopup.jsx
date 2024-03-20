@@ -8,6 +8,7 @@ import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
 import { useErrorBoundary } from 'react-error-boundary';
+import Listbox from '../ui/ListBox';
 
 const data = [
   { id: 1, name: 'In what city were you born?' },
@@ -17,8 +18,14 @@ const data = [
 
 const relationshipData = [
   { id: 1, name: 'Single' },
-  { id: 2, name: 'Married' },
-  { id: 3, name: 'Divorced' },
+  { id: 2, name: 'In a relationship' },
+  { id: 3, name: 'Engaged' },
+  { id: 4, name: 'Married' },
+  { id: 5, name: "It's complicated" },
+  { id: 6, name: 'In an open relationship' },
+  { id: 7, name: 'Widowed' },
+  { id: 8, name: 'Separated' },
+  { id: 9, name: 'Divorced' },
 ];
 
 const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, handleUserInfo }) => {
@@ -68,7 +75,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       value = {
         [selected.name]: name,
       };
-    }else if (type.trim() === 'currentCity' || type.trim() === 'homeTown' || type.trim() === 'relationshipStatus') {
+    } else if (type.trim() === 'currentCity' || type.trim() === 'homeTown' || type.trim() === 'relationshipStatus') {
       value = selected.name;
     } else {
       value = name;
@@ -191,6 +198,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         {/* {data && data.length >= 1 ? (
           <> */}
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
+          {/* <Listbox items={relationshipData} /> */}
           <CustomCombobox
             items={relationshipData}
             selected={selected}
