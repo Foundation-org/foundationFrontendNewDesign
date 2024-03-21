@@ -238,7 +238,7 @@ export default function Personal({ handleUserInfo, fetchUser,handleRemoveBadgePo
                 onClick={() => {
                   checkPersonalBadge(item.type)
                     ? handleRemoveBadgePopup({
-                        title: item.type,
+                        title: item.title,
                         image: item.image,
                         type: item.type,
                         badgeType:'personal'
@@ -282,7 +282,7 @@ export default function Personal({ handleUserInfo, fetchUser,handleRemoveBadgePo
                 onClick={() => {
                   checkPersonalBadge(item.type)
                     ? handleRemoveBadgePopup({
-                        title: item.type,
+                      title: item.title,
                         image: item.image,
                         type: item.type,
                         badgeType:'personal'
@@ -334,7 +334,7 @@ export default function Personal({ handleUserInfo, fetchUser,handleRemoveBadgePo
               onClick={() => {
                 checkPersonalBadge(item.type)
                   ? handleRemoveBadgePopup({
-                      title: item.type,
+                    title: item.title,
                       image: item.image,
                       type: item.type,
                       badgeType:'personal'

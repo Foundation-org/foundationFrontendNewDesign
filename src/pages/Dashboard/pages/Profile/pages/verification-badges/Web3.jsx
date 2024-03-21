@@ -10,6 +10,10 @@ export default function Web3({ handleUserInfo, fetchUser ,handleRemoveBadgePopup
   const persistedTheme = useSelector((state) => state.utils.theme);
   const { showBoundary } = useErrorBoundary();
 
+  const handleComingSoon=()=>{
+    toast.info("This feature will soon be available for mobile.")
+  }
+
   const checkWeb3Badge = (itemType) =>
     fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
 
@@ -75,7 +79,7 @@ export default function Web3({ handleUserInfo, fetchUser ,handleRemoveBadgePopup
                 color={checkWeb3Badge(item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
                   checkWeb3Badge(item.type) ? handleRemoveBadgePopup({
-                    title: item.type,
+                    title: item.title,
                     image: item.image,
                     type: item.type,
                     badgeType:'web3'
@@ -117,7 +121,7 @@ export default function Web3({ handleUserInfo, fetchUser ,handleRemoveBadgePopup
                 color={checkWeb3Badge(item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
                   checkWeb3Badge(item.type) ? handleRemoveBadgePopup({
-                    title: item.type,
+                    title: item.title,
                     image: item.image,
                     type: item.type,
                     badgeType:'web3'
@@ -160,12 +164,12 @@ export default function Web3({ handleUserInfo, fetchUser ,handleRemoveBadgePopup
               color={checkWeb3Badge(item.type) ? 'red' : item.ButtonColor}
               onClick={() => {
                 checkWeb3Badge(item.type) ? handleRemoveBadgePopup({
-                  title: item.type,
+                  title: item.title,
                   image: item.image,
                   type: item.type,
                   badgeType:'web3'
                 })
-              :handleWeb3(item?.title, item?.type);
+              :handleComingSoon();
               }}
               disabled={item.disabled}
             >
