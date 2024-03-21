@@ -200,7 +200,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         {/* {data && data.length >= 1 ? (
           <> */}
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-          <Listbox items={relationshipData} selected={selected} setSelected={setSelected} />
+          <Listbox items={relationshipData} selected={selected} setSelected={setSelected} placeholder={placeholder}/>
           {/* <CustomCombobox
             items={relationshipData}
             selected={selected}
