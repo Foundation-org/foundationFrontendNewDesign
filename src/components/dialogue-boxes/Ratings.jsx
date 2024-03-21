@@ -104,7 +104,8 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
           <Button
             variant={'submit'}
             onClick={() => {
-              setIsLoading(true);
+              toast.info('This feature will soon be available');
+              // setIsLoading(true);
               //   hidePost({
               //     uuid: persistedUserInfo?.uuid,
               //     questForeignKey: questStartData._id,
