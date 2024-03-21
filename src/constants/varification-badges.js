@@ -181,7 +181,7 @@ export const personal = [
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'work',
-    disabled: false,
+    disabled: true,
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`,
@@ -190,7 +190,7 @@ export const personal = [
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'education',
-    disabled: false,
+    disabled: true,
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Identity-2x-1.png`,
