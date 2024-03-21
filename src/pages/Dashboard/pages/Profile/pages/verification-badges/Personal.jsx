@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 import { personal } from '../../../../../../constants/varification-badges';
 import Button from '../../components/Button';
 import PersonalBadgesPopup from '../../../../../../components/dialogue-boxes/PersonalBadgesPopup';
-import WorkEducationBadgePopup from '../../../../../../components/dialogue-boxes/WorkEducationBadgePopup';
 import { toast } from 'sonner';
 import api from '../../../../../../services/api/Axios';
+import EducationBadgePopup from '../../../../../../components/dialogue-boxes/EducationBadgePopup';
+import WorkBadgePopup from '../../../../../../components/dialogue-boxes/WorkBadgePopup';
 
 export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgePopup }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -135,9 +136,8 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
         );
 
       case 'work':
-        console.log('wamiq', fetchUser);
         return (
-          <WorkEducationBadgePopup
+          <WorkBadgePopup
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
             title="Work"
@@ -152,7 +152,7 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
       case 'education':
         console.log('wamiq', fetchUser);
         return (
-          <WorkEducationBadgePopup
+          <EducationBadgePopup
             isPopup={isPersonalPopup}
             setIsPopup={setIsPersonalPopup}
             title="Education"
@@ -235,9 +235,15 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
               </div>
 
               <Button
-                color={checkPersonalBadge(item.type) ? 'red' : item.ButtonColor}
+                color={
+                  checkPersonalBadge(item.type)
+                    ? item.type === 'education' || item.type === 'work'
+                      ? 'yellow'
+                      : 'red'
+                    : item.ButtonColor
+                }
                 onClick={() => {
-                  checkPersonalBadge(item.type) && !item.type === 'education'
+                  checkPersonalBadge(item.type) && item.type !== 'education'
                     ? handleRemoveBadgePopup({
                         title: item.title,
                         image: item.image,
@@ -248,7 +254,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
                 }}
                 disabled={item.disabled}
               >
-                {checkPersonalBadge(item.type) ? 'Remove' : item.ButtonText}
+                {checkPersonalBadge(item.type)
+                  ? item.type === 'education' || item.type === 'work'
+                    ? 'View'
+                    : 'Remove'
+                  : item.ButtonText}
                 {!checkPersonalBadge(item.type) && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                     (+0.96 FDX)
@@ -279,9 +289,15 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
               </div>
 
               <Button
-                color={checkPersonalBadge(item.type) ? 'red' : item.ButtonColor}
+                color={
+                  checkPersonalBadge(item.type)
+                    ? item.type === 'education' || item.type === 'work'
+                      ? 'yellow'
+                      : 'red'
+                    : item.ButtonColor
+                }
                 onClick={() => {
-                  checkPersonalBadge(item.type) && !item.type === 'education'
+                  checkPersonalBadge(item.type) && item.type !== 'education'
                     ? handleRemoveBadgePopup({
                         title: item.title,
                         image: item.image,
@@ -292,7 +308,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
                 }}
                 disabled={item.disabled}
               >
-                {checkPersonalBadge(item.type) ? 'Remove' : item.ButtonText}
+                {checkPersonalBadge(item.type)
+                  ? item.type === 'education' || item.type === 'work'
+                    ? 'View'
+                    : 'Remove'
+                  : item.ButtonText}
                 {!checkPersonalBadge(item.type) && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                     (+0.96 FDX)
@@ -318,22 +338,16 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             >
               <h1>{item.title}</h1>
             </div>
-            {/* {item.NoOfButton !== 1 ? (
-        <div className="flex w-[19.9vw] justify-between  tablet:mr-[18.5px]">
-          <button className="rounded-[1.31vw] h-[5.8vw] w-[45%] bg-[#FAD308] text-[1.38vw] text-white tablet:rounded-[12.6px] laptop:rounded-[23px] dark:bg-[#FAD308]">
-            Edit
-          </button>
-          <button className="h-[5.8vw] w-[52%] rounded-[1.31vw]  bg-[#FF4057] text-[1.38vw] text-white tablet:rounded-[12.6px] laptop:rounded-[23px] dark:bg-[#C13232]">
-            Remove
-          </button>
-        </div>
-      ) : (
-        <Button color={item.ButtonColor}>{item.ButtonText}</Button>
-      )} */}
             <Button
-              color={checkPersonalBadge(item.type) ? 'red' : item.ButtonColor}
+              color={
+                checkPersonalBadge(item.type)
+                  ? item.type === 'education' || item.type === 'work'
+                    ? 'yellow'
+                    : 'red'
+                  : item.ButtonColor
+              }
               onClick={() => {
-                checkPersonalBadge(item.type) && !item.type === 'education'
+                checkPersonalBadge(item.type) && item.type !== 'education'
                   ? handleRemoveBadgePopup({
                       title: item.title,
                       image: item.image,
@@ -344,7 +358,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
               }}
               disabled={item.disabled}
             >
-              {checkPersonalBadge(item.type) ? 'Remove' : item.ButtonText}
+              {checkPersonalBadge(item.type)
+                ? item.type === 'education' || item.type === 'work'
+                  ? 'View'
+                  : 'Remove'
+                : item.ButtonText}
               {!checkPersonalBadge(item.type) && (
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                   (+0.96 FDX)
@@ -356,19 +374,4 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
       </div>
     </>
   );
-}
-
-{
-  /* {item.NoOfButton !== 1 ? (
-        <div className="flex w-[19.9vw] justify-between  tablet:mr-[18.5px]">
-          <button className="rounded-[1.31vw] h-[5.8vw] w-[45%] bg-[#FAD308] text-[1.38vw] text-white tablet:rounded-[12.6px] laptop:rounded-[23px] dark:bg-[#FAD308]">
-            Edit
-          </button>
-          <button className="h-[5.8vw] w-[52%] rounded-[1.31vw]  bg-[#FF4057] text-[1.38vw] text-white tablet:rounded-[12.6px] laptop:rounded-[23px] dark:bg-[#C13232]">
-            Remove
-          </button>
-        </div>
-      ) : (
-        <Button color={item.ButtonColor}>{item.ButtonText}</Button>
-      )} */
 }
