@@ -7,18 +7,15 @@ import WorkEducationBadgePopup from '../../../../../../components/dialogue-boxes
 import { toast } from 'sonner';
 import api from '../../../../../../services/api/Axios';
 
-export default function Personal({ handleUserInfo, fetchUser,handleRemoveBadgePopup }) {
+export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgePopup }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
 
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
   const [seletedPersonalBadge, setSelectedPersonalBadge] = useState('');
 
   const checkPersonalBadge = (itemType) =>
     fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
-
-  
 
   const handleRemovePersonalBadge = async (type) => {
     try {
@@ -138,6 +135,7 @@ export default function Personal({ handleUserInfo, fetchUser,handleRemoveBadgePo
         );
 
       case 'work':
+        console.log('wamiq', fetchUser);
         return (
           <WorkEducationBadgePopup
             isPopup={isPersonalPopup}
@@ -147,10 +145,12 @@ export default function Personal({ handleUserInfo, fetchUser,handleRemoveBadgePo
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`}
             placeholder="Work Here"
             handleUserInfo={handleUserInfo}
+            fetchUser={fetchUser}
           />
         );
 
       case 'education':
+        console.log('wamiq', fetchUser);
         return (
           <WorkEducationBadgePopup
             isPopup={isPersonalPopup}
@@ -160,6 +160,7 @@ export default function Personal({ handleUserInfo, fetchUser,handleRemoveBadgePo
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`}
             placeholder="Education Here"
             handleUserInfo={handleUserInfo}
+            fetchUser={fetchUser}
           />
         );
 
@@ -236,12 +237,12 @@ export default function Personal({ handleUserInfo, fetchUser,handleRemoveBadgePo
               <Button
                 color={checkPersonalBadge(item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
-                  checkPersonalBadge(item.type)
+                  checkPersonalBadge(item.type) && !item.type === 'education'
                     ? handleRemoveBadgePopup({
                         title: item.title,
                         image: item.image,
                         type: item.type,
-                        badgeType:'personal'
+                        badgeType: 'personal',
                       })
                     : handleClickPesonalBadges(item.type);
                 }}
@@ -280,17 +281,17 @@ export default function Personal({ handleUserInfo, fetchUser,handleRemoveBadgePo
               <Button
                 color={checkPersonalBadge(item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
-                  checkPersonalBadge(item.type)
+                  checkPersonalBadge(item.type) && !item.type === 'education'
                     ? handleRemoveBadgePopup({
-                      title: item.title,
+                        title: item.title,
                         image: item.image,
                         type: item.type,
-                        badgeType:'personal'
+                        badgeType: 'personal',
                       })
                     : handleClickPesonalBadges(item.type);
                 }}
                 disabled={item.disabled}
-                >
+              >
                 {checkPersonalBadge(item.type) ? 'Remove' : item.ButtonText}
                 {!checkPersonalBadge(item.type) && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
@@ -332,12 +333,12 @@ export default function Personal({ handleUserInfo, fetchUser,handleRemoveBadgePo
             <Button
               color={checkPersonalBadge(item.type) ? 'red' : item.ButtonColor}
               onClick={() => {
-                checkPersonalBadge(item.type)
+                checkPersonalBadge(item.type) && !item.type === 'education'
                   ? handleRemoveBadgePopup({
-                    title: item.title,
+                      title: item.title,
                       image: item.image,
                       type: item.type,
-                      badgeType:'personal'
+                      badgeType: 'personal',
                     })
                   : handleClickPesonalBadges(item.type);
               }}

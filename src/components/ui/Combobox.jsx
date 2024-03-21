@@ -3,12 +3,11 @@ import { Combobox, Transition } from '@headlessui/react';
 
 const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSelected, isArrow ,query,setQuery}) => {
 
-
   const filteredItems =
     query === ''
       ? items
       : items.filter((item) =>
-          item.name.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
+          item?.name?.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
         );
 
   return (
