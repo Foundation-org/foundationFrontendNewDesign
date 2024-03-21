@@ -24,7 +24,7 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
   //   const queryClient = useQueryClient();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [value, setValue] = useState([20, 37]);
+  const [value, setValue] = useState([0, 20]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -54,7 +54,7 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
     >
       <div className="px-[18px] py-[10px] tablet:px-[75px] tablet:py-[25px]">
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
-          Select your Rating according to your age group
+          Select the range of ratings you wish to see in all your feeds.
         </h1>
         <div className="mt-6 tablet:mt-16">
           <Slider
@@ -115,7 +115,7 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
             }}
             disabled={isLoading}
           >
-            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Submit'}
+            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
           </Button>
         </div>
       </div>
