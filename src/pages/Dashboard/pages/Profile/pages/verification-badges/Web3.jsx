@@ -11,7 +11,7 @@ export default function Web3({ handleUserInfo, fetchUser ,handleRemoveBadgePopup
   const { showBoundary } = useErrorBoundary();
 
   const handleComingSoon=()=>{
-    toast.info("This feature will soon be available for mobile.")
+    toast.info("This badge will soon be available for mobile.")
   }
 
   const checkWeb3Badge = (itemType) =>
