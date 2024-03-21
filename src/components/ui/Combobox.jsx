@@ -20,6 +20,8 @@ const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSele
             displayValue={(item) => item.name}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
+            disabled
+            
           />
           {isArrow && (
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">

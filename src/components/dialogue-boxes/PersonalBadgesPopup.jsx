@@ -73,16 +73,26 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       value = date;
     } else if (type.trim() === 'security-question') {
       value = {
-        [selected.name]: name,
+        [selected?.name]: name,
       };
+      if (!selected) {
+        toast.warning('Please select a question first!');
+        setLoading(false);
+        return;
+      }
+      if (!name) {
+        toast.warning('Answer field cannot be empty.');
+        setLoading(false);
+        return;
+      }
     } else if (type.trim() === 'currentCity' || type.trim() === 'homeTown' || type.trim() === 'relationshipStatus') {
-      value = selected.name;
+      value = selected?.name;
     } else {
       value = name;
     }
-
-    if (value === '') {
+    if (value === '' || value === undefined) {
       toast.warning('Field cannot be empty!');
+      setLoading(false);
       return;
     }
 
@@ -114,15 +124,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         {data && data.length >= 1 ? (
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-              <CustomCombobox
-                items={data}
-                selected={selected}
-                setSelected={setSelected}
-                query={query}
-                setQuery={setQuery}
-                isArrow={true}
-                placeholder={placeholder}
-              />
+            <Listbox items={data} selected={selected} setSelected={setSelected} placeholder={placeholder} />
               <input
                 type="text"
                 value={name}
@@ -198,8 +200,8 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         {/* {data && data.length >= 1 ? (
           <> */}
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-          {/* <Listbox items={relationshipData} /> */}
-          <CustomCombobox
+          <Listbox items={relationshipData} selected={selected} setSelected={setSelected} />
+          {/* <CustomCombobox
             items={relationshipData}
             selected={selected}
             setSelected={setSelected}
@@ -207,7 +209,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             setQuery={setQuery}
             isArrow={true}
             placeholder={placeholder}
-          />
+          /> */}
           {/* <input
             type="text"
             value={name}
