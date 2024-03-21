@@ -66,13 +66,8 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
           />
           <div className="mt-1 flex justify-between tablet:mt-[18px]">
             {rangeVal.map((item, index) => (
-              <div>
-                <p
-                  key={index + 1}
-                  className="text-[8px] font-semibold leading-normal text-[#9E9E9E] tablet:text-[18px]"
-                >
-                  {item}
-                </p>
+              <div key={index + 1}>
+                <p className="text-[8px] font-semibold leading-normal text-[#9E9E9E] tablet:text-[18px]">{item}</p>
                 {item === 0 && (
                   <p className="-ml-1 mt-[6px] flex h-[13px] w-[14px] items-center justify-center rounded-[1.56px] border-[0.52px] border-[#0F5634] bg-[#0FB063] text-[10.4px] font-normal leading-[1px] text-white tablet:-ml-[10px] tablet:mt-3 tablet:h-[35px] tablet:w-[35px] tablet:rounded-[4.2px] tablet:border-[1.4px] tablet:text-[28px]">
                     G

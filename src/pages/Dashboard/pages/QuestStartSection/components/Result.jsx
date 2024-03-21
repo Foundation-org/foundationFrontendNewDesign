@@ -168,7 +168,7 @@ const Result = (props) => {
 
   const sortContendedAnswersByAscDesc = (data, order) => {
     const questAnswersCopy = [...data.questStartData.QuestAnswers];
-    console.log('first', data.questStartData);
+
     if (data.questStartData?.contendedPercentage.length > 0 && data.questStartData?.contendedPercentage[0] !== null) {
       return questAnswersCopy.sort((a, b) => {
         const percentageA = parseFloat(
@@ -197,7 +197,8 @@ const Result = (props) => {
         }
       });
     } else {
-      return questAnswersCopy;
+      const data = getRankedAnswers(props);
+      return data;
     }
   };
 
@@ -366,7 +367,6 @@ const Result = (props) => {
         </div>
       ) : props.title === 'Ranked Choice' ? (
         <div className="relative">
-          {/* <div className="absolute -top-4 right-[30px] flex gap-[34px] tablet:-top-7 tablet:right-20 tablet:gap-14"> */}
           <div className="absolute -top-[21px] right-[69px] tablet:-top-7 tablet:right-[145px]">
             <button onClick={handleSortIconClick}>
               <SortIcon ass={selectedOption === 3 ? true : false} des={selectedOption === 2 ? true : false} />
