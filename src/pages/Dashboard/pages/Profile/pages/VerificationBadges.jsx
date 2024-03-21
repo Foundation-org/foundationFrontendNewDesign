@@ -327,67 +327,34 @@ const VerificationBadges = () => {
                   {checkSocial('linkedin') ? (
                     <>
                       <Button
-                        color={checkSocial('linkedin') ? 'red' : 'blue'}
-                        onClick={() => {
-                          if (persistedUserInfo?.role === 'guest') {
-                            toast.warning(
-                              <p>
-                                Please{' '}
-                                <span
-                                  className="cursor-pointer text-[#389CE3] underline"
-                                  onClick={() => navigate('/guest-signup')}
-                                >
-                                  Create an Account
-                                </span>{' '}
-                                to unlock this feature
-                              </p>,
-                            );
-                            return;
-                          } else {
-                            checkSocial('linkedin') && setModalVisible(true);
-                          }
-                        }}
-                      >
+                      color={checkSocial('linkedin') ? 'red' : 'blue'}
+                      onClick={() => {
+                        if (persistedUserInfo?.role === 'guest') {
+                          handleGuestBadgeAdd();
+                        } else {
+                          checkSocial('linkedin') &&
+                            handleRemoveBadgePopup({
+                              title: 'Linkedin',
+                              image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
+                              accountName: 'linkedin',
+                            });
+                        }
+                      }}
+                    >
                         {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
                         <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                           {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
-                      <BadgeRemovePopup
-                        handleClose={handleBadgesClose}
-                        modalVisible={modalVisible}
-                        title={'LinkedIn'}
-                        image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
-                        accountName={'linkedin'}
-                        fetchUser={fetchUser}
-                        setFetchUser={setFetchUser}
-                      />
+                      
                     </>
-                  ) : persistedUserInfo?.role === 'guest' ? (
-                    <Button
-                      color={checkSocial('linkedin') ? 'red' : 'blue'}
-                      onClick={() => {
-                        toast.warning(
-                          <p>
-                            Please{' '}
-                            <span
-                              className="cursor-pointer text-[#389CE3] underline"
-                              onClick={() => navigate('/guest-signup')}
-                            >
-                              Create an Account
-                            </span>{' '}
-                            to unlock this feature
-                          </p>,
-                        );
-                        return;
-                      }}
-                    >
-                      {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
+                  ) :  persistedUserInfo?.role === 'guest' ? (
+                    <Button color={checkSocial('twitter') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
+                      {checkSocial('twitter') ? 'Remove' : 'Add New Badge'}
                       <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
+                        {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                       </span>
-                    </Button>
-                  ) : (
+                    </Button> ): (
                     <LoginSocialLinkedin
                       // isOnlyGetToken
                       client_id={import.meta.env.VITE_LINKEDIN_KEY}
@@ -746,42 +713,27 @@ const VerificationBadges = () => {
                 </div>
                 {checkSocial('linkedin') ? (
                   <>
-                    <Button
+                     <Button
                       color={checkSocial('linkedin') ? 'red' : 'blue'}
                       onClick={() => {
                         if (persistedUserInfo?.role === 'guest') {
-                          toast.warning(
-                            <p>
-                              Please{' '}
-                              <span
-                                className="cursor-pointer text-[#389CE3] underline"
-                                onClick={() => navigate('/guest-signup')}
-                              >
-                                Create an Account
-                              </span>{' '}
-                              to unlock this feature
-                            </p>,
-                          );
-                          return;
+                          handleGuestBadgeAdd();
                         } else {
-                          checkSocial('linkedin') && setModalVisible(true);
+                          checkSocial('linkedin') &&
+                            handleRemoveBadgePopup({
+                              title: 'LinkedIn',
+                              image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
+                              accountName: 'linkedin',
+                            });
                         }
                       }}
                     >
-                      {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
-                      </span>
-                    </Button>
-                    <BadgeRemovePopup
-                      handleClose={handleBadgesClose}
-                      modalVisible={modalVisible}
-                      title={'LinkedIn'}
-                      image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
-                      accountName={'linkedin'}
-                      fetchUser={fetchUser}
-                      setFetchUser={setFetchUser}
-                    />
+                        {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
+                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                          {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
+                        </span>
+                      </Button>
+                    
                   </>
                 ) : persistedUserInfo?.role === 'guest' ? (
                   <Button
