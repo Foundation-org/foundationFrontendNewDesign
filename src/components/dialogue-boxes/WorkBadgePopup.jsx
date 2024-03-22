@@ -5,101 +5,92 @@ import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
 
-const workForm = [
-  {
-    label: 'Compaany Name',
-    items: [
-      { id: 1, name: 'Item 1' },
-      { id: 2, name: 'Item 2' },
-    ],
-    placeholder: 'Company Here',
-  },
-  {
-    label: 'Tittle',
-    items: [
-      { id: 1, name: 'Item 1' },
-      { id: 2, name: 'Item 2' },
-    ],
-    placeholder: 'Job Title Here',
-  },
-];
-
-const workFormTwo = [
-  {
-    label: 'Employement Type',
-    placeholder: 'Job Title Here',
-  },
-  {
-    label: 'Mode of Job',
-    placeholder: 'Job Title Here',
-  },
-];
-
-const School = {
-  label: 'School',
-  type: 'school',
-  placeholder: 'school here',
+const CompanyName = {
+  label: 'Company Name',
+  type: 'companyName',
+  placeholder: 'Company here',
+};
+const jobTitles = {
+  label: 'Title',
+  items: [
+    { id: 1, name: 'Software Engineer' },
+    { id: 2, name: 'Data Analyst' },
+    { id: 3, name: 'Human Resources Manager' },
+    { id: 4, name: 'Marketing Coordinator' },
+    { id: 5, name: 'Financial Analyst' },
+    { id: 6, name: 'Sales Representative' },
+    { id: 7, name: 'Customer Service Representative' },
+    { id: 8, name: 'Operations Manager' },
+    { id: 9, name: 'Product Manager' },
+    { id: 10, name: 'Graphic Designer' },
+    { id: 11, name: 'Network Administrator' },
+    { id: 12, name: 'Quality Assurance Analyst' },
+    { id: 13, name: 'Business Development Manager' },
+    { id: 14, name: 'Project Manager' },
+    { id: 15, name: 'Accountant' },
+    { id: 16, name: 'Executive Assistant' },
+    { id: 17, name: 'Research Scientist' },
+    { id: 18, name: 'Legal Counsel' },
+    { id: 19, name: 'Operations Analyst' },
+    { id: 20, name: 'Systems Engineer' },
+    // Add more as needed...
+  ],
+  type: 'jobTitle',
+  placeholder: 'Job Title here',
 };
 
-const degreePrograms = [
-  { id: 1, name: 'Bachelor of Science in Computer Science' },
-  { id: 2, name: 'Bachelor of Science in Electrical Engineering' },
-  { id: 3, name: 'Bachelor of Arts in Psychology' },
-  { id: 4, name: 'Bachelor of Arts in English Literature' },
-  { id: 5, name: 'Bachelor of Business Administration (BBA)' },
-  { id: 6, name: 'Bachelor of Science in Nursing (BSN)' },
-  { id: 7, name: 'Master of Business Administration (MBA)' },
-  { id: 8, name: 'Master of Science in Mechanical Engineering' },
-  { id: 9, name: 'Master of Science in Data Science' },
-  { id: 10, name: 'Master of Public Health (MPH)' },
-  { id: 11, name: 'Doctor of Medicine (MD)' },
-  { id: 12, name: 'Doctor of Philosophy (Ph.D.) in Economics' },
-  { id: 13, name: 'Doctor of Philosophy (Ph.D.) in Computer Science' },
-  { id: 14, name: 'Doctor of Philosophy (Ph.D.) in Psychology' },
-  // Add more as needed...
-];
+const EmploymentType = {
+  label: 'Employement Type',
+  placeholder: 'Full time / Part time',
+  items: [
+    { id: 1, name: 'Full Time' },
+    { id: 2, name: 'Part Time' },
+  ],
+  type: 'employmentType',
+};
 
-const StartingYear = {
+const Mode = {
+  label: 'Mode of Job',
+  placeholder: 'Remote / Hybrid / Onsite',
+  items: [
+    { id: 1, name: 'Remote' },
+    { id: 2, name: 'Hybrid' },
+    { id: 3, name: 'Onsite' },
+  ],
+  type: 'modeOfJob',
+};
+const startingYear = {
   label: 'Start Year',
   placeholder: 'Year here',
   type: 'startingYear',
 };
 
-const graduationYear = {
-  label: 'Graduation Year',
-  placeholder: 'Year here/Present',
-  type: 'graduationYear',
+const endingYear = {
+  label: 'End Year',
+  placeholder: 'Year here / Present',
+  type: 'endingYear',
 };
 
 const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, handleUserInfo, fetchUser }) => {
-  const [universities, setUniversities] = useState([]);
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
   const [field3Data, setField3Data] = useState([]);
   const [field4Data, setField4Data] = useState([]);
+  const [field5Data, setField5Data] = useState([]);
+  const [field6Data, setField6Data] = useState([]);
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
 
-  const searchUniversities = async () => {
-    const universities = await api.post(`search/searchUniversities/?name=${query}`);
-    setUniversities(universities.data);
-  };
-
   useEffect(() => {
     const param = fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(type));
     setExistingData(param?.personal);
-    console.log('new', existingData);
   }, [fetchUser.badges]);
 
-  useEffect(() => {
-    searchUniversities();
-  }, [query]);
-
   const handleClose = () => setIsPopup(false);
-
-  const handlefield3Change = (e) => setField3Data(e.target.value);
-  const handlefield4Change = (e) => setField4Data(e.target.value);
+  const handlefield1Change = (e) => setField1Data(e.target.value);
+  const handlefield5Change = (e) => setField5Data(e.target.value);
+  const handlefield6Change = (e) => setField6Data(e.target.value);
 
   const handleDateChange = (event) => {
     let inputValue = event.target.value.replace(/\D/g, '');
@@ -144,7 +135,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
     }
   };
 
-  const renderWorkField = (field1, field2, field3, field4) => {
+  const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
     return (
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
         {/* To View Already Added Info */}
@@ -153,14 +144,14 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
             <div className="flex w-full justify-between rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
               <div>
                 <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
-                  {existingData?.education?.school}
+                  {existingData?.work?.companyName + '-' + existingData?.work?.modeOfJob}
                 </h4>
                 <div className="mt-[2px] max-w-[270px] tablet:mt-2">
                   <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
-                    {existingData?.education?.degree + ' in ' + existingData.education?.fieldOfStudy}
+                    {existingData?.work?.jobTitle}
                   </h5>
                   <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
-                    {existingData?.education?.country}
+                    {existingData?.work.modeOfJob}
                   </h6>
                 </div>
               </div>
@@ -178,7 +169,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                   />
                 </div>
                 <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
-                  {existingData?.education?.startingYear + '-' + existingData?.education?.graduationYear}
+                  {existingData?.work?.startingYear + '-' + existingData?.work?.endingYear}
                 </h4>
               </div>
             </div>
@@ -194,13 +185,12 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
               <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 {field1.label}
               </p>
-              <CustomCombobox
-                items={universities}
+              <input
+                type="text"
+                value={field1Data}
+                onChange={handlefield1Change}
                 placeholder={field1.placeholder}
-                selected={field1Data}
-                setSelected={setField1Data}
-                query={query}
-                setQuery={setQuery}
+                className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
               />
             </div>
             <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
@@ -216,29 +206,55 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 setQuery={setQuery}
               />
             </div>
+            <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
+              <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                {field3.label}
+              </p>
+              <CustomCombobox
+                items={field3.items}
+                placeholder={field3.placeholder}
+                selected={field3Data}
+                setSelected={setField3Data}
+                query={query}
+                setQuery={setQuery}
+              />
+            </div>
+            <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
+              <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                {field4.label}
+              </p>
+              <CustomCombobox
+                items={field4.items}
+                placeholder={field4.placeholder}
+                selected={field4Data}
+                setSelected={setField4Data}
+                query={query}
+                setQuery={setQuery}
+              />
+            </div>
 
             <div className="mb-4 flex gap-[17.5px] tablet:mb-5 tablet:gap-[37px]">
               <div className="w-full">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                  {field3.label}
+                  {field5.label}
                 </p>
                 <input
                   type="text"
-                  value={field3Data}
-                  onChange={handlefield3Change}
-                  placeholder={field3.placeholder}
+                  value={field5Data}
+                  onChange={handlefield5Change}
+                  placeholder={field5.placeholder}
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                 />
               </div>
               <div className="w-full">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                  {field4.label}
+                  {field6.label}
                 </p>
                 <input
                   type="text"
-                  value={field4Data}
-                  onChange={handlefield4Change}
-                  placeholder={field4.placeholder}
+                  value={field6Data}
+                  onChange={handlefield6Change}
+                  placeholder={field6.placeholder}
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                 />
               </div>
@@ -253,11 +269,12 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 variant="submit"
                 onClick={() => {
                   const allFieldObject = {
-                    [field1.type]: field1Data.name,
+                    [field1.type]: field1Data,
                     [field2.type]: field2Data.name,
-                    ['country']: field1Data.country,
                     [field3.type]: field3Data.name,
-                    [field4.type]: field4Data,
+                    [field4.type]: field4Data.name,
+                    [field5.type]: field5Data,
+                    [field6.type]: field6Data,
                   };
                   handleAddPersonalBadge(allFieldObject);
                 }}
@@ -273,7 +290,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
   return (
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-      {title === 'Work' && renderWorkField(School, degreePrograms, StartingYear, graduationYear)}
+      {title === 'Work' && renderWorkField(CompanyName, jobTitles, EmploymentType, Mode, startingYear, endingYear)}
     </PopUp>
   );
 };

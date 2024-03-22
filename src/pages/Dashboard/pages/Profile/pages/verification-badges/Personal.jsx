@@ -243,7 +243,7 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
                     : item.ButtonColor
                 }
                 onClick={() => {
-                  checkPersonalBadge(item.type) && item.type !== 'education'
+                  checkPersonalBadge(item.type) && item.type !== 'education' && item.type != 'work'
                     ? handleRemoveBadgePopup({
                         title: item.title,
                         image: item.image,
@@ -297,7 +297,7 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
                     : item.ButtonColor
                 }
                 onClick={() => {
-                  checkPersonalBadge(item.type) && item.type !== 'education'
+                  checkPersonalBadge(item.type) && item.type !== 'education' && item.type != 'work'
                     ? handleRemoveBadgePopup({
                         title: item.title,
                         image: item.image,
@@ -347,7 +347,7 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
                   : item.ButtonColor
               }
               onClick={() => {
-                checkPersonalBadge(item.type) && item.type !== 'education'
+                checkPersonalBadge(item.type) && item.type !== 'education' && item.type != 'work'
                   ? handleRemoveBadgePopup({
                       title: item.title,
                       image: item.image,

@@ -73,7 +73,7 @@ const StartingYear = {
 
 const graduationYear = {
   label: 'Graduation Year',
-  placeholder: 'Year here/Present',
+  placeholder: 'Year here / Present',
   type: 'graduationYear',
 };
 
