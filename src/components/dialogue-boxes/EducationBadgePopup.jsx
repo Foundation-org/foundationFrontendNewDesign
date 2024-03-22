@@ -174,6 +174,11 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 <div className="flex flex-col justify-between">
                   <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
                     <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
+                      alt="Edit Icon"
+                      className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
+                    />
+                    <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                       alt="Edit Icon"
                       className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
@@ -220,7 +225,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               />
             </div>
 
-            <div className="mb-4 flex gap-[17.5px] tablet:mb-5 tablet:gap-[37px]">
+            <div className="mb-4 mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[37px]">
               <div className="w-full">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field3.label}
