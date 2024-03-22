@@ -1,49 +1,44 @@
-import PopUp from '../ui/PopUp';
+import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
-import { useSelector } from 'react-redux';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateHiddenQuest } from '../../services/api/questsApi';
-import { toast } from 'sonner';
-import { useDispatch } from 'react-redux';
-import { removeHiddenPosts } from '../../features/quest/utilsSlice';
-import { useState } from 'react';
-import { FaSpinner } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+
+import PopUp from '../ui/PopUp';
 import Slider from '@mui/material/Slider';
 
-import * as questUtilsActions from '../../features/quest/utilsSlice';
+// extras
+import * as homeFilterActions from '../../features/sidebar/filtersSlice';
+import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSlice';
+import { useLocation } from 'react-router-dom';
 
 function valuetext(value) {
-  return <p style={{ background: '#4A8DBD', color: 'white' }}>`${value}°C`</p>;
+  return <p style={{ background: '#4A8DBD', color: 'white' }}>`${value}`</p>;
 }
 
 const rangeVal = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
 export default function Ratings({ handleClose, modalVisible, questStartData }) {
-  //   const dispatch = useDispatch();
-  //   const persistedUserInfo = useSelector((state) => state.auth.user);
-  //   const queryClient = useQueryClient();
+  const location = useLocation();
 
-  const [isLoading, setIsLoading] = useState(false);
+  let filtersActions;
+  if (location.pathname === '/dashboard/bookmark') {
+    filtersActions = bookmarkFiltersActions;
+  } else {
+    filtersActions = homeFilterActions;
+  }
+
+  const dispatch = useDispatch();
+  const filterStates = useSelector(filtersActions.getFilters);
+
+  console.log('first', filterStates.moderationRatingFilter);
   const [value, setValue] = useState([0, 20]);
+
+  useEffect(() => {
+    setValue([filterStates.moderationRatingFilter?.initial, filterStates.moderationRatingFilter?.final]);
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  //   const { mutateAsync: hidePost } = useMutation({
-  //     mutationFn: updateHiddenQuest,
-  //     onSuccess: (resp) => {
-  //       toast.success('Post unhidden successfully');
-  //       queryClient.invalidateQueries('FeedData');
-  //       dispatch(questUtilsActions.addHiddenPostId(resp.data.data.questForeignKey));
-  //       setIsLoading(false);
-  //       handleClose();
-  //     },
-  //     onError: (err) => {
-  //       setIsLoading(false);
-  //       console.log(err);
-  //     },
-  //   });
 
   return (
     <PopUp
@@ -104,19 +99,16 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
           <Button
             variant={'submit'}
             onClick={() => {
-              toast.info('This feature will soon be available');
-              // setIsLoading(true);
-              //   hidePost({
-              //     uuid: persistedUserInfo?.uuid,
-              //     questForeignKey: questStartData._id,
-              //     hidden: false,
-              //     hiddenMessage: '',
-              //   });
-              //   dispatch(removeHiddenPosts(questStartData._id));
+              dispatch(
+                filtersActions.setRatings({
+                  initial: value[0],
+                  final: value[1],
+                }),
+              );
+              handleClose();
             }}
-            disabled={isLoading}
           >
-            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
+            Save
           </Button>
         </div>
       </div>

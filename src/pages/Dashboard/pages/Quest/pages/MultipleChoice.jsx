@@ -91,7 +91,7 @@ const MultipleChoice = () => {
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
-      validatedQuestion: question,
+      validatedQuestion: createQuestSlice.question,
     });
     // If found null
     if (!moderationRating) {
@@ -109,7 +109,7 @@ const MultipleChoice = () => {
       QuestAnswersSelected: [],
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
-      moderationRatingCount: moderationRating.moderationRatingCount
+      moderationRatingCount: moderationRating.moderationRatingCount,
     };
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
