@@ -178,7 +178,7 @@ const RankChoice = () => {
   };
 
   useEffect(() => {
-    if (!checkHollow() && optionsValue.every((value) => value.question !== '' && question !== '')) {
+    if (!checkHollow() && optionsValue.every((value) => value.question !== '' && createQuestSlice.question !== '')) {
       setHollow(false);
     } else {
       setHollow(true);
