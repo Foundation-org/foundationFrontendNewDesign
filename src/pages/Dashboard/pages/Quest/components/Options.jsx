@@ -108,7 +108,7 @@ const Options = ({
               <TextareaAutosize
                 id={`input-${number}`}
                 onChange={(e) => handleChange(e.target.value)}
-                onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value.trim())}
+                onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value)}
                 value={typedValue}
                 placeholder="Add your own option"
                 tabIndex={number + 1}

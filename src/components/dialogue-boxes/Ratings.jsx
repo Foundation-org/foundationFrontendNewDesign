@@ -29,7 +29,6 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
   const dispatch = useDispatch();
   const filterStates = useSelector(filtersActions.getFilters);
 
-  console.log('first', filterStates.moderationRatingFilter);
   const [value, setValue] = useState([0, 20]);
 
   useEffect(() => {

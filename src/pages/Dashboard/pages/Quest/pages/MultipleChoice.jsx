@@ -152,7 +152,14 @@ const MultipleChoice = () => {
     const [removed] = newTypedValues.splice(result.source.index, 1);
     newTypedValues.splice(result.destination.index, 0, removed);
 
-    dispatch(createQuestAction.drapAddDrop({ newTypedValues }));
+    const updatedTypedValues = newTypedValues.map((item, index) => {
+      return {
+        ...item,
+        id: `index-${index}`,
+      };
+    });
+
+    dispatch(createQuestAction.drapAddDrop({ newTypedValues: updatedTypedValues }));
   };
 
   useEffect(() => {
