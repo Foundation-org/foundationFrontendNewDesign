@@ -146,10 +146,12 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   };
 
   const renderWorkField = (field1, field2, field3, field4) => {
+    const [addAnotherForm, setAddAnotherForm] = useState(false);
+
     return (
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
         {/* To View Already Added Info */}
-        {existingData ? (
+        {existingData && !addAnotherForm ? (
           <div className="mx-3 tablet:mx-[40px]">
             {existingData.map((item, index) => (
               <div
@@ -183,15 +185,15 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 </div>
               </div>
             ))}
-            <div className="mt-4 flex justify-between">
-              <Button variant="addOption">
+            <div className="mt-4">
+              <Button variant="addOption" onClick={() => setAddAnotherForm(true)}>
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
               </Button>
             </div>
           </div>
         ) : (
           <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
-            <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
+            <div className="mb-[5px] tablet:mb-[15px]">
               <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 {field1.label}
               </p>
@@ -249,10 +251,10 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               </div>
             </div>
 
-            <div className="flex justify-between">
-              <Button variant="addOption">
+            <div className="flex justify-end">
+              {/* <Button variant="addOption">
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
-              </Button>
+              </Button> */}
               <Button
                 variant="submit"
                 onClick={() => {

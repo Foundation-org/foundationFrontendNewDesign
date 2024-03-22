@@ -1,8 +1,7 @@
 import { Fragment, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 
-const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSelected, isArrow ,query,setQuery}) => {
-
+const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSelected, isArrow, query, setQuery }) => {
   const filteredItems =
     query === ''
       ? items
@@ -20,7 +19,6 @@ const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSele
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
             disabled
-            
           />
           {isArrow && (
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -39,7 +37,7 @@ const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSele
           leaveTo="opacity-0"
           afterLeave={() => setQuery('')}
         >
-          <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-[10px] bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+          <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-[10px] bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
             {filteredItems.length === 0 && query !== '' ? (
               <div className="text-gray-700 relative cursor-default select-none px-4 py-2">Nothing found.</div>
             ) : (
