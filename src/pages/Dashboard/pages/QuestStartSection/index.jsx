@@ -58,6 +58,7 @@ const QuestStartSection = () => {
     start: pagination.sliceStart,
     end: pagination.sliceEnd,
     uuid: persistedUserInfo?.uuid,
+    moderationRatingFilter: filterStates.moderationRatingFilter,
   });
 
   // Reset Preferences

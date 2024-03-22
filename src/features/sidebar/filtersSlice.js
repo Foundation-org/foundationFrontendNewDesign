@@ -8,6 +8,10 @@ const resetState = {
   filterByScope: '',
   filterBySort: 'Newest First',
   isColumns: false,
+  moderationRatingFilter: {
+    initial: 0,
+    final: 20,
+  },
   clearFilter: false,
 };
 
@@ -17,6 +21,10 @@ const resetOtherStates = {
   filterByScope: '',
   filterBySort: 'Newest First',
   isColumns: false,
+  moderationRatingFilter: {
+    initial: 0,
+    final: 20,
+  },
   clearFilter: false,
 };
 
@@ -29,6 +37,10 @@ const initialState = {
   filterBySort: 'Newest First',
   isColumns: JSON.parse(localStorage.getItem('columns'))?.Block.list.length > 0 ? true : false,
   itemsWithCross: [],
+  moderationRatingFilter: {
+    initial: 0,
+    final: 20,
+  },
   clearFilter: false,
 };
 
@@ -80,6 +92,10 @@ export const filtersSlice = createSlice({
       }
       state.clearFilter = true;
     },
+    setRatings: (state, action) => {
+      const { initial, final } = action.payload;
+      state.moderationRatingFilter = { initial, final };
+    },
     resetFilters: (state) => {
       localStorage.setItem('selectedButtonId', 'newButton');
       const stateString = JSON.stringify({
@@ -126,6 +142,7 @@ export const {
   setFilterBySort,
   setItemWithCross,
   setIsColumn,
+  setRatings,
   resetFilters,
   resetSearchData,
   resetOtherFilters,

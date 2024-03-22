@@ -88,7 +88,7 @@ const LikeDislike = () => {
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
-      validatedQuestion: question,
+      validatedQuestion: createQuestSlice.question,
     });
     // If found null
     if (!moderationRating) {
@@ -102,7 +102,7 @@ const LikeDislike = () => {
       QuestionCorrect: 'Not Selected',
       uuid: persistedUserInfo.uuid,
       QuestTopic: questTopic,
-      moderationRatingCount: moderationRating.moderationRatingCount
+      moderationRatingCount: moderationRating.moderationRatingCount,
     };
 
     if (!checkHollow()) {
