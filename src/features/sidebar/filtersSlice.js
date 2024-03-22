@@ -59,7 +59,6 @@ export const filtersSlice = createSlice({
     },
     setFilterByStatus: (state, action) => {
       state.filterByStatus = action.payload;
-      state.clearFilter = true;
     },
     setFilterByType: (state, action) => {
       if (action.payload === 'Multiple Choice') {
@@ -71,15 +70,12 @@ export const filtersSlice = createSlice({
       } else {
         state.filterByType = action.payload;
       }
-      state.clearFilter = true;
     },
     setFilterByScope: (state, action) => {
       state.filterByScope = action.payload;
-      state.clearFilter = true;
     },
     setFilterBySort: (state, action) => {
       state.filterBySort = action.payload;
-      state.clearFilter = true;
     },
     setItemWithCross: (state, action) => {
       state.itemsWithCross = action.payload;
@@ -90,7 +86,6 @@ export const filtersSlice = createSlice({
       } else {
         state.isColumns = false;
       }
-      state.clearFilter = true;
     },
     setRatings: (state, action) => {
       const { initial, final } = action.payload;
@@ -116,6 +111,7 @@ export const filtersSlice = createSlice({
       state.searchData = '';
     },
     resetOtherFilters: (state) => {
+      localStorage.setItem('selectedButtonId', 'newButton');
       const stateString = JSON.stringify({
         All: {
           id: 'All',
