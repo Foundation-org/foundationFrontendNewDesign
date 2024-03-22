@@ -181,7 +181,8 @@ function matchFilters(filters, state) {
       state.hasOwnProperty(key) &&
       key !== 'columns' &&
       key !== 'searchData' &&
-      key !== 'expandedView'
+      key !== 'expandedView' &&
+      key !== 'moderationRatingFilter'
     ) {
       const filterValue = filters[key];
       const stateValue = state[key];

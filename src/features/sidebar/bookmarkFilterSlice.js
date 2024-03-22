@@ -9,10 +9,10 @@ const resetState = {
   filterBySort: 'Newest First',
   isColumns: false,
   clearFilter: false,
-  moderationRatingFilter: {
-    initial: 0,
-    final: 20,
-  },
+  // moderationRatingFilter: {
+  //   initial: 0,
+  //   final: 20,
+  // },
 };
 
 const resetOtherStates = {
@@ -22,10 +22,10 @@ const resetOtherStates = {
   filterBySort: 'Newest First',
   isColumns: false,
   clearFilter: false,
-  moderationRatingFilter: {
-    initial: 0,
-    final: 20,
-  },
+  // moderationRatingFilter: {
+  //   initial: 0,
+  //   final: 20,
+  // },
 };
 
 const initialState = {
