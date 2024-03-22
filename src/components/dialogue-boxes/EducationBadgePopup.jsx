@@ -41,27 +41,30 @@ const workFormTwo = [
 const School = {
   label: 'School',
   type: 'school',
-  placeholder: 'school here',
+  placeholder: 'School here',
 };
-
-const degreePrograms = [
-  { id: 1, name: 'Bachelor of Science in Computer Science' },
-  { id: 2, name: 'Bachelor of Science in Electrical Engineering' },
-  { id: 3, name: 'Bachelor of Arts in Psychology' },
-  { id: 4, name: 'Bachelor of Arts in English Literature' },
-  { id: 5, name: 'Bachelor of Business Administration (BBA)' },
-  { id: 6, name: 'Bachelor of Science in Nursing (BSN)' },
-  { id: 7, name: 'Master of Business Administration (MBA)' },
-  { id: 8, name: 'Master of Science in Mechanical Engineering' },
-  { id: 9, name: 'Master of Science in Data Science' },
-  { id: 10, name: 'Master of Public Health (MPH)' },
-  { id: 11, name: 'Doctor of Medicine (MD)' },
-  { id: 12, name: 'Doctor of Philosophy (Ph.D.) in Economics' },
-  { id: 13, name: 'Doctor of Philosophy (Ph.D.) in Computer Science' },
-  { id: 14, name: 'Doctor of Philosophy (Ph.D.) in Psychology' },
-  // Add more as needed...
-];
-
+const degreePrograms = {
+  label: 'Degree Program',
+  items: [
+    { id: 1, name: 'Bachelor of Science in Computer Science' },
+    { id: 2, name: 'Bachelor of Science in Electrical Engineering' },
+    { id: 3, name: 'Bachelor of Arts in Psychology' },
+    { id: 4, name: 'Bachelor of Arts in English Literature' },
+    { id: 5, name: 'Bachelor of Business Administration (BBA)' },
+    { id: 6, name: 'Bachelor of Science in Nursing (BSN)' },
+    { id: 7, name: 'Master of Business Administration (MBA)' },
+    { id: 8, name: 'Master of Science in Mechanical Engineering' },
+    { id: 9, name: 'Master of Science in Data Science' },
+    { id: 10, name: 'Master of Public Health (MPH)' },
+    { id: 11, name: 'Doctor of Medicine (MD)' },
+    { id: 12, name: 'Doctor of Philosophy (Ph.D.) in Economics' },
+    { id: 13, name: 'Doctor of Philosophy (Ph.D.) in Computer Science' },
+    { id: 14, name: 'Doctor of Philosophy (Ph.D.) in Psychology' },
+    // Add more as needed...
+  ],
+  type: 'degreeProgram',
+  placeholder: 'Select your degree program',
+};
 const StartingYear = {
   label: 'Start Year',
   placeholder: 'Year here',
@@ -159,7 +162,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 </h4>
                 <div className="mt-[2px] max-w-[270px] tablet:mt-2">
                   <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
-                    {existingData?.education?.degree + ' in ' + existingData.education?.fieldOfStudy}
+                    {existingData?.education?.degreeProgram}
                   </h5>
                   <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
                     {existingData?.education?.country}
@@ -257,7 +260,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                     [field1.type]: field1Data.name,
                     [field2.type]: field2Data.name,
                     ['country']: field1Data.country,
-                    [field3.type]: field3Data.name,
+                    [field3.type]: field3Data,
                     [field4.type]: field4Data,
                   };
                   handleAddPersonalBadge(allFieldObject);
