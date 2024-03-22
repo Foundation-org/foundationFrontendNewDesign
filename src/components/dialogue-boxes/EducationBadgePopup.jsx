@@ -73,7 +73,7 @@ const StartingYear = {
 
 const graduationYear = {
   label: 'Graduation Year',
-  placeholder: 'Year here/Present',
+  placeholder: 'Year here / Present',
   type: 'graduationYear',
 };
 
@@ -86,6 +86,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
+  const [isPresent, setIsPresent] = useState(false);
 
   const searchUniversities = async () => {
     const universities = await api.post(`search/searchUniversities/?name=${query}`);
@@ -103,26 +104,22 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   const handleClose = () => setIsPopup(false);
 
-  const handlefield3Change = (e) => setField3Data(e.target.value);
-  const handlefield4Change = (e) => setField4Data(e.target.value);
+  const handlefield3Change = (event) => {
+    const value = event.target.value;
+    setField3Data(value);
+  };
+  const handlefield4Change = (event) => {
+    const value = event.target.value;
+    setField4Data(value);
+  };
 
-  const handleDateChange = (event) => {
-    let inputValue = event.target.value.replace(/\D/g, '');
-    let formattedValue = '';
-
-    if (inputValue.length > 2) {
-      formattedValue += inputValue.substring(0, 2) + '/';
-      if (inputValue.length > 4) {
-        formattedValue += inputValue.substring(2, 4) + '/';
-        formattedValue += inputValue.substring(4, 8);
-      } else {
-        formattedValue += inputValue.substring(2);
-      }
+  const handlePresentToggle = () => {
+    setIsPresent(!isPresent);
+    if (!isPresent) {
+      setField4Data('Present');
     } else {
-      formattedValue = inputValue;
+      setField4Data('');
     }
-
-    setDate(formattedValue.substring(0, 10));
   };
 
   const handleAddPersonalBadge = async (data) => {
@@ -228,10 +225,10 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   {field3.label}
                 </p>
                 <input
-                  type="text"
+                  type="date"
                   value={field3Data}
                   onChange={handlefield3Change}
-                  placeholder={field3.placeholder}
+                  disabled={isPresent} // Disable date input when "Present" is selected
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                 />
               </div>
@@ -240,12 +237,16 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   {field4.label}
                 </p>
                 <input
-                  type="text"
+                  type="date"
                   value={field4Data}
                   onChange={handlefield4Change}
                   placeholder={field4.placeholder}
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                 />
+                <label className="ml-2">
+                  <input type="checkbox" checked={isPresent} onChange={handlePresentToggle} className="mr-1" />
+                  Present
+                </label>
               </div>
             </div>
 
