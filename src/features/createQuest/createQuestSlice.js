@@ -28,6 +28,8 @@ const defaultStatus = {
 const initialState = {
   questions: {
     question: '',
+    validatedQuestion: '',
+    questionTyping: true,
     changedOption: 'Anytime',
     changeState: true,
     multipleOption: false,
@@ -56,6 +58,17 @@ export const createQuestSlice = createSlice({
   name: 'createQuest',
   initialState,
   reducers: {
+    addQuestion: (state, action) => {
+      if (action.payload === state.questions.validatedQuestion) {
+        state.questionReset = state.chatgptStatus;
+        state.questions.question = state.questions.validatedQuestion;
+        state.questions.questionTyping = false;
+        return;
+      }
+      state.questions.questionTyping = true;
+      state.questions.question = action.payload;
+      state.questionReset = { ...defaultStatus };
+    },
     updateQuestion: (state, action) => {
       const { question, changedOption, changeState } = action.payload;
       return {
@@ -157,12 +170,15 @@ export const createQuestSlice = createSlice({
         tooltipStyle: 'tooltip-success',
         status: false,
       };
+      state.questions.questionTyping = false;
     });
     builder.addCase(checkQuestion.fulfilled, (state, action) => {
       const { validatedQuestion, errorMessage } = action.payload;
       if (errorMessage) {
         if (errorMessage === 'DUPLICATION') {
           state.questions.question = validatedQuestion;
+          state.questions.validatedQuestion = validatedQuestion;
+          state.questions.questionTyping = false;
           state.questionReset = {
             name: 'Duplicate',
             color: 'text-[#EFD700]',
@@ -178,6 +194,8 @@ export const createQuestSlice = createSlice({
             duplication: true,
           };
         } else {
+          state.questions.validatedQuestion = state.questions.question;
+          state.questions.questionTyping = false;
           state.questionReset = {
             name: 'Rejected',
             color: 'text-[#b00f0f]',
@@ -195,6 +213,8 @@ export const createQuestSlice = createSlice({
         }
       } else {
         state.questions.question = validatedQuestion;
+        state.questions.validatedQuestion = validatedQuestion;
+        state.questions.questionTyping = false;
         state.questionReset = {
           name: 'Ok',
           color: 'text-[#0FB063]',
@@ -212,20 +232,6 @@ export const createQuestSlice = createSlice({
           status: false,
         };
       }
-    });
-    builder.addCase(checkQuestion.rejected, (state, action) => {
-      state.questionReset = {
-        name: 'Rejected',
-        color: 'text-[#b00f0f]',
-        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-        tooltipStyle: 'tooltip-error',
-      };
-      state.chatgptStatus = {
-        name: 'Rejected',
-        color: 'text-[#b00f0f]',
-        tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-        tooltipStyle: 'tooltip-error',
-      };
     });
 
     // check answer status start
@@ -319,6 +325,7 @@ const getRejectedStatus = () => ({
 });
 
 export const {
+  addQuestion,
   updateQuestion,
   updateMultipleChoice,
   updateRankedChoice,

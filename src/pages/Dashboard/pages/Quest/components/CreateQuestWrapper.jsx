@@ -1,73 +1,27 @@
-import { useEffect, useState } from 'react';
 import { Tooltip } from '../../../../../utils/Tooltip';
 import { useSelector, useDispatch } from 'react-redux';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 
-export default function CreateQuestWrapper({ question, setQuestion, type, handleTab, msg, children }) {
+export default function CreateQuestWrapper({ type, handleTab, msg, children }) {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
-  const chatgptQuestionStatus = useSelector(createQuestAction.questionChatgptStatus);
-
-  const [prevValue, setPrevValue] = useState('');
-  const [questionStatusApi, setquestionStatusApi] = useState(questionStatus);
-  const [prevStatus, setPrevStatus] = useState(chatgptQuestionStatus);
-  const [isTyping, setIsTyping] = useState(true);
 
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
 
     if (inputValue.length <= 350) {
-      setQuestion(inputValue);
-      setIsTyping(true);
-      dispatch(createQuestAction.handleQuestionReset(inputValue));
-    }
-
-    if (prevValue === e.target.value.trim()) {
-      setIsTyping(false);
-      setquestionStatusApi(prevStatus);
-    } else {
-      setquestionStatusApi(questionStatus);
+      dispatch(createQuestAction.addQuestion(inputValue));
     }
   };
 
-  // To Verify Question
   const questionVerification = async (value) => {
-    if (prevValue === question.trim()) {
-      setquestionStatusApi(prevStatus);
-      return;
-    }
-
-    setIsTyping(false);
+    if (createQuestSlice.validatedQuestion === value) return;
     dispatch(createQuestAction.checkQuestion(value));
-    setPrevValue(value);
   };
-
-  // Question State updated
-  useEffect(() => {
-    if (createQuestSlice.question) {
-      setQuestion(createQuestSlice.question);
-      setPrevValue(createQuestSlice.question);
-    }
-
-    setquestionStatusApi(questionStatus);
-  }, [questionStatus]);
-
-  // Question previous Status handled
-  useEffect(() => {
-    if (chatgptQuestionStatus) {
-      setPrevStatus(chatgptQuestionStatus);
-    }
-  }, [chatgptQuestionStatus]);
-
-  useEffect(() => {
-    if (questionStatus.tooltipName === 'Question is Verified') {
-      setIsTyping(false);
-    }
-  }, [questionStatus.tooltipName]);
 
   return (
     <>
@@ -88,7 +42,7 @@ export default function CreateQuestWrapper({ question, setQuestion, type, handle
             aria-label="multiple choice question"
             onChange={handleQuestionChange}
             onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
-            value={question}
+            value={createQuestSlice.question}
             placeholder="Pose a question"
             tabIndex={1}
             onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(0, 'Enter'))}
@@ -96,12 +50,12 @@ export default function CreateQuestWrapper({ question, setQuestion, type, handle
           />
           <button
             id="new"
-            className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${questionStatusApi.color}`}
+            className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${questionStatus.color}`}
           >
             <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
-              {isTyping ? `${question.length}/350` : questionStatusApi.name}
+              {createQuestSlice.questionTyping ? `${createQuestSlice.question.length}/350` : questionStatus.name}
             </div>
-            <Tooltip optionStatus={questionStatusApi} />
+            <Tooltip optionStatus={questionStatus} />
           </button>
         </div>
         {children}

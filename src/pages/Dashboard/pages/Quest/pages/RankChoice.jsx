@@ -23,7 +23,6 @@ const RankChoice = () => {
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const [question, setQuestion] = useState(createQuestSlice.question);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
@@ -38,7 +37,6 @@ const RankChoice = () => {
           navigate('/dashboard');
           toast.success('Successfully Created');
           setLoading(false);
-          setQuestion('');
           setAddOption(false);
           setChangedOption('');
           setChangeState(false);
@@ -49,7 +47,6 @@ const RankChoice = () => {
     },
     onError: (err) => {
       console.log('Mutation Error', err);
-      setQuestion('');
       setAddOption(false);
       setChangedOption('');
       setChangeState(false);
@@ -75,13 +72,13 @@ const RankChoice = () => {
       setLoading(true);
     }
 
-    if (question === '') {
+    if (createQuestSlice.question === '') {
       return toast.warning('Post cannot be empty');
     }
 
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
-      validatedQuestion: question,
+      validatedQuestion: createQuestSlice.question,
     });
     // If any error captured
     if (errorMessage) {
@@ -89,7 +86,7 @@ const RankChoice = () => {
     }
 
     const params = {
-      Question: question,
+      Question: createQuestSlice.question,
       whichTypeQuestion: 'ranked choise',
       QuestionCorrect: 'No option',
       QuestAnswers: optionsValue,
@@ -147,7 +144,7 @@ const RankChoice = () => {
     });
     dispatch(
       updateRankedChoice({
-        question,
+        question: createQuestSlice.question,
         changedOption,
         changeState,
         optionsCount: optionsValue.length,
@@ -155,7 +152,7 @@ const RankChoice = () => {
         options: tempOptions,
       }),
     );
-  }, [question, changedOption, changeState, addOption, optionsValue.length, optionsValue]);
+  }, [createQuestSlice.question, changedOption, changeState, addOption, optionsValue.length, optionsValue]);
 
   const handleTab = (index, key) => {
     if (index === optionsValue.length) {
@@ -186,12 +183,10 @@ const RankChoice = () => {
     } else {
       setHollow(true);
     }
-  }, [optionsValue, question]);
+  }, [optionsValue, createQuestSlice.question]);
 
   return (
     <CreateQuestWrapper
-      question={question}
-      setQuestion={setQuestion}
       handleTab={handleTab}
       type={'Poll'}
       msg={'Create a selection of choices that can be arranged in order of preference.'}

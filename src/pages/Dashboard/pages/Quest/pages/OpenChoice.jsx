@@ -23,7 +23,6 @@ const OpenChoice = () => {
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const [question, setQuestion] = useState(createQuestSlice.question);
   const [multipleOption, setMultipleOption] = useState(true);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
@@ -39,7 +38,6 @@ const OpenChoice = () => {
           navigate('/dashboard');
           toast.success('Successfully Created');
           setLoading(false);
-          setQuestion('');
           dispatch(createQuestAction.resetCreateQuest());
         }, 500);
       }
@@ -51,7 +49,6 @@ const OpenChoice = () => {
       if (err.response) {
         toast.error(err.response.data.message.split(':')[1]);
       }
-      setQuestion('');
       setMultipleOption(false);
       setAddOption(false);
       setChangedOption('');
@@ -78,13 +75,13 @@ const OpenChoice = () => {
       setLoading(true);
     }
 
-    if (question === '') {
+    if (createQuestSlice.question === '') {
       return toast.warning('Post cannot be empty');
     }
 
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
-      validatedQuestion: question,
+      validatedQuestion: createQuestSlice.question,
     });
     // If any error captured
     if (errorMessage) {
@@ -92,7 +89,7 @@ const OpenChoice = () => {
     }
 
     const params = {
-      Question: question,
+      Question: createQuestSlice.question,
       whichTypeQuestion: 'open choice',
       QuestionCorrect: 'Not Selected',
       QuestAnswers: optionsValue,
@@ -153,7 +150,7 @@ const OpenChoice = () => {
     });
     dispatch(
       updateMultipleChoice({
-        question,
+        question: createQuestSlice.question,
         changedOption,
         changeState,
         optionsCount: optionsValue.length,
@@ -162,7 +159,15 @@ const OpenChoice = () => {
         multipleOption,
       }),
     );
-  }, [question, changedOption, changeState, addOption, optionsValue.length, optionsValue, multipleOption]);
+  }, [
+    createQuestSlice.question,
+    changedOption,
+    changeState,
+    addOption,
+    optionsValue.length,
+    optionsValue,
+    multipleOption,
+  ]);
 
   const handleTab = (index, key) => {
     if (index === optionsValue.length) {
@@ -193,12 +198,10 @@ const OpenChoice = () => {
     } else {
       setHollow(true);
     }
-  }, [optionsValue, question]);
+  }, [optionsValue, createQuestSlice.question]);
 
   return (
     <CreateQuestWrapper
-      question={question}
-      setQuestion={setQuestion}
       handleTab={handleTab}
       type={'Poll'}
       msg={'Ask a question where anyone can select multiple options from a list of choices'}

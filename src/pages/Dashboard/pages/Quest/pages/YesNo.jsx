@@ -20,7 +20,6 @@ const YesNo = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
-  const [question, setQuestion] = useState(createQuestSlice.question);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
@@ -34,7 +33,6 @@ const YesNo = () => {
           navigate('/dashboard');
           toast.success('Successfully Created');
           setLoading(false);
-          setQuestion('');
           setChangedOption('');
           setChangeState(false);
           dispatch(createQuestAction.resetCreateQuest());
@@ -45,7 +43,6 @@ const YesNo = () => {
     onError: (err) => {
       if (err.response) {
         toast.error(err.response.data.message.split(':')[1]);
-        setQuestion('');
         setChangedOption('');
         setChangeState(false);
       }
@@ -77,12 +74,12 @@ const YesNo = () => {
     if (!checkHollow()) {
       setLoading(true);
     }
-    if (question === '') {
+    if (createQuestSlice.question === '') {
       return toast.warning('Post cannot be empty');
     }
 
     const { questTopic, errorMessage } = await questServices.getTopicOfValidatedQuestion({
-      validatedQuestion: question,
+      validatedQuestion: createQuestSlice.question,
     });
     // If any error captured
     if (errorMessage) {
@@ -90,7 +87,7 @@ const YesNo = () => {
     }
 
     const params = {
-      Question: question,
+      Question: createQuestSlice.question,
       whichTypeQuestion: 'yes/no',
       usersChangeTheirAns: changedOption,
       QuestionCorrect: 'Not Selected',
@@ -113,21 +110,19 @@ const YesNo = () => {
   };
 
   useEffect(() => {
-    if (!checkHollow() && question !== '') {
+    if (!checkHollow() && createQuestSlice.question !== '') {
       setHollow(false);
     } else {
       setHollow(true);
     }
-  }, [question, questionStatus.tooltipName]);
+  }, [createQuestSlice.question, questionStatus.tooltipName]);
 
   useEffect(() => {
-    dispatch(updateQuestion({ question, changedOption, changeState }));
-  }, [question, changedOption, changeState]);
+    dispatch(updateQuestion({ question: createQuestSlice.question, changedOption, changeState }));
+  }, [createQuestSlice.question, changedOption, changeState]);
 
   return (
     <CreateQuestWrapper
-      question={question}
-      setQuestion={setQuestion}
       handleTab={handleTab}
       type={'Poll'}
       msg={'Ask a question that allows for a straightforward "Yes" or "No" response'}

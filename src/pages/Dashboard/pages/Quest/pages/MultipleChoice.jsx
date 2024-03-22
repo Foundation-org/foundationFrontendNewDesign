@@ -23,7 +23,6 @@ const MultipleChoice = () => {
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const [question, setQuestion] = useState(createQuestSlice.question);
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
@@ -39,7 +38,7 @@ const MultipleChoice = () => {
           navigate('/dashboard');
           toast.success('Successfully Created');
           setLoading(false);
-          setQuestion('');
+
           dispatch(createQuestAction.resetCreateQuest());
         }, 500);
       }
@@ -51,7 +50,7 @@ const MultipleChoice = () => {
       if (err.response) {
         toast.error(err.response.data.message.split(':')[1]);
       }
-      setQuestion('');
+
       setMultipleOption(false);
       setAddOption(false);
       setChangedOption('');
@@ -78,13 +77,13 @@ const MultipleChoice = () => {
       setLoading(true);
     }
 
-    if (question === '') {
+    if (createQuestSlice.question === '') {
       return toast.warning('Post cannot be empty');
     }
 
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
-      validatedQuestion: question,
+      validatedQuestion: createQuestSlice.question,
     });
     // If any error captured
     if (errorMessage) {
@@ -92,7 +91,7 @@ const MultipleChoice = () => {
     }
 
     const params = {
-      Question: question,
+      Question: createQuestSlice.question,
       whichTypeQuestion: 'multiple choise',
       QuestionCorrect: 'Not Selected',
       QuestAnswers: optionsValue,
@@ -153,7 +152,7 @@ const MultipleChoice = () => {
     });
     dispatch(
       updateMultipleChoice({
-        question,
+        question: createQuestSlice.question,
         changedOption,
         changeState,
         optionsCount: optionsValue.length,
@@ -162,7 +161,15 @@ const MultipleChoice = () => {
         multipleOption,
       }),
     );
-  }, [question, changedOption, changeState, addOption, optionsValue.length, optionsValue, multipleOption]);
+  }, [
+    createQuestSlice.question,
+    changedOption,
+    changeState,
+    addOption,
+    optionsValue.length,
+    optionsValue,
+    multipleOption,
+  ]);
 
   const handleTab = (index, key) => {
     if (index === optionsValue.length) {
@@ -193,12 +200,10 @@ const MultipleChoice = () => {
     } else {
       setHollow(true);
     }
-  }, [optionsValue, question]);
+  }, [optionsValue, createQuestSlice.question]);
 
   return (
     <CreateQuestWrapper
-      question={question}
-      setQuestion={setQuestion}
       handleTab={handleTab}
       type={'Poll'}
       msg={'Ask a question where anyone can select a single option from a list of choices'}
