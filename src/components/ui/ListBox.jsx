@@ -21,7 +21,7 @@ export default function ListBox({ items, selected, setSelected, placeholder }) {
               <Listbox.Option
                 key={personIdx}
                 className={({ active }) =>
-                  `relative cursor-default select-none py-2 pl-[0.75rem] pr-4 text-[10px] tablet:py-3 tablet:pl-11 tablet:text-[16px] ${
+                  `relative cursor-default select-none py-[6px] pl-[0.75rem] pr-4 text-[10px] tablet:py-3 tablet:pl-11 tablet:text-[16px] ${
                     active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                   }`
                 }
@@ -29,7 +29,9 @@ export default function ListBox({ items, selected, setSelected, placeholder }) {
               >
                 {({ selected }) => (
                   <>
-                    <span className={`block cursor-pointer truncate ${selected ? 'font-medium' : 'font-normal'}`}>
+                    <span
+                      className={`block cursor-pointer truncate leading-normal ${selected ? 'font-medium' : 'font-normal'}`}
+                    >
                       {person.name}
                     </span>
                     {/* {selected ? (
