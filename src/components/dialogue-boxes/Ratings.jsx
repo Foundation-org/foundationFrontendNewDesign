@@ -32,7 +32,10 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
   const [value, setValue] = useState([0, 20]);
 
   useEffect(() => {
-    setValue([filterStates.moderationRatingFilter?.initial, filterStates.moderationRatingFilter?.final]);
+    setValue([
+      filterStates.moderationRatingFilter?.initial ? filterStates.moderationRatingFilter?.initial : 0,
+      filterStates.moderationRatingFilter?.final ? filterStates.moderationRatingFilter?.final : 20,
+    ]);
   }, []);
 
   const handleChange = (event, newValue) => {
