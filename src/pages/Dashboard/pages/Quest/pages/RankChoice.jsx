@@ -13,6 +13,7 @@ import { updateRankedChoice } from '../../../../../features/createQuest/createQu
 import Options from '../components/Options';
 import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import * as questServices from '../../../../../services/api/questsApi';
 
 const RankChoice = () => {
   const navigate = useNavigate();
