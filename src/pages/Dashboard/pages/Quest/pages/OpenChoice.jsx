@@ -87,6 +87,14 @@ const OpenChoice = () => {
     if (errorMessage) {
       return toast.error('Oops! Something Went Wrong.');
     }
+    // ModerationRatingCount
+    const moderationRating = await questServices.moderationRating({
+      validatedQuestion: question,
+    });
+    // If found null
+    if (!moderationRating) {
+      return toast.error('Oops! Something Went Wrong.');
+    }
 
     const params = {
       Question: createQuestSlice.question,
@@ -99,6 +107,7 @@ const OpenChoice = () => {
       QuestAnswersSelected: [],
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
+      moderationRatingCount: moderationRating.moderationRatingCount
     };
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
