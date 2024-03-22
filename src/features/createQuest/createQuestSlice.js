@@ -17,6 +17,14 @@ export const checkAnswer = createAsyncThunk('createQuest/checkAnswer', async ({ 
   return { id, result, index };
 });
 
+const defaultStatus = {
+  name: 'Ok',
+  color: 'text-[#389CE3]',
+  tooltipName: 'Please write something...',
+  tooltipStyle: 'tooltip-info',
+  status: false,
+};
+
 const initialState = {
   questions: {
     question: '',
@@ -28,76 +36,20 @@ const initialState = {
     options: [],
   },
   questionReset: {
-    name: 'Ok',
-    color: 'text-[#389CE3]',
-    tooltipName: 'Please write something...',
-    tooltipStyle: 'tooltip-info',
-    status: false,
+    ...defaultStatus,
   },
   chatgptStatus: {
-    name: 'Ok',
-    color: 'text-[#389CE3]',
-    tooltipName: 'Please write something...',
-    tooltipStyle: 'tooltip-info',
-    status: false,
+    ...defaultStatus,
   },
-  optionsValue: [
-    {
-      id: 'index-0',
-      question: '',
-      selected: false,
-      optionStatus: {
-        name: 'Ok',
-        color: 'text-[#389CE3]',
-        tooltipName: 'Please write something...',
-        tooltipStyle: 'tooltip-info',
-      },
-      chatgptOptionStatus: {
-        name: 'Ok',
-        color: 'text-[#389CE3]',
-        tooltipName: 'Please write something...',
-        tooltipStyle: 'tooltip-info',
-      },
-      isTyping: true,
-    },
-    {
-      id: 'index-1',
-      question: '',
-      selected: false,
-      optionStatus: {
-        name: 'Ok',
-        color: 'text-[#389CE3]',
-        tooltipName: 'Please write something...',
-        tooltipStyle: 'tooltip-info',
-      },
-      chatgptOptionStatus: {
-        name: 'Ok',
-        color: 'text-[#389CE3]',
-        tooltipName: 'Please write something...',
-        tooltipStyle: 'tooltip-info',
-      },
-      isTyping: true,
-    },
-    {
-      selected: false,
-      id: 'index-2',
-      question: '',
-      optionStatus: {
-        name: 'Ok',
-        color: 'text-[#389CE3]',
-        tooltipName: 'Please write something...',
-        tooltipStyle: 'tooltip-info',
-      },
-      chatgptOptionStatus: {
-        name: 'Ok',
-        color: 'text-[#389CE3]',
-        tooltipName: 'Please write something...',
-        tooltipStyle: 'tooltip-info',
-      },
-      isTyping: true,
-    },
-  ],
-  optionslength: 3,
+  optionsValue: Array.from({ length: 3 }, (_, index) => ({
+    id: `index-${index}`,
+    question: '',
+    chatgptQuestion: '',
+    selected: false,
+    optionStatus: { ...defaultStatus },
+    chatgptOptionStatus: { ...defaultStatus },
+    isTyping: true,
+  })),
 };
 
 export const createQuestSlice = createSlice({
@@ -109,7 +61,6 @@ export const createQuestSlice = createSlice({
       return {
         ...state,
         questions: { ...state.questions, question, changedOption, changeState },
-        // questionReset: initialState.questionReset,
       };
     },
     updateMultipleChoice: (state, action) => {
@@ -126,7 +77,6 @@ export const createQuestSlice = createSlice({
           optionsCount,
           options,
         },
-        // questionReset: initialState.questionReset,
       };
     },
     updateRankedChoice: (state, action) => {
@@ -136,9 +86,26 @@ export const createQuestSlice = createSlice({
         questions: { ...state.questions, question, changedOption, changeState, addOption, optionsCount, options },
       };
     },
+    addOptionById: (state, action) => {
+      const { id, option } = action.payload;
+      const index = state.optionsValue.findIndex((option) => option.id === id);
+
+      if (index !== -1) {
+        state.optionsValue[index].question = option;
+        state.optionsValue[index].isTyping = true;
+        if (option === state.optionsValue[index].chatgptQuestion) {
+          state.optionsValue[index].optionStatus = state.optionsValue[index].chatgptOptionStatus;
+          state.optionsValue[index].isTyping = false;
+          return;
+        }
+        state.optionsValue[index].optionStatus = { ...defaultStatus };
+      } else {
+        console.error(`Option with the provided id ${id} not found.`);
+      }
+    },
     addNewOption: (state, action) => {
       const newOption = {
-        id: `index-${state.optionslength}`,
+        id: `index-${state.optionsValue.length}`,
         question: '',
         selected: false,
         optionStatus: {
@@ -149,8 +116,8 @@ export const createQuestSlice = createSlice({
         },
         isTyping: true,
       };
+
       state.optionsValue.push(newOption);
-      state.optionslength += 1;
     },
     delOption: (state, action) => {
       const tempOptions = state.optionsValue.filter((value) => value.id !== action.payload.id);
@@ -264,121 +231,98 @@ export const createQuestSlice = createSlice({
     // check answer status start
     builder.addCase(checkAnswer.pending, (state, action) => {
       const { id, value } = action.meta.arg;
-
-      const tempOptions = state.optionsValue.map((option) => {
-        return option.id === id
+      const updatedOptions = state.optionsValue.map((option) =>
+        option.id === id
           ? {
               ...option,
               question: value,
-              optionStatus: {
-                name: 'Checking',
-                color: 'text-[#0FB063]',
-                tooltipName: 'Verifying your answer. Please wait...',
-                tooltipStyle: 'tooltip-success',
-              },
-              chatgptOptionStatus: {
-                name: 'Checking',
-                color: 'text-[#0FB063]',
-                tooltipName: 'Verifying your answer. Please wait...',
-                tooltipStyle: 'tooltip-success',
-              },
+              chatgptQuestion: value,
+              optionStatus: getCheckingStatus(),
+              chatgptOptionStatus: getCheckingStatus(),
               isTyping: false,
             }
-          : option;
-      });
-      state.optionsValue = tempOptions;
+          : option,
+      );
+      state.optionsValue = updatedOptions;
     });
     builder.addCase(checkAnswer.fulfilled, (state, action) => {
       const { id, result, index } = action.payload;
-      // console.log("our result is", result);
+      const validatedAnswer = result.validatedAnswer;
 
-      if (result.validatedAnswer) {
-        let answerExist = checkAnswerExistCreateQuest({
+      if (validatedAnswer) {
+        const duplicate = checkAnswerExistCreateQuest({
           answersArray: JSON.parse(JSON.stringify(state.optionsValue)),
-          answer: result.validatedAnswer,
+          answer: validatedAnswer,
           index,
         });
 
-        if (answerExist) {
-          const tempOptions = state.optionsValue.map((option) => {
-            return option.id === id
-              ? {
-                  ...option,
-                  question: result.validatedAnswer,
-                  optionStatus: {
-                    name: 'Duplicate',
-                    color: 'text-[#EFD700]',
-                    tooltipName: 'Found Duplication!',
-                    tooltipStyle: 'tooltip-error',
-                    duplication: true,
-                  },
-                  chatgptOptionStatus: {
-                    name: 'Duplicate',
-                    color: 'text-[#EFD700]',
-                    tooltipName: 'Found Duplication!',
-                    tooltipStyle: 'tooltip-error',
-                    duplication: true,
-                  },
-                  isTyping: false,
-                }
-              : option;
-          });
-          state.optionsValue = tempOptions;
-        } else {
-          const tempOptions = state.optionsValue.map((option) => {
-            return option.id === id
-              ? {
-                  ...option,
-                  question: result.validatedAnswer,
-                  optionStatus: {
-                    name: 'Ok',
-                    color: 'text-[#0FB063]',
-                    tooltipName: 'Answer is Verified',
-                    tooltipStyle: 'tooltip-success',
-                  },
-                  chatgptOptionStatus: {
-                    name: 'Ok',
-                    color: 'text-[#0FB063]',
-                    tooltipName: 'Answer is Verified',
-                    tooltipStyle: 'tooltip-success',
-                  },
-                  isTyping: false,
-                }
-              : option;
-          });
-          state.optionsValue = tempOptions;
-        }
-      } else {
-        const tempOptions = state.optionsValue.map((option) => {
-          return option.id === id
+        const optionStatus = duplicate ? getDuplicateStatus() : getVerifiedStatus();
+
+        const updatedOptions = state.optionsValue.map((option) =>
+          option.id === id
             ? {
                 ...option,
-                optionStatus: {
-                  name: 'Rejected',
-                  color: 'text-[#b00f0f]',
-                  tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-                  tooltipStyle: 'tooltip-error',
-                },
-                chatgptOptionStatus: {
-                  name: 'Rejected',
-                  color: 'text-[#b00f0f]',
-                  tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-                  tooltipStyle: 'tooltip-error',
-                },
+                question: validatedAnswer,
+                chatgptQuestion: validatedAnswer,
+                optionStatus,
+                chatgptOptionStatus: optionStatus,
+                isTyping: false,
+                duplication: duplicate,
+              }
+            : option,
+        );
+        state.optionsValue = updatedOptions;
+      } else {
+        const updatedOptions = state.optionsValue.map((option) =>
+          option.id === id
+            ? {
+                ...option,
+                optionStatus: getRejectedStatus(),
+                chatgptOptionStatus: getRejectedStatus(),
                 isTyping: false,
               }
-            : option;
-        });
-        state.optionsValue = tempOptions;
+            : option,
+        );
+        state.optionsValue = updatedOptions;
       }
     });
   },
+});
+
+const getCheckingStatus = () => ({
+  name: 'Checking',
+  color: 'text-[#0FB063]',
+  tooltipName: 'Verifying your answer. Please wait...',
+  tooltipStyle: 'tooltip-success',
+});
+
+const getVerifiedStatus = () => ({
+  name: 'Ok',
+  color: 'text-[#0FB063]',
+  tooltipName: 'Answer is Verified',
+  tooltipStyle: 'tooltip-success',
+});
+
+const getDuplicateStatus = () => ({
+  name: 'Duplicate',
+  color: 'text-[#EFD700]',
+  tooltipName: 'Found Duplication!',
+  tooltipStyle: 'tooltip-error',
+  duplication: true,
+});
+
+const getRejectedStatus = () => ({
+  name: 'Rejected',
+  color: 'text-[#b00f0f]',
+  tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+  tooltipStyle: 'tooltip-error',
 });
 
 export const {
   updateQuestion,
   updateMultipleChoice,
   updateRankedChoice,
+  addOptionById,
   resetCreateQuest,
   handleQuestionReset,
   addNewOption,

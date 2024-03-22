@@ -1,5 +1,4 @@
 import { toast } from 'sonner';
-import { isEqual } from 'lodash';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,18 +22,14 @@ const MultipleChoice = () => {
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [question, setQuestion] = useState(createQuestSlice.question);
 
+  const [question, setQuestion] = useState(createQuestSlice.question);
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
-  // const [selectedValues, setSelectedValues] = useState([]);
-  const [optionsCount, setOptionsCount] = useState(createQuestSlice.optionsCount);
-  const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-  const [typedValues, setTypedValues] = useState(optionsValue);
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -79,8 +74,6 @@ const MultipleChoice = () => {
       return;
     }
 
-    // const constraintResponse = await checkUniqueQuestion(question);
-
     if (!checkHollow()) {
       setLoading(true);
     }
@@ -102,7 +95,7 @@ const MultipleChoice = () => {
       Question: question,
       whichTypeQuestion: 'multiple choise',
       QuestionCorrect: 'Not Selected',
-      QuestAnswers: typedValues,
+      QuestAnswers: optionsValue,
       usersAddTheirAns: addOption,
       usersChangeTheirAns: changedOption,
       userCanSelectMultiple: multipleOption,
@@ -124,139 +117,21 @@ const MultipleChoice = () => {
 
   const handleChange = (index, value) => {
     if (value.length <= 200) {
-      if (prevValueArr[index]?.value === value.trim()) {
-        setTypedValues((prevValues) => {
-          const newTypedValues = [...prevValues];
-          newTypedValues[index] = {
-            ...newTypedValues[index],
-            question: value,
-            optionStatus: optionsValue[index].chatgptOptionStatus,
-            isTyping: false,
-          };
-
-          return newTypedValues;
-        });
-      } else {
-        setTypedValues((prevValues) => {
-          const newTypedValues = [...prevValues];
-          newTypedValues[index] = {
-            ...newTypedValues[index],
-            question: value,
-            optionStatus: {
-              name: 'Ok',
-              color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
-              tooltipName: value.trim() === '' ? 'Please write something...' : '',
-              tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
-            },
-            isTyping: true,
-          };
-
-          return newTypedValues;
-        });
-      }
+      dispatch(createQuestAction.addOptionById({ id: `index-${index}`, option: value }));
     }
   };
 
-  useEffect(() => {
-    typedValues.map((_, index) => {
-      if (prevValueArr[index]?.value === typedValues[index].question) {
-        setTypedValues((prevValues) => {
-          const newTypedValues = [...prevValues];
-          newTypedValues[index] = {
-            ...newTypedValues[index],
-            question: optionsValue[index].question,
-            optionStatus: optionsValue[index].chatgptOptionStatus,
-            isTyping: false,
-          };
-
-          return newTypedValues;
-        });
-      }
-    });
-  }, [optionsValue]);
-
   const answerVerification = async (id, index, value) => {
-    if (prevValueArr[index]?.value === value.trim()) return;
-
-    setPrevValueArr((prev) => {
-      const updatedArray = [...prev];
-      updatedArray[index] = { value: value.trim() };
-      return [...updatedArray];
-    });
+    if (optionsValue[index].chatgptQuestion === value) return;
 
     dispatch(createQuestAction.checkAnswer({ id, value, index }));
   };
 
-  useEffect(() => {
-    if (optionsValue) {
-      setPrevValueArr((prev) => {
-        const updatedArray = [...prev];
-        const finalArr = updatedArray.map((item, index) => ({
-          value: optionsValue[index].question,
-        }));
-
-        return finalArr;
-      });
-    }
-  }, [typedValues]);
-
-  // useEffect(() => {
-  //   if (!isEqual(optionsValue, typedValues)) {
-  //     setTypedValues(optionsValue);
-  //   }
-  // }, [optionsValue]);
-
-  useEffect(() => {
-    // Find the index of the object in typedValues where optionStatus.name === 'Checking'
-    const checkingIndex = typedValues.findIndex((obj) => obj.optionStatus.name === 'Checking');
-
-    if (checkingIndex !== -1 && !isEqual(optionsValue[checkingIndex], typedValues[checkingIndex])) {
-      // Replace the object at checkingIndex in typedValues with the object from optionsValue at the same index
-      const updatedTypedValues = [...typedValues];
-      updatedTypedValues[checkingIndex] = optionsValue[checkingIndex];
-      setTypedValues(updatedTypedValues);
-    } else {
-      setTypedValues(optionsValue);
-    }
-  }, [optionsValue]);
-
-  const handleAddOption = () => {
-    const optionsCount = typedValues.length;
-    dispatch(createQuestAction.addNewOption({ optionsCount }));
+  const addNewOption = () => {
+    dispatch(createQuestAction.addNewOption());
   };
 
-  // const handleOptionSelect = (index) => {
-  //   const newTypedValues = [...typedValues];
-  //   newTypedValues[index].selected = !newTypedValues[index].selected;
-  //   setTypedValues(newTypedValues);
-
-  //   if (!multipleOption) {
-  //     newTypedValues.forEach((item, i) => {
-  //       if (i !== index) {
-  //         item.selected = false;
-  //       }
-  //     });
-  //     setTypedValues(newTypedValues);
-
-  //     const selectedOption = newTypedValues[index].selected ? [{ answers: newTypedValues[index].question }] : [];
-  //     setSelectedValues(selectedOption);
-  //   } else {
-  //     const selectedOption = { answers: newTypedValues[index].question };
-
-  //     if (newTypedValues[index].selected) {
-  //       setSelectedValues((prevValues) => [...prevValues, selectedOption]);
-  //     } else {
-  //       setSelectedValues((prevValues) => prevValues.filter((item) => item.answers !== selectedOption.answers));
-  //     }
-  //   }
-  // };
-
   const removeOption = (id, number) => {
-    setPrevValueArr((prevArr) => {
-      const newArr = prevArr.filter((_, index) => index !== number - 1);
-      return newArr;
-    });
-
     dispatch(createQuestAction.delOption({ id }));
   };
 
@@ -265,16 +140,15 @@ const MultipleChoice = () => {
       return;
     }
 
-    const newTypedValues = [...typedValues];
+    const newTypedValues = [...optionsValue];
     const [removed] = newTypedValues.splice(result.source.index, 1);
     newTypedValues.splice(result.destination.index, 0, removed);
 
     dispatch(createQuestAction.drapAddDrop({ newTypedValues }));
   };
 
-  // Update Whole Multiple choice state in Redux
   useEffect(() => {
-    let tempOptions = typedValues.map((item) => {
+    let tempOptions = optionsValue.map((item) => {
       return item.question;
     });
     dispatch(
@@ -282,17 +156,16 @@ const MultipleChoice = () => {
         question,
         changedOption,
         changeState,
-        optionsCount,
+        optionsCount: optionsValue.length,
         addOption,
         options: tempOptions,
         multipleOption,
       }),
     );
-  }, [question, changedOption, changeState, addOption, optionsCount, typedValues, multipleOption]);
+  }, [question, changedOption, changeState, addOption, optionsValue.length, optionsValue, multipleOption]);
 
-  // Pressing Tab and Enter key will move cursor to next field
   const handleTab = (index, key) => {
-    if (index === typedValues.length) {
+    if (index === optionsValue.length) {
       document.getElementById(`input-${index}`).blur();
     } else {
       if (key === 'Enter') {
@@ -304,9 +177,8 @@ const MultipleChoice = () => {
     }
   };
 
-  // To Handle The submit button being hollow or not
   const checkHollow = () => {
-    const AllVerified = typedValues.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
+    const AllVerified = optionsValue.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
     if (questionStatus.tooltipName === 'Question is Verified' && AllVerified) {
       return false;
     } else {
@@ -315,17 +187,13 @@ const MultipleChoice = () => {
     }
   };
 
-  // To Handle The submit button being hollow or not
   useEffect(() => {
-    if (!checkHollow() && typedValues.every((value) => value.question !== '' && question !== '')) {
+    if (!checkHollow() && optionsValue.every((value) => value.question !== '' && question !== '')) {
       setHollow(false);
     } else {
       setHollow(true);
     }
-  }, [typedValues, question]);
-
-  console.log('optionsValue', optionsValue);
-  console.log('typedValues', typedValues);
+  }, [optionsValue, question]);
 
   return (
     <CreateQuestWrapper
@@ -336,14 +204,14 @@ const MultipleChoice = () => {
       msg={'Ask a question where anyone can select a single option from a list of choices'}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId={`typedValues-${Date.now()}`}>
+        <Droppable droppableId={`optionsValue-${Date.now()}`}>
           {(provided) => (
             <div
               className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5"
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {typedValues.map((item, index) => (
+              {optionsValue.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <div
@@ -363,14 +231,13 @@ const MultipleChoice = () => {
                         options={false}
                         dragable={true}
                         handleChange={(value) => handleChange(index, value, optionsValue)}
-                        // handleOptionSelect={() => handleOptionSelect(index)}
                         typedValue={item.question}
                         isTyping={item?.isTyping}
                         isSelected={item.selected}
-                        optionsCount={typedValues.length}
+                        optionsCount={optionsValue.length}
                         removeOption={removeOption}
                         number={index + 1}
-                        optionStatus={typedValues[index].optionStatus}
+                        optionStatus={optionsValue[index].optionStatus}
                         answerVerification={(value) => answerVerification(item.id, index, value)}
                         handleTab={handleTab}
                       />
@@ -386,7 +253,7 @@ const MultipleChoice = () => {
       <Button
         variant="addOption"
         className="ml-[21.55px] mt-[16px] tablet:ml-[60px] tablet:mt-[33px]"
-        onClick={handleAddOption}
+        onClick={addNewOption}
       >
         + Add Option
       </Button>

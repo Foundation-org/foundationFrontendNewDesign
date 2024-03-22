@@ -1,17 +1,16 @@
 import { toast } from 'sonner';
-import { isEqual } from 'lodash';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSelector, useDispatch } from 'react-redux';
 import { createInfoQuest, getTopicOfValidatedQuestion } from '../../../../../services/api/questsApi';
-import Options from '../components/Options';
-import CustomSwitch from '../../../../../components/CustomSwitch';
 // import ChangeChoiceOption from '../components/ChangeChoiceOption';
+import CustomSwitch from '../../../../../components/CustomSwitch';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../../../components/ui/Button';
 import { updateRankedChoice } from '../../../../../features/createQuest/createQuestSlice';
+import Options from '../components/Options';
 import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 
@@ -23,16 +22,13 @@ const RankChoice = () => {
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [question, setQuestion] = useState(createQuestSlice.question);
 
+  const [question, setQuestion] = useState(createQuestSlice.question);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
-  const [optionsCount, setOptionsCount] = useState(createQuestSlice.optionsCount);
-  const [prevValueArr, setPrevValueArr] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-  const [typedValues, setTypedValues] = useState(optionsValue);
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -75,9 +71,6 @@ const RankChoice = () => {
       return;
     }
 
-    // To check uniqueness of the question
-    // const constraintResponse = await checkUniqueQuestion(question);
-
     if (!checkHollow()) {
       setLoading(true);
     }
@@ -99,7 +92,7 @@ const RankChoice = () => {
       Question: question,
       whichTypeQuestion: 'ranked choise',
       QuestionCorrect: 'No option',
-      QuestAnswers: typedValues,
+      QuestAnswers: optionsValue,
       usersAddTheirAns: addOption,
       usersChangeTheirAns: changedOption,
       uuid: persistedUserInfo?.uuid,
@@ -118,159 +111,38 @@ const RankChoice = () => {
 
   const handleChange = (index, value) => {
     if (value.length <= 200) {
-      if (prevValueArr[index]?.value === value.trim()) {
-        setTypedValues((prevValues) => {
-          const newTypedValues = [...prevValues];
-          newTypedValues[index] = {
-            ...newTypedValues[index],
-            question: value,
-            optionStatus: optionsValue[index].chatgptOptionStatus,
-            isTyping: false,
-          };
-
-          return newTypedValues;
-        });
-      } else {
-        setTypedValues((prevValues) => {
-          const newTypedValues = [...prevValues];
-          newTypedValues[index] = {
-            ...newTypedValues[index],
-            question: value,
-            optionStatus: {
-              name: 'Ok',
-              color: value.trim() === '' ? 'text-[#389CE3]' : 'text-[#b0a00f]',
-              tooltipName: value.trim() === '' ? 'Please write something...' : '',
-              tooltipStyle: value.trim() === '' ? 'tooltip-info' : '',
-            },
-            isTyping: true,
-          };
-
-          return newTypedValues;
-        });
-      }
+      dispatch(createQuestAction.addOptionById({ id: `index-${index}`, option: value }));
     }
   };
 
-  useEffect(() => {
-    typedValues.map((_, index) => {
-      if (prevValueArr[index]?.value === typedValues[index].question) {
-        console.log('first', optionsValue);
-        setTypedValues((prevValues) => {
-          const newTypedValues = [...prevValues];
-          newTypedValues[index] = {
-            ...newTypedValues[index],
-            question: optionsValue[index].question,
-            optionStatus: optionsValue[index].chatgptOptionStatus,
-            isTyping: false,
-          };
-
-          return newTypedValues;
-        });
-      }
-    });
-  }, [optionsValue]);
-
   const answerVerification = async (id, index, value) => {
-    if (prevValueArr[index]?.value === value.trim()) return;
-
-    setPrevValueArr((prev) => {
-      const updatedArray = [...prev];
-      updatedArray[index] = { value: value.trim() };
-      return [...updatedArray];
-    });
+    if (optionsValue[index].chatgptQuestion === value) return;
 
     dispatch(createQuestAction.checkAnswer({ id, value, index }));
   };
 
-  useEffect(() => {
-    if (optionsValue) {
-      setPrevValueArr((prev) => {
-        const updatedArray = [...prev];
-        const finalArr = updatedArray.map((item, index) => ({
-          value: optionsValue[index].question,
-        }));
-
-        return finalArr;
-      });
-    }
-  }, [typedValues]);
-
-  // useEffect(() => {
-  //   if (!isEqual(optionsValue, typedValues)) {
-  //     setTypedValues(optionsValue);
-  //   }
-  // }, [optionsValue]);
-
-  useEffect(() => {
-    // Find the index of the object in typedValues where optionStatus.name === 'Checking'
-    const checkingIndex = typedValues.findIndex((obj) => obj.optionStatus.name === 'Checking');
-
-    if (checkingIndex !== -1 && !isEqual(optionsValue[checkingIndex], typedValues[checkingIndex])) {
-      // Replace the object at checkingIndex in typedValues with the object from optionsValue at the same index
-      const updatedTypedValues = [...typedValues];
-      updatedTypedValues[checkingIndex] = optionsValue[checkingIndex];
-      setTypedValues(updatedTypedValues);
-    } else {
-      setTypedValues(optionsValue);
-    }
-  }, [optionsValue]);
-
-  const handleAddOption = () => {
-    const optionsCount = typedValues.length;
-    dispatch(createQuestAction.addNewOption({ optionsCount }));
+  const addNewOption = () => {
+    dispatch(createQuestAction.addNewOption());
   };
 
-  // const handleOptionSelect = (index) => {
-  //   const newTypedValues = [...typedValues];
-  //   newTypedValues[index].selected = !newTypedValues[index].selected;
-  //   setTypedValues(newTypedValues);
-
-  //   if (!multipleOption) {
-  //     newTypedValues.forEach((item, i) => {
-  //       if (i !== index) {
-  //         item.selected = false;
-  //       }
-  //     });
-  //     setTypedValues(newTypedValues);
-
-  //     const ChangedOption = newTypedValues[index].selected ? [{ answers: newTypedValues[index].question }] : [];
-  //     setSelectedValues(ChangedOption);
-  //   } else {
-  //     const ChangedOption = { answers: newTypedValues[index].question };
-
-  //     if (newTypedValues[index].selected) {
-  //       setSelectedValues((prevValues) => [...prevValues, ChangedOption]);
-  //     } else {
-  //       setSelectedValues((prevValues) => prevValues.filter((item) => item.answers !== ChangedOption.answers));
-  //     }
-  //   }
-  // };
-
   const removeOption = (id, number) => {
-    setPrevValueArr((prevArr) => {
-      const newArr = prevArr.filter((_, index) => index !== number - 1);
-      return newArr;
-    });
-
     dispatch(createQuestAction.delOption({ id }));
   };
 
   const handleOnDragEnd = (result) => {
-    console.log(result);
     if (!result.destination) {
       return;
     }
 
-    const newTypedValues = [...typedValues];
+    const newTypedValues = [...optionsValue];
     const [removed] = newTypedValues.splice(result.source.index, 1);
     newTypedValues.splice(result.destination.index, 0, removed);
 
     dispatch(createQuestAction.drapAddDrop({ newTypedValues }));
   };
 
-  // Update Whole Multiple choice state in Redux
   useEffect(() => {
-    let tempOptions = typedValues.map((item) => {
+    let tempOptions = optionsValue.map((item) => {
       return item.question;
     });
     dispatch(
@@ -278,16 +150,15 @@ const RankChoice = () => {
         question,
         changedOption,
         changeState,
-        optionsCount,
+        optionsCount: optionsValue.length,
         addOption,
         options: tempOptions,
       }),
     );
-  }, [question, changedOption, changeState, addOption, optionsCount, typedValues]);
+  }, [question, changedOption, changeState, addOption, optionsValue.length, optionsValue]);
 
-  // Pressing Tab and Enter key will move cursor to next field
   const handleTab = (index, key) => {
-    if (index === typedValues.length) {
+    if (index === optionsValue.length) {
       document.getElementById(`input-${index}`).blur();
     } else {
       if (key === 'Enter') {
@@ -299,9 +170,8 @@ const RankChoice = () => {
     }
   };
 
-  // To Handle The submit button being hollow or not
   const checkHollow = () => {
-    const AllVerified = typedValues.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
+    const AllVerified = optionsValue.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
     if (questionStatus.tooltipName === 'Question is Verified' && AllVerified) {
       return false;
     } else {
@@ -310,14 +180,13 @@ const RankChoice = () => {
     }
   };
 
-  // To Handle The submit button being hollow or not
   useEffect(() => {
-    if (!checkHollow() && typedValues.every((value) => value.question !== '' && question !== '')) {
+    if (!checkHollow() && optionsValue.every((value) => value.question !== '' && question !== '')) {
       setHollow(false);
     } else {
       setHollow(true);
     }
-  }, [typedValues, question]);
+  }, [optionsValue, question]);
 
   return (
     <CreateQuestWrapper
@@ -328,14 +197,14 @@ const RankChoice = () => {
       msg={'Create a selection of choices that can be arranged in order of preference.'}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId={`typedValues-${Date.now()}`}>
+        <Droppable droppableId={`optionsValue-${Date.now()}`}>
           {(provided) => (
             <ul
               className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5"
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {typedValues.map((item, index) => (
+              {optionsValue.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <li
@@ -353,15 +222,15 @@ const RankChoice = () => {
                         label={`Option ${index + 1} #`}
                         trash={true}
                         dragable={true}
-                        handleChange={(value) => handleChange(index, value)}
+                        handleChange={(value) => handleChange(index, value, optionsValue)}
                         handleOptionSelect={() => handleOptionSelect(index)}
                         typedValue={item.question}
                         isTyping={item?.isTyping}
                         isSelected={item.selected}
-                        optionsCount={typedValues.length}
+                        optionsCount={optionsValue.length}
                         removeOption={removeOption}
                         number={index + 1}
-                        optionStatus={typedValues[index].optionStatus}
+                        optionStatus={optionsValue[index].optionStatus}
                         answerVerification={(value) => answerVerification(item.id, index, value)}
                         handleTab={handleTab}
                       />
@@ -377,7 +246,7 @@ const RankChoice = () => {
       <Button
         variant="addOption"
         className="ml-[21.55px] mt-[16px] tablet:ml-[60px] tablet:mt-[33px]"
-        onClick={handleAddOption}
+        onClick={addNewOption}
       >
         + Add Option
       </Button>
