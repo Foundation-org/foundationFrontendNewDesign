@@ -1,9 +1,11 @@
 import api from './Axios';
 
 // For Search in Feed
-export const searchQuestions = async (term) => {
+export const searchQuestions = async (term, moderationRatingFilter) => {
   if (term !== '') {
-    const response = await api.post(`/search/easySearch?term=${term}`);
+    const response = await api.post(`/search/easySearch?term=${term}`, {
+      moderationRatingFilter,
+    });
     return response.data;
   }
 };
@@ -11,7 +13,7 @@ export const searchQuestions = async (term) => {
 // For Search hidden Posts
 export const searchHiddenQuestions = async (term) => {
   if (term !== '') {
-    const response = await api.post(`/search/searchHiddenQuest?term=${term}`);
+    const response = await api.post(`/search/searchHiddenQuest?term=${term}`, {});
     return response.data;
   }
 };
