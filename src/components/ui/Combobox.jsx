@@ -37,16 +37,18 @@ const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSele
           leaveTo="opacity-0"
           afterLeave={() => setQuery('')}
         >
-          <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-[10px] bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+          <Combobox.Options className="absolute z-10 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base leading-[10px] shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm tablet:max-h-60">
             {filteredItems.length === 0 && query !== '' ? (
-              <div className="text-gray-700 relative cursor-default select-none px-4 py-2">Nothing found.</div>
+              <div className="text-gray-900' relative cursor-default select-none px-4 py-2 text-[10px] tablet:text-[16px]">
+                Nothing found.
+              </div>
             ) : (
               filteredItems.map((item) => (
                 <Combobox.Option
                   key={item.id}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? 'bg-[#6BA5CF] text-white' : 'text-[#B6B4B4]'
+                    `relative cursor-default select-none py-2 pl-[0.75rem] pr-4 text-[10px] tablet:py-3 tablet:pl-11 tablet:text-[16px] ${
+                      active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                     }`
                   }
                   value={item}

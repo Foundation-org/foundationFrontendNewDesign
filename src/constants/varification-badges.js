@@ -176,7 +176,7 @@ export const personal = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`,
     title: 'Work',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'work',
@@ -185,7 +185,7 @@ export const personal = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`,
     title: 'Education',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'education',

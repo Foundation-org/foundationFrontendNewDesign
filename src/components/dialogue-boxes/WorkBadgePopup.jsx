@@ -126,10 +126,11 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   };
 
   const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
+    const [addAnotherForm, setAddAnotherForm] = useState(false);
     return (
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
         {/* To View Already Added Info */}
-        {existingData ? (
+        {existingData && !addAnotherForm ? (
           <div className="mx-3 tablet:mx-[40px]">
             {existingData.map((item, index) => (
               <div className="flex w-full justify-between rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
@@ -148,11 +149,11 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 </div>
                 <div className="flex flex-col justify-between">
                   <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
-                    {/* <img
+                    <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
                       alt="Edit Icon"
                       className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
-                    /> */}
+                    />
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                       alt="Edit Icon"
@@ -166,7 +167,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
               </div>
             ))}
             <div className="mt-4 flex justify-between">
-              <Button variant="addOption">
+              <Button variant="addOption" onClick={() => setAddAnotherForm(true)}>
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
               </Button>
             </div>
@@ -225,7 +226,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
               />
             </div>
 
-            <div className="mb-4 flex gap-[17.5px] tablet:mb-5 tablet:gap-[37px]">
+            <div className="mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:gap-[37px]">
               <div className="w-full">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field5.label}
