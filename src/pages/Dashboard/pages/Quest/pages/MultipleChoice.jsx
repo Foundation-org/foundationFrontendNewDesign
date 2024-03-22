@@ -117,7 +117,7 @@ const MultipleChoice = () => {
 
   const handleChange = (index, value) => {
     if (value.length <= 200) {
-      dispatch(createQuestAction.addOptionById({ id: `index-${index}`, option: value }));
+      dispatch(createQuestAction.addOptionById({ id: index, option: value }));
     }
   };
 
@@ -230,7 +230,7 @@ const MultipleChoice = () => {
                         trash={true}
                         options={false}
                         dragable={true}
-                        handleChange={(value) => handleChange(index, value, optionsValue)}
+                        handleChange={(value) => handleChange(item.id, value, optionsValue)}
                         typedValue={item.question}
                         isTyping={item?.isTyping}
                         isSelected={item.selected}
