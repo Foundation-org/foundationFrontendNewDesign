@@ -66,13 +66,13 @@ const degreePrograms = {
   placeholder: 'Select your degree program',
 };
 const StartingYear = {
-  label: 'Start Year',
+  label: 'Start Date',
   placeholder: 'Year here',
   type: 'startingYear',
 };
 
 const graduationYear = {
-  label: 'Graduation Year',
+  label: 'Graduation Date',
   placeholder: 'Year here / Present',
   type: 'graduationYear',
 };
@@ -95,9 +95,9 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   useEffect(() => {
     const param = fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(type));
-    setExistingData(param?.personal);
+    setExistingData(param?.personal[type]);
   }, [fetchUser.badges]);
-
+  console.log(existingData);
   useEffect(() => {
     searchUniversities();
   }, [query]);
@@ -124,10 +124,9 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   const handleAddPersonalBadge = async (data) => {
     try {
-      const addBadge = await api.post(`/addBadge/personal/add`, {
-        personal: {
-          [type]: data,
-        },
+      const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, {
+        data,
+        type,
         uuid: localStorage.getItem('uuid'),
       });
       if (addBadge.status === 200) {
@@ -152,38 +151,38 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         {/* To View Already Added Info */}
         {existingData ? (
           <div className="mx-3 tablet:mx-[40px]">
-            <div className="flex w-full justify-between rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
-              <div>
-                <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
-                  {existingData?.education?.school}
-                </h4>
-                <div className="mt-[2px] max-w-[270px] tablet:mt-2">
-                  <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
-                    {existingData?.education?.degreeProgram}
-                  </h5>
-                  <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
-                    {existingData?.education?.country}
-                  </h6>
+            {existingData.map((item, index) => (
+              <div
+                key={index}
+                className="flex w-full justify-between rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]"
+              >
+                <div>
+                  <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
+                    {item.school}
+                  </h4>
+                  <div className="mt-[2px] max-w-[270px] tablet:mt-2">
+                    <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
+                      {item.degreeProgram}
+                    </h5>
+                    <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
+                      {item.country}
+                    </h6>
+                  </div>
+                </div>
+                <div className="flex flex-col justify-between">
+                  <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                      alt="Edit Icon"
+                      className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
+                    />
+                  </div>
+                  <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
+                    {item.startingYear + '-' + item.graduationYear}
+                  </h4>
                 </div>
               </div>
-              <div className="flex flex-col justify-between">
-                <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
-                  {/* <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
-                    alt="Edit Icon"
-                    className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
-                  /> */}
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                    alt="Edit Icon"
-                    className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
-                  />
-                </div>
-                <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
-                  {existingData?.education?.startingYear + '-' + existingData?.education?.graduationYear}
-                </h4>
-              </div>
-            </div>
+            ))}
             <div className="mt-4 flex justify-between">
               <Button variant="addOption">
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another

@@ -60,14 +60,14 @@ const Mode = {
   type: 'modeOfJob',
 };
 const startingYear = {
-  label: 'Start Year',
+  label: 'Start Date',
   placeholder: 'Year here',
   type: 'startingYear',
 };
 
 const endingYear = {
-  label: 'End Year',
-  placeholder: 'Year here / Present',
+  label: 'End Date',
+  placeholder: 'Date here / Present',
   type: 'endingYear',
 };
 
@@ -85,7 +85,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
   useEffect(() => {
     const param = fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(type));
-    setExistingData(param?.personal);
+    setExistingData(param?.personal[type]);
   }, [fetchUser.badges]);
 
   const handleClose = () => setIsPopup(false);
@@ -96,37 +96,17 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const handlePresentToggle = () => {
     setIsPresent(!isPresent);
     if (!isPresent) {
-      setField4Data('Present');
+      setField6Data('Present');
     } else {
-      setField4Data('');
+      setField6Data('');
     }
-  };
-
-  const handleDateChange = (event) => {
-    let inputValue = event.target.value.replace(/\D/g, '');
-    let formattedValue = '';
-
-    if (inputValue.length > 2) {
-      formattedValue += inputValue.substring(0, 2) + '/';
-      if (inputValue.length > 4) {
-        formattedValue += inputValue.substring(2, 4) + '/';
-        formattedValue += inputValue.substring(4, 8);
-      } else {
-        formattedValue += inputValue.substring(2);
-      }
-    } else {
-      formattedValue = inputValue;
-    }
-
-    setDate(formattedValue.substring(0, 10));
   };
 
   const handleAddPersonalBadge = async (data) => {
     try {
-      const addBadge = await api.post(`/addBadge/personal/add`, {
-        personal: {
-          [type]: data,
-        },
+      const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, {
+        data,
+        type,
         uuid: localStorage.getItem('uuid'),
       });
       if (addBadge.status === 200) {
@@ -151,38 +131,40 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
         {/* To View Already Added Info */}
         {existingData ? (
           <div className="mx-3 tablet:mx-[40px]">
-            <div className="flex w-full justify-between rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
-              <div>
-                <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
-                  {existingData?.work?.companyName + '-' + existingData?.work?.modeOfJob}
-                </h4>
-                <div className="mt-[2px] max-w-[270px] tablet:mt-2">
-                  <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
-                    {existingData?.work?.jobTitle}
-                  </h5>
-                  <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
-                    {existingData?.work.modeOfJob}
-                  </h6>
+            {existingData.map((item, index) => (
+              <div className="flex w-full justify-between rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
+                <div>
+                  <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
+                    {item.companyName}
+                  </h4>
+                  <div className="mt-[2px] max-w-[270px] tablet:mt-2">
+                    <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
+                      {item.jobTitle}
+                    </h5>
+                    <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
+                      {item.modeOfJob}
+                    </h6>
+                  </div>
+                </div>
+                <div className="flex flex-col justify-between">
+                  <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
+                    {/* <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
+                      alt="Edit Icon"
+                      className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
+                    /> */}
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                      alt="Edit Icon"
+                      className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
+                    />
+                  </div>
+                  <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
+                    {item.startingYear + '-' + item.endingYear}
+                  </h4>
                 </div>
               </div>
-              <div className="flex flex-col justify-between">
-                <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
-                    alt="Edit Icon"
-                    className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
-                  />
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                    alt="Edit Icon"
-                    className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
-                  />
-                </div>
-                <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
-                  {existingData?.work?.startingYear + '-' + existingData?.work?.endingYear}
-                </h4>
-              </div>
-            </div>
+            ))}
             <div className="mt-4 flex justify-between">
               <Button variant="addOption">
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
@@ -249,7 +231,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                   {field5.label}
                 </p>
                 <input
-                  type="text"
+                  type="date"
                   value={field5Data}
                   onChange={handlefield5Change}
                   placeholder={field5.placeholder}
@@ -261,7 +243,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                   {field6.label}
                 </p>
                 <input
-                  type="text"
+                  type="date"
                   value={field6Data}
                   onChange={handlefield6Change}
                   placeholder={field6.placeholder}
@@ -276,9 +258,6 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
             {/* {isError && <p className="text-red ml-1 text-[6.8px] tablet:text-[14px]">{`Invalid ${title}!`}</p>}{' '} */}
             <div className="flex justify-between">
-              <Button variant="addOption">
-                <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
-              </Button>
               <Button
                 variant="submit"
                 onClick={() => {
