@@ -4,13 +4,14 @@ import * as HomepageAPIs from '../api/homepageApis';
 
 export function useGetFeedData(filterStates, debouncedSearch, pagination, columns, params) {
   params = applyFilters(params, filterStates, columns);
+  console.log('first', params.moderationRatingFilter);
   return useQuery({
     queryFn: async () => {
       if (debouncedSearch === '') {
         const result = await fetchDataByStatus(params, filterStates);
         return result.data;
       } else {
-        const result = await HomepageAPIs.searchQuestions(debouncedSearch);
+        const result = await HomepageAPIs.searchQuestions(debouncedSearch, params.moderationRatingFilter);
         return result;
       }
     },
