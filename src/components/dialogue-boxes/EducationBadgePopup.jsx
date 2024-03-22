@@ -225,7 +225,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               />
             </div>
 
-            <div className="mb-4 flex gap-[17.5px] tablet:mb-5 tablet:gap-[37px]">
+            <div className="mb-4 mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[37px]">
               <div className="w-full">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field3.label}
