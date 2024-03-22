@@ -78,6 +78,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const [field4Data, setField4Data] = useState([]);
   const [field5Data, setField5Data] = useState([]);
   const [field6Data, setField6Data] = useState([]);
+  const [isPresent, setIsPresent] = useState(false);
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
@@ -91,6 +92,15 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const handlefield1Change = (e) => setField1Data(e.target.value);
   const handlefield5Change = (e) => setField5Data(e.target.value);
   const handlefield6Change = (e) => setField6Data(e.target.value);
+
+  const handlePresentToggle = () => {
+    setIsPresent(!isPresent);
+    if (!isPresent) {
+      setField4Data('Present');
+    } else {
+      setField4Data('');
+    }
+  };
 
   const handleDateChange = (event) => {
     let inputValue = event.target.value.replace(/\D/g, '');
@@ -257,6 +267,10 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                   placeholder={field6.placeholder}
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                 />
+                <label className="ml-2">
+                  <input type="checkbox" checked={isPresent} onChange={handlePresentToggle} className="mr-1" />
+                  Present
+                </label>
               </div>
             </div>
 

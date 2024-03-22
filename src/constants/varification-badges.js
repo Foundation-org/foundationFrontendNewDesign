@@ -124,7 +124,6 @@ export const personal = [
     title: 'First Name',
     ButtonColor: 'blue',
     NoOfButton: 1,
-    // NoOfButton: 2,
     ButtonText: 'Add New Badge',
     type: 'firstName',
     disabled: false,
