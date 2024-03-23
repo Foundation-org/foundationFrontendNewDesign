@@ -67,8 +67,9 @@ const VerificationBadges = () => {
         const data = await response.json();
         handleAddBadge('instagram', data);
       } else {
-        showBoundary(response);
-        console.error('Error fetching Instagram profile:', response);
+        const data = await response.json();
+        showBoundary(data);
+        console.error('Error fetching Instagram profile:', data);
       }
     } catch (error) {
       showBoundary(error);
