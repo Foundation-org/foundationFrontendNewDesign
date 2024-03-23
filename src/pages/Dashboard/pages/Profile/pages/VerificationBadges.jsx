@@ -62,20 +62,19 @@ const VerificationBadges = () => {
           code: code,
         }),
       });
-
       if (response.ok) {
         const data = await response.json();
         handleAddBadge('instagram', data);
       } else {
         const data = await response.json();
-        showBoundary(data);
+        showBoundary(JSON.stringify(data)); // Stringify the error object
         console.error('Error fetching Instagram profile:', data);
       }
     } catch (error) {
-      showBoundary(error);
+      showBoundary(JSON.stringify(error)); // Stringify the error object
       console.error('Error fetching Instagram profile:', error.message);
     }
-  };
+  }
 
   const loginWithTwitter = () => {
     const provider = new TwitterAuthProvider();
