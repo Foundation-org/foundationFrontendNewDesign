@@ -58,7 +58,7 @@ const VerificationBadges = () => {
         body: JSON.stringify({
           clientId: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
           clientSecret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
-          redirectUri: window.location.href,
+          redirectUri: `${import.meta.env.VITE_CLIENT_URL}/profile/verification-badges`,
           code: code,
         }),
       });
