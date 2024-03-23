@@ -135,7 +135,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
               />
               {isError && (
-                <p className="absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
+                <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
               )}
             </div>
             <div className="mt-[10px] flex justify-end tablet:mt-5">
@@ -154,7 +154,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
             />
             {isError && (
-              <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
+              <p className="absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
             )}
             <div className="mt-[10px] flex justify-end tablet:mt-5">
               <Button variant="submit" disabled={isError} onClick={() => handleAddPersonalBadge()}>
