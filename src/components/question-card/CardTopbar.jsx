@@ -93,7 +93,7 @@ const CardTopbar = ({
       ) : (
         <>
           <div className="flex items-center gap-[5.64px] tablet:gap-[14.36px]">
-            {questStartData?.moderationRatingCount === 0 ? (
+            {Math.round(questStartData?.moderationRatingCount) === 0 ? (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-g.svg`}
                 alt="desk-g"
