@@ -37,9 +37,9 @@ const VerificationBadges = () => {
 
   const loginWithYoutube = () => { };
 
-  // const handleSoundCloud=()=>{
-  //   window.location.href = `https://secure.soundcloud.com/authorize?client_id=${'clientId'}&redirect_uri=${'redirectUri'}&response_type=code`;
-  // }
+  const handleSoundCloud = () => {
+    // window.location.href = `https://secure.soundcloud.com/authorize?client_id=${'clientId'}&redirect_uri=${'redirectUri'}&response_type=code`;
+  }
   const loginInWithInsta = async (code) => {
     try {
       // return
