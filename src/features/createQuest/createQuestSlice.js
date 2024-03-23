@@ -103,6 +103,13 @@ export const createQuestSlice = createSlice({
       const { id, option } = action.payload;
       const index = state.optionsValue.findIndex((option) => option.id === id);
 
+      if (option === '') {
+        state.optionsValue[index].question = option;
+        state.optionsValue[index].isTyping = true;
+        state.optionsValue[index].optionStatus = { ...defaultStatus };
+        return;
+      }
+
       if (index !== -1) {
         state.optionsValue[index].question = option;
         state.optionsValue[index].isTyping = true;
