@@ -171,11 +171,7 @@ const SingleQuest = () => {
         <meta property="og:video:type" content={seoMeta.videoType} /> */}
         {/* Show Image Meta Tags */}
         <meta property="og:image" itemprop="image" content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`} />
-        <meta
-          property="og:image:secure_url"
-          itemprop="image"
-          content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
-        />
+        <meta property="og:image:secure_url" itemprop="image" content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`} />
         {/* <meta property="og:image:type" content="image/svg" /> */}
         {/* <meta property="og:audio" content={seoMeta.preview} />
         <meta property="og:audio:type" content="audio/vnd.facebook.bridge" />
@@ -189,7 +185,7 @@ const SingleQuest = () => {
         <meta name="google" content="notranslate"></meta>
       </Helmet>
       <Topbar />
-      <div className="flex h-[calc(100vh-90px)] bg-[#F3F3F3] ">
+      <div className="flex h-[calc(100vh-66.8px)] bg-[#F3F3F3] tablet:h-[calc(100vh-92px)]">
         <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
           {error !== '' ? <p className="text-center text-[24px] font-bold tablet:text-[25px]">{error}</p> : null}
           {(singleQuestResp || submitResponse) && (

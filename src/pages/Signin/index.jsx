@@ -35,16 +35,19 @@ export default function Signin() {
   const [uuid, setUuid] = useState();
 
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   // console.log(provider, profile);
 
   const handleReferralOpen = () => {
     setIsReferral((prev) => !prev);
   };
+
   const handleReferralClose = () => {
     setIsReferral(false);
     setIsLoading(false);
     setIsLoadingSocial(false);
   };
+
   function onChange(value) {
     console.log('Captcha value:', value);
     setCaptchaToken(value);
@@ -235,7 +238,8 @@ export default function Signin() {
             <Typography variant="textBase" className="text-gray-100 dark:text-gray">
               Do not have an account?
             </Typography>
-            <Link to="/signup">
+
+            <Link to={persistedUserInfo && persistedUserInfo.role === 'guest' ? '/guest-signup' : '/signup'}>
               <Typography variant="textBase" className="text-blue dark:text-white">
                 Sign up
               </Typography>
