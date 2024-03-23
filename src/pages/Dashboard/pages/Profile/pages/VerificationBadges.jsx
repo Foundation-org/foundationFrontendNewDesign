@@ -36,14 +36,7 @@ const VerificationBadges = () => {
   const [pageLoading, setPageLoading] = useState(true);
 
   const loginWithYoutube = () => { };
-  const handleSoundCloud = () => { };
 
-  const handleLinkedIn = async () => {
-    const resp = await fetch(
-      `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${import.meta.env.VITE_LINKEDIN_KEY}&redirect_uri=${window.location.href}&state=foobar&scope=liteprofile%20emailaddress%20w_member_social`,
-    );
-    console.log(resp);
-  };
   // const handleSoundCloud=()=>{
   //   window.location.href = `https://secure.soundcloud.com/authorize?client_id=${'clientId'}&redirect_uri=${'redirectUri'}&response_type=code`;
   // }
@@ -64,6 +57,7 @@ const VerificationBadges = () => {
       });
       if (response.ok) {
         const data = await response.json();
+        setIsLoading(true);
         handleAddBadge('instagram', data);
       } else {
         const data = await response.json();
@@ -378,11 +372,8 @@ const VerificationBadges = () => {
                     >
                       <Button
                         color={checkSocial('linkedin') ? 'red' : 'blue'}
-                        // disabled={true}
-                        // color="gray"
-                        onClick={() => {
-                          checkSocial('linkedin') ? handleRemoveBadge('linkedin') : handleLinkedIn();
-                        }}
+                      // disabled={true}
+                      // color="gray"
                       >
                         {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
                         <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
