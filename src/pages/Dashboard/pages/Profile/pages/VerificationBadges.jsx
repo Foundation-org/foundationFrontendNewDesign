@@ -67,11 +67,11 @@ const VerificationBadges = () => {
         handleAddBadge('instagram', data);
       } else {
         const data = await response.json();
-        showBoundary(JSON.stringify(data)); // Stringify the error object
+        // showBoundary(JSON.stringify(data)); // Stringify the error object
         console.error('Error fetching Instagram profile:', data);
       }
     } catch (error) {
-      showBoundary(JSON.stringify(error)); // Stringify the error object
+      // showBoundary(JSON.stringify(error)); // Stringify the error object
       console.error('Error fetching Instagram profile:', error.message);
     }
   }
