@@ -93,31 +93,31 @@ const CardTopbar = ({
       ) : (
         <>
           <div className="flex items-center gap-[5.64px] tablet:gap-[14.36px]">
-            {questStartData?.moderationRatingCount >= 0 && questStartData.moderationRatingCount <= 19 ? (
+            {questStartData?.moderationRatingCount === 0 ? (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-g.svg`}
                 alt="desk-g"
                 className="h-[15px] w-[15px] tablet:h-[23px] tablet:w-[23px]"
               />
-            ) : questStartData?.moderationRatingCount >= 20 && questStartData.moderationRatingCount <= 39 ? (
+            ) : questStartData?.moderationRatingCount >= 1 && questStartData.moderationRatingCount <= 20 ? (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-pg.svg`}
                 alt="desk-pg"
                 className="h-[15px] w-[15px] tablet:h-[23px] tablet:w-[23px]"
               />
-            ) : questStartData?.moderationRatingCount >= 40 && questStartData.moderationRatingCount <= 59 ? (
+            ) : questStartData?.moderationRatingCount >= 21 && questStartData.moderationRatingCount <= 40 ? (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-r.svg`}
                 alt="desk-r"
                 className="h-[15px] w-[15px] tablet:h-[23px] tablet:w-[23px]"
               />
-            ) : questStartData?.moderationRatingCount >= 60 && questStartData.moderationRatingCount <= 79 ? (
+            ) : questStartData?.moderationRatingCount >= 41 && questStartData.moderationRatingCount <= 60 ? (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-nc.svg`}
                 alt="desk-nc"
                 className="h-[15px] w-[15px] tablet:h-[23px] tablet:w-[23px]"
               />
-            ) : questStartData?.moderationRatingCount >= 80 && questStartData.moderationRatingCount <= 100 ? (
+            ) : questStartData?.moderationRatingCount >= 61 && questStartData.moderationRatingCount <= 100 ? (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-x.svg`}
                 alt="desk-x"
