@@ -134,7 +134,15 @@ export const createQuestSlice = createSlice({
     },
     delOption: (state, action) => {
       const tempOptions = state.optionsValue.filter((value) => value.id !== action.payload.id);
-      state.optionsValue = tempOptions;
+
+      const updatedTypedValues = tempOptions.map((item, index) => {
+        return {
+          ...item,
+          id: `index-${index}`,
+        };
+      });
+
+      state.optionsValue = updatedTypedValues;
     },
     drapAddDrop: (state, action) => {
       state.optionsValue = action.payload.newTypedValues;
