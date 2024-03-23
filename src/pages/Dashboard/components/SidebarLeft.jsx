@@ -33,14 +33,6 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
       : persistedUserInfo?.States.searchData,
   );
 
-  const rating = () => {
-    console.log('inside');
-    if (pathname === '/dashboard/bookmark') {
-      toast.info('Feature coming soon');
-    } else {
-      showRatingDialogue();
-    }
-  };
   const [ratingsDialogue, setRatingsDialogue] = useState(false);
 
   const showRatingDialogue = () => setRatingsDialogue(true);
@@ -257,9 +249,9 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             Filters
           </h1>
           <button
-            // onClick={handleTopicPref}
-            // onClick={() => toast.success('Feature coming soon')}
-            onClick={rating}
+            onClick={() => {
+              showRatingDialogue();
+            }}
             className={`${
               persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
@@ -354,9 +346,9 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             className={`${
               persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             }  inset-0 w-fit text-nowrap rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner tablet:w-full tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
-            // onClick={handleTopicPref}
-            // onClick={() => toast.success('Feature coming soon')}
-            onClick={() => rating()}
+            onClick={() => {
+              showRatingDialogue();
+            }}
           >
             Rating
           </button>

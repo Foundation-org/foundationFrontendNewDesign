@@ -64,6 +64,7 @@ const Bookmark = () => {
       end: pagination.sliceEnd,
       uuid: persistedUserInfo?.uuid,
       Page: 'Bookmark',
+      moderationRatingFilter: filterStates.moderationRatingFilter,
     },
   );
 
