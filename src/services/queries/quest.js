@@ -47,7 +47,7 @@ export function useGetBookmarkFeedData(filterStates, debouncedSearch, pagination
         const result = await fetchDataByStatus(params, filterStates);
         return result.data;
       } else {
-        const result = await HomepageAPIs.searchBookmarks(debouncedSearch);
+        const result = await HomepageAPIs.searchBookmarks(debouncedSearch, params.moderationRatingFilter);
         return result;
       }
     },

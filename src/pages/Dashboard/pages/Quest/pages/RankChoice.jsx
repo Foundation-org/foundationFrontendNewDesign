@@ -122,7 +122,11 @@ const RankChoice = () => {
     }
   };
 
-  const answerVerification = async (id, index, value) => {
+  const answerVerification = async (id, index, value, extra) => {
+    if (extra) {
+      if (extra === value) return;
+    }
+
     if (optionsValue[index].chatgptQuestion === value) return;
 
     dispatch(createQuestAction.checkAnswer({ id, value, index }));
@@ -140,6 +144,13 @@ const RankChoice = () => {
     if (!result.destination) {
       return;
     }
+
+    answerVerification(
+      `index-${result.destination.index}`,
+      result.destination.index,
+      optionsValue[parseInt(result.draggableId.split('-')[1])].question,
+      optionsValue[parseInt(result.draggableId.split('-')[1])].chatgptQuestion,
+    );
 
     const newTypedValues = [...optionsValue];
     const [removed] = newTypedValues.splice(result.source.index, 1);

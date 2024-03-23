@@ -99,9 +99,11 @@ export const deleteBookmarkById = async (data) => {
   });
 };
 
-export const searchBookmarks = async (term) => {
+export const searchBookmarks = async (term, moderationRatingFilter) => {
   if (term !== '') {
-    const response = await api.post(`/search/searchBookmarks?term=${term}`);
+    const response = await api.post(`/search/searchBookmarks?term=${term}`, {
+      moderationRatingFilter,
+    });
     return response.data;
   }
 };
