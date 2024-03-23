@@ -36,6 +36,12 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
       filterStates.moderationRatingFilter?.initial ? filterStates.moderationRatingFilter?.initial : 0,
       filterStates.moderationRatingFilter?.final ? filterStates.moderationRatingFilter?.final : 20,
     ]);
+    dispatch(
+      filtersActions.setRatings({
+        initial: value[0],
+        final: value[1],
+      }),
+    );
   }, []);
 
   const handleChange = (event, newValue) => {
