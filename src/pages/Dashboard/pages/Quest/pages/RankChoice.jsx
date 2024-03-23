@@ -145,12 +145,14 @@ const RankChoice = () => {
       return;
     }
 
-    answerVerification(
-      `index-${result.destination.index}`,
-      result.destination.index,
-      optionsValue[parseInt(result.draggableId.split('-')[1])].question,
-      optionsValue[parseInt(result.draggableId.split('-')[1])].chatgptQuestion,
-    );
+    if (optionsValue[parseInt(result.draggableId.split('-')[1])].question !== '') {
+      answerVerification(
+        `index-${result.destination.index}`,
+        result.destination.index,
+        optionsValue[parseInt(result.draggableId.split('-')[1])].question,
+        optionsValue[parseInt(result.draggableId.split('-')[1])].chatgptQuestion,
+      );
+    }
 
     const newTypedValues = [...optionsValue];
     const [removed] = newTypedValues.splice(result.source.index, 1);
