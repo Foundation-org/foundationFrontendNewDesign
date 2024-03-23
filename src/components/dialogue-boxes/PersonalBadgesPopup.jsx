@@ -9,6 +9,7 @@ import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
 import { useErrorBoundary } from 'react-error-boundary';
 import Listbox from '../ui/ListBox';
+import { useDebounce } from '../../utils/useDebounce';
 
 const data = [
   { id: 1, name: 'In what city were you born?' },
@@ -35,6 +36,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [date, setDate] = useState('');
   const [loading, setLoading] = useState(false);
   const [cities, setCities] = useState([]);
+  const debounceName = useDebounce(name, 1000);
 
   const handleClose = () => setIsPopup(false);
 
@@ -49,7 +51,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [query, setQuery] = useState('');
 
   const { data: apiResp } = useQuery({
-    queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && name],
+    queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && debounceName],
     queryFn: () => validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name),
   });
 
