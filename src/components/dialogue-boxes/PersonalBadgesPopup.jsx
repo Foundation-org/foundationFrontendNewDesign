@@ -37,6 +37,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [loading, setLoading] = useState(false);
   const [cities, setCities] = useState([]);
   const debounceName = useDebounce(name, 1000);
+  const [check, setCheck] = useState(true);
 
   const handleClose = () => setIsPopup(false);
 
@@ -54,6 +55,13 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && debounceName],
     queryFn: () => validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name),
   });
+
+  useEffect(() => {
+    setCheck(true);
+    if (apiResp?.data?.message?.trim() === 'Yes' || apiResp?.data?.message?.trim() === 'Yes.') {
+      setCheck(false);
+    }
+  }, [name, apiResp?.data?.message]);
 
   const searchCities = async () => {
     const cities = await api.post(`search/searchCities/?name=${query}`);
@@ -141,9 +149,15 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               )}
             </div>
             <div className="mt-[10px] flex justify-end tablet:mt-5">
-              <Button variant="submit" disabled={isError} onClick={() => handleAddPersonalBadge()}>
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-              </Button>
+              {!selected || !name ? (
+                <Button variant="hollow-submit" disabled={true}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                </Button>
+              ) : (
+                <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                </Button>
+              )}
             </div>
           </>
         ) : (
@@ -159,9 +173,15 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               <p className="absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
             )}
             <div className="mt-[10px] flex justify-end tablet:mt-5">
-              <Button variant="submit" disabled={isError} onClick={() => handleAddPersonalBadge()}>
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-              </Button>
+              {check ? (
+                <Button variant="hollow-submit" disabled={true}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                </Button>
+              ) : (
+                <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                </Button>
+              )}
             </div>
           </div>
         )}
@@ -187,9 +207,15 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
           )}
         </div>
         <div className="mt-[10px] flex justify-end tablet:mt-5">
-          <Button variant="submit" disabled={isError} onClick={() => handleAddPersonalBadge()}>
-            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-          </Button>
+          {selected === undefined ? (
+            <Button variant="hollow-submit" disabled={true}>
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+            </Button>
+          ) : (
+            <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+            </Button>
+          )}
         </div>
       </div>
     );
@@ -226,9 +252,15 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
           )}
         </div>
         <div className="mt-[10px] flex justify-end tablet:mt-5">
-          <Button variant="submit" disabled={isError} onClick={() => handleAddPersonalBadge()}>
-            {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-          </Button>
+          {selected === undefined ? (
+            <Button variant="hollow-submit" disabled={true}>
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+            </Button>
+          ) : (
+            <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+            </Button>
+          )}
         </div>
         {/* </>
         ) : (
@@ -268,9 +300,15 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             className="revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
           />
           <div className="mt-[10px] flex justify-end tablet:mt-5">
-            <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-            </Button>
+            {!date ? (
+              <Button variant="hollow-submit" disabled={true}>
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+              </Button>
+            ) : (
+              <Button variant="submit" disabled={date} onClick={() => handleAddPersonalBadge()}>
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+              </Button>
+            )}
           </div>
         </div>
       )}
