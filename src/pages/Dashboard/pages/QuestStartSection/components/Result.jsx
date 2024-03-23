@@ -169,7 +169,21 @@ const Result = (props) => {
   const sortContendedAnswersByAscDesc = (data, order) => {
     const questAnswersCopy = [...data.questStartData.QuestAnswers];
 
-    if (data.questStartData?.contendedPercentage.length > 0 && data.questStartData?.contendedPercentage[0] !== null) {
+    const allZero = data.questStartData.contendedPercentage?.every((item) => {
+      for (const key in item) {
+        const percentage = parseFloat(item[key]?.replace('%', '') || '0');
+        if (percentage !== 0) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    if (
+      data.questStartData?.contendedPercentage.length > 0 &&
+      data.questStartData?.contendedPercentage[0] !== null &&
+      !allZero
+    ) {
       return questAnswersCopy.sort((a, b) => {
         const percentageA = parseFloat(
           data.questStartData?.contendedPercentage[data.questStartData?.contendedPercentage.length - 1][

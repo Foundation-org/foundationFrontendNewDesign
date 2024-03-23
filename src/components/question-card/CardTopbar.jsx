@@ -29,8 +29,6 @@ const CardTopbar = ({
     }
   };
 
-  console.log('first', questStartData.moderationRatingCount);
-
   return (
     <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-2 py-1 tablet:px-5 tablet:py-[0.63rem] laptop:px-4">
       <div className="flex items-center gap-5 tablet:gap-10">
