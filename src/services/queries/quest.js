@@ -4,8 +4,8 @@ import * as HomepageAPIs from '../api/homepageApis';
 
 export function useGetFeedData(filterStates, debouncedSearch, pagination, columns, params) {
   params = applyFilters(params, filterStates, columns);
-
-  return useQuery({
+  console.log('first', params.moderationRatingFilter);
+  const { data, isLoading } = useQuery({
     queryFn: async () => {
       if (debouncedSearch === '') {
         const result = await fetchDataByStatus(params, filterStates);
@@ -18,6 +18,8 @@ export function useGetFeedData(filterStates, debouncedSearch, pagination, column
     queryKey: ['FeedData', filterStates, debouncedSearch, pagination, columns],
     staleTime: 0,
   });
+
+  return { data, isLoading };
 }
 
 export function useGetHiddenFeedData(filterStates, debouncedSearch, pagination, columns, params) {

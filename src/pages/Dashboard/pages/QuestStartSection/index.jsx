@@ -52,16 +52,16 @@ const QuestStartSection = () => {
 
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
-  const { data: feedData } = QuestServices.useGetFeedData(filterStates, filterStates.searchData, pagination, columns, {
+  const { data: feedData, isLoading } = QuestServices.useGetFeedData(filterStates, filterStates.searchData, pagination, columns, {
     _page: pagination.page,
     _limit: pageLimit,
     start: pagination.sliceStart,
     end: pagination.sliceEnd,
     uuid: persistedUserInfo?.uuid,
     moderationRatingFilter: filterStates.moderationRatingFilter,
-  });
-
-  // Reset Preferences
+  },
+  );
+   // Reset Preferences
   useEffect(() => {
     if (!filterStates.isColumns) {
       const currentColumns = { ...columns };
@@ -85,6 +85,7 @@ const QuestStartSection = () => {
 
       setColumns(currentColumns);
     }
+
   }, [filterStates.isColumns]);
 
   // Update Preferences Columns in redux
@@ -131,6 +132,9 @@ const QuestStartSection = () => {
 
         return uniqueData;
       });
+    }
+    if (!isLoading) {
+      setSliderloading(false)
     }
   }, [feedData, filterStates, pagination.page]);
   // useEffect(() => {
