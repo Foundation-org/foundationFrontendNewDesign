@@ -101,7 +101,16 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
           </div>
         </div>
         <div className="mt-7 flex justify-end gap-[15px] tablet:mt-[75px] tablet:gap-[34px]">
-          <Button variant={'danger'} onClick={handleClose}>
+          <Button
+            variant={'danger'}
+            onClick={() => {
+              setValue([
+                filterStates.moderationRatingFilter?.initial ? filterStates.moderationRatingFilter?.initial : 0,
+                filterStates.moderationRatingFilter?.final ? filterStates.moderationRatingFilter?.final : 20,
+              ]);
+              handleClose();
+            }}
+          >
             Cancel
           </Button>
           <Button
