@@ -165,7 +165,12 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             <input
               type="text"
               value={name}
-              onChange={handleNameChange}
+              onChange={(e) => {
+                const inputName = e.target.value;
+                // Capitalize the first letter and concatenate with the rest of the string
+                const capitalizedName = inputName.charAt(0).toUpperCase() + inputName.slice(1);
+                setName(capitalizedName);
+              }}
               placeholder={placeholder}
               className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
             />
