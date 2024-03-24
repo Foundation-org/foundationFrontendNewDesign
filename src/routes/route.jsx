@@ -32,7 +32,7 @@ import { useSelector } from 'react-redux';
 import Maintenance from '../pages/Maintenance/maintenance';
 import Welcome from '../pages/Welcome/welcome';
 import SharedLinkResults from '../pages/Dashboard/pages/Profile/pages/shared-links/SharedLinkResults';
-import { ErrorBoundary } from '../components/providers/ErrorBoundry';
+import ErrorBoundary from '../components/providers/ErrorBoundry'; // Make sure this path is correct
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -67,6 +67,8 @@ export function Router() {
           {/* Protected */}
           <Routes>
             <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
+            <ErrorBoundary> {/* Wrap all routes with ErrorBoundary */}
+
               <Route path="/maintenance" element={<Maintenance />} />
               <Route path="/dashboard/" element={<Dashboard />}>
                 <Route path="" element={<QuestStartSection />} />
@@ -80,49 +82,37 @@ export function Router() {
               <Route
                 path="/profile/"
                 element={
-                  <ErrorBoundary>
-                    <Profile />
-                  </ErrorBoundary>
+                  <Profile />
                 }
               >
                 <Route
                   path=""
                   element={
-                    <ErrorBoundary>
-                      <Contributions />
-                    </ErrorBoundary>
+                    <Contributions />
                   }
                 />
                 <Route
                   path="verification-badges"
                   element={
-                    <ErrorBoundary>
-                      <VerificationBadges />
-                    </ErrorBoundary>
+                    <VerificationBadges />
                   }
                 />
                 <Route
                   path="ledger"
                   element={
-                    <ErrorBoundary>
-                      <BasicTable />
-                    </ErrorBoundary>
+                    <BasicTable />
                   }
                 />
                 <Route
                   path="hidden-posts"
                   element={
-                    <ErrorBoundary>
-                      <HiddenPosts />
-                    </ErrorBoundary>
+                    <HiddenPosts />
                   }
                 />
                 <Route
                   path="shared-links"
                   element={
-                    <ErrorBoundary>
-                      <SharedLinks />
-                    </ErrorBoundary>
+                    <SharedLinks />
                   }
                 />
                 <Route path="change-password" element={<ChangePassword />} />
@@ -136,6 +126,7 @@ export function Router() {
               <Route path="/signin" element={<Signin />} />
               <Route path="/verifycode" element={<VerifyCode />} />
               <Route path="*" element={<Navigate to="/dashboard" />} />
+              </ErrorBoundary>
             </Route>
           </Routes>
         </>

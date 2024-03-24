@@ -40,34 +40,34 @@ function App() {
   }, [theme]);
 
 
-  useEffect(() => {
-    let inactivityTimeout;
+  // useEffect(() => {
+  //   let inactivityTimeout;
 
-    const resetInactivityTimer = () => {
-      clearTimeout(inactivityTimeout);
-      inactivityTimeout = setTimeout(() => {
-        window.location.reload(); // Reload the page after 10 minutes of inactivity
-      }, 10 * 60 * 1000); // 10 minutes in milliseconds
-    };
+  //   const resetInactivityTimer = () => {
+  //     clearTimeout(inactivityTimeout);
+  //     inactivityTimeout = setTimeout(() => {
+  //       window.location.reload(); // Reload the page after 10 minutes of inactivity
+  //     }, 10 * 60 * 1000); // 10 minutes in milliseconds
+  //   };
 
-    const handleUserActivity = () => {
-      resetInactivityTimer();
-    };
+  //   const handleUserActivity = () => {
+  //     resetInactivityTimer();
+  //   };
 
-    // Listen for user activity events
-    document.addEventListener('mousemove', handleUserActivity);
-    document.addEventListener('keypress', handleUserActivity);
+  //   // Listen for user activity events
+  //   document.addEventListener('mousemove', handleUserActivity);
+  //   document.addEventListener('keypress', handleUserActivity);
 
-    // Initial setup
-    resetInactivityTimer();
+  //   // Initial setup
+  //   resetInactivityTimer();
 
-    // Clean up event listeners
-    return () => {
-      document.removeEventListener('mousemove', handleUserActivity);
-      document.removeEventListener('keypress', handleUserActivity);
-      clearTimeout(inactivityTimeout);
-    };
-  }, []);
+  //   // Clean up event listeners
+  //   return () => {
+  //     document.removeEventListener('mousemove', handleUserActivity);
+  //     document.removeEventListener('keypress', handleUserActivity);
+  //     clearTimeout(inactivityTimeout);
+  //   };
+  // }, []);
 
   return (
     <div className="h-screen overflow-hidden">
