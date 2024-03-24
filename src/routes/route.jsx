@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+
 import RequireAuth from './RequireAuth';
-import ErrorBoundary from '../components/providers/ErrorBoundry'; // Assuming ErrorBoundary is exported from '../components/providers/ErrorBoundry'
+
+// pages
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Guests from '../pages/Guests';
@@ -30,6 +32,7 @@ import { useSelector } from 'react-redux';
 import Maintenance from '../pages/Maintenance/maintenance';
 import Welcome from '../pages/Welcome/welcome';
 import SharedLinkResults from '../pages/Dashboard/pages/Profile/pages/shared-links/SharedLinkResults';
+import { ErrorBoundary } from '../components/providers/ErrorBoundry';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -37,6 +40,8 @@ export function Router() {
     User: 'user',
     Guest: 'guest',
   };
+
+  // console.log({ persistedUser });
 
   return (
     <>
