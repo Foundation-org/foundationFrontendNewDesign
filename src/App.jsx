@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Router } from './routes/route';
-import { Toaster } from 'sonner';
+import { Toaster, toast } from 'sonner';
 import SEO from './utils/SEO';
 // import SEO from './utils/SEO';
 
@@ -38,6 +38,18 @@ function App() {
       document.documentElement.classList.remove('dark');
     }
   }, [theme]);
+
+
+  useEffect(() => {
+    document.addEventListener("visibilitychange", function() {
+      if (document.visibilityState === 'hidden') {
+        alert("Background Tab Throttling hidden")
+      } else {
+        alert("Background Tab Throttling not hidden")
+        // Resume operations
+      }
+  });
+  }, []);
 
 
   // useEffect(() => {
