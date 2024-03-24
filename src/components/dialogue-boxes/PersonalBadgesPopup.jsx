@@ -53,7 +53,8 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   const { data: apiResp } = useQuery({
     queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && debounceName],
-    queryFn: () => validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name),
+    queryFn: () =>
+      validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name.charAt(0).toUpperCase() + name.slice(1)),
   });
 
   useEffect(() => {
@@ -166,10 +167,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               type="text"
               value={name}
               onChange={(e) => {
-                const inputName = e.target.value;
-                // Capitalize the first letter and concatenate with the rest of the string
-                const capitalizedName = inputName.charAt(0).toUpperCase() + inputName.slice(1);
-                setName(capitalizedName);
+                setName(e.target.value);
               }}
               placeholder={placeholder}
               className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
