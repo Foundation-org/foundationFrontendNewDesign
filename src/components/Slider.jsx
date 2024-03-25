@@ -188,7 +188,7 @@ function Slider({ nextPage, feedData, sliderLoading, setSliderloading }) {
           </Button>
           <Button
             variant={'topics'}
-            className={`${filterStates.filterByScope === 'Me' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} $ text-nowrap`}
+            className={`${filterStates.filterByScope === 'Me' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
             onClick={() => {
               handleButtonSelection('my-posts', null, 'myPostButton');
             }}
