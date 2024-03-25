@@ -175,8 +175,9 @@ const VerificationBadges = () => {
         handleUserInfo();
       }
     } catch (error) {
-      if (error.response.data.message.split(':')[1] === 'Oops! This account is already linked.') {
-        toast.error('Oops! This account is already linked.');
+      console.log(provider);
+      if (provider !== 'instagram') {
+        toast.error(error.response.data.message.split(':')[1]);
       }
     } finally {
       setIsLoading(false);
