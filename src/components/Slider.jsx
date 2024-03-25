@@ -7,7 +7,7 @@ import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice';
 import * as QuestServices from '../services/queries/quest';
 
-function Slider({ nextPage, feedData, sliderLoading, setSliderloading }) {
+function Slider({ sliderLoading, setSliderloading }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -106,6 +106,8 @@ function Slider({ nextPage, feedData, sliderLoading, setSliderloading }) {
     if (selectedButton) {
       selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
+
+    if (sliderLoading) return;
 
     switch (type) {
       case 'newest-first':
