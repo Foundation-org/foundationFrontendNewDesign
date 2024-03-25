@@ -67,8 +67,8 @@ export const filtersSlice = createSlice({
           ...state.topics,
           All: { id: 'All', list: action.payload },
           Block:
-            state.topics.Block && state.topics.Block.list.length > 0
-              ? { id: 'Block', list: state.topics.Block.list }
+            state.topics?.Block && state.topics?.Block.list.length > 0
+              ? { id: 'Block', list: state.topics?.Block.list }
               : { id: 'Block', list: [] },
         },
       };
@@ -81,7 +81,7 @@ export const filtersSlice = createSlice({
     //       : { id: 'Block', list: [] };
     // },
     setBlockTopics: (state, action) => {
-      state.topics.Block = { id: 'Block', list: action.payload };
+      state.topics?.Block = { id: 'Block', list: action.payload };
     },
     toggleExapandedView: (state, action) => {
       state.expandedView = !state.expandedView;
