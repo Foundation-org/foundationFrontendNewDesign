@@ -40,16 +40,16 @@ function App() {
   }, [theme]);
 
 
-  useEffect(() => {
-    document.addEventListener("visibilitychange", function() {
-      if (document.visibilityState === 'hidden') {
-        alert("Background Tab Throttling hidden")
-      } else {
-        alert("Background Tab Throttling not hidden")
-        // Resume operations
-      }
-  });
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("visibilitychange", function() {
+  //     if (document.visibilityState === 'hidden') {
+  //       alert("Background Tab Throttling hidden")
+  //     } else {
+  //       alert("Background Tab Throttling not hidden")
+  //       // Resume operations
+  //     }
+  // });
+  // }, []);
 
 
   // useEffect(() => {
