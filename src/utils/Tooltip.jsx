@@ -1,14 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import * as createQuestAction from '../features/createQuest/createQuestSlice';
+import { useDispatch } from 'react-redux';
 
-export const Tooltip = ({ optionStatus }) => {
+export const Tooltip = ({ optionStatus, id }) => {
+  // console.log('tooltip id', id)
+  const dispatch = useDispatch();
   const [tooltipStatus, setTooltipStatusState] = useState(optionStatus);
-
+  // console.log('optionStatus', optionStatus)
   useEffect(() => {
     setTooltipStatusState(optionStatus);
   }, [optionStatus]);
 
+  const hideTooltipMsg = () => {
+    // console.log('running')
+    dispatch(createQuestAction.hideToolTipMessage(id));
+  }
+
   return (
     <>
+    {tooltipStatus?.showToolTipMsg && (
+      <>
       {tooltipStatus?.name === 'Rejected' && (
         <div
           className={`absolute w-32 sm:w-[186px] md:w-52 xl:w-48 ${
@@ -21,7 +32,8 @@ export const Tooltip = ({ optionStatus }) => {
             <div
               className="relative -right-[7px] top-[10px] rounded-full bg-[#F34141] p-[2px] tablet:-right-4 tablet:top-[18px] tablet:p-2"
               onClick={() => {
-                setTooltipStatusState('');
+                setTooltipStatusState('')
+                hideTooltipMsg()
               }}
             >
               <svg
@@ -38,7 +50,7 @@ export const Tooltip = ({ optionStatus }) => {
               </svg>
             </div>
 
-            <div className="bottom-full right-0 w-[11rem] rounded-md border-[0.533px] bg-[#FEDEDE] px-[0.32rem] py-[0.2rem] text-[0.5rem] font-normal text-[#F34141] tablet:w-[28rem] tablet:rounded-[15px] tablet:py-[18px] tablet:text-[1rem] dark:bg-[#3C1A20] dark:text-[#DB6262]">
+           <div className="bottom-full right-0 w-[11rem] rounded-md border-[0.533px] bg-[#FEDEDE] px-[0.32rem] py-[0.2rem] text-[0.5rem] font-normal text-[#F34141] tablet:w-[28rem] tablet:rounded-[15px] tablet:py-[18px] tablet:text-[1rem] dark:bg-[#3C1A20] dark:text-[#DB6262]">
               {tooltipStatus?.tooltipName}
               <svg
                 className="absolute left-[27px] top-full -mt-[1px] h-2 w-full text-[#FEDEDE] tablet:left-[65px] tablet:h-[28px] laptop:left-[0px] dark:text-[#3C1A20]"
@@ -66,6 +78,7 @@ export const Tooltip = ({ optionStatus }) => {
               className="relative -right-[7px] top-[10px] rounded-full bg-[#C89E0A] p-[2px] tablet:-right-4 tablet:top-[18px] tablet:p-2"
               onClick={() => {
                 setTooltipStatusState('');
+                hideTooltipMsg()
               }}
             >
               <svg
@@ -102,6 +115,8 @@ export const Tooltip = ({ optionStatus }) => {
           </div>
         </div>
       )}
+      </>
+    )}
     </>
   );
 };

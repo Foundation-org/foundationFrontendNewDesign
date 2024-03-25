@@ -23,6 +23,7 @@ const defaultStatus = {
   tooltipName: 'Please write something...',
   tooltipStyle: 'tooltip-info',
   status: false,
+  showToolTipMsg: true,
 };
 
 const initialState = {
@@ -167,6 +168,11 @@ export const createQuestSlice = createSlice({
         questionReset: initialState.questionReset,
       };
     },
+    hideToolTipMessage: (state, action) => {
+      const parts = action.payload.split("-");
+      const index = parseInt(parts[1])
+      state.optionsValue[index-1].optionStatus.showToolTipMsg = false;
+    },
   },
   extraReducers: (builder) => {
     // check question status start
@@ -177,6 +183,7 @@ export const createQuestSlice = createSlice({
         tooltipName: 'Verifying your question. Please wait...',
         tooltipStyle: 'tooltip-success',
         status: false,
+        showToolTipMsg: true
       };
       state.chatgptStatus = {
         name: 'Checking',
@@ -184,6 +191,7 @@ export const createQuestSlice = createSlice({
         tooltipName: 'Verifying your question. Please wait...',
         tooltipStyle: 'tooltip-success',
         status: false,
+        showToolTipMsg: true
       };
       state.questions.questionTyping = false;
     });
@@ -200,6 +208,7 @@ export const createQuestSlice = createSlice({
             tooltipName: 'This post is not unique. A post like this already exists.',
             tooltipStyle: 'tooltip-error',
             duplication: true,
+            showToolTipMsg: true
           };
           state.chatgptStatus = {
             name: 'Duplicate',
@@ -207,6 +216,7 @@ export const createQuestSlice = createSlice({
             tooltipName: 'This post is not unique. A post like this already exists.',
             tooltipStyle: 'tooltip-error',
             duplication: true,
+            showToolTipMsg: true
           };
         } else {
           state.questions.validatedQuestion = state.questions.question;
@@ -217,6 +227,7 @@ export const createQuestSlice = createSlice({
             tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
             tooltipStyle: 'tooltip-error',
             status: true,
+            showToolTipMsg: true
           };
           state.chatgptStatus = {
             name: 'Rejected',
@@ -224,6 +235,7 @@ export const createQuestSlice = createSlice({
             tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
             tooltipStyle: 'tooltip-error',
             status: true,
+            showToolTipMsg: true
           };
         }
       } else {
@@ -330,6 +342,7 @@ const getDuplicateStatus = () => ({
   tooltipName: 'Found Duplication!',
   tooltipStyle: 'tooltip-error',
   duplication: true,
+  showToolTipMsg: true
 });
 
 const getRejectedStatus = () => ({
@@ -337,6 +350,7 @@ const getRejectedStatus = () => ({
   color: 'text-[#b00f0f]',
   tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
   tooltipStyle: 'tooltip-error',
+  showToolTipMsg: true
 });
 
 export const {
@@ -346,6 +360,7 @@ export const {
   updateRankedChoice,
   addOptionById,
   resetCreateQuest,
+  hideToolTipMessage,
   handleQuestionReset,
   addNewOption,
   delOption,
