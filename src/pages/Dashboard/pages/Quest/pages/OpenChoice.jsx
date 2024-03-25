@@ -145,6 +145,8 @@ const OpenChoice = () => {
   const removeOption = (id, number) => {
     dispatch(createQuestAction.delOption({ id }));
 
+    if (optionsValue.length - 1 === parseInt(id.split('-')[1])) return;
+
     answerVerification(
       `index-${optionsValue.length - 2}`,
       optionsValue.length - 2,
