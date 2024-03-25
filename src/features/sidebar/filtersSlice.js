@@ -81,7 +81,7 @@ export const filtersSlice = createSlice({
     //       : { id: 'Block', list: [] };
     // },
     setBlockTopics: (state, action) => {
-      state.topics?.Block = { id: 'Block', list: action.payload };
+      state.topics.Block = { id: 'Block', list: action.payload };
     },
     toggleExapandedView: (state, action) => {
       state.expandedView = !state.expandedView;
