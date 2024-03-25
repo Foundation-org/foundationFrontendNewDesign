@@ -133,8 +133,8 @@ function Slider({ nextPage, feedData, sliderLoading, setSliderloading }) {
         }
         break;
       case 'topics':
-        setSliderloading(true);
         if (filterStates.topics?.Block && filterStates.topics?.Block.list.includes(data)) return;
+        setSliderloading(true);
         dispatch(homeFilterActions.setBlockTopics([data]));
         dispatch(filtersActions.setFilterBySort(''));
         dispatch(filtersActions.setFilterByScope('All'));
@@ -170,7 +170,7 @@ function Slider({ nextPage, feedData, sliderLoading, setSliderloading }) {
             onClick={() => {
               handleButtonSelection('newest-first', null, 'newButton');
             }}
-            disabled={sliderLoading || (feedData.length === 0 && nextPage)}
+            disabled={sliderLoading}
             id={'newButton'}
           >
             New!
@@ -181,7 +181,7 @@ function Slider({ nextPage, feedData, sliderLoading, setSliderloading }) {
             onClick={() => {
               handleButtonSelection('most-popular', null, 'trendingButton');
             }}
-            disabled={sliderLoading || (feedData.length === 0 && nextPage)}
+            disabled={sliderLoading}
             id={'trendingButton'}
           >
             Trending!
@@ -192,7 +192,7 @@ function Slider({ nextPage, feedData, sliderLoading, setSliderloading }) {
             onClick={() => {
               handleButtonSelection('my-posts', null, 'myPostButton');
             }}
-            disabled={sliderLoading || (feedData.length === 0 && nextPage)}
+            disabled={sliderLoading}
             id={'myPostButton'}
           >
             My Posts
@@ -223,7 +223,7 @@ function Slider({ nextPage, feedData, sliderLoading, setSliderloading }) {
                 key={index + 1}
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
-                disabled={sliderLoading || (feedData.length === 0 && nextPage)}
+                disabled={sliderLoading}
                 id={`topic-${index}`}
               >
                 {item}

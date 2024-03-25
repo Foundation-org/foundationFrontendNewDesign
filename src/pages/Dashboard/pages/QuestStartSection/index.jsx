@@ -304,13 +304,13 @@ const QuestStartSection = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (sliderLoading) {
-      setTimeout(() => {
-        setSliderloading(false);
-      }, 1000);
-    }
-  }, [sliderLoading]);
+  // useEffect(() => {
+  //   if (sliderLoading) {
+  //     setTimeout(() => {
+  //       setSliderloading(false);
+  //     }, 1000);
+  //   }
+  // }, [sliderLoading]);
 
   // console.log(
   //   '🚀 ~ QuestStartSection ~ allData:',
