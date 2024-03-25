@@ -56,7 +56,18 @@ const QuestStartSection = () => {
     filterStates,
     filterStates.searchData,
     pagination,
-    filterStates.topics,
+    filterStates.topics !== undefined
+      ? filterStates.topics
+      : {
+          All: {
+            id: 'All',
+            list: [],
+          },
+          Block: {
+            id: 'Block',
+            list: [],
+          },
+        },
     {
       _page: pagination.page,
       _limit: pageLimit,
