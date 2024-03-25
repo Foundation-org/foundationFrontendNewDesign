@@ -4,7 +4,7 @@ import * as HomepageAPIs from '../api/homepageApis';
 
 export function useGetFeedData(filterStates, debouncedSearch, pagination, columns, params) {
   params = applyFilters(params, filterStates, columns);
-  console.log('first', params.moderationRatingFilter);
+
   const { data, isLoading } = useQuery({
     queryFn: async () => {
       if (debouncedSearch === '') {

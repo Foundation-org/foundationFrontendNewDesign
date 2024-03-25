@@ -11,13 +11,13 @@ import Slider from '../../../../components/Slider';
 
 // Utilities and Constants
 import { printEndMessage } from '../../../../utils';
-import { initialColumns } from '../../../../constants/preferences';
+// import { initialColumns } from '../../../../constants/preferences';
 import * as QuestServices from '../../../../services/queries/quest';
 import * as filtersActions from '../../../../features/sidebar/filtersSlice';
 import * as questUtilsActions from '../../../../features/quest/utilsSlice';
 
 const QuestStartSection = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // Redux State
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -43,56 +43,60 @@ const QuestStartSection = () => {
   const [sliderLoading, setSliderloading] = useState(false);
 
   // Preferences
-  const columnsData = localStorage.getItem('columns');
-  const parsedColumns = JSON.parse(columnsData);
-  const [columns, setColumns] = useState(parsedColumns || initialColumns);
-  const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
+  // const columnsData = localStorage.getItem('columns');
+  // const parsedColumns = JSON.parse(columnsData);
+  // const [columns, setColumns] = useState(parsedColumns || initialColumns);
+  // const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
   const [height, setHeight] = useState('calc(100vh - 140px)');
 
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
-  const { data: feedData, isLoading } = QuestServices.useGetFeedData(filterStates, filterStates.searchData, pagination, columns, {
-    _page: pagination.page,
-    _limit: pageLimit,
-    start: pagination.sliceStart,
-    end: pagination.sliceEnd,
-    uuid: persistedUserInfo?.uuid,
-    moderationRatingFilter: filterStates.moderationRatingFilter,
-  },
+  const { data: feedData, isLoading } = QuestServices.useGetFeedData(
+    filterStates,
+    filterStates.searchData,
+    pagination,
+    filterStates.topics,
+    {
+      _page: pagination.page,
+      _limit: pageLimit,
+      start: pagination.sliceStart,
+      end: pagination.sliceEnd,
+      uuid: persistedUserInfo?.uuid,
+      moderationRatingFilter: filterStates.moderationRatingFilter,
+    },
   );
-   // Reset Preferences
-  useEffect(() => {
-    if (!filterStates.isColumns) {
-      const currentColumns = { ...columns };
+  // Reset Preferences
+  // useEffect(() => {
+  //   if (!filterStates.isColumns) {
+  //     const currentColumns = { ...columns };
 
-      const stateString = JSON.stringify({
-        All: {
-          id: 'All',
-          list: [],
-        },
-        Block: {
-          id: 'Block',
-          list: [],
-        },
-      });
-      localStorage.setItem('columns', stateString);
+  //     const stateString = JSON.stringify({
+  //       All: {
+  //         id: 'All',
+  //         list: [],
+  //       },
+  //       Block: {
+  //         id: 'Block',
+  //         list: [],
+  //       },
+  //     });
+  //     localStorage.setItem('columns', stateString);
 
-      currentColumns.Block = {
-        id: 'Block',
-        list: [],
-      };
+  //     currentColumns.Block = {
+  //       id: 'Block',
+  //       list: [],
+  //     };
 
-      setColumns(currentColumns);
-    }
-
-  }, [filterStates.isColumns]);
+  //     setColumns(currentColumns);
+  //   }
+  // }, [filterStates.isColumns]);
 
   // Update Preferences Columns in redux
   useEffect(() => {
-    const stateString = JSON.stringify(columns);
-    localStorage.setItem('columns', stateString);
-    dispatch(filtersActions.setIsColumn());
+    // const stateString = JSON.stringify(columns);
+    // localStorage.setItem('columns', stateString);
+    // dispatch(filtersActions.setIsColumn());
 
     setPagination((prevPagination) => ({
       ...prevPagination,
@@ -100,12 +104,12 @@ const QuestStartSection = () => {
       sliceEnd: pageLimit,
       page: 1,
     }));
-  }, [columns]);
+  }, [filterStates.topics]);
 
   // Update Columns based on Preferences
-  useEffect(() => {
-    dispatch(filtersActions.setItemWithCross(itemsWithCross));
-  }, [itemsWithCross]);
+  // useEffect(() => {
+  //   dispatch(filtersActions.setItemWithCross(itemsWithCross));
+  // }, [itemsWithCross]);
 
   // Update Data on Filter Changes
   useEffect(() => {
@@ -134,7 +138,7 @@ const QuestStartSection = () => {
       });
     }
     if (!isLoading) {
-      setSliderloading(false)
+      setSliderloading(false);
     }
   }, [feedData, filterStates, pagination.page]);
   // useEffect(() => {
@@ -276,7 +280,7 @@ const QuestStartSection = () => {
 
   useEffect(() => {
     const updateHeight = () => {
-      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 182.3px)' : 'calc(100vh - 140px)';
+      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 210px)' : 'calc(100vh - 140px)';
       setHeight(newHeight);
     };
 
@@ -306,15 +310,15 @@ const QuestStartSection = () => {
     <div className="w-full bg-[#F3F3F3] dark:bg-black">
       <div className="mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
         <SidebarLeft
-          columns={columns}
-          setColumns={setColumns}
-          itemsWithCross={itemsWithCross}
-          setItemsWithCross={setItemsWithCross}
+        // columns={columns}
+        // setColumns={setColumns}
+        // itemsWithCross={itemsWithCross}
+        // setItemsWithCross={setItemsWithCross}
         />
         <div className="no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:min-h-[calc(100vh-92px)] dark:bg-[#242424]">
           <Slider
-            columns={columns}
-            setColumns={setColumns}
+            // columns={columns}
+            // setColumns={setColumns}
             feedData={allData}
             nextPage={feedData?.hasNextPage}
             sliderLoading={sliderLoading}

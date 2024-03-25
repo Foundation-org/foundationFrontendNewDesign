@@ -1,15 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/Button';
+import { useLocation } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice';
 import * as QuestServices from '../services/queries/quest';
-import * as prefActions from '../features/preferences/prefSlice';
-import { useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 
-function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSliderloading }) {
+function Slider({ nextPage, feedData, sliderLoading, setSliderloading }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -20,20 +18,10 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
     filtersActions = homeFilterActions;
   }
   const containerRef = useRef(null);
-  const getPreferences = useSelector(prefActions.getPrefs);
   const filterStates = useSelector(filtersActions.getFilters);
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [multipleOption, setMultipleOption] = useState(
-    localStorage.getItem('filterByState') !== undefined
-      ? localStorage.getItem('filterByState') === 'true'
-        ? true
-        : false
-      : false,
-  );
-  const [localMe, setLocalMe] = useState(multipleOption);
 
   const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
-  const { data: prefSearchRes } = QuestServices.useSearchTopics(getPreferences);
 
   useEffect(() => {
     const selectedButtonId = localStorage.getItem('selectedButtonId');
@@ -41,47 +29,13 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
     if (selectedButton) {
       selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-  }, [columns]);
+  }, [filterStates.topics]);
 
   useEffect(() => {
-    if (prefSearchRes?.length !== 0) {
-      setColumns((prevColumns) => {
-        const newList = prefSearchRes?.data.data || [];
-        // const filteredList = newList.filter(
-        //   (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
-        // );
-        const filteredList = newList.filter((item) => !prevColumns.Block.list.includes(item));
-
-        return {
-          ...prevColumns,
-          All: {
-            ...prevColumns.All,
-            list: filteredList || [],
-          },
-        };
-      });
-    } else {
-      if (isSuccess) {
-        setColumns((prevColumns) => {
-          const newList = topicsData?.data.data || [];
-          // const filteredList = newList.filter(
-          //   (item) => !prevColumns.Block.list.includes(item) && !prevColumns.Preferences.list.includes(item),
-          // );
-
-          // const filteredList = newList.filter((item) => !prevColumns.Block.list.includes(item));
-
-          return {
-            ...prevColumns,
-            All: {
-              ...prevColumns.All,
-              list: newList || [],
-              // list: filteredList || [],
-            },
-          };
-        });
-      }
+    if (isSuccess) {
+      dispatch(homeFilterActions.setTopics(topicsData?.data.data || []));
     }
-  }, [topicsData, prefSearchRes, isSuccess]);
+  }, [topicsData, isSuccess]);
 
   const handleMouseDown = (e) => {
     e.preventDefault();
@@ -112,30 +66,6 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
   };
-
-  const handleMyPosts = () => {
-    setLocalMe(!multipleOption);
-    dispatch(filtersActions.setFilterByScope(multipleOption ? 'All' : 'Me'));
-    localStorage.setItem('filterByState', !multipleOption ? 'true' : 'false');
-    setMultipleOption(!multipleOption);
-  };
-
-  const handleClearMyPosts = () => {
-    setLocalMe(false);
-    dispatch(filtersActions.setFilterByScope('All'));
-    localStorage.setItem('filterByState', 'false');
-    setMultipleOption(false);
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem('filterByState') === 'true') {
-      setMultipleOption(true);
-      setLocalMe(true);
-    } else {
-      setMultipleOption(false);
-      setLocalMe(false);
-    }
-  }, [localStorage.getItem('filterByState')]);
 
   useEffect(() => {
     setScrollPosition(0);
@@ -169,70 +99,48 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
     });
   };
 
-  const clearBlockList = () => {
-    setColumns((prevColumns) => {
-      const updatedColumns = { ...prevColumns }; // Create a shallow copy of the columns object
-      updatedColumns['Block'].list = []; // Set the list property of the Block column to an empty array
-      return updatedColumns; // Return the updated columns object
-    });
-  };
-
-  const handleSelectTopic = (item) => {
-    if (columns['Block'].list && columns['Block'].list.includes(item)) return;
-
-    setColumns((prevColumns) => {
-      const updatedColumns = { ...prevColumns }; // Create a shallow copy of the columns object
-      const blockList = updatedColumns['Block'].list;
-
-      const itemIndex = blockList.indexOf(item); // Check if the item exists in the Block list
-      if (itemIndex !== -1) {
-        // If the item exists, remove it from the Block list
-        blockList.splice(itemIndex, 1);
-      }
-
-      // Clear the blockList and add the new item
-      updatedColumns['Block'].list = [item];
-
-      return updatedColumns; // Return the updated columns object
-    });
-  };
-
   const handleButtonSelection = (type, data, id) => {
-    //save the id of selected button in localStorage for scrolling it into view
+    // Save the id of the selected button in localStorage for scrolling it into view
     localStorage.setItem('selectedButtonId', id);
     const selectedButton = document.getElementById(id);
     if (selectedButton) {
       selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-    if (type === 'newest-first') {
-      if (filterStates.filterBySort !== 'Newest First') {
+
+    switch (type) {
+      case 'newest-first':
+        if (filterStates.filterBySort !== 'Newest First') {
+          setSliderloading(true);
+          dispatch(homeFilterActions.setBlockTopics([]));
+          dispatch(filtersActions.setFilterByScope('All'));
+          dispatch(filtersActions.setFilterBySort('Newest First'));
+        }
+        break;
+      case 'most-popular':
+        if (filterStates.filterBySort !== 'Most Popular') {
+          setSliderloading(true);
+          dispatch(homeFilterActions.setBlockTopics([]));
+          dispatch(filtersActions.setFilterByScope('All'));
+          dispatch(filtersActions.setFilterBySort('Most Popular'));
+        }
+        break;
+      case 'my-posts':
+        if (filterStates.filterByScope !== 'Me') {
+          setSliderloading(true);
+          dispatch(homeFilterActions.setBlockTopics([]));
+          dispatch(filtersActions.setFilterBySort(''));
+          dispatch(filtersActions.setFilterByScope('Me'));
+        }
+        break;
+      case 'topics':
         setSliderloading(true);
-        clearBlockList();
-        handleClearMyPosts();
-        dispatch(filtersActions.setFilterBySort('Newest First'));
-      }
-    }
-    if (type === 'most-popular') {
-      if (filterStates.filterBySort !== 'Most Popular') {
-        setSliderloading(true);
-        handleClearMyPosts();
-        clearBlockList();
-        dispatch(filtersActions.setFilterBySort('Most Popular'));
-      }
-    }
-    if (type === 'my-posts') {
-      if (!localMe) {
-        setSliderloading(true);
-        clearBlockList();
+        if (filterStates.topics?.Block.list && filterStates.topics?.Block.list.includes(data)) return;
+        dispatch(homeFilterActions.setBlockTopics([data]));
         dispatch(filtersActions.setFilterBySort(''));
-        handleMyPosts();
-      }
-    }
-    if (type === 'topics') {
-      setSliderloading(true);
-      handleSelectTopic(data);
-      dispatch(filtersActions.setFilterBySort(''));
-      handleClearMyPosts();
+        dispatch(filtersActions.setFilterByScope('All'));
+        break;
+      default:
+        break;
     }
   };
 
@@ -258,7 +166,7 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
         <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || (feedData.length === 0 && nextPage) ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
             onClick={() => {
               handleButtonSelection('newest-first', null, 'newButton');
             }}
@@ -269,7 +177,7 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
           </Button>
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} ${sliderLoading || (feedData.length === 0 && nextPage) ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
             onClick={() => {
               handleButtonSelection('most-popular', null, 'trendingButton');
             }}
@@ -280,7 +188,7 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
           </Button>
           <Button
             variant={'topics'}
-            className={`${localMe ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} text-nowrap ${sliderLoading || (feedData.length === 0 && nextPage) === 0 ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+            className={`${filterStates.filterByScope === 'Me' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'} $ text-nowrap`}
             onClick={() => {
               handleButtonSelection('my-posts', null, 'myPostButton');
             }}
@@ -291,8 +199,8 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
           </Button>
         </div>
         <div className="flex gap-[6.75px]  tablet:gap-[13.82px]">
-          {columns?.All.list.map((item, index) => {
-            const isItemBlocked = columns?.Block.list.includes(item);
+          {filterStates.topics?.All.list.map((item, index) => {
+            const isItemBlocked = filterStates.topics?.Block?.list.includes(item);
             let startX = 0;
             let startY = 0;
 
@@ -311,7 +219,7 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
             return (
               <Button
                 variant={'topics'}
-                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'} ${sliderLoading || (feedData.length === 0 && nextPage) ? 'opacity-[60%]' : 'opacity-[100%]'}`}
+                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'}`}
                 key={index + 1}
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
@@ -323,7 +231,6 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
             );
           })}
         </div>
-
       </div>
       <button
         onClick={handleRightArrowClick}
@@ -333,7 +240,7 @@ function Slider({ columns, setColumns, nextPage, feedData, sliderLoading, setSli
           backgroundRepeat: 'no-repeat',
           backgroundSize: '100% 100%',
         }}
-      ></button>{' '}
+      ></button>
     </div>
   );
 }

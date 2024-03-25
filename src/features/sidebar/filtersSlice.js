@@ -1,5 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const topicsInitialState = {
+  All: {
+    id: 'All',
+    list: [],
+  },
+  Block: {
+    id: 'Block',
+    list: [],
+  },
+};
+
 const resetState = {
   // expandedView: true,
   searchData: '',
@@ -37,6 +48,7 @@ const initialState = {
   filterBySort: 'Newest First',
   isColumns: JSON.parse(localStorage.getItem('columns'))?.Block.list.length > 0 ? true : false,
   itemsWithCross: [],
+  topics: topicsInitialState,
   moderationRatingFilter: {
     initial: 0,
     final: 20,
@@ -48,6 +60,16 @@ export const filtersSlice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
+    setTopics: (state, action) => {
+      state.topics.All = { id: 'All', list: action.payload };
+      state.topics.Block =
+        state.topics.Block && state.topics.Block.list.length > 0
+          ? { id: 'Block', list: state.topics.Block.list }
+          : { id: 'Block', list: [] };
+    },
+    setBlockTopics: (state, action) => {
+      state.topics.Block = { id: 'Block', list: action.payload };
+    },
     toggleExapandedView: (state, action) => {
       state.expandedView = !state.expandedView;
     },
@@ -93,18 +115,7 @@ export const filtersSlice = createSlice({
     },
     resetFilters: (state) => {
       localStorage.setItem('selectedButtonId', 'newButton');
-      const stateString = JSON.stringify({
-        All: {
-          id: 'All',
-          list: [],
-        },
-        Block: {
-          id: 'Block',
-          list: [],
-        },
-      });
-      localStorage.setItem('columns', stateString);
-      // localStorage.removeItem('columns');
+      state.topics.Block = { id: 'Block', list: [] };
       Object.assign(state, resetState);
     },
     resetSearchData: (state) => {
@@ -112,24 +123,15 @@ export const filtersSlice = createSlice({
     },
     resetOtherFilters: (state) => {
       localStorage.setItem('selectedButtonId', 'newButton');
-      const stateString = JSON.stringify({
-        All: {
-          id: 'All',
-          list: [],
-        },
-        Block: {
-          id: 'Block',
-          list: [],
-        },
-      });
-      localStorage.setItem('columns', stateString);
-      // localStorage.removeItem('columns');
+      state.topics.Block = { id: 'Block', list: [] };
       Object.assign(state, resetOtherStates);
     },
   },
 });
 
 export const {
+  setTopics,
+  setBlockTopics,
   toggleExapandedView,
   setSearchData,
   setFilterByStatus,

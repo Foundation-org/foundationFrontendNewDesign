@@ -22,7 +22,7 @@ import { addUser } from '../../../features/auth/authSlice';
 import { useDebounce } from '../../../utils/useDebounce';
 import Ratings from '../../../components/dialogue-boxes/Ratings';
 
-const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross }) => {
+const SidebarLeft = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
@@ -113,8 +113,8 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
         dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
         dispatch(filtersActions.setExpandedView(true));
         dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
-        const stateString = JSON.stringify(persistedUserInfo?.bookmarkStates?.columns);
-        localStorage.setItem('bookmarkColumns', stateString);
+        // const stateString = JSON.stringify(persistedUserInfo?.bookmarkStates?.columns);
+        // localStorage.setItem('bookmarkColumns', stateString);
       } else {
         dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.filterByScope));
         dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
@@ -122,8 +122,8 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
         dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
         dispatch(filtersActions.setExpandedView(true));
         dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
-        const stateString = JSON.stringify(persistedUserInfo?.States?.columns);
-        localStorage.setItem('columns', stateString);
+        // const stateString = JSON.stringify(persistedUserInfo?.States?.columns);
+        // localStorage.setItem('columns', stateString);
       }
     }
   }, [persistedUserInfo]);
@@ -133,38 +133,38 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
 
   useEffect(() => {
     if (pathname === '/dashboard/bookmark') {
-      setBookmarkFilters({ ...filterStates, columns: columns });
+      setBookmarkFilters({ ...filterStates, columns: filterStates.topics });
     } else {
-      setFilters({ ...filterStates, columns: columns });
+      setFilters({ ...filterStates, columns: filterStates.topics });
     }
-  }, [filterStates, columns]);
+  }, [filterStates, filterStates.topics]);
 
-  const [multipleOption, setMultipleOption] = useState(
-    localStorage.getItem('filterByState') !== undefined
-      ? localStorage.getItem('filterByState') === 'true'
-        ? true
-        : false
-      : false,
-  );
-  const [localMe, setLocalMe] = useState(multipleOption);
+  // const [multipleOption, setMultipleOption] = useState(
+  //   localStorage.getItem('filterByState') !== undefined
+  //     ? localStorage.getItem('filterByState') === 'true'
+  //       ? true
+  //       : false
+  //     : false,
+  // );
+  // const [localMe, setLocalMe] = useState(multipleOption);
   const [openTopicPref, setOpenTopicPref] = useState(false);
 
-  const handleSwitchChange = () => {
-    setLocalMe(!multipleOption);
-    dispatch(filtersActions.setFilterByScope(multipleOption ? 'All' : 'Me'));
-    localStorage.setItem('filterByState', !multipleOption ? 'true' : 'false');
-    setMultipleOption(!multipleOption);
-  };
+  // const handleSwitchChange = () => {
+  //   setLocalMe(!multipleOption);
+  //   dispatch(filtersActions.setFilterByScope(multipleOption ? 'All' : 'Me'));
+  //   localStorage.setItem('filterByState', !multipleOption ? 'true' : 'false');
+  //   setMultipleOption(!multipleOption);
+  // };
 
-  useEffect(() => {
-    if (localStorage.getItem('filterByState') === 'true') {
-      setMultipleOption(true);
-      setLocalMe(true);
-    } else {
-      setMultipleOption(false);
-      setLocalMe(false);
-    }
-  }, [localStorage.getItem('filterByState')]);
+  // useEffect(() => {
+  //   if (localStorage.getItem('filterByState') === 'true') {
+  //     setMultipleOption(true);
+  //     setLocalMe(true);
+  //   } else {
+  //     setMultipleOption(false);
+  //     setLocalMe(false);
+  //   }
+  // }, [localStorage.getItem('filterByState')]);
 
   const handleExpendedView = () => {
     localStorage.setItem('expandedView', !filterStates.expandedView ? 'true' : 'false');
@@ -266,11 +266,11 @@ const SidebarLeft = ({ columns, setColumns, itemsWithCross, setItemsWithCross })
             customClasses="rounded-[0.9375rem] tablet:rounded-[2.31rem] w-[75vw] h-fit tablet:h-fit tablet:w-fit bg-[#FCFCFD] dark:bg-[#3E3E3E]"
           >
             <TopicPreferences
-              columns={columns}
-              setColumns={setColumns}
+              // columns={columns}
+              // setColumns={setColumns}
               handleClose={handleTopicPref}
-              itemsWithCross={itemsWithCross}
-              setItemsWithCross={setItemsWithCross}
+              // itemsWithCross={itemsWithCross}
+              // setItemsWithCross={setItemsWithCross}
             />
           </BasicModal>
 
