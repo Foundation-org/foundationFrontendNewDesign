@@ -12,7 +12,7 @@ export const applyFilters = (params, filterStates, columns) => {
   }
 
   if (filterStates.filterByScope === 'Me') {
-    params = { ...params, filter: true };
+    params = { ...params, filter: true, sort: 'Newest First' };
   }
 
   // if (columns.Preferences.list.length !== 0) {
