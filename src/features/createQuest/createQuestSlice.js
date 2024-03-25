@@ -169,9 +169,13 @@ export const createQuestSlice = createSlice({
       };
     },
     hideToolTipMessage: (state, action) => {
-      const parts = action.payload.split("-");
-      const index = parseInt(parts[1])
-      state.optionsValue[index-1].optionStatus.showToolTipMsg = false;
+      if (action.payload) {
+        const parts = action.payload.split("-");
+        const index = parseInt(parts[1])
+        state.optionsValue[index-1].optionStatus.showToolTipMsg = false;
+      } else {
+        state.questionReset.showToolTipMsg = false;
+      }
     },
   },
   extraReducers: (builder) => {

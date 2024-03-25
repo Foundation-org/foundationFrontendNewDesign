@@ -9,7 +9,6 @@ export default function CreateQuestWrapper({ type, handleTab, msg, children }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
-
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
 
