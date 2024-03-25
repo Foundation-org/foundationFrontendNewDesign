@@ -440,7 +440,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
     </div>
   ) : (
     <div className="flex items-center justify-center">
-      <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
+      <FaSpinner className="animate-spin pb-[5rem] pt-3 text-[10vw]  text-blue tablet:py-[27px] tablet:text-[4vw]" />
     </div>
   );
 };
