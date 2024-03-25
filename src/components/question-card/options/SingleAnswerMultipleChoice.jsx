@@ -112,12 +112,14 @@ const SingleAnswerMultipleChoice = (props) => {
       color: 'text-[#0FB063]',
       tooltipName: 'Verifying your option. Please wait...',
       tooltipStyle: 'tooltip-success',
+      showToolTipMsg: true
     });
     setPrevStatus({
       name: 'Checking',
       color: 'text-[#0FB063]',
       tooltipName: 'Verifying your option. Please wait...',
       tooltipStyle: 'tooltip-success',
+      showToolTipMsg: true
     });
     // option Validation
     const { validatedAnswer, errorMessage } = await questServices.answerValidation({
@@ -130,12 +132,14 @@ const SingleAnswerMultipleChoice = (props) => {
         color: 'text-[#b00f0f]',
         tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
         tooltipStyle: 'tooltip-error',
+        showToolTipMsg: true
       });
       return props.setCheckOptionStatus({
         name: 'Rejected',
         color: 'text-[#b00f0f]',
         tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
         tooltipStyle: 'tooltip-error',
+        showToolTipMsg: true
       });
     }
     // Check Answer is unique
@@ -152,6 +156,7 @@ const SingleAnswerMultipleChoice = (props) => {
         tooltipName: 'Found Duplication!',
         tooltipStyle: 'tooltip-error',
         duplication: true,
+        showToolTipMsg: true
       });
       return props.setCheckOptionStatus({
         name: 'Duplicate',
@@ -159,6 +164,7 @@ const SingleAnswerMultipleChoice = (props) => {
         tooltipName: 'Found Duplication!',
         tooltipStyle: 'tooltip-error',
         duplication: true,
+        showToolTipMsg: true
       });
     }
     // Answer is validated and status is Ok
@@ -171,6 +177,7 @@ const SingleAnswerMultipleChoice = (props) => {
         tooltipName: 'Answer is Verified',
         tooltipStyle: 'tooltip-success',
         isVerifiedAnswer: true,
+        showToolTipMsg: true
       });
       props.setCheckOptionStatus({
         name: 'Ok',
@@ -178,6 +185,7 @@ const SingleAnswerMultipleChoice = (props) => {
         tooltipName: 'Answer is Verified',
         tooltipStyle: 'tooltip-success',
         isVerifiedAnswer: true,
+        showToolTipMsg: true
       });
     }
   };
