@@ -131,6 +131,7 @@ const MultipleChoice = () => {
   };
 
   const answerVerification = async (id, index, value, extra) => {
+    console.log('first', id, index, value);
     if (extra) {
       if (extra === value) return;
     }
@@ -145,8 +146,13 @@ const MultipleChoice = () => {
   };
 
   const removeOption = (id, number) => {
-    answerVerification(id, parseInt(id.split('-')[1]), optionsValue[optionsValue.length - 1].question);
     dispatch(createQuestAction.delOption({ id }));
+
+    answerVerification(
+      `index-${optionsValue.length - 2}`,
+      optionsValue.length - 2,
+      optionsValue[optionsValue.length - 1].question,
+    );
   };
 
   const handleOnDragEnd = (result) => {
@@ -232,6 +238,8 @@ const MultipleChoice = () => {
       setHollow(true);
     }
   }, [optionsValue, createQuestSlice.question]);
+
+  console.log(optionsValue);
 
   return (
     <CreateQuestWrapper

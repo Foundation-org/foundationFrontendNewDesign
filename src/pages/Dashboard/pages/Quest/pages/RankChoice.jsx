@@ -137,8 +137,13 @@ const RankChoice = () => {
   };
 
   const removeOption = (id, number) => {
-    answerVerification(id, parseInt(id.split('-')[1]), optionsValue[optionsValue.length - 1].question);
     dispatch(createQuestAction.delOption({ id }));
+
+    answerVerification(
+      `index-${optionsValue.length - 2}`,
+      optionsValue.length - 2,
+      optionsValue[optionsValue.length - 1].question,
+    );
   };
 
   const handleOnDragEnd = (result) => {
