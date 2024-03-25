@@ -11,6 +11,7 @@ import api from '../../../../../services/api/Axios';
 
 import { LoginSocialFacebook } from 'reactjs-social-login';
 import { LoginSocialLinkedin } from './ReactLinkedIn';
+import { LoginSocialYoutube } from './ReactYoutube';
 import { contacts } from '../../../../../constants/varification-badges';
 import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
@@ -35,11 +36,11 @@ const VerificationBadges = () => {
   const [deleteModalState, setDeleteModalState] = useState();
   const [pageLoading, setPageLoading] = useState(true);
 
-  const loginWithYoutube = () => { };
+  const loginWithYoutube = () => {};
 
   const handleSoundCloud = () => {
     // window.location.href = `https://secure.soundcloud.com/authorize?client_id=${'clientId'}&redirect_uri=${'redirectUri'}&response_type=code`;
-  }
+  };
   const loginInWithInsta = async (code) => {
     try {
       // return
@@ -68,7 +69,7 @@ const VerificationBadges = () => {
       // showBoundary(JSON.stringify(error)); // Stringify the error object
       console.error('Error fetching Instagram profile:', error.message);
     }
-  }
+  };
 
   const loginWithTwitter = () => {
     const provider = new TwitterAuthProvider();
@@ -159,6 +160,8 @@ const VerificationBadges = () => {
         id = data.user.uid;
       } else if (provider === 'github') {
         id = data.user.email;
+      } else if (provider === 'youtube') {
+        id = data.items[0].id;
       }
 
       const addBadge = await api.post(`/addBadge`, {
@@ -169,15 +172,12 @@ const VerificationBadges = () => {
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
-        console.log('2', isLoading);
         handleUserInfo();
       }
     } catch (error) {
       if (error.response.data.message.split(':')[1] === 'Oops! This account is already linked.') {
-
         toast.error('Oops! This account is already linked.');
       }
-
     } finally {
       setIsLoading(false);
     }
@@ -228,8 +228,9 @@ const VerificationBadges = () => {
             My Verification Badges
           </h1>
           <div
-            className={`${persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
-              } relative mx-6 mb-[140px] mt-[10px] flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-[30px] tablet:mb-[10rem] tablet:mt-[35px] tablet:gap-4 tablet:rounded-[45px] tablet:px-[30px] tablet:py-[30px] laptop:mx-[45px] laptop:gap-5 laptop:px-[40px]`}
+            className={`${
+              persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
+            } relative mx-6 mb-[140px] mt-[10px] flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-[30px] tablet:mb-[10rem] tablet:mt-[35px] tablet:gap-4 tablet:rounded-[45px] tablet:px-[30px] tablet:py-[30px] laptop:mx-[45px] laptop:gap-5 laptop:px-[40px]`}
           >
             <Contact
               handleUserInfo={handleUserInfo}
@@ -251,8 +252,9 @@ const VerificationBadges = () => {
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
                   <div
-                    className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                      } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    className={`${
+                      persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                   >
                     <h1>Facebook</h1>
                   </div>
@@ -317,8 +319,9 @@ const VerificationBadges = () => {
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
                   <div
-                    className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                      } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    className={`${
+                      persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                   >
                     <h1>Linked In</h1>
                   </div>
@@ -372,8 +375,8 @@ const VerificationBadges = () => {
                     >
                       <Button
                         color={checkSocial('linkedin') ? 'red' : 'blue'}
-                      // disabled={true}
-                      // color="gray"
+                        // disabled={true}
+                        // color="gray"
                       >
                         {checkSocial('linkedin') ? 'Remove' : 'Add New Badge'}
                         <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
@@ -392,8 +395,9 @@ const VerificationBadges = () => {
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
                   <div
-                    className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                      } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    className={`${
+                      persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                   >
                     <h1>Twitter</h1>
                   </div>
@@ -448,8 +452,9 @@ const VerificationBadges = () => {
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
                   <div
-                    className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                      } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    className={`${
+                      persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                   >
                     <h1>Instagram</h1>
                   </div>
@@ -513,8 +518,9 @@ const VerificationBadges = () => {
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
                   <div
-                    className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                      } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    className={`${
+                      persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                   >
                     <h1>Github</h1>
                   </div>
@@ -561,15 +567,16 @@ const VerificationBadges = () => {
                   )}
                 </div>
                 {/* Youtube  */}
-                <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
+                <div className="flex items-center gap-[10px] laptop:gap-5">
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`}
                     alt="Twitter"
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
                   <div
-                    className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                      } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    className={`${
+                      persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                   >
                     <h1>Youtube</h1>
                   </div>
@@ -602,19 +609,29 @@ const VerificationBadges = () => {
                       </span>
                     </Button>
                   ) : (
-                    <Button
-                      // color={checkSocial('youtube') ? 'red' : 'blue'}
-                      color={'gray'}
-                      onClick={() => {
-                        loginWithYoutube();
+                    <LoginSocialYoutube
+                      // isOnlyGetToken
+                      client_id={import.meta.env.VITE_GG_APP_ID}
+                      onResolve={({ provider, data }) => {
+                        console.log('youtube', data);
+                        setIsLoading(true);
+                        handleAddBadge('youtube', data);
                       }}
-                      disabled={true}
+                      redirect_uri={window.location.href}
+                      scope="openid profile email https://www.googleapis.com/auth/youtube.readonly"
+                      onReject={(err) => {
+                        toast.error('An error occured while adding badge');
+                        setIsLoading(false);
+                        console.log(err);
+                      }}
                     >
-                      {checkSocial('youtube') ? 'Remove' : 'Add New Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
-                      </span>
-                    </Button>
+                      <Button color={'blue'}>
+                        {'Add New Badge'}
+                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                          {'(+0.96 FDX)'}
+                        </span>
+                      </Button>
+                    </LoginSocialYoutube>
                   )}
                 </div>
                 {/* SoundCloud */}
@@ -626,8 +643,9 @@ const VerificationBadges = () => {
                     className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                   />
                   <div
-                    className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                      } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    className={`${
+                      persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                   >
                     <h1>Sound Cloud</h1>
                   </div>
@@ -688,8 +706,9 @@ const VerificationBadges = () => {
                   className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                 />
                 <div
-                  className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  className={`${
+                    persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                 >
                   <h1>Facebook</h1>
                 </div>
@@ -754,8 +773,9 @@ const VerificationBadges = () => {
                   className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                 />
                 <div
-                  className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  className={`${
+                    persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                 >
                   <h1>Linked In</h1>
                 </div>
@@ -849,8 +869,9 @@ const VerificationBadges = () => {
                   className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                 />
                 <div
-                  className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  className={`${
+                    persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                 >
                   <h1>Twitter</h1>
                 </div>
@@ -904,8 +925,9 @@ const VerificationBadges = () => {
                   className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                 />
                 <div
-                  className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  className={`${
+                    persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                 >
                   <h1>Instagram</h1>
                 </div>
@@ -967,8 +989,9 @@ const VerificationBadges = () => {
                   className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                 />
                 <div
-                  className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  className={`${
+                    persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                 >
                   <h1>Github</h1>
                 </div>
@@ -1016,15 +1039,16 @@ const VerificationBadges = () => {
               </div>
 
               {/* Youtube  */}
-              <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
+              <div className="flex items-center gap-[10px] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`}
                   alt="Twitter"
                   className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                 />
                 <div
-                  className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  className={`${
+                    persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                 >
                   <h1>Youtube</h1>
                 </div>
@@ -1057,19 +1081,29 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 ) : (
-                  <Button
-                    // color={checkSocial('youtube') ? 'red' : 'blue'}
-                    color={'gray'}
-                    onClick={() => {
-                      loginWithYoutube();
+                  <LoginSocialYoutube
+                    // isOnlyGetToken
+                    client_id={import.meta.env.VITE_GG_APP_ID}
+                    onResolve={({ provider, data }) => {
+                      console.log('youtube', data);
+                      setIsLoading(true);
+                      handleAddBadge('youtube', data);
                     }}
-                    disabled={true}
+                    redirect_uri={window.location.href}
+                    scope="openid profile email https://www.googleapis.com/auth/youtube.readonly"
+                    onReject={(err) => {
+                      toast.error('An error occured while adding badge');
+                      setIsLoading(false);
+                      console.log(err);
+                    }}
                   >
-                    {checkSocial('youtube') ? 'Remove' : 'Add New Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                      {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
-                    </span>
-                  </Button>
+                    <Button color={'blue'}>
+                      {'Add New Badge'}
+                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                        {'(+0.96 FDX)'}
+                      </span>
+                    </Button>
+                  </LoginSocialYoutube>
                 )}
               </div>
               {/* SoundCloud */}
@@ -1081,8 +1115,9 @@ const VerificationBadges = () => {
                   className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
                 />
                 <div
-                  className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  className={`${
+                    persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                 >
                   <h1>Sound Cloud</h1>
                 </div>
