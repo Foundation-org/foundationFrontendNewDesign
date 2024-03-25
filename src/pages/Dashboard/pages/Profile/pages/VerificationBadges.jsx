@@ -35,6 +35,7 @@ const VerificationBadges = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
   const [pageLoading, setPageLoading] = useState(true);
+  const [height, setHeight] = useState(false);
 
   const loginWithYoutube = () => {};
 
@@ -201,6 +202,23 @@ const VerificationBadges = () => {
     setDeleteModalState(item);
     setModalVisible(true);
   };
+
+  useEffect(() => {
+    const updateHeight = () => {
+      const newHeight = window.innerWidth <= 744 ? true : false;
+      setHeight(newHeight);
+    };
+
+    updateHeight();
+
+    window.addEventListener('resize', updateHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []);
+
+  console.log('height', height);
 
   return (
     <>
@@ -568,73 +586,75 @@ const VerificationBadges = () => {
                   )}
                 </div>
                 {/* Youtube  */}
-                <div className="flex items-center gap-[10px] laptop:gap-5">
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`}
-                    alt="Twitter"
-                    className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
-                  />
-                  <div
-                    className={`${
-                      persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
-                  >
-                    <h1>Youtube</h1>
-                  </div>
-                  {checkSocial('youtube') ? (
-                    <Button
-                      color={checkSocial('youtube') ? 'red' : 'blue'}
-                      onClick={() => {
-                        if (persistedUserInfo?.role === 'guest') {
-                          handleGuestBadgeAdd();
-                        } else {
-                          checkSocial('youtube') &&
-                            handleRemoveBadgePopup({
-                              title: 'youtube',
-                              image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`,
-                              accountName: 'youtube',
-                            });
-                        }
-                      }}
+                {!height ? (
+                  <div className="flex items-center gap-[10px] laptop:gap-5">
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`}
+                      alt="Twitter"
+                      className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
+                    />
+                    <div
+                      className={`${
+                        persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                      } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
                     >
-                      {checkSocial('youtube') ? 'Remove' : 'Add New Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
-                      </span>
-                    </Button>
-                  ) : persistedUserInfo?.role === 'guest' ? (
-                    <Button color={checkSocial('youtube') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
-                      {checkSocial('youtube') ? 'Remove' : 'Add New Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                        {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
-                      </span>
-                    </Button>
-                  ) : (
-                    <LoginSocialYoutube
-                      // isOnlyGetToken
-                      client_id={import.meta.env.VITE_GG_APP_ID}
-                      onResolve={({ provider, data }) => {
-                        console.log('youtube', data);
-                        setIsLoading(true);
-                        handleAddBadge('youtube', data);
-                      }}
-                      redirect_uri={window.location.href}
-                      scope="openid profile email https://www.googleapis.com/auth/youtube.readonly"
-                      onReject={(err) => {
-                        toast.error('An error occured while adding badge');
-                        setIsLoading(false);
-                        console.log(err);
-                      }}
-                    >
-                      <Button color={'blue'}>
-                        {'Add New Badge'}
+                      <h1>Youtube</h1>
+                    </div>
+                    {checkSocial('youtube') ? (
+                      <Button
+                        color={checkSocial('youtube') ? 'red' : 'blue'}
+                        onClick={() => {
+                          if (persistedUserInfo?.role === 'guest') {
+                            handleGuestBadgeAdd();
+                          } else {
+                            checkSocial('youtube') &&
+                              handleRemoveBadgePopup({
+                                title: 'youtube',
+                                image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`,
+                                accountName: 'youtube',
+                              });
+                          }
+                        }}
+                      >
+                        {checkSocial('youtube') ? 'Remove' : 'Add New Badge'}
                         <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                          {'(+0.96 FDX)'}
+                          {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
-                    </LoginSocialYoutube>
-                  )}
-                </div>
+                    ) : persistedUserInfo?.role === 'guest' ? (
+                      <Button color={checkSocial('youtube') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
+                        {checkSocial('youtube') ? 'Remove' : 'Add New Badge'}
+                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                          {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
+                        </span>
+                      </Button>
+                    ) : (
+                      <LoginSocialYoutube
+                        // isOnlyGetToken
+                        client_id={import.meta.env.VITE_GG_APP_ID}
+                        onResolve={({ provider, data }) => {
+                          console.log('youtube', data);
+                          setIsLoading(true);
+                          handleAddBadge('youtube', data);
+                        }}
+                        redirect_uri={window.location.href}
+                        scope="openid profile email https://www.googleapis.com/auth/youtube.readonly"
+                        onReject={(err) => {
+                          toast.error('An error occured while adding badge');
+                          setIsLoading(false);
+                          console.log(err);
+                        }}
+                      >
+                        <Button color={'blue'}>
+                          {'Add New Badge'}
+                          <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                            {'(+0.96 FDX)'}
+                          </span>
+                        </Button>
+                      </LoginSocialYoutube>
+                    )}
+                  </div>
+                ) : null}
                 {/* SoundCloud */}
 
                 <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
@@ -699,7 +719,7 @@ const VerificationBadges = () => {
 
             {/* all */}
             <div className="flex flex-col items-center gap-[7px] tablet:hidden tablet:gap-4 laptop:gap-5">
-              {/* ...........................Facebook......................  */}
+              {/* Facebook */}
               <div className="flex items-center gap-[10px] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`}
@@ -766,7 +786,7 @@ const VerificationBadges = () => {
                 )}
               </div>
 
-              {/* ...........................LinkedIn......................  */}
+              {/* LinkedIn */}
               <div className="flex items-center gap-[10px] opacity-[100%] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
@@ -862,7 +882,7 @@ const VerificationBadges = () => {
                 )}
               </div>
 
-              {/* ...........................Twitter......................  */}
+              {/* Twitter */}
               <div className="flex items-center gap-[10px] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`}
@@ -918,7 +938,8 @@ const VerificationBadges = () => {
                   </Button>
                 )}
               </div>
-              {/* Instagram  */}
+
+              {/* Instagram */}
               <div className="flex items-center gap-[10px] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`}
@@ -982,7 +1003,7 @@ const VerificationBadges = () => {
                 )}
               </div>
 
-              {/* ............................Github......................... */}
+              {/* Github */}
               <div className="flex items-center gap-[10px] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`}
@@ -1107,8 +1128,8 @@ const VerificationBadges = () => {
                   </LoginSocialYoutube>
                 )}
               </div>
-              {/* SoundCloud */}
 
+              {/* SoundCloud */}
               <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/soundCloud.svg`}
