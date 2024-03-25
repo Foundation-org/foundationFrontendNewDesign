@@ -199,7 +199,7 @@ function Slider({ nextPage, feedData, sliderLoading, setSliderloading }) {
           </Button>
         </div>
         <div className="flex gap-[6.75px]  tablet:gap-[13.82px]">
-          {filterStates.topics?.All.list.map((item, index) => {
+          {filterStates.topics?.All?.list.map((item, index) => {
             const isItemBlocked = filterStates.topics?.Block?.list.includes(item);
             let startX = 0;
             let startY = 0;

@@ -61,12 +61,25 @@ export const filtersSlice = createSlice({
   initialState,
   reducers: {
     setTopics: (state, action) => {
-      state.topics.All = { id: 'All', list: action.payload };
-      state.topics.Block =
-        state.topics.Block && state.topics.Block.list.length > 0
-          ? { id: 'Block', list: state.topics.Block.list }
-          : { id: 'Block', list: [] };
+      return {
+        ...state,
+        topics: {
+          ...state.topics,
+          All: { id: 'All', list: action.payload },
+          Block:
+            state.topics.Block && state.topics.Block.list.length > 0
+              ? { id: 'Block', list: state.topics.Block.list }
+              : { id: 'Block', list: [] },
+        },
+      };
     },
+    // setTopics: (state, action) => {
+    //   state.topics.All = { id: 'All', list: action.payload };
+    //   state.topics.Block =
+    //     state.topics.Block && state.topics.Block.list.length > 0
+    //       ? { id: 'Block', list: state.topics.Block.list }
+    //       : { id: 'Block', list: [] };
+    // },
     setBlockTopics: (state, action) => {
       state.topics.Block = { id: 'Block', list: action.payload };
     },

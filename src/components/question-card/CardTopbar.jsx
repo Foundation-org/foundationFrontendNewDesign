@@ -29,6 +29,21 @@ const CardTopbar = ({
     }
   };
 
+  const moderationRatingCount = Math.round(questStartData?.moderationRatingCount);
+  let ratingImage = null;
+
+  if (moderationRatingCount === 0) {
+    ratingImage = 'desk-g.svg';
+  } else if (moderationRatingCount >= 1 && moderationRatingCount <= 20) {
+    ratingImage = 'desk-pg.svg';
+  } else if (moderationRatingCount >= 21 && moderationRatingCount <= 40) {
+    ratingImage = 'desk-r.svg';
+  } else if (moderationRatingCount >= 41 && moderationRatingCount <= 60) {
+    ratingImage = 'desk-nc.svg';
+  } else if (moderationRatingCount >= 61 && moderationRatingCount <= 100) {
+    ratingImage = 'desk-x.svg';
+  }
+
   return (
     <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-2 py-1 tablet:px-5 tablet:py-[0.63rem] laptop:px-4">
       <div className="flex items-center gap-5 tablet:gap-10">
@@ -93,35 +108,11 @@ const CardTopbar = ({
       ) : (
         <>
           <div className="flex items-center gap-[5.64px] tablet:gap-[14.36px]">
-            {Math.round(questStartData?.moderationRatingCount) === 0 ? (
+            {ratingImage ? (
               <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-g.svg`}
-                alt="desk-g"
-                className="h-[15px] w-[15px] tablet:h-[23px] tablet:w-[23px]"
-              />
-            ) : questStartData?.moderationRatingCount >= 1 && questStartData.moderationRatingCount <= 20 ? (
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-pg.svg`}
-                alt="desk-pg"
-                className="h-[15px] w-[15px] tablet:h-[23px] tablet:w-[23px]"
-              />
-            ) : questStartData?.moderationRatingCount >= 21 && questStartData.moderationRatingCount <= 40 ? (
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-r.svg`}
-                alt="desk-r"
-                className="h-[15px] w-[15px] tablet:h-[23px] tablet:w-[23px]"
-              />
-            ) : questStartData?.moderationRatingCount >= 41 && questStartData.moderationRatingCount <= 60 ? (
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-nc.svg`}
-                alt="desk-nc"
-                className="h-[15px] w-[15px] tablet:h-[23px] tablet:w-[23px]"
-              />
-            ) : questStartData?.moderationRatingCount >= 61 && questStartData.moderationRatingCount <= 100 ? (
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-x.svg`}
-                alt="desk-x"
-                className="h-[15px] w-[15px] tablet:h-[23px] tablet:w-[23px]"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/${ratingImage}`}
+                alt={ratingImage.replace('.svg', '')}
+                className="h-[15px] w-full tablet:h-[23px]"
               />
             ) : null}
             <h1 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">

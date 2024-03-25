@@ -145,6 +145,7 @@ const MultipleChoice = () => {
   };
 
   const removeOption = (id, number) => {
+    answerVerification(id, parseInt(id.split('-')[1]), optionsValue[optionsValue.length - 1].question);
     dispatch(createQuestAction.delOption({ id }));
   };
 
