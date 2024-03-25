@@ -134,7 +134,7 @@ function Slider({ nextPage, feedData, sliderLoading, setSliderloading }) {
         break;
       case 'topics':
         setSliderloading(true);
-        if (filterStates.topics?.Block.list && filterStates.topics?.Block.list.includes(data)) return;
+        if (filterStates.topics?.Block && filterStates.topics?.Block.list.includes(data)) return;
         dispatch(homeFilterActions.setBlockTopics([data]));
         dispatch(filtersActions.setFilterBySort(''));
         dispatch(filtersActions.setFilterByScope('All'));
