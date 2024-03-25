@@ -657,7 +657,7 @@ const VerificationBadges = () => {
                 ) : null}
                 {/* SoundCloud */}
 
-                <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
+                {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/soundCloud.svg`}
                     alt="Sound Cloud"
@@ -713,7 +713,7 @@ const VerificationBadges = () => {
                       </span>
                     </Button>
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -1130,7 +1130,7 @@ const VerificationBadges = () => {
               </div>
 
               {/* SoundCloud */}
-              <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
+              {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/soundCloud.svg`}
                   alt="Sound Cloud"
@@ -1181,7 +1181,7 @@ const VerificationBadges = () => {
                     </span>
                   </Button>
                 )}
-              </div>
+              </div> */}
             </div>
 
             <Web3
