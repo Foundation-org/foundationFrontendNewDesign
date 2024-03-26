@@ -1,62 +1,77 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- HTML Meta Tags -->
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/fav64+xml" href="/public/fav64.png" />
-    <!-- --------------------------------------------------------------------------------------------- -->
-    <title>Foundation</title>
-    <meta name="title" content="Foundation" />
-    <meta
-      name="description"
-      content="Participate on foundation and have your voice heard. Foundation rewards every user for their valuable insights"
-    />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <!-- <meta property="og:url" content="https://on.foundation" /> -->
-    <meta property="og:title" content="Foundation" />
-    <meta
-      property="og:description"
-      content="Participate on foundation and have your voice heard. Foundation rewards every user for their valuable insights"
-    />
-    <meta property="og:image" content="https://foundation-seo.s3.amazonaws.com/foundation-seo-logo.png" />
+<head>
+  <!-- HTML Meta Tags -->
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/fav64+xml" href="/public/fav64.png" />
+  <!-- --------------------------------------------------------------------------------------------- -->
+  <title>Foundation</title>
+  <meta name="title" content="Foundation" />
+  <meta name="description"
+    content="Participate on foundation and have your voice heard. Foundation rewards every user for their valuable insights" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="website" />
-    <meta property="twitter:url" content="https://on.foundation" />
-    <meta name="twitter:title" content="Foundation" />
-    <meta
-      name="twitter:description"
-      content="Participate on foundation and have your voice heard. Foundation rewards every user for their valuable insights"
-    />
-    <meta name="twitter:image" content="https://foundation-seo.s3.amazonaws.com/foundation-seo-logo.png" />
-    <!-- --------------------------------------------------------------------------------------------- -->
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <!-- <meta property="og:url" content="https://on.foundation" /> -->
+  <meta property="og:title" content="Foundation" />
+  <meta property="og:description"
+    content="Participate on foundation and have your voice heard. Foundation rewards every user for their valuable insights" />
+  <meta property="og:image" content="https://foundation-seo.s3.amazonaws.com/foundation-seo-logo.png" />
 
-    <!-- Light Theme Favicon -->
-    <link rel="icon" type="image/png" sizes="64x64" href="/fav64.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/fav32.png" />
-    <link rel="icon" type="image/png" sizes="96x96" href="/fav96.png" />
+  <!-- Twitter -->
+  <meta property="twitter:card" content="website" />
+  <meta property="twitter:url" content="https://on.foundation" />
+  <meta name="twitter:title" content="Foundation" />
+  <meta name="twitter:description"
+    content="Participate on foundation and have your voice heard. Foundation rewards every user for their valuable insights" />
+  <meta name="twitter:image" content="https://foundation-seo.s3.amazonaws.com/foundation-seo-logo.png" />
+  <!-- --------------------------------------------------------------------------------------------- -->
 
-    <!-- Dark Theme Favicon -->
-    <link rel="icon" type="image/png" sizes="64x64" href="/fav64a.png" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/fav32a.png" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/png" sizes="96x96" href="/fav96a.png" media="(prefers-color-scheme: dark)" />
+  <!-- Light Theme Favicon -->
+  <link rel="icon" type="image/png" sizes="64x64" href="/fav64.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/fav32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/fav96.png" />
 
-    <!-- Fallback Favicon (for browsers that do not support media queries) -->
-    <link rel="icon" type="image/svg+xml" sizes="64x64" href="/light-64.svg" />
+  <!-- Dark Theme Favicon -->
+  <link rel="icon" type="image/png" sizes="64x64" href="/fav64a.png" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/fav32a.png" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/fav96a.png" media="(prefers-color-scheme: dark)" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2, user-scalable=yes" />
+  <!-- Fallback Favicon (for browsers that do not support media queries) -->
+  <link rel="icon" type="image/svg+xml" sizes="64x64" href="/light-64.svg" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body className="dark">
-    <div id="root"></div>
-    <script type="module" src="./src/main.jsx"></script>
-  </body>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2, user-scalable=yes" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body className="dark">
+  <div id="root"></div>
+  <!-- Add script for checking and reloading page -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let isReloading = false;
+
+      setTimeout(function() {
+        // Check if the main element is empty or has unexpected content
+        const mainElement = document.querySelector('#root'); // Change '#root' to your main container selector
+        if (!mainElement || mainElement.innerHTML.trim() === '') {
+          // Reload the page if main content is missing or empty, and ensure it's not already reloading
+          if (!isReloading) {
+            isReloading = true;
+            window.location.reload();
+          }
+        }
+      }, 1000); // Adjust the delay as needed
+    });
+  </script>
+
+  <script type="module" src="./src/main.jsx"></script>
+</body>
+
 </html>
