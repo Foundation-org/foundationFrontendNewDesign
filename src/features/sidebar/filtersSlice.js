@@ -12,17 +12,12 @@ const topicsInitialState = {
 };
 
 const resetState = {
-  // expandedView: true,
+  expandedView: true,
   searchData: '',
   filterByStatus: '',
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
-  isColumns: false,
-  // moderationRatingFilter: {
-  //   initial: 0,
-  //   final: 20,
-  // },
   clearFilter: false,
 };
 
@@ -31,11 +26,6 @@ const resetOtherStates = {
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
-  isColumns: false,
-  // moderationRatingFilter: {
-  //   initial: 0,
-  //   final: 20,
-  // },
   clearFilter: false,
 };
 
@@ -46,8 +36,6 @@ const initialState = {
   filterByType: '',
   filterByScope: '',
   filterBySort: 'Newest First',
-  isColumns: JSON.parse(localStorage.getItem('columns'))?.Block.list.length > 0 ? true : false,
-  itemsWithCross: [],
   topics: topicsInitialState,
   moderationRatingFilter: {
     initial: 0,
@@ -67,20 +55,14 @@ export const filtersSlice = createSlice({
           ...state.topics,
           All: { id: 'All', list: action.payload },
           Block:
-            state.topics?.Block && state.topics?.Block.list.length > 0
+            state.topics?.Block && state.topics?.Block.list?.length > 0
               ? { id: 'Block', list: state.topics?.Block.list }
               : { id: 'Block', list: [] },
         },
       };
     },
-    // setTopics: (state, action) => {
-    //   state.topics.All = { id: 'All', list: action.payload };
-    //   state.topics.Block =
-    //     state.topics.Block && state.topics.Block.list.length > 0
-    //       ? { id: 'Block', list: state.topics.Block.list }
-    //       : { id: 'Block', list: [] };
-    // },
     setBlockTopics: (state, action) => {
+      console.log('called', action.payload);
       state.topics.Block = { id: 'Block', list: action.payload };
     },
     toggleExapandedView: (state, action) => {
@@ -112,16 +94,6 @@ export const filtersSlice = createSlice({
     setFilterBySort: (state, action) => {
       state.filterBySort = action.payload;
     },
-    setItemWithCross: (state, action) => {
-      state.itemsWithCross = action.payload;
-    },
-    setIsColumn: (state, action) => {
-      if (JSON.parse(localStorage.getItem('columns'))?.Block.list.length > 0) {
-        state.isColumns = true;
-      } else {
-        state.isColumns = false;
-      }
-    },
     setRatings: (state, action) => {
       const { initial, final } = action.payload;
       state.moderationRatingFilter = { initial, final };
@@ -151,8 +123,6 @@ export const {
   setFilterByType,
   setFilterByScope,
   setFilterBySort,
-  setItemWithCross,
-  setIsColumn,
   setRatings,
   resetFilters,
   resetSearchData,

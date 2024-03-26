@@ -104,18 +104,18 @@ const QuestStartSection = () => {
   // }, [filterStates.isColumns]);
 
   // Update Preferences Columns in redux
-  useEffect(() => {
-    // const stateString = JSON.stringify(columns);
-    // localStorage.setItem('columns', stateString);
-    // dispatch(filtersActions.setIsColumn());
+  // useEffect(() => {
+  //   // const stateString = JSON.stringify(columns);
+  //   // localStorage.setItem('columns', stateString);
+  //   // dispatch(filtersActions.setIsColumn());
 
-    setPagination((prevPagination) => ({
-      ...prevPagination,
-      sliceStart: 0,
-      sliceEnd: pageLimit,
-      page: 1,
-    }));
-  }, [filterStates.topics]);
+  //   setPagination((prevPagination) => ({
+  //     ...prevPagination,
+  //     sliceStart: 0,
+  //     sliceEnd: pageLimit,
+  //     page: 1,
+  //   }));
+  // }, [filterStates.topics]);
 
   // Update Columns based on Preferences
   // useEffect(() => {
@@ -330,8 +330,8 @@ const QuestStartSection = () => {
           <Slider
             // columns={columns}
             // setColumns={setColumns}
-            feedData={allData}
-            nextPage={feedData?.hasNextPage}
+            // feedData={allData}
+            // nextPage={feedData?.hasNextPage}
             sliderLoading={sliderLoading}
             setSliderloading={setSliderloading}
           />

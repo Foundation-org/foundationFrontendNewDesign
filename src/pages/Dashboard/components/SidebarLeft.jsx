@@ -2,13 +2,9 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
 
 // components
 import Dropdown2 from '../../../components/Dropdown2';
-import CustomSwitch2 from '../../../components/CustomSwitch2';
-import BasicModal from '../../../components/BasicModal';
-import TopicPreferences from './topicpreferences';
 
 // extras
 import * as homeFilterActions from '../../../features/sidebar/filtersSlice';
@@ -16,9 +12,7 @@ import * as bookmarkFiltersActions from '../../../features/sidebar/bookmarkFilte
 
 // icons
 import { GrClose } from 'react-icons/gr';
-import { topicPreferencesModalStyle } from '../../../assets/styles';
-import { setBookmarkFilterStates, setFilterStates, userInfo, userInfoById } from '../../../services/api/userAuth';
-import { addUser } from '../../../features/auth/authSlice';
+import { setBookmarkFilterStates, setFilterStates } from '../../../services/api/userAuth';
 import { useDebounce } from '../../../utils/useDebounce';
 import Ratings from '../../../components/dialogue-boxes/Ratings';
 
@@ -26,62 +20,28 @@ const SidebarLeft = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
+  let filtersActions;
+  if (pathname === '/dashboard/bookmark') {
+    filtersActions = bookmarkFiltersActions;
+  } else {
+    filtersActions = homeFilterActions;
+  }
+
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedTheme = useSelector((state) => state.utils.theme);
+  const filterStates = useSelector(filtersActions.getFilters);
+  const [ratingsDialogue, setRatingsDialogue] = useState(false);
   const [search, setSearch] = useState(
     pathname === '/dashboard/bookmark'
       ? persistedUserInfo?.bookmarkStates.searchData
       : persistedUserInfo?.States.searchData,
   );
 
-  const [ratingsDialogue, setRatingsDialogue] = useState(false);
-
   const showRatingDialogue = () => setRatingsDialogue(true);
   const hideRatingDialogue = () => setRatingsDialogue(false);
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-  });
-
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
-      if (resp?.status === 200) {
-        // Cookie Calling
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          // Set into local storage
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        // LocalStorage Calling
-        if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-          if (res?.data?.requiredAction) {
-            setModalVisible(true);
-          }
-        }
-
-        if (resp?.data?.requiredAction) {
-          setModalVisible(true);
-        }
-      }
-
-      // setResponse(resp?.data);
-    } catch (e) {
-      console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
-
   const { mutateAsync: setFilters } = useMutation({
     mutationFn: setFilterStates,
-    onSuccess: (resp) => {
-      handleUserInfo();
-    },
     onError: (err) => {
       console.log(err);
     },
@@ -89,20 +49,10 @@ const SidebarLeft = () => {
 
   const { mutateAsync: setBookmarkFilters } = useMutation({
     mutationFn: setBookmarkFilterStates,
-    onSuccess: (resp) => {
-      handleUserInfo();
-    },
     onError: (err) => {
       console.log(err);
     },
   });
-
-  let filtersActions;
-  if (pathname === '/dashboard/bookmark') {
-    filtersActions = bookmarkFiltersActions;
-  } else {
-    filtersActions = homeFilterActions;
-  }
 
   useEffect(() => {
     if (persistedUserInfo) {
@@ -113,8 +63,6 @@ const SidebarLeft = () => {
         dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
         dispatch(filtersActions.setExpandedView(true));
         dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
-        // const stateString = JSON.stringify(persistedUserInfo?.bookmarkStates?.columns);
-        // localStorage.setItem('bookmarkColumns', stateString);
       } else {
         dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.filterByScope));
         dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
@@ -122,59 +70,20 @@ const SidebarLeft = () => {
         dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
         dispatch(filtersActions.setExpandedView(true));
         dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
-        // const stateString = JSON.stringify(persistedUserInfo?.States?.columns);
-        // localStorage.setItem('columns', stateString);
+        dispatch(filtersActions.setBlockTopics(persistedUserInfo.States.topics?.Block.list));
       }
     }
   }, [persistedUserInfo]);
-
-  const persistedTheme = useSelector((state) => state.utils.theme);
-  const filterStates = useSelector(filtersActions.getFilters);
 
   useEffect(() => {
     if (pathname === '/dashboard/bookmark') {
       setBookmarkFilters({ ...filterStates, columns: filterStates.topics });
     } else {
-      setFilters({ ...filterStates, columns: filterStates.topics });
+      setFilters({ ...filterStates });
     }
-  }, [filterStates, filterStates.topics]);
+  }, [filterStates]);
 
-  // const [multipleOption, setMultipleOption] = useState(
-  //   localStorage.getItem('filterByState') !== undefined
-  //     ? localStorage.getItem('filterByState') === 'true'
-  //       ? true
-  //       : false
-  //     : false,
-  // );
-  // const [localMe, setLocalMe] = useState(multipleOption);
-  const [openTopicPref, setOpenTopicPref] = useState(false);
-
-  // const handleSwitchChange = () => {
-  //   setLocalMe(!multipleOption);
-  //   dispatch(filtersActions.setFilterByScope(multipleOption ? 'All' : 'Me'));
-  //   localStorage.setItem('filterByState', !multipleOption ? 'true' : 'false');
-  //   setMultipleOption(!multipleOption);
-  // };
-
-  // useEffect(() => {
-  //   if (localStorage.getItem('filterByState') === 'true') {
-  //     setMultipleOption(true);
-  //     setLocalMe(true);
-  //   } else {
-  //     setMultipleOption(false);
-  //     setLocalMe(false);
-  //   }
-  // }, [localStorage.getItem('filterByState')]);
-
-  const handleExpendedView = () => {
-    localStorage.setItem('expandedView', !filterStates.expandedView ? 'true' : 'false');
-    dispatch(filtersActions.toggleExapandedView());
-  };
-
-  const handleTopicPref = () => {
-    setOpenTopicPref(!openTopicPref);
-  };
-
+  // Search
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
@@ -197,12 +106,6 @@ const SidebarLeft = () => {
       <div className="no-scrollbar mt-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between rounded-[17.928px] bg-white pb-14 pt-8 text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:bg-[#000] dark:text-white">
         <div className="flex flex-col items-center">
           <div className="flex w-full flex-col items-center justify-center gap-[4vh] border-b-[1.32px] border-[#9C9C9C] pb-[3vh] ">
-            {/* <div className="flex items-center justify-center gap-[25px]">
-              <h1 className="ml-[5px] flex items-center gap-2 text-[20px] font-medium leading-normal text-[#707175] dark:text-white">
-                Expanded View
-              </h1>
-              <CustomSwitch2 enabled={filterStates.expandedView} setEnabled={handleExpendedView} />
-            </div> */}
             <div className="relative">
               <div className="relative h-[45px] w-[212px]">
                 <input
@@ -259,21 +162,6 @@ const SidebarLeft = () => {
             {/* Topics */}
             Rating
           </button>
-          <BasicModal
-            open={openTopicPref}
-            handleClose={handleTopicPref}
-            customStyle={topicPreferencesModalStyle}
-            customClasses="rounded-[0.9375rem] tablet:rounded-[2.31rem] w-[75vw] h-fit tablet:h-fit tablet:w-fit bg-[#FCFCFD] dark:bg-[#3E3E3E]"
-          >
-            <TopicPreferences
-              // columns={columns}
-              // setColumns={setColumns}
-              handleClose={handleTopicPref}
-              // itemsWithCross={itemsWithCross}
-              // setItemsWithCross={setItemsWithCross}
-            />
-          </BasicModal>
-
           <div className="mt-[4vh] flex flex-col gap-[3vh]">
             <Dropdown2
               label={'Status'}
@@ -309,22 +197,8 @@ const SidebarLeft = () => {
                 dispatch(filtersActions.setFilterByType(item));
               }}
             />
-            {/* <Dropdown2
-              label={'Sort'}
-              title={filterStates.filterBySort ? filterStates.filterBySort : 'Newest First'}
-              items={['Most Popular', 'Last Updated', 'Oldest First', 'Newest First']}
-              handleSelect={(item) => {
-                dispatch(filtersActions.setFilterBySort(item));
-              }}
-            /> */}
           </div>
 
-          {/* <div className="flex w-full items-center justify-center gap-[17px] py-[3vh]">
-            <h1 className="flex items-center gap-2 text-[14px] font-medium leading-normal text-[#707175] dark:text-white">
-              Show Only My Posts
-            </h1>
-            <CustomSwitch2 enabled={localMe} setEnabled={handleSwitchChange} />
-          </div> */}
           <button
             className={`${
               persistedTheme === 'dark' ? 'bg-[#F0F0F0]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
@@ -332,7 +206,6 @@ const SidebarLeft = () => {
             onClick={() => {
               dispatch(filtersActions.resetFilters());
               setSearch('');
-              localStorage.setItem('filterByState', 'false');
             }}
           >
             Clear Filters
@@ -386,14 +259,6 @@ const SidebarLeft = () => {
               dispatch(filtersActions.setFilterByType(item));
             }}
           />
-          {/* <Dropdown2
-            label={'Sort'}
-            title={filterStates.filterBySort ? filterStates.filterBySort : 'Newest First'}
-            items={['Most Popular', 'Last Updated', 'Oldest First', 'Newest First']}
-            handleSelect={(item) => {
-              dispatch(filtersActions.setFilterBySort(item));
-            }}
-          /> */}
           <button
             className={`${
               persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
@@ -435,28 +300,6 @@ const SidebarLeft = () => {
             )}
           </div>
         </div>
-        {/* <div className="mt-[9px] flex items-center justify-between gap-[4px] tablet:mt-[21px]">
-          <button
-            className={`${
-              persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-            }  inset-0 w-4/6 rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
-            onClick={handleTopicPref}
-          >
-            Topics
-          </button>
-          <div className="flex w-full items-center justify-center gap-[6px]">
-            <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] tablet:text-[15px] dark:text-white">
-              Expanded View
-            </h1>
-            <CustomSwitch2 enabled={filterStates.expandedView} setEnabled={handleExpendedView} />
-          </div>
-          <div className="flex w-full items-center justify-center gap-[6px]">
-            <h1 className="whitespace-nowrap text-[8px] font-medium leading-normal text-[#707175] tablet:text-[15px] dark:text-white">
-              Show Only My Posts
-            </h1>
-            <CustomSwitch2 enabled={localMe} setEnabled={handleSwitchChange} />
-          </div>
-        </div> */}
       </div>
     </>
   );
