@@ -16,3 +16,30 @@ export const createRedeeemCode = async (data) => {
     toast.error(error.response.data.message.split(':')[1]);
   }
 };
+
+export const addRedeemCode = async (data) => {
+  try {
+    return await api.post('/redeem/transfer', {
+      uuid: data.uuid,
+      code: data.code,
+    });
+  } catch (error) {
+    toast.error(error.response.data.message.split(':')[1]);
+  }
+};
+
+export const getUnredeemedData = async (id, uuid) => {
+  try {
+    return await api.get(`/redeem/getUnredeemedById/${id}/${uuid}`);
+  } catch (error) {
+    toast.error(error.response.data.message.split(':')[1]);
+  }
+};
+
+export const getHistoryData = async (id, uuid) => {
+  try {
+    return await api.get(`/redeem/getRedeemHistoryById/${id}/${uuid}`);
+  } catch (error) {
+    toast.error(error.response.data.message.split(':')[1]);
+  }
+};
