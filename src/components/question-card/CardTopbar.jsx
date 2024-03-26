@@ -33,8 +33,8 @@ const CardTopbar = ({
   let ratingImage = null;
 
   if (moderationRatingCount >= 0 && moderationRatingCount <= 60) {
-    ratingImage = 'desk-g.svg';
-  } else ratingImage = 'desk-r.svg';
+    ratingImage = 'post-e.svg';
+  } else ratingImage = 'post-a.svg';
 
   return (
     <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-2 py-1 tablet:px-5 tablet:py-[0.63rem] laptop:px-4">
