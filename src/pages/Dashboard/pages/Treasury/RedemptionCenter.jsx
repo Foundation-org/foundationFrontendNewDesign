@@ -1,12 +1,68 @@
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import { Button } from '../../../../components/ui/Button';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useMutation } from '@tanstack/react-query';
+import { createRedeeemCode } from '../../../../services/api/redemptionApi';
+import { toast } from 'sonner';
 
 export default function RedemptionCenter() {
+  const [fdx, setFdx] = useState(0);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [description, setDescription] = useState('');
+  const [expiry, setExpiry] = useState('');
+
+  const { mutateAsync: createRedemptionCode } = useMutation({
+    mutationFn: createRedeeemCode,
+    onSuccess: (resp) => {
+      console.log(resp.data);
+      toast.success('Redemption Code created successfully');
+
+      setExpiry('30 days');
+      setDescription('');
+      setFdx(0);
+    },
+
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+  console.log(expiry);
+
+  const handleSubmit = () => {
+    if (fdx === 0) return toast.error('Please select the amount');
+    if (description === '') return toast.error('You cannot leave description empty');
+    let newExpiryDate;
+    if (expiry === '30 days') {
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 30);
+      newExpiryDate = currentDate.toISOString().split('T')[0];
+    } else if (expiry === '7 days') {
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 7);
+      newExpiryDate = currentDate.toISOString();
+    } else {
+      newExpiryDate = null;
+    }
+
+    const params = {
+      creator: persistedUserInfo._id,
+      owner: persistedUserInfo._id,
+      uuid: persistedUserInfo.uuid,
+      amount: fdx,
+      description: description,
+      to: 'any',
+      expiry: newExpiryDate,
+    };
+
+    createRedemptionCode(params);
+  };
   return (
     <div className="flex flex-col gap-[25px]">
       <div>
         <h1 className="mb-6 text-[24px] font-semibold leading-normal text-[#707175]">Redemption center</h1>
         <div className="flex gap-[78px]">
+          {/* Create  */}
           <div className="w-full rounded-[15px] border-[1.846px] border-[#4A8DBD] bg-white px-[25px] py-[25px]">
             <div className="flex justify-between">
               <h1 className="mb-4 text-[22px] font-semibold leading-normal text-[#707175]">Create Redemption Code</h1>
@@ -15,16 +71,22 @@ export default function RedemptionCenter() {
                 <select
                   name=""
                   id=""
+                  value={expiry}
+                  onChange={(e) => setExpiry(e.target.value)}
                   className="h-7 min-w-[82px] max-w-[82px] rounded-[5.376px] border-[2.279px] border-[#DEE6F7] bg-[#F9F9F9] text-[13.6px] font-semibold text-[#7C7C7C] focus:outline-none"
                 >
-                  <option selected>Never</option>
-                  <option>Han</option>
-                  <option>Greedo</option>
+                  <option selected>30 days</option>
+                  <option>7 days</option>
+                  <option>Never</option>
                 </select>
               </div>
             </div>
             <input
               type="text"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
               placeholder="Description here....."
               className="w-full rounded-[7.07px] border-[3px] border-[#DEE6F7] bg-[#F9F9F9] px-4 py-3 text-[16px] font-medium leading-normal text-[#707175] focus:outline-none"
             />
@@ -34,13 +96,29 @@ export default function RedemptionCenter() {
             <div className="flex items-center gap-9">
               <h2 className="text-[20px] font-semibold leading-normal text-[#7C7C7C]">FDX</h2>
               <div className="flex w-full max-w-[178px] items-center justify-between rounded-[7px] border-[3px] border-[#DEE6F7] bg-[#F9F9F9] px-[18px] py-2 text-[#7C7C7C]">
-                <FaPlus className="w-[23px] cursor-pointer" />
-                <h2 className="text-[20px] font-semibold leading-normal text-[#7C7C7C]">0</h2>
-                <FaMinus className="w-[23px] cursor-pointer" />
+                <FaPlus
+                  className="w-[23px] cursor-pointer"
+                  onClick={() => {
+                    if (persistedUserInfo.balance.toFixed(2) - 0.5 > fdx) {
+                      setFdx(fdx + 0.5);
+                    } else {
+                      setFdx(fdx + (persistedUserInfo.balance.toFixed(2) - fdx));
+                    }
+                  }}
+                />
+                <h2 className="text-[20px] font-semibold leading-normal text-[#7C7C7C]">{fdx}</h2>
+                <FaMinus
+                  className="w-[23px] cursor-pointer"
+                  onClick={() => {
+                    if (fdx !== 0) setFdx(fdx - 0.5);
+                  }}
+                />
               </div>
             </div>
             <div className="flex w-full justify-end">
-              <Button variant={'cancel'}>Create</Button>
+              <Button variant={'cancel'} onClick={handleSubmit}>
+                Create
+              </Button>
             </div>
           </div>
           <div className="w-full rounded-[15px] border-[1.846px] border-[#F2DB12] bg-white px-[25px] py-[25px]">

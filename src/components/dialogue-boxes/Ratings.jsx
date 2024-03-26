@@ -70,7 +70,7 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
           >
             <div className="flex items-center justify-center gap-[8px]">
               <img
-                src="/assets/svgs/ratings/post-e.svg"
+                src="/assets/svgs/ratings/desk-e.svg"
                 alt=""
                 className="h-[15px] w-[15px] tablet:h-[35px] tablet:w-[35px]"
               />
