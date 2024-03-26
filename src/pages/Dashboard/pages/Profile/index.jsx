@@ -20,7 +20,7 @@ const Profile = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [selectedTab, setSelectedTab] = useState(pathname);
-  const [treasuryAmount, setTreasuryAmount] = useState(0);
+  // const [treasuryAmount, setTreasuryAmount] = useState(0);
 
   useEffect(() => {
     setSelectedTab(pathname);
@@ -43,22 +43,22 @@ const Profile = () => {
 
   const handleSelectedTab = (id) => setSelectedTab(id);
 
-  const getTreasuryAmount = async () => {
-    try {
-      const res = await api.get(`/treasury/get`);
-      if (res.status === 200) {
-        localStorage.setItem('treasuryAmount', res.data.data);
-        setTreasuryAmount(res.data.data);
-      }
-    } catch (error) {
-      showBoundary(error);
-      toast.error(error.response.data.message.split(':')[1]);
-    }
-  };
+  // const getTreasuryAmount = async () => {
+  //   try {
+  //     const res = await api.get(`/treasury/get`);
+  //     if (res.status === 200) {
+  //       localStorage.setItem('treasuryAmount', res.data.data);
+  //       setTreasuryAmount(res.data.data);
+  //     }
+  //   } catch (error) {
+  //     showBoundary(error);
+  //     toast.error(error.response.data.message.split(':')[1]);
+  //   }
+  // };
 
-  useEffect(() => {
-    getTreasuryAmount();
-  }, []);
+  // useEffect(() => {
+  //   getTreasuryAmount();
+  // }, []);
 
   return (
     <ErrorBoundary
@@ -114,7 +114,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="flex gap-[5.16px] tablet:gap-[15px]">
+          {/* <div className="flex gap-[5.16px] tablet:gap-[15px]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
               alt="badge"
@@ -126,7 +126,7 @@ const Profile = () => {
                 <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
         <Tabs handleSelectedTab={handleSelectedTab} active={selectedTab} />
         <Outlet />

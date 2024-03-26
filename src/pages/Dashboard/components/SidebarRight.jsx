@@ -9,14 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../../components/ui/Button';
 import { addUser } from '../../../features/auth/authSlice';
 import { createGuestMode, userInfo, userInfoById } from '../../../services/api/userAuth';
-import * as filterActions from '../../../features/sidebar/filtersSlice';
 import { formatCountNumber } from '../../../utils/utils';
 
 const SidebarRight = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [response, setResponse] = useState();
-  const [treasuryAmount, setTreasuryAmount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -159,21 +156,8 @@ const SidebarRight = () => {
     }
   };
 
-  const getTreasuryAmount = async () => {
-    try {
-      const res = await api.get(`/treasury/get`);
-      if (res.status === 200) {
-        localStorage.setItem('treasuryAmount', res.data.data);
-        setTreasuryAmount(res.data.data);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-    }
-  };
-
   useEffect(() => {
     handleUserInfo();
-    getTreasuryAmount();
   }, []);
 
   const { mutateAsync: createGuest } = useMutation({
@@ -266,16 +250,6 @@ const SidebarRight = () => {
             </div>
           </div>
         </PopUp>
-        {/* //Teasury Icon and val
-         <div className="mb-[3vh] flex gap-[15px]">
-          <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`} alt="badge" className="h-[60px] w-[60px]" />
-          <div>
-            <h4 className="heading">Treasury</h4>
-            <p className="whitespace-nowrap text-[20px] font-medium text-[#616161] dark:text-white">
-              <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
-            </p>
-          </div>
-        </div> */}
         {persistedUserInfo.role !== 'user' ? (
           <div className="mb-[35px] flex items-center gap-6">
             <div className="relative h-fit w-fit">
@@ -298,44 +272,9 @@ const SidebarRight = () => {
               </div>
             </div>
           </div>
-        ) : (
-          <div
-            className="mb-[35px] flex cursor-pointer items-center gap-[15px]"
-            onClick={() => {
-              navigate('/dashboard/profile');
-            }}
-          >
-            <div className="relative h-fit w-fit">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
-                alt="badge"
-                className="tablet:h-[74px] tablet:w-[60px]"
-              />
-              <p className="transform-center absolute z-50 pb-5 text-[32.25px] font-medium leading-normal text-[#7A7016]">
-                {persistedUserInfo?.badges?.length}
-              </p>
-            </div>
-            <div>
-              <h4 className="heading">My Profile</h4>
-              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] tablet:text-[17px] laptop:text-[20px] dark:text-[#D2D2D2]">
-                <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
-              </div>
-              <div>
-                <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">My Account</Anchor>
-              </div>
-              {/* <div className="mt-3 flex gap-1">
-                <div className="h-[9px] w-[19.5px] rounded-md bg-[#4A8DBD]"></div>
-                <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-                <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-                <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-                <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-                <div className="h-[9px] w-[19.5px] rounded-md bg-[#D9D9D9] dark:bg-[#323232]"></div>
-              </div> */}
-            </div>
-          </div>
-        )}
+        ) : null}
         {sidebarList.map((item) => (
-          <div className="mt-[1.9vh] flex items-center gap-4" key={item.id}>
+          <div className={`flex items-center gap-4 ${item.id !== 1 && 'mt-[1.9vh]'}`} key={item.id}>
             {persistedTheme === 'dark' ? (
               <img src={item.icon} alt={item.alt} className="h-10 w-10" />
             ) : (

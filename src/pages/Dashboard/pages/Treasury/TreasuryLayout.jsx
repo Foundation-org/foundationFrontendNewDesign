@@ -1,11 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const TreasuryLayout = () => {
   const location = useLocation();
   const { pathname } = location;
-
   const [selectedTab, setSelectedTab] = useState(pathname);
+  const [treasuryAmount, setTreasuryAmount] = useState(0);
+
+  const getTreasuryAmount = async () => {
+    try {
+      const res = await api.get(`/treasury/get`);
+      if (res.status === 200) {
+        localStorage.setItem('treasuryAmount', res.data.data);
+        setTreasuryAmount(res.data.data);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+    }
+  };
+
+  useEffect(() => {
+    getTreasuryAmount();
+  }, []);
 
   return (
     <div className="h-[calc(100vh-58px)] w-full overflow-scroll overflow-x-hidden bg-[#F3F3F3] tablet:h-[calc(100vh-70px)]">
@@ -19,8 +35,7 @@ const TreasuryLayout = () => {
           <div className="flex flex-col justify-center">
             <h4 className="heading">Treasury</h4>
             <p className="whitespace-nowrap text-[8px] font-normal leading-[8px] text-[#616161] tablet:text-[15px] tablet:leading-[15px] laptop:text-[18px] laptop:leading-[18px] dark:text-white">
-              {/* <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span> */}
-              <span>1,357,432.20 FDX</span>
+              <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
             </p>
           </div>
         </div>
