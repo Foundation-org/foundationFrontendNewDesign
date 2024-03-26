@@ -27,6 +27,7 @@ export default {
     },
     fontFamily: {
       poppins: ['Poppins'],
+      neuropol: ['Neuropol'],
     },
     extend: {
       screens: {

@@ -34,6 +34,10 @@ import Welcome from '../pages/Welcome/welcome';
 import SharedLinkResults from '../pages/Dashboard/pages/Profile/pages/shared-links/SharedLinkResults';
 import { ErrorBoundary } from '../components/providers/ErrorBoundry';
 
+import RedemptionCenter from '../pages/Dashboard/pages/Treasury/RedemptionCenter';
+import Ledger from '../pages/Dashboard/pages/Treasury/Ledger';
+import TreasuryLayout from '../pages/Dashboard/pages/Treasury/TreasuryLayout';
+
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
   const ROLES = {
@@ -68,13 +72,74 @@ export function Router() {
           <Routes>
             <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
               <Route path="/maintenance" element={<Maintenance />} />
-              <Route path="/dashboard/" element={<ErrorBoundary><Dashboard /></ErrorBoundary>}>
+              <Route
+                path="/dashboard/"
+                element={
+                  <ErrorBoundary>
+                    <Dashboard />
+                  </ErrorBoundary>
+                }
+              >
                 <Route path="" element={<QuestStartSection />} />
                 <Route path="quest" element={<Quest />} />
                 <Route path="bookmark" element={<Bookmark />} />
                 <Route path="faq/" element={<CustomerSupport />}>
                   <Route path="" element={<Faq />} />
                   <Route path="contact-us" element={<ContactUs />} />
+                </Route>
+                <Route path="treasury/" element={<TreasuryLayout />}>
+                  <Route path="" element={<RedemptionCenter />} />
+                  <Route path="ledger" element={<Ledger />} />
+                </Route>
+                <Route
+                  path="profile/"
+                  element={
+                    <ErrorBoundary>
+                      <Profile />
+                    </ErrorBoundary>
+                  }
+                >
+                  <Route
+                    path=""
+                    element={
+                      <ErrorBoundary>
+                        <Contributions />
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="verification-badges"
+                    element={
+                      <ErrorBoundary>
+                        <VerificationBadges />
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="ledger"
+                    element={
+                      <ErrorBoundary>
+                        <BasicTable />
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="hidden-posts"
+                    element={
+                      <ErrorBoundary>
+                        <HiddenPosts />
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="shared-links"
+                    element={
+                      <ErrorBoundary>
+                        <SharedLinks />
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route path="change-password" element={<ChangePassword />} />
                 </Route>
               </Route>
               <Route

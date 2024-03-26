@@ -3,6 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Neuropol';
+  src:
+    local('neuropol'),
+    url('/public/assets/fonts/neuropol.otf') format('opentype');
+}
+
 @layer components {
   .bg-blue-gradiant {
     @apply bg-gradient-to-r from-[#6BA5CF] to-[#389CE3];
