@@ -24,6 +24,35 @@ function App() {
   }, []);
 
   useEffect(() => {
+    console.log('Running UseEffect For Erros Checker')
+    // Check for blank screen
+    const isBlankScreen = document.documentElement.clientWidth === 0 || document.documentElement.clientHeight === 0;
+
+    // Check for JavaScript errors
+    const hasJavaScriptError = window.onerror !== null;
+
+    // Check for specific error messages in console
+    const hasConsoleErrorMessage = console.error.toString().includes('Error message to check');
+
+    // Check for network errors
+    const hasNetworkError = window.navigator.onLine === false;
+
+    // Check for uncaught exceptions
+    const hasUncaughtException = window.onerror !== null || window.onunhandledrejection !== null;
+
+    // Combine conditions to check for rendering issues
+    const hasRenderingIssue = isBlankScreen || hasJavaScriptError || hasConsoleErrorMessage || hasNetworkError || hasUncaughtException;
+
+    if (hasRenderingIssue) {
+
+      // Reload the page if the condition is met
+      
+      window.location.reload();
+    }
+  }, []); // Empty dependency array ensures this effect runs only once on component mount
+
+
+  useEffect(() => {
     if (persistedTheme === 'dark') {
       setTheme('dark');
     } else {
