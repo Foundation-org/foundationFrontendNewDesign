@@ -2,30 +2,22 @@ import api from './Axios';
 import { toast } from 'sonner';
 
 export const createRedeeemCode = async (data) => {
-  try {
-    return await api.post('/redeem/create', {
-      creator: data.creator,
-      owner: data.owner,
-      uuid: data.uuid,
-      amount: data.amount,
-      description: data.description,
-      to: data.to,
-      expiry: data.expiry,
-    });
-  } catch (error) {
-    toast.error(error.response.data.message.split(':')[1]);
-  }
+  return await api.post('/redeem/create', {
+    creator: data.creator,
+    owner: data.owner,
+    uuid: data.uuid,
+    amount: data.amount,
+    description: data.description,
+    to: data.to,
+    expiry: data.expiry,
+  });
 };
 
 export const addRedeemCode = async (data) => {
-  try {
-    return await api.post('/redeem/transfer', {
-      uuid: data.uuid,
-      code: data.code,
-    });
-  } catch (error) {
-    toast.error(error.response.data.message.split(':')[1]);
-  }
+  return await api.post('/redeem/transfer', {
+    uuid: data.uuid,
+    code: data.code,
+  });
 };
 
 export const getUnredeemedData = async (id, uuid) => {

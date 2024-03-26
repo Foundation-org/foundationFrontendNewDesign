@@ -144,7 +144,7 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
           </button>
         </div>
         <div className={'mt-[0.48rem] flex justify-center tablet:mt-4'}>
-          <Button variant={'submit'} className={'w-fit'} onClick={() => navigate('/profile/shared-links')}>
+          <Button variant={'submit'} className={'w-fit'} onClick={() => navigate('/dashboard/profile/shared-links')}>
             Manage My Shared Links
           </Button>
         </div>

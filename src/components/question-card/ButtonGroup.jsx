@@ -379,7 +379,7 @@ const ButtonGroup = ({
         <Button
           variant="cancel"
           onClick={() => {
-            navigate('/profile/shared-links');
+            navigate('/dashboard/profile/shared-links');
           }}
         >
           Go Back

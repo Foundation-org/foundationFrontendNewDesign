@@ -43,7 +43,7 @@ const Topbar = () => {
             <div
               className="flex h-full items-center justify-center space-x-2 laptop:hidden"
               onClick={() => {
-                navigate('/profile');
+                navigate('/dashboard/profile');
               }}
             >
               <div className="relative block h-fit w-fit laptop:hidden">
@@ -60,7 +60,7 @@ const Topbar = () => {
                 <h3
                   className="text-blue-300 font-inter text-[11px] font-medium text-[#E9F6FF] tablet:text-[20px] dark:text-white"
                   onClick={() => {
-                    navigate('/profile');
+                    navigate('/dashboard/profile');
                   }}
                 >
                   Guest User
@@ -73,7 +73,7 @@ const Topbar = () => {
           )}
           <Link
             to={'/dashboard'}
-            className="flex justify-center tablet:w-[149.47px]"
+            className="flex justify-center"
             onClick={() => {
               dispatch(createQuestActions.resetCreateQuest());
             }}
@@ -105,7 +105,7 @@ const Topbar = () => {
               <img
                 src="/assets/navbar/faqlogo.png"
                 alt="arrow-right"
-                className="h-[13px] w-[13px] tablet:h-[36px] tablet:w-[36px]"
+                className="h-[15px] w-[15px] tablet:h-[32px] tablet:w-[32px] laptop:h-[36px] laptop:w-[36px]"
               />
             </Link>
             {localStorage.getItem('isGuestMode') ? (
@@ -128,13 +128,13 @@ const Topbar = () => {
           </div>
         </div>
         {/* items */}
-        <ul className="flex w-full max-w-[777px] items-end justify-around px-5 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-[57px] laptop:gap-0 laptop:px-0">
+        <ul className="flex w-full max-w-[777px] items-end justify-around px-4 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-0 laptop:gap-0">
           {TopbarItems?.map((item) => (
             <li key={item.id} className="relative flex items-center">
               <Link
                 to={item.path}
                 className={`flex items-center gap-1 text-[12px] font-semibold leading-[12px] tablet:gap-[13.6px] tablet:text-[24px] tablet:leading-[25px] laptop:gap-[10px] laptop:text-[25px] ${
-                  location.pathname === item.path || location.pathname === `${item.path}/`
+                  item.activePaths?.some((path) => location.pathname === path) || location.pathname === `${item.path}/`
                     ? 'text-white'
                     : persistedTheme === 'dark'
                       ? 'text-[#92959D]'
@@ -145,11 +145,12 @@ const Topbar = () => {
                   dispatch(addSharedLinkPost(null));
                 }}
               >
-                {location.pathname === item.path || location.pathname === `${item.path}/` ? (
+                {item.activePaths?.some((path) => location.pathname === path) ||
+                location.pathname === `${item.path}/` ? (
                   <img
                     src={item.icon}
                     alt={item.title}
-                    className={`absolute -left-[14px] h-3 w-3 tablet:h-[20.5px] tablet:w-[20.5px] laptop:w-[26px]`}
+                    className={`absolute -left-[12px] h-[10.4px] w-[10.4px] tablet:-left-7 tablet:h-[20.5px] tablet:w-[20.5px] laptop:w-auto`}
                   />
                 ) : null}
                 {item.title}

@@ -6,12 +6,12 @@ const Tabs = ({ handleSelectedTab, active }) => {
       <Link
         to={''}
         className={`${
-          active === '/profile/' || active === '/profile'
+          active === '/dashboard/profile/' || active === '/dashboard/profile'
             ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black'
             : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
         } tab-button`}
         onClick={() => {
-          handleSelectedTab('/profile');
+          handleSelectedTab('/dashboard/profile');
         }}
       >
         Contributions
@@ -19,12 +19,12 @@ const Tabs = ({ handleSelectedTab, active }) => {
       <Link
         to={'verification-badges'}
         className={`${
-          active === '/profile/verification-badges/' || active === '/profile/verification-badges'
+          active === '/dashboard/profile/verification-badges/' || active === '/dashboard/profile/verification-badges'
             ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black'
             : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
         } tab-button`}
         onClick={() => {
-          handleSelectedTab('/profile/verification-badges');
+          handleSelectedTab('/dashboard/profile/verification-badges');
         }}
       >
         Verfication Badges
@@ -32,12 +32,12 @@ const Tabs = ({ handleSelectedTab, active }) => {
       <Link
         to={'ledger'}
         className={`${
-          active === '/profile/ledger/' || active === '/profile/ledger'
+          active === '/dashboard/profile/ledger/' || active === '/dashboard/profile/ledger'
             ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black'
             : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
         } tab-button`}
         onClick={() => {
-          handleSelectedTab('/profile/ledger');
+          handleSelectedTab('/dashboard/profile/ledger');
         }}
       >
         Ledger
@@ -45,12 +45,12 @@ const Tabs = ({ handleSelectedTab, active }) => {
       <Link
         to={'hidden-posts'}
         className={`${
-          active === '/profile/hidden-posts/' || active === '/profile/hidden-posts'
+          active === '/dashboard/profile/hidden-posts/' || active === '/dashboard/profile/hidden-posts'
             ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black'
             : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
         } tab-button`}
         onClick={() => {
-          handleSelectedTab('/profile/hidden-posts');
+          handleSelectedTab('/dashboard/profile/hidden-posts');
         }}
       >
         Hidden Posts
@@ -58,12 +58,12 @@ const Tabs = ({ handleSelectedTab, active }) => {
       <Link
         to={'shared-links'}
         className={`${
-          active === '/profile/shared-links/' || active === '/profile/shared-links'
+          active === '/dashboard/profile/shared-links/' || active === '/dashboard/profile/shared-links'
             ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black'
             : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
         } tab-button`}
         onClick={() => {
-          handleSelectedTab('/profile/shared-links');
+          handleSelectedTab('/dashboard/profile/shared-links');
         }}
       >
         Shared Links

@@ -8,9 +8,9 @@ const TreasuryLayout = () => {
   const [selectedTab, setSelectedTab] = useState(pathname);
 
   return (
-    <div className="h-[calc(100vh-92px)] w-full overflow-y-auto bg-[#F3F3F3]">
-      <div className="mx-auto max-w-[1378px] py-[25px]">
-        <div className="flex gap-[5.16px] px-6 tablet:gap-[15px]">
+    <div className="h-[calc(100vh-58px)] w-full overflow-scroll overflow-x-hidden bg-[#F3F3F3] tablet:h-[calc(100vh-70px)]">
+      <div className="mx-auto max-w-[1378px] py-[9px] tablet:py-[25px]">
+        <div className="flex gap-[5.16px] px-5 tablet:gap-[15px] tablet:px-6">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
             alt="badge"
@@ -25,7 +25,7 @@ const TreasuryLayout = () => {
           </div>
         </div>
         {/* Tabs */}
-        <div className="mb-[10px] mt-[15px] flex justify-center gap-[5px] tablet:my-[35px] tablet:gap-[19.9px] laptop:gap-[35px]">
+        <div className="mb-[10px] mt-[15px] flex justify-center gap-8 tablet:my-[35px] tablet:gap-[19.9px] laptop:gap-[35px]">
           <Link
             to={'/dashboard/treasury'}
             className={`${
