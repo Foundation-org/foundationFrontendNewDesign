@@ -29,20 +29,12 @@ const CardTopbar = ({
     }
   };
 
-  const moderationRatingCount = Math.round(questStartData?.moderationRatingCount);
+  const moderationRatingCount = questStartData?.moderationRatingCount;
   let ratingImage = null;
 
-  if (moderationRatingCount === 0) {
+  if (moderationRatingCount >= 0 && moderationRatingCount <= 60) {
     ratingImage = 'desk-g.svg';
-  } else if (moderationRatingCount >= 1 && moderationRatingCount <= 20) {
-    ratingImage = 'desk-pg.svg';
-  } else if (moderationRatingCount >= 21 && moderationRatingCount <= 40) {
-    ratingImage = 'desk-r.svg';
-  } else if (moderationRatingCount >= 41 && moderationRatingCount <= 60) {
-    ratingImage = 'desk-nc.svg';
-  } else if (moderationRatingCount >= 61 && moderationRatingCount <= 100) {
-    ratingImage = 'desk-x.svg';
-  }
+  } else ratingImage = 'desk-r.svg';
 
   return (
     <div className="flex items-center justify-between border-b-2 border-[#D9D9D9] px-2 py-1 tablet:px-5 tablet:py-[0.63rem] laptop:px-4">

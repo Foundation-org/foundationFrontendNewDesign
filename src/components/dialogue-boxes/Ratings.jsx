@@ -3,8 +3,6 @@ import { Button } from '../ui/Button';
 import { useSelector, useDispatch } from 'react-redux';
 
 import PopUp from '../ui/PopUp';
-import Slider from '@mui/material/Slider';
-
 // extras
 import * as homeFilterActions from '../../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSlice';
@@ -13,8 +11,6 @@ import { useLocation } from 'react-router-dom';
 function valuetext(value) {
   return <p style={{ background: '#4A8DBD', color: 'white' }}>`${value}`</p>;
 }
-
-const rangeVal = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
 export default function Ratings({ handleClose, modalVisible, questStartData }) {
   const location = useLocation();
@@ -29,12 +25,12 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
   const dispatch = useDispatch();
   const filterStates = useSelector(filtersActions.getFilters);
 
-  const [value, setValue] = useState([0, 20]);
+  const [value, setValue] = useState([0, 60]);
 
   useEffect(() => {
     setValue([
       filterStates.moderationRatingFilter?.initial ? filterStates.moderationRatingFilter?.initial : 0,
-      filterStates.moderationRatingFilter?.final ? filterStates.moderationRatingFilter?.final : 20,
+      filterStates.moderationRatingFilter?.final ? filterStates.moderationRatingFilter?.final : 60,
     ]);
     dispatch(
       filtersActions.setRatings({
@@ -56,76 +52,51 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
       handleClose={handleClose}
     >
       <div className="px-[18px] py-[10px] tablet:px-[75px] tablet:py-[25px]">
-        <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
-          Select the range of ratings you wish to see in all your feeds.
+        <h1 className="text-center text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
+          Select your Rating Category
         </h1>
-        <div className="mt-6 tablet:mt-16">
-          <Slider
-            getAriaLabel={() => 'Ratings range'}
-            value={value}
-            onChange={handleChange}
-            valueLabelDisplay="auto"
-            getAriaValueText={valuetext}
-          />
-          <div className="mt-1 flex justify-between tablet:mt-[18px]">
-            {rangeVal.map((item, index) => (
-              <div key={index + 1} className="relative">
-                <p className="text-[8px] font-semibold leading-normal text-[#9E9E9E] tablet:text-[18px]">{item}</p>
-                {item === 0 && (
-                  <div className="absolute left-1/2 top-[15px] w-[13px] -translate-x-1/2 transform tablet:top-[36px] tablet:w-[35px]">
-                    <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-g.svg`} alt="desk-g" />
-                  </div>
-                )}{' '}
-                <div className="absolute left-1/2 top-[15px] w-[20px] -translate-x-1/2 transform tablet:top-[36px] tablet:w-[50px]">
-                  {item === 20 && (
-                    <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-pg.svg`} alt="desk-pg" />
-                  )}
-                </div>
-                {item === 40 && (
-                  <div className="absolute left-1/2 top-[15px] w-[13px] -translate-x-1/2 transform tablet:top-[36px] tablet:w-[35px]">
-                    <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-r.svg`} alt="desk-r" />
-                  </div>
-                )}
-                {item === 60 && (
-                  <div className="absolute left-1/2 top-[15px] w-[20px] -translate-x-1/2 transform tablet:top-[36px] tablet:w-[50px]">
-                    <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-nc.svg`} alt="desk-nc" />
-                  </div>
-                )}
-                {item === 80 && (
-                  <div className="absolute left-1/2 top-[15px] w-[13px]  -translate-x-1/2 transform tablet:top-[36px] tablet:w-[35px]">
-                    <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/desk-x.svg`} alt="desk-x" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="mt-7 flex justify-end gap-[15px] tablet:mt-[75px] tablet:gap-[34px]">
+        <div className="mt-[10px] flex items-center justify-center gap-[36.8px] tablet:mt-[15px]  tablet:gap-[100px]">
           <Button
-            variant={'danger'}
+            variant={'submit'}
             onClick={() => {
-              setValue([
-                filterStates.moderationRatingFilter?.initial ? filterStates.moderationRatingFilter?.initial : 0,
-                filterStates.moderationRatingFilter?.final ? filterStates.moderationRatingFilter?.final : 20,
-              ]);
+              dispatch(
+                filtersActions.setRatings({
+                  initial: 0,
+                  final: 60,
+                }),
+              );
               handleClose();
             }}
           >
-            Cancel
+            <div className="flex items-center justify-center gap-[8px]">
+              <img
+                src="/assets/svgs/ratings/desk-g.svg"
+                alt=""
+                className="h-[15px] w-[15px] tablet:h-[35px] tablet:w-[35px]"
+              />
+              <p>Everyone</p>
+            </div>
           </Button>
           <Button
             variant={'submit'}
             onClick={() => {
               dispatch(
                 filtersActions.setRatings({
-                  initial: value[0],
-                  final: value[1],
+                  initial: 61,
+                  final: 100,
                 }),
               );
               handleClose();
             }}
           >
-            Save
+            <div className="flex items-center justify-center gap-[8px]">
+              <img
+                src="/assets/svgs/ratings/desk-r.svg"
+                alt=""
+                className="h-[15px] w-[15px] tablet:h-[35px] tablet:w-[35px]"
+              />
+              <p>Adult</p>
+            </div>
           </Button>
         </div>
       </div>

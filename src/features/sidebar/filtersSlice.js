@@ -39,7 +39,7 @@ const initialState = {
   topics: topicsInitialState,
   moderationRatingFilter: {
     initial: 0,
-    final: 20,
+    final: 60,
   },
   clearFilter: false,
 };
