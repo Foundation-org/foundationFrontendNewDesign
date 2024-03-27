@@ -77,8 +77,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
 
     handleClose();
   };
-  console.log(selectedOptions);
-  console.log(filterStates.moderationRatingFilter?.initial, filterStates.moderationRatingFilter?.final);
+
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/dialoguebox/ratings-icon.svg`}

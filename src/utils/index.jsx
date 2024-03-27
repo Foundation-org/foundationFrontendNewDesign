@@ -175,9 +175,7 @@ export const handleClickScroll = () => {
 };
 
 function matchFilters(filters, state) {
-  console.log(filters, state);
   for (const key in filters) {
-    console.log(key);
     if (
       filters.hasOwnProperty(key) &&
       state.hasOwnProperty(key) &&

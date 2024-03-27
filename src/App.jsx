@@ -23,34 +23,33 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    console.log('Running UseEffect For Erros Checker')
-    // Check for blank screen
-    const isBlankScreen = document.documentElement.clientWidth === 0 || document.documentElement.clientHeight === 0;
+  // useEffect(() => {
+  //   console.log('Running UseEffect For Erros Checker')
+  //   // Check for blank screen
+  //   const isBlankScreen = document.documentElement.clientWidth === 0 || document.documentElement.clientHeight === 0;
 
-    // Check for JavaScript errors
-    const hasJavaScriptError = window.onerror !== null;
+  //   // Check for JavaScript errors
+  //   const hasJavaScriptError = window.onerror !== null;
 
-    // Check for specific error messages in console
-    const hasConsoleErrorMessage = console.error.toString().includes('Error message to check');
+  //   // Check for specific error messages in console
+  //   const hasConsoleErrorMessage = console.error.toString().includes('Error message to check');
 
-    // Check for network errors
-    const hasNetworkError = window.navigator.onLine === false;
+  //   // Check for network errors
+  //   const hasNetworkError = window.navigator.onLine === false;
 
-    // Check for uncaught exceptions
-    const hasUncaughtException = window.onerror !== null || window.onunhandledrejection !== null;
+  //   // Check for uncaught exceptions
+  //   const hasUncaughtException = window.onerror !== null || window.onunhandledrejection !== null;
 
-    // Combine conditions to check for rendering issues
-    const hasRenderingIssue = isBlankScreen || hasJavaScriptError || hasConsoleErrorMessage || hasNetworkError || hasUncaughtException;
+  //   // Combine conditions to check for rendering issues
+  //   const hasRenderingIssue = isBlankScreen || hasJavaScriptError || hasConsoleErrorMessage || hasNetworkError || hasUncaughtException;
 
-    if (hasRenderingIssue) {
+  //   if (hasRenderingIssue) {
 
-      // Reload the page if the condition is met
-      
-      window.location.reload();
-    }
-  }, []); // Empty dependency array ensures this effect runs only once on component mount
+  //     // Reload the page if the condition is met
 
+  //     window.location.reload();
+  //   }
+  // }, []); // Empty dependency array ensures this effect runs only once on component mount
 
   useEffect(() => {
     if (persistedTheme === 'dark') {
@@ -68,7 +67,6 @@ function App() {
     }
   }, [theme]);
 
-
   // useEffect(() => {
   //   document.addEventListener("visibilitychange", function() {
   //     if (document.visibilityState === 'hidden') {
@@ -79,7 +77,6 @@ function App() {
   //     }
   // });
   // }, []);
-
 
   // useEffect(() => {
   //   let inactivityTimeout;
@@ -114,7 +111,9 @@ function App() {
     <div className="h-screen overflow-hidden">
       <SEO
         title={'Foundation'}
-        description={'Participate on foundation and have your voice heard. Foundation rewards every user for their valuable insights'}
+        description={
+          'Participate on foundation and have your voice heard. Foundation rewards every user for their valuable insights'
+        }
         url={import.meta.env.VITE_CLIENT_URL}
         image={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
         type={'website'}
