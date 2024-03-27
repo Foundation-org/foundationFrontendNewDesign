@@ -46,7 +46,7 @@ const TreasuryLayout = () => {
           <Link
             to={'/dashboard/treasury'}
             className={`${
-              selectedTab === '/dashboard/treasury/' || selectedTab === '/dashboard/treasury'
+              selectedTab === '/dashboard/treasury/' || selectedTab === '/dashboard/treasury' || /^\/dashboard\/treasury(\/(?!ledger).*)?$/.test(selectedTab)
                 ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black'
                 : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
             } tab-button`}
