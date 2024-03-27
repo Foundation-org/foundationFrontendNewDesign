@@ -175,14 +175,15 @@ export const handleClickScroll = () => {
 };
 
 function matchFilters(filters, state) {
+  console.log(filters, state);
   for (const key in filters) {
+    console.log(key);
     if (
       filters.hasOwnProperty(key) &&
       state.hasOwnProperty(key) &&
       key !== 'columns' &&
       key !== 'searchData' &&
-      key !== 'expandedView' &&
-      key !== 'moderationRatingFilter'
+      key !== 'expandedView'
     ) {
       const filterValue = filters[key];
       const stateValue = state[key];
@@ -264,8 +265,10 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
 
   const result = matchFilters(filtersInitialState, filterStates);
 
-  const resultPreferences = JSON.parse(localStorage.getItem('columns'))?.Block.list.length == 0;
-  const resultPreferencesForBookmark = JSON.parse(localStorage.getItem('bookmarkColumns'))?.Block.list.length == 0;
+  const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
+  const resultPreferencesForBookmark = true;
+
+  console.log(result, resultPreferences);
 
   return feedData?.hasNextPage === false ? (
     <div className="flex justify-between gap-4 px-4 pb-[5rem] pt-3 tablet:py-[27px]">

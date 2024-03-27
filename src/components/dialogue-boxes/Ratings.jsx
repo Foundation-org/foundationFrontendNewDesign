@@ -8,11 +8,7 @@ import * as homeFilterActions from '../../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSlice';
 import { useLocation } from 'react-router-dom';
 
-function valuetext(value) {
-  return <p style={{ background: '#4A8DBD', color: 'white' }}>`${value}`</p>;
-}
-
-export default function Ratings({ handleClose, modalVisible, questStartData }) {
+export default function Ratings({ handleClose, modalVisible, selectedOptions, setSelectedOptions }) {
   const location = useLocation();
 
   let filtersActions;
@@ -25,25 +21,64 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
   const dispatch = useDispatch();
   const filterStates = useSelector(filtersActions.getFilters);
 
-  const [value, setValue] = useState([0, 60]);
-
   useEffect(() => {
-    setValue([
-      filterStates.moderationRatingFilter?.initial ? filterStates.moderationRatingFilter?.initial : 0,
-      filterStates.moderationRatingFilter?.final ? filterStates.moderationRatingFilter?.final : 60,
-    ]);
     dispatch(
       filtersActions.setRatings({
-        initial: value[0],
-        final: value[1],
+        initial: filterStates.moderationRatingFilter?.initial ? filterStates.moderationRatingFilter?.initial : 0,
+        final: filterStates.moderationRatingFilter?.final ? filterStates.moderationRatingFilter?.final : 0,
       }),
     );
+    if (filterStates.moderationRatingFilter?.initial === 0 && filterStates.moderationRatingFilter?.final === 100) {
+      setSelectedOptions(['adult', 'everyone']);
+    } else if (
+      filterStates.moderationRatingFilter?.initial === 1 &&
+      filterStates.moderationRatingFilter?.final === 100
+    ) {
+      setSelectedOptions(['adult']);
+    } else {
+      console.log('inside');
+      setSelectedOptions(['everyone']);
+    }
   }, []);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleCheckboxChange = (option) => {
+    if (selectedOptions.includes(option)) {
+      if (selectedOptions.length > 1) {
+        setSelectedOptions(selectedOptions.filter((item) => item !== option));
+      }
+    } else {
+      setSelectedOptions([...selectedOptions, option]);
+    }
   };
 
+  const handleSubmit = () => {
+    if (selectedOptions.includes('adult') && selectedOptions.includes('everyone')) {
+      dispatch(
+        filtersActions.setRatings({
+          initial: 0,
+          final: 100,
+        }),
+      );
+    } else if (selectedOptions.includes('adult')) {
+      dispatch(
+        filtersActions.setRatings({
+          initial: 1,
+          final: 100,
+        }),
+      );
+    } else {
+      dispatch(
+        filtersActions.setRatings({
+          initial: 0,
+          final: 0,
+        }),
+      );
+    }
+
+    handleClose();
+  };
+  console.log(selectedOptions);
+  console.log(filterStates.moderationRatingFilter?.initial, filterStates.moderationRatingFilter?.final);
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/dialoguebox/ratings-icon.svg`}
@@ -51,52 +86,56 @@ export default function Ratings({ handleClose, modalVisible, questStartData }) {
       open={modalVisible}
       handleClose={handleClose}
     >
-      <div className="px-[18px] py-[10px] tablet:px-[75px] tablet:py-[25px]">
+      <div className="px-[18px] py-[10px] tablet:px-[45px] tablet:py-[25px]">
         <h1 className="text-center text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Rating Category
         </h1>
         <div className="mt-[10px] flex items-center justify-center gap-[36.8px] tablet:mt-[15px]  tablet:gap-[100px]">
-          <Button
-            variant={'submit'}
-            onClick={() => {
-              dispatch(
-                filtersActions.setRatings({
-                  initial: 0,
-                  final: 60,
-                }),
-              );
-              handleClose();
-            }}
-          >
+          <div className="flex items-center justify-center gap-[10px] tablet:gap-[32px]">
+            <input
+              type="checkbox"
+              className="h-[15px] w-[15px] tablet:h-[25px] tablet:w-[25px]"
+              checked={selectedOptions.includes('everyone')}
+              onChange={() => handleCheckboxChange('everyone')}
+            />
             <div className="flex items-center justify-center gap-[8px]">
               <img
                 src="/assets/svgs/ratings/desk-e.svg"
                 alt=""
                 className="h-[15px] w-[15px] tablet:h-[35px] tablet:w-[35px]"
               />
-              <p>Everyone</p>
+              <p className="text-[10px] tablet:text-[20px]">Everyone</p>
             </div>
-          </Button>
-          <Button
-            variant={'submit'}
-            onClick={() => {
-              dispatch(
-                filtersActions.setRatings({
-                  initial: 61,
-                  final: 100,
-                }),
-              );
-              handleClose();
-            }}
-          >
+          </div>
+          <div className="flex items-center justify-center gap-[10px] tablet:gap-[32px]">
+            <input
+              type="checkbox"
+              className="h-[15px] w-[15px] tablet:h-[25px] tablet:w-[25px]"
+              checked={selectedOptions.includes('adult')}
+              onChange={() => handleCheckboxChange('adult')}
+            />
             <div className="flex items-center justify-center gap-[8px]">
               <img
                 src="/assets/svgs/ratings/desk-r.svg"
                 alt=""
                 className="h-[15px] w-[15px] tablet:h-[35px] tablet:w-[35px]"
               />
-              <p>Adult</p>
+              <p className="text-[10px] tablet:text-[20px]">Adult</p>
             </div>
+          </div>
+        </div>
+        <div className="mt-[10px] mt-[22.54px] flex items-center  justify-end gap-[25px] tablet:mt-[15px] tablet:gap-[49px]">
+          <Button
+            variant={'danger'}
+            onClick={() => {
+              handleClose();
+            }}
+          >
+            Cancel
+          </Button>
+
+          <Button variant={'submit'} onClick={handleSubmit}>
+            Save
           </Button>
         </div>
       </div>

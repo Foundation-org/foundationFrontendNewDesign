@@ -31,6 +31,7 @@ const SidebarLeft = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
   const [ratingsDialogue, setRatingsDialogue] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]); //for ratings
   const [search, setSearch] = useState(
     pathname === '/dashboard/bookmark'
       ? persistedUserInfo?.bookmarkStates.searchData
@@ -63,6 +64,7 @@ const SidebarLeft = () => {
         dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
         dispatch(filtersActions.setExpandedView(true));
         dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
+        dispatch(filtersActions.setRatings(persistedUserInfo.bookmarkStates.moderationRatingFilter));
       } else {
         dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.filterByScope));
         dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
@@ -71,6 +73,7 @@ const SidebarLeft = () => {
         dispatch(filtersActions.setExpandedView(true));
         dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
         dispatch(filtersActions.setBlockTopics(persistedUserInfo.States.topics?.Block.list));
+        dispatch(filtersActions.setRatings(persistedUserInfo.States.moderationRatingFilter));
       }
     }
   }, [persistedUserInfo]);
@@ -100,9 +103,27 @@ const SidebarLeft = () => {
     }
   }, [filterStates.searchData]);
 
+  useEffect(() => {
+    if (filterStates.moderationRatingFilter?.initial === 0 && filterStates.moderationRatingFilter?.final === 100) {
+      setSelectedOptions(['adult', 'everyone']);
+    } else if (
+      filterStates.moderationRatingFilter?.initial === 1 &&
+      filterStates.moderationRatingFilter?.final === 100
+    ) {
+      setSelectedOptions(['adult']);
+    } else {
+      setSelectedOptions(['everyone']);
+    }
+  }, [ratingsDialogue]);
+
   return (
     <>
-      <Ratings modalVisible={ratingsDialogue} handleClose={hideRatingDialogue} />
+      <Ratings
+        modalVisible={ratingsDialogue}
+        handleClose={hideRatingDialogue}
+        selectedOptions={selectedOptions}
+        setSelectedOptions={setSelectedOptions}
+      />
       <div className="no-scrollbar mt-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between rounded-[17.928px] bg-white pb-14 pt-8 text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:bg-[#000] dark:text-white">
         <div className="flex flex-col items-center">
           <div className="flex w-full flex-col items-center justify-center gap-[4vh] border-b-[1.32px] border-[#9C9C9C] pb-[3vh] ">
