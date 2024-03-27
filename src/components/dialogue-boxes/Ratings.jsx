@@ -93,7 +93,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
             <input
               type="checkbox"
-              className="h-[15px] w-[15px] tablet:h-[25px] tablet:w-[25px]"
+              className="h-[15px] w-[15px] accent-[#0e9e59] tablet:h-[25px] tablet:w-[25px]"
               checked={selectedOptions.includes('everyone')}
               onChange={() => handleCheckboxChange('everyone')}
             />
@@ -109,7 +109,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
             <input
               type="checkbox"
-              className="h-[15px] w-[15px] tablet:h-[25px] tablet:w-[25px]"
+              className="h-[15px] w-[15px] accent-[#db0000] tablet:h-[25px] tablet:w-[25px]"
               checked={selectedOptions.includes('adult')}
               onChange={() => handleCheckboxChange('adult')}
             />
