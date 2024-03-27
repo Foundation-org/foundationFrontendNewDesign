@@ -64,7 +64,16 @@ const SidebarLeft = () => {
         dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
         dispatch(filtersActions.setExpandedView(true));
         dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
-        dispatch(filtersActions.setRatings(persistedUserInfo.bookmarkStates.moderationRatingFilter));
+        dispatch(
+          filtersActions.setRatings({
+            initial: persistedUserInfo.bookmarkStates.moderationRatingFilter?.initial
+              ? persistedUserInfo.bookmarkStates.moderationRatingFilter?.initial
+              : 0,
+            final: persistedUserInfo.bookmarkStates.moderationRatingFilter?.final
+              ? persistedUserInfo.bookmarkStates.moderationRatingFilter?.final
+              : 0,
+          }),
+        );
       } else {
         dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.filterByScope));
         dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));

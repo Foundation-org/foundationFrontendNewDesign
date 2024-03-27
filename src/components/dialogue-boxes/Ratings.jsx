@@ -124,7 +124,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
             </div>
           </div>
         </div>
-        <div className="mt-[10px] mt-[22.54px] flex items-center  justify-end gap-[25px] tablet:mt-[15px] tablet:gap-[49px]">
+        <div className="mt-[10px] flex items-center  justify-end gap-[25px] tablet:mt-[15px] tablet:gap-[49px]">
           <Button
             variant={'danger'}
             onClick={() => {
