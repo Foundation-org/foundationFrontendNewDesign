@@ -7,7 +7,7 @@
   font-family: 'Neuropol';
   src:
     local('neuropol'),
-    url('/public/assets/fonts/neuropol.otf') format('opentype');
+    url('/public/assets/neuropol.otf') format('opentype');
 }
 
 @layer components {
