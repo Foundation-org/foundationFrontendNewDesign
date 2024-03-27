@@ -274,9 +274,9 @@ const SidebarRight = () => {
           </div>
         ) : (
           <div
-            className="mb-[25px] flex cursor-pointer items-center gap-[15px]"
+            className="mb-[25px] flex cursor-pointer items-center gap-5"
             onClick={() => {
-              navigate('/profile');
+              navigate('/dashboard/profile');
             }}
           >
             <div className="relative h-fit w-fit">

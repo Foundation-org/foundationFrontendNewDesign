@@ -202,113 +202,116 @@ export default function RedemptionCenter() {
 
   return (
     <div className="flex flex-col gap-[10px] px-5 tablet:gap-[25px]">
-      <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
-        Redemption center
-      </h1>
-      <div className="flex flex-col gap-2 tablet:gap-[78px] laptop:flex-row">
-        {/* Create */}
-        <div className="w-full rounded-[5.85px] border-[0.72px] border-[#4A8DBD] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">
-          <div className="flex justify-between">
-            <h1 className="mb-2 text-[10px] font-semibold leading-normal text-[#707175] tablet:mb-4 tablet:text-[22px]">
-              Create Redemption Code
-            </h1>
-            <div className="flex items-baseline gap-[10px]">
-              <p className="text-[7px] font-normal leading-normal text-[#85898C] tablet:text-[14.765px]">Expires in</p>
-              <select
-                value={expiry}
-                onChange={(e) => setExpiry(e.target.value)}
-                className="h-[13px] min-w-[40px] max-w-[40px] rounded-[2.706px] border-[2.279px] border-[#DEE6F7] bg-[#F9F9F9] text-[7.49px] font-semibold text-[#7C7C7C] focus:outline-none tablet:h-7 tablet:min-w-[82px] tablet:max-w-[82px] tablet:rounded-[5.376px] tablet:text-[13.6px]"
-              >
-                <option value="30 days">30 days</option>
-                <option value="7 days">7 days</option>
-                <option value="Never">Never</option>
-              </select>
+      <div>
+        <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
+          Redemption center
+        </h1>
+        <div className="flex flex-col gap-2 tablet:gap-[78px] laptop:flex-row">
+          {/* Create */}
+          <div className="w-full rounded-[5.85px] border-[0.72px] border-[#4A8DBD] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">
+            <div className="flex justify-between">
+              <h1 className="mb-2 text-[10px] font-semibold leading-normal text-[#707175] tablet:mb-4 tablet:text-[22px]">
+                Create Redemption Code
+              </h1>
+              <div className="flex items-baseline gap-[10px]">
+                <p className="text-[7px] font-normal leading-normal text-[#85898C] tablet:text-[14.765px]">
+                  Expires in
+                </p>
+                <select
+                  value={expiry}
+                  onChange={(e) => setExpiry(e.target.value)}
+                  className="h-[13px] min-w-[40px] max-w-[40px] rounded-[2.706px] border-[2.279px] border-[#DEE6F7] bg-[#F9F9F9] text-[7.49px] font-semibold text-[#7C7C7C] focus:outline-none tablet:h-7 tablet:min-w-[82px] tablet:max-w-[82px] tablet:rounded-[5.376px] tablet:text-[13.6px]"
+                >
+                  <option value="30 days">30 days</option>
+                  <option value="7 days">7 days</option>
+                  <option value="Never">Never</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-            placeholder="Description here....."
-            className="w-full rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] p-1 text-[10px] font-medium leading-normal text-[#707175] focus:outline-none tablet:rounded-[7.07px] tablet:border-[3px] tablet:px-4 tablet:py-3 tablet:text-[16px]"
-          />
-          <p className="my-[5px] text-[7.5px] font-normal leading-normal text-[#85898C] tablet:my-[15px] tablet:text-[14.7px]">
-            Create FDX and maximize your access to all features.
-          </p>
-          <div className="flex items-center gap-5 tablet:gap-9">
-            <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">FDX</h2>
-            <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[187px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
-              <FaMinus
-                className="w-[7px] cursor-pointer tablet:w-[23px]"
-                onClick={() => {
-                  if (fdx * 1 - 1 > 0) setFdx(fdx - 1);
-                  else setFdx(0);
-                }}
-              />
-              <input
-                type="number"
-                className="hide-input-arrows w-full bg-transparent text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] focus:outline-none tablet:text-[20px]"
-                value={fdx === 0 ? '' : fdx}
-                placeholder="0"
-                onChange={(e) => {
-                  let x = parseFloat(e.target.value);
-                  if (!isNaN(x)) {
-                    if (Number.isInteger(x)) {
-                      setFdx(x.toString());
-                    } else {
-                      setFdx(x.toFixed(2));
-                    }
-                  } else {
-                    setFdx(0);
-                  }
-                }}
-              />
-              <FaPlus
-                className="w-[7px] cursor-pointer tablet:w-[23px]"
-                onClick={() => {
-                  if (persistedUserInfo.balance.toFixed(2) - 1 > fdx) {
-                    setFdx(fdx * 1 + 1);
-                  } else {
-                    setFdx((fdx * 1 + (persistedUserInfo.balance.toFixed(2) - fdx)).toFixed(2));
-                  }
-                }}
-              />
-            </div>
-          </div>
-          <div className="flex w-full justify-end">
-            <Button variant={'cancel'} onClick={handleCreate}>
-              Create
-            </Button>
-          </div>
-        </div>
-        {/* Add  */}
-        <div className="w-full rounded-[5.85px] border-[0.72px] border-[#F2DB12] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">
-          <h1 className="mb-2 text-[10px] font-semibold leading-normal text-[#707175] tablet:mb-4 tablet:text-[22px]">
-            Add Redemption Code
-          </h1>
-          <p className="my-[5px] text-[7.5px] font-normal leading-normal text-[#85898C] tablet:my-[15px] tablet:text-[14.7px]">
-            You can add redemption code and earn reworded coins
-          </p>
-          <div className="flex items-center gap-4 tablet:gap-9">
-            <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">Code</h2>
             <input
               type="text"
-              placeholder="eg (rG57HK)"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              className="min-w-[70px] max-w-[70px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-3 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[187px] tablet:max-w-[187px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+              placeholder="Description here....."
+              className="w-full rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] p-1 text-[10px] font-medium leading-normal text-[#707175] focus:outline-none tablet:rounded-[7.07px] tablet:border-[3px] tablet:px-4 tablet:py-3 tablet:text-[16px]"
             />
+            <p className="my-[5px] text-[7.5px] font-normal leading-normal text-[#85898C] tablet:my-[15px] tablet:text-[14.7px]">
+              Create FDX and maximize your access to all features.
+            </p>
+            <div className="flex items-center gap-5 tablet:gap-9">
+              <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">FDX</h2>
+              <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[187px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
+                <FaMinus
+                  className="w-[7px] cursor-pointer tablet:w-[23px]"
+                  onClick={() => {
+                    if (fdx * 1 - 1 > 0) setFdx(fdx - 1);
+                    else setFdx(0);
+                  }}
+                />
+                <input
+                  type="number"
+                  className="hide-input-arrows w-full bg-transparent text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] focus:outline-none tablet:text-[20px]"
+                  value={fdx === 0 ? '' : fdx}
+                  placeholder="0"
+                  onChange={(e) => {
+                    let x = parseFloat(e.target.value);
+                    if (!isNaN(x)) {
+                      if (Number.isInteger(x)) {
+                        setFdx(x.toString());
+                      } else {
+                        setFdx(x.toFixed(2));
+                      }
+                    } else {
+                      setFdx(0);
+                    }
+                  }}
+                />
+                <FaPlus
+                  className="w-[7px] cursor-pointer tablet:w-[23px]"
+                  onClick={() => {
+                    if (persistedUserInfo.balance.toFixed(2) - 1 > fdx) {
+                      setFdx(fdx * 1 + 1);
+                    } else {
+                      setFdx((fdx * 1 + (persistedUserInfo.balance.toFixed(2) - fdx)).toFixed(2));
+                    }
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex w-full justify-end">
+              <Button variant={'cancel'} onClick={handleCreate}>
+                Create
+              </Button>
+            </div>
           </div>
-          <div className="flex w-full justify-end">
-            <Button variant={'cancel'} onClick={handleAdd}>
-              Add
-            </Button>
+          {/* Add  */}
+          <div className="w-full rounded-[5.85px] border-[0.72px] border-[#F2DB12] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">
+            <h1 className="mb-2 text-[10px] font-semibold leading-normal text-[#707175] tablet:mb-4 tablet:text-[22px]">
+              Add Redemption Code
+            </h1>
+            <p className="my-[5px] text-[7.5px] font-normal leading-normal text-[#85898C] tablet:my-[15px] tablet:text-[14.7px]">
+              You can add redemption code and earn reworded coins
+            </p>
+            <div className="flex items-center gap-4 tablet:gap-9">
+              <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">Code</h2>
+              <input
+                type="text"
+                placeholder="eg (rG57HK)"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                className="min-w-[70px] max-w-[70px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-3 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[187px] tablet:max-w-[187px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
+              />
+            </div>
+            <div className="flex w-full justify-end">
+              <Button variant={'cancel'} onClick={handleAdd}>
+                Add
+              </Button>
+            </div>
           </div>
         </div>
       </div>
-
       <div>
         <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
           Un-Redeemed Codes

@@ -78,10 +78,10 @@ const Topbar = () => {
               dispatch(createQuestActions.resetCreateQuest());
             }}
           >
-            <h1 className="font-neuropol relative text-[12px] font-normal text-white tablet:text-[20px]">
+            <h1 className="relative font-neuropol text-[12px] font-normal text-white tablet:text-[20px]">
               FOUNDATION{' '}
               <span className="absolute -right-8 bottom-[2px] whitespace-nowrap font-poppins text-[7px] font-medium text-[#D0E4F2] tablet:-bottom-3 tablet:left-0 tablet:text-[12px]">
-                v 1.1.6.50
+                v 1.6.101
               </span>
             </h1>
 
