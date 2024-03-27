@@ -54,20 +54,25 @@
   <div id="root"></div>
   <!-- Add script for checking and reloading page -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      let isReloading = false;
+    document.addEventListener('DOMContentLoaded', function () {
+      // Check if the browser is Safari
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-      setTimeout(function() {
-        // Check if the main element is empty or has unexpected content
-        const mainElement = document.querySelector('#root'); // Change '#root' to your main container selector
-        if (!mainElement || mainElement.innerHTML.trim() === '') {
-          // Reload the page if main content is missing or empty, and ensure it's not already reloading
-          if (!isReloading) {
-            isReloading = true;
-            window.location.reload();
+      if (!isSafari) {
+        let isReloading = false;
+
+        setTimeout(function () {
+          // Check if the main element is empty or has unexpected content
+          const mainElement = document.querySelector('#root'); // Change '#root' to your main container selector
+          if (!mainElement || mainElement.innerHTML.trim() === '') {
+            // Reload the page if main content is missing or empty, and ensure it's not already reloading
+            if (!isReloading) {
+              isReloading = true;
+              window.location.reload();
+            }
           }
-        }
-      }, 1); // Adjust the delay as needed
+        }, 1); // Adjust the delay as needed
+      }
     });
   </script>
 
