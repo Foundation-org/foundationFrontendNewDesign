@@ -32,7 +32,7 @@ const CardTopbar = ({
   const moderationRatingCount = questStartData?.moderationRatingCount;
   let ratingImage = null;
 
-  if (moderationRatingCount >= 0 && moderationRatingCount <= 60) {
+  if (moderationRatingCount === 0) {
     ratingImage = 'post-e.svg';
   } else ratingImage = 'post-a.svg';
 

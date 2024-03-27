@@ -81,7 +81,7 @@ const Profile = () => {
               }}
               className="relative flex h-[25px] w-5 items-center justify-center bg-cover bg-no-repeat tablet:h-12 tablet:w-10 laptop:h-16 laptop:w-[51px]"
             >
-              <p className="transform-center absolute z-50 pb-[7px] text-[12px] font-medium leading-normal text-[#7A7016] tablet:pb-3 tablet:text-[25px]">
+              <p className="transform-center absolute z-50 pb-[7px] text-[11px] font-medium leading-normal text-[#7A7016] tablet:pb-3 tablet:text-[25px]">
                 {persistedUserInfo?.badges?.length}
               </p>
             </div>

@@ -586,7 +586,7 @@ const VerificationBadges = () => {
                   )}
                 </div>
                 {/* Youtube  */}
-                {!height ? (
+                {/* {!height ? (
                   <div className="flex items-center gap-[10px] laptop:gap-5">
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`}
@@ -654,7 +654,7 @@ const VerificationBadges = () => {
                       </LoginSocialYoutube>
                     )}
                   </div>
-                ) : null}
+                ) : null} */}
                 {/* SoundCloud */}
 
                 {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
@@ -1061,7 +1061,7 @@ const VerificationBadges = () => {
               </div>
 
               {/* Youtube  */}
-              <div className="flex items-center gap-[10px] laptop:gap-5">
+              {/* <div className="flex items-center gap-[10px] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`}
                   alt="Twitter"
@@ -1127,7 +1127,7 @@ const VerificationBadges = () => {
                     </Button>
                   </LoginSocialYoutube>
                 )}
-              </div>
+              </div> */}
 
               {/* SoundCloud */}
               {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
