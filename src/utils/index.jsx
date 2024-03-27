@@ -197,10 +197,10 @@ function matchFilters(filters, state) {
 
 export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates, dispatch) => {
   const result = matchFilters(filtersInitialState, filterStates);
-
-  const resultPreferences = JSON.parse(localStorage.getItem('columns'))?.Block.list.length == 0;
-  const resultPreferencesForBookmark = JSON.parse(localStorage.getItem('bookmarkColumns'))?.Block.list.length == 0;
-  const isOtherCategory = JSON.parse(localStorage.getItem('columns'))?.Block.list[0];
+  console.log(filterStates);
+  const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
+  const resultPreferencesForBookmark = true;
+  const isOtherCategory = filterStates?.topics?.Block?.list[0];
   return (
     <div className="my-[15vh] flex  flex-col items-center justify-center">
       {persistedTheme === 'dark' ? (
@@ -329,7 +329,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
                     localStorage.setItem('filterByState', 'false');
                   }}
                 >
-                  Clear Filters
+                  Clear Filterssss
                 </button>
               )}
               <button
