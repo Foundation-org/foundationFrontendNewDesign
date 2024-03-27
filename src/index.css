@@ -21,7 +21,7 @@
 }
 
 .heading {
-  @apply text-[12px] font-semibold leading-normal text-[#616161] 2xl:text-[30px] tablet:text-[16.9px] laptop:text-[25px] dark:text-white;
+  @apply text-[12px] font-semibold leading-normal text-[#616161] 2xl:text-[30px] tablet:text-[18px] dark:text-white;
 }
 
 .green-select {

@@ -9,7 +9,7 @@ import {
   deleteHistory,
   getHistoryData,
   getUnredeemedData,
-  redeemCode,
+  // redeemCode,
 } from '../../../../services/api/redemptionApi';
 import { toast } from 'sonner';
 
@@ -34,6 +34,7 @@ export default function RedemptionCenter() {
       toast.error(err.response.data.message.split(':')[1]);
     },
   });
+
   useEffect(() => {
     const url = window.location.href;
     const extractedCode = url.substring(url.lastIndexOf('/') + 1);
@@ -53,6 +54,7 @@ export default function RedemptionCenter() {
       console.error('Unable to copy text to clipboard:', err);
     }
   };
+
   const copyToClipboard = async (code) => {
     const textToCopy = code;
 
@@ -66,6 +68,7 @@ export default function RedemptionCenter() {
   const { mutateAsync: addRedemptionCode } = useMutation({
     mutationFn: addRedeemCode,
     onSuccess: (resp) => {
+      queryClient.invalidateQueries('history');
       toast.success('Code Redeemed Successfully');
       setCode('');
     },
@@ -73,17 +76,19 @@ export default function RedemptionCenter() {
       toast.error(err.response.data.message.split(':')[1]);
     },
   });
-  const { mutateAsync: redeem } = useMutation({
-    mutationFn: redeemCode,
-    onSuccess: (resp) => {
-      queryClient.invalidateQueries('unredeemedData');
-      toast.success('Code Redeemed Successfully');
-      setCode('');
-    },
-    onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
-    },
-  });
+
+  // const { mutateAsync: redeem } = useMutation({
+  //   mutationFn: redeemCode,
+  //   onSuccess: (resp) => {
+  //     queryClient.invalidateQueries('unredeemedData');
+  //     toast.success('Code Redeemed Successfully');
+  //     setCode('');
+  //   },
+  //   onError: (err) => {
+  //     toast.error(err.response.data.message.split(':')[1]);
+  //   },
+  // });
+
   const { mutateAsync: DeleteHistory } = useMutation({
     mutationFn: deleteHistory,
     onSuccess: (resp) => {
@@ -129,6 +134,7 @@ export default function RedemptionCenter() {
     };
     DeleteHistory(params);
   };
+
   const handleRedeeem = (code) => {
     if (code === '') return toast.error('Enter some code to Redeem');
 
@@ -136,7 +142,7 @@ export default function RedemptionCenter() {
       uuid: persistedUserInfo?.uuid,
       code: code,
     };
-    redeem(params);
+    addRedemptionCode(params);
   };
 
   const handleCreate = () => {
@@ -183,6 +189,7 @@ export default function RedemptionCenter() {
       return 'Never';
     }
   };
+
   function formatDate(timestamp) {
     const date = new Date(timestamp);
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -195,11 +202,9 @@ export default function RedemptionCenter() {
 
   return (
     <div className="flex flex-col gap-[10px] px-5 tablet:gap-[25px]">
-      <div>
-        <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
-          Redemption center
-        </h1>
-      </div>
+      <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
+        Redemption center
+      </h1>
       <div className="flex flex-col gap-2 tablet:gap-[78px] laptop:flex-row">
         {/* Create */}
         <div className="w-full rounded-[5.85px] border-[0.72px] border-[#4A8DBD] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">

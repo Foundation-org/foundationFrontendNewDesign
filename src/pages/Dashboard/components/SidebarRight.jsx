@@ -272,6 +272,53 @@ const SidebarRight = () => {
               </div>
             </div>
           </div>
+        ) : (
+          <div
+            className="mb-[25px] flex cursor-pointer items-center gap-[15px]"
+            onClick={() => {
+              navigate('/profile');
+            }}
+          >
+            <div className="relative h-fit w-fit">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
+                alt="badge"
+                className="tablet:h-[47px] tablet:w-[38px]"
+              />
+              <p className="transform-center absolute z-50 pb-3 text-[20px] font-medium leading-normal text-[#7A7016]">
+                {persistedUserInfo?.badges?.length}
+              </p>
+            </div>
+            <div>
+              <h4 className="heading">My Balance</h4>
+              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] dark:text-[#D2D2D2]">
+                <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
+              </div>
+            </div>
+          </div>
+        )}
+        {persistedUserInfo.role !== 'user' ? (
+          <div className="mb-[35px] flex items-center gap-6">
+            <div className="relative h-fit w-fit">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
+                alt="badge"
+                className="tablet:h-[74px] tablet:w-[60px]"
+              />
+              <p className="transform-center absolute z-50 pb-5 text-[32.25px] font-bold leading-normal text-white">
+                G
+              </p>
+            </div>
+            <div>
+              <h4 className="heading">Guest User</h4>
+              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] tablet:text-[17px] laptop:text-[20px] dark:text-[#D2D2D2]">
+                <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
+              </div>
+              <div onClick={handleGuestLogout}>
+                <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Create Account</Anchor>
+              </div>
+            </div>
+          </div>
         ) : null}
         {sidebarList.map((item) => (
           <div className={`flex items-center gap-4 ${item.id !== 1 && 'mt-[1.9vh]'}`} key={item.id}>
