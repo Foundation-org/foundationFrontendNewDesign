@@ -1,13 +1,15 @@
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import { Button } from '../../../../components/ui/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   addRedeemCode,
   createRedeeemCode,
+  deleteHistory,
   getHistoryData,
   getUnredeemedData,
+  redeemCode,
 } from '../../../../services/api/redemptionApi';
 import { toast } from 'sonner';
 
@@ -32,7 +34,26 @@ export default function RedemptionCenter() {
       toast.error(err.response.data.message.split(':')[1]);
     },
   });
+  useEffect(() => {
+    const url = window.location.href;
+    const extractedCode = url.substring(url.lastIndexOf('/') + 1);
+    if (extractedCode !== 'treasury') {
+      setCode(extractedCode);
+      setTimeout(() => {
+        if (extractedCode) toast.info('Hit add to redeeem');
+        console.log('hello');
+      }, 500);
+    }
+  }, []);
 
+  const handleShareLink = async (code) => {
+    const url = window.location.href + '/' + code;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch (err) {
+      console.error('Unable to copy text to clipboard:', err);
+    }
+  };
   const copyToClipboard = async (code) => {
     const textToCopy = code;
 
@@ -46,6 +67,28 @@ export default function RedemptionCenter() {
   const { mutateAsync: addRedemptionCode } = useMutation({
     mutationFn: addRedeemCode,
     onSuccess: (resp) => {
+      toast.success('Code Redeemed Successfully');
+      setCode('');
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message.split(':')[1]);
+    },
+  });
+  const { mutateAsync: redeem } = useMutation({
+    mutationFn: redeemCode,
+    onSuccess: (resp) => {
+      queryClient.invalidateQueries('unredeemedData');
+      toast.success('Code Redeemed Successfully');
+      setCode('');
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message.split(':')[1]);
+    },
+  });
+  const { mutateAsync: DeleteHistory } = useMutation({
+    mutationFn: deleteHistory,
+    onSuccess: (resp) => {
+      queryClient.invalidateQueries('history');
       toast.success('Code Redeemed Successfully');
       setCode('');
     },
@@ -76,6 +119,25 @@ export default function RedemptionCenter() {
       code: code,
     };
     addRedemptionCode(params);
+  };
+
+  const handleDeleteHistory = (code) => {
+    if (code === '') return toast.error('Enter some code to Delete');
+
+    const params = {
+      uuid: persistedUserInfo?.uuid,
+      code: code,
+    };
+    DeleteHistory(params);
+  };
+  const handleRedeeem = (code) => {
+    if (code === '') return toast.error('Enter some code to Redeem');
+
+    const params = {
+      uuid: persistedUserInfo?.uuid,
+      code: code,
+    };
+    redeem(params);
   };
 
   const handleCreate = () => {
@@ -112,10 +174,8 @@ export default function RedemptionCenter() {
     if (expiry) {
       const targetDate = new Date(expiry);
       const currentDate = new Date();
-
       // Calculate the difference in milliseconds
       const differenceMs = targetDate - currentDate;
-
       // Convert milliseconds to days
       const differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
 
@@ -124,6 +184,15 @@ export default function RedemptionCenter() {
       return 'Never';
     }
   };
+  function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+  }
 
   return (
     <div className="flex flex-col gap-[10px] px-5 tablet:gap-[25px]">
@@ -283,8 +352,16 @@ export default function RedemptionCenter() {
                         {calculateExpiry(item.expiry)}
                       </p>
                     </div>
-                    <div className="flex items-center justify-end gap-[10px] tablet:gap-3">
-                      <Button variant="share-link">Share Link</Button>
+                    <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
+                      <Button
+                        variant="share-link"
+                        onClick={() => {
+                          handleShareLink(item.code);
+                          toast.success('Share Link copied!');
+                        }}
+                      >
+                        Share Link
+                      </Button>
                       <Button
                         variant="submit"
                         onClick={() => {
@@ -294,7 +371,9 @@ export default function RedemptionCenter() {
                       >
                         Copy
                       </Button>
-                      <Button variant="result">Redeem</Button>
+                      <Button variant="result" onClick={() => handleRedeeem(item.code)}>
+                        Redeem
+                      </Button>
                     </div>
                   </div>
                   <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
@@ -338,11 +417,12 @@ export default function RedemptionCenter() {
               </div>
               <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
                 <p className="text-[9px] font-medium leading-normal text-[#A3A3A3] tablet:text-[20px]">Redeemed</p>
-                <p className="text-[20px] font-medium leading-normal text-[#707175]">12,May-23</p>
+                <p className="text-[20px] font-medium leading-normal text-[#707175]">{formatDate(item.createdAt)}</p>
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                   alt="trash"
                   className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
+                  onClick={() => handleDeleteHistory(item.code)}
                 />
               </div>
             </div>

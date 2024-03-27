@@ -20,6 +20,21 @@ export const addRedeemCode = async (data) => {
   });
 };
 
+// new
+export const redeemCode = async (data) => {
+  return await api.post('/redeem/transfer', {
+    uuid: data.uuid,
+    code: data.code,
+  });
+};
+
+export const deleteHistory = async (data) => {
+  return await api.post('/redeem/transfer', {
+    uuid: data.uuid,
+    code: data.code,
+  });
+};
+
 export const getUnredeemedData = async (id, uuid) => {
   try {
     return await api.get(`/redeem/getUnredeemedById/${id}/${uuid}`);

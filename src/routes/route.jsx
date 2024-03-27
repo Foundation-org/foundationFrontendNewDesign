@@ -91,6 +91,10 @@ export function Router() {
                   <Route path="" element={<RedemptionCenter />} />
                   <Route path="ledger" element={<Ledger />} />
                 </Route>
+                <Route path="treasury/:code" element={<TreasuryLayout />}>
+                  <Route path="" element={<RedemptionCenter />} />
+                  <Route path="ledger" element={<Ledger />} />
+                </Route>
                 <Route
                   path="profile/"
                   element={
