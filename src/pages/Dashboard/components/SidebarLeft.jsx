@@ -73,7 +73,16 @@ const SidebarLeft = () => {
         dispatch(filtersActions.setExpandedView(true));
         dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
         dispatch(filtersActions.setBlockTopics(persistedUserInfo.States.topics?.Block.list));
-        dispatch(filtersActions.setRatings(persistedUserInfo.States.moderationRatingFilter));
+        dispatch(
+          filtersActions.setRatings({
+            initial: persistedUserInfo.States.moderationRatingFilter?.initial
+              ? persistedUserInfo.States.moderationRatingFilter?.initial
+              : 0,
+            final: persistedUserInfo.States.moderationRatingFilter?.final
+              ? persistedUserInfo.States.moderationRatingFilter?.final
+              : 0,
+          }),
+        );
       }
     }
   }, [persistedUserInfo]);
