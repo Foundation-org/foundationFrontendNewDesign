@@ -197,7 +197,6 @@ function matchFilters(filters, state) {
 
 export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates, dispatch) => {
   const result = matchFilters(filtersInitialState, filterStates);
-  console.log(filterStates);
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
   const isOtherCategory = filterStates?.topics?.Block?.list[0];
@@ -265,8 +264,6 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
 
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
-
-  console.log(result, resultPreferences);
 
   return feedData?.hasNextPage === false ? (
     <div className="flex justify-between gap-4 px-4 pb-[6rem] pt-3 tablet:py-[27px]">

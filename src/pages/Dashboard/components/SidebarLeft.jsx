@@ -92,6 +92,7 @@ const SidebarLeft = () => {
               : 0,
           }),
         );
+        localStorage.setItem('selectedButtonId', persistedUserInfo.States.selectedBtnId);
       }
     }
   }, [persistedUserInfo]);
@@ -100,7 +101,7 @@ const SidebarLeft = () => {
     if (pathname === '/dashboard/bookmark') {
       setBookmarkFilters({ ...filterStates, columns: filterStates.topics });
     } else {
-      setFilters({ ...filterStates });
+      setFilters({ ...filterStates, selectedBtnId: localStorage.getItem('selectedButtonId') });
     }
   }, [filterStates]);
 
