@@ -9,7 +9,7 @@ export const createRedeeemCode = async (data) => {
     amount: data.amount,
     description: data.description,
     to: data.to,
-    expiry: data.expiry,
+    expiry: "never",
   });
 };
 
