@@ -41,7 +41,6 @@ export default function RedemptionCenter() {
       setCode(extractedCode);
       setTimeout(() => {
         if (extractedCode) toast.info('Hit add to redeeem');
-        console.log('hello');
       }, 500);
     }
   }, []);

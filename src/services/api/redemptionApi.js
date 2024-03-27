@@ -22,14 +22,14 @@ export const addRedeemCode = async (data) => {
 
 // new
 export const redeemCode = async (data) => {
-  return await api.post('/redeem/transfer', {
+  return await api.post('/redeem/balance', {
     uuid: data.uuid,
     code: data.code,
   });
 };
 
 export const deleteHistory = async (data) => {
-  return await api.post('/redeem/transfer', {
+  return await api.post('/redeem/delete', {
     uuid: data.uuid,
     code: data.code,
   });
