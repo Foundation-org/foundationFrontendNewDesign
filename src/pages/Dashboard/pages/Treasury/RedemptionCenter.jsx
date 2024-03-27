@@ -32,6 +32,15 @@ export default function RedemptionCenter() {
       toast.error(err.response.data.message.split(':')[1]);
     },
   });
+  const copyToClipboard = async (code) => {
+    const textToCopy = code;
+
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+    } catch (err) {
+      console.error('Unable to copy text to clipboard:', err);
+    }
+  };
 
   const { mutateAsync: addRedemptionCode } = useMutation({
     mutationFn: addRedeemCode,
@@ -98,6 +107,22 @@ export default function RedemptionCenter() {
 
     createRedemptionCode(params);
   };
+  const calculateExpiry = (expiry) => {
+    if (expiry) {
+      const targetDate = new Date(expiry);
+      const currentDate = new Date();
+
+      // Calculate the difference in milliseconds
+      const differenceMs = targetDate - currentDate;
+
+      // Convert milliseconds to days
+      const differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
+
+      return differenceDays + ' ' + 'days'; // Output the difference in days
+    } else {
+      return 'Never';
+    }
+  };
 
   return (
     <div className="flex flex-col gap-[10px] px-5 tablet:gap-[25px]">
@@ -143,21 +168,24 @@ export default function RedemptionCenter() {
           <div className="flex items-center gap-5 tablet:gap-9">
             <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">FDX</h2>
             <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[178px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
-              <FaPlus
-                className="w-[7px] cursor-pointer tablet:w-[23px]"
-                onClick={() => {
-                  if (persistedUserInfo.balance.toFixed(2) - 0.5 > fdx) {
-                    setFdx(fdx + 0.5);
-                  } else {
-                    setFdx(fdx + (persistedUserInfo.balance.toFixed(2) - fdx));
-                  }
-                }}
-              />
-              <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">{fdx}</h2>
               <FaMinus
                 className="w-[7px] cursor-pointer tablet:w-[23px]"
                 onClick={() => {
-                  if (fdx !== 0) setFdx(fdx - 0.5);
+                  if (fdx - 1 > 0) setFdx(fdx - 1);
+                  else setFdx(0);
+                }}
+              />
+              <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">
+                {fdx.toFixed(2)}
+              </h2>
+              <FaPlus
+                className="w-[7px] cursor-pointer tablet:w-[23px]"
+                onClick={() => {
+                  if (persistedUserInfo.balance.toFixed(2) - 1 > fdx) {
+                    setFdx(fdx + 1);
+                  } else {
+                    setFdx(fdx + (persistedUserInfo.balance.toFixed(2) - fdx));
+                  }
                 }}
               />
             </div>
@@ -238,14 +266,22 @@ export default function RedemptionCenter() {
                         {item.code}
                       </p>
                       <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[89px] tablet:max-w-[89px] tablet:text-[20px]">
-                        {item.expiry}
+                        {calculateExpiry(item.expiry)}
                       </p>
                     </div>
                     <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
                       <Button variant="danger" className={'bg-[#BABABA]'}>
                         Share Link
                       </Button>
-                      <Button variant="submit">Copy</Button>
+                      <Button
+                        variant="submit"
+                        onClick={() => {
+                          copyToClipboard(item.code);
+                          toast.success('Code Copied!');
+                        }}
+                      >
+                        Copy
+                      </Button>
                       <Button variant="result">Redeem</Button>
                     </div>
                   </div>
@@ -285,7 +321,7 @@ export default function RedemptionCenter() {
                   {item.code}
                 </p>
                 <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[89px] tablet:max-w-[89px] tablet:text-[20px]">
-                  {item.expiry}
+                  {calculateExpiry(item.expiry)}
                 </p>
               </div>
               <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
