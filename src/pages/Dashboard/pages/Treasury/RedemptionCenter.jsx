@@ -32,6 +32,7 @@ export default function RedemptionCenter() {
       toast.error(err.response.data.message.split(':')[1]);
     },
   });
+
   const copyToClipboard = async (code) => {
     const textToCopy = code;
 
@@ -82,7 +83,6 @@ export default function RedemptionCenter() {
     if (description === '') return toast.error('You cannot leave description empty');
     let newExpiryDate;
 
-    console.log(expiry);
     if (expiry === '30 days') {
       const currentDate = new Date();
       currentDate.setDate(currentDate.getDate() + 30);
@@ -107,6 +107,7 @@ export default function RedemptionCenter() {
 
     createRedemptionCode(params);
   };
+
   const calculateExpiry = (expiry) => {
     if (expiry) {
       const targetDate = new Date(expiry);
@@ -141,15 +142,13 @@ export default function RedemptionCenter() {
             <div className="flex items-baseline gap-[10px]">
               <p className="text-[7px] font-normal leading-normal text-[#85898C] tablet:text-[14.765px]">Expires in</p>
               <select
-                name=""
-                id=""
                 value={expiry}
                 onChange={(e) => setExpiry(e.target.value)}
                 className="h-[13px] min-w-[40px] max-w-[40px] rounded-[2.706px] border-[2.279px] border-[#DEE6F7] bg-[#F9F9F9] text-[7.49px] font-semibold text-[#7C7C7C] focus:outline-none tablet:h-7 tablet:min-w-[82px] tablet:max-w-[82px] tablet:rounded-[5.376px] tablet:text-[13.6px]"
               >
-                <option selected>30 days</option>
-                <option>7 days</option>
-                <option>Never</option>
+                <option value="30 days">30 days</option>
+                <option value="7 days">7 days</option>
+                <option value="Never">Never</option>
               </select>
             </div>
           </div>
@@ -175,16 +174,30 @@ export default function RedemptionCenter() {
                   else setFdx(0);
                 }}
               />
-              <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">
-                {fdx.toFixed(2)}
-              </h2>
+              <input
+                type="number"
+                className="hide-input-arrows w-full bg-transparent text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] focus:outline-none tablet:text-[20px]"
+                value={fdx}
+                onChange={(e) => {
+                  let x = parseFloat(e.target.value);
+                  if (!isNaN(x)) {
+                    if (Number.isInteger(x)) {
+                      setFdx(x.toString());
+                    } else {
+                      setFdx(x.toFixed(2));
+                    }
+                  } else {
+                    setFdx(0);
+                  }
+                }}
+              />
               <FaPlus
                 className="w-[7px] cursor-pointer tablet:w-[23px]"
                 onClick={() => {
                   if (persistedUserInfo.balance.toFixed(2) - 1 > fdx) {
                     setFdx(fdx + 1);
                   } else {
-                    setFdx(fdx + (persistedUserInfo.balance.toFixed(2) - fdx));
+                    setFdx((fdx + (persistedUserInfo.balance.toFixed(2) - fdx)).toFixed(2));
                   }
                 }}
               />
@@ -208,10 +221,10 @@ export default function RedemptionCenter() {
             <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">Code</h2>
             <input
               type="text"
-              placeholder="45kLM0p"
+              placeholder="eg (rG57HK)"
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="min-w-[70px] max-w-[70px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-3 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[178px] tablet:max-w-[178px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:px-7 tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
+              className="min-w-[70px] max-w-[70px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-3 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[178px] tablet:max-w-[178px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
             />
           </div>
           <div className="flex w-full justify-end">
@@ -235,44 +248,43 @@ export default function RedemptionCenter() {
         ) : (
           <div>
             <div className="mb-2 ml-3 flex items-center gap-[10px] tablet:mb-[13px] tablet:ml-[60px] tablet:gap-[35px]">
-              <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[89px] tablet:max-w-[89px] tablet:text-[22px]">
+              <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[22px]">
                 FDX
               </p>
               <p className="min-w-[95px] max-w-[95px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[189px] tablet:max-w-[189px] tablet:text-[22px]">
                 Description
               </p>
-              <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[89px] tablet:max-w-[89px] tablet:text-[22px]">
+              <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-36 tablet:max-w-36 tablet:text-[22px]">
                 Code
               </p>
-              <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[89px] tablet:max-w-[89px] tablet:text-[22px]">
+              <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-20 tablet:max-w-20 tablet:text-[22px]">
                 Expiry
               </p>
             </div>
             <div className="rounded-[5.85px] border-[1.84px] border-[#0FB063] bg-white tablet:rounded-[15px]">
               {unredeemedData?.data?.data?.map((item, index) => (
-                <div>
-                  <div
-                    className="flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0"
-                    key={index}
-                  >
+                <div key={index + 1}>
+                  <div className="flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0">
                     <div className="flex items-center gap-[10px] tablet:gap-[35px]">
-                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[89px] tablet:max-w-[89px] tablet:text-[20px]">
+                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
                         {item.amount}
                       </p>
-                      <p className="min-w-[95px] max-w-[95px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[189px] tablet:max-w-[189px] tablet:text-[20px]">
-                        {item.description}
-                      </p>
-                      <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[89px] tablet:max-w-[89px] tablet:text-[20px]">
+                      <div className=" flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[20px]">
+                        <div className="tooltip" data-tip={item.description}>
+                          <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[189px] tablet:max-w-[189px]">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-36 tablet:max-w-36 tablet:text-[20px]">
                         {item.code}
                       </p>
-                      <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[89px] tablet:max-w-[89px] tablet:text-[20px]">
+                      <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
                         {calculateExpiry(item.expiry)}
                       </p>
                     </div>
-                    <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
-                      <Button variant="danger" className={'bg-[#BABABA]'}>
-                        Share Link
-                      </Button>
+                    <div className="flex items-center justify-end gap-[10px] tablet:gap-3">
+                      <Button variant="share-link">Share Link</Button>
                       <Button
                         variant="submit"
                         onClick={() => {
@@ -311,16 +323,16 @@ export default function RedemptionCenter() {
               className="flex flex-col justify-between gap-2 rounded-[5.85px] border-[1.84px] border-[#0FB063] bg-white py-2 pl-[13px] pr-4 tablet:gap-4 tablet:rounded-[15px] tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0"
             >
               <div className="flex items-center gap-[10px] tablet:gap-[35px]">
-                <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[89px] tablet:max-w-[89px] tablet:text-[20px]">
+                <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
                   {item.amount}
                 </p>
                 <p className="min-w-[95px] max-w-[95px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[189px] tablet:max-w-[189px] tablet:text-[20px]">
                   {item.description}
                 </p>
-                <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[89px] tablet:max-w-[89px] tablet:text-[20px]">
+                <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
                   {item.code}
                 </p>
-                <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[89px] tablet:max-w-[89px] tablet:text-[20px]">
+                <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
                   {calculateExpiry(item.expiry)}
                 </p>
               </div>

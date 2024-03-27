@@ -89,8 +89,8 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
         <h1 className="text-center text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Rating Category
         </h1>
-        <div className="mt-[10px] flex items-center justify-center gap-[36.8px] tablet:mt-[15px]  tablet:gap-[100px]">
-          <div className="flex items-center justify-center gap-[10px] tablet:gap-[32px]">
+        <div className="mt-[10px] flex items-center justify-center gap-[36.8px] tablet:mt-[30px]  tablet:gap-[100px]">
+          <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
             <input
               type="checkbox"
               className="h-[15px] w-[15px] tablet:h-[25px] tablet:w-[25px]"
@@ -103,10 +103,10 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                 alt=""
                 className="h-[15px] w-[15px] tablet:h-[35px] tablet:w-[35px]"
               />
-              <p className="text-[10px] tablet:text-[20px]">Everyone</p>
+              <p className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Everyone</p>
             </div>
           </div>
-          <div className="flex items-center justify-center gap-[10px] tablet:gap-[32px]">
+          <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
             <input
               type="checkbox"
               className="h-[15px] w-[15px] tablet:h-[25px] tablet:w-[25px]"
@@ -119,11 +119,11 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                 alt=""
                 className="h-[15px] w-[15px] tablet:h-[35px] tablet:w-[35px]"
               />
-              <p className="text-[10px] tablet:text-[20px]">Adult</p>
+              <p className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Adult</p>
             </div>
           </div>
         </div>
-        <div className="mt-[10px] flex items-center  justify-end gap-[25px] tablet:mt-[15px] tablet:gap-[49px]">
+        <div className="mt-[10px] flex items-center justify-end gap-[25px] tablet:mt-[25px] tablet:gap-[49px]">
           <Button
             variant={'danger'}
             onClick={() => {

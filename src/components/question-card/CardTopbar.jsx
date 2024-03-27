@@ -72,14 +72,14 @@ const CardTopbar = ({
         )}
       </div>
       {postProperties === 'HiddenPosts' ? (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <h1 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">
             {questStartData?.userQuestSetting?.hiddenMessage}
           </h1>
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/eye-latest-cut.svg`}
             alt="eye-cut"
-            className="h-[10.67px] w-[15.24px] tablet:h-[26.6px] tablet:w-[30px]"
+            className="h-[15.67px] w-[15.24px] tablet:h-[26.6px] tablet:w-[30px]"
           />
         </div>
       ) : postProperties === 'SharedLinks' ? (

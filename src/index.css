@@ -628,3 +628,16 @@ input.hide_number_input_arrows2::-webkit-inner-spin-button {
   padding: 0px !important;
 }
 /* Min and Max Range Slider End*/
+
+/* HIDE INPUT UP DOWN ARROW */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
