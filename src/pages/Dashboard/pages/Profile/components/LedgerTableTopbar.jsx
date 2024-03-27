@@ -1,6 +1,14 @@
 import { useSelector } from 'react-redux';
 
-const LedgerTableTopbar = ({ sort, setsort, filterText, setFilterText, selectedOption, setSelectedOption }) => {
+const LedgerTableTopbar = ({
+  isTreasury,
+  sort,
+  setsort,
+  filterText,
+  setFilterText,
+  selectedOption,
+  setSelectedOption,
+}) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const handleDropdown = () => {
@@ -14,40 +22,46 @@ const LedgerTableTopbar = ({ sort, setsort, filterText, setFilterText, selectedO
 
   return (
     <div className="mb-[10.27px] flex w-full justify-between tablet:mb-8">
-      <div className="flex gap-[10.97px] tablet:gap-5 laptop:gap-[63px]">
-        {/* profile */}
-        <div className="flex gap-[5.51px] tablet:gap-[13px]">
-          <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/person.svg`}
-            alt="person icon"
-            className="h-[18.5px] w-[18.5px] tablet:h-[36px] tablet:w-[36px] laptop:h-[44.2px] laptop:w-[44.2px]"
-          />
-          <div>
-            <h1 className="whitespace-nowrap text-[8.6px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC] tablet:text-[14px] laptop:text-[20.7px]">
-              My Profile
-            </h1>
-            <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
-              <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
+      {!isTreasury ? (
+        <div className="flex gap-[10.97px] tablet:gap-5 laptop:gap-[63px]">
+          {/* profile */}
+
+          <div className="flex gap-[5.51px] tablet:gap-[13px]">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/person.svg`}
+              alt="person icon"
+              className="h-[18.5px] w-[18.5px] tablet:h-[36px] tablet:w-[36px] laptop:h-[44.2px] laptop:w-[44.2px]"
+            />
+            <div>
+              <h1 className="whitespace-nowrap text-[8.6px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC] tablet:text-[14px] laptop:text-[20.7px]">
+                My Profile
+              </h1>
+              <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
+                <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
+              </div>
+            </div>
+          </div>
+
+          {/* treasury */}
+          <div className="flex gap-[5.51px] tablet:gap-[13px]">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.png`}
+              alt="person icon"
+              className="h-[18.5px] w-[18.5px] tablet:h-[36px] tablet:w-[36px] laptop:h-[44.2px] laptop:w-[44.2px]"
+            />
+            <div>
+              <h1 className="text-[8.6px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC] tablet:text-[14px] laptop:text-[20.7px]">
+                Treasury
+              </h1>
+              <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
+                <p>{localStorage.getItem('treasuryAmount')} FDX</p>
+              </div>
             </div>
           </div>
         </div>
-        {/* treasury */}
-        <div className="flex gap-[5.51px] tablet:gap-[13px]">
-          <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.png`}
-            alt="person icon"
-            className="h-[18.5px] w-[18.5px] tablet:h-[36px] tablet:w-[36px] laptop:h-[44.2px] laptop:w-[44.2px]"
-          />
-          <div>
-            <h1 className="text-[8.6px] font-semibold leading-normal -tracking-[0.207px] text-[#ACACAC] tablet:text-[14px] laptop:text-[20.7px]">
-              Treasury
-            </h1>
-            <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
-              <p>{localStorage.getItem('treasuryAmount')} FDX</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      ) : (
+        <div></div>
+      )}
       <div className="flex items-center gap-[5.4px] tablet:gap-[8.5px] laptop:gap-[23.5px]">
         {/* search */}
         <div className="relative flex h-[12.6px] tablet:h-[32px] laptop:h-[43px]">

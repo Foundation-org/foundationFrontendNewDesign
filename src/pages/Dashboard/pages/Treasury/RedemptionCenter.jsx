@@ -234,18 +234,19 @@ export default function RedemptionCenter() {
           </p>
           <div className="flex items-center gap-5 tablet:gap-9">
             <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">FDX</h2>
-            <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[178px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
+            <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[187px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
               <FaMinus
                 className="w-[7px] cursor-pointer tablet:w-[23px]"
                 onClick={() => {
-                  if (fdx - 1 > 0) setFdx(fdx - 1);
+                  if (fdx * 1 - 1 > 0) setFdx(fdx - 1);
                   else setFdx(0);
                 }}
               />
               <input
                 type="number"
                 className="hide-input-arrows w-full bg-transparent text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] focus:outline-none tablet:text-[20px]"
-                value={fdx}
+                value={fdx === 0 ? '' : fdx}
+                placeholder="0"
                 onChange={(e) => {
                   let x = parseFloat(e.target.value);
                   if (!isNaN(x)) {
@@ -263,9 +264,9 @@ export default function RedemptionCenter() {
                 className="w-[7px] cursor-pointer tablet:w-[23px]"
                 onClick={() => {
                   if (persistedUserInfo.balance.toFixed(2) - 1 > fdx) {
-                    setFdx(fdx + 1);
+                    setFdx(fdx * 1 + 1);
                   } else {
-                    setFdx((fdx + (persistedUserInfo.balance.toFixed(2) - fdx)).toFixed(2));
+                    setFdx((fdx * 1 + (persistedUserInfo.balance.toFixed(2) - fdx)).toFixed(2));
                   }
                 }}
               />
@@ -292,7 +293,7 @@ export default function RedemptionCenter() {
               placeholder="eg (rG57HK)"
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="min-w-[70px] max-w-[70px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-3 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[178px] tablet:max-w-[178px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
+              className="min-w-[70px] max-w-[70px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-3 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[187px] tablet:max-w-[187px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
             />
           </div>
           <div className="flex w-full justify-end">
@@ -338,7 +339,7 @@ export default function RedemptionCenter() {
                         {item.amount}
                       </p>
                       <div className=" flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[20px]">
-                        <div className="tooltip" data-tip={item.description}>
+                        <div className="tooltip text-start" data-tip={item.description}>
                           <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[189px] tablet:max-w-[189px]">
                             {item.description}
                           </p>
@@ -387,7 +388,6 @@ export default function RedemptionCenter() {
         <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
           History
         </h1>
-
         {!history || history.data.data.length === 0 ? (
           <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white py-2 tablet:rounded-[15px] tablet:py-6">
             <p className="text-center text-[11px] font-medium leading-normal text-[#C9C8C8] tablet:text-[22px]">
@@ -395,37 +395,48 @@ export default function RedemptionCenter() {
             </p>
           </div>
         ) : (
-          history?.data?.data?.map((item, index) => (
-            <div
-              key={index + 1}
-              className="flex flex-col justify-between gap-2 rounded-[5.85px] border-[1.84px] border-[#0FB063] bg-white py-2 pl-[13px] pr-4 tablet:gap-4 tablet:rounded-[15px] tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0"
-            >
-              <div className="flex items-center gap-[10px] tablet:gap-[35px]">
-                <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
-                  {item.amount}
-                </p>
-                <p className="min-w-[95px] max-w-[95px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[189px] tablet:max-w-[189px] tablet:text-[20px]">
-                  {item.description}
-                </p>
-                <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
-                  {item.code}
-                </p>
-                <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
-                  {calculateExpiry(item.expiry)}
-                </p>
+          <div className="rounded-[5.85px] border-[1.84px] border-[#0FB063] bg-white tablet:rounded-[15px]">
+            {history?.data?.data?.map((item, index) => (
+              <div>
+                <div
+                  key={index + 1}
+                  className="flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0"
+                >
+                  <div className="flex items-center gap-[10px] tablet:gap-[35px]">
+                    <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
+                      {item.amount}
+                    </p>
+                    <div className="flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[20px]">
+                      <div className="tooltip text-start" data-tip={item.description}>
+                        <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[189px] tablet:max-w-[189px]">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-36 tablet:max-w-36 tablet:text-[20px]">
+                      {item.code}
+                    </p>
+                    <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
+                      {calculateExpiry(item.expiry)}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
+                    <p className="text-[9px] font-medium leading-normal text-[#A3A3A3] tablet:text-[20px]">Redeemed</p>
+                    <p className="text-[20px] font-medium leading-normal text-[#707175]">
+                      {formatDate(item.createdAt)}
+                    </p>
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                      alt="trash"
+                      className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
+                      onClick={() => handleDeleteHistory(item.code)}
+                    />
+                  </div>
+                </div>
+                <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
               </div>
-              <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
-                <p className="text-[9px] font-medium leading-normal text-[#A3A3A3] tablet:text-[20px]">Redeemed</p>
-                <p className="text-[20px] font-medium leading-normal text-[#707175]">{formatDate(item.createdAt)}</p>
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                  alt="trash"
-                  className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-                  onClick={() => handleDeleteHistory(item.code)}
-                />
-              </div>
-            </div>
-          ))
+            ))}
+          </div>
         )}
       </div>
     </div>

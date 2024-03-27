@@ -36,6 +36,12 @@ export const getAllLedgerData = async (page, limit, sort) => {
   });
 };
 
+export const getAllRedemptionLedgerData = async (page, limit, sort, uuid) => {
+  return await api.get('/ledger/ledgerById', {
+    params: { page, limit, sort, type: 'redemption', uuid },
+  });
+};
+
 export const setFilterStates = async (state) => {
   return await api.post('/user/setStates', state);
 };
@@ -47,6 +53,12 @@ export const setBookmarkFilterStates = async (state) => {
 export const searchLedger = async (page, limit, sort, term) => {
   return await api.post('/ledger/searchLedger', {
     params: { page, limit, sort, term },
+  });
+};
+
+export const searchRedemptionLedger = async (page, limit, sort, term, uuid) => {
+  return await api.post('/ledger/searchLedger', {
+    params: { page, limit, sort, term, type: 'redemption', uuid },
   });
 };
 
