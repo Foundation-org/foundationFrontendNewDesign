@@ -360,7 +360,8 @@ export default function RedemptionCenter() {
                         {item.code}
                       </p>
                       <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
-                        {calculateExpiry(item.expiry)}
+                        {/* {calculateExpiry(item.expiry)} */}
+                        Never
                       </p>
                     </div>
                     <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
@@ -443,7 +444,8 @@ export default function RedemptionCenter() {
                         {item.code}
                       </p>
                       <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
-                        {calculateExpiry(item.expiry)}
+                        {/* {calculateExpiry(item.expiry)} */}
+                        Never
                       </p>
                     </div>
                     <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
