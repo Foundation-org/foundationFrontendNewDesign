@@ -138,14 +138,27 @@ const QuestStartSection = () => {
     if (pagination.page === 1) {
       setAllData(feedData?.data || []);
     } else {
+      // setAllData((prevData) => {
+      //   const newData = [...prevData, ...(feedData?.data || [])];
+
+      //   const uniqueData = newData.filter(
+      //     (item, index, array) => array.findIndex((data) => data._id === item._id) === index,
+      //   );
+
+      //   return uniqueData;
+      // });
       setAllData((prevData) => {
-        const newData = [...prevData, ...(feedData?.data || [])];
+        const newData = feedData?.data || [];
+        const updatedData = [...prevData];
 
-        const uniqueData = newData.filter(
-          (item, index, array) => array.findIndex((data) => data._id === item._id) === index,
-        );
+        newData.forEach((item) => {
+          const exists = prevData.some((data) => data._id === item._id);
+          if (!exists) {
+            updatedData.push(item);
+          }
+        });
 
-        return uniqueData;
+        return updatedData;
       });
     }
     if (!isLoading) {
