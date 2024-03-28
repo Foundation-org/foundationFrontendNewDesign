@@ -6,12 +6,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   addRedeemCode,
   createRedeeemCode,
-  deleteHistory,
   getHistoryData,
   getUnredeemedData,
   // redeemCode,
 } from '../../../../services/api/redemptionApi';
 import { toast } from 'sonner';
+import { FaSpinner } from 'react-icons/fa';
+import DeleteHistoryPopup from '../../../../components/dialogue-boxes/deleteHistoryPopup';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
@@ -20,8 +21,15 @@ export default function RedemptionCenter() {
   const [description, setDescription] = useState('');
   const [expiry, setExpiry] = useState('30 days');
   const [code, setCode] = useState('');
+  const [isPulse, setIsPulse] = useState(false);
+  const [addCodeLoading, setAddCodeLoading] = useState(false);
+  const [radeemLoading, setRadeemLoading] = useState('');
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [deleteHistoryCode, setDeleteHistoryCode] = useState(false);
 
-  const { mutateAsync: createRedemptionCode } = useMutation({
+  const handleClose = () => setIsDeleteModal(false);
+
+  const { mutateAsync: createRedemptionCode, isPending: createPending } = useMutation({
     mutationFn: createRedeeemCode,
     onSuccess: (resp) => {
       toast.success('Redemption Code created successfully');
@@ -71,8 +79,13 @@ export default function RedemptionCenter() {
       queryClient.invalidateQueries('history');
       toast.success('Code Redeemed Successfully');
       setCode('');
+      setIsPulse(true);
+      setAddCodeLoading(false);
+      setRadeemLoading('');
     },
     onError: (err) => {
+      setAddCodeLoading(false);
+      setRadeemLoading('');
       toast.error(err.response.data.message.split(':')[1]);
     },
   });
@@ -88,19 +101,6 @@ export default function RedemptionCenter() {
   //     toast.error(err.response.data.message.split(':')[1]);
   //   },
   // });
-
-  const { mutateAsync: DeleteHistory } = useMutation({
-    mutationFn: deleteHistory,
-    onSuccess: (resp) => {
-      queryClient.invalidateQueries('history');
-      toast.success('Code Redeemed Successfully');
-      setCode('');
-    },
-    onError: (err) => {
-      console.log('hamza', err);
-      toast.error(err.response.data.message.split(':')[1]);
-    },
-  });
 
   const { data: unredeemedData } = useQuery({
     queryFn: async () => {
@@ -118,6 +118,7 @@ export default function RedemptionCenter() {
 
   const handleAdd = () => {
     if (code === '') return toast.error('Enter some code to Redeeem');
+    setAddCodeLoading(true);
 
     const params = {
       uuid: persistedUserInfo?.uuid,
@@ -126,18 +127,9 @@ export default function RedemptionCenter() {
     addRedemptionCode(params);
   };
 
-  const handleDeleteHistory = (code) => {
-    if (code === '') return toast.error('Enter some code to Delete');
-
-    const params = {
-      uuid: persistedUserInfo?.uuid,
-      code: code,
-    };
-    DeleteHistory(params);
-  };
-
   const handleRedeeem = (code) => {
     if (code === '') return toast.error('Enter some code to Redeem');
+    setRadeemLoading(code);
 
     const params = {
       uuid: persistedUserInfo?.uuid,
@@ -200,6 +192,16 @@ export default function RedemptionCenter() {
     const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
   }
+
+  useEffect(() => {
+    if (isPulse) {
+      const timer = setTimeout(() => {
+        setIsPulse(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isPulse]);
 
   return (
     <div className="flex flex-col gap-[10px] px-5 tablet:gap-[25px]">
@@ -285,7 +287,7 @@ export default function RedemptionCenter() {
             </div>
             <div className="flex w-full justify-end">
               <Button variant={'cancel'} onClick={handleCreate}>
-                Create
+                {createPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               </Button>
             </div>
           </div>
@@ -304,12 +306,12 @@ export default function RedemptionCenter() {
                 placeholder="eg (rG57HK)"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="min-w-[70px] max-w-[70px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-3 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[187px] tablet:max-w-[187px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
+                className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
               />
             </div>
             <div className="flex w-full justify-end">
               <Button variant={'cancel'} onClick={handleAdd}>
-                Add
+                {addCodeLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
               </Button>
             </div>
           </div>
@@ -384,7 +386,7 @@ export default function RedemptionCenter() {
                         Copy Code
                       </Button>
                       <Button variant="result" onClick={() => handleRedeeem(item.code)}>
-                        Redeem
+                        {radeemLoading === item.code ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Redeem'}
                       </Button>
                     </div>
                   </div>
@@ -397,6 +399,11 @@ export default function RedemptionCenter() {
       </div>
 
       <div>
+        <DeleteHistoryPopup
+          isDeleteModal={isDeleteModal}
+          handleClose={handleClose}
+          deleteHistoryCode={deleteHistoryCode}
+        />
         <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
           History
         </h1>
@@ -422,44 +429,49 @@ export default function RedemptionCenter() {
                 Expires
               </p>
             </div>
-            <div className="rounded-[5.85px] border-[1.84px] border-[#0FB063] bg-white tablet:rounded-[15px]">
+            <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
               {history?.data?.data?.map((item, index) => (
                 <div>
                   <div
                     key={index + 1}
-                    className="flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0"
+                    className={`flex flex-col justify-between gap-2  py-2 pl-[13px] pr-4  tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
                   >
                     <div className="flex items-center gap-[10px] tablet:gap-[35px]">
-                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
+                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
                         {item.amount}
                       </p>
-                      <div className="flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[20px]">
+                      <div className="flex items-center text-[10px] font-medium leading-normal tablet:text-[20px]">
                         <div className="tooltip text-start" data-tip={item.description}>
                           <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[189px] tablet:max-w-[189px]">
                             {item.description}
                           </p>
                         </div>
                       </div>
-                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-36 tablet:max-w-36 tablet:text-[20px]">
+                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal tablet:min-w-36 tablet:max-w-36 tablet:text-[20px]">
                         {item.code}
                       </p>
-                      <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
+                      <p className="leading-normals min-w-[40px] max-w-[40px] text-[10px] font-medium tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
                         {/* {calculateExpiry(item.expiry)} */}
                         Never
                       </p>
                     </div>
                     <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
-                      <p className="text-[9px] font-medium leading-normal text-[#A3A3A3] tablet:text-[20px]">
+                      <p
+                        className={`text-[9px] font-medium leading-normal tablet:text-[20px] ${index === 0 && isPulse ? 'text-[#049952]' : 'text-[#A3A3A3]'}`}
+                      >
                         Redeemed
                       </p>
-                      <p className="text-[9px] font-medium leading-normal text-[#707175] tablet:text-[20px]">
+                      <p className="text-[9px] font-medium leading-normal tablet:text-[20px]">
                         {formatDate(item.createdAt)}
                       </p>
                       <img
                         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                         alt="trash"
                         className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-                        onClick={() => handleDeleteHistory(item.code)}
+                        onClick={() => {
+                          setDeleteHistoryCode(item.code);
+                          setIsDeleteModal(true);
+                        }}
                       />
                     </div>
                   </div>

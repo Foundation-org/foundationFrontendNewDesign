@@ -1,9 +1,8 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useDebounce } from '../../../../utils/useDebounce';
 import {
-  getAllLedgerData,
+  getAllRadeemLedgerData,
   getAllRedemptionLedgerData,
-  searchLedger,
   searchRedemptionLedger,
 } from '../../../../services/api/userAuth';
 import { Columns } from '../Profile/components/LedgerUtils';
@@ -94,7 +93,7 @@ export default function Ledger() {
 
   const handlePageClick = async (page) => {
     setCurrentPage(page);
-    const data = await getAllLedgerData(page, itemsPerPage, sort);
+    const data = await getAllRadeemLedgerData(page, itemsPerPage, sort);
     if (data) {
       setLedgerData(data);
     }

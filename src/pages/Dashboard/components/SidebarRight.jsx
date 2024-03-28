@@ -297,29 +297,6 @@ const SidebarRight = () => {
             </div>
           </div>
         )}
-        {persistedUserInfo.role !== 'user' ? (
-          <div className="mb-[35px] flex items-center gap-6">
-            <div className="relative h-fit w-fit">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
-                alt="badge"
-                className="tablet:h-[74px] tablet:w-[60px]"
-              />
-              <p className="transform-center absolute z-50 pb-5 text-[32.25px] font-bold leading-normal text-white">
-                G
-              </p>
-            </div>
-            <div>
-              <h4 className="heading">Guest User</h4>
-              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base  font-medium text-[#616161] tablet:text-[17px] laptop:text-[20px] dark:text-[#D2D2D2]">
-                <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
-              </div>
-              <div onClick={handleGuestLogout}>
-                <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Create Account</Anchor>
-              </div>
-            </div>
-          </div>
-        ) : null}
         {sidebarList.map((item) => (
           <div className={`flex items-center gap-4 ${item.id !== 1 && 'mt-[1.9vh]'}`} key={item.id}>
             {persistedTheme === 'dark' ? (
