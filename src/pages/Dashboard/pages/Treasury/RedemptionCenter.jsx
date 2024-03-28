@@ -6,13 +6,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   addRedeemCode,
   createRedeeemCode,
-  deleteHistory,
   getHistoryData,
   getUnredeemedData,
   // redeemCode,
 } from '../../../../services/api/redemptionApi';
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
+import DeleteHistoryPopup from '../../../../components/dialogue-boxes/deleteHistoryPopup';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
@@ -24,6 +24,10 @@ export default function RedemptionCenter() {
   const [isPulse, setIsPulse] = useState(false);
   const [addCodeLoading, setAddCodeLoading] = useState(false);
   const [radeemLoading, setRadeemLoading] = useState(false);
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [deleteHistoryCode, setDeleteHistoryCode] = useState(false);
+
+  const handleClose = () => setIsDeleteModal(false);
 
   const { mutateAsync: createRedemptionCode, isPending: createPending } = useMutation({
     mutationFn: createRedeeemCode,
@@ -98,19 +102,6 @@ export default function RedemptionCenter() {
   //   },
   // });
 
-  const { mutateAsync: DeleteHistory } = useMutation({
-    mutationFn: deleteHistory,
-    onSuccess: (resp) => {
-      queryClient.invalidateQueries('history');
-      toast.success('Code Redeemed Successfully');
-      setCode('');
-    },
-    onError: (err) => {
-      console.log('hamza', err);
-      toast.error(err.response.data.message.split(':')[1]);
-    },
-  });
-
   const { data: unredeemedData } = useQuery({
     queryFn: async () => {
       return await getUnredeemedData(persistedUserInfo._id, persistedUserInfo.uuid);
@@ -134,16 +125,6 @@ export default function RedemptionCenter() {
       code: code,
     };
     addRedemptionCode(params);
-  };
-
-  const handleDeleteHistory = (code) => {
-    if (code === '') return toast.error('Enter some code to Delete');
-
-    const params = {
-      uuid: persistedUserInfo?.uuid,
-      code: code,
-    };
-    DeleteHistory(params);
   };
 
   const handleRedeeem = (code) => {
@@ -418,6 +399,11 @@ export default function RedemptionCenter() {
       </div>
 
       <div>
+        <DeleteHistoryPopup
+          isDeleteModal={isDeleteModal}
+          handleClose={handleClose}
+          deleteHistoryCode={deleteHistoryCode}
+        />
         <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
           History
         </h1>
@@ -482,7 +468,10 @@ export default function RedemptionCenter() {
                         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                         alt="trash"
                         className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-                        onClick={() => handleDeleteHistory(item.code)}
+                        onClick={() => {
+                          setDeleteHistoryCode(item.code);
+                          setIsDeleteModal(true);
+                        }}
                       />
                     </div>
                   </div>
