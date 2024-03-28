@@ -23,7 +23,7 @@ export default function RedemptionCenter() {
   const [code, setCode] = useState('');
   const [isPulse, setIsPulse] = useState(false);
   const [addCodeLoading, setAddCodeLoading] = useState(false);
-  const [radeemLoading, setRadeemLoading] = useState(false);
+  const [radeemLoading, setRadeemLoading] = useState('');
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteHistoryCode, setDeleteHistoryCode] = useState(false);
 
@@ -81,11 +81,11 @@ export default function RedemptionCenter() {
       setCode('');
       setIsPulse(true);
       setAddCodeLoading(false);
-      setRadeemLoading(false);
+      setRadeemLoading('');
     },
     onError: (err) => {
       setAddCodeLoading(false);
-      setRadeemLoading(false);
+      setRadeemLoading('');
       toast.error(err.response.data.message.split(':')[1]);
     },
   });
@@ -129,7 +129,7 @@ export default function RedemptionCenter() {
 
   const handleRedeeem = (code) => {
     if (code === '') return toast.error('Enter some code to Redeem');
-    setRadeemLoading(true);
+    setRadeemLoading(code);
 
     const params = {
       uuid: persistedUserInfo?.uuid,
@@ -306,7 +306,7 @@ export default function RedemptionCenter() {
                 placeholder="eg (rG57HK)"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="min-w-[70px] max-w-[70px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-3 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[187px] tablet:max-w-[187px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
+                className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
               />
             </div>
             <div className="flex w-full justify-end">
@@ -386,7 +386,7 @@ export default function RedemptionCenter() {
                         Copy Code
                       </Button>
                       <Button variant="result" onClick={() => handleRedeeem(item.code)}>
-                        {radeemLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Redeem'}
+                        {radeemLoading === item.code ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Redeem'}
                       </Button>
                     </div>
                   </div>

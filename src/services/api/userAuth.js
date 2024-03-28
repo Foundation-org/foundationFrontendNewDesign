@@ -36,6 +36,12 @@ export const getAllLedgerData = async (page, limit, sort) => {
   });
 };
 
+export const getAllRadeemLedgerData = async (page, limit, sort) => {
+  return await api.get('/ledger/ledgerById', {
+    params: { page, limit, sort, type: 'redemption' },
+  });
+};
+
 export const getAllRedemptionLedgerData = async (page, limit, sort, uuid) => {
   return await api.get('/ledger/ledgerById', {
     params: { page, limit, sort, type: 'redemption', uuid },
