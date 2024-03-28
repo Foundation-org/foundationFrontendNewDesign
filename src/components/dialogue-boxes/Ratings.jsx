@@ -91,12 +91,16 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
         </h1>
         <div className="mt-[10px] flex items-center justify-center gap-[36.8px] tablet:mt-[30px]  tablet:gap-[100px]">
           <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
-            <input
-              type="checkbox"
-              className="h-[15px] w-[15px] tablet:h-[25px] tablet:w-[25px]"
-              checked={selectedOptions.includes('everyone')}
-              onChange={() => handleCheckboxChange('everyone')}
-            />
+            <div id="custom-rating-checkbox" className="flex h-full items-center">
+              <input
+                id="small-checkbox"
+                type="checkbox"
+                className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                checked={selectedOptions.includes('everyone')}
+                onChange={() => handleCheckboxChange('everyone')}
+                readOnly
+              />
+            </div>
             <div className="flex items-center justify-center gap-[8px]">
               <img
                 src="/assets/svgs/ratings/desk-e.svg"
@@ -107,12 +111,16 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
             </div>
           </div>
           <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
-            <input
-              type="checkbox"
-              className="h-[15px] w-[15px] tablet:h-[25px] tablet:w-[25px]"
-              checked={selectedOptions.includes('adult')}
-              onChange={() => handleCheckboxChange('adult')}
-            />
+            <div id="custom-rating-checkbox" className="flex h-full items-center">
+              <input
+                id="small-checkbox"
+                type="checkbox"
+                className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                checked={selectedOptions.includes('adult')}
+                onChange={() => handleCheckboxChange('adult')}
+                readOnly
+              />
+            </div>
             <div className="flex items-center justify-center gap-[8px]">
               <img
                 src="/assets/svgs/ratings/desk-r.svg"

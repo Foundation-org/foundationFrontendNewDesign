@@ -641,3 +641,69 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+/* ========================================================= Ratings Checkbox */
+/* General styles */
+#custom-rating-checkbox .checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid #525252;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+  outline: none;
+}
+
+#custom-rating-checkbox .checkbox:focus-within {
+  outline: none;
+}
+
+#custom-rating-checkbox .checkbox:checked {
+  background: white;
+}
+
+#custom-rating-checkbox .checkbox::after {
+  content: url('/assets/svgs/checkmark-black-sm.svg');
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* Media query for larger screens */
+@media only screen and (min-width: 744px) {
+  #custom-rating-checkbox .checkbox {
+    border: 2px solid #525252;
+  }
+
+  #custom-rating-checkbox .checkbox::after {
+    content: url('/assets/svgs/checkmark-black.svg');
+    display: none;
+    padding-top: 5px;
+    width: 100%;
+    height: 100%;
+  }
+
+  #custom-rating-checkbox .checkbox:checked::after {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -1px;
+  }
+}
+
+/* Common styles for all screen sizes */
+#custom-rating-checkbox .checkbox:checked::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -2px;
+}
