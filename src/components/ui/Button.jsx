@@ -12,6 +12,9 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'addOption'
         ? 'addoption-boxShadow h-[1.375rem] w-fit gap-[0.27rem] bg-[#D9D9D9] p-2 text-[0.625rem] font-normal text-[#435059] tablet:h-[3.125rem] tablet:text-[1.25rem]'
         : '',
+      variant === 'addEmbeded'
+        ? 'addoption-boxShadow h-[1.375rem] w-fit gap-[0.27rem] bg-[#D9D9D9] p-2 text-[0.625rem] font-normal text-[#435059] tablet:h-[3.125rem] tablet:text-[1.25rem]'
+        : '',
       variant === 'cancel'
         ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] max-w-[10.8125rem] bg-[#707175] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
         : '',

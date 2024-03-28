@@ -23,6 +23,8 @@ const MultipleChoice = () => {
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [url, setUrl] = useState('');
+  const [description, setDescription] = useState('');
 
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
@@ -98,6 +100,9 @@ const MultipleChoice = () => {
     if (!moderationRating) {
       return toast.error('Oops! Something Went Wrong.');
     }
+    if (!description) {
+      return toast.error('You cannot leave the description empty.');
+    }
 
     const params = {
       Question: createQuestSlice.question,
@@ -111,6 +116,8 @@ const MultipleChoice = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
+      url: url,
+      description: description,
     };
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
@@ -234,18 +241,24 @@ const MultipleChoice = () => {
   };
 
   useEffect(() => {
-    if (!checkHollow() && optionsValue.every((value) => value.question !== '' && createQuestSlice.question !== '')) {
+    if (
+      !checkHollow() &&
+      optionsValue.every((value) => value.question !== '' && createQuestSlice.question !== '' && description !== '')
+    ) {
       setHollow(false);
     } else {
       setHollow(true);
     }
-  }, [optionsValue, createQuestSlice.question]);
+  }, [optionsValue, createQuestSlice.question, description]);
 
   return (
     <CreateQuestWrapper
       handleTab={handleTab}
       type={'Poll'}
       msg={'Ask a question where anyone can select a single option from a list of choices'}
+      url={url}
+      setUrl={setUrl}
+      setDescription={setDescription}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId={`optionsValue-${Date.now()}`}>

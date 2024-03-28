@@ -41,7 +41,9 @@ export const createInfoQuest = async (data) => {
       QuestAnswersSelected: data.QuestAnswersSelected,
       uuid: data.uuid,
       QuestTopic: data.QuestTopic,
-      moderationRatingCount: data.moderationRatingCount
+      moderationRatingCount: data.moderationRatingCount,
+      url: data.url,
+      description: data.description,
     });
   } catch (error) {
     toast.error(error.response.data.message.split(':')[1]);
@@ -158,7 +160,7 @@ export const moderationRating = async ({ validatedQuestion }) => {
     if (response.status === 200) {
       return response.data;
     } else {
-      return null
+      return null;
     }
   } catch (error) {
     return null;

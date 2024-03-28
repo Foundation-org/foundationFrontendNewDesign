@@ -24,6 +24,8 @@ const AgreeDisagree = () => {
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
+  const [url, setUrl] = useState('');
+  const [description, setDescription] = useState('');
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
@@ -80,6 +82,9 @@ const AgreeDisagree = () => {
     if (createQuestSlice.question === '') {
       return toast.warning('Post cannot be empty');
     }
+    if (!description) {
+      return toast.error('You cannot leave the description empty.');
+    }
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await questServices.getTopicOfValidatedQuestion({
       validatedQuestion: createQuestSlice.question,
@@ -122,12 +127,12 @@ const AgreeDisagree = () => {
   };
 
   useEffect(() => {
-    if (!checkHollow() && createQuestSlice.question !== '') {
+    if (!checkHollow() && createQuestSlice.question !== '' && description !== '') {
       setHollow(false);
     } else {
       setHollow(true);
     }
-  }, [createQuestSlice.question, questionStatus.tooltipName]);
+  }, [createQuestSlice.question, questionStatus.tooltipName, description]);
 
   useEffect(() => {
     dispatch(updateQuestion({ question: createQuestSlice.question, changedOption, changeState }));
@@ -138,6 +143,9 @@ const AgreeDisagree = () => {
       handleTab={handleTab}
       type={'Statement'}
       msg={'Make a statement that anyone can "Agree" or "Disagree" with'}
+      url={url}
+      setUrl={setUrl}
+      setDescription={setDescription}
     >
       <div className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5">
         <YesNoOptions answer={'Agree'} />

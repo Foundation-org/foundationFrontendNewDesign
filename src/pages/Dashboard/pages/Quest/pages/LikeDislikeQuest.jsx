@@ -24,6 +24,8 @@ const LikeDislike = () => {
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
+  const [url, setUrl] = useState('');
+  const [description, setDescription] = useState('');
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
@@ -94,6 +96,9 @@ const LikeDislike = () => {
     if (!moderationRating) {
       return toast.error('Oops! Something Went Wrong.');
     }
+    if (!description) {
+      return toast.error('You cannot leave the description empty.');
+    }
 
     const params = {
       Question: createQuestSlice.question,
@@ -120,12 +125,12 @@ const LikeDislike = () => {
   };
 
   useEffect(() => {
-    if (!checkHollow() && createQuestSlice.question !== '') {
+    if (!checkHollow() && createQuestSlice.question !== '' && description !== '') {
       setHollow(false);
     } else {
       setHollow(true);
     }
-  }, [createQuestSlice.question, questionStatus.tooltipName]);
+  }, [createQuestSlice.question, questionStatus.tooltipName, description]);
 
   useEffect(() => {
     dispatch(updateQuestion({ question: createQuestSlice.question, changedOption, changeState }));
@@ -136,6 +141,9 @@ const LikeDislike = () => {
       handleTab={handleTab}
       type={'Statement'}
       msg={'Make a statement that anyone can "Like" or "Dislike"'}
+      url={url}
+      setUrl={setUrl}
+      setDescription={setDescription}
     >
       <div className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5">
         <YesNoOptions answer={'Like'} />

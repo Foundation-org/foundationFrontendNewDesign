@@ -30,6 +30,8 @@ const OpenChoice = () => {
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
+  const [url, setUrl] = useState('');
+  const [description, setDescription] = useState('');
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -95,6 +97,9 @@ const OpenChoice = () => {
     // If found null
     if (!moderationRating) {
       return toast.error('Oops! Something Went Wrong.');
+    }
+    if (!description) {
+      return toast.error('You cannot leave the description empty.');
     }
 
     const params = {
@@ -231,18 +236,24 @@ const OpenChoice = () => {
   };
 
   useEffect(() => {
-    if (!checkHollow() && optionsValue.every((value) => value.question !== '' && createQuestSlice.question !== '')) {
+    if (
+      !checkHollow() &&
+      optionsValue.every((value) => value.question !== '' && createQuestSlice.question !== '' && description !== '')
+    ) {
       setHollow(false);
     } else {
       setHollow(true);
     }
-  }, [optionsValue, createQuestSlice.question]);
+  }, [optionsValue, createQuestSlice.question, description]);
 
   return (
     <CreateQuestWrapper
       handleTab={handleTab}
       type={'Poll'}
       msg={'Ask a question where anyone can select multiple options from a list of choices'}
+      url={url}
+      setUrl={setUrl}
+      setDescription={setDescription}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId={`optionsValue-${Date.now()}`}>

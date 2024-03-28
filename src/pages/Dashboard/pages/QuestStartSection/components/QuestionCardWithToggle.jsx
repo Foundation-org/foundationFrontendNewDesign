@@ -23,6 +23,7 @@ import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import * as authActions from '../../../../../features/auth/authSlice';
 import { useLocation } from 'react-router-dom';
+import { EmbededVideo } from '../../../../../components/question-card/EmbededVideo.jsx';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -741,7 +742,8 @@ const QuestionCardWithToggle = (props) => {
     if (viewResult !== questStartData._id && openResults !== true) {
       return (
         <>
-          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          {/* <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} /> */}
+          <EmbededVideo description={questStartData.description} url={questStartData.url} />
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -764,7 +766,8 @@ const QuestionCardWithToggle = (props) => {
     } else {
       return (
         <>
-          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          {/* <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} /> */}
+          <EmbededVideo description={questStartData.description} url={questStartData.url} />
           <Result
             questStartData={questStartData}
             id={questStartData._id}
