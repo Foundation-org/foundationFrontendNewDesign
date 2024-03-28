@@ -98,7 +98,7 @@ const OpenChoice = () => {
     if (!moderationRating) {
       return toast.error('Oops! Something Went Wrong.');
     }
-    if (!description) {
+    if (!description && url !== '') {
       return toast.error('You cannot leave the description empty.');
     }
 
@@ -114,6 +114,8 @@ const OpenChoice = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
+      url: url,
+      description: description,
     };
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');

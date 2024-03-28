@@ -96,7 +96,7 @@ const LikeDislike = () => {
     if (!moderationRating) {
       return toast.error('Oops! Something Went Wrong.');
     }
-    if (!description) {
+    if (!description && url !== '') {
       return toast.error('You cannot leave the description empty.');
     }
 
@@ -108,6 +108,8 @@ const LikeDislike = () => {
       uuid: persistedUserInfo.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
+      url: url,
+      description: description,
     };
 
     if (!checkHollow()) {

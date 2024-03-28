@@ -82,7 +82,7 @@ const AgreeDisagree = () => {
     if (createQuestSlice.question === '') {
       return toast.warning('Post cannot be empty');
     }
-    if (!description) {
+    if (!description && url !== '') {
       return toast.error('You cannot leave the description empty.');
     }
     // getTopicOfValidatedQuestion
@@ -110,6 +110,8 @@ const AgreeDisagree = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
+      url: url,
+      description: description,
     };
 
     if (!checkHollow()) {

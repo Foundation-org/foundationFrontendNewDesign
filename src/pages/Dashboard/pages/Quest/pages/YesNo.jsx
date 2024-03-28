@@ -26,7 +26,7 @@ const YesNo = () => {
   const [hollow, setHollow] = useState(true);
   const [url, setUrl] = useState('');
   const [description, setDescription] = useState('');
-
+  console.log(url);
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
@@ -95,7 +95,7 @@ const YesNo = () => {
     if (!moderationRating) {
       return toast.error('Oops! Something Went Wrong.');
     }
-    if (!description) {
+    if (!description && url !== '') {
       return toast.error('You cannot leave the description empty.');
     }
 
@@ -107,6 +107,8 @@ const YesNo = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
+      url: url,
+      description: description,
     };
 
     if (!checkHollow()) {

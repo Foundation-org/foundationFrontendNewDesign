@@ -742,8 +742,11 @@ const QuestionCardWithToggle = (props) => {
     if (viewResult !== questStartData._id && openResults !== true) {
       return (
         <>
-          {/* <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} /> */}
-          <EmbededVideo description={questStartData.description} url={questStartData.url} />
+          {questStartData.url !== '' ? (
+            <EmbededVideo description={questStartData.description} url={questStartData.url} />
+          ) : (
+            <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          )}
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -766,8 +769,11 @@ const QuestionCardWithToggle = (props) => {
     } else {
       return (
         <>
-          {/* <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} /> */}
-          <EmbededVideo description={questStartData.description} url={questStartData.url} />
+          {questStartData.url !== '' ? (
+            <EmbededVideo description={questStartData.description} url={questStartData.url} />
+          ) : (
+            <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          )}
           <Result
             questStartData={questStartData}
             id={questStartData._id}

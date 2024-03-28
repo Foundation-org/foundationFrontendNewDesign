@@ -68,7 +68,15 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
         {isShowPreview ? (
           <div>
             <div className="player-wrapper">
-              <ReactPlayer url={url} className="react-player" playing width="100%" height="100%" controls={false} />
+              <ReactPlayer
+                url={url}
+                className="react-player"
+                playing
+                width="100%"
+                height="100%"
+                controls={true}
+                muted={true}
+              />
             </div>
             <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-5 tablet:pb-[13px]">
               <TextareaAutosize
