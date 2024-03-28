@@ -12,6 +12,7 @@ import {
   // redeemCode,
 } from '../../../../services/api/redemptionApi';
 import { toast } from 'sonner';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
@@ -21,8 +22,10 @@ export default function RedemptionCenter() {
   const [expiry, setExpiry] = useState('30 days');
   const [code, setCode] = useState('');
   const [isPulse, setIsPulse] = useState(false);
+  const [addCodeLoading, setAddCodeLoading] = useState(false);
+  const [radeemLoading, setRadeemLoading] = useState(false);
 
-  const { mutateAsync: createRedemptionCode } = useMutation({
+  const { mutateAsync: createRedemptionCode, isPending: createPending } = useMutation({
     mutationFn: createRedeeemCode,
     onSuccess: (resp) => {
       toast.success('Redemption Code created successfully');
@@ -73,8 +76,12 @@ export default function RedemptionCenter() {
       toast.success('Code Redeemed Successfully');
       setCode('');
       setIsPulse(true);
+      setAddCodeLoading(false);
+      setRadeemLoading(false);
     },
     onError: (err) => {
+      setAddCodeLoading(false);
+      setRadeemLoading(false);
       toast.error(err.response.data.message.split(':')[1]);
     },
   });
@@ -120,6 +127,7 @@ export default function RedemptionCenter() {
 
   const handleAdd = () => {
     if (code === '') return toast.error('Enter some code to Redeeem');
+    setAddCodeLoading(true);
 
     const params = {
       uuid: persistedUserInfo?.uuid,
@@ -140,6 +148,7 @@ export default function RedemptionCenter() {
 
   const handleRedeeem = (code) => {
     if (code === '') return toast.error('Enter some code to Redeem');
+    setRadeemLoading(true);
 
     const params = {
       uuid: persistedUserInfo?.uuid,
@@ -297,7 +306,7 @@ export default function RedemptionCenter() {
             </div>
             <div className="flex w-full justify-end">
               <Button variant={'cancel'} onClick={handleCreate}>
-                Create
+                {createPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               </Button>
             </div>
           </div>
@@ -321,7 +330,7 @@ export default function RedemptionCenter() {
             </div>
             <div className="flex w-full justify-end">
               <Button variant={'cancel'} onClick={handleAdd}>
-                Add
+                {addCodeLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
               </Button>
             </div>
           </div>
@@ -396,7 +405,7 @@ export default function RedemptionCenter() {
                         Copy Code
                       </Button>
                       <Button variant="result" onClick={() => handleRedeeem(item.code)}>
-                        Redeem
+                        {radeemLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Redeem'}
                       </Button>
                     </div>
                   </div>
