@@ -67,21 +67,14 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
         </h1>
         {isShowPreview ? (
           <div>
+            <div className="player-wrapper">
+              <ReactPlayer url={url} className="react-player" playing width="100%" height="100%" controls={false} />
+            </div>
             <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-5 tablet:pb-[13px]">
               <TextareaAutosize
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Please decribe this embeded video"
-                className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
-              />
-            </div>
-            <div className="player-wrapper">
-              <ReactPlayer
-                url="https://www.youtube.com/watch?v=6HCqxcQbiu8"
-                className="react-player"
-                playing
-                width="100%"
-                height="100%"
-                controls={false}
+                className="w-full resize-none rounded-[5.128px] border border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10.3px] tablet:border-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
               />
             </div>
           </div>
