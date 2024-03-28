@@ -20,6 +20,7 @@ export default function RedemptionCenter() {
   const [description, setDescription] = useState('');
   const [expiry, setExpiry] = useState('30 days');
   const [code, setCode] = useState('');
+  const [isPulse, setIsPulse] = useState(false);
 
   const { mutateAsync: createRedemptionCode } = useMutation({
     mutationFn: createRedeeemCode,
@@ -71,6 +72,7 @@ export default function RedemptionCenter() {
       queryClient.invalidateQueries('history');
       toast.success('Code Redeemed Successfully');
       setCode('');
+      setIsPulse(true);
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
@@ -200,6 +202,16 @@ export default function RedemptionCenter() {
     const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
   }
+
+  useEffect(() => {
+    if (isPulse) {
+      const timer = setTimeout(() => {
+        setIsPulse(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isPulse]);
 
   return (
     <div className="flex flex-col gap-[10px] px-5 tablet:gap-[25px]">
@@ -422,37 +434,39 @@ export default function RedemptionCenter() {
                 Expires
               </p>
             </div>
-            <div className="rounded-[5.85px] border-[1.84px] border-[#0FB063] bg-white tablet:rounded-[15px]">
+            <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
               {history?.data?.data?.map((item, index) => (
                 <div>
                   <div
                     key={index + 1}
-                    className="flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0"
+                    className={`flex flex-col justify-between gap-2  py-2 pl-[13px] pr-4  tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
                   >
                     <div className="flex items-center gap-[10px] tablet:gap-[35px]">
-                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
+                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
                         {item.amount}
                       </p>
-                      <div className="flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[20px]">
+                      <div className="flex items-center text-[10px] font-medium leading-normal tablet:text-[20px]">
                         <div className="tooltip text-start" data-tip={item.description}>
                           <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[189px] tablet:max-w-[189px]">
                             {item.description}
                           </p>
                         </div>
                       </div>
-                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-36 tablet:max-w-36 tablet:text-[20px]">
+                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal tablet:min-w-36 tablet:max-w-36 tablet:text-[20px]">
                         {item.code}
                       </p>
-                      <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
+                      <p className="leading-normals min-w-[40px] max-w-[40px] text-[10px] font-medium tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
                         {/* {calculateExpiry(item.expiry)} */}
                         Never
                       </p>
                     </div>
                     <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
-                      <p className="text-[9px] font-medium leading-normal text-[#A3A3A3] tablet:text-[20px]">
+                      <p
+                        className={`text-[9px] font-medium leading-normal tablet:text-[20px] ${index === 0 && isPulse ? 'text-[#049952]' : 'text-[#A3A3A3]'}`}
+                      >
                         Redeemed
                       </p>
-                      <p className="text-[9px] font-medium leading-normal text-[#707175] tablet:text-[20px]">
+                      <p className="text-[9px] font-medium leading-normal tablet:text-[20px]">
                         {formatDate(item.createdAt)}
                       </p>
                       <img
