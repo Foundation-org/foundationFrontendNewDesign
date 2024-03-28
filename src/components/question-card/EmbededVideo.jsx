@@ -3,12 +3,12 @@ import ReactPlayer from 'react-player';
 
 export const EmbededVideo = ({ description, url }) => {
   return (
-    <div className="align-items border-red w-90% flex flex-col justify-start border-[1px] border-solid">
+    <div className="align-items mx-[22px] flex flex-col justify-start border border-[#DEE6F7] tablet:mx-[60px]">
       <div>{description}</div>
-      <div className="player-wrapper">
+      <div className="feed-player-wrapper">
         <ReactPlayer
           url={url}
-          className="react-player"
+          className="feed-react-player"
           playing
           width="100%"
           height="100%"
