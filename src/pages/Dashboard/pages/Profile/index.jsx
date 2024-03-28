@@ -9,6 +9,9 @@ import { toast } from 'sonner';
 import api from '../../../../services/api/Axios';
 import FallBack from '../../../ErrorBoundry/FallBack';
 import { ErrorBoundary, useErrorBoundary } from 'react-error-boundary';
+import { useMutation } from '@tanstack/react-query';
+import { userInfo } from '../../../../services/api/userAuth';
+import { addUser } from '../../../../features/auth/authSlice';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -55,10 +58,23 @@ const Profile = () => {
   //     toast.error(error.response.data.message.split(':')[1]);
   //   }
   // };
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+    onSuccess: (resp) => {
+      if (resp?.status === 200) {
+        if (resp.data) {
+          dispatch(addUser(resp.data));
+        }
+      }
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
 
-  // useEffect(() => {
-  //   getTreasuryAmount();
-  // }, []);
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   return (
     <ErrorBoundary
