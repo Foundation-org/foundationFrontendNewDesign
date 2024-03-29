@@ -95,7 +95,7 @@ const SidebarLeft = () => {
         localStorage.setItem('selectedButtonId', persistedUserInfo.States.selectedBtnId);
       }
     }
-  }, [persistedUserInfo]);
+  }, []);
 
   useEffect(() => {
     if (pathname === '/dashboard/bookmark') {
