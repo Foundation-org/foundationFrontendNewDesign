@@ -129,7 +129,7 @@ export default function Ledger() {
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
         />
-        <div className="no-scrollbar w-full overflow-auto tablet:h-[600px]">
+        <div className="no-scrollbar relative w-full overflow-auto tablet:h-[600px]">
           <table
             style={{
               minWidth:
@@ -185,7 +185,12 @@ export default function Ledger() {
             </thead>
             <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] md:text-[1.25rem] tablet:text-[0.875rem]">
               {table.getRowModel().rows.length === 0 ? (
-                <h4 className="mt-12 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem]">No results found</h4>
+                <div>
+                  <h4 className="mt-4 text-[0.4rem] md:text-[.88rem] tablet:mt-20 laptop:text-[1.2rem]">&#x200B;</h4>
+                  <h4 className="absolute left-1/2 top-[25px] -translate-x-1/2 transform text-[12px] tablet:top-1/2 tablet:text-[32px]">
+                    No results found
+                  </h4>
+                </div>
               ) : (
                 table.getRowModel().rows.map((row) => (
                   <tr
