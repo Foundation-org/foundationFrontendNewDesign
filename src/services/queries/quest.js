@@ -16,7 +16,7 @@ export function useGetFeedData(filterStates, debouncedSearch, pagination, column
       }
     },
     queryKey: ['FeedData', filterStates, debouncedSearch, pagination, columns],
-    staleTime: 10000,
+    staleTime: 60000,
   });
 
   return { data, isLoading };
@@ -69,7 +69,7 @@ export function useGetBookmarkData() {
   return useQuery({
     queryFn: () => HomepageAPIs.getAllBookmarkedQuests(),
     queryKey: ['getBookmarked'],
-    staleTime: 10000,
+    staleTime: 60000,
   });
 }
 
@@ -78,7 +78,7 @@ export function useGetAllTopics() {
   return useQuery({
     queryFn: () => HomepageAPIs.getAllTopics(),
     queryKey: ['topicsData'],
-    staleTime: 10000,
+    staleTime: 60000,
   });
 }
 
