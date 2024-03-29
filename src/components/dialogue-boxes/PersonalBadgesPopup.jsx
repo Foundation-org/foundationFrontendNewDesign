@@ -308,7 +308,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
               </Button>
             ) : (
-              <Button variant="submit" disabled={date} onClick={() => handleAddPersonalBadge()}>
+              <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
               </Button>
             )}
