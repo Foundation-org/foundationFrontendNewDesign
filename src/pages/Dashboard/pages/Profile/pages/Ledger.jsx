@@ -294,13 +294,13 @@ export default function BasicTable() {
                                   cell.getValue() !== 'DAO Treasury' &&
                                   cell.getValue() !== 'dao' &&
                                   cell.getValue() !== persistedUserInfo?.uuid
-                                ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
+                                ? `User`
                                 : cell.getValue() === persistedUserInfo?.uuid
                                   ? 'My Account'
                                   : cell.column.id === 'txTo' &&
                                       cell.getValue() !== 'DAO Treasury' &&
                                       cell.getValue() !== 'dao'
-                                    ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
+                                    ? `User`
                                     : cell.getValue() === 'dao'
                                       ? 'DAO'
                                       : cell.getValue()

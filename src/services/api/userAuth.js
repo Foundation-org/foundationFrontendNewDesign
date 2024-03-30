@@ -38,13 +38,13 @@ export const getAllLedgerData = async (page, limit, sort) => {
 
 export const getAllRadeemLedgerData = async (page, limit, sort) => {
   return await api.get('/ledger/ledgerById', {
-    params: { page, limit, sort, type: 'redemption' },
+    params: { page, limit, sort, txAuth: 'DAO' },
   });
 };
 
 export const getAllRedemptionLedgerData = async (page, limit, sort, uuid) => {
   return await api.get('/ledger/ledgerById', {
-    params: { page, limit, sort, type: 'redemption', uuid },
+    params: { page, limit, sort, txAuth: 'DAO', uuid },
   });
 };
 
