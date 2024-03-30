@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Reorder } from 'framer-motion';
 
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
@@ -72,18 +71,6 @@ const StartTest = ({
     const labelFound = array.filter((item) => item.label === labelToFind);
     return labelFound[0]?.contend === true;
   }
-
-  // const handleOnDragEnd = (result) => {
-  //   if (!result.destination) {
-  //     return;
-  //   }
-
-  //   const newTypedValues = [...rankedAnswers];
-  //   const [removed] = newTypedValues.splice(result.source.index, 1);
-  //   newTypedValues.splice(result.destination.index, 0, removed);
-
-  //   setRankedAnswers(newTypedValues);
-  // };
 
   const renderOptionsByTitle = () => {
     const listContainerRef = useRef(null);
@@ -237,6 +224,7 @@ const StartTest = ({
                 key={item.id}
                 onDrag={() => setDragId(item.id)}
                 onDragEnd={() => setDragId(null)}
+                className="cursor-pointer"
               >
                 <SingleAnswerRankedChoice
                   isDragging={dragId === item.id ? true : false}

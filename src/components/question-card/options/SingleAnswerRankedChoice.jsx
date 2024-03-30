@@ -247,22 +247,15 @@ const SingleAnswerRankedChoice = (props) => {
             <div
               className={`${
                 props.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-              } flex h-full w-fit items-center rounded-l-[4.734px] px-[3.3px] py-[5.6px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:py-[13px]`}
-            >
-              {persistedTheme === 'dark' ? (
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`}
-                  alt="six dots"
-                  className="h-[8.5px] w-[5.2px] tablet:h-auto tablet:w-auto"
-                />
-              ) : (
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`}
-                  alt="six dots"
-                  className="h-[8.5px] w-[5.2px] tablet:h-auto tablet:w-auto"
-                />
-              )}
-            </div>
+              } flex h-full w-fit items-center rounded-l-[4.734px] bg-center bg-no-repeat px-[3.3px] py-[5.6px] tablet:w-[25px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:py-[13px]`}
+              style={{
+                backgroundImage: `url(${
+                  persistedTheme === 'dark'
+                    ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`
+                    : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`
+                })`,
+              }}
+            />
           )}
 
           <div
