@@ -52,13 +52,22 @@ export const utilsSlice = createSlice({
     addEnablePostId: (state, action) => {
       state.enablePostId = action.payload;
     },
-    adBookmarkArr: (state, action) => {
-      state.bookmarkResponse = action.payload;
-    },
+    // addBookmarkResponse: (state, action) => {
+    //   const newResponse = action.payload;
+    //   state.bookmarkResponse.push(newResponse);
+    // },
     addBookmarkResponse: (state, action) => {
       const newResponse = action.payload;
-      state.bookmarkResponse.push(newResponse);
+
+      const existingBookmark = state.bookmarkResponse.find(
+        (bookmark) => bookmark.questForeignKey === newResponse.questForeignKey,
+      );
+      if (!existingBookmark) {
+        state.bookmarkResponse.push(newResponse);
+      } else {
+      }
     },
+
     removeBookmarkResponse: (state, action) => {
       const idToRemove = action.payload;
       console.log('🚀 ~ idToRemove:', idToRemove);
@@ -77,7 +86,6 @@ export const {
   addHiddenPostId,
   addDisabledPostId,
   addEnablePostId,
-  adBookmarkArr,
   addBookmarkResponse,
   removeBookmarkResponse,
 } = utilsSlice.actions;

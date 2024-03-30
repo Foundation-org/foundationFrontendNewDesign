@@ -14,7 +14,6 @@ import { printEndMessage } from '../../../utils';
 import * as QuestServices from '../../../services/queries/quest';
 import * as filtersActions from '../../../features/sidebar/bookmarkFilterSlice';
 import * as questUtilsActions from '../../../features/quest/utilsSlice';
-import Slider from '../../../components/Slider';
 
 const Bookmark = () => {
   const dispatch = useDispatch();
@@ -255,17 +254,13 @@ const Bookmark = () => {
 
   // console.log('🚀 ~ Bookmark ~ allData:', allData);
 
+  // console.log('bookmarkResp', bookmarkedData.data, questUtils.bookmarkResponse);
+
   return (
     <div className="w-full bg-[#F3F3F3] dark:bg-black">
       <div className="mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
-        <SidebarLeft
-          columns={columns}
-          setColumns={setColumns}
-          itemsWithCross={itemsWithCross}
-          setItemsWithCross={setItemsWithCross}
-        />
+        <SidebarLeft />
         <div className="no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:min-h-[calc(100vh-92px)] dark:bg-[#242424]">
-          {/* <Slider columns={columns} setColumns={setColumns} /> */}
           <InfiniteScroll
             dataLength={allData?.length}
             next={fetchMoreData}
@@ -276,66 +271,21 @@ const Bookmark = () => {
           >
             <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
               {
-                // filterStates.expandedView
-                //   ?
+                // filterStates.expandedView ?
                 allData
                   .filter((item) => !questUtils.hiddenPosts.includes(item._id))
                   ?.map((item, index) => (
                     <div key={index + 1}>
                       <QuestionCardWithToggle
                         questStartData={item}
+                        isBookmarked={bookmarkedData?.data
+                          .concat(questUtils?.bookmarkResponse)
+                          .some((bookmark) => bookmark.questForeignKey === item._id)}
+                        // isBookmarked={bookmarkedData?.data.some((bookmark) => {
+                        //   return bookmark.questForeignKey === item._id;
+                        // })}
                         setPagination={setPagination}
-                        submitResponse={submitResponse}
                         setSubmitResponse={setSubmitResponse}
-                        id={item._id}
-                        img={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
-                        alt="badge"
-                        badgeCount="5"
-                        title={
-                          item?.whichTypeQuestion === 'agree/disagree'
-                            ? 'Agree/Disagree'
-                            : item?.whichTypeQuestion === 'like/dislike'
-                              ? 'Like/Dislike'
-                              : item?.whichTypeQuestion === 'multiple choise'
-                                ? 'Multiple Choice'
-                                : item?.whichTypeQuestion === 'open choice'
-                                  ? 'Open Choice'
-                                  : item?.whichTypeQuestion === 'ranked choise'
-                                    ? 'Ranked Choice'
-                                    : item?.whichTypeQuestion === 'yes/no'
-                                      ? 'Yes/No'
-                                      : null
-                        }
-                        answers={item?.QuestAnswers}
-                        time={item?.createdAt}
-                        multipleOption={item?.userCanSelectMultiple}
-                        question={item?.Question}
-                        whichTypeQuestion={item?.whichTypeQuestion}
-                        startTest={startTest}
-                        setStartTest={setStartTest}
-                        viewResult={viewResult}
-                        setViewResult={setViewResult}
-                        handleViewResults={handleViewResults}
-                        handleStartTest={handleStartTest}
-                        usersAddTheirAns={item?.usersAddTheirAns}
-                        startStatus={item?.startStatus}
-                        createdBy={item?.uuid}
-                        btnColor={
-                          item?.startStatus === 'completed'
-                            ? 'bg-[#4ABD71]'
-                            : item?.startStatus === 'change answer'
-                              ? 'bg-[#FDD503]'
-                              : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                        }
-                        btnText={item?.startStatus}
-                        isBookmarked={bookmarkedData?.data.some((bookmark) => {
-                          return bookmark.questForeignKey === item._id;
-                        })}
-                        lastInteractedAt={item.lastInteractedAt}
-                        usersChangeTheirAns={item.usersChangeTheirAns}
-                        expandedView={true}
-                        QuestTopic={item.QuestTopic}
-                        isBookmarkTab={true}
                       />
                     </div>
                   ))

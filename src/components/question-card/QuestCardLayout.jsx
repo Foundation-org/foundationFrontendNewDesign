@@ -79,10 +79,10 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
     mutationFn: HomepageApis.deleteBookmarkById,
     onSuccess: (resp) => {
       // toast.success('Bookmark Removed ');
-      if (location.pathname === '/dashboard') {
-        // queryClient.invalidateQueries('FeedData');
-        dispatch(removeBookmarkResponse(resp.data.id));
-      }
+      // if (location.pathname === '/dashboard') {
+      // queryClient.invalidateQueries('FeedData');
+      dispatch(removeBookmarkResponse(resp.data.id));
+      // }
     },
     onError: (err) => {
       console.log(err);
