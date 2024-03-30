@@ -17,13 +17,14 @@ import * as filtersActions from '../../../../features/sidebar/filtersSlice';
 import * as questUtilsActions from '../../../../features/quest/utilsSlice';
 
 const QuestStartSection = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // Redux State
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
+  console.log('🚀 ~ questUtils:', questUtils.bookmarkResponse);
 
   // Pagination
   const pageLimit = 5;
@@ -48,7 +49,7 @@ const QuestStartSection = () => {
   // const [columns, setColumns] = useState(parsedColumns || initialColumns);
   // const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
-  const [height, setHeight] = useState('calc(100vh - 140px)');
+  const [height, setHeight] = useState('calc(100vh - 147.63px)');
 
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
@@ -77,6 +78,7 @@ const QuestStartSection = () => {
       moderationRatingFilter: filterStates.moderationRatingFilter,
     },
   );
+
   // Reset Preferences
   // useEffect(() => {
   //   if (!filterStates.isColumns) {
@@ -165,6 +167,16 @@ const QuestStartSection = () => {
       setSliderloading(false);
     }
   }, [feedData, filterStates, pagination.page]);
+
+  // Update Data on BookmarkData Changes
+  useEffect(() => {
+    if (bookmarkedData) {
+      bookmarkedData.data.forEach((bookmark) => {
+        dispatch(questUtilsActions.addBookmarkResponse(bookmark));
+      });
+    }
+  }, [bookmarkedData]);
+
   // useEffect(() => {
   // if (pagination.page === 1 && !allData?.some((item) => item?.title === 'You are all caught up')) {
   // if (pagination.page === 1) {
@@ -304,7 +316,7 @@ const QuestStartSection = () => {
 
   useEffect(() => {
     const updateHeight = () => {
-      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 210px)' : 'calc(100vh - 140px)';
+      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 196.39px)' : 'calc(100vh - 147.63px)';
       setHeight(newHeight);
     };
 
@@ -317,14 +329,6 @@ const QuestStartSection = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (sliderLoading) {
-  //     setTimeout(() => {
-  //       setSliderloading(false);
-  //     }, 1000);
-  //   }
-  // }, [sliderLoading]);
-
   // console.log(
   //   '🚀 ~ QuestStartSection ~ allData:',
   //   allData.filter((item) => !questUtils.hiddenPosts.includes(item._id)),
@@ -333,21 +337,9 @@ const QuestStartSection = () => {
   return (
     <div className="w-full bg-[#F3F3F3] dark:bg-black">
       <div className="mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
-        <SidebarLeft
-        // columns={columns}
-        // setColumns={setColumns}
-        // itemsWithCross={itemsWithCross}
-        // setItemsWithCross={setItemsWithCross}
-        />
-        <div className="no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:min-h-[calc(100vh-92px)] dark:bg-[#242424]">
-          <Slider
-            // columns={columns}
-            // setColumns={setColumns}
-            // feedData={allData}
-            // nextPage={feedData?.hasNextPage}
-            sliderLoading={sliderLoading}
-            setSliderloading={setSliderloading}
-          />
+        <SidebarLeft />
+        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100vh-155.5px)] min-h-[calc(100vh-155.5px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F3F3F3] tablet:max-h-[calc(100vh-70px)] tablet:min-h-[calc(100vh-70px)] dark:bg-[#242424]">
+          <Slider sliderLoading={sliderLoading} setSliderloading={setSliderloading} />
           <InfiniteScroll
             dataLength={allData?.length}
             next={fetchMoreData}
@@ -365,7 +357,9 @@ const QuestStartSection = () => {
                       {/* {filterStates.expandedView ? ( */}
                       <QuestionCardWithToggle
                         questStartData={item}
-                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
+                        isBookmarked={bookmarkedData?.data
+                          .concat(questUtils?.bookmarkResponse)
+                          .some((bookmark) => bookmark.questForeignKey === item._id)}
                         setPagination={setPagination}
                         setSubmitResponse={setSubmitResponse}
                       />

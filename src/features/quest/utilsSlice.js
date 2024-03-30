@@ -14,6 +14,7 @@ const initialState = {
   hiddenPostId: null,
   DisabledPostId: null,
   enablePostId: null,
+  bookmarkResponse: [],
 };
 
 export const utilsSlice = createSlice({
@@ -51,6 +52,18 @@ export const utilsSlice = createSlice({
     addEnablePostId: (state, action) => {
       state.enablePostId = action.payload;
     },
+    adBookmarkArr: (state, action) => {
+      state.bookmarkResponse = action.payload;
+    },
+    addBookmarkResponse: (state, action) => {
+      const newResponse = action.payload;
+      state.bookmarkResponse.push(newResponse);
+    },
+    removeBookmarkResponse: (state, action) => {
+      const idToRemove = action.payload;
+      console.log('🚀 ~ idToRemove:', idToRemove);
+      state.bookmarkResponse = state.bookmarkResponse.filter((response) => response.questForeignKey !== idToRemove);
+    },
   },
 });
 
@@ -64,6 +77,9 @@ export const {
   addHiddenPostId,
   addDisabledPostId,
   addEnablePostId,
+  adBookmarkArr,
+  addBookmarkResponse,
+  removeBookmarkResponse,
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;

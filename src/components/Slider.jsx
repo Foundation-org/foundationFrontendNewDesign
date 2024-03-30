@@ -147,7 +147,7 @@ function Slider({ sliderLoading, setSliderloading }) {
   };
 
   return (
-    <div className="mx-4 my-[7px] flex items-center tablet:mx-6 tablet:my-[14.82px]">
+    <div className="flex items-center px-4 py-[7px] tablet:px-6 tablet:py-[14.82px]">
       {scrollPosition > 0 && (
         <button
           onClick={handleLeftArrowClick}

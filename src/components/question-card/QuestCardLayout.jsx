@@ -4,12 +4,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import CardTopbar from './CardTopbar';
 import QuestBottombar from './QuestBottombar';
-import * as HomepageApis from '../../services/api/homepageApis';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
 import { useLocation } from 'react-router-dom';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
-import { updateDialogueBox } from '../../features/quest/utilsSlice';
+import { addBookmarkResponse, removeBookmarkResponse, updateDialogueBox } from '../../features/quest/utilsSlice';
 import { useDispatch } from 'react-redux';
+import * as HomepageApis from '../../services/api/homepageApis';
+
 const data = [
   {
     id: 1,
@@ -44,6 +45,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
+
   const showHidePostOpen = () => {
     setCheckboxStates(data.map(() => false));
     setModalVisible(true);
@@ -61,7 +63,12 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
     mutationFn: HomepageApis.createBookmark,
     onSuccess: (resp) => {
       // toast.success('Bookmarked Added');
-      queryClient.invalidateQueries('FeedData');
+      dispatch(
+        addBookmarkResponse({
+          questForeignKey: resp.data.id,
+        }),
+      );
+      // queryClient.invalidateQueries('FeedData');
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
@@ -73,7 +80,8 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
     onSuccess: (resp) => {
       // toast.success('Bookmark Removed ');
       if (location.pathname === '/dashboard') {
-        queryClient.invalidateQueries('FeedData');
+        // queryClient.invalidateQueries('FeedData');
+        dispatch(removeBookmarkResponse(resp.data.id));
       }
     },
     onError: (err) => {
