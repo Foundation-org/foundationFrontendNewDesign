@@ -58,11 +58,12 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   });
 
   useEffect(() => {
-    setCheck(true);
     if (apiResp?.data?.message?.trim() === 'Yes' || apiResp?.data?.message?.trim() === 'Yes.') {
       setCheck(false);
+    } else {
+      setCheck(true);
     }
-  }, [name, apiResp?.data?.message]);
+  }, [apiResp?.data?.message]);
 
   const searchCities = async () => {
     const cities = await api.post(`search/searchCities/?name=${query}`);
@@ -167,6 +168,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               type="text"
               value={name}
               onChange={(e) => {
+                setCheck(true);
                 setName(e.target.value);
               }}
               placeholder={placeholder}
