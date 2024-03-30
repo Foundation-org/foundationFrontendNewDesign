@@ -247,7 +247,7 @@ const SingleAnswerRankedChoice = (props) => {
             <div
               className={`${
                 props.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-              } flex h-full w-fit items-center rounded-l-[4.734px] bg-center bg-no-repeat px-[3.3px] py-[5.6px] tablet:w-[25px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:py-[13px]`}
+              } flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:py-[10px]`}
               style={{
                 backgroundImage: `url(${
                   persistedTheme === 'dark'
