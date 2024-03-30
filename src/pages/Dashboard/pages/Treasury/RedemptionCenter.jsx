@@ -140,7 +140,7 @@ export default function RedemptionCenter() {
 
   const handleCreate = () => {
     if (fdx === 0) return toast.error('Please select the amount');
-    if (description === '') return toast.error('You cannot leave description empty');
+    if (description === '') return toast.error('You cannot leave the description field blank');
     let newExpiryDate;
 
     if (expiry === '30 days') {
@@ -266,7 +266,7 @@ export default function RedemptionCenter() {
                       if (Number.isInteger(x)) {
                         setFdx(x.toString());
                       } else {
-                        setFdx(x.toFixed(2));
+                        setFdx(x);
                       }
                     } else {
                       setFdx(0);
@@ -276,10 +276,10 @@ export default function RedemptionCenter() {
                 <FaPlus
                   className="w-[7px] cursor-pointer tablet:w-[23px]"
                   onClick={() => {
-                    if (persistedUserInfo.balance.toFixed(2) - 1 > fdx) {
+                    if (persistedUserInfo.balance - 1 > fdx) {
                       setFdx(fdx * 1 + 1);
                     } else {
-                      setFdx((fdx * 1 + (persistedUserInfo.balance.toFixed(2) - fdx)).toFixed(2));
+                      setFdx(fdx * 1 + (Math.floor(persistedUserInfo.balance) - fdx));
                     }
                   }}
                 />
