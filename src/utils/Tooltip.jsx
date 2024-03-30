@@ -40,7 +40,7 @@ export const Tooltip = ({ optionStatus, id }) => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="h-3 w-3 text-white tablet:h-4 tablet:w-4 laptop:h-6 laptop:w-6"
+                    className="size-[15px] w-[15px] text-white tablet:h-4 tablet:w-4 laptop:h-6 laptop:w-6"
                   >
                     <path
                       fillRule="evenodd"
@@ -90,7 +90,7 @@ export const Tooltip = ({ optionStatus, id }) => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="h-3 w-3 text-white tablet:h-4 tablet:w-4 laptop:h-6 laptop:w-6"
+                    className="size-[15px] text-white tablet:h-4 tablet:w-4 laptop:h-6 laptop:w-6"
                   >
                     <path
                       fillRule="evenodd"
