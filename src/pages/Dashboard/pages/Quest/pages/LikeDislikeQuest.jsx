@@ -31,7 +31,7 @@ const LikeDislike = () => {
       if (resp.status === 201) {
         setTimeout(() => {
           navigate('/dashboard');
-          toast.success('Successfully Created');
+          // toast.success('Successfully Created');
           setLoading(false);
           setChangedOption('');
           setChangeState(false);

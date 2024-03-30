@@ -99,15 +99,15 @@ const CardTopbar = ({
         </div>
       ) : (
         <>
-          <div className="flex items-center gap-[5.64px] tablet:gap-[14.36px]">
+          <div className=" mr-[20.64px]  flex items-center gap-[5.64px] tablet:mr-[37.36px] tablet:gap-[14.36px]">
             {ratingImage ? (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/ratings/${ratingImage}`}
                 alt={ratingImage.replace('.svg', '')}
-                className="h-[15px] w-full tablet:h-[23px]"
+                className=" h-[15px] w-full tablet:h-[23px]"
               />
             ) : null}
-            <h1 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">
+            <h1 className="relative text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">
               {QuestTopic}
             </h1>
           </div>
