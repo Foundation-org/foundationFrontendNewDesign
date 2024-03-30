@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { Reorder } from 'framer-motion';
 
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
 
@@ -25,6 +26,7 @@ const StartTest = ({
   postProperties,
 }) => {
   const { isFullScreen } = useParams();
+  const [dragId, setDragId] = useState(null);
 
   const handleCheckChange = (index, check) => {
     setAnswerSelection((prevAnswers) => prevAnswers.map((answer, i) => (i === index ? { ...answer, check } : answer)));
@@ -71,17 +73,17 @@ const StartTest = ({
     return labelFound[0]?.contend === true;
   }
 
-  const handleOnDragEnd = (result) => {
-    if (!result.destination) {
-      return;
-    }
+  // const handleOnDragEnd = (result) => {
+  //   if (!result.destination) {
+  //     return;
+  //   }
 
-    const newTypedValues = [...rankedAnswers];
-    const [removed] = newTypedValues.splice(result.source.index, 1);
-    newTypedValues.splice(result.destination.index, 0, removed);
+  //   const newTypedValues = [...rankedAnswers];
+  //   const [removed] = newTypedValues.splice(result.source.index, 1);
+  //   newTypedValues.splice(result.destination.index, 0, removed);
 
-    setRankedAnswers(newTypedValues);
-  };
+  //   setRankedAnswers(newTypedValues);
+  // };
 
   const renderOptionsByTitle = () => {
     const listContainerRef = useRef(null);
@@ -224,64 +226,45 @@ const StartTest = ({
       }
       if (getQuestionTitle(questStartData.whichTypeQuestion) === 'Ranked Choice') {
         return (
-          <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
-            <DragDropContext onDragEnd={handleOnDragEnd}>
-              <Droppable droppableId={`rankedAnswers-${Date.now()}`}>
-                {(provided) => (
-                  <div
-                    ref={listContainerRef}
-                    className={`${
-                      isFullScreen === undefined
-                        ? 'quest-scrollbar max-h-[178.2px] md:max-h-[336px] overflow-auto min-h-fit mr-[2px] tablet:mr-1'
-                        : null
-                    }`}
-                  >
-                    <ul
-                      className={`${
-                        isFullScreen === undefined ? ' tablet:max-h-[336px]' : ''
-                      }  flex flex-col gap-[5.7px] tablet:gap-[10px]`}
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
-                      {rankedAnswers?.map((item, index) => (
-                        <Draggable key={item.id} draggableId={item.id} index={index}>
-                          {(provided, snapshot) => (
-                            <li ref={provided.innerRef} {...provided.draggableProps} className="w-full">
-                              <SingleAnswerRankedChoice
-                                questStartData={questStartData}
-                                id={index}
-                                dragHandleProps={provided.dragHandleProps}
-                                snapshot={snapshot}
-                                number={index + 1}
-                                editable={item.edit}
-                                deleteable={item.delete}
-                                answer={item.label}
-                                addedAnswerUuid={item.uuid}
-                                answersSelection={answersSelection}
-                                setAnswerSelection={setAnswerSelection}
-                                rankedAnswers={rankedAnswers}
-                                title={getQuestionTitle(questStartData.whichTypeQuestion)}
-                                checkInfo={false}
-                                check={findLabelChecked(rankedAnswers, item.label)}
-                                contend={findLabelContend(rankedAnswers, item.label)}
-                                handleCheckChange={(check) => handleCheckChange(index, check)}
-                                handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
-                                setAddOptionField={setAddOptionField}
-                                checkOptionStatus={checkOptionStatus}
-                                setCheckOptionStatus={setCheckOptionStatus}
-                                postProperties={postProperties}
-                              />
-                            </li>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </ul>
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          </div>
+          <Reorder.Group
+            onReorder={setRankedAnswers}
+            values={rankedAnswers}
+            className="flex flex-col gap-[5.7px] tablet:gap-[10px]"
+          >
+            {rankedAnswers?.map((item, index) => (
+              <Reorder.Item
+                value={item}
+                key={item.id}
+                onDrag={() => setDragId(item.id)}
+                onDragEnd={() => setDragId(null)}
+              >
+                <SingleAnswerRankedChoice
+                  isDragging={dragId === item.id ? true : false}
+                  questStartData={questStartData}
+                  id={index}
+                  item={item}
+                  number={index + 1}
+                  editable={item.edit}
+                  deleteable={item.delete}
+                  answer={item.label}
+                  addedAnswerUuid={item.uuid}
+                  answersSelection={answersSelection}
+                  setAnswerSelection={setAnswerSelection}
+                  rankedAnswers={rankedAnswers}
+                  title={getQuestionTitle(questStartData.whichTypeQuestion)}
+                  checkInfo={false}
+                  check={findLabelChecked(rankedAnswers, item.label)}
+                  contend={findLabelContend(rankedAnswers, item.label)}
+                  handleCheckChange={(check) => handleCheckChange(index, check)}
+                  handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
+                  setAddOptionField={setAddOptionField}
+                  checkOptionStatus={checkOptionStatus}
+                  setCheckOptionStatus={setCheckOptionStatus}
+                  postProperties={postProperties}
+                />
+              </Reorder.Item>
+            ))}
+          </Reorder.Group>
         );
       }
     } else {

@@ -28,7 +28,7 @@ const SingleAnswerRankedChoice = (props) => {
     color: 'text-[#389CE3]',
     tooltipName: 'Please write something...',
     tooltipStyle: 'tooltip-info',
-    showToolTipMsg: true
+    showToolTipMsg: true,
   };
 
   const [prevValue, setPrevValue] = useState('');
@@ -76,14 +76,14 @@ const SingleAnswerRankedChoice = (props) => {
       color: 'text-[#0FB063]',
       tooltipName: 'Verifying your option. Please wait...',
       tooltipStyle: 'tooltip-success',
-      showToolTipMsg: true
+      showToolTipMsg: true,
     });
     setPrevStatus({
       name: 'Checking',
       color: 'text-[#0FB063]',
       tooltipName: 'Verifying your option. Please wait...',
       tooltipStyle: 'tooltip-success',
-      showToolTipMsg: true
+      showToolTipMsg: true,
     });
     // option Validation
     const { validatedAnswer, errorMessage } = await answerValidation({
@@ -96,14 +96,14 @@ const SingleAnswerRankedChoice = (props) => {
         color: 'text-[#b00f0f]',
         tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
         tooltipStyle: 'tooltip-error',
-        showToolTipMsg: true
+        showToolTipMsg: true,
       });
       return props.setCheckOptionStatus({
         name: 'Rejected',
         color: 'text-[#b00f0f]',
         tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
         tooltipStyle: 'tooltip-error',
-        showToolTipMsg: true
+        showToolTipMsg: true,
       });
     }
     // Check Answer is unique
@@ -120,7 +120,7 @@ const SingleAnswerRankedChoice = (props) => {
         tooltipName: 'Found Duplication!',
         tooltipStyle: 'tooltip-error',
         duplication: true,
-        showToolTipMsg: true
+        showToolTipMsg: true,
       });
       return props.setCheckOptionStatus({
         name: 'Duplicate',
@@ -128,7 +128,7 @@ const SingleAnswerRankedChoice = (props) => {
         tooltipName: 'Found Duplication!',
         tooltipStyle: 'tooltip-error',
         duplication: true,
-        showToolTipMsg: true
+        showToolTipMsg: true,
       });
     }
     // Answer is validated and status is Ok
@@ -141,7 +141,7 @@ const SingleAnswerRankedChoice = (props) => {
         tooltipName: 'Answer is Verified',
         tooltipStyle: 'tooltip-success',
         isVerifiedAnswer: true,
-        showToolTipMsg: true
+        showToolTipMsg: true,
       });
       props.setCheckOptionStatus({
         name: 'Ok',
@@ -149,7 +149,7 @@ const SingleAnswerRankedChoice = (props) => {
         tooltipName: 'Answer is Verified',
         tooltipStyle: 'tooltip-success',
         isVerifiedAnswer: true,
-        showToolTipMsg: true
+        showToolTipMsg: true,
       });
     }
   };
@@ -239,16 +239,14 @@ const SingleAnswerRankedChoice = (props) => {
       <div
         {...props.dragHandleProps}
         className={`${
-          props.snapshot.isDragging
-            ? 'border-[#5FA3D5]'
-            : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
+          props.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
         } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
       >
         <div className="flex w-full items-center rounded-l-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
           {props.btnText !== 'Results' && (
             <div
               className={`${
-                props.snapshot.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                props.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
               } flex h-full w-fit items-center rounded-l-[4.734px] px-[3.3px] py-[5.6px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:py-[13px]`}
             >
               {persistedTheme === 'dark' ? (
@@ -269,7 +267,7 @@ const SingleAnswerRankedChoice = (props) => {
 
           <div
             className={`${
-              props.snapshot.isDragging
+              props.isDragging
                 ? 'border-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]'
                 : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
             } flex w-full justify-between bg-white dark:bg-[#0D1012]`}
@@ -283,7 +281,7 @@ const SingleAnswerRankedChoice = (props) => {
                 autoFocus
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
                 className={`${
-                  props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
+                  props.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
                 } w-full resize-none rounded-[4.73px] px-2 py-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none tablet:rounded-[10.949px] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]`}
               />
             ) : (
@@ -294,7 +292,7 @@ const SingleAnswerRankedChoice = (props) => {
             {props.deleteable && (
               <div
                 className={`${
-                  props.snapshot.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012] ' : 'bg-white dark:bg-[#0D1012]'
+                  props.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012] ' : 'bg-white dark:bg-[#0D1012]'
                 } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.25rem] ${
                   props.checkOptionStatus.color
                 }`}
@@ -309,7 +307,7 @@ const SingleAnswerRankedChoice = (props) => {
         </div>
         <div
           className={`${
-            props.snapshot.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+            props.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
           } flex h-full min-h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] bg-white tablet:h-full tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
         >
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>
