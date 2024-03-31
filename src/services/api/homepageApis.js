@@ -89,6 +89,7 @@ export const createBookmark = async (data) => {
     questForeignKey: data.questForeignKey,
     whichTypeQuestion: data.whichTypeQuestion,
     Question: data.Question,
+    moderationRatingCount: data.moderationRatingCount,
   });
 };
 

@@ -101,6 +101,7 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
         questForeignKey: questStartData._id,
         Question: questStartData.Question,
         whichTypeQuestion: questStartData.whichTypeQuestion,
+        moderationRatingCount: questStartData.moderationRatingCount,
       };
       AddBookmark(params);
     }
