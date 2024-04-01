@@ -13,6 +13,7 @@ import {
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import DeleteHistoryPopup from '../../../../components/dialogue-boxes/deleteHistoryPopup';
+import WelcomePopup from '../../../../components/dialogue-boxes/WelcomePopup';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
@@ -26,8 +27,14 @@ export default function RedemptionCenter() {
   const [radeemLoading, setRadeemLoading] = useState('');
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteHistoryCode, setDeleteHistoryCode] = useState(false);
+  const [modalVisible, setModalVisible] = useState(localStorage.getItem('guestWelcome') === 'true' ? false : true);
 
   const handleClose = () => setIsDeleteModal(false);
+
+  const openWelcomeDialogue = () => setModalVisible(true);
+  const closeWelcomeDialogue = () => {
+    setModalVisible(false);
+  };
 
   const { mutateAsync: createRedemptionCode, isPending: createPending } = useMutation({
     mutationFn: createRedeeemCode,
@@ -46,11 +53,15 @@ export default function RedemptionCenter() {
   useEffect(() => {
     const url = window.location.href;
     const extractedCode = url.substring(url.lastIndexOf('/') + 1);
-    if (extractedCode !== 'treasury') {
+    if (extractedCode !== 'treasury' && persistedUserInfo?.role !== 'guest') {
       setCode(extractedCode);
       setTimeout(() => {
         if (extractedCode) toast.info('Hit add to redeem');
       }, 500);
+    }
+    if (persistedUserInfo?.role === 'guest' && !localStorage.getItem('guestWelcome')) {
+      localStorage.setItem('guestWelcome', 'true');
+      openWelcomeDialogue();
     }
   }, []);
 
@@ -117,14 +128,27 @@ export default function RedemptionCenter() {
   });
 
   const handleAdd = () => {
-    if (code === '') return toast.error('Enter some code to Redeeem');
-    setAddCodeLoading(true);
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
+      return;
+    } else {
+      if (code === '') return toast.error('Enter some code to Redeeem');
+      setAddCodeLoading(true);
 
-    const params = {
-      uuid: persistedUserInfo?.uuid,
-      code: code,
-    };
-    addRedemptionCode(params);
+      const params = {
+        uuid: persistedUserInfo?.uuid,
+        code: code,
+      };
+      addRedemptionCode(params);
+    }
   };
 
   const handleRedeeem = (code) => {
@@ -139,33 +163,46 @@ export default function RedemptionCenter() {
   };
 
   const handleCreate = () => {
-    if (fdx === 0) return toast.error('Please select the amount');
-    if (description === '') return toast.error('You cannot leave the description field blank');
-    let newExpiryDate;
-
-    if (expiry === '30 days') {
-      const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() + 30);
-      newExpiryDate = currentDate.toISOString().split('T')[0];
-    } else if (expiry === '7 days') {
-      const currentDate = new Date();
-      currentDate.setDate(currentDate.getDate() + 7);
-      newExpiryDate = currentDate.toISOString();
+    if (persistedUserInfo?.role === 'guest') {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
+      return;
     } else {
-      newExpiryDate = null;
+      if (fdx === 0) return toast.error('Please select the amount');
+      if (description === '') return toast.error('You cannot leave the description field blank');
+      let newExpiryDate;
+
+      if (expiry === '30 days') {
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + 30);
+        newExpiryDate = currentDate.toISOString().split('T')[0];
+      } else if (expiry === '7 days') {
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + 7);
+        newExpiryDate = currentDate.toISOString();
+      } else {
+        newExpiryDate = null;
+      }
+
+      const params = {
+        creator: persistedUserInfo._id,
+        owner: persistedUserInfo._id,
+        uuid: persistedUserInfo.uuid,
+        amount: fdx,
+        description: description,
+        to: 'any',
+        expiry: newExpiryDate,
+      };
+
+      createRedemptionCode(params);
     }
-
-    const params = {
-      creator: persistedUserInfo._id,
-      owner: persistedUserInfo._id,
-      uuid: persistedUserInfo.uuid,
-      amount: fdx,
-      description: description,
-      to: 'any',
-      expiry: newExpiryDate,
-    };
-
-    createRedemptionCode(params);
   };
 
   const calculateExpiry = (expiry) => {
@@ -205,6 +242,9 @@ export default function RedemptionCenter() {
 
   return (
     <div className="flex flex-col gap-[10px] px-5 tablet:gap-[25px]">
+      {persistedUserInfo?.role === 'guest' && (
+        <WelcomePopup modalVisible={modalVisible} handleClose={closeWelcomeDialogue} />
+      )}
       <div>
         <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
           Redemption center
@@ -397,7 +437,6 @@ export default function RedemptionCenter() {
           </div>
         )}
       </div>
-
       <div>
         <DeleteHistoryPopup
           isDeleteModal={isDeleteModal}
