@@ -776,6 +776,17 @@ input[type='number'] {
   margin-left: 0px !important;
 }
 
+/* SoundCloud */
+.react-player iframe {
+  width: 100% !important;
+  height: 60px !important;
+}
+
+.feed-react-player iframe {
+  width: 100% !important;
+  height: 60px !important;
+}
+
 @media only screen and (min-width: 744px) {
   .feed-react-player div iframe {
     height: 371px !important;
@@ -783,8 +794,19 @@ input[type='number'] {
     margin-left: auto;
     margin-right: auto;
   }
-  .feed-player-wrapper {
+
+  /* .feed-player-wrapper {
     padding-left: 10px !important;
     padding-right: 10px !important;
+  } */
+
+  .react-player iframe {
+    width: 100% !important;
+    height: 85px !important;
+  }
+
+  .feed-react-player iframe {
+    width: 100% !important;
+    height: 85px !important;
   }
 }
