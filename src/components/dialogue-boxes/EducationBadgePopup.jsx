@@ -92,15 +92,14 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     const universities = await api.post(`search/searchUniversities/?name=${query}`);
     setUniversities(universities.data);
   };
+  useEffect(() => {
+    searchUniversities();
+  }, [query]);
 
   useEffect(() => {
     const param = fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(type));
     setExistingData(param?.personal[type]);
   }, [fetchUser.badges]);
-  console.log(existingData);
-  useEffect(() => {
-    searchUniversities();
-  }, [query]);
 
   const handleClose = () => setIsPopup(false);
 
@@ -144,6 +143,16 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       handleClose();
     }
   };
+  const handleDelete = async (id) => {
+    const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, {
+      id: id,
+      uuid: localStorage.getItem('uuid'),
+      type: type,
+    });
+    if (companies.status === 200) {
+      handleUserInfo();
+    }
+  };
 
   const renderWorkField = (field1, field2, field3, field4) => {
     const [addAnotherForm, setAddAnotherForm] = useState(false);
@@ -152,7 +161,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
         {/* To View Already Added Info */}
         {existingData && !addAnotherForm ? (
-          <div className="mx-3 tablet:mx-[40px]">
+          <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
             {existingData.map((item, index) => (
               <div
                 key={index}
@@ -182,6 +191,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                       alt="Edit Icon"
                       className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
+                      onClick={() => handleDelete(item.id)}
                     />
                   </div>
                   <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
@@ -264,6 +274,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 variant="submit"
                 onClick={() => {
                   const allFieldObject = {
+                    ['id']: field1Data.id,
                     [field1.type]: field1Data.name,
                     [field2.type]: field2Data.name,
                     ['country']: field1Data.country,
