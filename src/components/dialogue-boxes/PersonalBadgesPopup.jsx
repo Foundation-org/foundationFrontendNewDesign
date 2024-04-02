@@ -56,6 +56,16 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     queryFn: () =>
       validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name.charAt(0).toUpperCase() + name.slice(1)),
   });
+  const gotLocation = (position) => {
+    console.log(position.coords.longitude);
+    setName(position.coords.latitude + ',' + position.coords.longitude);
+  };
+  const failedToGet = () => {
+    toast.error('Error getting location');
+  };
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition(gotLocation, failedToGet);
+  };
 
   useEffect(() => {
     if (apiResp?.data?.message?.trim() === 'Yes' || apiResp?.data?.message?.trim() === 'Yes.') {
@@ -162,6 +172,30 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               )}
             </div>
           </>
+        ) : title === 'Geolocation' ? (
+          <div className="relative">
+            <input
+              type="text"
+              value={name}
+              disabled
+              placeholder={placeholder2}
+              className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
+            />
+            <div className="mt-[10px] flex justify-between tablet:mt-5">
+              <Button variant="submit" onClick={() => getLocation()}>
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Get Current location'}
+              </Button>
+              {name === '' ? (
+                <Button variant="hollow-submit" disabled={true}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                </Button>
+              ) : (
+                <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                </Button>
+              )}
+            </div>
+          </div>
         ) : (
           <div className="relative">
             <input
@@ -234,24 +268,6 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
           <> */}
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
           <Listbox items={relationshipData} selected={selected} setSelected={setSelected} placeholder={placeholder} />
-          {/* <CustomCombobox
-            items={relationshipData}
-            selected={selected}
-            setSelected={setSelected}
-            query={query}
-            setQuery={setQuery}
-            isArrow={true}
-            placeholder={placeholder}
-          /> */}
-          {/* <input
-            type="text"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            placeholder={placeholder2}
-            className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
-          /> */}
           {isError && (
             <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
           )}
