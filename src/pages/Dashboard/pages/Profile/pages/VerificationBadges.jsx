@@ -218,8 +218,6 @@ const VerificationBadges = () => {
     };
   }, []);
 
-  console.log('height', height);
-
   return (
     <>
       {pageLoading ? (

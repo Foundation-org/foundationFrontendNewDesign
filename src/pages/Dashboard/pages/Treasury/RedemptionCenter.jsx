@@ -13,7 +13,6 @@ import {
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import DeleteHistoryPopup from '../../../../components/dialogue-boxes/deleteHistoryPopup';
-import WelcomePopup from '../../../../components/dialogue-boxes/WelcomePopup';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
@@ -27,14 +26,8 @@ export default function RedemptionCenter() {
   const [radeemLoading, setRadeemLoading] = useState('');
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteHistoryCode, setDeleteHistoryCode] = useState(false);
-  const [modalVisible, setModalVisible] = useState(localStorage.getItem('guestWelcome') === 'true' ? false : true);
 
   const handleClose = () => setIsDeleteModal(false);
-
-  const openWelcomeDialogue = () => setModalVisible(true);
-  const closeWelcomeDialogue = () => {
-    setModalVisible(false);
-  };
 
   const { mutateAsync: createRedemptionCode, isPending: createPending } = useMutation({
     mutationFn: createRedeeemCode,
@@ -53,15 +46,11 @@ export default function RedemptionCenter() {
   useEffect(() => {
     const url = window.location.href;
     const extractedCode = url.substring(url.lastIndexOf('/') + 1);
-    if (extractedCode !== 'treasury' && persistedUserInfo?.role !== 'guest') {
+    if (extractedCode !== 'treasury') {
       setCode(extractedCode);
       setTimeout(() => {
         if (extractedCode) toast.info('Hit add to redeem');
       }, 500);
-    }
-    if (persistedUserInfo?.role === 'guest' && !localStorage.getItem('guestWelcome')) {
-      localStorage.setItem('guestWelcome', 'true');
-      openWelcomeDialogue();
     }
   }, []);
 
@@ -242,9 +231,6 @@ export default function RedemptionCenter() {
 
   return (
     <div className="flex flex-col gap-[10px] px-5 tablet:gap-[25px]">
-      {persistedUserInfo?.role === 'guest' && (
-        <WelcomePopup modalVisible={modalVisible} handleClose={closeWelcomeDialogue} />
-      )}
       <div>
         <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
           Redemption center

@@ -1,9 +1,9 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 // import { signUp } from '../../services/api/userAuth';
 // import { useMutation } from '@tanstack/react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Form from './components/Form';
 import Button from '../../components/Button';
 import Anchor from '../../components/Anchor';
@@ -24,11 +24,13 @@ import { signUpGuest } from '../../services/api/userAuth';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../features/auth/authSlice';
 import { useMutation } from '@tanstack/react-query';
+import WelcomePopup from '../../components/dialogue-boxes/WelcomePopup';
 
 const REDIRECT_URI = window.location.href;
 
 export default function Signup() {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,8 +50,14 @@ export default function Signup() {
   const [isPopup, setIspopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [socialAccount, setSocialAccount] = useState({ isSocial: false, data: null });
+  const [welcomeModal, setWelcomeModal] = useState(localStorage.getItem('guestWelcome') === 'true' ? false : true);
 
   const persistedTheme = useSelector((state) => state.utils.theme);
+
+  const openWelcomeDialogue = () => setWelcomeModal(true);
+  const closeWelcomeDialogue = () => {
+    setWelcomeModal(false);
+  };
 
   const handleReferralOpen = () => setIsReferral(true);
   const handleReferralClose = () => {
@@ -61,7 +69,6 @@ export default function Signup() {
   const handlePopupClose = () => setIspopup(false);
 
   function onChange(value) {
-    console.log('Captcha value:', value);
     setCaptchaToken(value);
   }
 
@@ -133,6 +140,7 @@ export default function Signup() {
       handleReferralOpen();
     }
   };
+
   const handleSignUpSocialGuest = async (data) => {
     try {
       data.uuid = localStorage.getItem('uuid');
@@ -225,8 +233,19 @@ export default function Signup() {
     transform: 'translate(-50%, -50%)',
   };
 
+  useEffect(() => {
+    if (location.state?.from === '/dashboard/treasury/:code' && !localStorage.getItem('guestWelcome')) {
+      localStorage.setItem('guestWelcome', 'true');
+      openWelcomeDialogue();
+    }
+  }, []);
+
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
+      {location.state?.from === '/dashboard/treasury/:code' && (
+        <WelcomePopup modalVisible={welcomeModal} handleClose={closeWelcomeDialogue} />
+      )}
+
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div

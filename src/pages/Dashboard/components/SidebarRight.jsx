@@ -289,12 +289,12 @@ const SidebarRight = () => {
           </div>
         ) : (
           <div
-            className="mb-[15px] flex cursor-pointer items-center gap-5"
+            className="mb-[15px] flex cursor-pointer items-center gap-[15px]"
             onClick={() => {
               navigate('/dashboard/profile');
             }}
           >
-            <div className="relative h-fit w-fit">
+            <div className="relative flex size-[47px] items-center justify-center">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
                 alt="badge"
