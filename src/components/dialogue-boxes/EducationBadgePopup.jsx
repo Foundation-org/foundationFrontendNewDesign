@@ -81,9 +81,9 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [universities, setUniversities] = useState([]);
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
-  const [field3Data, setField3Data] = useState([]);
-  const [field4Data, setField4Data] = useState([]);
-
+  const [field3Data, setField3Data] = useState();
+  const [field4Data, setField4Data] = useState();
+  const [prevInfo, setPrevInfo] = useState({});
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
   const [isPresent, setIsPresent] = useState(false);
@@ -154,8 +154,61 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     }
   };
 
+  const handleUpdateBadge = async (newData) => {
+    try {
+      if (
+        prevInfo.school === field1Data.name &&
+        prevInfo.degreeProgram === field2Data.name &&
+        prevInfo.startingYear === field3Data &&
+        prevInfo.graduationYear === field4Data
+      ) {
+        toast.error('Information already saved');
+        return;
+      }
+      const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, {
+        newData,
+        type,
+        uuid: localStorage.getItem('uuid'),
+        id: prevInfo.id,
+      });
+      if (updateBadge.status === 200) {
+        handleUserInfo();
+        toast.success('Info Updated Successfully');
+
+        handleClose();
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+      handleClose();
+    }
+  };
+
+  const handleEdit = async (id) => {
+    const info = await api.post(`/addBadge/personal/getWorkOrEducation`, {
+      id: id,
+      uuid: localStorage.getItem('uuid'),
+      type: type,
+    });
+    setPrevInfo(info?.data?.obj);
+    if (info.status === 200) {
+      console.log(info);
+      const data = info?.data.obj;
+
+      setField1Data({ id: data.id, name: data.school, country: data.country });
+      setField2Data({ name: data.degreeProgram });
+      setField3Data(data.startingYear);
+      if (data.graduationYear === 'Present') {
+        setIsPresent(true);
+        setField4Data(data.graduationYear);
+      } else {
+        setField4Data(data.graduationYear);
+      }
+    }
+  };
+
   const renderWorkField = (field1, field2, field3, field4) => {
     const [addAnotherForm, setAddAnotherForm] = useState(false);
+    const [edit, setEdit] = useState(false);
 
     return (
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
@@ -186,13 +239,17 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
                       alt="Edit Icon"
                       className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
-                      onClick={() => toast.info('Feature coming soon')}
+                      onClick={() => {
+                        setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                      }}
                     />
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                       alt="Edit Icon"
                       className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
-                      onClick={() => handleDelete(item.id)}
+                      onClick={() => {
+                        handleDelete(item.id);
+                      }}
                     />
                   </div>
                   <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
@@ -245,7 +302,6 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   type="date"
                   value={field3Data}
                   onChange={handlefield3Change}
-                  disabled={isPresent} // Disable date input when "Present" is selected
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                 />
               </div>
@@ -258,6 +314,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   value={field4Data}
                   onChange={handlefield4Change}
                   placeholder={field4.placeholder}
+                  disabled={isPresent} // Disable date input when "Present" is selected
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                 />
                 <label className="ml-2">
@@ -267,10 +324,15 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               </div>
             </div>
 
-            <div className="flex justify-end">
-              {/* <Button variant="addOption">
-                <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
-              </Button> */}
+            <div className="flex justify-between">
+              <Button
+                variant="addOption"
+                onClick={() => {
+                  setAddAnotherForm(false);
+                }}
+              >
+                Go Back
+              </Button>
               <Button
                 variant="submit"
                 onClick={() => {
@@ -282,7 +344,11 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                     [field3.type]: field3Data,
                     [field4.type]: field4Data,
                   };
-                  handleAddPersonalBadge(allFieldObject);
+                  if (edit) {
+                    handleUpdateBadge(allFieldObject);
+                  } else {
+                    handleAddPersonalBadge(allFieldObject);
+                  }
                 }}
               >
                 Add
