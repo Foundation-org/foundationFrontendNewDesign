@@ -65,7 +65,7 @@ export function Router() {
             <Route path="/p/:id" element={<GuestRedirect />} />
             <Route
               path="/dashboard/treasury/:code"
-              element={<Navigate to="/signup" state={{ from: '/dashboard/treasury/:code' }} />}
+              element={<Navigate to="/" state={{ from: '/dashboard/treasury/:code' }} />}
             />
             <Route path="*" element={<Navigate to="/signin" />} />
           </Routes>

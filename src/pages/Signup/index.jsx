@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 // import { signUp } from '../../services/api/userAuth';
 // import { useMutation } from '@tanstack/react-query';
@@ -12,7 +12,6 @@ import Typography from '../../components/Typography';
 import SocialLogins from '../../components/SocialLogins';
 import MyModal from './components/Modal';
 import api from '../../services/api/Axios';
-import { FaSpinner } from 'react-icons/fa';
 import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
 import PopUp from '../../components/ui/PopUp';
@@ -24,7 +23,6 @@ import { signUpGuest } from '../../services/api/userAuth';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../features/auth/authSlice';
 import { useMutation } from '@tanstack/react-query';
-import WelcomePopup from '../../components/dialogue-boxes/WelcomePopup';
 
 const REDIRECT_URI = window.location.href;
 
@@ -50,14 +48,8 @@ export default function Signup() {
   const [isPopup, setIspopup] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [socialAccount, setSocialAccount] = useState({ isSocial: false, data: null });
-  const [welcomeModal, setWelcomeModal] = useState(localStorage.getItem('guestWelcome') === 'true' ? false : true);
 
   const persistedTheme = useSelector((state) => state.utils.theme);
-
-  const openWelcomeDialogue = () => setWelcomeModal(true);
-  const closeWelcomeDialogue = () => {
-    setWelcomeModal(false);
-  };
 
   const handleReferralOpen = () => setIsReferral(true);
   const handleReferralClose = () => {
@@ -233,19 +225,8 @@ export default function Signup() {
     transform: 'translate(-50%, -50%)',
   };
 
-  useEffect(() => {
-    if (location.state?.from === '/dashboard/treasury/:code' && !localStorage.getItem('guestWelcome')) {
-      localStorage.setItem('guestWelcome', 'true');
-      openWelcomeDialogue();
-    }
-  }, []);
-
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
-      {location.state?.from === '/dashboard/treasury/:code' && (
-        <WelcomePopup modalVisible={welcomeModal} handleClose={closeWelcomeDialogue} />
-      )}
-
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div

@@ -1,10 +1,20 @@
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { Button } from '../../components/ui/Button';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 export default function Signup() {
-  const persistedTheme = useSelector((state) => state.utils.theme);
   const navigate = useNavigate();
+  const location = useLocation();
+  const persistedTheme = useSelector((state) => state.utils.theme);
+
+  useEffect(() => {
+    if (location.state?.from === '/dashboard/treasury/:code' && !localStorage.getItem('guestWelcome')) {
+      localStorage.setItem('guestWelcome', 'true');
+      toast.warning('To radeem this code, please create an account.');
+    }
+  }, []);
 
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white xl:flex-row dark:bg-black-200">
