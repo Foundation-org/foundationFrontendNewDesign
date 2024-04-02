@@ -4,6 +4,7 @@ import { Button } from '../ui/Button';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
+import ListBox from '../ui/ListBox';
 
 const CompanyName = {
   label: 'Company Name',
@@ -72,6 +73,7 @@ const endingYear = {
 };
 
 const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, handleUserInfo, fetchUser }) => {
+  const [companies, setCompanies] = useState([]);
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
   const [field3Data, setField3Data] = useState([]);
@@ -82,6 +84,14 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
+
+  const searchCompanies = async () => {
+    const companies = await api.post(`search/searchCompanies/?name=${query}`);
+    setCompanies(companies.data);
+  };
+  useEffect(() => {
+    searchCompanies();
+  }, [query]);
 
   useEffect(() => {
     const param = fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(type));
@@ -124,6 +134,16 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       handleClose();
     }
   };
+  const handleDelete = async (id) => {
+    const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, {
+      id: id,
+      uuid: localStorage.getItem('uuid'),
+      type: type,
+    });
+    if (companies.status === 200) {
+      handleUserInfo();
+    }
+  };
 
   const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
     const [addAnotherForm, setAddAnotherForm] = useState(false);
@@ -131,9 +151,9 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
         {/* To View Already Added Info */}
         {existingData && !addAnotherForm ? (
-          <div className="mx-3 tablet:mx-[40px]">
+          <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
             {existingData.map((item, index) => (
-              <div className="flex w-full justify-between rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
+              <div className="flex w-full justify-between  rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
                 <div>
                   <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
                     {item.companyName}
@@ -158,6 +178,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                       alt="Edit Icon"
                       className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
+                      onClick={() => handleDelete(item.id)}
                     />
                   </div>
                   <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
@@ -178,12 +199,13 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
               <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 {field1.label}
               </p>
-              <input
-                type="text"
-                value={field1Data}
-                onChange={handlefield1Change}
+              <CustomCombobox
+                items={companies}
                 placeholder={field1.placeholder}
-                className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                selected={field1Data}
+                setSelected={setField1Data}
+                query={query}
+                setQuery={setQuery}
               />
             </div>
             <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
@@ -203,27 +225,27 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
               <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 {field3.label}
               </p>
-              <CustomCombobox
-                items={field3.items}
-                placeholder={field3.placeholder}
-                selected={field3Data}
-                setSelected={setField3Data}
-                query={query}
-                setQuery={setQuery}
-              />
+              <div className="z-20 flex flex-col gap-[10px] tablet:gap-[15px]">
+                <ListBox
+                  items={field3.items}
+                  selected={field3Data}
+                  setSelected={setField3Data}
+                  placeholder={field3.placeholder}
+                />
+              </div>
             </div>
             <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
               <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 {field4.label}
               </p>
-              <CustomCombobox
-                items={field4.items}
-                placeholder={field4.placeholder}
-                selected={field4Data}
-                setSelected={setField4Data}
-                query={query}
-                setQuery={setQuery}
-              />
+              <div className="z-20 flex flex-col gap-[10px] tablet:gap-[15px]">
+                <ListBox
+                  items={field4.items}
+                  selected={field4Data}
+                  setSelected={setField4Data}
+                  placeholder={field4.placeholder}
+                />
+              </div>
             </div>
 
             <div className="mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:gap-[37px]">
@@ -263,7 +285,9 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 variant="submit"
                 onClick={() => {
                   const allFieldObject = {
-                    [field1.type]: field1Data,
+                    ['id']: field1Data.id,
+                    [field1.type]: field1Data.name,
+                    ['country']: field1Data.country,
                     [field2.type]: field2Data.name,
                     [field3.type]: field3Data.name,
                     [field4.type]: field4Data.name,
