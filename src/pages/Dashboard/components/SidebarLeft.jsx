@@ -145,7 +145,7 @@ const SidebarLeft = () => {
       />
       <div className="no-scrollbar mt-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between rounded-[17.928px] bg-white pb-14 pt-8 text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:bg-[#000] dark:text-white">
         <div className="flex flex-col items-center">
-          <div className="flex w-full flex-col items-center justify-center gap-[4vh] border-b-[1.32px] border-[#9C9C9C] pb-[3vh] ">
+          <div className="flex w-full flex-col items-center justify-center gap-[25px] border-b-[1.32px] border-[#9C9C9C] pb-[25px]">
             <div className="relative">
               <div className="relative h-[45px] w-[212px]">
                 <input
@@ -182,8 +182,20 @@ const SidebarLeft = () => {
                 />
               )}
             </div>
+            <div className="h-[1.325px] w-full bg-[#9C9C9C]" />
+            <button
+              onClick={() => {
+                showRatingDialogue();
+              }}
+              className={`${
+                persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+              } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
+            >
+              {/* Topics */}
+              Rating
+            </button>
           </div>
-          <h1 className="flex w-[212px] items-center gap-2 py-[3vh] text-[22px] font-[500] leading-none text-[#888] dark:text-white">
+          <h1 className="flex w-[212px] items-center gap-2 pb-[38px] pt-[24px] text-[22px] font-[500] leading-none text-[#888] dark:text-white">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/filter.svg`}
               alt="filter"
@@ -191,18 +203,7 @@ const SidebarLeft = () => {
             />
             Filters
           </h1>
-          <button
-            onClick={() => {
-              showRatingDialogue();
-            }}
-            className={`${
-              persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-            } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
-          >
-            {/* Topics */}
-            Rating
-          </button>
-          <div className="mt-[4vh] flex flex-col gap-[3vh]">
+          <div className="flex flex-col gap-[3vh]">
             <Dropdown2
               label={'Status'}
               title={filterStates.filterByStatus ? filterStates.filterByStatus : 'All'}
@@ -238,7 +239,6 @@ const SidebarLeft = () => {
               }}
             />
           </div>
-
           <button
             className={`${
               persistedTheme === 'dark' ? 'bg-[#F0F0F0]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'

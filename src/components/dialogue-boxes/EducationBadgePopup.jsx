@@ -325,14 +325,18 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             </div>
 
             <div className="flex justify-between">
-              <Button
-                variant="addOption"
-                onClick={() => {
-                  setAddAnotherForm(false);
-                }}
-              >
-                Go Back
-              </Button>
+              {existingData && existingData.lenght !== 0 ? (
+                <Button
+                  variant="addOption"
+                  onClick={() => {
+                    setAddAnotherForm(false);
+                  }}
+                >
+                  Go Back
+                </Button>
+              ) : (
+                <div></div>
+              )}
               <Button
                 variant="submit"
                 onClick={() => {

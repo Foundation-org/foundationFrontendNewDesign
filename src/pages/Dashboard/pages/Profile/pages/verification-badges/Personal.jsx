@@ -150,7 +150,6 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
         );
 
       case 'education':
-        console.log('wamiq', fetchUser);
         return (
           <EducationBadgePopup
             isPopup={isPersonalPopup}

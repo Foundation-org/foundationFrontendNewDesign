@@ -183,7 +183,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             />
             <div className="mt-[10px] flex justify-between tablet:mt-5">
               <Button variant="submit" onClick={() => getLocation()}>
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Get Current location'}
+                Get Current location
               </Button>
               {name === '' ? (
                 <Button variant="hollow-submit" disabled={true}>

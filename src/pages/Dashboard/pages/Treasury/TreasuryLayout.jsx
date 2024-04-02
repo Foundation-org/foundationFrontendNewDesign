@@ -69,7 +69,7 @@ const TreasuryLayout = () => {
           </div>
         </div>
       </div>
-      <div className="mx-auto max-w-[1378px]">
+      <div className="mx-auto mb-[10px] max-w-[1378px] tablet:mb-[25px]">
         {/* Tabs */}
         <div className="mb-[10px] mt-[15px] flex justify-center gap-8 tablet:my-[35px] tablet:gap-[19.9px] laptop:gap-[35px]">
           <Link

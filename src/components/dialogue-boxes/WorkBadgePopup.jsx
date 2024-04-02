@@ -344,14 +344,18 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
             {/* {isError && <p className="text-red ml-1 text-[6.8px] tablet:text-[14px]">{`Invalid ${title}!`}</p>}{' '} */}
             <div className="flex justify-between">
-              <Button
-                variant="addOption"
-                onClick={() => {
-                  setAddAnotherForm(false);
-                }}
-              >
-                Go Back
-              </Button>
+              {existingData && existingData.lenght !== 0 ? (
+                <Button
+                  variant="addOption"
+                  onClick={() => {
+                    setAddAnotherForm(false);
+                  }}
+                >
+                  Go Back
+                </Button>
+              ) : (
+                <div></div>
+              )}
               <Button
                 variant="submit"
                 onClick={() => {
