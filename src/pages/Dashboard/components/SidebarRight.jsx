@@ -17,6 +17,7 @@ const SidebarRight = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [treasuryAmount, setTreasuryAmount] = useState(0);
 
   const sidebarList = [
     {
@@ -156,8 +157,21 @@ const SidebarRight = () => {
     }
   };
 
+  const getTreasuryAmount = async () => {
+    try {
+      const res = await api.get(`/treasury/get`);
+      if (res.status === 200) {
+        localStorage.setItem('treasuryAmount', res.data.data);
+        setTreasuryAmount(res.data.data);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+    }
+  };
+
   useEffect(() => {
     handleUserInfo();
+    getTreasuryAmount();
   }, []);
 
   const { mutateAsync: createGuest } = useMutation({
@@ -250,6 +264,7 @@ const SidebarRight = () => {
             </div>
           </div>
         </PopUp>
+        {/* My Balance / Guest */}
         {persistedUserInfo.role !== 'user' ? (
           <div className="mb-[35px] flex items-center gap-6">
             <div className="relative h-fit w-fit">
@@ -274,7 +289,7 @@ const SidebarRight = () => {
           </div>
         ) : (
           <div
-            className="mb-[25px] flex cursor-pointer items-center gap-5"
+            className="mb-[15px] flex cursor-pointer items-center gap-5"
             onClick={() => {
               navigate('/dashboard/profile');
             }}
@@ -289,14 +304,32 @@ const SidebarRight = () => {
                 {persistedUserInfo?.badges?.length}
               </p>
             </div>
-            <div>
+            <div className="flex flex-col gap-1">
               <h4 className="heading">My Balance</h4>
-              <div className="font-inter mt-[-4px] flex gap-1 text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] dark:text-[#D2D2D2]">
+              <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
                 <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
               </div>
             </div>
           </div>
         )}
+        {/* Treasury */}
+        <div className="flex items-center gap-[15px]">
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
+            alt="badge"
+            className="size-[47px]"
+          />
+          <div className="flex flex-col gap-1">
+            <h4 className="heading">Treasury</h4>
+            <p className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
+              <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
+            </p>
+          </div>
+        </div>
+        <div className="my-[25px] h-[1.325px] bg-[#9C9C9C]" />
+        <p className="font-inter mb-[25px] text-center text-[10.79px] font-medium leading-[18px] text-[#616161] tablet:text-[18px] dark:text-[#D2D2D2]">
+          My Contributions
+        </p>
         {sidebarList.map((item) => (
           <div className={`flex items-center gap-4 ${item.id !== 1 && 'mt-[1.9vh]'}`} key={item.id}>
             {persistedTheme === 'dark' ? (

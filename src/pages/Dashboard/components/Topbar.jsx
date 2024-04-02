@@ -71,23 +71,48 @@ const Topbar = () => {
               </div>
             </div>
           )}
+          <div
+            className="flex cursor-pointer items-center gap-[2.4px] tablet:hidden"
+            onClick={() => {
+              navigate('/dashboard/profile');
+            }}
+          >
+            <div className="relative h-fit w-fit">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
+                alt="badge"
+                className="h-5 w-4 tablet:h-[47px] tablet:w-[38px]"
+              />
+              <p className="transform-center absolute z-50 pb-1 text-[10px] font-medium leading-normal text-[#7A7016] tablet:text-[20px]">
+                {persistedUserInfo?.badges?.length}
+              </p>
+            </div>
+            <p className="font-inter text-[11.523px] text-base font-medium leading-[11.523px] text-white tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
+              {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
+            </p>
+          </div>
           <Link
             to={'/dashboard'}
-            className="flex justify-center"
+            className="flex items-baseline justify-center gap-[2px]"
             onClick={() => {
               dispatch(createQuestActions.resetCreateQuest());
             }}
           >
-            <h1 className="relative font-neuropol text-[12px] font-normal text-white tablet:text-[20px]">
+            {/* <h1 className="relative font-neuropol text-[12px] font-normal leading-[12px] text-white tablet:text-[20px] tablet:leading-[20px]">
               FOUNDATION{' '}
               <span className="absolute -right-8 bottom-[2px] whitespace-nowrap font-poppins text-[7px] font-medium text-[#D0E4F2] tablet:-bottom-3 tablet:left-0 tablet:text-[12px]">
                 v 1.7.17
               </span>
+            </h1> */}
+            <h1 className="font-neuropol text-[12px] font-normal leading-[12px] text-white tablet:text-[20px] tablet:leading-[20px]">
+              FOUNDATION{' '}
             </h1>
-
+            <p className="whitespace-nowrap font-poppins text-[7px] font-medium leading-[7px] text-[#D0E4F2] tablet:text-[12px] tablet:leading-[12px]">
+              v 1.7.17
+            </p>
             {/* <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="" /> */}
           </Link>
-          <div className="flex w-[85.81px] items-center justify-end gap-4 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
+          <div className="flex w-fit items-center justify-end gap-4 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
             {/* <div
             className="relative cursor-pointer "
             onClick={() => toast.error("err coming soon")}

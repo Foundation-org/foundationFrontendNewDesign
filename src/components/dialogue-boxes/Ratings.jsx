@@ -36,7 +36,6 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
     ) {
       setSelectedOptions(['adult']);
     } else {
-      console.log('inside');
       setSelectedOptions(['everyone']);
     }
   }, []);

@@ -24,7 +24,6 @@ const QuestStartSection = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
-  console.log('🚀 ~ questUtils:', questUtils.bookmarkResponse);
 
   // Pagination
   const pageLimit = 5;
