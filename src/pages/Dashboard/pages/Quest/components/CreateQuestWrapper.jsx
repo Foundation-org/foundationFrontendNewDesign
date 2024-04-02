@@ -62,8 +62,9 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
         {msg}
       </h4>
       <div
-        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
+        className={`${
+          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] dark:text-[#D8D8D8]">
           Create a {type}
@@ -78,12 +79,39 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
             />
             <TextareaAutosize
               onChange={(e) => setUrl(e.target.value)}
+              value={url}
               placeholder="Paste embed link here....."
               className="w-full resize-none rounded-[5.128px] border border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10.3px] tablet:border-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
             />
           </div>
 
-          <div className="player-wrapper mt-[6px] tablet:mt-[15px]">
+          <div
+            className="player-wrapper relative mt-[6px] cursor-pointer tablet:mt-[15px]"
+            onClick={() => {
+              setUrl('');
+            }}
+          >
+            <div
+              className={`absolute -top-[5px] right-4 z-20 tablet:-top-4 tablet:right-[45px] ${url ? 'block' : 'hidden'}`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="41"
+                height="41"
+                viewBox="0 0 41 41"
+                fill="none"
+                className="size-[15px] tablet:size-[41px]"
+              >
+                <path
+                  d="M35.6826 19.2751C35.6826 28.2373 28.4173 35.5026 19.455 35.5026C10.4928 35.5026 3.22746 28.2373 3.22746 19.2751C3.22746 10.3128 10.4928 3.04751 19.455 3.04751C28.4173 3.04751 35.6826 10.3128 35.6826 19.2751Z"
+                  fill="white"
+                />
+                <path
+                  d="M34.6479 33.8809C42.2729 25.8323 41.9295 13.1264 33.8809 5.50145C25.8323 -2.12352 13.1264 -1.78012 5.50145 6.26845C-2.12352 14.317 -1.78012 27.0229 6.26845 34.6479C14.317 42.2729 27.0229 41.9295 34.6479 33.8809ZM13.8838 16.1848C13.3089 15.6402 13.2844 14.7326 13.829 14.1577C14.3736 13.5828 15.2812 13.5583 15.8561 14.1029L20.0199 18.0476L23.9645 13.8838C24.5092 13.3089 25.4167 13.2844 25.9916 13.829C26.5665 14.3736 26.591 15.2812 26.0464 15.8561L22.1018 20.0199L26.2655 23.9645C26.8404 24.5092 26.865 25.4167 26.3203 25.9916C25.7757 26.5665 24.8681 26.591 24.2932 26.0464L20.1295 22.1018L16.1848 26.2655C15.6402 26.8404 14.7326 26.865 14.1577 26.3203C13.5828 25.7757 13.5583 24.8681 14.1029 24.2932L18.0476 20.1295L13.8838 16.1848Z"
+                  fill="#7C7C7C"
+                />
+              </svg>
+            </div>
             {/* <ReactPlayer
               url={url}
               // https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
@@ -97,7 +125,7 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
               muted={true}
             /> */}
 
-            {url && url.includes("soundcloud") ? (
+            {url && url.includes('soundcloud') ? (
               <iframe
                 className="oembedIframe"
                 width="100%"
@@ -105,31 +133,33 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
                 src={`https://w.soundcloud.com/player/?url=${url}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_playcount=false&sharing=false&buying=false&download=false%22%3E`}
                 frameBorder="0"
               ></iframe>
-            ) : url && (
-              // <iframe
-              //   className="oembedIframeYoutube"
-              //   // src="https://www.youtube.com/embed/Xf0yP-kNyXQ"
-              //   // src="https://youtube.com/embed/Xf0yP-kNyXQ?feature=shared"
-              //   src={`https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}`}
+            ) : (
+              url && (
+                // <iframe
+                //   className="oembedIframeYoutube"
+                //   // src="https://www.youtube.com/embed/Xf0yP-kNyXQ"
+                //   // src="https://youtube.com/embed/Xf0yP-kNyXQ?feature=shared"
+                //   src={`https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}`}
 
-              //   frameborder="0"
-              //   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              //   allowfullscreen></iframe>
-              <ReactPlayer
-                url={url}
-                onError={(e) => {
-                  toast.error("Invalid URL"), setUrl("")
-                }}
-                // https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
-                // https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
-                // https://soundcloud.com/mrjteze/huh
-                className="react-player"
-                // playing
-                width="100%"
-                height="100%"
-                controls={true}
-                muted={true}
-              />
+                //   frameborder="0"
+                //   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                //   allowfullscreen></iframe>
+                <ReactPlayer
+                  url={url}
+                  onError={(e) => {
+                    toast.error('Invalid URL'), setUrl('');
+                  }}
+                  // https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
+                  // https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
+                  // https://soundcloud.com/mrjteze/huh
+                  className="react-player"
+                  // playing
+                  width="100%"
+                  height="100%"
+                  controls={true}
+                  muted={true}
+                />
+              )
             )}
           </div>
           {/* {`https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}`} */}
