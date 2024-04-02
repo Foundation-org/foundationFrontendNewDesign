@@ -186,6 +186,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
                       alt="Edit Icon"
                       className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
+                      onClick={() => toast.info('Feature coming soon')}
                     />
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}

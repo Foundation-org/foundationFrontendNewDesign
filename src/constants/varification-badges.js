@@ -176,20 +176,20 @@ export const personal = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`,
     title: 'Work',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'work',
-    disabled: true,
+    disabled: false,
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`,
     title: 'Education',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'education',
-    disabled: true,
+    disabled: false,
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Identity-2x-1.png`,
@@ -204,11 +204,11 @@ export const personal = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Geolocation-2x-1.png`,
     title: 'Geolocation',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     ButtonText: 'Add New Badge',
     NoOfButton: 1,
     type: 'geolocation',
-    disabled: true,
+    disabled: false,
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/securityquestion-a.png`,
