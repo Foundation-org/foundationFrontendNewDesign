@@ -87,7 +87,7 @@ const Topbar = () => {
                 {persistedUserInfo?.badges?.length}
               </p>
             </div>
-            <p className="font-inter text-[11.523px] text-base font-medium leading-[11.523px] text-white tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
+            <p className="font-inter text-[9.523px] text-base font-medium leading-[11.523px] text-white tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
               {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
             </p>
           </div>
