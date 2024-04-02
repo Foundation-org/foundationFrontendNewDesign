@@ -1,4 +1,5 @@
 import { Tooltip } from '../../../../../utils/Tooltip';
+import { toast } from 'sonner';
 import { useSelector, useDispatch } from 'react-redux';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import ReactPlayer from 'react-player';
@@ -61,9 +62,8 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
         {msg}
       </h4>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
+        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] dark:text-[#D8D8D8]">
           Create a {type}
@@ -84,16 +84,55 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
           </div>
 
           <div className="player-wrapper mt-[6px] tablet:mt-[15px]">
-            <ReactPlayer
-              url={'https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0'}
+            {/* <ReactPlayer
+              url={url}
+              // https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
+              // https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
+              // https://soundcloud.com/mrjteze/huh
               className="react-player"
-              playing
+              // playing
               width="100%"
               height="100%"
-              controls={1}
+              controls={true}
               muted={true}
-            />
+            /> */}
+
+            {url && url.includes("soundcloud") ? (
+              <iframe
+                className="oembedIframe"
+                width="100%"
+                height="100%"
+                src={`https://w.soundcloud.com/player/?url=${url}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_playcount=false&sharing=false&buying=false&download=false%22%3E`}
+                frameBorder="0"
+              ></iframe>
+            ) : url && (
+              // <iframe
+              //   className="oembedIframeYoutube"
+              //   // src="https://www.youtube.com/embed/Xf0yP-kNyXQ"
+              //   // src="https://youtube.com/embed/Xf0yP-kNyXQ?feature=shared"
+              //   src={`https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}`}
+
+              //   frameborder="0"
+              //   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              //   allowfullscreen></iframe>
+              <ReactPlayer
+                url={url}
+                onError={(e) => {
+                  toast.error("Invalid URL"), setUrl("")
+                }}
+                // https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
+                // https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
+                // https://soundcloud.com/mrjteze/huh
+                className="react-player"
+                // playing
+                width="100%"
+                height="100%"
+                controls={true}
+                muted={true}
+              />
+            )}
           </div>
+          {/* {`https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}`} */}
         </div>
         {/* ) : (
           <Button

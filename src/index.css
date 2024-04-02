@@ -708,6 +708,14 @@ input[type='number'] {
   margin-top: -2px;
 }
 
+.oembedIframe{
+  width: 100% !important;
+  height: 80px !important;
+}
+.oembedIframeYoutube{
+  width: 100% !important;
+  height: 370px !important;
+}
 .react-player {
   padding-top: 0px !important;
 }
