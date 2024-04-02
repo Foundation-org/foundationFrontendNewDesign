@@ -78,9 +78,10 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const [field2Data, setField2Data] = useState([]);
   const [field3Data, setField3Data] = useState([]);
   const [field4Data, setField4Data] = useState([]);
-  const [field5Data, setField5Data] = useState([]);
-  const [field6Data, setField6Data] = useState([]);
+  const [field5Data, setField5Data] = useState();
+  const [field6Data, setField6Data] = useState();
   const [isPresent, setIsPresent] = useState(false);
+  const [prevInfo, setPrevInfo] = useState({});
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
@@ -99,7 +100,6 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   }, [fetchUser.badges]);
 
   const handleClose = () => setIsPopup(false);
-  const handlefield1Change = (e) => setField1Data(e.target.value);
   const handlefield5Change = (e) => setField5Data(e.target.value);
   const handlefield6Change = (e) => setField6Data(e.target.value);
 
@@ -145,8 +145,67 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
     }
   };
 
+  const handleUpdateBadge = async (newData) => {
+    try {
+      if (
+        prevInfo.companyName === field1Data.name &&
+        prevInfo.jobTitle === field2Data.name &&
+        prevInfo.employmentType === field3Data.name &&
+        prevInfo.modeOfJob === field4Data.name &&
+        prevInfo.startingYear === field5Data &&
+        prevInfo.endingYear === field6Data
+      ) {
+        toast.error('Information already saved');
+        return;
+      }
+
+      const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, {
+        newData,
+        type,
+        uuid: localStorage.getItem('uuid'),
+        id: prevInfo.id,
+      });
+      if (updateBadge.status === 200) {
+        handleUserInfo();
+        toast.success('Info Updated Successfully');
+
+        handleClose();
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+      handleClose();
+    }
+  };
+
+  const handleEdit = async (id) => {
+    const info = await api.post(`/addBadge/personal/getWorkOrEducation`, {
+      id: id,
+      uuid: localStorage.getItem('uuid'),
+      type: type,
+    });
+    setPrevInfo(info?.data?.obj);
+    if (info.status === 200) {
+      console.log(info);
+      const data = info?.data.obj;
+
+      setField1Data({ id: data.id, name: data.companyName, country: data.country });
+      setField2Data({ name: data.jobTitle });
+      setField3Data({ name: data.employmentType });
+      setField4Data({ name: data.modeOfJob });
+      setField5Data(data.startingYear);
+      if (data.endingYear === 'Present') {
+        setIsPresent(true);
+        setField6Data(data.endingYear);
+      } else {
+        setField6Data(data.endingYear);
+      }
+    }
+  };
+
   const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
     const [addAnotherForm, setAddAnotherForm] = useState(false);
+    const [edit, setEdit] = useState(false);
+
     return (
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
         {/* To View Already Added Info */}
@@ -173,7 +232,9 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
                       alt="Edit Icon"
                       className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
-                      onClick={() => toast.info('Feature coming soon')}
+                      onClick={() => {
+                        setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                      }}
                     />
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
@@ -270,6 +331,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                   type="date"
                   value={field6Data}
                   onChange={handlefield6Change}
+                  disabled={isPresent}
                   placeholder={field6.placeholder}
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                 />
@@ -283,6 +345,14 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
             {/* {isError && <p className="text-red ml-1 text-[6.8px] tablet:text-[14px]">{`Invalid ${title}!`}</p>}{' '} */}
             <div className="flex justify-between">
               <Button
+                variant="addOption"
+                onClick={() => {
+                  setAddAnotherForm(false);
+                }}
+              >
+                Go Back
+              </Button>
+              <Button
                 variant="submit"
                 onClick={() => {
                   const allFieldObject = {
@@ -295,7 +365,11 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                     [field5.type]: field5Data,
                     [field6.type]: field6Data,
                   };
-                  handleAddPersonalBadge(allFieldObject);
+                  if (edit) {
+                    handleUpdateBadge(allFieldObject);
+                  } else {
+                    handleAddPersonalBadge(allFieldObject);
+                  }
                 }}
               >
                 Add
