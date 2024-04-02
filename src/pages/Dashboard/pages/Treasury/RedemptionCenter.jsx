@@ -303,6 +303,7 @@ export default function RedemptionCenter() {
                   onChange={(e) => {
                     let x = parseFloat(e.target.value);
                     if (!isNaN(x)) {
+                      x = Math.round(x * 100) / 100;
                       if (Number.isInteger(x)) {
                         setFdx(x.toString());
                       } else {
@@ -313,6 +314,7 @@ export default function RedemptionCenter() {
                     }
                   }}
                 />
+
                 <FaPlus
                   className="w-[7px] cursor-pointer tablet:w-[23px]"
                   onClick={() => {
