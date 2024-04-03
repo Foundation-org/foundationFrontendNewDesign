@@ -332,7 +332,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                     setAddAnotherForm(false);
                   }}
                 >
-                  Go Back
+                  Cancel
                 </Button>
               ) : (
                 <div></div>

@@ -351,7 +351,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                     setAddAnotherForm(false);
                   }}
                 >
-                  Go Back
+                  Cancel
                 </Button>
               ) : (
                 <div></div>
