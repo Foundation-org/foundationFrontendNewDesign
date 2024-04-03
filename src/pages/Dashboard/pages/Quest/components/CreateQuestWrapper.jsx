@@ -169,7 +169,7 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
                 <Tooltip optionStatus={mediaDescStatus} />
               </button>
             </div>
-            <div className="flex">
+            <div className="mr-[50px] tablet:mr-[100px] laptop:mr-[132px]">
               <TextareaAutosize
                 onChange={(e) => {
                   let userValue = e.target.value;
@@ -197,16 +197,8 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
                 }}
                 value={url}
                 placeholder="Paste embed link here....."
-                className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+                className="w-full resize-none rounded-[5.128px] border border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10.3px] tablet:border-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
               />
-              <button
-                className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${mediaUrlStatus.color}`}
-              >
-                <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
-                  {mediaUrlStatus.name}
-                </div>
-                <Tooltip optionStatus={mediaUrlStatus} />
-              </button>
             </div>
             {url && (
               <div
