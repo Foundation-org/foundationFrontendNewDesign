@@ -210,13 +210,13 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
             </div>
             {url && (
               <div
-                className="player-wrapper relative cursor-pointer rounded-[10px]"
+                className="player-wrapper relative mt-1 cursor-pointer rounded-[10px] tablet:mt-[10px]"
                 onClick={() => {
                   setUrl('');
                 }}
               >
                 <div
-                  className={`absolute right-1 top-[5px] z-20 tablet:right-4 tablet:top-4 ${url ? 'block' : 'hidden'}`}
+                  className={`absolute -right-1 top-[7px] z-20 tablet:-right-4 tablet:-top-4 ${url ? 'block' : 'hidden'}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
