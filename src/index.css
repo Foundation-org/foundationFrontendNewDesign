@@ -708,11 +708,11 @@ input[type='number'] {
   margin-top: -2px;
 }
 
-.oembedIframe{
+.oembedIframe {
   width: 100% !important;
   height: 80px !important;
 }
-.oembedIframeYoutube{
+.oembedIframeYoutube {
   width: 100% !important;
   height: 370px !important;
 }
@@ -734,10 +734,10 @@ input[type='number'] {
   margin-right: auto;
 }
 
-.player-wrapper {
+/* .player-wrapper {
   padding-left: 22px !important;
   padding-right: 22px !important;
-}
+} */
 
 .react-player div {
   margin-left: 0px !important;
@@ -749,11 +749,12 @@ input[type='number'] {
     width: 100% !important;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 10px;
   }
-  .player-wrapper {
+  /* .player-wrapper {
     padding-left: 60px !important;
     padding-right: 60px !important;
-  }
+  } */
 }
 
 /* Embedded posts homefeed */

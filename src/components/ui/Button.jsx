@@ -100,5 +100,6 @@ Button.propTypes = {
     'submit-green',
     'topics',
     'share-link',
+    'addEmbeded',
   ]),
 };

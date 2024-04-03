@@ -26,7 +26,7 @@ const YesNo = () => {
   const [hollow, setHollow] = useState(true);
   const [url, setUrl] = useState('');
   const [description, setDescription] = useState('');
-  console.log(url);
+
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
