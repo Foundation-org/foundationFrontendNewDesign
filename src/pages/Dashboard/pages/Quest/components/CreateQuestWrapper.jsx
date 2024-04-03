@@ -8,7 +8,7 @@ import ReactPlayer from 'react-player';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import './Player.css';
 
-export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, setDescription, children }) {
+export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, children }) {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const createQuestSlice = useSelector(createQuestAction.getCreate);

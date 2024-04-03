@@ -20,12 +20,12 @@ const YesNo = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
+  const getMediaStates = useSelector(createQuestAction.getMedia);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
   const [url, setUrl] = useState('');
-  const [description, setDescription] = useState('');
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
@@ -95,7 +95,7 @@ const YesNo = () => {
     if (!moderationRating) {
       return toast.error('Oops! Something Went Wrong.');
     }
-    if (!description && url !== '') {
+    if (!getMediaStates.desctiption && url !== '') {
       return toast.error('You cannot leave the description empty.');
     }
 
@@ -108,7 +108,7 @@ const YesNo = () => {
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
       url: url,
-      description: description,
+      description: getMediaStates.desctiption,
     };
 
     if (!checkHollow()) {
@@ -126,12 +126,12 @@ const YesNo = () => {
   };
 
   useEffect(() => {
-    if (!checkHollow() && createQuestSlice.question !== '' && description !== '') {
+    if (!checkHollow() && createQuestSlice.question !== '' && getMediaStates.desctiption !== '') {
       setHollow(false);
     } else {
       setHollow(true);
     }
-  }, [createQuestSlice.question, questionStatus.tooltipName, description]);
+  }, [createQuestSlice.question, questionStatus.tooltipName, getMediaStates.desctiption]);
 
   useEffect(() => {
     dispatch(updateQuestion({ question: createQuestSlice.question, changedOption, changeState }));
@@ -144,7 +144,6 @@ const YesNo = () => {
       msg={'Ask a question that allows for a straightforward "Yes" or "No" response'}
       url={url}
       setUrl={setUrl}
-      setDescription={setDescription}
     >
       <div className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5">
         <YesNoOptions answer={'Yes'} />
