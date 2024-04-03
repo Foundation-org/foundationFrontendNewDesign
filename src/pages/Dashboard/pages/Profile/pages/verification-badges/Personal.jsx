@@ -245,7 +245,7 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
       >
         {checkPersonalBadge(item.type)
           ? item.type === 'education' || item.type === 'work'
-            ? 'View'
+            ? 'Edit'
             : 'Remove'
           : item.ButtonText}
         {!checkPersonalBadge(item.type) && (
