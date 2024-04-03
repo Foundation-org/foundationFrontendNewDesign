@@ -18,7 +18,9 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const [soundcloudUnique] = useState('soundcloud.com');
-  const [youtubeBaseURLs] = useState(['youtube.com', 'youtube-nocookie.com', 'youtu.be']);
+  const [youtubeBaseURLs] = useState(['youtube.com',
+    "www.youtube.com",
+    "m.youtube.com", 'youtube-nocookie.com', 'youtu.be']);
 
   const playerRef = useRef(null);
   const handleVideoEnded = () => {
@@ -28,6 +30,23 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
       playerRef.current.getInternalPlayer().play(); // Resume playback
     }
   };
+
+  function extractYouTubeVideoId(url) {
+    const patternLong = /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/;
+    const patternShort = /youtu\.be\/([^"&?/ ]{11})/;
+
+    const matchLong = url.match(patternLong);
+    const matchShort = url.match(patternShort);
+
+    if (matchLong && matchLong[1]) {
+      return matchLong[1]; // Full YouTube URL
+    } else if (matchShort && matchShort[1]) {
+      return matchShort[1]; // Short YouTube URL
+    } else {
+      return null; // Invalid or unsupported URL
+    }
+  }
+
   function checkVideoAgeRestriction(videoId, userValue) {
     const apiKey = import.meta.env.VITE_GG_API_KEY;
     const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=contentDetails`;
@@ -105,9 +124,8 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
         {msg}
       </h4>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
+        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] dark:text-[#D8D8D8]">
           Create a {type}
@@ -148,12 +166,14 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
               // onChange={(e) => setUrl(e.target.value)}
               onChange={(e) => {
                 let userValue = e.target.value;
-                console.log(userValue);
+
                 if (youtubeBaseURLs.some((baseURL) => url.includes(baseURL))) {
-                  let videoId = userValue.match(
-                    /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/,
-                  )[1];
+                  // let videoId = userValue.match(
+                  //   /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/,
+                  // )[1];
                   // console.log(videoId);
+                  const videoId = extractYouTubeVideoId(userValue);
+
                   checkVideoAgeRestriction(videoId, userValue);
                 } else {
                   setUrl(userValue);
@@ -232,33 +252,20 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
                     },
                   }}
                   onEnded={handleVideoEnded}
-                  // onReady={(player) => {
-                  //   // Check if the URL is a SoundCloud playlist
-                  //   if (url.includes(soundcloudUnique) && url.includes("/sets/")) {
-                  //     toast.error("We do not support SoundCloud playlists");
-                  //     setUrl(""); // Set URL to empty string
-                  //     return; // Stop execution
-                  //   }
-                  //   // Check if the URL is a YouTube playlist
-                  //   if (youtubeBaseURLs.some(baseURL => url.includes(baseURL)) && url.includes("list=")) {
-                  //     toast.error("We do not support YouTube playlists");
-                  //     setUrl(""); // Set URL to empty string
-                  //     return; // Stop execution
-                  //   }
-                  // }}
                 />
 
                 {/* 
-                  https://soundcloud.com/mrjteze/huh
-                  https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
-                  https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
-                  https://www.youtube.com/embed/Xf0yP-kNyXQ
-                  https://youtube.com/embed/Xf0yP-kNyXQ?feature=shared
-                  https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}
-                  https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
-                  https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
-                  https://soundcloud.com/mrjteze/huh 
-                  https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]} */}
+            https://soundcloud.com/mrjteze/huh
+            https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
+            https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
+            https://www.youtube.com/embed/Xf0yP-kNyXQ
+            https://youtube.com/embed/Xf0yP-kNyXQ?feature=shared
+            https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}
+            https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
+            https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}
+            https://www.youtube.com/shorts/NCj-0-OK470
+            https://www.youtube.com/shorts/9YYIPiYwvGY
+            */}
               </div>
             )}
           </div>
