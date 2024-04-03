@@ -1,13 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Tooltip } from '../../../../../utils/Tooltip';
 import { toast } from 'sonner';
 import { useSelector, useDispatch } from 'react-redux';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import ReactPlayer from 'react-player';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
-import { useState } from 'react';
-import BasicModal from '../../../../../components/BasicModal';
-import EmbedeDialogue from '../../../../../components/dialogue-boxes/EmbedeDialogue';
 import { Button } from '../../../../../components/ui/Button';
 import './Player.css';
 
@@ -18,11 +15,28 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const [soundcloudUnique] = useState('soundcloud.com');
-  const [youtubeBaseURLs] = useState(['youtube.com',
-    "www.youtube.com",
-    "m.youtube.com", 'youtube-nocookie.com', 'youtu.be']);
+  const [youtubeBaseURLs] = useState([
+    'youtube.com',
+    'www.youtube.com',
+    'm.youtube.com',
+    'youtube-nocookie.com',
+    'youtu.be',
+  ]);
+
+  const defaultStatus = {
+    name: 'Ok',
+    color: 'text-[#389CE3]',
+    tooltipName: 'Please write something...',
+    tooltipStyle: 'tooltip-info',
+    status: false,
+    showToolTipMsg: true,
+  };
+
+  const [mediaDescStatus, setMediaDescStatus] = useState(defaultStatus);
+  const [mediaUrlStatus, setMediaUrlStatus] = useState(defaultStatus);
 
   const playerRef = useRef(null);
+
   const handleVideoEnded = () => {
     console.log('ended');
     if (playerRef.current) {
@@ -56,7 +70,7 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
       .then((data) => {
         const contentRating = data.items[0]?.contentDetails?.contentRating?.ytRating;
         const isAdultContent = contentRating === 'ytAgeRestricted';
-        // console.log('Is Adult Content:', isAdultContent);
+        console.log('Is Adult Content:', isAdultContent);
         if (isAdultContent === false) {
           setUrl(userValue);
         } else {
@@ -66,6 +80,7 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
       })
       .catch((error) => console.error('Error:', error));
   }
+
   // https://www.youtube.com/watch?v=tWZMJoWb7ck
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
@@ -82,16 +97,6 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
 
   const handleCopyOpen = () => setCopyModal(true);
   const handleCopyClose = () => setCopyModal(false);
-
-  const customModalStyle = {
-    backgroundColor: '#FCFCFD',
-    boxShadow: 'none',
-    border: '0px',
-    outline: 'none',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-  };
 
   useEffect(() => {
     // Check if the URL is a SoundCloud playlist
@@ -111,21 +116,13 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
 
   return (
     <>
-      {/* <BasicModal
-        open={copyModal}
-        handleClose={handleCopyClose}
-        customStyle={customModalStyle}
-        customClasses="rounded-[10px] tablet:rounded-[26px]"
-      >
-        <EmbedeDialogue handleClose={handleCopyClose} setIsShowPreview={setIsShowPreview} url={url} setUrl={setUrl} />
-      </BasicModal> */}
-
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
         {msg}
       </h4>
       <div
-        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
+        className={`${
+          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] dark:text-[#D8D8D8]">
           Create a {type}
@@ -157,32 +154,60 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
                 />
               </svg>
             </div>
-            <TextareaAutosize
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Please decribe this embeded video....."
-              className="w-full resize-none rounded-[5.128px] border border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10.3px] tablet:border-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
-            />
-            <TextareaAutosize
-              // onChange={(e) => setUrl(e.target.value)}
-              onChange={(e) => {
-                let userValue = e.target.value;
+            <div className="flex">
+              <TextareaAutosize
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Please decribe this embeded video....."
+                className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+              />
+              <button
+                className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${mediaDescStatus.color}`}
+              >
+                <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
+                  {mediaDescStatus.name}
+                </div>
+                <Tooltip optionStatus={mediaDescStatus} />
+              </button>
+            </div>
+            <div className="flex">
+              <TextareaAutosize
+                onChange={(e) => {
+                  let userValue = e.target.value;
 
-                if (youtubeBaseURLs.some((baseURL) => url.includes(baseURL))) {
-                  // let videoId = userValue.match(
-                  //   /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/,
-                  // )[1];
-                  // console.log(videoId);
-                  const videoId = extractYouTubeVideoId(userValue);
+                  if (youtubeBaseURLs.some((baseURL) => url.includes(baseURL))) {
+                    // let videoId = userValue.match(
+                    //   /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/,
+                    // )[1];
+                    // console.log(videoId);
+                    const videoId = extractYouTubeVideoId(userValue);
 
-                  checkVideoAgeRestriction(videoId, userValue);
-                } else {
-                  setUrl(userValue);
-                }
-              }}
-              value={url}
-              placeholder="Paste embed link here....."
-              className="w-full resize-none rounded-[5.128px] border border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10.3px] tablet:border-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
-            />
+                    checkVideoAgeRestriction(videoId, userValue);
+                  } else {
+                    setUrl(userValue);
+                    console.log('first');
+                    // setMediaUrlStatus({
+                    //   name: 'Ok',
+                    //   color: 'text-[#0FB063]',
+                    //   tooltipName: 'Question is Verified',
+                    //   tooltipStyle: 'tooltip-success',
+                    //   isVerifiedQuestion: true,
+                    //   status: false,
+                    // });
+                  }
+                }}
+                value={url}
+                placeholder="Paste embed link here....."
+                className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+              />
+              <button
+                className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${mediaUrlStatus.color}`}
+              >
+                <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
+                  {mediaUrlStatus.name}
+                </div>
+                <Tooltip optionStatus={mediaUrlStatus} />
+              </button>
+            </div>
             {url && (
               <div
                 className="player-wrapper relative cursor-pointer rounded-[10px]"
