@@ -1,18 +1,19 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Tooltip } from '../../../../../utils/Tooltip';
 import { toast } from 'sonner';
+import { useRef, useEffect, useState } from 'react';
+import { Tooltip } from '../../../../../utils/Tooltip';
 import { useSelector, useDispatch } from 'react-redux';
+import { Button } from '../../../../../components/ui/Button';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import ReactPlayer from 'react-player';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
-import { Button } from '../../../../../components/ui/Button';
 import './Player.css';
 
 export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, setDescription, children }) {
   const dispatch = useDispatch();
-  const [copyModal, setCopyModal] = useState(false);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
+  const getMediaStates = useSelector(createQuestAction.getMedia);
+  console.log('getMediaStates', getMediaStates);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const [soundcloudUnique] = useState('soundcloud.com');
   const [youtubeBaseURLs] = useState([
@@ -22,18 +23,6 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
     'youtube-nocookie.com',
     'youtu.be',
   ]);
-
-  const defaultStatus = {
-    name: 'Ok',
-    color: 'text-[#389CE3]',
-    tooltipName: 'Please write something...',
-    tooltipStyle: 'tooltip-info',
-    status: false,
-    showToolTipMsg: true,
-  };
-
-  const [mediaDescStatus, setMediaDescStatus] = useState(defaultStatus);
-  const [mediaUrlStatus, setMediaUrlStatus] = useState(defaultStatus);
 
   const playerRef = useRef(null);
 
@@ -95,9 +84,6 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
     dispatch(createQuestAction.checkQuestion(value));
   };
 
-  const handleCopyOpen = () => setCopyModal(true);
-  const handleCopyClose = () => setCopyModal(false);
-
   useEffect(() => {
     // Check if the URL is a SoundCloud playlist
     if (url.includes(soundcloudUnique) && url.includes('/sets/')) {
@@ -114,6 +100,20 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
     }
   }, [url]);
 
+  // TO handle Media Description
+  const handleDescChange = (e) => {
+    const inputValue = e.target.value;
+
+    if (inputValue.length <= 350) {
+      dispatch(createQuestAction.addMediaDesc(inputValue));
+    }
+  };
+
+  const descVerification = async (value) => {
+    if (getMediaStates.validatedDescription === value) return;
+    dispatch(createQuestAction.checkDescription(value));
+  };
+
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
@@ -127,14 +127,16 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] dark:text-[#D8D8D8]">
           Create a {type}
         </h1>
-        {copyModal ? (
+        {getMediaStates?.isMedia ? (
           <div className="w-[calc(100%-51.75px] relative mx-[15px] mt-1 flex flex-col gap-[6px] rounded-[7.175px] border border-[#DEE6F7] p-[15px] px-[5px] py-[10px] tablet:mx-11 tablet:mt-[25px] tablet:gap-[15px] tablet:border-[2.153px] tablet:px-[15px] tablet:py-[25px]">
             <h1 className="absolute -top-[5.5px] left-5 bg-white text-[10px] font-semibold leading-[10px] text-[#707175] tablet:-top-[11px] tablet:left-9 tablet:text-[20px] tablet:leading-[20px]">
               Media
             </h1>
             <div
               className="absolute -right-[7px] -top-[5px] z-20 cursor-pointer tablet:-right-5 tablet:-top-[26px]"
-              onClick={handleCopyClose}
+              onClick={() => {
+                dispatch(createQuestAction.updateIsMedia(false));
+              }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -156,17 +158,19 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
             </div>
             <div className="flex">
               <TextareaAutosize
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={handleDescChange}
+                onBlur={(e) => e.target.value.trim() !== '' && descVerification(e.target.value.trim())}
+                value={getMediaStates.desctiption}
                 placeholder="Please decribe this embeded video....."
                 className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
               />
               <button
-                className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${mediaDescStatus.color}`}
+                className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${getMediaStates.mediaDescStatus.color}`}
               >
                 <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
-                  {mediaDescStatus.name}
+                  {getMediaStates.mediaDescStatus.name}
                 </div>
-                <Tooltip optionStatus={mediaDescStatus} />
+                <Tooltip optionStatus={getMediaStates.mediaDescStatus} />
               </button>
             </div>
             <div className="mr-[50px] tablet:mr-[100px] laptop:mr-[132px]">
@@ -184,7 +188,6 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
                     checkVideoAgeRestriction(videoId, userValue);
                   } else {
                     setUrl(userValue);
-                    console.log('first');
                     // setMediaUrlStatus({
                     //   name: 'Ok',
                     //   color: 'text-[#0FB063]',
@@ -290,7 +293,9 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
           <Button
             variant="addEmbeded"
             className="ml-[21.55px] mt-[16px] px-[25px] tablet:ml-[60px] tablet:mt-[33px]"
-            onClick={handleCopyOpen}
+            onClick={() => {
+              dispatch(createQuestAction.updateIsMedia(true));
+            }}
           >
             + Add Media
           </Button>
