@@ -418,7 +418,9 @@ export default function RedemptionCenter() {
                       </Button>
                     </div>
                   </div>
-                  <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
+                  {index !== unredeemedData?.data?.data.length - 1 && (
+                    <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
+                  )}
                 </div>
               ))}
             </div>
@@ -458,9 +460,8 @@ export default function RedemptionCenter() {
             </div>
             <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
               {history?.data?.data?.map((item, index) => (
-                <div>
+                <div key={index + 1}>
                   <div
-                    key={index + 1}
                     className={`flex flex-col justify-between gap-2  py-2 pl-[13px] pr-4  tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
                   >
                     <div className="flex items-center gap-[10px] tablet:gap-[35px]">
@@ -502,7 +503,9 @@ export default function RedemptionCenter() {
                       />
                     </div>
                   </div>
-                  <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
+                  {index !== history?.data?.data.length - 1 && (
+                    <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
+                  )}
                 </div>
               ))}
             </div>

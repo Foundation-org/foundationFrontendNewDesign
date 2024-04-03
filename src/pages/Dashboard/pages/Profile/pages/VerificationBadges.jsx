@@ -260,7 +260,7 @@ const VerificationBadges = () => {
             </h1>
 
             <div className="hidden flex-col justify-between gap-[7px] rounded-2xl border-[3px] border-[#DEE6F7] p-[17px] tablet:flex tablet:flex-row tablet:gap-5 laptop:gap-6">
-              <div className="flex flex-col gap-[7px] tablet:gap-4 laptop:gap-5">
+              <div className="flex w-full flex-col items-center gap-[7px] tablet:gap-4 laptop:gap-5">
                 {/* ...........................Facebook......................  */}
                 <div className="flex items-center gap-[10px] laptop:gap-5">
                   <img
@@ -526,7 +526,7 @@ const VerificationBadges = () => {
                 </div>
               </div>
               <div className="w-2 rounded-[16px] border-[3px] border-[#DEE6F7] bg-[#FDFDFD]" />
-              <div className="flex flex-col gap-[7px] tablet:gap-4 laptop:gap-5">
+              <div className="flex w-full flex-col items-center gap-[7px] tablet:gap-4 laptop:gap-5">
                 {/* ............................Github......................... */}
                 <div className="flex items-center gap-[10px] laptop:gap-5">
                   <img

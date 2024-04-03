@@ -264,7 +264,7 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
       </h1>
       {renderPersonalBadgesPopup()}
       <div className="hidden flex-col justify-between gap-[7px] rounded-2xl border-[3px] border-[#DEE6F7] p-[17px] tablet:flex tablet:flex-row tablet:gap-5 laptop:gap-6">
-        <div className="flex flex-col gap-[10px] tablet:gap-4 laptop:gap-5">
+        <div className="flex w-full flex-col items-center gap-[10px] tablet:gap-4 laptop:gap-5">
           {personal.slice(0, Math.ceil(personal.length / 2)).map((item, index) => (
             <PersonalItem
               key={index}
@@ -277,7 +277,7 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
           ))}
         </div>
         <div className="w-2 rounded-[16px] border-[3px] border-[#DEE6F7] bg-[#FDFDFD]" />
-        <div className="flex flex-col gap-7 tablet:gap-4 laptop:gap-5">
+        <div className="flex w-full flex-col items-center gap-7 tablet:gap-4 laptop:gap-5">
           {personal.slice(Math.ceil(personal.length / 2)).map((item, index) => (
             <PersonalItem
               key={index}
