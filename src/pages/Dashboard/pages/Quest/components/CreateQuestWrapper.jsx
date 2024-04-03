@@ -1,3 +1,4 @@
+import React, { useRef, useEffect } from 'react';
 import { Tooltip } from '../../../../../utils/Tooltip';
 import { toast } from 'sonner';
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,7 +18,37 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const [isShowPreview, setIsShowPreview] = useState(false);
+  const [soundcloudUnique] = useState('soundcloud.com');
+  const [youtubeBaseURLs] = useState(['youtube.com', 'youtube-nocookie.com', 'youtu.be']);
 
+  const playerRef = useRef(null);
+  const handleVideoEnded = () => {
+    console.log('ended');
+    if (playerRef.current) {
+      playerRef.current.seekTo(0);
+      playerRef.current.getInternalPlayer().play(); // Resume playback
+    }
+  };
+  function checkVideoAgeRestriction(videoId, userValue) {
+    const apiKey = import.meta.env.VITE_GG_API_KEY;
+    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=contentDetails`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        const contentRating = data.items[0]?.contentDetails?.contentRating?.ytRating;
+        const isAdultContent = contentRating === 'ytAgeRestricted';
+        // console.log('Is Adult Content:', isAdultContent);
+        if (isAdultContent === false) {
+          setUrl(userValue);
+        } else {
+          toast.error("It's an adult video");
+          setUrl('');
+        }
+      })
+      .catch((error) => console.error('Error:', error));
+  }
+  // https://www.youtube.com/watch?v=tWZMJoWb7ck
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
 
@@ -46,6 +77,22 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
     left: '50%',
     transform: 'translate(-50%, -50%)',
   };
+
+  useEffect(() => {
+    // Check if the URL is a SoundCloud playlist
+    if (url.includes(soundcloudUnique) && url.includes('/sets/')) {
+      toast.error('We do not support SoundCloud playlists');
+      setUrl(''); // Set URL to empty string
+      return; // Stop execution
+    }
+
+    // Check if the URL is a YouTube playlist
+    if (youtubeBaseURLs.some((baseURL) => url.includes(baseURL)) && url.includes('list=')) {
+      toast.error('We do not support YouTube playlists');
+      setUrl(''); // Set URL to empty string
+      return; // Stop execution
+    }
+  }, [url]);
 
   return (
     <>
@@ -78,8 +125,20 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
               className="w-full resize-none rounded-[5.128px] border border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10.3px] tablet:border-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
             />
             <TextareaAutosize
-              onChange={(e) => setUrl(e.target.value)}
-              value={url}
+              // onChange={(e) => setUrl(e.target.value)}
+              onChange={(e) => {
+                let userValue = e.target.value;
+                console.log(userValue);
+                if (youtubeBaseURLs.some((baseURL) => url.includes(baseURL))) {
+                  let videoId = userValue.match(
+                    /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/,
+                  )[1];
+                  // console.log(videoId);
+                  checkVideoAgeRestriction(videoId, userValue);
+                } else {
+                  setUrl(userValue);
+                }
+              }}
               placeholder="Paste embed link here....."
               className="w-full resize-none rounded-[5.128px] border border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10.3px] tablet:border-[3px] tablet:px-[2.31rem] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
             />
@@ -114,55 +173,72 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
             </div>
             {/* <ReactPlayer
               url={url}
-              // https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
-              // https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
-              // https://soundcloud.com/mrjteze/huh
               className="react-player"
-              // playing
+              onError={(e) => {
+                toast.error("Invalid URL"), setUrl("")
+              }}
               width="100%"
               height="100%"
-              controls={true}
-              muted={true}
-            /> */}
+              // single_active={true}
+              controls={true} // Hide player controls
+              muted={false} // Unmute audio
+              playing={false} // Do not autoplay
+              // loop={true} // Enable looping
+              loop={!url.includes(soundcloudUnique)}
+              config={{
+                soundcloud: {
+                  options: {
+                    auto_play: false, // Disable auto play
+                    hide_related: true, // Hide related tracks
+                    show_comments: false, // Hide comments
+                    show_user: false, // Hide user information
+                    show_reposts: false, // Hide reposts
+                    show_teaser: false, // Hide track teasers
+                    visual: false, // Disable visual mode
+                    show_playcount: false, // Hide play count
+                    sharing: false, // Disable sharing
+                    buying: false, // Disable buying options
+                    download: false // Disable download option
+                  }
+                },
+                youtube: {
+                  playerVars: {
+                    modestbranding: 1, // Hide YouTube logo
+                    showinfo: 0, // Hide video title and uploader info
+                    autoplay: 0, // Disable autoplay
+                    loop: 1 // Enable looping
+                  }
+                }
+              }}
+              onEnded={handleVideoEnded}
+            // onReady={(player) => {
+            //   // Check if the URL is a SoundCloud playlist
+            //   if (url.includes(soundcloudUnique) && url.includes("/sets/")) {
+            //     toast.error("We do not support SoundCloud playlists");
+            //     setUrl(""); // Set URL to empty string
+            //     return; // Stop execution
+            //   }
+            //   // Check if the URL is a YouTube playlist
+            //   if (youtubeBaseURLs.some(baseURL => url.includes(baseURL)) && url.includes("list=")) {
+            //     toast.error("We do not support YouTube playlists");
+            //     setUrl(""); // Set URL to empty string
+            //     return; // Stop execution
+            //   }
+            // }}
+            />
 
-            {url && url.includes('soundcloud') ? (
-              <iframe
-                className="oembedIframe"
-                width="100%"
-                height="100%"
-                src={`https://w.soundcloud.com/player/?url=${url}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_playcount=false&sharing=false&buying=false&download=false%22%3E`}
-                frameBorder="0"
-              ></iframe>
-            ) : (
-              url && (
-                // <iframe
-                //   className="oembedIframeYoutube"
-                //   // src="https://www.youtube.com/embed/Xf0yP-kNyXQ"
-                //   // src="https://youtube.com/embed/Xf0yP-kNyXQ?feature=shared"
-                //   src={`https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}`}
-
-                //   frameborder="0"
-                //   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                //   allowfullscreen></iframe>
-                <ReactPlayer
-                  url={url}
-                  onError={(e) => {
-                    toast.error('Invalid URL'), setUrl('');
-                  }}
-                  // https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
-                  // https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
-                  // https://soundcloud.com/mrjteze/huh
-                  className="react-player"
-                  // playing
-                  width="100%"
-                  height="100%"
-                  controls={true}
-                  muted={true}
-                />
-              )
-            )}
+            {/* 
+            https://soundcloud.com/mrjteze/huh
+            https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
+            https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
+            https://www.youtube.com/embed/Xf0yP-kNyXQ
+            https://youtube.com/embed/Xf0yP-kNyXQ?feature=shared
+            https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}
+            https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
+            https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
+            https://soundcloud.com/mrjteze/huh 
+            https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]} */}
           </div>
-          {/* {`https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}`} */}
         </div>
         {/* ) : (
           <Button
