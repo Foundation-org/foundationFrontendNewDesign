@@ -34,7 +34,7 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
     }
   };
   function checkVideoAgeRestriction(videoId, userValue) {
-    const apiKey = "AIzaSyBWTZ4P5qvAQpgNhflRrS0H2P370R7vWDY";
+    const apiKey = import.meta.env.VITE_GG_API_KEY;
     const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=contentDetails`;
 
     fetch(apiUrl)
