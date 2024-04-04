@@ -7,6 +7,7 @@ import { validation } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
+import { FaSpinner } from 'react-icons/fa';
 
 const workForm = [
   {
@@ -87,6 +88,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
   const [deleteItem, setDeleteItem] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const searchUniversities = async () => {
     const universities = await api.post(`search/searchUniversities/?name=${query}`);
@@ -121,10 +123,12 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         field4Data === undefined
       ) {
         toast.error('You cannot leave the field blank');
+        setLoading(false);
         return;
       }
       if (field4Data < field3Data) {
         toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        setLoading(false);
         return;
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, {
@@ -137,6 +141,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         toast.success('Badge Added Successfully!');
 
         handleClose();
+        setLoading(false);
       }
       if (addBadge.status === 201) {
         toast.success('Please check your Email to verify');
@@ -162,6 +167,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     try {
       if (field4Data < field3Data) {
         toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        setLoading(false);
         return;
       }
       if (
@@ -171,6 +177,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         prevInfo.graduationYear === field4Data
       ) {
         toast.error('Information already saved');
+        setLoading(false);
         return;
       }
 
@@ -183,7 +190,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       if (updateBadge.status === 200) {
         handleUserInfo();
         toast.success('Info Updated Successfully');
-
+        setLoading(false);
         handleClose();
       }
     } catch (error) {
@@ -369,6 +376,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 <div></div>
               )}
               <Button
+                disabled={loading}
                 variant="submit"
                 onClick={() => {
                   const allFieldObject = {
@@ -380,13 +388,15 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                     [field4.type]: field4Data,
                   };
                   if (edit) {
+                    setLoading(true);
                     handleUpdateBadge(allFieldObject);
                   } else {
+                    setLoading(true);
                     handleAddPersonalBadge(allFieldObject);
                   }
                 }}
               >
-                Add
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
               </Button>
             </div>
           </div>
