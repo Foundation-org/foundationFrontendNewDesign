@@ -6,6 +6,7 @@ import { startRegistration } from '@simplewebauthn/browser';
 import Button from '../../components/Button';
 import { useErrorBoundary } from 'react-error-boundary';
 import api from '../../../../../../services/api/Axios';
+import { isBrowser, isMobile } from 'react-device-detect';
 
 export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -57,6 +58,13 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
   }
   const handlePasskey = async (title, type) => {
     try {
+      // Device Detect
+      if(type === 'desktop' && !isBrowser){
+        return toast.warning("Please switch to desktop!")
+      }
+      if(type === 'mobile' && !isMobile){
+        return toast.warning("Please switch to mobile!")
+      }
       let value;
       if (title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile') {
         const resp = await fetch(`${import.meta.env.VITE_API_URL}/generate-registration-options`);
