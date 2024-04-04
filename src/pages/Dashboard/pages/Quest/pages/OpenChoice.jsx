@@ -21,6 +21,7 @@ const OpenChoice = () => {
   const queryClient = useQueryClient();
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
+  const getMediaStates = useSelector(createQuestAction.getMedia);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -30,8 +31,6 @@ const OpenChoice = () => {
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-  const [url, setUrl] = useState('');
-  const [description, setDescription] = useState('');
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -98,7 +97,7 @@ const OpenChoice = () => {
     if (!moderationRating) {
       return toast.error('Oops! Something Went Wrong.');
     }
-    if (!description && url !== '') {
+    if (!getMediaStates.desctiption && getMediaStates.url !== '') {
       return toast.error('You cannot leave the description empty.');
     }
 
@@ -114,8 +113,8 @@ const OpenChoice = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: url,
-      description: description,
+      url: getMediaStates.url,
+      description: getMediaStates.desctiption,
     };
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
@@ -240,22 +239,21 @@ const OpenChoice = () => {
   useEffect(() => {
     if (
       !checkHollow() &&
-      optionsValue.every((value) => value.question !== '' && createQuestSlice.question !== '' && description !== '')
+      optionsValue.every(
+        (value) => value.question !== '' && createQuestSlice.question !== '' && getMediaStates.desctiption !== '',
+      )
     ) {
       setHollow(false);
     } else {
       setHollow(true);
     }
-  }, [optionsValue, createQuestSlice.question, description]);
+  }, [optionsValue, createQuestSlice.question, getMediaStates.desctiption]);
 
   return (
     <CreateQuestWrapper
       handleTab={handleTab}
       type={'Poll'}
       msg={'Ask a question where anyone can select multiple options from a list of choices'}
-      url={url}
-      setUrl={setUrl}
-      setDescription={setDescription}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId={`optionsValue-${Date.now()}`}>
