@@ -56,7 +56,7 @@ const initialState = {
     changeState: true,
     multipleOption: false,
     addOption: true,
-    optionsCount: 3,
+    optionsCount: 2,
     options: [],
   },
   questionReset: {
@@ -65,7 +65,7 @@ const initialState = {
   chatgptStatus: {
     ...defaultStatus,
   },
-  optionsValue: Array.from({ length: 3 }, (_, index) => ({
+  optionsValue: Array.from({ length: 2 }, (_, index) => ({
     id: `index-${index}`,
     question: '',
     chatgptQuestion: '',
@@ -236,7 +236,7 @@ export const createQuestSlice = createSlice({
         status: false,
         showToolTipMsg: true,
       };
-      state.questions.questionTyping = false;
+      // state.questions.questionTyping = false;
     });
     builder.addCase(checkDescription.fulfilled, (state, action) => {
       const { validatedQuestion, errorMessage } = action.payload;
@@ -306,6 +306,7 @@ export const createQuestSlice = createSlice({
 
     // check question status start
     builder.addCase(checkQuestion.pending, (state, action) => {
+      console.log('first');
       state.questionReset = {
         name: 'Checking',
         color: 'text-[#0FB063]',
@@ -325,6 +326,7 @@ export const createQuestSlice = createSlice({
       state.questions.questionTyping = false;
     });
     builder.addCase(checkQuestion.fulfilled, (state, action) => {
+      console.log('first');
       const { validatedQuestion, errorMessage } = action.payload;
       if (errorMessage) {
         if (errorMessage === 'DUPLICATION') {

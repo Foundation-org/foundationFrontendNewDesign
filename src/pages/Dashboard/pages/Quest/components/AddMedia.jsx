@@ -106,7 +106,7 @@ export default function AddMedia() {
             Media
           </h1>
           <div
-            className="absolute -right-[7px] -top-[5px] z-20 cursor-pointer tablet:-right-5 tablet:-top-[26px]"
+            className="absolute -right-[7px] -top-[5px] z-0 cursor-pointer tablet:-right-5 tablet:-top-[26px]"
             onClick={() => {
               dispatch(createQuestAction.updateIsMedia(false));
             }}
