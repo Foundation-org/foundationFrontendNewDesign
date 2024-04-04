@@ -7,11 +7,13 @@ import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import ReactPlayer from 'react-player';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import './Player.css';
+import { useDebounce } from '../../../../../utils/useDebounce';
 
 export default function AddMedia({ handleTab }) {
   const playerRef = useRef(null);
   const dispatch = useDispatch();
   const getMediaStates = useSelector(createQuestAction.getMedia);
+  const debouncedURL = useDebounce(getMediaStates.url, 1000);
   const [soundcloudUnique] = useState('soundcloud.com');
   const [youtubeBaseURLs] = useState([
     'youtube.com',
@@ -45,6 +47,16 @@ export default function AddMedia({ handleTab }) {
     }
   }
 
+  // Process the debounced value when it changes
+  useEffect(() => {
+    if (youtubeBaseURLs.some((baseURL) => debouncedURL?.includes(baseURL))) {
+      const videoId = extractYouTubeVideoId(debouncedURL);
+      checkVideoAgeRestriction(videoId, debouncedURL);
+    } else {
+      dispatch(createQuestAction.addMediaUrl(debouncedURL));
+    }
+  }, [debouncedURL]);
+
   function checkVideoAgeRestriction(videoId, userValue) {
     const apiKey = import.meta.env.VITE_GG_API_KEY;
     const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=contentDetails`;
@@ -52,9 +64,9 @@ export default function AddMedia({ handleTab }) {
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        const contentRating = data.items[0]?.contentDetails?.contentRating?.ytRating;
+        const contentRating = data?.items[0]?.contentDetails?.contentRating?.ytRating;
         const isAdultContent = contentRating === 'ytAgeRestricted';
-        console.log('Is Adult Content:', isAdultContent);
+
         if (isAdultContent === false) {
           dispatch(createQuestAction.addMediaUrl(userValue));
         } else {
@@ -67,7 +79,7 @@ export default function AddMedia({ handleTab }) {
 
   useEffect(() => {
     // Check if the URL is a SoundCloud playlist
-    if (getMediaStates.url.includes(soundcloudUnique) && getMediaStates.url.includes('/sets/')) {
+    if (getMediaStates.url?.includes(soundcloudUnique) && getMediaStates.url?.includes('/sets/')) {
       toast.error('We do not support SoundCloud playlists');
       dispatch(createQuestAction.addMediaUrl('')); // Set URL to empty string
       return; // Stop execution
@@ -75,7 +87,7 @@ export default function AddMedia({ handleTab }) {
 
     // Check if the URL is a YouTube playlist
     if (
-      youtubeBaseURLs.some((baseURL) => getMediaStates.url.includes(baseURL)) &&
+      youtubeBaseURLs.some((baseURL) => getMediaStates.url?.includes(baseURL)) &&
       getMediaStates.url.includes('list=')
     ) {
       toast.error('We do not support YouTube playlists');
@@ -137,32 +149,37 @@ export default function AddMedia({ handleTab }) {
               <Tooltip optionStatus={getMediaStates.mediaDescStatus} />
             </button>
           </div>
-          <div className="mr-[50px] tablet:mr-[100px] laptop:mr-[132px]">
-            <TextareaAutosize
-              tabIndex={2}
-              id="input-1"
-              onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(1, 'Enter'))}
-              onChange={(e) => {
-                let userValue = e.target.value;
+          {debouncedURL === '' && (
+            <div className="mr-[50px] tablet:mr-[100px] laptop:mr-[132px]">
+              <TextareaAutosize
+                tabIndex={2}
+                id="input-1"
+                onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(1, 'Enter'))}
+                // onChange={(e) => {
+                //   let userValue = e.target.value;
 
-                if (youtubeBaseURLs.some((baseURL) => getMediaStates.url.includes(baseURL))) {
-                  // let videoId = userValue.match(
-                  //   /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/,
-                  // )[1];
-                  // console.log(videoId);
-                  const videoId = extractYouTubeVideoId(userValue);
+                //   if (youtubeBaseURLs.some((baseURL) => getMediaStates.url.includes(baseURL))) {
+                //     // let videoId = userValue.match(
+                //     //   /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/,
+                //     // )[1];
+                //     // console.log(videoId);
+                //     const videoId = extractYouTubeVideoId(userValue);
 
-                  checkVideoAgeRestriction(videoId, userValue);
-                } else {
-                  dispatch(createQuestAction.addMediaUrl(userValue));
-                }
-              }}
-              value={getMediaStates.url}
-              placeholder="Paste embed link here....."
-              className="w-full resize-none rounded-[5.128px] border border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10.3px] tablet:border-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
-            />
-          </div>
-          {getMediaStates.url && (
+                //     checkVideoAgeRestriction(videoId, userValue);
+                //   } else {
+                //     dispatch(createQuestAction.addMediaUrl(userValue));
+                //   }
+                // }}
+                onChange={(e) => {
+                  dispatch(createQuestAction.addMediaUrl(e.target.value));
+                }}
+                value={getMediaStates.url}
+                placeholder="Paste embed link here....."
+                className="w-full resize-none rounded-[5.128px] border border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10.3px] tablet:border-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+              />
+            </div>
+          )}
+          {debouncedURL && (
             <div
               className="player-wrapper relative mt-1 cursor-pointer rounded-[10px] tablet:mt-[10px]"
               onClick={() => {
@@ -180,10 +197,11 @@ export default function AddMedia({ handleTab }) {
               </div>
               <ReactPlayer
                 ref={playerRef}
-                url={getMediaStates.url}
+                url={debouncedURL}
                 className="react-player"
                 onError={(e) => {
-                  toast.error('Invalid URL'), dispatch(createQuestAction.addMediaUrl(''));
+                  toast.error('Invalid URL');
+                  // toast.error('Invalid URL'), dispatch(createQuestAction.addMediaUrl(''));
                 }}
                 width="100%"
                 height="100%"
