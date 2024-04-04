@@ -111,7 +111,11 @@ export default function AddMedia() {
               dispatch(createQuestAction.updateIsMedia(false));
             }}
           >
-            <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`} alt="mediaCloseIcon" />
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
+              alt="mediaCloseIcon"
+              className="size-[15px] tablet:size-[41px]"
+            />
           </div>
           <div className="flex">
             <TextareaAutosize
@@ -160,11 +164,12 @@ export default function AddMedia() {
               }}
             >
               <div
-                className={`absolute -right-1 top-[7px] z-20 tablet:-right-4 tablet:-top-4 ${getMediaStates.url ? 'block' : 'hidden'}`}
+                className={`absolute -right-1 -top-[6px] z-20 tablet:-right-4 tablet:-top-4 ${getMediaStates.url ? 'block' : 'hidden'}`}
               >
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
                   alt="mediaCloseIcon"
+                  className="size-[15px] tablet:size-[41px]"
                 />
               </div>
               <ReactPlayer
@@ -228,7 +233,7 @@ export default function AddMedia() {
       ) : (
         <Button
           variant="addEmbeded"
-          className="ml-[21.55px] mt-[16px] px-[25px] tablet:ml-[60px] tablet:mt-[33px]"
+          className="ml-[21.55px] mt-[16px] px-2 tablet:ml-[60px] tablet:mt-[33px] tablet:px-[25px]"
           onClick={() => {
             dispatch(createQuestAction.updateIsMedia(true));
           }}
