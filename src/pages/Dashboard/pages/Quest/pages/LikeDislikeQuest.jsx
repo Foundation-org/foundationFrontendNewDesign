@@ -20,6 +20,7 @@ const LikeDislike = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
+  const getMediaStates = useSelector(createQuestAction.getMedia);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
@@ -78,6 +79,7 @@ const LikeDislike = () => {
     if (createQuestSlice.question === '') {
       return toast.warning('Post cannot be empty');
     }
+
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await questServices.getTopicOfValidatedQuestion({
       validatedQuestion: createQuestSlice.question,
@@ -94,6 +96,9 @@ const LikeDislike = () => {
     if (!moderationRating) {
       return toast.error('Oops! Something Went Wrong.');
     }
+    if (!getMediaStates.desctiption && getMediaStates.url !== '') {
+      return toast.error('You cannot leave the description empty.');
+    }
 
     const params = {
       Question: createQuestSlice.question,
@@ -103,6 +108,8 @@ const LikeDislike = () => {
       uuid: persistedUserInfo.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
+      url: getMediaStates.url,
+      description: getMediaStates.desctiption,
     };
 
     if (!checkHollow()) {
@@ -120,12 +127,12 @@ const LikeDislike = () => {
   };
 
   useEffect(() => {
-    if (!checkHollow() && createQuestSlice.question !== '') {
+    if (!checkHollow() && createQuestSlice.question !== '' && getMediaStates.desctiption !== '') {
       setHollow(false);
     } else {
       setHollow(true);
     }
-  }, [createQuestSlice.question, questionStatus.tooltipName]);
+  }, [createQuestSlice.question, questionStatus.tooltipName, getMediaStates.desctiption]);
 
   useEffect(() => {
     dispatch(updateQuestion({ question: createQuestSlice.question, changedOption, changeState }));

@@ -2,6 +2,14 @@ import * as questServices from '../../services/api/questsApi';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { checkAnswerExistCreateQuest } from '../../services/api/questsApi';
 
+export const checkDescription = createAsyncThunk('createQuest/checkDescription', async (value) => {
+  const result = await questServices.questionValidation({
+    question: value,
+    queryType: 'yes/no',
+  });
+  return result;
+});
+
 export const checkQuestion = createAsyncThunk('createQuest/checkQuestion', async (value) => {
   const result = await questServices.questionValidation({
     question: value,
@@ -27,6 +35,19 @@ const defaultStatus = {
 };
 
 const initialState = {
+  media: {
+    isMedia: false,
+    desctiption: '',
+    validatedDescription: '',
+    mediaDescStatus: {
+      ...defaultStatus,
+    },
+    chatgptMediaDescStatus: {
+      ...defaultStatus,
+    },
+    url: '',
+  },
+
   questions: {
     question: '',
     validatedQuestion: '',
@@ -59,6 +80,24 @@ export const createQuestSlice = createSlice({
   name: 'createQuest',
   initialState,
   reducers: {
+    updateIsMedia: (state, action) => {
+      state.media.isMedia = action.payload;
+    },
+    addMediaDesc: (state, action) => {
+      // state.media.desctiption = action.payload;
+      if (action.payload === state.media.validatedDescription) {
+        state.media.mediaDescStatus = state.media.chatgptMediaDescStatus;
+        state.media.desctiption = state.media.validatedDescription;
+        // state.questions.questionTyping = false;
+        return;
+      }
+      state.media.mediaDescStatus = { ...defaultStatus };
+      state.media.desctiption = action.payload;
+      // state.questions.questionTyping = true;
+    },
+    addMediaUrl: (state, action) => {
+      state.media.url = action.payload;
+    },
     addQuestion: (state, action) => {
       if (action.payload === state.questions.validatedQuestion) {
         state.questionReset = state.chatgptStatus;
@@ -170,15 +209,101 @@ export const createQuestSlice = createSlice({
     },
     hideToolTipMessage: (state, action) => {
       if (action.payload) {
-        const parts = action.payload.split("-");
-        const index = parseInt(parts[1])
-        state.optionsValue[index-1].optionStatus.showToolTipMsg = false;
+        const parts = action.payload.split('-');
+        const index = parseInt(parts[1]);
+        state.optionsValue[index - 1].optionStatus.showToolTipMsg = false;
       } else {
         state.questionReset.showToolTipMsg = false;
       }
     },
   },
   extraReducers: (builder) => {
+    // check description status start
+    builder.addCase(checkDescription.pending, (state, action) => {
+      state.media.mediaDescStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+      state.media.chatgptMediaDescStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+      state.questions.questionTyping = false;
+    });
+    builder.addCase(checkDescription.fulfilled, (state, action) => {
+      const { validatedQuestion, errorMessage } = action.payload;
+      if (errorMessage) {
+        if (errorMessage === 'DUPLICATION') {
+          state.media.desctiption = validatedQuestion;
+          state.media.validatedDescription = validatedQuestion;
+          // state.questions.questionTyping = false;
+          state.media.mediaDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+          state.media.chatgptMediaDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+        } else {
+          state.media.validatedDescription = state.questions.question;
+          // state.questions.questionTyping = false;
+          state.media.mediaDescStatus = {
+            name: 'Rejected',
+            color: 'text-[#b00f0f]',
+            tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+            tooltipStyle: 'tooltip-error',
+            status: true,
+            showToolTipMsg: true,
+          };
+          state.media.chatgptMediaDescStatus = {
+            name: 'Rejected',
+            color: 'text-[#b00f0f]',
+            tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+            tooltipStyle: 'tooltip-error',
+            status: true,
+            showToolTipMsg: true,
+          };
+        }
+      } else {
+        state.media.desctiption = validatedQuestion;
+        state.media.validatedDescription = validatedQuestion;
+        // state.questions.questionTyping = false;
+        state.media.mediaDescStatus = {
+          name: 'Ok',
+          color: 'text-[#0FB063]',
+          tooltipName: 'Question is Verified',
+          tooltipStyle: 'tooltip-success',
+          isVerifiedQuestion: true,
+          status: false,
+        };
+        state.media.chatgptMediaDescStatus = {
+          name: 'Ok',
+          color: 'text-[#0FB063]',
+          tooltipName: 'Question is Verified',
+          tooltipStyle: 'tooltip-success',
+          isVerifiedQuestion: true,
+          status: false,
+        };
+      }
+    });
+
     // check question status start
     builder.addCase(checkQuestion.pending, (state, action) => {
       state.questionReset = {
@@ -187,7 +312,7 @@ export const createQuestSlice = createSlice({
         tooltipName: 'Verifying your question. Please wait...',
         tooltipStyle: 'tooltip-success',
         status: false,
-        showToolTipMsg: true
+        showToolTipMsg: true,
       };
       state.chatgptStatus = {
         name: 'Checking',
@@ -195,7 +320,7 @@ export const createQuestSlice = createSlice({
         tooltipName: 'Verifying your question. Please wait...',
         tooltipStyle: 'tooltip-success',
         status: false,
-        showToolTipMsg: true
+        showToolTipMsg: true,
       };
       state.questions.questionTyping = false;
     });
@@ -212,7 +337,7 @@ export const createQuestSlice = createSlice({
             tooltipName: 'This post is not unique. A post like this already exists.',
             tooltipStyle: 'tooltip-error',
             duplication: true,
-            showToolTipMsg: true
+            showToolTipMsg: true,
           };
           state.chatgptStatus = {
             name: 'Duplicate',
@@ -220,7 +345,7 @@ export const createQuestSlice = createSlice({
             tooltipName: 'This post is not unique. A post like this already exists.',
             tooltipStyle: 'tooltip-error',
             duplication: true,
-            showToolTipMsg: true
+            showToolTipMsg: true,
           };
         } else {
           state.questions.validatedQuestion = state.questions.question;
@@ -231,7 +356,7 @@ export const createQuestSlice = createSlice({
             tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
             tooltipStyle: 'tooltip-error',
             status: true,
-            showToolTipMsg: true
+            showToolTipMsg: true,
           };
           state.chatgptStatus = {
             name: 'Rejected',
@@ -239,7 +364,7 @@ export const createQuestSlice = createSlice({
             tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
             tooltipStyle: 'tooltip-error',
             status: true,
-            showToolTipMsg: true
+            showToolTipMsg: true,
           };
         }
       } else {
@@ -346,7 +471,7 @@ const getDuplicateStatus = () => ({
   tooltipName: 'Found Duplication!',
   tooltipStyle: 'tooltip-error',
   duplication: true,
-  showToolTipMsg: true
+  showToolTipMsg: true,
 });
 
 const getRejectedStatus = () => ({
@@ -354,10 +479,13 @@ const getRejectedStatus = () => ({
   color: 'text-[#b00f0f]',
   tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
   tooltipStyle: 'tooltip-error',
-  showToolTipMsg: true
+  showToolTipMsg: true,
 });
 
 export const {
+  updateIsMedia,
+  addMediaDesc,
+  addMediaUrl,
   addQuestion,
   updateQuestion,
   updateMultipleChoice,
@@ -374,6 +502,7 @@ export const {
 
 export default createQuestSlice.reducer;
 
+export const getMedia = (state) => state.createQuest.media;
 export const getCreate = (state) => state.createQuest.questions;
 export const questionStatus = (state) => state.createQuest.questionReset;
 export const questionChatgptStatus = (state) => state.createQuest.chatgptStatus;

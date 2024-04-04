@@ -775,3 +775,115 @@ input[type='number'] {
   justify-content: center;
   margin-top: -2px;
 }
+
+.oembedIframe {
+  width: 100% !important;
+  height: 80px !important;
+}
+.oembedIframeYoutube {
+  width: 100% !important;
+  height: 370px !important;
+}
+.react-player {
+  padding-top: 0px !important;
+}
+
+.react-player div iframe {
+  height: 371px !important;
+  width: 964px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.react-player div iframe {
+  height: 135px !important;
+  width: 100% !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* .player-wrapper {
+  padding-left: 22px !important;
+  padding-right: 22px !important;
+} */
+
+.react-player div {
+  margin-left: 0px !important;
+}
+
+@media only screen and (min-width: 744px) {
+  .react-player div iframe {
+    height: 371px !important;
+    width: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+  }
+  /* .player-wrapper {
+    padding-left: 60px !important;
+    padding-right: 60px !important;
+  } */
+}
+
+/* Embedded posts homefeed */
+.feed-react-player {
+  padding-top: 0px !important;
+}
+
+.feed-react-player div iframe {
+  height: 371px !important;
+  width: 964px !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feed-react-player div iframe {
+  height: 135px !important;
+  width: 100% !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feed-player-wrapper {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.feed-react-player div {
+  margin-left: 0px !important;
+}
+
+/* SoundCloud */
+.react-player iframe {
+  width: 100% !important;
+  height: 60px !important;
+}
+
+.feed-react-player iframe {
+  width: 100% !important;
+  height: 60px !important;
+}
+
+@media only screen and (min-width: 744px) {
+  .feed-react-player div iframe {
+    height: 371px !important;
+    width: 100% !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* .feed-player-wrapper {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  } */
+
+  .react-player iframe {
+    width: 100% !important;
+    height: 85px !important;
+  }
+
+  .feed-react-player iframe {
+    width: 100% !important;
+    height: 85px !important;
+  }
+}

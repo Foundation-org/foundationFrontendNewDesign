@@ -21,6 +21,7 @@ const RankChoice = () => {
   const queryClient = useQueryClient();
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
+  const getMediaStates = useSelector(createQuestAction.getMedia);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -93,6 +94,9 @@ const RankChoice = () => {
     if (!moderationRating) {
       return toast.error('Oops! Something Went Wrong.');
     }
+    if (!getMediaStates.desctiption && getMediaStates.url !== '') {
+      return toast.error('You cannot leave the description empty.');
+    }
 
     const params = {
       Question: createQuestSlice.question,
@@ -104,6 +108,8 @@ const RankChoice = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
+      url: getMediaStates.url,
+      description: getMediaStates.desctiption,
     };
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
@@ -216,12 +222,17 @@ const RankChoice = () => {
   };
 
   useEffect(() => {
-    if (!checkHollow() && optionsValue.every((value) => value.question !== '' && createQuestSlice.question !== '')) {
+    if (
+      !checkHollow() &&
+      optionsValue.every(
+        (value) => value.question !== '' && createQuestSlice.question !== '' && getMediaStates.desctiption !== '',
+      )
+    ) {
       setHollow(false);
     } else {
       setHollow(true);
     }
-  }, [optionsValue, createQuestSlice.question]);
+  }, [optionsValue, createQuestSlice.question, getMediaStates.desctiption]);
 
   return (
     <CreateQuestWrapper

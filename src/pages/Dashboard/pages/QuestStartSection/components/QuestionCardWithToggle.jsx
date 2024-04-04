@@ -23,6 +23,7 @@ import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import * as authActions from '../../../../../features/auth/authSlice';
 import { useLocation } from 'react-router-dom';
+import { EmbededVideo } from '../../../../../components/question-card/EmbededVideo.jsx';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -742,6 +743,7 @@ const QuestionCardWithToggle = (props) => {
       return (
         <>
           <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -765,6 +767,7 @@ const QuestionCardWithToggle = (props) => {
       return (
         <>
           <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+
           <Result
             questStartData={questStartData}
             id={questStartData._id}
@@ -791,40 +794,42 @@ const QuestionCardWithToggle = (props) => {
   };
 
   return (
-    <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} postProperties={postProperties}>
-      {renderQuestContent()}
-      <ButtonGroup
-        questStartData={questStartData}
-        id={questStartData._id}
-        btnText={questStartData.startStatus}
-        handleStartTest={handleStartTest}
-        viewResult={viewResult}
-        handleViewResults={handleViewResults}
-        setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-        whichTypeQuestion={questStartData.whichTypeQuestion}
-        handleToggleCheck={handleToggleCheck}
-        handleRankedChoice={handleRankedChoice}
-        rankedAnswers={rankedAnswers}
-        setRankedAnswers={setRankedAnswers}
-        answersSelection={answersSelection}
-        setAnswerSelection={setAnswerSelection}
-        startStatus={questStartData.startStatus}
-        setLoadingDetail={setLoadingDetail}
-        handleOpen={handleAddOption}
-        usersAddTheirAns={questStartData.usersAddTheirAns}
-        answers={questStartData.QuestAnswers}
-        title={getQuestionTitle(questStartData.whichTypeQuestion)}
-        handleSubmit={handleSubmit}
-        loading={loading}
-        startTest={startTest}
-        handleChange={handleChange}
-        addOptionField={addOptionField}
-        setAddOptionField={setAddOptionField}
-        checkOptionStatus={checkOptionStatus}
-        postProperties={postProperties}
-        SharedLinkButton={SharedLinkButton}
-      />
-    </QuestCardLayout>
+    <>
+      <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} postProperties={postProperties}>
+        {renderQuestContent()}
+        <ButtonGroup
+          questStartData={questStartData}
+          id={questStartData._id}
+          btnText={questStartData.startStatus}
+          handleStartTest={handleStartTest}
+          viewResult={viewResult}
+          handleViewResults={handleViewResults}
+          setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+          whichTypeQuestion={questStartData.whichTypeQuestion}
+          handleToggleCheck={handleToggleCheck}
+          handleRankedChoice={handleRankedChoice}
+          rankedAnswers={rankedAnswers}
+          setRankedAnswers={setRankedAnswers}
+          answersSelection={answersSelection}
+          setAnswerSelection={setAnswerSelection}
+          startStatus={questStartData.startStatus}
+          setLoadingDetail={setLoadingDetail}
+          handleOpen={handleAddOption}
+          usersAddTheirAns={questStartData.usersAddTheirAns}
+          answers={questStartData.QuestAnswers}
+          title={getQuestionTitle(questStartData.whichTypeQuestion)}
+          handleSubmit={handleSubmit}
+          loading={loading}
+          startTest={startTest}
+          handleChange={handleChange}
+          addOptionField={addOptionField}
+          setAddOptionField={setAddOptionField}
+          checkOptionStatus={checkOptionStatus}
+          postProperties={postProperties}
+          SharedLinkButton={SharedLinkButton}
+        />
+      </QuestCardLayout>
+    </>
   );
 };
 

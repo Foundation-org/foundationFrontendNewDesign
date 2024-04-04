@@ -1,14 +1,15 @@
 import { Tooltip } from '../../../../../utils/Tooltip';
 import { useSelector, useDispatch } from 'react-redux';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
-
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import AddMedia from './AddMedia';
 
 export default function CreateQuestWrapper({ type, handleTab, msg, children }) {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
+
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
 
@@ -35,7 +36,8 @@ export default function CreateQuestWrapper({ type, handleTab, msg, children }) {
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] dark:text-[#D8D8D8]">
           Create a {type}
         </h1>
-        <div className="w-[calc(100%-51.75px] mx-[22px] mt-1 flex tablet:mx-[60px] tablet:mt-5 tablet:pb-[13px]">
+        <AddMedia />
+        <div className="w-[calc(100%-51.75px] mx-[22px] mt-2 flex tablet:mx-[60px] tablet:mt-[25px] tablet:pb-[13px]">
           <TextareaAutosize
             id="input-0"
             aria-label="multiple choice question"
