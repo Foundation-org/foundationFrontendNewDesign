@@ -8,12 +8,11 @@ import ReactPlayer from 'react-player';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import './Player.css';
 
-export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, children }) {
+export default function CreateQuestWrapper({ type, handleTab, msg, children }) {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const getMediaStates = useSelector(createQuestAction.getMedia);
-  console.log('getMediaStates', getMediaStates);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const [soundcloudUnique] = useState('soundcloud.com');
   const [youtubeBaseURLs] = useState([
@@ -61,10 +60,10 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
         const isAdultContent = contentRating === 'ytAgeRestricted';
         console.log('Is Adult Content:', isAdultContent);
         if (isAdultContent === false) {
-          setUrl(userValue);
+          dispatch(createQuestAction.addMediaUrl(userValue));
         } else {
           toast.error("It's an adult video");
-          setUrl('');
+          dispatch(createQuestAction.addMediaUrl(''));
         }
       })
       .catch((error) => console.error('Error:', error));
@@ -86,19 +85,22 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
 
   useEffect(() => {
     // Check if the URL is a SoundCloud playlist
-    if (url.includes(soundcloudUnique) && url.includes('/sets/')) {
+    if (getMediaStates.url.includes(soundcloudUnique) && getMediaStates.url.includes('/sets/')) {
       toast.error('We do not support SoundCloud playlists');
-      setUrl(''); // Set URL to empty string
+      dispatch(createQuestAction.addMediaUrl('')); // Set URL to empty string
       return; // Stop execution
     }
 
     // Check if the URL is a YouTube playlist
-    if (youtubeBaseURLs.some((baseURL) => url.includes(baseURL)) && url.includes('list=')) {
+    if (
+      youtubeBaseURLs.some((baseURL) => getMediaStates.url.includes(baseURL)) &&
+      getMediaStates.url.includes('list=')
+    ) {
       toast.error('We do not support YouTube playlists');
-      setUrl(''); // Set URL to empty string
+      dispatch(createQuestAction.addMediaUrl('')); // Set URL to empty string
       return; // Stop execution
     }
-  }, [url]);
+  }, [getMediaStates.url]);
 
   // TO handle Media Description
   const handleDescChange = (e) => {
@@ -178,7 +180,7 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
                 onChange={(e) => {
                   let userValue = e.target.value;
 
-                  if (youtubeBaseURLs.some((baseURL) => url.includes(baseURL))) {
+                  if (youtubeBaseURLs.some((baseURL) => getMediaStates.url.includes(baseURL))) {
                     // let videoId = userValue.match(
                     //   /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/,
                     // )[1];
@@ -187,7 +189,7 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
 
                     checkVideoAgeRestriction(videoId, userValue);
                   } else {
-                    setUrl(userValue);
+                    dispatch(createQuestAction.addMediaUrl(userValue));
                     // setMediaUrlStatus({
                     //   name: 'Ok',
                     //   color: 'text-[#0FB063]',
@@ -198,20 +200,20 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
                     // });
                   }
                 }}
-                value={url}
+                value={getMediaStates.url}
                 placeholder="Paste embed link here....."
                 className="w-full resize-none rounded-[5.128px] border border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10.3px] tablet:border-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
               />
             </div>
-            {url && (
+            {getMediaStates.url && (
               <div
                 className="player-wrapper relative mt-1 cursor-pointer rounded-[10px] tablet:mt-[10px]"
                 onClick={() => {
-                  setUrl('');
+                  dispatch(createQuestAction.addMediaUrl(''));
                 }}
               >
                 <div
-                  className={`absolute -right-1 top-[7px] z-20 tablet:-right-4 tablet:-top-4 ${url ? 'block' : 'hidden'}`}
+                  className={`absolute -right-1 top-[7px] z-20 tablet:-right-4 tablet:-top-4 ${getMediaStates.url ? 'block' : 'hidden'}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -233,10 +235,10 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
                 </div>
                 <ReactPlayer
                   ref={playerRef}
-                  url={url}
+                  url={getMediaStates.url}
                   className="react-player"
                   onError={(e) => {
-                    toast.error('Invalid URL'), setUrl('');
+                    toast.error('Invalid URL'), dispatch(createQuestAction.addMediaUrl(''));
                   }}
                   width="100%"
                   height="100%"
@@ -245,7 +247,7 @@ export default function CreateQuestWrapper({ type, handleTab, msg, url, setUrl, 
                   muted={false} // Unmute audio
                   playing={false} // Do not autoplay
                   // loop={true} // Enable looping
-                  loop={!url.includes(soundcloudUnique)}
+                  loop={!getMediaStates.url.includes(soundcloudUnique)}
                   config={{
                     soundcloud: {
                       options: {
