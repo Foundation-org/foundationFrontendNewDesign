@@ -56,7 +56,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
       <h1 className="font-500 font-Inter mb-[5px] mt-3 text-[9.74px] font-medium text-black tablet:text-[1.7vw] dark:text-white">
         Web 3
       </h1>
-      <div className="hidden flex-col justify-between gap-[7px] rounded-2xl border-[3px] border-[#DEE6F7] p-[17px] tablet:flex tablet:flex-row tablet:gap-5 laptop:gap-6">
+      <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">
         <div className="flex w-full flex-col items-center gap-[10px] tablet:gap-4 laptop:gap-5">
           {web3.slice(0, Math.ceil(web3.length / 2)).map((item, index) => (
             <div

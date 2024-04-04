@@ -263,7 +263,7 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
         Personal
       </h1>
       {renderPersonalBadgesPopup()}
-      <div className="hidden flex-col justify-between gap-[7px] rounded-2xl border-[3px] border-[#DEE6F7] p-[17px] tablet:flex tablet:flex-row tablet:gap-5 laptop:gap-6">
+      <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">
         <div className="flex w-full flex-col items-center gap-[10px] tablet:gap-4 laptop:gap-5">
           {personal.slice(0, Math.ceil(personal.length / 2)).map((item, index) => (
             <PersonalItem
