@@ -82,6 +82,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const [field6Data, setField6Data] = useState();
   const [isPresent, setIsPresent] = useState(false);
   const [prevInfo, setPrevInfo] = useState({});
+  const [deleteItem, setDeleteItem] = useState('');
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
@@ -101,8 +102,9 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
   const handleClose = () => setIsPopup(false);
   const handlefield5Change = (e) => setField5Data(e.target.value);
-  const handlefield6Change = (e) => setField6Data(e.target.value);
-
+  const handlefield6Change = (e) => {
+    setField6Data(e.target.value);
+  };
   const handlePresentToggle = () => {
     setIsPresent(!isPresent);
     if (!isPresent) {
@@ -114,6 +116,23 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
   const handleAddPersonalBadge = async (data) => {
     try {
+      if (
+        field1Data.name === undefined ||
+        field2Data.name === undefined ||
+        field3Data.name === undefined ||
+        field4Data.name === undefined ||
+        field5Data === undefined ||
+        field6Data === undefined ||
+        field6Data === ''
+      ) {
+        toast.error('You cannot leave the field blank');
+        return;
+      }
+
+      if (field6Data < field5Data) {
+        toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        return;
+      }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, {
         data,
         type,
@@ -156,6 +175,10 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
         prevInfo.endingYear === field6Data
       ) {
         toast.error('Information already saved');
+        return;
+      }
+      if (field6Data < field5Data) {
+        toast.warning('Please ensure the ending date is not earlier than the starting date.');
         return;
       }
 
@@ -211,44 +234,68 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
         {/* To View Already Added Info */}
         {existingData && !addAnotherForm ? (
           <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
-            {existingData.map((item, index) => (
-              <div className="flex w-full justify-between  rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
-                <div>
-                  <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
-                    {item.companyName}
-                  </h4>
-                  <div className="max-w-[270px]">
-                    <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
-                      {item.jobTitle}
-                    </h5>
-                    <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
-                      {item.modeOfJob}
-                    </h6>
-                  </div>
-                </div>
-                <div className="flex flex-col justify-between">
-                  <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
-                      alt="Edit Icon"
-                      className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
+            {existingData.map((item, index) =>
+              deleteItem === item.id ? (
+                <div className="flex w-full flex-col justify-between gap-[10px]  rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
+                  <p>Are you sure you want to remove this item?</p>
+                  <div className="flex justify-end gap-[10px]">
+                    <Button
+                      variant="addOption"
                       onClick={() => {
-                        setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                        setDeleteItem('');
                       }}
-                    />
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                      alt="Edit Icon"
-                      className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
-                      onClick={() => handleDelete(item.id)}
-                    />
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        handleDelete(deleteItem);
+                      }}
+                    >
+                      Delete
+                    </Button>
                   </div>
-                  <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
-                    {item.startingYear + '-' + item.endingYear}
-                  </h4>
                 </div>
-              </div>
-            ))}
+              ) : (
+                <div className="flex w-full justify-between  rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
+                  <div>
+                    <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
+                      {item.companyName}
+                    </h4>
+                    <div className="max-w-[270px]">
+                      <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
+                        {item.jobTitle}
+                      </h5>
+                      <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
+                        {item.modeOfJob}
+                      </h6>
+                    </div>
+                  </div>
+                  <div className="flex flex-col justify-between">
+                    <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
+                        alt="Edit Icon"
+                        className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
+                        onClick={() => {
+                          setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                        }}
+                      />
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                        alt="Edit Icon"
+                        className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
+                        onClick={() => setDeleteItem(item.id)}
+                      />
+                    </div>
+                    <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
+                      {item.startingYear + '-' + item.endingYear}
+                    </h4>
+                  </div>
+                </div>
+              ),
+            )}
             <div className="mt-4 flex justify-between">
               <Button variant="addOption" onClick={() => setAddAnotherForm(true)}>
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
@@ -362,6 +409,14 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 <Button
                   variant="addOption"
                   onClick={() => {
+                    setField1Data([]);
+                    setField2Data([]);
+                    setField3Data([]);
+                    setField4Data([]);
+                    setField5Data();
+                    setField6Data();
+                    setIsPresent(false);
+
                     setAddAnotherForm(false);
                   }}
                 >

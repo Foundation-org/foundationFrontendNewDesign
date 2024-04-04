@@ -86,6 +86,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [prevInfo, setPrevInfo] = useState({});
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
+  const [deleteItem, setDeleteItem] = useState('');
 
   const searchUniversities = async () => {
     const universities = await api.post(`search/searchUniversities/?name=${query}`);
@@ -113,6 +114,19 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   const handleAddPersonalBadge = async (data) => {
     try {
+      if (
+        field1Data.name === undefined ||
+        field2Data.name === undefined ||
+        field3Data === undefined ||
+        field4Data === undefined
+      ) {
+        toast.error('You cannot leave the field blank');
+        return;
+      }
+      if (field4Data < field3Data) {
+        toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        return;
+      }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, {
         data,
         type,
@@ -146,6 +160,10 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   const handleUpdateBadge = async (newData) => {
     try {
+      if (field4Data < field3Data) {
+        toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        return;
+      }
       if (
         prevInfo.school === field1Data.name &&
         prevInfo.degreeProgram === field2Data.name &&
@@ -155,6 +173,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         toast.error('Information already saved');
         return;
       }
+
       const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, {
         newData,
         type,
@@ -205,49 +224,72 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         {/* To View Already Added Info */}
         {existingData && !addAnotherForm ? (
           <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
-            {existingData.map((item, index) => (
-              <div
-                key={index}
-                className="flex w-full justify-between rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]"
-              >
-                <div>
-                  <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
-                    {item.school}
-                  </h4>
-                  <div className="mt-[2px] max-w-[270px] tablet:mt-2">
-                    <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
-                      {item.degreeProgram}
-                    </h5>
-                    <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
-                      {item.country}
-                    </h6>
+            {existingData.map((item, index) =>
+              deleteItem === item.id ? (
+                <div className="flex w-full flex-col justify-between gap-[10px]  rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
+                  <p>Are you sure you want to remove this item?</p>
+                  <div className="flex justify-end gap-[10px]">
+                    <Button
+                      variant="addOption"
+                      onClick={() => {
+                        setDeleteItem('');
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        handleDelete(deleteItem);
+                      }}
+                    >
+                      Delete
+                    </Button>
                   </div>
                 </div>
-                <div className="flex flex-col justify-between">
-                  <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
-                      alt="Edit Icon"
-                      className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
-                      onClick={() => {
-                        setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
-                      }}
-                    />
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                      alt="Edit Icon"
-                      className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
-                      onClick={() => {
-                        handleDelete(item.id);
-                      }}
-                    />
+              ) : (
+                <div
+                  key={index}
+                  className="flex w-full justify-between rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]"
+                >
+                  <div>
+                    <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
+                      {item.school}
+                    </h4>
+                    <div className="mt-[2px] max-w-[270px] tablet:mt-2">
+                      <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
+                        {item.degreeProgram}
+                      </h5>
+                      <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
+                        {item.country}
+                      </h6>
+                    </div>
                   </div>
-                  <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
-                    {item.startingYear + '-' + item.graduationYear}
-                  </h4>
+                  <div className="flex flex-col justify-between">
+                    <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
+                        alt="Edit Icon"
+                        className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
+                        onClick={() => {
+                          setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                        }}
+                      />
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                        alt="Edit Icon"
+                        className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[17.64px]"
+                        onClick={() => setDeleteItem(item.id)}
+                      />
+                    </div>
+                    <h4 className="text-[8.28px] font-medium leading-[10.93px] text-[#A7A7A7] tablet:text-[18px] tablet:leading-[26.63px]">
+                      {item.startingYear + '-' + item.graduationYear}
+                    </h4>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ),
+            )}
+
             <div className="mt-4">
               <Button variant="addOption" onClick={() => setAddAnotherForm(true)}>
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
@@ -314,6 +356,10 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 <Button
                   variant="addOption"
                   onClick={() => {
+                    setField1Data([]);
+                    setField2Data([]);
+                    setField3Data();
+                    setField4Data();
                     setAddAnotherForm(false);
                   }}
                 >

@@ -146,6 +146,7 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             placeholder="Work Here"
             handleUserInfo={handleUserInfo}
             fetchUser={fetchUser}
+            handleRemoveBadgePopup={handleRemoveBadgePopup}
           />
         );
 
@@ -160,6 +161,7 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             placeholder="Education Here"
             handleUserInfo={handleUserInfo}
             fetchUser={fetchUser}
+            handleRemoveBadgePopup={handleRemoveBadgePopup}
           />
         );
 
