@@ -217,7 +217,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                   <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
                     {item.companyName}
                   </h4>
-                  <div className="mt-[2px] max-w-[270px] tablet:mt-2">
+                  <div className="max-w-[270px]">
                     <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
                       {item.jobTitle}
                     </h5>
