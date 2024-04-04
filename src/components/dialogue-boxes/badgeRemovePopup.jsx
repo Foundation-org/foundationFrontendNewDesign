@@ -55,6 +55,12 @@ export default function BadgeRemovePopup({
         removeBadge = await api.post(`/removeWeb3Badge`, {
           type: type,
           uuid: fetchUser.uuid,
+        });
+      }else if (badgeType === 'passkey') {
+        removeBadge = await api.post(`/removePasskey`, {
+          type: type,
+          accountName: accountName,
+          uuid: fetchUser.uuid,
         });}
        else {
         const findBadge = fetchUser.badges.filter((item) => {

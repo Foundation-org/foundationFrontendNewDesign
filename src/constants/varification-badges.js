@@ -103,18 +103,20 @@ export const web3 = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/passkey-desktop.svg`,
     title: 'Passkey Desktop',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     ButtonText: 'Add Badge',
-    disabled: true,
+    disabled: false,
     NoOfButton: 1,
+    type: 'desktop',
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/passkey.svg`,
     title: 'Passkey Mobile',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     ButtonText: 'Add Badge',
-    disabled: true,
+    disabled: false,
     NoOfButton: 1,
+    type: 'mobile',
   },
 ];
 
