@@ -86,7 +86,6 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [prevInfo, setPrevInfo] = useState({});
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
-  const [isPresent, setIsPresent] = useState(false);
 
   const searchUniversities = async () => {
     const universities = await api.post(`search/searchUniversities/?name=${query}`);
@@ -110,15 +109,6 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const handlefield4Change = (event) => {
     const value = event.target.value;
     setField4Data(value);
-  };
-
-  const handlePresentToggle = () => {
-    setIsPresent(!isPresent);
-    if (!isPresent) {
-      setField4Data('Present');
-    } else {
-      setField4Data('');
-    }
   };
 
   const handleAddPersonalBadge = async (data) => {
@@ -293,19 +283,6 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               />
             </div>
 
-            <label
-              id="custom-square-checkbox"
-              className="flex items-center gap-2 text-[10px] font-medium text-[#7C7C7C] tablet:gap-[15px] tablet:text-[20px]"
-            >
-              <input
-                type="checkbox"
-                checked={isPresent}
-                onChange={handlePresentToggle}
-                className="checkbox size-[14px] tablet:size-[25px]"
-              />
-              I am currently working in this role
-            </label>
-
             <div className="mb-4 mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[37px]">
               <div className="w-full">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
@@ -327,7 +304,6 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   value={field4Data}
                   onChange={handlefield4Change}
                   placeholder={field4.placeholder}
-                  disabled={isPresent} // Disable date input when "Present" is selected
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                 />
               </div>
