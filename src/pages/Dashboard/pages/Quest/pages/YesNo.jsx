@@ -51,10 +51,17 @@ const YesNo = () => {
     },
   });
 
-  const handleTab = () => {
-    const settingElement = document.getElementById('input-0');
-    if (settingElement) {
-      settingElement.blur();
+  const handleTab = (index, key) => {
+    console.log(index, key);
+    if (index === 2) {
+      document.getElementById(`input-${index}`).blur();
+    } else {
+      if (key === 'Enter') {
+        event.preventDefault();
+        document.getElementById(`input-${index + 1}`).focus();
+      } else {
+        document.getElementById(`input-${index}`).focus();
+      }
     }
   };
 

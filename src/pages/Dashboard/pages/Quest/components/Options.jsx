@@ -105,13 +105,15 @@ const Options = ({
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
                 } w-5 min-w-5 border-y tablet:border-y-[3px]`}
               ></div>
+              {console.log(number)}
               <TextareaAutosize
                 id={`input-${number}`}
                 onChange={(e) => handleChange(e.target.value)}
                 onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value)}
                 value={typedValue}
                 placeholder="Add your own option"
-                tabIndex={number + 1}
+                tabIndex={number + 2}
+                autoFocus={number >= 5 ? true : false}
                 onKeyDown={(e) =>
                   (e.key === 'Tab' && handleTab(number)) || (e.key === 'Enter' && handleTab(number, 'Enter'))
                 }

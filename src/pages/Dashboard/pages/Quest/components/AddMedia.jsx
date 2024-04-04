@@ -8,7 +8,7 @@ import ReactPlayer from 'react-player';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import './Player.css';
 
-export default function AddMedia() {
+export default function AddMedia({ handleTab }) {
   const playerRef = useRef(null);
   const dispatch = useDispatch();
   const getMediaStates = useSelector(createQuestAction.getMedia);
@@ -119,10 +119,13 @@ export default function AddMedia() {
           </div>
           <div className="flex">
             <TextareaAutosize
+              id="input-0"
+              tabIndex={1}
               onChange={handleDescChange}
               onBlur={(e) => e.target.value.trim() !== '' && descVerification(e.target.value.trim())}
               value={getMediaStates.desctiption}
               placeholder="Please decribe this embeded video....."
+              onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(0, 'Enter'))}
               className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
             />
             <button
@@ -136,6 +139,9 @@ export default function AddMedia() {
           </div>
           <div className="mr-[50px] tablet:mr-[100px] laptop:mr-[132px]">
             <TextareaAutosize
+              tabIndex={2}
+              id="input-1"
+              onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(1, 'Enter'))}
               onChange={(e) => {
                 let userValue = e.target.value;
 

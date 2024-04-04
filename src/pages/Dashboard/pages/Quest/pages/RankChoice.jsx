@@ -199,7 +199,7 @@ const RankChoice = () => {
   }, [createQuestSlice.question, changedOption, changeState, addOption, optionsValue.length, optionsValue]);
 
   const handleTab = (index, key) => {
-    if (index === optionsValue.length) {
+    if (index === optionsValue.length + 2) {
       document.getElementById(`input-${index}`).blur();
     } else {
       if (key === 'Enter') {
@@ -273,7 +273,7 @@ const RankChoice = () => {
                         isSelected={item.selected}
                         optionsCount={optionsValue.length}
                         removeOption={removeOption}
-                        number={index + 1}
+                        number={index + 3}
                         optionStatus={optionsValue[index].optionStatus}
                         answerVerification={(value) => answerVerification(item.id, index, value)}
                         handleTab={handleTab}
