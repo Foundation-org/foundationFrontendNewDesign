@@ -22,6 +22,7 @@ const RankChoice = () => {
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
+  console.log('🚀 ~ RankChoice ~ getMediaStates:', getMediaStates);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -96,6 +97,11 @@ const RankChoice = () => {
     }
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
       return toast.error('You cannot leave the description empty.');
+    }
+
+    if (optionsValue.length <= 2) {
+      setLoading(false);
+      return toast.warning('The minimum number of options should be 3.');
     }
 
     const params = {
@@ -222,17 +228,29 @@ const RankChoice = () => {
   };
 
   useEffect(() => {
-    if (
-      !checkHollow() &&
-      optionsValue.every(
-        (value) => value.question !== '' && createQuestSlice.question !== '' && getMediaStates.desctiption !== '',
-      )
-    ) {
-      setHollow(false);
+    if (getMediaStates.isMedia) {
+      if (
+        !checkHollow() &&
+        optionsValue.every(
+          (value) =>
+            value.question !== '' &&
+            createQuestSlice.question !== '' &&
+            getMediaStates.desctiption !== '' &&
+            getMediaStates.url !== '',
+        )
+      ) {
+        setHollow(false);
+      } else {
+        setHollow(true);
+      }
     } else {
-      setHollow(true);
+      if (!checkHollow() && optionsValue.every((value) => value.question !== '' && createQuestSlice.question !== '')) {
+        setHollow(false);
+      } else {
+        setHollow(true);
+      }
     }
-  }, [optionsValue, createQuestSlice.question, getMediaStates.desctiption]);
+  }, [optionsValue, createQuestSlice.question, getMediaStates.isMedia, getMediaStates.desctiption, getMediaStates.url]);
 
   return (
     <CreateQuestWrapper

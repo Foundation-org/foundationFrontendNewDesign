@@ -306,7 +306,6 @@ export const createQuestSlice = createSlice({
 
     // check question status start
     builder.addCase(checkQuestion.pending, (state, action) => {
-      console.log('first');
       state.questionReset = {
         name: 'Checking',
         color: 'text-[#0FB063]',
@@ -326,7 +325,6 @@ export const createQuestSlice = createSlice({
       state.questions.questionTyping = false;
     });
     builder.addCase(checkQuestion.fulfilled, (state, action) => {
-      console.log('first');
       const { validatedQuestion, errorMessage } = action.payload;
       if (errorMessage) {
         if (errorMessage === 'DUPLICATION') {

@@ -134,12 +134,31 @@ const LikeDislike = () => {
   };
 
   useEffect(() => {
-    if (!checkHollow() && createQuestSlice.question !== '' && getMediaStates.desctiption !== '') {
-      setHollow(false);
+    if (getMediaStates.isMedia) {
+      if (
+        !checkHollow() &&
+        createQuestSlice.question !== '' &&
+        getMediaStates.desctiption !== '' &&
+        getMediaStates.url !== ''
+      ) {
+        setHollow(false);
+      } else {
+        setHollow(true);
+      }
     } else {
-      setHollow(true);
+      if (!checkHollow() && createQuestSlice.question !== '') {
+        setHollow(false);
+      } else {
+        setHollow(true);
+      }
     }
-  }, [createQuestSlice.question, questionStatus.tooltipName, getMediaStates.desctiption]);
+  }, [
+    createQuestSlice.question,
+    questionStatus.tooltipName,
+    getMediaStates.isMedia,
+    getMediaStates.desctiption,
+    getMediaStates.url,
+  ]);
 
   useEffect(() => {
     dispatch(updateQuestion({ question: createQuestSlice.question, changedOption, changeState }));
