@@ -20,6 +20,8 @@ const LedgerTableTopbar = ({
     setSelectedOption(false);
   };
 
+  let x = 10000000000000;
+
   return (
     <div className="mb-[10.27px] flex w-full justify-between tablet:mb-8">
       {!isTreasury ? (
@@ -54,7 +56,11 @@ const LedgerTableTopbar = ({
                 Treasury
               </h1>
               <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
-                <p>{localStorage.getItem('treasuryAmount')} FDX</p>
+                <p>
+                  {localStorage.getItem('treasuryAmount') && !isNaN(localStorage.getItem('treasuryAmount'))
+                    ? Number(localStorage.getItem('treasuryAmount')).toFixed(2) + ' FDX'
+                    : '0 FDX'}
+                </p>
               </div>
             </div>
           </div>
