@@ -171,7 +171,7 @@ const VerifyCode = () => {
   };
 
   return (
-    <div className="bg-gray-50 relative flex min-h-screen flex-col justify-center overflow-hidden bg-[#F3F3F3] px-4 py-12">
+    <div className="bg-gray-50 relative flex min-h-screen flex-col justify-center overflow-hidden bg-[#F2F3F5] px-4 py-12">
       {showDialogBox ? (
         <div className="relative mx-auto w-full max-w-lg rounded-2xl bg-white px-5 pb-9 pt-10 shadow-xl tablet:px-6">
           <div className="mx-auto flex w-full max-w-md flex-col space-y-16">

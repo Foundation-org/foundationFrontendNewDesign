@@ -1,6 +1,6 @@
 const TermsPrivacyLayout = ({ children, title, timeStamp }) => {
   return (
-    <div className="h-full bg-[#F3F3F3]">
+    <div className="h-full bg-[#F2F3F5]">
       <div className="bg-blue-gradiant flex items-center justify-center py-[14px]">
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}

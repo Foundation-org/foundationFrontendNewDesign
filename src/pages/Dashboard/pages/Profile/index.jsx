@@ -97,7 +97,7 @@ const Profile = () => {
         console.log(error);
       }}
     >
-      <div className="h-[calc(100vh-58px)] w-full overflow-y-scroll bg-[#F3F3F3] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]">
+      <div className="h-[calc(100vh-58px)] w-full overflow-y-scroll bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]">
         <div className="mx-[18px] mt-[10px] flex items-center justify-between tablet:mx-8 tablet:mt-[25px] laptop:mx-[110px]">
           <div className="flex w-full items-center justify-between gap-[5.16px] tablet:gap-[15px] laptop:gap-[19.4px]">
             <div className="flex items-center gap-[5.16px] tablet:gap-[15px]">

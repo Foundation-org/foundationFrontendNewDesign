@@ -57,7 +57,7 @@ export default function SharedLinkResults() {
   return (
     <>
       <Topbar />
-      <div className="flex h-[calc(100vh-90px)] bg-[#F3F3F3] dark:bg-[#242424]">
+      <div className="flex h-[calc(100vh-90px)] bg-[#F2F3F5] dark:bg-[#242424]">
         <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
           <div className="mb-7 flex justify-center gap-5 tablet:mb-[3.81rem] tablet:gap-[5.69rem]">
             <button

@@ -185,7 +185,7 @@ const SingleQuest = () => {
         <meta name="google" content="notranslate"></meta>
       </Helmet>
       <Topbar />
-      <div className="flex h-[calc(100vh-66.8px)] bg-[#F3F3F3] tablet:h-[calc(100vh-92px)]">
+      <div className="flex h-[calc(100vh-66.8px)] bg-[#F2F3F5] tablet:h-[calc(100vh-92px)]">
         <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
           {error !== '' ? <p className="text-center text-[24px] font-bold tablet:text-[25px]">{error}</p> : null}
           {(singleQuestResp || submitResponse) && (

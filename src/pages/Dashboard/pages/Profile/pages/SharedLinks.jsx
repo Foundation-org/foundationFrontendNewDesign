@@ -224,7 +224,7 @@ export default function SharedLinks() {
             />
             <label
               htmlFor="floating_outlined"
-              className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 absolute left-[15px] start-1 top-[10px] z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F3F3F3] px-2 text-[8.33px] leading-[10px] text-[#707175]  duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:top-2 tablet:text-[18px] tablet:leading-[21.78px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
+              className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 absolute left-[15px] start-1 top-[10px] z-10 origin-[0] -translate-y-4 scale-75 transform bg-[#F2F3F5] px-2 text-[8.33px] leading-[10px] text-[#707175]  duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:top-2 tablet:text-[18px] tablet:leading-[21.78px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
             >
               Search
             </label>
@@ -252,7 +252,7 @@ export default function SharedLinks() {
         </div>
       </div>
 
-      <div className="no-scrollbar tablet:w-fulls mx-auto mt-5 flex h-full max-w-full flex-col overflow-y-auto bg-[#F3F3F3] tablet:pt-[0.94rem] dark:bg-[#242424]">
+      <div className="no-scrollbar tablet:w-fulls mx-auto mt-5 flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] tablet:pt-[0.94rem] dark:bg-[#242424]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
