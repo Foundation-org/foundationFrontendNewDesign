@@ -256,8 +256,8 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
             </div>
           </div>
         ) : (
-          <div className="px-5 tablet:px-[60px] laptop:px-[80px]">
-            <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
+          <div className="px-5 tablet:px-[60px] laptop:px-[72px]">
+            <div className="mb-[5px] tablet:mb-[15px]">
               <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 {field1.label}
               </p>
@@ -270,7 +270,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 setQuery={setQuery}
               />
             </div>
-            <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
+            <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
               <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 {field2.label}
               </p>
@@ -283,34 +283,48 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 setQuery={setQuery}
               />
             </div>
-            <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
-              <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                {field3.label}
-              </p>
-              <div className="z-20 flex flex-col gap-[10px] tablet:gap-[15px]">
-                <ListBox
-                  items={field3.items}
-                  selected={field3Data}
-                  setSelected={setField3Data}
-                  placeholder={field3.placeholder}
-                />
+            <div className="flex items-center gap-[17.5px] tablet:gap-9">
+              <div className="mb-[5px] w-full tablet:mb-[25px]">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  {field3.label}
+                </p>
+                <div className="z-20 flex flex-col gap-[10px] tablet:gap-[15px]">
+                  <ListBox
+                    items={field3.items}
+                    selected={field3Data}
+                    setSelected={setField3Data}
+                    placeholder={field3.placeholder}
+                  />
+                </div>
+              </div>
+              <div className="mb-[5px] w-full tablet:mb-[25px]">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  {field4.label}
+                </p>
+                <div className="z-20 flex flex-col gap-[10px] tablet:gap-[15px]">
+                  <ListBox
+                    items={field4.items}
+                    selected={field4Data}
+                    setSelected={setField4Data}
+                    placeholder={field4.placeholder}
+                  />
+                </div>
               </div>
             </div>
-            <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
-              <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                {field4.label}
-              </p>
-              <div className="z-20 flex flex-col gap-[10px] tablet:gap-[15px]">
-                <ListBox
-                  items={field4.items}
-                  selected={field4Data}
-                  setSelected={setField4Data}
-                  placeholder={field4.placeholder}
-                />
-              </div>
-            </div>
+            <label
+              id="custom-square-checkbox"
+              className="flex items-center gap-2 text-[10px] font-medium text-[#7C7C7C] tablet:gap-[15px] tablet:text-[20px]"
+            >
+              <input
+                type="checkbox"
+                checked={isPresent}
+                onChange={handlePresentToggle}
+                className="checkbox size-[14px] tablet:size-[25px]"
+              />
+              I am currently working in this role
+            </label>
 
-            <div className="mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:gap-[37px]">
+            <div className="mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[37px]">
               <div className="w-full">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field5.label}
@@ -335,15 +349,11 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                   placeholder={field6.placeholder}
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                 />
-                <label className="ml-2">
-                  <input type="checkbox" checked={isPresent} onChange={handlePresentToggle} className="mr-1" />
-                  Present
-                </label>
               </div>
             </div>
 
             {/* {isError && <p className="text-red ml-1 text-[6.8px] tablet:text-[14px]">{`Invalid ${title}!`}</p>}{' '} */}
-            <div className="flex justify-between">
+            <div className="mt-[10px] flex justify-between">
               {existingData && existingData.lenght !== 0 ? (
                 <Button
                   variant="addOption"
