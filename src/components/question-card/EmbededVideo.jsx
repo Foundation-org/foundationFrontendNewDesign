@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player';
 export const EmbededVideo = ({ description, url, setPlayingPlayerId, questId, playing }) => {
   const playerRef = useRef(null);
   const [soundcloudUnique] = useState('soundcloud.com');
+  const [mediaURL, setMediaURL] = useState(url);
 
   const handleVideoEnded = () => {
     if (playerRef.current) {
@@ -12,13 +13,33 @@ export const EmbededVideo = ({ description, url, setPlayingPlayerId, questId, pl
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 500) {
+        // Hide artwork for screens smaller than 400px
+        setMediaURL(`${url}&show_artwork=false`);
+      } else {
+        // Show artwork for larger screens
+        setMediaURL(url);
+      }
+    };
+
+    // Initial call
+    handleResize();
+
+    // Event listener for window resize
+    window.addEventListener('resize', handleResize);
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, [url]);
+
   return (
     <div className="align-items mx-[22px] mb-2 flex flex-col justify-start rounded-[9.183px] border border-[#DEE6F7] px-[5px] py-2 tablet:mx-[60px] tablet:mb-[14px] tablet:border-[2.755px] tablet:px-2">
       <h2 className="mb-1 ml-[9px] text-[8px] font-medium text-[#7C7C7C] tablet:text-[14.692px]">{description}</h2>
       <div className="">
         <ReactPlayer
           ref={playerRef}
-          url={url}
+          url={mediaURL}
           className="react-player"
           onError={(e) => {
             toast.error('Invalid URL');

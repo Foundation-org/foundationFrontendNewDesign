@@ -14,6 +14,7 @@ export default function AddMedia({ handleTab }) {
   const dispatch = useDispatch();
   const getMediaStates = useSelector(createQuestAction.getMedia);
   const debouncedURL = useDebounce(getMediaStates.url, 1000);
+  const [mediaURL, setMediaURL] = useState(debouncedURL);
   const [soundcloudUnique] = useState('soundcloud.com');
   const [youtubeBaseURLs] = useState([
     'youtube.com',
@@ -46,6 +47,26 @@ export default function AddMedia({ handleTab }) {
       return null; // Invalid or unsupported URL
     }
   }
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 500) {
+        // Hide artwork for screens smaller than 400px
+        setMediaURL(`${debouncedURL}&show_artwork=false`);
+      } else {
+        // Show artwork for larger screens
+        setMediaURL(debouncedURL);
+      }
+    };
+
+    // Initial call
+    handleResize();
+
+    // Event listener for window resize
+    window.addEventListener('resize', handleResize);
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, [debouncedURL]);
 
   // Process the debounced value when it changes
   useEffect(() => {
@@ -197,7 +218,7 @@ export default function AddMedia({ handleTab }) {
               </div>
               <ReactPlayer
                 ref={playerRef}
-                url={debouncedURL}
+                url={mediaURL}
                 className="react-player"
                 onError={(e) => {
                   toast.error('Invalid URL');
