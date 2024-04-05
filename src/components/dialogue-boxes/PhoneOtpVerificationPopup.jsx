@@ -88,17 +88,19 @@ const PhoneOtpVerificationPopup = ({ isPopup, setIsPopup, title, logo, selectedB
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
         <div className="pb-[15px] pt-2 tablet:py-[25px]">
           <div className=" px-5 tablet:px-[60px] laptop:px-[80px]">
-            <h1 className="text-[20px] font-semibold leading-[20px] text-[#707175]">OTP Verification</h1>
-            <p className="my-[15px] text-[18px] font-normal leading-[20px] text-[#707175]">
+            <h1 className="text-[9.278px] font-medium leading-[9.278px] text-[#707175] tablet:text-[20px] tablet:font-semibold tablet:leading-[20px]">
+              OTP Verification
+            </h1>
+            <p className="my-[10px] text-[9.28px] font-normal leading-[9.28px] text-[#707175] tablet:my-[15px] tablet:text-[18px] tablet:leading-[20px]">
               We Will send you a one time password on this <span className="font-semibold">+923007065077</span>
             </p>
             <div className="flex flex-col space-y-16">
-              <div className="flex w-full flex-row items-center gap-[15px]">
+              <div className="flex w-full flex-row items-center gap-2 tablet:gap-[15px]">
                 {otp.map((digit, index) => (
-                  <div key={index} className="h-11 w-11 tablet:size-[57px]">
+                  <div key={index} className="size-[26.7px] tablet:size-[57px]">
                     <input
                       ref={refs[index]}
-                      className="flex h-full w-full flex-col items-center justify-center rounded-[15px] border border-[#DEE6F7] bg-[#FBFBFB] text-center text-lg outline-none focus:ring-0 tablet:border-[3px]"
+                      className="flex h-full w-full flex-col items-center justify-center rounded-[6px] border border-[#DEE6F7] bg-[#FBFBFB] text-center text-[14px] outline-none focus:ring-0 tablet:rounded-[15px] tablet:border-[3px] tablet:text-[26px]"
                       type="text"
                       maxLength={1}
                       value={digit}
@@ -108,10 +110,12 @@ const PhoneOtpVerificationPopup = ({ isPopup, setIsPopup, title, logo, selectedB
                   </div>
                 ))}
               </div>
-            </div>{' '}
-            <h1 className="mb-3 mt-[18px] text-[20px] font-semibold leading-[20px] text-[#707175]">00:39</h1>
-            <p className="my-[15px] text-[18px] font-normal leading-[20px] text-[#707175]">
-              Do not Receive OTP ? <span className="font-semibold text-[#4A8DBD]">Send OTP</span>
+            </div>
+            <h1 className="mt-2 text-[9.278px] font-semibold leading-[9.278px] text-[#707175] tablet:text-[20px] tablet:leading-[20px]">
+              00:39
+            </h1>
+            <p className="my-[6] text-[8px] font-normal leading-[20px] text-[#707175] tablet:my-[15px] tablet:text-[18px]">
+              Do not Receive OTP ? <span className="cursor-pointer font-semibold text-[#4A8DBD]">Send OTP</span>
             </p>
             <div className="flex justify-end" onClick={() => handleAddContactBadge({ legacy: true })}>
               <Button variant="submit" disabled={loading}>
