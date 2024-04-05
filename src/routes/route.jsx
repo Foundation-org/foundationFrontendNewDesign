@@ -206,7 +206,11 @@ export function Router() {
               <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />
               <Route path="/verify-email" element={<VerifyEmail />} />
               <Route path="/guest-signup" element={<Signup />} />
-              <Route path="/signin" element={<Signin />} />
+              <Route
+                path="/signin"
+                element={persistedUser.role === 'user' ? <Navigate to="/dashboard" /> : <Signin />}
+              />
+
               <Route path="/verifycode" element={<VerifyCode />} />
               <Route path="*" element={<Navigate to="/dashboard" />} />
             </Route>
