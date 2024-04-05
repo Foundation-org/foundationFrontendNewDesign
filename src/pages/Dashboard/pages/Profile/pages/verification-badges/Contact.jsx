@@ -5,26 +5,14 @@ import { contacts } from '../../../../../../constants/varification-badges';
 import VerificationPopups from '../../components/VerificationPopups';
 import Button from '../../components/Button';
 import AddCellPhonePopup from '../../../../../../components/dialogue-boxes/AddCellPhonePopup';
-import PhoneOtpVerificationPopup from '../../../../../../components/dialogue-boxes/PhoneOtpVerificationPopup';
 
 export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePopup }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isPopup, setIsPopup] = useState(false);
-  const [isPopupVerification, setIsPopupVerification] = useState(false);
   const [seletedBadge, setSelectedBadge] = useState('');
-  const [isOtpSent, setIsOtpSent] = useState(false);
-  const [otpResp, setOtpResp] = useState();
-  console.log(otpResp);
   const handleClose = () => {
     setIsPopup(false);
-  };
-
-  const handleVerificationOpen = () => {
-    localStorage.setItem('isOtpSent', 'true');
-
-    setIsPopup(false);
-    setIsPopupVerification(true);
   };
 
   const checkContact = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
@@ -107,7 +95,6 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
     if (!isPopup) {
       return null;
     }
-    console.log(isPopupVerification, isPopup, localStorage.getItem('isOtpSent'));
 
     switch (seletedBadge) {
       case 'personal':
@@ -152,32 +139,16 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
       case 'cell-phone':
         return (
           <>
-            {isOtpSent ? (
-              <PhoneOtpVerificationPopup
-                isPopup={isPopupVerification}
-                setIsPopup={setIsPopupVerification}
-                title="Phone Number"
-                logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
-                selectedBadge={seletedBadge}
-                handleUserInfo={handleUserInfo}
-                setIsOtpSent={setIsOtpSent}
-                otpResp={otpResp}
-                handleClose={handleClose}
-              />
-            ) : (
-              <AddCellPhonePopup
-                isPopup={isPopup}
-                setIsPopup={setIsPopup}
-                title="Phone Number"
-                logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
-                selectedBadge={seletedBadge}
-                handleUserInfo={handleUserInfo}
-                setIsOtpSent={setIsOtpSent}
-                setOtpResp={setOtpResp}
-                handleClose={handleClose}
-                handleVerificationOpen={handleVerificationOpen}
-              />
-            )}
+            <AddCellPhonePopup
+              isPopup={isPopup}
+              setIsPopup={setIsPopup}
+              title="Phone Number"
+              logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
+              selectedBadge={seletedBadge}
+              handleUserInfo={handleUserInfo}
+              handleClose={handleClose}
+              type={'cell-phone'}
+            />
           </>
         );
 
