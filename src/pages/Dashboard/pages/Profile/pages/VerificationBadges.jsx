@@ -1186,6 +1186,7 @@ const VerificationBadges = () => {
               handleUserInfo={handleUserInfo}
               fetchUser={fetchUser}
               handleRemoveBadgePopup={handleRemoveBadgePopup}
+              type={'web3'}
             />
             <Personal
               handleUserInfo={handleUserInfo}

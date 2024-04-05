@@ -7,8 +7,25 @@ import Button from '../../components/Button';
 import { useErrorBoundary } from 'react-error-boundary';
 import api from '../../../../../../services/api/Axios';
 import { isBrowser, isMobile } from 'react-device-detect';
+import { useSDK } from "@metamask/sdk-react";
+import { useState } from 'react';
 
 export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup }) {
+  const [account, setAccount] = useState();
+  const { sdk, connected, chainId } = useSDK();
+
+    const connect = async () => {
+        try {
+            const accounts = await sdk?.connect();
+            setAccount(accounts[0]);
+            handleWeb3(accounts)
+        } catch (err) {
+            console.warn("failed to connect..", err);
+        }
+    };
+
+
+
   const persistedTheme = useSelector((state) => state.utils.theme);
   const { showBoundary } = useErrorBoundary();
 
@@ -19,27 +36,11 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
   const checkWeb3Badge = (itemType) =>
     fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
 
-  const handleWeb3 = async (title, type) => {
+  const handleWeb3 = async (accounts) => {
     try {
-      let value;
-      if (title.trim() === 'Ethereum Wallet') {
-        if (window.ethereum) {
-          const provider = new ethers.BrowserProvider(window.ethereum);
-          const signer = await provider.getSigner();
-          const _walletAddress = await signer.getAddress();
-          value = _walletAddress;
-        } else {
-          console.log('Wallet not detected');
-          toast.warning('Please install an Ethereum wallet');
-          return;
-        }
-      }
-      if (value === '') {
-        return;
-      }
       const addBadge = await api.post(`/addBadge/web3/add`, {
         web3: {
-          [type]: value,
+          ['etherium-wallet']: accounts,
         },
         uuid: fetchUser.uuid,
       });
@@ -138,6 +139,8 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
                 color={checkPassKeyBadge("Passkey", item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
                   // alert("hello1...")
+                  item.type === "etherium-wallet" ? 
+                  connect():
                   checkPassKeyBadge("Passkey", item.type) ? handleRemoveBadgePopup({
                     title: item.title,
                     image: item.image,
