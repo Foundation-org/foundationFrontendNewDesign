@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { contacts } from '../../../../../../constants/varification-badges';
 import VerificationPopups from '../../components/VerificationPopups';
@@ -12,6 +12,7 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isPopup, setIsPopup] = useState(false);
   const [seletedBadge, setSelectedBadge] = useState('');
+  const [isOtpSent, setIsOtpSent] = useState(false);
 
   const checkContact = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
   const checkPrimary = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType && i.primary === true);
@@ -79,6 +80,16 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
     );
   };
 
+  // useEffect(() => {
+  //   if (localStorage.getItem('isOtpSent') === 'true') {
+  //     const timeout = setTimeout(() => {
+  //       localStorage.removeItem('isOtpSent');
+  //     }, 10000);
+
+  //     return () => clearTimeout(timeout);
+  //   }
+  // }, [localStorage.getItem('isOtpSent')]);
+
   const renderContactBadgesPopup = () => {
     if (!isPopup) {
       return null;
@@ -126,22 +137,29 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
 
       case 'cell-phone':
         return (
-          // <AddCellPhonePopup
-          //   isPopup={isPopup}
-          //   setIsPopup={setIsPopup}
-          //   title="Phone Number"
-          //   logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
-          //   selectedBadge={seletedBadge}
-          //   handleUserInfo={handleUserInfo}
-          // />
-          <PhoneOtpVerificationPopup
-            isPopup={isPopup}
-            setIsPopup={setIsPopup}
-            title="Phone Number"
-            logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
-            selectedBadge={seletedBadge}
-            handleUserInfo={handleUserInfo}
-          />
+          <>
+            {localStorage.getItem('isOtpSent') === 'true' ? (
+              <PhoneOtpVerificationPopup
+                isPopup={isPopup}
+                setIsPopup={setIsPopup}
+                title="Phone Number"
+                logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
+                selectedBadge={seletedBadge}
+                handleUserInfo={handleUserInfo}
+                setIsOtpSent={setIsOtpSent}
+              />
+            ) : (
+              <AddCellPhonePopup
+                isPopup={isPopup}
+                setIsPopup={setIsPopup}
+                title="Phone Number"
+                logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
+                selectedBadge={seletedBadge}
+                handleUserInfo={handleUserInfo}
+                setIsOtpSent={setIsOtpSent}
+              />
+            )}
+          </>
         );
 
       default:
@@ -152,6 +170,7 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
   return (
     <div className="flex flex-col justify-between ">
       {renderContactBadgesPopup()}
+
       <div className="flex flex-col gap-[7px] tablet:gap-4 laptop:gap-5">
         <h1 className="font-500 font-Inter mb-[3px] text-[9.74px] font-medium text-[#000] tablet:text-[1.7vw] dark:text-white">
           Contact

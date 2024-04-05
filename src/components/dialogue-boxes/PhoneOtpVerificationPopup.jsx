@@ -1,16 +1,14 @@
 import { toast } from 'sonner';
 import { useState, useRef } from 'react';
 import { FaSpinner } from 'react-icons/fa';
-import { LoginSocialGoogle } from 'reactjs-social-login';
-import { useErrorBoundary } from 'react-error-boundary';
 import { Button } from '../ui/Button';
-import api from '../../services/api/Axios';
+import { useMutation } from '@tanstack/react-query';
+import { verifyOtp } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
 
 const PhoneOtpVerificationPopup = ({ isPopup, setIsPopup, title, logo, selectedBadge, handleUserInfo }) => {
-  const { showBoundary } = useErrorBoundary();
-  const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
+  let phone = '03471236957';
+
   const handleClose = () => {
     setIsPopup(false);
   };
@@ -40,48 +38,19 @@ const PhoneOtpVerificationPopup = ({ isPopup, setIsPopup, title, logo, selectedB
     }
   };
 
-  // Handle Add Contact Badge
-  const handleAddContactBadge = async ({ provider, data, legacy }) => {
-    setLoading(true);
-    try {
-      let addBadge;
-      if (legacy) {
-        if (email === '') return toast.warning('Please enter your email address');
-        addBadge = await api.post(`/addBadge/contact`, {
-          legacy,
-          email,
-          uuid: localStorage.getItem('uuid'),
-          type: selectedBadge,
-        });
-      } else {
-        data['provider'] = provider;
-        data['type'] = selectedBadge;
-        data['uuid'] = localStorage.getItem('uuid');
-        addBadge = await api.post(`/addBadge/contact`, {
-          ...data,
-        });
-      }
-      if (addBadge.status === 200) {
-        toast.success('Badge Added Successfully!');
-        handleClose();
-        handleUserInfo();
-        setEmail('');
-      }
-      if (addBadge.status === 201) {
-        toast.success('Please check your Email to verify');
-        handleClose();
-        handleUserInfo();
-        setEmail('');
-      }
-    } catch (error) {
-      showBoundary(error);
-      toast.error(error.response.data.message.split(':')[1]);
+  const { mutateAsync: verifyOtpCode, isPending } = useMutation({
+    mutationFn: verifyOtp,
+    onSuccess: (resp) => {
+      // queryClient.invalidateQueries('history');
+      toast.success('OTP verified Successfully');
+      localStorage.removeItem('isOtpSent');
+      // setIsOtpSent(true);
       handleClose();
-      setEmail('');
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message.split(':')[1]);
+    },
+  });
 
   return (
     <div>
@@ -117,9 +86,16 @@ const PhoneOtpVerificationPopup = ({ isPopup, setIsPopup, title, logo, selectedB
             <p className="my-[6] text-[8px] font-normal leading-[20px] text-[#707175] tablet:my-[15px] tablet:text-[18px]">
               Do not Receive OTP ? <span className="cursor-pointer font-semibold text-[#4A8DBD]">Send OTP</span>
             </p>
-            <div className="flex justify-end" onClick={() => handleAddContactBadge({ legacy: true })}>
-              <Button variant="submit" disabled={loading}>
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+            <div className="flex justify-end">
+              <Button
+                variant="submit"
+                disabled={isPending}
+                onClick={() => {
+                  const otpString = otp.join('');
+                  verifyOtpCode({ phone, otpString });
+                }}
+              >
+                {isPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               </Button>
             </div>
           </div>
