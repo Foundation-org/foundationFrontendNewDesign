@@ -48,6 +48,7 @@ const Bookmark = () => {
   const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
   const [height, setHeight] = useState('calc(100vh - 164.3px)');
+  const [playerPlayingId, setPlayingPlayerId] = useState();
 
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
@@ -286,6 +287,8 @@ const Bookmark = () => {
                         // })}
                         setPagination={setPagination}
                         setSubmitResponse={setSubmitResponse}
+                        playing={item._id === playerPlayingId}
+                        setPlayingPlayerId={setPlayingPlayerId}
                       />
                     </div>
                   ))
