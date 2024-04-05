@@ -3,16 +3,10 @@ import { useState, useRef } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../ui/Button';
 import { useMutation } from '@tanstack/react-query';
-import { verifyOtp } from '../../services/api/badgesApi';
+import { sendOtp, verifyOtp } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
 
-const PhoneOtpVerificationPopup = ({ isPopup, setIsPopup, title, logo, selectedBadge, handleUserInfo }) => {
-  let phone = '03471236957';
-
-  const handleClose = () => {
-    setIsPopup(false);
-  };
-
+const PhoneOtpVerificationPopup = ({ isPopup, title, logo, handleClose, otpResp }) => {
   const [otp, setOTP] = useState(['', '', '', '', '', '']);
   const refs = Array.from({ length: 6 }).map(() => useRef());
 
@@ -41,16 +35,15 @@ const PhoneOtpVerificationPopup = ({ isPopup, setIsPopup, title, logo, selectedB
   const { mutateAsync: verifyOtpCode, isPending } = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (resp) => {
-      // queryClient.invalidateQueries('history');
       toast.success('OTP verified Successfully');
       localStorage.removeItem('isOtpSent');
-      // setIsOtpSent(true);
       handleClose();
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
     },
   });
+  console.log(otpResp);
 
   return (
     <div>
@@ -61,7 +54,8 @@ const PhoneOtpVerificationPopup = ({ isPopup, setIsPopup, title, logo, selectedB
               OTP Verification
             </h1>
             <p className="my-[10px] text-[9.28px] font-normal leading-[9.28px] text-[#707175] tablet:my-[15px] tablet:text-[18px] tablet:leading-[20px]">
-              We Will send you a one time password on this <span className="font-semibold">+923007065077</span>
+              We Will send you a one time password on this{' '}
+              <span className="font-semibold">{otpResp?.data?.data?.phoneNumber}</span>
             </p>
             <div className="flex flex-col space-y-16">
               <div className="flex w-full flex-row items-center gap-2 tablet:gap-[15px]">
@@ -92,7 +86,7 @@ const PhoneOtpVerificationPopup = ({ isPopup, setIsPopup, title, logo, selectedB
                 disabled={isPending}
                 onClick={() => {
                   const otpString = otp.join('');
-                  verifyOtpCode({ phone, otpString });
+                  verifyOtpCode({ phone: otpResp?.data?.data?.phoneNumber, otpString });
                 }}
               >
                 {isPending ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}

@@ -11,8 +11,21 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isPopup, setIsPopup] = useState(false);
+  const [isPopupVerification, setIsPopupVerification] = useState(false);
   const [seletedBadge, setSelectedBadge] = useState('');
   const [isOtpSent, setIsOtpSent] = useState(false);
+  const [otpResp, setOtpResp] = useState();
+  console.log(otpResp);
+  const handleClose = () => {
+    setIsPopup(false);
+  };
+
+  const handleVerificationOpen = () => {
+    localStorage.setItem('isOtpSent', 'true');
+
+    setIsPopup(false);
+    setIsPopupVerification(true);
+  };
 
   const checkContact = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType);
   const checkPrimary = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType && i.primary === true);
@@ -94,6 +107,7 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
     if (!isPopup) {
       return null;
     }
+    console.log(isPopupVerification, isPopup, localStorage.getItem('isOtpSent'));
 
     switch (seletedBadge) {
       case 'personal':
@@ -138,15 +152,17 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
       case 'cell-phone':
         return (
           <>
-            {localStorage.getItem('isOtpSent') === 'true' ? (
+            {isOtpSent ? (
               <PhoneOtpVerificationPopup
-                isPopup={isPopup}
-                setIsPopup={setIsPopup}
+                isPopup={isPopupVerification}
+                setIsPopup={setIsPopupVerification}
                 title="Phone Number"
                 logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
                 selectedBadge={seletedBadge}
                 handleUserInfo={handleUserInfo}
                 setIsOtpSent={setIsOtpSent}
+                otpResp={otpResp}
+                handleClose={handleClose}
               />
             ) : (
               <AddCellPhonePopup
@@ -157,6 +173,9 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
                 selectedBadge={seletedBadge}
                 handleUserInfo={handleUserInfo}
                 setIsOtpSent={setIsOtpSent}
+                setOtpResp={setOtpResp}
+                handleClose={handleClose}
+                handleVerificationOpen={handleVerificationOpen}
               />
             )}
           </>

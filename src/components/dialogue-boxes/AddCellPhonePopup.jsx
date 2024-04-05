@@ -6,21 +6,16 @@ import PopUp from '../ui/PopUp';
 import { useMutation } from '@tanstack/react-query';
 import { sendOtp } from '../../services/api/badgesApi';
 
-const AddCellPhonePopup = ({ isPopup, setIsPopup, title, logo, selectedBadge, handleUserInfo, setIsOtpSent }) => {
-  const [phone, setPhone] = useState('');
-
-  const handleClose = () => {
-    setIsPopup(false);
-  };
+const AddCellPhonePopup = ({ isPopup, title, logo, setOtpResp, handleClose, setIsOtpSent, handleVerificationOpen }) => {
+  const [phone, setPhone] = useState();
 
   const { mutateAsync: generateOtp, isPending } = useMutation({
     mutationFn: sendOtp,
     onSuccess: (resp) => {
-      // queryClient.invalidateQueries('history');
+      setOtpResp(resp);
       toast.success('OTP sent Successfully');
-      localStorage.setItem('isOtpSent', 'true');
-      // setIsOtpSent(true);
-      handleClose();
+      setIsOtpSent(true);
+      handleVerificationOpen();
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
