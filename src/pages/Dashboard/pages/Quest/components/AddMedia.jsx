@@ -8,12 +8,15 @@ import ReactPlayer from 'react-player';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import './Player.css';
 import { useDebounce } from '../../../../../utils/useDebounce';
+import { useQuery } from '@tanstack/react-query';
+import { validateURL } from '../../../../../services/api/embedded-media';
 
 export default function AddMedia({ handleTab }) {
   const playerRef = useRef(null);
   const dispatch = useDispatch();
   const getMediaStates = useSelector(createQuestAction.getMedia);
   const debouncedURL = useDebounce(getMediaStates.url, 1000);
+  const [mediaId, setMediaId] = useState('');
   const [mediaURL, setMediaURL] = useState(debouncedURL);
   const [soundcloudUnique] = useState('soundcloud.com');
   const [youtubeBaseURLs] = useState([
@@ -24,11 +27,25 @@ export default function AddMedia({ handleTab }) {
     'youtu.be',
   ]);
 
+  const { data: validatedURL } = useQuery({
+    queryKey: ['validateURL', mediaId],
+    queryFn: () => validateURL(mediaId),
+  });
+
   const handleVideoEnded = () => {
-    console.log('ended');
     if (playerRef.current) {
       playerRef.current.seekTo(0);
       playerRef.current.getInternalPlayer().play(); // Resume playback
+    }
+  };
+
+  const extractPartFromUrl = (url) => {
+    const pattern = /soundcloud.com\/(?:[^\/]+)\/([^/?]+)/;
+    const match = url.match(pattern);
+    if (match) {
+      return match[1];
+    } else {
+      return null;
     }
   };
 
@@ -72,8 +89,11 @@ export default function AddMedia({ handleTab }) {
   useEffect(() => {
     if (youtubeBaseURLs.some((baseURL) => debouncedURL?.includes(baseURL))) {
       const videoId = extractYouTubeVideoId(debouncedURL);
+      setMediaId(videoId);
       checkVideoAgeRestriction(videoId, debouncedURL);
     } else {
+      const urlId = extractPartFromUrl(debouncedURL);
+      setMediaId(urlId);
       dispatch(createQuestAction.addMediaUrl(debouncedURL));
     }
   }, [debouncedURL]);
