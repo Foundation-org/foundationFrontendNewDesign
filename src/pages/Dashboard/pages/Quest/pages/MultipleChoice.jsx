@@ -238,6 +238,7 @@ const MultipleChoice = () => {
       return true;
     }
   };
+  console.log(optionsValue);
 
   useEffect(() => {
     if (getMediaStates.isMedia) {
@@ -320,7 +321,13 @@ const MultipleChoice = () => {
       <Button
         variant="addOption"
         className="ml-[21.55px] mt-[16px] tablet:ml-[60px] tablet:mt-[33px]"
-        onClick={addNewOption}
+        onClick={() => {
+          if (optionsValue.length < 50) {
+            addNewOption();
+          } else {
+            toast.warning('You cannot add more than 50 options');
+          }
+        }}
       >
         + Add Option
       </Button>
