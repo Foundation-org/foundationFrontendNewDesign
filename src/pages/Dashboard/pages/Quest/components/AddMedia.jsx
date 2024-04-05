@@ -15,7 +15,7 @@ export default function AddMedia({ handleTab }) {
   const playerRef = useRef(null);
   const dispatch = useDispatch();
   const getMediaStates = useSelector(createQuestAction.getMedia);
-  const debouncedURL = useDebounce(getMediaStates.url, 1000);
+  let debouncedURL = useDebounce(getMediaStates.url, 1000);
   const [mediaId, setMediaId] = useState('');
   const [mediaURL, setMediaURL] = useState(debouncedURL);
   const [soundcloudUnique] = useState('soundcloud.com');
@@ -26,7 +26,8 @@ export default function AddMedia({ handleTab }) {
     'youtube-nocookie.com',
     'youtu.be',
   ]);
-
+  const [show, setShow] = useState(false);
+  console.log(debouncedURL);
   const { data: validatedURL } = useQuery({
     queryKey: ['validateURL', mediaId],
     queryFn: () => validateURL(mediaId),
@@ -190,7 +191,7 @@ export default function AddMedia({ handleTab }) {
               <Tooltip optionStatus={getMediaStates.mediaDescStatus} />
             </button>
           </div>
-          {debouncedURL === '' && (
+          {(debouncedURL === '' || !show) && (
             <div className="mr-[50px] tablet:mr-[100px] laptop:mr-[132px]">
               <TextareaAutosize
                 tabIndex={2}
@@ -213,6 +214,7 @@ export default function AddMedia({ handleTab }) {
                 // }}
                 onChange={(e) => {
                   dispatch(createQuestAction.addMediaUrl(e.target.value));
+                  setShow(true);
                 }}
                 value={getMediaStates.url}
                 placeholder="Paste embed link here....."
@@ -220,7 +222,7 @@ export default function AddMedia({ handleTab }) {
               />
             </div>
           )}
-          {debouncedURL && (
+          {debouncedURL && show && (
             <div
               className="player-wrapper relative mt-1 cursor-pointer rounded-[10px] tablet:mt-[10px]"
               onClick={() => {
@@ -241,8 +243,9 @@ export default function AddMedia({ handleTab }) {
                 url={mediaURL}
                 className="react-player"
                 onError={(e) => {
-                  toast.error('Invalid URL');
-                  // toast.error('Invalid URL'), dispatch(createQuestAction.addMediaUrl(''));
+                  // toast.error('Invalid URL');
+                  setShow(false);
+                  toast.error('Invalid URL'), dispatch(createQuestAction.addMediaUrl(''));
                 }}
                 width="100%"
                 height="100%"
