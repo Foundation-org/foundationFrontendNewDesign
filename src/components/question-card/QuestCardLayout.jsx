@@ -39,7 +39,7 @@ const data = [
   },
 ];
 
-const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, children }) => {
+const QuestCardLayout = ({ questStartData, isBookmarked, setPlayingPlayerId, playing, postProperties, children }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const queryClient = useQueryClient();
@@ -135,7 +135,13 @@ const QuestCardLayout = ({ questStartData, isBookmarked, postProperties, childre
 
       <div className="pb-[0.94rem] pt-[0.84rem] tablet:pb-5 tablet:pt-[0.94rem]">
         {questStartData.url !== '' && (
-          <EmbededVideo description={questStartData.description} url={questStartData.url} />
+          <EmbededVideo
+            description={questStartData.description}
+            url={questStartData.url}
+            setPlayingPlayerId={setPlayingPlayerId}
+            questId={questStartData._id}
+            playing={playing}
+          />
         )}
         <div className="ml-[1.39rem] mr-[0.62rem] flex items-start justify-between tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
           <div className="flex gap-1.5 pr-5 tablet:gap-3 tablet:pr-6">

@@ -23,7 +23,6 @@ import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import * as authActions from '../../../../../features/auth/authSlice';
 import { useLocation } from 'react-router-dom';
-import { EmbededVideo } from '../../../../../components/question-card/EmbededVideo.jsx';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -795,7 +794,13 @@ const QuestionCardWithToggle = (props) => {
 
   return (
     <>
-      <QuestCardLayout questStartData={questStartData} isBookmarked={isBookmarked} postProperties={postProperties}>
+      <QuestCardLayout
+        questStartData={questStartData}
+        isBookmarked={isBookmarked}
+        setPlayingPlayerId={props.setPlayingPlayerId}
+        postProperties={postProperties}
+        playing={props.playing}
+      >
         {renderQuestContent()}
         <ButtonGroup
           questStartData={questStartData}

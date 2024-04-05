@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 // Components
@@ -24,7 +24,7 @@ const QuestStartSection = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
-
+  const [playerPlayingId, setPlayingPlayerId] = useState();
   // Pagination
   const pageLimit = 5;
   const [pagination, setPagination] = useState({
@@ -361,6 +361,8 @@ const QuestStartSection = () => {
                           .some((bookmark) => bookmark.questForeignKey === item._id)}
                         setPagination={setPagination}
                         setSubmitResponse={setSubmitResponse}
+                        playing={item._id === playerPlayingId}
+                        setPlayingPlayerId={setPlayingPlayerId}
                       />
                       {/* ) : (
                         <QuestionCard
