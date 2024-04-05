@@ -97,7 +97,7 @@ body {
 
 iframe {
   width: 302px !important;
-  height: 77px !important;
+  /* height: 77px !important; */
   border-radius: 4px;
 }
 
@@ -844,10 +844,10 @@ input[type='number'] {
   margin-right: auto;
 }
 
-.feed-player-wrapper {
+/* .feed-player-wrapper {
   padding-left: 5px !important;
   padding-right: 5px !important;
-}
+} */
 
 .feed-react-player div {
   margin-left: 0px !important;
@@ -856,12 +856,12 @@ input[type='number'] {
 /* SoundCloud */
 .react-player iframe {
   width: 100% !important;
-  height: 60px !important;
+  height: 128px !important;
 }
 
 .feed-react-player iframe {
   width: 100% !important;
-  height: 60px !important;
+  /* height: 60px !important; */
 }
 
 @media only screen and (min-width: 744px) {
@@ -879,7 +879,7 @@ input[type='number'] {
 
   .react-player iframe {
     width: 100% !important;
-    height: 85px !important;
+    height: 180px !important;
   }
 
   .feed-react-player iframe {
