@@ -282,25 +282,47 @@ export const createQuestSlice = createSlice({
           };
         }
       } else {
-        state.media.desctiption = validatedQuestion;
-        state.media.validatedDescription = validatedQuestion;
-        // state.questions.questionTyping = false;
-        state.media.mediaDescStatus = {
-          name: 'Ok',
-          color: 'text-[#0FB063]',
-          tooltipName: 'Question is Verified',
-          tooltipStyle: 'tooltip-success',
-          isVerifiedQuestion: true,
-          status: false,
-        };
-        state.media.chatgptMediaDescStatus = {
-          name: 'Ok',
-          color: 'text-[#0FB063]',
-          tooltipName: 'Question is Verified',
-          tooltipStyle: 'tooltip-success',
-          isVerifiedQuestion: true,
-          status: false,
-        };
+        if (validatedQuestion === state.questions.validatedQuestion) {
+          state.media.desctiption = validatedQuestion;
+          state.media.validatedDescription = validatedQuestion;
+          // state.questions.questionTyping = false;
+          state.media.mediaDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+          state.media.chatgptMediaDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+        } else {
+          state.media.desctiption = validatedQuestion;
+          state.media.validatedDescription = validatedQuestion;
+          // state.questions.questionTyping = false;
+          state.media.mediaDescStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+          state.media.chatgptMediaDescStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+        }
       }
     });
 
@@ -368,25 +390,47 @@ export const createQuestSlice = createSlice({
           };
         }
       } else {
-        state.questions.question = validatedQuestion;
-        state.questions.validatedQuestion = validatedQuestion;
-        state.questions.questionTyping = false;
-        state.questionReset = {
-          name: 'Ok',
-          color: 'text-[#0FB063]',
-          tooltipName: 'Question is Verified',
-          tooltipStyle: 'tooltip-success',
-          isVerifiedQuestion: true,
-          status: false,
-        };
-        state.chatgptStatus = {
-          name: 'Ok',
-          color: 'text-[#0FB063]',
-          tooltipName: 'Question is Verified',
-          tooltipStyle: 'tooltip-success',
-          isVerifiedQuestion: true,
-          status: false,
-        };
+        if (validatedQuestion === state.media.validatedDescription) {
+          state.questions.question = validatedQuestion;
+          state.questions.validatedQuestion = validatedQuestion;
+          state.questions.questionTyping = false;
+          state.questionReset = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+          state.chatgptStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+        } else {
+          state.questions.question = validatedQuestion;
+          state.questions.validatedQuestion = validatedQuestion;
+          state.questions.questionTyping = false;
+          state.questionReset = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+          state.chatgptStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+        }
       }
     });
 
