@@ -52,6 +52,8 @@ const QuestBottombar = ({
         </p>,
       );
       return;
+    } else if (questStartData?.moderationRatingCount >= 1) {
+      toast.warning('Sharing adult posts is prohibited.');
     } else {
       setCopyModal(true);
     }
@@ -204,7 +206,7 @@ const QuestBottombar = ({
       {postProperties !== 'HiddenPosts' &&
         postProperties !== 'SharedLinks' &&
         postProperties !== 'sharedlink-results' &&
-        postProperties !=='actual-results'&&
+        postProperties !== 'actual-results' &&
         !window.location.href.includes('/p/') && (
           <div className="flex min-w-[70px] justify-center tablet:min-w-[160px]">
             {isFullScreen === undefined ? (

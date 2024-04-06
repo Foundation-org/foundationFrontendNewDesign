@@ -138,7 +138,8 @@ const AgreeDisagree = () => {
   const checkMediaHollow = () => {
     if (
       questionStatus.tooltipName === 'Question is Verified' &&
-      getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified'
+      getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      getMediaStates.urlStatus.tooltipName === 'Question is Verified'
     ) {
       return false;
     } else {
@@ -172,6 +173,7 @@ const AgreeDisagree = () => {
     getMediaStates.isMedia,
     getMediaStates.desctiption,
     getMediaStates.url,
+    getMediaStates.urlStatus,
   ]);
 
   useEffect(() => {
