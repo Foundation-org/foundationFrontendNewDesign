@@ -154,6 +154,45 @@ export const answerValidation = async ({ answer }) => {
   }
 };
 
+async function checkVideoAgeRestriction(videoId) {
+  const apiKey = import.meta.env.VITE_GG_API_KEY;
+  const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=contentDetails`;
+
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
+export const urlDuplicateCheck = async ({ id }) => {
+  try {
+    const constraintResponses = await api.get(`/infoquestions/checkMediaDuplicateUrl/${id}`);
+
+    let response = await checkVideoAgeRestriction(id);
+
+    console.log('response', response);
+    const contentRating = response?.items[0]?.contentDetails?.contentRating?.ytRating;
+    const isAdultContent = contentRating === 'ytAgeRestricted';
+
+    if (isAdultContent === false) {
+      return { message: constraintResponses.data.message, errorMessage: null };
+    } else {
+      return { message: 'It is an adult video', errorMessage: 'ADULT' };
+    }
+
+    return { message: constraintResponses.data.message, errorMessage: null };
+  } catch (error) {
+    console.log({ error });
+    if (error.response.data.duplicate === true) {
+      return { message: error.response.data.error, errorMessage: 'DUPLICATION' };
+    }
+  }
+};
+
 export const moderationRating = async ({ validatedQuestion }) => {
   try {
     const response = await api.post(`/ai-validation/moderator?userMessage=${validatedQuestion}`);
