@@ -7,27 +7,24 @@ import Button from '../../components/Button';
 import { useErrorBoundary } from 'react-error-boundary';
 import api from '../../../../../../services/api/Axios';
 import { isBrowser, isMobile } from 'react-device-detect';
-import { useSDK } from "@metamask/sdk-react";
+import { useSDK } from '@metamask/sdk-react';
 import { useState } from 'react';
 
 export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup }) {
   const [account, setAccount] = useState();
   const { sdk, connected, chainId } = useSDK();
 
-    const connect = async () => {
-        try {
-            const accounts = await sdk?.connect();
-            setAccount(accounts[0]);
-            handleWeb3(accounts)
-        } catch (err) {
-            console.warn("failed to connect..", err);
-        }
-    };
-
-
+  const connect = async () => {
+    try {
+      const accounts = await sdk?.connect();
+      setAccount(accounts[0]);
+      handleWeb3(accounts[0]);
+    } catch (err) {
+      console.warn('failed to connect..', err);
+    }
+  };
 
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const { showBoundary } = useErrorBoundary();
 
   const handleComingSoon = () => {
     toast.info('This badge will soon be available for mobile.');
@@ -55,16 +52,16 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
   };
 
   const checkPassKeyBadge = (accountName, type) => {
-    return fetchUser?.badges.some((badge) => badge.accountName === accountName && badge.type === type)
-  }
+    return fetchUser?.badges.some((badge) => badge.accountName === accountName && badge.type === type);
+  };
   const handlePasskey = async (title, type) => {
     try {
       // Device Detect
-      if(type === 'desktop' && !isBrowser){
-        return toast.warning("Please switch to desktop!")
+      if (type === 'desktop' && !isBrowser) {
+        return toast.warning('Please switch to desktop!');
       }
-      if(type === 'mobile' && !isMobile){
-        return toast.warning("Please switch to mobile!")
+      if (type === 'mobile' && !isMobile) {
+        return toast.warning('Please switch to mobile!');
       }
       let value;
       if (title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile') {
@@ -72,7 +69,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
         const data = await resp.json();
         // const attResp = await window.SimpleWebAuthnBrowser.startRegistration(data);
         const attResp = await startRegistration(data);
-        attResp.challenge = data.challenge
+        attResp.challenge = data.challenge;
         const verificationResp = await fetch(`${import.meta.env.VITE_API_URL}/verify-registration`, {
           method: 'POST',
           headers: {
@@ -81,7 +78,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
           body: JSON.stringify(attResp),
         });
         const verificationJSON = await verificationResp.json();
-        console.log("🚀 ~ handleRegistration ~ verificationResp:", verificationResp)
+        console.log('🚀 ~ handleRegistration ~ verificationResp:', verificationResp);
 
         if (verificationJSON && verificationJSON.verified) {
           value = attResp;
@@ -95,10 +92,10 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
       const addBadge = await api.post(`/addBadge/passkey/add`, {
         uuid: fetchUser.uuid,
         accountId: value.id,
-        accountName: "Passkey",
+        accountName: 'Passkey',
         isVerified: true,
         type: type,
-        data: value
+        data: value,
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
@@ -107,7 +104,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
     } catch (error) {
       // showBoundary(error);
       console.error(error);
-      toast.error(error.response.data.message.split(":")[1])
+      toast.error(error.response.data.message.split(':')[1]);
     }
   };
 
@@ -136,24 +133,33 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
                 <h1>{item.title}</h1>
               </div>
               <Button
-                color={checkPassKeyBadge("Passkey", item.type) ? 'red' : item.ButtonColor}
+                color={checkPassKeyBadge('Passkey', item.type) || checkWeb3Badge(item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
                   // alert("hello1...")
-                  item.type === "etherium-wallet" ? 
-                  connect():
-                  checkPassKeyBadge("Passkey", item.type) ? handleRemoveBadgePopup({
-                    title: item.title,
-                    image: item.image,
-                    type: item.type,
-                    badgeType:'passkey',
-                    accountName: "Passkey",
-                  })
-                :handlePasskey(item?.title, item?.type);
+                  item.type === 'etherium-wallet'
+                    ? checkWeb3Badge(item.type)
+                      ? handleRemoveBadgePopup({
+                          title: item.title,
+                          image: item.image,
+                          type: item.type,
+                          badgeType: 'passkey',
+                          accountName: 'Passkey',
+                        })
+                      : connect()
+                    : checkPassKeyBadge('Passkey', item.type)
+                      ? handleRemoveBadgePopup({
+                          title: item.title,
+                          image: item.image,
+                          type: item.type,
+                          badgeType: 'passkey',
+                          accountName: 'Passkey',
+                        })
+                      : handlePasskey(item?.title, item?.type);
                 }}
                 disabled={item.disabled}
               >
-                {checkPassKeyBadge("Passkey", item.type) ? 'Remove' : item.ButtonText}
-                {!checkPassKeyBadge("Passkey", item.type) && (
+                {checkPassKeyBadge('Passkey', item.type) || checkWeb3Badge(item.type) ? 'Remove' : item.ButtonText}
+                {!checkPassKeyBadge('Passkey', item.type) && !checkWeb3Badge(item.type) && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                     (+0.96 FDX)
                   </span>
@@ -182,22 +188,23 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
                 <h1>{item.title}</h1>
               </div>
               <Button
-                color={checkPassKeyBadge("Passkey", item.type) ? 'red' : item.ButtonColor}
+                color={checkPassKeyBadge('Passkey', item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
                   // alert("hello2...")
-                  checkPassKeyBadge("Passkey", item.type) ? handleRemoveBadgePopup({
-                    title: item.title,
-                    image: item.image,
-                    type: item.type,
-                    badgeType:'passkey',
-                    accountName: "Passkey",
-                  })
-                :handlePasskey(item?.title, item?.type);
+                  checkPassKeyBadge('Passkey', item.type)
+                    ? handleRemoveBadgePopup({
+                        title: item.title,
+                        image: item.image,
+                        type: item.type,
+                        badgeType: 'passkey',
+                        accountName: 'Passkey',
+                      })
+                    : handlePasskey(item?.title, item?.type);
                 }}
                 disabled={item.disabled}
               >
-                {checkPassKeyBadge("Passkey", item.type) ? 'Remove' : item.ButtonText}
-                {!checkPassKeyBadge("Passkey", item.type) && (
+                {checkPassKeyBadge('Passkey', item.type) ? 'Remove' : item.ButtonText}
+                {!checkPassKeyBadge('Passkey', item.type) && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                     (+0.96 FDX)
                   </span>
@@ -227,26 +234,27 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
               <h1>{item.title}</h1>
             </div>
             <Button
-            color={checkPassKeyBadge("Passkey", item.type) ? 'red' : item.ButtonColor}
-            onClick={() => {
-              // alert("hello3...")
-              checkPassKeyBadge("Passkey", item.type) ? handleRemoveBadgePopup({
-                title: item.title,
-                image: item.image,
-                type: item.type,
-                badgeType:'passkey',
-                accountName: "Passkey",
-              })
-            :handlePasskey(item?.title, item?.type);
-            }}
-            disabled={item.disabled}
-          >
-            {checkPassKeyBadge("Passkey", item.type) ? 'Remove' : item.ButtonText}
-            {!checkPassKeyBadge("Passkey", item.type) && (
-              <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
-                (+0.96 FDX)
-              </span>
-            )}
+              color={checkPassKeyBadge('Passkey', item.type) ? 'red' : item.ButtonColor}
+              onClick={() => {
+                // alert("hello3...")
+                checkPassKeyBadge('Passkey', item.type)
+                  ? handleRemoveBadgePopup({
+                      title: item.title,
+                      image: item.image,
+                      type: item.type,
+                      badgeType: 'passkey',
+                      accountName: 'Passkey',
+                    })
+                  : handlePasskey(item?.title, item?.type);
+              }}
+              disabled={item.disabled}
+            >
+              {checkPassKeyBadge('Passkey', item.type) ? 'Remove' : item.ButtonText}
+              {!checkPassKeyBadge('Passkey', item.type) && (
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                  (+0.96 FDX)
+                </span>
+              )}
             </Button>
           </div>
         ))}

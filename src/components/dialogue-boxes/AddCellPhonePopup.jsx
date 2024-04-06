@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../ui/Button';
 import { useMutation } from '@tanstack/react-query';
-import { sendOtp, verifyOtp } from '../../services/api/badgesApi';
+import { resendOtp, sendOtp, verifyOtp } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 
@@ -70,6 +70,17 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
 
   const { mutateAsync: generateOtp, isPending } = useMutation({
     mutationFn: sendOtp,
+    onSuccess: (resp) => {
+      setOtpResp(resp);
+      toast.success('OTP sent Successfully');
+      setIsRunning(true);
+    },
+    onError: (err) => {
+      toast.error(err.response.data.message.split(':')[1]);
+    },
+  });
+  const { mutateAsync: regenerateOtp } = useMutation({
+    mutationFn: resendOtp,
     onSuccess: (resp) => {
       setOtpResp(resp);
       toast.success('OTP sent Successfully');
@@ -164,9 +175,21 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
               <h1 className="mt-2 text-[9.278px] font-semibold leading-[9.278px] text-[#707175] tablet:text-[20px] tablet:leading-[20px]">
                 {formattedTime}
               </h1>
-              <p className="my-[6] text-[8px] font-normal leading-[20px] text-[#707175] tablet:my-[15px] tablet:text-[18px]">
-                Do not Receive OTP ? <span className="cursor-pointer font-semibold text-[#4A8DBD]">Resend OTP</span>
-              </p>
+              {seconds === 0 && (
+                <p className="my-[6] text-[8px] font-normal leading-[20px] text-[#707175] tablet:my-[15px] tablet:text-[18px]">
+                  Do not Receive OTP ?{' '}
+                  <span
+                    className="cursor-pointer font-semibold text-[#4A8DBD]"
+                    onClick={() => {
+                      regenerateOtp(otpResp?.data?.data?.phoneNumber);
+                      setSeconds(40);
+                      setIsRunning(true);
+                    }}
+                  >
+                    Resend OTP
+                  </span>
+                </p>
+              )}
               <div className="flex justify-end">
                 <Button
                   variant="submit"
