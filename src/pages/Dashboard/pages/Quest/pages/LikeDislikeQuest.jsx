@@ -133,10 +133,22 @@ const LikeDislike = () => {
     }
   };
 
+  const checkMediaHollow = () => {
+    if (
+      questionStatus.tooltipName === 'Question is Verified' &&
+      getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified'
+    ) {
+      return false;
+    } else {
+      setLoading(false);
+      return true;
+    }
+  };
+
   useEffect(() => {
     if (getMediaStates.isMedia) {
       if (
-        !checkHollow() &&
+        !checkMediaHollow() &&
         createQuestSlice.question !== '' &&
         getMediaStates.desctiption !== '' &&
         getMediaStates.url !== ''

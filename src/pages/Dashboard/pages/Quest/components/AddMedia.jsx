@@ -27,7 +27,7 @@ export default function AddMedia({ handleTab }) {
     'youtu.be',
   ]);
   const [show, setShow] = useState(false);
-  console.log(debouncedURL);
+
   const { data: validatedURL } = useQuery({
     queryKey: ['validateURL', mediaId],
     queryFn: () => validateURL(mediaId),

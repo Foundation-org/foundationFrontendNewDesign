@@ -22,7 +22,6 @@ const RankChoice = () => {
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
-  console.log('🚀 ~ RankChoice ~ getMediaStates:', getMediaStates);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -227,10 +226,24 @@ const RankChoice = () => {
     }
   };
 
+  const checkMediaHollow = () => {
+    const AllVerified = optionsValue.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
+    if (
+      questionStatus.tooltipName === 'Question is Verified' &&
+      getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      AllVerified
+    ) {
+      return false;
+    } else {
+      setLoading(false);
+      return true;
+    }
+  };
+
   useEffect(() => {
     if (getMediaStates.isMedia) {
       if (
-        !checkHollow() &&
+        !checkMediaHollow() &&
         optionsValue.every(
           (value) =>
             value.question !== '' &&

@@ -105,7 +105,6 @@ const Options = ({
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
                 } w-5 min-w-5 border-y tablet:border-y-[3px]`}
               ></div>
-              {console.log(number)}
               <TextareaAutosize
                 id={`input-${number}`}
                 onChange={(e) => handleChange(e.target.value)}

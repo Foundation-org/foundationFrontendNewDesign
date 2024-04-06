@@ -238,12 +238,25 @@ const MultipleChoice = () => {
       return true;
     }
   };
-  console.log(optionsValue);
+
+  const checkMediaHollow = () => {
+    const AllVerified = optionsValue.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
+    if (
+      questionStatus.tooltipName === 'Question is Verified' &&
+      getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      AllVerified
+    ) {
+      return false;
+    } else {
+      setLoading(false);
+      return true;
+    }
+  };
 
   useEffect(() => {
     if (getMediaStates.isMedia) {
       if (
-        !checkHollow() &&
+        !checkMediaHollow() &&
         optionsValue.every(
           (value) =>
             value.question !== '' &&
