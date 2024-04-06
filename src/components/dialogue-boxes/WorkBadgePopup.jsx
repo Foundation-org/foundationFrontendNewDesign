@@ -258,8 +258,8 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
         {existingData && !addAnotherForm ? (
           <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
             {existingData.map((item, index) => (
-              <div className="flex w-full justify-between  rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
-                <div>
+              <div className="flex w-full justify-between rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] pl-[9px] text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]">
+                <div className="py-3 tablet:py-[25px]">
                   <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
                     {item.companyName}
                   </h4>
@@ -273,26 +273,33 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                   </div>
                 </div>
                 {deleteItem === item.id ? (
-                  <div>
-                    <Button
-                      variant="addOption"
-                      onClick={() => {
-                        setDeleteItem('');
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        handleDelete(deleteItem);
-                      }}
-                    >
-                      Delete
-                    </Button>
+                  <div className="max-w-[160px] rounded-[10.06px] border-l border-[#DEE6F7] px-[9px] py-2 tablet:max-w-[342px] tablet:rounded-[21.06px] tablet:border-l-[3px] tablet:px-5 tablet:py-[15px]">
+                    <h1 className="mb-[7px] text-[8px] font-medium leading-[8px] text-[#A7A7A7] tablet:mb-[10px] tablet:text-[18px] tablet:font-semibold tablet:leading-[26.73px]">
+                      Are you sure you want to delete your experience?
+                    </h1>
+                    <div className="flex justify-end gap-2 tablet:gap-[25px]">
+                      <Button
+                        className={'min-w-[2.875rem] tablet:min-w-[80px]'}
+                        variant="submit"
+                        onClick={() => {
+                          handleDelete(deleteItem);
+                        }}
+                      >
+                        Yes
+                      </Button>
+                      <Button
+                        className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}
+                        variant="cancel"
+                        onClick={() => {
+                          setDeleteItem('');
+                        }}
+                      >
+                        No
+                      </Button>
+                    </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col justify-between">
+                  <div className="flex flex-col justify-between py-3 pr-[9px] tablet:py-[25px] tablet:pr-7">
                     <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
                       <img
                         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/editIcon.svg`}
