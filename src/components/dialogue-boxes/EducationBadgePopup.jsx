@@ -127,7 +127,12 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         return;
       }
       if (field4Data < field3Data) {
-        toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        toast.warning('Please ensure the graduation date is not earlier than the start date.');
+        setLoading(false);
+        return;
+      }
+      if (field4Data === field3Data) {
+        toast.warning('Please ensure the graduation date is not the same as the start date.');
         setLoading(false);
         return;
       }
@@ -166,7 +171,12 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const handleUpdateBadge = async (newData) => {
     try {
       if (field4Data < field3Data) {
-        toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        toast.warning('Please ensure the graduation date is not earlier than the start date.');
+        setLoading(false);
+        return;
+      }
+      if (field4Data === field3Data) {
+        toast.warning('Please ensure the graduation date is not the same as the start date.');
         setLoading(false);
         return;
       }
