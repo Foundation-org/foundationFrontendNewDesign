@@ -138,6 +138,12 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
         return;
       }
+      if (field6Data < field5Data) {
+        toast.warning('Please ensure the ending date is not same as the starting date.');
+        setLoading(false);
+
+        return;
+      }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, {
         data,
         type,
@@ -187,6 +193,12 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       }
       if (field6Data < field5Data) {
         toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        setLoading(false);
+
+        return;
+      }
+      if (field6Data < field5Data) {
+        toast.warning('Please ensure the ending date is not same as the starting date.');
         setLoading(false);
 
         return;
