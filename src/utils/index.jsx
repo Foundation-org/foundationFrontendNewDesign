@@ -326,7 +326,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
                     localStorage.setItem('filterByState', 'false');
                   }}
                 >
-                  Clear Filterssss
+                  Clear Filters
                 </button>
               )}
               <button
