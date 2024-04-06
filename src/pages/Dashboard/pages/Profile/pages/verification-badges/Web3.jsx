@@ -1,23 +1,18 @@
 import { toast } from 'sonner';
-import { ethers } from 'ethers';
 import { useSelector } from 'react-redux';
 import { web3 } from '../../../../../../constants/varification-badges';
 import { startRegistration } from '@simplewebauthn/browser';
 import Button from '../../components/Button';
-import { useErrorBoundary } from 'react-error-boundary';
 import api from '../../../../../../services/api/Axios';
 import { isBrowser, isMobile } from 'react-device-detect';
 import { useSDK } from '@metamask/sdk-react';
-import { useState } from 'react';
 
 export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup }) {
-  const [account, setAccount] = useState();
-  const { sdk, connected, chainId } = useSDK();
+  const { sdk } = useSDK();
 
   const connect = async () => {
     try {
       const accounts = await sdk?.connect();
-      setAccount(accounts[0]);
       handleWeb3(accounts[0]);
     } catch (err) {
       console.warn('failed to connect..', err);
@@ -25,10 +20,6 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
   };
 
   const persistedTheme = useSelector((state) => state.utils.theme);
-
-  const handleComingSoon = () => {
-    toast.info('This badge will soon be available for mobile.');
-  };
 
   const checkWeb3Badge = (itemType) =>
     fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
@@ -67,7 +58,6 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
       if (title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile') {
         const resp = await fetch(`${import.meta.env.VITE_API_URL}/generate-registration-options`);
         const data = await resp.json();
-        // const attResp = await window.SimpleWebAuthnBrowser.startRegistration(data);
         const attResp = await startRegistration(data);
         attResp.challenge = data.challenge;
         const verificationResp = await fetch(`${import.meta.env.VITE_API_URL}/verify-registration`, {
@@ -102,7 +92,6 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
         handleUserInfo();
       }
     } catch (error) {
-      // showBoundary(error);
       console.error(error);
       toast.error(error.response.data.message.split(':')[1]);
     }
@@ -135,15 +124,13 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
               <Button
                 color={checkPassKeyBadge('Passkey', item.type) || checkWeb3Badge(item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
-                  // alert("hello1...")
                   item.type === 'etherium-wallet'
                     ? checkWeb3Badge(item.type)
                       ? handleRemoveBadgePopup({
                           title: item.title,
                           image: item.image,
                           type: item.type,
-                          badgeType: 'passkey',
-                          accountName: 'Passkey',
+                          badgeType: 'etherium-wallet',
                         })
                       : connect()
                     : checkPassKeyBadge('Passkey', item.type)
@@ -234,23 +221,31 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
               <h1>{item.title}</h1>
             </div>
             <Button
-              color={checkPassKeyBadge('Passkey', item.type) ? 'red' : item.ButtonColor}
+              color={checkPassKeyBadge('Passkey', item.type) || checkWeb3Badge(item.type) ? 'red' : item.ButtonColor}
               onClick={() => {
-                // alert("hello3...")
-                checkPassKeyBadge('Passkey', item.type)
-                  ? handleRemoveBadgePopup({
-                      title: item.title,
-                      image: item.image,
-                      type: item.type,
-                      badgeType: 'passkey',
-                      accountName: 'Passkey',
-                    })
-                  : handlePasskey(item?.title, item?.type);
+                item.type === 'etherium-wallet'
+                  ? checkWeb3Badge(item.type)
+                    ? handleRemoveBadgePopup({
+                        title: item.title,
+                        image: item.image,
+                        type: item.type,
+                        badgeType: 'etherium-wallet',
+                      })
+                    : connect()
+                  : checkPassKeyBadge('Passkey', item.type)
+                    ? handleRemoveBadgePopup({
+                        title: item.title,
+                        image: item.image,
+                        type: item.type,
+                        badgeType: 'passkey',
+                        accountName: 'Passkey',
+                      })
+                    : handlePasskey(item?.title, item?.type);
               }}
               disabled={item.disabled}
             >
-              {checkPassKeyBadge('Passkey', item.type) ? 'Remove' : item.ButtonText}
-              {!checkPassKeyBadge('Passkey', item.type) && (
+              {checkPassKeyBadge('Passkey', item.type) || checkWeb3Badge(item.type) ? 'Remove' : item.ButtonText}
+              {!checkPassKeyBadge('Passkey', item.type) && !checkWeb3Badge(item.type) && (
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
                   (+0.96 FDX)
                 </span>
