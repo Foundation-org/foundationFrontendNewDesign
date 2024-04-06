@@ -228,9 +228,11 @@ const RankChoice = () => {
 
   const checkMediaHollow = () => {
     const AllVerified = optionsValue.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
+    console.log({ getMediaStates });
     if (
       questionStatus.tooltipName === 'Question is Verified' &&
       getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      getMediaStates.urlStatus.tooltipName === 'Question is Verified' &&
       AllVerified
     ) {
       return false;
@@ -263,7 +265,14 @@ const RankChoice = () => {
         setHollow(true);
       }
     }
-  }, [optionsValue, createQuestSlice.question, getMediaStates.isMedia, getMediaStates.desctiption, getMediaStates.url]);
+  }, [
+    optionsValue,
+    createQuestSlice.question,
+    getMediaStates.isMedia,
+    getMediaStates.desctiption,
+    getMediaStates.url,
+    getMediaStates.urlStatus,
+  ]);
 
   return (
     <CreateQuestWrapper

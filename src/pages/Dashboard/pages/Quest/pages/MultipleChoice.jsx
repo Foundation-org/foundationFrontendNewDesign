@@ -241,9 +241,11 @@ const MultipleChoice = () => {
 
   const checkMediaHollow = () => {
     const AllVerified = optionsValue.every((value) => value.optionStatus.tooltipName === 'Answer is Verified');
+    console.log({ getMediaStates });
     if (
       questionStatus.tooltipName === 'Question is Verified' &&
       getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      getMediaStates.urlStatus.tooltipName === 'Question is Verified' &&
       AllVerified
     ) {
       return false;
@@ -276,7 +278,14 @@ const MultipleChoice = () => {
         setHollow(true);
       }
     }
-  }, [optionsValue, createQuestSlice.question, getMediaStates.isMedia, getMediaStates.desctiption, getMediaStates.url]);
+  }, [
+    optionsValue,
+    createQuestSlice.question,
+    getMediaStates.isMedia,
+    getMediaStates.desctiption,
+    getMediaStates.url,
+    getMediaStates.urlStatus,
+  ]);
 
   return (
     <CreateQuestWrapper
@@ -372,18 +381,8 @@ const MultipleChoice = () => {
           /> */}
       </div>
       {hollow ? (
-        // <div className="flex w-full justify-end">
-        //   <button
-        //     className="mr-7 mt-[10px] tablet:mt-[30px] w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-        //     onClick={() => handleSubmit()}
-        //     disabled={loading === true }
-        //   >
-        //     {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : <span style={{ opacity: 0 }}>Submit</span>}
-
-        //   </button>
-        // </div>
         <div className="flex w-full justify-end pr-7 pt-[10px] tablet:pr-[70px] tablet:pt-[30px] ">
-          <Button variant="hollow-submit" id="submitButton" onClick={() => handleSubmit()} disabled={loading === true}>
+          <Button variant="hollow-submit" id="submitButton" onClick={() => handleSubmit()} disabled={true}>
             Create
           </Button>
         </div>
@@ -394,20 +393,13 @@ const MultipleChoice = () => {
             variant="submit"
             onClick={() => handleSubmit()}
             className="mr-7 mt-[10px] tablet:mr-[70px] tablet:mt-[30px]"
+            disabled={loading}
           >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
             <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
               (-0.1 FDX)
             </span>
           </Button>
-          {/* <button
-              id="submitButton2"
-              className=" w-fit rounded-[7.28px] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-white dark:bg-[#333B46] dark:from-[#333B46] dark:to-[#333B46] tablet:mr-[70px] tablet:rounded-[15.2px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]"
-              onClick={() => handleSubmit()}
-              disabled={loading === true}
-            >
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
-            </button> */}
         </div>
       )}
     </CreateQuestWrapper>
