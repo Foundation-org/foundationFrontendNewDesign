@@ -87,7 +87,7 @@ const YesNo = () => {
     }
 
     const { questTopic, errorMessage } = await questServices.getTopicOfValidatedQuestion({
-      validatedQuestion: createQuestSlice.question,
+      validatedQuestion: getMediaStates.desctiption ? getMediaStates.desctiption : createQuestSlice.question,
     });
     // If any error captured
     if (errorMessage) {

@@ -81,7 +81,7 @@ const RankChoice = () => {
 
     // getTopicOfValidatedQuestion
     const { questTopic, errorMessage } = await getTopicOfValidatedQuestion({
-      validatedQuestion: createQuestSlice.question,
+      validatedQuestion: getMediaStates.desctiption ? getMediaStates.desctiption : createQuestSlice.question,
     });
     // If any error captured
     if (errorMessage) {
