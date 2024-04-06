@@ -257,11 +257,23 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
         {/* To View Already Added Info */}
         {existingData && !addAnotherForm ? (
           <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
-            {existingData.map((item, index) =>
-              deleteItem === item.id ? (
-                <div className="flex w-full flex-col justify-between gap-[10px]  rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
-                  <p>Are you sure you want to remove this item?</p>
-                  <div className="flex justify-end gap-[10px]">
+            {existingData.map((item, index) => (
+              <div className="flex w-full justify-between  rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
+                <div>
+                  <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
+                    {item.companyName}
+                  </h4>
+                  <div className="max-w-[270px]">
+                    <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
+                      {item.jobTitle}
+                    </h5>
+                    <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
+                      {item.modeOfJob}
+                    </h6>
+                  </div>
+                </div>
+                {deleteItem === item.id ? (
+                  <div>
                     <Button
                       variant="addOption"
                       onClick={() => {
@@ -279,22 +291,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                       Delete
                     </Button>
                   </div>
-                </div>
-              ) : (
-                <div className="flex w-full justify-between  rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[9px] py-3 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[21.06px] tablet:border-[3px] tablet:px-7 tablet:py-[25px] tablet:text-[18px] tablet:leading-[21px]">
-                  <div>
-                    <h4 className="max-w-[324px] text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[22px] tablet:leading-[26.63px]">
-                      {item.companyName}
-                    </h4>
-                    <div className="max-w-[270px]">
-                      <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
-                        {item.jobTitle}
-                      </h5>
-                      <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
-                        {item.modeOfJob}
-                      </h6>
-                    </div>
-                  </div>
+                ) : (
                   <div className="flex flex-col justify-between">
                     <div className="flex justify-end gap-[10px] tablet:gap-[30px]">
                       <img
@@ -316,9 +313,9 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                       {item.startingYear + '-' + item.endingYear}
                     </h4>
                   </div>
-                </div>
-              ),
-            )}
+                )}
+              </div>
+            ))}
             <div className="mt-4 flex justify-between">
               <Button variant="addOption" onClick={() => setAddAnotherForm(true)}>
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
