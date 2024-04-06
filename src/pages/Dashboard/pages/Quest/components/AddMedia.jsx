@@ -4,19 +4,16 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { useDebounce } from '../../../../../utils/useDebounce';
 import ReactPlayer from 'react-player';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import './Player.css';
-import { useDebounce } from '../../../../../utils/useDebounce';
-import { useQuery } from '@tanstack/react-query';
-import { validateURL } from '../../../../../services/api/embedded-media';
 
 export default function AddMedia({ handleTab }) {
   const playerRef = useRef(null);
   const dispatch = useDispatch();
   const getMediaStates = useSelector(createQuestAction.getMedia);
   let debouncedURL = useDebounce(getMediaStates.url, 1000);
-  const [mediaId, setMediaId] = useState('');
   const [mediaURL, setMediaURL] = useState(debouncedURL);
   const [soundcloudUnique] = useState('soundcloud.com');
   const [youtubeBaseURLs] = useState([
@@ -26,12 +23,6 @@ export default function AddMedia({ handleTab }) {
     'youtube-nocookie.com',
     'youtu.be',
   ]);
-  const [show, setShow] = useState(false);
-
-  const { data: validatedURL } = useQuery({
-    queryKey: ['validateURL', mediaId],
-    queryFn: () => validateURL(mediaId),
-  });
 
   const handleVideoEnded = () => {
     if (playerRef.current) {
@@ -66,6 +57,7 @@ export default function AddMedia({ handleTab }) {
     }
   }
 
+  // To show and hide artwork on different screen sizes
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 500) {
@@ -77,54 +69,20 @@ export default function AddMedia({ handleTab }) {
       }
     };
 
-    // Initial call
     handleResize();
 
-    // Event listener for window resize
     window.addEventListener('resize', handleResize);
-    // Cleanup
+
     return () => window.removeEventListener('resize', handleResize);
   }, [debouncedURL]);
 
-  // Process the debounced value when it changes
-  useEffect(() => {
-    if (youtubeBaseURLs.some((baseURL) => debouncedURL?.includes(baseURL))) {
-      const videoId = extractYouTubeVideoId(debouncedURL);
-      setMediaId(videoId);
-      checkVideoAgeRestriction(videoId, debouncedURL);
-    } else {
-      const urlId = extractPartFromUrl(debouncedURL);
-      setMediaId(urlId);
-      dispatch(createQuestAction.addMediaUrl(debouncedURL));
-    }
-  }, [debouncedURL]);
-
-  function checkVideoAgeRestriction(videoId, userValue) {
-    const apiKey = import.meta.env.VITE_GG_API_KEY;
-    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=contentDetails`;
-
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        const contentRating = data?.items[0]?.contentDetails?.contentRating?.ytRating;
-        const isAdultContent = contentRating === 'ytAgeRestricted';
-
-        if (isAdultContent === false) {
-          dispatch(createQuestAction.addMediaUrl(userValue));
-        } else {
-          toast.error("It's an adult video");
-          dispatch(createQuestAction.addMediaUrl(''));
-        }
-      })
-      .catch((error) => console.error('Error:', error));
-  }
-
+  // To Check If it is a playlist url
   useEffect(() => {
     // Check if the URL is a SoundCloud playlist
     if (getMediaStates.url?.includes(soundcloudUnique) && getMediaStates.url?.includes('/sets/')) {
       toast.error('We do not support SoundCloud playlists');
-      dispatch(createQuestAction.addMediaUrl('')); // Set URL to empty string
-      return; // Stop execution
+      dispatch(createQuestAction.clearUrl());
+      return;
     }
 
     // Check if the URL is a YouTube playlist
@@ -133,12 +91,11 @@ export default function AddMedia({ handleTab }) {
       getMediaStates.url.includes('list=')
     ) {
       toast.error('We do not support YouTube playlists');
-      dispatch(createQuestAction.addMediaUrl('')); // Set URL to empty string
-      return; // Stop execution
+      dispatch(createQuestAction.clearUrl());
+      return;
     }
-  }, [getMediaStates.url]);
+  }, [debouncedURL]);
 
-  // TO handle Media Description
   const handleDescChange = (e) => {
     const inputValue = e.target.value;
 
@@ -152,6 +109,18 @@ export default function AddMedia({ handleTab }) {
     dispatch(createQuestAction.checkDescription(value));
   };
 
+  const urlVerification = async (value) => {
+    if (getMediaStates.validatedUrl === value) return;
+
+    if (youtubeBaseURLs.some((baseURL) => value?.includes(baseURL))) {
+      const videoId = extractYouTubeVideoId(value);
+      dispatch(createQuestAction.checkIsUrlAlreayExists(videoId));
+    } else {
+      const urlId = extractPartFromUrl(value);
+      dispatch(createQuestAction.checkIsUrlAlreayExists(urlId));
+    }
+  };
+
   return (
     <div>
       {getMediaStates?.isMedia ? (
@@ -162,7 +131,7 @@ export default function AddMedia({ handleTab }) {
           <div
             className="absolute -right-[7px] -top-[5px] z-0 cursor-pointer tablet:-right-5 tablet:-top-[26px]"
             onClick={() => {
-              dispatch(createQuestAction.updateIsMedia(false));
+              dispatch(createQuestAction.clearMedia());
             }}
           >
             <img
@@ -191,42 +160,35 @@ export default function AddMedia({ handleTab }) {
               <Tooltip optionStatus={getMediaStates.mediaDescStatus} />
             </button>
           </div>
-          {(debouncedURL === '' || !show) && (
-            <div className="mr-[50px] tablet:mr-[100px] laptop:mr-[132px]">
+          {getMediaStates.urlStatus.tooltipName !== 'Question is Verified' && (
+            <div className="flex">
               <TextareaAutosize
-                tabIndex={2}
                 id="input-1"
+                tabIndex={2}
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(1, 'Enter'))}
-                // onChange={(e) => {
-                //   let userValue = e.target.value;
-
-                //   if (youtubeBaseURLs.some((baseURL) => getMediaStates.url.includes(baseURL))) {
-                //     // let videoId = userValue.match(
-                //     //   /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/,
-                //     // )[1];
-                //     // console.log(videoId);
-                //     const videoId = extractYouTubeVideoId(userValue);
-
-                //     checkVideoAgeRestriction(videoId, userValue);
-                //   } else {
-                //     dispatch(createQuestAction.addMediaUrl(userValue));
-                //   }
-                // }}
                 onChange={(e) => {
                   dispatch(createQuestAction.addMediaUrl(e.target.value));
-                  setShow(true);
                 }}
+                onBlur={(e) => e.target.value.trim() !== '' && urlVerification(e.target.value.trim())}
                 value={getMediaStates.url}
                 placeholder="Paste embed link here....."
-                className="w-full resize-none rounded-[5.128px] border border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10.3px] tablet:border-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+                className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
               />
+              <button
+                className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${getMediaStates.urlStatus.color}`}
+              >
+                <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
+                  {getMediaStates.urlStatus.name}
+                </div>
+                <Tooltip optionStatus={getMediaStates.urlStatus} />
+              </button>
             </div>
           )}
-          {debouncedURL && show && (
+          {getMediaStates.urlStatus.tooltipName === 'Question is Verified' && (
             <div
               className="player-wrapper relative mt-1 cursor-pointer rounded-[10px] tablet:mt-[10px]"
               onClick={() => {
-                dispatch(createQuestAction.addMediaUrl(''));
+                dispatch(createQuestAction.clearUrl());
               }}
             >
               <div
@@ -243,9 +205,7 @@ export default function AddMedia({ handleTab }) {
                 url={mediaURL}
                 className="react-player"
                 onError={(e) => {
-                  // toast.error('Invalid URL');
-                  setShow(false);
-                  toast.error('Invalid URL'), dispatch(createQuestAction.addMediaUrl(''));
+                  toast.error('Invalid URL'), dispatch(createQuestAction.clearUrl());
                 }}
                 width="100%"
                 height="100%"
@@ -282,19 +242,6 @@ export default function AddMedia({ handleTab }) {
                 }}
                 onEnded={handleVideoEnded}
               />
-
-              {/* 
-          https://soundcloud.com/mrjteze/huh
-          https://soundcloud.com/mrjteze/huh?si=0f922f04744e4d74a0ed5ac4ae7fcb41&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
-          https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
-          https://www.youtube.com/embed/Xf0yP-kNyXQ
-          https://youtube.com/embed/Xf0yP-kNyXQ?feature=shared
-          https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}
-          https://youtu.be/JaR7hhdBt-0?si=bTjEAhF9wxdQRCRc?rel=0
-          https://youtube.com/embed/${url.match(/(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/)[1]}
-          https://www.youtube.com/shorts/NCj-0-OK470
-          https://www.youtube.com/shorts/9YYIPiYwvGY
-          */}
             </div>
           )}
         </div>
