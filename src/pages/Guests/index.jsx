@@ -49,7 +49,7 @@ const Guests = () => {
     <>
       <Topbar />
       <div className="flex h-[calc(100vh-58px)] bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]">
-        <div className="quest-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
+        <div className="no-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
           {isFullScreen !== 'isfullscreen' && (
             <div className="mb-7 flex justify-center gap-5 tablet:mb-[3.81rem] tablet:gap-[5.69rem]">
               <button
