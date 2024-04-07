@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import * as createQuestAction from '../features/createQuest/createQuestSlice';
 import { useDispatch } from 'react-redux';
 
-export const Tooltip = ({ optionStatus, id }) => {
+export const Tooltip = ({ optionStatus, id, type }) => {
   // console.log('tooltip id', id)
   const dispatch = useDispatch();
   const [tooltipStatus, setTooltipStatusState] = useState(optionStatus);
@@ -13,7 +13,7 @@ export const Tooltip = ({ optionStatus, id }) => {
 
   const hideTooltipMsg = () => {
     // console.log('running')
-    dispatch(createQuestAction.hideToolTipMessage(id));
+    dispatch(createQuestAction.hideToolTipMessage({ id, type }));
   };
 
   return (

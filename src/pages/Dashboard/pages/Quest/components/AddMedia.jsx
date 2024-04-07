@@ -157,7 +157,7 @@ export default function AddMedia({ handleTab }) {
               <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
                 {getMediaStates.mediaDescStatus.name}
               </div>
-              <Tooltip optionStatus={getMediaStates.mediaDescStatus} />
+              <Tooltip optionStatus={getMediaStates.mediaDescStatus} type="media" />
             </button>
           </div>
           {getMediaStates.urlStatus.tooltipName !== 'Question is Verified' && (
@@ -180,7 +180,7 @@ export default function AddMedia({ handleTab }) {
                 <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
                   {getMediaStates.urlStatus.name}
                 </div>
-                <Tooltip optionStatus={getMediaStates.urlStatus} />
+                <Tooltip optionStatus={getMediaStates.urlStatus} type="mediaURL"/>
               </button>
             </div>
           )}

@@ -230,12 +230,21 @@ export const createQuestSlice = createSlice({
       };
     },
     hideToolTipMessage: (state, action) => {
-      if (action.payload) {
-        const parts = action.payload.split('-');
-        const index = parseInt(parts[1]);
-        state.optionsValue[index - 1].optionStatus.showToolTipMsg = false;
-      } else {
-        state.questionReset.showToolTipMsg = false;
+      const { id, type } = action.payload;
+
+      if (!type) {
+        if (id) {
+          const parts = id.split('-');
+          const index = parseInt(parts[1]);
+
+          state.optionsValue[index - 3].optionStatus.showToolTipMsg = false;
+        } else {
+          state.questionReset.showToolTipMsg = false;
+        }
+      } else if (type === 'media') {
+        state.media.mediaDescStatus.showToolTipMsg = false;
+      } else if (type === 'mediaURL') {
+        state.media.urlStatus.showToolTipMsg = false;
       }
     },
     clearUrl: (state, action) => {
