@@ -45,7 +45,7 @@ export const EmbededVideo = ({ description, url, setPlayingPlayerId, questId, pl
       className={`align-items mx-[22px] mb-2 flex flex-col justify-start rounded-[9.183px] border border-[#DEE6F7] px-[5px] py-2 tablet:mx-[60px] tablet:mb-[14px] tablet:border-[2.755px] tablet:px-2 ${
         url
           ? youtubeBaseURLs.some((baseURL) => url.includes(baseURL))
-            ? 'h-[169px] tablet:h-[461px]'
+            ? 'h-[169px] tablet:h-[420px]'
             : url.includes(soundcloudUnique)
               ? 'h-[162px] tablet:h-[226px]'
               : ''

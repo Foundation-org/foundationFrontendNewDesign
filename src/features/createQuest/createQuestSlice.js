@@ -382,116 +382,120 @@ export const createQuestSlice = createSlice({
     });
     builder.addCase(checkIsUrlAlreayExists.fulfilled, (state, action) => {
       const { message, errorMessage } = action.payload;
-      console.log('errorMessage', errorMessage);
-      if (errorMessage) {
-        if (errorMessage === 'DUPLICATION') {
-          state.media.validatedUrl = state.media.url;
-          // state.media.desctiption = message;
-          // state.media.validatedDescription = message;
-          // state.questions.questionTyping = false;
-          state.media.urlStatus = {
-            name: 'Duplicate',
-            color: 'text-[#EFD700]',
-            tooltipName: 'This url is not unique. A url like this already exists.',
-            tooltipStyle: 'tooltip-error',
-            duplication: true,
-            showToolTipMsg: true,
-          };
-          state.media.chatgptUrlStatus = {
-            name: 'Duplicate',
-            color: 'text-[#EFD700]',
-            tooltipName: 'This url is not unique. A url like this already exists.',
-            tooltipStyle: 'tooltip-error',
-            duplication: true,
-            showToolTipMsg: true,
-          };
-        }
-        if (errorMessage === 'ADULT') {
-          state.media.validatedUrl = state.media.url;
-          // state.media.desctiption = message;
-          // state.media.validatedDescription = message;
-          // state.questions.questionTyping = false;
-          state.media.urlStatus = {
-            name: 'Rejected',
-            color: 'text-[#b00f0f]',
-            tooltipName: 'It is an adult video',
-            tooltipStyle: 'tooltip-error',
-            duplication: true,
-            showToolTipMsg: true,
-          };
-          state.media.chatgptUrlStatus = {
-            name: 'Rejected',
-            color: 'text-[#b00f0f]',
-            tooltipName: 'It is an adult video',
-            tooltipStyle: 'tooltip-error',
-            duplication: true,
-            showToolTipMsg: true,
-          };
-        }
-        // else {
-        //   state.media.validatedDescription = state.questions.question;
-        //   // state.questions.questionTyping = false;
-        //   state.media.mediaDescStatus = {
-        //     name: 'Rejected',
-        //     color: 'text-[#b00f0f]',
-        //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-        //     tooltipStyle: 'tooltip-error',
-        //     status: true,
-        //     showToolTipMsg: true,
-        //   };
-        //   state.media.chatgptMediaDescStatus = {
-        //     name: 'Rejected',
-        //     color: 'text-[#b00f0f]',
-        //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
-        //     tooltipStyle: 'tooltip-error',
-        //     status: true,
-        //     showToolTipMsg: true,
-        //   };
-        // }
+      if (state.media.url === '') {
+        state.media.urlStatus = { ...defaultStatus };
+        state.media.chatgptUrlStatus = { ...defaultStatus };
       } else {
-        // if (message === state.questions.message) {
-        //   state.media.desctiption = message;
-        //   state.media.validatedDescription = message;
-        //   // state.questions.questionTyping = false;
-        //   state.media.mediaDescStatus = {
-        //     name: 'Duplicate',
-        //     color: 'text-[#EFD700]',
-        //     tooltipName: 'This post is not unique. A post like this already exists.',
-        //     tooltipStyle: 'tooltip-error',
-        //     duplication: true,
-        //     showToolTipMsg: true,
-        //   };
-        //   state.media.chatgptMediaDescStatus = {
-        //     name: 'Duplicate',
-        //     color: 'text-[#EFD700]',
-        //     tooltipName: 'This post is not unique. A post like this already exists.',
-        //     tooltipStyle: 'tooltip-error',
-        //     duplication: true,
-        //     showToolTipMsg: true,
-        //   };
-        // }
-        // else
-        // {
-        // state.media.desctiption = message;
-        // state.media.validatedDescription = message;
-        // state.questions.questionTyping = false;
-        state.media.urlStatus = {
-          name: 'Ok',
-          color: 'text-[#0FB063]',
-          tooltipName: 'Question is Verified',
-          tooltipStyle: 'tooltip-success',
-          isVerifiedQuestion: true,
-          status: false,
-        };
-        state.media.chatgptUrlStatus = {
-          name: 'Ok',
-          color: 'text-[#0FB063]',
-          tooltipName: 'Question is Verified',
-          tooltipStyle: 'tooltip-success',
-          isVerifiedQuestion: true,
-          status: false,
-        };
-        // }
+        if (errorMessage) {
+          if (errorMessage === 'DUPLICATION') {
+            state.media.validatedUrl = state.media.url;
+            // state.media.desctiption = message;
+            // state.media.validatedDescription = message;
+            // state.questions.questionTyping = false;
+            state.media.urlStatus = {
+              name: 'Duplicate',
+              color: 'text-[#EFD700]',
+              tooltipName: 'This url is not unique. A url like this already exists.',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+            state.media.chatgptUrlStatus = {
+              name: 'Duplicate',
+              color: 'text-[#EFD700]',
+              tooltipName: 'This url is not unique. A url like this already exists.',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+          }
+          if (errorMessage === 'ADULT') {
+            state.media.validatedUrl = state.media.url;
+            // state.media.desctiption = message;
+            // state.media.validatedDescription = message;
+            // state.questions.questionTyping = false;
+            state.media.urlStatus = {
+              name: 'Rejected',
+              color: 'text-[#b00f0f]',
+              tooltipName: 'It is an adult video',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+            state.media.chatgptUrlStatus = {
+              name: 'Rejected',
+              color: 'text-[#b00f0f]',
+              tooltipName: 'It is an adult video',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+          }
+          // else {
+          //   state.media.validatedDescription = state.questions.question;
+          //   // state.questions.questionTyping = false;
+          //   state.media.mediaDescStatus = {
+          //     name: 'Rejected',
+          //     color: 'text-[#b00f0f]',
+          //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+          //     tooltipStyle: 'tooltip-error',
+          //     status: true,
+          //     showToolTipMsg: true,
+          //   };
+          //   state.media.chatgptMediaDescStatus = {
+          //     name: 'Rejected',
+          //     color: 'text-[#b00f0f]',
+          //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+          //     tooltipStyle: 'tooltip-error',
+          //     status: true,
+          //     showToolTipMsg: true,
+          //   };
+          // }
+        } else {
+          // if (message === state.questions.message) {
+          //   state.media.desctiption = message;
+          //   state.media.validatedDescription = message;
+          //   // state.questions.questionTyping = false;
+          //   state.media.mediaDescStatus = {
+          //     name: 'Duplicate',
+          //     color: 'text-[#EFD700]',
+          //     tooltipName: 'This post is not unique. A post like this already exists.',
+          //     tooltipStyle: 'tooltip-error',
+          //     duplication: true,
+          //     showToolTipMsg: true,
+          //   };
+          //   state.media.chatgptMediaDescStatus = {
+          //     name: 'Duplicate',
+          //     color: 'text-[#EFD700]',
+          //     tooltipName: 'This post is not unique. A post like this already exists.',
+          //     tooltipStyle: 'tooltip-error',
+          //     duplication: true,
+          //     showToolTipMsg: true,
+          //   };
+          // }
+          // else
+          // {
+          // state.media.desctiption = message;
+          // state.media.validatedDescription = message;
+          // state.questions.questionTyping = false;
+          state.media.urlStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+          state.media.chatgptUrlStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+          // }
+        }
       }
     });
 
