@@ -1,7 +1,7 @@
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import { Button } from '../../../../components/ui/Button';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   addRedeemCode,
@@ -13,6 +13,8 @@ import {
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import DeleteHistoryPopup from '../../../../components/dialogue-boxes/deleteHistoryPopup';
+import { userInfo } from '../../../../services/api/userAuth';
+import { addUser } from '../../../../features/auth/authSlice';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
@@ -26,12 +28,28 @@ export default function RedemptionCenter() {
   const [radeemLoading, setRadeemLoading] = useState('');
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteHistoryCode, setDeleteHistoryCode] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClose = () => setIsDeleteModal(false);
+
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+    onSuccess: (resp) => {
+      if (resp?.status === 200) {
+        if (resp.data) {
+          dispatch(addUser(resp.data));
+        }
+      }
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
 
   const { mutateAsync: createRedemptionCode, isPending: createPending } = useMutation({
     mutationFn: createRedeeemCode,
     onSuccess: (resp) => {
+      getUserInfo();
       toast.success('Redemption Code created successfully');
       queryClient.invalidateQueries('unredeemedData');
       setExpiry('30 days');
@@ -76,6 +94,7 @@ export default function RedemptionCenter() {
   const { mutateAsync: addRedemptionCode } = useMutation({
     mutationFn: addRedeemCode,
     onSuccess: (resp) => {
+      getUserInfo();
       queryClient.invalidateQueries('history');
       toast.success('Code Redeemed Successfully');
       setCode('');
