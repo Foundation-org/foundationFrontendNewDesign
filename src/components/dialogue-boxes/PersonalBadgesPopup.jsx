@@ -240,6 +240,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             placeholder={placeholder}
             query={query}
             setQuery={setQuery}
+            type={'city'}
           />
           {isError && (
             <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>

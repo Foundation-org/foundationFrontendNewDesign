@@ -1,12 +1,14 @@
 import { Fragment, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 
-const CustomCombobox = ({ items, initialSelected, placeholder, selected, setSelected, isArrow, query, setQuery }) => {
+const CustomCombobox = ({ items, type, placeholder, selected, setSelected, isArrow, query, setQuery }) => {
   const filteredItems =
     query === ''
       ? items
-      : items.filter((item) =>
-          item?.name?.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
+      : items.filter(
+          type === 'city'
+            ? (item) => item?.name?.toLowerCase()
+            : (item) => item?.name?.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
         );
 
   return (
