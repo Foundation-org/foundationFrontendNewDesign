@@ -251,14 +251,14 @@ const SidebarLeft = ({ scrollToPlayingCard }) => {
             Clear Filters
           </button>
 
-          <button
+          {/* <button
             onClick={scrollToPlayingCard}
             className={`${
               persistedTheme === 'dark' ? 'bg-[#F0F0F0]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
             }  inset-0 mt-7 w-[192px] rounded-[14px] px-5 py-[6px] text-[0.85rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
           >
             Go to Playing Question
-          </button>
+          </button> */}
         </div>
       </div>
       {/* sidebar mobile */}
