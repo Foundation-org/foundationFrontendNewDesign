@@ -328,15 +328,17 @@ const QuestStartSection = () => {
     };
   }, []);
 
-  // console.log(
-  //   '🚀 ~ QuestStartSection ~ allData:',
-  //   allData.filter((item) => !questUtils.hiddenPosts.includes(item._id)),
-  // );
-
+  const scrollToPlayingCard = () => {
+    const playingCard = document.getElementById('playing-card');
+    console.log(playingCard);
+    if (playingCard) {
+      playingCard.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <div className="w-full bg-[#F2F3F5] dark:bg-black">
       <div className="mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
-        <SidebarLeft />
+        <SidebarLeft scrollToPlayingCard={scrollToPlayingCard} />
         <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100vh-155.5px)] min-h-[calc(100vh-155.5px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100vh-70px)] tablet:min-h-[calc(100vh-70px)] dark:bg-[#242424]">
           <Slider sliderLoading={sliderLoading} setSliderloading={setSliderloading} />
           <InfiniteScroll
@@ -352,7 +354,7 @@ const QuestStartSection = () => {
                 allData
                   .filter((item) => !questUtils.hiddenPosts.includes(item._id))
                   ?.map((item, index) => (
-                    <div key={index + 1}>
+                    <div key={index + 1} id={item._id === playerPlayingId ? 'playing-card' : ''}>
                       {/* {filterStates.expandedView ? ( */}
                       <QuestionCardWithToggle
                         questStartData={item}
@@ -364,51 +366,9 @@ const QuestStartSection = () => {
                         playing={item._id === playerPlayingId}
                         setPlayingPlayerId={setPlayingPlayerId}
                       />
-                      {/* ) : (
-                        <QuestionCard
-                          questStartData={item}
-                          startTest={startTest}
-                          setStartTest={setStartTest}
-                          viewResult={viewResult}
-                          handleViewResults={memoizedViewResults}
-                          handleStartTest={memoizedStartTest}
-                          isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                          setPagination={setPagination}
-                          setSubmitResponse={setSubmitResponse}
-                        />
-                      )} */}
                     </div>
                   ))}
             </div>
-            {/* <div id="section-1" className="flex flex-col gap-2 tablet:gap-[0.94rem]">
-            {allData &&
-              allData?.map((item, index) => (
-                <div key={index + 1}>
-                  {!item.title ? (
-                    filterStates.expandedView ? (
-                      <QuestionCardWithToggle
-                        questStartData={item}
-                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                      />
-                    ) : (
-                      <QuestionCard
-                        questStartData={item}
-                        startTest={startTest}
-                        setStartTest={setStartTest}
-                        viewResult={viewResult}
-                        handleViewResults={memoizedViewResults}
-                        handleStartTest={memoizedStartTest}
-                        isBookmarked={bookmarkedData?.data.some((bookmark) => bookmark.questForeignKey === item._id)}
-                      />
-                    )
-                  ) : (
-                    <p className="text-center text-[4vw] tablet:text-[2vw]">
-                      <b>You are all caught up!</b>
-                    </p>
-                  )}
-                </div>
-              ))}
-          </div> */}
           </InfiniteScroll>
         </div>
         <SidebarRight />
