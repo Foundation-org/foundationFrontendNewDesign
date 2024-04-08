@@ -1,14 +1,14 @@
 import { toast } from 'sonner';
-import { Tooltip } from '../../../../../utils/Tooltip';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Tooltip } from '../../../../../utils/Tooltip';
 import { Button } from '../../../../../components/ui/Button';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { useDebounce } from '../../../../../utils/useDebounce';
-import ReactPlayer from 'react-player';
-import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import { extractPartFromUrl, extractYouTubeVideoId } from '../../../../../utils/embeddedutils';
 import { soundcloudUnique, youtubeBaseURLs } from '../../../../../constants/addMedia';
+import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import ReactPlayer from 'react-player';
 import './Player.css';
 
 export default function AddMedia({ handleTab }) {
@@ -84,9 +84,11 @@ export default function AddMedia({ handleTab }) {
       const videoId = extractYouTubeVideoId(value);
 
       dispatch(createQuestAction.checkIsUrlAlreayExists({ id: videoId, url: getMediaStates.url }));
-    } else {
+    } else if (value?.includes(soundcloudUnique)) {
       const urlId = extractPartFromUrl(value);
       dispatch(createQuestAction.checkIsUrlAlreayExists({ id: urlId, url: getMediaStates.url }));
+    } else {
+      toast.warning('YouTube and SoundCloud links are supported.');
     }
   };
 
