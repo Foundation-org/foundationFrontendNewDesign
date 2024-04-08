@@ -12,6 +12,7 @@ const CompanyName = {
   type: 'companyName',
   placeholder: 'Company here',
 };
+
 const jobTitles = {
   label: 'Title',
   items: [
@@ -61,6 +62,7 @@ const Mode = {
   ],
   type: 'modeOfJob',
 };
+
 const startingYear = {
   label: 'Start Date',
   placeholder: 'Year here',
@@ -90,9 +92,25 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const [query, setQuery] = useState('');
 
   const searchCompanies = async () => {
-    const companies = await api.post(`search/searchCompanies/?name=${query}`);
-    setCompanies(companies.data);
+    try {
+      const companies = await api.post(`search/searchCompanies/?name=${query}`);
+
+      const queryExists = companies.data.some((item) => item.name.toLowerCase() === query.toLowerCase());
+      const newArr = queryExists
+        ? [...companies.data]
+        : [
+            { country: '', id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query },
+            ...companies.data.map((company) => ({
+              ...company,
+              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+            })),
+          ];
+      setCompanies(newArr);
+    } catch (err) {
+      setCompanies([{ country: '', id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query }]);
+    }
   };
+
   useEffect(() => {
     searchCompanies();
   }, [query]);
@@ -103,10 +121,13 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   }, [fetchUser.badges]);
 
   const handleClose = () => setIsPopup(false);
+
   const handlefield5Change = (e) => setField5Data(e.target.value);
+
   const handlefield6Change = (e) => {
     setField6Data(e.target.value);
   };
+
   const handlePresentToggle = () => {
     setIsPresent(!isPresent);
     if (!isPresent) {
@@ -181,6 +202,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       handleClose();
     }
   };
+
   const handleDelete = async (id) => {
     const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, {
       id: id,
@@ -267,6 +289,12 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
     const [addAnotherForm, setAddAnotherForm] = useState(false);
     const [edit, setEdit] = useState(false);
+
+    const queryExists = field2.items.some((item) => item.name.toLowerCase() === query.toLowerCase());
+
+    const updatedField2Items = queryExists
+      ? [...field2.items]
+      : [{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query }, ...field2.items];
 
     return (
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
@@ -368,7 +396,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 {field2.label}
               </p>
               <CustomCombobox
-                items={field2.items}
+                items={updatedField2Items}
                 placeholder={field2.placeholder}
                 selected={field2Data}
                 setSelected={setField2Data}
