@@ -77,7 +77,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const [companies, setCompanies] = useState([]);
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
-  const [field3Data, setField3Data] = useState([]);
+  // const [field3Data, setField3Data] = useState([]);
   const [field4Data, setField4Data] = useState([]);
   const [field5Data, setField5Data] = useState();
   const [field6Data, setField6Data] = useState();
@@ -116,12 +116,28 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
     }
   };
 
+  const handleTab = (index, key) => {
+    if (index === 2) {
+      document.getElementById(`input-${index}`).blur();
+    } else {
+      if (key === 'Enter') {
+        document.getElementById(`input-${index + 1}`).focus();
+      } else {
+        if (index > 1) {
+          document.getElementById(`input-${index + 1}`).focus();
+        } else {
+          document.getElementById(`input-${index}`).focus();
+        }
+      }
+    }
+  };
+
   const handleAddPersonalBadge = async (data) => {
     try {
       if (
         field1Data.name === undefined ||
         field2Data.name === undefined ||
-        field3Data.name === undefined ||
+        // field3Data.name === undefined ||
         field4Data.name === undefined ||
         field5Data === undefined ||
         field6Data === undefined ||
@@ -181,7 +197,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       if (
         prevInfo.companyName === field1Data.name &&
         prevInfo.jobTitle === field2Data.name &&
-        prevInfo.employmentType === field3Data.name &&
+        // prevInfo.employmentType === field3Data.name &&
         prevInfo.modeOfJob === field4Data.name &&
         prevInfo.startingYear === field5Data &&
         prevInfo.endingYear === field6Data
@@ -236,7 +252,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
       setField1Data({ id: data.id, name: data.companyName, country: data.country });
       setField2Data({ name: data.jobTitle });
-      setField3Data({ name: data.employmentType });
+      // setField3Data({ name: data.employmentType });
       setField4Data({ name: data.modeOfJob });
       setField5Data(data.startingYear);
       if (data.endingYear === 'Present') {
@@ -342,6 +358,8 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 setSelected={setField1Data}
                 query={query}
                 setQuery={setQuery}
+                id={1}
+                handleTab={handleTab}
               />
             </div>
             <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
@@ -355,10 +373,12 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 setSelected={setField2Data}
                 query={query}
                 setQuery={setQuery}
+                id={2}
+                handleTab={handleTab}
               />
             </div>
             <div className="flex items-center gap-[17.5px] tablet:gap-9">
-              <div className="mb-[5px] w-full tablet:mb-[25px]">
+              {/* <div className="mb-[5px] w-full tablet:mb-[25px]">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field3.label}
                 </p>
@@ -370,7 +390,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                     placeholder={field3.placeholder}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="mb-[5px] w-full tablet:mb-[25px]">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field4.label}
@@ -438,7 +458,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                   onClick={() => {
                     setField1Data([]);
                     setField2Data([]);
-                    setField3Data([]);
+                    // setField3Data([]);
                     setField4Data([]);
                     setField5Data();
                     setField6Data();
@@ -461,7 +481,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                     [field1.type]: field1Data.name,
                     ['country']: field1Data.country,
                     [field2.type]: field2Data.name,
-                    [field3.type]: field3Data.name,
+                    // [field3.type]: field3Data.name,
                     [field4.type]: field4Data.name,
                     [field5.type]: field5Data,
                     [field6.type]: field6Data,

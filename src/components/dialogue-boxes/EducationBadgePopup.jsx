@@ -253,6 +253,23 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     }
   };
 
+  const handleTab = (index, key) => {
+    if (index === 4) {
+      document.getElementById(`input-${index}`).blur();
+    } else {
+      if (key === 'Enter') {
+        event.preventDefault();
+        document.getElementById(`input-${index + 1}`).focus();
+      } else {
+        if (index > 1) {
+          document.getElementById(`input-${index + 1}`).focus();
+        } else {
+          document.getElementById(`input-${index}`).focus();
+        }
+      }
+    }
+  };
+
   const renderWorkField = (field1, field2, field3, field4) => {
     const [addAnotherForm, setAddAnotherForm] = useState(false);
     const [edit, setEdit] = useState(false);
@@ -351,6 +368,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 setSelected={setField1Data}
                 query={query}
                 setQuery={setQuery}
+                id={1}
+                handleTab={handleTab}
               />
             </div>
             <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
@@ -364,6 +383,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 setSelected={setField2Data}
                 query={query}
                 setQuery={setQuery}
+                id={2}
+                handleTab={handleTab}
               />
             </div>
             <label
@@ -385,6 +406,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   {field3.label}
                 </p>
                 <input
+                  id="input-3"
+                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(3)) || (e.key === 'Enter' && handleTab(3, 'Enter'))}
                   type="date"
                   value={field3Data}
                   onChange={handlefield3Change}
@@ -399,6 +422,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                     {field4.label}
                   </p>
                   <input
+                    id="input-4"
+                    onKeyDown={(e) => (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))}
                     type="date"
                     value={field4Data}
                     onChange={handlefield4Change}

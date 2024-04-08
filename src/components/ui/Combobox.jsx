@@ -1,7 +1,18 @@
 import { Fragment, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 
-const CustomCombobox = ({ items, type, placeholder, selected, setSelected, isArrow, query, setQuery }) => {
+const CustomCombobox = ({
+  items,
+  type,
+  placeholder,
+  selected,
+  setSelected,
+  isArrow,
+  query,
+  setQuery,
+  handleTab,
+  id,
+}) => {
   const filteredItems =
     query === ''
       ? items
@@ -16,11 +27,13 @@ const CustomCombobox = ({ items, type, placeholder, selected, setSelected, isArr
       <div className="relative">
         <div className="relative w-full cursor-default overflow-hidden rounded-[8.62px] border border-[#DEE6F7] bg-white text-left sm:text-sm tablet:rounded-[10px] tablet:border-[3px]">
           <Combobox.Input
+            id={`input-${id}`}
             className="w-full bg-transparent py-2 pl-3 pr-4 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] tablet:py-3 tablet:pl-7 tablet:pr-10 tablet:text-[18px] tablet:leading-[21.78px]"
             displayValue={(item) => item.name}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
             disabled
+            onKeyDown={(e) => (e.key === 'Tab' && handleTab(id)) || (e.key === 'Enter' && handleTab(id, 'Enter'))}
           />
           {isArrow && (
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
