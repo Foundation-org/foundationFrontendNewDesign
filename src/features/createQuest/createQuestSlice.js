@@ -10,10 +10,8 @@ export const checkDescription = createAsyncThunk('createQuest/checkDescription',
   return result;
 });
 
-export const checkIsUrlAlreayExists = createAsyncThunk('createQuest/checkIsUrlAlreayExists', async (id) => {
-  const result = await questServices.urlDuplicateCheck({
-    id,
-  });
+export const checkIsUrlAlreayExists = createAsyncThunk('createQuest/checkIsUrlAlreayExists', async (data) => {
+  const result = await questServices.urlDuplicateCheck(data);
   console.log({ result });
   return result;
 });
@@ -390,7 +388,7 @@ export const createQuestSlice = createSlice({
       // state.questions.questionTyping = false;
     });
     builder.addCase(checkIsUrlAlreayExists.fulfilled, (state, action) => {
-      const { message, errorMessage } = action.payload;
+      const { message, errorMessage, url } = action.payload;
       if (state.media.url === '') {
         state.media.urlStatus = { ...defaultStatus };
         state.media.chatgptUrlStatus = { ...defaultStatus };
@@ -487,6 +485,8 @@ export const createQuestSlice = createSlice({
           // state.media.desctiption = message;
           // state.media.validatedDescription = message;
           // state.questions.questionTyping = false;
+          state.media.url = url;
+          state.media.validatedUrl = url;
           state.media.urlStatus = {
             name: 'Ok',
             color: 'text-[#0FB063]',

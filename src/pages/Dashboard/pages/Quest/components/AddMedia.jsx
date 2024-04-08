@@ -7,6 +7,8 @@ import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { useDebounce } from '../../../../../utils/useDebounce';
 import ReactPlayer from 'react-player';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import { extractPartFromUrl, extractYouTubeVideoId } from '../../../../../utils/embeddedutils';
+import { soundcloudUnique, youtubeBaseURLs } from '../../../../../constants/addMedia';
 import './Player.css';
 
 export default function AddMedia({ handleTab }) {
@@ -15,14 +17,6 @@ export default function AddMedia({ handleTab }) {
   const getMediaStates = useSelector(createQuestAction.getMedia);
   let debouncedURL = useDebounce(getMediaStates.url, 1000);
   const [mediaURL, setMediaURL] = useState(debouncedURL);
-  const [soundcloudUnique] = useState('soundcloud.com');
-  const [youtubeBaseURLs] = useState([
-    'youtube.com',
-    'www.youtube.com',
-    'm.youtube.com',
-    'youtube-nocookie.com',
-    'youtu.be',
-  ]);
 
   const handleVideoEnded = () => {
     if (playerRef.current) {
@@ -30,32 +24,6 @@ export default function AddMedia({ handleTab }) {
       playerRef.current.getInternalPlayer().play(); // Resume playback
     }
   };
-
-  const extractPartFromUrl = (url) => {
-    const pattern = /soundcloud.com\/(?:[^\/]+)\/([^/?]+)/;
-    const match = url.match(pattern);
-    if (match) {
-      return match[1];
-    } else {
-      return null;
-    }
-  };
-
-  function extractYouTubeVideoId(url) {
-    const patternLong = /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/;
-    const patternShort = /youtu\.be\/([^"&?/ ]{11})/;
-
-    const matchLong = url.match(patternLong);
-    const matchShort = url.match(patternShort);
-
-    if (matchLong && matchLong[1]) {
-      return matchLong[1]; // Full YouTube URL
-    } else if (matchShort && matchShort[1]) {
-      return matchShort[1]; // Short YouTube URL
-    } else {
-      return null; // Invalid or unsupported URL
-    }
-  }
 
   // To show and hide artwork on different screen sizes
   useEffect(() => {
@@ -114,10 +82,11 @@ export default function AddMedia({ handleTab }) {
 
     if (youtubeBaseURLs.some((baseURL) => value?.includes(baseURL))) {
       const videoId = extractYouTubeVideoId(value);
-      dispatch(createQuestAction.checkIsUrlAlreayExists(videoId));
+
+      dispatch(createQuestAction.checkIsUrlAlreayExists({ id: videoId, url: getMediaStates.url }));
     } else {
       const urlId = extractPartFromUrl(value);
-      dispatch(createQuestAction.checkIsUrlAlreayExists(urlId));
+      dispatch(createQuestAction.checkIsUrlAlreayExists({ id: urlId, url: getMediaStates.url }));
     }
   };
 
@@ -200,9 +169,10 @@ export default function AddMedia({ handleTab }) {
                   className="size-[15px] tablet:size-[41px]"
                 />
               </div>
+              {console.log({ mediaURL })}
               <ReactPlayer
                 ref={playerRef}
-                url={mediaURL}
+                url={getMediaStates.url}
                 className="react-player"
                 onError={(e) => {
                   toast.error('Invalid URL'), dispatch(createQuestAction.clearUrl());
@@ -214,7 +184,7 @@ export default function AddMedia({ handleTab }) {
                 muted={false} // Unmute audio
                 playing={false} // Do not autoplay
                 // loop={true} // Enable looping
-                loop={!getMediaStates.url.includes(soundcloudUnique)}
+                loop={!getMediaStates.url?.includes(soundcloudUnique)}
                 config={{
                   soundcloud: {
                     options: {

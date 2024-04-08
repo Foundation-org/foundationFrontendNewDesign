@@ -1,17 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
+import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
 
 export const EmbededVideo = ({ description, url, setPlayingPlayerId, questId, playing }) => {
   const playerRef = useRef(null);
   const [mediaURL, setMediaURL] = useState(url);
-  const [soundcloudUnique] = useState('soundcloud.com');
-  const [youtubeBaseURLs] = useState([
-    'youtube.com',
-    'www.youtube.com',
-    'm.youtube.com',
-    'youtube-nocookie.com',
-    'youtu.be',
-  ]);
 
   const handleVideoEnded = () => {
     if (playerRef.current) {

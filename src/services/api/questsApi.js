@@ -1,3 +1,5 @@
+import { soundcloudUnique } from '../../constants/addMedia';
+import { extractPartFromUrl } from '../../utils/embeddedutils';
 import api from './Axios';
 import { toast } from 'sonner';
 
@@ -168,23 +170,45 @@ async function checkVideoAgeRestriction(videoId) {
   }
 }
 
-export const urlDuplicateCheck = async ({ id }) => {
+async function getFullSoundcloudUrlFromShortUrl(url) {
   try {
-    const constraintResponses = await api.get(`/infoquestions/checkMediaDuplicateUrl/${id}`);
+    const response = await api.get(`infoquestions/getFullSoundcloudUrlFromShortUrl?shortUrl=${url}`);
 
-    let response = await checkVideoAgeRestriction(id);
+    return response.data.finalUrl;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
 
-    console.log('response', response);
+export const urlDuplicateCheck = async ({ id, url }) => {
+  let linkId = id;
+  try {
+    let apiResp;
+    if (url.includes(soundcloudUnique)) {
+      apiResp = await getFullSoundcloudUrlFromShortUrl(url);
+
+      if (apiResp) {
+        const soundcloudId = extractPartFromUrl(apiResp);
+        linkId = soundcloudId;
+      }
+    }
+
+    const constraintResponses = await api.get(`/infoquestions/checkMediaDuplicateUrl/${linkId}`);
+
+    let response = await checkVideoAgeRestriction(linkId);
+
     const contentRating = response?.items[0]?.contentDetails?.contentRating?.ytRating;
     const isAdultContent = contentRating === 'ytAgeRestricted';
 
     if (isAdultContent === false) {
-      return { message: constraintResponses.data.message, errorMessage: null };
+      if (apiResp) {
+        return { message: constraintResponses.data.message, errorMessage: null, url: apiResp };
+      }
+      return { message: constraintResponses.data.message, errorMessage: null, url: url };
     } else {
       return { message: 'It is an adult video', errorMessage: 'ADULT' };
     }
-
-    return { message: constraintResponses.data.message, errorMessage: null };
   } catch (error) {
     console.log({ error });
     if (error.response.data.duplicate === true) {
