@@ -57,49 +57,51 @@ export default function SharedLinkResults() {
   return (
     <>
       <Topbar />
-      <div className="flex h-[calc(100vh-90px)] bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]">
-        <div className="no-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
-          <div className="mb-7 flex justify-center gap-5 tablet:mb-[3.81rem] tablet:gap-[5.69rem]">
-            <button
-              className={`text-nowrap rounded-[7.1px] border  px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal tablet:rounded-[23.6px] tablet:px-[66px] tablet:py-5 tablet:text-[23.63px] ${tab === 'All Results' ? ' bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] text-white' : ' border-[#BABABA] bg-white text-[#7C7C7C]'}`}
-              onClick={() => setTab('All Results')}
-            >
-              All Results
-            </button>
-            <button
-              className={`text-nowrap rounded-[7.1px] border px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal tablet:rounded-[23.6px] tablet:px-[66px] tablet:py-5 tablet:text-[23.63px] ${tab === 'My Link Results' ? ' bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] text-white' : 'border-[#BABABA] bg-white text-[#7C7C7C]'}`}
-              onClick={() => setTab('My Link Results')}
-            >
-              My Link Results
-            </button>
+      <div className="bg-[#F2F3F5] dark:bg-[#242424]">
+        <div className="mx-auto flex h-[calc(100vh-90px)] max-w-[1378px] tablet:h-[calc(100vh-70px)]">
+          <div className="no-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
+            <div className="mb-7 flex justify-center gap-5 tablet:mb-[3.81rem] tablet:gap-[5.69rem]">
+              <button
+                className={`text-nowrap rounded-[7.1px] border  px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal tablet:rounded-[23.6px] tablet:px-[66px] tablet:py-5 tablet:text-[23.63px] ${tab === 'All Results' ? ' bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] text-white' : ' border-[#BABABA] bg-white text-[#7C7C7C]'}`}
+                onClick={() => setTab('All Results')}
+              >
+                All Results
+              </button>
+              <button
+                className={`text-nowrap rounded-[7.1px] border px-[9.4px] py-1 text-[9.4px] font-semibold leading-normal tablet:rounded-[23.6px] tablet:px-[66px] tablet:py-5 tablet:text-[23.63px] ${tab === 'My Link Results' ? ' bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] text-white' : 'border-[#BABABA] bg-white text-[#7C7C7C]'}`}
+                onClick={() => setTab('My Link Results')}
+              >
+                My Link Results
+              </button>
+            </div>
+
+            {loading ? (
+              <Loader />
+            ) : tab === 'My Link Results' ? (
+              questData && (
+                <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px]">
+                  <QuestionCardWithToggle
+                    questStartData={questData}
+                    postProperties={'sharedlink-results'}
+                    SharedLinkButton={'shared-links-results-button'}
+                  />
+                </div>
+              )
+            ) : (
+              allQuestData && (
+                <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px]">
+                  <QuestionCardWithToggle
+                    questStartData={allQuestData}
+                    postProperties={'actual-results'}
+                    SharedLinkButton={'shared-links-results-button'}
+                  />
+                </div>
+              )
+            )}
           </div>
 
-          {loading ? (
-            <Loader />
-          ) : tab === 'My Link Results' ? (
-            questData && (
-              <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px]">
-                <QuestionCardWithToggle
-                  questStartData={questData}
-                  postProperties={'sharedlink-results'}
-                  SharedLinkButton={'shared-links-results-button'}
-                />
-              </div>
-            )
-          ) : (
-            allQuestData && (
-              <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px]">
-                <QuestionCardWithToggle
-                  questStartData={allQuestData}
-                  postProperties={'actual-results'}
-                  SharedLinkButton={'shared-links-results-button'}
-                />
-              </div>
-            )
-          )}
+          <SidebarRight />
         </div>
-
-        <SidebarRight />
       </div>
     </>
   );

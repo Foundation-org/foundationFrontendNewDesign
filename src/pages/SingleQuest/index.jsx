@@ -183,24 +183,26 @@ const SingleQuest = () => {
         <meta name="google" content="notranslate"></meta>
       </Helmet>
       <Topbar />
-      <div className="flex h-[calc(100vh-66.8px)] bg-[#F2F3F5] tablet:h-[calc(100vh-70px)]">
-        <div className="no-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
-          {error !== '' ? <p className="text-center text-[24px] font-bold tablet:text-[25px]">{error}</p> : null}
-          {(singleQuestResp || submitResponse) && (
-            <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px] ">
-              <QuestionCardWithToggle
-                questStartData={submitResponse ? submitResponse : singleQuestResp}
-                isBookmarked={false}
-                setSingleQuestResp={setSingleQuestResp}
-                setSubmitResponse={setSubmitResponse}
-                isSingleQuest={location.pathname.includes('/p/') ? true : false}
-                postLink={id}
-                guestResult={submitResponse ? true : singleQuestResp.startStatus === 'change answer' ? true : false}
-              />
-            </div>
-          )}
+      <div className="bg-[#F2F3F5]">
+        <div className="mx-auto flex h-[calc(100vh-66.8px)] max-w-[1378px] tablet:h-[calc(100vh-70px)]">
+          <div className="no-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
+            {error !== '' ? <p className="text-center text-[24px] font-bold tablet:text-[25px]">{error}</p> : null}
+            {(singleQuestResp || submitResponse) && (
+              <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px] ">
+                <QuestionCardWithToggle
+                  questStartData={submitResponse ? submitResponse : singleQuestResp}
+                  isBookmarked={false}
+                  setSingleQuestResp={setSingleQuestResp}
+                  setSubmitResponse={setSubmitResponse}
+                  isSingleQuest={location.pathname.includes('/p/') ? true : false}
+                  postLink={id}
+                  guestResult={submitResponse ? true : singleQuestResp.startStatus === 'change answer' ? true : false}
+                />
+              </div>
+            )}
+          </div>
+          <SidebarRight />
         </div>
-        <SidebarRight />
       </div>
     </>
   );
