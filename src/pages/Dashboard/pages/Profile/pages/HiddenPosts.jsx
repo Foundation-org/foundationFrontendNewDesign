@@ -300,7 +300,8 @@ export default function HiddenPosts() {
         >
           <div
             id="section-1"
-            className="flex flex-col justify-center gap-2 tablet:flex-row tablet:flex-wrap tablet:gap-5"
+            className="flex flex-col justify-center gap-2 tablet:items-center "
+            // className="flex flex-col justify-center gap-2 tablet:flex-row tablet:flex-wrap tablet:gap-5"
           >
             {allData &&
               allData.map((item, index) => (
