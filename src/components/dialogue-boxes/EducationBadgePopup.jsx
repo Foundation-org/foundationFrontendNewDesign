@@ -90,6 +90,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [query, setQuery] = useState('');
   const [deleteItem, setDeleteItem] = useState('');
   const [loading, setLoading] = useState(false);
+  const [delloading, setDelLoading] = useState(false);
 
   const searchUniversities = async () => {
     const universities = await api.post(`search/searchUniversities/?name=${query}`);
@@ -307,10 +308,11 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                         className={'min-w-[2.875rem] tablet:min-w-[80px]'}
                         variant="submit"
                         onClick={() => {
+                          setDelLoading(true);
                           handleDelete(deleteItem);
                         }}
                       >
-                        Yes
+                        {delloading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
                       </Button>
                       <Button
                         className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}

@@ -77,7 +77,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const [companies, setCompanies] = useState([]);
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
-  // const [field3Data, setField3Data] = useState([]);
+  const [delloading, setDelLoading] = useState(false);
   const [field4Data, setField4Data] = useState([]);
   const [field5Data, setField5Data] = useState();
   const [field6Data, setField6Data] = useState();
@@ -298,10 +298,11 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                         className={'min-w-[2.875rem] tablet:min-w-[80px]'}
                         variant="submit"
                         onClick={() => {
+                          setDelLoading(true);
                           handleDelete(deleteItem);
                         }}
                       >
-                        Yes
+                        {delloading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
                       </Button>
                       <Button
                         className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}
