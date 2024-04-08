@@ -130,8 +130,6 @@ const SingleQuest = () => {
     }
   }, []);
 
-  console.log('first', singleQuestResp);
-
   return (
     <>
       <WelcomePopup modalVisible={modalVisible} handleClose={closeWelcomeDialogue} />
@@ -197,6 +195,7 @@ const SingleQuest = () => {
                 setSubmitResponse={setSubmitResponse}
                 isSingleQuest={location.pathname.includes('/p/') ? true : false}
                 postLink={id}
+                guestResult={submitResponse ? true : singleQuestResp.startStatus === 'change answer' ? true : false}
               />
             </div>
           )}

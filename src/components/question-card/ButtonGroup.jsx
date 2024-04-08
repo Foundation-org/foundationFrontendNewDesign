@@ -379,7 +379,19 @@ const ButtonGroup = ({
         <Button
           variant="cancel"
           onClick={() => {
-            navigate('/dashboard/profile/shared-links');
+            if (persistedUserInfo?.role === 'guest') {
+              toast.warning(
+                <p>
+                  Please{' '}
+                  <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+                    Create an Account
+                  </span>{' '}
+                  to unlock this feature
+                </p>,
+              );
+            } else {
+              navigate('/dashboard/profile/shared-links');
+            }
           }}
         >
           Go Back

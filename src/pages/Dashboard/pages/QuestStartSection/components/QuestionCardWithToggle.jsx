@@ -22,7 +22,7 @@ import ConditionalTextFullScreen from '../../../../../components/question-card/C
 import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import * as authActions from '../../../../../features/auth/authSlice';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const QuestionCardWithToggle = (props) => {
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   const { questStartData, isBookmarked, postProperties, SharedLinkButton } = props;
-  const { setSubmitResponse, isSingleQuest, postLink } = props;
+  const { setSubmitResponse, isSingleQuest, postLink, guestResult } = props;
 
   let questData;
 
@@ -56,6 +56,7 @@ const QuestionCardWithToggle = (props) => {
   const [viewResult, setViewResult] = useState('');
   const [questSelection, setQuestSelection] = useState(questSelectionInitial);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const navigate = useNavigate();
   const reset = {
     name: 'Ok',
     color: 'text-[#389CE3]',
@@ -703,8 +704,15 @@ const QuestionCardWithToggle = (props) => {
         handleStartTest(questStartData._id);
       }
       if (questStartData.startStatus === 'change answer') {
-        setOpenResults(false);
-        handleViewResults(questStartData._id);
+        console.log('here', guestResult);
+        if (!guestResult) {
+          setOpenResults(false);
+          handleViewResults(questStartData._id);
+        } else {
+          navigate('/shared-links/result', {
+            state: { questId: questStartData._id, link: location.pathname.split('/').pop() },
+          });
+        }
       }
       if (questStartData.startStatus === 'completed') {
         setOpenResults(true);
@@ -719,8 +727,7 @@ const QuestionCardWithToggle = (props) => {
     const updatedAnswers = prevAnswers.map((answer) => {
       // Check if the label matches the question
       if (label.some((item) => item.question === answer.label)) {
-        return { ...answer, check: true }; // Set check to true for matching question
-      } else {
+        return { ...answer, check: true };
         return answer;
       }
     });
