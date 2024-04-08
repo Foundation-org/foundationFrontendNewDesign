@@ -171,7 +171,7 @@ export default function AddMedia({ handleTab }) {
                 }}
                 onBlur={(e) => e.target.value.trim() !== '' && urlVerification(e.target.value.trim())}
                 value={getMediaStates.url}
-                placeholder="Paste embed link here....."
+                placeholder="Paste Youtube or Soundcloud URL here..."
                 className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
               />
               <button
@@ -180,7 +180,7 @@ export default function AddMedia({ handleTab }) {
                 <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[134px]">
                   {getMediaStates.urlStatus.name}
                 </div>
-                <Tooltip optionStatus={getMediaStates.urlStatus} type="mediaURL"/>
+                <Tooltip optionStatus={getMediaStates.urlStatus} type="mediaURL" />
               </button>
             </div>
           )}

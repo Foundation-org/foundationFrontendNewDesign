@@ -85,6 +85,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [field3Data, setField3Data] = useState();
   const [field4Data, setField4Data] = useState();
   const [prevInfo, setPrevInfo] = useState({});
+  const [isPresent, setIsPresent] = useState(false);
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
   const [deleteItem, setDeleteItem] = useState('');
@@ -93,6 +94,14 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const searchUniversities = async () => {
     const universities = await api.post(`search/searchUniversities/?name=${query}`);
     setUniversities(universities.data);
+  };
+  const handlePresentToggle = () => {
+    setIsPresent(!isPresent);
+    if (!isPresent) {
+      setField4Data('Present');
+    } else {
+      setField4Data('');
+    }
   };
   useEffect(() => {
     searchUniversities();
@@ -120,7 +129,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         field1Data.name === undefined ||
         field2Data.name === undefined ||
         field3Data === undefined ||
-        field4Data === undefined
+        field4Data === undefined ||
+        field4Data === ''
       ) {
         toast.error('You cannot leave the field blank');
         setLoading(false);
@@ -170,6 +180,17 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   const handleUpdateBadge = async (newData) => {
     try {
+      if (
+        field1Data.name === undefined ||
+        field2Data.name === undefined ||
+        field3Data === undefined ||
+        field4Data === undefined ||
+        field4Data === ''
+      ) {
+        toast.error('You cannot leave the field blank');
+        setLoading(false);
+        return;
+      }
       if (field4Data < field3Data) {
         toast.warning('Please ensure the graduation date is not earlier than the start date.');
         setLoading(false);
@@ -345,6 +366,18 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 setQuery={setQuery}
               />
             </div>
+            <label
+              id="custom-square-checkbox"
+              className="flex items-center gap-2 text-[10px] font-medium text-[#7C7C7C] tablet:gap-[15px] tablet:text-[20px]"
+            >
+              <input
+                type="checkbox"
+                checked={isPresent}
+                onChange={handlePresentToggle}
+                className="checkbox size-[14px] tablet:size-[25px]"
+              />
+              Not Completed
+            </label>
 
             <div className="mb-4 mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[37px]">
               <div className="w-full">
@@ -358,18 +391,22 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                 />
               </div>
-              <div className="w-full">
-                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                  {field4.label}
-                </p>
-                <input
-                  type="date"
-                  value={field4Data}
-                  onChange={handlefield4Change}
-                  placeholder={field4.placeholder}
-                  className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
-                />
-              </div>
+              {isPresent ? (
+                <div className="w-full"></div>
+              ) : (
+                <div className="w-full">
+                  <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                    {field4.label}
+                  </p>
+                  <input
+                    type="date"
+                    value={field4Data}
+                    onChange={handlefield4Change}
+                    placeholder={field4.placeholder}
+                    className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                  />
+                </div>
+              )}
             </div>
 
             <div className="flex justify-between">
