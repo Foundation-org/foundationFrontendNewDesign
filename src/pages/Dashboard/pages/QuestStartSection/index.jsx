@@ -15,6 +15,7 @@ import { printEndMessage } from '../../../../utils';
 import * as QuestServices from '../../../../services/queries/quest';
 import * as filtersActions from '../../../../features/sidebar/filtersSlice';
 import * as questUtilsActions from '../../../../features/quest/utilsSlice';
+import MediaControls from '../../../../components/MediaControls';
 
 const QuestStartSection = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const QuestStartSection = () => {
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
   const [sliderLoading, setSliderloading] = useState(false);
+  const [prevPlayerId, setPrevPlayerId] = useState();
 
   // Preferences
   // const columnsData = localStorage.getItem('columns');
@@ -335,10 +337,24 @@ const QuestStartSection = () => {
       playingCard.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const toggleMedia = () => {
+    if (playerPlayingId === '') {
+      setPlayingPlayerId(prevPlayerId);
+    } else {
+      setPrevPlayerId(playerPlayingId);
+      setPlayingPlayerId('');
+    }
+  };
+
   return (
     <div className="w-full bg-[#F2F3F5] dark:bg-black">
-      <div className="mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
-        <SidebarLeft scrollToPlayingCard={scrollToPlayingCard} />
+      <div className="relative mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
+        <SidebarLeft
+          scrollToPlayingCard={scrollToPlayingCard}
+          toggleMedia={toggleMedia}
+          playerPlayingId={playerPlayingId}
+        />
         <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100vh-155.5px)] min-h-[calc(100vh-155.5px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100vh-70px)] tablet:min-h-[calc(100vh-70px)] dark:bg-[#242424]">
           <Slider sliderLoading={sliderLoading} setSliderloading={setSliderloading} />
           <InfiniteScroll
@@ -372,6 +388,13 @@ const QuestStartSection = () => {
           </InfiniteScroll>
         </div>
         <SidebarRight />
+        <div className="absolute bottom-3 left-1/2 block -translate-x-1/2 laptop:hidden">
+          <MediaControls
+            scrollToPlayingCard={scrollToPlayingCard}
+            toggleMedia={toggleMedia}
+            playerPlayingId={playerPlayingId}
+          />
+        </div>
       </div>
     </div>
   );

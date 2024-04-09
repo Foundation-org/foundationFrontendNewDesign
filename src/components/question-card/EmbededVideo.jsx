@@ -62,6 +62,7 @@ export const EmbededVideo = ({ description, url, setPlayingPlayerId, questId, pl
           }}
           width="100%"
           height="100%"
+          onPause={() => playing && setPlayingPlayerId('')}
           // single_active={true}
           controls={true} // Hide player controls
           muted={false} // Unmute audio
