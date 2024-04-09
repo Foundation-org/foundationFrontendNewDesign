@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { web3 } from '../../../../../../constants/varification-badges';
 import { startRegistration } from '@simplewebauthn/browser';
@@ -103,6 +103,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
           type: type,
           data: value,
         });
+        setIsButtonClicked(false);
         // alert("testing...   ")
         console.log("🚀 ~ handlePasskey ~ value:", value)
       }
@@ -122,9 +123,13 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
       siweUri: 'https://example.com/login',
     };
     
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
     const triggerFarcaster = () => {
+      setIsButtonClicked(true);
       const a = document.querySelector("._1n3pr301");
       a.click();
+      // setTimeout(() => {
+      // }, 1000);
     }
   return (
     <>
@@ -132,16 +137,21 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
         Web 3
       </h1>
         <AuthKitProvider config={config}>
-          <div className='hidden'>
-            <SignInButton 
-            onSuccess={(data) =>{
-              // alert("testing...")
-              console.log("testing...");
-              handlePasskey('Farcaster', 'farcaster', data)
-            }
-            // console.log(`Hello, ${username}! Your fid is ${fid} ${data}.`)
-            // console.log(data)
-            } />
+            <div className='hidden'>
+              <SignInButton 
+              onClick={() => console.log('testing clicking....')}
+              // onStatusResponse={(res) => console.log("status callback:", res)}
+              onSuccess={(data) =>{
+                // alert("testing...")
+                // console.log("testing...");
+                isButtonClicked &&
+                handlePasskey('Farcaster', 'farcaster', data)
+              }
+              // console.log(`Hello, ${username}! Your fid is ${fid} ${data}.`)
+              // console.log(data)
+              } />
+            </div>
+          <div className=''>
           </div>
         </AuthKitProvider>
       <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">
