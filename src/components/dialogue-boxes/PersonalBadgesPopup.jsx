@@ -57,11 +57,10 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name.charAt(0).toUpperCase() + name.slice(1)),
   });
   const gotLocation = (position) => {
-    console.log(position.coords.longitude);
     setName(position.coords.latitude + ',' + position.coords.longitude);
   };
-  const failedToGet = () => {
-    toast.error('Error getting location');
+  const failedToGet = (err) => {
+    toast.error('Error getting location', err);
   };
   const getLocation = () => {
     navigator.geolocation.getCurrentPosition(gotLocation, failedToGet);
