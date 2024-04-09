@@ -117,8 +117,8 @@ export default function AddPictures({ handleTab }) {
 
               <img
                 src={getMediaStates.validatedPicUrl}
-                alt=""
-                className="max-h-[134.456px] w-full rounded-[3.875px] tablet:max-h-[371px] tablet:rounded-[10px]"
+                alt="embedded-photo"
+                className="max-h-[134.456px] w-full rounded-[3.875px] object-contain tablet:max-h-[371px] tablet:rounded-[10px]"
               />
             </div>
           )}

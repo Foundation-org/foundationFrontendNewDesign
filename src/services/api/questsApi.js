@@ -233,9 +233,10 @@ export const pictureUrlCheck = async ({ url }) => {
 
     const constraintResponses = await api.get(`/infoquestions/getFlickerUrl?url=${url}`);
 
-    let urlId = constraintResponses.data.imageUrl.split('/')[3];
+    let urlId = constraintResponses.data.imageUrl.split('/')[4];
+    let beforeDot = urlId.split('.')[0];
 
-    const checkDuplicate = await api.get(`/infoquestions/checkMediaDuplicateUrl/${urlId}`);
+    const checkDuplicate = await api.get(`/infoquestions/checkMediaDuplicateUrl/${beforeDot}`);
 
     if (checkDuplicate.status === 200 && constraintResponses) {
       return { message: 'Success', errorMessage: null, url: constraintResponses?.data.imageUrl };
