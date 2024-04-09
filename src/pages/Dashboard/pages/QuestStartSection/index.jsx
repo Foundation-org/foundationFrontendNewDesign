@@ -388,7 +388,7 @@ const QuestStartSection = () => {
           </InfiniteScroll>
         </div>
         <SidebarRight />
-        <div className="absolute bottom-3 left-1/2 block -translate-x-1/2 laptop:hidden">
+        <div className="absolute bottom-24 left-1/2 block -translate-x-1/2 laptop:hidden">
           <MediaControls
             scrollToPlayingCard={scrollToPlayingCard}
             toggleMedia={toggleMedia}

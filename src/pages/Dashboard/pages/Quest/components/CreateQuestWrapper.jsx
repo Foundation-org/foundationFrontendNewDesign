@@ -53,6 +53,18 @@ export default function CreateQuestWrapper({ type, handleTab, msg, children }) {
               + Add Media
             </Button>
           )}
+          {/* {getMediaStates?.isMedia === false && (
+            <Button
+              variant="addEmbeded"
+              className="px-2 tablet:px-[25px]"
+              onClick={() => {
+                dispatch(createQuestAction.updateIsPicMedia(false));
+                dispatch(createQuestAction.updateIsMedia(true));
+              }}
+            >
+              + Add Audio
+            </Button>
+          )} */}
           {getPicsMediaStates?.isPicMedia === false && (
             <Button
               variant="addEmbeded"

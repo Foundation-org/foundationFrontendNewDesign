@@ -10,6 +10,14 @@ export const checkDescription = createAsyncThunk('createQuest/checkDescription',
   return result;
 });
 
+export const checkAudioDescription = createAsyncThunk('createQuest/checkAudioDescription', async (value) => {
+  const result = await questServices.questionValidation({
+    question: value,
+    queryType: 'yes/no',
+  });
+  return result;
+});
+
 export const checkPicsDescription = createAsyncThunk('createQuest/checkPicsDescription', async (value) => {
   const result = await questServices.questionValidation({
     question: value,
@@ -19,6 +27,11 @@ export const checkPicsDescription = createAsyncThunk('createQuest/checkPicsDescr
 });
 
 export const checkIsUrlAlreayExists = createAsyncThunk('createQuest/checkIsUrlAlreayExists', async (data) => {
+  const result = await questServices.urlDuplicateCheck(data);
+  return result;
+});
+
+export const checkAudioUrl = createAsyncThunk('createQuest/checkAudioUrl', async (data) => {
   const result = await questServices.urlDuplicateCheck(data);
   return result;
 });
@@ -70,6 +83,25 @@ const initialState = {
       ...defaultStatus,
     },
     chatgptUrlStatus: {
+      ...defaultStatus,
+    },
+  },
+  audio: {
+    isAudio: false,
+    audioDesc: '',
+    validatedAudioDesc: '',
+    audioDescStatus: {
+      ...defaultStatus,
+    },
+    chatgptAudioDescStatus: {
+      ...defaultStatus,
+    },
+    audioUrl: '',
+    validatedAudioUrl: '',
+    audioUrlStatus: {
+      ...defaultStatus,
+    },
+    chatgptAudioUrlStatus: {
       ...defaultStatus,
     },
   },
@@ -127,9 +159,13 @@ export const createQuestSlice = createSlice({
     updateIsMedia: (state, action) => {
       state.media.isMedia = action.payload;
     },
+    updateIsAudio: (state, action) => {
+      state.audio.isAudio = action.payload;
+    },
     updateIsPicMedia: (state, action) => {
       state.pictureMedia.isPicMedia = action.payload;
     },
+    // Description
     addMediaDesc: (state, action) => {
       // state.media.desctiption = action.payload;
       if (action.payload === state.media.validatedDescription) {
@@ -142,6 +178,15 @@ export const createQuestSlice = createSlice({
       state.media.desctiption = action.payload;
       // state.questions.questionTyping = true;
     },
+    addAudioDesc: (state, action) => {
+      if (action.payload === state.audio.validatedDescription) {
+        state.audio.audioDescStatus = state.audio.chatgptAudioDescStatus;
+        state.audio.audioDesc = state.audio.validatedAudioDesc;
+        return;
+      }
+      state.audio.audioDescStatus = { ...defaultStatus };
+      state.audio.audioDesc = action.payload;
+    },
     addPicsMediaDesc: (state, action) => {
       if (action.payload === state.media.validatedDescription) {
         state.pictureMedia.picDescStatus = state.pictureMedia.chatgptPicDescStatus;
@@ -151,6 +196,7 @@ export const createQuestSlice = createSlice({
       state.pictureMedia.picDescStatus = { ...defaultStatus };
       state.pictureMedia.picDesctiption = action.payload;
     },
+    // Url
     addMediaUrl: (state, action) => {
       if (action.payload === state.media.validatedUrl) {
         state.media.urlStatus = state.media.chatgptUrlStatus;
@@ -161,6 +207,15 @@ export const createQuestSlice = createSlice({
       state.media.url = action.payload;
       // state.media.urlStatus = { ...defaultStatus };
     },
+    addAudioUrl: (state, action) => {
+      if (action.payload === state.audio.validatedAudioUrl) {
+        state.audio.audioUrlStatus = state.audio.chatgptAudioUrlStatus;
+        state.audio.audioUrl = state.audio.validatedAudioUrl;
+        return;
+      }
+      state.audio.audioUrlStatus = { ...defaultStatus };
+      state.audio.audioUrl = action.payload;
+    },
     addPicUrl: (state, action) => {
       if (action.payload === state.pictureMedia.validatedPicUrl) {
         state.pictureMedia.picUrlStatus = state.pictureMedia.chatgptPicUrlStatus;
@@ -170,6 +225,7 @@ export const createQuestSlice = createSlice({
       state.pictureMedia.picUrlStatus = { ...defaultStatus };
       state.pictureMedia.picUrl = action.payload;
     },
+    // Questions
     addQuestion: (state, action) => {
       if (action.payload === state.questions.validatedQuestion) {
         state.questionReset = state.chatgptStatus;
@@ -188,6 +244,7 @@ export const createQuestSlice = createSlice({
         questions: { ...state.questions, question, changedOption, changeState },
       };
     },
+    // Options
     updateMultipleChoice: (state, action) => {
       const { question, changedOption, changeState, multipleOption, addOption, optionsCount, options } = action.payload;
       return {
@@ -420,6 +477,113 @@ export const createQuestSlice = createSlice({
             status: false,
           };
           state.media.chatgptMediaDescStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+        }
+      }
+    });
+
+    // check Audio Description status
+    builder.addCase(checkAudioDescription.pending, (state, action) => {
+      state.audio.audioDescStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+      state.audio.chatgptAudioDescStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+    });
+    builder.addCase(checkAudioDescription.fulfilled, (state, action) => {
+      const { validatedQuestion, errorMessage } = action.payload;
+      if (errorMessage) {
+        if (errorMessage === 'DUPLICATION') {
+          state.audio.audioDesc = validatedQuestion;
+          state.audio.validatedAudioDesc = validatedQuestion;
+          // state.questions.questionTyping = false;
+          state.audio.audioDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+          state.audio.chatgptAudioDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+        } else {
+          state.audio.validatedAudioDesc = state.questions.question;
+          // state.questions.questionTyping = false;
+          state.audio.audioDescStatus = {
+            name: 'Rejected',
+            color: 'text-[#b00f0f]',
+            tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+            tooltipStyle: 'tooltip-error',
+            status: true,
+            showToolTipMsg: true,
+          };
+          state.audio.chatgptAudioDescStatus = {
+            name: 'Rejected',
+            color: 'text-[#b00f0f]',
+            tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+            tooltipStyle: 'tooltip-error',
+            status: true,
+            showToolTipMsg: true,
+          };
+        }
+      } else {
+        if (validatedQuestion === state.questions.validatedQuestion) {
+          state.audio.audioDesc = validatedQuestion;
+          state.audio.validatedAudioDesc = validatedQuestion;
+          // state.questions.questionTyping = false;
+          state.audio.audioDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+          state.audio.chatgptAudioDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+        } else {
+          state.audio.audioDesc = validatedQuestion;
+          state.audio.validatedAudioDesc = validatedQuestion;
+          // state.questions.questionTyping = false;
+          state.audio.audioDescStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+          state.audio.chatgptAudioDescStatus = {
             name: 'Ok',
             color: 'text-[#0FB063]',
             tooltipName: 'Question is Verified',
@@ -668,6 +832,147 @@ export const createQuestSlice = createSlice({
             status: false,
           };
           state.media.chatgptUrlStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+          // }
+        }
+      }
+    });
+
+    // check audio url status start
+    builder.addCase(checkAudioUrl.pending, (state, action) => {
+      state.audio.audioUrlStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+      state.audio.chatgptAudioUrlStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+      // state.questions.questionTyping = false;
+    });
+    builder.addCase(checkAudioUrl.fulfilled, (state, action) => {
+      const { message, errorMessage, url } = action.payload;
+      if (state.audio.audioUrl === '') {
+        state.audio.audioUrlStatus = { ...defaultStatus };
+        state.audio.chatgptAudioUrlStatus = { ...defaultStatus };
+      } else {
+        if (errorMessage) {
+          if (errorMessage === 'DUPLICATION') {
+            state.audio.validatedAudioUrl = state.audio.url;
+            // state.media.desctiption = message;
+            // state.media.validatedDescription = message;
+            // state.questions.questionTyping = false;
+            state.audio.audioUrlStatus = {
+              name: 'Duplicate',
+              color: 'text-[#EFD700]',
+              tooltipName: 'This url is not unique. A url like this already exists.',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+            state.audio.chatgptAudioUrlStatus = {
+              name: 'Duplicate',
+              color: 'text-[#EFD700]',
+              tooltipName: 'This url is not unique. A url like this already exists.',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+          }
+          if (errorMessage === 'ADULT') {
+            state.audio.validatedAudioUrl = state.audio.audioUrl;
+            // state.media.desctiption = message;
+            // state.media.validatedDescription = message;
+            // state.questions.questionTyping = false;
+            state.audio.audioUrlStatus = {
+              name: 'Rejected',
+              color: 'text-[#b00f0f]',
+              tooltipName: 'It is an adult video',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+            state.audio.chatgptAudioUrlStatus = {
+              name: 'Rejected',
+              color: 'text-[#b00f0f]',
+              tooltipName: 'It is an adult video',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+          }
+          // else {
+          //   state.media.validatedDescription = state.questions.question;
+          //   // state.questions.questionTyping = false;
+          //   state.media.mediaDescStatus = {
+          //     name: 'Rejected',
+          //     color: 'text-[#b00f0f]',
+          //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+          //     tooltipStyle: 'tooltip-error',
+          //     status: true,
+          //     showToolTipMsg: true,
+          //   };
+          //   state.media.chatgptMediaDescStatus = {
+          //     name: 'Rejected',
+          //     color: 'text-[#b00f0f]',
+          //     tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+          //     tooltipStyle: 'tooltip-error',
+          //     status: true,
+          //     showToolTipMsg: true,
+          //   };
+          // }
+        } else {
+          // if (message === state.questions.message) {
+          //   state.media.desctiption = message;
+          //   state.media.validatedDescription = message;
+          //   // state.questions.questionTyping = false;
+          //   state.media.mediaDescStatus = {
+          //     name: 'Duplicate',
+          //     color: 'text-[#EFD700]',
+          //     tooltipName: 'This post is not unique. A post like this already exists.',
+          //     tooltipStyle: 'tooltip-error',
+          //     duplication: true,
+          //     showToolTipMsg: true,
+          //   };
+          //   state.media.chatgptMediaDescStatus = {
+          //     name: 'Duplicate',
+          //     color: 'text-[#EFD700]',
+          //     tooltipName: 'This post is not unique. A post like this already exists.',
+          //     tooltipStyle: 'tooltip-error',
+          //     duplication: true,
+          //     showToolTipMsg: true,
+          //   };
+          // }
+          // else
+          // {
+          // state.media.desctiption = message;
+          // state.media.validatedDescription = message;
+          // state.questions.questionTyping = false;
+          state.audio.audioUrl = url;
+          state.audio.validatedAudioUrl = url;
+          state.audio.audioUrlStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+          state.audio.chatgptAudioUrlStatus = {
             name: 'Ok',
             color: 'text-[#0FB063]',
             tooltipName: 'Question is Verified',
@@ -1022,11 +1327,14 @@ const getRejectedStatus = () => ({
 
 export const {
   updateIsMedia,
+  updateIsAudio,
+  updateIsPicMedia,
   addMediaDesc,
+  addAudioDesc,
   addPicsMediaDesc,
   addMediaUrl,
+  addAudioUrl,
   addPicUrl,
-  updateIsPicMedia,
   addQuestion,
   updateQuestion,
   updateMultipleChoice,
@@ -1048,6 +1356,7 @@ export const {
 export default createQuestSlice.reducer;
 
 export const getMedia = (state) => state.createQuest.media;
+export const getAudio = (state) => state.createQuest.audio;
 export const getPicsMedia = (state) => state.createQuest.pictureMedia;
 export const getCreate = (state) => state.createQuest.questions;
 export const questionStatus = (state) => state.createQuest.questionReset;
