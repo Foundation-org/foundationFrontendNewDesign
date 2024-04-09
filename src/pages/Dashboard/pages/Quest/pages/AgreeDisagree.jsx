@@ -183,6 +183,7 @@ const AgreeDisagree = () => {
 
   return (
     <CreateQuestWrapper
+      quest="Statement"
       handleTab={handleTab}
       type={'Statement'}
       msg={'Make a statement that anyone can "Agree" or "Disagree" with'}

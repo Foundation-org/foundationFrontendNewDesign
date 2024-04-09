@@ -290,6 +290,7 @@ const MultipleChoice = () => {
 
   return (
     <CreateQuestWrapper
+      quest="M/R"
       handleTab={handleTab}
       type={'Poll'}
       msg={'Ask a question where anyone can select a single option from a list of choices'}

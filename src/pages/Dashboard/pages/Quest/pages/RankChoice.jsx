@@ -277,6 +277,7 @@ const RankChoice = () => {
 
   return (
     <CreateQuestWrapper
+      quest="M/R"
       handleTab={handleTab}
       type={'Poll'}
       msg={'Create a selection of choices that can be arranged in order of preference.'}

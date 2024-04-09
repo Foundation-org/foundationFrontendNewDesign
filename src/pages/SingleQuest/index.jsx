@@ -132,7 +132,7 @@ const SingleQuest = () => {
 
   return (
     <>
-      <WelcomePopup modalVisible={modalVisible} handleClose={closeWelcomeDialogue} />
+      {/* <WelcomePopup modalVisible={modalVisible} handleClose={closeWelcomeDialogue} /> */}
       {/* <SEO
         title={'Foundation'}
           description={singleQuestResp?.Question}

@@ -181,6 +181,7 @@ const LikeDislike = () => {
 
   return (
     <CreateQuestWrapper
+      quest="Statement"
       handleTab={handleTab}
       type={'Statement'}
       msg={'Make a statement that anyone can "Like" or "Dislike"'}
