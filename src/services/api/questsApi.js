@@ -217,6 +217,54 @@ export const urlDuplicateCheck = async ({ id, url }) => {
   }
 };
 
+export const pictureUrlCheck = async ({ url }) => {
+  // console.log('url', url);
+  // let linkId = id;
+  try {
+    // let apiResp;
+    // if (url.includes(soundcloudUnique)) {
+    //   apiResp = await getFullSoundcloudUrlFromShortUrl(url);
+
+    //   if (apiResp) {
+    //     const soundcloudId = extractPartFromUrl(apiResp);
+    //     linkId = soundcloudId;
+    //   }
+    // }
+
+    const constraintResponses = await api.get(`/infoquestions/getFlickerUrl?url=${url}`);
+
+    let urlId = constraintResponses.data.imageUrl.split('/')[3];
+
+    const checkDuplicate = await api.get(`/infoquestions/checkMediaDuplicateUrl/${urlId}`);
+
+    if (checkDuplicate.status === 200 && constraintResponses) {
+      return { message: 'Success', errorMessage: null, url: constraintResponses?.data.imageUrl };
+    }
+
+    // let response = await checkVideoAgeRestriction(linkId);
+
+    // const contentRating = response?.items[0]?.contentDetails?.contentRating?.ytRating;
+    // const isAdultContent = contentRating === 'ytAgeRestricted';
+
+    // if (isAdultContent === false) {
+    //   if (apiResp) {
+    //     return { message: constraintResponses.data.message, errorMessage: null, url: apiResp };
+    //   }
+    //   return { message: constraintResponses.data.message, errorMessage: null, url: url };
+    // } else {
+    //   return { message: 'It is an adult video', errorMessage: 'ADULT' };
+    // }
+  } catch (error) {
+    console.log({ error });
+    if (error.response.data.duplicate === true) {
+      return { message: error.response.data.error, errorMessage: 'DUPLICATION' };
+    }
+    if (error.response.status === 500) {
+      return { message: error.response.data.message, errorMessage: 'ERROR' };
+    }
+  }
+};
+
 export const moderationRating = async ({ validatedQuestion }) => {
   try {
     const response = await api.post(`/ai-validation/moderator?userMessage=${validatedQuestion}`);

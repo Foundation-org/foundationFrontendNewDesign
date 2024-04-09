@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import * as HomepageApis from '../../services/api/homepageApis';
 
 import { EmbededVideo } from './EmbededVideo';
+import { isImageUrl } from '../../utils/embeddedutils';
+import { EmbededImage } from './EmbededImage';
 const data = [
   {
     id: 1,
@@ -134,15 +136,18 @@ const QuestCardLayout = ({ questStartData, isBookmarked, setPlayingPlayerId, pla
       />
 
       <div className="pb-[0.94rem] pt-[0.84rem] tablet:pb-5 tablet:pt-[0.94rem]">
-        {questStartData.url !== '' && (
-          <EmbededVideo
-            description={questStartData.description}
-            url={questStartData.url}
-            setPlayingPlayerId={setPlayingPlayerId}
-            questId={questStartData._id}
-            playing={playing}
-          />
-        )}
+        {questStartData.url !== '' &&
+          (isImageUrl(questStartData.url) ? (
+            <EmbededImage description={questStartData.description} url={questStartData.url} />
+          ) : (
+            <EmbededVideo
+              description={questStartData.description}
+              url={questStartData.url}
+              setPlayingPlayerId={setPlayingPlayerId}
+              questId={questStartData._id}
+              playing={playing}
+            />
+          ))}
         <div className="ml-[1.39rem] mr-[0.62rem] flex items-start justify-between tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
           <div className="flex gap-1.5 pr-5 tablet:gap-3 tablet:pr-6">
             {/* <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">

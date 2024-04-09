@@ -21,6 +21,7 @@ const YesNo = () => {
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
+  const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
@@ -82,6 +83,7 @@ const YesNo = () => {
     if (!checkHollow()) {
       setLoading(true);
     }
+
     if (createQuestSlice.question === '') {
       return toast.warning('Post cannot be empty');
     }
@@ -89,18 +91,22 @@ const YesNo = () => {
     const { questTopic, errorMessage } = await questServices.getTopicOfValidatedQuestion({
       validatedQuestion: getMediaStates.desctiption ? getMediaStates.desctiption : createQuestSlice.question,
     });
+
     // If any error captured
     if (errorMessage) {
       return toast.error('Oops! Something Went Wrong.');
     }
+
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
       validatedQuestion: createQuestSlice.question,
     });
+
     // If found null
     if (!moderationRating) {
       return toast.error('Oops! Something Went Wrong.');
     }
+
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
       return toast.error('You cannot leave the description empty.');
     }
@@ -113,8 +119,8 @@ const YesNo = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates.url,
-      description: getMediaStates.desctiption,
+      url: getMediaStates?.isMedia ? getMediaStates.url : getPicsMediaStates.picUrl,
+      description: getMediaStates?.isMedia ? getMediaStates.desctiption : getPicsMediaStates.picDesctiption,
     };
 
     if (!checkHollow()) {

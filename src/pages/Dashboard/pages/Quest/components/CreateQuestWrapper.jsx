@@ -1,14 +1,18 @@
 import { Tooltip } from '../../../../../utils/Tooltip';
 import { useSelector, useDispatch } from 'react-redux';
+import { Button } from '../../../../../components/ui/Button';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import AddMedia from './AddMedia';
+import AddPictures from './AddPictures';
 
 export default function CreateQuestWrapper({ type, handleTab, msg, children }) {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
+  const getMediaStates = useSelector(createQuestAction.getMedia);
+  const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
 
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
@@ -36,7 +40,34 @@ export default function CreateQuestWrapper({ type, handleTab, msg, children }) {
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] dark:text-[#D8D8D8]">
           Create a {type}
         </h1>
+        <div className="mb-2 ml-[21.55px] mt-[16px] flex items-center gap-12 px-2 tablet:ml-[60px] tablet:mt-[33px]">
+          {getMediaStates?.isMedia === false && (
+            <Button
+              variant="addEmbeded"
+              className="px-2 tablet:px-[25px]"
+              onClick={() => {
+                dispatch(createQuestAction.updateIsPicMedia(false));
+                dispatch(createQuestAction.updateIsMedia(true));
+              }}
+            >
+              + Add Media
+            </Button>
+          )}
+          {getPicsMediaStates?.isPicMedia === false && (
+            <Button
+              variant="addEmbeded"
+              className="px-2 tablet:px-[25px]"
+              onClick={() => {
+                dispatch(createQuestAction.updateIsMedia(false));
+                dispatch(createQuestAction.updateIsPicMedia(true));
+              }}
+            >
+              + Add Picture
+            </Button>
+          )}
+        </div>
         <AddMedia handleTab={handleTab} />
+        <AddPictures />
         <div className="w-[calc(100%-51.75px] mx-[22px] mt-2 flex tablet:mx-[60px] tablet:mt-[25px] tablet:pb-[13px]">
           <TextareaAutosize
             id="input-2"

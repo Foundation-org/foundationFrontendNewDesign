@@ -23,3 +23,9 @@ export const extractPartFromUrl = (url) => {
     return null;
   }
 };
+
+export function isImageUrl(url) {
+  const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg']; // Add more if needed
+  const lowerCaseUrl = url.toLowerCase();
+  return imageExtensions.some((extension) => lowerCaseUrl.endsWith(extension));
+}

@@ -10,8 +10,21 @@ export const checkDescription = createAsyncThunk('createQuest/checkDescription',
   return result;
 });
 
+export const checkPicsDescription = createAsyncThunk('createQuest/checkPicsDescription', async (value) => {
+  const result = await questServices.questionValidation({
+    question: value,
+    queryType: 'yes/no',
+  });
+  return result;
+});
+
 export const checkIsUrlAlreayExists = createAsyncThunk('createQuest/checkIsUrlAlreayExists', async (data) => {
   const result = await questServices.urlDuplicateCheck(data);
+  return result;
+});
+
+export const checkPictureUrl = createAsyncThunk('createQuest/checkPictureUrl', async (data) => {
+  const result = await questServices.pictureUrlCheck(data);
   console.log({ result });
   return result;
 });
@@ -60,7 +73,25 @@ const initialState = {
       ...defaultStatus,
     },
   },
-
+  pictureMedia: {
+    isPicMedia: false,
+    picDesctiption: '',
+    validatedPicDescription: '',
+    picDescStatus: {
+      ...defaultStatus,
+    },
+    chatgptPicDescStatus: {
+      ...defaultStatus,
+    },
+    picUrl: '',
+    validatedPicUrl: '',
+    picUrlStatus: {
+      ...defaultStatus,
+    },
+    chatgptPicUrlStatus: {
+      ...defaultStatus,
+    },
+  },
   questions: {
     question: '',
     validatedQuestion: '',
@@ -96,6 +127,9 @@ export const createQuestSlice = createSlice({
     updateIsMedia: (state, action) => {
       state.media.isMedia = action.payload;
     },
+    updateIsPicMedia: (state, action) => {
+      state.pictureMedia.isPicMedia = action.payload;
+    },
     addMediaDesc: (state, action) => {
       // state.media.desctiption = action.payload;
       if (action.payload === state.media.validatedDescription) {
@@ -108,6 +142,15 @@ export const createQuestSlice = createSlice({
       state.media.desctiption = action.payload;
       // state.questions.questionTyping = true;
     },
+    addPicsMediaDesc: (state, action) => {
+      if (action.payload === state.media.validatedDescription) {
+        state.pictureMedia.picDescStatus = state.pictureMedia.chatgptPicDescStatus;
+        state.pictureMedia.picDesctiption = state.pictureMedia.validatedPicDescription;
+        return;
+      }
+      state.pictureMedia.picDescStatus = { ...defaultStatus };
+      state.pictureMedia.picDesctiption = action.payload;
+    },
     addMediaUrl: (state, action) => {
       if (action.payload === state.media.validatedUrl) {
         state.media.urlStatus = state.media.chatgptUrlStatus;
@@ -117,6 +160,15 @@ export const createQuestSlice = createSlice({
       state.media.urlStatus = { ...defaultStatus };
       state.media.url = action.payload;
       // state.media.urlStatus = { ...defaultStatus };
+    },
+    addPicUrl: (state, action) => {
+      if (action.payload === state.pictureMedia.validatedPicUrl) {
+        state.pictureMedia.picUrlStatus = state.pictureMedia.chatgptPicUrlStatus;
+        state.pictureMedia.picUrl = state.pictureMedia.validatedPicUrl;
+        return;
+      }
+      state.pictureMedia.picUrlStatus = { ...defaultStatus };
+      state.pictureMedia.picUrl = action.payload;
     },
     addQuestion: (state, action) => {
       if (action.payload === state.questions.validatedQuestion) {
@@ -257,6 +309,18 @@ export const createQuestSlice = createSlice({
         media: initialState.media,
       };
     },
+    clearPicsUrl: (state, action) => {
+      state.pictureMedia.picUrl = '';
+      state.pictureMedia.validatedPicUrl = '';
+      state.pictureMedia.picUrlStatus = { ...defaultStatus };
+      state.pictureMedia.chatgptPicUrlStatus = { ...defaultStatus };
+    },
+    clearPicsMedia: (state = initialState, action) => {
+      return {
+        ...state,
+        pictureMedia: initialState.pictureMedia,
+      };
+    },
   },
   extraReducers: (builder) => {
     // check description status start
@@ -356,6 +420,114 @@ export const createQuestSlice = createSlice({
             status: false,
           };
           state.media.chatgptMediaDescStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+        }
+      }
+    });
+
+    // check description status start
+    builder.addCase(checkPicsDescription.pending, (state, action) => {
+      state.pictureMedia.picDescStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+      state.pictureMedia.chatgptPicDescStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+      // state.questions.questionTyping = false;
+    });
+    builder.addCase(checkPicsDescription.fulfilled, (state, action) => {
+      const { validatedQuestion, errorMessage } = action.payload;
+      if (errorMessage) {
+        if (errorMessage === 'DUPLICATION') {
+          state.pictureMedia.picDesctiption = validatedQuestion;
+          state.pictureMedia.validatedPicDescription = validatedQuestion;
+          // state.questions.questionTyping = false;
+          state.pictureMedia.picDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+          state.pictureMedia.chatgptPicDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+        } else {
+          state.pictureMedia.validatedPicDescription = state.questions.question;
+          // state.questions.questionTyping = false;
+          state.pictureMedia.picDescStatus = {
+            name: 'Rejected',
+            color: 'text-[#b00f0f]',
+            tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+            tooltipStyle: 'tooltip-error',
+            status: true,
+            showToolTipMsg: true,
+          };
+          state.pictureMedia.chatgptPicDescStatus = {
+            name: 'Rejected',
+            color: 'text-[#b00f0f]',
+            tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+            tooltipStyle: 'tooltip-error',
+            status: true,
+            showToolTipMsg: true,
+          };
+        }
+      } else {
+        if (validatedQuestion === state.questions.validatedQuestion) {
+          state.pictureMedia.picDesctiption = validatedQuestion;
+          state.pictureMedia.validatedPicDescription = validatedQuestion;
+          // state.questions.questionTyping = false;
+          state.pictureMedia.picDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+          state.pictureMedia.chatgptPicDescStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+        } else {
+          state.pictureMedia.picDesctiption = validatedQuestion;
+          state.pictureMedia.validatedPicDescription = validatedQuestion;
+          // state.questions.questionTyping = false;
+          state.pictureMedia.picDescStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+          state.pictureMedia.chatgptPicDescStatus = {
             name: 'Ok',
             color: 'text-[#0FB063]',
             tooltipName: 'Question is Verified',
@@ -496,6 +668,146 @@ export const createQuestSlice = createSlice({
             status: false,
           };
           state.media.chatgptUrlStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+          // }
+        }
+      }
+    });
+
+    // check picture url status
+    builder.addCase(checkPictureUrl.pending, (state, action) => {
+      state.pictureMedia.picUrlStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+      state.pictureMedia.chatgptPicUrlStatus = {
+        name: 'Checking',
+        color: 'text-[#0FB063]',
+        tooltipName: 'Verifying your question. Please wait...',
+        tooltipStyle: 'tooltip-success',
+        status: false,
+        showToolTipMsg: true,
+      };
+    });
+    builder.addCase(checkPictureUrl.fulfilled, (state, action) => {
+      const { message, errorMessage, url } = action.payload;
+      if (state.pictureMedia.picUrl === '') {
+        state.pictureMedia.picUrlStatus = { ...defaultStatus };
+        state.pictureMedia.chatgptPicUrlStatus = { ...defaultStatus };
+      } else {
+        if (errorMessage) {
+          if (errorMessage === 'DUPLICATION') {
+            state.pictureMedia.validatedPicUrl = state.pictureMedia.picUrl;
+            // state.media.desctiption = message;
+            // state.media.validatedDescription = message;
+            // state.questions.questionTyping = false;
+            state.pictureMedia.picUrlStatus = {
+              name: 'Duplicate',
+              color: 'text-[#EFD700]',
+              tooltipName: 'This url is not unique. A url like this already exists.',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+            state.pictureMedia.chatgptPicUrlStatus = {
+              name: 'Duplicate',
+              color: 'text-[#EFD700]',
+              tooltipName: 'This url is not unique. A url like this already exists.',
+              tooltipStyle: 'tooltip-error',
+              duplication: true,
+              showToolTipMsg: true,
+            };
+          }
+          // if (errorMessage === 'ADULT') {
+          //   state.pictureMedia.validatedPicUrl = state.pictureMedia.picUrl;
+          //   // state.media.desctiption = message;
+          //   // state.media.validatedDescription = message;
+          //   // state.questions.questionTyping = false;
+          //   state.pictureMedia.picUrlStatus = {
+          //     name: 'Rejected',
+          //     color: 'text-[#b00f0f]',
+          //     tooltipName: 'It is an adult video',
+          //     tooltipStyle: 'tooltip-error',
+          //     duplication: true,
+          //     showToolTipMsg: true,
+          //   };
+          //   state.pictureMedia.chatgptPicUrlStatus = {
+          //     name: 'Rejected',
+          //     color: 'text-[#b00f0f]',
+          //     tooltipName: 'It is an adult video',
+          //     tooltipStyle: 'tooltip-error',
+          //     duplication: true,
+          //     showToolTipMsg: true,
+          //   };
+          // }
+          else {
+            state.pictureMedia.validatedPicUrl = '';
+            // state.questions.questionTyping = false;
+            state.pictureMedia.picUrlStatus = {
+              name: 'Rejected',
+              color: 'text-[#b00f0f]',
+              tooltipName: 'Inavlid Url.',
+              tooltipStyle: 'tooltip-error',
+              status: true,
+              showToolTipMsg: true,
+            };
+            state.pictureMedia.chatgptPicUrlStatus = {
+              name: 'Rejected',
+              color: 'text-[#b00f0f]',
+              tooltipName: 'Inavlid Url.',
+              tooltipStyle: 'tooltip-error',
+              status: true,
+              showToolTipMsg: true,
+            };
+          }
+        } else {
+          // if (message === state.questions.message) {
+          //   state.media.desctiption = message;
+          //   state.media.validatedDescription = message;
+          //   // state.questions.questionTyping = false;
+          //   state.media.mediaDescStatus = {
+          //     name: 'Duplicate',
+          //     color: 'text-[#EFD700]',
+          //     tooltipName: 'This post is not unique. A post like this already exists.',
+          //     tooltipStyle: 'tooltip-error',
+          //     duplication: true,
+          //     showToolTipMsg: true,
+          //   };
+          //   state.media.chatgptMediaDescStatus = {
+          //     name: 'Duplicate',
+          //     color: 'text-[#EFD700]',
+          //     tooltipName: 'This post is not unique. A post like this already exists.',
+          //     tooltipStyle: 'tooltip-error',
+          //     duplication: true,
+          //     showToolTipMsg: true,
+          //   };
+          // }
+          // else
+          // {
+          // state.media.desctiption = message;
+          // state.media.validatedDescription = message;
+          // state.questions.questionTyping = false;
+          state.pictureMedia.picUrl = url;
+          state.pictureMedia.validatedPicUrl = url;
+          state.pictureMedia.picUrlStatus = {
+            name: 'Ok',
+            color: 'text-[#0FB063]',
+            tooltipName: 'Question is Verified',
+            tooltipStyle: 'tooltip-success',
+            isVerifiedQuestion: true,
+            status: false,
+          };
+          state.pictureMedia.chatgptPicUrlStatus = {
             name: 'Ok',
             color: 'text-[#0FB063]',
             tooltipName: 'Question is Verified',
@@ -711,7 +1023,10 @@ const getRejectedStatus = () => ({
 export const {
   updateIsMedia,
   addMediaDesc,
+  addPicsMediaDesc,
   addMediaUrl,
+  addPicUrl,
+  updateIsPicMedia,
   addQuestion,
   updateQuestion,
   updateMultipleChoice,
@@ -726,11 +1041,14 @@ export const {
   handleChangeOption,
   clearUrl,
   clearMedia,
+  clearPicsUrl,
+  clearPicsMedia,
 } = createQuestSlice.actions;
 
 export default createQuestSlice.reducer;
 
 export const getMedia = (state) => state.createQuest.media;
+export const getPicsMedia = (state) => state.createQuest.pictureMedia;
 export const getCreate = (state) => state.createQuest.questions;
 export const questionStatus = (state) => state.createQuest.questionReset;
 export const questionChatgptStatus = (state) => state.createQuest.chatgptStatus;

@@ -217,17 +217,7 @@ export default function AddMedia({ handleTab }) {
             </div>
           )}
         </div>
-      ) : (
-        <Button
-          variant="addEmbeded"
-          className="ml-[21.55px] mt-[16px] px-2 tablet:ml-[60px] tablet:mt-[33px] tablet:px-[25px]"
-          onClick={() => {
-            dispatch(createQuestAction.updateIsMedia(true));
-          }}
-        >
-          + Add Media
-        </Button>
-      )}
+      ) : null}
     </div>
   );
 }
