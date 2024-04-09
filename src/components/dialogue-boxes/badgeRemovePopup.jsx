@@ -61,6 +61,12 @@ export default function BadgeRemovePopup({
           type: type,
           accountName: accountName,
           uuid: fetchUser.uuid,
+        });
+      }else if (badgeType === 'farcaster') {
+        removeBadge = await api.post(`/removeFarCasterBadge`, {
+          type: type,
+          accountName: accountName,
+          uuid: fetchUser.uuid,
         });}
        else {
         const findBadge = fetchUser.badges.filter((item) => {

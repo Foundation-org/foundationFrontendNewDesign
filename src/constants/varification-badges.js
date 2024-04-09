@@ -99,6 +99,8 @@ export const web3 = [
     NoOfButton: 1,
     type: 'etherium-wallet',
     disabled: false,
+    accountName: '',
+    badgeType: '',
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/passkey-desktop.svg`,
@@ -108,6 +110,8 @@ export const web3 = [
     disabled: false,
     NoOfButton: 1,
     type: 'desktop',
+    accountName: 'Passkey',
+    badgeType: 'passkey',
   },
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/passkey.svg`,
@@ -117,7 +121,20 @@ export const web3 = [
     disabled: false,
     NoOfButton: 1,
     type: 'mobile',
+    accountName: 'Passkey',
+    badgeType: 'passkey',
   },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
+    title: 'Farcaster',
+    ButtonColor: 'blue',
+    ButtonText: 'Add Badge',
+    disabled: false,
+    NoOfButton: 1,
+    type: 'farcaster',
+    accountName: 'Farcaster',
+    badgeType: 'farcaster',
+},
 ];
 
 export const personal = [
