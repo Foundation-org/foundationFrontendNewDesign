@@ -21,6 +21,7 @@ const AgreeDisagree = () => {
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
+  const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
@@ -117,8 +118,8 @@ const AgreeDisagree = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates.url,
-      description: getMediaStates.desctiption,
+      url: getMediaStates?.isMedia ? getMediaStates.url : getPicsMediaStates.picUrl,
+      description: getMediaStates?.isMedia ? getMediaStates.desctiption : getPicsMediaStates.picDesctiption,
     };
 
     if (!checkHollow()) {

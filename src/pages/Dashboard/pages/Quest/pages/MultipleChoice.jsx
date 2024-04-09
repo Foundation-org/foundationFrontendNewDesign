@@ -22,6 +22,7 @@ const MultipleChoice = () => {
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
+  const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -115,8 +116,8 @@ const MultipleChoice = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates.url,
-      description: getMediaStates.desctiption,
+      url: getMediaStates?.isMedia ? getMediaStates.url : getPicsMediaStates.picUrl,
+      description: getMediaStates?.isMedia ? getMediaStates.desctiption : getPicsMediaStates.picDesctiption,
     };
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
