@@ -174,7 +174,8 @@ export default function AddMedia({ handleTab }) {
               {console.log({ mediaURL })}
               <ReactPlayer
                 ref={playerRef}
-                url={getMediaStates.url}
+                // url={getMediaStates.url}
+                url={window.innerWidth < 500 ? `${getMediaStates.url}&show_artwork=false` : getMediaStates.url}
                 className="react-player"
                 onError={(e) => {
                   toast.error('Invalid URL'), dispatch(createQuestAction.clearUrl());
