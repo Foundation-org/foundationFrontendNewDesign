@@ -35,9 +35,8 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
         {msg}
       </h4>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
+        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] dark:text-[#D8D8D8]">
           Create a {type}
@@ -88,7 +87,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             value={createQuestSlice.question}
             placeholder={
-              quest === 'M/R'
+              quest === 'M/R' || quest === "OpenChoice"
                 ? 'Make a statement or pose a question'
                 : quest === 'Statement'
                   ? 'Make a statement'

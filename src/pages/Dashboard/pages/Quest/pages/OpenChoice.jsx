@@ -287,6 +287,7 @@ const OpenChoice = () => {
 
   return (
     <CreateQuestWrapper
+      quest="OpenChoice"
       handleTab={handleTab}
       type={'Poll'}
       msg={'Ask a question where anyone can select multiple options from a list of choices'}
