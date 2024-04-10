@@ -89,7 +89,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             value={createQuestSlice.question}
             placeholder={
               quest === 'M/R'
-                ? 'Make a Statement or pose a question'
+                ? 'Make a statement or pose a question'
                 : quest === 'Statement'
                   ? 'Make a statement'
                   : 'Pose a question'
