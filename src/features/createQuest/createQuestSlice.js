@@ -1066,7 +1066,7 @@ export const createQuestSlice = createSlice({
             state.pictureMedia.picUrlStatus = {
               name: 'Rejected',
               color: 'text-[#b00f0f]',
-              tooltipName: 'Inavlid Url.',
+              tooltipName: 'Invalid Url.',
               tooltipStyle: 'tooltip-error',
               status: true,
               showToolTipMsg: true,
@@ -1074,7 +1074,7 @@ export const createQuestSlice = createSlice({
             state.pictureMedia.chatgptPicUrlStatus = {
               name: 'Rejected',
               color: 'text-[#b00f0f]',
-              tooltipName: 'Inavlid Url.',
+              tooltipName: 'Invalid Url.',
               tooltipStyle: 'tooltip-error',
               status: true,
               showToolTipMsg: true,
