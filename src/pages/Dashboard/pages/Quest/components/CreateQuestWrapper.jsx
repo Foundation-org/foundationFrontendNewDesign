@@ -27,49 +27,63 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
     dispatch(createQuestAction.checkQuestion(value));
   };
 
-  console.log('first', type);
-
   return (
     <>
       <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
         {msg}
       </h4>
       <div
-        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-          } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
+        className={`${
+          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] dark:text-[#D8D8D8]">
           Create a {type}
         </h1>
-        {getMediaStates?.isMedia === false && getPicsMediaStates?.isPicMedia === false && (
-          <div className="mb-2 ml-[21.55px] mt-[16px] flex items-center gap-12 px-2 tablet:ml-[60px] tablet:mt-[33px]">
+        {getMediaStates?.isMedia.isMedia === false && getPicsMediaStates?.isPicMedia === false && (
+          <div className="tablet::gap-2 mb-2 ml-[21.55px] mt-[16px] flex items-center gap-1 px-2 tablet:ml-[60px] tablet:mt-[33px] laptop:gap-12">
             <Button
               variant="addEmbeded"
               className="px-2 tablet:px-[25px]"
               onClick={() => {
                 dispatch(createQuestAction.updateIsPicMedia(false));
-                dispatch(createQuestAction.updateIsMedia(true));
+                dispatch(
+                  createQuestAction.updateIsMedia({
+                    isMedia: true,
+                    type: 'EmbedVideo',
+                  }),
+                );
               }}
             >
-              + Add Media
+              + Add Video
             </Button>
-            {/* {getMediaStates?.isMedia === false && (
+            {getMediaStates?.isMedia.isMedia === false && (
+              <Button
+                variant="addEmbeded"
+                className="px-2 tablet:px-[25px]"
+                onClick={() => {
+                  dispatch(createQuestAction.updateIsPicMedia(false));
+                  dispatch(
+                    createQuestAction.updateIsMedia({
+                      isMedia: true,
+                      type: 'EmbedAudio',
+                    }),
+                  );
+                }}
+              >
+                + Add Audio
+              </Button>
+            )}
             <Button
               variant="addEmbeded"
               className="px-2 tablet:px-[25px]"
               onClick={() => {
-                dispatch(createQuestAction.updateIsPicMedia(false));
-                dispatch(createQuestAction.updateIsMedia(true));
-              }}
-            >
-              + Add Audio
-            </Button>
-          )} */}
-            <Button
-              variant="addEmbeded"
-              className="px-2 tablet:px-[25px]"
-              onClick={() => {
-                dispatch(createQuestAction.updateIsMedia(false));
+                dispatch(
+                  createQuestAction.updateIsMedia({
+                    isMedia: false,
+                    type: '',
+                  }),
+                );
                 dispatch(createQuestAction.updateIsPicMedia(true));
               }}
             >
@@ -87,7 +101,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             value={createQuestSlice.question}
             placeholder={
-              quest === 'M/R' || quest === "OpenChoice"
+              quest === 'M/R' || quest === 'OpenChoice'
                 ? 'Make a statement or pose a question'
                 : quest === 'Statement'
                   ? 'Make a statement'

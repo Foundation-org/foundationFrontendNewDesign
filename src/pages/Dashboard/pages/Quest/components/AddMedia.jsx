@@ -80,21 +80,40 @@ export default function AddMedia({ handleTab }) {
   const urlVerification = async (value) => {
     if (getMediaStates.validatedUrl === value) return;
 
-    if (youtubeBaseURLs.some((baseURL) => value?.includes(baseURL))) {
-      const videoId = extractYouTubeVideoId(value);
+    if (getMediaStates.isMedia.type === 'EmbedVideo') {
+      if (youtubeBaseURLs.some((baseURL) => value?.includes(baseURL))) {
+        const videoId = extractYouTubeVideoId(value);
 
-      dispatch(createQuestAction.checkIsUrlAlreayExists({ id: videoId, url: getMediaStates.url }));
-    } else if (value?.includes(soundcloudUnique)) {
-      const urlId = extractPartFromUrl(value);
-      dispatch(createQuestAction.checkIsUrlAlreayExists({ id: urlId, url: getMediaStates.url }));
-    } else {
-      toast.warning('YouTube and SoundCloud links are supported.');
+        dispatch(createQuestAction.checkIsUrlAlreayExists({ id: videoId, url: getMediaStates.url }));
+      } else {
+        toast.warning('YouTube links are supported.');
+      }
     }
+
+    if (getMediaStates.isMedia.type === 'EmbedAudio') {
+      if (value?.includes(soundcloudUnique)) {
+        const urlId = extractPartFromUrl(value);
+        dispatch(createQuestAction.checkIsUrlAlreayExists({ id: urlId, url: getMediaStates.url }));
+      } else {
+        toast.warning('SoundCloud links are supported.');
+      }
+    }
+
+    // if (youtubeBaseURLs.some((baseURL) => value?.includes(baseURL))) {
+    //   const videoId = extractYouTubeVideoId(value);
+
+    //   dispatch(createQuestAction.checkIsUrlAlreayExists({ id: videoId, url: getMediaStates.url }));
+    // } else if (value?.includes(soundcloudUnique)) {
+    //   const urlId = extractPartFromUrl(value);
+    //   dispatch(createQuestAction.checkIsUrlAlreayExists({ id: urlId, url: getMediaStates.url }));
+    // } else {
+    //   toast.warning('YouTube and SoundCloud links are supported.');
+    // }
   };
 
   return (
     <div>
-      {getMediaStates?.isMedia ? (
+      {getMediaStates?.isMedia.isMedia ? (
         <div className="w-[calc(100%-51.75px] relative mx-[15px] mt-1 flex flex-col gap-[6px] rounded-[7.175px] border border-[#DEE6F7] p-[15px] px-[5px] py-[10px] tablet:mx-11 tablet:mt-[25px] tablet:gap-[15px] tablet:border-[2.153px] tablet:px-[15px] tablet:py-[25px]">
           <h1 className="absolute -top-[5.5px] left-5 bg-white text-[10px] font-semibold leading-[10px] text-[#707175] tablet:-top-[11px] tablet:left-9 tablet:text-[20px] tablet:leading-[20px]">
             Media
@@ -142,7 +161,11 @@ export default function AddMedia({ handleTab }) {
                 }}
                 onBlur={(e) => e.target.value.trim() !== '' && urlVerification(e.target.value.trim())}
                 value={getMediaStates.url}
-                placeholder="Paste Youtube or Soundcloud URL here..."
+                placeholder={
+                  getMediaStates.isMedia.type === 'EmbedVideo'
+                    ? 'Paste Youtube URL here...'
+                    : 'Paste Soundcloud URL here...'
+                }
                 className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
               />
               <button

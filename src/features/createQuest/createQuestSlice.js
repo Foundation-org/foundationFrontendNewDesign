@@ -68,7 +68,10 @@ const defaultStatus = {
 
 const initialState = {
   media: {
-    isMedia: false,
+    isMedia: {
+      isMedia: false,
+      type: '',
+    },
     desctiption: '',
     validatedDescription: '',
     mediaDescStatus: {
@@ -157,7 +160,9 @@ export const createQuestSlice = createSlice({
   initialState,
   reducers: {
     updateIsMedia: (state, action) => {
-      state.media.isMedia = action.payload;
+      const { isMedia, type } = action.payload;
+      state.media.isMedia.isMedia = isMedia;
+      state.media.isMedia.type = type;
     },
     updateIsAudio: (state, action) => {
       state.audio.isAudio = action.payload;

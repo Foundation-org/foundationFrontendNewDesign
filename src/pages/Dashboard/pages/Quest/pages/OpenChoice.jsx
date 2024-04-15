@@ -114,8 +114,8 @@ const OpenChoice = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia ? getMediaStates.url : getPicsMediaStates.picUrl,
-      description: getMediaStates?.isMedia ? getMediaStates.desctiption : getPicsMediaStates.picDesctiption,
+      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPicsMediaStates.picUrl,
+      description: getMediaStates?.isMedia.isMedia ? getMediaStates.desctiption : getPicsMediaStates.picDesctiption,
     };
 
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
