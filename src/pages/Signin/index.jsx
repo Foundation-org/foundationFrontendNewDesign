@@ -87,8 +87,8 @@ export default function Signin() {
         if (resp.status === 200) {
           // localStorage.setItem("userLoggedIn", resp.data.uuid);
           // localStorage.setItem("uId", resp.data.uuid);
-          await getUserInfo();
           localStorage.removeItem('isGuestMode');
+          await getUserInfo();
           // localStorage.setItem("jwt", resp.data.token);
           setEmail('');
           setPassword('');
@@ -161,6 +161,8 @@ export default function Signin() {
         // localStorage.removeItem('isGuestMode');
         // localStorage.setItem('jwt', res.data.token);
         // navigate('/dashboard');
+        console.log('called hamza');
+        localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
         navigate('/dashboard');
       }

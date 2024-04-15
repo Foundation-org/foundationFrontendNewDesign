@@ -99,7 +99,7 @@ const SingleQuest = () => {
   const questByUniqueShareLink = async () => {
     await handleUserInfo();
     const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
-    console.log('2nd', getQuest);
+
     if (getQuest.error === 'This link is not active') {
       setError(getQuest.error);
     } else {
@@ -184,7 +184,7 @@ const SingleQuest = () => {
       </Helmet>
       <Topbar />
       <div className="bg-[#F2F3F5]">
-        <div className="mx-auto flex h-[calc(100vh-66.8px)] max-w-[1378px] tablet:h-[calc(100vh-70px)]">
+        <div className="mx-auto flex h-[calc(100vh-58px)] max-w-[1378px] tablet:h-[calc(100vh-70px)]">
           <div className="no-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
             {error !== '' ? <p className="text-center text-[24px] font-bold tablet:text-[25px]">{error}</p> : null}
             {(singleQuestResp || submitResponse) && (
