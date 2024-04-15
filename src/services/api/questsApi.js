@@ -213,6 +213,9 @@ export const urlDuplicateCheck = async ({ id, url }) => {
     console.log({ error });
     if (error.response.data.duplicate === true) {
       return { message: error.response.data.error, errorMessage: 'DUPLICATION' };
+    } else {
+      toast.error(error.response.data.error);
+      return;
     }
   }
 };
