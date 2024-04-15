@@ -28,7 +28,7 @@ export default function AddAudio({ handleTab }) {
   // To show and hide artwork on different screen sizes
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 500) {
+      if (window.innerWidth < 744) {
         // Hide artwork for screens smaller than 400px
         setMediaURL(`${debouncedURL}&show_artwork=false`);
       } else {
