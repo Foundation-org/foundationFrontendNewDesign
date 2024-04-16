@@ -26,6 +26,7 @@ const QuestStartSection = () => {
   const filterStates = useSelector(filtersActions.getFilters);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const [playerPlayingId, setPlayingPlayerId] = useState();
+  const [isShowPlayer, setIsShowPlayer] = useState(false);
   // Pagination
   const pageLimit = 5;
   const [pagination, setPagination] = useState({
@@ -42,7 +43,7 @@ const QuestStartSection = () => {
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
   const [sliderLoading, setSliderloading] = useState(false);
-  const [prevPlayerId, setPrevPlayerId] = useState();
+  const [isPlaying, setIsPlaying] = useState(false);
 
   // Preferences
   // const columnsData = localStorage.getItem('columns');
@@ -332,19 +333,13 @@ const QuestStartSection = () => {
 
   const scrollToPlayingCard = () => {
     const playingCard = document.getElementById('playing-card');
-    console.log(playingCard);
     if (playingCard) {
       playingCard.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   const toggleMedia = () => {
-    if (playerPlayingId === '') {
-      setPlayingPlayerId(prevPlayerId);
-    } else {
-      setPrevPlayerId(playerPlayingId);
-      setPlayingPlayerId('');
-    }
+    setIsPlaying(!isPlaying);
   };
 
   return (
@@ -354,6 +349,10 @@ const QuestStartSection = () => {
           scrollToPlayingCard={scrollToPlayingCard}
           toggleMedia={toggleMedia}
           playerPlayingId={playerPlayingId}
+          isPlaying={isPlaying}
+          setPlayingPlayerId={setPlayingPlayerId}
+          isShowPlayer={isShowPlayer}
+          setIsShowPlayer={setIsShowPlayer}
         />
         <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100vh-155.5px)] min-h-[calc(100vh-155.5px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100vh-70px)] tablet:min-h-[calc(100vh-70px)] dark:bg-[#242424]">
           <Slider sliderLoading={sliderLoading} setSliderloading={setSliderloading} />
@@ -379,8 +378,11 @@ const QuestStartSection = () => {
                           .some((bookmark) => bookmark.questForeignKey === item._id)}
                         setPagination={setPagination}
                         setSubmitResponse={setSubmitResponse}
-                        playing={item._id === playerPlayingId}
+                        playing={item._id === playerPlayingId && isPlaying}
+                        isPlaying={isPlaying}
+                        setIsPlaying={setIsPlaying}
                         setPlayingPlayerId={setPlayingPlayerId}
+                        setIsShowPlayer={setIsShowPlayer}
                       />
                     </div>
                   ))}
@@ -388,13 +390,17 @@ const QuestStartSection = () => {
           </InfiniteScroll>
         </div>
         <SidebarRight />
-        <div className="absolute bottom-24 left-1/2 block -translate-x-1/2 laptop:hidden">
-          <MediaControls
-            scrollToPlayingCard={scrollToPlayingCard}
-            toggleMedia={toggleMedia}
-            playerPlayingId={playerPlayingId}
-          />
-        </div>
+        {isShowPlayer && (
+          <div className="absolute bottom-24 left-1/2 block -translate-x-1/2 laptop:hidden">
+            <div onClick={() => setIsShowPlayer(false)}>close</div>
+            <MediaControls
+              scrollToPlayingCard={scrollToPlayingCard}
+              toggleMedia={toggleMedia}
+              playerPlayingId={playerPlayingId}
+              isPlaying={isPlaying}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

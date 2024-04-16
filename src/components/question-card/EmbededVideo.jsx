@@ -3,7 +3,16 @@ import { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
 
-export const EmbededVideo = ({ description, url, setPlayingPlayerId, questId, playing }) => {
+export const EmbededVideo = ({
+  description,
+  url,
+  setPlayingPlayerId,
+  questId,
+  playing,
+  setIsShowPlayer,
+  setIsPlaying,
+  isPlaying,
+}) => {
   const playerRef = useRef(null);
   const [mediaURL, setMediaURL] = useState(url);
 
@@ -57,13 +66,25 @@ export const EmbededVideo = ({ description, url, setPlayingPlayerId, questId, pl
           }}
           onStart={() => {
             setPlayingPlayerId(questId);
+            if (!playing) {
+              setIsPlaying(true);
+            }
+            setIsShowPlayer(true);
           }}
           onPlay={() => {
             setPlayingPlayerId(questId);
+            if (!playing) {
+              setIsPlaying(true);
+            }
+            setIsShowPlayer(true);
           }}
           width="100%"
           height="100%"
-          // onPause={() => playing && setPlayingPlayerId('')}
+          onPause={() => {
+            if (playing) {
+              setIsPlaying(false);
+            }
+          }}
           // single_active={true}
           controls={true} // Hide player controls
           muted={false} // Unmute audio

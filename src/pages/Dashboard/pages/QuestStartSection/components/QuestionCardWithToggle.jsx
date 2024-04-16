@@ -807,6 +807,9 @@ const QuestionCardWithToggle = (props) => {
         setPlayingPlayerId={props.setPlayingPlayerId}
         postProperties={postProperties}
         playing={props.playing}
+        setIsPlaying={props.setIsPlaying}
+        setIsShowPlayer={props.setIsShowPlayer}
+        isPlaying={props.isPlaying}
       >
         {renderQuestContent()}
         <ButtonGroup

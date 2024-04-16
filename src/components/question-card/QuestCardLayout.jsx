@@ -41,7 +41,18 @@ const data = [
   },
 ];
 
-const QuestCardLayout = ({ questStartData, isBookmarked, setPlayingPlayerId, playing, postProperties, children }) => {
+const QuestCardLayout = ({
+  questStartData,
+  isBookmarked,
+  setPlayingPlayerId,
+  playing,
+  setIsPlaying,
+  setIsShowPlayer,
+  isPlaying,
+  postProperties,
+
+  children,
+}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const queryClient = useQueryClient();
@@ -146,6 +157,9 @@ const QuestCardLayout = ({ questStartData, isBookmarked, setPlayingPlayerId, pla
               setPlayingPlayerId={setPlayingPlayerId}
               questId={questStartData._id}
               playing={playing}
+              setIsPlaying={setIsPlaying}
+              setIsShowPlayer={setIsShowPlayer}
+              isPlaying={isPlaying}
             />
           ))}
         <div className="ml-[1.39rem] mr-[0.62rem] flex items-start justify-between tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">

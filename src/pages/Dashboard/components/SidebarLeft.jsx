@@ -17,7 +17,14 @@ import { useDebounce } from '../../../utils/useDebounce';
 import Ratings from '../../../components/dialogue-boxes/Ratings';
 import MediaControls from '../../../components/MediaControls';
 
-const SidebarLeft = ({ scrollToPlayingCard, toggleMedia, playerPlayingId }) => {
+const SidebarLeft = ({
+  scrollToPlayingCard,
+  toggleMedia,
+  playerPlayingId,
+  isShowPlayer,
+  setIsShowPlayer,
+  isPlaying,
+}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
@@ -254,13 +261,17 @@ const SidebarLeft = ({ scrollToPlayingCard, toggleMedia, playerPlayingId }) => {
             </button>
           </div>
         </div>
-        <div className="hidden laptop:block">
-          <MediaControls
-            scrollToPlayingCard={scrollToPlayingCard}
-            toggleMedia={toggleMedia}
-            playerPlayingId={playerPlayingId}
-          />
-        </div>
+        {isShowPlayer && (
+          <div className="hidden laptop:block">
+            <GrClose className="h-2 w-2 text-black dark:text-white" onClick={() => setIsShowPlayer(false)} />
+            <MediaControls
+              scrollToPlayingCard={scrollToPlayingCard}
+              toggleMedia={toggleMedia}
+              playerPlayingId={playerPlayingId}
+              isPlaying={isPlaying}
+            />
+          </div>
+        )}
         {/* sidebar mobile */}
         <div className="block border-b-4 border-[#F3F3F3] bg-white px-[15px] py-[10px] tablet:px-[37px] tablet:py-[26px] laptop:hidden dark:bg-[#0A0A0C]">
           <div className="mt-[10px] flex items-end justify-between gap-[6px]">
