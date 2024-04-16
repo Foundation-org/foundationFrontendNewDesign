@@ -23,6 +23,7 @@ const SidebarLeft = ({
   playerPlayingId,
   isShowPlayer,
   setIsShowPlayer,
+  setPlayingPlayerId,
   isPlaying,
 }) => {
   const dispatch = useDispatch();
@@ -263,12 +264,13 @@ const SidebarLeft = ({
         </div>
         {isShowPlayer && (
           <div className="hidden laptop:block">
-  <div className="relative">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
-                alt="mediaCloseIcon" className="h-6 w-6 text-black dark:text-white absolute -top-4 -right-2 cursor-pointer" onClick={() => setIsShowPlayer(false)}
-              />
-            </div>
+            <GrClose
+              className="h-2 w-2 text-black dark:text-white"
+              onClick={() => {
+                setIsShowPlayer(false);
+                setPlayingPlayerId('');
+              }}
+            />
             <MediaControls
               scrollToPlayingCard={scrollToPlayingCard}
               toggleMedia={toggleMedia}

@@ -395,10 +395,15 @@ const QuestStartSection = () => {
         <SidebarRight />
         {isShowPlayer && (
           <div className="absolute bottom-24 left-1/2 block -translate-x-1/2 laptop:hidden">
-              <div className="relative">
+            <div className="relative">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
-                alt="mediaCloseIcon" className="h-4 w-4 text-black dark:text-white absolute top-3 -right-2 cursor-pointer" onClick={() => setIsShowPlayer(false)}
+                alt="mediaCloseIcon"
+                className="absolute -right-2 top-3 h-4 w-4 cursor-pointer text-black dark:text-white"
+                onClick={() => {
+                  setIsShowPlayer(false);
+                  setPlayingPlayerId('');
+                }}
               />
             </div>
             <MediaControls
