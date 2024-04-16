@@ -55,6 +55,8 @@ export const EmbededVideo = ({
           : ''
       }`}
     >
+      {' '}
+      {console.log(mediaURL)}
       <h2 className="mb-1 ml-[9px] text-[8px] font-medium text-[#7C7C7C] tablet:text-[14.692px]">{description}</h2>
       <div className="">
         <ReactPlayer
@@ -62,7 +64,8 @@ export const EmbededVideo = ({
           url={mediaURL}
           className="react-player"
           onError={(e) => {
-            toast.error('Invalid URL');
+            // toast.error('Invalid URL');
+            console.log('Invalid URl', e);
           }}
           onStart={() => {
             setPlayingPlayerId(questId);
