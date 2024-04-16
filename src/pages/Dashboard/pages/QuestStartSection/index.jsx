@@ -17,6 +17,9 @@ import * as filtersActions from '../../../../features/sidebar/filtersSlice';
 import * as questUtilsActions from '../../../../features/quest/utilsSlice';
 import MediaControls from '../../../../components/MediaControls';
 
+// Icons
+import { GrClose } from 'react-icons/gr';
+
 const QuestStartSection = () => {
   const dispatch = useDispatch();
 
@@ -392,7 +395,12 @@ const QuestStartSection = () => {
         <SidebarRight />
         {isShowPlayer && (
           <div className="absolute bottom-24 left-1/2 block -translate-x-1/2 laptop:hidden">
-            <div onClick={() => setIsShowPlayer(false)}>close</div>
+              <div className="relative">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
+                alt="mediaCloseIcon" className="h-4 w-4 text-black dark:text-white absolute top-3 -right-2 cursor-pointer" onClick={() => setIsShowPlayer(false)}
+              />
+            </div>
             <MediaControls
               scrollToPlayingCard={scrollToPlayingCard}
               toggleMedia={toggleMedia}
