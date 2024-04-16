@@ -87,7 +87,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
                 dispatch(createQuestAction.updateIsPicMedia(true));
               }}
             >
-              + Add Picture
+              + Add Image
             </Button>
           </div>
         )}
