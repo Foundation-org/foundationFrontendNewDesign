@@ -157,7 +157,9 @@ export default function AddMedia({ handleTab }) {
                 tabIndex={2}
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(1, 'Enter'))}
                 onChange={(e) => {
-                  dispatch(createQuestAction.addMediaUrl(e.target.value));
+                  const url = e.target.value.split('?')[0];
+                  dispatch(createQuestAction.addMediaUrl(url));
+                  // dispatch(createQuestAction.addMediaUrl(e.target.value));
                 }}
                 onBlur={(e) => e.target.value.trim() !== '' && urlVerification(e.target.value.trim())}
                 value={getMediaStates.url}
