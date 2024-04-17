@@ -165,7 +165,7 @@ const QuestBottombar = ({
       />
       {postProperties === 'HiddenPosts' ? (
         <div className="flex items-center gap-2">
-          <h1 className="text-[0.6rem] font-medium text-[#9A9A9A] tablet:text-[1.13531rem] laptop:text-[1.32569rem]">
+          <h1 className="text-[0.6rem] font-medium text-[#9A9A9A] tablet:text-[1.13531rem] laptop:text-[1.2rem]">
             {questStartData?.userQuestSetting?.hiddenMessage}
           </h1>
           <img
@@ -185,7 +185,7 @@ const QuestBottombar = ({
               className=" h-[15px] w-full tablet:h-[23px]"
             />
           ) : null}
-          <h1 className="relative  text-[0.6rem] font-medium text-[#9A9A9A]  tablet:text-[1.13531rem] laptop:text-[1.32569rem] ">
+          <h1 className="relative  text-[0.6rem] font-medium text-[#9A9A9A]  tablet:text-[1.13531rem] laptop:text-[1.2rem] ">
             {questStartData.QuestTopic}
           </h1>
         </div>
@@ -303,7 +303,7 @@ const QuestBottombar = ({
             />
           )}
 
-          <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.32569rem] dark:text-white">
+          <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
             {timeAgo}
           </h4>
         </div>
