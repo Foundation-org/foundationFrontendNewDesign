@@ -165,7 +165,7 @@ const QuestBottombar = ({
       />
       {postProperties === 'HiddenPosts' ? (
         <div className="flex items-center gap-2">
-          <h1 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">
+          <h1 className="text-[0.6rem] font-medium text-[#9A9A9A] tablet:text-[1.13531rem] laptop:text-[1.32569rem]">
             {questStartData?.userQuestSetting?.hiddenMessage}
           </h1>
           <img
@@ -185,7 +185,7 @@ const QuestBottombar = ({
               className=" h-[15px] w-full tablet:h-[23px]"
             />
           ) : null}
-          <h1 className="relative text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">
+          <h1 className="relative  text-[0.6rem] font-medium text-[#9A9A9A]  tablet:text-[1.13531rem] laptop:text-[1.32569rem] ">
             {questStartData.QuestTopic}
           </h1>
         </div>
@@ -303,13 +303,13 @@ const QuestBottombar = ({
             />
           )}
 
-          <h4 className="whitespace-nowrap text-[0.51638rem] font-normal text-[#9C9C9C] tablet:text-[1.13531rem] laptop:text-[1.32569rem] dark:text-white">
+          <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.32569rem] dark:text-white">
             {timeAgo}
           </h4>
         </div>
       </div>
       {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
-        <div className="flex gap-[30px]">
+        <div className="flex items-center justify-center gap-[8px] tablet:gap-[30px]">
           {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
             <div className="flex  items-center gap-[0.17rem]  tablet:gap-[6px]">
               <div onClick={handleCopyOpen} className="cursor-pointer">
