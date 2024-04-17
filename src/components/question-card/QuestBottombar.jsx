@@ -281,7 +281,7 @@ const QuestBottombar = ({
       {/* </div>
       )} */}
 
-      <div className="flex min-w-[70px] justify-end tablet:min-w-[160px]">
+      <div className="flex min-w-[70px] justify-center tablet:min-w-[160px]">
         <div className="flex h-4 w-fit items-center gap-[0.44rem] rounded-[0.625rem] md:h-[1.75rem]">
           {persistedTheme === 'dark' ? (
             <svg
