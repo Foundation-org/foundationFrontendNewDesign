@@ -35,7 +35,6 @@ const SidebarLeft = ({
   } else {
     filtersActions = homeFilterActions;
   }
-
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
@@ -49,6 +48,7 @@ const SidebarLeft = ({
 
   const showRatingDialogue = () => setRatingsDialogue(true);
   const hideRatingDialogue = () => setRatingsDialogue(false);
+  console.log(persistedUserInfo.States);
 
   const { mutateAsync: setFilters } = useMutation({
     mutationFn: setFilterStates,
@@ -89,6 +89,7 @@ const SidebarLeft = ({
         dispatch(filtersActions.setFilterByStatus(persistedUserInfo.States.filterByStatus));
         dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
         dispatch(filtersActions.setExpandedView(true));
+        dispatch(filtersActions.setBookmarks(persistedUserInfo.States.bookmarks));
         dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
         dispatch(filtersActions.setBlockTopics(persistedUserInfo.States.topics?.Block.list));
         dispatch(

@@ -113,6 +113,7 @@ function Slider({ sliderLoading, setSliderloading }) {
       case 'newest-first':
         if (filterStates.filterBySort !== 'Newest First') {
           setSliderloading(true);
+          dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
           dispatch(filtersActions.setFilterBySort('Newest First'));
@@ -121,6 +122,7 @@ function Slider({ sliderLoading, setSliderloading }) {
       case 'most-popular':
         if (filterStates.filterBySort !== 'Most Popular') {
           setSliderloading(true);
+          dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
           dispatch(filtersActions.setFilterBySort('Most Popular'));
@@ -129,14 +131,25 @@ function Slider({ sliderLoading, setSliderloading }) {
       case 'my-posts':
         if (filterStates.filterByScope !== 'Me') {
           setSliderloading(true);
+          dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterBySort(''));
           dispatch(filtersActions.setFilterByScope('Me'));
         }
         break;
+      case 'bookmarks':
+        if (filterStates.bookmarks !== true) {
+          setSliderloading(true);
+          dispatch(homeFilterActions.setBlockTopics([]));
+          dispatch(filtersActions.setFilterBySort(''));
+          dispatch(filtersActions.setFilterByScope('All'));
+          dispatch(filtersActions.setBookmarks(true));
+        }
+        break;
       case 'topics':
         if (filterStates.topics?.Block && filterStates.topics?.Block.list.includes(data)) return;
         setSliderloading(true);
+        dispatch(filtersActions.setBookmarks(false));
         dispatch(homeFilterActions.setBlockTopics([data]));
         dispatch(filtersActions.setFilterBySort(''));
         dispatch(filtersActions.setFilterByScope('All'));
@@ -145,7 +158,6 @@ function Slider({ sliderLoading, setSliderloading }) {
         break;
     }
   };
-
   return (
     <div className="flex items-center px-4 py-[7px] tablet:px-6 tablet:py-[14.82px]">
       {scrollPosition > 0 && (
@@ -198,6 +210,17 @@ function Slider({ sliderLoading, setSliderloading }) {
             id={'myPostButton'}
           >
             My Posts
+          </Button>
+          <Button
+            variant={'topics'}
+            className={`${filterStates.bookmarks === true ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            onClick={() => {
+              handleButtonSelection('bookmarks', null, 'bookmarkButton');
+            }}
+            disabled={sliderLoading}
+            id={'bookmarkButton'}
+          >
+            Bookmarks
           </Button>
         </div>
         <div className="flex gap-[6.75px]  tablet:gap-[13.82px]">

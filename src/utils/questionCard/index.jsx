@@ -19,6 +19,10 @@ export const applyFilters = (params, filterStates, columns) => {
   //   params = { ...params, terms: columns.Preferences.list };
   // }
 
+  if (filterStates.bookmarks === true) {
+    params = { ...params, Page: 'Bookmark', sort: 'Newest First' };
+  }
+
   if (columns.Block?.list?.length !== 0) {
     params = { ...params, blockedTerms: columns.Block?.list };
   }

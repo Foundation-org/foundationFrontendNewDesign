@@ -33,11 +33,11 @@ export const TopbarItems = [
     activePaths: ['/dashboard/treasury', '/dashboard/treasury/ledger'],
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury/treasury-logo.svg`,
   },
-  {
-    id: 5,
-    title: 'Bookmarks',
-    path: '/dashboard/bookmark',
-    activePaths: ['/dashboard/bookmark'],
-    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/bookmark/darkbookmark2.png`,
-  },
+  // {
+  //   id: 5,
+  //   title: 'Bookmarks',
+  //   path: '/dashboard/bookmark',
+  //   activePaths: ['/dashboard/bookmark'],
+  //   icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/bookmark/darkbookmark2.png`,
+  // },
 ];

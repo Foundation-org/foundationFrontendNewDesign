@@ -17,6 +17,7 @@ const resetState = {
   filterByStatus: '',
   filterByType: '',
   filterByScope: '',
+  bookmarks: false,
   filterBySort: 'Newest First',
   clearFilter: false,
 };
@@ -25,6 +26,7 @@ const resetOtherStates = {
   filterByStatus: '',
   filterByType: '',
   filterByScope: '',
+  bookmarks: false,
   filterBySort: 'Newest First',
   clearFilter: false,
 };
@@ -35,6 +37,7 @@ const initialState = {
   filterByStatus: '',
   filterByType: '',
   filterByScope: '',
+  bookmarks: false,
   filterBySort: 'Newest First',
   topics: topicsInitialState,
   moderationRatingFilter: {
@@ -64,7 +67,7 @@ export const filtersSlice = createSlice({
     setBlockTopics: (state, action) => {
       state.topics = {
         ...state.topics,
-        Block: { id: 'Block', list: action.payload }
+        Block: { id: 'Block', list: action.payload },
       };
     },
     toggleExapandedView: (state, action) => {
@@ -75,6 +78,9 @@ export const filtersSlice = createSlice({
     },
     setSearchData: (state, action) => {
       state.searchData = action.payload;
+    },
+    setBookmarks: (state, action) => {
+      state.bookmarks = action.payload;
     },
     setFilterByStatus: (state, action) => {
       state.filterByStatus = action.payload;
@@ -124,6 +130,7 @@ export const {
   setFilterByStatus,
   setFilterByType,
   setFilterByScope,
+  setBookmarks,
   setFilterBySort,
   setRatings,
   resetFilters,
