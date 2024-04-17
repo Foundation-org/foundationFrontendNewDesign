@@ -2,7 +2,7 @@ const Copy = ({ color, h, w }) => {
   return (
     <div className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] ">
       <img
-        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copylg.png`}
+        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/sharelink.svg`}
         alt="copy"
         className="h-3 w-3 tablet:h-[23px] tablet:w-[23px]"
       />
@@ -22,7 +22,7 @@ const Copy = ({ color, h, w }) => {
           fill={color ? color : '#A3A3A3'}
         />
       </svg> */}
-      <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem] laptop:text-[1.25rem]">Share</p>
+      {/* <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem] laptop:text-[1.25rem]">Share</p> */}
     </div>
   );
 };

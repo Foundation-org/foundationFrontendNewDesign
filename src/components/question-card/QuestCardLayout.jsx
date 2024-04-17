@@ -144,6 +144,7 @@ const QuestCardLayout = ({
         bookmarkStatus={bookmarkStatus}
         handleBookmark={handleBookmark}
         postProperties={postProperties}
+        showDisableSharedLinkPopup={showDisableSharedLinkPopup}
       />
 
       <div className="pb-[0.94rem] pt-[0.84rem] tablet:pb-5 tablet:pt-[0.94rem]">
@@ -162,31 +163,31 @@ const QuestCardLayout = ({
               isPlaying={isPlaying}
             />
           ))}
-        <div className="ml-[1.39rem] mr-[0.62rem] flex items-start justify-between tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
-          <div className="flex gap-1.5 pr-5 tablet:gap-3 tablet:pr-6">
-            {/* <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
+        <div className="ml-[1.39rem] mr-[0.62rem] flex items-start  tablet:ml-[3.25rem] tablet:mr-[1.3rem] laptop:ml-[3.67rem]">
+          {/* <div className="flex gap-1.5 pr-5 tablet:gap-3 tablet:pr-6"> */}
+          {/* <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
               {questStartData.Question?.endsWith('?') ? 'Q.' : 'S.'}
             </h4> */}
-            <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
+          {/* <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
               {questStartData.Question}
             </h4>
-          </div>
-          {postProperties === 'HiddenPosts' ? null : postProperties === 'SharedLinks' ? null : (
+          </div> */}
+          {/* {postProperties === 'HiddenPosts' ? null : postProperties === 'SharedLinks' ? null : (
             <img
               src="/assets/hiddenposts/unhide/icon1.png"
               alt="eye-latest"
               className="mt-[3px] h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
               onClick={showHidePostOpen}
             />
-          )}
-          {postProperties === 'SharedLinks' ? (
+          )} */}
+          {/* {postProperties === 'SharedLinks' ? (
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
               alt="trash"
               className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
               onClick={showDisableSharedLinkPopup}
             />
-          ) : null}
+          ) : null} */}
         </div>
         {children}
       </div>
@@ -203,14 +204,14 @@ const QuestCardLayout = ({
         questStartData={questStartData}
         postProperties={postProperties}
       />
-      <ShowHidePostPopup
+      {/* <ShowHidePostPopup
         handleClose={showHidePostClose}
         setCheckboxStates={setCheckboxStates}
         checkboxStates={checkboxStates}
         data={data}
         modalVisible={modalVisible}
         questStartData={questStartData}
-      />
+      /> */}
     </div>
   );
 };
