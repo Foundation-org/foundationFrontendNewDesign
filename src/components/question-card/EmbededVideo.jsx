@@ -45,7 +45,7 @@ export const EmbededVideo = ({
 
   return (
     <div
-      className={`align-items mx-[22px] mb-2 flex flex-col justify-start rounded-[9.183px] border border-[#DEE6F7] px-[5px] py-2 tablet:mx-[60px] tablet:mb-[14px] tablet:border-[2.755px] tablet:px-2 ${
+      className={`align-items mx-[22px] mb-2 flex flex-col justify-start rounded-[9.183px] border border-[#DEE6F7] px-[5px] py-2 tablet:mx-[60px] tablet:mb-[0px] mt-[12px] tablet:mt-[23px] tablet:border-[2.755px] tablet:px-2 ${
         url
           ? youtubeBaseURLs.some((baseURL) => url.includes(baseURL))
             ? 'h-[169px] tablet:h-[420px]'
@@ -56,7 +56,6 @@ export const EmbededVideo = ({
       }`}
     >
       {' '}
-      {console.log(mediaURL)}
       <h2 className="mb-1 ml-[9px] text-[8px] font-medium text-[#7C7C7C] tablet:text-[14.692px]">{description}</h2>
       <div className="">
         <ReactPlayer
