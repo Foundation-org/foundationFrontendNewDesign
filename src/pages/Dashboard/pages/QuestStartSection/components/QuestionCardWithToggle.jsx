@@ -748,7 +748,7 @@ const QuestionCardWithToggle = (props) => {
     if (viewResult !== questStartData._id && openResults !== true) {
       return (
         <>
-          {/* <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} /> */}
+          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
 
           <StartTest
             questStartData={questStartData}
