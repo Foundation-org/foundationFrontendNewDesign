@@ -197,9 +197,8 @@ const SidebarLeft = ({
                 onClick={() => {
                   showRatingDialogue();
                 }}
-                className={`${
-                  persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
+                className={`${persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                  } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
               >
                 {/* Topics */}
                 Rating
@@ -250,9 +249,8 @@ const SidebarLeft = ({
               />
             </div>
             <button
-              className={`${
-                persistedTheme === 'dark' ? 'bg-[#F0F0F0]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-              }  inset-0 mt-7 w-[192px] rounded-[14px] px-5 py-[6px] text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
+              className={`${persistedTheme === 'dark' ? 'bg-[#F0F0F0]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                }  inset-0 mt-7 w-[192px] rounded-[14px] px-5 py-[6px] text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
               onClick={() => {
                 dispatch(filtersActions.resetFilters());
                 setSearch('');
@@ -264,13 +262,15 @@ const SidebarLeft = ({
         </div>
         {isShowPlayer && (
           <div className="hidden laptop:block">
-            <GrClose
-              className="h-2 w-2 text-black dark:text-white"
-              onClick={() => {
-                setIsShowPlayer(false);
-                setPlayingPlayerId('');
-              }}
-            />
+            <div className="relative">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
+                alt="mediaCloseIcon" className="h-6 w-6 text-black dark:text-white absolute -top-3 -right-3 cursor-pointer" onClick={() => {
+                  setIsShowPlayer(false);
+                  setPlayingPlayerId('');
+                }}
+              />
+            </div>
             <MediaControls
               scrollToPlayingCard={scrollToPlayingCard}
               toggleMedia={toggleMedia}
@@ -283,9 +283,8 @@ const SidebarLeft = ({
         <div className="block border-b-4 border-[#F3F3F3] bg-white px-[15px] py-[10px] tablet:px-[37px] tablet:py-[26px] laptop:hidden dark:bg-[#0A0A0C]">
           <div className="mt-[10px] flex items-end justify-between gap-[6px]">
             <button
-              className={`${
-                persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-              }  inset-0 w-fit text-nowrap rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner tablet:w-full tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+              className={`${persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                }  inset-0 w-fit text-nowrap rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner tablet:w-full tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
               onClick={() => {
                 showRatingDialogue();
               }}
@@ -327,9 +326,8 @@ const SidebarLeft = ({
               }}
             />
             <button
-              className={`${
-                persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-              }  inset-0 w-fit whitespace-nowrap rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner tablet:w-full tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+              className={`${persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                }  inset-0 w-fit whitespace-nowrap rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner tablet:w-full tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
               onClick={() => {
                 dispatch(filtersActions.resetFilters());
                 localStorage.setItem('filterByState', 'false');
