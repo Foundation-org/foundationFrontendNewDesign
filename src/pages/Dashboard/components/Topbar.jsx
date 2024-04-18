@@ -49,7 +49,7 @@ const Topbar = () => {
             <h1 className="relative font-neuropol text-[12px] font-normal text-white tablet:text-[20px]">
               FOUNDATION{' '}
               <span className="absolute -right-[26px] bottom-[2px] whitespace-nowrap font-poppins text-[7px] font-medium text-[#D0E4F2] tablet:-bottom-3 tablet:-right-8 tablet:left-0 tablet:text-[12px]">
-                v 1.8.16
+                v 1.8.17
               </span>
             </h1>
 
