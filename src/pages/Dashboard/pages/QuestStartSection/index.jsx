@@ -83,7 +83,7 @@ const QuestStartSection = () => {
       moderationRatingFilter: filterStates.moderationRatingFilter,
     },
   );
-
+  console.log('wamiq', feedData);
   // Reset Preferences
   // useEffect(() => {
   //   if (!filterStates.isColumns) {

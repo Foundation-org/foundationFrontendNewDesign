@@ -6,11 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice';
 import * as QuestServices from '../services/queries/quest';
+import { useQueryClient } from '@tanstack/react-query';
 
 function Slider({ sliderLoading, setSliderloading }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
+  const queryClient = useQueryClient();
+
   const { pathname } = location;
   if (pathname === '/dashboard/bookmark') {
     filtersActions = bookmarkFiltersActions;
@@ -215,6 +218,7 @@ function Slider({ sliderLoading, setSliderloading }) {
             variant={'topics'}
             className={`${filterStates.bookmarks === true ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
             onClick={() => {
+              queryClient.invalidateQueries('FeedData');
               handleButtonSelection('bookmarks', null, 'bookmarkButton');
             }}
             disabled={sliderLoading}
