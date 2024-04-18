@@ -282,7 +282,9 @@ const QuestBottombar = ({
       )} */}
 
       {/* Time Duration */}
-      <div className="absolute left-1/2 flex h-4 w-fit -translate-x-1/2 items-center gap-[0.44rem] rounded-[0.625rem] md:h-[1.75rem]">
+      <div
+        className={`${postProperties === 'HiddenPosts' || postProperties === 'SharedLinks' ? '' : 'absolute left-1/2 -translate-x-1/2'} flex h-4 w-fit items-center gap-[0.44rem] rounded-[0.625rem] md:h-[1.75rem]`}
+      >
         {persistedTheme === 'dark' ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -304,7 +306,7 @@ const QuestBottombar = ({
         )}
 
         <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
-          {timeAgo}
+          {postProperties === 'HiddenPosts' ? 'Hidden' : null} {timeAgo}
         </h4>
       </div>
 
