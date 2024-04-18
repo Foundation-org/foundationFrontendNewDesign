@@ -185,6 +185,7 @@ function Slider({ sliderLoading, setSliderloading }) {
             variant={'topics'}
             className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
             onClick={() => {
+              queryClient.invalidateQueries('FeedData');
               handleButtonSelection('newest-first', null, 'newButton');
             }}
             disabled={sliderLoading}
@@ -196,6 +197,7 @@ function Slider({ sliderLoading, setSliderloading }) {
             variant={'topics'}
             className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
             onClick={() => {
+              queryClient.invalidateQueries('FeedData');
               handleButtonSelection('most-popular', null, 'trendingButton');
             }}
             disabled={sliderLoading}
@@ -207,6 +209,7 @@ function Slider({ sliderLoading, setSliderloading }) {
             variant={'topics'}
             className={`${filterStates.filterByScope === 'Me' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
             onClick={() => {
+              queryClient.invalidateQueries('FeedData');
               handleButtonSelection('my-posts', null, 'myPostButton');
             }}
             disabled={sliderLoading}
@@ -218,7 +221,7 @@ function Slider({ sliderLoading, setSliderloading }) {
             variant={'topics'}
             className={`${filterStates.bookmarks === true ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
             onClick={() => {
-              queryClient.invalidateQueries('FeedData');
+              // queryClient.invalidateQueries('FeedData');
               handleButtonSelection('bookmarks', null, 'bookmarkButton');
             }}
             disabled={sliderLoading}
@@ -241,6 +244,7 @@ function Slider({ sliderLoading, setSliderloading }) {
             const handleMouseUp = (e) => {
               const distance = Math.sqrt((e.clientX - startX) ** 2 + (e.clientY - startY) ** 2);
               if (distance < 5) {
+                queryClient.invalidateQueries('FeedData');
                 handleButtonSelection('topics', item, `topic-${index}`);
               }
             };
