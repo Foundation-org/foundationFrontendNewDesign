@@ -193,7 +193,7 @@ export default function Signin() {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
+    <div className="flex h-dvh w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
       {isLoadingSocial && <Loader />}
       <div
         className={`${
@@ -206,7 +206,7 @@ export default function Signin() {
           className="h-[45px] w-[58px]"
         />
       </div>
-      <div className="flex h-screen w-full flex-col items-center bg-white md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
+      <div className="flex h-full w-full flex-col items-center bg-white md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle" className="text-center tablet:text-left">
             Sign in

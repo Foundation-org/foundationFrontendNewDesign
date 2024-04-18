@@ -79,7 +79,8 @@
 
 body {
   margin: 0;
-  height: 100vh;
+  padding: 0;
+  /* height: 100vh; */
   font-family: 'Inter', sans-serif;
   overflow: hidden;
 }
