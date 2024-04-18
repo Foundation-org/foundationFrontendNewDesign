@@ -5,7 +5,7 @@ import * as HomepageAPIs from '../api/homepageApis';
 export function useGetFeedData(filterStates, debouncedSearch, pagination, columns, params) {
   params = applyFilters(params, filterStates, columns);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isFetching } = useQuery({
     queryFn: async () => {
       if (debouncedSearch === '') {
         const result = await fetchDataByStatus(params, filterStates);
@@ -19,7 +19,7 @@ export function useGetFeedData(filterStates, debouncedSearch, pagination, column
     staleTime: 60000,
   });
 
-  return { data, isLoading };
+  return { data, isLoading, isFetching };
 }
 
 export function useGetHiddenFeedData(filterStates, debouncedSearch, pagination, columns, params) {
@@ -66,11 +66,13 @@ export function useGetSingleQuest(uuid, id) {
 }
 
 export function useGetBookmarkData() {
-  return useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () => HomepageAPIs.getAllBookmarkedQuests(),
     queryKey: ['getBookmarked'],
     staleTime: 60000,
   });
+
+  return { data, isLoading };
 }
 
 // GET ALL PREFERENCES

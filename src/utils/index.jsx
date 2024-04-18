@@ -1,7 +1,6 @@
 import { FaSpinner } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import * as filtersActions from '../features/sidebar/filtersSlice';
-import * as bookmarkfiltersActions from '../features/sidebar/bookmarkFilterSlice';
 
 const filtersInitialState = {
   filterByStatus: '',
@@ -225,7 +224,7 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
               }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
               onClick={() => {
-                dispatch(bookmarkfiltersActions.resetOtherFilters());
+                dispatch(filtersActions.resetOtherFilters());
                 localStorage.setItem('filterByState', 'false');
               }}
             >
@@ -257,15 +256,24 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
   );
 };
 
-export const printEndMessage = (feedData, filterStates, allData, persistedTheme, isBookmarked) => {
+export const printEndMessage = (
+  feedData,
+  filterStates,
+  allData,
+  persistedTheme,
+  isBookmarked,
+  isLoading,
+  isFetching,
+) => {
   const dispatch = useDispatch();
 
   const result = matchFilters(filtersInitialState, filterStates);
 
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
+  // console.log(feedData?.hasNextPage, isPending, isLoading);
 
-  return feedData?.hasNextPage === false ? (
+  return !feedData?.hasNextPage && !isFetching && !isLoading ? (
     <div className="flex justify-between gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
       <div></div>
       {filterStates.searchData && allData.length == 0 ? (
@@ -293,7 +301,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                   }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                   onClick={() => {
-                    dispatch(bookmarkfiltersActions.resetOtherFilters());
+                    dispatch(filtersActions.resetOtherFilters());
                     localStorage.setItem('filterByState', 'false');
                   }}
                 >
@@ -305,7 +313,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
                   persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                 }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                 onClick={() => {
-                  dispatch(bookmarkfiltersActions.resetSearchData());
+                  dispatch(filtersActions.resetSearchData());
                 }}
               >
                 Clear Search
@@ -355,7 +363,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                   }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                   onClick={() => {
-                    dispatch(bookmarkfiltersActions.resetOtherFilters());
+                    dispatch(filtersActions.resetOtherFilters());
                     localStorage.setItem('filterByState', 'false');
                   }}
                 >
@@ -396,7 +404,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                   }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                   onClick={() => {
-                    dispatch(bookmarkfiltersActions.resetOtherFilters());
+                    dispatch(filtersActions.resetOtherFilters());
                     localStorage.setItem('filterByState', 'false');
                   }}
                 >
@@ -408,7 +416,7 @@ export const printEndMessage = (feedData, filterStates, allData, persistedTheme,
                   persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                 }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                 onClick={() => {
-                  dispatch(bookmarkfiltersActions.resetSearchData());
+                  dispatch(filtersActions.resetSearchData());
                 }}
               >
                 Clear Search

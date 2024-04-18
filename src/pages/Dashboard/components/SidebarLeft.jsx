@@ -48,7 +48,6 @@ const SidebarLeft = ({
 
   const showRatingDialogue = () => setRatingsDialogue(true);
   const hideRatingDialogue = () => setRatingsDialogue(false);
-  console.log(persistedUserInfo.States);
 
   const { mutateAsync: setFilters } = useMutation({
     mutationFn: setFilterStates,

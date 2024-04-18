@@ -58,7 +58,11 @@ const QuestStartSection = () => {
 
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
-  const { data: feedData, isLoading } = QuestServices.useGetFeedData(
+  const {
+    data: feedData,
+    isLoading,
+    isFetching,
+  } = QuestServices.useGetFeedData(
     filterStates,
     filterStates.searchData,
     pagination,
@@ -83,6 +87,7 @@ const QuestStartSection = () => {
       moderationRatingFilter: filterStates.moderationRatingFilter,
     },
   );
+
   // Reset Preferences
   // useEffect(() => {
   //   if (!filterStates.isColumns) {
@@ -367,7 +372,15 @@ const QuestStartSection = () => {
             dataLength={allData?.length}
             next={fetchMoreData}
             hasMore={feedData?.hasNextPage}
-            endMessage={printEndMessage(feedData, filterStates, allData, persistedTheme)}
+            endMessage={printEndMessage(
+              feedData,
+              filterStates,
+              allData,
+              persistedTheme,
+              filterStates.bookmarks,
+              isLoading,
+              isFetching,
+            )}
             height={height}
             className="no-scrollbar px-4 pb-[10px] tablet:px-6 tablet:pb-5"
           >
