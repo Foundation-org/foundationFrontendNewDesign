@@ -83,7 +83,6 @@ const QuestStartSection = () => {
       moderationRatingFilter: filterStates.moderationRatingFilter,
     },
   );
-  console.log('wamiq', feedData);
   // Reset Preferences
   // useEffect(() => {
   //   if (!filterStates.isColumns) {
@@ -358,7 +357,12 @@ const QuestStartSection = () => {
           setIsShowPlayer={setIsShowPlayer}
         />
         <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-155.5px)] min-h-[calc(100dvh-155.5px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100dvh-70px)] tablet:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
-          <Slider sliderLoading={sliderLoading} setSliderloading={setSliderloading} />
+          <Slider
+            sliderLoading={sliderLoading}
+            setSliderloading={setSliderloading}
+            setPlayingPlayerId={setPlayingPlayerId}
+            setIsShowPlayer={setIsShowPlayer}
+          />
           <InfiniteScroll
             dataLength={allData?.length}
             next={fetchMoreData}
