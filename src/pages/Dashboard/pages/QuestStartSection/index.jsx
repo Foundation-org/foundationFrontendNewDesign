@@ -54,7 +54,7 @@ const QuestStartSection = () => {
   // const [columns, setColumns] = useState(parsedColumns || initialColumns);
   // const [itemsWithCross, setItemsWithCross] = useState(filterStates.itemsWithCross || []);
 
-  const [height, setHeight] = useState('calc(100vh - 147.63px)');
+  const [height, setHeight] = useState('calc(100dvh - 147.63px)');
 
   // Quest Services
   const { data: bookmarkedData } = QuestServices.useGetBookmarkData();
@@ -321,7 +321,7 @@ const QuestStartSection = () => {
 
   useEffect(() => {
     const updateHeight = () => {
-      const newHeight = window.innerWidth <= 744 ? 'calc(100vh - 280px)' : 'calc(100vh - 147.63px)';
+      const newHeight = window.innerWidth <= 744 ? 'calc(100dvh - 196.39px)' : 'calc(100dvh - 147.63px)';
       setHeight(newHeight);
     };
 
@@ -357,7 +357,7 @@ const QuestStartSection = () => {
           isShowPlayer={isShowPlayer}
           setIsShowPlayer={setIsShowPlayer}
         />
-        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100vh-155.5px)] min-h-[calc(100vh-155.5px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100vh-70px)] tablet:min-h-[calc(100vh-70px)] dark:bg-[#242424]">
+        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-155.5px)] min-h-[calc(100dvh-155.5px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100dvh-70px)] tablet:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
           <Slider sliderLoading={sliderLoading} setSliderloading={setSliderloading} />
           <InfiniteScroll
             dataLength={allData?.length}
