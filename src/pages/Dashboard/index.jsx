@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <>
       <Topbar />
-      <div className="flex h-[calc(100vh-58px)] justify-between tablet:h-[calc(100vh-116px)] laptop:h-[calc(100vh-70px)]">
+      <div className="flex h-[calc(100dvh-58px)] justify-between tablet:h-[calc(100dvh-116px)] laptop:h-[calc(100dvh-70px)]">
         <Outlet />
       </div>
     </>
