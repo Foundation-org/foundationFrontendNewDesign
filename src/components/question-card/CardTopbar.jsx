@@ -38,10 +38,10 @@ const CardTopbar = ({
   // } else ratingImage = 'post-a.svg';
 
   return (
-    <div className="flex flex-col justify-between border-[#D9D9D9] px-2 pt-2 tablet:px-5 tablet:pt-5 laptop:px-6">
+    <div className="flex flex-col justify-between border-[#D9D9D9] px-2 pt-2 tablet:px-5 tablet:pt-4 laptop:px-5">
       {postProperties === 'SharedLinks' && (
-        <div className="flex justify-between">
-          <div className="max-w-48 pl-[1rem] tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
+        <div className="mb-2 flex justify-between tablet:mb-5">
+          <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
             <h1 className="truncate text-wrap text-[10px] font-semibold text-[#707175] tablet:text-[20px] tablet:font-medium">
               {url}
             </h1>

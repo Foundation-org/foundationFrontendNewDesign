@@ -60,7 +60,7 @@ const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
           ) : (
             <>
               {postProperties === 'SharedLinks' ? (
-                <div className="my-2 ml-10 flex gap-1 tablet:my-5 tablet:ml-[86px] tablet:gap-20">
+                <div className="my-2 ml-10 flex gap-1 tablet:mb-[25px] tablet:ml-16 tablet:mt-[15px] tablet:gap-20">
                   <div className="flex items-center gap-[1px] tablet:gap-2">
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/clicks.svg`}
