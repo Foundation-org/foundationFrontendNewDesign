@@ -24,18 +24,18 @@ export default function AddPictures({ handleTab }) {
     // }
   };
 
-  const handleDescChange = (e) => {
-    const inputValue = e.target.value;
+  // const handleDescChange = (e) => {
+  //   const inputValue = e.target.value;
 
-    if (inputValue.length <= 350) {
-      dispatch(createQuestAction.addPicsMediaDesc(inputValue));
-    }
-  };
+  //   if (inputValue.length <= 350) {
+  //     dispatch(createQuestAction.addPicsMediaDesc(inputValue));
+  //   }
+  // };
 
-  const descVerification = async (value) => {
-    if (getMediaStates.validatedDescription === value) return;
-    dispatch(createQuestAction.checkPicsDescription(value));
-  };
+  // const descVerification = async (value) => {
+  //   if (getMediaStates.validatedDescription === value) return;
+  //   dispatch(createQuestAction.checkPicsDescription(value));
+  // };
 
   return (
     <div>
@@ -56,7 +56,7 @@ export default function AddPictures({ handleTab }) {
               className="size-[15px] tablet:size-[41px]"
             />
           </div>
-          <div className="flex">
+          {/* <div className="flex">
             <TextareaAutosize
               id="input-0"
               tabIndex={1}
@@ -75,7 +75,7 @@ export default function AddPictures({ handleTab }) {
               </div>
               <Tooltip optionStatus={getMediaStates.picDescStatus} type="media" />
             </button>
-          </div>
+          </div> */}
           {getMediaStates.picUrlStatus.tooltipName !== 'Question is Verified' && (
             <div className="flex">
               <TextareaAutosize

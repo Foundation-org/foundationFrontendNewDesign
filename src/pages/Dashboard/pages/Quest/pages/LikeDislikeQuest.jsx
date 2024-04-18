@@ -117,7 +117,7 @@ const LikeDislike = () => {
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
       url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPicsMediaStates.picUrl,
-      description: getMediaStates?.isMedia.isMedia ? getMediaStates.desctiption : getPicsMediaStates.picDesctiption,
+      description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
     };
 
     if (!checkHollow()) {
@@ -147,14 +147,33 @@ const LikeDislike = () => {
     }
   };
 
+  const checkPicMediaHollow = () => {
+    if (
+      questionStatus.tooltipName === 'Question is Verified' &&
+      getPicsMediaStates.picUrlStatus.tooltipName === 'Question is Verified' &&
+      getPicsMediaStates.picUrl !== ''
+    ) {
+      return false;
+    } else {
+      setLoading(false);
+      return true;
+    }
+  };
+
   useEffect(() => {
-    if (getMediaStates.isMedia) {
+    if (getMediaStates.isMedia.isMedia) {
       if (
         !checkMediaHollow() &&
         createQuestSlice.question !== '' &&
         getMediaStates.desctiption !== '' &&
         getMediaStates.url !== ''
       ) {
+        setHollow(false);
+      } else {
+        setHollow(true);
+      }
+    } else if (getPicsMediaStates.isPicMedia) {
+      if (!checkPicMediaHollow()) {
         setHollow(false);
       } else {
         setHollow(true);
@@ -173,6 +192,9 @@ const LikeDislike = () => {
     getMediaStates.desctiption,
     getMediaStates.url,
     getMediaStates.urlStatus,
+    getPicsMediaStates.isPicMedia,
+    getPicsMediaStates.picUrlStatus,
+    getPicsMediaStates.picUrl,
   ]);
 
   useEffect(() => {
@@ -207,12 +229,7 @@ const LikeDislike = () => {
       <div className="flex w-full justify-end">
         {hollow ? (
           <div className="pr-7 pt-[10px] tablet:pr-[70px] tablet:pt-[30px] ">
-            <Button
-              variant="hollow-submit"
-              id="submitButton"
-              onClick={() => handleSubmit()}
-              disabled={loading === true}
-            >
+            <Button variant="hollow-submit" id="submitButton" disabled={true}>
               Create
             </Button>
           </div>
