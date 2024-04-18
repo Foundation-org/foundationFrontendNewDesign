@@ -203,6 +203,7 @@ const QuestCardLayout = ({
         badgeCount={questStartData.getUserBadge?.badges?.length}
         questStartData={questStartData}
         postProperties={postProperties}
+        showDisableSharedLinkPopup={showDisableSharedLinkPopup}
       />
       {/* <ShowHidePostPopup
         handleClose={showHidePostClose}

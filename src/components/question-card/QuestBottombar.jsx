@@ -53,6 +53,7 @@ const QuestBottombar = ({
   question,
   questStartData,
   postProperties,
+  showDisableSharedLinkPopup,
 }) => {
   const navigate = useNavigate();
 
@@ -153,7 +154,7 @@ const QuestBottombar = ({
 
   return (
     <div
-      className={`relative flex items-center border-t-2 border-[#D9D9D9] px-[0.57rem] py-2 tablet:px-5 tablet:py-[0.63rem] ${postProperties === 'SharedLinks' ? 'justify-end' : 'justify-between'}`}
+      className={`relative flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] py-2 tablet:px-5  tablet:py-[0.63rem]`}
     >
       <ShowHidePostPopup
         handleClose={showHidePostClose}
@@ -163,6 +164,14 @@ const QuestBottombar = ({
         modalVisible={modalVisible}
         questStartData={questStartData}
       />
+      {/* {postProperties === 'SharedLinks' && (
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+          alt="trash"
+          className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
+          onClick={showDisableSharedLinkPopup}
+        />
+      )} */}
       {postProperties === 'HiddenPosts' ? (
         <div className="flex items-center gap-2">
           <h1 className="text-[0.6rem] font-medium text-[#9A9A9A] tablet:text-[1.13531rem] laptop:text-[1.2rem]">
@@ -175,7 +184,12 @@ const QuestBottombar = ({
           />
         </div>
       ) : postProperties === 'SharedLinks' ? (
-        <></>
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+          alt="trash"
+          className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
+          onClick={showDisableSharedLinkPopup}
+        />
       ) : (
         <div className="flex items-center gap-[5.64px] tablet:gap-[14.36px]">
           {ratingImage ? (

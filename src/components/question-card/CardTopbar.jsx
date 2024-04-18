@@ -12,7 +12,6 @@ const CardTopbar = ({
   bookmarkStatus,
   handleBookmark,
   postProperties,
-  showDisableSharedLinkPopup,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -113,12 +112,7 @@ const CardTopbar = ({
           // </div>
           <></>
         ) : postProperties === 'SharedLinks' ? (
-          <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-            alt="trash"
-            className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
-            onClick={showDisableSharedLinkPopup}
-          />
+          <></>
         ) : (
           // <div
           //   className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
