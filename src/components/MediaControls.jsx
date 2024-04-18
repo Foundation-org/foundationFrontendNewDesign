@@ -1,6 +1,6 @@
 export default function MediaControls({ scrollToPlayingCard, toggleMedia, isPlaying }) {
   return (
-    <div className="mt-5 flex items-center justify-center gap-2 rounded-[9.211px] border-[2.86px] border-[#CECFD1] bg-[#E5E7EC] px-2 py-2 tablet:gap-6 tablet:rounded-[14px] tablet:py-[10px]">
+    <div className="mt-5 flex items-center justify-center gap-2 rounded-[9.211px] border-[2.86px] border-[#CECFD1] bg-[#E5E7EC] px-4 py-2 tablet:gap-6 tablet:rounded-[14px] tablet:py-[10px]">
       <button onClick={toggleMedia} className="w-[15px] tablet:w-[22px]">
         {!isPlaying ? (
           <svg

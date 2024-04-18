@@ -399,7 +399,7 @@ const QuestStartSection = () => {
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
                 alt="mediaCloseIcon"
-                className="absolute -right-2 top-3 h-4 w-4 cursor-pointer text-black dark:text-white"
+                className="absolute -right-2 top-3 h-6 w-6 cursor-pointer text-black dark:text-white"
                 onClick={() => {
                   setIsShowPlayer(false);
                   setPlayingPlayerId('');
