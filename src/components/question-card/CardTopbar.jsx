@@ -38,7 +38,7 @@ const CardTopbar = ({
   // } else ratingImage = 'post-a.svg';
 
   return (
-    <div className="flex flex-col justify-between border-[#D9D9D9] px-2 py-1 tablet:px-5 tablet:py-[0.63rem] laptop:px-4">
+    <div className="flex flex-col justify-between border-[#D9D9D9] px-2 py-1 tablet:px-5 tablet:py-[0.63rem] laptop:px-6">
       {postProperties === 'SharedLinks' && (
         <div className="flex justify-between">
           <div className="max-w-48 pl-[1rem] tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
@@ -63,15 +63,15 @@ const CardTopbar = ({
         </div>
       )}
 
-      <div className="flex items-center justify-between border-[#D9D9D9] px-2 py-1 tablet:px-5 tablet:py-[0.63rem] laptop:px-4">
+      <div className="flex items-center justify-between border-[#D9D9D9] py-1 tablet:py-[0.63rem]">
         <div className="flex flex-col gap-[10px] tablet:gap-[18px]">
-          <div className="flex items-center gap-2 tablet:gap-6 ">
+          <div className="flex items-center gap-2 tablet:gap-4 ">
             {createdBy === persistedUserInfo?.uuid ? (
               <div className="relative h-fit w-fit">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
                   alt={alt}
-                  className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888px]"
+                  className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
                 />
                 <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#7A7016] tablet:top-[40%] tablet:text-[13px]">
                   {badgeCount}
@@ -82,7 +82,7 @@ const CardTopbar = ({
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
                   alt={alt}
-                  className="h-[18.5px] w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] laptop:h-[29px] laptop:w-[22.888px]"
+                  className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
                 />
                 <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#F6F6F6] tablet:top-[40%] tablet:text-[13px]">
                   {badgeCount}
