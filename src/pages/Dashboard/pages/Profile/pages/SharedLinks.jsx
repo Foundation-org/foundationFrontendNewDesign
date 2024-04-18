@@ -259,7 +259,7 @@ export default function SharedLinks() {
           hasMore={feedData?.hasNextPage}
           endMessage={
             feedData?.hasNextPage === false ? (
-              <div className="flex justify-between gap-4 px-4 pb-[5rem] pt-3 tablet:py-[27px]">
+              <div className="flex justify-between gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
                 <div></div>
                 {filterStates.searchData && allData.length == 0 ? (
                   <div className="my-[15vh] flex  flex-col items-center justify-center">

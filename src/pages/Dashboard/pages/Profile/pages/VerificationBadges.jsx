@@ -225,7 +225,7 @@ const VerificationBadges = () => {
           <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
         </div>
       ) : (
-        <div className="pb-12">
+        <div className="pb-8">
           {/* DELETE MODAL POPUP */}
           {modalVisible && (
             <BadgeRemovePopup
@@ -247,7 +247,7 @@ const VerificationBadges = () => {
           <div
             className={`${
               persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
-            } relative mx-6 mb-[140px] mt-[10px] flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-[30px] tablet:mb-[10rem] tablet:mt-[35px] tablet:gap-4 tablet:rounded-[45px] tablet:px-[30px] tablet:py-[30px] laptop:mx-[45px] laptop:gap-5 laptop:px-[40px]`}
+            } relative mx-6 mb-8 mt-[10px] flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-[30px] tablet:mb-[10rem] tablet:mt-[35px] tablet:gap-4 tablet:rounded-[45px] tablet:px-[30px] tablet:py-[30px] laptop:mx-[45px] laptop:gap-5 laptop:px-[40px]`}
           >
             <Contact
               handleUserInfo={handleUserInfo}

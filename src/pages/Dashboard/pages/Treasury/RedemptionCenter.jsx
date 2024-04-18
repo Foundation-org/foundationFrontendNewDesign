@@ -249,7 +249,7 @@ export default function RedemptionCenter() {
   }, [isPulse]);
 
   return (
-    <div className="flex flex-col gap-[10px] px-5 tablet:gap-[25px]">
+    <div className="flex flex-col gap-[10px] px-5 pb-8 tablet:gap-[25px]">
       <div>
         <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
           Redemption center

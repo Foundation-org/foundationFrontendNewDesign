@@ -8,7 +8,7 @@ const TermsPrivacyLayout = ({ children, title, timeStamp }) => {
           className="w-[34.5px] tablet:w-[69.2px] laptop:w-[5.75rem]"
         />
       </div>
-      <div className="term-privacy-scrollbar mr-1 h-full overflow-y-auto bg-white pb-[10rem] pl-6 pr-5 pt-[2px] text-[#707175] tablet:px-[46px] tablet:pt-[15px] ">
+      <div className="term-privacy-scrollbar mr-1 h-full overflow-y-auto bg-white pb-[5rem] pl-6 pr-5 pt-[2px] text-[#707175] tablet:px-[46px] tablet:pt-[15px] ">
         <h1 className="text-center text-[12px] font-semibold text-[#707175] tablet:text-[30px]">{title}</h1>
         <p className="text-center text-[7.5px] font-normal text-[#707175] tablet:text-[19.36px]">{timeStamp}</p>
         {children}
