@@ -38,30 +38,6 @@ const CardTopbar = ({
 
   return (
     <div className="flex flex-col justify-between border-[#D9D9D9] px-2 pt-2 tablet:px-5 tablet:pt-4 laptop:px-5">
-      {postProperties === 'SharedLinks' && (
-        <div className="mb-2 flex justify-between tablet:mb-5">
-          <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
-            <h1 className="truncate text-wrap text-[10px] font-semibold text-[#707175] tablet:text-[20px] tablet:font-medium">
-              {url}
-            </h1>
-          </div>
-          <div
-            className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
-            onClick={() => {
-              copyToClipboard();
-              toast.success('Link Copied!');
-            }}
-          >
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copylinkblue.png`}
-              alt="eye-cut"
-              className="h-3 w-3 tablet:h-[22.92px] tablet:w-[19.79px]"
-            />
-            <h1 className="text-[10.45px] font-semibold text-[#6BA5CF] tablet:text-[20px]">Copy Link</h1>
-          </div>
-        </div>
-      )}
-
       <div className="flex items-start justify-between border-[#D9D9D9]">
         <div className="flex flex-col gap-[10px] tablet:gap-[18px]">
           <div className="flex items-start gap-2 tablet:gap-4 ">
