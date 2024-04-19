@@ -1333,6 +1333,31 @@ export const createQuestSlice = createSlice({
             status: true,
             showToolTipMsg: true,
           };
+        } else if (
+          state.media.isMedia.isMedia === false &&
+          state.pictureMedia.isPicMedia === false &&
+          errorMessage === 'DUPLICATION'
+        ) {
+          console.log('here duplication', state.media.isMedia.isMedia, state.pictureMedia.isPicMedia, errorMessage);
+          state.questions.question = validatedQuestion;
+          state.questions.validatedQuestion = validatedQuestion;
+          state.questions.questionTyping = false;
+          state.questionReset = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
+          state.chatgptStatus = {
+            name: 'Duplicate',
+            color: 'text-[#EFD700]',
+            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipStyle: 'tooltip-error',
+            duplication: true,
+            showToolTipMsg: true,
+          };
         } else {
           if (validatedQuestion === state.media.validatedDescription) {
             state.questions.question = validatedQuestion;
