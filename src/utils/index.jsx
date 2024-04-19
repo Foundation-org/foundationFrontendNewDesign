@@ -374,7 +374,7 @@ export const printEndMessage = (
             </div>
           ) : result === false || !resultPreferences ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
-              <b>{!resultPreferences ? 'No more matching posts found!' : 'You are all caught up!adadad'}</b>
+              <b>{!resultPreferences ? 'No more matching posts found!' : 'You are all caught up!'}</b>
               {(result === false || !resultPreferences) && (
                 <button
                   className={`${
