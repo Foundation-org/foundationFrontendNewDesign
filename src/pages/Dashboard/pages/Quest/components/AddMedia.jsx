@@ -185,65 +185,71 @@ export default function AddMedia({ handleTab }) {
             </div>
           )}
           {getMediaStates.urlStatus.tooltipName === 'Question is Verified' && (
-            <div
-              className="player-wrapper relative mt-1 cursor-pointer rounded-[10px] tablet:mt-[10px]"
-              onClick={() => {
-                dispatch(createQuestAction.clearUrl());
-              }}
-            >
-              <div
-                className={`absolute -right-1 -top-[6px] z-20 tablet:-right-4 tablet:-top-4 ${getMediaStates.url ? 'block' : 'hidden'}`}
-              >
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
-                  alt="mediaCloseIcon"
-                  className="size-[15px] tablet:size-[41px]"
-                />
-              </div>
-              {console.log({ mediaURL })}
-              <ReactPlayer
-                ref={playerRef}
-                // url={getMediaStates.url}
-                url={window.innerWidth < 500 ? `${getMediaStates.url}&show_artwork=false` : getMediaStates.url}
-                className="react-player"
-                onError={(e) => {
-                  toast.error('Invalid URL'), dispatch(createQuestAction.clearUrl());
-                }}
-                width="100%"
-                height="100%"
-                // single_active={true}
-                controls={true} // Hide player controls
-                muted={false} // Unmute audio
-                playing={false} // Do not autoplay
-                // loop={true} // Enable looping
-                loop={!getMediaStates.url?.includes(soundcloudUnique)}
-                config={{
-                  soundcloud: {
-                    options: {
-                      auto_play: false, // Disable auto play
-                      hide_related: true, // Hide related tracks
-                      show_comments: false, // Hide comments
-                      show_user: false, // Hide user information
-                      show_reposts: false, // Hide reposts
-                      show_teaser: false, // Hide track teasers
-                      visual: false, // Disable visual mode
-                      show_playcount: false, // Hide play count
-                      sharing: false, // Disable sharing
-                      buying: false, // Disable buying options
-                      download: false, // Disable download option
-                    },
-                  },
-                  youtube: {
-                    playerVars: {
-                      modestbranding: 1, // Hide YouTube logo
-                      showinfo: 0, // Hide video title and uploader info
-                      autoplay: 0, // Disable autoplay
-                      loop: 1, // Enable looping
-                    },
-                  },
-                }}
-                onEnded={handleVideoEnded}
-              />
+            <div className="player-wrapper relative mt-1 cursor-pointer rounded-[10px] tablet:mt-[10px]">
+              {ReactPlayer.canPlay(getMediaStates.url) ? (
+                <>
+                  <div
+                    className={`absolute -right-1 -top-[6px] z-20 tablet:-right-4 tablet:-top-4 ${getMediaStates.url ? 'block' : 'hidden'}`}
+                    onClick={() => {
+                      dispatch(createQuestAction.clearUrl());
+                    }}
+                  >
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
+                      alt="mediaCloseIcon"
+                      className="size-[15px] tablet:size-[41px]"
+                    />
+                  </div>
+                  <ReactPlayer
+                    ref={playerRef}
+                    // url={getMediaStates.url}
+                    url={window.innerWidth < 500 ? `${getMediaStates.url}&show_artwork=false` : getMediaStates.url}
+                    className="react-player"
+                    onError={(e) => {
+                      // toast.error('Invalid URL'), dispatch(createQuestAction.clearUrl());
+                    }}
+                    width="100%"
+                    height="100%"
+                    // single_active={true}
+                    controls={true} // Hide player controls
+                    muted={false} // Unmute audio
+                    playing={false} // Do not autoplay
+                    // loop={true} // Enable looping
+                    loop={!getMediaStates.url?.includes(soundcloudUnique)}
+                    config={{
+                      soundcloud: {
+                        options: {
+                          auto_play: false, // Disable auto play
+                          hide_related: true, // Hide related tracks
+                          show_comments: false, // Hide comments
+                          show_user: false, // Hide user information
+                          show_reposts: false, // Hide reposts
+                          show_teaser: false, // Hide track teasers
+                          visual: false, // Disable visual mode
+                          show_playcount: false, // Hide play count
+                          sharing: false, // Disable sharing
+                          buying: false, // Disable buying options
+                          download: false, // Disable download option
+                        },
+                      },
+                      youtube: {
+                        playerVars: {
+                          modestbranding: 1, // Hide YouTube logo
+                          showinfo: 0, // Hide video title and uploader info
+                          autoplay: 0, // Disable autoplay
+                          loop: 1, // Enable looping
+                        },
+                      },
+                    }}
+                    onEnded={handleVideoEnded}
+                  />
+                </>
+              ) : (
+                <>
+                  {toast.error('Invalid URL')}
+                  {dispatch(createQuestAction.clearUrl())}
+                </>
+              )}
             </div>
           )}
         </div>
