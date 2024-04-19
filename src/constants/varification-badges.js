@@ -29,10 +29,10 @@ export const contacts = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`,
     title: 'Cell Phone',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     ButtonText: 'Add Badge',
     NoOfButton: 1,
-    disabled: true,
+    disabled: false,
     type: 'cell-phone',
   },
 ];
@@ -134,7 +134,7 @@ export const web3 = [
     type: 'farcaster',
     accountName: 'Farcaster',
     badgeType: 'farcaster',
-},
+  },
 ];
 
 export const personal = [
