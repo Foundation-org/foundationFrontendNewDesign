@@ -15,29 +15,6 @@ const CompanyName = {
 
 const jobTitles = {
   label: 'Title',
-  items: [
-    { id: 1, name: 'Software Engineer' },
-    { id: 2, name: 'Data Analyst' },
-    { id: 3, name: 'Human Resources Manager' },
-    { id: 4, name: 'Marketing Coordinator' },
-    { id: 5, name: 'Financial Analyst' },
-    { id: 6, name: 'Sales Representative' },
-    { id: 7, name: 'Customer Service Representative' },
-    { id: 8, name: 'Operations Manager' },
-    { id: 9, name: 'Product Manager' },
-    { id: 10, name: 'Graphic Designer' },
-    { id: 11, name: 'Network Administrator' },
-    { id: 12, name: 'Quality Assurance Analyst' },
-    { id: 13, name: 'Business Development Manager' },
-    { id: 14, name: 'Project Manager' },
-    { id: 15, name: 'Accountant' },
-    { id: 16, name: 'Executive Assistant' },
-    { id: 17, name: 'Research Scientist' },
-    { id: 18, name: 'Legal Counsel' },
-    { id: 19, name: 'Operations Analyst' },
-    { id: 20, name: 'Systems Engineer' },
-    // Add more as needed...
-  ],
   type: 'jobTitle',
   placeholder: 'Job Title here',
 };
@@ -86,9 +63,34 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const [prevInfo, setPrevInfo] = useState({});
   const [deleteItem, setDeleteItem] = useState('');
   const [loading, setLoading] = useState(false);
+  const [jobs, setJobs] = useState();
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
+
+  const searchJobtitles = async () => {
+    try {
+      const jb = await api.post(`search/searchJobTitles/?name=${query}`);
+
+      const queryExists = jb.data.some((item) => item.name.toLowerCase() === query.toLowerCase());
+      const newArr = queryExists
+        ? [...jb.data]
+        : [
+            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+            ...jb.data.map((company) => ({
+              ...jb,
+              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+            })),
+          ];
+      setJobs(newArr);
+    } catch (err) {
+      setJobs([{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true }]);
+    }
+  };
+
+  useEffect(() => {
+    searchJobtitles();
+  }, [query]);
 
   useEffect(() => {
     const param = fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(type));
@@ -127,7 +129,24 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       }
     }
   };
-  console.log(field1Data);
+  const checkHollow = () => {
+    if (
+      field1Data.name === undefined ||
+      field2Data.name === undefined ||
+      // field3Data.name === undefined ||
+      field4Data.name === undefined ||
+      field5Data === undefined ||
+      field6Data === undefined ||
+      field6Data === ''
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  useEffect(() => {
+    checkHollow();
+  }, [field1Data, field2Data, field4Data, field5Data, field6Data]);
 
   const handleAddPersonalBadge = async (data) => {
     try {
@@ -170,8 +189,15 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
         });
         if (companySaved.status === 200) {
           console.log(companySaved);
-          handleClose();
-          setLoading(false);
+          const jobsSaved = await api.post(`/addBadge/jobTitles/add`, {
+            name: field2Data.name,
+            uuid: localStorage.getItem('uuid'),
+          });
+          if (jobsSaved.status === 200) {
+            console.log(jobsSaved);
+            handleClose();
+            setLoading(false);
+          }
         }
       }
     } catch (error) {
@@ -279,11 +305,11 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
     const [addAnotherForm, setAddAnotherForm] = useState(false);
     const [edit, setEdit] = useState(false);
 
-    const queryExists = field2.items.some((item) => item.name.toLowerCase() === query.toLowerCase());
+    // const queryExists = field2.items.some((item) => item.name.toLowerCase() === query.toLowerCase());
 
-    const updatedField2Items = queryExists
-      ? [...field2.items]
-      : [{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true }, ...field2.items];
+    // const updatedField2Items = queryExists
+    //   ? [...field2.items]
+    //   : [{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true }, ...field2.items];
 
     return (
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
@@ -395,7 +421,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 {field2.label}
               </p>
               <CustomCombobox
-                items={updatedField2Items}
+                items={jobs}
                 placeholder={field2.placeholder}
                 selected={field2Data}
                 setSelected={setField2Data}
@@ -500,32 +526,38 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
               ) : (
                 <div></div>
               )}
-              <Button
-                disabled={loading}
-                variant="submit"
-                onClick={() => {
-                  const allFieldObject = {
-                    ['id']: field1Data.id,
-                    [field1.type]: field1Data.name,
-                    [field2.type]: field2Data.name,
-                    // [field3.type]: field3Data.name,
-                    [field4.type]: field4Data.name,
-                    [field5.type]: field5Data,
-                    [field6.type]: field6Data,
-                  };
-                  if (edit) {
-                    setLoading(true);
+              {checkHollow() ? (
+                <Button variant="hollow-submit" id="submitButton" disabled={true}>
+                  Add
+                </Button>
+              ) : (
+                <Button
+                  disabled={loading}
+                  variant="submit"
+                  onClick={() => {
+                    const allFieldObject = {
+                      ['id']: field1Data.id,
+                      [field1.type]: field1Data.name,
+                      [field2.type]: field2Data.name,
+                      // [field3.type]: field3Data.name,
+                      [field4.type]: field4Data.name,
+                      [field5.type]: field5Data,
+                      [field6.type]: field6Data,
+                    };
+                    if (edit) {
+                      setLoading(true);
 
-                    handleUpdateBadge(allFieldObject);
-                  } else {
-                    setLoading(true);
+                      handleUpdateBadge(allFieldObject);
+                    } else {
+                      setLoading(true);
 
-                    handleAddPersonalBadge(allFieldObject);
-                  }
-                }}
-              >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-              </Button>
+                      handleAddPersonalBadge(allFieldObject);
+                    }
+                  }}
+                >
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                </Button>
+              )}
             </div>
           </div>
         )}

@@ -70,12 +70,14 @@ const CustomCombobox = ({
                 >
                   {({ selected, active }) => (
                     <>
-                      <span
-                        className={`block truncate ${selected ? 'font-medium' : 'font-normal'} flex justify-between`}
-                      >
-                        {item.name}
-                        {item.button && item.name !== '' && <span>Add</span>}
-                      </span>
+                      {item.name !== '' && (
+                        <span
+                          className={`block truncate ${selected ? 'font-medium' : 'font-normal'} flex justify-between`}
+                        >
+                          {item.name}
+                          {item.button && item.name !== '' && <span>Add</span>}
+                        </span>
+                      )}
                       {selected ? (
                         <span
                           className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
