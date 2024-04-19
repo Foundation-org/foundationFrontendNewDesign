@@ -26,7 +26,7 @@ export default function SharedLinks() {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
-  const [height, setHeight] = useState('calc(100vh - 200px)');
+  const [height, setHeight] = useState('calc(100vh - 185px)');
   const [allData, setAllData] = useState([]);
   const [feedData, setFeedData] = useState();
   const [startTest, setStartTest] = useState(null);
@@ -189,10 +189,10 @@ export default function SharedLinks() {
     const updateHeight = () => {
       const newHeight =
         window.innerWidth <= 744
-          ? 'calc(100vh - 200px)'
+          ? 'calc(100vh - 185px)'
           : window.innerWidth <= 1280
             ? 'calc(100vh - 370px)'
-            : 'calc(100vh - 380px)';
+            : 'calc(100vh - 354px)';
       setHeight(newHeight);
     };
 
