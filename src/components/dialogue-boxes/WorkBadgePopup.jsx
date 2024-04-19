@@ -306,12 +306,6 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
     const [addAnotherForm, setAddAnotherForm] = useState(false);
     const [edit, setEdit] = useState(false);
 
-    // const queryExists = field2.items.some((item) => item.name.toLowerCase() === query.toLowerCase());
-
-    // const updatedField2Items = queryExists
-    //   ? [...field2.items]
-    //   : [{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true }, ...field2.items];
-
     return (
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
         {/* To View Already Added Info */}
@@ -412,7 +406,8 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 onChange={(e) => {
                   setField1Data({ name: e.target.value });
                 }}
-                id={1}
+                onKeyDown={(e) => (e.key === 'Tab' && handleTab(1)) || (e.key === 'Enter' && handleTab(1, 'Enter'))}
+                id="input-1"
                 placeholder={field1.placeholder}
                 className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
               />
