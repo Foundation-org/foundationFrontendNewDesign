@@ -77,7 +77,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
         ? [...jb.data]
         : [
             { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-            ...jb.data.map((company) => ({
+            ...jb.data.map((jb) => ({
               ...jb,
               id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
             })),
