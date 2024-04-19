@@ -320,9 +320,6 @@ const SidebarLeft = ({
                 const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                   homeFilterActions.filterInitialState;
 
-                console.log('filterStates', filterWithoutTopicsAll);
-                console.log('homeFilterActions.filterInitialState', initialStateWithoutTopicsAll);
-
                 if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                   dispatch(filtersActions.resetFilters());
                   setFilters({
