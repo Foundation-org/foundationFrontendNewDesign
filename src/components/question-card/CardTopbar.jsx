@@ -62,9 +62,9 @@ const CardTopbar = ({
         </div>
       )}
 
-      <div className="flex items-center justify-between border-[#D9D9D9]">
+      <div className="flex items-start justify-between border-[#D9D9D9]">
         <div className="flex flex-col gap-[10px] tablet:gap-[18px]">
-          <div className="flex items-center gap-2 tablet:gap-4 ">
+          <div className="flex items-start gap-2 tablet:gap-4 ">
             {createdBy === persistedUserInfo?.uuid ? (
               <div className="relative h-fit w-fit">
                 <img
