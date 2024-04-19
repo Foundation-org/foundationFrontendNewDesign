@@ -19,6 +19,8 @@ import MediaControls from '../../../../components/MediaControls';
 
 // Icons
 import { GrClose } from 'react-icons/gr';
+import { setFilterStates } from '../../../../services/api/userAuth';
+import { useMutation } from '@tanstack/react-query';
 
 const QuestStartSection = () => {
   const dispatch = useDispatch();
@@ -349,6 +351,13 @@ const QuestStartSection = () => {
     setIsPlaying(!isPlaying);
   };
 
+  const { mutateAsync: setFilters } = useMutation({
+    mutationFn: setFilterStates,
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   return (
     <div className="w-full bg-[#F2F3F5] dark:bg-black">
       <div className="relative mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
@@ -380,6 +389,7 @@ const QuestStartSection = () => {
               filterStates.bookmarks,
               isLoading,
               isFetching,
+              setFilters,
             )}
             height={height}
             className="no-scrollbar px-4 pb-[10px] tablet:px-6 tablet:pb-5"

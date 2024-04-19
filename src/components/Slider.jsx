@@ -135,6 +135,13 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
             filterBySort: 'Newest First',
             bookmarks: false,
             selectedBtnId: localStorage.getItem('selectedButtonId'),
+            topics: {
+              ...filterStates.topics,
+              Block: {
+                ...filterStates.topics.Block,
+                list: [],
+              },
+            },
           });
         }
         break;
@@ -153,6 +160,13 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
             filterBySort: 'Most Popular',
             bookmarks: false,
             selectedBtnId: localStorage.getItem('selectedButtonId'),
+            topics: {
+              ...filterStates.topics,
+              Block: {
+                ...filterStates.topics.Block,
+                list: [],
+              },
+            },
           });
         }
         break;
@@ -171,6 +185,13 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
             bookmarks: false,
             filterBySort: '',
             selectedBtnId: localStorage.getItem('selectedButtonId'),
+            topics: {
+              ...filterStates.topics,
+              Block: {
+                ...filterStates.topics.Block,
+                list: [],
+              },
+            },
           });
         }
         break;
@@ -189,6 +210,13 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
             filterByScope: '',
             bookmarks: true,
             selectedBtnId: localStorage.getItem('selectedButtonId'),
+            topics: {
+              ...filterStates.topics,
+              Block: {
+                ...filterStates.topics.Block,
+                list: [],
+              },
+            },
           });
         }
         break;
