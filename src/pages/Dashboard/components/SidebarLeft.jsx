@@ -107,21 +107,23 @@ const SidebarLeft = ({
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
-    dispatch(filtersActions.setFilterByScope(userData.States.filterByScope));
-    dispatch(filtersActions.setFilterBySort(userData.States.filterBySort));
-    dispatch(filtersActions.setFilterByStatus(userData.States.filterByStatus));
-    dispatch(filtersActions.setFilterByType(userData.States.filterByType));
+    dispatch(filtersActions.setFilterByScope(userData?.States.filterByScope));
+    dispatch(filtersActions.setFilterBySort(userData?.States.filterBySort));
+    dispatch(filtersActions.setFilterByStatus(userData?.States.filterByStatus));
+    dispatch(filtersActions.setFilterByType(userData?.States.filterByType));
     dispatch(filtersActions.setExpandedView(true));
-    dispatch(filtersActions.setBookmarks(userData.States.bookmarks));
-    dispatch(filtersActions.setSearchData(userData.States.searchData));
-    dispatch(filtersActions.setBlockTopics(userData.States.topics?.Block.list));
+    dispatch(filtersActions.setBookmarks(userData?.States.bookmarks));
+    dispatch(filtersActions.setSearchData(userData?.States.searchData));
+    dispatch(filtersActions.setBlockTopics(userData?.States.topics?.Block.list));
     dispatch(
       filtersActions.setRatings({
-        initial: userData.States.moderationRatingFilter?.initial ? userData.States.moderationRatingFilter?.initial : 0,
-        final: userData.States.moderationRatingFilter?.final ? userData.States.moderationRatingFilter?.final : 0,
+        initial: userData?.States.moderationRatingFilter?.initial
+          ? userData?.States.moderationRatingFilter?.initial
+          : 0,
+        final: userData?.States.moderationRatingFilter?.final ? userData?.States.moderationRatingFilter?.final : 0,
       }),
     );
-    localStorage.setItem('selectedButtonId', userData.States.selectedBtnId);
+    localStorage.setItem('selectedButtonId', userData?.States.selectedBtnId);
   }, [localStorage.getItem('userData')]);
 
   // useEffect(() => {

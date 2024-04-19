@@ -267,9 +267,11 @@ const Result = (props) => {
   function sortAnswersDataByPercentage(answersData, sortOrder) {
     const data = [...answersData];
 
+    console.log('dataToBeSorted', data);
+
     return data.sort((a, b) => {
-      let percentageA = parseFloat(a.percentage);
-      let percentageB = parseFloat(b.percentage);
+      let percentageA = parseFloat(a.percentage === undefined ? '0%' : a.percentage);
+      let percentageB = parseFloat(b.percentage === undefined ? '0%' : b.percentage);
 
       if (sortOrder === 'ascending') {
         return percentageA - percentageB;

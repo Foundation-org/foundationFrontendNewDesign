@@ -146,31 +146,30 @@ const QuestCardLayout = ({
 
   return (
     <div className="max-w-[730px] rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000] ">
-      <div className="px-2 pt-2 tablet:px-5 tablet:pt-4 laptop:px-5">
-        {postProperties === 'SharedLinks' && (
-          <div className="mb-2 flex justify-between tablet:mb-5">
-            <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
-              <h1 className="truncate text-wrap text-[10px] font-semibold text-[#707175] tablet:text-[20px] tablet:font-medium">
-                {url}
-              </h1>
-            </div>
-            <div
-              className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
-              onClick={() => {
-                copyToClipboard();
-                toast.success('Link Copied!');
-              }}
-            >
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copylinkblue.png`}
-                alt="eye-cut"
-                className="h-3 w-3 tablet:h-[22.92px] tablet:w-[19.79px]"
-              />
-              <h1 className="text-[10.45px] font-semibold text-[#6BA5CF] tablet:text-[20px]">Copy Link</h1>
-            </div>
+      {postProperties === 'SharedLinks' && (
+        <div className="mb-2 flex justify-between px-2 pt-2 tablet:mb-5 tablet:px-5 tablet:pt-4 laptop:px-5">
+          <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
+            <h1 className="truncate text-wrap text-[10px] font-semibold text-[#707175] tablet:text-[20px] tablet:font-medium">
+              {url}
+            </h1>
           </div>
-        )}
-      </div>
+          <div
+            className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
+            onClick={() => {
+              copyToClipboard();
+              toast.success('Link Copied!');
+            }}
+          >
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copylinkblue.png`}
+              alt="eye-cut"
+              className="h-3 w-3 tablet:h-[22.92px] tablet:w-[19.79px]"
+            />
+            <h1 className="text-[10.45px] font-semibold text-[#6BA5CF] tablet:text-[20px]">Copy Link</h1>
+          </div>
+        </div>
+      )}
+
       {questStartData.url !== '' &&
         (isImageUrl(questStartData.url) ? (
           <EmbededImage description={questStartData.description} url={questStartData.url} />
