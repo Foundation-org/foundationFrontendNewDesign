@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice';
 import * as QuestServices from '../services/queries/quest';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { setFilterStates } from '../services/api/userAuth';
 
 function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShowPlayer }) {
   let filtersActions;
@@ -102,6 +103,13 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
     });
   };
 
+  const { mutateAsync: setFilters } = useMutation({
+    mutationFn: setFilterStates,
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   const handleButtonSelection = (type, data, id) => {
     // Save the id of the selected button in localStorage for scrolling it into view
     localStorage.setItem('selectedButtonId', id);
@@ -122,6 +130,12 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
           dispatch(filtersActions.setFilterBySort('Newest First'));
+          setFilters({
+            ...filterStates,
+            filterBySort: 'Newest First',
+            bookmarks: false,
+            selectedBtnId: localStorage.getItem('selectedButtonId'),
+          });
         }
         break;
       case 'most-popular':
@@ -133,6 +147,13 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
           dispatch(filtersActions.setFilterBySort('Most Popular'));
+          setFilters({
+            ...filterStates,
+            filterByScope: '',
+            filterBySort: 'Most Popular',
+            bookmarks: false,
+            selectedBtnId: localStorage.getItem('selectedButtonId'),
+          });
         }
         break;
       case 'my-posts':
@@ -144,6 +165,12 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterBySort(''));
           dispatch(filtersActions.setFilterByScope('Me'));
+          setFilters({
+            ...filterStates,
+            filterByScope: 'Me',
+            bookmarks: false,
+            selectedBtnId: localStorage.getItem('selectedButtonId'),
+          });
         }
         break;
       case 'bookmarks':
@@ -155,6 +182,13 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
           dispatch(filtersActions.setFilterBySort(''));
           dispatch(filtersActions.setFilterByScope('All'));
           dispatch(filtersActions.setBookmarks(true));
+          setFilters({
+            ...filterStates,
+            filterBySort: '',
+            filterByScope: '',
+            bookmarks: true,
+            selectedBtnId: localStorage.getItem('selectedButtonId'),
+          });
         }
         break;
       case 'topics':
@@ -166,6 +200,20 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
         dispatch(homeFilterActions.setBlockTopics([data]));
         dispatch(filtersActions.setFilterBySort(''));
         dispatch(filtersActions.setFilterByScope('All'));
+        setFilters({
+          ...filterStates,
+          filterBySort: '',
+          filterByScope: '',
+          bookmarks: false,
+          topics: {
+            ...filterStates.topics,
+            Block: {
+              ...filterStates.topics.Block,
+              list: [data],
+            },
+          },
+          selectedBtnId: localStorage.getItem('selectedButtonId'),
+        });
         break;
       default:
         break;

@@ -56,12 +56,12 @@ const SidebarLeft = ({
     },
   });
 
-  const { mutateAsync: setBookmarkFilters } = useMutation({
-    mutationFn: setBookmarkFilterStates,
-    onError: (err) => {
-      console.log(err);
-    },
-  });
+  // const { mutateAsync: setBookmarkFilters } = useMutation({
+  //   mutationFn: setBookmarkFilterStates,
+  //   onError: (err) => {
+  //     console.log(err);
+  //   },
+  // });
 
   useEffect(() => {
     if (persistedUserInfo) {
@@ -104,15 +104,15 @@ const SidebarLeft = ({
         localStorage.setItem('selectedButtonId', persistedUserInfo.States.selectedBtnId);
       }
     }
-  }, []);
+  }, [persistedUserInfo]);
 
-  useEffect(() => {
-    if (pathname === '/dashboard/bookmark') {
-      setBookmarkFilters({ ...filterStates, columns: filterStates.topics });
-    } else {
-      setFilters({ ...filterStates, selectedBtnId: localStorage.getItem('selectedButtonId') });
-    }
-  }, [filterStates]);
+  // useEffect(() => {
+  //   if (pathname === '/dashboard/bookmark') {
+  //     setBookmarkFilters({ ...filterStates, columns: filterStates.topics });
+  //   } else {
+  //     setFilters({ ...filterStates, selectedBtnId: localStorage.getItem('selectedButtonId') });
+  //   }
+  // }, [filterStates]);
 
   // Search
   const handleSearch = (e) => {
@@ -151,6 +151,7 @@ const SidebarLeft = ({
         handleClose={hideRatingDialogue}
         selectedOptions={selectedOptions}
         setSelectedOptions={setSelectedOptions}
+        setFilters={setFilters}
       />
       <div>
         <div className="no-scrollbar mt-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between rounded-[17.928px] bg-white py-8 text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:bg-[#000] dark:text-white">
@@ -220,6 +221,21 @@ const SidebarLeft = ({
                 items={['All', 'Not Participated', 'Participated']}
                 handleSelect={(item) => {
                   dispatch(filtersActions.setFilterByStatus(item));
+                  setFilters({
+                    ...filterStates,
+                    filterByStatus: item,
+                    filterBySort: 'Newest First',
+                    filterByScope: '',
+                    bookmarks: false,
+                    topics: {
+                      ...filterStates.topics,
+                      Block: {
+                        ...filterStates.topics.Block,
+                        list: [],
+                      },
+                    },
+                    selectedBtnId: localStorage.removeItem('selectedButtonId'),
+                  });
                 }}
               />
               <Dropdown2
@@ -246,6 +262,22 @@ const SidebarLeft = ({
                 ]}
                 handleSelect={(item) => {
                   dispatch(filtersActions.setFilterByType(item));
+                  setFilters({
+                    ...filterStates,
+                    filterByType: item,
+                    filterByStatus: '',
+                    filterBySort: 'Newest First',
+                    filterByScope: '',
+                    bookmarks: false,
+                    topics: {
+                      ...filterStates.topics,
+                      Block: {
+                        ...filterStates.topics.Block,
+                        list: [],
+                      },
+                    },
+                    selectedBtnId: localStorage.removeItem('selectedButtonId'),
+                  });
                 }}
               />
             </div>
@@ -302,6 +334,21 @@ const SidebarLeft = ({
               items={['All', 'Not Participated', 'Participated']}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterByStatus(item));
+                setFilters({
+                  ...filterStates,
+                  filterByStatus: item,
+                  filterBySort: 'Newest First',
+                  filterByScope: '',
+                  bookmarks: false,
+                  topics: {
+                    ...filterStates.topics,
+                    Block: {
+                      ...filterStates.topics.Block,
+                      list: [],
+                    },
+                  },
+                  selectedBtnId: localStorage.removeItem('selectedButtonId'),
+                });
               }}
             />
             <Dropdown2
@@ -328,6 +375,22 @@ const SidebarLeft = ({
               ]}
               handleSelect={(item) => {
                 dispatch(filtersActions.setFilterByType(item));
+                setFilters({
+                  ...filterStates,
+                  filterByType: item,
+                  filterByStatus: '',
+                  filterBySort: 'Newest First',
+                  filterByScope: '',
+                  bookmarks: false,
+                  topics: {
+                    ...filterStates.topics,
+                    Block: {
+                      ...filterStates.topics.Block,
+                      list: [],
+                    },
+                  },
+                  selectedBtnId: localStorage.removeItem('selectedButtonId'),
+                });
               }}
             />
             <button

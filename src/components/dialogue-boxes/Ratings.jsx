@@ -8,7 +8,7 @@ import * as homeFilterActions from '../../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSlice';
 import { useLocation } from 'react-router-dom';
 
-export default function Ratings({ handleClose, modalVisible, selectedOptions, setSelectedOptions }) {
+export default function Ratings({ handleClose, modalVisible, selectedOptions, setSelectedOptions, setFilters }) {
   const location = useLocation();
 
   let filtersActions;
@@ -58,6 +58,26 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           final: 100,
         }),
       );
+      setFilters({
+        ...filterStates,
+        filterByType: '',
+        filterByStatus: '',
+        filterBySort: 'Newest First',
+        filterByScope: '',
+        bookmarks: false,
+        topics: {
+          ...filterStates.topics,
+          Block: {
+            ...filterStates.topics.Block,
+            list: [],
+          },
+        },
+        moderationRatingFilter: {
+          initial: 0,
+          final: 100,
+        },
+        selectedBtnId: localStorage.removeItem('selectedButtonId'),
+      });
     } else if (selectedOptions.includes('adult')) {
       dispatch(
         filtersActions.setRatings({
@@ -65,6 +85,26 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           final: 100,
         }),
       );
+      setFilters({
+        ...filterStates,
+        filterByType: '',
+        filterByStatus: '',
+        filterBySort: 'Newest First',
+        filterByScope: '',
+        bookmarks: false,
+        topics: {
+          ...filterStates.topics,
+          Block: {
+            ...filterStates.topics.Block,
+            list: [],
+          },
+        },
+        moderationRatingFilter: {
+          initial: 1,
+          final: 100,
+        },
+        selectedBtnId: localStorage.removeItem('selectedButtonId'),
+      });
     } else {
       dispatch(
         filtersActions.setRatings({
@@ -72,6 +112,26 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           final: 0,
         }),
       );
+      setFilters({
+        ...filterStates,
+        filterByType: '',
+        filterByStatus: '',
+        filterBySort: 'Newest First',
+        filterByScope: '',
+        bookmarks: false,
+        topics: {
+          ...filterStates.topics,
+          Block: {
+            ...filterStates.topics.Block,
+            list: [],
+          },
+        },
+        moderationRatingFilter: {
+          initial: 0,
+          final: 0,
+        },
+        selectedBtnId: localStorage.removeItem('selectedButtonId'),
+      });
     }
 
     handleClose();
