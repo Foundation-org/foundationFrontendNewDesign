@@ -63,7 +63,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const [prevInfo, setPrevInfo] = useState({});
   const [deleteItem, setDeleteItem] = useState('');
   const [loading, setLoading] = useState(false);
-  const [jobs, setJobs] = useState();
+  const [jobs, setJobs] = useState([]);
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
@@ -82,6 +82,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
               id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
             })),
           ];
+
       setJobs(newArr);
     } catch (err) {
       setJobs([{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true }]);
