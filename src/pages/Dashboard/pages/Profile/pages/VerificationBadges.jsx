@@ -42,6 +42,7 @@ const VerificationBadges = () => {
   const handleSoundCloud = () => {
     // window.location.href = `https://secure.soundcloud.com/authorize?client_id=${'clientId'}&redirect_uri=${'redirectUri'}&response_type=code`;
   };
+
   const loginInWithInsta = async (code) => {
     try {
       // return
@@ -460,8 +461,10 @@ const VerificationBadges = () => {
                     </Button>
                   )}
                 </div>
-
-                {/* Instagram  */}
+              </div>
+              <div className="w-2 rounded-[16px] border-[3px] border-[#DEE6F7] bg-[#FDFDFD]" />
+              <div className="flex w-full flex-col items-center gap-[7px] tablet:gap-4 laptop:gap-5">
+                {/* ...........................Instagram......................  */}
                 <div className="flex items-center gap-[10px] laptop:gap-5">
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`}
@@ -524,9 +527,6 @@ const VerificationBadges = () => {
                     </InstagramLogin>
                   )}
                 </div>
-              </div>
-              <div className="w-2 rounded-[16px] border-[3px] border-[#DEE6F7] bg-[#FDFDFD]" />
-              <div className="flex w-full flex-col items-center gap-[7px] tablet:gap-4 laptop:gap-5">
                 {/* ............................Github......................... */}
                 <div className="flex items-center gap-[10px] laptop:gap-5">
                   <img
