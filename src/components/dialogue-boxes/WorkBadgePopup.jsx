@@ -76,7 +76,6 @@ const endingYear = {
 };
 
 const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, handleUserInfo, fetchUser }) => {
-  const [companies, setCompanies] = useState([]);
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
   const [delloading, setDelLoading] = useState(false);
@@ -90,30 +89,6 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
-
-  const searchCompanies = async () => {
-    try {
-      const companies = await api.post(`search/searchCompanies/?name=${query}`);
-
-      const queryExists = companies.data.some((item) => item.name.toLowerCase() === query.toLowerCase());
-      const newArr = queryExists
-        ? [...companies.data]
-        : [
-            { country: '', id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query },
-            ...companies.data.map((company) => ({
-              ...company,
-              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-            })),
-          ];
-      setCompanies(newArr);
-    } catch (err) {
-      setCompanies([{ country: '', id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query }]);
-    }
-  };
-
-  useEffect(() => {
-    searchCompanies();
-  }, [query]);
 
   useEffect(() => {
     const param = fetchUser?.badges?.find((badge) => badge.personal && badge.personal.hasOwnProperty(type));
@@ -152,6 +127,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       }
     }
   };
+  console.log(field1Data);
 
   const handleAddPersonalBadge = async (data) => {
     try {
@@ -178,7 +154,6 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       if (field6Data < field5Data) {
         toast.warning('Please ensure the ending date is not same as the starting date.');
         setLoading(false);
-
         return;
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, {
@@ -189,13 +164,15 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       if (addBadge.status === 200) {
         handleUserInfo();
         toast.success('Badge Added Successfully!');
-
-        handleClose();
-        setLoading(false);
-      }
-      if (addBadge.status === 201) {
-        toast.success('Please check your Email to verify');
-        handleClose();
+        const companySaved = await api.post(`/addBadge/company/add`, {
+          name: field1Data.name,
+          uuid: localStorage.getItem('uuid'),
+        });
+        if (companySaved.status === 200) {
+          console.log(companySaved);
+          handleClose();
+          setLoading(false);
+        }
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -251,9 +228,21 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       if (updateBadge.status === 200) {
         handleUserInfo();
         toast.success('Info Updated Successfully');
-
-        handleClose();
-        setLoading(false);
+        if (prevInfo.companyName !== field1Data.name) {
+          const companySaved = await api.post(`/addBadge/company/add`, {
+            name: field1Data.name,
+            uuid: localStorage.getItem('uuid'),
+          });
+          if (companySaved.status === 200) {
+            console.log(companySaved);
+            handleClose();
+            setLoading(false);
+          }
+        } else {
+          handleClose();
+          setLoading(false);
+          console.log('company name was same so not saved');
+        }
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -272,7 +261,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       console.log(info);
       const data = info?.data.obj;
 
-      setField1Data({ id: data.id, name: data.companyName, country: data.country });
+      setField1Data({ id: data.id, name: data.companyName });
       setField2Data({ name: data.jobTitle });
       // setField3Data({ name: data.employmentType });
       setField4Data({ name: data.modeOfJob });
@@ -294,7 +283,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
     const updatedField2Items = queryExists
       ? [...field2.items]
-      : [{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query }, ...field2.items];
+      : [{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true }, ...field2.items];
 
     return (
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
@@ -380,7 +369,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
               <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                 {field1.label}
               </p>
-              <CustomCombobox
+              {/* <CustomCombobox
                 items={companies}
                 placeholder={field1.placeholder}
                 selected={field1Data}
@@ -389,6 +378,16 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 setQuery={setQuery}
                 id={1}
                 handleTab={handleTab}
+              /> */}
+              <input
+                type="text"
+                value={field1Data.name}
+                onChange={(e) => {
+                  setField1Data({ name: e.target.value });
+                }}
+                id={1}
+                placeholder={field1.placeholder}
+                className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
               />
             </div>
             <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
@@ -508,7 +507,6 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                   const allFieldObject = {
                     ['id']: field1Data.id,
                     [field1.type]: field1Data.name,
-                    ['country']: field1Data.country,
                     [field2.type]: field2Data.name,
                     // [field3.type]: field3Data.name,
                     [field4.type]: field4Data.name,

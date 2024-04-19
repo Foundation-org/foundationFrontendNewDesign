@@ -46,25 +46,14 @@ const School = {
 };
 const degreePrograms = {
   label: 'Degree Program',
-  items: [
-    { id: 1, name: 'Bachelor of Science in Computer Science' },
-    { id: 2, name: 'Bachelor of Science in Electrical Engineering' },
-    { id: 3, name: 'Bachelor of Arts in Psychology' },
-    { id: 4, name: 'Bachelor of Arts in English Literature' },
-    { id: 5, name: 'Bachelor of Business Administration (BBA)' },
-    { id: 6, name: 'Bachelor of Science in Nursing (BSN)' },
-    { id: 7, name: 'Master of Business Administration (MBA)' },
-    { id: 8, name: 'Master of Science in Mechanical Engineering' },
-    { id: 9, name: 'Master of Science in Data Science' },
-    { id: 10, name: 'Master of Public Health (MPH)' },
-    { id: 11, name: 'Doctor of Medicine (MD)' },
-    { id: 12, name: 'Doctor of Philosophy (Ph.D.) in Economics' },
-    { id: 13, name: 'Doctor of Philosophy (Ph.D.) in Computer Science' },
-    { id: 14, name: 'Doctor of Philosophy (Ph.D.) in Psychology' },
-    // Add more as needed...
-  ],
   type: 'degreeProgram',
-  placeholder: 'Select your degree program',
+  placeholder: 'Degree here',
+};
+
+const fieldOfStudy = {
+  label: 'Field of Study',
+  type: 'fieldOfStudy',
+  placeholder: 'Field of Study here',
 };
 const StartingYear = {
   label: 'Start Date',
@@ -84,6 +73,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [field2Data, setField2Data] = useState([]);
   const [field3Data, setField3Data] = useState();
   const [field4Data, setField4Data] = useState();
+  const [field5Data, setField5Data] = useState([]);
   const [prevInfo, setPrevInfo] = useState({});
   const [isPresent, setIsPresent] = useState(false);
   const [existingData, setExistingData] = useState();
@@ -91,6 +81,9 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [deleteItem, setDeleteItem] = useState('');
   const [loading, setLoading] = useState(false);
   const [delloading, setDelLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isError2, setIsError2] = useState(false);
+  const [hollow, setHollow] = useState(false);
 
   const searchUniversities = async () => {
     const universities = await api.post(`search/searchUniversities/?name=${query}`);
@@ -270,8 +263,47 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       }
     }
   };
+  const verifyDegree = async () => {
+    const response = await api.get(`/ai-validation/7?userMessage=${field2Data}`);
+    if (response.data.message === 'Rejected') {
+      setIsError(true);
+      setHollow(true);
+    } else {
+      setIsError(false);
+      setHollow(false);
+    }
+  };
+  const verifyFieldOfStudy = async () => {
+    const response = await api.get(`/ai-validation/8?userMessage=${field5Data}`);
+    if (response.data.message === 'Rejected') {
+      setIsError2(true);
+      setHollow(true);
+    } else {
+      setIsError2(false);
+      setHollow(false);
+    }
+  };
+  const checkHollow = () => {
+    if (
+      field1Data.name === undefined ||
+      field2Data === undefined ||
+      field2Data === '' ||
+      field3Data === undefined ||
+      field4Data === undefined ||
+      field4Data === '' ||
+      field5Data === undefined ||
+      field5Data === ''
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  useEffect(() => {
+    checkHollow();
+  }, [field1Data, field2Data, field3Data, field4Data, field5Data]);
 
-  const renderWorkField = (field1, field2, field3, field4) => {
+  const renderWorkField = (field1, field2, field3, field4, field5) => {
     const [addAnotherForm, setAddAnotherForm] = useState(false);
     const [edit, setEdit] = useState(false);
 
@@ -374,20 +406,57 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 handleTab={handleTab}
               />
             </div>
-            <div className="mb-[5px] mt-[15px] tablet:mb-[15px] tablet:mt-[25px]">
-              <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
-                {field2.label}
-              </p>
-              <CustomCombobox
-                items={field2.items}
-                placeholder={field2.placeholder}
-                selected={field2Data}
-                setSelected={setField2Data}
-                query={query}
-                setQuery={setQuery}
-                id={2}
-                handleTab={handleTab}
-              />
+            <div className="mb-4 mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[37px]">
+              <div className="w-full">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  {field2.label}
+                </p>
+                <input
+                  id="input-2"
+                  type="text"
+                  value={field2Data}
+                  onBlur={() => {
+                    if (field2Data) {
+                      verifyDegree;
+                    }
+                  }}
+                  onChange={(e) => {
+                    setHollow(true);
+                    setIsError(false);
+                    setField2Data(e.target.value);
+                  }}
+                  placeholder={field2.placeholder}
+                  className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
+                />
+                {isError && (
+                  <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
+                )}
+              </div>
+              <div className="w-full">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  {field5.label}
+                </p>
+                <input
+                  id="input-3"
+                  type="text"
+                  onBlur={() => {
+                    if (field5Data) {
+                      verifyFieldOfStudy();
+                    }
+                  }}
+                  value={field5Data}
+                  onChange={(e) => {
+                    setHollow(true);
+                    setIsError2(false);
+                    setField5Data(e.target.value);
+                  }}
+                  placeholder={field5.placeholder}
+                  className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
+                />
+                {isError2 && (
+                  <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${field5.label}!`}</p>
+                )}
+              </div>
             </div>
             <label
               id="custom-square-checkbox"
@@ -408,7 +477,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   {field3.label}
                 </p>
                 <input
-                  id="input-3"
+                  id="input-4"
                   onKeyDown={(e) => (e.key === 'Tab' && handleTab(3)) || (e.key === 'Enter' && handleTab(3, 'Enter'))}
                   type="date"
                   value={field3Data}
@@ -424,7 +493,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                     {field4.label}
                   </p>
                   <input
-                    id="input-4"
+                    id="input-5"
                     onKeyDown={(e) => (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))}
                     type="date"
                     value={field4Data}
@@ -453,29 +522,36 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               ) : (
                 <div></div>
               )}
-              <Button
-                disabled={loading}
-                variant="submit"
-                onClick={() => {
-                  const allFieldObject = {
-                    ['id']: field1Data.id,
-                    [field1.type]: field1Data.name,
-                    [field2.type]: field2Data.name,
-                    ['country']: field1Data.country,
-                    [field3.type]: field3Data,
-                    [field4.type]: field4Data,
-                  };
-                  if (edit) {
-                    setLoading(true);
-                    handleUpdateBadge(allFieldObject);
-                  } else {
-                    setLoading(true);
-                    handleAddPersonalBadge(allFieldObject);
-                  }
-                }}
-              >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-              </Button>
+              {console.log(hollow, checkHollow())}
+              {hollow || checkHollow() ? (
+                <Button variant="hollow-submit" id="submitButton" disabled={true}>
+                  Add
+                </Button>
+              ) : (
+                <Button
+                  disabled={loading}
+                  variant="submit"
+                  onClick={() => {
+                    const allFieldObject = {
+                      ['id']: field1Data.id,
+                      [field1.type]: field1Data.name,
+                      [field2.type]: field2Data.name,
+                      ['country']: field1Data.country,
+                      [field3.type]: field3Data,
+                      [field4.type]: field4Data,
+                    };
+                    if (edit) {
+                      setLoading(true);
+                      handleUpdateBadge(allFieldObject);
+                    } else {
+                      setLoading(true);
+                      handleAddPersonalBadge(allFieldObject);
+                    }
+                  }}
+                >
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                </Button>
+              )}
             </div>
           </div>
         )}
@@ -485,7 +561,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   return (
     <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-      {title === 'Education' && renderWorkField(School, degreePrograms, StartingYear, graduationYear)}
+      {title === 'Education' && renderWorkField(School, degreePrograms, StartingYear, graduationYear, fieldOfStudy)}
     </PopUp>
   );
 };
