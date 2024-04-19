@@ -89,7 +89,7 @@ const CardTopbar = ({
               </div>
             )}
 
-            <div className="flex gap-1.5 pr-5 tablet:gap-3 tablet:pr-6">
+            <div className="mt-[1.5px] flex gap-1.5 pr-5 tablet:mt-[3px] tablet:gap-3 tablet:pr-6">
               {/* <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
               {questStartData.Question?.endsWith('?') ? 'Q.' : 'S.'}
             </h4> */}

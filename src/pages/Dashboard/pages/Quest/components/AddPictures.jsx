@@ -48,6 +48,7 @@ export default function AddPictures({ handleTab }) {
             className="absolute -right-[7px] -top-[5px] z-0 cursor-pointer tablet:-right-5 tablet:-top-[26px]"
             onClick={() => {
               dispatch(createQuestAction.clearPicsMedia());
+              dispatch(createQuestAction.clearPicsUrl());
             }}
           >
             <img
@@ -102,7 +103,7 @@ export default function AddPictures({ handleTab }) {
           )}
           {getMediaStates.picUrlStatus.tooltipName === 'Question is Verified' && (
             <div className="relative mt-1 cursor-pointer rounded-[10px] tablet:mt-[10px]">
-              <div
+              {/* <div
                 onClick={() => {
                   dispatch(createQuestAction.clearPicsUrl());
                 }}
@@ -113,7 +114,7 @@ export default function AddPictures({ handleTab }) {
                   alt="mediaCloseIcon"
                   className="size-[15px] tablet:size-[41px]"
                 />
-              </div>
+              </div> */}
 
               <img
                 src={getMediaStates.validatedPicUrl}

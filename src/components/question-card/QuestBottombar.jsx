@@ -297,7 +297,7 @@ const QuestBottombar = ({
 
       {/* Time Duration */}
       <div
-        className={`${postProperties === 'HiddenPosts' || postProperties === 'SharedLinks' ? '' : 'absolute left-1/2 -translate-x-1/2'} flex h-4 w-fit items-center gap-[0.44rem] rounded-[0.625rem] md:h-[1.75rem]`}
+        className={`${postProperties === 'HiddenPosts' || postProperties === 'SharedLinks' ? '' : 'absolute left-1/2 -translate-x-1/2'} flex h-4 w-fit items-center gap-1 rounded-[0.625rem] md:h-[1.75rem] tablet:gap-2`}
       >
         {persistedTheme === 'dark' ? (
           <svg
@@ -354,7 +354,7 @@ const QuestBottombar = ({
             <img
               src="/assets/hiddenposts/unhide/icon1.png"
               alt="eye-latest"
-              className="mt-[3px] h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
+              className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
               onClick={showHidePostOpen}
             />
           )}
