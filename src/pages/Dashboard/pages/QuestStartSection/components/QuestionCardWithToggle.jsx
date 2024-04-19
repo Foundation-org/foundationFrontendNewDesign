@@ -704,7 +704,6 @@ const QuestionCardWithToggle = (props) => {
         handleStartTest(questStartData._id);
       }
       if (questStartData.startStatus === 'change answer') {
-        console.log('here', guestResult);
         if (!guestResult) {
           setOpenResults(false);
           handleViewResults(questStartData._id);

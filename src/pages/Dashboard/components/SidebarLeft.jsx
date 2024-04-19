@@ -107,7 +107,6 @@ const SidebarLeft = ({
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
-    console.log(userData.States);
     dispatch(filtersActions.setFilterByScope(userData.States.filterByScope));
     dispatch(filtersActions.setFilterBySort(userData.States.filterBySort));
     dispatch(filtersActions.setFilterByStatus(userData.States.filterByStatus));
