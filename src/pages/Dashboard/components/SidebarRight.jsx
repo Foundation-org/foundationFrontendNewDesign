@@ -130,6 +130,7 @@ const SidebarRight = () => {
         // Cookie Calling
         if (resp.data) {
           dispatch(addUser(resp?.data));
+          localStorage.setItem('userData', JSON.stringify(resp?.data));
           // Set into local storage
           if (!localStorage.getItem('uuid')) {
             localStorage.setItem('uuid', resp.data.uuid);

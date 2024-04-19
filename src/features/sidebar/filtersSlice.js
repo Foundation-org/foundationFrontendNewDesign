@@ -31,7 +31,7 @@ const resetOtherStates = {
   clearFilter: false,
 };
 
-const initialState = {
+export const filterInitialState = {
   expandedView: true,
   searchData: '',
   filterByStatus: '',
@@ -49,7 +49,7 @@ const initialState = {
 
 export const filtersSlice = createSlice({
   name: 'filters',
-  initialState,
+  initialState: filterInitialState,
   reducers: {
     setTopics: (state, action) => {
       return {

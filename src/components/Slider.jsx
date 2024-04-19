@@ -169,6 +169,7 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
             ...filterStates,
             filterByScope: 'Me',
             bookmarks: false,
+            filterBySort: '',
             selectedBtnId: localStorage.getItem('selectedButtonId'),
           });
         }

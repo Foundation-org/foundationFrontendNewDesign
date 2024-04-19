@@ -63,48 +63,66 @@ const SidebarLeft = ({
   //   },
   // });
 
+  // useEffect(() => {
+  // if (persistedUserInfo) {
+  // if (pathname === '/dashboard/bookmark') {
+  //   dispatch(filtersActions.setFilterByScope(persistedUserInfo.bookmarkStates.filterByScope));
+  //   dispatch(filtersActions.setFilterBySort(persistedUserInfo.bookmarkStates.filterBySort));
+  //   dispatch(filtersActions.setFilterByStatus(persistedUserInfo.bookmarkStates.filterByStatus));
+  //   dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
+  //   dispatch(filtersActions.setExpandedView(true));
+  //   dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
+  //   dispatch(
+  //     filtersActions.setRatings({
+  //       initial: persistedUserInfo.bookmarkStates.moderationRatingFilter?.initial
+  //         ? persistedUserInfo.bookmarkStates.moderationRatingFilter?.initial
+  //         : 0,
+  //       final: persistedUserInfo.bookmarkStates.moderationRatingFilter?.final
+  //         ? persistedUserInfo.bookmarkStates.moderationRatingFilter?.final
+  //         : 0,
+  //     }),
+  //   );
+  // } else {
+  // const userData = JSON.parse(localStorage.getItem('userData'));
+  // console.log(userData.States);
+  // dispatch(filtersActions.setFilterByScope(userData.States.filterByScope));
+  // dispatch(filtersActions.setFilterBySort(userData.States.filterBySort));
+  // dispatch(filtersActions.setFilterByStatus(userData.States.filterByStatus));
+  // dispatch(filtersActions.setFilterByType(userData.States.filterByType));
+  // dispatch(filtersActions.setExpandedView(true));
+  // dispatch(filtersActions.setBookmarks(userData.States.bookmarks));
+  // dispatch(filtersActions.setSearchData(userData.States.searchData));
+  // dispatch(filtersActions.setBlockTopics(userData.States.topics?.Block.list));
+  // dispatch(
+  //   filtersActions.setRatings({
+  //     initial: userData.States.moderationRatingFilter?.initial ? userData.States.moderationRatingFilter?.initial : 0,
+  //     final: userData.States.moderationRatingFilter?.final ? userData.States.moderationRatingFilter?.final : 0,
+  //   }),
+  // );
+  // localStorage.setItem('selectedButtonId', userData.States.selectedBtnId);
+  // }
+  // }
+  // }, []);
+
   useEffect(() => {
-    if (persistedUserInfo) {
-      if (pathname === '/dashboard/bookmark') {
-        dispatch(filtersActions.setFilterByScope(persistedUserInfo.bookmarkStates.filterByScope));
-        dispatch(filtersActions.setFilterBySort(persistedUserInfo.bookmarkStates.filterBySort));
-        dispatch(filtersActions.setFilterByStatus(persistedUserInfo.bookmarkStates.filterByStatus));
-        dispatch(filtersActions.setFilterByType(persistedUserInfo.bookmarkStates.filterByType));
-        dispatch(filtersActions.setExpandedView(true));
-        dispatch(filtersActions.setSearchData(persistedUserInfo.bookmarkStates.searchData));
-        dispatch(
-          filtersActions.setRatings({
-            initial: persistedUserInfo.bookmarkStates.moderationRatingFilter?.initial
-              ? persistedUserInfo.bookmarkStates.moderationRatingFilter?.initial
-              : 0,
-            final: persistedUserInfo.bookmarkStates.moderationRatingFilter?.final
-              ? persistedUserInfo.bookmarkStates.moderationRatingFilter?.final
-              : 0,
-          }),
-        );
-      } else {
-        dispatch(filtersActions.setFilterByScope(persistedUserInfo.States.filterByScope));
-        dispatch(filtersActions.setFilterBySort(persistedUserInfo.States.filterBySort));
-        dispatch(filtersActions.setFilterByStatus(persistedUserInfo.States.filterByStatus));
-        dispatch(filtersActions.setFilterByType(persistedUserInfo.States.filterByType));
-        dispatch(filtersActions.setExpandedView(true));
-        dispatch(filtersActions.setBookmarks(persistedUserInfo.States.bookmarks));
-        dispatch(filtersActions.setSearchData(persistedUserInfo.States.searchData));
-        dispatch(filtersActions.setBlockTopics(persistedUserInfo.States.topics?.Block.list));
-        dispatch(
-          filtersActions.setRatings({
-            initial: persistedUserInfo.States.moderationRatingFilter?.initial
-              ? persistedUserInfo.States.moderationRatingFilter?.initial
-              : 0,
-            final: persistedUserInfo.States.moderationRatingFilter?.final
-              ? persistedUserInfo.States.moderationRatingFilter?.final
-              : 0,
-          }),
-        );
-        localStorage.setItem('selectedButtonId', persistedUserInfo.States.selectedBtnId);
-      }
-    }
-  }, [persistedUserInfo]);
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    console.log(userData.States);
+    dispatch(filtersActions.setFilterByScope(userData.States.filterByScope));
+    dispatch(filtersActions.setFilterBySort(userData.States.filterBySort));
+    dispatch(filtersActions.setFilterByStatus(userData.States.filterByStatus));
+    dispatch(filtersActions.setFilterByType(userData.States.filterByType));
+    dispatch(filtersActions.setExpandedView(true));
+    dispatch(filtersActions.setBookmarks(userData.States.bookmarks));
+    dispatch(filtersActions.setSearchData(userData.States.searchData));
+    dispatch(filtersActions.setBlockTopics(userData.States.topics?.Block.list));
+    dispatch(
+      filtersActions.setRatings({
+        initial: userData.States.moderationRatingFilter?.initial ? userData.States.moderationRatingFilter?.initial : 0,
+        final: userData.States.moderationRatingFilter?.final ? userData.States.moderationRatingFilter?.final : 0,
+      }),
+    );
+    localStorage.setItem('selectedButtonId', userData.States.selectedBtnId);
+  }, [localStorage.getItem('userData')]);
 
   // useEffect(() => {
   //   if (pathname === '/dashboard/bookmark') {
@@ -288,6 +306,9 @@ const SidebarLeft = ({
               onClick={() => {
                 dispatch(filtersActions.resetFilters());
                 setSearch('');
+                setFilters({
+                  ...homeFilterActions.filterInitialState,
+                });
               }}
             >
               Clear Filters
@@ -400,6 +421,9 @@ const SidebarLeft = ({
               onClick={() => {
                 dispatch(filtersActions.resetFilters());
                 localStorage.setItem('filterByState', 'false');
+                setFilters({
+                  ...homeFilterActions.filterInitialState,
+                });
               }}
             >
               Clear Filters
