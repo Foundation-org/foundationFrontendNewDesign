@@ -18,9 +18,10 @@ const ImagePopUp = ({ open, handleClose, children, customStyle, customClasses })
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      sx={{ background: 'black' }}
     >
       <Box sx={mergedStyle} className={`${customClasses} z-[1000] w-[90%] max-w-max border-none outline-none`}>
-        <div className="relative rounded-b-[9.76px] bg-transparent tablet:rounded-b-[26px]" onClick={handleClose}>
+        <div className="relative rounded-b-[9.76px] bg-black tablet:rounded-b-[26px]" onClick={handleClose}>
           {/* <div className="absolute right-0">
             {!closeIcon && (
               <img
