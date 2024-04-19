@@ -16,6 +16,7 @@ import { setBookmarkFilterStates, setFilterStates } from '../../../services/api/
 import { useDebounce } from '../../../utils/useDebounce';
 import Ratings from '../../../components/dialogue-boxes/Ratings';
 import MediaControls from '../../../components/MediaControls';
+import { isEqual } from 'lodash';
 
 const SidebarLeft = ({
   scrollToPlayingCard,
@@ -303,12 +304,32 @@ const SidebarLeft = ({
               className={`${
                 persistedTheme === 'dark' ? 'bg-[#F0F0F0]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
               }  inset-0 mt-7 w-[192px] rounded-[14px] px-5 py-[6px] text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
+              // onClick={() => {
+              //   console.log('filterStates', filterStates);
+              //   console.log('homeFilterActions.filterInitialState', homeFilterActions.filterInitialState);
+              //   dispatch(filtersActions.resetFilters());
+              //   setSearch('');
+              //   if (!isEqual(filterStates, homeFilterActions.filterInitialState)) {
+              //     setFilters({
+              //       ...homeFilterActions.filterInitialState,
+              //     });
+              //   }
+              // }}
               onClick={() => {
-                dispatch(filtersActions.resetFilters());
                 setSearch('');
-                setFilters({
-                  ...homeFilterActions.filterInitialState,
-                });
+                const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
+                const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
+                  homeFilterActions.filterInitialState;
+
+                console.log('filterStates', filterWithoutTopicsAll);
+                console.log('homeFilterActions.filterInitialState', initialStateWithoutTopicsAll);
+
+                if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
+                  dispatch(filtersActions.resetFilters());
+                  setFilters({
+                    ...homeFilterActions.filterInitialState,
+                  });
+                }
               }}
             >
               Clear Filters
