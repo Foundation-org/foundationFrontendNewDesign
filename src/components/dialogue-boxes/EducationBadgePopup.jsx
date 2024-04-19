@@ -263,6 +263,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       }
     }
   };
+  console.log(field2Data);
   const verifyDegree = async () => {
     const response = await api.get(`/ai-validation/7?userMessage=${field2Data}`);
     if (response.data.message === 'Rejected') {
@@ -417,7 +418,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   value={field2Data}
                   onBlur={() => {
                     if (field2Data) {
-                      verifyDegree;
+                      verifyDegree();
                     }
                   }}
                   onChange={(e) => {
