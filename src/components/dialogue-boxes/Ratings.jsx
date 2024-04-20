@@ -8,6 +8,22 @@ import * as homeFilterActions from '../../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSlice';
 import { useLocation } from 'react-router-dom';
 
+const FilterContainer = () => {
+  return (
+    <div className="w-full rounded-t-[15px]">
+      <div className="rounded-t-[15px] bg-[#DEE6F7] py-2">
+        <h1 className="text-center text-[22px] font-bold text-[#707175]">Status</h1>
+      </div>
+      <div className="rounded-b-[15px] border-x-[3px] border-b-[3px] border-[#DEE6F7] bg-[#FDFDFD] p-[15px]">
+        <div className="flex items-center gap-6">
+          <input id="red-radio" type="radio" value="" name="colored-radio" class="size-6 accent-[#525252]" />
+          <h3 className="text-center text-[18px] font-semibold leading-[18px] text-[#707175]">All</h3>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default function Ratings({ handleClose, modalVisible, selectedOptions, setSelectedOptions, setFilters }) {
   const location = useLocation();
 
@@ -144,11 +160,11 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       open={modalVisible}
       handleClose={handleClose}
     >
-      <div className="px-[18px] py-[10px] tablet:px-[45px] tablet:py-[25px]">
+      <div className="px-[18px] pt-[10px] tablet:px-[45px] tablet:pt-[25px]">
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Rating Category
         </h1>
-        <div className="mt-[10px] flex items-center justify-center gap-[36.8px] border-b border-[#7C7C7C] pb-[25px] tablet:my-[25px] tablet:gap-[100px]">
+        <div className="mt-[10px] flex items-center justify-center gap-[36.8px] border-b border-[#7C7C7C] pb-[25px] tablet:mt-[25px] tablet:gap-[100px]">
           <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
             <div id="custom-rating-checkbox" className="flex h-full items-center">
               <input
@@ -189,6 +205,16 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
               <p className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Adult</p>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="px-[18px] py-[10px] tablet:px-[45px] tablet:py-[25px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
+          Select your Filter Options
+        </h1>
+        <div className="grid grid-cols-3 gap-[15px]">
+          <FilterContainer />
+          <FilterContainer />
+          <FilterContainer />
         </div>
         <div className="mt-[10px] flex items-center justify-end gap-[25px] tablet:mt-[25px] tablet:gap-[49px]">
           <Button
