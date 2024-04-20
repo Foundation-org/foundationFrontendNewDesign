@@ -145,10 +145,10 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       handleClose={handleClose}
     >
       <div className="px-[18px] py-[10px] tablet:px-[45px] tablet:py-[25px]">
-        <h1 className="text-center text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Rating Category
         </h1>
-        <div className="mt-[10px] flex items-center justify-center gap-[36.8px] tablet:mt-[30px]  tablet:gap-[100px]">
+        <div className="mt-[10px] flex items-center justify-center gap-[36.8px] border-b border-[#7C7C7C] pb-[25px] tablet:my-[25px] tablet:gap-[100px]">
           <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
             <div id="custom-rating-checkbox" className="flex h-full items-center">
               <input
