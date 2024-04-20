@@ -62,6 +62,8 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const [isPresent, setIsPresent] = useState(false);
   const [prevInfo, setPrevInfo] = useState({});
   const [deleteItem, setDeleteItem] = useState('');
+  const [isError, setIsError] = useState(false);
+  const [hollow, setHollow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [jobs, setJobs] = useState([]);
 
@@ -90,6 +92,8 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   };
 
   useEffect(() => {
+    setHollow(true);
+    setIsError(false);
     searchJobtitles();
   }, [query]);
 
@@ -145,6 +149,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       return false;
     }
   };
+  console.log(hollow, checkHollow());
   useEffect(() => {
     checkHollow();
   }, [field1Data, field2Data, field4Data, field5Data, field6Data]);
@@ -207,6 +212,21 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
     }
   };
 
+  const verifyJobTitle = async () => {
+    setHollow(true);
+    const response = await api.get(`/ai-validation/9?userMessage=${field2Data.name}`);
+    if (response.data.message === 'Rejected') {
+      setIsError(true);
+      setHollow(true);
+    } else {
+      if (response.data.message !== 'Accepted') {
+        setField2Data({ name: response.data.message });
+      }
+      setIsError(false);
+      setHollow(false);
+    }
+  };
+
   const handleDelete = async (id) => {
     const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, {
       id: id,
@@ -262,14 +282,19 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
           });
           if (companySaved.status === 200) {
             console.log(companySaved);
-            handleClose();
-            setLoading(false);
           }
-        } else {
-          handleClose();
-          setLoading(false);
-          console.log('company name was same so not saved');
         }
+        if (prevInfo.jobTitle !== field2Data.name) {
+          const jobsSaved = await api.post(`/addBadge/jobTitles/add`, {
+            name: field2Data.name,
+            uuid: localStorage.getItem('uuid'),
+          });
+          if (jobsSaved.status === 200) {
+            console.log(jobsSaved);
+          }
+        }
+        handleClose();
+        setLoading(false);
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -285,6 +310,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
     });
     setPrevInfo(info?.data?.obj);
     if (info.status === 200) {
+      setHollow(false);
       console.log(info);
       const data = info?.data.obj;
 
@@ -425,7 +451,13 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 setQuery={setQuery}
                 id={2}
                 handleTab={handleTab}
+                verify={verifyJobTitle}
+                setHollow={setHollow}
+                setError={setIsError}
               />
+              {isError && (
+                <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
+              )}
             </div>
             <div className="flex items-center gap-[17.5px] tablet:gap-9">
               {/* <div className="mb-[5px] w-full tablet:mb-[25px]">
@@ -522,7 +554,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
               ) : (
                 <div></div>
               )}
-              {checkHollow() ? (
+              {hollow || checkHollow() ? (
                 <Button variant="hollow-submit" id="submitButton" disabled={true}>
                   Add
                 </Button>

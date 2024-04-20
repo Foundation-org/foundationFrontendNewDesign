@@ -78,12 +78,47 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [isPresent, setIsPresent] = useState(false);
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
+  const [query2, setQuery2] = useState('');
+  const [query3, setQuery3] = useState('');
   const [deleteItem, setDeleteItem] = useState('');
   const [loading, setLoading] = useState(false);
   const [delloading, setDelLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isError2, setIsError2] = useState(false);
   const [hollow, setHollow] = useState(false);
+  const [isError2, setIsError2] = useState(false);
+  const [eduData, setEduData] = useState([]);
+
+  const searchDegreeAndFields = async (type, query) => {
+    try {
+      const jb = await api.post(`search/searchDegreesAndFields/?name=${query}&type=${type}`);
+
+      const queryExists = jb.data.some((item) => item.name.toLowerCase() === query.toLowerCase());
+      const newArr = queryExists
+        ? [...jb.data]
+        : [
+            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+            ...jb.data.map((jb) => ({
+              ...jb,
+              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+            })),
+          ];
+
+      setEduData(newArr);
+    } catch (err) {
+      setEduData([{ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true }]);
+    }
+  };
+  useEffect(() => {
+    setHollow(true);
+    setIsError(false);
+    searchDegreeAndFields(degreePrograms.type, query2);
+  }, [query2]);
+
+  useEffect(() => {
+    setHollow(true);
+    setIsError2(false);
+    searchDegreeAndFields(fieldOfStudy.type, query3);
+  }, [query3]);
 
   const searchUniversities = async () => {
     const universities = await api.post(`search/searchUniversities/?name=${query}`);
@@ -121,13 +156,13 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     try {
       if (
         field1Data.name === undefined ||
-        field2Data === undefined ||
-        field2Data === '' ||
+        field2Data.name === undefined ||
+        field2Data.name === '' ||
         field3Data === undefined ||
         field4Data === undefined ||
         field4Data === '' ||
-        field5Data === undefined ||
-        field5Data === ''
+        field5Data.name === undefined ||
+        field5Data.name === ''
       ) {
         toast.error('You cannot leave the field blank');
         setLoading(false);
@@ -151,9 +186,24 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       if (addBadge.status === 200) {
         handleUserInfo();
         toast.success('Badge Added Successfully!');
-
-        handleClose();
-        setLoading(false);
+        const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
+          name: field2Data.name,
+          uuid: localStorage.getItem('uuid'),
+          type: degreePrograms.type,
+        });
+        if (dataSaved.status === 200) {
+          console.log(dataSaved);
+          const dataSaved2 = await api.post(`/addBadge/degreesAndFields/add`, {
+            name: field5Data.name,
+            uuid: localStorage.getItem('uuid'),
+            type: fieldOfStudy.type,
+          });
+          if (dataSaved2.status === 200) {
+            console.log(dataSaved2);
+            handleClose();
+            setLoading(false);
+          }
+        }
       }
       if (addBadge.status === 201) {
         toast.success('Please check your Email to verify');
@@ -174,19 +224,18 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       handleUserInfo();
     }
   };
-  console.log(field1Data.name, field2Data, field3Data, field4Data, field5Data);
 
   const handleUpdateBadge = async (newData) => {
     try {
       if (
         field1Data.name === undefined ||
-        field2Data === undefined ||
-        field2Data === '' ||
+        field2Data.name === undefined ||
+        field2Data.name === '' ||
         field3Data === undefined ||
         field4Data === undefined ||
         field4Data === '' ||
-        field5Data === undefined ||
-        field5Data === ''
+        field5Data.name === undefined ||
+        field5Data.name === ''
       ) {
         toast.error('You cannot leave the field blank');
         setLoading(false);
@@ -204,8 +253,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       }
       if (
         prevInfo.school === field1Data.name &&
-        prevInfo.degreeProgram === field2Data &&
-        prevInfo.fieldOfStudy === field5Data &&
+        prevInfo.degreeProgram === field2Data.name &&
+        prevInfo.fieldOfStudy === field5Data.name &&
         prevInfo.startingYear === field3Data &&
         prevInfo.graduationYear === field4Data
       ) {
@@ -223,8 +272,29 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       if (updateBadge.status === 200) {
         handleUserInfo();
         toast.success('Info Updated Successfully');
-        setLoading(false);
+
+        if (prevInfo.degreeProgram !== field2Data.name) {
+          const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
+            name: field2Data.name,
+            uuid: localStorage.getItem('uuid'),
+            type: degreePrograms.type,
+          });
+          if (dataSaved.status === 200) {
+            console.log(dataSaved);
+          }
+        }
+        if (prevInfo.fieldOfStudy !== field5Data.name) {
+          const dataSaved2 = await api.post(`/addBadge/degreesAndFields/add`, {
+            name: field5Data.name,
+            uuid: localStorage.getItem('uuid'),
+            type: fieldOfStudy.type,
+          });
+          if (dataSaved2.status === 200) {
+            console.log(dataSaved2);
+          }
+        }
         handleClose();
+        setLoading(false);
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -240,12 +310,11 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     });
     setPrevInfo(info?.data?.obj);
     if (info.status === 200) {
-      console.log(info);
       const data = info?.data.obj;
 
       setField1Data({ id: data.id, name: data.school, country: data.country });
-      setField2Data(data.degreeProgram);
-      setField5Data(data.fieldOfStudy);
+      setField2Data({ id: data.id, name: data.degreeProgram });
+      setField5Data({ id: data.id, name: data.fieldOfStudy });
       setField3Data(data.startingYear);
       if (data.graduationYear === 'Present') {
         setIsPresent(true);
@@ -253,6 +322,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       } else {
         setField4Data(data.graduationYear);
       }
+      setHollow(false);
     }
   };
 
@@ -273,36 +343,42 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   };
   const verifyDegree = async () => {
     setHollow(true);
-    const response = await api.get(`/ai-validation/7?userMessage=${field2Data}`);
+    const response = await api.get(`/ai-validation/7?userMessage=${field2Data.name}`);
     if (response.data.message === 'Rejected') {
       setIsError(true);
       setHollow(true);
     } else {
+      if (response.data.message !== 'Accepted') {
+        setField2Data({ name: response.data.message });
+      }
       setIsError(false);
       setHollow(false);
     }
   };
   const verifyFieldOfStudy = async () => {
     setHollow(true);
-    const response = await api.get(`/ai-validation/8?userMessage=${field5Data}`);
+    const response = await api.get(`/ai-validation/8?userMessage=${field5Data.name}`);
     if (response.data.message === 'Rejected') {
       setIsError2(true);
       setHollow(true);
     } else {
-      setIsError2(false);
+      if (response.data.message !== 'Accepted') {
+        setField5Data({ name: response.data.message });
+      }
       setHollow(false);
+      setIsError2(false);
     }
   };
   const checkHollow = () => {
     if (
       field1Data.name === undefined ||
-      field2Data === undefined ||
-      field2Data === '' ||
+      field2Data.name === undefined ||
+      field2Data.name === '' ||
       field3Data === undefined ||
       field4Data === undefined ||
       field4Data === '' ||
-      field5Data === undefined ||
-      field5Data === ''
+      field5Data.name === undefined ||
+      field5Data.name === ''
     ) {
       return true;
     } else {
@@ -421,7 +497,20 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field2.label}
                 </p>
-                <input
+                <CustomCombobox
+                  items={eduData}
+                  placeholder={field2.placeholder}
+                  selected={field2Data}
+                  setSelected={setField2Data}
+                  query={query2}
+                  verify={verifyDegree}
+                  setQuery={setQuery2}
+                  setHollow={setHollow}
+                  setError={setIsError}
+                  id={2}
+                  handleTab={handleTab}
+                />
+                {/* <input
                   id="input-2"
                   type="text"
                   value={field2Data}
@@ -438,7 +527,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   onKeyDown={(e) => (e.key === 'Tab' && handleTab(2)) || (e.key === 'Enter' && handleTab(2, 'Enter'))}
                   placeholder={field2.placeholder}
                   className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
-                />
+                /> */}
                 {isError && (
                   <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
                 )}
@@ -447,15 +536,28 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field5.label}
                 </p>
-                <input
+                <CustomCombobox
+                  items={eduData}
+                  placeholder={field5.placeholder}
+                  selected={field5Data}
+                  setSelected={setField5Data}
+                  query={query3}
+                  verify={verifyFieldOfStudy}
+                  setQuery={setQuery3}
+                  setHollow={setHollow}
+                  setError={setIsError2}
+                  id={3}
+                  handleTab={handleTab}
+                />
+                {/* <input
                   id="input-3"
                   type="text"
                   onBlur={() => {
-                    if (field5Data) {
+                    if (field5Data.name) {
                       verifyFieldOfStudy();
                     }
                   }}
-                  value={field5Data}
+                  value={field5Data.name}
                   onChange={(e) => {
                     setHollow(true);
                     setIsError2(false);
@@ -464,7 +566,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   onKeyDown={(e) => (e.key === 'Tab' && handleTab(3)) || (e.key === 'Enter' && handleTab(3, 'Enter'))}
                   placeholder={field5.placeholder}
                   className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
-                />
+                /> */}
                 {isError2 && (
                   <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${field5.label}!`}</p>
                 )}
@@ -526,6 +628,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                     setField2Data([]);
                     setField3Data();
                     setField4Data();
+                    setField5Data([]);
+                    setIsPresent(false);
                     setAddAnotherForm(false);
                   }}
                 >
@@ -534,6 +638,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               ) : (
                 <div></div>
               )}
+              {console.log(hollow, checkHollow())}
               {hollow || checkHollow() ? (
                 <Button variant="hollow-submit" id="submitButton" disabled={true}>
                   Add
@@ -546,8 +651,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                     const allFieldObject = {
                       ['id']: field1Data.id,
                       [field1.type]: field1Data.name,
-                      [field2.type]: field2Data,
-                      [field5.type]: field5Data,
+                      [field2.type]: field2Data.name,
+                      [field5.type]: field5Data.name,
                       ['country']: field1Data.country,
                       [field3.type]: field3Data,
                       [field4.type]: field4Data,

@@ -9,6 +9,7 @@ const CustomCombobox = ({
   setSelected,
   isArrow,
   query,
+  verify,
   setQuery,
   handleTab,
   id,
@@ -23,7 +24,13 @@ const CustomCombobox = ({
         );
 
   return (
-    <Combobox value={selected} onChange={setSelected}>
+    <Combobox
+      value={selected}
+      onChange={setSelected}
+      onBlur={() => {
+        if (selected.name !== '') verify(selected.name);
+      }}
+    >
       <div className="relative">
         <div className="relative w-full cursor-default overflow-hidden rounded-[8.62px] border border-[#DEE6F7] bg-white text-left sm:text-sm tablet:rounded-[10px] tablet:border-[3px]">
           <Combobox.Input
