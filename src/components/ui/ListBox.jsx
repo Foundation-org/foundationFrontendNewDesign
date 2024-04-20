@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 
 export default function ListBox({ items, selected, setSelected, placeholder }) {
-  console.log(selected);
+  // console.log(selected);
   return (
     <Listbox value={selected} onChange={setSelected}>
       <div className="relative">

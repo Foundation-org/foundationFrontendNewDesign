@@ -28,7 +28,7 @@ const CustomCombobox = ({
       value={selected}
       onChange={setSelected}
       onBlur={() => {
-        if (selected.name !== '') verify(selected.name);
+        if (selected.name !== '') verify();
       }}
     >
       <div className="relative">
@@ -57,7 +57,7 @@ const CustomCombobox = ({
           leave="transition ease-in duration-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
-          afterLeave={() => setQuery('')}
+          // afterLeave={() => setQuery('')}
         >
           <Combobox.Options className="absolute z-10 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base leading-[10px] shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm tablet:max-h-60">
             {filteredItems.length === 0 && query !== '' ? (
