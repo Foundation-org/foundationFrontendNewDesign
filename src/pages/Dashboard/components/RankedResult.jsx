@@ -35,11 +35,11 @@ const RankedResult = (props) => {
           </div>
         ) : (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-white tablet:w-[45.6px] dark:bg-[#141618]">
-            <img
+            {/* <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/bluebadge.svg`}
               alt="trash"
               className="h-4 w-[12px] cursor-pointer tablet:h-[27px] tablet:w-[21px]"
-            />
+            /> */}
           </div>
         )
       ) : (
