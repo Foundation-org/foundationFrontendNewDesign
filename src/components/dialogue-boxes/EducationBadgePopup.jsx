@@ -200,7 +200,15 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
           });
           if (dataSaved2.status === 200) {
             console.log(dataSaved2);
-            handleClose();
+            document.getElementById('cancalTheForm').click();
+            // setField1Data([]);
+            // setField2Data([]);
+            // setField3Data();
+            // setField4Data();
+            // setField5Data([]);
+            // setIsPresent(false);
+            // setAddAnotherForm(false);
+            // handleClose();
             setLoading(false);
           }
         }
@@ -632,6 +640,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                     setIsPresent(false);
                     setAddAnotherForm(false);
                   }}
+                  id="cancalTheForm"
                 >
                   Cancel
                 </Button>
