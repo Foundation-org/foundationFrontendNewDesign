@@ -195,10 +195,10 @@ export const personal = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`,
     title: 'Work',
-    ButtonColor: 'gray',
+    ButtonColor: 'blue',
     ButtonText: 'Add Badge',
     NoOfButton: 1,
-    disabled: true,
+    disabled: false,
     type: 'work',
   },
   {
