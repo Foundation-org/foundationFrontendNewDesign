@@ -6,6 +6,8 @@ import { useMutation } from '@tanstack/react-query';
 import { resendOtp, sendOtp, verifyOtp } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUserInfo }) => {
   const [phone, setPhone] = useState();
@@ -125,13 +127,18 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
             >
               {title}
             </p>
-            <input
+            {/* <input
               type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder={'Phone Number here'}
               className="mb-[10px] mt-1 w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:mb-5 tablet:mt-[15px] tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
-            />
+            /> */}
+             <PhoneInput
+              placeholder="Enter phone number"
+              value={phone}
+              className="mb-[10px] mt-1 w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:mb-5 tablet:mt-[15px] tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
+              onChange={setPhone}/>
             <div className="flex justify-end">
               <Button
                 variant="submit"

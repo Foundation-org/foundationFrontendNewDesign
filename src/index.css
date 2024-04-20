@@ -888,3 +888,10 @@ input[type='number'] {
     height: 85px !important;
   }
 }
+
+.PhoneInputInput {
+  background-color: transparent;
+  outline: none;
+  color: #B6B4B4 !important;
+  color-scheme: auto;
+}
