@@ -216,7 +216,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
   const verifyJobTitle = async () => {
     setHollow(true);
-    const response = await api.get(`/ai-validation/9?userMessage=${field2Data.name}`);
+    const response = await api.get(`/ai-validation/9?userMessage=${toVerify}`);
     if (response.data.message === 'Rejected') {
       setIsError(true);
       setHollow(true);
