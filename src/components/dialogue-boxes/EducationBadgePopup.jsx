@@ -186,13 +186,17 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       if (addBadge.status === 200) {
         handleUserInfo();
         toast.success('Badge Added Successfully!');
-        const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
-          name: field2Data.name,
-          uuid: localStorage.getItem('uuid'),
-          type: degreePrograms.type,
-        });
-        if (dataSaved.status === 200) {
-          console.log(dataSaved);
+        if (field2Data.button) {
+          const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
+            name: field2Data.name,
+            uuid: localStorage.getItem('uuid'),
+            type: degreePrograms.type,
+          });
+          if (dataSaved.status === 200) {
+            console.log(dataSaved);
+          }
+        }
+        if (field5Data.button) {
           const dataSaved2 = await api.post(`/addBadge/degreesAndFields/add`, {
             name: field5Data.name,
             uuid: localStorage.getItem('uuid'),
@@ -200,18 +204,10 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
           });
           if (dataSaved2.status === 200) {
             console.log(dataSaved2);
-            document.getElementById('cancalTheForm').click();
-            // setField1Data([]);
-            // setField2Data([]);
-            // setField3Data();
-            // setField4Data();
-            // setField5Data([]);
-            // setIsPresent(false);
-            // setAddAnotherForm(false);
-            // handleClose();
-            setLoading(false);
           }
         }
+        document.getElementById('cancalTheForm').click();
+        setLoading(false);
       }
       if (addBadge.status === 201) {
         toast.success('Please check your Email to verify');
@@ -270,6 +266,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         setLoading(false);
         return;
       }
+      console.log(field2Data, field5Data);
 
       const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, {
         newData,
@@ -280,8 +277,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       if (updateBadge.status === 200) {
         handleUserInfo();
         toast.success('Info Updated Successfully');
-
-        if (prevInfo.degreeProgram !== field2Data.name) {
+        if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
             name: field2Data.name,
             uuid: localStorage.getItem('uuid'),
@@ -291,7 +287,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             console.log(dataSaved);
           }
         }
-        if (prevInfo.fieldOfStudy !== field5Data.name) {
+        if (field5Data.button) {
           const dataSaved2 = await api.post(`/addBadge/degreesAndFields/add`, {
             name: field5Data.name,
             uuid: localStorage.getItem('uuid'),
@@ -349,9 +345,9 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       }
     }
   };
-  const verifyDegree = async () => {
+  const verifyDegree = async (toVerify) => {
     setHollow(true);
-    const response = await api.get(`/ai-validation/7?userMessage=${field2Data.name}`);
+    const response = await api.get(`/ai-validation/7?userMessage=${toVerify}`);
     if (response.data.message === 'Rejected') {
       setIsError(true);
       setHollow(true);
@@ -363,9 +359,9 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       setHollow(false);
     }
   };
-  const verifyFieldOfStudy = async () => {
+  const verifyFieldOfStudy = async (toVerify) => {
     setHollow(true);
-    const response = await api.get(`/ai-validation/8?userMessage=${field5Data.name}`);
+    const response = await api.get(`/ai-validation/8?userMessage=${toVerify}`);
     if (response.data.message === 'Rejected') {
       setIsError2(true);
       setHollow(true);
@@ -417,7 +413,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   </h4>
                   <div className="mt-[2px] max-w-[270px] tablet:mt-2">
                     <h5 className="text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:text-[20px] tablet:leading-[26.63px]">
-                      {item.degreeProgram + ' ' + 'of' + ' ' + item.fieldOfStudy}
+                      {item.degreeProgram + ' ' + 'in' + ' ' + item.fieldOfStudy}
                     </h5>
                     <h6 className="text-[8.28px] font-medium leading-[10.93px] text-[#B6B4B4] tablet:text-[18px] tablet:leading-[26.63px]">
                       {item.country}

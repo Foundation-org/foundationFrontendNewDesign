@@ -191,22 +191,26 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       if (addBadge.status === 200) {
         handleUserInfo();
         toast.success('Badge Added Successfully!');
+
         const companySaved = await api.post(`/addBadge/company/add`, {
           name: field1Data.name,
           uuid: localStorage.getItem('uuid'),
         });
         if (companySaved.status === 200) {
           console.log(companySaved);
+        }
+
+        if (field2Data.button) {
           const jobsSaved = await api.post(`/addBadge/jobTitles/add`, {
             name: field2Data.name,
             uuid: localStorage.getItem('uuid'),
           });
           if (jobsSaved.status === 200) {
             console.log(jobsSaved);
-            handleClose();
-            setLoading(false);
           }
         }
+        handleClose();
+        setLoading(false);
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -214,7 +218,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
     }
   };
 
-  const verifyJobTitle = async () => {
+  const verifyJobTitle = async (toVerify) => {
     setHollow(true);
     const response = await api.get(`/ai-validation/9?userMessage=${toVerify}`);
     if (response.data.message === 'Rejected') {
@@ -277,7 +281,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       if (updateBadge.status === 200) {
         handleUserInfo();
         toast.success('Info Updated Successfully');
-        if (prevInfo.companyName !== field1Data.name) {
+        if (prevInfo.CompanyName !== field1Data.name) {
           const companySaved = await api.post(`/addBadge/company/add`, {
             name: field1Data.name,
             uuid: localStorage.getItem('uuid'),
@@ -286,7 +290,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
             console.log(companySaved);
           }
         }
-        if (prevInfo.jobTitle !== field2Data.name) {
+        if (field2Data.button) {
           const jobsSaved = await api.post(`/addBadge/jobTitles/add`, {
             name: field2Data.name,
             uuid: localStorage.getItem('uuid'),
