@@ -368,11 +368,11 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                         className={'min-w-[2.875rem] tablet:min-w-[80px]'}
                         variant="submit"
                         onClick={() => {
-                          setDelLoading(true);
+                          setDelLoading(item.id);
                           handleDelete(deleteItem);
                         }}
                       >
-                        {delloading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
+                        {delloading === item.id ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
                       </Button>
                       <Button
                         className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}
@@ -411,7 +411,13 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
               </div>
             ))}
             <div className="mt-4 flex justify-between">
-              <Button variant="addOption" onClick={() => setAddAnotherForm(true)}>
+              <Button
+                variant="addOption"
+                onClick={() => {
+                  setEdit(false);
+                  setAddAnotherForm(true);
+                }}
+              >
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
               </Button>
             </div>
@@ -436,7 +442,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 type="text"
                 value={field1Data.name}
                 onChange={(e) => {
-                  setField1Data({ name: e.target.value });
+                  setField1Data({ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: e.target.value });
                 }}
                 onKeyDown={(e) => (e.key === 'Tab' && handleTab(1)) || (e.key === 'Enter' && handleTab(1, 'Enter'))}
                 id="input-1"

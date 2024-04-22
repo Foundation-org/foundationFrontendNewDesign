@@ -168,6 +168,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         setLoading(false);
         return;
       }
+
       if (field4Data < field3Data) {
         toast.warning('Please ensure the graduation date is not earlier than the start date.');
         setLoading(false);
@@ -175,6 +176,11 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       }
       if (field4Data === field3Data) {
         toast.warning('Please ensure the graduation date is not the same as the start date.');
+        setLoading(false);
+        return;
+      }
+      if (existingData.some((item) => item.id === field1Data.id)) {
+        toast.warning('School already exists');
         setLoading(false);
         return;
       }
@@ -208,10 +214,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         }
         document.getElementById('cancalTheForm').click();
         setLoading(false);
-      }
-      if (addBadge.status === 201) {
-        toast.success('Please check your Email to verify');
-        handleClose();
+        setDelLoading(false);
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -255,6 +258,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         setLoading(false);
         return;
       }
+
       if (
         prevInfo.school === field1Data.name &&
         prevInfo.degreeProgram === field2Data.name &&
@@ -430,11 +434,11 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                         className={'min-w-[2.875rem] tablet:min-w-[80px]'}
                         variant="submit"
                         onClick={() => {
-                          setDelLoading(true);
+                          setDelLoading(item.id);
                           handleDelete(deleteItem);
                         }}
                       >
-                        {delloading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
+                        {delloading === item.id ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
                       </Button>
                       <Button
                         className={'w-[2.875rem] tablet:min-w-[80px] laptop:w-[80px]'}
@@ -474,7 +478,13 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             ))}
 
             <div className="mt-4">
-              <Button variant="addOption" onClick={() => setAddAnotherForm(true)}>
+              <Button
+                variant="addOption"
+                onClick={() => {
+                  setEdit(false);
+                  setAddAnotherForm(true);
+                }}
+              >
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
               </Button>
             </div>
@@ -635,6 +645,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                     setField5Data([]);
                     setIsPresent(false);
                     setAddAnotherForm(false);
+                    setDelLoading(false);
+                    setLoading(false);
                   }}
                   id="cancalTheForm"
                 >
@@ -643,8 +655,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               ) : (
                 <div></div>
               )}
-              {console.log(hollow, checkHollow())}
-              {hollow || checkHollow() ? (
+              {hollow || isError || isError2 || checkHollow() ? (
                 <Button variant="hollow-submit" id="submitButton" disabled={true}>
                   Add
                 </Button>
