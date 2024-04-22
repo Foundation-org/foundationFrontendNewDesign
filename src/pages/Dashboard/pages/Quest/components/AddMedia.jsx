@@ -56,7 +56,7 @@ export default function AddMedia({ handleTab }) {
     // Check if the URL is a YouTube playlist
     if (
       youtubeBaseURLs.some((baseURL) => getMediaStates.url?.includes(baseURL)) &&
-      getMediaStates.url.includes('list=')
+      getMediaStates.url.includes('playlist?list=')
     ) {
       toast.error('We do not support YouTube playlists');
       dispatch(createQuestAction.clearUrl());
@@ -161,8 +161,11 @@ export default function AddMedia({ handleTab }) {
                 tabIndex={2}
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(1, 'Enter'))}
                 onChange={(e) => {
-                  // const url = e.target.value.split('?')[0];
-                  const url = e.target.value;
+                  const url =
+                    e.target.value.includes('/watch?') || e.target.value.includes('playlist?list=')
+                      ? e.target.value
+                      : e.target.value.split('?')[0];
+                  // const url = e.target.value;
                   dispatch(createQuestAction.addMediaUrl(url));
                   // dispatch(createQuestAction.addMediaUrl(e.target.value));
                 }}
