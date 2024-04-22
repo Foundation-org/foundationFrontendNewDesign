@@ -60,10 +60,17 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     setName(position.coords.latitude + ',' + position.coords.longitude);
   };
   const failedToGet = (err) => {
-    toast.error('Error getting location', err);
+    toast.error(
+      'It seems like location services are off or denied. To proceed, please enable location in your device settings and try again.',
+    );
+    console.log(err);
   };
   const getLocation = () => {
-    navigator.geolocation.getCurrentPosition(gotLocation, failedToGet);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(gotLocation, failedToGet);
+    } else {
+      toast.error("Your browser doesn't support geolocation.");
+    }
   };
 
   useEffect(() => {
