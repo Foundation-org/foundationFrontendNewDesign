@@ -8,17 +8,92 @@ import * as homeFilterActions from '../../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSlice';
 import { useLocation } from 'react-router-dom';
 
-const FilterContainer = () => {
+export const StatusFiltersList = [
+  {
+    id: 1,
+    title: 'All',
+  },
+  {
+    id: 2,
+    title: 'Not Participated',
+  },
+  {
+    id: 3,
+    title: 'Participated',
+  },
+];
+
+export const MediaFiltersList = [
+  {
+    id: 1,
+    title: 'Images',
+  },
+  {
+    id: 2,
+    title: 'Video',
+  },
+
+  {
+    id: 3,
+    title: 'Audio',
+  },
+  {
+    id: 4,
+    title: 'None',
+  },
+];
+
+export const TypeFiltersList = [
+  {
+    id: 1,
+    title: 'All',
+  },
+  {
+    id: 2,
+    title: 'Yes/No',
+  },
+  {
+    id: 3,
+    title: 'Multiple Choice',
+  },
+  {
+    id: 4,
+    title: 'Open Choice',
+  },
+  {
+    id: 5,
+    title: 'Rank Choice',
+  },
+  {
+    id: 6,
+    title: 'Agree/Disagree',
+  },
+  {
+    id: 7,
+    title: 'Like/Dislike',
+  },
+];
+
+const FilterContainer = (props) => {
+  const { list, style } = props;
   return (
-    <div className="w-full rounded-t-[15px]">
+    <div className="w-full">
       <div className="rounded-t-[15px] bg-[#DEE6F7] py-2">
-        <h1 className="text-center text-[22px] font-bold text-[#707175]">Status</h1>
+        <h1 className="text-center text-[12px] font-bold text-[#707175] tablet:text-[22px]">Status</h1>
       </div>
-      <div className="rounded-b-[15px] border-x-[3px] border-b-[3px] border-[#DEE6F7] bg-[#FDFDFD] p-[15px]">
-        <div className="flex items-center gap-6">
-          <input id="red-radio" type="radio" value="" name="colored-radio" class="size-6 accent-[#525252]" />
-          <h3 className="text-center text-[18px] font-semibold leading-[18px] text-[#707175]">All</h3>
-        </div>
+      <div
+        className={` ${style === 'yes' ? 'grid h-[calc(125px-26px)] grid-cols-2' : 'flex h-[calc(100%-34px)]'} flex-col gap-[6px] rounded-b-[15px] border-x-[3px] border-b-[3px] border-[#DEE6F7] bg-[#FDFDFD] p-2 tablet:h-[calc(100%-49px)] tablet:gap-4 tablet:p-[15px]`}
+      >
+        {list?.map((item) => (
+          <div className="flex items-center gap-3 tablet:gap-6">
+            <div className="flex size-4 items-center justify-center rounded-full border-2 border-[#525252] tablet:size-6">
+              <div className="size-2 rounded-full bg-[#525252] tablet:size-[14px]"></div>
+            </div>
+            <h3 className="whitespace-nowrap text-center text-[12px] font-normal leading-[12px] text-[#707175] tablet:text-[18px] tablet:font-semibold tablet:leading-[18px]">
+              {item.title}
+            </h3>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -211,12 +286,17 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Filter Options
         </h1>
-        <div className="grid grid-cols-3 gap-[15px]">
-          <FilterContainer />
-          <FilterContainer />
-          <FilterContainer />
+        <div className="mt-3 grid grid-cols-2 gap-[15px] tablet:mt-5 tablet:grid-cols-3">
+          <FilterContainer list={StatusFiltersList} />
+          <FilterContainer list={MediaFiltersList} />
+          <div className="hidden tablet:block">
+            <FilterContainer list={TypeFiltersList} />
+          </div>
         </div>
-        <div className="mt-[10px] flex items-center justify-end gap-[25px] tablet:mt-[25px] tablet:gap-[49px]">
+        <div className="mt-3 block tablet:hidden">
+          <FilterContainer list={TypeFiltersList} style="yes" />
+        </div>
+        <div className="mt-[10px] flex items-center justify-end gap-[25px] tablet:mt-[25px] tablet:gap-[35px]">
           <Button
             variant={'danger'}
             onClick={() => {
