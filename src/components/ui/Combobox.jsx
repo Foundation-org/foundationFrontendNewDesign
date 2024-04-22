@@ -69,7 +69,7 @@ const CustomCombobox = ({
                 <Combobox.Option
                   key={item.id}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-[0.75rem] pr-4 text-[10px] tablet:py-3 tablet:pl-11 tablet:text-[16px] ${
+                    `relative flex cursor-default select-none justify-between gap-2 py-2 pl-[0.75rem] pr-4 text-[10px] tablet:gap-3 tablet:py-3 tablet:pl-11 tablet:text-[16px] ${
                       active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                     }`
                   }
@@ -82,9 +82,9 @@ const CustomCombobox = ({
                           className={`block truncate ${selected ? 'font-medium' : 'font-normal'} flex justify-between`}
                         >
                           {item.name}
-                          {item.button && item.name !== '' && <span>Add</span>}
                         </span>
                       )}
+                      {item.button && item.name !== '' && <span>Add</span>}
                       {selected ? (
                         <span
                           className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
