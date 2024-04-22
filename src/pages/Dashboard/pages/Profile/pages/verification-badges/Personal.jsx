@@ -261,7 +261,7 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
 
   return (
     <>
-      <h1 className="font-500 font-Inter my-[5px] text-[9.74px] font-medium text-black tablet:text-[1.7vw] dark:text-white">
+      <h1 className="font-500 font-Inter my-[5px] mt-3 text-[9.74px] font-medium text-black tablet:text-[1.7vw] dark:text-white">
         Personal
       </h1>
       {renderPersonalBadgesPopup()}

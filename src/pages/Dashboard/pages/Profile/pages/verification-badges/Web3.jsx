@@ -49,8 +49,8 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
     return fetchUser?.badges.some((badge) => badge.accountName === accountName && badge.type === type);
   };
   const handlePasskey = async (title, type, value) => {
-    console.log("🚀 ~ handlePasskey ~ value:", value)
-    console.log("🚀 ~ handlePasskey ~ title, type:", title, type)
+    console.log('🚀 ~ handlePasskey ~ value:', value);
+    console.log('🚀 ~ handlePasskey ~ title, type:', title, type);
     try {
       // Device Detect
       if (type === 'desktop' && !isBrowser) {
@@ -85,7 +85,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
         return;
       }
       let addBadge;
-      if(title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile'){
+      if (title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile') {
         addBadge = await api.post(`/addBadge/passkey/add`, {
           uuid: fetchUser.uuid,
           accountId: value.id,
@@ -94,7 +94,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
           type: type,
           data: value,
         });
-      } else if(title.trim() === 'Farcaster') {
+      } else if (title.trim() === 'Farcaster') {
         addBadge = await api.post(`/addBadge/addFarCasterBadge/add`, {
           uuid: fetchUser.uuid,
           accountId: value.fid,
@@ -105,7 +105,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
         });
         setIsButtonClicked(false);
         // alert("testing...   ")
-        console.log("🚀 ~ handlePasskey ~ value:", value)
+        console.log('🚀 ~ handlePasskey ~ value:', value);
       }
       if (addBadge?.status === 200) {
         toast.success('Badge Added Successfully!');
@@ -117,43 +117,42 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
     }
   };
   const config = {
-      // relay: "https://relay.farcaster.xyz",
-      rpcUrl: 'https://mainnet.optimism.io',
-      domain: 'on.foundation',
-      siweUri: 'https://example.com/login',
-    };
-    
-    const [isButtonClicked, setIsButtonClicked] = useState(false);
-    const triggerFarcaster = () => {
-      setIsButtonClicked(true);
-      const a = document.querySelector("._1n3pr301");
-      a.click();
-      // setTimeout(() => {
-      // }, 1000);
-    }
+    // relay: "https://relay.farcaster.xyz",
+    rpcUrl: 'https://mainnet.optimism.io',
+    domain: 'on.foundation',
+    siweUri: 'https://example.com/login',
+  };
+
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const triggerFarcaster = () => {
+    setIsButtonClicked(true);
+    const a = document.querySelector('._1n3pr301');
+    a.click();
+    // setTimeout(() => {
+    // }, 1000);
+  };
   return (
     <>
       <h1 className="font-500 font-Inter mb-[5px] mt-3 text-[9.74px] font-medium text-black tablet:text-[1.7vw] dark:text-white">
         Web 3
       </h1>
-        <AuthKitProvider config={config}>
-            <div className='hidden'>
-              <SignInButton 
-              onClick={() => console.log('testing clicking....')}
-              // onStatusResponse={(res) => console.log("status callback:", res)}
-              onSuccess={(data) =>{
+      <AuthKitProvider config={config}>
+        <div className="hidden">
+          <SignInButton
+            onClick={() => console.log('testing clicking....')}
+            // onStatusResponse={(res) => console.log("status callback:", res)}
+            onSuccess={
+              (data) => {
                 // alert("testing...")
                 // console.log("testing...");
-                isButtonClicked &&
-                handlePasskey('Farcaster', 'farcaster', data)
+                isButtonClicked && handlePasskey('Farcaster', 'farcaster', data);
               }
               // console.log(`Hello, ${username}! Your fid is ${fid} ${data}.`)
               // console.log(data)
-              } />
-            </div>
-          <div className=''>
-          </div>
-        </AuthKitProvider>
+            }
+          />
+        </div>
+      </AuthKitProvider>
       <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">
         <div className="flex w-full flex-col items-center gap-[10px] tablet:gap-4 laptop:gap-5">
           {web3.slice(0, Math.ceil(web3.length / 2)).map((item, index) => (
@@ -230,16 +229,17 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
                 color={checkPassKeyBadge(item.accountName, item.type) ? 'red' : item.ButtonColor}
                 onClick={() => {
                   // alert("hello2...")
-                  item.accountName === "Farcaster" && !checkPassKeyBadge(item.accountName, item.type) ? triggerFarcaster() :
-                  checkPassKeyBadge(item.accountName, item.type)
-                    ? handleRemoveBadgePopup({
-                        title: item.title,
-                        image: item.image,
-                        type: item.type,
-                        badgeType: item.badgeType,
-                        accountName: item.accountName,
-                      })
-                    : handlePasskey(item?.title, item?.type);
+                  item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)
+                    ? triggerFarcaster()
+                    : checkPassKeyBadge(item.accountName, item.type)
+                      ? handleRemoveBadgePopup({
+                          title: item.title,
+                          image: item.image,
+                          type: item.type,
+                          badgeType: item.badgeType,
+                          accountName: item.accountName,
+                        })
+                      : handlePasskey(item?.title, item?.type);
                 }}
                 disabled={item.disabled}
               >
@@ -274,27 +274,30 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
               <h1>{item.title}</h1>
             </div>
             <Button
-              color={checkPassKeyBadge(item.accountName, item.type) || checkWeb3Badge(item.type) ? 'red' : item.ButtonColor}
+              color={
+                checkPassKeyBadge(item.accountName, item.type) || checkWeb3Badge(item.type) ? 'red' : item.ButtonColor
+              }
               onClick={() => {
-                item.accountName === "Farcaster" && !checkPassKeyBadge(item.accountName, item.type) ? triggerFarcaster() :
-                item.type === 'etherium-wallet'
-                  ? checkWeb3Badge(item.type)
-                    ? handleRemoveBadgePopup({
-                        title: item.title,
-                        image: item.image,
-                        type: item.type,
-                        badgeType: 'etherium-wallet',
-                      })
-                    : connect()
-                  : checkPassKeyBadge(item.accountName, item.type)
-                    ? handleRemoveBadgePopup({
-                        title: item.title,
-                        image: item.image,
-                        type: item.type,
-                        badgeType: item.badgeType,
-                        accountName: item.accountName,
-                      })
-                    : handlePasskey(item?.title, item?.type);
+                item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)
+                  ? triggerFarcaster()
+                  : item.type === 'etherium-wallet'
+                    ? checkWeb3Badge(item.type)
+                      ? handleRemoveBadgePopup({
+                          title: item.title,
+                          image: item.image,
+                          type: item.type,
+                          badgeType: 'etherium-wallet',
+                        })
+                      : connect()
+                    : checkPassKeyBadge(item.accountName, item.type)
+                      ? handleRemoveBadgePopup({
+                          title: item.title,
+                          image: item.image,
+                          type: item.type,
+                          badgeType: item.badgeType,
+                          accountName: item.accountName,
+                        })
+                      : handlePasskey(item?.title, item?.type);
               }}
               disabled={item.disabled}
             >
