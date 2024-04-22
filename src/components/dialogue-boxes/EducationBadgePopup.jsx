@@ -153,6 +153,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   };
 
   const handleAddPersonalBadge = async (data) => {
+    console.log('comeimng');
     try {
       if (
         field1Data.name === undefined ||
@@ -179,10 +180,13 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         setLoading(false);
         return;
       }
-      if (existingData.some((item) => item.id === field1Data.id)) {
-        toast.warning('School already exists');
-        setLoading(false);
-        return;
+
+      if (existingData) {
+        if (existingData.some((item) => item.id === field1Data.id)) {
+          toast.warning('School already exists');
+          setLoading(false);
+          return;
+        }
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, {
         data,
@@ -217,7 +221,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         setDelLoading(false);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      console.log(error);
       handleClose();
     }
   };
@@ -231,6 +235,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       handleUserInfo();
     }
   };
+  console.log(field2Data, field5Data);
 
   const handleUpdateBadge = async (newData) => {
     try {
@@ -357,7 +362,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       setHollow(true);
     } else {
       if (response.data.message !== 'Accepted') {
-        setField2Data({ name: response.data.message });
+        console.log('ran');
+        setField2Data({ ...field2Data, name: response.data.message });
       }
       setIsError(false);
       setHollow(false);
@@ -371,7 +377,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       setHollow(true);
     } else {
       if (response.data.message !== 'Accepted') {
-        setField5Data({ name: response.data.message });
+        setField5Data({ ...field5Data, name: response.data.message });
       }
       setHollow(false);
       setIsError2(false);
@@ -506,7 +512,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 handleTab={handleTab}
               />
             </div>
-            <div className="mb-4 mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[37px]">
+            <div className="mb-4 mt-[15px] flex gap-[6.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[10px]">
               <div className="w-full">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field2.label}
@@ -523,6 +529,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   setError={setIsError}
                   id={2}
                   handleTab={handleTab}
+                  verification={true}
+                  wordsCheck={true}
                 />
                 {/* <input
                   id="input-2"
@@ -546,6 +554,9 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
                 )}
               </div>
+              <p className="flex items-center pt-4 text-[9.28px]  font-medium leading-[11.23px] text-[#7C7C7C] tablet:pt-10 tablet:text-[20px]">
+                in
+              </p>
               <div className="w-full">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field5.label}
@@ -562,6 +573,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                   setError={setIsError2}
                   id={3}
                   handleTab={handleTab}
+                  verification={true}
                 />
                 {/* <input
                   id="input-3"
@@ -599,7 +611,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               Not Completed
             </label>
 
-            <div className="mb-4 mt-[15px] flex gap-[17.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[37px]">
+            <div className="mb-4 mt-[15px] flex gap-[19.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[38px]">
               <div className="w-full">
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field3.label}

@@ -226,7 +226,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       setHollow(true);
     } else {
       if (response.data.message !== 'Accepted') {
-        setField2Data({ name: response.data.message });
+        setField2Data({ ...field2Data, name: response.data.message });
       }
       setIsError(false);
       setHollow(false);
@@ -466,6 +466,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 verify={verifyJobTitle}
                 setHollow={setHollow}
                 setError={setIsError}
+                verification={true}
               />
               {isError && (
                 <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>

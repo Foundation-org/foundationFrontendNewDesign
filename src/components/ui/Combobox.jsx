@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
+import { toast } from 'sonner';
 
 const CustomCombobox = ({
   items,
@@ -12,6 +13,8 @@ const CustomCombobox = ({
   verify,
   setQuery,
   handleTab,
+  verification,
+  wordsCheck,
   id,
 }) => {
   const filteredItems =
@@ -22,13 +25,27 @@ const CustomCombobox = ({
             ? (item) => item?.name?.toLowerCase()
             : (item) => item?.name?.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
         );
+  const validateSelection = (selection) => {
+    const wordCount = selection?.name?.split(' ').filter((word) => word.length > 0).length;
+    if (wordCount < 3) {
+      toast.error('Degree cannot be less than three words');
+      return false;
+    }
+    return true;
+  };
 
   return (
     <Combobox
       value={selected}
-      onChange={setSelected}
+      onChange={(item) => {
+        if (wordsCheck) {
+          if (validateSelection(item)) setSelected(item);
+        } else {
+          setSelected(item);
+        }
+      }}
       onBlur={() => {
-        if (selected.name && selected.name !== '') verify(selected.name);
+        if (verification && selected.name && selected.name !== '') verify(selected.name);
       }}
     >
       <div className="relative">
