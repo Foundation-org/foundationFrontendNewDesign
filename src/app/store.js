@@ -16,6 +16,7 @@ import questCardReducer from '../features/quest/questCardSlice';
 import createQuestReducer from '../features/createQuest/createQuestSlice';
 import ledgerReducer from '../features/profile/legerSlice';
 import hiddenPostReducer from '../features/profile/hiddenPosts';
+import sharedLinksReducer from '../features/profile/sharedLinks';
 
 const persistConfig = {
   key: 'persist-store',
@@ -36,6 +37,7 @@ const reducer = combineReducers({
   createQuest: createQuestReducer,
   ledger: ledgerReducer,
   hiddenPosts: hiddenPostReducer,
+  sharedLinks: sharedLinksReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);
