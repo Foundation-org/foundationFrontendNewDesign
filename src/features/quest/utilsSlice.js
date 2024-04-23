@@ -15,6 +15,9 @@ const initialState = {
   DisabledPostId: null,
   enablePostId: null,
   bookmarkResponse: [],
+  isMediaPlaying: false,
+  playerPlayingId: '',
+  isShowPlayer: false,
 };
 
 export const utilsSlice = createSlice({
@@ -67,11 +70,19 @@ export const utilsSlice = createSlice({
       } else {
       }
     },
-
     removeBookmarkResponse: (state, action) => {
       const idToRemove = action.payload;
       console.log('🚀 ~ idToRemove:', idToRemove);
       state.bookmarkResponse = state.bookmarkResponse.filter((response) => response.questForeignKey !== idToRemove);
+    },
+    toggleMedia: (state, action) => {
+      state.isMediaPlaying = action.payload;
+    },
+    setPlayingPlayerId: (state, action) => {
+      state.playerPlayingId = action.payload;
+    },
+    setIsShowPlayer: (state, action) => {
+      state.isShowPlayer = action.payload;
     },
   },
 });
@@ -88,6 +99,9 @@ export const {
   addEnablePostId,
   addBookmarkResponse,
   removeBookmarkResponse,
+  toggleMedia,
+  setPlayingPlayerId,
+  setIsShowPlayer,
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;

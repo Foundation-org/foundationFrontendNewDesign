@@ -13,20 +13,13 @@ import * as bookmarkFiltersActions from '../../../features/sidebar/bookmarkFilte
 // icons
 import { GrClose } from 'react-icons/gr';
 import { setBookmarkFilterStates, setFilterStates } from '../../../services/api/userAuth';
+import { setPlayingPlayerId, setIsShowPlayer, getQuestUtils } from '../../../features/quest/utilsSlice';
 import { useDebounce } from '../../../utils/useDebounce';
 import Ratings from '../../../components/dialogue-boxes/Ratings';
 import MediaControls from '../../../components/MediaControls';
 import { isEqual } from 'lodash';
 
-const SidebarLeft = ({
-  scrollToPlayingCard,
-  toggleMedia,
-  playerPlayingId,
-  isShowPlayer,
-  setIsShowPlayer,
-  setPlayingPlayerId,
-  isPlaying,
-}) => {
+const SidebarLeft = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
@@ -39,6 +32,7 @@ const SidebarLeft = ({
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
+  const questUtilsState = useSelector(getQuestUtils);
   const [ratingsDialogue, setRatingsDialogue] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]); //for ratings
   const [search, setSearch] = useState(
@@ -173,7 +167,6 @@ const SidebarLeft = ({
         setSelectedOptions={setSelectedOptions}
         setFilters={setFilters}
       />
-
       <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
         <div className="relative">
           <div className="relative h-[45px] w-[212px]">
@@ -212,7 +205,6 @@ const SidebarLeft = ({
           )}
         </div>
       </div>
-
       <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
         <div className="flex w-full flex-col items-center justify-center gap-[25px]">
           <button
@@ -228,9 +220,7 @@ const SidebarLeft = ({
           </button>
         </div>
       </div>
-
-      <div>
-        <div className="no-scrollbar mt-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between rounded-[17.928px] bg-white py-8 text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:bg-[#000] dark:text-white">
+      {/* <div className="no-scrollbar mt-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between rounded-[17.928px] bg-white py-8 text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:bg-[#000] dark:text-white">
           <div className="flex flex-col items-center">
             <div className="flex flex-col gap-[3vh]">
               <Dropdown2
@@ -303,17 +293,6 @@ const SidebarLeft = ({
               className={`${
                 persistedTheme === 'dark' ? 'bg-[#F0F0F0]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
               }  inset-0 mt-7 w-[192px] rounded-[14px] px-5 py-[6px] text-[1.25rem] font-semibold leading-normal text-white shadow-inner dark:text-[#707175]`}
-              // onClick={() => {
-              //   console.log('filterStates', filterStates);
-              //   console.log('homeFilterActions.filterInitialState', homeFilterActions.filterInitialState);
-              //   dispatch(filtersActions.resetFilters());
-              //   setSearch('');
-              //   if (!isEqual(filterStates, homeFilterActions.filterInitialState)) {
-              //     setFilters({
-              //       ...homeFilterActions.filterInitialState,
-              //     });
-              //   }
-              // }}
               onClick={() => {
                 setSearch('');
                 const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
@@ -331,8 +310,10 @@ const SidebarLeft = ({
               Clear Filters
             </button>
           </div>
-        </div>
-        {isShowPlayer && (
+        </div> */}
+
+      <div>
+        {questUtilsState.isShowPlayer && (
           <div className="hidden laptop:block">
             <div className="relative">
               <img
@@ -340,17 +321,12 @@ const SidebarLeft = ({
                 alt="mediaCloseIcon"
                 className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black tablet:-right-[14px] tablet:-top-[14px] tablet:h-10 tablet:w-10 dark:text-white"
                 onClick={() => {
-                  setIsShowPlayer(false);
-                  setPlayingPlayerId('');
+                  dispatch(setIsShowPlayer(false));
+                  dispatch(setPlayingPlayerId(''));
                 }}
               />
             </div>
-            <MediaControls
-              scrollToPlayingCard={scrollToPlayingCard}
-              toggleMedia={toggleMedia}
-              playerPlayingId={playerPlayingId}
-              isPlaying={isPlaying}
-            />
+            <MediaControls />
           </div>
         )}
         {/* sidebar mobile */}

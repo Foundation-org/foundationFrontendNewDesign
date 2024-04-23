@@ -177,12 +177,12 @@ const QuestCardLayout = ({
           <EmbededVideo
             description={questStartData.description}
             url={questStartData.url}
-            setPlayingPlayerId={setPlayingPlayerId}
             questId={questStartData._id}
+            // setPlayingPlayerId={setPlayingPlayerId}
             playing={playing}
-            setIsPlaying={setIsPlaying}
-            setIsShowPlayer={setIsShowPlayer}
-            isPlaying={isPlaying}
+            // setIsPlaying={setIsPlaying}
+            // setIsShowPlayer={setIsShowPlayer}
+            // isPlaying={isPlaying}
           />
         ))}
       <CardTopbar

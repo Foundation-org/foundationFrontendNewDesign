@@ -3,8 +3,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 // Components
-import QuestionCard from './components/QuestionCard';
-import SidebarLeft from '../../components/SidebarLeft';
+// import QuestionCard from './components/QuestionCard';
+// import SidebarLeft from '../../components/SidebarLeft';
 // import SidebarRight from '../../components/SidebarRight';
 import QuestionCardWithToggle from './components/QuestionCardWithToggle';
 import Slider from '../../../../components/Slider';
@@ -45,8 +45,8 @@ const QuestStartSection = () => {
   const [allData, setAllData] = useState([]);
 
   // Test and Result States
-  const [startTest, setStartTest] = useState(null);
-  const [viewResult, setViewResult] = useState(null);
+  // const [startTest, setStartTest] = useState(null);
+  // const [viewResult, setViewResult] = useState(null);
   const [sliderLoading, setSliderloading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -260,21 +260,21 @@ const QuestStartSection = () => {
   // }, [feedData]);
 
   // Memoized Callbacks
-  const memoizedStartTest = useCallback(
-    (testId) => {
-      setViewResult(null);
-      setStartTest((prev) => (prev === testId ? null : testId));
-    },
-    [setViewResult, setStartTest],
-  );
+  // const memoizedStartTest = useCallback(
+  //   (testId) => {
+  //     setViewResult(null);
+  //     setStartTest((prev) => (prev === testId ? null : testId));
+  //   },
+  //   [setViewResult, setStartTest],
+  // );
 
-  const memoizedViewResults = useCallback(
-    (testId) => {
-      setStartTest(null);
-      setViewResult((prev) => (prev === testId ? null : testId));
-    },
-    [setStartTest, setViewResult],
-  );
+  // const memoizedViewResults = useCallback(
+  //   (testId) => {
+  //     setStartTest(null);
+  //     setViewResult((prev) => (prev === testId ? null : testId));
+  //   },
+  //   [setStartTest, setViewResult],
+  // );
 
   // Function to update allData based on submitResponse
   const updateAllData = () => {
@@ -361,15 +361,7 @@ const QuestStartSection = () => {
   return (
     <div className="w-full bg-[#F2F3F5] dark:bg-black">
       <div className="relative mx-auto flex w-full max-w-[778px] flex-col laptop:flex-row">
-        <SidebarLeft
-          scrollToPlayingCard={scrollToPlayingCard}
-          toggleMedia={toggleMedia}
-          playerPlayingId={playerPlayingId}
-          isPlaying={isPlaying}
-          setPlayingPlayerId={setPlayingPlayerId}
-          isShowPlayer={isShowPlayer}
-          setIsShowPlayer={setIsShowPlayer}
-        />
+        {/* <SidebarLeft /> */}
         <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-155.5px)] min-h-[calc(100dvh-155.5px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100dvh-70px)] tablet:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
           <Slider
             sliderLoading={sliderLoading}
@@ -399,7 +391,7 @@ const QuestStartSection = () => {
                 allData
                   .filter((item) => !questUtils.hiddenPosts.includes(item._id))
                   ?.map((item, index) => (
-                    <div key={index + 1} id={item._id === playerPlayingId ? 'playing-card' : ''}>
+                    <div key={index + 1} id={item._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
                       {/* {filterStates.expandedView ? ( */}
                       <QuestionCardWithToggle
                         questStartData={item}
@@ -408,11 +400,11 @@ const QuestStartSection = () => {
                           .some((bookmark) => bookmark.questForeignKey === item._id)}
                         setPagination={setPagination}
                         setSubmitResponse={setSubmitResponse}
-                        playing={item._id === playerPlayingId && isPlaying}
-                        isPlaying={isPlaying}
-                        setIsPlaying={setIsPlaying}
-                        setPlayingPlayerId={setPlayingPlayerId}
-                        setIsShowPlayer={setIsShowPlayer}
+                        playing={item._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+                        // isPlaying={isPlaying}
+                        // setIsPlaying={setIsPlaying}
+                        // setPlayingPlayerId={setPlayingPlayerId}
+                        // setIsShowPlayer={setIsShowPlayer}
                       />
                     </div>
                   ))}
@@ -434,10 +426,10 @@ const QuestStartSection = () => {
               />
             </div>
             <MediaControls
-              scrollToPlayingCard={scrollToPlayingCard}
-              toggleMedia={toggleMedia}
-              playerPlayingId={playerPlayingId}
-              isPlaying={isPlaying}
+            // scrollToPlayingCard={scrollToPlayingCard}
+            // toggleMedia={toggleMedia}
+            // playerPlayingId={playerPlayingId}
+            // isPlaying={isPlaying}
             />
           </div>
         )}

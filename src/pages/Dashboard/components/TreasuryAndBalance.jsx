@@ -3,8 +3,14 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { userInfo } from '../../../services/api/userAuth';
 import SidebarRight from './SidebarRight';
+import { toast } from 'sonner';
+import SidebarLeft from './SidebarLeft';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../../features/auth/authSlice';
+import api from '../../../services/api/Axios';
 
 export default function TreasuryAndBalance({ children }) {
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [treasuryAmount, setTreasuryAmount] = useState(0);
 
@@ -67,18 +73,21 @@ export default function TreasuryAndBalance({ children }) {
 
   return (
     <div className="mx-auto flex w-full max-w-[1440px] justify-between">
-      <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
-        <div className="flex items-center gap-[15px]">
-          <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
-            alt="badge"
-            className="size-[47px]"
-          />
-          <div className="flex flex-col gap-1">
-            <h4 className="heading">Treasury</h4>
-            <p className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-              <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
-            </p>
+      <div>
+        <SidebarLeft />
+        <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+          <div className="flex items-center gap-[15px]">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
+              alt="badge"
+              className="size-[47px]"
+            />
+            <div className="flex flex-col gap-1">
+              <h4 className="heading">Treasury</h4>
+              <p className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
+                <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
