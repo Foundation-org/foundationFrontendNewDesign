@@ -13,6 +13,7 @@ import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import DisabledLinkPopup from '../../../../../components/dialogue-boxes/DisabledLinkPopup';
 import { useDispatch } from 'react-redux';
 import { useErrorBoundary } from 'react-error-boundary';
+import { sharedLinksFilters, updateSharedLinkSearch } from '../../../../../features/profile/sharedLinks';
 
 export default function SharedLinks() {
   const pageLimit = 5;
@@ -26,28 +27,29 @@ export default function SharedLinks() {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
+  const getSharedLinksFilters = useSelector(sharedLinksFilters);
   const [height, setHeight] = useState('calc(100vh - 185px)');
   const [allData, setAllData] = useState([]);
   const [feedData, setFeedData] = useState();
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
-  const [filterStates, setFilterStates] = useState({
-    filterBySort: 'Newest First',
-    filterByType: '',
-    searchData: '',
-  });
+  // const [filterStates, setFilterStates] = useState({
+  //   filterBySort: 'Newest First',
+  //   filterByType: '',
+  //   searchData: '',
+  // });
 
   const showHidePostClose = () => {
     dispatch(questUtilsActions.updateDialogueBox({ type: null, status: false, link: null, id: null }));
   };
 
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value;
-    setFilterStates((prevState) => ({
-      ...prevState,
-      searchData: searchTerm,
-    }));
-  };
+  // const handleSearch = (e) => {
+  //   const searchTerm = e.target.value;
+  //   setFilterStates((prevState) => ({
+  //     ...prevState,
+  //     searchData: searchTerm,
+  //   }));
+  // };
 
   const getSharedLinkFeedData = async (filterStates, debouncedSearch, pagination, columns, params) => {
     const updatedParams = applyFilters(params, filterStates, columns);
@@ -68,7 +70,7 @@ export default function SharedLinks() {
   };
 
   useEffect(() => {
-    getSharedLinkFeedData(filterStates, filterStates.searchData, pagination, initialColumns, {
+    getSharedLinkFeedData(getSharedLinksFilters, getSharedLinksFilters.searchData, pagination, initialColumns, {
       Page: 'SharedLink',
       _page: pagination.page,
       _limit: pageLimit,
@@ -76,7 +78,7 @@ export default function SharedLinks() {
       end: pagination.sliceEnd,
       uuid: persistedUserInfo?.uuid,
     });
-  }, [filterStates.searchData, pagination]);
+  }, [getSharedLinksFilters.searchData, pagination]);
 
   // Update Data on Filter Changes
   useEffect(() => {
@@ -87,7 +89,7 @@ export default function SharedLinks() {
       page: 1,
     }));
     setAllData([]);
-  }, [filterStates, filterStates.searchData]);
+  }, [getSharedLinksFilters, getSharedLinksFilters.searchData]);
 
   // Update Data on FeedData Changes
   useEffect(() => {
@@ -104,7 +106,7 @@ export default function SharedLinks() {
         return uniqueData;
       });
     }
-  }, [feedData, filterStates, pagination.page]);
+  }, [feedData, getSharedLinksFilters, pagination.page]);
 
   // Update Pagination on Page Change
   useEffect(() => {
@@ -207,9 +209,9 @@ export default function SharedLinks() {
 
   return (
     <div>
-      <div className="ml-[32px] mr-4 flex justify-between pt-[5px] tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
+      <div className="mx-[15px] my-2 mr-4 flex justify-between tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
         <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} />
-        <h1 className=" text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
+        <h1 className="text-[12px] font-semibold leading-[17px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
           Shared Links
         </h1>
         <div className="relative">
@@ -218,9 +220,11 @@ export default function SharedLinks() {
               type="text"
               id="floating_outlined"
               className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[3.55px] border-[0.71px] border-[#707175] bg-transparent py-2 pl-2 pr-8 text-[6px] leading-[7.25px] text-[#707175] focus:outline-none focus:ring-0 tablet:rounded-[10px] tablet:border-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-              value={filterStates.searchData}
+              value={getSharedLinksFilters.searchData}
               placeholder=""
-              onChange={handleSearch}
+              onChange={(e) => {
+                dispatch(updateSharedLinkSearch(e.target.value));
+              }}
             />
             <label
               htmlFor="floating_outlined"
@@ -228,20 +232,23 @@ export default function SharedLinks() {
             >
               Search
             </label>
-            {filterStates.searchData && (
+            {getSharedLinksFilters.searchData && (
               <button
                 className="absolute right-1.5 top-[55%] -translate-y-1/2 transform tablet:right-3 tablet:top-1/2 "
                 onClick={() => {
-                  setFilterStates((prevState) => ({
-                    ...prevState,
-                    searchData: '',
-                  }));
+                  dispatch(updateSharedLinkSearch(''));
                 }}
+                // onClick={() => {
+                //   setFilterStates((prevState) => ({
+                //     ...prevState,
+                //     searchData: '',
+                //   }));
+                // }}
               >
                 <GrClose className="h-2 w-2 text-[#ACACAC] tablet:h-4 tablet:w-4 dark:text-white" />
               </button>
             )}
-            {!filterStates.searchData && (
+            {!getSharedLinksFilters.searchData && (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
                 alt="search"
@@ -261,7 +268,7 @@ export default function SharedLinks() {
             feedData?.hasNextPage === false ? (
               <div className="flex justify-between gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
                 <div></div>
-                {filterStates.searchData && allData.length == 0 ? (
+                {getSharedLinksFilters.searchData && allData.length == 0 ? (
                   <div className="my-[15vh] flex  flex-col items-center justify-center">
                     {persistedTheme === 'dark' ? (
                       <img
@@ -283,22 +290,25 @@ export default function SharedLinks() {
                         className={`${
                           persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                         }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                        // onClick={() => {
+                        //   setFilterStates((prevState) => ({
+                        //     ...prevState,
+                        //     searchData: '',
+                        //   }));
+                        // }}
                         onClick={() => {
-                          setFilterStates((prevState) => ({
-                            ...prevState,
-                            searchData: '',
-                          }));
+                          dispatch(updateSharedLinkSearch(''));
                         }}
                       >
                         Clear Search
                       </button>
                     </div>
                   </div>
-                ) : !filterStates.searchData && allData.length === 0 ? (
+                ) : !getSharedLinksFilters.searchData && allData.length === 0 ? (
                   <p className="text-center text-[4vw] tablet:text-[2vw]">
                     <b>No Shared posts!</b>
                   </p>
-                ) : !filterStates.searchData ? (
+                ) : !getSharedLinksFilters.searchData ? (
                   <p className="text-center text-[4vw] tablet:text-[2vw]">
                     <b>No more shared posts!</b>
                   </p>
@@ -311,11 +321,14 @@ export default function SharedLinks() {
                       className={`${
                         persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                       }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                      // onClick={() => {
+                      //   setFilterStates((prevState) => ({
+                      //     ...prevState,
+                      //     searchData: '',
+                      //   }));
+                      // }}
                       onClick={() => {
-                        setFilterStates((prevState) => ({
-                          ...prevState,
-                          searchData: '',
-                        }));
+                        dispatch(updateSharedLinkSearch(''));
                       }}
                     >
                       Clear Search

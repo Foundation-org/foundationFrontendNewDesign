@@ -14,17 +14,6 @@ import { useErrorBoundary } from 'react-error-boundary';
 import { hiddenPostFilters, updateSearch } from '../../../../../features/profile/hiddenPosts';
 import { useDispatch } from 'react-redux';
 
-// Debounce function to delay execution
-// const debounce = (func, delay) => {
-//   let timeoutId;
-//   return (...args) => {
-//     clearTimeout(timeoutId);
-//     timeoutId = setTimeout(() => {
-//       func.apply(null, args);
-//     }, delay);
-//   };
-// };
-
 export default function HiddenPosts() {
   const pageLimit = 5;
   const [pagination, setPagination] = useState({

@@ -7,11 +7,11 @@ import { toast } from 'sonner';
 import SidebarLeft from './SidebarLeft';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../../features/auth/authSlice';
-import api from '../../../services/api/Axios';
 import { useLocation } from 'react-router-dom';
 import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
 import { GrClose } from 'react-icons/gr';
 import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
+import api from '../../../services/api/Axios';
 
 export default function TreasuryAndBalance({ children }) {
   const location = useLocation();
