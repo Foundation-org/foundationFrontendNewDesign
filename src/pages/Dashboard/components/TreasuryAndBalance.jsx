@@ -11,6 +11,7 @@ import api from '../../../services/api/Axios';
 import { useLocation } from 'react-router-dom';
 import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
 import { GrClose } from 'react-icons/gr';
+import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
 
 export default function TreasuryAndBalance({ children }) {
   const location = useLocation();
@@ -18,6 +19,7 @@ export default function TreasuryAndBalance({ children }) {
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
+  const getSharedLinksFilters = useSelector(sharedLinksFilters);
   const [treasuryAmount, setTreasuryAmount] = useState(0);
 
   const { mutateAsync: getUserInfo } = useMutation({
@@ -224,10 +226,10 @@ export default function TreasuryAndBalance({ children }) {
                   type="text"
                   id="floating_outlined"
                   className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-                  value={getHiddenPostFilters.searchData}
+                  value={getSharedLinksFilters.searchData}
                   placeholder=""
                   onChange={(e) => {
-                    dispatch(updateSearch(e.target.value));
+                    dispatch(updateSharedLinkSearch(e.target.value));
                   }}
                 />
                 <label
@@ -237,17 +239,17 @@ export default function TreasuryAndBalance({ children }) {
                   Search
                 </label>
               </div>
-              {getHiddenPostFilters.searchData && (
+              {getSharedLinksFilters.searchData && (
                 <button
                   className="absolute right-3 top-4"
                   onClick={() => {
-                    dispatch(updateSearch(''));
+                    dispatch(updateSharedLinkSearch(''));
                   }}
                 >
                   <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
                 </button>
               )}
-              {!getHiddenPostFilters.searchData && (
+              {!getSharedLinksFilters.searchData && (
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
                   alt="search"

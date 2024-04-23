@@ -12,13 +12,13 @@ export const sharedLinksSlice = createSlice({
   name: 'sharedLinks',
   initialState,
   reducers: {
-    updateSearch: (state, action) => {
+    updateSharedLinkSearch: (state, action) => {
       state.filterStates.searchData = action.payload;
     },
   },
 });
 
-export const { updateSearch } = sharedLinksSlice.actions;
+export const { updateSharedLinkSearch } = sharedLinksSlice.actions;
 
 export default sharedLinksSlice.reducer;
 

@@ -207,7 +207,7 @@ export default function SharedLinks() {
 
   return (
     <div>
-      <div className="ml-[32px] mr-4 flex justify-between pt-[5px] tablet:ml-[97px] tablet:mr-[70px]">
+      <div className="ml-[32px] mr-4 flex justify-between pt-[5px] tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
         <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} />
         <h1 className=" text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
           Shared Links
@@ -252,7 +252,7 @@ export default function SharedLinks() {
         </div>
       </div>
 
-      <div className="no-scrollbar tablet:w-fulls mx-auto mt-5 flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] tablet:pt-[0.94rem] dark:bg-[#242424]">
+      <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-[#242424]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -331,7 +331,7 @@ export default function SharedLinks() {
             )
           }
           height={height}
-          className="no-scrollbar px-4 py-[10px]  tablet:py-5"
+          className="no-scrollbar px-4"
         >
           <div
             id="section-1"
