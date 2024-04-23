@@ -15,6 +15,7 @@ import prefReducer from '../features/preferences/prefSlice';
 import questCardReducer from '../features/quest/questCardSlice';
 import createQuestReducer from '../features/createQuest/createQuestSlice';
 import ledgerReducer from '../features/profile/legerSlice';
+import hiddenPostReducer from '../features/profile/hiddenPosts';
 
 const persistConfig = {
   key: 'persist-store',
@@ -34,6 +35,7 @@ const reducer = combineReducers({
   questCard: questCardReducer,
   createQuest: createQuestReducer,
   ledger: ledgerReducer,
+  hiddenPosts: hiddenPostReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);

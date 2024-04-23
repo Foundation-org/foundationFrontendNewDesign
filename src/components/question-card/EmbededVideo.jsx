@@ -1,4 +1,4 @@
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 import { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
@@ -16,7 +16,7 @@ export const EmbededVideo = ({
   // setIsPlaying,
   // isPlaying,
 }) => {
-  console.log({ questId });
+  // console.log({ questId });
   const playerRef = useRef(null);
   const [mediaURL, setMediaURL] = useState(url);
   const dispatch = useDispatch();

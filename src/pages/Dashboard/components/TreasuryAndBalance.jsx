@@ -9,12 +9,15 @@ import { useDispatch } from 'react-redux';
 import { addUser } from '../../../features/auth/authSlice';
 import api from '../../../services/api/Axios';
 import { useLocation } from 'react-router-dom';
+import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
+import { GrClose } from 'react-icons/gr';
 
 export default function TreasuryAndBalance({ children }) {
   const location = useLocation();
   console.log('🚀 ~ TreasuryAndBalance ~ location:', location);
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const getHiddenPostFilters = useSelector(hiddenPostFilters);
   const [treasuryAmount, setTreasuryAmount] = useState(0);
 
   const { mutateAsync: getUserInfo } = useMutation({
@@ -163,8 +166,56 @@ export default function TreasuryAndBalance({ children }) {
             </div>
           </div>
         </div>
-        {location.pathname !== '/dashboard/quest' && <SidebarLeft />}
+        {location.pathname !== '/dashboard/quest' &&
+          location.pathname !== '/dashboard/profile' &&
+          location.pathname !== '/dashboard/profile/ledger' &&
+          location.pathname !== '/dashboard/profile/hidden-posts' &&
+          location.pathname !== '/dashboard/profile/shared-links' && <SidebarLeft />}
+
+        {/* HiddenPost Search */}
+        {location.pathname === '/dashboard/profile/hidden-posts' && (
+          <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+            <div className="relative">
+              <div className="relative h-[45px] w-full">
+                <input
+                  type="text"
+                  id="floating_outlined"
+                  className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
+                  value={getHiddenPostFilters.searchData}
+                  placeholder=""
+                  onChange={(e) => {
+                    dispatch(updateSearch(e.target.value));
+                  }}
+                />
+                <label
+                  htmlFor="floating_outlined"
+                  className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2  text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
+                >
+                  Search
+                </label>
+              </div>
+              {getHiddenPostFilters.searchData && (
+                <button
+                  className="absolute right-3 top-4"
+                  onClick={() => {
+                    dispatch(updateSearch(''));
+                  }}
+                >
+                  <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
+                </button>
+              )}
+              {!getHiddenPostFilters.searchData && (
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
+                  alt="search"
+                  className="absolute right-3 top-4 h-4 w-4"
+                />
+              )}
+            </div>
+          </div>
+        )}
       </div>
+
       {children}
       {/* Right Side */}
       <div className="hidden tablet:block">
@@ -217,7 +268,9 @@ export default function TreasuryAndBalance({ children }) {
             </div>
           )}
         </div>
-        {location.pathname !== '/dashboard/quest' && <SidebarRight />}
+        {location.pathname !== '/dashboard/quest' && location.pathname !== '/dashboard/profile/ledger' && (
+          <SidebarRight />
+        )}
       </div>
     </div>
   );
