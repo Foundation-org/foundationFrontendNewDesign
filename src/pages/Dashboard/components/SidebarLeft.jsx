@@ -438,11 +438,17 @@ const SidebarLeft = ({
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
               }  inset-0 w-fit whitespace-nowrap rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner tablet:w-full tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
               onClick={() => {
-                dispatch(filtersActions.resetFilters());
-                localStorage.setItem('filterByState', 'false');
-                setFilters({
-                  ...homeFilterActions.filterInitialState,
-                });
+                setSearch('');
+                const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
+                const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
+                  homeFilterActions.filterInitialState;
+
+                if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
+                  dispatch(filtersActions.resetFilters());
+                  setFilters({
+                    ...homeFilterActions.filterInitialState,
+                  });
+                }
               }}
             >
               Clear Filters

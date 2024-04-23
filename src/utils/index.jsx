@@ -1,6 +1,7 @@
 import { FaSpinner } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
-import * as filtersActions from '../features/sidebar/filtersSlice';
+import * as homeFilterActions from '../features/sidebar/filtersSlice';
+import { isEqual } from 'lodash';
 
 const filtersInitialState = {
   filterByStatus: '',
@@ -195,6 +196,7 @@ function matchFilters(filters, state) {
 }
 
 export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates, dispatch) => {
+  const filtersActions = homeFilterActions;
   const result = matchFilters(filtersInitialState, filterStates);
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
@@ -224,8 +226,16 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
               }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
               onClick={() => {
-                dispatch(filtersActions.resetOtherFilters());
-                localStorage.setItem('filterByState', 'false');
+                const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
+                const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
+                  homeFilterActions.filterInitialState;
+
+                if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
+                  dispatch(filtersActions.resetFilters());
+                  setFilters({
+                    ...homeFilterActions.filterInitialState,
+                  });
+                }
               }}
             >
               Clear Filters
@@ -243,8 +253,16 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
               }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
               onClick={() => {
-                dispatch(filtersActions.resetOtherFilters());
-                localStorage.setItem('filterByState', 'false');
+                const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
+                const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
+                  homeFilterActions.filterInitialState;
+
+                if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
+                  dispatch(filtersActions.resetFilters());
+                  setFilters({
+                    ...homeFilterActions.filterInitialState,
+                  });
+                }
               }}
             >
               Clear Filters
@@ -269,7 +287,7 @@ export const printEndMessage = (
   const dispatch = useDispatch();
 
   const result = matchFilters(filtersInitialState, filterStates);
-
+  const filtersActions = homeFilterActions;
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
   // console.log(feedData?.hasNextPage, isPending, isLoading);
@@ -302,8 +320,16 @@ export const printEndMessage = (
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                   }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                   onClick={() => {
-                    dispatch(filtersActions.resetOtherFilters());
-                    localStorage.setItem('filterByState', 'false');
+                    const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
+                    const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
+                      homeFilterActions.filterInitialState;
+
+                    if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
+                      dispatch(filtersActions.resetOtherFilters());
+                      setFilters({
+                        ...homeFilterActions.filterInitialState,
+                      });
+                    }
                   }}
                 >
                   Clear Filters
@@ -331,8 +357,16 @@ export const printEndMessage = (
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                   }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                   onClick={() => {
-                    dispatch(filtersActions.resetOtherFilters());
-                    localStorage.setItem('filterByState', 'false');
+                    const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
+                    const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
+                      homeFilterActions.filterInitialState;
+
+                    if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
+                      dispatch(filtersActions.resetOtherFilters());
+                      setFilters({
+                        ...homeFilterActions.filterInitialState,
+                      });
+                    }
                   }}
                 >
                   Clear Filters
@@ -364,8 +398,16 @@ export const printEndMessage = (
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                   }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                   onClick={() => {
-                    dispatch(filtersActions.resetOtherFilters());
-                    localStorage.setItem('filterByState', 'false');
+                    const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
+                    const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
+                      homeFilterActions.filterInitialState;
+
+                    if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
+                      dispatch(filtersActions.resetOtherFilters());
+                      setFilters({
+                        ...homeFilterActions.filterInitialState,
+                      });
+                    }
                   }}
                 >
                   Clear Filters
@@ -385,11 +427,16 @@ export const printEndMessage = (
                   //   localStorage.setItem('filterByState', 'false');
                   // }}
                   onClick={() => {
-                    dispatch(filtersActions.resetOtherFilters());
-                    localStorage.setItem('filterByState', 'false');
-                    setFilters({
-                      ...filtersActions.filterInitialState,
-                    });
+                    const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
+                    const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
+                      homeFilterActions.filterInitialState;
+
+                    if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
+                      dispatch(filtersActions.resetOtherFilters());
+                      setFilters({
+                        ...homeFilterActions.filterInitialState,
+                      });
+                    }
                   }}
                 >
                   Clear Filters
@@ -411,8 +458,16 @@ export const printEndMessage = (
                     persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                   }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                   onClick={() => {
-                    dispatch(filtersActions.resetOtherFilters());
-                    localStorage.setItem('filterByState', 'false');
+                    const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
+                    const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
+                      homeFilterActions.filterInitialState;
+
+                    if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
+                      dispatch(filtersActions.resetOtherFilters());
+                      setFilters({
+                        ...homeFilterActions.filterInitialState,
+                      });
+                    }
                   }}
                 >
                   Clear Filters
