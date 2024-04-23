@@ -8,8 +8,9 @@ import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice
 import * as QuestServices from '../services/queries/quest';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { setFilterStates } from '../services/api/userAuth';
+import { setIsShowPlayer, setPlayingPlayerId } from '../features/quest/utilsSlice';
 
-function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShowPlayer }) {
+function Slider({ sliderLoading, setSliderloading }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -124,8 +125,8 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
       case 'newest-first':
         if (filterStates.filterBySort !== 'Newest First') {
           setSliderloading(true);
-          setPlayingPlayerId('');
-          setIsShowPlayer(false);
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
@@ -148,8 +149,8 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
       case 'most-popular':
         if (filterStates.filterBySort !== 'Most Popular') {
           setSliderloading(true);
-          setPlayingPlayerId('');
-          setIsShowPlayer(false);
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
@@ -173,8 +174,8 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
       case 'my-posts':
         if (filterStates.filterByScope !== 'Me') {
           setSliderloading(true);
-          setPlayingPlayerId('');
-          setIsShowPlayer(false);
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterBySort(''));
@@ -198,8 +199,8 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
       case 'bookmarks':
         if (filterStates.bookmarks !== true) {
           setSliderloading(true);
-          setPlayingPlayerId('');
-          setIsShowPlayer(false);
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterBySort(''));
           dispatch(filtersActions.setFilterByScope('All'));
@@ -223,8 +224,8 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
       case 'topics':
         if (filterStates.topics?.Block && filterStates.topics?.Block.list.includes(data)) return;
         setSliderloading(true);
-        setPlayingPlayerId('');
-        setIsShowPlayer(false);
+        dispatch(setIsShowPlayer(false));
+        dispatch(setPlayingPlayerId(''));
         dispatch(filtersActions.setBookmarks(false));
         dispatch(homeFilterActions.setBlockTopics([data]));
         dispatch(filtersActions.setFilterBySort(''));

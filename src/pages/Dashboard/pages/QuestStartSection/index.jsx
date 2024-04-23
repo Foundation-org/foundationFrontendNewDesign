@@ -30,8 +30,8 @@ const QuestStartSection = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
-  const [playerPlayingId, setPlayingPlayerId] = useState();
-  const [isShowPlayer, setIsShowPlayer] = useState(false);
+  // const [playerPlayingId, setPlayingPlayerId] = useState();
+  // const [isShowPlayer, setIsShowPlayer] = useState(false);
   // Pagination
   const pageLimit = 5;
   const [pagination, setPagination] = useState({
@@ -365,12 +365,7 @@ const QuestStartSection = () => {
           <SidebarLeft />
         </div>
         <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-155.5px)] min-h-[calc(100dvh-155.5px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100dvh-70px)] tablet:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
-          <Slider
-            sliderLoading={sliderLoading}
-            setSliderloading={setSliderloading}
-            setPlayingPlayerId={setPlayingPlayerId}
-            setIsShowPlayer={setIsShowPlayer}
-          />
+          <Slider sliderLoading={sliderLoading} setSliderloading={setSliderloading} />
           <InfiniteScroll
             dataLength={allData?.length}
             next={fetchMoreData}
@@ -413,26 +408,22 @@ const QuestStartSection = () => {
             </div>
           </InfiniteScroll>
         </div>
+        {console.log(questUtils)}
         {/* <SidebarRight /> */}
-        {isShowPlayer && (
-          <div className="absolute bottom-8 left-1/2 block -translate-x-1/2 laptop:hidden">
+        {questUtils.isShowPlayer && (
+          <div className="absolute bottom-8 left-1/2 block -translate-x-1/2 tablet:hidden">
             <div className="relative">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
                 alt="mediaCloseIcon"
                 className="absolute -right-2 top-3 h-6 w-6 cursor-pointer text-black dark:text-white"
                 onClick={() => {
-                  setIsShowPlayer(false);
-                  setPlayingPlayerId('');
+                  dispatch(questUtilsActions.setIsShowPlayer(false));
+                  dispatch(questUtilsActions.setPlayingPlayerId(''));
                 }}
               />
             </div>
-            <MediaControls
-            // scrollToPlayingCard={scrollToPlayingCard}
-            // toggleMedia={toggleMedia}
-            // playerPlayingId={playerPlayingId}
-            // isPlaying={isPlaying}
-            />
+            <MediaControls />
           </div>
         )}
       </div>
