@@ -8,8 +8,11 @@ import SidebarLeft from './SidebarLeft';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../../features/auth/authSlice';
 import api from '../../../services/api/Axios';
+import { useLocation } from 'react-router-dom';
 
 export default function TreasuryAndBalance({ children }) {
+  const location = useLocation();
+  console.log('🚀 ~ TreasuryAndBalance ~ location:', location);
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [treasuryAmount, setTreasuryAmount] = useState(0);
@@ -72,9 +75,79 @@ export default function TreasuryAndBalance({ children }) {
   }, []);
 
   return (
-    <div className="mx-auto flex w-full max-w-[1440px] justify-between">
-      <div>
-        <SidebarLeft />
+    <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between tablet:flex-row">
+      {/* Mobile TopBar */}
+      {location.pathname !== '/dashboard' && (
+        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white px-5 tablet:hidden">
+          <div className="h-fit rounded-[15px] bg-white dark:bg-[#000]">
+            <div className="flex items-center gap-2">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
+                alt="badge"
+                className="size-[25px]"
+              />
+              <div className="flex flex-col gap-1">
+                <h4 className="heading">Treasury</h4>
+                <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
+                  {treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="h-fit rounded-[15px] bg-white dark:bg-[#000]">
+            {persistedUserInfo.role !== 'user' ? (
+              <div className="flex cursor-pointer items-center gap-2">
+                <div className="relative h-fit w-fit">
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
+                    alt="badge"
+                    className="h-[25px] w-5"
+                  />
+                  <p className="transform-center absolute z-50 pb-3 text-[20px] font-medium leading-normal text-white">
+                    G
+                  </p>
+                </div>
+                <div>
+                  <h4 className="heading">Guest User</h4>
+                  <div className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
+                    <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
+                  </div>
+                  <div onClick={handleGuestLogout}>
+                    <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Create Account</Anchor>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div
+                className="flex cursor-pointer items-center gap-2"
+                onClick={() => {
+                  navigate('/dashboard/profile');
+                }}
+              >
+                <div className="relative flex items-center justify-center">
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
+                    alt="badge"
+                    className="h-[25px] w-5"
+                  />
+                  <p className="absolute bottom-2 z-50 text-[9.5px] font-medium text-[#7A7016]">
+                    {persistedUserInfo?.badges?.length}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <h4 className="heading">My Balance</h4>
+                  <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
+                    {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+      {/* Desktop */}
+      <div className="hidden tablet:block">
         <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
           <div className="flex items-center gap-[15px]">
             <img
@@ -90,9 +163,11 @@ export default function TreasuryAndBalance({ children }) {
             </div>
           </div>
         </div>
+        {location.pathname !== '/dashboard/quest' && <SidebarLeft />}
       </div>
-      {children} {/* Guest or User Balance */}
-      <div>
+      {children}
+      {/* Right Side */}
+      <div className="hidden tablet:block">
         <div className="mr-[31px] mt-5 hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
           {persistedUserInfo.role !== 'user' ? (
             <div className="flex cursor-pointer items-center gap-[15px]">
@@ -142,7 +217,7 @@ export default function TreasuryAndBalance({ children }) {
             </div>
           )}
         </div>
-        <SidebarRight />
+        {location.pathname !== '/dashboard/quest' && <SidebarRight />}
       </div>
     </div>
   );

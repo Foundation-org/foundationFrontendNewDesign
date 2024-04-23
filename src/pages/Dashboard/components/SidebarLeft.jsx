@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from '@tanstack/react-query';
 
 // components
-import Dropdown2 from '../../../components/Dropdown2';
+// import Dropdown2 from '../../../components/Dropdown2';
 
 // extras
 import * as homeFilterActions from '../../../features/sidebar/filtersSlice';
@@ -12,12 +12,13 @@ import * as bookmarkFiltersActions from '../../../features/sidebar/bookmarkFilte
 
 // icons
 import { GrClose } from 'react-icons/gr';
-import { setBookmarkFilterStates, setFilterStates } from '../../../services/api/userAuth';
+import { setFilterStates } from '../../../services/api/userAuth';
+// import { setBookmarkFilterStates } from '../../../services/api/userAuth';
 import { setPlayingPlayerId, setIsShowPlayer, getQuestUtils } from '../../../features/quest/utilsSlice';
 import { useDebounce } from '../../../utils/useDebounce';
 import Ratings from '../../../components/dialogue-boxes/Ratings';
 import MediaControls from '../../../components/MediaControls';
-import { isEqual } from 'lodash';
+// import { isEqual } from 'lodash';
 
 const SidebarLeft = () => {
   const dispatch = useDispatch();
@@ -169,7 +170,7 @@ const SidebarLeft = () => {
       />
       <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
         <div className="relative">
-          <div className="relative h-[45px] w-[212px]">
+          <div className="relative h-[45px] w-full">
             <input
               type="text"
               id="floating_outlined"
@@ -312,9 +313,9 @@ const SidebarLeft = () => {
           </div>
         </div> */}
 
-      <div>
+      <div className="">
         {questUtilsState.isShowPlayer && (
-          <div className="hidden laptop:block">
+          <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
             <div className="relative">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
@@ -330,8 +331,7 @@ const SidebarLeft = () => {
           </div>
         )}
         {/* sidebar mobile */}
-        <div className="block border-b-4 border-[#F3F3F3] bg-white px-[15px] py-[10px] tablet:px-[37px] tablet:py-[26px] laptop:hidden dark:bg-[#0A0A0C]">
-          <div className="mt-[10px] flex items-end justify-between gap-[6px]">
+        {/*  <div className="mt-[10px] flex items-end justify-between gap-[6px]">
             <button
               className={`${
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
@@ -340,9 +340,9 @@ const SidebarLeft = () => {
                 showRatingDialogue();
               }}
             >
-              Rating
+              Filters
             </button>
-            <Dropdown2
+             <Dropdown2
               label={'Status'}
               title={filterStates.filterByStatus ? filterStates.filterByStatus : 'All'}
               items={['All', 'Not Participated', 'Participated']}
@@ -406,8 +406,8 @@ const SidebarLeft = () => {
                   selectedBtnId: localStorage.removeItem('selectedButtonId'),
                 });
               }}
-            />
-            <button
+            /> 
+             <button
               className={`${
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
               }  inset-0 w-fit whitespace-nowrap rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner tablet:w-full tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
@@ -420,14 +420,25 @@ const SidebarLeft = () => {
               }}
             >
               Clear Filters
+            </button> 
+          </div>*/}
+        <div className="block bg-white px-[15px] py-[10px] tablet:px-[37px] tablet:py-[26px] laptop:hidden dark:bg-[#0A0A0C]">
+          <div className="flex h-[23px] items-center justify-between gap-2">
+            <button
+              className={`${
+                persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+              }  inset-0 w-[75px] text-nowrap rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner tablet:w-full tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+              onClick={() => {
+                showRatingDialogue();
+              }}
+            >
+              Filters
             </button>
-          </div>
-          <div className="mt-3 flex items-center justify-between gap-2 tablet:mt-[21px] tablet:gap-[13px]">
-            <div className="relative w-full">
+            <div className="relative ">
               <input
                 type="text"
                 placeholder="Search here...."
-                className="h-[30px] w-full min-w-[215px] rounded-[8px] border-[0.59px] border-[#707175] bg-[#F6F6F6] px-[10px] text-[9px] font-normal text-[#858585] focus:outline-none tablet:h-[50.7px] tablet:text-[17.13px] dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
+                className="h-[23px] w-full min-w-[244px] max-w-[244px] rounded-[8px] border-[0.59px] border-[#707175] bg-[#F6F6F6] px-[10px] text-[9px] font-normal text-[#858585] focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
                 value={search}
                 onChange={handleSearch}
               />
