@@ -217,7 +217,7 @@ export default function HiddenPosts() {
         </div>
       </div>
 
-      <div className="no-scrollbar tablet:w-fulls mx-auto mt-5 flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] tablet:pt-[0.94rem] dark:bg-[#242424]">
+      <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] tablet:pt-[5.2px] dark:bg-[#242424]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -296,7 +296,7 @@ export default function HiddenPosts() {
             )
           }
           height={height}
-          className="no-scrollbar px-4 py-[10px] tablet:py-5"
+          className="no-scrollbar px-4 tablet:px-6"
         >
           <div
             id="section-1"

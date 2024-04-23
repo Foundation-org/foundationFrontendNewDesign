@@ -75,11 +75,16 @@ export const TypeFiltersList = [
 ];
 
 const FilterContainer = (props) => {
-  const { list, style } = props;
+  const { heading, list, style } = props;
+  const dispatch = useDispatch();
+  const filterStates = useSelector(homeFilterActions.getFilters);
+
+  console.log('first', filterStates);
+
   return (
     <div className="w-full">
       <div className="rounded-t-[15px] bg-[#DEE6F7] py-2">
-        <h1 className="text-center text-[12px] font-bold text-[#707175] tablet:text-[22px]">Status</h1>
+        <h1 className="text-center text-[12px] font-bold text-[#707175] tablet:text-[22px]">{heading}</h1>
       </div>
       <div
         className={` ${style === 'yes' ? 'grid h-[calc(125px-26px)] grid-cols-2' : 'flex h-[calc(100%-34px)]'} flex-col gap-[6px] rounded-b-[15px] border-x-[3px] border-b-[3px] border-[#DEE6F7] bg-[#FDFDFD] p-2 tablet:h-[calc(100%-49px)] tablet:gap-4 tablet:p-[15px]`}
@@ -87,7 +92,9 @@ const FilterContainer = (props) => {
         {list?.map((item) => (
           <div className="flex items-center gap-3 tablet:gap-6">
             <div className="flex size-4 items-center justify-center rounded-full border-2 border-[#525252] tablet:size-6">
-              <div className="size-2 rounded-full bg-[#525252] tablet:size-[14px]"></div>
+              {filterStates.filterByStatus === item.title ? (
+                <div className="size-2 rounded-full bg-[#525252] tablet:size-[14px]"></div>
+              ) : null}
             </div>
             <h3 className="whitespace-nowrap text-center text-[12px] font-normal leading-[12px] text-[#707175] tablet:text-[18px] tablet:font-semibold tablet:leading-[18px]">
               {item.title}
@@ -287,14 +294,14 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           Select your Filter Options
         </h1>
         <div className="mt-3 grid grid-cols-2 gap-[15px] tablet:mt-5 tablet:grid-cols-3">
-          <FilterContainer list={StatusFiltersList} />
-          <FilterContainer list={MediaFiltersList} />
+          <FilterContainer heading="Status" list={StatusFiltersList} />
+          <FilterContainer heading="Media" list={MediaFiltersList} />
           <div className="hidden tablet:block">
-            <FilterContainer list={TypeFiltersList} />
+            <FilterContainer heading="Type" list={TypeFiltersList} />
           </div>
         </div>
         <div className="mt-3 block tablet:hidden">
-          <FilterContainer list={TypeFiltersList} style="yes" />
+          <FilterContainer heading="Type" list={TypeFiltersList} style="yes" />
         </div>
         <div className="mt-[10px] flex items-center justify-end gap-[25px] tablet:mt-[25px] tablet:gap-[35px]">
           <Button
@@ -303,11 +310,11 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
               handleClose();
             }}
           >
-            Cancel
+            Clear Filter
           </Button>
 
           <Button variant={'submit'} onClick={handleSubmit}>
-            Save
+            Apply
           </Button>
         </div>
       </div>

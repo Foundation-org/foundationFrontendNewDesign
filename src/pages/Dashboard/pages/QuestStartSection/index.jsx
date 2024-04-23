@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 // Components
 import QuestionCard from './components/QuestionCard';
 import SidebarLeft from '../../components/SidebarLeft';
-import SidebarRight from '../../components/SidebarRight';
+// import SidebarRight from '../../components/SidebarRight';
 import QuestionCardWithToggle from './components/QuestionCardWithToggle';
 import Slider from '../../../../components/Slider';
 
@@ -18,7 +18,7 @@ import * as questUtilsActions from '../../../../features/quest/utilsSlice';
 import MediaControls from '../../../../components/MediaControls';
 
 // Icons
-import { GrClose } from 'react-icons/gr';
+// import { GrClose } from 'react-icons/gr';
 import { setFilterStates } from '../../../../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 
@@ -360,7 +360,7 @@ const QuestStartSection = () => {
 
   return (
     <div className="w-full bg-[#F2F3F5] dark:bg-black">
-      <div className="relative mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
+      <div className="relative mx-auto flex w-full max-w-[778px] flex-col laptop:flex-row">
         <SidebarLeft
           scrollToPlayingCard={scrollToPlayingCard}
           toggleMedia={toggleMedia}
@@ -419,7 +419,7 @@ const QuestStartSection = () => {
             </div>
           </InfiniteScroll>
         </div>
-        <SidebarRight />
+        {/* <SidebarRight /> */}
         {isShowPlayer && (
           <div className="absolute bottom-8 left-1/2 block -translate-x-1/2 laptop:hidden">
             <div className="relative">

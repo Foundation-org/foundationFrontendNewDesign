@@ -165,7 +165,7 @@ const SidebarLeft = ({
   }, [ratingsDialogue]);
 
   return (
-    <>
+    <div>
       <Ratings
         modalVisible={ratingsDialogue}
         handleClose={hideRatingDialogue}
@@ -173,67 +173,65 @@ const SidebarLeft = ({
         setSelectedOptions={setSelectedOptions}
         setFilters={setFilters}
       />
+
+      <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+        <div className="relative">
+          <div className="relative h-[45px] w-[212px]">
+            <input
+              type="text"
+              id="floating_outlined"
+              className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
+              value={search}
+              placeholder=""
+              onChange={handleSearch}
+            />
+            <label
+              htmlFor="floating_outlined"
+              className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2  text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
+            >
+              Search
+            </label>
+          </div>
+          {search && (
+            <button
+              className="absolute right-3 top-4"
+              onClick={() => {
+                dispatch(filtersActions.setSearchData(''));
+                setSearch('');
+              }}
+            >
+              <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
+            </button>
+          )}
+          {!search && (
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
+              alt="search"
+              className="absolute right-3 top-4 h-4 w-4"
+            />
+          )}
+        </div>
+      </div>
+
+      <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+        <div className="flex w-full flex-col items-center justify-center gap-[25px]">
+          <button
+            onClick={() => {
+              showRatingDialogue();
+            }}
+            className={`${
+              persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+            } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
+          >
+            {/* Topics */}
+            Filters
+          </button>
+        </div>
+      </div>
+
       <div>
         <div className="no-scrollbar mt-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] flex-col items-center justify-between rounded-[17.928px] bg-white py-8 text-[#535353] laptop:flex 5xl:w-[23rem] 5xl:min-w-[23rem] dark:bg-[#000] dark:text-white">
           <div className="flex flex-col items-center">
-            <div className="flex w-full flex-col items-center justify-center gap-[25px] border-b-[1.32px] border-[#9C9C9C] pb-[25px]">
-              <div className="relative">
-                <div className="relative h-[45px] w-[212px]">
-                  <input
-                    type="text"
-                    id="floating_outlined"
-                    className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-                    value={search}
-                    placeholder=""
-                    onChange={handleSearch}
-                  />
-                  <label
-                    htmlFor="floating_outlined"
-                    className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2  text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
-                  >
-                    Search
-                  </label>
-                </div>
-                {search && (
-                  <button
-                    className="absolute right-3 top-4"
-                    onClick={() => {
-                      dispatch(filtersActions.setSearchData(''));
-                      setSearch('');
-                    }}
-                  >
-                    <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
-                  </button>
-                )}
-                {!search && (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
-                    alt="search"
-                    className="absolute right-3 top-4 h-4 w-4"
-                  />
-                )}
-              </div>
-              <div className="h-[1.325px] w-full bg-[#9C9C9C]" />
-              <button
-                onClick={() => {
-                  showRatingDialogue();
-                }}
-                className={`${
-                  persistedTheme === 'dark' ? 'bg-[#EDEDED]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                } w-[212px] rounded-[9.338px] px-5 py-3 text-[18px] font-medium leading-[18px] text-white focus:outline-none dark:text-[#707175]`}
-              >
-                {/* Topics */}
-                Rating
-              </button>
-            </div>
-            <h1 className="flex w-[212px] items-center gap-2 pb-[38px] pt-[24px] text-[22px] font-[500] leading-none text-[#888] dark:text-white">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/filter.svg`}
-                alt="filter"
-                className="h-[1.188rem] w-[1.188rem]"
-              />
-              Filters
-            </h1>
             <div className="flex flex-col gap-[3vh]">
               <Dropdown2
                 label={'Status'}
@@ -479,7 +477,7 @@ const SidebarLeft = ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

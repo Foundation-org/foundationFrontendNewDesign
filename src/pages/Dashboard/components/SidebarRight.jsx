@@ -17,7 +17,6 @@ const SidebarRight = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [treasuryAmount, setTreasuryAmount] = useState(0);
 
   const sidebarList = [
     {
@@ -118,63 +117,6 @@ const SidebarRight = () => {
     },
   ];
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-  });
-
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
-      if (resp?.status === 200) {
-        // Cookie Calling
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          localStorage.setItem('userData', JSON.stringify(resp?.data));
-          // Set into local storage
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        // LocalStorage Calling
-        if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-          if (res?.data?.requiredAction) {
-            setModalVisible(true);
-          }
-        }
-
-        if (resp?.data?.requiredAction) {
-          setModalVisible(true);
-        }
-      }
-
-      // setResponse(resp?.data);
-    } catch (e) {
-      console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
-
-  const getTreasuryAmount = async () => {
-    try {
-      const res = await api.get(`/treasury/get`);
-      if (res.status === 200) {
-        localStorage.setItem('treasuryAmount', res.data.data);
-        setTreasuryAmount(res.data.data);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-    }
-  };
-
-  useEffect(() => {
-    handleUserInfo();
-    getTreasuryAmount();
-  }, []);
-
   const { mutateAsync: createGuest } = useMutation({
     mutationFn: createGuestMode,
     onSuccess: (resp) => {
@@ -222,132 +164,66 @@ const SidebarRight = () => {
   };
 
   return (
-    <>
-      <div className="no-scrollbar my-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto rounded-[15px] bg-white py-8 pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
-        <PopUp
-          logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email.svg`}
-          title={'Email'}
-          open={modalVisible}
-          closeIcon={true}
-        >
-          <div className="flex flex-col items-center pb-[32px] pt-2">
-            <p className="text-center text-[8px] font-semibold text-[#838383] tablet:text-[25px]">
-              {persistedUserInfo?.email}
-            </p>
-            <p className="mb-[10px] mt-[10px] text-center text-[10px] font-medium text-[#838383] tablet:mb-[22px] tablet:mt-[14px] tablet:text-[25px]">
-              Please select if this email is personal or professional.
-            </p>
-            <div className="flex items-center justify-center gap-[30px] tablet:gap-[65px]">
-              <Button
-                variant="personal-work"
-                className="gap-2 tablet:gap-[15px]"
-                onClick={() => handleEmailType('personal')}
-              >
-                <img
-                  className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10"
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/personal.svg`}
-                  alt="personal"
-                />
-                Personal
-              </Button>
-              <Button
-                variant="personal-work"
-                className="gap-2 tablet:gap-[15px]"
-                onClick={() => handleEmailType('work')}
-              >
-                <img
-                  className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10"
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/work.svg`}
-                  alt="work"
-                />{' '}
-                Work
-              </Button>
-            </div>
-          </div>
-        </PopUp>
-        {/* My Balance / Guest */}
-        {persistedUserInfo.role !== 'user' ? (
-          <div className="mb-[15px] flex cursor-pointer items-center gap-[15px]">
-            <div className="relative h-fit w-fit">
+    <div className="no-scrollbar my-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto rounded-[15px] bg-white py-[25px] pl-[1.3rem] pr-[2.1rem] tablet:my-[15px] laptop:block dark:bg-[#000]">
+      <PopUp
+        logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email.svg`}
+        title={'Email'}
+        open={modalVisible}
+        closeIcon={true}
+      >
+        <div className="flex flex-col items-center pb-[32px] pt-2">
+          <p className="text-center text-[8px] font-semibold text-[#838383] tablet:text-[25px]">
+            {persistedUserInfo?.email}
+          </p>
+          <p className="mb-[10px] mt-[10px] text-center text-[10px] font-medium text-[#838383] tablet:mb-[22px] tablet:mt-[14px] tablet:text-[25px]">
+            Please select if this email is personal or professional.
+          </p>
+          <div className="flex items-center justify-center gap-[30px] tablet:gap-[65px]">
+            <Button
+              variant="personal-work"
+              className="gap-2 tablet:gap-[15px]"
+              onClick={() => handleEmailType('personal')}
+            >
               <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
-                alt="badge"
-                className="tablet:h-[47px] tablet:w-[38px]"
+                className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/personal.svg`}
+                alt="personal"
               />
-              <p className="transform-center absolute z-50 pb-3 text-[20px] font-medium leading-normal text-white">G</p>
-            </div>
-            <div>
-              <h4 className="heading">Guest User</h4>
-              <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-                <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
-              </div>
-              <div onClick={handleGuestLogout}>
-                <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Create Account</Anchor>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div
-            className="mb-[15px] flex cursor-pointer items-center gap-[15px]"
-            onClick={() => {
-              navigate('/dashboard/profile');
-            }}
-          >
-            <div className="relative flex size-[47px] items-center justify-center">
+              Personal
+            </Button>
+            <Button variant="personal-work" className="gap-2 tablet:gap-[15px]" onClick={() => handleEmailType('work')}>
               <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
-                alt="badge"
-                className="tablet:h-[47px] tablet:w-[38px]"
-              />
-              <p className="transform-center absolute z-50 pb-3 text-[20px] font-medium leading-normal text-[#7A7016]">
-                {persistedUserInfo?.badges?.length}
-              </p>
-            </div>
-            <div className="flex flex-col gap-1">
-              <h4 className="heading">My Balance</h4>
-              <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-                <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
-              </div>
-            </div>
-          </div>
-        )}
-        {/* Treasury */}
-        <div className="flex items-center gap-[15px]">
-          <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
-            alt="badge"
-            className="size-[47px]"
-          />
-          <div className="flex flex-col gap-1">
-            <h4 className="heading">Treasury</h4>
-            <p className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-              <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
-            </p>
+                className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/work.svg`}
+                alt="work"
+              />{' '}
+              Work
+            </Button>
           </div>
         </div>
-        <div className="my-[25px] h-[1.325px] bg-[#9C9C9C]" />
-        <p className="font-inter mb-[25px] text-center text-[10.79px] font-medium leading-[18px] text-[#616161] tablet:text-[18px] dark:text-[#D2D2D2]">
-          My Contributions
-        </p>
-        {sidebarList.map((item) => (
-          <div className={`flex items-center gap-4 ${item.id !== 1 && 'mt-[1.9vh]'}`} key={item.id}>
-            {persistedTheme === 'dark' ? (
-              <img src={item.icon} alt={item.alt} className="h-10 w-10" />
-            ) : (
-              <img src={item.iconLight} alt={item.alt} className="h-10 w-10" />
-            )}
+      </PopUp>
 
-            <div className="flex w-full items-center justify-between text-[14px] font-medium leading-5 text-[#7C7C7C] dark:text-[#878787]">
-              <div>
-                <h5>{item.title?.split('-')[0]}</h5>
-                <h5>{item.title?.split('-')[1]}</h5>
-              </div>
-              <h5 className="text-[22px] font-semibold">{formatCountNumber(item.value)}</h5>
+      <p className="font-inter mb-[25px] text-center text-[10.79px] font-medium leading-[18px] text-[#616161] tablet:text-[18px] dark:text-[#D2D2D2]">
+        My Contributions
+      </p>
+      {sidebarList.map((item) => (
+        <div className={`flex items-center gap-4 ${item.id !== 1 && 'mt-[1.6vh]'}`} key={item.id}>
+          {persistedTheme === 'dark' ? (
+            <img src={item.icon} alt={item.alt} className="h-10 w-10" />
+          ) : (
+            <img src={item.iconLight} alt={item.alt} className="h-10 w-10" />
+          )}
+
+          <div className="flex w-full items-center justify-between text-[14px] font-medium leading-5 text-[#7C7C7C] dark:text-[#878787]">
+            <div>
+              <h5>{item.title?.split('-')[0]}</h5>
+              <h5>{item.title?.split('-')[1]}</h5>
             </div>
+            <h5 className="text-[22px] font-semibold">{formatCountNumber(item.value)}</h5>
           </div>
-        ))}
-      </div>
-    </>
+        </div>
+      ))}
+    </div>
   );
 };
 
