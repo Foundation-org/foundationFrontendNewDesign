@@ -2,6 +2,8 @@ import { FaSpinner } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import { isEqual } from 'lodash';
+import { setFilterStates } from '../services/api/userAuth';
+import { useMutation } from '@tanstack/react-query';
 
 const filtersInitialState = {
   filterByStatus: '',
@@ -195,12 +197,13 @@ function matchFilters(filters, state) {
   return true;
 }
 
-export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates, dispatch) => {
+export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates, dispatch, setFilters) => {
   const filtersActions = homeFilterActions;
   const result = matchFilters(filtersInitialState, filterStates);
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
   const isOtherCategory = filterStates?.topics?.Block?.list[0];
+
   return (
     <div className="my-[15vh] flex  flex-col items-center justify-center">
       {persistedTheme === 'dark' ? (
@@ -231,9 +234,9 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
                   homeFilterActions.filterInitialState;
 
                 if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
-                  dispatch(filtersActions.resetFilters());
+                  dispatch(filtersActions.resetOtherFilters());
                   setFilters({
-                    ...homeFilterActions.filterInitialState,
+                    ...homeFilterActions.resetOtherStates,
                   });
                 }
               }}
@@ -258,9 +261,9 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
                   homeFilterActions.filterInitialState;
 
                 if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
-                  dispatch(filtersActions.resetFilters());
+                  dispatch(filtersActions.resetOtherFilters());
                   setFilters({
-                    ...homeFilterActions.filterInitialState,
+                    ...homeFilterActions.resetOtherStates,
                   });
                 }
               }}
@@ -327,7 +330,7 @@ export const printEndMessage = (
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters({
-                        ...homeFilterActions.filterInitialState,
+                        ...homeFilterActions.resetOtherStates,
                       });
                     }
                   }}
@@ -364,7 +367,7 @@ export const printEndMessage = (
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters({
-                        ...homeFilterActions.filterInitialState,
+                        ...homeFilterActions.resetOtherStates,
                       });
                     }
                   }}
@@ -386,7 +389,7 @@ export const printEndMessage = (
           )}
         </div>
       ) : !filterStates.searchData && allData.length === 0 ? (
-        <>{printNoRecordsMessage(persistedTheme, isBookmarked, filterStates, dispatch)}</>
+        <>{printNoRecordsMessage(persistedTheme, isBookmarked, filterStates, dispatch, setFilters)}</>
       ) : !filterStates.searchData ? (
         <div className="text-center text-[4vw] tablet:text-[2vw]">
           {isBookmarked ? (
@@ -405,7 +408,7 @@ export const printEndMessage = (
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters({
-                        ...homeFilterActions.filterInitialState,
+                        ...homeFilterActions.resetOtherStates,
                       });
                     }
                   }}
@@ -434,7 +437,7 @@ export const printEndMessage = (
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters({
-                        ...homeFilterActions.filterInitialState,
+                        ...homeFilterActions.resetOtherStates,
                       });
                     }
                   }}
@@ -461,11 +464,10 @@ export const printEndMessage = (
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                       homeFilterActions.filterInitialState;
-
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters({
-                        ...homeFilterActions.filterInitialState,
+                        ...homeFilterActions.resetOtherStates,
                       });
                     }
                   }}

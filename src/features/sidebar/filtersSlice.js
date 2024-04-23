@@ -22,7 +22,7 @@ const resetState = {
   clearFilter: false,
 };
 
-const resetOtherStates = {
+export const resetOtherStates = {
   filterByStatus: '',
   filterByType: '',
   filterByScope: '',
