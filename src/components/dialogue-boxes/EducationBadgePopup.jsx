@@ -357,7 +357,11 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const verifyDegree = async (toVerify) => {
     setHollow(true);
     const response = await api.get(`/ai-validation/7?userMessage=${toVerify}`);
-    if (response.data.message === 'Rejected') {
+    if (
+      response.data.message === 'Rejected' ||
+      response.data.message === 'Rejected.' ||
+      response.data.status === 'VIOLATION'
+    ) {
       setIsError(true);
       setHollow(true);
     } else {
@@ -372,7 +376,11 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const verifyFieldOfStudy = async (toVerify) => {
     setHollow(true);
     const response = await api.get(`/ai-validation/8?userMessage=${toVerify}`);
-    if (response.data.message === 'Rejected') {
+    if (
+      response.data.message === 'Rejected' ||
+      response.data.message === 'Rejected.' ||
+      response.data.status === 'VIOLATION'
+    ) {
       setIsError2(true);
       setHollow(true);
     } else {
