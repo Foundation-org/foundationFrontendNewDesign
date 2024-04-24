@@ -416,7 +416,7 @@ export default function RedemptionCenter() {
                     <div className="flex items-center justify-end gap-[10px] tablet:gap-[25px]">
                       <Button
                         variant="share-link"
-                        className={'max-w-[141px] tablet:h-[30px]'}
+                        className={'max-w-[141px] tablet:h-[30px] laptop:h-[50px]'}
                         onClick={() => {
                           handleShareLink(item.code);
                           toast.success('Share Link copied!');
