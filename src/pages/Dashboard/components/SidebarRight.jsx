@@ -159,10 +159,6 @@ const SidebarRight = () => {
     }
   };
 
-  const handleGuestLogout = async () => {
-    navigate('/guest-signup');
-  };
-
   return (
     <div className="no-scrollbar my-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto rounded-[15px] bg-white py-[25px] pl-[1.3rem] pr-[2.1rem] tablet:my-[15px] laptop:block dark:bg-[#000]">
       <PopUp

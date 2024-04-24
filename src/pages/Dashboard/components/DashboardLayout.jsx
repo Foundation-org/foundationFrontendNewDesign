@@ -12,6 +12,7 @@ import { hiddenPostFilters, updateSearch } from '../../../features/profile/hidde
 import { GrClose } from 'react-icons/gr';
 import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
 import api from '../../../services/api/Axios';
+import Anchor from '../../../components/Anchor';
 
 export default function DashboardLayout({ children }) {
   const location = useLocation();
@@ -77,6 +78,10 @@ export default function DashboardLayout({ children }) {
     handleUserInfo();
     getTreasuryAmount();
   }, []);
+
+  const handleGuestLogout = async () => {
+    navigate('/guest-signup');
+  };
 
   return (
     <div className="mx-auto w-full max-w-[1440px]">
