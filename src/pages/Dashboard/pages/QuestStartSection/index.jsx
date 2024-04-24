@@ -394,7 +394,6 @@ const QuestStartSection = () => {
                   .filter((item) => !questUtils.hiddenPosts.includes(item._id))
                   ?.map((item, index) => (
                     <div key={index + 1} id={item._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
-                      {/* {filterStates.expandedView ? ( */}
                       <QuestionCardWithToggle
                         questStartData={item}
                         isBookmarked={bookmarkedData?.data
@@ -403,10 +402,6 @@ const QuestStartSection = () => {
                         setPagination={setPagination}
                         setSubmitResponse={setSubmitResponse}
                         playing={item._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
-                        // isPlaying={isPlaying}
-                        // setIsPlaying={setIsPlaying}
-                        // setPlayingPlayerId={setPlayingPlayerId}
-                        // setIsShowPlayer={setIsShowPlayer}
                       />
                     </div>
                   ))}

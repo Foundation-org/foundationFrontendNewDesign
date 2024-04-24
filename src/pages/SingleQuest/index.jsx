@@ -8,7 +8,6 @@ import { getQuestById, getQuestByUniqueShareLink } from '../../services/api/home
 
 // components
 import Topbar from '../Dashboard/components/Topbar';
-import SidebarRight from '../Dashboard/components/SidebarRight';
 
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import { createGuestMode, userInfo, userInfoById } from '../../services/api/userAuth';
@@ -19,6 +18,7 @@ import SEO from '../../utils/SEO';
 import { Helmet } from 'react-helmet-async';
 import WelcomePopup from '../../components/dialogue-boxes/WelcomePopup';
 import { questImpression } from '../../services/api/questsApi';
+import DashboardLayout from '../Dashboard/components/DashboardLayout';
 
 const SingleQuest = () => {
   let { id } = useParams();
@@ -183,12 +183,12 @@ const SingleQuest = () => {
         <meta name="google" content="notranslate"></meta>
       </Helmet>
       <Topbar />
-      <div className="bg-[#F2F3F5]">
-        <div className="mx-auto flex h-[calc(100vh-58px)] max-w-[1378px] tablet:h-[calc(100vh-70px)]">
-          <div className="no-scrollbar w-full overflow-y-auto py-7 tablet:py-[3.81rem]">
+      <div className="w-full bg-[#F2F3F5]">
+        <DashboardLayout>
+          <div className="no-scrollbar h-[calc(100vh-58px)] w-full overflow-y-auto py-2 tablet:h-[calc(100vh-101px)] laptop:h-[calc(100vh-70px)] laptop:py-5">
             {error !== '' ? <p className="text-center text-[24px] font-bold tablet:text-[25px]">{error}</p> : null}
             {(singleQuestResp || submitResponse) && (
-              <div className="mx-auto max-w-[730px] px-[25px] tablet:px-[0px] ">
+              <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px] ">
                 <QuestionCardWithToggle
                   questStartData={submitResponse ? submitResponse : singleQuestResp}
                   isBookmarked={false}
@@ -201,8 +201,7 @@ const SingleQuest = () => {
               </div>
             )}
           </div>
-          <SidebarRight />
-        </div>
+        </DashboardLayout>
       </div>
     </>
   );

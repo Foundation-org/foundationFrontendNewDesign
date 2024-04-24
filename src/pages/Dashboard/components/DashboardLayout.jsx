@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import SidebarLeft from './SidebarLeft';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../../features/auth/authSlice';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
 import { GrClose } from 'react-icons/gr';
 import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
@@ -15,7 +15,9 @@ import api from '../../../services/api/Axios';
 import Anchor from '../../../components/Anchor';
 
 export default function DashboardLayout({ children }) {
+  const navigate = useNavigate();
   const location = useLocation();
+  console.log('🚀 ~ DashboardLayout ~ location:', location);
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
@@ -114,18 +116,20 @@ export default function DashboardLayout({ children }) {
                       alt="badge"
                       className="h-[25px] w-5"
                     />
-                    <p className="transform-center absolute z-50 pb-3 text-[20px] font-medium leading-normal text-white">
+                    <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
                       G
                     </p>
                   </div>
-                  <div>
+                  <div className="flex flex-col">
                     <h4 className="heading">Guest User</h4>
-                    <div className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                      <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
-                    </div>
-                    <div onClick={handleGuestLogout}>
-                      <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Create Account</Anchor>
-                    </div>
+                    <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
+                      {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
+                    </p>
+                    {/* <div className="" onClick={handleGuestLogout}> */}
+                    <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]" onClick={handleGuestLogout}>
+                      Create Account
+                    </Anchor>
+                    {/* </div> */}
                   </div>
                 </div>
               ) : (
@@ -179,7 +183,10 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/hidden-posts' &&
             location.pathname !== '/dashboard/profile/shared-links' &&
             location.pathname !== '/dashboard/treasury' &&
-            location.pathname !== '/dashboard/treasury/ledger' && <SidebarLeft />}
+            location.pathname !== '/dashboard/treasury/ledger' &&
+            location.pathname !== '/quest/isfullscreen' &&
+            location.pathname !== '/shared-links/result' &&
+            !location.pathname.startsWith('/p/') && <SidebarLeft />}
 
           {/* HiddenPost Search */}
           {location.pathname === '/dashboard/profile/hidden-posts' && (
@@ -289,10 +296,12 @@ export default function DashboardLayout({ children }) {
                 </div>
                 <div>
                   <h4 className="heading">Guest User</h4>
-                  <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-                    <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
-                  </div>
-                  <div onClick={handleGuestLogout}>
+                  {persistedUserInfo?.balance && (
+                    <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
+                      <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
+                    </div>
+                  )}
+                  <div className="h-[10px]" onClick={handleGuestLogout}>
                     <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Create Account</Anchor>
                   </div>
                 </div>

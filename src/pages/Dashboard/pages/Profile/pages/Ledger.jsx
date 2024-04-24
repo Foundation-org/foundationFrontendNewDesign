@@ -201,7 +201,7 @@ export default function BasicTable() {
           >
             <thead
               style={{ width: table.getTotalSize() }}
-              className="text-[0.4rem] text-[#bbb] md:text-[.88rem] laptop:text-[1.2rem] dark:text-[#B5B7C0]"
+              className="text-[0.4rem] text-[#bbb] tablet:text-[1rem] laptop:text-[1.2rem] dark:text-[#B5B7C0]"
             >
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
@@ -256,7 +256,7 @@ export default function BasicTable() {
                 </tr>
               ))}
             </thead>
-            <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] md:text-[1.25rem] tablet:text-[0.875rem]">
+            <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] tablet:text-[1rem] laptop:text-[0.875rem]">
               {table.getRowModel().rows.length === 0 ? (
                 <h4 className="mt-12 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem]">No results found</h4>
               ) : (
@@ -267,7 +267,7 @@ export default function BasicTable() {
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
-                        className="py-1 text-[0.4rem] md:text-[.88rem] tablet:py-3 laptop:text-[1.2rem]"
+                        className="py-1 text-[0.4rem] tablet:py-3 tablet:text-[.88rem] laptop:text-[1.2rem]"
                         // key={cell.id}
                         // style={{ width: cell.column.getSize() }}
                         {...{
