@@ -416,7 +416,7 @@ export default function RedemptionCenter() {
                     <div className="flex items-center justify-end gap-[10px] tablet:gap-[25px]">
                       <Button
                         variant="share-link"
-                        className={'max-w-[141px] tablet:h-[30px] laptop:h-[50px]'}
+                        className={'max-w-[141px] tablet:h-[50px]'}
                         onClick={() => {
                           handleShareLink(item.code);
                           toast.success('Share Link copied!');
@@ -483,7 +483,7 @@ export default function RedemptionCenter() {
               {history?.data?.data?.map((item, index) => (
                 <div key={index + 1}>
                   <div
-                    className={`flex flex-col justify-between gap-2 py-2  pl-[13px] pr-4 tablet:h-[67px]  tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                    className={`flex flex-col justify-between gap-2 py-2  pl-[13px] pr-4 tablet:h-[112px] tablet:gap-4  tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:h-[67px] laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
                   >
                     <div className="flex items-center gap-[10px] tablet:gap-[35px]">
                       <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
