@@ -1,4 +1,4 @@
-import { soundcloudUnique } from '../../constants/addMedia';
+import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
 import { extractPartFromUrl } from '../../utils/embeddedutils';
 import api from './Axios';
 import { toast } from 'sonner';
@@ -181,6 +181,11 @@ async function getFullSoundcloudUrlFromShortUrl(url) {
   }
 }
 
+// Function to check if the URL matches any of the YouTube base URLs
+function isYouTubeURL(URL, baseURLs) {
+  return baseURLs.some((baseURL) => URL.includes(baseURL));
+}
+
 export const urlDuplicateCheck = async ({ id, url }) => {
   let linkId = id;
   try {
@@ -196,10 +201,13 @@ export const urlDuplicateCheck = async ({ id, url }) => {
 
     const constraintResponses = await api.get(`/infoquestions/checkMediaDuplicateUrl/${linkId}`);
 
-    let response = await checkVideoAgeRestriction(linkId);
+    let isAdultContent = false;
+    if (isYouTubeURL(url, youtubeBaseURLs)) {
+      let response = await checkVideoAgeRestriction(linkId);
 
-    const contentRating = response?.items[0]?.contentDetails?.contentRating?.ytRating;
-    const isAdultContent = contentRating === 'ytAgeRestricted';
+      const contentRating = response?.items[0]?.contentDetails?.contentRating?.ytRating;
+      isAdultContent = contentRating === 'ytAgeRestricted';
+    }
 
     if (isAdultContent === false) {
       if (apiResp) {
