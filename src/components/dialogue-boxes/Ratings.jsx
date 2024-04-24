@@ -358,14 +358,14 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Filter Options
         </h1>
-        <div className="mt-3 grid grid-cols-2 gap-[15px] tablet:mt-5 tablet:grid-cols-3">
+        <div className="mt-3 grid grid-cols-2 gap-[15px] tablet:mt-5 laptop:grid-cols-3">
           <FilterContainer heading="Status" list={StatusFiltersList} setFilters={setFilters} />
           <FilterContainer heading="Media" list={MediaFiltersList} setFilters={setFilters} />
-          <div className="hidden tablet:block">
+          <div className="hidden laptop:block">
             <FilterContainer heading="Type" list={TypeFiltersList} setFilters={setFilters} />
           </div>
         </div>
-        <div className="mt-3 block tablet:hidden">
+        <div className="mt-3 block laptop:hidden">
           <FilterContainer heading="Type" list={TypeFiltersList} style="yes" setFilters={setFilters} />
         </div>
         <div className="mt-[10px] flex items-center justify-end gap-[25px] tablet:mt-[25px] tablet:gap-[35px]">
