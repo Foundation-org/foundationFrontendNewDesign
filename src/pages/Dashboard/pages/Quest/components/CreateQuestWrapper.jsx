@@ -29,19 +29,19 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
 
   return (
     <>
-      <h4 className="mt-[10.5px] text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px]">
-        {msg}
-      </h4>
       <div
         className={`${
           persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto my-[10px] max-w-[85%] rounded-[8.006px] bg-white py-[8.75px] tablet:my-[15px] tablet:rounded-[26px] tablet:py-[27px] laptop:max-w-[1084px] laptop:pb-[30px] laptop:pt-[25px] dark:bg-[#141618]`}
+        } mx-auto mb-[10px] max-w-[90%] rounded-[8.006px] bg-white py-3 tablet:mb-[15px] tablet:max-w-[730px] tablet:rounded-[39px] tablet:py-[27px] laptop:py-[25px] dark:bg-[#141618]`}
       >
-        <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] dark:text-[#D8D8D8]">
+        <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] laptop:leading-[25px] dark:text-[#D8D8D8]">
           Create a {type}
         </h1>
+        <h4 className="mt-1 text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px] tablet:leading-[16px]">
+          {msg}
+        </h4>
         {getMediaStates?.isMedia.isMedia === false && getPicsMediaStates?.isPicMedia === false && (
-          <div className="tablet::gap-2 mb-2 ml-[21.55px] mt-[16px] flex items-center gap-1 px-2 tablet:ml-[60px] tablet:mt-[33px] laptop:gap-12">
+          <div className="mx-[30px] mt-3 flex items-center justify-between gap-1 tablet:mx-[50px] tablet:mt-[25px] tablet:gap-2 laptop:gap-12">
             <Button
               variant="addEmbeded"
               className="px-2 tablet:px-[25px]"
@@ -93,7 +93,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
         )}
         <AddMedia handleTab={handleTab} />
         <AddPictures />
-        <div className="w-[calc(100%-51.75px] mx-[22px] mt-2 flex tablet:mx-[60px] tablet:mt-[25px] tablet:pb-[13px]">
+        <div className="w-[calc(100%-51.75px] mx-[30px] mb-[10px] mt-3 flex tablet:mx-[50px] tablet:mb-7 tablet:mt-[15px]">
           <TextareaAutosize
             id="input-2"
             aria-label="multiple choice question"

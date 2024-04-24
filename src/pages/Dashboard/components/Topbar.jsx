@@ -36,7 +36,7 @@ const Topbar = () => {
 
   return (
     <div className="bg-[#389CE3]">
-      <div className="static mx-auto flex h-[58px] max-h-[58px] min-h-[58px] w-full max-w-[1378px] flex-col items-center justify-between pb-2 tablet:h-[116px] tablet:min-h-[116px] laptop:h-[92px] laptop:max-h-[70px] laptop:min-h-[70px] laptop:flex-row laptop:pb-0">
+      <div className="static mx-auto flex h-[58px] max-h-[58px] min-h-[58px] w-full max-w-[1378px] flex-col items-center justify-between pb-2 tablet:h-24 tablet:min-h-24 laptop:h-[92px] laptop:max-h-[70px] laptop:min-h-[70px] laptop:flex-row laptop:pb-0">
         {/* logo */}
         <div className="relative flex w-full items-center justify-between px-4 py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
           <Link
@@ -89,34 +89,36 @@ const Topbar = () => {
           )}
 
           <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
-            <div
-              className="flex cursor-pointer items-center gap-[2.4px] tablet:hidden"
-              onClick={() => {
-                navigate('/dashboard/profile');
-              }}
-            >
-              <div className="relative h-fit w-fit">
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
-                  alt="badge"
-                  className="h-[15px] w-3 tablet:h-[47px] tablet:w-[38px]"
-                />
-                <p className="transform-center absolute z-50 pb-[1px] pr-[1px] text-[7.5px] font-medium leading-normal text-[#7A7016] tablet:text-[20px]">
-                  {persistedUserInfo?.badges?.length}
+            {persistedUserInfo.role === 'user' && (
+              <div
+                className="flex cursor-pointer items-center gap-[2.4px] tablet:hidden"
+                onClick={() => {
+                  navigate('/dashboard/profile');
+                }}
+              >
+                <div className="relative h-fit w-fit">
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
+                    alt="badge"
+                    className="h-[15px] w-3 tablet:h-[47px] tablet:w-[38px]"
+                  />
+                  <p className="transform-center absolute z-50 pb-[1px] pr-[1px] text-[7.5px] font-medium leading-normal text-[#7A7016] tablet:text-[20px]">
+                    {persistedUserInfo?.badges?.length}
+                  </p>
+                </div>
+                <p className="font-inter hidden text-[7.5px] font-medium leading-[11.523px] text-white tablet:block tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
+                  {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
                 </p>
+                <div>
+                  <p className="font-inter text-[7.5px] font-medium leading-[7.5px] text-white dark:text-[#D2D2D2]">
+                    {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
+                  </p>
+                  <p className="font-inter text-[7.5px] font-medium leading-[7.5px] text-white dark:text-[#D2D2D2]">
+                    FDX
+                  </p>
+                </div>
               </div>
-              <p className="font-inter hidden text-[7.5px] font-medium leading-[11.523px] text-white tablet:block tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-                {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
-              </p>
-              <div>
-                <p className="font-inter text-[7.5px] font-medium leading-[7.5px] text-white dark:text-[#D2D2D2]">
-                  {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
-                </p>
-                <p className="font-inter text-[7.5px] font-medium leading-[7.5px] text-white dark:text-[#D2D2D2]">
-                  FDX
-                </p>
-              </div>
-            </div>
+            )}
             {/* <div
             className="relative cursor-pointer "
             onClick={() => toast.error("err coming soon")}

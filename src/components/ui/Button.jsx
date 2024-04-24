@@ -60,11 +60,14 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'share-link'
         ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] max-w-[10.8125rem] bg-[#BABABA] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
         : '',
+      variant === 'share-link-submit'
+        ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] max-w-[10.8125rem]  bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
+        : '',
       variant === 'submit-green'
         ? 'addoption-boxShadow h-[1.375rem] min-w-[4.875rem] bg-[#0FB063] px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:text-[1.25rem] laptop:px-[17px] '
         : '',
       variant === 'topics'
-        ? 'whitespace-nowrap px-[4.9px] py-[6.5px] text-[0.57944rem] font-semibold focus:outline-none focus:ring-0 tablet:px-[12px] tablet:py-[12px] tablet:text-[20px] tablet:leading-[24px]'
+        ? 'h-6 whitespace-nowrap border px-[4.9px] py-[6.5px] text-[0.57944rem] font-semibold focus:outline-none focus:ring-0 tablet:h-12 tablet:border-[1.86px] tablet:px-[12px] tablet:py-[13px] tablet:text-[20px] tablet:leading-[20px]'
         : '',
       className,
     )}

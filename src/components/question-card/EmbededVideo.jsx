@@ -1,20 +1,25 @@
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 import { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player/lazy';
 import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
 
 export const EmbededVideo = ({
   description,
   url,
-  setPlayingPlayerId,
   questId,
+  // setPlayingPlayerId,
   playing,
-  setIsShowPlayer,
-  setIsPlaying,
-  isPlaying,
+  // setIsShowPlayer,
+  // setIsPlaying,
+  // isPlaying,
 }) => {
   const playerRef = useRef(null);
   const [mediaURL, setMediaURL] = useState(url);
+  const dispatch = useDispatch();
+  const questUtilsState = useSelector(getQuestUtils);
 
   const handleVideoEnded = () => {
     if (playerRef.current) {
@@ -56,24 +61,32 @@ export const EmbededVideo = ({
             console.log('Invalid URl', e);
           }}
           onStart={() => {
-            setPlayingPlayerId(questId);
+            console.log('selectedQuestId', questId);
+            dispatch(setPlayingPlayerId(questId));
+            // setPlayingPlayerId(questId);
             if (!playing) {
-              setIsPlaying(true);
+              dispatch(toggleMedia(true));
+              // setIsPlaying(true);
             }
-            setIsShowPlayer(true);
+            dispatch(setIsShowPlayer(true));
+            // setIsShowPlayer(true);
           }}
           onPlay={() => {
-            setPlayingPlayerId(questId);
+            dispatch(setPlayingPlayerId(questId));
+            // setPlayingPlayerId(questId);
             if (!playing) {
-              setIsPlaying(true);
+              // setIsPlaying(true);
+              dispatch(toggleMedia(true));
             }
-            setIsShowPlayer(true);
+            dispatch(setIsShowPlayer(true));
+            // setIsShowPlayer(true);
           }}
           width="100%"
           height="100%"
           onPause={() => {
             if (playing) {
-              setIsPlaying(false);
+              // setIsPlaying(false);
+              dispatch(toggleMedia(false));
             }
           }}
           // single_active={true}

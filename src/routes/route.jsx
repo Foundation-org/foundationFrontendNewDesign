@@ -111,15 +111,15 @@ export function Router() {
                     path=""
                     element={
                       <ErrorBoundary>
-                        <Contributions />
+                        <VerificationBadges />
                       </ErrorBoundary>
                     }
                   />
                   <Route
-                    path="verification-badges"
+                    path="contributions"
                     element={
                       <ErrorBoundary>
-                        <VerificationBadges />
+                        <Contributions />
                       </ErrorBoundary>
                     }
                   />

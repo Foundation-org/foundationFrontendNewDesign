@@ -8,8 +8,9 @@ import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice
 import * as QuestServices from '../services/queries/quest';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { setFilterStates } from '../services/api/userAuth';
+import { setIsShowPlayer, setPlayingPlayerId } from '../features/quest/utilsSlice';
 
-function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShowPlayer }) {
+function Slider({ sliderLoading, setSliderloading }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -124,8 +125,8 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
       case 'newest-first':
         if (filterStates.filterBySort !== 'Newest First') {
           setSliderloading(true);
-          setPlayingPlayerId('');
-          setIsShowPlayer(false);
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
@@ -148,8 +149,8 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
       case 'most-popular':
         if (filterStates.filterBySort !== 'Most Popular') {
           setSliderloading(true);
-          setPlayingPlayerId('');
-          setIsShowPlayer(false);
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
@@ -173,8 +174,8 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
       case 'my-posts':
         if (filterStates.filterByScope !== 'Me') {
           setSliderloading(true);
-          setPlayingPlayerId('');
-          setIsShowPlayer(false);
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterBySort(''));
@@ -198,8 +199,8 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
       case 'bookmarks':
         if (filterStates.bookmarks !== true) {
           setSliderloading(true);
-          setPlayingPlayerId('');
-          setIsShowPlayer(false);
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterBySort(''));
           dispatch(filtersActions.setFilterByScope('All'));
@@ -223,8 +224,8 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
       case 'topics':
         if (filterStates.topics?.Block && filterStates.topics?.Block.list.includes(data)) return;
         setSliderloading(true);
-        setPlayingPlayerId('');
-        setIsShowPlayer(false);
+        dispatch(setIsShowPlayer(false));
+        dispatch(setPlayingPlayerId(''));
         dispatch(filtersActions.setBookmarks(false));
         dispatch(homeFilterActions.setBlockTopics([data]));
         dispatch(filtersActions.setFilterBySort(''));
@@ -249,7 +250,7 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
     }
   };
   return (
-    <div className="flex items-center px-4 py-[7px] tablet:px-6 tablet:py-[14.82px]">
+    <div className="flex items-center px-4 py-2 tablet:px-6 tablet:py-[14.82px]">
       {scrollPosition > 0 && (
         <button
           onClick={handleLeftArrowClick}
@@ -270,7 +271,7 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
         <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Newest First' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            className={`${filterStates.filterBySort === 'Newest First' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'}`}
             onClick={() => {
               queryClient.invalidateQueries('FeedData');
               handleButtonSelection('newest-first', null, 'newButton');
@@ -282,7 +283,7 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
           </Button>
           <Button
             variant={'topics'}
-            className={`${filterStates.filterBySort === 'Most Popular' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            className={`${filterStates.filterBySort === 'Most Popular' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'}`}
             onClick={() => {
               queryClient.invalidateQueries('FeedData');
               handleButtonSelection('most-popular', null, 'trendingButton');
@@ -294,7 +295,7 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
           </Button>
           <Button
             variant={'topics'}
-            className={`${filterStates.filterByScope === 'Me' ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            className={`${filterStates.filterByScope === 'Me' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'}`}
             onClick={() => {
               queryClient.invalidateQueries('FeedData');
               handleButtonSelection('my-posts', null, 'myPostButton');
@@ -306,7 +307,7 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
           </Button>
           <Button
             variant={'topics'}
-            className={`${filterStates.bookmarks === true ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            className={`${filterStates.bookmarks === true ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'}`}
             onClick={() => {
               // queryClient.invalidateQueries('FeedData');
               handleButtonSelection('bookmarks', null, 'bookmarkButton');
@@ -339,7 +340,7 @@ function Slider({ sliderLoading, setSliderloading, setPlayingPlayerId, setIsShow
             return (
               <Button
                 variant={'topics'}
-                className={`${isItemBlocked ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#707175]'}`}
+                className={`${isItemBlocked ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
                 key={index + 1}
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}

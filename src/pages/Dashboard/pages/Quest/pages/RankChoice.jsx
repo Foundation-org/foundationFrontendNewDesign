@@ -308,7 +308,7 @@ const RankChoice = () => {
         <Droppable droppableId={`optionsValue-${Date.now()}`}>
           {(provided) => (
             <ul
-              className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5"
+              className="flex flex-col gap-[5px] tablet:gap-[15px]"
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
@@ -353,7 +353,7 @@ const RankChoice = () => {
       </DragDropContext>
       <Button
         variant="addOption"
-        className="ml-[21.55px] mt-[16px] tablet:ml-[60px] tablet:mt-[33px]"
+        className="ml-[30px] mt-2 tablet:ml-[50px] tablet:mt-[15px]"
         onClick={() => {
           if (optionsValue.length < 50) {
             addNewOption();
@@ -365,14 +365,14 @@ const RankChoice = () => {
         + Add Option
       </Button>
       {/* settings */}
-      <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] tablet:mb-[10px] tablet:mt-5 tablet:text-[16px] dark:text-[#D8D8D8]">
+      {/* <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] tablet:mb-[10px] tablet:mt-5 tablet:text-[16px] dark:text-[#D8D8D8]">
         &#x200B;
-      </p>
-      <div className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px] dark:bg-[#212224]">
+      </p> */}
+      <div className="mx-[30px] mt-2 flex flex-col gap-[5px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] tablet:mx-[50px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[20px] dark:bg-[#212224]">
         <h5 className="text-center text-[10px] font-medium leading-normal text-[#435059] tablet:text-[19.35px] laptop:text-[25px] dark:text-[#737B82]">
           Settings
         </h5>
-        <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-[#DEE6F7] px-[8.62px] pb-[10.25px] pt-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
+        <div className="mx-[15px] flex items-center justify-between rounded-[0.30925rem] border border-[#DEE6F7] px-[8.62px] py-[6px] tablet:rounded-[16px] tablet:border-[3px] tablet:px-[20.26px] tablet:pb-[13.72px] tablet:pt-[14.83px] laptop:mx-[28px] laptop:px-7 laptop:py-[20px]">
           <h5 className="w-[150px] text-[9px] font-normal leading-normal text-[#7C7C7C] tablet:w-[300px] tablet:text-[18.662px] laptop:w-full laptop:text-[20px]">
             Participants can add their own options.
           </h5>
@@ -397,7 +397,7 @@ const RankChoice = () => {
 
           //   </button>
           // </div>
-          <div className="flex w-full justify-end pr-7 pt-[10px] tablet:pr-[70px] tablet:pt-[30px] ">
+          <div className="mt-[10px] flex w-full justify-end pr-7 tablet:mt-[25px] tablet:pr-[50px]">
             <Button variant="hollow-submit" id="submitButton" disabled={true}>
               Create
             </Button>
@@ -408,7 +408,7 @@ const RankChoice = () => {
               id="submitButton2"
               variant="submit"
               onClick={() => handleSubmit()}
-              className="mr-7 mt-[10px] tablet:mr-[70px] tablet:mt-[30px]"
+              className="mr-7 mt-[10px] tablet:mr-[50px] tablet:mt-[25px]"
             >
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">

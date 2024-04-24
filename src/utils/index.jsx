@@ -6,9 +6,9 @@ import { setFilterStates } from '../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 
 const filtersInitialState = {
-  filterByStatus: '',
-  filterByType: '',
-  filterByScope: '',
+  filterByStatus: 'All',
+  filterByType: 'All',
+  filterByScope: 'All',
   filterBySort: 'Newest First',
   clearFilter: false,
 };
@@ -202,8 +202,7 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
   const result = matchFilters(filtersInitialState, filterStates);
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
-  const isOtherCategory = filterStates?.topics?.Block?.list[0];
-
+  const isOtherCategory = filterStates?.topics?.Block?.list !== undefined && filterStates?.topics?.Block.list[0];
   return (
     <div className="my-[15vh] flex  flex-col items-center justify-center">
       {persistedTheme === 'dark' ? (
@@ -451,7 +450,7 @@ export const printEndMessage = (
           )}
         </div>
       ) : (
-        <div className="text-center text-[4vw] tablet:text-[2vw]">
+        <div className="text-center text-[4vw] laptop:text-[2vw]">
           {isBookmarked ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
               <b>No more bookmarks!</b>{' '}

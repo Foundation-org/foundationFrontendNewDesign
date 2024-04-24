@@ -3,9 +3,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 // Components
-import QuestionCard from './components/QuestionCard';
+// import QuestionCard from './components/QuestionCard';
 import SidebarLeft from '../../components/SidebarLeft';
-import SidebarRight from '../../components/SidebarRight';
+// import SidebarRight from '../../components/SidebarRight';
 import QuestionCardWithToggle from './components/QuestionCardWithToggle';
 import Slider from '../../../../components/Slider';
 
@@ -18,7 +18,7 @@ import * as questUtilsActions from '../../../../features/quest/utilsSlice';
 import MediaControls from '../../../../components/MediaControls';
 
 // Icons
-import { GrClose } from 'react-icons/gr';
+// import { GrClose } from 'react-icons/gr';
 import { setFilterStates } from '../../../../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 
@@ -30,8 +30,8 @@ const QuestStartSection = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const filterStates = useSelector(filtersActions.getFilters);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
-  const [playerPlayingId, setPlayingPlayerId] = useState();
-  const [isShowPlayer, setIsShowPlayer] = useState(false);
+  // const [playerPlayingId, setPlayingPlayerId] = useState();
+  // const [isShowPlayer, setIsShowPlayer] = useState(false);
   // Pagination
   const pageLimit = 5;
   const [pagination, setPagination] = useState({
@@ -45,8 +45,8 @@ const QuestStartSection = () => {
   const [allData, setAllData] = useState([]);
 
   // Test and Result States
-  const [startTest, setStartTest] = useState(null);
-  const [viewResult, setViewResult] = useState(null);
+  // const [startTest, setStartTest] = useState(null);
+  // const [viewResult, setViewResult] = useState(null);
   const [sliderLoading, setSliderloading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -260,21 +260,21 @@ const QuestStartSection = () => {
   // }, [feedData]);
 
   // Memoized Callbacks
-  const memoizedStartTest = useCallback(
-    (testId) => {
-      setViewResult(null);
-      setStartTest((prev) => (prev === testId ? null : testId));
-    },
-    [setViewResult, setStartTest],
-  );
+  // const memoizedStartTest = useCallback(
+  //   (testId) => {
+  //     setViewResult(null);
+  //     setStartTest((prev) => (prev === testId ? null : testId));
+  //   },
+  //   [setViewResult, setStartTest],
+  // );
 
-  const memoizedViewResults = useCallback(
-    (testId) => {
-      setStartTest(null);
-      setViewResult((prev) => (prev === testId ? null : testId));
-    },
-    [setStartTest, setViewResult],
-  );
+  // const memoizedViewResults = useCallback(
+  //   (testId) => {
+  //     setStartTest(null);
+  //     setViewResult((prev) => (prev === testId ? null : testId));
+  //   },
+  //   [setStartTest, setViewResult],
+  // );
 
   // Function to update allData based on submitResponse
   const updateAllData = () => {
@@ -327,7 +327,12 @@ const QuestStartSection = () => {
 
   useEffect(() => {
     const updateHeight = () => {
-      const newHeight = window.innerWidth <= 744 ? 'calc(100dvh - 196.39px)' : 'calc(100dvh - 147.63px)';
+      const newHeight =
+        window.innerWidth < 744
+          ? 'calc(100dvh - 141.89px)'
+          : window.innerWidth >= 744 && window.innerWidth <= 1280
+            ? 'calc(100dvh - 249.63px)'
+            : 'calc(100dvh - 147.63px)';
       setHeight(newHeight);
     };
 
@@ -360,23 +365,12 @@ const QuestStartSection = () => {
 
   return (
     <div className="w-full bg-[#F2F3F5] dark:bg-black">
-      <div className="relative mx-auto flex w-full max-w-[1378px] flex-col laptop:flex-row">
-        <SidebarLeft
-          scrollToPlayingCard={scrollToPlayingCard}
-          toggleMedia={toggleMedia}
-          playerPlayingId={playerPlayingId}
-          isPlaying={isPlaying}
-          setPlayingPlayerId={setPlayingPlayerId}
-          isShowPlayer={isShowPlayer}
-          setIsShowPlayer={setIsShowPlayer}
-        />
-        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-155.5px)] min-h-[calc(100dvh-155.5px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100dvh-70px)] tablet:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
-          <Slider
-            sliderLoading={sliderLoading}
-            setSliderloading={setSliderloading}
-            setPlayingPlayerId={setPlayingPlayerId}
-            setIsShowPlayer={setIsShowPlayer}
-          />
+      <div className="relative mx-auto flex w-full max-w-[778px] flex-col laptop:flex-row">
+        <div className="block tablet:hidden">
+          <SidebarLeft />
+        </div>
+        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-101px)] min-h-[calc(100dvh-101px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100dvh-70px)] tablet:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
+          <Slider sliderLoading={sliderLoading} setSliderloading={setSliderloading} />
           <InfiniteScroll
             dataLength={allData?.length}
             next={fetchMoreData}
@@ -399,8 +393,7 @@ const QuestStartSection = () => {
                 allData
                   .filter((item) => !questUtils.hiddenPosts.includes(item._id))
                   ?.map((item, index) => (
-                    <div key={index + 1} id={item._id === playerPlayingId ? 'playing-card' : ''}>
-                      {/* {filterStates.expandedView ? ( */}
+                    <div key={index + 1} id={item._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
                       <QuestionCardWithToggle
                         questStartData={item}
                         isBookmarked={bookmarkedData?.data
@@ -408,37 +401,28 @@ const QuestStartSection = () => {
                           .some((bookmark) => bookmark.questForeignKey === item._id)}
                         setPagination={setPagination}
                         setSubmitResponse={setSubmitResponse}
-                        playing={item._id === playerPlayingId && isPlaying}
-                        isPlaying={isPlaying}
-                        setIsPlaying={setIsPlaying}
-                        setPlayingPlayerId={setPlayingPlayerId}
-                        setIsShowPlayer={setIsShowPlayer}
+                        playing={item._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
                       />
                     </div>
                   ))}
             </div>
           </InfiniteScroll>
         </div>
-        <SidebarRight />
-        {isShowPlayer && (
-          <div className="absolute bottom-8 left-1/2 block -translate-x-1/2 laptop:hidden">
+        {/* <SidebarRight /> */}
+        {questUtils.isShowPlayer && (
+          <div className="absolute bottom-8 left-1/2 block -translate-x-1/2 tablet:hidden">
             <div className="relative">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
                 alt="mediaCloseIcon"
                 className="absolute -right-2 top-3 h-6 w-6 cursor-pointer text-black dark:text-white"
                 onClick={() => {
-                  setIsShowPlayer(false);
-                  setPlayingPlayerId('');
+                  dispatch(questUtilsActions.setIsShowPlayer(false));
+                  dispatch(questUtilsActions.setPlayingPlayerId(''));
                 }}
               />
             </div>
-            <MediaControls
-              scrollToPlayingCard={scrollToPlayingCard}
-              toggleMedia={toggleMedia}
-              playerPlayingId={playerPlayingId}
-              isPlaying={isPlaying}
-            />
+            <MediaControls />
           </div>
         )}
       </div>

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 
 const Button = ({ children, type = 'button', color, onClick, disabled }) => {
   const buttonClasses = classNames(
-    'w-[38vw] h-[7.3vw] tablet:w-[18.4vw] tablet:h-[3.48vw] rounded-[1.31vw] tablet:rounded-[8px] laptop:rounded-[15px] text-[2.65vw] tablet:text-[1.38vw] font-semibold leading-normal',
+    'w-[120px] h-[21.5px] tablet:w-[207px] tablet:h-[50px] rounded-[1.31vw] tablet:rounded-[8px] laptop:rounded-[15px] text-[2.65vw] tablet:text-[20px] font-semibold leading-normal',
     {
       'text-white bg-[#FAD308]': color === 'yellow',
       'border-[1px] border-[#BABABA] text-[#949494] dark-bg-[#252D37] bg-[#fff]': color === 'gray-light',

@@ -7,6 +7,169 @@ import PopUp from '../ui/PopUp';
 import * as homeFilterActions from '../../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSlice';
 import { useLocation } from 'react-router-dom';
+import { isEqual } from 'lodash';
+
+export const StatusFiltersList = [
+  {
+    id: 1,
+    title: 'All',
+    val: 'All',
+  },
+  {
+    id: 2,
+    title: 'Not Participated',
+    val: 'Not Participated',
+  },
+  {
+    id: 3,
+    title: 'Participated',
+    val: 'Participated',
+  },
+];
+
+export const MediaFiltersList = [
+  {
+    id: 1,
+    title: 'Images',
+  },
+  {
+    id: 2,
+    title: 'Video',
+  },
+
+  {
+    id: 3,
+    title: 'Audio',
+  },
+  {
+    id: 4,
+    title: 'None',
+  },
+];
+
+export const TypeFiltersList = [
+  {
+    id: 1,
+    title: 'All',
+    val: 'All',
+  },
+  {
+    id: 2,
+    title: 'Yes/No',
+    val: 'Yes/No',
+  },
+  {
+    id: 3,
+    title: 'Multiple Choice',
+    val: 'Multiple Choice',
+  },
+  {
+    id: 4,
+    title: 'Open Choice',
+    val: 'Open Choice',
+  },
+  {
+    id: 5,
+    title: 'Rank Choice',
+    val: 'Ranked Choice',
+  },
+  {
+    id: 6,
+    title: 'Agree/Disagree',
+    val: 'Agree/Disagree',
+  },
+  {
+    id: 7,
+    title: 'Like/Dislike',
+    val: 'Like/Dislike',
+  },
+];
+
+export const filterTitles = {
+  All: 'All',
+  'Yes/No': 'Yes/No',
+  'Agree/Disagree': 'Agree/Disagree',
+  'Like/Dislike': 'Like/Dislike',
+  'Multiple Choise': 'Multiple Choice',
+  'Open Choice': 'Open Choice',
+  'Ranked Choise': 'Rank Choice',
+};
+
+const FilterContainer = (props) => {
+  const { heading, list, style, setFilters } = props;
+  const dispatch = useDispatch();
+  const filterStates = useSelector(homeFilterActions.getFilters);
+
+  console.log('first', filterStates);
+
+  return (
+    <div className="w-full">
+      <div className="rounded-t-[15px] bg-[#DEE6F7] py-2">
+        <h1 className="text-center text-[12px] font-bold text-[#707175] tablet:text-[22px]">{heading}</h1>
+      </div>
+      <div
+        className={` ${style === 'yes' ? 'grid h-[calc(125px-26px)] grid-cols-2' : 'flex h-[calc(100%-34px)]'} flex-col gap-[6px] rounded-b-[15px] border-x-[3px] border-b-[3px] border-[#DEE6F7] bg-[#FDFDFD] p-2 tablet:h-[calc(100%-49px)] tablet:gap-4 tablet:p-[15px]`}
+      >
+        {list?.map((item) => (
+          <div
+            className="flex cursor-pointer items-center gap-3 tablet:gap-6"
+            onClick={() => {
+              if (heading === 'Status') {
+                dispatch(homeFilterActions.setFilterByStatus(item.title));
+                setFilters({
+                  ...filterStates,
+                  filterByStatus: item.title,
+                  filterBySort: 'Newest First',
+                  filterByScope: '',
+                  bookmarks: false,
+                  topics: {
+                    ...filterStates.topics,
+                    Block: {
+                      ...filterStates.topics.Block,
+                      list: [],
+                    },
+                  },
+                  selectedBtnId: localStorage.removeItem('selectedButtonId'),
+                });
+              }
+              if (heading === 'Type') {
+                dispatch(homeFilterActions.setFilterByType(item.val));
+                setFilters({
+                  ...filterStates,
+                  filterByType: item.val,
+                  filterByStatus: 'All',
+                  filterBySort: 'Newest First',
+                  filterByScope: '',
+                  bookmarks: false,
+                  topics: {
+                    ...filterStates.topics,
+                    Block: {
+                      ...filterStates.topics.Block,
+                      list: [],
+                    },
+                  },
+                  selectedBtnId: localStorage.removeItem('selectedButtonId'),
+                });
+              }
+            }}
+          >
+            <div className="flex size-4 items-center justify-center rounded-full border-2 border-[#525252] tablet:size-6">
+              {heading === 'Status' && filterStates.filterByStatus === item.title ? (
+                <div className="size-2 rounded-full bg-[#525252] tablet:size-[14px]"></div>
+              ) : heading === 'Type' && filterTitles[filterStates.filterByType] === item.title ? (
+                <div className="size-2 rounded-full bg-[#525252] tablet:size-[14px]"></div>
+              ) : null}
+            </div>
+
+            <h3 className="whitespace-nowrap text-center text-[12px] font-normal leading-[12px] text-[#707175] tablet:text-[18px] tablet:font-semibold tablet:leading-[18px]">
+              {item.title}
+            </h3>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default function Ratings({ handleClose, modalVisible, selectedOptions, setSelectedOptions, setFilters }) {
   const location = useLocation();
@@ -60,8 +223,8 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       );
       setFilters({
         ...filterStates,
-        filterByType: '',
-        filterByStatus: '',
+        filterByType: 'All',
+        filterByStatus: 'All',
         filterBySort: 'Newest First',
         filterByScope: '',
         bookmarks: false,
@@ -87,8 +250,8 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       );
       setFilters({
         ...filterStates,
-        filterByType: '',
-        filterByStatus: '',
+        filterByType: 'All',
+        filterByStatus: 'All',
         filterBySort: 'Newest First',
         filterByScope: '',
         bookmarks: false,
@@ -114,8 +277,8 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       );
       setFilters({
         ...filterStates,
-        filterByType: '',
-        filterByStatus: '',
+        filterByType: 'All',
+        filterByStatus: 'All',
         filterBySort: 'Newest First',
         filterByScope: '',
         bookmarks: false,
@@ -140,15 +303,15 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/dialoguebox/ratings-icon.svg`}
-      title={'Rating'}
+      title={'Filters'}
       open={modalVisible}
       handleClose={handleClose}
     >
-      <div className="px-[18px] py-[10px] tablet:px-[45px] tablet:py-[25px]">
-        <h1 className="text-center text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
+      <div className="px-[18px] pt-[10px] tablet:px-[45px] tablet:pt-[25px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           Select your Rating Category
         </h1>
-        <div className="mt-[10px] flex items-center justify-center gap-[36.8px] tablet:mt-[30px]  tablet:gap-[100px]">
+        <div className="mt-[10px] flex items-center justify-center gap-[36.8px] border-b border-[#7C7C7C] pb-[25px] tablet:mt-[25px] tablet:gap-[100px]">
           <div className="flex items-center justify-center gap-[10px] tablet:gap-[25px]">
             <div id="custom-rating-checkbox" className="flex h-full items-center">
               <input
@@ -190,18 +353,46 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
             </div>
           </div>
         </div>
-        <div className="mt-[10px] flex items-center justify-end gap-[25px] tablet:mt-[25px] tablet:gap-[49px]">
+      </div>
+      <div className="px-[18px] py-[10px] tablet:px-[45px] tablet:py-[25px]">
+        <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
+          Select your Filter Options
+        </h1>
+        <div className="mt-3 grid grid-cols-2 gap-[15px] tablet:mt-5 laptop:grid-cols-3">
+          <FilterContainer heading="Status" list={StatusFiltersList} setFilters={setFilters} />
+          <FilterContainer heading="Media" list={MediaFiltersList} setFilters={setFilters} />
+          <div className="hidden laptop:block">
+            <FilterContainer heading="Type" list={TypeFiltersList} setFilters={setFilters} />
+          </div>
+        </div>
+        <div className="mt-3 block laptop:hidden">
+          <FilterContainer heading="Type" list={TypeFiltersList} style="yes" setFilters={setFilters} />
+        </div>
+        <div className="mt-[10px] flex items-center justify-end gap-[25px] tablet:mt-[25px] tablet:gap-[35px]">
           <Button
             variant={'danger'}
+            // onClick={() => {
+            //   handleClose();
+            // }}
             onClick={() => {
-              handleClose();
+              setSearch('');
+              const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
+              const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
+                homeFilterActions.filterInitialState;
+
+              if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
+                dispatch(homeFilterActions.resetFilters());
+                setFilters({
+                  ...homeFilterActions.filterInitialState,
+                });
+              }
             }}
           >
-            Cancel
+            Clear Filter
           </Button>
 
           <Button variant={'submit'} onClick={handleSubmit}>
-            Save
+            Apply
           </Button>
         </div>
       </div>
