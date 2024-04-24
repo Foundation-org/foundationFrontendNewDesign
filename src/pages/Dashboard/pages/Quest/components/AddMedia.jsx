@@ -8,7 +8,7 @@ import { useDebounce } from '../../../../../utils/useDebounce';
 import { extractPartFromUrl, extractYouTubeVideoId } from '../../../../../utils/embeddedutils';
 import { soundcloudUnique, youtubeBaseURLs } from '../../../../../constants/addMedia';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import './Player.css';
 
 export default function AddMedia({ handleTab }) {

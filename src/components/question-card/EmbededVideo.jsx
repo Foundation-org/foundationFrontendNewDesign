@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import { useState, useRef, useEffect } from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
 
 export const EmbededVideo = ({
