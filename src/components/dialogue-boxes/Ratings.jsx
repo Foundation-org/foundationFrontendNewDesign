@@ -86,6 +86,7 @@ export const TypeFiltersList = [
 ];
 
 export const filterTitles = {
+  All: 'All',
   'Yes/No': 'Yes/No',
   'Agree/Disagree': 'Agree/Disagree',
   'Like/Dislike': 'Like/Dislike',
@@ -136,7 +137,7 @@ const FilterContainer = (props) => {
                 setFilters({
                   ...filterStates,
                   filterByType: item.val,
-                  filterByStatus: '',
+                  filterByStatus: 'All',
                   filterBySort: 'Newest First',
                   filterByScope: '',
                   bookmarks: false,
@@ -222,8 +223,8 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       );
       setFilters({
         ...filterStates,
-        filterByType: '',
-        filterByStatus: '',
+        filterByType: 'All',
+        filterByStatus: 'All',
         filterBySort: 'Newest First',
         filterByScope: '',
         bookmarks: false,
@@ -249,8 +250,8 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       );
       setFilters({
         ...filterStates,
-        filterByType: '',
-        filterByStatus: '',
+        filterByType: 'All',
+        filterByStatus: 'All',
         filterBySort: 'Newest First',
         filterByScope: '',
         bookmarks: false,
@@ -276,8 +277,8 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       );
       setFilters({
         ...filterStates,
-        filterByType: '',
-        filterByStatus: '',
+        filterByType: 'All',
+        filterByStatus: 'All',
         filterBySort: 'Newest First',
         filterByScope: '',
         bookmarks: false,

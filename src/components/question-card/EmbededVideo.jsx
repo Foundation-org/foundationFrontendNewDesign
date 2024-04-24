@@ -16,7 +16,6 @@ export const EmbededVideo = ({
   // setIsPlaying,
   // isPlaying,
 }) => {
-  // console.log({ questId });
   const playerRef = useRef(null);
   const [mediaURL, setMediaURL] = useState(url);
   const dispatch = useDispatch();

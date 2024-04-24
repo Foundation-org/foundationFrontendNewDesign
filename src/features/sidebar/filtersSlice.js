@@ -14,18 +14,18 @@ const topicsInitialState = {
 const resetState = {
   expandedView: true,
   searchData: '',
-  filterByStatus: '',
-  filterByType: '',
-  filterByScope: '',
+  filterByStatus: 'All',
+  filterByType: 'All',
+  filterByScope: 'All',
   bookmarks: false,
   filterBySort: 'Newest First',
   clearFilter: false,
 };
 
 const resetOtherStates = {
-  filterByStatus: '',
-  filterByType: '',
-  filterByScope: '',
+  filterByStatus: 'All',
+  filterByType: 'All',
+  filterByScope: 'All',
   bookmarks: false,
   filterBySort: 'Newest First',
   clearFilter: false,
@@ -34,9 +34,9 @@ const resetOtherStates = {
 export const filterInitialState = {
   expandedView: true,
   searchData: '',
-  filterByStatus: '',
-  filterByType: '',
-  filterByScope: '',
+  filterByStatus: 'All',
+  filterByType: 'All',
+  filterByScope: 'All',
   bookmarks: false,
   filterBySort: 'Newest First',
   topics: topicsInitialState,

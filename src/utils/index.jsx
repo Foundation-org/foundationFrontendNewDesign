@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 import * as filtersActions from '../features/sidebar/filtersSlice';
 
 const filtersInitialState = {
-  filterByStatus: '',
-  filterByType: '',
-  filterByScope: '',
+  filterByStatus: 'All',
+  filterByType: 'All',
+  filterByScope: 'All',
   filterBySort: 'Newest First',
   clearFilter: false,
 };

@@ -408,7 +408,6 @@ const QuestStartSection = () => {
             </div>
           </InfiniteScroll>
         </div>
-        {console.log(questUtils)}
         {/* <SidebarRight /> */}
         {questUtils.isShowPlayer && (
           <div className="absolute bottom-8 left-1/2 block -translate-x-1/2 tablet:hidden">
