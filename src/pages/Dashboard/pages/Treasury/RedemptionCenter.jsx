@@ -249,9 +249,9 @@ export default function RedemptionCenter() {
   }, [isPulse]);
 
   return (
-    <div className="flex flex-col gap-[10px] px-5 pb-8 tablet:gap-[25px]">
+    <div className="mx-auto flex max-w-[1278px] flex-col gap-[10px] px-5 pb-12 tablet:gap-[25px]">
       <div>
-        <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
+        <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-5 tablet:text-[24px]">
           Redemption center
         </h1>
         <div className="flex flex-col gap-2 tablet:gap-[78px] laptop:flex-row">
@@ -413,9 +413,10 @@ export default function RedemptionCenter() {
                         Never
                       </p>
                     </div>
-                    <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
+                    <div className="flex items-center justify-end gap-[10px] tablet:gap-[25px]">
                       <Button
                         variant="share-link"
+                        className={'max-w-[141px] tablet:h-[30px]'}
                         onClick={() => {
                           handleShareLink(item.code);
                           toast.success('Share Link copied!');
@@ -424,7 +425,8 @@ export default function RedemptionCenter() {
                         Share Link
                       </Button>
                       <Button
-                        variant="submit"
+                        variant="share-link-submit"
+                        className={'max-w-[152px]'}
                         onClick={() => {
                           copyToClipboard(item.code);
                           toast.success('Code Copied!');
@@ -432,7 +434,7 @@ export default function RedemptionCenter() {
                       >
                         Copy Code
                       </Button>
-                      <Button variant="result" onClick={() => handleRedeeem(item.code)}>
+                      <Button variant="result" className={'max-w-[124px]'} onClick={() => handleRedeeem(item.code)}>
                         {radeemLoading === item.code ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Redeem'}
                       </Button>
                     </div>
@@ -481,7 +483,7 @@ export default function RedemptionCenter() {
               {history?.data?.data?.map((item, index) => (
                 <div key={index + 1}>
                   <div
-                    className={`flex flex-col justify-between gap-2  py-2 pl-[13px] pr-4  tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                    className={`flex flex-col justify-between gap-2 py-2  pl-[13px] pr-4 tablet:h-[67px]  tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
                   >
                     <div className="flex items-center gap-[10px] tablet:gap-[35px]">
                       <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">

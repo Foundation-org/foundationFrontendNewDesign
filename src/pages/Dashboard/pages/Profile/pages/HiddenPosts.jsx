@@ -174,10 +174,10 @@ export default function HiddenPosts() {
     const updateHeight = () => {
       const newHeight =
         window.innerWidth <= 744
-          ? 'calc(100vh - 185px)'
+          ? 'calc(100vh - 158.89px)'
           : window.innerWidth <= 1280
             ? 'calc(100vh - 370px)'
-            : 'calc(100vh - 354px)';
+            : 'calc(100vh - 147.63px)';
       setHeight(newHeight);
     };
 
@@ -235,7 +235,7 @@ export default function HiddenPosts() {
         </div>
       </div>
 
-      <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] tablet:pt-[5.2px] dark:bg-[#242424]">
+      <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-[#242424]">
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}

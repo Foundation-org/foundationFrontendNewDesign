@@ -1,35 +1,35 @@
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import api from '../../../../services/api/Axios';
-import { useSelector } from 'react-redux';
+// import api from '../../../../services/api/Axios';
+// import { useSelector } from 'react-redux';
 
 const TreasuryLayout = () => {
   const location = useLocation();
   const { pathname } = location;
   const [selectedTab, setSelectedTab] = useState(pathname);
-  const [treasuryAmount, setTreasuryAmount] = useState(0);
-  const persistedUserInfo = useSelector((state) => state.auth.user);
+  // const [treasuryAmount, setTreasuryAmount] = useState(0);
+  // const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const getTreasuryAmount = async () => {
-    try {
-      const res = await api.get(`/treasury/get`);
-      if (res.status === 200) {
-        localStorage.setItem('treasuryAmount', res.data.data);
-        setTreasuryAmount(res.data.data);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-    }
-  };
+  // const getTreasuryAmount = async () => {
+  //   try {
+  //     const res = await api.get(`/treasury/get`);
+  //     if (res.status === 200) {
+  //       localStorage.setItem('treasuryAmount', res.data.data);
+  //       setTreasuryAmount(res.data.data);
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.response.data.message.split(':')[1]);
+  //   }
+  // };
 
-  useEffect(() => {
-    getTreasuryAmount();
-  }, []);
+  // useEffect(() => {
+  //   getTreasuryAmount();
+  // }, []);
 
   return (
-    <div className="h-[calc(100vh-58px)] w-full overflow-scroll overflow-x-hidden bg-[#F2F3F5] tablet:h-[calc(100vh-70px)]">
-      <div className="mx-[18px] mt-[10px] flex items-center justify-between tablet:mx-8 tablet:mt-[25px] laptop:mx-[110px]">
+    <div className="h-[calc(100vh-58px)] w-full overflow-hidden bg-[#F2F3F5] tablet:-mt-[133px] tablet:h-[calc(100vh-70px)]">
+      {/* <div className="mx-[18px] mt-[10px] flex items-center justify-between tablet:mx-8 tablet:mt-[25px] laptop:mx-[110px]">
         <div className="flex w-full items-center justify-between">
           <div className="flex gap-[5.16px] tablet:gap-[15px]">
             <img
@@ -68,10 +68,10 @@ const TreasuryLayout = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="mx-auto mb-[10px] max-w-[1378px] tablet:mb-[25px]">
         {/* Tabs */}
-        <div className="mb-[10px] mt-[15px] flex justify-center gap-8 tablet:my-[35px] tablet:gap-[19.9px] laptop:gap-[35px]">
+        <div className="mb-[10px] mt-[15px] flex justify-center gap-8 tablet:mb-[37px] tablet:mt-[43px] tablet:gap-[19.9px] laptop:gap-[35px]">
           <Link
             to={'/dashboard/treasury'}
             className={`${
@@ -101,7 +101,9 @@ const TreasuryLayout = () => {
             Ledger
           </Link>
         </div>
-        <Outlet />
+        <div className="no-scrollbar h-[calc(100dvh-121.27px)] overflow-auto tablet:h-[calc(100dvh-208px)]">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

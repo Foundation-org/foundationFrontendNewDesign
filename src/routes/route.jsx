@@ -107,19 +107,19 @@ export function Router() {
                     </ErrorBoundary>
                   }
                 >
-                  {/* <Route
-                    path=""
-                    element={
-                      <ErrorBoundary>
-                        <Contributions />
-                      </ErrorBoundary>
-                    }
-                  /> */}
                   <Route
                     path=""
                     element={
                       <ErrorBoundary>
                         <VerificationBadges />
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="contributions"
+                    element={
+                      <ErrorBoundary>
+                        <Contributions />
                       </ErrorBoundary>
                     }
                   />

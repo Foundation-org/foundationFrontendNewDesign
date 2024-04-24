@@ -191,10 +191,10 @@ export default function SharedLinks() {
     const updateHeight = () => {
       const newHeight =
         window.innerWidth <= 744
-          ? 'calc(100vh - 185px)'
+          ? 'calc(100vh - 158.89px)'
           : window.innerWidth <= 1280
             ? 'calc(100vh - 370px)'
-            : 'calc(100vh - 354px)';
+            : 'calc(100vh - 147.63px)';
       setHeight(newHeight);
     };
 

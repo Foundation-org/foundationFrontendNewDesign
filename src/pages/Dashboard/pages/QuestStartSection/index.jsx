@@ -327,7 +327,7 @@ const QuestStartSection = () => {
 
   useEffect(() => {
     const updateHeight = () => {
-      const newHeight = window.innerWidth <= 744 ? 'calc(100dvh - 196.39px)' : 'calc(100dvh - 147.63px)';
+      const newHeight = window.innerWidth <= 744 ? 'calc(100dvh - 141.89px)' : 'calc(100dvh - 147.63px)';
       setHeight(newHeight);
     };
 
@@ -364,7 +364,7 @@ const QuestStartSection = () => {
         <div className="block tablet:hidden">
           <SidebarLeft />
         </div>
-        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-155.5px)] min-h-[calc(100dvh-155.5px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100dvh-70px)] tablet:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
+        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-101px)] min-h-[calc(100dvh-101px)] w-full max-w-[778px] flex-col overflow-y-auto bg-[#F2F3F5] tablet:max-h-[calc(100dvh-70px)] tablet:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
           <Slider sliderLoading={sliderLoading} setSliderloading={setSliderloading} />
           <InfiniteScroll
             dataLength={allData?.length}

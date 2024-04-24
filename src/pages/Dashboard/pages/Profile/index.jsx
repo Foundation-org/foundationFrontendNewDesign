@@ -179,12 +179,14 @@ const Profile = () => {
           </div> */}
       {/* </div> */}
       {/* <Tabs handleSelectedTab={handleSelectedTab} active={selectedTab} /> */}
-      <div className="relative w-full bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]">
+      <div
+        className={`${selectedTab !== '/dashboard/profile/ledger' ? '' : 'tablet:-mt-[133px]'} w-full bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]`}
+      >
         <div className="mx-auto max-w-[778px]">
           <ProfileSlider tab={selectedTab} setTab={setSelectedTab} />
         </div>
         <div
-          className={`${selectedTab !== '/dashboard/profile/ledger' ? 'max-w-[778px]' : 'absolute left-1/2 mt-16 max-w-[1440px] -translate-x-1/2 pb-16'} no-scrollbar mx-auto h-[calc(100vh-98.89px)] overflow-y-scroll tablet:h-[calc(100vh-147.63px)]`}
+          className={`${selectedTab !== '/dashboard/profile/ledger' ? 'max-w-[778px]' : 'max-w-[1440px] pb-16 tablet:mt-[60px]'} no-scrollbar mx-auto h-[calc(100vh-98.89px)] overflow-y-scroll tablet:h-[calc(100vh-147.63px)]`}
         >
           <Outlet />
         </div>

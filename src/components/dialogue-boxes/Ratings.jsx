@@ -303,7 +303,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/dialoguebox/ratings-icon.svg`}
-      title={'Rating'}
+      title={'Filters'}
       open={modalVisible}
       handleClose={handleClose}
     >
