@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { userInfo } from '../../../services/api/userAuth';
+import { userInfo, userInfoById } from '../../../services/api/userAuth';
 import SidebarRight from './SidebarRight';
 import { toast } from 'sonner';
 import SidebarLeft from './SidebarLeft';
