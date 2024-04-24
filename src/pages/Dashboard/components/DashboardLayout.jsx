@@ -80,7 +80,7 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div className="mx-auto w-full max-w-[1440px]">
-      <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between tablet:flex-row">
+      <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
         {location.pathname !== '/dashboard' && (
           <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white px-5 tablet:hidden">

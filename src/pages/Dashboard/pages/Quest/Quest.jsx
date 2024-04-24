@@ -12,12 +12,12 @@ const Quest = () => {
   const [tab, setTab] = useState(0);
 
   return (
-    <div className="w-full bg-[#F2F3F5] pb-8 md:pb-12 tablet:h-[calc(100vh-116px)] laptop:h-[calc(100vh-70px)] dark:bg-[#242424]">
+    <div className="w-full bg-[#F2F3F5] pb-8 md:pb-12 tablet:h-[calc(100vh-96px)] laptop:h-[calc(100vh-70px)] dark:bg-[#242424]">
       {/* <Navbar handleTab={handleTab} tab={tab} /> */}
       <div className="mx-auto max-w-[778px]">
         <CreateSlider setTab={setTab} tab={tab} />
       </div>
-      <div className="no-scrollbar h-[calc(100dvh-141.89px)] overflow-y-auto tablet:h-[calc(100dvh-147.63px)]">
+      <div className="no-scrollbar h-[calc(100dvh-141.89px)] overflow-y-auto tablet:mx-6 tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.63px)]">
         {tab === 0 && <YesNo />}
         {tab === 1 && <MultipleChoice />}
         {tab === 2 && <RankChoice />}

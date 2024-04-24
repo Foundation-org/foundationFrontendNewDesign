@@ -248,7 +248,7 @@ const VerificationBadges = () => {
           <div
             className={`${
               persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
-            } relative mx-[15px] mb-8 flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-[30px] tablet:mt-[5.2px] tablet:gap-4 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5 laptop:mx-6 laptop:gap-5 laptop:px-[40px]`}
+            } relative mx-[15px] mb-8 flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-6 tablet:gap-4 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5 laptop:gap-5 laptop:px-[40px]`}
           >
             <Contact
               handleUserInfo={handleUserInfo}

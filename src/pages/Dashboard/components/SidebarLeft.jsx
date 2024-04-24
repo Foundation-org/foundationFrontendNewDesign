@@ -422,23 +422,23 @@ const SidebarLeft = () => {
               Clear Filters
             </button> 
           </div>*/}
-        <div className="block bg-white px-[15px] py-[10px] tablet:px-[37px] tablet:py-[26px] laptop:hidden dark:bg-[#0A0A0C]">
-          <div className="flex h-[23px] items-center justify-between gap-2">
+        <div className="block bg-white px-[15px] py-[10px] tablet:px-[37px] tablet:py-5 laptop:hidden laptop:py-[26px] dark:bg-[#0A0A0C]">
+          <div className="flex h-[23px] items-center justify-between gap-2 tablet:h-[36px]">
             <button
               className={`${
                 persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-              }  inset-0 w-[75px] text-nowrap rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner tablet:w-full tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+              }  inset-0 w-[75px] text-nowrap rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-normal leading-[1.032] text-white shadow-inner tablet:w-[192px] tablet:min-w-[192px] tablet:pt-2 tablet:text-[15px] tablet:font-semibold tablet:leading-normal laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
               onClick={() => {
                 showRatingDialogue();
               }}
             >
               Filters
             </button>
-            <div className="relative ">
+            <div className="relative w-full">
               <input
                 type="text"
                 placeholder="Search here...."
-                className="h-[23px] w-full min-w-[244px] max-w-[244px] rounded-[8px] border-[0.59px] border-[#707175] bg-[#F6F6F6] px-[10px] text-[9px] font-normal text-[#858585] focus:outline-none dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
+                className="h-[23px] w-full min-w-[244px] max-w-[244px] rounded-[8px] border-[0.59px] border-[#707175] bg-[#F6F6F6] px-[10px] text-[9px] font-normal text-[#858585] focus:outline-none tablet:h-[36px] tablet:max-w-full dark:border-[#989898] dark:bg-[#000] dark:text-[#E8E8E8]"
                 value={search}
                 onChange={handleSearch}
               />
@@ -457,7 +457,7 @@ const SidebarLeft = () => {
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
                   alt="search"
-                  className="absolute right-[12px] top-[9px] h-3 w-3 tablet:top-3 tablet:h-[26.4px] tablet:w-[24.3px]"
+                  className="absolute right-[12px] top-1/2 h-3 w-3 -translate-y-1/2 tablet:h-[26.4px] tablet:w-[24.3px]"
                 />
               )}
             </div>

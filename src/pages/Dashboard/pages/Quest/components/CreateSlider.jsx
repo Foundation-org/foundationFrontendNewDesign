@@ -97,7 +97,7 @@ export default function CreateSlider({ setTab, tab }) {
             key={item.id}
             id={`create-btn-${item.id}`}
             variant={'topics'}
-            className={`${tab === item.id ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+            className={`${tab === item.id ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
             onClick={() => handleTab(item.id)}
           >
             {item.title}

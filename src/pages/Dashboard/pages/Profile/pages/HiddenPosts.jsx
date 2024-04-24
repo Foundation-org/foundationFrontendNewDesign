@@ -173,10 +173,10 @@ export default function HiddenPosts() {
   useEffect(() => {
     const updateHeight = () => {
       const newHeight =
-        window.innerWidth <= 744
+        window.innerWidth < 744
           ? 'calc(100vh - 158.89px)'
-          : window.innerWidth <= 1280
-            ? 'calc(100vh - 370px)'
+          : window.innerWidth >= 744 && window.innerWidth <= 1280
+            ? 'calc(100vh - 173.63px)'
             : 'calc(100vh - 147.63px)';
       setHeight(newHeight);
     };
@@ -279,11 +279,11 @@ export default function HiddenPosts() {
                     </div>
                   </div>
                 ) : !getHiddenPostFilters.searchData && allData.length === 0 ? (
-                  <p className="text-center text-[4vw] tablet:text-[2vw]">
+                  <p className="text-center text-[4vw] laptop:text-[2vw]">
                     <b>No hidden posts!</b>
                   </p>
                 ) : !getHiddenPostFilters.searchData ? (
-                  <p className="text-center text-[4vw] tablet:text-[2vw]">
+                  <p className="text-center text-[4vw] laptop:text-[2vw]">
                     <b>No more hidden posts!</b>
                   </p>
                 ) : (
@@ -326,7 +326,7 @@ export default function HiddenPosts() {
           >
             {allData &&
               allData.map((item, index) => (
-                <div key={index + 1} className="max-w-[730px] tablet:min-w-[730px]">
+                <div key={index + 1} className="w-full max-w-[730px] laptop:min-w-[730px]">
                   <QuestionCard
                     postProperties={'HiddenPosts'}
                     questStartData={item}

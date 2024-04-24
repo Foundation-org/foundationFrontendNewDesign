@@ -327,7 +327,12 @@ const QuestStartSection = () => {
 
   useEffect(() => {
     const updateHeight = () => {
-      const newHeight = window.innerWidth <= 744 ? 'calc(100dvh - 141.89px)' : 'calc(100dvh - 147.63px)';
+      const newHeight =
+        window.innerWidth < 744
+          ? 'calc(100dvh - 141.89px)'
+          : window.innerWidth >= 744 && window.innerWidth <= 1280
+            ? 'calc(100dvh - 249.63px)'
+            : 'calc(100dvh - 147.63px)';
       setHeight(newHeight);
     };
 

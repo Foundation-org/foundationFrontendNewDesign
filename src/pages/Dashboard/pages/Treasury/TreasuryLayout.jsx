@@ -28,7 +28,7 @@ const TreasuryLayout = () => {
   // }, []);
 
   return (
-    <div className="h-[calc(100vh-58px)] w-full overflow-hidden bg-[#F2F3F5] tablet:-mt-[133px] tablet:h-[calc(100vh-70px)]">
+    <div className="h-[calc(100vh-58px)] w-full overflow-hidden bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] laptop:-mt-[133px]">
       {/* <div className="mx-[18px] mt-[10px] flex items-center justify-between tablet:mx-8 tablet:mt-[25px] laptop:mx-[110px]">
         <div className="flex w-full items-center justify-between">
           <div className="flex gap-[5.16px] tablet:gap-[15px]">
@@ -71,7 +71,7 @@ const TreasuryLayout = () => {
       </div> */}
       <div className="mx-auto mb-[10px] max-w-[1378px] tablet:mb-[25px]">
         {/* Tabs */}
-        <div className="mb-[10px] mt-[15px] flex justify-center gap-8 tablet:mb-[37px] tablet:mt-[43px] tablet:gap-[19.9px] laptop:gap-[35px]">
+        <div className="mb-[10px] mt-[15px] flex justify-center gap-8 tablet:gap-5 laptop:mb-[37px] laptop:mt-[43px] laptop:gap-[35px]">
           <Link
             to={'/dashboard/treasury'}
             className={`${
@@ -101,7 +101,7 @@ const TreasuryLayout = () => {
             Ledger
           </Link>
         </div>
-        <div className="no-scrollbar h-[calc(100dvh-121.27px)] overflow-auto tablet:h-[calc(100dvh-208px)]">
+        <div className="no-scrollbar h-[calc(100dvh-121.27px)] overflow-auto tablet:h-[calc(100dvh-138px)] tablet:pb-10 laptop:h-[calc(100dvh-208px)] laptop:pb-0">
           <Outlet />
         </div>
       </div>

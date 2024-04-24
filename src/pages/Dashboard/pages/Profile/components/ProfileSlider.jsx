@@ -118,7 +118,7 @@ export default function ProfileSlider({ setTab, tab }) {
               >
                 <Button
                   variant={'topics'}
-                  className={`${tab === item.path ? 'bg-[#4A8DBD] text-white' : 'bg-white text-[#ABABAB]'}`}
+                  className={`${tab === item.path ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
                 >
                   {item.title}
                 </Button>

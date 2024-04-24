@@ -36,7 +36,7 @@ const Topbar = () => {
 
   return (
     <div className="bg-[#389CE3]">
-      <div className="static mx-auto flex h-[58px] max-h-[58px] min-h-[58px] w-full max-w-[1378px] flex-col items-center justify-between pb-2 tablet:h-[116px] tablet:min-h-[116px] laptop:h-[92px] laptop:max-h-[70px] laptop:min-h-[70px] laptop:flex-row laptop:pb-0">
+      <div className="static mx-auto flex h-[58px] max-h-[58px] min-h-[58px] w-full max-w-[1378px] flex-col items-center justify-between pb-2 tablet:h-24 tablet:min-h-24 laptop:h-[92px] laptop:max-h-[70px] laptop:min-h-[70px] laptop:flex-row laptop:pb-0">
         {/* logo */}
         <div className="relative flex w-full items-center justify-between px-4 py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
           <Link
