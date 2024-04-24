@@ -85,7 +85,7 @@ export default function ProfileSlider({ setTab, tab }) {
   }, []);
 
   return (
-    <div className="flex items-center justify-center px-2 py-[7px] tablet:px-6 tablet:py-[14.82px]">
+    <div className="flex items-center justify-center p-2 tablet:px-6 tablet:py-[14.82px]">
       {scrollPosition > 0 && (
         <button
           onClick={handleLeftArrowClick}
