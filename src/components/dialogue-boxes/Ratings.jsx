@@ -373,7 +373,6 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
             //   handleClose();
             // }}
             onClick={() => {
-              setSearch('');
               const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
               const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                 homeFilterActions.filterInitialState;
