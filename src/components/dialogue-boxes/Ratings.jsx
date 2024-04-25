@@ -8,6 +8,7 @@ import * as homeFilterActions from '../../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSlice';
 import { useLocation } from 'react-router-dom';
 import { isEqual } from 'lodash';
+import { toast } from 'sonner';
 
 export const StatusFiltersList = [
   {
@@ -101,7 +102,13 @@ const FilterContainer = (props) => {
   const filterStates = useSelector(homeFilterActions.getFilters);
 
   return (
-    <div className="w-full">
+    <div
+      className={`w-full ${heading === 'Media' && 'opacity-[60%]'}`}
+      onClick={() => {
+        console.log('run');
+        heading === 'Media' && toast.info('Feature coming soon');
+      }}
+    >
       <div className="rounded-t-[15px] bg-[#DEE6F7] py-2">
         <h1 className="text-center text-[12px] font-bold text-[#707175] tablet:text-[22px]">{heading}</h1>
       </div>
