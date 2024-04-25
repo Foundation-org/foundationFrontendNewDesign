@@ -30,20 +30,20 @@ export const StatusFiltersList = [
 export const MediaFiltersList = [
   {
     id: 1,
-    title: 'Images',
+    title: 'All',
   },
   {
     id: 2,
+    title: 'Images',
+  },
+  {
+    id: 3,
     title: 'Video',
   },
 
   {
-    id: 3,
-    title: 'Audio',
-  },
-  {
     id: 4,
-    title: 'None',
+    title: 'Audio',
   },
 ];
 

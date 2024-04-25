@@ -254,7 +254,7 @@ function Slider({ sliderLoading, setSliderloading }) {
       {scrollPosition > 0 && (
         <button
           onClick={handleLeftArrowClick}
-          className="h-[10px] w-[20px] rotate-180 tablet:h-[21px] tablet:w-14"
+          className="size-[10px] min-w-[10px] max-w-[10px] rotate-180 tablet:size-5 tablet:min-w-5 tablet:max-w-5"
           style={{
             background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
             backgroundRepeat: 'no-repeat',
@@ -355,7 +355,7 @@ function Slider({ sliderLoading, setSliderloading }) {
       </div>
       <button
         onClick={handleRightArrowClick}
-        className="h-[10px] w-[20px] tablet:h-[21px] tablet:w-14"
+        className="size-[10px] min-w-[10px] max-w-[10px] tablet:size-5 tablet:min-w-5 tablet:max-w-5"
         style={{
           background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
           backgroundRepeat: 'no-repeat',

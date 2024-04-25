@@ -74,11 +74,11 @@ export default function CreateSlider({ setTab, tab }) {
   };
 
   return (
-    <div className="flex items-center justify-center p-2 tablet:px-6 tablet:py-[14.82px]">
+    <div className="flex items-center justify-center px-4 py-2 tablet:px-6 tablet:py-[14.82px]">
       {scrollPosition > 0 && (
         <button
           onClick={handleLeftArrowClick}
-          className="h-[10px] w-[20px] rotate-180 tablet:h-[21px] tablet:w-14"
+          className="size-[10px] min-w-[10px] max-w-[10px] rotate-180 tablet:size-5 tablet:min-w-5 tablet:max-w-5"
           style={{
             background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
             backgroundRepeat: 'no-repeat',
@@ -93,20 +93,25 @@ export default function CreateSlider({ setTab, tab }) {
         onMouseDown={handleMouseDown}
       >
         {createItems.map((item) => (
-          <Button
-            key={item.id}
-            id={`create-btn-${item.id}`}
-            variant={'topics'}
-            className={`${tab === item.id ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
-            onClick={() => handleTab(item.id)}
-          >
-            {item.title}
-          </Button>
+          <div className="flex">
+            <Button
+              key={item.id}
+              id={`create-btn-${item.id}`}
+              variant={'topics'}
+              className={`${tab === item.id ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
+              onClick={() => handleTab(item.id)}
+            >
+              {item.title}
+            </Button>
+            {item.id === 2 && (
+              <div className="ml-[6.75px] min-w-[1.4px] bg-[#CECECE] tablet:ml-[13.82px] tablet:min-w-[2.4px]" />
+            )}
+          </div>
         ))}
       </div>
       <button
         onClick={handleRightArrowClick}
-        className="h-[10px] w-[20px] tablet:h-[21px] tablet:w-14"
+        className="size-[10px] min-w-[10px] max-w-[10px] tablet:size-5 tablet:min-w-5 tablet:max-w-5"
         style={{
           background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
           backgroundRepeat: 'no-repeat',

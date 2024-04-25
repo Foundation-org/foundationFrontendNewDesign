@@ -91,7 +91,10 @@ export default function DashboardLayout({ children }) {
         {/* Mobile TopBar */}
         {location.pathname !== '/dashboard' && (
           <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white px-5 tablet:hidden">
-            <div className="h-fit rounded-[15px] bg-white dark:bg-[#000]">
+            <div
+              className="h-fit rounded-[15px] bg-white dark:bg-[#000]"
+              onClick={() => navigate('/dashboard/treasury')}
+            >
               <div className="flex items-center gap-2">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
