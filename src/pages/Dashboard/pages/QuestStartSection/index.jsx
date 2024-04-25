@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 // Components
@@ -21,6 +21,12 @@ import MediaControls from '../../../../components/MediaControls';
 // import { GrClose } from 'react-icons/gr';
 import { setFilterStates } from '../../../../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
+
+// New
+import { useEffect } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInView } from 'react-intersection-observer';
+import api from '../../../../services/api/Axios';
 
 const QuestStartSection = () => {
   const dispatch = useDispatch();
@@ -362,6 +368,59 @@ const QuestStartSection = () => {
       console.log(err);
     },
   });
+
+  // NEW
+
+  // const res = await fetch(`https://jsonplaceholder.typicode.com/todos?_page=${pageParam}`);
+  // const fetchPosts = async ({
+  //   pageParam,
+  //   uuid,
+  //   _page,
+  //   _limit,
+  //   filter,
+  //   sort,
+  //   type,
+  //   Page,
+  //   terms,
+  //   blockedTerms,
+  //   moderationRatingInitial,
+  //   start,
+  //   end,
+  //   moderationRatingFinal,
+  //   participated,
+  // }) => {
+  //   const queryParams = new URLSearchParams({
+  //     uuid,
+  //     _page,
+  //     _limit,
+  //     filter,
+  //     sort,
+  //     type,
+  //     Page,
+  //     terms,
+  //     blockedTerms: JSON.stringify(blockedTerms),
+  //     moderationRatingInitial,
+  //     start,
+  //     end,
+  //     moderationRatingFinal,
+  //     participated,
+  //   });
+
+  //   const res = await api.get(`/infoquestions/getQuestsAll?${queryParams}`);
+  //   return res.json();
+  // };
+
+  // const { data, status, error, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery({
+  //   queryKey: ['todos'],
+  //   queryFn: fetchPosts,
+  //   initialPageParam: 1,
+  //   getNextPageParam: (lastPage, allPages) => {
+  //     const nexPage = lastPage.length ? allPages.length + 1 : undefined;
+  //     return nexPage;
+  //   },
+  // });
+
+  // console.log({ data });
 
   return (
     <div className="w-full bg-[#F2F3F5] dark:bg-black">
