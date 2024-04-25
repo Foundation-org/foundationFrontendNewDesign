@@ -34,6 +34,8 @@ const CustomCombobox = ({
     return true;
   };
 
+  console.log(selected);
+
   return (
     <Combobox
       value={selected}
