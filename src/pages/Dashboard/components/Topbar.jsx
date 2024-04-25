@@ -49,7 +49,7 @@ const Topbar = () => {
             <h1 className="relative font-neuropol text-[12px] font-normal text-white tablet:text-[20px]">
               FOUNDATION{' '}
               <span className="absolute -right-[26px] bottom-[2px] whitespace-nowrap font-poppins text-[7px] font-medium text-[#D0E4F2] tablet:-bottom-3 tablet:-right-8 tablet:left-0 tablet:text-[12px]">
-                v 1.9.8
+                v 1.9.9
               </span>
             </h1>
 
@@ -159,7 +159,7 @@ const Topbar = () => {
           </div>
         </div>
         {/* items */}
-        <ul className="flex w-full max-w-[777px] items-end justify-around px-4 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-0 laptop:gap-0">
+        <ul className="flex w-full items-end justify-around px-4 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-0 laptop:gap-0">
           {TopbarItems?.map((item) => (
             <li key={item.id} className="relative flex items-center">
               <Link

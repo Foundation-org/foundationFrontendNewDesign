@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '../../../../../components/ui/Button';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const createItems = [
   { id: 1, title: 'Verfication Badges', path: '/dashboard/profile', to: '' },
@@ -11,6 +11,7 @@ const createItems = [
 ];
 
 export default function ProfileSlider({ setTab, tab }) {
+  const location = useLocation();
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -75,6 +76,8 @@ export default function ProfileSlider({ setTab, tab }) {
   };
 
   useEffect(() => {
+    handleTab(location.pathname);
+
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
@@ -107,14 +110,28 @@ export default function ProfileSlider({ setTab, tab }) {
           if (windowWidth >= 744 && item.id === 0) {
             return null; // Ignore item with id 0 when window width is less than or equal to 744
           } else {
+            let startX = 0;
+            let startY = 0;
+
+            const handleMouseDown = (e) => {
+              startX = e.clientX;
+              startY = e.clientY;
+            };
+
+            const handleMouseUp = (e) => {
+              const distance = Math.sqrt((e.clientX - startX) ** 2 + (e.clientY - startY) ** 2);
+              if (distance < 5) {
+                handleTab(item.path);
+              }
+            };
+
             return (
               <Link
                 id={`profile-btn-${item.path}`}
                 key={item.id}
                 to={item.to}
-                onClick={() => {
-                  handleTab(item.path);
-                }}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
               >
                 <Button
                   variant={'topics'}

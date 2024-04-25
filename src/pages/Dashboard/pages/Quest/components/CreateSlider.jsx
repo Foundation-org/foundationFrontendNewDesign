@@ -92,22 +92,39 @@ export default function CreateSlider({ setTab, tab }) {
         ref={containerRef}
         onMouseDown={handleMouseDown}
       >
-        {createItems.map((item) => (
-          <div className="flex">
-            <Button
-              key={item.id}
-              id={`create-btn-${item.id}`}
-              variant={'topics'}
-              className={`${tab === item.id ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
-              onClick={() => handleTab(item.id)}
-            >
-              {item.title}
-            </Button>
-            {item.id === 2 && (
-              <div className="ml-[6.75px] min-w-[1.4px] bg-[#CECECE] tablet:ml-[13.82px] tablet:min-w-[2.4px]" />
-            )}
-          </div>
-        ))}
+        {createItems.map((item) => {
+          let startX = 0;
+          let startY = 0;
+
+          const handleMouseDown = (e) => {
+            startX = e.clientX;
+            startY = e.clientY;
+          };
+
+          const handleMouseUp = (e) => {
+            const distance = Math.sqrt((e.clientX - startX) ** 2 + (e.clientY - startY) ** 2);
+            if (distance < 5) {
+              handleTab(item.id);
+            }
+          };
+
+          return (
+            <div className="flex" key={item.id}>
+              <Button
+                id={`create-btn-${item.id}`}
+                variant={'topics'}
+                className={`${tab === item.id ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+              >
+                {item.title}
+              </Button>
+              {item.id === 2 && (
+                <div className="ml-[6.75px] min-w-[1.4px] bg-[#CECECE] tablet:ml-[13.82px] tablet:min-w-[2.4px]" />
+              )}
+            </div>
+          );
+        })}
       </div>
       <button
         onClick={handleRightArrowClick}

@@ -17,7 +17,6 @@ import Anchor from '../../../components/Anchor';
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log('🚀 ~ DashboardLayout ~ location:', location);
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getHiddenPostFilters = useSelector(hiddenPostFilters);

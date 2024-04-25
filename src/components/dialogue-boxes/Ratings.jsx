@@ -100,8 +100,6 @@ const FilterContainer = (props) => {
   const dispatch = useDispatch();
   const filterStates = useSelector(homeFilterActions.getFilters);
 
-  console.log('first', filterStates);
-
   return (
     <div className="w-full">
       <div className="rounded-t-[15px] bg-[#DEE6F7] py-2">
@@ -153,11 +151,11 @@ const FilterContainer = (props) => {
               }
             }}
           >
-            <div className="flex size-4 items-center justify-center rounded-full border-2 border-[#525252] tablet:size-6">
+            <div className="flex size-4 min-h-4 min-w-4 items-center justify-center rounded-full border-2 border-[#525252] tablet:min-h-6 tablet:size-6 tablet:min-w-6">
               {heading === 'Status' && filterStates.filterByStatus === item.title ? (
-                <div className="size-2 rounded-full bg-[#525252] tablet:size-[14px]"></div>
+                <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252]  tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
               ) : heading === 'Type' && filterTitles[filterStates.filterByType] === item.title ? (
-                <div className="size-2 rounded-full bg-[#525252] tablet:size-[14px]"></div>
+                <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252] tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
               ) : null}
             </div>
 
