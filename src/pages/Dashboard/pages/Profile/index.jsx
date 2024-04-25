@@ -186,7 +186,7 @@ const Profile = () => {
           <ProfileSlider tab={selectedTab} setTab={setSelectedTab} />
         </div>
         <div
-          className={`${selectedTab !== '/dashboard/profile/ledger' ? 'max-w-[778px]' : 'max-w-[1440px] pb-16 laptop:mt-[60px]'} no-scrollbar mx-auto h-[calc(100vh-98.89px)] overflow-y-scroll tablet:h-[calc(100vh-173.63px)] laptop:h-[calc(100vh-147.63px)]`}
+          className={`${selectedTab !== '/dashboard/profile/ledger' ? 'max-w-[778px]' : 'max-w-[1440px] pb-16 laptop:mt-[60px]'} no-scrollbar mx-auto h-[calc(100dvh-141px)] overflow-y-scroll tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.63px)]`}
         >
           <Outlet />
         </div>
