@@ -60,8 +60,8 @@ export default function SharedLinkResults() {
       <Topbar />
       <div className="bg-[#F2F3F5] dark:bg-[#242424]">
         <DashboardLayout>
-          <div className="no-scrollbar h-[calc(100vh-90px)] w-full overflow-y-auto tablet:h-[calc(100vh-70px)]">
-            <div className="mb-[10px] mt-[15px] flex justify-center gap-8 tablet:gap-5 laptop:mb-[37px] laptop:mt-[43px] laptop:gap-[35px]">
+          <div className="no-scrollbar h-[calc(100dvh-101px)] w-full overflow-y-auto tablet:h-[calc(100vh-70px)]">
+            <div className="mb-[10px] mt-[15px] flex justify-center gap-[15px] tablet:gap-5 laptop:mb-[37px] laptop:mt-[43px] laptop:gap-[35px]">
               <button
                 className={`${
                   tab === 'All Results'

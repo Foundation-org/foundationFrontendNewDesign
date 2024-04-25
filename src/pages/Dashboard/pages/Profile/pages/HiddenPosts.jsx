@@ -27,7 +27,7 @@ export default function HiddenPosts() {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
-  const [height, setHeight] = useState('calc(100vh - 185px)');
+  const [height, setHeight] = useState('calc(100dvh - 158px)');
   const [allData, setAllData] = useState([]);
   const [feedData, setFeedData] = useState();
   const [startTest, setStartTest] = useState(null);
@@ -174,7 +174,7 @@ export default function HiddenPosts() {
     const updateHeight = () => {
       const newHeight =
         window.innerWidth < 744
-          ? 'calc(100vh - 158.89px)'
+          ? 'calc(100dvh - 158px)'
           : window.innerWidth >= 744 && window.innerWidth <= 1280
             ? 'calc(100vh - 173.63px)'
             : 'calc(100vh - 147.63px)';
