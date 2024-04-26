@@ -61,32 +61,32 @@ export const TypeFiltersList = [
   {
     id: 2,
     title: 'Yes/No',
-    val: 'Yes/No',
+    val: 'yes/no',
   },
   {
     id: 3,
     title: 'Multiple Choice',
-    val: 'Multiple Choice',
+    val: 'multiple choise',
   },
   {
     id: 4,
     title: 'Open Choice',
-    val: 'Open Choice',
+    val: 'open choice',
   },
   {
     id: 5,
     title: 'Rank Choice',
-    val: 'Ranked Choise',
+    val: 'ranked choise',
   },
   {
     id: 6,
     title: 'Agree/Disagree',
-    val: 'Agree/Disagree',
+    val: 'agree/disagree',
   },
   {
     id: 7,
     title: 'Like/Dislike',
-    val: 'Like/Dislike',
+    val: 'like/dislike',
   },
 ];
 
