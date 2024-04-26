@@ -17,6 +17,7 @@ const resetState = {
   filterByStatus: 'All',
   filterByType: 'All',
   filterByScope: 'All',
+  filterByMedia: 'All',
   bookmarks: false,
   filterBySort: 'Newest First',
   clearFilter: false,
@@ -26,6 +27,7 @@ const resetOtherStates = {
   filterByStatus: 'All',
   filterByType: 'All',
   filterByScope: 'All',
+  filterByMedia: 'All',
   bookmarks: false,
   filterBySort: 'Newest First',
   clearFilter: false,
@@ -36,6 +38,7 @@ export const filterInitialState = {
   searchData: '',
   filterByStatus: 'All',
   filterByType: 'All',
+  filterByMedia: 'All',
   filterByScope: 'All',
   bookmarks: false,
   filterBySort: 'Newest First',
@@ -99,6 +102,9 @@ export const filtersSlice = createSlice({
     setFilterByScope: (state, action) => {
       state.filterByScope = action.payload;
     },
+    setFilterByMedia: (state, action) => {
+      state.filterByMedia = action.payload;
+    },
     setFilterBySort: (state, action) => {
       state.filterBySort = action.payload;
     },
@@ -132,6 +138,7 @@ export const {
   setFilterByScope,
   setBookmarks,
   setFilterBySort,
+  setFilterByMedia,
   setRatings,
   resetFilters,
   resetSearchData,

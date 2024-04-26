@@ -32,19 +32,23 @@ export const MediaFiltersList = [
   {
     id: 1,
     title: 'All',
+    val: 'All',
   },
   {
     id: 2,
     title: 'Images',
+    val: 'Images',
   },
   {
     id: 3,
     title: 'Video',
+    val: 'Video',
   },
 
   {
     id: 4,
     title: 'Audio',
+    val: 'Audio',
   },
 ];
 
@@ -97,17 +101,10 @@ export const filterTitles = {
 };
 
 const FilterContainer = (props) => {
-  const { heading, list, style, setFilters } = props;
-  const dispatch = useDispatch();
-  const filterStates = useSelector(homeFilterActions.getFilters);
+  const { heading, list, style } = props;
 
   return (
-    <div
-      className={`w-full ${heading === 'Media' && 'opacity-[60%]'}`}
-      onClick={() => {
-        heading === 'Media' && toast.info('Feature coming soon');
-      }}
-    >
+    <div className={`w-full ${heading === 'Media' && 'opacity-[60%]'}`}>
       <div className="rounded-t-[15px] bg-[#DEE6F7] py-2">
         <h1 className="text-center text-[12px] font-bold text-[#707175] tablet:text-[22px]">{heading}</h1>
       </div>
@@ -119,13 +116,13 @@ const FilterContainer = (props) => {
             className="flex cursor-pointer items-center gap-3 tablet:gap-6"
             onClick={() => {
               if (heading === 'Status') {
-                console.log('clicked');
                 props.setFilterValues({ ...props.filterValues, status: item.title });
               }
               if (heading === 'Type') {
-                console.log('clicked type');
-                console.log(item.val);
                 props.setFilterValues({ ...props.filterValues, type: item.val });
+              }
+              if (heading === 'Media') {
+                props.setFilterValues({ ...props.filterValues, media: item.val });
               }
             }}
           >
@@ -133,6 +130,8 @@ const FilterContainer = (props) => {
               {heading === 'Status' && props.filterValues.status === item.title ? (
                 <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252]  tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
               ) : heading === 'Type' && props.filterValues.type === item.val ? (
+                <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252] tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
+              ) : heading === 'Media' && props.filterValues.media === item.val ? (
                 <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252] tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
               ) : null}
             </div>
@@ -198,6 +197,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       setFilters({
         ...filterStates,
         filterByType: filterValues.type,
+        filterByMedia: 'All',
         filterByStatus: 'All',
         filterBySort: 'Newest First',
         filterByScope: '',
@@ -217,6 +217,26 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       setFilters({
         ...filterStates,
         filterByStatus: filterValues.status,
+        filterByMedia: 'All',
+        filterBySort: 'Newest First',
+        filterByScope: '',
+        bookmarks: false,
+        topics: {
+          ...filterStates.topics,
+          Block: {
+            ...filterStates.topics.Block,
+            list: [],
+          },
+        },
+        selectedBtnId: localStorage.removeItem('selectedButtonId'),
+      });
+    }
+    if (filterValues.media !== '') {
+      dispatch(homeFilterActions.setFilterByMedia(filterValues.media));
+      setFilters({
+        ...filterStates,
+        filterByMedia: filterValues.media,
+        filterByStatus: 'All',
         filterBySort: 'Newest First',
         filterByScope: '',
         bookmarks: false,
@@ -425,6 +445,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                 setFilters({
                   ...homeFilterActions.filterInitialState,
                 });
+                setFilterValues({ type: filterStates.filterByType, media: 'All', status: filterStates.filterByStatus });
               }
             }}
           >
