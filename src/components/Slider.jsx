@@ -10,7 +10,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { setFilterStates } from '../services/api/userAuth';
 import { setIsShowPlayer, setPlayingPlayerId } from '../features/quest/utilsSlice';
 
-function Slider({ sliderLoading, setSliderloading }) {
+function Slider({ isFetching }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -25,7 +25,6 @@ function Slider({ sliderLoading, setSliderloading }) {
   const containerRef = useRef(null);
   const filterStates = useSelector(filtersActions.getFilters);
   const [scrollPosition, setScrollPosition] = useState(0);
-
   const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
 
   useEffect(() => {
@@ -119,12 +118,12 @@ function Slider({ sliderLoading, setSliderloading }) {
       selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    if (sliderLoading) return;
+    if (isFetching) return;
 
     switch (type) {
       case 'newest-first':
         if (filterStates.filterBySort !== 'Newest First') {
-          setSliderloading(true);
+          // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
           dispatch(filtersActions.setBookmarks(false));
@@ -134,6 +133,7 @@ function Slider({ sliderLoading, setSliderloading }) {
           setFilters({
             ...filterStates,
             filterBySort: 'Newest First',
+            filterByScope: '',
             bookmarks: false,
             selectedBtnId: localStorage.getItem('selectedButtonId'),
             topics: {
@@ -148,7 +148,7 @@ function Slider({ sliderLoading, setSliderloading }) {
         break;
       case 'most-popular':
         if (filterStates.filterBySort !== 'Most Popular') {
-          setSliderloading(true);
+          // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
           dispatch(filtersActions.setBookmarks(false));
@@ -173,7 +173,7 @@ function Slider({ sliderLoading, setSliderloading }) {
         break;
       case 'my-posts':
         if (filterStates.filterByScope !== 'Me') {
-          setSliderloading(true);
+          // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
           dispatch(filtersActions.setBookmarks(false));
@@ -198,7 +198,7 @@ function Slider({ sliderLoading, setSliderloading }) {
         break;
       case 'bookmarks':
         if (filterStates.bookmarks !== true) {
-          setSliderloading(true);
+          // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
           dispatch(homeFilterActions.setBlockTopics([]));
@@ -223,7 +223,7 @@ function Slider({ sliderLoading, setSliderloading }) {
         break;
       case 'topics':
         if (filterStates.topics?.Block && filterStates.topics?.Block.list.includes(data)) return;
-        setSliderloading(true);
+        // setSliderloading(true);
         dispatch(setIsShowPlayer(false));
         dispatch(setPlayingPlayerId(''));
         dispatch(filtersActions.setBookmarks(false));
@@ -249,6 +249,7 @@ function Slider({ sliderLoading, setSliderloading }) {
         break;
     }
   };
+
   return (
     <div className="flex items-center px-4 py-2 tablet:px-6 tablet:py-[14.82px]">
       {scrollPosition > 0 && (
@@ -276,7 +277,7 @@ function Slider({ sliderLoading, setSliderloading }) {
               queryClient.invalidateQueries('FeedData');
               handleButtonSelection('newest-first', null, 'newButton');
             }}
-            disabled={sliderLoading}
+            disabled={isFetching}
             id={'newButton'}
           >
             New!
@@ -288,7 +289,7 @@ function Slider({ sliderLoading, setSliderloading }) {
               queryClient.invalidateQueries('FeedData');
               handleButtonSelection('most-popular', null, 'trendingButton');
             }}
-            disabled={sliderLoading}
+            disabled={isFetching}
             id={'trendingButton'}
           >
             Trending!
@@ -300,7 +301,7 @@ function Slider({ sliderLoading, setSliderloading }) {
               queryClient.invalidateQueries('FeedData');
               handleButtonSelection('my-posts', null, 'myPostButton');
             }}
-            disabled={sliderLoading}
+            disabled={isFetching}
             id={'myPostButton'}
           >
             My Posts
@@ -312,7 +313,7 @@ function Slider({ sliderLoading, setSliderloading }) {
               // queryClient.invalidateQueries('FeedData');
               handleButtonSelection('bookmarks', null, 'bookmarkButton');
             }}
-            disabled={sliderLoading}
+            disabled={isFetching}
             id={'bookmarkButton'}
           >
             Bookmarks
@@ -344,7 +345,7 @@ function Slider({ sliderLoading, setSliderloading }) {
                 key={index + 1}
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
-                disabled={sliderLoading}
+                disabled={isFetching}
                 id={`topic-${index}`}
               >
                 {item}

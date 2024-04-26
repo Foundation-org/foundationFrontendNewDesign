@@ -4,6 +4,7 @@ import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import { isEqual } from 'lodash';
 import { setFilterStates } from '../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 
 const filtersInitialState = {
   filterByStatus: 'All',
@@ -277,26 +278,33 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
 };
 
 export const printEndMessage = (
-  feedData,
-  filterStates,
+  // feedData,
+  // filterStates,
+  // isLoading,
+  // persistedTheme,
+  // setFilters,
   allData,
-  persistedTheme,
   isBookmarked,
-  isLoading,
   isFetching,
-  setFilters,
 ) => {
   const dispatch = useDispatch();
-
-  const result = matchFilters(filtersInitialState, filterStates);
   const filtersActions = homeFilterActions;
+  const filterStates = useSelector(filtersActions.getFilters);
+  const result = matchFilters(filtersInitialState, filterStates);
+  const persistedTheme = useSelector((state) => state.utils.theme);
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
   // console.log(feedData?.hasNextPage, isPending, isLoading);
 
-  return !feedData?.hasNextPage && !isFetching && !isLoading ? (
-    <div className="flex justify-between gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
-      <div></div>
+  const { mutateAsync: setFilters } = useMutation({
+    mutationFn: setFilterStates,
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  return !isFetching ? (
+    <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
       {filterStates.searchData && allData.length == 0 ? (
         <div className="my-[15vh] flex  flex-col items-center justify-center">
           {persistedTheme === 'dark' ? (
@@ -505,7 +513,6 @@ export const printEndMessage = (
           )}
         </div>
       )}
-      <div></div>
     </div>
   ) : (
     <div className="flex items-center justify-center pb-[6rem] pt-3 tablet:py-[27px]">

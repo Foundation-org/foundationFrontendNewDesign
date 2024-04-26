@@ -14,6 +14,7 @@ import * as HomepageApis from '../../services/api/homepageApis';
 import { EmbededVideo } from './EmbededVideo';
 import { isImageUrl } from '../../utils/embeddedutils';
 import { EmbededImage } from './EmbededImage';
+
 const data = [
   {
     id: 1,
@@ -43,46 +44,52 @@ const data = [
 
 const QuestCardLayout = ({
   questStartData,
-  isBookmarked,
-  setPlayingPlayerId,
   playing,
-  setIsPlaying,
-  setIsShowPlayer,
-  isPlaying,
   postProperties,
-
   children,
+  // isBookmarked,
+  // setPlayingPlayerId,
+  // setIsPlaying,
+  // setIsShowPlayer,
+  // isPlaying,
 }) => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  // const location = useLocation();
   const queryClient = useQueryClient();
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
 
-  const showHidePostOpen = () => {
-    setCheckboxStates(data.map(() => false));
-    setModalVisible(true);
-  };
+  // const showHidePostOpen = () => {
+  //   setCheckboxStates(data.map(() => false));
+  //   setModalVisible(true);
+  // };
 
-  const showHidePostClose = () => {
-    setModalVisible(false);
-  };
+  // const showHidePostClose = () => {
+  //   setModalVisible(false);
+  // };
 
   useEffect(() => {
-    setbookmarkStatus(isBookmarked);
-  }, [isBookmarked]);
+    setbookmarkStatus(questStartData.bookmark);
+  }, [questStartData.bookmark]);
 
   const { mutateAsync: AddBookmark } = useMutation({
     mutationFn: HomepageApis.createBookmark,
     onSuccess: (resp) => {
-      // toast.success('Bookmarked Added');
-      dispatch(
-        addBookmarkResponse({
-          questForeignKey: resp.data.id,
-        }),
-      );
-      queryClient.invalidateQueries('FeedData');
+      queryClient.setQueryData(['posts'], (oldData) => ({
+        ...oldData,
+        pages: oldData?.pages?.map((page) =>
+          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: true } : item)),
+        ),
+      }));
+
+      // dispatch(
+      //   addBookmarkResponse({
+      //     questForeignKey: resp.data.id,
+      //   }),
+      // );
+
+      // queryClient.invalidateQueries('FeedData');
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
@@ -92,10 +99,16 @@ const QuestCardLayout = ({
   const { mutateAsync: DelBookmark } = useMutation({
     mutationFn: HomepageApis.deleteBookmarkById,
     onSuccess: (resp) => {
+      queryClient.setQueryData(['posts'], (oldData) => ({
+        ...oldData,
+        pages: oldData?.pages?.map((page) =>
+          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: false } : item)),
+        ),
+      }));
       // toast.success('Bookmark Removed ');
       // if (location.pathname === '/dashboard') {
       // queryClient.invalidateQueries('FeedData');
-      dispatch(removeBookmarkResponse(resp.data.id));
+      // dispatch(removeBookmarkResponse(resp.data.id));
       // }
     },
     onError: (err) => {
@@ -131,6 +144,7 @@ const QuestCardLayout = ({
       }),
     );
   };
+
   const { protocol, host } = window.location;
   let url = `${protocol}//${host}/p/${questStartData?.userQuestSetting?.link}`;
 
@@ -178,8 +192,8 @@ const QuestCardLayout = ({
             description={questStartData.description}
             url={questStartData.url}
             questId={questStartData._id}
-            // setPlayingPlayerId={setPlayingPlayerId}
             playing={playing}
+            // setPlayingPlayerId={setPlayingPlayerId}
             // setIsPlaying={setIsPlaying}
             // setIsShowPlayer={setIsShowPlayer}
             // isPlaying={isPlaying}

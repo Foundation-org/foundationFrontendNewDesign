@@ -111,8 +111,9 @@ const FilterContainer = (props) => {
       <div
         className={` ${style === 'yes' ? 'grid h-[calc(125px-26px)] grid-cols-2' : 'flex h-[calc(100%-34px)]'} flex-col gap-[6px] rounded-b-[15px] border-x-[3px] border-b-[3px] border-[#DEE6F7] bg-[#FDFDFD] p-2 tablet:h-[calc(100%-49px)] tablet:gap-4 tablet:p-[15px]`}
       >
-        {list?.map((item) => (
+        {list?.map((item, index) => (
           <div
+            key={index + 1}
             className="flex cursor-pointer items-center gap-3 tablet:gap-6"
             onClick={() => {
               if (heading === 'Status') {

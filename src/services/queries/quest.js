@@ -2,25 +2,25 @@ import { useQuery } from '@tanstack/react-query';
 import { applyFilters, fetchDataByStatus } from '../../utils/questionCard';
 import * as HomepageAPIs from '../api/homepageApis';
 
-export function useGetFeedData(filterStates, debouncedSearch, pagination, columns, params) {
-  params = applyFilters(params, filterStates, columns);
+// export function useGetFeedData(filterStates, debouncedSearch, pagination, columns, params) {
+//   params = applyFilters(params, filterStates, columns);
 
-  const { data, isLoading, isFetching } = useQuery({
-    queryFn: async () => {
-      if (debouncedSearch === '') {
-        const result = await fetchDataByStatus(params, filterStates);
-        return result.data;
-      } else {
-        const result = await HomepageAPIs.searchQuestions(debouncedSearch, params.moderationRatingFilter);
-        return result;
-      }
-    },
-    queryKey: ['FeedData', filterStates, debouncedSearch, pagination, columns],
-    staleTime: 60000,
-  });
+//   const { data, isLoading, isFetching } = useQuery({
+//     queryFn: async () => {
+//       if (debouncedSearch === '') {
+//         const result = await fetchDataByStatus(params, filterStates);
+//         return result.data;
+//       } else {
+//         const result = await HomepageAPIs.searchQuestions(debouncedSearch, params.moderationRatingFilter);
+//         return result;
+//       }
+//     },
+//     queryKey: ['FeedData', filterStates, debouncedSearch, pagination, columns],
+//     staleTime: 60000,
+//   });
 
-  return { data, isLoading, isFetching };
-}
+//   return { data, isLoading, isFetching };
+// }
 
 export function useGetHiddenFeedData(filterStates, debouncedSearch, pagination, columns, params) {
   params = applyFilters(params, filterStates, columns);
