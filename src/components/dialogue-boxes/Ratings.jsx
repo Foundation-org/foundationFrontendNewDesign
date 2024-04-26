@@ -72,7 +72,7 @@ export const TypeFiltersList = [
   {
     id: 5,
     title: 'Rank Choice',
-    val: 'Ranked Choice',
+    val: 'Ranked Choise',
   },
   {
     id: 6,
@@ -105,7 +105,6 @@ const FilterContainer = (props) => {
     <div
       className={`w-full ${heading === 'Media' && 'opacity-[60%]'}`}
       onClick={() => {
-        console.log('run');
         heading === 'Media' && toast.info('Feature coming soon');
       }}
     >
@@ -120,48 +119,20 @@ const FilterContainer = (props) => {
             className="flex cursor-pointer items-center gap-3 tablet:gap-6"
             onClick={() => {
               if (heading === 'Status') {
-                dispatch(homeFilterActions.setFilterByStatus(item.title));
-                setFilters({
-                  ...filterStates,
-                  filterByStatus: item.title,
-                  filterBySort: 'Newest First',
-                  filterByScope: '',
-                  bookmarks: false,
-                  topics: {
-                    ...filterStates.topics,
-                    Block: {
-                      ...filterStates.topics.Block,
-                      list: [],
-                    },
-                  },
-                  selectedBtnId: localStorage.removeItem('selectedButtonId'),
-                });
+                console.log('clicked');
+                props.setFilterValues({ ...props.filterValues, status: item.title });
               }
               if (heading === 'Type') {
-                dispatch(homeFilterActions.setFilterByType(item.val));
-                setFilters({
-                  ...filterStates,
-                  filterByType: item.val,
-                  filterByStatus: 'All',
-                  filterBySort: 'Newest First',
-                  filterByScope: '',
-                  bookmarks: false,
-                  topics: {
-                    ...filterStates.topics,
-                    Block: {
-                      ...filterStates.topics.Block,
-                      list: [],
-                    },
-                  },
-                  selectedBtnId: localStorage.removeItem('selectedButtonId'),
-                });
+                console.log('clicked type');
+                console.log(item.val);
+                props.setFilterValues({ ...props.filterValues, type: item.val });
               }
             }}
           >
             <div className="flex size-4 min-h-4 min-w-4 items-center justify-center rounded-full border-2 border-[#525252] tablet:min-h-6 tablet:size-6 tablet:min-w-6">
-              {heading === 'Status' && filterStates.filterByStatus === item.title ? (
+              {heading === 'Status' && props.filterValues.status === item.title ? (
                 <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252]  tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
-              ) : heading === 'Type' && filterTitles[filterStates.filterByType] === item.title ? (
+              ) : heading === 'Type' && props.filterValues.type === item.val ? (
                 <div className="size-2 min-h-2 min-w-2 rounded-full bg-[#525252] tablet:size-[14px] tablet:min-h-[14px] tablet:min-w-[14px]"></div>
               ) : null}
             </div>
@@ -178,16 +149,19 @@ const FilterContainer = (props) => {
 
 export default function Ratings({ handleClose, modalVisible, selectedOptions, setSelectedOptions, setFilters }) {
   const location = useLocation();
-
   let filtersActions;
   if (location.pathname === '/dashboard/bookmark') {
     filtersActions = bookmarkFiltersActions;
   } else {
     filtersActions = homeFilterActions;
   }
-
   const dispatch = useDispatch();
   const filterStates = useSelector(filtersActions.getFilters);
+  const [filterValues, setFilterValues] = useState({
+    type: filterTitles[filterStates.filterByType],
+    media: 'All',
+    status: filterStates.filterByStatus,
+  });
 
   useEffect(() => {
     dispatch(
@@ -219,6 +193,43 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
   };
 
   const handleSubmit = () => {
+    if (filterValues.type !== '') {
+      dispatch(homeFilterActions.setFilterByType(filterValues.type));
+      setFilters({
+        ...filterStates,
+        filterByType: filterValues.type,
+        filterByStatus: 'All',
+        filterBySort: 'Newest First',
+        filterByScope: '',
+        bookmarks: false,
+        topics: {
+          ...filterStates.topics,
+          Block: {
+            ...filterStates.topics.Block,
+            list: [],
+          },
+        },
+        selectedBtnId: localStorage.removeItem('selectedButtonId'),
+      });
+    }
+    if (filterValues.status !== '') {
+      dispatch(homeFilterActions.setFilterByStatus(filterValues.status));
+      setFilters({
+        ...filterStates,
+        filterByStatus: filterValues.status,
+        filterBySort: 'Newest First',
+        filterByScope: '',
+        bookmarks: false,
+        topics: {
+          ...filterStates.topics,
+          Block: {
+            ...filterStates.topics.Block,
+            list: [],
+          },
+        },
+        selectedBtnId: localStorage.removeItem('selectedButtonId'),
+      });
+    }
     if (selectedOptions.includes('adult') && selectedOptions.includes('everyone')) {
       dispatch(
         filtersActions.setRatings({
@@ -364,14 +375,39 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           Select your Filter Options
         </h1>
         <div className="mt-3 grid grid-cols-2 gap-[15px] tablet:mt-5 laptop:grid-cols-3">
-          <FilterContainer heading="Status" list={StatusFiltersList} setFilters={setFilters} />
-          <FilterContainer heading="Media" list={MediaFiltersList} setFilters={setFilters} />
+          <FilterContainer
+            heading="Status"
+            list={StatusFiltersList}
+            setFilters={setFilters}
+            filterValues={filterValues}
+            setFilterValues={setFilterValues}
+          />
+          <FilterContainer
+            heading="Media"
+            list={MediaFiltersList}
+            setFilters={setFilters}
+            filterValues={filterValues}
+            setFilterValues={setFilterValues}
+          />
           <div className="hidden laptop:block">
-            <FilterContainer heading="Type" list={TypeFiltersList} setFilters={setFilters} />
+            <FilterContainer
+              heading="Type"
+              list={TypeFiltersList}
+              setFilters={setFilters}
+              filterValues={filterValues}
+              setFilterValues={setFilterValues}
+            />
           </div>
         </div>
         <div className="mt-3 block laptop:hidden">
-          <FilterContainer heading="Type" list={TypeFiltersList} style="yes" setFilters={setFilters} />
+          <FilterContainer
+            heading="Type"
+            list={TypeFiltersList}
+            style="yes"
+            setFilters={setFilters}
+            filterValues={filterValues}
+            setFilterValues={setFilterValues}
+          />
         </div>
         <div className="mt-[10px] flex items-center justify-end gap-[25px] tablet:mt-[25px] tablet:gap-[35px]">
           <Button
