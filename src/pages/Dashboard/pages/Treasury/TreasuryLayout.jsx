@@ -71,7 +71,7 @@ const TreasuryLayout = () => {
       </div> */}
       <div className="mx-auto mb-[10px] max-w-[1378px] tablet:mb-[25px]">
         {/* Tabs */}
-        <div className="mb-[10px] mt-[15px] flex justify-center gap-8 tablet:gap-5 laptop:mb-[37px] laptop:mt-[43px] laptop:gap-[35px]">
+        <div className="mb-[10px] mt-[15px] flex justify-center gap-[18.64px] tablet:gap-5 laptop:mb-[37px] laptop:mt-[43px] laptop:gap-[35px]">
           <Link
             to={'/dashboard/treasury'}
             className={`${
