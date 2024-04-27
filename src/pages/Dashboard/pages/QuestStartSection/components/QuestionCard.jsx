@@ -28,8 +28,7 @@ const QuestionCard = (props) => {
   const quests = useSelector(questAction.getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const { questStartData, setPagination } = props;
-  const { handleStartTest, startTest, setStartTest } = props;
+  const { questStartData, handleStartTest, startTest, setStartTest } = props;
   const { isBookmarked, viewResult, handleViewResults } = props;
   const { setSubmitResponse, postProperties } = props;
 

@@ -2,36 +2,43 @@ import { GrClose } from 'react-icons/gr';
 import { FaSpinner } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
-import { initialColumns } from '../../../../../constants/preferences';
+// import { initialColumns } from '../../../../../constants/preferences';
 
-import InfiniteScroll from 'react-infinite-scroll-component';
+// import InfiniteScroll from 'react-infinite-scroll-component';
 import QuestionCard from '../../QuestStartSection/components/QuestionCard';
 
-import { applyFilters, fetchDataByStatus } from '../../../../../utils/questionCard';
-import * as HomepageAPIs from '../../../../../services/api/homepageApis';
-import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
-import { useErrorBoundary } from 'react-error-boundary';
+// import { applyFilters, fetchDataByStatus } from '../../../../../utils/questionCard';
+// import * as HomepageAPIs from '../../../../../services/api/homepageApis';
+// import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
+// import { useErrorBoundary } from 'react-error-boundary';
 import { hiddenPostFilters, updateSearch } from '../../../../../features/profile/hiddenPosts';
 import { useDispatch } from 'react-redux';
+import api from '../../../../../services/api/Axios';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInView } from 'react-intersection-observer';
 
 export default function HiddenPosts() {
-  const pageLimit = 5;
-  const [pagination, setPagination] = useState({
-    page: 1,
-    sliceStart: 0,
-    sliceEnd: pageLimit,
-  });
   const dispatch = useDispatch();
-  const { showBoundary } = useErrorBoundary();
+  const { ref, inView } = useInView();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const questUtils = useSelector(questUtilsActions.getQuestUtils);
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
-  const [height, setHeight] = useState('calc(100dvh - 158px)');
-  const [allData, setAllData] = useState([]);
-  const [feedData, setFeedData] = useState();
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
+  // const pageLimit = 5;
+  // const questUtils = useSelector(questUtilsActions.getQuestUtils);
+  // const [pagination, setPagination] = useState({
+  //   page: 1,
+  //   sliceStart: 0,
+  //   sliceEnd: pageLimit,
+  // });
+
+  // const { showBoundary } = useErrorBoundary();
+
+  // const [height, setHeight] = useState('calc(100dvh - 158px)');
+  // const [feedData, setFeedData] = useState();
+  // const [allData, setAllData] = useState([]);
+
   // const [filterStates, setFilterStates] = useState({
   //   filterBySort: 'Newest First',
   //   filterByType: '',
@@ -61,89 +68,122 @@ export default function HiddenPosts() {
   //   }, 300); // Adjust the delay time as needed
   // };
 
-  const getHiddenFeedData = async (filterStates, debouncedSearch, pagination, columns, params) => {
-    const updatedParams = applyFilters(params, filterStates, columns);
+  // const getHiddenFeedData = async (filterStates, debouncedSearch, pagination, columns, params) => {
+  //   const updatedParams = applyFilters(params, filterStates, columns);
 
-    try {
-      if (debouncedSearch === '') {
-        const result = await fetchDataByStatus(updatedParams, filterStates);
-        setFeedData(result.data);
-      } else {
-        const result = await HomepageAPIs.searchHiddenQuestions(debouncedSearch);
-        setFeedData(result);
-      }
-    } catch (error) {
-      showBoundary(error);
-      console.error('Error fetching data:', error);
-      throw error;
-    }
-  };
+  //   try {
+  //     if (debouncedSearch === '') {
+  //       const result = await fetchDataByStatus(updatedParams, filterStates);
+  //       setFeedData(result.data);
+  //     } else {
+  //       const result = await HomepageAPIs.searchHiddenQuestions(debouncedSearch);
+  //       setFeedData(result);
+  //     }
+  //   } catch (error) {
+  //     showBoundary(error);
+  //     console.error('Error fetching data:', error);
+  //     throw error;
+  //   }
+  // };
 
-  useEffect(() => {
-    getHiddenFeedData(getHiddenPostFilters, getHiddenPostFilters.searchData, pagination, initialColumns, {
-      Page: 'Hidden',
-      _page: pagination.page,
-      _limit: pageLimit,
-      start: pagination.sliceStart,
-      end: pagination.sliceEnd,
-      uuid: persistedUserInfo?.uuid,
-    });
-  }, [getHiddenPostFilters.searchData, pagination]);
+  // useEffect(() => {
+  //   getHiddenFeedData(getHiddenPostFilters, getHiddenPostFilters.searchData, pagination, initialColumns, {
+  //     Page: 'Hidden',
+  //     _page: pagination.page,
+  //     _limit: pageLimit,
+  //     start: pagination.sliceStart,
+  //     end: pagination.sliceEnd,
+  //     uuid: persistedUserInfo?.uuid,
+  //   });
+  // }, [getHiddenPostFilters.searchData, pagination]);
 
   // Update Data on Filter Changes
-  useEffect(() => {
-    setPagination((prevPagination) => ({
-      ...prevPagination,
-      sliceStart: 0,
-      sliceEnd: pageLimit,
-      page: 1,
-    }));
-    setAllData([]);
-  }, [getHiddenPostFilters, getHiddenPostFilters.searchData]);
+  // useEffect(() => {
+  //   setPagination((prevPagination) => ({
+  //     ...prevPagination,
+  //     sliceStart: 0,
+  //     sliceEnd: pageLimit,
+  //     page: 1,
+  //   }));
+  //   setAllData([]);
+  // }, [getHiddenPostFilters, getHiddenPostFilters.searchData]);
 
   // Update Data on FeedData Changes
-  useEffect(() => {
-    if (pagination.page === 1) {
-      setAllData(feedData?.data || []);
-    } else {
-      setAllData((prevData) => {
-        const newData = [...prevData, ...(feedData?.data || [])];
+  // useEffect(() => {
+  //   if (pagination.page === 1) {
+  //     setAllData(feedData?.data || []);
+  //   } else {
+  //     setAllData((prevData) => {
+  //       const newData = [...prevData, ...(feedData?.data || [])];
 
-        const uniqueData = newData.filter(
-          (item, index, array) => array.findIndex((data) => data._id === item._id) === index,
-        );
+  //       const uniqueData = newData.filter(
+  //         (item, index, array) => array.findIndex((data) => data._id === item._id) === index,
+  //       );
 
-        return uniqueData;
-      });
-    }
-  }, [feedData, getHiddenPostFilters, pagination.page]);
+  //       return uniqueData;
+  //     });
+  //   }
+  // }, [feedData, getHiddenPostFilters, pagination.page]);
 
   // Update Pagination on Page Change
-  useEffect(() => {
-    if (pagination.page === 1) {
-      setPagination((prevPagination) => ({
-        ...prevPagination,
-        sliceStart: 0,
-        sliceEnd: pageLimit,
-      }));
-    } else {
-      setPagination((prevPagination) => ({
-        ...prevPagination,
-        sliceStart: prevPagination.sliceEnd,
-        sliceEnd: prevPagination.sliceEnd + pageLimit,
-      }));
-    }
-  }, [pagination.page]);
+  // useEffect(() => {
+  //   if (pagination.page === 1) {
+  //     setPagination((prevPagination) => ({
+  //       ...prevPagination,
+  //       sliceStart: 0,
+  //       sliceEnd: pageLimit,
+  //     }));
+  //   } else {
+  //     setPagination((prevPagination) => ({
+  //       ...prevPagination,
+  //       sliceStart: prevPagination.sliceEnd,
+  //       sliceEnd: prevPagination.sliceEnd + pageLimit,
+  //     }));
+  //   }
+  // }, [pagination.page]);
 
   // Fetch More Data on Infinite Scroll
-  const fetchMoreData = useCallback(() => {
-    setPagination((prevPagination) => ({
-      ...prevPagination,
-      page: prevPagination.page + 1,
-    }));
-  }, []);
+  // const fetchMoreData = useCallback(() => {
+  //   setPagination((prevPagination) => ({
+  //     ...prevPagination,
+  //     page: prevPagination.page + 1,
+  //   }));
+  // }, []);
 
   // Memoized Callbacks
+
+  // useEffect(() => {
+  //   const indexToRemove = allData.findIndex((item) => item._id === questUtils.hiddenPostId);
+
+  //   if (indexToRemove !== -1) {
+  //     const updatedAllData = [...allData.slice(0, indexToRemove), ...allData.slice(indexToRemove + 1)];
+
+  //     setAllData(updatedAllData);
+  //   }
+  // }, [questUtils.hiddenPostId]);
+
+  // useEffect(() => {
+  //   const updateHeight = () => {
+  //     const newHeight =
+  //       window.innerWidth < 744
+  //         ? 'calc(100dvh - 158px)'
+  //         : window.innerWidth >= 744 && window.innerWidth <= 1280
+  //           ? 'calc(100vh - 173.63px)'
+  //           : 'calc(100vh - 147.63px)';
+  //     setHeight(newHeight);
+  //   };
+
+  //   updateHeight();
+
+  //   window.addEventListener('resize', updateHeight);
+
+  //   return () => {
+  //     window.removeEventListener('resize', updateHeight);
+  //   };
+  // }, []);
+
+  //================================================== NEW
+
   const memoizedStartTest = useCallback(
     (testId) => {
       setViewResult(null);
@@ -160,35 +200,78 @@ export default function HiddenPosts() {
     [setStartTest, setViewResult],
   );
 
+  const fetchPosts = async function getInfoQuestions({ pageParam }) {
+    const params = {
+      _page: pageParam,
+      _limit: 5,
+      start: 0,
+      end: 5,
+      uuid: persistedUserInfo.uuid,
+      sort: 'Newest First',
+      type: 'All',
+      Page: 'Hidden',
+      terms: getHiddenPostFilters.searchData,
+      moderationRatingInitial: 0,
+      moderationRatingFinal: 100,
+    };
+
+    const response = await api.get('/infoquestions/getQuestsAll', { params });
+
+    return response.data.data;
+  };
+
+  const { data, status, error, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery({
+    queryKey: ['hiddenPosts', getHiddenPostFilters.searchData],
+    queryFn: fetchPosts,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const nexPage = lastPage.length && lastPage.length === 5 ? allPages.length + 1 : undefined;
+      return nexPage;
+    },
+  });
+
   useEffect(() => {
-    const indexToRemove = allData.findIndex((item) => item._id === questUtils.hiddenPostId);
-
-    if (indexToRemove !== -1) {
-      const updatedAllData = [...allData.slice(0, indexToRemove), ...allData.slice(indexToRemove + 1)];
-
-      setAllData(updatedAllData);
+    if (inView && hasNextPage) {
+      fetchNextPage();
     }
-  }, [questUtils.hiddenPostId]);
+  }, [inView, hasNextPage, fetchNextPage]);
 
-  useEffect(() => {
-    const updateHeight = () => {
-      const newHeight =
-        window.innerWidth < 744
-          ? 'calc(100dvh - 158px)'
-          : window.innerWidth >= 744 && window.innerWidth <= 1280
-            ? 'calc(100vh - 173.63px)'
-            : 'calc(100vh - 147.63px)';
-      setHeight(newHeight);
-    };
+  if (status === 'error') {
+    return <p>Error: {error.message}</p>;
+  }
 
-    updateHeight();
-
-    window.addEventListener('resize', updateHeight);
-
-    return () => {
-      window.removeEventListener('resize', updateHeight);
-    };
-  }, []);
+  const content = data?.pages.map((posts) =>
+    posts.map((post, index) => {
+      if (posts.length == index + 1) {
+        return (
+          <QuestionCard
+            innerRef={ref}
+            key={post._id}
+            questStartData={post}
+            postProperties={'HiddenPosts'}
+            startTest={startTest}
+            setStartTest={setStartTest}
+            viewResult={viewResult}
+            handleViewResults={memoizedViewResults}
+            handleStartTest={memoizedStartTest}
+          />
+        );
+      } else {
+        return (
+          <QuestionCard
+            key={post._id}
+            questStartData={post}
+            postProperties={'HiddenPosts'}
+            startTest={startTest}
+            setStartTest={setStartTest}
+            viewResult={viewResult}
+            handleViewResults={memoizedViewResults}
+            handleStartTest={memoizedStartTest}
+          />
+        );
+      }
+    }),
+  );
 
   return (
     <div>
@@ -236,6 +319,81 @@ export default function HiddenPosts() {
       </div>
 
       <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-[#242424]">
+        <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">
+          {content}
+          {!isFetching ? (
+            <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
+              {getHiddenPostFilters.searchData && data?.pages[0].length == 0 ? (
+                <div className="my-[15vh] flex  flex-col items-center justify-center">
+                  {persistedTheme === 'dark' ? (
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingDark.svg`}
+                      alt="noposts image"
+                    />
+                  ) : (
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/noMatchingLight.svg`}
+                      alt="noposts image"
+                      className="h-[173px] w-[160px]"
+                    />
+                  )}
+                  <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+                    <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray">
+                      No matching posts found!
+                    </p>
+                    <button
+                      className={`${
+                        persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                      }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                      onClick={() => dispatch(updateSearch(''))}
+                    >
+                      Clear Search
+                    </button>
+                  </div>
+                </div>
+              ) : !getHiddenPostFilters.searchData && data?.pages[0].length === 0 ? (
+                <p className="text-center text-[4vw] laptop:text-[2vw]">
+                  <b>No hidden posts!</b>
+                </p>
+              ) : !getHiddenPostFilters.searchData ? (
+                <p className="text-center text-[4vw] laptop:text-[2vw]">
+                  <b>No more hidden posts!</b>
+                </p>
+              ) : (
+                <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
+                  <p className="font-inter mt-[1.319vw] text-center text-[5.083vw] font-bold text-[#9F9F9F] tablet:text-[2.083vw] dark:text-gray">
+                    You are all caught up!
+                  </p>
+                  <button
+                    className={`${
+                      persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                    }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                    onClick={() => dispatch(updateSearch(''))}
+                  >
+                    Clear Search
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center">
+              <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" />
+            </div>
+          )}
+        </div>
+        {/* 
+        
+          //   setFilterStates((prevState) => ({
+                    //     ...prevState,
+                    //     searchData: '',
+                    //   }));
+                    // }}
+                      // onClick={() => {
+                  //   setFilterStates((prevState) => ({
+                  //     ...prevState,
+                  //     searchData: '',
+                  //   }));
+                  // }}
         <InfiniteScroll
           dataLength={allData?.length}
           next={fetchMoreData}
@@ -340,7 +498,7 @@ export default function HiddenPosts() {
                 </div>
               ))}
           </div>
-        </InfiniteScroll>
+        </InfiniteScroll> */}
       </div>
     </div>
   );

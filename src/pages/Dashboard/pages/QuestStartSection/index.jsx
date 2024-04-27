@@ -373,7 +373,7 @@ const QuestStartSection = () => {
   //   },
   // });
 
-  // console.log('filterStates', filterStates.filterBySort);
+  console.log('filterStates', filterStates);
   //================================================== NEW
 
   const fetchPosts = async function getInfoQuestions({ pageParam }) {
@@ -396,6 +396,7 @@ const QuestStartSection = () => {
       moderationRatingFinal: filterStates.moderationRatingFilter.final,
       terms: filterStates.searchData,
       Page: filterStates.bookmarks ? 'Bookmark' : '',
+      media: filterStates.filterByMedia,
     };
 
     if (filterStates.topics.Block.list.length !== 0) {
@@ -419,6 +420,7 @@ const QuestStartSection = () => {
       filterStates.filterByStatus,
       filterStates.topics.Block.list,
       filterStates.bookmarks,
+      filterStates.filterByMedia,
     ],
     queryFn: fetchPosts,
     initialPageParam: 1,

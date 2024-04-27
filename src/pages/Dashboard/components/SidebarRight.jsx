@@ -1,20 +1,11 @@
 import { toast } from 'sonner';
-import { useState, useEffect } from 'react';
-import api from '../../../services/api/Axios';
-import { useNavigate } from 'react-router-dom';
-import Anchor from '../../../components/Anchor';
-import PopUp from '../../../components/ui/PopUp';
+import { useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '../../../components/ui/Button';
-import { addUser } from '../../../features/auth/authSlice';
-import { createGuestMode, userInfo, userInfoById } from '../../../services/api/userAuth';
+import { useSelector } from 'react-redux';
+import { createGuestMode } from '../../../services/api/userAuth';
 import { formatCountNumber } from '../../../utils/utils';
 
 const SidebarRight = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [modalVisible, setModalVisible] = useState(false);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -139,66 +130,8 @@ const SidebarRight = () => {
     }
   }, []);
 
-  const handleEmailType = async (value) => {
-    try {
-      if (!value) return toast.error('Please select the email type!');
-      setModalVisible(false);
-      const res = await api.patch(`/updateBadge/${persistedUserInfo._id}/${persistedUserInfo.badges[0]._id}`, {
-        type: value,
-        primary: true,
-      });
-      if (res.status === 200) {
-        localStorage.setItem('uId', res.data.uuid);
-        localStorage.setItem('userLoggedIn', res.data.uuid);
-        localStorage.removeItem('isGuestMode');
-        localStorage.setItem('jwt', res.data.token);
-        navigate('/dashboard');
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-    }
-  };
-
   return (
     <div className="no-scrollbar my-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto rounded-[15px] bg-white py-[25px] pl-[1.3rem] pr-[2.1rem] tablet:my-[15px] laptop:block dark:bg-[#000]">
-      <PopUp
-        logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email.svg`}
-        title={'Email'}
-        open={modalVisible}
-        closeIcon={true}
-      >
-        <div className="flex flex-col items-center pb-[32px] pt-2">
-          <p className="text-center text-[8px] font-semibold text-[#838383] tablet:text-[25px]">
-            {persistedUserInfo?.email}
-          </p>
-          <p className="mb-[10px] mt-[10px] text-center text-[10px] font-medium text-[#838383] tablet:mb-[22px] tablet:mt-[14px] tablet:text-[25px]">
-            Please select if this email is personal or professional.
-          </p>
-          <div className="flex items-center justify-center gap-[30px] tablet:gap-[65px]">
-            <Button
-              variant="personal-work"
-              className="gap-2 tablet:gap-[15px]"
-              onClick={() => handleEmailType('personal')}
-            >
-              <img
-                className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10"
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/personal.svg`}
-                alt="personal"
-              />
-              Personal
-            </Button>
-            <Button variant="personal-work" className="gap-2 tablet:gap-[15px]" onClick={() => handleEmailType('work')}>
-              <img
-                className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10"
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/work.svg`}
-                alt="work"
-              />{' '}
-              Work
-            </Button>
-          </div>
-        </div>
-      </PopUp>
-
       <p className="font-inter mb-[25px] text-center text-[10.79px] font-medium leading-[18px] text-[#616161] tablet:text-[18px] dark:text-[#D2D2D2]">
         My Contributions
       </p>

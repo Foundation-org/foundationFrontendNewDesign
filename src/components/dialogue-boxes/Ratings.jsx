@@ -48,7 +48,7 @@ export const MediaFiltersList = [
   {
     id: 4,
     title: 'Audio',
-    val: 'Audio',
+    val: 'Music',
   },
 ];
 

@@ -263,17 +263,18 @@ export default function BasicTable() {
                 table.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    className=" whitespace-nowrap border-0 border-b border-[#EEEEEE] text-[#292D32] dark:text-[#C8C8C8]"
+                    className="whitespace-nowrap border-0 border-b border-[#EEEEEE] text-[#292D32] dark:text-[#C8C8C8]"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
-                        className="py-1 text-[0.4rem] tablet:py-3 tablet:text-[.88rem] laptop:text-[1.2rem]"
+                        className="truncate py-1 text-[0.4rem] tablet:py-3 tablet:text-[.88rem] laptop:text-[1.2rem]"
                         // key={cell.id}
                         // style={{ width: cell.column.getSize() }}
                         {...{
                           key: cell.id,
                           style: {
                             width: cell.column.getSize(),
+                            maxWidth: cell.column.getSize(),
                           },
                         }}
                       >

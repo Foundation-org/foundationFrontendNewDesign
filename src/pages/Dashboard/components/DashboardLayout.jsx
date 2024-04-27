@@ -1,18 +1,19 @@
-import { useMutation } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { userInfo, userInfoById } from '../../../services/api/userAuth';
-import SidebarRight from './SidebarRight';
 import { toast } from 'sonner';
-import SidebarLeft from './SidebarLeft';
-import { useDispatch } from 'react-redux';
+import { GrClose } from 'react-icons/gr';
+import { useEffect, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { Button } from '../../../components/ui/Button';
+import { useSelector, useDispatch } from 'react-redux';
 import { addUser } from '../../../features/auth/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { userInfo, userInfoById } from '../../../services/api/userAuth';
 import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
-import { GrClose } from 'react-icons/gr';
 import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
+import SidebarRight from './SidebarRight';
+import SidebarLeft from './SidebarLeft';
 import api from '../../../services/api/Axios';
 import Anchor from '../../../components/Anchor';
+import PopUp from '../../../components/ui/PopUp';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function DashboardLayout({ children }) {
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
   const getSharedLinksFilters = useSelector(sharedLinksFilters);
   const [treasuryAmount, setTreasuryAmount] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
@@ -84,8 +86,66 @@ export default function DashboardLayout({ children }) {
     navigate('/guest-signup');
   };
 
+  const handleEmailType = async (value) => {
+    try {
+      if (!value) return toast.error('Please select the email type!');
+      setModalVisible(false);
+      const res = await api.patch(`/updateBadge/${persistedUserInfo._id}/${persistedUserInfo.badges[0]._id}`, {
+        type: value,
+        primary: true,
+      });
+      if (res.status === 200) {
+        localStorage.setItem('uId', res.data.uuid);
+        localStorage.setItem('userLoggedIn', res.data.uuid);
+        localStorage.removeItem('isGuestMode');
+        localStorage.setItem('jwt', res.data.token);
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+    }
+  };
+
   return (
     <div className="mx-auto w-full max-w-[1440px]">
+      <PopUp
+        logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email.svg`}
+        title={'Email'}
+        open={modalVisible}
+        closeIcon={true}
+      >
+        <div className="flex flex-col items-center pb-[32px] pt-2">
+          <p className="text-center text-[8px] font-semibold text-[#838383] tablet:text-[25px]">
+            {persistedUserInfo?.email}
+          </p>
+          <p className="mb-[10px] mt-[10px] text-center text-[10px] font-medium text-[#838383] tablet:mb-[22px] tablet:mt-[14px] tablet:text-[25px]">
+            Please select if this email is personal or professional.
+          </p>
+          <div className="flex items-center justify-center gap-[30px] tablet:gap-[65px]">
+            <Button
+              variant="personal-work"
+              className="gap-2 tablet:gap-[15px]"
+              onClick={() => handleEmailType('personal')}
+            >
+              <img
+                className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/personal.svg`}
+                alt="personal"
+              />
+              Personal
+            </Button>
+            <Button variant="personal-work" className="gap-2 tablet:gap-[15px]" onClick={() => handleEmailType('work')}>
+              <img
+                className="h-[16.6px] w-[16.6px] tablet:h-10 tablet:w-10"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/work.svg`}
+                alt="work"
+              />{' '}
+              Work
+            </Button>
+          </div>
+        </div>
+      </PopUp>
+
       <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
         {location.pathname !== '/dashboard' && (

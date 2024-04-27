@@ -199,11 +199,12 @@ export default function Ledger() {
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
-                        className="py-1 text-[0.4rem] tablet:py-3 tablet:text-[.88rem] laptop:text-[1.2rem]"
+                        className="truncate py-1 text-[0.4rem] tablet:py-3 tablet:text-[.88rem] laptop:text-[1.2rem]"
                         {...{
                           key: cell.id,
                           style: {
                             width: cell.column.getSize(),
+                            maxWidth: cell.column.getSize(),
                           },
                         }}
                       >

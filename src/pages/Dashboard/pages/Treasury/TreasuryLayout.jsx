@@ -72,7 +72,7 @@ const TreasuryLayout = () => {
       </div> */}
       <div className="mx-auto mb-[10px] max-w-[1378px] tablet:mb-[25px]">
         {/* Tabs */}
-        <div className="my-2 flex justify-center gap-[15px] tablet:gap-5 laptop:mb-[37px] laptop:mt-[43px] laptop:gap-[35px]">
+        <div className="my-2 flex justify-center gap-[15px] tablet:gap-5 laptop:mb-[65px] laptop:mt-[14.82px] laptop:gap-[35px]">
           <Link
             to={'/dashboard/treasury'}
             onClick={() => {
