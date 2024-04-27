@@ -37,7 +37,7 @@ export const MediaFiltersList = [
   {
     id: 2,
     title: 'Images',
-    val: 'Images',
+    val: 'Image',
   },
   {
     id: 3,
@@ -410,6 +410,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
             filterValues={filterValues}
             setFilterValues={setFilterValues}
           />
+          {console.log(filterValues)}
           <div className="hidden laptop:block">
             <FilterContainer
               heading="Type"
@@ -433,20 +434,20 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
         <div className="mt-[10px] flex items-center justify-end gap-[25px] tablet:mt-[25px] tablet:gap-[35px]">
           <Button
             variant={'danger'}
-            // onClick={() => {
-            //   handleClose();
-            // }}
             onClick={() => {
+              setFilterValues({
+                type: 'All',
+                media: 'All',
+                status: 'All',
+              });
               const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
               const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                 homeFilterActions.filterInitialState;
-
               if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                 dispatch(homeFilterActions.resetFilters());
                 setFilters({
                   ...homeFilterActions.filterInitialState,
                 });
-                setFilterValues({ type: filterStates.filterByType, media: 'All', status: filterStates.filterByStatus });
               }
             }}
           >
