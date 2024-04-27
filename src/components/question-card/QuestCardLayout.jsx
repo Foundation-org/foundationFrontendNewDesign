@@ -190,37 +190,43 @@ const QuestCardLayout = ({
     return new Blob([arrayBuffer], { type: mimeString });
   }
 
-  const getImage = useCallback(() => {
-    if (imageGetter.current === null) {
-      return;
-    }
+  const getImage = useCallback(
+    (link) => {
+      if (imageGetter.current === null) {
+        return;
+      }
+      toPng(imageGetter.current, { cacheBust: true })
+        .then((dataUrl) => {
+          const formData = new FormData();
+          const blob = dataURLToBlob(dataUrl);
 
-    toPng(imageGetter.current, { cacheBust: true })
-      .then((dataUrl) => {
-        const formData = new FormData();
-        const blob = dataURLToBlob(dataUrl);
+          formData.append('image', blob);
+          formData.append('path', `image-${questStartData._id}.png`);
+          formData.append('link', link);
 
-        formData.append('image', blob, `image-${questStartData._id}.png`);
-
-        fetch('localhost/', {
-          method: 'POST',
-          body: formData,
-        })
-          .then((response) => {
-            if (response.ok) {
-              console.log('Image uploaded successfully!');
-            } else {
-              console.error('Error uploading image:', response.statusText);
-            }
+          console.log('came');
+          fetch('http://localhost/1234', {
+            method: 'POST',
+            body: formData,
           })
-          .catch((error) => {
-            console.error('Error sending image to server:', error);
-          });
-      })
-      .catch((err) => {
-        console.error('Error converting image to dataURL:', err);
-      });
-  }, [imageGetter]);
+            .then((response) => {
+              console.log('then', response);
+              if (response.ok) {
+                console.log('Image uploaded successfully!');
+              } else {
+                console.error('Error uploading image:', response.statusText);
+              }
+            })
+            .catch((error) => {
+              console.error('Error sending image to server:', error);
+            });
+        })
+        .catch((err) => {
+          console.error('Error converting image to dataURL:', err);
+        });
+    },
+    [imageGetter],
+  );
 
   return (
     <div

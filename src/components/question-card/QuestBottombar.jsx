@@ -332,7 +332,7 @@ const QuestBottombar = ({
             <div className="flex  items-center gap-[0.17rem]  tablet:gap-[6px]">
               <div
                 onClick={() => {
-                  handleCopyOpen(), getImage();
+                  handleCopyOpen();
                 }}
                 className="cursor-pointer"
               >
@@ -353,6 +353,7 @@ const QuestBottombar = ({
                   img={img}
                   alt={alt}
                   badgeCount={badgeCount}
+                  getImage={getImage}
                 />
               </BasicModal>
             </div>
