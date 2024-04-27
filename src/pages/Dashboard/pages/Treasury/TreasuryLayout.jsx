@@ -1,6 +1,7 @@
 // import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Button } from '../../../../components/ui/Button';
 // import api from '../../../../services/api/Axios';
 // import { useSelector } from 'react-redux';
 
@@ -71,34 +72,40 @@ const TreasuryLayout = () => {
       </div> */}
       <div className="mx-auto mb-[10px] max-w-[1378px] tablet:mb-[25px]">
         {/* Tabs */}
-        <div className="mb-[10px] mt-[15px] flex justify-center gap-[18.64px] tablet:gap-5 laptop:mb-[37px] laptop:mt-[43px] laptop:gap-[35px]">
+        <div className="my-2 flex justify-center gap-[15px] tablet:gap-5 laptop:mb-[37px] laptop:mt-[43px] laptop:gap-[35px]">
           <Link
             to={'/dashboard/treasury'}
-            className={`${
-              selectedTab === '/dashboard/treasury/' ||
-              selectedTab === '/dashboard/treasury' ||
-              /^\/dashboard\/treasury(\/(?!ledger).*)?$/.test(selectedTab)
-                ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black'
-                : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
-            } tab-button`}
             onClick={() => {
               setSelectedTab('/dashboard/treasury');
             }}
           >
-            Redemption center
+            <Button
+              variant={'topics'}
+              className={`${
+                selectedTab === '/dashboard/treasury/' || selectedTab === '/dashboard/treasury'
+                  ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white'
+                  : 'border-[#ACACAC] bg-white text-[#707175]'
+              }`}
+            >
+              Redemption center
+            </Button>
           </Link>
           <Link
             to={'/dashboard/treasury/ledger'}
-            className={`${
-              selectedTab === '/dashboard/treasury/ledger/' || selectedTab === '/dashboard/treasury/ledger'
-                ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white dark:border-[#252D37] dark:bg-white dark:text-black'
-                : 'border-[#BABABA] bg-[#f9f9f9] text-[#7C7C7C] dark:bg-[#212428]'
-            } tab-button`}
             onClick={() => {
               setSelectedTab('/dashboard/treasury/ledger');
             }}
           >
-            Ledger
+            <Button
+              variant={'topics'}
+              className={`${
+                selectedTab === '/dashboard/treasury/ledger/' || selectedTab === '/dashboard/treasury/ledger'
+                  ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white'
+                  : 'border-[#ACACAC] bg-white text-[#707175]'
+              }`}
+            >
+              Ledger
+            </Button>
           </Link>
         </div>
         <div className="no-scrollbar h-[calc(100dvh-121.27px)] overflow-auto tablet:h-[calc(100dvh-138px)] tablet:pb-10 laptop:h-[calc(100dvh-208px)] laptop:pb-0">
