@@ -410,7 +410,6 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
             filterValues={filterValues}
             setFilterValues={setFilterValues}
           />
-          {console.log(filterValues)}
           <div className="hidden laptop:block">
             <FilterContainer
               heading="Type"

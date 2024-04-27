@@ -818,7 +818,7 @@ input[type='number'] {
     width: 100% !important;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 10px;
+    /* border-radius: 10px; */
   }
   /* .player-wrapper {
     padding-left: 60px !important;

@@ -373,7 +373,6 @@ const QuestStartSection = () => {
   //   },
   // });
 
-  console.log('filterStates', filterStates);
   //================================================== NEW
 
   const fetchPosts = async function getInfoQuestions({ pageParam }) {

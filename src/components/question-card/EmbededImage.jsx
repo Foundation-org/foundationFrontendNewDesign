@@ -8,7 +8,7 @@ export const EmbededImage = ({ description, url }) => {
   const closeDialogue = () => setImageDialogue(false);
 
   return (
-    <div className="flex flex-col justify-start rounded-[9.183px] px-1 py-2">
+    <div className="mb-1 ml-2 flex flex-col justify-start py-2 tablet:mb-2 tablet:ml-3">
       <FullScreenPicturePopup handleClose={closeDialogue} modalVisible={imageDialogue} content={url} />
       {/* <h2 className="mb-1 text-[8px] font-medium text-[#7C7C7C] tablet:text-[14.692px]">{description}</h2> */}
       <img
