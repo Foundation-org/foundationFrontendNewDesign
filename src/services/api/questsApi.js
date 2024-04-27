@@ -342,6 +342,7 @@ export const createUpdateUniqueLink = async (data) => {
     Question: data.Question,
     linkStatus: 'Enable',
     isGenerateLink: data.isGenerateLink,
+    sharedTime: new Date(),
   });
 };
 

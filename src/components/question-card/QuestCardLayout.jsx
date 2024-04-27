@@ -316,7 +316,13 @@ const QuestCardLayout = ({
       </div>
       <QuestBottombar
         uniqueShareLink={questStartData.uniqueShareLink}
-        time={questStartData.createdAt}
+        time={
+          postProperties === 'HiddenPosts'
+            ? questStartData.userQuestSetting.hiddenTime
+            : postProperties === 'SharedLinks'
+              ? questStartData.userQuestSetting.sharedTime
+              : questStartData.createdAt
+        }
         id={questStartData._id}
         createdBy={questStartData.uuid}
         title={getQuestionTitle(questStartData.whichTypeQuestion)}

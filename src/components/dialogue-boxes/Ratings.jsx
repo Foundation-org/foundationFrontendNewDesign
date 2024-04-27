@@ -8,7 +8,6 @@ import * as homeFilterActions from '../../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSlice';
 import { useLocation } from 'react-router-dom';
 import { isEqual } from 'lodash';
-import { toast } from 'sonner';
 
 export const StatusFiltersList = [
   {
