@@ -5,6 +5,9 @@ import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import AddMedia from './AddMedia';
 import AddPictures from './AddPictures';
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
+import { useCallback, useRef } from 'react';
 
 export default function CreateQuestWrapper({ quest, type, handleTab, msg, children }) {
   const dispatch = useDispatch();
@@ -13,6 +16,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
+  const ref = useRef(null);
 
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
@@ -28,7 +32,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
   };
 
   return (
-    <>
+    <div ref={ref}>
       <div
         className={`${
           persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
@@ -120,9 +124,10 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             </div>
             <Tooltip optionStatus={questionStatus} />
           </button>
+          <button onClick={onButtonClick}>click</button>
         </div>
         {children}
       </div>
-    </>
+    </div>
   );
 }
