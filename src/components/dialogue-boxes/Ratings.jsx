@@ -104,7 +104,7 @@ const FilterContainer = (props) => {
   const { heading, list, style } = props;
 
   return (
-    <div className={`w-full ${heading === 'Media' && 'opacity-[60%]'}`}>
+    <div className={`w-full`}>
       <div className="rounded-t-[15px] bg-[#DEE6F7] py-2">
         <h1 className="text-center text-[12px] font-bold text-[#707175] tablet:text-[22px]">{heading}</h1>
       </div>
