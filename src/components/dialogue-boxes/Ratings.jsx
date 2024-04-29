@@ -388,7 +388,6 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
 
     handleClose();
   };
-
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/dialoguebox/ratings-icon.svg`}
@@ -497,7 +496,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
               if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                 dispatch(homeFilterActions.resetFilters());
                 setFilters({
-                  ...homeFilterActions.filterInitialState,
+                  ...homeFilterActions.resetState,
                 });
               }
             }}

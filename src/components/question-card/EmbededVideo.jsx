@@ -5,6 +5,7 @@ import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
+import { suppressPost } from '../../services/api/questsApi';
 
 export const EmbededVideo = ({
   description,
@@ -61,7 +62,8 @@ export const EmbededVideo = ({
           className="react-player"
           onError={(e) => {
             // toast.error('Invalid URL');
-            console.log('Invalid URl', e);
+            console.log('Invalid URl', questId);
+            suppressPost(questId);
           }}
           onStart={() => {
             console.log('selectedQuestId', questId);
