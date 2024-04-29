@@ -322,7 +322,7 @@ const QuestBottombar = ({
         )}
 
         <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
-          {postProperties === 'HiddenPosts' ? 'Hidden' : null} {timeAgo}
+          {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null} {timeAgo}
         </h4>
       </div>
 
