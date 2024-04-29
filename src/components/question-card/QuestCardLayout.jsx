@@ -204,8 +204,7 @@ const QuestCardLayout = ({
           formData.append('path', `image-${questStartData._id}.png`);
           formData.append('link', link);
 
-          console.log('came');
-          fetch('http://localhost:7354/aws/s3ImageUploadToFrames', {
+          fetch(`${import.meta.env.VITE_API_URL}/aws/s3ImageUploadToFrames`, {
             method: 'POST',
             body: formData,
           })
