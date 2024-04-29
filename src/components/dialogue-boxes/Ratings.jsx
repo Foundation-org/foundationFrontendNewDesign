@@ -156,11 +156,21 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
   }
   const dispatch = useDispatch();
   const filterStates = useSelector(filtersActions.getFilters);
-  const [filterValues, setFilterValues] = useState({
-    type: filterTitles[filterStates.filterByType],
-    media: 'All',
-    status: filterStates.filterByStatus,
-  });
+  const [filterValues, setFilterValues] = useState({});
+  console.log(filterStates, filterValues);
+
+  useEffect(() => {
+    setFilterValues({
+      type: filterStates.filterByType,
+      media: filterStates.filterByMedia,
+      status: filterStates.filterByStatus,
+    });
+  }, [
+    filterStates.filterByType,
+    filterStates.filterByMedia,
+    filterStates.filterByStatus,
+    filterStates.moderationRatingFilter,
+  ]);
 
   useEffect(() => {
     dispatch(
