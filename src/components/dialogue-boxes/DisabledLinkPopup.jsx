@@ -20,12 +20,18 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
     onSuccess: (resp) => {
       toast.success(resp?.data.message);
       // console.log('first', questUtils.sharedQuestStatus.type);
+      // dispatch(questUtilsActions.addHiddenPostId(questUtils.sharedQuestStatus.id));
       if (questUtils.sharedQuestStatus.type === 'Delete') {
-        // dispatch(questUtilsActions.addHiddenPostId(questUtils.sharedQuestStatus.id));
-        queryClient.setQueriesData(['sharedLink'], (oldData) => ({
-          ...oldData,
-          pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-        }));
+        queryClient.setQueriesData(['sharedLink'], (oldData) => {
+          if (oldData.pages[0].length <= 1) {
+            queryClient.invalidateQueries(['sharedLink']);
+          } else {
+            return {
+              ...oldData,
+              pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+            };
+          }
+        });
       }
       if (questUtils.sharedQuestStatus.type === 'Disable') {
         queryClient.setQueriesData(['sharedLink'], (oldData) => ({

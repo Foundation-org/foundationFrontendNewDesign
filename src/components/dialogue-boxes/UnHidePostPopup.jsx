@@ -21,10 +21,16 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
     onSuccess: (resp) => {
       toast.success('Post unhidden successfully');
 
-      queryClient.setQueriesData(['hiddenPosts'], (oldData) => ({
-        ...oldData,
-        pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-      }));
+      queryClient.setQueriesData(['hiddenPosts'], (oldData) => {
+        if (oldData.pages[0].length <= 1) {
+          queryClient.invalidateQueries(['hiddenPosts']);
+        } else {
+          return {
+            ...oldData,
+            pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+          };
+        }
+      });
 
       setIsLoading(false);
       handleClose();

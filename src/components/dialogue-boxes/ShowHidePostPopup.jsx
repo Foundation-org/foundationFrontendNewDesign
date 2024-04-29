@@ -67,10 +67,16 @@ export default function ShowHidePostPopup({
       toast.success('Post hidden successfully');
       getUserInfo();
 
-      queryClient.setQueriesData(['posts'], (oldData) => ({
-        ...oldData,
-        pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-      }));
+      queryClient.setQueriesData(['posts'], (oldData) => {
+        if (oldData.pages[0].length <= 1) {
+          queryClient.invalidateQueries(['posts']);
+        } else {
+          return {
+            ...oldData,
+            pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+          };
+        }
+      });
 
       setIsLoading(false);
       handleClose();
@@ -88,10 +94,16 @@ export default function ShowHidePostPopup({
       toast.success('Post hidden successfully');
       getUserInfo();
 
-      queryClient.setQueriesData(['posts'], (oldData) => ({
-        ...oldData,
-        pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-      }));
+      queryClient.setQueriesData(['posts'], (oldData) => {
+        if (oldData.pages[0].length <= 1) {
+          queryClient.invalidateQueries(['posts']);
+        } else {
+          return {
+            ...oldData,
+            pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+          };
+        }
+      });
 
       setIsLoading(false);
       handleClose();
