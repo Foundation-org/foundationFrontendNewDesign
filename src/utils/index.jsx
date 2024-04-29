@@ -470,7 +470,7 @@ export const printEndMessage = (
                       homeFilterActions.filterInitialState;
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
-                      setFilters(...resetOtherStates);
+                      setFilters(resetOtherStates);
                     }
                   }}
                 >
