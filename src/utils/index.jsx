@@ -115,6 +115,15 @@ export function calculateRemainingTime(lastInteractedAt, howManyTimesAnsChanged,
 //     return 'you are good to go';
 //   }
 // }
+const resetOtherStates = {
+  filterByStatus: 'All',
+  filterByType: 'All',
+  filterByScope: 'All',
+  filterByMedia: 'All',
+  bookmarks: false,
+  filterBySort: 'Newest First',
+  clearFilter: false,
+};
 
 export function remainingTime(lastInteractedAt, howManyTimesAnsChanged, usersChangeTheirAns) {
   const validateInterval = () => {
@@ -235,9 +244,7 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
 
                 if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                   dispatch(filtersActions.resetOtherFilters());
-                  setFilters({
-                    ...homeFilterActions.resetOtherStates,
-                  });
+                  setFilters(resetOtherStates);
                 }
               }}
             >
@@ -262,9 +269,7 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
 
                 if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                   dispatch(filtersActions.resetOtherFilters());
-                  setFilters({
-                    ...homeFilterActions.resetOtherStates,
-                  });
+                  setFilters(resetOtherStates);
                 }
               }}
             >
@@ -336,9 +341,7 @@ export const printEndMessage = (
 
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
-                      setFilters({
-                        ...homeFilterActions.resetOtherStates,
-                      });
+                      setFilters(resetOtherStates);
                     }
                   }}
                 >
@@ -373,9 +376,7 @@ export const printEndMessage = (
 
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
-                      setFilters({
-                        ...homeFilterActions.resetOtherStates,
-                      });
+                      setFilters(resetOtherStates);
                     }
                   }}
                 >
@@ -414,9 +415,7 @@ export const printEndMessage = (
 
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
-                      setFilters({
-                        ...homeFilterActions.resetOtherStates,
-                      });
+                      setFilters(resetOtherStates);
                     }
                   }}
                 >
@@ -443,9 +442,7 @@ export const printEndMessage = (
 
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
-                      setFilters({
-                        ...homeFilterActions.resetOtherStates,
-                      });
+                      setFilters(resetOtherStates);
                     }
                   }}
                 >
@@ -473,9 +470,7 @@ export const printEndMessage = (
                       homeFilterActions.filterInitialState;
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
-                      setFilters({
-                        ...homeFilterActions.resetOtherStates,
-                      });
+                      setFilters(...resetOtherStates);
                     }
                   }}
                 >

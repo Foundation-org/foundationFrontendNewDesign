@@ -496,7 +496,15 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
               if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                 dispatch(homeFilterActions.resetFilters());
                 setFilters({
-                  ...homeFilterActions.resetState,
+                  expandedView: true,
+                  searchData: '',
+                  filterByStatus: 'All',
+                  filterByType: 'All',
+                  filterByScope: 'All',
+                  filterByMedia: 'All',
+                  bookmarks: false,
+                  filterBySort: 'Newest First',
+                  clearFilter: false,
                 });
               }
             }}

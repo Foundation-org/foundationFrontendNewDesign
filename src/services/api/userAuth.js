@@ -49,7 +49,8 @@ export const getAllRedemptionLedgerData = async (page, limit, sort, uuid) => {
 };
 
 export const setFilterStates = async (state) => {
-  return await api.post('/user/setStates', state);
+  const data = await api.post('/user/setStates', state);
+  localStorage.setItem('userData', JSON.stringify(data?.data?.updatedUser));
 };
 
 export const setBookmarkFilterStates = async (state) => {

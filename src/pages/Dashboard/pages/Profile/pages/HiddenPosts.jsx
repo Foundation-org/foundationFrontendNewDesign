@@ -290,6 +290,7 @@ export default function HiddenPosts() {
       }
     }),
   );
+  console.log(getHiddenPostFilters);
 
   return (
     <div>
