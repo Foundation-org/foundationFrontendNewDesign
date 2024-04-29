@@ -200,12 +200,12 @@ const QuestCardLayout = ({
           const formData = new FormData();
           const blob = dataURLToBlob(dataUrl);
 
-          formData.append('image', blob);
+          formData.append('file', blob);
           formData.append('path', `image-${questStartData._id}.png`);
           formData.append('link', link);
 
           console.log('came');
-          fetch('http://localhost/1234', {
+          fetch('http://localhost:7354/aws/s3ImageUploadToFrames', {
             method: 'POST',
             body: formData,
           })
