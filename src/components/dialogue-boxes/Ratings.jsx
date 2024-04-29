@@ -192,64 +192,11 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
   };
 
   const handleSubmit = () => {
-    if (filterValues.type !== '') {
-      dispatch(homeFilterActions.setFilterByType(filterValues.type));
-      setFilters({
-        ...filterStates,
-        filterByType: filterValues.type,
-        filterByMedia: 'All',
-        filterByStatus: 'All',
-        filterBySort: 'Newest First',
-        filterByScope: '',
-        bookmarks: false,
-        topics: {
-          ...filterStates.topics,
-          Block: {
-            ...filterStates.topics.Block,
-            list: [],
-          },
-        },
-        selectedBtnId: localStorage.removeItem('selectedButtonId'),
-      });
-    }
-    if (filterValues.status !== '') {
-      dispatch(homeFilterActions.setFilterByStatus(filterValues.status));
-      setFilters({
-        ...filterStates,
-        filterByStatus: filterValues.status,
-        filterByMedia: 'All',
-        filterBySort: 'Newest First',
-        filterByScope: '',
-        bookmarks: false,
-        topics: {
-          ...filterStates.topics,
-          Block: {
-            ...filterStates.topics.Block,
-            list: [],
-          },
-        },
-        selectedBtnId: localStorage.removeItem('selectedButtonId'),
-      });
-    }
-    if (filterValues.media !== '') {
-      dispatch(homeFilterActions.setFilterByMedia(filterValues.media));
-      setFilters({
-        ...filterStates,
-        filterByMedia: filterValues.media,
-        filterByStatus: 'All',
-        filterBySort: 'Newest First',
-        filterByScope: '',
-        bookmarks: false,
-        topics: {
-          ...filterStates.topics,
-          Block: {
-            ...filterStates.topics.Block,
-            list: [],
-          },
-        },
-        selectedBtnId: localStorage.removeItem('selectedButtonId'),
-      });
-    }
+    console.log({ selectedOptions });
+    // if (filterValues.type !== '') {
+    dispatch(homeFilterActions.setFilterByType(filterValues.type));
+    dispatch(homeFilterActions.setFilterByStatus(filterValues.status));
+    dispatch(homeFilterActions.setFilterByMedia(filterValues.media));
     if (selectedOptions.includes('adult') && selectedOptions.includes('everyone')) {
       dispatch(
         filtersActions.setRatings({
@@ -257,26 +204,6 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           final: 100,
         }),
       );
-      setFilters({
-        ...filterStates,
-        filterByType: 'All',
-        filterByStatus: 'All',
-        filterBySort: 'Newest First',
-        filterByScope: '',
-        bookmarks: false,
-        topics: {
-          ...filterStates.topics,
-          Block: {
-            ...filterStates.topics.Block,
-            list: [],
-          },
-        },
-        moderationRatingFilter: {
-          initial: 0,
-          final: 100,
-        },
-        selectedBtnId: localStorage.removeItem('selectedButtonId'),
-      });
     } else if (selectedOptions.includes('adult')) {
       dispatch(
         filtersActions.setRatings({
@@ -284,26 +211,6 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           final: 100,
         }),
       );
-      setFilters({
-        ...filterStates,
-        filterByType: 'All',
-        filterByStatus: 'All',
-        filterBySort: 'Newest First',
-        filterByScope: '',
-        bookmarks: false,
-        topics: {
-          ...filterStates.topics,
-          Block: {
-            ...filterStates.topics.Block,
-            list: [],
-          },
-        },
-        moderationRatingFilter: {
-          initial: 1,
-          final: 100,
-        },
-        selectedBtnId: localStorage.removeItem('selectedButtonId'),
-      });
     } else {
       dispatch(
         filtersActions.setRatings({
@@ -311,27 +218,163 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
           final: 0,
         }),
       );
-      setFilters({
-        ...filterStates,
-        filterByType: 'All',
-        filterByStatus: 'All',
-        filterBySort: 'Newest First',
-        filterByScope: '',
-        bookmarks: false,
-        topics: {
-          ...filterStates.topics,
-          Block: {
-            ...filterStates.topics.Block,
-            list: [],
-          },
-        },
-        moderationRatingFilter: {
-          initial: 0,
-          final: 0,
-        },
-        selectedBtnId: localStorage.removeItem('selectedButtonId'),
-      });
     }
+    setFilters({
+      ...filterStates,
+      filterByType: filterValues.type,
+      filterByMedia: filterValues.media,
+      filterByStatus: filterValues.status,
+      moderationRatingFilter: {
+        initial:
+          selectedOptions.includes('adult') && selectedOptions.includes('everyone')
+            ? 0
+            : selectedOptions.includes('adult')
+              ? 1
+              : 0,
+        final:
+          selectedOptions.includes('adult') && selectedOptions.includes('everyone')
+            ? 100
+            : selectedOptions.includes('adult')
+              ? 100
+              : 0,
+      },
+      // filterBySort: 'Newest First',
+      // filterByScope: '',
+      // bookmarks: false,
+      // topics: {
+      //   ...filterStates.topics,
+      //   Block: {
+      //     ...filterStates.topics.Block,
+      //     list: [],
+      //   },
+      // },
+
+      // selectedBtnId: localStorage.removeItem('selectedButtonId'),
+    });
+    // }
+
+    // filterStates.moderationRatingFilter.initial,
+    // filterStates.moderationRatingFilter.final,
+    // if (filterValues.status !== '') {
+    //   dispatch(homeFilterActions.setFilterByStatus(filterValues.status));
+    //   setFilters({
+    //     ...filterStates,
+    //     filterByStatus: filterValues.status,
+    //     filterByMedia: 'All',
+    //     filterBySort: 'Newest First',
+    //     filterByScope: '',
+    //     bookmarks: false,
+    //     topics: {
+    //       ...filterStates.topics,
+    //       Block: {
+    //         ...filterStates.topics.Block,
+    //         list: [],
+    //       },
+    //     },
+    //     selectedBtnId: localStorage.removeItem('selectedButtonId'),
+    //   });
+    // }
+    // if (filterValues.media !== '') {
+    //   dispatch(homeFilterActions.setFilterByMedia(filterValues.media));
+    //   setFilters({
+    //     ...filterStates,
+    //     filterByMedia: filterValues.media,
+    //     filterByStatus: 'All',
+    //     filterBySort: 'Newest First',
+    //     filterByScope: '',
+    //     bookmarks: false,
+    //     topics: {
+    //       ...filterStates.topics,
+    //       Block: {
+    //         ...filterStates.topics.Block,
+    //         list: [],
+    //       },
+    //     },
+    //     selectedBtnId: localStorage.removeItem('selectedButtonId'),
+    //   });
+    // }
+    // if (selectedOptions.includes('adult') && selectedOptions.includes('everyone')) {
+    //   dispatch(
+    //     filtersActions.setRatings({
+    //       initial: 0,
+    //       final: 100,
+    //     }),
+    //   );
+    //   setFilters({
+    //     ...filterStates,
+    //     filterByType: 'All',
+    //     filterByStatus: 'All',
+    //     filterBySort: 'Newest First',
+    //     filterByScope: '',
+    //     bookmarks: false,
+    //     topics: {
+    //       ...filterStates.topics,
+    //       Block: {
+    //         ...filterStates.topics.Block,
+    //         list: [],
+    //       },
+    //     },
+    //     moderationRatingFilter: {
+    //       initial: 0,
+    //       final: 100,
+    //     },
+    //     selectedBtnId: localStorage.removeItem('selectedButtonId'),
+    //   });
+    // } else if (selectedOptions.includes('adult')) {
+    //   dispatch(
+    //     filtersActions.setRatings({
+    //       initial: 1,
+    //       final: 100,
+    //     }),
+    //   );
+    //   setFilters({
+    //     ...filterStates,
+    //     filterByType: 'All',
+    //     filterByStatus: 'All',
+    //     filterBySort: 'Newest First',
+    //     filterByScope: '',
+    //     bookmarks: false,
+    //     topics: {
+    //       ...filterStates.topics,
+    //       Block: {
+    //         ...filterStates.topics.Block,
+    //         list: [],
+    //       },
+    //     },
+    //     moderationRatingFilter: {
+    //       initial: 1,
+    //       final: 100,
+    //     },
+    //     selectedBtnId: localStorage.removeItem('selectedButtonId'),
+    //   });
+    // } else {
+    //   dispatch(
+    //     filtersActions.setRatings({
+    //       initial: 0,
+    //       final: 0,
+    //     }),
+    //   );
+    //   setFilters({
+    //     ...filterStates,
+    //     filterByType: 'All',
+    //     filterByStatus: 'All',
+    //     filterBySort: 'Newest First',
+    //     filterByScope: '',
+    //     bookmarks: false,
+    //     topics: {
+    //       ...filterStates.topics,
+    //       Block: {
+    //         ...filterStates.topics.Block,
+    //         list: [],
+    //       },
+    //     },
+    //     moderationRatingFilter: {
+    //       initial: 0,
+    //       final: 0,
+    //     },
+    //     selectedBtnId: localStorage.removeItem('selectedButtonId'),
+    //   });
+    // }
 
     handleClose();
   };
