@@ -395,8 +395,7 @@ const QuestStartSection = () => {
       moderationRatingFinal: filterStates.moderationRatingFilter.final,
       terms: filterStates.searchData,
       Page: filterStates.bookmarks ? 'Bookmark' : '',
-      media: 'All',
-      // media: filterStates.filterByMedia,
+      media: filterStates.filterByMedia,
     };
 
     if (filterStates.topics.Block.list.length !== 0) {

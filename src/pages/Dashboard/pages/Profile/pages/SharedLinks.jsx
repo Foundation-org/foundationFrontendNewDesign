@@ -10,6 +10,7 @@ import { sharedLinksFilters, updateSharedLinkSearch } from '../../../../../featu
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import api from '../../../../../services/api/Axios';
+import { useDebounce } from '../../../../../utils/useDebounce';
 
 // import { initialColumns } from '../../../../../constants/preferences';
 // import InfiniteScroll from 'react-infinite-scroll-component';
@@ -26,6 +27,7 @@ export default function SharedLinks() {
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
   const { ref, inView } = useInView();
+  const [sharedlinkSearch, setSharedlinkSearch] = useState('');
   // const pageLimit = 5;
   // const [allData, setAllData] = useState([]);
   // const [pagination, setPagination] = useState({
@@ -192,6 +194,22 @@ export default function SharedLinks() {
   // }, []);
 
   //================================================== NEW
+  const handleSharedLinkSearch = (e) => {
+    setSharedlinkSearch(e.target.value);
+  };
+
+  const debouncedSharedSearch = useDebounce(sharedlinkSearch, 1000);
+
+  useEffect(() => {
+    dispatch(updateSharedLinkSearch(debouncedSharedSearch));
+  }, [debouncedSharedSearch]);
+
+  useEffect(() => {
+    if (getSharedLinksFilters.searchData === '') {
+      setSharedlinkSearch('');
+    }
+  }, [getSharedLinksFilters.searchData]);
+
   const memoizedStartTest = useCallback(
     (testId) => {
       setViewResult(null);
@@ -298,11 +316,9 @@ export default function SharedLinks() {
               type="text"
               id="floating_outlined"
               className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[3.55px] border-[0.71px] border-[#707175] bg-transparent py-2 pl-2 pr-8 text-[6px] leading-[7.25px] text-[#707175] focus:outline-none focus:ring-0 tablet:rounded-[10px] tablet:border-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-              value={getSharedLinksFilters.searchData}
+              value={sharedlinkSearch}
               placeholder=""
-              onChange={(e) => {
-                dispatch(updateSharedLinkSearch(e.target.value));
-              }}
+              onChange={handleSharedLinkSearch}
             />
             <label
               htmlFor="floating_outlined"

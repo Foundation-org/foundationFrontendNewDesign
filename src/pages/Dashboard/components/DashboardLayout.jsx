@@ -14,6 +14,7 @@ import SidebarLeft from './SidebarLeft';
 import api from '../../../services/api/Axios';
 import Anchor from '../../../components/Anchor';
 import PopUp from '../../../components/ui/PopUp';
+import { useDebounce } from '../../../utils/useDebounce';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -24,6 +25,8 @@ export default function DashboardLayout({ children }) {
   const getSharedLinksFilters = useSelector(sharedLinksFilters);
   const [treasuryAmount, setTreasuryAmount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [hiddenSearch, setHiddenSearch] = useState('');
+  const [sharedlinkSearch, setSharedlinkSearch] = useState('');
 
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
@@ -105,6 +108,40 @@ export default function DashboardLayout({ children }) {
       toast.error(error.response.data.message.split(':')[1]);
     }
   };
+
+  // Hidden post Search
+  const handleHiddenPostSearch = (e) => {
+    setHiddenSearch(e.target.value);
+  };
+
+  const debouncedHiddenSearch = useDebounce(hiddenSearch, 1000);
+
+  useEffect(() => {
+    dispatch(updateSearch(debouncedHiddenSearch));
+  }, [debouncedHiddenSearch]);
+
+  useEffect(() => {
+    if (getHiddenPostFilters.searchData === '') {
+      setHiddenSearch('');
+    }
+  }, [getHiddenPostFilters.searchData]);
+
+  // SharedLinks Posts Search
+  const handleSharedLinkSearch = (e) => {
+    setSharedlinkSearch(e.target.value);
+  };
+
+  const debouncedSharedSearch = useDebounce(sharedlinkSearch, 1000);
+
+  useEffect(() => {
+    dispatch(updateSharedLinkSearch(debouncedSharedSearch));
+  }, [debouncedSharedSearch]);
+
+  useEffect(() => {
+    if (getSharedLinksFilters.searchData === '') {
+      setSharedlinkSearch('');
+    }
+  }, [getSharedLinksFilters.searchData]);
 
   return (
     <div className="mx-auto w-full max-w-[1440px]">
@@ -259,11 +296,9 @@ export default function DashboardLayout({ children }) {
                     type="text"
                     id="floating_outlined"
                     className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-                    value={getHiddenPostFilters.searchData}
+                    value={hiddenSearch}
                     placeholder=""
-                    onChange={(e) => {
-                      dispatch(updateSearch(e.target.value));
-                    }}
+                    onChange={handleHiddenPostSearch}
                   />
                   <label
                     htmlFor="floating_outlined"
@@ -302,11 +337,9 @@ export default function DashboardLayout({ children }) {
                     type="text"
                     id="floating_outlined"
                     className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[10px] border-2 border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-                    value={getSharedLinksFilters.searchData}
+                    value={sharedlinkSearch}
                     placeholder=""
-                    onChange={(e) => {
-                      dispatch(updateSharedLinkSearch(e.target.value));
-                    }}
+                    onChange={handleSharedLinkSearch}
                   />
                   <label
                     htmlFor="floating_outlined"

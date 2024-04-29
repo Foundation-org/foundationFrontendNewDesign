@@ -3,9 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from '@tanstack/react-query';
 
-// components
-// import Dropdown2 from '../../../components/Dropdown2';
-
 // extras
 import * as homeFilterActions from '../../../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../../../features/sidebar/bookmarkFilterSlice';
@@ -13,11 +10,14 @@ import * as bookmarkFiltersActions from '../../../features/sidebar/bookmarkFilte
 // icons
 import { GrClose } from 'react-icons/gr';
 import { setFilterStates } from '../../../services/api/userAuth';
-// import { setBookmarkFilterStates } from '../../../services/api/userAuth';
 import { setPlayingPlayerId, setIsShowPlayer, getQuestUtils } from '../../../features/quest/utilsSlice';
 import { useDebounce } from '../../../utils/useDebounce';
 import Ratings from '../../../components/dialogue-boxes/Ratings';
 import MediaControls from '../../../components/MediaControls';
+
+// components
+// import Dropdown2 from '../../../components/Dropdown2';
+// import { setBookmarkFilterStates } from '../../../services/api/userAuth';
 // import { isEqual } from 'lodash';
 
 const SidebarLeft = () => {

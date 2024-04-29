@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import api from '../../../../../services/api/Axios';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
+import { useDebounce } from '../../../../../utils/useDebounce';
 
 export default function HiddenPosts() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export default function HiddenPosts() {
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
   const [startTest, setStartTest] = useState(null);
   const [viewResult, setViewResult] = useState(null);
+  const [hiddenSearch, setHiddenSearch] = useState('');
   // const pageLimit = 5;
   // const questUtils = useSelector(questUtilsActions.getQuestUtils);
   // const [pagination, setPagination] = useState({
@@ -184,6 +186,22 @@ export default function HiddenPosts() {
 
   //================================================== NEW
 
+  const handleHiddenPostSearch = (e) => {
+    setHiddenSearch(e.target.value);
+  };
+
+  const debouncedHiddenSearch = useDebounce(hiddenSearch, 1000);
+
+  useEffect(() => {
+    dispatch(updateSearch(debouncedHiddenSearch));
+  }, [debouncedHiddenSearch]);
+
+  useEffect(() => {
+    if (getHiddenPostFilters.searchData === '') {
+      setHiddenSearch('');
+    }
+  }, [getHiddenPostFilters.searchData]);
+
   const memoizedStartTest = useCallback(
     (testId) => {
       setViewResult(null);
@@ -285,11 +303,9 @@ export default function HiddenPosts() {
               type="text"
               id="floating_outlined"
               className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[3.55px] border-[0.71px] border-[#707175] bg-transparent py-2 pl-2 pr-8 text-[6px] leading-[7.25px] text-[#707175] focus:outline-none focus:ring-0 tablet:rounded-[10px] tablet:border-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-              value={getHiddenPostFilters.searchData}
+              value={hiddenSearch}
               placeholder=""
-              onChange={(e) => {
-                dispatch(updateSearch(e.target.value));
-              }}
+              onChange={handleHiddenPostSearch}
             />
             <label
               htmlFor="floating_outlined"
