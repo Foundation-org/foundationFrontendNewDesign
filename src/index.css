@@ -797,7 +797,8 @@ input[type='number'] {
 }
 
 .react-player div iframe {
-  height: 135px !important;
+  /* height: 135px !important; */
+  height: 180px !important;
   width: 100% !important;
   margin-left: auto;
   margin-right: auto;
