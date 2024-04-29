@@ -424,7 +424,7 @@ const QuestStartSection = () => {
     queryFn: fetchPosts,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
-      const nexPage = lastPage.length ? allPages.length + 1 : undefined;
+      const nexPage = lastPage.length && lastPage.length === 5 ? allPages.length + 1 : undefined;
       return nexPage;
     },
   });

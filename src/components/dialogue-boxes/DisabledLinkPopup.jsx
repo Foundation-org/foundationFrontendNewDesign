@@ -23,14 +23,13 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
       // dispatch(questUtilsActions.addHiddenPostId(questUtils.sharedQuestStatus.id));
       if (questUtils.sharedQuestStatus.type === 'Delete') {
         queryClient.setQueriesData(['sharedLink'], (oldData) => {
-          if (oldData.pages[0].length <= 1) {
-            queryClient.invalidateQueries(['sharedLink']);
-          } else {
-            return {
-              ...oldData,
-              pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-            };
-          }
+          // if (oldData.pages[0].length <= 1) {
+          //   queryClient.invalidateQueries(['sharedLink']);
+          // } else {
+          return {
+            ...oldData,
+            pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+          };
         });
       }
       if (questUtils.sharedQuestStatus.type === 'Disable') {

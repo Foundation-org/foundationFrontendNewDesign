@@ -68,14 +68,13 @@ export default function ShowHidePostPopup({
       getUserInfo();
 
       queryClient.setQueriesData(['posts'], (oldData) => {
-        if (oldData.pages[0].length <= 1) {
-          queryClient.invalidateQueries(['posts']);
-        } else {
-          return {
-            ...oldData,
-            pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-          };
-        }
+        // if (oldData.pages[0].length <= 1) {
+        //   queryClient.invalidateQueries(['posts']);
+        // } else {
+        return {
+          ...oldData,
+          pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+        };
       });
 
       setIsLoading(false);
@@ -95,14 +94,13 @@ export default function ShowHidePostPopup({
       getUserInfo();
 
       queryClient.setQueriesData(['posts'], (oldData) => {
-        if (oldData.pages[0].length <= 1) {
-          queryClient.invalidateQueries(['posts']);
-        } else {
-          return {
-            ...oldData,
-            pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-          };
-        }
+        // if (oldData.pages[0].length <= 1) {
+        //   queryClient.invalidateQueries(['posts']);
+        // } else {
+        return {
+          ...oldData,
+          pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+        };
       });
 
       setIsLoading(false);
