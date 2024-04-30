@@ -37,6 +37,7 @@ import { ErrorBoundary } from '../components/providers/ErrorBoundry';
 import RedemptionCenter from '../pages/Dashboard/pages/Treasury/RedemptionCenter';
 import Ledger from '../pages/Dashboard/pages/Treasury/Ledger';
 import TreasuryLayout from '../pages/Dashboard/pages/Treasury/TreasuryLayout';
+import UserSettings from '../pages/Dashboard/pages/Profile/pages/UserSettings';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -144,6 +145,14 @@ export function Router() {
                     element={
                       <ErrorBoundary>
                         <SharedLinks />
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="user-settings"
+                    element={
+                      <ErrorBoundary>
+                        <UserSettings />
                       </ErrorBoundary>
                     }
                   />

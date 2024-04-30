@@ -1,10 +1,10 @@
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
 import { TopbarItems } from '../../../constants/topbar';
-import api from '../../../services/api/Axios';
-import * as filterActions from '../../../features/sidebar/filtersSlice';
+// import api from '../../../services/api/Axios';
+// import * as filterActions from '../../../features/sidebar/filtersSlice';
 import { useDispatch } from 'react-redux';
 import * as createQuestActions from '../../../features/createQuest/createQuestSlice';
 import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
@@ -16,23 +16,23 @@ const Topbar = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const handleLogout = async () => {
-    try {
-      const res = await api.post('user/logout');
-      if (res.status === 200) {
-        dispatch(filterActions.resetFilters());
-        localStorage.clear();
-        navigate('/signin');
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message.split(':')[1]);
-    }
-  };
+  // const handleLogout = async () => {
+  //   try {
+  //     const res = await api.post('user/logout');
+  //     if (res.status === 200) {
+  //       dispatch(filterActions.resetFilters());
+  //       localStorage.clear();
+  //       navigate('/signin');
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error(error.response.data.message.split(':')[1]);
+  //   }
+  // };
 
-  const handleGuestLogout = async () => {
-    navigate('/guest-signup');
-  };
+  // const handleGuestLogout = async () => {
+  //   navigate('/guest-signup');
+  // };
 
   return (
     <div className="bg-[#389CE3]">
@@ -49,7 +49,7 @@ const Topbar = () => {
             <h1 className="relative font-neuropol text-[12px] font-normal text-white tablet:text-[20px]">
               FOUNDATION{' '}
               <span className="absolute -right-[26px] bottom-[2px] whitespace-nowrap font-poppins text-[7px] font-medium text-[#D0E4F2] tablet:-bottom-3 tablet:-right-8 tablet:left-0 tablet:text-[12px]">
-                v 1.9.25
+                v 1.9.28
               </span>
             </h1>
 
@@ -139,7 +139,7 @@ const Topbar = () => {
                 className="h-[15px] w-[15px] tablet:h-[32px] tablet:w-[32px] laptop:h-[36px] laptop:w-[36px]"
               />
             </Link>
-            {localStorage.getItem('isGuestMode') ? (
+            {/* {localStorage.getItem('isGuestMode') ? (
               <div onClick={handleGuestLogout}>
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/signupIcon.png`}
@@ -155,7 +155,7 @@ const Topbar = () => {
                   className="h-[13px] w-[16.2px] cursor-pointer tablet:h-[36px] tablet:w-[28px]"
                 />
               </div>
-            )}
+            )} */}
           </div>
         </div>
         {/* items */}
@@ -209,7 +209,7 @@ const Topbar = () => {
           >
             <img src="/assets/navbar/faqlogo.png" alt="arrow-right" className="h-[30px] w-[30px]" />
           </Link>
-          {persistedUserInfo.role !== 'user' ? (
+          {/* {persistedUserInfo.role !== 'user' ? (
             <div onClick={handleGuestLogout}>
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/signupIcon.png`}
@@ -225,7 +225,7 @@ const Topbar = () => {
                 className="h-[26px] w-[26px]"
               />
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

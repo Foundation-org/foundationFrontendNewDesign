@@ -19,13 +19,19 @@ export const signIn = async (data) => {
   return await api.post('/user/signInUser', data);
 };
 
+export const signOut = async () => {
+  return await api.post('user/logout');
+};
+
 export const userInfo = async () => {
   return await api.post('/user/userInfo');
   // return await api.post('/user/userInfo', { uuid: localStorage.getItem('uuid') });
 };
+
 export const userInfoById = async (uuid) => {
   return await api.post('/user/userInfoById', { uuid });
 };
+
 export const changePassword = async (params) => {
   return await api.put('/user/changePassword', params);
 };

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-// import { Switch } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeTheme } from '../../../../features/utils/utilsSlice';
+// import { changeTheme } from '../../../../features/utils/utilsSlice';
 // import Topbar from '../../components/Topbar';
 // import Tabs from './components/Tabs';
 import { toast } from 'sonner';
@@ -20,8 +19,8 @@ const Profile = () => {
   const { pathname } = location;
   // const { showBoundary } = useErrorBoundary();
 
-  const [checkState, setCheckState] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
-  const persistedTheme = useSelector((state) => state.utils.theme);
+  // const [checkState, setCheckState] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
+  // const persistedTheme = useSelector((state) => state.utils.theme);
   // const persistedUserInfo = useSelector((state) => state.auth.user);
   const [selectedTab, setSelectedTab] = useState(pathname);
   const [treasuryAmount, setTreasuryAmount] = useState(0);
@@ -31,20 +30,20 @@ const Profile = () => {
     setSelectedTab(pathname);
   }, [pathname]);
 
-  useEffect(() => {
-    if (persistedTheme === 'light') {
-      setCheckState(false);
-      localStorage.setItem('theme', 'light');
-    } else {
-      setCheckState(true);
-      localStorage.setItem('theme', 'dark');
-    }
-  }, [persistedTheme]);
+  // useEffect(() => {
+  //   if (persistedTheme === 'light') {
+  //     setCheckState(false);
+  //     localStorage.setItem('theme', 'light');
+  //   } else {
+  //     setCheckState(true);
+  //     localStorage.setItem('theme', 'dark');
+  //   }
+  // }, [persistedTheme]);
 
-  const handleTheme = () => {
-    dispatch(changeTheme());
-    setCheckState((prevCheckState) => !prevCheckState);
-  };
+  // const handleTheme = () => {
+  //   dispatch(changeTheme());
+  //   setCheckState((prevCheckState) => !prevCheckState);
+  // };
 
   // const handleSelectedTab = (id) => setSelectedTab(id);
 
