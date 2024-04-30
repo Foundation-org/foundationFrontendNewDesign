@@ -13,6 +13,7 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import { userInfo, userInfoById } from '../../../../../services/api/userAuth';
+import { addUser } from '../../../../../features/auth/authSlice';
 
 const LikeDislike = () => {
   const navigate = useNavigate();

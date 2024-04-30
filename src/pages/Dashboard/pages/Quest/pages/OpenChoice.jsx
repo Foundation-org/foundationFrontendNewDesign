@@ -15,6 +15,7 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as questServices from '../../../../../services/api/questsApi';
 import { userInfo, userInfoById } from '../../../../../services/api/userAuth';
+import { addUser } from '../../../../../features/auth/authSlice';
 
 const OpenChoice = () => {
   const navigate = useNavigate();
@@ -33,7 +34,6 @@ const OpenChoice = () => {
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
   });
