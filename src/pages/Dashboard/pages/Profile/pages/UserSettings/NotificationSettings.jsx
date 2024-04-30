@@ -1,4 +1,5 @@
 import { Switch } from '@headlessui/react';
+import { toast } from 'sonner';
 
 export default function NotificationSettings() {
   return (
@@ -11,15 +12,15 @@ export default function NotificationSettings() {
         <div className="flex items-center justify-between">
           <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Email notifications</h1>
           <Switch
-            //   checked={checkState}
-            //   onChange={handleTheme}
-            className={`${true ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
+            checked={false}
+            onChange={() => toast.info('Feature coming soon.')}
+            className={`${false ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
           >
             <span className="sr-only">Use setting</span>
             <span
               aria-hidden="true"
               className={`${
-                true ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#4A8DBD]'
+                false ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#4A8DBD]'
               }
       pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
             />
@@ -28,15 +29,15 @@ export default function NotificationSettings() {
         <div className="flex items-center justify-between">
           <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">system notifications</h1>
           <Switch
-            //   checked={checkState}
-            //   onChange={handleTheme}
-            className={`${true ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
+            checked={false}
+            onChange={() => toast.info('Feature coming soon.')}
+            className={`${false ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
           >
             <span className="sr-only">Use setting</span>
             <span
               aria-hidden="true"
               className={`${
-                true ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#4A8DBD]'
+                false ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#4A8DBD]'
               }
       pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
             />

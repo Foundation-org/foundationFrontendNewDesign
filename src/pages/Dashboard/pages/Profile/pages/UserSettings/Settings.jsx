@@ -58,7 +58,8 @@ export const Settings = () => {
         </div>
         <Switch
           checked={checkState}
-          onChange={handleTheme}
+          onChange={() => toast.info('Feature coming soon.')}
+          // onChange={handleTheme}
           className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
         >
           <span className="sr-only">Use setting</span>
@@ -78,15 +79,15 @@ export const Settings = () => {
           <p className="hidden text-[16px] font-medium text-[#ACACAC] tablet:block">Enable Default Sort.</p>
         </div>
         <Switch
-          checked={checkState}
-          onChange={handleTheme}
-          className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
+          checked={false}
+          onChange={() => toast.info('Feature coming soon.')}
+          className={`${false ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
         >
           <span className="sr-only">Use setting</span>
           <span
             aria-hidden="true"
             className={`${
-              checkState ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#4A8DBD]'
+              false ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#4A8DBD]'
             }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
           />
