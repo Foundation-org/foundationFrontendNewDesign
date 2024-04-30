@@ -66,7 +66,17 @@ export default function ShowHidePostPopup({
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
       getUserInfo();
-      // queryClient.invalidateQueries('FeedData');
+
+      queryClient.setQueriesData(['posts'], (oldData) => {
+        // if (oldData.pages[0].length <= 1) {
+        //   queryClient.invalidateQueries(['posts']);
+        // } else {
+        return {
+          ...oldData,
+          pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+        };
+      });
+
       setIsLoading(false);
       handleClose();
     },
@@ -82,7 +92,17 @@ export default function ShowHidePostPopup({
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
       getUserInfo();
-      // queryClient.invalidateQueries('FeedData');
+
+      queryClient.setQueriesData(['posts'], (oldData) => {
+        // if (oldData.pages[0].length <= 1) {
+        //   queryClient.invalidateQueries(['posts']);
+        // } else {
+        return {
+          ...oldData,
+          pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+        };
+      });
+
       setIsLoading(false);
       handleClose();
     },
@@ -93,7 +113,6 @@ export default function ShowHidePostPopup({
   });
 
   const handleHiddenPostApiCall = () => {
-    dispatch(questsActions.addHiddenPostId(null));
     setIsLoading(true);
     if (persistedUserInfo?.role === 'guest') {
       toast.warning(

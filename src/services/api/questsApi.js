@@ -350,6 +350,7 @@ export const createUpdateUniqueLink = async (data) => {
     Question: data.Question,
     linkStatus: 'Enable',
     isGenerateLink: data.isGenerateLink,
+    sharedTime: new Date(),
   });
 };
 
@@ -357,6 +358,9 @@ export const questImpression = async (data) => {
   return await api.post(`/userQuestImpression/${data}`);
 };
 
+export const suppressPost = async (data) => {
+  return await api.post(`infoQuestions/supressPost/${data}`);
+};
 // UPDATE SHAREDLINK STATUS
 export const updateSharedLinkStatus = async ({ link, data }) => {
   console.log('api', link, data);

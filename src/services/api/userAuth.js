@@ -19,13 +19,19 @@ export const signIn = async (data) => {
   return await api.post('/user/signInUser', data);
 };
 
+export const signOut = async () => {
+  return await api.post('user/logout');
+};
+
 export const userInfo = async () => {
   return await api.post('/user/userInfo');
   // return await api.post('/user/userInfo', { uuid: localStorage.getItem('uuid') });
 };
+
 export const userInfoById = async (uuid) => {
   return await api.post('/user/userInfoById', { uuid });
 };
+
 export const changePassword = async (params) => {
   return await api.put('/user/changePassword', params);
 };
@@ -49,7 +55,8 @@ export const getAllRedemptionLedgerData = async (page, limit, sort, uuid) => {
 };
 
 export const setFilterStates = async (state) => {
-  return await api.post('/user/setStates', state);
+  const data = await api.post('/user/setStates', state);
+  localStorage.setItem('userData', JSON.stringify(data?.data?.updatedUser));
 };
 
 export const setBookmarkFilterStates = async (state) => {

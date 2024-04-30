@@ -50,6 +50,22 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
   const handleSecurityQuestionChange = (event) => {};
   const [query, setQuery] = useState('');
+  const [questions, setQuestion] = useState();
+
+  useEffect(() => {
+    const jb = data;
+    const queryExists = jb.some((item) => item.name.toLowerCase() === query.toLowerCase());
+    const newArr = queryExists
+      ? [...jb]
+      : [
+          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+          ...jb.map((jb) => ({
+            ...jb,
+            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+          })),
+        ];
+    setQuestion(newArr);
+  }, [query]);
 
   const { data: apiResp } = useQuery({
     queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && debounceName],
@@ -82,10 +98,13 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   }, [apiResp?.data?.message]);
 
   const searchCities = async () => {
-    const cities = await api.post(`search/searchCities/?name=${query}`);
-    console.log(cities.data);
-
-    setCities(cities.data);
+    try {
+      const cities = await api.post(`search/searchCities/?name=${query}`);
+      console.log(cities.data);
+      setCities(cities.data);
+    } catch (err) {
+      setCities([]);
+    }
   };
 
   useEffect(() => {
@@ -152,7 +171,15 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         {data && data.length >= 1 ? (
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-              <Listbox items={data} selected={selected} setSelected={setSelected} placeholder={placeholder} />
+              {/* <Listbox items={data} selected={selected} setSelected={setSelected} placeholder={placeholder} /> */}
+              <CustomCombobox
+                items={questions}
+                selected={selected}
+                setSelected={setSelected}
+                placeholder={placeholder}
+                query={query}
+                setQuery={setQuery}
+              />
               <input
                 type="text"
                 value={name}
@@ -351,7 +378,7 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
           'Security Question',
           name,
           handleSecurityQuestionChange,
-          'Select a security question',
+          'Security question here',
           apiResp,
           data,
           'Write your answer here',

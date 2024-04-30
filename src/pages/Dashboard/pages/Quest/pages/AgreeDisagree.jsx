@@ -12,6 +12,8 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 
 import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import { userInfo, userInfoById } from '../../../../../services/api/userAuth';
+import { addUser } from '../../../../../features/auth/authSlice';
 
 const AgreeDisagree = () => {
   const navigate = useNavigate();
@@ -27,13 +29,43 @@ const AgreeDisagree = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
 
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+  });
+
+  const handleUserInfo = async () => {
+    try {
+      const resp = await getUserInfo();
+
+      if (resp?.status === 200) {
+        if (resp.data) {
+          dispatch(addUser(resp?.data));
+          localStorage.setItem('userData', JSON.stringify(resp?.data));
+          if (!localStorage.getItem('uuid')) {
+            localStorage.setItem('uuid', resp.data.uuid);
+          }
+        }
+
+        if (!resp.data) {
+          const res = await userInfoById(localStorage.getItem('uuid'));
+          dispatch(addUser(res?.data));
+        }
+      }
+
+      // setResponse(resp?.data);
+    } catch (e) {
+      console.log({ e });
+      toast.error(e.response.data.message.split(':')[1]);
+    }
+  };
+
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
           navigate('/dashboard');
-          // toast.success('Successfully Created');
+          handleUserInfo();
           setLoading(false);
           setChangedOption('');
           setChangeState(false);
@@ -210,13 +242,13 @@ const AgreeDisagree = () => {
       type={'Statement'}
       msg={'Make a statement that anyone can "Agree" or "Disagree" with'}
     >
-      <div className="mt-2 flex flex-col gap-[7px] tablet:mt-5 tablet:gap-5">
+      <div className="flex flex-col gap-[5px] tablet:gap-[15px]">
         <YesNoOptions answer={'Agree'} />
         <YesNoOptions answer={'Disagree'} />
       </div>
-      <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] tablet:mb-[10px] tablet:mt-5 tablet:text-[16px] dark:text-[#D8D8D8]">
+      {/* <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] tablet:mb-[10px] tablet:mt-5 tablet:text-[16px] dark:text-[#D8D8D8]">
         &#x200B;
-      </p>
+      </p> */}
       {/* <div className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
           <h5 className="text-center text-[10px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[25px]">
             Settings
@@ -241,13 +273,13 @@ const AgreeDisagree = () => {
               </button> */}
       <div className="flex w-full justify-end">
         {hollow ? (
-          <div className="pr-7 pt-[10px] tablet:pr-[70px] tablet:pt-[30px] ">
+          <div className="pr-[30px] pt-2 tablet:pr-[50px] tablet:pt-[25px]">
             <Button variant="hollow-submit" id="submitButton" disabled={true}>
               Create
             </Button>
           </div>
         ) : (
-          <div className="pr-7 pt-[10px] tablet:pr-[70px] tablet:pt-[30px] ">
+          <div className="pr-[30px] pt-2 tablet:pr-[50px] tablet:pt-[25px]">
             <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()}>
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">

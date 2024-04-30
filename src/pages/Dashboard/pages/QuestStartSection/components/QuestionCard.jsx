@@ -28,8 +28,7 @@ const QuestionCard = (props) => {
   const quests = useSelector(questAction.getQuests);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const { questStartData, setPagination } = props;
-  const { handleStartTest, startTest, setStartTest } = props;
+  const { innerRef, questStartData, handleStartTest, startTest, setStartTest } = props;
   const { isBookmarked, viewResult, handleViewResults } = props;
   const { setSubmitResponse, postProperties } = props;
 
@@ -746,43 +745,45 @@ const QuestionCard = (props) => {
   };
 
   return (
-    <QuestCardLayout
-      questStartData={questStartData}
-      isBookmarked={isBookmarked}
-      handleStartTest={handleStartTest}
-      postProperties={postProperties}
-    >
-      {renderQuestContent()}
-
-      <ButtonGroup
-        postProperties={postProperties}
+    <div ref={innerRef}>
+      <QuestCardLayout
         questStartData={questStartData}
-        handleToggleCheck={handleToggleCheck}
-        id={questStartData._id}
-        btnText={questStartData.startStatus}
+        isBookmarked={isBookmarked}
         handleStartTest={handleStartTest}
-        handleViewResults={handleViewResults}
-        setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-        whichTypeQuestion={questStartData.whichTypeQuestion}
-        handleRankedChoice={handleRankedChoice}
-        rankedAnswers={rankedAnswers}
-        setRankedAnswers={setRankedAnswers}
-        answersSelection={answersSelection}
-        setAnswerSelection={setAnswerSelection}
-        startStatus={questStartData.startStatus}
-        setLoadingDetail={setLoadingDetail}
-        handleOpen={handleAddOption}
-        usersAddTheirAns={questStartData.usersAddTheirAns}
-        answers={questStartData.QuestAnswers}
-        title={getQuestionTitle(questStartData.whichTypeQuestion)}
-        setStartTest={setStartTest}
-        viewResult={viewResult}
-        handleSubmit={handleSubmit}
-        loading={loading}
-        startTest={startTest}
-        checkOptionStatus={checkOptionStatus}
-      />
-    </QuestCardLayout>
+        postProperties={postProperties}
+      >
+        {renderQuestContent()}
+
+        <ButtonGroup
+          postProperties={postProperties}
+          questStartData={questStartData}
+          handleToggleCheck={handleToggleCheck}
+          id={questStartData._id}
+          btnText={questStartData.startStatus}
+          handleStartTest={handleStartTest}
+          handleViewResults={handleViewResults}
+          setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+          whichTypeQuestion={questStartData.whichTypeQuestion}
+          handleRankedChoice={handleRankedChoice}
+          rankedAnswers={rankedAnswers}
+          setRankedAnswers={setRankedAnswers}
+          answersSelection={answersSelection}
+          setAnswerSelection={setAnswerSelection}
+          startStatus={questStartData.startStatus}
+          setLoadingDetail={setLoadingDetail}
+          handleOpen={handleAddOption}
+          usersAddTheirAns={questStartData.usersAddTheirAns}
+          answers={questStartData.QuestAnswers}
+          title={getQuestionTitle(questStartData.whichTypeQuestion)}
+          setStartTest={setStartTest}
+          viewResult={viewResult}
+          handleSubmit={handleSubmit}
+          loading={loading}
+          startTest={startTest}
+          checkOptionStatus={checkOptionStatus}
+        />
+      </QuestCardLayout>
+    </div>
   );
 };
 

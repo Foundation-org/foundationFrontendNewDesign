@@ -14,18 +14,20 @@ const topicsInitialState = {
 const resetState = {
   expandedView: true,
   searchData: '',
-  filterByStatus: '',
-  filterByType: '',
-  filterByScope: '',
+  filterByStatus: 'All',
+  filterByType: 'All',
+  filterByScope: 'All',
+  filterByMedia: 'All',
   bookmarks: false,
   filterBySort: 'Newest First',
   clearFilter: false,
 };
 
-export const resetOtherStates = {
-  filterByStatus: '',
-  filterByType: '',
-  filterByScope: '',
+const resetOtherStates = {
+  filterByStatus: 'All',
+  filterByType: 'All',
+  filterByScope: 'All',
+  filterByMedia: 'All',
   bookmarks: false,
   filterBySort: 'Newest First',
   clearFilter: false,
@@ -34,9 +36,10 @@ export const resetOtherStates = {
 export const filterInitialState = {
   expandedView: true,
   searchData: '',
-  filterByStatus: '',
-  filterByType: '',
-  filterByScope: '',
+  filterByStatus: 'All',
+  filterByType: 'All',
+  filterByMedia: 'All',
+  filterByScope: 'All',
   bookmarks: false,
   filterBySort: 'Newest First',
   topics: topicsInitialState,
@@ -99,6 +102,9 @@ export const filtersSlice = createSlice({
     setFilterByScope: (state, action) => {
       state.filterByScope = action.payload;
     },
+    setFilterByMedia: (state, action) => {
+      state.filterByMedia = action.payload;
+    },
     setFilterBySort: (state, action) => {
       state.filterBySort = action.payload;
     },
@@ -132,6 +138,7 @@ export const {
   setFilterByScope,
   setBookmarks,
   setFilterBySort,
+  setFilterByMedia,
   setRatings,
   resetFilters,
   resetSearchData,

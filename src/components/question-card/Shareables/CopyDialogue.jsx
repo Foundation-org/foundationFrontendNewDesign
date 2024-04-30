@@ -8,7 +8,17 @@ import Copy from '../../../assets/optionbar/Copy';
 import { Button } from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
 
-const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, badgeCount, questStartData }) => {
+const CopyDialogue = ({
+  handleClose,
+  id,
+  uniqueShareLink,
+  createdBy,
+  img,
+  alt,
+  badgeCount,
+  questStartData,
+  getImage,
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -41,6 +51,7 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
       const resp = await createUpdateUniqueLink(data);
 
       if (resp.status === 201) {
+        getImage(resp.data.data.link);
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
@@ -50,6 +61,7 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
       const resp = await createUpdateUniqueLink(data);
 
       if (resp.status === 201) {
+        getImage(resp.data.data.link);
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);

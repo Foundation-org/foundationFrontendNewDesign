@@ -14,6 +14,10 @@
   .bg-blue-gradiant {
     @apply bg-gradient-to-r from-[#6BA5CF] to-[#389CE3];
   }
+
+  .switch_basic_design {
+    @apply relative inline-flex h-[10.78px] w-[20.53px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 tablet:h-[25px] tablet:w-12;
+  }
 }
 
 .tab-button {
@@ -21,7 +25,7 @@
 }
 
 .heading {
-  @apply text-[12px] font-semibold leading-normal text-[#616161] 2xl:text-[30px] tablet:text-[18px] tablet:leading-[18px] dark:text-white;
+  @apply text-[12px] font-semibold leading-[12px] text-[#616161] 2xl:text-[30px] tablet:text-[18px] tablet:leading-[18px] dark:text-white;
 }
 
 .green-select {
@@ -797,7 +801,8 @@ input[type='number'] {
 }
 
 .react-player div iframe {
-  height: 135px !important;
+  /* height: 135px !important; */
+  height: 180px !important;
   width: 100% !important;
   margin-left: auto;
   margin-right: auto;
@@ -818,7 +823,7 @@ input[type='number'] {
     width: 100% !important;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 10px;
+    /* border-radius: 10px; */
   }
   /* .player-wrapper {
     padding-left: 60px !important;
@@ -892,6 +897,6 @@ input[type='number'] {
 .PhoneInputInput {
   background-color: transparent;
   outline: none;
-  color: #B6B4B4 !important;
+  color: #b6b4b4 !important;
   color-scheme: auto;
 }

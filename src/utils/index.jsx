@@ -4,11 +4,12 @@ import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import { isEqual } from 'lodash';
 import { setFilterStates } from '../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 
 const filtersInitialState = {
-  filterByStatus: '',
-  filterByType: '',
-  filterByScope: '',
+  filterByStatus: 'All',
+  filterByType: 'All',
+  filterByScope: 'All',
   filterBySort: 'Newest First',
   clearFilter: false,
 };
@@ -197,13 +198,19 @@ function matchFilters(filters, state) {
   return true;
 }
 
-export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates, dispatch, setFilters) => {
+export const printNoRecordsMessage = (
+  persistedTheme,
+  isBookmarked,
+  filterStates,
+  dispatch,
+  setFilters,
+  resetOtherStates,
+) => {
   const filtersActions = homeFilterActions;
   const result = matchFilters(filtersInitialState, filterStates);
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
-  const isOtherCategory = filterStates?.topics?.Block?.list[0];
-
+  const isOtherCategory = filterStates?.topics?.Block?.list !== undefined && filterStates?.topics?.Block.list[0];
   return (
     <div className="my-[15vh] flex  flex-col items-center justify-center">
       {persistedTheme === 'dark' ? (
@@ -232,12 +239,11 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
                 const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                 const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                   homeFilterActions.filterInitialState;
+                dispatch(filtersActions.setBlockTopics([]));
 
                 if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                   dispatch(filtersActions.resetOtherFilters());
-                  setFilters({
-                    ...homeFilterActions.resetOtherStates,
-                  });
+                  setFilters(resetOtherStates);
                 }
               }}
             >
@@ -259,12 +265,10 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
                 const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                 const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                   homeFilterActions.filterInitialState;
-
+                dispatch(filtersActions.setBlockTopics([]));
                 if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                   dispatch(filtersActions.resetOtherFilters());
-                  setFilters({
-                    ...homeFilterActions.resetOtherStates,
-                  });
+                  setFilters(resetOtherStates);
                 }
               }}
             >
@@ -278,26 +282,51 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
 };
 
 export const printEndMessage = (
-  feedData,
-  filterStates,
+  // feedData,
+  // filterStates,
+  // isLoading,
+  // persistedTheme,
+  // setFilters,
   allData,
-  persistedTheme,
   isBookmarked,
-  isLoading,
   isFetching,
-  setFilters,
 ) => {
   const dispatch = useDispatch();
-
-  const result = matchFilters(filtersInitialState, filterStates);
   const filtersActions = homeFilterActions;
+  const filterStates = useSelector(filtersActions.getFilters);
+  const result = matchFilters(filtersInitialState, filterStates);
+  const persistedTheme = useSelector((state) => state.utils.theme);
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
   // console.log(feedData?.hasNextPage, isPending, isLoading);
 
-  return !feedData?.hasNextPage && !isFetching && !isLoading ? (
-    <div className="flex justify-between gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
-      <div></div>
+  const resetOtherStates = {
+    filterByStatus: 'All',
+    filterByType: 'All',
+    filterByScope: 'All',
+    filterByMedia: 'All',
+    bookmarks: false,
+    filterBySort: 'Newest First',
+    clearFilter: false,
+    topics: {
+      ...filterStates.topics,
+      Block: {
+        ...filterStates.topics.Block,
+        list: [],
+      },
+    },
+    selectedBtnId: 'newButton',
+  };
+
+  const { mutateAsync: setFilters } = useMutation({
+    mutationFn: setFilterStates,
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  return !isFetching ? (
+    <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
       {filterStates.searchData && allData.length == 0 ? (
         <div className="my-[15vh] flex  flex-col items-center justify-center">
           {persistedTheme === 'dark' ? (
@@ -326,12 +355,10 @@ export const printEndMessage = (
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                       homeFilterActions.filterInitialState;
-
+                    dispatch(filtersActions.setBlockTopics([]));
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
-                      setFilters({
-                        ...homeFilterActions.resetOtherStates,
-                      });
+                      setFilters(resetOtherStates);
                     }
                   }}
                 >
@@ -363,12 +390,10 @@ export const printEndMessage = (
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                       homeFilterActions.filterInitialState;
-
+                    dispatch(filtersActions.setBlockTopics([]));
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
-                      setFilters({
-                        ...homeFilterActions.resetOtherStates,
-                      });
+                      setFilters(resetOtherStates);
                     }
                   }}
                 >
@@ -389,7 +414,7 @@ export const printEndMessage = (
           )}
         </div>
       ) : !filterStates.searchData && allData.length === 0 ? (
-        <>{printNoRecordsMessage(persistedTheme, isBookmarked, filterStates, dispatch, setFilters)}</>
+        <>{printNoRecordsMessage(persistedTheme, isBookmarked, filterStates, dispatch, setFilters, resetOtherStates)}</>
       ) : !filterStates.searchData ? (
         <div className="text-center text-[4vw] tablet:text-[2vw]">
           {isBookmarked ? (
@@ -404,12 +429,10 @@ export const printEndMessage = (
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                       homeFilterActions.filterInitialState;
-
+                    dispatch(filtersActions.setBlockTopics([]));
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
-                      setFilters({
-                        ...homeFilterActions.resetOtherStates,
-                      });
+                      setFilters(resetOtherStates);
                     }
                   }}
                 >
@@ -433,12 +456,10 @@ export const printEndMessage = (
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                       homeFilterActions.filterInitialState;
-
+                    dispatch(filtersActions.setBlockTopics([]));
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
-                      setFilters({
-                        ...homeFilterActions.resetOtherStates,
-                      });
+                      setFilters(resetOtherStates);
                     }
                   }}
                 >
@@ -451,7 +472,7 @@ export const printEndMessage = (
           )}
         </div>
       ) : (
-        <div className="text-center text-[4vw] tablet:text-[2vw]">
+        <div className="text-center text-[4vw] laptop:text-[2vw]">
           {isBookmarked ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
               <b>No more bookmarks!</b>{' '}
@@ -464,11 +485,10 @@ export const printEndMessage = (
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                       homeFilterActions.filterInitialState;
+                    dispatch(filtersActions.setBlockTopics([]));
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
-                      setFilters({
-                        ...homeFilterActions.resetOtherStates,
-                      });
+                      setFilters(resetOtherStates);
                     }
                   }}
                 >
@@ -506,7 +526,6 @@ export const printEndMessage = (
           )}
         </div>
       )}
-      <div></div>
     </div>
   ) : (
     <div className="flex items-center justify-center pb-[6rem] pt-3 tablet:py-[27px]">

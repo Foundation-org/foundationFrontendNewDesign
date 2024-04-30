@@ -54,6 +54,7 @@ const QuestBottombar = ({
   questStartData,
   postProperties,
   showDisableSharedLinkPopup,
+  getImage,
 }) => {
   const navigate = useNavigate();
 
@@ -88,6 +89,7 @@ const QuestBottombar = ({
       setCopyModal(true);
     }
   };
+
   const handleCopyClose = () => setCopyModal(false);
   const handleLinkOpen = () => setLinkModal(true);
   const handleLinkClose = () => setLinkModal(false);
@@ -320,7 +322,7 @@ const QuestBottombar = ({
         )}
 
         <h4 className="whitespace-nowrap text-[0.6rem] font-normal text-[#9C9C9C]  tablet:text-[1.13531rem] laptop:text-[1.2rem] dark:text-white">
-          {postProperties === 'HiddenPosts' ? 'Hidden' : null} {timeAgo}
+          {postProperties === 'HiddenPosts' ? 'Hidden' : postProperties === 'SharedLinks' ? 'Shared' : null} {timeAgo}
         </h4>
       </div>
 
@@ -328,7 +330,12 @@ const QuestBottombar = ({
         <div className="flex items-center justify-center gap-[8px] tablet:gap-[30px]">
           {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
             <div className="flex  items-center gap-[0.17rem]  tablet:gap-[6px]">
-              <div onClick={handleCopyOpen} className="cursor-pointer">
+              <div
+                onClick={() => {
+                  handleCopyOpen();
+                }}
+                className="cursor-pointer"
+              >
                 {persistedTheme === 'dark' ? <Copy /> : <Copy />}
               </div>
               <BasicModal
@@ -346,6 +353,7 @@ const QuestBottombar = ({
                   img={img}
                   alt={alt}
                   badgeCount={badgeCount}
+                  getImage={getImage}
                 />
               </BasicModal>
             </div>

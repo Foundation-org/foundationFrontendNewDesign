@@ -1,20 +1,26 @@
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 import { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player/lazy';
 import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
+import { suppressPost } from '../../services/api/questsApi';
 
 export const EmbededVideo = ({
   description,
   url,
-  setPlayingPlayerId,
   questId,
+  // setPlayingPlayerId,
   playing,
-  setIsShowPlayer,
-  setIsPlaying,
-  isPlaying,
+  // setIsShowPlayer,
+  // setIsPlaying,
+  // isPlaying,
 }) => {
   const playerRef = useRef(null);
   const [mediaURL, setMediaURL] = useState(url);
+  const dispatch = useDispatch();
+  const questUtilsState = useSelector(getQuestUtils);
 
   const handleVideoEnded = () => {
     if (playerRef.current) {
@@ -44,8 +50,11 @@ export const EmbededVideo = ({
   }, [url]);
 
   return (
-    <div className="mx-[22px] mb-2 mt-[12px] flex flex-col justify-start rounded-[9.183px] border border-[#DEE6F7] px-[5px] py-2 tablet:mx-[60px] tablet:mb-[0px] tablet:mt-[23px] tablet:border-[2.755px] tablet:px-2">
-      <h2 className="mb-1 text-[8px] font-medium text-[#7C7C7C] tablet:text-[14.692px]">{description}</h2>
+    // <div className="mx-[22px] mb-2 mt-[12px] flex flex-col justify-start rounded-[9.183px] border border-[#DEE6F7] px-[5px] py-2 tablet:mx-[60px] tablet:mb-[0px] tablet:mt-[23px] tablet:border-[2.755px] tablet:px-2">
+    <div className="flex flex-col justify-start pb-2 pt-1 tablet:py-2">
+      <h2 className="mb-1 ml-2 text-[8px] font-medium text-[#7C7C7C] tablet:mb-2 tablet:ml-3 tablet:text-[14.692px]">
+        {description}
+      </h2>
       <div>
         <ReactPlayer
           ref={playerRef}
@@ -53,27 +62,36 @@ export const EmbededVideo = ({
           className="react-player"
           onError={(e) => {
             // toast.error('Invalid URL');
-            console.log('Invalid URl', e);
+            console.log('Invalid URl', questId);
+            suppressPost(questId);
           }}
           onStart={() => {
-            setPlayingPlayerId(questId);
+            console.log('selectedQuestId', questId);
+            dispatch(setPlayingPlayerId(questId));
+            // setPlayingPlayerId(questId);
             if (!playing) {
-              setIsPlaying(true);
+              dispatch(toggleMedia(true));
+              // setIsPlaying(true);
             }
-            setIsShowPlayer(true);
+            dispatch(setIsShowPlayer(true));
+            // setIsShowPlayer(true);
           }}
           onPlay={() => {
-            setPlayingPlayerId(questId);
+            dispatch(setPlayingPlayerId(questId));
+            // setPlayingPlayerId(questId);
             if (!playing) {
-              setIsPlaying(true);
+              // setIsPlaying(true);
+              dispatch(toggleMedia(true));
             }
-            setIsShowPlayer(true);
+            dispatch(setIsShowPlayer(true));
+            // setIsShowPlayer(true);
           }}
           width="100%"
           height="100%"
           onPause={() => {
             if (playing) {
-              setIsPlaying(false);
+              // setIsPlaying(false);
+              dispatch(toggleMedia(false));
             }
           }}
           // single_active={true}

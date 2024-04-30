@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import CardTopbar from './CardTopbar';
@@ -14,6 +14,8 @@ import * as HomepageApis from '../../services/api/homepageApis';
 import { EmbededVideo } from './EmbededVideo';
 import { isImageUrl } from '../../utils/embeddedutils';
 import { EmbededImage } from './EmbededImage';
+import { toPng } from 'html-to-image';
+
 const data = [
   {
     id: 1,
@@ -43,46 +45,53 @@ const data = [
 
 const QuestCardLayout = ({
   questStartData,
-  isBookmarked,
-  setPlayingPlayerId,
   playing,
-  setIsPlaying,
-  setIsShowPlayer,
-  isPlaying,
   postProperties,
-
   children,
+  // isBookmarked,
+  // setPlayingPlayerId,
+  // setIsPlaying,
+  // setIsShowPlayer,
+  // isPlaying,
 }) => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  // const location = useLocation();
   const queryClient = useQueryClient();
   const [bookmarkStatus, setbookmarkStatus] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
+  const imageGetter = useRef(null);
 
-  const showHidePostOpen = () => {
-    setCheckboxStates(data.map(() => false));
-    setModalVisible(true);
-  };
+  // const showHidePostOpen = () => {
+  //   setCheckboxStates(data.map(() => false));
+  //   setModalVisible(true);
+  // };
 
-  const showHidePostClose = () => {
-    setModalVisible(false);
-  };
+  // const showHidePostClose = () => {
+  //   setModalVisible(false);
+  // };
 
   useEffect(() => {
-    setbookmarkStatus(isBookmarked);
-  }, [isBookmarked]);
+    setbookmarkStatus(questStartData.bookmark);
+  }, [questStartData.bookmark]);
 
   const { mutateAsync: AddBookmark } = useMutation({
     mutationFn: HomepageApis.createBookmark,
     onSuccess: (resp) => {
-      // toast.success('Bookmarked Added');
-      dispatch(
-        addBookmarkResponse({
-          questForeignKey: resp.data.id,
-        }),
-      );
-      queryClient.invalidateQueries('FeedData');
+      queryClient.setQueryData(['posts'], (oldData) => ({
+        ...oldData,
+        pages: oldData?.pages?.map((page) =>
+          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: true } : item)),
+        ),
+      }));
+
+      // dispatch(
+      //   addBookmarkResponse({
+      //     questForeignKey: resp.data.id,
+      //   }),
+      // );
+
+      // queryClient.invalidateQueries('FeedData');
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
@@ -92,10 +101,16 @@ const QuestCardLayout = ({
   const { mutateAsync: DelBookmark } = useMutation({
     mutationFn: HomepageApis.deleteBookmarkById,
     onSuccess: (resp) => {
+      queryClient.setQueryData(['posts'], (oldData) => ({
+        ...oldData,
+        pages: oldData?.pages?.map((page) =>
+          page.map((item) => (item._id === resp.data.id ? { ...item, bookmark: false } : item)),
+        ),
+      }));
       // toast.success('Bookmark Removed ');
       // if (location.pathname === '/dashboard') {
       // queryClient.invalidateQueries('FeedData');
-      dispatch(removeBookmarkResponse(resp.data.id));
+      // dispatch(removeBookmarkResponse(resp.data.id));
       // }
     },
     onError: (err) => {
@@ -131,6 +146,7 @@ const QuestCardLayout = ({
       }),
     );
   };
+
   const { protocol, host } = window.location;
   let url = `${protocol}//${host}/p/${questStartData?.userQuestSetting?.link}`;
 
@@ -143,9 +159,79 @@ const QuestCardLayout = ({
       console.error('Unable to copy text to clipboard:', err);
     }
   };
+  // const getImage = useCallback(() => {
+  //   if (imageGetter.current === null) {
+  //     return;
+  //   }
+
+  //   toPng(imageGetter.current, { cacheBust: true })
+  //     .then((dataUrl) => {
+  //       const link = document.createElement('a');
+  //       link.download = `image-${questStartData._id}.png`;
+  //       link.href = dataUrl;
+  //       link.click();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [imageGetter]);
+  function dataURLToBlob(dataURL) {
+    const parts = dataURL.split(';base64,');
+    const contentType = parts[0].split(':')[1];
+    const byteString = atob(parts[1]);
+    const mimeString = contentType;
+
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([arrayBuffer], { type: mimeString });
+  }
+
+  const getImage = useCallback(
+    (link) => {
+      if (imageGetter.current === null) {
+        return;
+      }
+      toPng(imageGetter.current, { cacheBust: true })
+        .then((dataUrl) => {
+          const formData = new FormData();
+          const blob = dataURLToBlob(dataUrl);
+
+          formData.append('file', blob);
+          formData.append('path', `image-${questStartData._id}.png`);
+          formData.append('link', link);
+
+          fetch(`${import.meta.env.VITE_API_URL}/aws/s3ImageUploadToFrames`, {
+            method: 'POST',
+            body: formData,
+          })
+            .then((response) => {
+              console.log('then', response);
+              if (response.ok) {
+                console.log('Image uploaded successfully!');
+              } else {
+                console.error('Error uploading image:', response.statusText);
+              }
+            })
+            .catch((error) => {
+              console.error('Error sending image to server:', error);
+            });
+        })
+        .catch((err) => {
+          console.error('Error converting image to dataURL:', err);
+        });
+    },
+    [imageGetter],
+  );
 
   return (
-    <div className="max-w-[730px] rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000] ">
+    <div
+      className="max-w-[730px] rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000] "
+      ref={imageGetter}
+    >
       {postProperties === 'SharedLinks' && (
         <div className="mb-2 flex justify-between px-2 pt-2 tablet:mb-5 tablet:px-5 tablet:pt-4 laptop:px-5">
           <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
@@ -177,12 +263,12 @@ const QuestCardLayout = ({
           <EmbededVideo
             description={questStartData.description}
             url={questStartData.url}
-            setPlayingPlayerId={setPlayingPlayerId}
             questId={questStartData._id}
             playing={playing}
-            setIsPlaying={setIsPlaying}
-            setIsShowPlayer={setIsShowPlayer}
-            isPlaying={isPlaying}
+            // setPlayingPlayerId={setPlayingPlayerId}
+            // setIsPlaying={setIsPlaying}
+            // setIsShowPlayer={setIsShowPlayer}
+            // isPlaying={isPlaying}
           />
         ))}
       <CardTopbar
@@ -229,7 +315,13 @@ const QuestCardLayout = ({
       </div>
       <QuestBottombar
         uniqueShareLink={questStartData.uniqueShareLink}
-        time={questStartData.createdAt}
+        time={
+          postProperties === 'HiddenPosts'
+            ? questStartData.userQuestSetting.hiddenTime
+            : postProperties === 'SharedLinks'
+              ? questStartData.userQuestSetting.sharedTime
+              : questStartData.createdAt
+        }
         id={questStartData._id}
         createdBy={questStartData.uuid}
         title={getQuestionTitle(questStartData.whichTypeQuestion)}
@@ -240,6 +332,7 @@ const QuestCardLayout = ({
         questStartData={questStartData}
         postProperties={postProperties}
         showDisableSharedLinkPopup={showDisableSharedLinkPopup}
+        getImage={getImage}
       />
       {/* <ShowHidePostPopup
         handleClose={showHidePostClose}

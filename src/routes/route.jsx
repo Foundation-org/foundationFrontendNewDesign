@@ -37,6 +37,7 @@ import { ErrorBoundary } from '../components/providers/ErrorBoundry';
 import RedemptionCenter from '../pages/Dashboard/pages/Treasury/RedemptionCenter';
 import Ledger from '../pages/Dashboard/pages/Treasury/Ledger';
 import TreasuryLayout from '../pages/Dashboard/pages/Treasury/TreasuryLayout';
+import UserSettings from '../pages/Dashboard/pages/Profile/pages/UserSettings';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -76,6 +77,10 @@ export function Router() {
           <Routes>
             <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
               <Route path="/maintenance" element={<Maintenance />} />
+              <Route path="/dashboard/faq/" element={<CustomerSupport />}>
+                <Route path="" element={<Faq />} />
+                <Route path="contact-us" element={<ContactUs />} />
+              </Route>
               <Route
                 path="/dashboard/"
                 element={
@@ -87,10 +92,6 @@ export function Router() {
                 <Route path="" element={<QuestStartSection />} />
                 <Route path="quest" element={<Quest />} />
                 <Route path="bookmark" element={<Bookmark />} />
-                <Route path="faq/" element={<CustomerSupport />}>
-                  <Route path="" element={<Faq />} />
-                  <Route path="contact-us" element={<ContactUs />} />
-                </Route>
                 <Route path="treasury/" element={<TreasuryLayout />}>
                   <Route path="" element={<RedemptionCenter />} />
                   <Route path="ledger" element={<Ledger />} />
@@ -111,15 +112,15 @@ export function Router() {
                     path=""
                     element={
                       <ErrorBoundary>
-                        <Contributions />
+                        <VerificationBadges />
                       </ErrorBoundary>
                     }
                   />
                   <Route
-                    path="verification-badges"
+                    path="contributions"
                     element={
                       <ErrorBoundary>
-                        <VerificationBadges />
+                        <Contributions />
                       </ErrorBoundary>
                     }
                   />
@@ -144,6 +145,14 @@ export function Router() {
                     element={
                       <ErrorBoundary>
                         <SharedLinks />
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="user-settings"
+                    element={
+                      <ErrorBoundary>
+                        <UserSettings />
                       </ErrorBoundary>
                     }
                   />
