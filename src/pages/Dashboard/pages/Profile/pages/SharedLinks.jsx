@@ -234,8 +234,8 @@ export default function SharedLinks() {
     const params = {
       _page: pageParam,
       _limit: 5,
-      start: 0,
-      end: 5,
+      start: (pageParam - 1) * 5,
+      end: pageParam * 5,
       uuid: persistedUserInfo.uuid,
       sort: 'Newest First',
       Page: 'SharedLink',
@@ -255,7 +255,7 @@ export default function SharedLinks() {
     queryFn: fetchPosts,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
-      const nexPage = lastPage.length && lastPage.length === 5 ? allPages.length + 1 : undefined;
+      const nexPage = lastPage.length ? allPages.length + 1 : undefined;
       return nexPage;
     },
   });
