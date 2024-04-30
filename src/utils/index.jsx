@@ -115,15 +115,6 @@ export function calculateRemainingTime(lastInteractedAt, howManyTimesAnsChanged,
 //     return 'you are good to go';
 //   }
 // }
-const resetOtherStates = {
-  filterByStatus: 'All',
-  filterByType: 'All',
-  filterByScope: 'All',
-  filterByMedia: 'All',
-  bookmarks: false,
-  filterBySort: 'Newest First',
-  clearFilter: false,
-};
 
 export function remainingTime(lastInteractedAt, howManyTimesAnsChanged, usersChangeTheirAns) {
   const validateInterval = () => {
@@ -207,7 +198,14 @@ function matchFilters(filters, state) {
   return true;
 }
 
-export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates, dispatch, setFilters) => {
+export const printNoRecordsMessage = (
+  persistedTheme,
+  isBookmarked,
+  filterStates,
+  dispatch,
+  setFilters,
+  resetOtherStates,
+) => {
   const filtersActions = homeFilterActions;
   const result = matchFilters(filtersInitialState, filterStates);
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
@@ -241,6 +239,7 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
                 const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                 const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                   homeFilterActions.filterInitialState;
+                dispatch(filtersActions.setBlockTopics([]));
 
                 if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                   dispatch(filtersActions.resetOtherFilters());
@@ -266,7 +265,7 @@ export const printNoRecordsMessage = (persistedTheme, isBookmarked, filterStates
                 const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                 const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                   homeFilterActions.filterInitialState;
-
+                dispatch(filtersActions.setBlockTopics([]));
                 if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                   dispatch(filtersActions.resetOtherFilters());
                   setFilters(resetOtherStates);
@@ -300,6 +299,24 @@ export const printEndMessage = (
   const resultPreferences = filterStates?.topics?.Block?.list?.length === 0;
   const resultPreferencesForBookmark = true;
   // console.log(feedData?.hasNextPage, isPending, isLoading);
+
+  const resetOtherStates = {
+    filterByStatus: 'All',
+    filterByType: 'All',
+    filterByScope: 'All',
+    filterByMedia: 'All',
+    bookmarks: false,
+    filterBySort: 'Newest First',
+    clearFilter: false,
+    topics: {
+      ...filterStates.topics,
+      Block: {
+        ...filterStates.topics.Block,
+        list: [],
+      },
+    },
+    selectedBtnId: 'newButton',
+  };
 
   const { mutateAsync: setFilters } = useMutation({
     mutationFn: setFilterStates,
@@ -338,7 +355,7 @@ export const printEndMessage = (
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                       homeFilterActions.filterInitialState;
-
+                    dispatch(filtersActions.setBlockTopics([]));
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters(resetOtherStates);
@@ -373,7 +390,7 @@ export const printEndMessage = (
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                       homeFilterActions.filterInitialState;
-
+                    dispatch(filtersActions.setBlockTopics([]));
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters(resetOtherStates);
@@ -397,7 +414,7 @@ export const printEndMessage = (
           )}
         </div>
       ) : !filterStates.searchData && allData.length === 0 ? (
-        <>{printNoRecordsMessage(persistedTheme, isBookmarked, filterStates, dispatch, setFilters)}</>
+        <>{printNoRecordsMessage(persistedTheme, isBookmarked, filterStates, dispatch, setFilters, resetOtherStates)}</>
       ) : !filterStates.searchData ? (
         <div className="text-center text-[4vw] tablet:text-[2vw]">
           {isBookmarked ? (
@@ -412,7 +429,7 @@ export const printEndMessage = (
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                       homeFilterActions.filterInitialState;
-
+                    dispatch(filtersActions.setBlockTopics([]));
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters(resetOtherStates);
@@ -439,7 +456,7 @@ export const printEndMessage = (
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                       homeFilterActions.filterInitialState;
-
+                    dispatch(filtersActions.setBlockTopics([]));
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters(resetOtherStates);
@@ -468,6 +485,7 @@ export const printEndMessage = (
                     const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
                     const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                       homeFilterActions.filterInitialState;
+                    dispatch(filtersActions.setBlockTopics([]));
                     if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                       dispatch(filtersActions.resetOtherFilters());
                       setFilters(resetOtherStates);
