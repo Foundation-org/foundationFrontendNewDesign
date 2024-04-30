@@ -157,7 +157,6 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
   const dispatch = useDispatch();
   const filterStates = useSelector(filtersActions.getFilters);
   const [filterValues, setFilterValues] = useState({});
-  console.log(filterStates, filterValues);
 
   useEffect(() => {
     setFilterValues({
@@ -493,6 +492,8 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
               const { topics: topicsFilter, ...filterWithoutTopicsAll } = filterStates;
               const { topics: topicsInitialState, ...initialStateWithoutTopicsAll } =
                 homeFilterActions.filterInitialState;
+
+              dispatch(homeFilterActions.setBlockTopics([]));
               if (!isEqual(filterWithoutTopicsAll, initialStateWithoutTopicsAll)) {
                 dispatch(homeFilterActions.resetFilters());
                 setFilters({
@@ -505,6 +506,14 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
                   bookmarks: false,
                   filterBySort: 'Newest First',
                   clearFilter: false,
+                  topics: {
+                    ...filterStates.topics,
+                    Block: {
+                      ...filterStates.topics.Block,
+                      list: [],
+                    },
+                  },
+                  selectedBtnId: 'newButton',
                 });
               }
             }}

@@ -106,6 +106,7 @@ const SidebarLeft = () => {
     dispatch(filtersActions.setFilterBySort(userData?.States.filterBySort));
     dispatch(filtersActions.setFilterByStatus(userData?.States.filterByStatus));
     dispatch(filtersActions.setFilterByType(userData?.States.filterByType));
+    dispatch(filtersActions.setFilterByMedia(userData?.States.filterByMedia));
     dispatch(filtersActions.setExpandedView(true));
     dispatch(filtersActions.setBookmarks(userData?.States.bookmarks));
     dispatch(filtersActions.setSearchData(userData?.States.searchData));
