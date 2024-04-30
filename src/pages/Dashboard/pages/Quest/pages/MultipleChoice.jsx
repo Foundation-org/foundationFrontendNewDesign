@@ -14,6 +14,7 @@ import Options from '../components/Options';
 import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as questServices from '../../../../../services/api/questsApi';
+import { userInfo, userInfoById } from '../../../../../services/api/userAuth';
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -33,12 +34,43 @@ const MultipleChoice = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
 
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+  });
+
+  const handleUserInfo = async () => {
+    try {
+      const resp = await getUserInfo();
+
+      if (resp?.status === 200) {
+        if (resp.data) {
+          dispatch(addUser(resp?.data));
+          localStorage.setItem('userData', JSON.stringify(resp?.data));
+          if (!localStorage.getItem('uuid')) {
+            localStorage.setItem('uuid', resp.data.uuid);
+          }
+        }
+
+        if (!resp.data) {
+          const res = await userInfoById(localStorage.getItem('uuid'));
+          dispatch(addUser(res?.data));
+        }
+      }
+
+      // setResponse(resp?.data);
+    } catch (e) {
+      console.log({ e });
+      toast.error(e.response.data.message.split(':')[1]);
+    }
+  };
+
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
           navigate('/dashboard');
+          handleUserInfo();
           // toast.success('Successfully Created');
           setLoading(false);
 

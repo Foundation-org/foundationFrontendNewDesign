@@ -49,10 +49,6 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
     return fetchUser?.badges.some((badge) => badge.accountName === accountName && badge.type === type);
   };
   const handlePasskey = async (title, type, value) => {
-    console.log('🚀 ~ handlePasskey ~ value:', value);
-    console.log('🚀 ~ handlePasskey ~ title, type:', title, type);
-    console.log('🚀 ~ handlePasskey ~ value:', value);
-    console.log('🚀 ~ handlePasskey ~ title, type:', title, type);
     try {
       // Device Detect
       if (type === 'desktop' && !isBrowser) {

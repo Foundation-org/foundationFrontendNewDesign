@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Button } from '../../../components/ui/Button';
 import { useSelector, useDispatch } from 'react-redux';
+import { useDebounce } from '../../../utils/useDebounce';
 import { addUser } from '../../../features/auth/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { userInfo, userInfoById } from '../../../services/api/userAuth';
@@ -14,7 +15,6 @@ import SidebarLeft from './SidebarLeft';
 import api from '../../../services/api/Axios';
 import Anchor from '../../../components/Anchor';
 import PopUp from '../../../components/ui/PopUp';
-import { useDebounce } from '../../../utils/useDebounce';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
