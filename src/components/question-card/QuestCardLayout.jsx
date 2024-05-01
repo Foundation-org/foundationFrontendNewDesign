@@ -15,6 +15,7 @@ import { EmbededVideo } from './EmbededVideo';
 import { isImageUrl } from '../../utils/embeddedutils';
 import { EmbededImage } from './EmbededImage';
 import { toPng } from 'html-to-image';
+import DeletePostPopup from '../dialogue-boxes/DeletePostPopup';
 
 const data = [
   {
@@ -226,7 +227,7 @@ const QuestCardLayout = ({
     },
     [imageGetter],
   );
-
+  const handleClose = () => setModalVisible(false);
   return (
     <div
       className="max-w-[730px] rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000] "
@@ -313,6 +314,15 @@ const QuestCardLayout = ({
         </div>
         {children}
       </div>
+      {modalVisible && (
+        <DeletePostPopup
+          handleClose={handleClose}
+          modalVisible={modalVisible}
+          title={'Delete Post'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
+          id={questStartData._id}
+        />
+      )}
       <QuestBottombar
         uniqueShareLink={questStartData.uniqueShareLink}
         time={
@@ -333,6 +343,7 @@ const QuestCardLayout = ({
         postProperties={postProperties}
         showDisableSharedLinkPopup={showDisableSharedLinkPopup}
         getImage={getImage}
+        setDelModalVisible={setModalVisible}
       />
       {/* <ShowHidePostPopup
         handleClose={showHidePostClose}
