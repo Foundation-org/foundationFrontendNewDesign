@@ -23,6 +23,7 @@ export const TopbarItems = [
       '/dashboard/profile/ledger',
       '/dashboard/profile/hidden-posts',
       '/dashboard/profile/shared-links',
+      '/dashboard/profile/user-settings',
     ],
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/profile-logo.svg`,
   },

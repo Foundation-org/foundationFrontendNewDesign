@@ -413,7 +413,7 @@ export const printEndMessage = (
             </div>
           )}
         </div>
-      ) : !filterStates.searchData && allData.length === 0 ? (
+      ) : !filterStates.searchData && allData && allData?.length === 0 ? (
         <>{printNoRecordsMessage(persistedTheme, isBookmarked, filterStates, dispatch, setFilters, resetOtherStates)}</>
       ) : !filterStates.searchData ? (
         <div className="text-center text-[4vw] tablet:text-[2vw]">
