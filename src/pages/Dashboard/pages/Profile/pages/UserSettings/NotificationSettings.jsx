@@ -27,7 +27,7 @@ export default function NotificationSettings() {
           </Switch>
         </div>
         <div className="flex items-center justify-between">
-          <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">system notifications</h1>
+          <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">System notifications</h1>
           <Switch
             checked={false}
             onChange={() => toast.info('Feature coming soon.')}
