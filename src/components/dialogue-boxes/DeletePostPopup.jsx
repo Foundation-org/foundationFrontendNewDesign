@@ -1,25 +1,32 @@
 import PopUp from '../ui/PopUp';
 import { Button } from '../ui/Button';
 import { useState } from 'react';
-import api from '../../services/api/Axios';
 import { FaSpinner } from 'react-icons/fa';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteQuest } from '../../services/api/questsApi';
 
 export default function DeletePostPopup({ handleClose, modalVisible, title, image, id }) {
+  const queryClient = useQueryClient();
   const [loading, setIsLoading] = useState(false);
 
-  const handleDeletePost = async () => {
-    setIsLoading(true);
-    try {
-      const deletePost = await api.delete(`/infoquestions/deleteInfoQuest/${id}/${localStorage.getItem('uuid')}`);
-      if (deletePost.status === 200) {
-        console.log('Post deleted Successfully');
-        setIsLoading(false);
-      }
-    } catch (error) {
+  const { mutateAsync: handleDeletePost } = useMutation({
+    mutationFn: deleteQuest,
+    onSuccess: () => {
+      console.log('Post deleted Successfully');
+      setIsLoading(false);
+
+      queryClient.setQueriesData(['posts'], (oldData) => {
+        return {
+          ...oldData,
+          pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== id)),
+        };
+      });
+    },
+    onError: (error) => {
       console.log(error);
       setIsLoading(false);
-    }
-  };
+    },
+  });
 
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
@@ -28,7 +35,13 @@ export default function DeletePostPopup({ handleClose, modalVisible, title, imag
           Are you sure you want to delete Post?
         </h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
-          <Button variant={'submit'} onClick={handleDeletePost}>
+          <Button
+            variant={'submit'}
+            onClick={() => {
+              setIsLoading(true);
+              handleDeletePost(id);
+            }}
+          >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}
           </Button>
           <Button variant={'cancel'} onClick={handleClose}>
