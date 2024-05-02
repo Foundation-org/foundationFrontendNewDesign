@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'; // Import arrow icons from react-icons library
+import { IoClose } from 'react-icons/io5';
 
 import { Carousel } from 'react-responsive-carousel';
 import FullScreenPicturePopup from '../dialogue-boxes/FullScreenPicturePopup';
+import { useLocation } from 'react-router-dom';
+import { delOption } from '../../features/createQuest/pictureMediaSlice';
+import { useDispatch } from 'react-redux';
 
 // Custom arrow component for the left arrow
 const CustomLeftArrow = ({ onClick }) => (
@@ -53,6 +57,8 @@ const renderThumbs = (children) => {
 };
 
 export default ({ data }) => {
+  const location = useLocation();
+  const dispatch = useDispatch();
   const [imageDialogue, setImageDialogue] = useState(false);
   const [selectedImg, setSelectedImg] = useState('');
 
@@ -89,16 +95,23 @@ export default ({ data }) => {
         {data &&
           data.length >= 1 &&
           data.map((item, index) => (
-            <div
-              className="relative"
-              key={index}
-              onClick={() => {
-                openDialogue(index + 1);
-              }}
-            >
-              <img alt={index} src={item} />
-              <p className="absolute -left-3 -top-3 size-6 rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
-                {index + 1}
+            <div className="relative" key={index}>
+              <div
+                onClick={() => {
+                  openDialogue(index + 1);
+                }}
+              >
+                <img alt={index} src={item} />
+              </div>
+              <p
+                onClick={() => {
+                  if (location.pathname === '/dashboard/quest') {
+                    dispatch(delOption({ id: `index-${index}` }));
+                  }
+                }}
+                className="absolute -left-3 -top-3 flex size-6 items-center justify-center rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]"
+              >
+                {location.pathname === '/dashboard/quest' ? <IoClose className="size-4" /> : index + 1}
               </p>
             </div>
           ))}

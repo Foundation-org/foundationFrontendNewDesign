@@ -115,16 +115,36 @@ export const pictureMediaSlice = createSlice({
       state.optionsValue.push(newOption);
     },
     delOption: (state, action) => {
-      const tempOptions = state.optionsValue.filter((value) => value.id !== action.payload.id);
+      const idToRemove = action.payload.id;
 
-      const updatedTypedValues = tempOptions.map((item, index) => {
-        return {
-          ...item,
-          id: `index-${index}`,
-        };
-      });
+      const indexToRemove = state.optionsValue.findIndex((value) => value.id === idToRemove);
 
-      state.optionsValue = updatedTypedValues;
+      if (indexToRemove !== -1) {
+        const tempOptions = state.optionsValue.filter((value) => value.id !== idToRemove);
+
+        if (tempOptions.length === 0) {
+          state.optionsValue = [
+            {
+              id: `index-0`,
+              picUrl: '',
+              validatedPicUrl: '',
+              picUrlStatus: { ...defaultStatus },
+              chatgptPicUrlStatus: { ...defaultStatus },
+            },
+          ];
+        } else {
+          const updatedTypedValues = tempOptions.map((item, index) => {
+            return {
+              ...item,
+              id: `index-${index}`,
+            };
+          });
+
+          state.optionsValue = updatedTypedValues;
+        }
+      } else {
+        console.error(`Option with id ${idToRemove} not found.`);
+      }
     },
     resetCreateQuest: (state) => {
       Object.assign(state, initialState);

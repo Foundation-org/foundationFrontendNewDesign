@@ -21,6 +21,8 @@ export default function AddPictureUrls({ handleTab }) {
     dispatch(pictureMediaAction.addNewOption());
   };
 
+  console.log('getUrlsOptions', getUrlsOptions);
+
   return (
     <div>
       {getPicMediaStates?.isPicMedia && (
@@ -32,6 +34,7 @@ export default function AddPictureUrls({ handleTab }) {
             className="absolute -right-[7px] -top-[5px] z-0 cursor-pointer tablet:-right-5 tablet:-top-[26px]"
             onClick={() => {
               dispatch(pictureMediaAction.clearPicsMedia());
+              dispatch(pictureMediaAction.resetToInitialState());
             }}
           >
             <img
@@ -86,11 +89,13 @@ export default function AddPictureUrls({ handleTab }) {
                 </div>
               ),
           )}
-          {getUrlsOptions[getUrlsOptions.length - 1].picUrlStatus.tooltipName === 'Answer is Verified' && (
-            <Button variant="addEmbeded" className="px-2 tablet:px-[25px]" onClick={addNewOption}>
-              + Add Image
-            </Button>
-          )}
+          {getUrlsOptions &&
+            getUrlsOptions.length >= 1 &&
+            getUrlsOptions[getUrlsOptions.length - 1].picUrlStatus.tooltipName === 'Answer is Verified' && (
+              <Button variant="addEmbeded" className="px-2 tablet:px-[25px]" onClick={addNewOption}>
+                + Add Image
+              </Button>
+            )}
         </div>
       )}
     </div>
