@@ -103,15 +103,20 @@ export default ({ data }) => {
               >
                 <img alt={index} src={item} />
               </div>
-              <p
-                onClick={() => {
-                  if (location.pathname === '/dashboard/quest') {
-                    dispatch(delOption({ id: `index-${index}` }));
-                  }
-                }}
-                className="absolute -left-3 -top-3 flex size-6 items-center justify-center rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]"
-              >
-                {location.pathname === '/dashboard/quest' ? <IoClose className="size-4" /> : index + 1}
+              {location.pathname === '/dashboard/quest' && (
+                <p
+                  onClick={() => {
+                    if (location.pathname === '/dashboard/quest') {
+                      dispatch(delOption({ id: `index-${index}` }));
+                    }
+                  }}
+                  className="absolute -right-3 -top-3 flex size-6 items-center justify-center rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]"
+                >
+                  <IoClose className="size-4" />
+                </p>
+              )}
+              <p className="absolute -left-3 -top-3 flex size-6 items-center justify-center rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
+                {index + 1}
               </p>
             </div>
           ))}

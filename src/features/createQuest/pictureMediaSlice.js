@@ -260,49 +260,60 @@ export const pictureMediaSlice = createSlice({
     });
     builder.addCase(checkPictureUrl.fulfilled, (state, action) => {
       const { id, result, index } = action.payload;
+      console.log('result', result);
       const validatedAnswer = result.url;
 
-      if (validatedAnswer) {
-        // const duplicate = checkAnswerExistCreateQuest({
-        //   answersArray: JSON.parse(JSON.stringify(state.optionsValue)),
-        //   answer: validatedAnswer,
-        //   index,
-        // });
-
-        // const optionStatus = duplicate ? getDuplicateStatus() : getVerifiedStatus();
-
-        const updatedOptions = state.optionsValue.map((option) =>
-          option.validatedPicUrl === validatedAnswer
-            ? {
-                ...option,
-                validatedPicUrl: '',
-                picUrlStatus: getDuplicateStatus(),
-                chatgptPicUrlStatus: getDuplicateStatus(),
-              }
-            : option.id === id
-              ? {
-                  ...option,
-                  picUrl: validatedAnswer,
-                  validatedPicUrl: validatedAnswer,
-                  picUrlStatus: getVerifiedStatus(),
-                  chatgptPicUrlStatus: getVerifiedStatus(),
-                  // duplication: duplicate,
-                }
-              : option,
-        );
+      if (result.errorMessage === 'DUPLICATION') {
+        const updatedOptions = state.optionsValue.map((option) => ({
+          ...option,
+          validatedPicUrl: '',
+          picUrlStatus: getDuplicateStatus(),
+          chatgptPicUrlStatus: getDuplicateStatus(),
+        }));
         state.optionsValue = updatedOptions;
       } else {
-        const updatedOptions = state.optionsValue.map((option) =>
-          option.id === id
-            ? {
-                ...option,
-                validatedPicUrl: '',
-                picUrlStatus: getRejectedStatus(),
-                chatgptPicUrlStatus: getRejectedStatus(),
-              }
-            : option,
-        );
-        state.optionsValue = updatedOptions;
+        if (validatedAnswer) {
+          // const duplicate = checkAnswerExistCreateQuest({
+          //   answersArray: JSON.parse(JSON.stringify(state.optionsValue)),
+          //   answer: validatedAnswer,
+          //   index,
+          // });
+
+          // const optionStatus = duplicate ? getDuplicateStatus() : getVerifiedStatus();
+
+          const updatedOptions = state.optionsValue.map((option) =>
+            option.validatedPicUrl === validatedAnswer
+              ? {
+                  ...option,
+                  validatedPicUrl: '',
+                  picUrlStatus: getDuplicateStatus(),
+                  chatgptPicUrlStatus: getDuplicateStatus(),
+                }
+              : option.id === id
+                ? {
+                    ...option,
+                    picUrl: validatedAnswer,
+                    validatedPicUrl: validatedAnswer,
+                    picUrlStatus: getVerifiedStatus(),
+                    chatgptPicUrlStatus: getVerifiedStatus(),
+                    // duplication: duplicate,
+                  }
+                : option,
+          );
+          state.optionsValue = updatedOptions;
+        } else {
+          const updatedOptions = state.optionsValue.map((option) =>
+            option.id === id
+              ? {
+                  ...option,
+                  validatedPicUrl: '',
+                  picUrlStatus: getRejectedStatus(),
+                  chatgptPicUrlStatus: getRejectedStatus(),
+                }
+              : option,
+          );
+          state.optionsValue = updatedOptions;
+        }
       }
     });
   },
