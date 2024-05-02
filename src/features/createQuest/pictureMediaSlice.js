@@ -64,8 +64,8 @@ export const pictureMediaSlice = createSlice({
     },
     addPicUrl: (state, action) => {
       if (action.payload === state.pictureMedia.validatedPicUrl) {
-        state.pictureMedia.picUrlStatus = state.pictureMedia.chatgptPicUrlStatus;
-        state.pictureMedia.picUrl = state.pictureMedia.validatedPicUrl;
+        // state.pictureMedia.picUrlStatus = state.pictureMedia.chatgptPicUrlStatus;
+        // state.pictureMedia.picUrl = state.pictureMedia.validatedPicUrl;
         return;
       }
       state.pictureMedia.picUrlStatus = { ...defaultStatus };
@@ -84,7 +84,6 @@ export const pictureMediaSlice = createSlice({
     },
     addOptionById: (state, action) => {
       const { id, option } = action.payload;
-      console.log('hamza', id, option);
       const index = state.optionsValue.findIndex((option) => option.id === id);
 
       if (option === '') {
@@ -231,7 +230,7 @@ export const pictureMediaSlice = createSlice({
           ? {
               ...option,
               picUrl: value,
-              validatedPicUrl: value,
+              validatedPicUrl: '',
               picUrlStatus: getCheckingStatus(),
               chatgptPicUrlStatus: getCheckingStatus(),
             }
@@ -253,16 +252,23 @@ export const pictureMediaSlice = createSlice({
         // const optionStatus = duplicate ? getDuplicateStatus() : getVerifiedStatus();
 
         const updatedOptions = state.optionsValue.map((option) =>
-          option.id === id
+          option.validatedPicUrl === validatedAnswer
             ? {
                 ...option,
-                picUrl: validatedAnswer,
-                validatedPicUrl: validatedAnswer,
-                picUrlStatus: getVerifiedStatus(),
-                chatgptPicUrlStatus: getVerifiedStatus(),
-                // duplication: duplicate,
+                validatedPicUrl: '',
+                picUrlStatus: getDuplicateStatus(),
+                chatgptPicUrlStatus: getDuplicateStatus(),
               }
-            : option,
+            : option.id === id
+              ? {
+                  ...option,
+                  picUrl: validatedAnswer,
+                  validatedPicUrl: validatedAnswer,
+                  picUrlStatus: getVerifiedStatus(),
+                  chatgptPicUrlStatus: getVerifiedStatus(),
+                  // duplication: duplicate,
+                }
+              : option,
         );
         state.optionsValue = updatedOptions;
       } else {
@@ -296,14 +302,14 @@ const getVerifiedStatus = () => ({
   tooltipStyle: 'tooltip-success',
 });
 
-// const getDuplicateStatus = () => ({
-//   name: 'Duplicate',
-//   color: 'text-[#EFD700]',
-//   tooltipName: 'Found Duplication!',
-//   tooltipStyle: 'tooltip-error',
-//   duplication: true,
-//   showToolTipMsg: true,
-// });
+const getDuplicateStatus = () => ({
+  name: 'Duplicate',
+  color: 'text-[#EFD700]',
+  tooltipName: 'Found Duplication!',
+  tooltipStyle: 'tooltip-error',
+  duplication: true,
+  showToolTipMsg: true,
+});
 
 const getRejectedStatus = () => ({
   name: 'Rejected',
