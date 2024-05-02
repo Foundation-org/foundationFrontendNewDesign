@@ -77,6 +77,11 @@ export const pictureMediaSlice = createSlice({
         pictureMedia: initialState.pictureMedia,
       };
     },
+    resetToInitialState: (state) => {
+      Object.keys(state).forEach((key) => {
+        state[key] = initialState[key];
+      });
+    },
     addOptionById: (state, action) => {
       const { id, option } = action.payload;
       console.log('hamza', id, option);
@@ -334,6 +339,7 @@ export const {
   clearMedia,
   clearPicsUrl,
   clearPicsMedia,
+  resetToInitialState,
 } = pictureMediaSlice.actions;
 
 export default pictureMediaSlice.reducer;

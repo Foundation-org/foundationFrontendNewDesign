@@ -31,8 +31,6 @@ const YesNo = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
 
-  console.log('getPictureUrls', getPictureUrls);
-
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
   });
@@ -74,6 +72,7 @@ const YesNo = () => {
           setChangedOption('');
           setChangeState(false);
           dispatch(createQuestAction.resetCreateQuest());
+          dispatch(pictureMediaAction.resetToInitialState());
         }, 500);
       }
       queryClient.invalidateQueries('FeedData');
