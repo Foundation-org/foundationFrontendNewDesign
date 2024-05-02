@@ -44,28 +44,30 @@ const ImagePopUp = ({ open, handleClose, data, selectedImg }) => {
               />
             </svg>
           </div>
-          <Carousel
-            autoPlay
-            infiniteLoop={true}
-            stopOnHover={true}
-            showArrows={true}
-            showIndicators={false}
-            emulateTouch={true}
-            selectedItem={selectedImg - 1}
-            renderThumbs={(children) => renderThumbs(children)}
-            statusFormatter={(currentItem, total) => ''}
-          >
-            {data &&
-              data.length >= 1 &&
-              data?.map((item, index) => (
-                <div id="fullscreen_carousel" className="relative" key={index}>
-                  <img alt={index} src={item} />
-                  <p className="absolute -left-3 -top-3 size-6 rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
-                    {index + 1}
-                  </p>
-                </div>
-              ))}
-          </Carousel>
+          <div id="fullscreen_carousel_container">
+            <Carousel
+              autoPlay
+              infiniteLoop={true}
+              stopOnHover={true}
+              showArrows={true}
+              showIndicators={false}
+              emulateTouch={true}
+              selectedItem={selectedImg - 1}
+              renderThumbs={(children) => renderThumbs(children)}
+              statusFormatter={(currentItem, total) => ''}
+            >
+              {data &&
+                data.length >= 1 &&
+                data?.map((item, index) => (
+                  <div id="fullscreen_carousel" className="relative" key={index}>
+                    <img alt={index} src={item} />
+                    <p className="absolute -left-3 -top-3 size-6 rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
+                      {index + 1}
+                    </p>
+                  </div>
+                ))}
+            </Carousel>
+          </div>
         </div>
       </Box>
     </Modal>

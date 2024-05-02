@@ -969,8 +969,16 @@ input[type='number'] {
   height: 100dvh !important;
 }
 
-#fullscreen_carousel_main div div {
-  height: calc(100dvh - 100px) !important;
+#fullscreen_carousel_container div div:first-child {
+  height: calc(100dvh - 110px) !important;
+}
+
+#fullscreen_carousel_container div div:nth-child(2) {
+  height: fit-content !important;
+}
+
+#fullscreen_carousel_container div div:nth-child(2) div {
+  height: fit-content !important;
 }
 
 #fullscreen_carousel img {
