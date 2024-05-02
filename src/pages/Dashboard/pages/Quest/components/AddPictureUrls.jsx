@@ -21,8 +21,6 @@ export default function AddPictureUrls({ handleTab }) {
     dispatch(pictureMediaAction.addNewOption());
   };
 
-  console.log('getUrlsOptions', getUrlsOptions);
-
   return (
     <div>
       {getPicMediaStates?.isPicMedia && (
