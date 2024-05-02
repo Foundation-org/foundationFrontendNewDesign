@@ -12,6 +12,7 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 
 import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import { userInfo, userInfoById } from '../../../../../services/api/userAuth';
 import { addUser } from '../../../../../features/auth/authSlice';
 
@@ -24,10 +25,13 @@ const YesNo = () => {
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
+  const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
+
+  console.log('getPictureUrls', getPictureUrls);
 
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
@@ -151,7 +155,7 @@ const YesNo = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPicsMediaStates.picUrl,
+      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
       // description: getMediaStates?.isMedia.isMedia ? getMediaStates.desctiption : getPicsMediaStates.picDesctiption,
     };

@@ -14,6 +14,7 @@ import questUtilsReducer from '../features/quest/utilsSlice';
 import prefReducer from '../features/preferences/prefSlice';
 import questCardReducer from '../features/quest/questCardSlice';
 import createQuestReducer from '../features/createQuest/createQuestSlice';
+import pictureMediaReducer from '../features/createQuest/pictureMediaSlice';
 import ledgerReducer from '../features/profile/legerSlice';
 import hiddenPostReducer from '../features/profile/hiddenPosts';
 import sharedLinksReducer from '../features/profile/sharedLinks';
@@ -35,6 +36,7 @@ const reducer = combineReducers({
   preferences: prefReducer,
   questCard: questCardReducer,
   createQuest: createQuestReducer,
+  pictureMedia: pictureMediaReducer,
   ledger: ledgerReducer,
   hiddenPosts: hiddenPostReducer,
   sharedLinks: sharedLinksReducer,

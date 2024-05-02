@@ -2,7 +2,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Carousel } from 'react-responsive-carousel';
 
-const ImagePopUp = ({ open, handleClose, children, customStyle, customClasses, data, selectedImg }) => {
+const ImagePopUp = ({ open, handleClose, data, selectedImg }) => {
   const defaultStyle = {
     boxShadow: 'none',
     position: 'absolute',
@@ -11,7 +11,7 @@ const ImagePopUp = ({ open, handleClose, children, customStyle, customClasses, d
     transform: 'translate(-50%, -50%)',
   };
 
-  const mergedStyle = { ...defaultStyle, ...customStyle };
+  const mergedStyle = { ...defaultStyle };
 
   const renderThumbs = (children) => {
     return children.map((child, index) => (
@@ -30,7 +30,7 @@ const ImagePopUp = ({ open, handleClose, children, customStyle, customClasses, d
       aria-describedby="modal-modal-description"
       sx={{ background: 'black' }}
     >
-      <Box sx={mergedStyle} className={`${customClasses} z-[1000] w-full max-w-max border-none outline-none`}>
+      <Box sx={mergedStyle} className={`z-[1000] w-full max-w-max border-none outline-none`}>
         <div id="fullscreen_carousel_main" className="relative rounded-b-[9.76px] bg-black tablet:rounded-b-[26px]">
           <div className="absolute left-6 top-6 z-[100000] cursor-pointer" onClick={handleClose}>
             <svg xmlns="http://www.w3.org/2000/svg" width="51" height="50" viewBox="0 0 51 50" fill="none">
@@ -55,14 +55,16 @@ const ImagePopUp = ({ open, handleClose, children, customStyle, customClasses, d
             renderThumbs={(children) => renderThumbs(children)}
             statusFormatter={(currentItem, total) => ''}
           >
-            {data?.map((item) => (
-              <div id="fullscreen_carousel" className="relative" key={item.id}>
-                <img alt={item.id} src={item.picture} />
-                <p className="absolute -left-3 -top-3 size-6 rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
-                  {item.id}
-                </p>
-              </div>
-            ))}
+            {data &&
+              data.length >= 1 &&
+              data?.map((item, index) => (
+                <div id="fullscreen_carousel" className="relative" key={index}>
+                  <img alt={index} src={item} />
+                  <p className="absolute -left-3 -top-3 size-6 rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
+                    {index + 1}
+                  </p>
+                </div>
+              ))}
           </Carousel>
         </div>
       </Box>

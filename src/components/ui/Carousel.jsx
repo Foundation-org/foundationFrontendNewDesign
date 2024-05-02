@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'; // Import arrow icons from react-icons library
 
@@ -52,20 +52,7 @@ const renderThumbs = (children) => {
   ));
 };
 
-const data = [
-  { id: 1, picture: 'https://source.unsplash.com/featured/?nature' },
-  { id: 2, picture: 'https://source.unsplash.com/featured/?water' },
-  { id: 3, picture: 'https://source.unsplash.com/featured/?mountain' },
-  { id: 4, picture: 'https://source.unsplash.com/featured/?forest' },
-  { id: 5, picture: 'https://source.unsplash.com/featured/?sunset' },
-  { id: 6, picture: 'https://source.unsplash.com/featured/?beach' },
-  { id: 7, picture: 'https://source.unsplash.com/featured/?landscape' },
-  { id: 8, picture: 'https://source.unsplash.com/featured/?sky' },
-  { id: 9, picture: 'https://source.unsplash.com/featured/?flower' },
-  { id: 10, picture: 'https://source.unsplash.com/featured/?city' },
-];
-
-export default () => {
+export default ({ data }) => {
   const [imageDialogue, setImageDialogue] = useState(false);
   const [selectedImg, setSelectedImg] = useState('');
 
@@ -99,20 +86,22 @@ export default () => {
         // onClickItem={onClickItem}
         // onClickThumb={onClickThumb}
       >
-        {data.map((item) => (
-          <div
-            className="relative"
-            key={item.id}
-            onClick={() => {
-              openDialogue(item.id);
-            }}
-          >
-            <img alt={item.id} src={item.picture} />
-            <p className="absolute -left-3 -top-3 size-6 rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
-              {item.id}
-            </p>
-          </div>
-        ))}
+        {data &&
+          data.length >= 1 &&
+          data.map((item, index) => (
+            <div
+              className="relative"
+              key={index}
+              onClick={() => {
+                openDialogue(index + 1);
+              }}
+            >
+              <img alt={index} src={item} />
+              <p className="absolute -left-3 -top-3 size-6 rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]">
+                {index + 1}
+              </p>
+            </div>
+          ))}
       </Carousel>
     </div>
   );
