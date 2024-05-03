@@ -46,7 +46,7 @@ const ImagePopUp = ({ open, handleClose, data, selectedImg }) => {
           </div>
           <div id="fullscreen_carousel_container">
             <Carousel
-              autoPlay
+              // autoPlay
               infiniteLoop={true}
               stopOnHover={true}
               showArrows={true}

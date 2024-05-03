@@ -77,7 +77,7 @@ export default ({ data }) => {
         imgArr={data}
       />
       <Carousel
-        autoPlay
+        // autoPlay
         infiniteLoop={true}
         stopOnHover={true}
         showArrows={true}
