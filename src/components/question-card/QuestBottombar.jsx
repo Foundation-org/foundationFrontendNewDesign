@@ -54,7 +54,7 @@ const QuestBottombar = ({
   questStartData,
   postProperties,
   showDisableSharedLinkPopup,
-  getImage,
+  // getImage,
   setDelModalVisible,
 }) => {
   const navigate = useNavigate();
@@ -366,7 +366,7 @@ const QuestBottombar = ({
                   img={img}
                   alt={alt}
                   badgeCount={badgeCount}
-                  getImage={getImage}
+                  // getImage={getImage}
                 />
               </BasicModal>
             </div>
