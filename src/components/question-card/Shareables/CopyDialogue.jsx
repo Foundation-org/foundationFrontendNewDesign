@@ -2,11 +2,12 @@ import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createUpdateUniqueLink } from '../../../services/api/questsApi';
+import { createUpdateUniqueLink, generateImage } from '../../../services/api/questsApi';
 import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
 import Copy from '../../../assets/optionbar/Copy';
 import { Button } from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 
 const CopyDialogue = ({
   handleClose,
@@ -17,7 +18,7 @@ const CopyDialogue = ({
   alt,
   badgeCount,
   questStartData,
-  getImage,
+  // getImage,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,6 +39,10 @@ const CopyDialogue = ({
     }
   };
 
+  const { mutateAsync: sendImage } = useMutation({
+    mutationFn: generateImage,
+  });
+
   const uniqueLinkQuestSetting = async () => {
     setIsLoading(true);
     const data = {
@@ -52,7 +57,7 @@ const CopyDialogue = ({
 
       if (resp.status === 201) {
         if (questStartData.whichTypeQuestion === 'yes/no') {
-          getImage(resp.data.data.link);
+          sendImage({ questStartData, link: resp.data.data.link });
         }
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
@@ -64,7 +69,7 @@ const CopyDialogue = ({
 
       if (resp.status === 201) {
         if (questStartData.whichTypeQuestion === 'yes/no') {
-          getImage(resp.data.data.link);
+          sendImage({ questStartData, link: resp.data.data.link });
         }
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));

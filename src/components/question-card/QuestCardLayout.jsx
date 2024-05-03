@@ -176,57 +176,59 @@ const QuestCardLayout = ({
   //       console.log(err);
   //     });
   // }, [imageGetter]);
-  function dataURLToBlob(dataURL) {
-    const parts = dataURL.split(';base64,');
-    const contentType = parts[0].split(':')[1];
-    const byteString = atob(parts[1]);
-    const mimeString = contentType;
+  // function dataURLToBlob(dataURL) {
+  //   const parts = dataURL.split(';base64,');
+  //   const contentType = parts[0].split(':')[1];
+  //   const byteString = atob(parts[1]);
+  //   const mimeString = contentType;
 
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const uint8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      uint8Array[i] = byteString.charCodeAt(i);
-    }
+  //   const arrayBuffer = new ArrayBuffer(byteString.length);
+  //   const uint8Array = new Uint8Array(arrayBuffer);
+  //   for (let i = 0; i < byteString.length; i++) {
+  //     uint8Array[i] = byteString.charCodeAt(i);
+  //   }
 
-    return new Blob([arrayBuffer], { type: mimeString });
-  }
+  //   return new Blob([arrayBuffer], { type: mimeString });
+  // }
 
-  const getImage = useCallback(
-    (link) => {
-      if (imageGetter.current === null) {
-        return;
-      }
-      toPng(imageGetter.current, { cacheBust: true })
-        .then((dataUrl) => {
-          const formData = new FormData();
-          const blob = dataURLToBlob(dataUrl);
+  // const getImage = useCallback(
+  //   (link) => {
+  //     console.log(link);
+  //     if (imageGetter.current === null) {
+  //       return;
+  //     }
+  //     toPng(imageGetter.current, { cacheBust: true })
+  //       .then((dataUrl) => {
+  //         const formData = new FormData();
+  //         const blob = dataURLToBlob(dataUrl);
 
-          formData.append('file', blob);
-          formData.append('path', `image-${questStartData._id}.png`);
-          formData.append('link', link);
+  //         formData.append('file', blob);
+  //         formData.append('path', `image-${questStartData._id}.png`);
+  //         formData.append('link', link.link);
+  //         formData.append('data', JSON.parse(link.questStartData));
 
-          fetch(`${import.meta.env.VITE_API_URL}/aws/s3ImageUploadToFrames`, {
-            method: 'POST',
-            body: formData,
-          })
-            .then((response) => {
-              console.log('then', response);
-              if (response.ok) {
-                console.log('Image uploaded successfully!');
-              } else {
-                console.error('Error uploading image:', response.statusText);
-              }
-            })
-            .catch((error) => {
-              console.error('Error sending image to server:', error);
-            });
-        })
-        .catch((err) => {
-          console.error('Error converting image to dataURL:', err);
-        });
-    },
-    [imageGetter],
-  );
+  //         fetch(`${import.meta.env.VITE_API_URL}/aws/s3ImageUploadToFrames`, {
+  //           method: 'POST',
+  //           body: formData,
+  //         })
+  //           .then((response) => {
+  //             console.log('then', response);
+  //             if (response.ok) {
+  //               console.log('Image uploaded successfully!');
+  //             } else {
+  //               console.error('Error uploading image:', response.statusText);
+  //             }
+  //           })
+  //           .catch((error) => {
+  //             console.error('Error sending image to server:', error);
+  //           });
+  //       })
+  //       .catch((err) => {
+  //         console.error('Error converting image to dataURL:', err);
+  //       });
+  //   },
+  //   [imageGetter],
+  // );
   const handleClose = () => setModalVisible(false);
   return (
     <div
@@ -257,7 +259,9 @@ const QuestCardLayout = ({
         </div>
       )}
 
-      {questStartData.url[0] !== '' &&
+      {questStartData.url &&
+        questStartData.url.length !== 0 &&
+        questStartData.url[0] !== '' &&
         (isImageUrl(questStartData.url) ? (
           <EmbededImage description={questStartData.description} url={questStartData.url} />
         ) : (
@@ -342,7 +346,7 @@ const QuestCardLayout = ({
         questStartData={questStartData}
         postProperties={postProperties}
         showDisableSharedLinkPopup={showDisableSharedLinkPopup}
-        getImage={getImage}
+        // getImage={getImage}
         setDelModalVisible={setModalVisible}
       />
       {/* <ShowHidePostPopup

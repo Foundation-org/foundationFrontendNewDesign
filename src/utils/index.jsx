@@ -10,6 +10,7 @@ const filtersInitialState = {
   filterByStatus: 'All',
   filterByType: 'All',
   filterByScope: 'All',
+  filterByMedia: 'All',
   filterBySort: 'Newest First',
   clearFilter: false,
 };

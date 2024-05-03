@@ -54,7 +54,7 @@ const QuestBottombar = ({
   questStartData,
   postProperties,
   showDisableSharedLinkPopup,
-  getImage,
+  // getImage,
   setDelModalVisible,
 }) => {
   const navigate = useNavigate();
@@ -331,7 +331,8 @@ const QuestBottombar = ({
         <div className="flex items-center justify-center gap-[8px] tablet:gap-[30px]">
           {postProperties !== 'HiddenPosts' &&
             postProperties !== 'SharedLinks' &&
-            questStartData.startStatus === '' && (
+            questStartData.startStatus === '' &&
+            createdBy === localStorage.getItem('uuid') && (
               <img
                 src="/assets/hiddenposts/unhide/deletePost.png"
                 alt="eye-latest"
@@ -339,6 +340,7 @@ const QuestBottombar = ({
                 onClick={() => setDelModalVisible(true)}
               />
             )}
+
           {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
             <div className="flex  items-center gap-[0.17rem]  tablet:gap-[6px]">
               <div
@@ -364,7 +366,7 @@ const QuestBottombar = ({
                   img={img}
                   alt={alt}
                   badgeCount={badgeCount}
-                  getImage={getImage}
+                  // getImage={getImage}
                 />
               </BasicModal>
             </div>

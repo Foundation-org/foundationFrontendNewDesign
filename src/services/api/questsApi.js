@@ -373,3 +373,10 @@ export const updateSharedLinkStatus = async ({ link, data }) => {
     status: data,
   });
 };
+
+export const generateImage = async ({ questStartData, link }) => {
+  return await api.post(`/aws/s3ImageUploadToFrames`, {
+    questStartData,
+    link,
+  });
+};
