@@ -285,6 +285,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/quest/isfullscreen' &&
             location.pathname !== '/shared-links/result' &&
+            location.pathname !== '/dashboard/profile/user-settings' &&
             !location.pathname.startsWith('/p/') && <SidebarLeft />}
 
           {/* HiddenPost Search */}
