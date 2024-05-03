@@ -41,7 +41,28 @@ export default function AddPictureUrls({ handleTab }) {
               className="size-[15px] tablet:size-[41px]"
             />
           </div>
-          {getPictureUrls[0] !== '' && <Carousel data={getPictureUrls} />}
+          {getPictureUrls.length === 1 && getPictureUrls[0] !== '' ? (
+            <div className="relative mt-1 cursor-pointer rounded-[10px] tablet:mt-[10px]">
+              <div
+                onClick={() => dispatch(pictureMediaAction.delOption({ id: 'index-0' }))}
+                className={`absolute -right-1 -top-[6px] z-20 tablet:-right-4 tablet:-top-4`}
+              >
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
+                  alt="mediaCloseIcon"
+                  className="size-[15px] tablet:size-[41px]"
+                />
+              </div>
+
+              <img
+                src={getPictureUrls[0]}
+                alt="embedded-photo"
+                className="max-h-[134.456px] w-full rounded-[3.875px] object-contain tablet:max-h-[371px] tablet:rounded-[10px]"
+              />
+            </div>
+          ) : (
+            <Carousel data={getPictureUrls} />
+          )}
           {getUrlsOptions.map(
             (item, index) =>
               item.picUrlStatus.tooltipName !== 'Answer is Verified' && (
