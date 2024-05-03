@@ -266,8 +266,8 @@ const QuestionCardWithToggle = (props) => {
   }, [questStartData]);
 
   const questByUniqueShareLink = async () => {
-    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-2)[0]);
-    props.setSingleQuestResp(getQuest.data.data[0]);
+    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-1)[0]);
+    props.setSingleQuestResp(getQuest.response.data.data[0]);
   };
 
   const { mutateAsync: getUserInfo } = useMutation({
