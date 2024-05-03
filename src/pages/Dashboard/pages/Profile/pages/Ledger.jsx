@@ -300,7 +300,7 @@ export default function BasicTable() {
                                   ? 'My Account'
                                   : cell.column.id === 'txTo' &&
                                       cell.getValue() !== 'DAO Treasury' &&
-                                      cell.getValue() !== 'dao'
+                                      cell.getValue() !== 'DAO'
                                     ? `User`
                                     : cell.getValue() === 'dao'
                                       ? 'DAO'
