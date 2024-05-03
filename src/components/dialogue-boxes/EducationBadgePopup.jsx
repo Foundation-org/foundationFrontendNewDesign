@@ -396,9 +396,8 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       field1Data.name === undefined ||
       field2Data.name === undefined ||
       field2Data.name === '' ||
-      field3Data === undefined ||
-      field4Data === undefined ||
-      field4Data === '' ||
+      !field3Data ||
+      !field4Data ||
       field5Data.name === undefined ||
       field5Data.name === ''
     ) {

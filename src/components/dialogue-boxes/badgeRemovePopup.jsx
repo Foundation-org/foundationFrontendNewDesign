@@ -18,9 +18,11 @@ export default function BadgeRemovePopup({
   setFetchUser,
   type,
   badgeType,
+  setIsPersonalPopup,
+  setIsLoading,
+  loading,
 }) {
   const dispatch = useDispatch();
-  const [loading, setIsLoading] = useState(false);
 
   const handleUserInfo = async () => {
     try {
@@ -51,24 +53,24 @@ export default function BadgeRemovePopup({
           type: type,
           uuid: fetchUser.uuid,
         });
-      }else if (badgeType === 'web3') {
+      } else if (badgeType === 'web3') {
         removeBadge = await api.post(`/removeWeb3Badge`, {
           type: type,
           uuid: fetchUser.uuid,
         });
-      }else if (badgeType === 'passkey') {
+      } else if (badgeType === 'passkey') {
         removeBadge = await api.post(`/removePasskey`, {
           type: type,
           accountName: accountName,
           uuid: fetchUser.uuid,
         });
-      }else if (badgeType === 'farcaster') {
+      } else if (badgeType === 'farcaster') {
         removeBadge = await api.post(`/removeFarCasterBadge`, {
           type: type,
           accountName: accountName,
           uuid: fetchUser.uuid,
-        });}
-       else {
+        });
+      } else {
         const findBadge = fetchUser.badges.filter((item) => {
           if (item.accountName === accountName) {
             return item;
@@ -85,6 +87,7 @@ export default function BadgeRemovePopup({
         handleUserInfo();
         handleClose();
         setIsLoading(false);
+        setIsPersonalPopup(false);
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
@@ -92,7 +95,7 @@ export default function BadgeRemovePopup({
   };
 
   return (
-    <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
+    <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose} remove={true}>
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
           Are you sure you want to remove this badge? 'If you remove this badge, you will not be able to add it again

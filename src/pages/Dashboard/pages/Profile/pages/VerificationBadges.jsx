@@ -1203,6 +1203,7 @@ const VerificationBadges = () => {
             <Personal
               handleUserInfo={handleUserInfo}
               fetchUser={fetchUser}
+              setFetchUser={setFetchUser}
               handleRemoveBadgePopup={handleRemoveBadgePopup}
             />
           </div>

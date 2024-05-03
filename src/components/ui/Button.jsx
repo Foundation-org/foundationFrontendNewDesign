@@ -22,7 +22,7 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
         ? 'addoption-boxShadow h-[1.375rem] min-w-[4.875rem] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:text-[1.25rem] laptop:px-[17px] '
         : '',
       variant === 'hollow-submit'
-        ? 'h-[1.375rem] w-fit rounded-[7.28px] border-[1.428px] border-[#389CE3] bg-gradient-to-tr px-[24.5px] py-[3.8px] text-[10px] font-semibold leading-normal text-[#389CE3] tablet:h-[3.125rem] tablet:rounded-[15.2px] tablet:border-[3px] tablet:px-[15.26px] tablet:py-[8.14px] tablet:text-[20.73px] tablet:leading-none laptop:rounded-[12px] laptop:px-[60px] laptop:py-3 laptop:text-[25px]'
+        ? 'h-[1.375rem] min-w-[4.875rem] rounded-[7.28px] border-[1.428px] border-[#389CE3] bg-gradient-to-tr px-[6.63px] py-[3.8px] text-[10px] font-semibold leading-normal text-[#389CE3] tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[15.2px] tablet:border-[3px] tablet:text-[20.73px]  tablet:leading-none laptop:rounded-[12px] laptop:px-[17px]  laptop:text-[25px]'
         : '',
       variant === 'submit-welcome'
         ? 'addoption-boxShadow min-w-[4.875rem] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[6.63px] py-[9px] text-[12px] font-semibold leading-[14.562px] text-white tablet:min-w-[10.8125rem] tablet:rounded-[11.7px] tablet:py-4 tablet:text-[30px] tablet:font-semibold tablet:leading-[36px] laptop:px-[17px] '

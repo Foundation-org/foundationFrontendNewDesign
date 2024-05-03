@@ -141,9 +141,8 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       field2Data.name === undefined ||
       // field3Data.name === undefined ||
       field4Data.name === undefined ||
-      field5Data === undefined ||
-      field6Data === undefined ||
-      field6Data === ''
+      !field5Data ||
+      !field6Data
     ) {
       return true;
     } else {
