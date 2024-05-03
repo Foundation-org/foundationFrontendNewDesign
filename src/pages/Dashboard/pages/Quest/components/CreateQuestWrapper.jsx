@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import AddMedia from './AddMedia';
 import AddPictures from './AddPictures';
+import AddPictureUrls from './AddPictureUrls';
 
 export default function CreateQuestWrapper({ quest, type, handleTab, msg, children }) {
   const dispatch = useDispatch();
@@ -12,6 +14,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
+  const getPicMediaStates = useSelector(pictureMediaAction.getPicsMedia);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
 
   const handleQuestionChange = (e) => {
@@ -40,7 +43,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
         <h4 className="mt-1 text-center text-[8px] font-medium leading-normal text-[#ACACAC] tablet:mt-[25px] tablet:text-[16px] tablet:leading-[16px]">
           {msg}
         </h4>
-        {getMediaStates?.isMedia.isMedia === false && getPicsMediaStates?.isPicMedia === false && (
+        {getMediaStates?.isMedia.isMedia === false && getPicMediaStates.isPicMedia === false && (
           <div className="mx-[30px] mt-3 flex items-center justify-between gap-1 tablet:mx-[50px] tablet:mt-[25px] tablet:gap-2 laptop:gap-12">
             <Button
               variant="addEmbeded"
@@ -84,7 +87,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
                     type: '',
                   }),
                 );
-                dispatch(createQuestAction.updateIsPicMedia(true));
+                dispatch(pictureMediaAction.updateIsPicMedia(true));
               }}
             >
               + Add Image
@@ -92,7 +95,8 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
           </div>
         )}
         <AddMedia handleTab={handleTab} />
-        <AddPictures />
+        {/* <AddPictures /> */}
+        <AddPictureUrls />
         <div className="w-[calc(100%-51.75px] mx-[30px] mb-[10px] mt-3 flex tablet:mx-[50px] tablet:mb-7 tablet:mt-[15px]">
           <TextareaAutosize
             id="input-2"

@@ -51,7 +51,9 @@ const CopyDialogue = ({
       const resp = await createUpdateUniqueLink(data);
 
       if (resp.status === 201) {
-        getImage(resp.data.data.link);
+        if (questStartData.whichTypeQuestion === 'yes/no') {
+          getImage(resp.data.data.link);
+        }
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
@@ -61,7 +63,9 @@ const CopyDialogue = ({
       const resp = await createUpdateUniqueLink(data);
 
       if (resp.status === 201) {
-        getImage(resp.data.data.link);
+        if (questStartData.whichTypeQuestion === 'yes/no') {
+          getImage(resp.data.data.link);
+        }
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);

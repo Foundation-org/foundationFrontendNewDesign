@@ -52,6 +52,11 @@ export const createInfoQuest = async (data) => {
   }
 };
 
+// Delete Quest
+export const deleteQuest = async (id) => {
+  await api.delete(`/infoquestions/deleteInfoQuest/${id}/${localStorage.getItem('uuid')}`);
+};
+
 // change
 // to get selected results
 export const getStartQuestInfo = async (data) => {

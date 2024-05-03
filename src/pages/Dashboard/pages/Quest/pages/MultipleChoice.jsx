@@ -13,6 +13,7 @@ import { updateMultipleChoice } from '../../../../../features/createQuest/create
 import Options from '../components/Options';
 import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import * as questServices from '../../../../../services/api/questsApi';
 import { userInfo, userInfoById } from '../../../../../services/api/userAuth';
 import { addUser } from '../../../../../features/auth/authSlice';
@@ -25,6 +26,7 @@ const MultipleChoice = () => {
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
+  const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -76,6 +78,7 @@ const MultipleChoice = () => {
           setLoading(false);
 
           dispatch(createQuestAction.resetCreateQuest());
+          dispatch(pictureMediaAction.resetToInitialState());
         }, 500);
       }
 
@@ -149,7 +152,7 @@ const MultipleChoice = () => {
       uuid: persistedUserInfo?.uuid,
       QuestTopic: questTopic,
       moderationRatingCount: moderationRating.moderationRatingCount,
-      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPicsMediaStates.picUrl,
+      url: getMediaStates?.isMedia.isMedia ? getMediaStates.url : getPictureUrls,
       description: getMediaStates?.isMedia.isMedia && getMediaStates.desctiption,
     };
 
