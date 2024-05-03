@@ -929,6 +929,7 @@ input[type='number'] {
 
 .carousel .thumb {
   /* height: 80px; */
+  margin-right: 16px !important;
   max-width: 80px !important;
   width: fit-content !important;
   height: fit-content !important;
