@@ -8,6 +8,7 @@ import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
+import BadgeRemovePopup from './badgeRemovePopup';
 
 const workForm = [
   {
@@ -67,7 +68,18 @@ const graduationYear = {
   type: 'graduationYear',
 };
 
-const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, handleUserInfo, fetchUser }) => {
+const EducationBadgePopup = ({
+  isPopup,
+  setIsPopup,
+  type,
+  title,
+  logo,
+  placeholder,
+  handleUserInfo,
+  fetchUser,
+  setFetchUser,
+  setIsPersonalPopup,
+}) => {
   const [universities, setUniversities] = useState([]);
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
@@ -87,6 +99,9 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   const [hollow, setHollow] = useState(false);
   const [isError2, setIsError2] = useState(false);
   const [eduData, setEduData] = useState([]);
+  const [deleteModalState, setDeleteModalState] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [RemoveLoading, setRemoveLoading] = useState(false);
 
   const searchDegreeAndFields = async (type, query) => {
     try {
@@ -409,6 +424,11 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   useEffect(() => {
     checkHollow();
   }, [field1Data, field2Data, field3Data, field4Data, field5Data]);
+  const handleRemoveBadgePopup = (item) => {
+    setDeleteModalState(item);
+    setModalVisible(true);
+  };
+  const handleBadgesClose = () => setModalVisible(false);
 
   const renderWorkField = (field1, field2, field3, field4, field5) => {
     const [addAnotherForm, setAddAnotherForm] = useState(false);
@@ -416,6 +436,21 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
 
     return (
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
+        {modalVisible && (
+          <BadgeRemovePopup
+            handleClose={handleBadgesClose}
+            modalVisible={modalVisible}
+            title={deleteModalState?.title}
+            image={deleteModalState?.image}
+            type={deleteModalState?.type}
+            badgeType={deleteModalState?.badgeType}
+            fetchUser={fetchUser}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
+            setIsLoading={setRemoveLoading}
+            loading={RemoveLoading}
+          />
+        )}
         {/* To View Already Added Info */}
         {existingData && !addAnotherForm ? (
           <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
@@ -489,8 +524,7 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 )}
               </div>
             ))}
-
-            <div className="mt-4">
+            <div className="mt-4 flex items-center justify-between">
               <Button
                 variant="addOption"
                 onClick={() => {
@@ -500,6 +534,24 @@ const EducationBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               >
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
               </Button>
+
+              {existingData ? (
+                <Button
+                  variant="badge-remove"
+                  onClick={() => {
+                    handleRemoveBadgePopup({
+                      title: title,
+                      type: type,
+                      badgeType: 'personal',
+                      image: logo,
+                    });
+                  }}
+                >
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                </Button>
+              ) : (
+                <div></div>
+              )}
             </div>
           </div>
         ) : (

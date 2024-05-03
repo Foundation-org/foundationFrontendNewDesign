@@ -167,7 +167,8 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             placeholder="Work Here"
             handleUserInfo={handleUserInfo}
             fetchUser={fetchUser}
-            handleRemoveBadgePopup={handleRemoveBadgePopup}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -182,7 +183,8 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             placeholder="Education Here"
             handleUserInfo={handleUserInfo}
             fetchUser={fetchUser}
-            handleRemoveBadgePopup={handleRemoveBadgePopup}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 

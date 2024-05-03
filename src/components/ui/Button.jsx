@@ -57,6 +57,9 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'danger'
         ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] max-w-[10.8125rem] bg-[#DC1010] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
         : '',
+      variant === 'badge-remove'
+        ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] max-w-[10.8125rem] bg-[#FF2C2C] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
+        : '',
       variant === 'share-link'
         ? 'addoption-boxShadow h-[1.375rem] w-[4.875rem] max-w-[10.8125rem] bg-[#BABABA] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:w-[10.8125rem] tablet:text-[1.25rem] laptop:w-[12vw]'
         : '',

@@ -400,10 +400,10 @@ const PersonalBadgesPopup = ({
                 <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
               )}
             </div>
-            <div className="mt-[10px] flex justify-end gap-2 tablet:mt-5">
+            <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
               {edit && (
                 <Button
-                  variant="danger"
+                  variant="badge-remove"
                   onClick={() => {
                     handleRemoveBadgePopup({
                       title: title,
@@ -440,10 +440,10 @@ const PersonalBadgesPopup = ({
               <Button variant="submit" onClick={() => getLocation()}>
                 Get Current location
               </Button>
-              <div className="flex justify-between gap-2">
+              <div className="flex justify-between gap-[13px] tablet:gap-[35px]">
                 {edit && (
                   <Button
-                    variant="danger"
+                    variant="badge-remove"
                     onClick={() => {
                       handleRemoveBadgePopup({
                         title: title,
@@ -483,10 +483,10 @@ const PersonalBadgesPopup = ({
             {isError && (
               <p className="absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
             )}
-            <div className="mt-[10px] flex justify-end gap-2 gap-2 tablet:mt-5">
+            <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
               {edit && (
                 <Button
-                  variant="danger"
+                  variant="badge-remove"
                   onClick={() => {
                     handleRemoveBadgePopup({
                       title: title,
@@ -537,19 +537,10 @@ const PersonalBadgesPopup = ({
             <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
           )}
         </div>
-        <div className="mt-[10px] flex justify-end gap-2 tablet:mt-5">
-          {hollow ? (
-            <Button variant="hollow-submit" disabled={true}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
-            </Button>
-          ) : (
-            <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
-            </Button>
-          )}
+        <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
           {edit && (
             <Button
-              variant="danger"
+              variant="badge-remove"
               onClick={() => {
                 handleRemoveBadgePopup({
                   title: title,
@@ -560,6 +551,15 @@ const PersonalBadgesPopup = ({
               }}
             >
               {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+            </Button>
+          )}
+          {hollow ? (
+            <Button variant="hollow-submit" disabled={true}>
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+            </Button>
+          ) : (
+            <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
             </Button>
           )}
         </div>
@@ -579,19 +579,10 @@ const PersonalBadgesPopup = ({
             <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
           )}
         </div>
-        <div className="mt-[10px] flex justify-end gap-2 tablet:mt-5">
-          {hollow ? (
-            <Button variant="hollow-submit" disabled={true}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
-            </Button>
-          ) : (
-            <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
-            </Button>
-          )}
+        <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
           {edit && (
             <Button
-              variant="danger"
+              variant="badge-remove"
               onClick={() => {
                 handleRemoveBadgePopup({
                   title: title,
@@ -602,6 +593,15 @@ const PersonalBadgesPopup = ({
               }}
             >
               {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+            </Button>
+          )}
+          {hollow ? (
+            <Button variant="hollow-submit" disabled={true}>
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+            </Button>
+          ) : (
+            <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
             </Button>
           )}
         </div>
@@ -658,19 +658,10 @@ const PersonalBadgesPopup = ({
               onChange={handleDateChange}
               className="revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
             />
-            <div className="mt-[10px] flex justify-end gap-2 tablet:mt-5">
-              {hollow ? (
-                <Button variant="hollow-submit" disabled={true}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
-                </Button>
-              ) : (
-                <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
-                </Button>
-              )}
+            <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
               {edit && (
                 <Button
-                  variant="danger"
+                  variant="badge-remove"
                   onClick={() => {
                     handleRemoveBadgePopup({
                       title: title,
@@ -681,6 +672,15 @@ const PersonalBadgesPopup = ({
                   }}
                 >
                   {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                </Button>
+              )}
+              {hollow ? (
+                <Button variant="hollow-submit" disabled={true}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                </Button>
+              ) : (
+                <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
                 </Button>
               )}
             </div>
