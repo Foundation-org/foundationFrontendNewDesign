@@ -375,7 +375,7 @@ export const updateSharedLinkStatus = async ({ link, data }) => {
 };
 
 export const generateImage = async ({ questStartData, link }) => {
-  return await api.post(`/aws/s3ImageUploadToFrames`, {
+  return await api.post(`/userQuestSetting/sharedLinkDynamicImage`, {
     questStartData,
     link,
   });
