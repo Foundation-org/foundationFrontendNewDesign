@@ -7,6 +7,7 @@ import { TopbarItems } from '../../../constants/topbar';
 // import * as filterActions from '../../../features/sidebar/filtersSlice';
 import { useDispatch } from 'react-redux';
 import * as createQuestActions from '../../../features/createQuest/createQuestSlice';
+import * as pictureMediaAction from '../../../features/createQuest/pictureMediaSlice';
 import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
 
 const Topbar = () => {
@@ -173,6 +174,7 @@ const Topbar = () => {
                 }`}
                 onClick={() => {
                   dispatch(createQuestActions.resetCreateQuest());
+                  dispatch(pictureMediaAction.resetToInitialState());
                   dispatch(addSharedLinkPost(null));
                 }}
               >
