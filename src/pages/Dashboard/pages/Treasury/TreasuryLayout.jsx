@@ -1,5 +1,5 @@
 // import { toast } from 'sonner';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { Button } from '../../../../components/ui/Button';
 // import api from '../../../../services/api/Axios';

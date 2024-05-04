@@ -28,6 +28,16 @@ export const userInfo = async () => {
   // return await api.post('/user/userInfo', { uuid: localStorage.getItem('uuid') });
 };
 
+export const getTreasuryAmount = async () => {
+  const res = await api.get(`/treasury/get`);
+  localStorage.setItem('treasuryAmount', res.data.data);
+  if (Object.keys(res.data).length === 0 && res.data.constructor === Object) {
+    return 0;
+  } else {
+    return res.data.data;
+  }
+};
+
 export const userInfoById = async (uuid) => {
   return await api.post('/user/userInfoById', { uuid });
 };

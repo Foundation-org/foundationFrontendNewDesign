@@ -1,13 +1,13 @@
 import { toast } from 'sonner';
 import { GrClose } from 'react-icons/gr';
 import { useEffect, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button } from '../../../components/ui/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDebounce } from '../../../utils/useDebounce';
 import { addUser } from '../../../features/auth/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { userInfo, userInfoById } from '../../../services/api/userAuth';
+import { getTreasuryAmount, userInfo, userInfoById } from '../../../services/api/userAuth';
 import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
 import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
 import SidebarRight from './SidebarRight';
@@ -23,10 +23,18 @@ export default function DashboardLayout({ children }) {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
   const getSharedLinksFilters = useSelector(sharedLinksFilters);
-  const [treasuryAmount, setTreasuryAmount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [hiddenSearch, setHiddenSearch] = useState('');
   const [sharedlinkSearch, setSharedlinkSearch] = useState('');
+
+  const { data: treasuryAmount, error: treasuryError } = useQuery({
+    queryKey: ['treasury'],
+    queryFn: getTreasuryAmount,
+  });
+
+  if (treasuryError) {
+    toast.error(treasuryError.response.data.message.split(':')[1]);
+  }
 
   const { mutateAsync: getUserInfo } = useMutation({
     mutationFn: userInfo,
@@ -68,21 +76,8 @@ export default function DashboardLayout({ children }) {
     }
   };
 
-  const getTreasuryAmount = async () => {
-    try {
-      const res = await api.get(`/treasury/get`);
-      if (res.status === 200) {
-        localStorage.setItem('treasuryAmount', res.data.data);
-        setTreasuryAmount(res.data.data);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-    }
-  };
-
   useEffect(() => {
     handleUserInfo();
-    getTreasuryAmount();
   }, []);
 
   const handleGuestLogout = async () => {
