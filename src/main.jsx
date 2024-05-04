@@ -20,8 +20,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // React Helmet for SEO
 import { HelmetProvider } from 'react-helmet-async';
 
-import { MetaMaskProvider } from "@metamask/sdk-react";
-
+import { MetaMaskProvider } from '@metamask/sdk-react';
 
 const queryClient = new QueryClient();
 
@@ -30,29 +29,29 @@ let persistor = persistStore(store);
 const helmetContext = {};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <MetaMaskProvider
-      debug={false}
-      sdkOptions={{
-        dappMetadata: {
-          name: 'Foundation',
-          url: window.location.href,
-        },
-        // infuraAPIKey: process.env.INFURA_API_KEY,
-        // Other options
-      }}
-    >
-      <HelmetProvider context={helmetContext}>
-        <BrowserRouter>
-          <Provider store={store}>
-            <PersistGate persistor={persistor}>
-              <QueryClientProvider client={queryClient}>
-                <App />
-              </QueryClientProvider>
-            </PersistGate>
-          </Provider>
-        </BrowserRouter>
-      </HelmetProvider>
-    </MetaMaskProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <MetaMaskProvider
+    debug={false}
+    sdkOptions={{
+      dappMetadata: {
+        name: 'Foundation',
+        url: window.location.href,
+      },
+      // infuraAPIKey: process.env.INFURA_API_KEY,
+      // Other options
+    }}
+  >
+    <HelmetProvider context={helmetContext}>
+      <BrowserRouter>
+        <Provider store={store}>
+          <PersistGate persistor={persistor}>
+            <QueryClientProvider client={queryClient}>
+              <App />
+            </QueryClientProvider>
+          </PersistGate>
+        </Provider>
+      </BrowserRouter>
+    </HelmetProvider>
+  </MetaMaskProvider>,
+  // {/* </React.StrictMode>, */}
 );

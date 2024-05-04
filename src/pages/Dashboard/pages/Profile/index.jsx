@@ -1,51 +1,51 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { Switch } from '@headlessui/react';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeTheme } from '../../../../features/utils/utilsSlice';
-import Topbar from '../../components/Topbar';
-import Tabs from './components/Tabs';
-import { toast } from 'sonner';
-import api from '../../../../services/api/Axios';
+import { useDispatch } from 'react-redux';
+// import { changeTheme } from '../../../../features/utils/utilsSlice';
+// import Topbar from '../../components/Topbar';
+// import Tabs from './components/Tabs';
+// import { toast } from 'sonner';
+// import api from '../../../../services/api/Axios';
 import FallBack from '../../../ErrorBoundry/FallBack';
-import { ErrorBoundary, useErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useMutation } from '@tanstack/react-query';
 import { userInfo } from '../../../../services/api/userAuth';
 import { addUser } from '../../../../features/auth/authSlice';
+import ProfileSlider from './components/ProfileSlider';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
-  const { showBoundary } = useErrorBoundary();
+  // const { showBoundary } = useErrorBoundary();
 
-  const [checkState, setCheckState] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
-  const persistedTheme = useSelector((state) => state.utils.theme);
-  const persistedUserInfo = useSelector((state) => state.auth.user);
+  // const [checkState, setCheckState] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
+  // const persistedTheme = useSelector((state) => state.utils.theme);
+  // const persistedUserInfo = useSelector((state) => state.auth.user);
   const [selectedTab, setSelectedTab] = useState(pathname);
-  const [treasuryAmount, setTreasuryAmount] = useState(0);
+  // const [treasuryAmount, setTreasuryAmount] = useState(0);
   // const [treasuryAmount, setTreasuryAmount] = useState(0);
 
   useEffect(() => {
     setSelectedTab(pathname);
   }, [pathname]);
 
-  useEffect(() => {
-    if (persistedTheme === 'light') {
-      setCheckState(false);
-      localStorage.setItem('theme', 'light');
-    } else {
-      setCheckState(true);
-      localStorage.setItem('theme', 'dark');
-    }
-  }, [persistedTheme]);
+  // useEffect(() => {
+  //   if (persistedTheme === 'light') {
+  //     setCheckState(false);
+  //     localStorage.setItem('theme', 'light');
+  //   } else {
+  //     setCheckState(true);
+  //     localStorage.setItem('theme', 'dark');
+  //   }
+  // }, [persistedTheme]);
 
-  const handleTheme = () => {
-    dispatch(changeTheme());
-    setCheckState((prevCheckState) => !prevCheckState);
-  };
+  // const handleTheme = () => {
+  //   dispatch(changeTheme());
+  //   setCheckState((prevCheckState) => !prevCheckState);
+  // };
 
-  const handleSelectedTab = (id) => setSelectedTab(id);
+  // const handleSelectedTab = (id) => setSelectedTab(id);
 
   // const getTreasuryAmount = async () => {
   //   try {
@@ -73,21 +73,21 @@ const Profile = () => {
     },
   });
 
-  const getTreasuryAmount = async () => {
-    try {
-      const res = await api.get(`/treasury/get`);
-      if (res.status === 200) {
-        localStorage.setItem('treasuryAmount', res.data.data);
-        setTreasuryAmount(res.data.data);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-    }
-  };
+  // const getTreasuryAmount = async () => {
+  //   try {
+  //     const res = await api.get(`/treasury/get`);
+  //     if (res.status === 200) {
+  //       localStorage.setItem('treasuryAmount', res.data.data);
+  //       setTreasuryAmount(res.data.data);
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.response.data.message.split(':')[1]);
+  //   }
+  // };
 
   useEffect(() => {
     getUserInfo();
-    getTreasuryAmount();
+    // getTreasuryAmount();
   }, []);
 
   return (
@@ -97,8 +97,7 @@ const Profile = () => {
         console.log(error);
       }}
     >
-      <div className="h-[calc(100vh-58px)] w-full overflow-y-scroll bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]">
-        <div className="mx-[18px] mt-[10px] flex items-center justify-between tablet:mx-8 tablet:mt-[25px] laptop:mx-[110px]">
+      {/* <div className="mx-[18px] mt-[10px] flex items-center justify-between tablet:mx-8 tablet:mt-[25px] laptop:mx-[110px]">
           <div className="flex w-full items-center justify-between gap-[5.16px] tablet:gap-[15px] laptop:gap-[19.4px]">
             <div className="flex items-center gap-[5.16px] tablet:gap-[15px]">
               <div
@@ -135,9 +134,8 @@ const Profile = () => {
                   <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
                 </p>
               </div>
-            </div>
-
-            {/* <div>
+            </div> */}
+      {/* <div>
               <h4 className="heading">My Profile</h4>
               <div className="flex items-center gap-1 tablet:gap-[13px]">
                 <p className="text-[8px] font-medium leading-none text-[#7C7C7C] tablet:text-[15px] laptop:text-[18px] dark:text-white">
@@ -164,8 +162,8 @@ const Profile = () => {
               <p className="text-[8px] dark:text-white tablet:text-[16px]">Dark</p> 
               </div>
             </div> */}
-          </div>
-          {/* <div className="flex gap-[5.16px] tablet:gap-[15px]">
+      {/* </div> */}
+      {/* <div className="flex gap-[5.16px] tablet:gap-[15px]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
               alt="badge"
@@ -178,9 +176,19 @@ const Profile = () => {
               </p>
             </div>
           </div> */}
+      {/* </div> */}
+      {/* <Tabs handleSelectedTab={handleSelectedTab} active={selectedTab} /> */}
+      <div
+        className={`${selectedTab !== '/dashboard/profile/ledger' ? '' : 'laptop:-mt-[133px]'} w-full bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]`}
+      >
+        <div className="mx-auto max-w-[778px]">
+          <ProfileSlider tab={selectedTab} setTab={setSelectedTab} />
         </div>
-        <Tabs handleSelectedTab={handleSelectedTab} active={selectedTab} />
-        <Outlet />
+        <div
+          className={`${selectedTab !== '/dashboard/profile/ledger' ? 'max-w-[778px]' : 'max-w-[1440px] pb-16 laptop:mt-[60px]'} no-scrollbar mx-auto h-[calc(100dvh-141px)] overflow-y-scroll tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.63px)]`}
+        >
+          <Outlet />
+        </div>
       </div>
     </ErrorBoundary>
   );

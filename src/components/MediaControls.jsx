@@ -1,8 +1,25 @@
-export default function MediaControls({ scrollToPlayingCard, toggleMedia, isPlaying }) {
+import { useDispatch } from 'react-redux';
+import { getQuestUtils, toggleMedia } from '../features/quest/utilsSlice';
+import { useSelector } from 'react-redux';
+
+export default function MediaControls() {
+  const dispatch = useDispatch();
+  const questUtilsState = useSelector(getQuestUtils);
+
+  const scrollToPlayingCard = () => {
+    const playingCard = document.getElementById('playing-card');
+    if (playingCard) {
+      playingCard.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="mt-5 flex items-center justify-center gap-2 rounded-[9.211px] border-[2.86px] border-[#CECFD1] bg-[#E5E7EC] px-4 py-2 tablet:gap-6 tablet:rounded-[14px] tablet:py-[10px]">
-      <button onClick={toggleMedia} className="w-[15px] tablet:w-[22px]">
-        {!isPlaying ? (
+      <button
+        onClick={() => dispatch(toggleMedia(questUtilsState.isMediaPlaying === true ? false : true))}
+        className="w-[15px] tablet:w-[22px]"
+      >
+        {!questUtilsState.isMediaPlaying ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="21"

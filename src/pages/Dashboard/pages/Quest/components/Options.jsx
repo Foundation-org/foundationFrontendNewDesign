@@ -30,7 +30,7 @@ const Options = ({
     <div
       className={`${
         label ? 'flex flex-col gap-[13px]' : 'flex flex-row items-center gap-[25px]'
-      } mx-[22px] tablet:ml-[60px] tablet:mr-[59.23px]`}
+      } mx-[30px] tablet:ml-[50px] tablet:mr-[50px]`}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">

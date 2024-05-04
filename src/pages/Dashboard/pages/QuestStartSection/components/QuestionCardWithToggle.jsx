@@ -32,8 +32,8 @@ const QuestionCardWithToggle = (props) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
-  const { questStartData, isBookmarked, postProperties, SharedLinkButton } = props;
-  const { setSubmitResponse, isSingleQuest, postLink, guestResult } = props;
+  const { innerRef, questStartData, postProperties, SharedLinkButton } = props;
+  const { isSingleQuest, postLink, guestResult } = props;
 
   let questData;
 
@@ -117,28 +117,6 @@ const QuestionCardWithToggle = (props) => {
       setAddOptionField(0);
     }
   }, [questStartData]);
-
-  // const cardSize = useMemo(() => {
-  //   const limit = windowWidth >= 744 ? true : false;
-  //   if (
-  //     questStartData.whichTypeQuestion === 'agree/disagree' ||
-  //     questStartData.whichTypeQuestion === 'like/dislike' ||
-  //     questStartData.whichTypeQuestion === 'yes/no'
-  //   ) {
-  //     return limit ? 108 : 49;
-  //   } else {
-  //     let tempSize = 0;
-  //     questStartData.QuestAnswers.forEach((item, index) => {
-  //       // tempSize += index === 0 ? (limit ? 45 : 24) : limit ? 55 : 29.7;
-  //       tempSize += index === 0 ? (limit ? 49 : 24) : limit ? 59 : 29.7;
-  //     });
-  //     if (limit) {
-  //       return tempSize > 336 ? 336 : tempSize;
-  //     } else {
-  //       return tempSize > 187 ? 187 : tempSize;
-  //     }
-  //   }
-  // }, [questStartData.QuestAnswers, windowWidth]);
 
   const cardSize = useMemo(() => {
     const limit = windowWidth >= 744 ? true : false;
@@ -288,8 +266,8 @@ const QuestionCardWithToggle = (props) => {
   }, [questStartData]);
 
   const questByUniqueShareLink = async () => {
-    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-2)[0]);
-    props.setSingleQuestResp(getQuest.data.data[0]);
+    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-1)[0]);
+    props.setSingleQuestResp(getQuest.response.data.data[0]);
   };
 
   const { mutateAsync: getUserInfo } = useMutation({
@@ -313,15 +291,14 @@ const QuestionCardWithToggle = (props) => {
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
-      setSubmitResponse(resp.data.data);
-      // setPagination(questStartData.pagination);
-
-      // setTimeout(() => {
-      //   queryClient.invalidateQueries({ queryKey: ['FeedData'] });
-      // }, 500);
+      queryClient.setQueriesData(['posts'], (oldData) => ({
+        ...oldData,
+        pages: oldData?.pages?.map((page) =>
+          page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
+        ),
+      }));
 
       if (resp.data.message === 'Start Quest Created Successfully') {
-        // toast.success('Successfully Completed');
         setLoading(false);
         getUserInfo();
       }
@@ -329,13 +306,8 @@ const QuestionCardWithToggle = (props) => {
       if (persistedUserInfo.role === 'guest') {
         questByUniqueShareLink();
       }
-
+      props.setSubmitResponse(resp.data.data);
       handleViewResults(questStartData._id);
-      // userInfo(persistedUserInfo?.uuid || localStorage.getItem('uuid')).then((resp) => {
-      //   if (resp.status === 200) {
-      //     dispatch(addUser(resp.data));
-      //   }
-      // });
     },
     onError: (err) => {
       console.log(err);
@@ -357,15 +329,17 @@ const QuestionCardWithToggle = (props) => {
         setLoading(false);
       }
       if (resp.data.message === 'Start Quest Updated Successfully') {
-        // toast.success('Successfully Changed');
         setLoading(false);
         handleViewResults(questStartData._id);
-        setSubmitResponse(resp.data.data);
-        // setPagination(questStartData.pagination);
 
-        // setTimeout(() => {
-        //   queryClient.invalidateQueries({ queryKey: ['FeedData'] });
-        // }, 500);
+        props.setSubmitResponse(resp.data.data);
+
+        queryClient.setQueriesData(['posts'], (oldData) => ({
+          ...oldData,
+          pages: oldData?.pages?.map((page) =>
+            page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
+          ),
+        }));
       }
       userInfo(persistedUserInfo?.uuid || localStorage.getItem('uuid')).then((resp) => {
         if (resp.status === 200) {
@@ -799,16 +773,15 @@ const QuestionCardWithToggle = (props) => {
   };
 
   return (
-    <>
+    <div ref={innerRef}>
       <QuestCardLayout
         questStartData={questStartData}
-        isBookmarked={isBookmarked}
-        setPlayingPlayerId={props.setPlayingPlayerId}
-        postProperties={postProperties}
         playing={props.playing}
-        setIsPlaying={props.setIsPlaying}
-        setIsShowPlayer={props.setIsShowPlayer}
-        isPlaying={props.isPlaying}
+        postProperties={postProperties}
+        // setPlayingPlayerId={props.setPlayingPlayerId}
+        // setIsPlaying={props.setIsPlaying}
+        // setIsShowPlayer={props.setIsShowPlayer}
+        // isPlaying={props.isPlaying}
       >
         {renderQuestContent()}
         <ButtonGroup
@@ -843,7 +816,7 @@ const QuestionCardWithToggle = (props) => {
           SharedLinkButton={SharedLinkButton}
         />
       </QuestCardLayout>
-    </>
+    </div>
   );
 };
 

@@ -2,13 +2,24 @@ import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createUpdateUniqueLink } from '../../../services/api/questsApi';
+import { createUpdateUniqueLink, generateImage } from '../../../services/api/questsApi';
 import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
 import Copy from '../../../assets/optionbar/Copy';
 import { Button } from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 
-const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, badgeCount, questStartData }) => {
+const CopyDialogue = ({
+  handleClose,
+  id,
+  uniqueShareLink,
+  createdBy,
+  img,
+  alt,
+  badgeCount,
+  questStartData,
+  // getImage,
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -28,6 +39,10 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
     }
   };
 
+  const { mutateAsync: sendImage } = useMutation({
+    mutationFn: generateImage,
+  });
+
   const uniqueLinkQuestSetting = async () => {
     setIsLoading(true);
     const data = {
@@ -41,6 +56,9 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
       const resp = await createUpdateUniqueLink(data);
 
       if (resp.status === 201) {
+        if (questStartData.whichTypeQuestion === 'yes/no') {
+          sendImage({ questStartData, link: resp.data.data.link });
+        }
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
@@ -50,6 +68,9 @@ const CopyDialogue = ({ handleClose, id, uniqueShareLink, createdBy, img, alt, b
       const resp = await createUpdateUniqueLink(data);
 
       if (resp.status === 201) {
+        if (questStartData.whichTypeQuestion === 'yes/no') {
+          sendImage({ questStartData, link: resp.data.data.link });
+        }
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);

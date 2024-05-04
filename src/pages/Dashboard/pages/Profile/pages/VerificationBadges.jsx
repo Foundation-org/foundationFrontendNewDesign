@@ -54,7 +54,7 @@ const VerificationBadges = () => {
         body: JSON.stringify({
           clientId: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
           clientSecret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
-          redirectUri: `${import.meta.env.VITE_CLIENT_URL}/dashboard/profile/verification-badges`,
+          redirectUri: `${import.meta.env.VITE_CLIENT_URL}/dashboard/profile`,
           code: code,
         }),
       });
@@ -242,13 +242,13 @@ const VerificationBadges = () => {
             />
           )}
           {isLoading && <Loader />}
-          <h1 className="ml-[32px] text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:ml-[97px] tablet:text-[25px] tablet:font-semibold tablet:leading-[30px] dark:text-[#B8B8B8]">
+          {/* <h1 className="ml-[32px] text-[12px] font-semibold leading-[14.52px] text-[#4A8DBD] tablet:ml-[97px] tablet:text-[25px] tablet:font-semibold tablet:leading-[30px] dark:text-[#B8B8B8]">
             My Verification Badges
-          </h1>
+          </h1> */}
           <div
             className={`${
               persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
-            } relative mx-6 mb-8 mt-[10px] flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-[30px] tablet:mb-[10rem] tablet:mt-[35px] tablet:gap-4 tablet:rounded-[45px] tablet:px-[30px] tablet:py-[30px] laptop:mx-[45px] laptop:gap-5 laptop:px-[40px]`}
+            } relative mx-[15px] mb-8 flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-6 tablet:gap-4 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5 laptop:gap-5 laptop:px-[40px]`}
           >
             <Contact
               handleUserInfo={handleUserInfo}
@@ -256,14 +256,14 @@ const VerificationBadges = () => {
               handleRemoveBadgePopup={handleRemoveBadgePopup}
             />
 
-            <h1 className="font-500 font-Inter mb-[5px] mt-3 text-[9.74px] font-medium text-[#000] tablet:text-[1.7vw] dark:text-white">
+            <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
               Social
             </h1>
 
-            <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">
-              <div className="flex w-full flex-col items-center gap-[7px] tablet:gap-4 laptop:gap-5">
-                {/* ...........................Facebook......................  */}
-                <div className="flex items-center gap-[10px] laptop:gap-5">
+            {/* <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">
+              <div className="flex w-full flex-col items-center gap-[7px] tablet:gap-4 laptop:gap-5"> */}
+            {/* ...........................Facebook......................  */}
+            {/* <div className="flex items-center gap-[10px] laptop:gap-5">
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`}
                     alt="Facebook"
@@ -272,7 +272,7 @@ const VerificationBadges = () => {
                   <div
                     className={`${
                       persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                   >
                     <h1>Facebook</h1>
                   </div>
@@ -293,14 +293,14 @@ const VerificationBadges = () => {
                       }}
                     >
                       {checkSocial('facebook') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
                   ) : persistedUserInfo?.role === 'guest' ? (
                     <Button color={checkSocial('github') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                       {checkSocial('facebook') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -321,16 +321,16 @@ const VerificationBadges = () => {
                     >
                       <Button color={checkSocial('facebook') ? 'red' : 'blue'}>
                         {checkSocial('facebook') ? '' : 'Add Badge'}
-                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                        <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                           {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
                     </LoginSocialFacebook>
                   )}
-                </div>
+                </div> */}
 
-                {/* ...........................LinkedIn......................  */}
-                <div className="flex items-center gap-[10px] opacity-[100%] laptop:gap-5">
+            {/* ...........................LinkedIn......................  */}
+            {/* <div className="flex items-center gap-[10px] opacity-[100%] laptop:gap-5">
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
                     alt="LinkedIn"
@@ -339,7 +339,7 @@ const VerificationBadges = () => {
                   <div
                     className={`${
                       persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                   >
                     <h1>Linked In</h1>
                   </div>
@@ -361,7 +361,7 @@ const VerificationBadges = () => {
                         }}
                       >
                         {checkSocial('linkedin') ? 'Remove' : 'Add Badge'}
-                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                        <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                           {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
@@ -369,7 +369,7 @@ const VerificationBadges = () => {
                   ) : persistedUserInfo?.role === 'guest' ? (
                     <Button color={checkSocial('twitter') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                       {checkSocial('twitter') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -397,16 +397,16 @@ const VerificationBadges = () => {
                         // color="gray"
                       >
                         {checkSocial('linkedin') ? 'Remove' : 'Add Badge'}
-                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                        <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                           {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
                     </LoginSocialLinkedin>
                   )}
-                </div>
+                </div> */}
 
-                {/* ...........................Twitter......................  */}
-                <div className="flex items-center gap-[10px] laptop:gap-5">
+            {/* ...........................Twitter......................  */}
+            {/* <div className="flex items-center gap-[10px] laptop:gap-5">
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`}
                     alt="Twitter"
@@ -415,7 +415,7 @@ const VerificationBadges = () => {
                   <div
                     className={`${
                       persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                   >
                     <h1>Twitter</h1>
                   </div>
@@ -436,14 +436,14 @@ const VerificationBadges = () => {
                       }}
                     >
                       {checkSocial('twitter') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
                   ) : persistedUserInfo?.role === 'guest' ? (
                     <Button color={checkSocial('twitter') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                       {checkSocial('twitter') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -455,7 +455,7 @@ const VerificationBadges = () => {
                       }}
                     >
                       {checkSocial('twitter') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -463,9 +463,9 @@ const VerificationBadges = () => {
                 </div>
               </div>
               <div className="w-2 rounded-[16px] border-[3px] border-[#DEE6F7] bg-[#FDFDFD]" />
-              <div className="flex w-full flex-col items-center gap-[7px] tablet:gap-4 laptop:gap-5">
-                {/* ...........................Instagram......................  */}
-                <div className="flex items-center gap-[10px] laptop:gap-5">
+              <div className="flex w-full flex-col items-center gap-[7px] tablet:gap-4 laptop:gap-5"> */}
+            {/* ...........................Instagram......................  */}
+            {/* <div className="flex items-center gap-[10px] laptop:gap-5">
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`}
                     alt="Instagram"
@@ -474,7 +474,7 @@ const VerificationBadges = () => {
                   <div
                     className={`${
                       persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                   >
                     <h1>Instagram</h1>
                   </div>
@@ -496,7 +496,7 @@ const VerificationBadges = () => {
                         }}
                       >
                         {checkSocial('instagram') ? 'Remove' : 'Add Badge'}
-                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                        <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                           {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
@@ -504,7 +504,7 @@ const VerificationBadges = () => {
                   ) : persistedUserInfo?.role === 'guest' ? (
                     <Button color={checkSocial('instagram') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                       {checkSocial('instagram') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -520,15 +520,15 @@ const VerificationBadges = () => {
                     >
                       <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
                         {checkSocial('instagram') ? '' : 'Add Badge'}
-                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                        <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                           {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
                     </InstagramLogin>
                   )}
-                </div>
-                {/* ............................Github......................... */}
-                <div className="flex items-center gap-[10px] laptop:gap-5">
+                </div> */}
+            {/* ............................Github......................... */}
+            {/* <div className="flex items-center gap-[10px] laptop:gap-5">
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`}
                     alt="Github"
@@ -537,7 +537,7 @@ const VerificationBadges = () => {
                   <div
                     className={`${
                       persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                   >
                     <h1>Github</h1>
                   </div>
@@ -558,14 +558,14 @@ const VerificationBadges = () => {
                       }}
                     >
                       {checkSocial('github') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('github') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
                   ) : persistedUserInfo?.role === 'guest' ? (
                     <Button color={checkSocial('github') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                       {checkSocial('github') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('github') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -577,14 +577,14 @@ const VerificationBadges = () => {
                       }}
                     >
                       {checkSocial('github') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('github') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
                   )}
-                </div>
-                {/* Youtube  */}
-                {/* {!height ? (
+                </div> */}
+            {/* Youtube  */}
+            {/* {!height ? (
                   <div className="flex items-center gap-[10px] laptop:gap-5">
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`}
@@ -594,7 +594,7 @@ const VerificationBadges = () => {
                     <div
                       className={`${
                         persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                      } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                      }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                     >
                       <h1>Youtube</h1>
                     </div>
@@ -615,14 +615,14 @@ const VerificationBadges = () => {
                         }}
                       >
                         {checkSocial('youtube') ? 'Remove' : 'Add Badge'}
-                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                        <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                           {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
                     ) : persistedUserInfo?.role === 'guest' ? (
                       <Button color={checkSocial('youtube') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                         {checkSocial('youtube') ? 'Remove' : 'Add Badge'}
-                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                        <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                           {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
@@ -645,7 +645,7 @@ const VerificationBadges = () => {
                       >
                         <Button color={'blue'}>
                           {'Add Badge'}
-                          <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                          <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                             {'(+0.96 FDX)'}
                           </span>
                         </Button>
@@ -653,9 +653,9 @@ const VerificationBadges = () => {
                     )}
                   </div>
                 ) : null} */}
-                {/* SoundCloud */}
+            {/* SoundCloud */}
 
-                {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
+            {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/soundCloud.svg`}
                     alt="Sound Cloud"
@@ -664,7 +664,7 @@ const VerificationBadges = () => {
                   <div
                     className={`${
                       persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                    } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                    }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                   >
                     <h1>Sound Cloud</h1>
                   </div>
@@ -686,7 +686,7 @@ const VerificationBadges = () => {
                         }}
                       >
                         {checkSocial('soundcloud') ? 'Remove' : 'Add Badge'}
-                        <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                        <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                           {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
                         </span>
                       </Button>
@@ -694,7 +694,7 @@ const VerificationBadges = () => {
                   ) : persistedUserInfo?.role === 'guest' ? (
                     <Button color={checkSocial('soundcloud') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                       {checkSocial('soundcloud') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -706,30 +706,32 @@ const VerificationBadges = () => {
                       disabled={true}
                     >
                       {checkSocial('soundcloud') ? '' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
                   )}
                 </div> */}
-              </div>
-            </div>
+            {/* </div>
+            </div> */}
 
             {/* all */}
-            <div className="flex flex-col items-center gap-[7px] tablet:hidden tablet:gap-4 laptop:gap-5">
+            <div className="flex flex-col items-center gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]">
               {/* Facebook */}
-              <div className="flex items-center gap-[10px] laptop:gap-5">
+              <div className="flex items-center gap-[8.5px] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`}
                   alt="Facebook"
-                  className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
+                  className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
                 />
                 <div
                   className={`${
                     persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                 >
-                  <h1>Facebook</h1>
+                  <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
+                    Facebook
+                  </h1>
                 </div>
                 {checkSocial('facebook') ? (
                   <Button
@@ -748,14 +750,14 @@ const VerificationBadges = () => {
                     }}
                   >
                     {checkSocial('facebook') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
                 ) : persistedUserInfo?.role === 'guest' ? (
                   <Button color={checkSocial('github') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                     {checkSocial('facebook') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
@@ -776,7 +778,7 @@ const VerificationBadges = () => {
                   >
                     <Button color={checkSocial('facebook') ? 'red' : 'blue'}>
                       {checkSocial('facebook') ? '' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -785,18 +787,20 @@ const VerificationBadges = () => {
               </div>
 
               {/* LinkedIn */}
-              <div className="flex items-center gap-[10px] opacity-[100%] laptop:gap-5">
+              <div className="flex items-center gap-[8.5px] opacity-[100%] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
                   alt="LinkedIn"
-                  className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
+                  className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
                 />
                 <div
                   className={`${
                     persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                 >
-                  <h1>Linked In</h1>
+                  <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
+                    Linked In
+                  </h1>
                 </div>
                 {checkSocial('linkedin') ? (
                   <>
@@ -816,7 +820,7 @@ const VerificationBadges = () => {
                       }}
                     >
                       {checkSocial('linkedin') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -841,7 +845,7 @@ const VerificationBadges = () => {
                     }}
                   >
                     {checkSocial('linkedin') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
@@ -872,7 +876,7 @@ const VerificationBadges = () => {
                       }}
                     >
                       {checkSocial('linkedin') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -881,18 +885,20 @@ const VerificationBadges = () => {
               </div>
 
               {/* Twitter */}
-              <div className="flex items-center gap-[10px] laptop:gap-5">
+              <div className="flex items-center gap-[8.5px] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`}
                   alt="Twitter"
-                  className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
+                  className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
                 />
                 <div
                   className={`${
                     persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                 >
-                  <h1>Twitter</h1>
+                  <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
+                    Twitter
+                  </h1>
                 </div>
                 {checkSocial('twitter') ? (
                   <Button
@@ -911,14 +917,14 @@ const VerificationBadges = () => {
                     }}
                   >
                     {checkSocial('twitter') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
                 ) : persistedUserInfo?.role === 'guest' ? (
                   <Button color={checkSocial('twitter') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                     {checkSocial('twitter') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
@@ -930,7 +936,7 @@ const VerificationBadges = () => {
                     }}
                   >
                     {checkSocial('twitter') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
@@ -938,18 +944,20 @@ const VerificationBadges = () => {
               </div>
 
               {/* Instagram */}
-              <div className="flex items-center gap-[10px] laptop:gap-5">
+              <div className="flex items-center gap-[8.5px] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`}
                   alt="Instagram"
-                  className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
+                  className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
                 />
                 <div
                   className={`${
                     persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                 >
-                  <h1>Instagram</h1>
+                  <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
+                    Instagram
+                  </h1>
                 </div>
                 {checkSocial('instagram') ? (
                   <>
@@ -969,7 +977,7 @@ const VerificationBadges = () => {
                       }}
                     >
                       {checkSocial('instagram') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -977,7 +985,7 @@ const VerificationBadges = () => {
                 ) : persistedUserInfo?.role === 'guest' ? (
                   <Button color={checkSocial('instagram') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                     {checkSocial('instagram') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px] ">
                       {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
@@ -991,29 +999,33 @@ const VerificationBadges = () => {
                     redirectUri={window.location.href}
                     cssClass={'hideBack'}
                   >
-                    <Button color={checkSocial('instagram') ? 'red' : 'blue'}>
+                    <div
+                      className={`${checkSocial('instagram') ? 'bg-[#FF4057] text-white dark:bg-[#C13232]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] text-white dark:bg-[#252D37] dark:from-[#252D37] dark:to-[#252D37]'} flex h-[21.5px] w-[120px] items-center justify-center rounded-[1.31vw] text-[2.65vw] font-semibold leading-normal tablet:h-[50px] tablet:w-[207px] tablet:rounded-[8px] tablet:text-[20px] laptop:rounded-[15px]`}
+                    >
                       {checkSocial('instagram') ? '' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                       </span>
-                    </Button>
+                    </div>
                   </InstagramLogin>
                 )}
               </div>
 
               {/* Github */}
-              <div className="flex items-center gap-[10px] laptop:gap-5">
+              <div className="flex items-center gap-[8.5px] laptop:gap-5">
                 <img
                   src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`}
                   alt="Github"
-                  className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:h-[3.48vw] tablet:min-h-[3.48vw] tablet:w-[3.48vw] tablet:min-w-[3.48vw]"
+                  className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
                 />
                 <div
                   className={`${
                     persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                 >
-                  <h1>Github</h1>
+                  <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
+                    Github
+                  </h1>
                 </div>
                 {checkSocial('github') ? (
                   <Button
@@ -1032,14 +1044,14 @@ const VerificationBadges = () => {
                     }}
                   >
                     {checkSocial('github') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('github') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
                 ) : persistedUserInfo?.role === 'guest' ? (
                   <Button color={checkSocial('github') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                     {checkSocial('github') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('github') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
@@ -1051,7 +1063,7 @@ const VerificationBadges = () => {
                     }}
                   >
                     {checkSocial('github') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('github') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
@@ -1068,7 +1080,7 @@ const VerificationBadges = () => {
                 <div
                   className={`${
                     persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                 >
                   <h1>Youtube</h1>
                 </div>
@@ -1089,14 +1101,14 @@ const VerificationBadges = () => {
                     }}
                   >
                     {checkSocial('youtube') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
                 ) : persistedUserInfo?.role === 'guest' ? (
                   <Button color={checkSocial('youtube') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                     {checkSocial('youtube') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
@@ -1119,7 +1131,7 @@ const VerificationBadges = () => {
                   >
                     <Button color={'blue'}>
                       {'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {'(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -1137,7 +1149,7 @@ const VerificationBadges = () => {
                 <div
                   className={`${
                     persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                  } flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+                  }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
                 >
                   <h1>Sound Cloud</h1>
                 </div>
@@ -1159,7 +1171,7 @@ const VerificationBadges = () => {
                       }}
                     >
                       {checkSocial('soundcloud') ? 'Remove' : 'Add Badge'}
-                      <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                      <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                         {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
                       </span>
                     </Button>
@@ -1167,14 +1179,14 @@ const VerificationBadges = () => {
                 ) : persistedUserInfo?.role === 'guest' ? (
                   <Button color={checkSocial('soundcloud') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
                     {checkSocial('soundcloud') ? 'Remove' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
                 ) : (
                   <Button color={'gray'} onClick={handleSoundCloud} disabled={true}>
                     {checkSocial('soundcloud') ? '' : 'Add Badge'}
-                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                       {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
                     </span>
                   </Button>
@@ -1191,6 +1203,7 @@ const VerificationBadges = () => {
             <Personal
               handleUserInfo={handleUserInfo}
               fetchUser={fetchUser}
+              setFetchUser={setFetchUser}
               handleRemoveBadgePopup={handleRemoveBadgePopup}
             />
           </div>

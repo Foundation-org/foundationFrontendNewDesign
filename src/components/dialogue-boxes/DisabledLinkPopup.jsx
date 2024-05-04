@@ -9,7 +9,7 @@ import * as questUtilsActions from '../../features/quest/utilsSlice';
 import PopUp from '../ui/PopUp';
 
 export default function DisabledLinkPopup({ handleClose, modalVisible }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
@@ -18,17 +18,47 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
   const { mutateAsync: updateStatus } = useMutation({
     mutationFn: updateSharedLinkStatus,
     onSuccess: (resp) => {
-      console.log('resp', resp);
       toast.success(resp?.data.message);
-      queryClient.invalidateQueries('FeedData');
+      // console.log('first', questUtils.sharedQuestStatus.type);
+      // dispatch(questUtilsActions.addHiddenPostId(questUtils.sharedQuestStatus.id));
       if (questUtils.sharedQuestStatus.type === 'Delete') {
-        dispatch(questUtilsActions.addHiddenPostId(questUtils.sharedQuestStatus.id));
+        queryClient.setQueriesData(['sharedLink'], (oldData) => {
+          // if (oldData.pages[0].length <= 1) {
+          //   queryClient.invalidateQueries(['sharedLink']);
+          // } else {
+          return {
+            ...oldData,
+            pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+          };
+        });
       }
       if (questUtils.sharedQuestStatus.type === 'Disable') {
-        dispatch(questUtilsActions.addDisabledPostId(questUtils.sharedQuestStatus.id));
+        queryClient.setQueriesData(['sharedLink'], (oldData) => ({
+          ...oldData,
+          pages: oldData?.pages?.map((page) =>
+            page.map((item) =>
+              item._id === resp.data.data.questForeignKey
+                ? { ...item, userQuestSetting: { ...item.userQuestSetting, linkStatus: 'Disable' } }
+                : item,
+            ),
+          ),
+        }));
+
+        //  updatedQuestData[questIndex].userQuestSetting.linkStatus = 'Disable';
+        // dispatch(questUtilsActions.addDisabledPostId(questUtils.sharedQuestStatus.id));
       }
       if (questUtils.sharedQuestStatus.type === 'Enable') {
-        dispatch(questUtilsActions.addEnablePostId(questUtils.sharedQuestStatus.id));
+        // dispatch(questUtilsActions.addEnablePostId(questUtils.sharedQuestStatus.id));
+        queryClient.setQueriesData(['sharedLink'], (oldData) => ({
+          ...oldData,
+          pages: oldData?.pages?.map((page) =>
+            page.map((item) =>
+              item._id === resp.data.data.questForeignKey
+                ? { ...item, userQuestSetting: { ...item.userQuestSetting, linkStatus: 'Enable' } }
+                : item,
+            ),
+          ),
+        }));
       }
       setIsLoading(false);
       handleClose();

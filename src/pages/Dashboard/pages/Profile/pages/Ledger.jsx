@@ -157,14 +157,14 @@ export default function BasicTable() {
   }, [columnSizes, table]);
 
   return (
-    <div className="mb-[50px] overflow-y-auto tablet:mb-[124px]">
-      <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px]  tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
+    <div className="mb-6 overflow-y-auto">
+      {/* <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px]  tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
         Ledger
-      </h1>
+      </h1> */}
       <div
         className={`${
           persistedTheme === 'dark' ? 'ledger-dark' : 'ledger-light bg-white'
-        } mx-[17px] mb-10 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-11 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
+        } mx-[17px] mb-5 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
       >
         <LedgerTableTopbar
           sort={sort}
@@ -201,7 +201,7 @@ export default function BasicTable() {
           >
             <thead
               style={{ width: table.getTotalSize() }}
-              className="text-[0.4rem] text-[#bbb] md:text-[.88rem] laptop:text-[1.2rem] dark:text-[#B5B7C0]"
+              className="text-[0.4rem] text-[#bbb] tablet:text-[1rem] laptop:text-[1.2rem] dark:text-[#B5B7C0]"
             >
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
@@ -256,24 +256,25 @@ export default function BasicTable() {
                 </tr>
               ))}
             </thead>
-            <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] md:text-[1.25rem] tablet:text-[0.875rem]">
+            <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] tablet:text-[1rem] laptop:text-[0.875rem]">
               {table.getRowModel().rows.length === 0 ? (
                 <h4 className="mt-12 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem]">No results found</h4>
               ) : (
                 table.getRowModel().rows.map((row) => (
                   <tr
                     key={row.id}
-                    className=" whitespace-nowrap border-0 border-b border-[#EEEEEE] text-[#292D32] dark:text-[#C8C8C8]"
+                    className="whitespace-nowrap border-0 border-b border-[#EEEEEE] text-[#292D32] dark:text-[#C8C8C8]"
                   >
                     {row.getVisibleCells().map((cell) => (
                       <td
-                        className="py-1 text-[0.4rem] md:text-[.88rem] tablet:py-3 laptop:text-[1.2rem]"
+                        className="truncate py-1 text-[0.4rem] tablet:py-3 tablet:text-[.88rem] laptop:text-[1.2rem]"
                         // key={cell.id}
                         // style={{ width: cell.column.getSize() }}
                         {...{
                           key: cell.id,
                           style: {
                             width: cell.column.getSize(),
+                            maxWidth: cell.column.getSize(),
                           },
                         }}
                       >
@@ -299,7 +300,7 @@ export default function BasicTable() {
                                   ? 'My Account'
                                   : cell.column.id === 'txTo' &&
                                       cell.getValue() !== 'DAO Treasury' &&
-                                      cell.getValue() !== 'dao'
+                                      cell.getValue() !== 'DAO'
                                     ? `User`
                                     : cell.getValue() === 'dao'
                                       ? 'DAO'

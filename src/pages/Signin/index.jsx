@@ -161,7 +161,6 @@ export default function Signin() {
         // localStorage.removeItem('isGuestMode');
         // localStorage.setItem('jwt', res.data.token);
         // navigate('/dashboard');
-        console.log('called hamza');
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
         navigate('/dashboard');

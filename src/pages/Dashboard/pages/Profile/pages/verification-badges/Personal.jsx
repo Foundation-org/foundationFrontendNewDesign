@@ -8,32 +8,18 @@ import api from '../../../../../../services/api/Axios';
 import EducationBadgePopup from '../../../../../../components/dialogue-boxes/EducationBadgePopup';
 import WorkBadgePopup from '../../../../../../components/dialogue-boxes/WorkBadgePopup';
 
-export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgePopup }) {
+export default function Personal({ handleUserInfo, fetchUser, setFetchUser, handleRemoveBadgePopup }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
   const [seletedPersonalBadge, setSelectedPersonalBadge] = useState('');
+  const [edit, setEdit] = useState(false);
 
   const checkPersonalBadge = (itemType) =>
     fetchUser?.badges?.some((badge) => badge?.personal?.hasOwnProperty(itemType) || false) || false;
 
-  const handleRemovePersonalBadge = async (type) => {
-    try {
-      const removeBadge = await api.post(`/removePersonalBadge`, {
-        type: type,
-        uuid: fetchUser.uuid,
-      });
-      if (removeBadge.status === 200) {
-        toast.success('Badge Removed Successfully!');
-        handleUserInfo();
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const handleClickPesonalBadges = (type) => {
+  const handleClickPesonalBadges = async (type, edit) => {
     if (persistedUserInfo?.role === 'guest') {
       toast.warning(
         <p>
@@ -46,6 +32,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
       );
       return;
     } else {
+      if (edit) {
+        setEdit(true);
+      } else {
+        setEdit(false);
+      }
       setIsPersonalPopup(true);
       setSelectedPersonalBadge(type);
     }
@@ -67,6 +58,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/firstname.png`}
             placeholder="First Name Here"
             handleUserInfo={handleUserInfo}
+            edit={edit}
+            setEdit={setEdit}
+            fetchUser={fetchUser}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -80,6 +76,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/lastname.png`}
             placeholder="Last Name Here"
             handleUserInfo={handleUserInfo}
+            edit={edit}
+            setEdit={setEdit}
+            fetchUser={fetchUser}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -93,6 +94,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/dob.svg`}
             placeholder="MM/DD/YYYY"
             handleUserInfo={handleUserInfo}
+            edit={edit}
+            setEdit={setEdit}
+            fetchUser={fetchUser}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -106,6 +112,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/currentcity-1.png`}
             placeholder="Current City here"
             handleUserInfo={handleUserInfo}
+            edit={edit}
+            setEdit={setEdit}
+            fetchUser={fetchUser}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -119,6 +130,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/hometown.svg`}
             placeholder="Hometown Here"
             handleUserInfo={handleUserInfo}
+            edit={edit}
+            setEdit={setEdit}
+            fetchUser={fetchUser}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -132,6 +148,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`}
             placeholder="Relationship Here"
             handleUserInfo={handleUserInfo}
+            edit={edit}
+            setEdit={setEdit}
+            fetchUser={fetchUser}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -146,7 +167,8 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             placeholder="Work Here"
             handleUserInfo={handleUserInfo}
             fetchUser={fetchUser}
-            handleRemoveBadgePopup={handleRemoveBadgePopup}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -161,7 +183,8 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             placeholder="Education Here"
             handleUserInfo={handleUserInfo}
             fetchUser={fetchUser}
-            handleRemoveBadgePopup={handleRemoveBadgePopup}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -175,6 +198,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Identity-2x-1.png`}
             placeholder="ID / Passport Here"
             handleUserInfo={handleUserInfo}
+            edit={edit}
+            setEdit={setEdit}
+            fetchUser={fetchUser}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -188,6 +216,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`}
             placeholder="Geolocation"
             handleUserInfo={handleUserInfo}
+            edit={edit}
+            setEdit={setEdit}
+            fetchUser={fetchUser}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -201,6 +234,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/securityquestion-a.png`}
             placeholder="Answer Here"
             handleUserInfo={handleUserInfo}
+            edit={edit}
+            setEdit={setEdit}
+            fetchUser={fetchUser}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
           />
         );
 
@@ -209,49 +247,28 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
     }
   };
 
-  const PersonalItem = ({
-    item,
-    persistedTheme,
-    checkPersonalBadge,
-    handleRemoveBadgePopup,
-    handleClickPesonalBadges,
-  }) => (
+  const PersonalItem = ({ item, persistedTheme, checkPersonalBadge, handleClickPesonalBadges }) => (
     <div
       className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5 ${item.disabled ? 'opacity-60' : ''}`}
     >
-      <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:h-[3.48vw] tablet:w-[3.48vw]" />
+      <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
       <div
-        className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[7.3vw] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] text-[2.11vw] font-medium leading-normal text-[#000] tablet:h-[3.48vw] tablet:w-[13.9vw] tablet:rounded-[8px] tablet:border-[3px] tablet:text-[1.38vw] laptop:rounded-[15px] dark:text-[#CACACA]`}
+        className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''} flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
       >
-        <h1>{item.title}</h1>
+        <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
+          {item.title}
+        </h1>
       </div>
       <Button
-        color={
-          checkPersonalBadge(item.type)
-            ? item.type === 'education' || item.type === 'work'
-              ? 'yellow'
-              : 'red'
-            : item.ButtonColor
-        }
+        color={checkPersonalBadge(item.type) ? 'yellow' : item.ButtonColor}
         onClick={() => {
-          checkPersonalBadge(item.type) && item.type !== 'education' && item.type != 'work'
-            ? handleRemoveBadgePopup({
-                title: item.title,
-                image: item.image,
-                type: item.type,
-                badgeType: 'personal',
-              })
-            : handleClickPesonalBadges(item.type);
+          handleClickPesonalBadges(item.type, checkPersonalBadge(item.type) ? true : false);
         }}
         disabled={item.disabled}
       >
-        {checkPersonalBadge(item.type)
-          ? item.type === 'education' || item.type === 'work'
-            ? 'Edit'
-            : 'Remove'
-          : item.ButtonText}
+        {checkPersonalBadge(item.type) ? 'Edit' : item.ButtonText}
         {!checkPersonalBadge(item.type) && (
-          <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[3px] laptop:pl-[10px] laptop:text-[13px]">
+          <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
             (+0.96 FDX)
           </span>
         )}
@@ -261,11 +278,11 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
 
   return (
     <>
-      <h1 className="font-500 font-Inter my-[5px] mt-3 text-[9.74px] font-medium text-black tablet:text-[1.7vw] dark:text-white">
+      <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
         Personal
       </h1>
       {renderPersonalBadgesPopup()}
-      <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">
+      {/* <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">
         <div className="flex w-full flex-col items-center gap-[10px] tablet:gap-4 laptop:gap-5">
           {personal.slice(0, Math.ceil(personal.length / 2)).map((item, index) => (
             <PersonalItem
@@ -291,15 +308,15 @@ export default function Personal({ handleUserInfo, fetchUser, handleRemoveBadgeP
             />
           ))}
         </div>
-      </div>
-      <div className="flex flex-col gap-[7px] tablet:hidden tablet:gap-4 laptop:gap-5">
+      </div> */}
+      {/* <div className="flex flex-col items-center gap-[7px] tablet:gap-4 laptop:gap-5"> */}
+      <div className="flex flex-col items-center justify-between gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]">
         {personal.map((item, index) => (
           <PersonalItem
             key={index}
             item={item}
             persistedTheme={persistedTheme}
             checkPersonalBadge={checkPersonalBadge}
-            handleRemoveBadgePopup={handleRemoveBadgePopup}
             handleClickPesonalBadges={handleClickPesonalBadges}
           />
         ))}

@@ -14,7 +14,10 @@ const initialState = {
   hiddenPostId: null,
   DisabledPostId: null,
   enablePostId: null,
-  bookmarkResponse: [],
+  // bookmarkResponse: [],
+  isMediaPlaying: false,
+  playerPlayingId: '',
+  isShowPlayer: false,
 };
 
 export const utilsSlice = createSlice({
@@ -56,22 +59,30 @@ export const utilsSlice = createSlice({
     //   const newResponse = action.payload;
     //   state.bookmarkResponse.push(newResponse);
     // },
-    addBookmarkResponse: (state, action) => {
-      const newResponse = action.payload;
+    // addBookmarkResponse: (state, action) => {
+    //   const newResponse = action.payload;
 
-      const existingBookmark = state.bookmarkResponse.find(
-        (bookmark) => bookmark.questForeignKey === newResponse.questForeignKey,
-      );
-      if (!existingBookmark) {
-        state.bookmarkResponse.push(newResponse);
-      } else {
-      }
+    //   const existingBookmark = state.bookmarkResponse.find(
+    //     (bookmark) => bookmark.questForeignKey === newResponse.questForeignKey,
+    //   );
+    //   if (!existingBookmark) {
+    //     state.bookmarkResponse.push(newResponse);
+    //   } else {
+    //   }
+    // },
+    // removeBookmarkResponse: (state, action) => {
+    //   const idToRemove = action.payload;
+    //   console.log('🚀 ~ idToRemove:', idToRemove);
+    //   state.bookmarkResponse = state.bookmarkResponse.filter((response) => response.questForeignKey !== idToRemove);
+    // },
+    toggleMedia: (state, action) => {
+      state.isMediaPlaying = action.payload;
     },
-
-    removeBookmarkResponse: (state, action) => {
-      const idToRemove = action.payload;
-      console.log('🚀 ~ idToRemove:', idToRemove);
-      state.bookmarkResponse = state.bookmarkResponse.filter((response) => response.questForeignKey !== idToRemove);
+    setPlayingPlayerId: (state, action) => {
+      state.playerPlayingId = action.payload;
+    },
+    setIsShowPlayer: (state, action) => {
+      state.isShowPlayer = action.payload;
     },
   },
 });
@@ -88,6 +99,9 @@ export const {
   addEnablePostId,
   addBookmarkResponse,
   removeBookmarkResponse,
+  toggleMedia,
+  setPlayingPlayerId,
+  setIsShowPlayer,
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;

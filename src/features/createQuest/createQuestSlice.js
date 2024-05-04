@@ -38,7 +38,7 @@ export const checkAudioUrl = createAsyncThunk('createQuest/checkAudioUrl', async
 
 export const checkPictureUrl = createAsyncThunk('createQuest/checkPictureUrl', async (data) => {
   const result = await questServices.pictureUrlCheck(data);
-  console.log({ result });
+  // console.log({ result });
   return result;
 });
 
