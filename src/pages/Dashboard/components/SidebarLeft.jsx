@@ -139,7 +139,7 @@ const SidebarLeft = () => {
 
   useEffect(() => {
     dispatch(filtersActions.setSearchData(debouncedSearch));
-    setFilters({ searchData: debouncedSearch });
+    // setFilters({ searchData: debouncedSearch });
   }, [debouncedSearch]);
 
   useEffect(() => {
