@@ -119,8 +119,8 @@ function App() {
         image={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`}
         type={'website'}
       />
-      {/* <Router /> */}
-      <MaintenanceRouter />
+      <Router />
+      {/* <MaintenanceRouter /> */}
       <Toaster position="top-right" expand={true} theme={persistedTheme === 'dark' ? 'dark' : 'light'} richColors />
     </div>
   );
