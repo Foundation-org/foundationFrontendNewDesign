@@ -80,6 +80,7 @@ const OpenChoice = () => {
       }
 
       queryClient.invalidateQueries('FeedData');
+      queryClient.invalidateQueries('treasury');
     },
 
     onError: (err) => {

@@ -76,6 +76,7 @@ const LikeDislike = () => {
         }, 500);
       }
       queryClient.invalidateQueries('FeedData');
+      queryClient.invalidateQueries('treasury');
     },
     onError: (err) => {
       if (err.response) {

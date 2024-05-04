@@ -22,6 +22,8 @@ export default function DeletePostPopup({ handleClose, modalVisible, title, imag
           pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== id)),
         };
       });
+
+      queryClient.invalidateQueries('treasury');
     },
     onError: (error) => {
       console.log(error.response.data.message);

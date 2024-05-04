@@ -82,6 +82,7 @@ const RankChoice = () => {
         }, 500);
       }
       queryClient.invalidateQueries('FeedData');
+      queryClient.invalidateQueries('treasury');
     },
     onError: (err) => {
       console.log('Mutation Error', err);
