@@ -306,7 +306,9 @@ const QuestionCardWithToggle = (props) => {
       if (persistedUserInfo.role === 'guest') {
         questByUniqueShareLink();
       }
-      props.setSubmitResponse(resp.data.data);
+      if (location.pathname.startsWith('/p/') || location.pathname.startsWith('/quest/')) {
+        props.setSubmitResponse(resp.data.data);
+      }
       handleViewResults(questStartData._id);
     },
     onError: (err) => {
@@ -332,7 +334,9 @@ const QuestionCardWithToggle = (props) => {
         setLoading(false);
         handleViewResults(questStartData._id);
 
-        props.setSubmitResponse(resp.data.data);
+        if (location.pathname.startsWith('/p/') || location.pathname.startsWith('/quest/')) {
+          props.setSubmitResponse(resp.data.data);
+        }
 
         queryClient.setQueriesData(['posts'], (oldData) => ({
           ...oldData,
