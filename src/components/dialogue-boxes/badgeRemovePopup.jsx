@@ -38,7 +38,7 @@ export default function BadgeRemovePopup({
   };
 
   const handleRemoveBadge = async () => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     try {
       let removeBadge;
