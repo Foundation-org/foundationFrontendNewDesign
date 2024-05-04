@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // import { changeTheme } from '../../../../features/utils/utilsSlice';
 // import Topbar from '../../components/Topbar';
 // import Tabs from './components/Tabs';
-import { toast } from 'sonner';
-import api from '../../../../services/api/Axios';
+// import { toast } from 'sonner';
+// import api from '../../../../services/api/Axios';
 import FallBack from '../../../ErrorBoundry/FallBack';
-import { ErrorBoundary, useErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useMutation } from '@tanstack/react-query';
 import { userInfo } from '../../../../services/api/userAuth';
 import { addUser } from '../../../../features/auth/authSlice';
@@ -23,7 +23,7 @@ const Profile = () => {
   // const persistedTheme = useSelector((state) => state.utils.theme);
   // const persistedUserInfo = useSelector((state) => state.auth.user);
   const [selectedTab, setSelectedTab] = useState(pathname);
-  const [treasuryAmount, setTreasuryAmount] = useState(0);
+  // const [treasuryAmount, setTreasuryAmount] = useState(0);
   // const [treasuryAmount, setTreasuryAmount] = useState(0);
 
   useEffect(() => {
@@ -73,21 +73,21 @@ const Profile = () => {
     },
   });
 
-  const getTreasuryAmount = async () => {
-    try {
-      const res = await api.get(`/treasury/get`);
-      if (res.status === 200) {
-        localStorage.setItem('treasuryAmount', res.data.data);
-        setTreasuryAmount(res.data.data);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-    }
-  };
+  // const getTreasuryAmount = async () => {
+  //   try {
+  //     const res = await api.get(`/treasury/get`);
+  //     if (res.status === 200) {
+  //       localStorage.setItem('treasuryAmount', res.data.data);
+  //       setTreasuryAmount(res.data.data);
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.response.data.message.split(':')[1]);
+  //   }
+  // };
 
   useEffect(() => {
     getUserInfo();
-    getTreasuryAmount();
+    // getTreasuryAmount();
   }, []);
 
   return (

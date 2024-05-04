@@ -392,7 +392,14 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/dialoguebox/ratings-icon.svg`}
       title={'Filters'}
       open={modalVisible}
-      handleClose={handleClose}
+      handleClose={() => {
+        setFilterValues({
+          type: filterStates.filterByType,
+          media: filterStates.filterByMedia,
+          status: filterStates.filterByStatus,
+        });
+        handleClose();
+      }}
     >
       <div className="px-[18px] pt-[10px] tablet:px-[45px] tablet:pt-[25px]">
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">

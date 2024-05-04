@@ -306,7 +306,7 @@ const QuestionCardWithToggle = (props) => {
       if (persistedUserInfo.role === 'guest') {
         questByUniqueShareLink();
       }
-
+      props.setSubmitResponse(resp.data.data);
       handleViewResults(questStartData._id);
     },
     onError: (err) => {
@@ -332,7 +332,7 @@ const QuestionCardWithToggle = (props) => {
         setLoading(false);
         handleViewResults(questStartData._id);
 
-        console.log('changed', resp.data.data);
+        props.setSubmitResponse(resp.data.data);
 
         queryClient.setQueriesData(['posts'], (oldData) => ({
           ...oldData,

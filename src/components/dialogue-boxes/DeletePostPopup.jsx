@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteQuest } from '../../services/api/questsApi';
+import { toast } from 'sonner';
 
 export default function DeletePostPopup({ handleClose, modalVisible, title, image, id }) {
   const queryClient = useQueryClient();
@@ -21,9 +22,17 @@ export default function DeletePostPopup({ handleClose, modalVisible, title, imag
           pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== id)),
         };
       });
+
+      queryClient.invalidateQueries('treasury');
     },
     onError: (error) => {
-      console.log(error);
+      console.log(error.response.data.message);
+      if (error.response.data.message === "Quest is involved in Discussion, Quest can't be deleted.") {
+        toast.warning(error.response.data.message);
+        setIsLoading(false);
+        return;
+      }
+
       setIsLoading(false);
     },
   });

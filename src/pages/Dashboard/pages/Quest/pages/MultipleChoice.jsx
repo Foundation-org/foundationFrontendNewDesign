@@ -83,6 +83,7 @@ const MultipleChoice = () => {
       }
 
       queryClient.invalidateQueries('FeedData');
+      queryClient.invalidateQueries('treasury');
     },
 
     onError: (err) => {

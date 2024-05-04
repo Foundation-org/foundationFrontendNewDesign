@@ -79,12 +79,12 @@ const CustomCombobox = ({
           // afterLeave={() => setQuery('')}
         >
           <Combobox.Options className="absolute z-10 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base leading-[10px] shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm tablet:max-h-60">
-            {filteredItems.length === 0 && query !== '' ? (
+            {filteredItems?.length === 0 && query !== '' ? (
               <div className="text-gray-900' relative cursor-default select-none px-4 py-2 text-[10px] tablet:text-[16px]">
                 Nothing found.
               </div>
             ) : (
-              filteredItems.map((item) => (
+              filteredItems?.map((item) => (
                 <Combobox.Option
                   key={item.id}
                   className={({ active }) =>

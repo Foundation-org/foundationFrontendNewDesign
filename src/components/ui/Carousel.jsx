@@ -83,6 +83,7 @@ export default ({ data }) => {
         showArrows={true}
         showIndicators={false}
         emulateTouch={true}
+        useKeyboardArrows={true}
         renderArrowPrev={(onClickHandler, hasPrev, label) => hasPrev && <CustomLeftArrow onClick={onClickHandler} />}
         renderArrowNext={(onClickHandler, hasNext, label) => hasNext && <CustomRightArrow onClick={onClickHandler} />}
         statusFormatter={(currentItem, total) => ''}

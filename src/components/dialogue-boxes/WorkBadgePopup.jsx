@@ -6,6 +6,7 @@ import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
 import ListBox from '../ui/ListBox';
 import { FaSpinner } from 'react-icons/fa';
+import BadgeRemovePopup from './badgeRemovePopup';
 
 const CompanyName = {
   label: 'Company Name',
@@ -52,7 +53,18 @@ const endingYear = {
   type: 'endingYear',
 };
 
-const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, handleUserInfo, fetchUser }) => {
+const WorkBadgePopup = ({
+  isPopup,
+  setIsPopup,
+  type,
+  title,
+  logo,
+  placeholder,
+  handleUserInfo,
+  fetchUser,
+  setFetchUser,
+  setIsPersonalPopup,
+}) => {
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
   const [delloading, setDelLoading] = useState(false);
@@ -66,6 +78,9 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
   const [hollow, setHollow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [jobs, setJobs] = useState([]);
+  const [deleteModalState, setDeleteModalState] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [RemoveLoading, setRemoveLoading] = useState(false);
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
@@ -141,9 +156,8 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       field2Data.name === undefined ||
       // field3Data.name === undefined ||
       field4Data.name === undefined ||
-      field5Data === undefined ||
-      field6Data === undefined ||
-      field6Data === ''
+      !field5Data ||
+      !field6Data
     ) {
       return true;
     } else {
@@ -337,6 +351,11 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
       }
     }
   };
+  const handleRemoveBadgePopup = (item) => {
+    setDeleteModalState(item);
+    setModalVisible(true);
+  };
+  const handleBadgesClose = () => setModalVisible(false);
 
   const renderWorkField = (field1, field2, field3, field4, field5, field6) => {
     const [addAnotherForm, setAddAnotherForm] = useState(false);
@@ -344,7 +363,21 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
 
     return (
       <div className="pb-[15px] pt-2 tablet:py-[25px]">
-        {/* To View Already Added Info */}
+        {modalVisible && (
+          <BadgeRemovePopup
+            handleClose={handleBadgesClose}
+            modalVisible={modalVisible}
+            title={deleteModalState?.title}
+            image={deleteModalState?.image}
+            type={deleteModalState?.type}
+            badgeType={deleteModalState?.badgeType}
+            fetchUser={fetchUser}
+            setFetchUser={setFetchUser}
+            setIsPersonalPopup={setIsPersonalPopup}
+            setIsLoading={setRemoveLoading}
+            loading={RemoveLoading}
+          />
+        )}
         {existingData && !addAnotherForm ? (
           <div className="mx-3 flex flex-col gap-[2px] tablet:mx-[40px] tablet:gap-[5px]">
             {existingData.map((item, index) => (
@@ -414,7 +447,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
                 )}
               </div>
             ))}
-            <div className="mt-4 flex justify-between">
+            <div className="mt-4 flex items-center justify-between">
               <Button
                 variant="addOption"
                 onClick={() => {
@@ -424,6 +457,24 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, h
               >
                 <span className="text-[16px] tablet:text-[32px]">+</span> Add Another
               </Button>
+
+              {existingData ? (
+                <Button
+                  variant="badge-remove"
+                  onClick={() => {
+                    handleRemoveBadgePopup({
+                      title: title,
+                      type: type,
+                      badgeType: 'personal',
+                      image: logo,
+                    });
+                  }}
+                >
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                </Button>
+              ) : (
+                <div></div>
+              )}
             </div>
           </div>
         ) : (

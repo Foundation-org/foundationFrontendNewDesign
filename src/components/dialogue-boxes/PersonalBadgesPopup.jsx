@@ -10,6 +10,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { useErrorBoundary } from 'react-error-boundary';
 import Listbox from '../ui/ListBox';
 import { useDebounce } from '../../utils/useDebounce';
+import BadgeRemovePopup from './badgeRemovePopup';
 
 const data = [
   { id: 1, name: 'In what city were you born?' },
@@ -29,17 +30,33 @@ const relationshipData = [
   { id: 9, name: 'Divorced' },
 ];
 
-const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, handleUserInfo }) => {
+const PersonalBadgesPopup = ({
+  isPopup,
+  setIsPopup,
+  type,
+  title,
+  logo,
+  placeholder,
+  handleUserInfo,
+  edit,
+  fetchUser,
+  setFetchUser,
+  setIsPersonalPopup,
+}) => {
   const { showBoundary } = useErrorBoundary();
   const [selected, setSelected] = useState();
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [loading, setLoading] = useState(false);
+  const [RemoveLoading, setRemoveLoading] = useState(false);
   const [cities, setCities] = useState([]);
   const debounceName = useDebounce(name, 1000);
-  const [check, setCheck] = useState(true);
-
+  const [check, setCheck] = useState(edit ? false : true);
+  const [deleteModalState, setDeleteModalState] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [prevInfo, setPrevInfo] = useState();
   const handleClose = () => setIsPopup(false);
+  const [hollow, setHollow] = useState(edit ? false : true);
 
   const handleNameChange = (e) => setName(e.target.value);
 
@@ -67,6 +84,110 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
     setQuestion(newArr);
   }, [query]);
 
+  const FetchData = async () => {
+    const info = await api.post(`/addBadge/personal/getPersonalBadge`, {
+      uuid: localStorage.getItem('uuid'),
+      type: type,
+    });
+    setPrevInfo(info?.data?.obj);
+    if (type === 'firstName' || type === 'lastName' || type === 'geolocation') {
+      setName(info?.data?.obj);
+    }
+    if (type === 'dateOfBirth') {
+      setDate(info?.data?.obj);
+    }
+    if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus') {
+      setSelected({ name: info?.data?.obj });
+    }
+    if (type === 'security-question') {
+      setSelected({ name: Object.keys(info?.data?.obj)[0] });
+      setName(info?.data?.obj[Object.keys(info?.data?.obj)[0]]);
+    }
+  };
+
+  useEffect(() => {
+    if (edit) {
+      FetchData();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (edit) {
+      if (type === 'dateOfBirth') {
+        if (date && date !== prevInfo) {
+          setHollow(false);
+        } else {
+          setHollow(true);
+        }
+      } else if (type === 'geolocation') {
+        if (name && name !== prevInfo) {
+          setHollow(false);
+        } else {
+          setHollow(true);
+        }
+      } else if (type === 'firstName' || type === 'lastName') {
+        if (name && name !== prevInfo && !check) {
+          setHollow(false);
+        } else {
+          setHollow(true);
+        }
+      } else if (type === 'security-question') {
+        if (name && selected?.name) {
+          if (prevInfo) {
+            if (name === prevInfo[Object.keys(prevInfo)[0]] && selected?.name === Object.keys(prevInfo)[0]) {
+              setHollow(true);
+            } else {
+              setHollow(false);
+            }
+          } else {
+            setHollow(true);
+          }
+        } else {
+          setHollow(true);
+        }
+      } else if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus') {
+        if (selected?.name && selected?.name !== prevInfo) {
+          setHollow(false);
+        } else {
+          setHollow(true);
+        }
+      }
+    } else {
+      if (type === 'dateOfBirth') {
+        if (date) {
+          setHollow(false);
+        } else {
+          setHollow(true);
+        }
+      } else if (type === 'geolocation') {
+        if (name) {
+          setHollow(false);
+        } else {
+          setHollow(true);
+        }
+      } else if (type === 'firstName' || type === 'lastName') {
+        if (name && !check) {
+          setHollow(false);
+        } else {
+          setHollow(true);
+        }
+      } else if (type === 'security-question') {
+        if (name && selected?.name) {
+          setHollow(false);
+        } else {
+          setHollow(true);
+        }
+      } else if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus') {
+        if (selected?.name) {
+          setHollow(false);
+        } else {
+          setHollow(true);
+        }
+      }
+    }
+  }, [date, selected, name, check, prevInfo]);
+  console.log(name && name !== prevInfo && !check);
+  console.log(hollow);
   const { data: apiResp } = useQuery({
     queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && debounceName],
     queryFn: () =>
@@ -90,12 +211,21 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   };
 
   useEffect(() => {
-    if (apiResp?.data?.message?.trim() === 'Yes' || apiResp?.data?.message?.trim() === 'Yes.') {
-      setCheck(false);
+    if (edit) {
+      if (prevInfo !== undefined && name !== undefined && prevInfo !== name)
+        if (apiResp?.data?.message?.trim() === 'Yes' || apiResp?.data?.message?.trim() === 'Yes.') {
+          setCheck(false);
+        } else {
+          setCheck(true);
+        }
     } else {
-      setCheck(true);
+      if (apiResp?.data?.message?.trim() === 'Yes' || apiResp?.data?.message?.trim() === 'Yes.') {
+        setCheck(false);
+      } else {
+        setCheck(true);
+      }
     }
-  }, [apiResp?.data?.message]);
+  }, [apiResp]);
 
   const searchCities = async () => {
     try {
@@ -112,6 +242,79 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       searchCities();
     }
   }, [query]);
+  const handleUpdateBadge = async () => {
+    if (type === 'firstName' || type === 'lastName' || type === 'geolocation') {
+      if (name === prevInfo) {
+        toast.warning('Information already saved');
+        return;
+      }
+    }
+    if (type === 'dateOfBirth') {
+      if (date === prevInfo) {
+        toast.warning('Information already saved');
+        return;
+      }
+    }
+    if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus') {
+      if (selected.name === prevInfo) {
+        toast.warning('Information already saved');
+        return;
+      }
+    }
+    if (type === 'security-question') {
+      if (name === prevInfo[Object.keys(prevInfo)[0]] && selected.name === Object.keys(prevInfo)[0]) {
+        toast.warning('Information already saved');
+        return;
+      }
+    }
+    setLoading(true);
+    let value;
+    if (type.trim() === 'dateOfBirth') {
+      value = date;
+    } else if (type.trim() === 'security-question') {
+      value = {
+        [selected?.name]: name,
+      };
+      if (!selected) {
+        toast.warning('Please select a question first!');
+        setLoading(false);
+        return;
+      }
+      if (!name) {
+        toast.warning('Answer field cannot be empty.');
+        setLoading(false);
+        return;
+      }
+    } else if (type.trim() === 'currentCity' || type.trim() === 'homeTown' || type.trim() === 'relationshipStatus') {
+      value = selected?.name;
+    } else {
+      value = name;
+    }
+    if (value === '' || value === undefined) {
+      toast.warning('Field cannot be empty!');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const addBadge = await api.post(`/addBadge/personal/updatePersonalBadge`, {
+        newData: value,
+        type: type,
+        uuid: localStorage.getItem('uuid'),
+      });
+      if (addBadge.status === 200) {
+        toast.success('Badge Updated Successfully!');
+        handleUserInfo();
+        handleClose();
+      }
+    } catch (error) {
+      showBoundary(error);
+      console.log(error);
+      handleClose();
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleAddPersonalBadge = async () => {
     setLoading(true);
@@ -163,6 +366,11 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
       setLoading(false);
     }
   };
+  const handleRemoveBadgePopup = (item) => {
+    setDeleteModalState(item);
+    setModalVisible(true);
+  };
+  const handleBadgesClose = () => setModalVisible(false);
 
   const renderInputField = (title, name, handleNameChange, placeholder, apiResp, data, placeholder2) => {
     const isError = apiResp?.data?.message === 'No';
@@ -171,7 +379,6 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
         {data && data.length >= 1 ? (
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-              {/* <Listbox items={data} selected={selected} setSelected={setSelected} placeholder={placeholder} /> */}
               <CustomCombobox
                 items={questions}
                 selected={selected}
@@ -193,14 +400,29 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
                 <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
               )}
             </div>
-            <div className="mt-[10px] flex justify-end tablet:mt-5">
-              {!selected || !name ? (
+            <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+              {edit && (
+                <Button
+                  variant="badge-remove"
+                  onClick={() => {
+                    handleRemoveBadgePopup({
+                      title: title,
+                      type: type,
+                      badgeType: 'personal',
+                      image: logo,
+                    });
+                  }}
+                >
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                </Button>
+              )}
+              {hollow ? (
                 <Button variant="hollow-submit" disabled={true}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
                 </Button>
               ) : (
-                <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+                <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
                 </Button>
               )}
             </div>
@@ -214,19 +436,36 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
               placeholder={placeholder2}
               className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
             />
-            <div className="mt-[10px] flex justify-between tablet:mt-5">
+            <div className="mt-[10px] flex justify-between gap-2 tablet:mt-5">
               <Button variant="submit" onClick={() => getLocation()}>
                 Get Current location
               </Button>
-              {name === '' ? (
-                <Button variant="hollow-submit" disabled={true}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-                </Button>
-              ) : (
-                <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-                </Button>
-              )}
+              <div className="flex justify-between gap-[13px] tablet:gap-[35px]">
+                {edit && (
+                  <Button
+                    variant="badge-remove"
+                    onClick={() => {
+                      handleRemoveBadgePopup({
+                        title: title,
+                        type: type,
+                        badgeType: 'personal',
+                        image: logo,
+                      });
+                    }}
+                  >
+                    {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                  </Button>
+                )}
+                {hollow ? (
+                  <Button variant="hollow-submit" disabled={true}>
+                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  </Button>
+                ) : (
+                  <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         ) : (
@@ -244,15 +483,34 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             {isError && (
               <p className="absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
             )}
-            <div className="mt-[10px] flex justify-end tablet:mt-5">
-              {check ? (
-                <Button variant="hollow-submit" disabled={true}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+            <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+              {edit && (
+                <Button
+                  variant="badge-remove"
+                  onClick={() => {
+                    handleRemoveBadgePopup({
+                      title: title,
+                      type: type,
+                      badgeType: 'personal',
+                      image: logo,
+                    });
+                  }}
+                >
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
                 </Button>
+              )}
+              {hollow ? (
+                <div className="flex gap-2">
+                  <Button variant="hollow-submit" disabled={true}>
+                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  </Button>
+                </div>
               ) : (
-                <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
-                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-                </Button>
+                <div className="flex gap-2">
+                  <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+                    {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                  </Button>
+                </div>
               )}
             </div>
           </div>
@@ -279,14 +537,29 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
           )}
         </div>
-        <div className="mt-[10px] flex justify-end tablet:mt-5">
-          {selected === undefined ? (
+        <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+          {edit && (
+            <Button
+              variant="badge-remove"
+              onClick={() => {
+                handleRemoveBadgePopup({
+                  title: title,
+                  type: type,
+                  badgeType: 'personal',
+                  image: logo,
+                });
+              }}
+            >
+              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+            </Button>
+          )}
+          {hollow ? (
             <Button variant="hollow-submit" disabled={true}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
             </Button>
           ) : (
-            <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+            <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
             </Button>
           )}
         </div>
@@ -306,14 +579,29 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
             <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
           )}
         </div>
-        <div className="mt-[10px] flex justify-end tablet:mt-5">
-          {selected === undefined ? (
+        <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+          {edit && (
+            <Button
+              variant="badge-remove"
+              onClick={() => {
+                handleRemoveBadgePopup({
+                  title: title,
+                  type: type,
+                  badgeType: 'personal',
+                  image: logo,
+                });
+              }}
+            >
+              {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+            </Button>
+          )}
+          {hollow ? (
             <Button variant="hollow-submit" disabled={true}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
             </Button>
           ) : (
-            <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+            <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
             </Button>
           )}
         </div>
@@ -342,48 +630,80 @@ const PersonalBadgesPopup = ({ isPopup, setIsPopup, type, title, logo, placehold
   };
 
   return (
-    <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
-      {title === 'First Name' && renderInputField('First Name', name, handleNameChange, placeholder, apiResp)}
-      {title === 'Last Name' && renderInputField('Last Name', name, handleNameChange, placeholder, apiResp)}
-      {title === 'Date of Birth' && (
-        <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-          <input
-            type="date"
-            id="dateInput"
-            value={date}
-            onChange={handleDateChange}
-            className="revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
-          />
-          <div className="mt-[10px] flex justify-end tablet:mt-5">
-            {!date ? (
-              <Button variant="hollow-submit" disabled={true}>
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-              </Button>
-            ) : (
-              <Button variant="submit" onClick={() => handleAddPersonalBadge()}>
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-              </Button>
-            )}
-          </div>
-        </div>
+    <>
+      {modalVisible && (
+        <BadgeRemovePopup
+          handleClose={handleBadgesClose}
+          modalVisible={modalVisible}
+          title={deleteModalState?.title}
+          image={deleteModalState?.image}
+          type={deleteModalState?.type}
+          badgeType={deleteModalState?.badgeType}
+          fetchUser={fetchUser}
+          setFetchUser={setFetchUser}
+          setIsPersonalPopup={setIsPersonalPopup}
+          setIsLoading={setRemoveLoading}
+          loading={RemoveLoading}
+        />
       )}
-      {title === 'Current City' && renderCurrentCity('Current City', name, handleNameChange, placeholder, apiResp)}
-      {title === 'Home Town' && renderCurrentCity('Home Town', name, handleNameChange, placeholder, apiResp)}
-      {title === 'Relationship Status' &&
-        renderRelationship('Relationship Status', name, handleNameChange, placeholder, apiResp)}
-      {title === 'ID / Passport' && renderInputField('ID / Passport', name, handleNameChange, placeholder, apiResp)}
-      {title === 'Geolocation' && renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp)}
-      {title === 'Security Question' &&
-        renderInputField(
-          'Security Question',
-          name,
-          handleSecurityQuestionChange,
-          'Security question here',
-          apiResp,
-          data,
-          'Write your answer here',
+      <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
+        {title === 'First Name' && renderInputField('First Name', name, handleNameChange, placeholder, apiResp)}
+        {title === 'Last Name' && renderInputField('Last Name', name, handleNameChange, placeholder, apiResp)}
+        {title === 'Date of Birth' && (
+          <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
+            <input
+              type="date"
+              id="dateInput"
+              value={date}
+              onChange={handleDateChange}
+              className="revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
+            />
+            <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
+              {edit && (
+                <Button
+                  variant="badge-remove"
+                  onClick={() => {
+                    handleRemoveBadgePopup({
+                      title: title,
+                      type: type,
+                      badgeType: 'personal',
+                      image: logo,
+                    });
+                  }}
+                >
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                </Button>
+              )}
+              {hollow ? (
+                <Button variant="hollow-submit" disabled={true}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                </Button>
+              ) : (
+                <Button variant="submit" onClick={() => (edit ? handleUpdateBadge() : handleAddPersonalBadge())}>
+                  {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : edit ? 'Update' : 'Add'}
+                </Button>
+              )}
+            </div>
+          </div>
         )}
-    </PopUp>
+        {title === 'Current City' && renderCurrentCity('Current City', name, handleNameChange, placeholder, apiResp)}
+        {title === 'Home Town' && renderCurrentCity('Home Town', name, handleNameChange, placeholder, apiResp)}
+        {title === 'Relationship Status' &&
+          renderRelationship('Relationship Status', name, handleNameChange, placeholder, apiResp)}
+        {title === 'ID / Passport' && renderInputField('ID / Passport', name, handleNameChange, placeholder, apiResp)}
+        {title === 'Geolocation' && renderInputField('Geolocation', name, handleNameChange, placeholder, apiResp)}
+        {title === 'Security Question' &&
+          renderInputField(
+            'Security Question',
+            name,
+            handleSecurityQuestionChange,
+            'Security question here',
+            apiResp,
+            data,
+            'Write your answer here',
+          )}
+      </PopUp>
+    </>
   );
 };
 

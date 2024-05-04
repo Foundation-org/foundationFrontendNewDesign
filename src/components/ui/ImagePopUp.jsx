@@ -52,6 +52,7 @@ const ImagePopUp = ({ open, handleClose, data, selectedImg }) => {
               showArrows={true}
               showIndicators={false}
               emulateTouch={true}
+              useKeyboardArrows={true}
               selectedItem={selectedImg - 1}
               renderThumbs={(children) => renderThumbs(children)}
               statusFormatter={(currentItem, total) => ''}
