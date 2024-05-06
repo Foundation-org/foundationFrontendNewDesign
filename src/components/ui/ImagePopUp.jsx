@@ -1,8 +1,10 @@
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Carousel } from 'react-responsive-carousel';
+import { useEffect, useState } from 'react';
 
 const ImagePopUp = ({ open, handleClose, data, selectedImg }) => {
+  const [shouldEmulateTouch, setShouldEmulateTouch] = useState(false);
   const defaultStyle = {
     boxShadow: 'none',
     position: 'absolute',
@@ -10,6 +12,17 @@ const ImagePopUp = ({ open, handleClose, data, selectedImg }) => {
     left: '50%',
     transform: 'translate(-50%, -50%)',
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShouldEmulateTouch(window.innerWidth <= 744 ? false : true);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const mergedStyle = { ...defaultStyle };
 
@@ -47,6 +60,7 @@ const ImagePopUp = ({ open, handleClose, data, selectedImg }) => {
           <div id="fullscreen_carousel_container">
             <Carousel
               // autoPlay
+              swipeable={shouldEmulateTouch}
               infiniteLoop={true}
               stopOnHover={true}
               showArrows={true}

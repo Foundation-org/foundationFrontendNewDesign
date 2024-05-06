@@ -562,7 +562,7 @@ const EducationBadgePopup = ({
               </p>
               <CustomCombobox
                 items={universities}
-                placeholder={field1.placeholder}
+                placeholder={edit ? (field1Data?.name ? field1.placeholder : 'Loading...') : field1.placeholder}
                 selected={field1Data}
                 setSelected={setField1Data}
                 query={query}
@@ -578,7 +578,7 @@ const EducationBadgePopup = ({
                 </p>
                 <CustomCombobox
                   items={eduData}
-                  placeholder={field2.placeholder}
+                  placeholder={edit ? (field2Data?.name ? field2.placeholder : 'Loading...') : field2.placeholder}
                   selected={field2Data}
                   setSelected={setField2Data}
                   query={query2}
@@ -622,7 +622,7 @@ const EducationBadgePopup = ({
                 </p>
                 <CustomCombobox
                   items={eduData}
-                  placeholder={field5.placeholder}
+                  placeholder={edit ? (field5Data?.name ? field5.placeholder : 'Loading...') : field5.placeholder}
                   selected={field5Data}
                   setSelected={setField5Data}
                   query={query3}
@@ -675,14 +675,22 @@ const EducationBadgePopup = ({
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field3.label}
                 </p>
-                <input
-                  id="input-4"
-                  onKeyDown={(e) => (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))}
-                  type="date"
-                  value={field3Data}
-                  onChange={handlefield3Change}
-                  className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
-                />
+                {!field3Data && edit ? (
+                  <input
+                    type="text"
+                    value="Loading..."
+                    className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                  />
+                ) : (
+                  <input
+                    id="input-4"
+                    onKeyDown={(e) => (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))}
+                    type="date"
+                    value={field3Data}
+                    onChange={handlefield3Change}
+                    className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                  />
+                )}
               </div>
               {isPresent ? (
                 <div className="w-full"></div>
@@ -691,15 +699,25 @@ const EducationBadgePopup = ({
                   <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field4.label}
                   </p>
-                  <input
-                    id="input-5"
-                    onKeyDown={(e) => (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))}
-                    type="date"
-                    value={field4Data}
-                    onChange={handlefield4Change}
-                    placeholder={field4.placeholder}
-                    className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
-                  />
+                  {!field4Data && edit ? (
+                    <input
+                      type="text"
+                      value="Loading..."
+                      className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                    />
+                  ) : (
+                    <input
+                      id="input-5"
+                      onKeyDown={(e) =>
+                        (e.key === 'Tab' && handleTab(4)) || (e.key === 'Enter' && handleTab(4, 'Enter'))
+                      }
+                      type="date"
+                      value={field4Data}
+                      onChange={handlefield4Change}
+                      placeholder={field4.placeholder}
+                      className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                    />
+                  )}
                 </div>
               )}
             </div>
