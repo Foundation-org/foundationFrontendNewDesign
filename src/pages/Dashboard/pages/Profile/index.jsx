@@ -181,7 +181,10 @@ const Profile = () => {
       <div
         className={`${selectedTab !== '/dashboard/profile/ledger' ? '' : 'laptop:-mt-[133px]'} w-full bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]`}
       >
-        <div className="fixed left-auto right-auto w-full max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
+        {/* <div className="fixed left-auto right-auto w-full max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]"> */}
+        <div
+          className={`${selectedTab === '/dashboard/profile/ledger' ? 'mx-auto max-w-[778px]' : 'fixed left-auto right-auto w-full max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]'}`}
+        >
           <ProfileSlider tab={selectedTab} setTab={setSelectedTab} />
         </div>
         <div

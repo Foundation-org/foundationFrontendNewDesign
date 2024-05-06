@@ -236,7 +236,7 @@ const QuestCardLayout = ({
       ref={imageGetter}
     >
       {postProperties === 'SharedLinks' && (
-        <div className="mb-2 flex justify-between px-2 pt-2 tablet:mb-5 tablet:px-5 tablet:pt-4 laptop:px-5">
+        <div className="mb-2 flex justify-between border-b border-[#D9D9D9] px-2 py-2 tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-4 laptop:px-5">
           <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
             <h1 className="truncate text-wrap text-[10px] font-semibold text-[#707175] tablet:text-[20px] tablet:font-medium">
               {url}
