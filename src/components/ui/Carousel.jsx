@@ -94,11 +94,12 @@ export default ({ data }) => {
       />
       <Carousel
         // autoPlay
+        swipeable={shouldEmulateTouch}
         infiniteLoop={true}
         stopOnHover={true}
         showArrows={true}
         showIndicators={false}
-        emulateTouch={false}
+        emulateTouch={true}
         useKeyboardArrows={true}
         renderArrowPrev={(onClickHandler, hasPrev, label) => hasPrev && <CustomLeftArrow onClick={onClickHandler} />}
         renderArrowNext={(onClickHandler, hasNext, label) => hasNext && <CustomRightArrow onClick={onClickHandler} />}
