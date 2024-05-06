@@ -987,6 +987,10 @@ input[type='number'] {
   border: 3px solid #647785 !important;
 }
 
+.carousel.carousel-slider .control-arrow:hover {
+  background: none !important;
+}
+
 /* #fullscreen_carousel_main div {
   height: 100dvh !important;
 }
