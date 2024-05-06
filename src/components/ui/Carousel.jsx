@@ -98,7 +98,7 @@ export default ({ data }) => {
         stopOnHover={true}
         showArrows={true}
         showIndicators={false}
-        emulateTouch={shouldEmulateTouch}
+        emulateTouch={false}
         useKeyboardArrows={true}
         renderArrowPrev={(onClickHandler, hasPrev, label) => hasPrev && <CustomLeftArrow onClick={onClickHandler} />}
         renderArrowNext={(onClickHandler, hasNext, label) => hasNext && <CustomRightArrow onClick={onClickHandler} />}
