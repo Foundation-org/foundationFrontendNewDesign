@@ -45,8 +45,15 @@ const ImagePopUp = ({ open, handleClose, data, selectedImg }) => {
     >
       <Box sx={mergedStyle} className={`z-[1000] w-full max-w-max border-none outline-none`}>
         <div id="fullscreen_carousel_main" className="relative rounded-b-[9.76px] bg-black tablet:rounded-b-[26px]">
-          <div className="absolute left-6 top-6 z-[100000] cursor-pointer" onClick={handleClose}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="51" height="50" viewBox="0 0 51 50" fill="none">
+          <div className="absolute right-6 top-6 z-[100000] cursor-pointer" onClick={handleClose}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="51"
+              height="50"
+              viewBox="0 0 51 50"
+              fill="none"
+              className="size-[30px] tablet:size-[50px]"
+            >
               <path
                 d="M44.5116 24.0042C44.5116 35.1654 35.4637 44.2132 24.3025 44.2132C13.1414 44.2132 4.09353 35.1654 4.09353 24.0042C4.09353 12.8431 13.1414 3.79522 24.3025 3.79522C35.4637 3.79522 44.5116 12.8431 44.5116 24.0042Z"
                 fill="black"
@@ -57,7 +64,7 @@ const ImagePopUp = ({ open, handleClose, data, selectedImg }) => {
               />
             </svg>
           </div>
-          <div id="fullscreen_carousel_container">
+          <div id="fullscreen_carousel_container" className="flex h-dvh items-center justify-center">
             <Carousel
               // autoPlay
               swipeable={shouldEmulateTouch}

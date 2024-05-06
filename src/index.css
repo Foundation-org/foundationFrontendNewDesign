@@ -966,12 +966,37 @@ input[type='number'] {
   padding: 5px;
 }
 
-#fullscreen_carousel_main div {
+#fullscreen_carousel_container > div:first-child {
+  height: 100vh !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#fullscreen_carousel_container > div:first-child > div:first-child {
+  height: 80% !important;
+}
+
+.carousel .thumb {
+  border: 3px solid transparent !important;
+}
+
+.carousel .thumb.selected,
+.carousel .thumb:hover {
+  border: 3px solid #647785 !important;
+}
+
+.carousel.carousel-slider .control-arrow:hover {
+  background: none !important;
+}
+
+/* #fullscreen_carousel_main div {
   height: 100dvh !important;
 }
 
 #fullscreen_carousel_container div div:first-child {
-  height: calc(100dvh - 110px) !important;
+  height: calc(100dvh - 140px) !important;
 }
 
 #fullscreen_carousel_container div div:nth-child(2) {
@@ -980,7 +1005,7 @@ input[type='number'] {
 
 #fullscreen_carousel_container div div:nth-child(2) div {
   height: fit-content !important;
-}
+} */
 
 #fullscreen_carousel img {
   max-width: 100% !important;
