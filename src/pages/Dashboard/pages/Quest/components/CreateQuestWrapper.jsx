@@ -44,7 +44,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
           {msg}
         </h4>
         {getMediaStates?.isMedia.isMedia === false && getPicMediaStates.isPicMedia === false && (
-          <div className="mx-[30px] mt-3 flex items-center justify-between gap-1 tablet:mx-[50px] tablet:mt-[25px] tablet:gap-2 laptop:gap-12">
+          <div className="mx-[30px] mt-3 flex items-center justify-between gap-1 tablet:mt-[25px] tablet:gap-2 laptop:mx-4 laptop:gap-4 desktop:mx-[50px] desktop:gap-12">
             <Button
               variant="addEmbeded"
               className="px-2 tablet:px-[25px]"
