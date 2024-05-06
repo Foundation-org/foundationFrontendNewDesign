@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'; // Import arrow icons from react-icons library
+import { useState, useEffect } from 'react';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { IoClose } from 'react-icons/io5';
-
 import { Carousel } from 'react-responsive-carousel';
 import FullScreenPicturePopup from '../dialogue-boxes/FullScreenPicturePopup';
 import { useLocation } from 'react-router-dom';
@@ -61,11 +60,28 @@ export default ({ data }) => {
   const dispatch = useDispatch();
   const [imageDialogue, setImageDialogue] = useState(false);
   const [selectedImg, setSelectedImg] = useState('');
+  const [shouldEmulateTouch, setShouldEmulateTouch] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShouldEmulateTouch(window.innerWidth <= 744 ? false : true);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const openDialogue = (img) => {
+    if (event.target.closest('.thumbItem')) {
+      return;
+    }
+
     setSelectedImg(img);
     setImageDialogue(true);
   };
+
   const closeDialogue = () => setImageDialogue(false);
 
   return (
@@ -82,7 +98,7 @@ export default ({ data }) => {
         stopOnHover={true}
         showArrows={true}
         showIndicators={false}
-        emulateTouch={true}
+        emulateTouch={shouldEmulateTouch}
         useKeyboardArrows={true}
         renderArrowPrev={(onClickHandler, hasPrev, label) => hasPrev && <CustomLeftArrow onClick={onClickHandler} />}
         renderArrowNext={(onClickHandler, hasNext, label) => hasNext && <CustomRightArrow onClick={onClickHandler} />}
