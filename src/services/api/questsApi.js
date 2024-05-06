@@ -372,3 +372,11 @@ export const generateImage = async ({ questStartData, link }) => {
     link,
   });
 };
+
+export const createCustomLink = async ({ questStartData, uuid, link }) => {
+  return await api.post(`userQuestSetting/customLink`, {
+    uuid,
+    questForeignKey: questStartData._id,
+    link,
+  });
+};
