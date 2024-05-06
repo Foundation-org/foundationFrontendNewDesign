@@ -978,6 +978,15 @@ input[type='number'] {
   height: 80% !important;
 }
 
+.carousel .thumb {
+  border: 3px solid transparent !important;
+}
+
+.carousel .thumb.selected,
+.carousel .thumb:hover {
+  border: 3px solid #647785 !important;
+}
+
 /* #fullscreen_carousel_main div {
   height: 100dvh !important;
 }

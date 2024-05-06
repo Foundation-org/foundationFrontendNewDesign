@@ -45,7 +45,7 @@ const ImagePopUp = ({ open, handleClose, data, selectedImg }) => {
     >
       <Box sx={mergedStyle} className={`z-[1000] w-full max-w-max border-none outline-none`}>
         <div id="fullscreen_carousel_main" className="relative rounded-b-[9.76px] bg-black tablet:rounded-b-[26px]">
-          <div className="absolute left-6 top-6 z-[100000] cursor-pointer" onClick={handleClose}>
+          <div className="absolute right-6 top-6 z-[100000] cursor-pointer" onClick={handleClose}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="51"
