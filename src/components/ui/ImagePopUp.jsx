@@ -67,7 +67,6 @@ const ImagePopUp = ({ open, handleClose, data, selectedImg }) => {
           <div id="fullscreen_carousel_container" className="flex h-dvh items-center justify-center">
             <Carousel
               // autoPlay
-              swipeable={shouldEmulateTouch}
               infiniteLoop={true}
               stopOnHover={true}
               showArrows={true}
