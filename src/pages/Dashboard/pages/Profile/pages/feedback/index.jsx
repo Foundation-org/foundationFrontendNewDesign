@@ -9,37 +9,7 @@ import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useDebounce } from '../../../../../../utils/useDebounce';
 import api from '../../../../../../services/api/Axios';
-
-const optionsData = [
-  {
-    id: 1,
-    title: 'Does not apply to me',
-  },
-  {
-    id: 2,
-    title: 'Not interested',
-  },
-  {
-    id: 3,
-    title: 'Has Mistakes or Errors',
-  },
-  {
-    id: 4,
-    title: 'Needs More Options',
-  },
-  {
-    id: 5,
-    title: 'Unclear / Doesn’t make Sense',
-  },
-  {
-    id: 6,
-    title: 'Duplicate / Similar Post',
-  },
-  {
-    id: 7,
-    title: 'Invalid Media',
-  },
-];
+import { hideReasons } from '../../../../../../constants/hiddenPosts';
 
 const QuestCard = ({ innerRef, persistedUserInfo, post }) => {
   return (
@@ -98,14 +68,20 @@ const QuestCard = ({ innerRef, persistedUserInfo, post }) => {
         {post.Question}
       </h1>
       <div className="mb-[26px] ml-[60px] mt-[15px] grid grid-cols-2 gap-x-[50px] gap-y-[15px] ">
-        {optionsData.map((item) => (
-          <p
-            key={item.id}
-            className={`${post.suppressedReason === item.title && item.title === 'Invalid Media' ? 'font-semibold text-[#DC1010]' : 'font-normal text-[#BABABA]'} text-[18px]`}
-          >
-            {post.count} {item.title}
-          </p>
-        ))}
+        {hideReasons.map((item) => {
+          const feedbackItem = post.feedback.find((feedback) => feedback.id === item.title);
+          const feedbackCount = feedbackItem ? feedbackItem.count : 0;
+          const feedbackViolated = feedbackItem ? feedbackItem.violated : false;
+
+          return (
+            <p
+              key={item.id}
+              className={`${post.suppressedReason === item.title && item.title === 'Invalid Media' ? 'font-semibold text-[#DC1010]' : feedbackViolated ? 'font-semibold text-[#DC1010]' : feedbackCount >= 1 ? 'text-[#4A8DBD]' : 'font-normal text-[#BABABA]'} text-[18px]`}
+            >
+              {feedbackCount} {item.title}
+            </p>
+          );
+        })}
       </div>
     </div>
   );
