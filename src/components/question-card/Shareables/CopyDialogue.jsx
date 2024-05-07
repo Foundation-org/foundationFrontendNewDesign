@@ -7,7 +7,7 @@ import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
 import Copy from '../../../assets/optionbar/Copy';
 import { Button } from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const CopyDialogue = ({
   handleClose,
@@ -22,6 +22,7 @@ const CopyDialogue = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
   const [postLink, setPostLink] = useState(questStartData?.userQuestSetting?.link || '');
@@ -90,6 +91,27 @@ const CopyDialogue = ({
     mutationFn: createCustomLink,
     onSuccess: (resp) => {
       toast.success('Custom link generated successfully.');
+      queryClient.setQueriesData(['posts'], (oldData) => {
+        return {
+          ...oldData,
+          pages: oldData?.pages?.map((page) => {
+            const updatedPage = page.map((item) => {
+              if (item._id === resp.data.data.questForeignKey) {
+                return {
+                  ...item,
+                  userQuestSetting: {
+                    ...item.userQuestSetting,
+                    link: resp.data.data.link,
+                  },
+                };
+              }
+              return item;
+            });
+            return updatedPage;
+          }),
+        };
+      });
+
       setPostLink(resp.data.data.link);
       setCreateCustom(false);
     },
