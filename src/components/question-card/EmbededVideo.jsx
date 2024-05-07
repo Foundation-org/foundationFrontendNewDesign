@@ -5,6 +5,8 @@ import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
+import * as questUtilsActions from '../../features/quest/utilsSlice';
+
 import { suppressPost } from '../../services/api/questsApi';
 
 export const EmbededVideo = ({
@@ -23,9 +25,20 @@ export const EmbededVideo = ({
   const questUtilsState = useSelector(getQuestUtils);
 
   const handleVideoEnded = () => {
-    if (playerRef.current) {
-      playerRef.current.seekTo(0);
-      playerRef.current.getInternalPlayer().play(); // Resume playback
+    if (questUtilsState.loop === true) {
+      console.log('ran', questUtilsState.loop);
+      if (playerRef.current) {
+        playerRef.current.seekTo(0);
+        playerRef.current.getInternalPlayer().play(); // Resume playback
+      }
+    } else {
+      console.log('else ran');
+      const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
+      if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
+        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
+      } else if (index !== -1 && index + 1 >= questUtilsState.playingIds.length) {
+        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
+      }
     }
   };
 
@@ -66,7 +79,6 @@ export const EmbededVideo = ({
             suppressPost(questId);
           }}
           onStart={() => {
-            console.log('selectedQuestId', questId);
             dispatch(setPlayingPlayerId(questId));
             // setPlayingPlayerId(questId);
             if (!playing) {
@@ -99,7 +111,7 @@ export const EmbededVideo = ({
           muted={false} // Unmute audio
           playing={playing} // Do not autoplay
           // loop={true} // Enable looping
-          loop={!url.includes(soundcloudUnique)}
+          // loop={!url.includes(soundcloudUnique)}
           config={{
             soundcloud: {
               options: {
@@ -125,7 +137,7 @@ export const EmbededVideo = ({
               },
             },
           }}
-          onEnded={handleVideoEnded}
+          onEnded={() => handleVideoEnded()}
         />
       </div>
     </div>

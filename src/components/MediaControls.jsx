@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { getQuestUtils, toggleMedia } from '../features/quest/utilsSlice';
+import * as questUtilsActions from '../features/quest/utilsSlice';
 import { useSelector } from 'react-redux';
 
 export default function MediaControls() {
@@ -8,13 +9,49 @@ export default function MediaControls() {
 
   const scrollToPlayingCard = () => {
     const playingCard = document.getElementById('playing-card');
+    console.log(playingCard);
     if (playingCard) {
       playingCard.scrollIntoView({ behavior: 'smooth' });
     }
   };
+  const runLoop = () => {
+    dispatch(questUtilsActions.toggleLoop(!questUtilsState.loop));
+  };
+  const playPrevious = () => {
+    const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
+    if (index !== -1 && index - 1 >= 0) {
+      dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index - 1]));
+      dispatch(questUtilsActions.toggleMedia(true));
+    }
+  };
+  const playNext = () => {
+    const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
+    if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
+      dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
+      dispatch(questUtilsActions.toggleMedia(true));
+    } else if (index !== -1 && index + 1 >= questUtilsState.playingIds.length) {
+      dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
+      dispatch(questUtilsActions.toggleMedia(true));
+    }
+  };
 
   return (
-    <div className="mt-5 flex items-center justify-center gap-2 rounded-[9.211px] border-[2.86px] border-[#CECFD1] bg-[#E5E7EC] px-4 py-2 tablet:gap-6 tablet:rounded-[14px] tablet:py-[10px]">
+    <div className="mt-5 flex items-center justify-center gap-2 rounded-[9.211px] border-[2.86px] border-[#CECFD1] bg-[#E5E7EC] px-4 py-2 tablet:gap-3 tablet:rounded-[14px] tablet:py-[10px]">
+      {/* {questUtilsState.loop ? 'Loop' : 'Series'} */}
+      <img
+        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/player/${questUtilsState.loop ? 'loop.svg' : 'series.svg'}`}
+        onClick={runLoop}
+      />
+      <img
+        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/player/back.svg`}
+        className={`${
+          questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId) === 0
+            ? 'opacity-[60%]'
+            : 'opacity-[100%]'
+        }`}
+        onClick={playPrevious}
+      />
+
       <button
         onClick={() => dispatch(toggleMedia(questUtilsState.isMediaPlaying === true ? false : true))}
         className="w-[15px] tablet:w-[22px]"
@@ -47,13 +84,14 @@ export default function MediaControls() {
           </svg>
         )}
       </button>
+      <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/player/next.svg`} onClick={playNext} />
       <button
         className="rounded-[3.892px] bg-[#A3A3A3] px-4 py-[5.2px] text-[10px] font-medium leading-normal text-white tablet:rounded-[7.78px] tablet:py-2 tablet:text-[18px]"
         onClick={() => {
           scrollToPlayingCard();
         }}
       >
-        Return to Post
+        Playing
       </button>
     </div>
   );

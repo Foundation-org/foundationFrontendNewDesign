@@ -14,10 +14,11 @@ const initialState = {
   hiddenPostId: null,
   DisabledPostId: null,
   enablePostId: null,
-  // bookmarkResponse: [],
+  playingIds: [],
   isMediaPlaying: false,
   playerPlayingId: '',
   isShowPlayer: false,
+  loop: false,
 };
 
 export const utilsSlice = createSlice({
@@ -78,11 +79,19 @@ export const utilsSlice = createSlice({
     toggleMedia: (state, action) => {
       state.isMediaPlaying = action.payload;
     },
+    toggleLoop: (state, action) => {
+      state.loop = action.payload;
+    },
     setPlayingPlayerId: (state, action) => {
       state.playerPlayingId = action.payload;
     },
     setIsShowPlayer: (state, action) => {
       state.isShowPlayer = action.payload;
+    },
+    addPlayerId: (state, action) => {
+      if (!state.playingIds?.includes(action.payload)) {
+        state.playingIds.push(action.payload);
+      }
     },
   },
 });
@@ -102,6 +111,8 @@ export const {
   toggleMedia,
   setPlayingPlayerId,
   setIsShowPlayer,
+  addPlayerId,
+  toggleLoop,
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;

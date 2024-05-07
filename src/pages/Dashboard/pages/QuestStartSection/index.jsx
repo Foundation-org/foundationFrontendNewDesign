@@ -82,9 +82,10 @@ const QuestStartSection = () => {
   if (status === 'error') {
     return <p>Error: {error.message}</p>;
   }
-
   const content = data?.pages.map((posts) =>
     posts.map((post, index) => {
+      if (post.url?.length > 0 && !post.url[0]?.includes('flickr') && post.url[0] !== '')
+        dispatch(questUtilsActions.addPlayerId(post._id));
       if (post.id === 'system_notification') {
         return (
           <div className="flex flex-col gap-4 rounded-[13.842px] border-[1.846px] border-[#D9D9D9] bg-[#F4F8FF] px-[44px] py-6">
@@ -95,20 +96,24 @@ const QuestStartSection = () => {
       } else {
         if (posts.length == index + 1) {
           return (
+            // <div key={index + 1} id={posts._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
             <QuestionCardWithToggle
               innerRef={ref}
               key={post._id}
               questStartData={post}
               playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
             />
+            // </div>
           );
         } else {
           return (
+            // <div key={index + 1} id={posts._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
             <QuestionCardWithToggle
               key={post._id}
               questStartData={post}
               playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
             />
+            // </div>
           );
         }
       }
