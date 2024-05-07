@@ -122,14 +122,6 @@ const SidebarLeft = () => {
     localStorage.setItem('selectedButtonId', userData?.States.selectedBtnId);
   }, [localStorage.getItem('userData')]);
 
-  // useEffect(() => {
-  //   if (pathname === '/dashboard/bookmark') {
-  //     setBookmarkFilters({ ...filterStates, columns: filterStates.topics });
-  //   } else {
-  //     setFilters({ ...filterStates, selectedBtnId: localStorage.getItem('selectedButtonId') });
-  //   }
-  // }, [filterStates]);
-
   // Search
   const handleSearch = (e) => {
     setSearch(e.target.value);
