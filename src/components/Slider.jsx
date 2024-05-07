@@ -332,7 +332,7 @@ function Slider({ isFetching }) {
                       list: [item],
                     },
                   },
-                  selectedBtnId: localStorage.getItem('selectedButtonId'),
+                  selectedBtnId: `topic-${index}`,
                 });
                 handleButtonSelection('topics', item, `topic-${index}`);
               }
