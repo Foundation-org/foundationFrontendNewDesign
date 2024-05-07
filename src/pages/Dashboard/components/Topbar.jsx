@@ -53,7 +53,7 @@ const Topbar = () => {
               className="h-2 w-[92.44px] tablet:h-auto tablet:w-auto"
             />
             <span className="absolute -bottom-[3px] -right-[24px] w-fit whitespace-nowrap font-poppins text-[7px] font-medium text-[#D0E4F2] tablet:-bottom-[18px] tablet:-right-8 tablet:left-0 tablet:text-[12px]">
-              v 1.10.7
+              v 1.10.10
             </span>
 
             {/* <h1 className="relative font-neuropol text-[12px] font-normal text-white tablet:text-[20px]">
