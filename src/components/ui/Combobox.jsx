@@ -16,6 +16,7 @@ const CustomCombobox = ({
   verification,
   wordsCheck,
   id,
+  disabled,
 }) => {
   const filteredItems =
     query === ''
@@ -45,10 +46,9 @@ const CustomCombobox = ({
         } else {
           setSelected(item);
         }
+        if (verification && item.name && item.name !== '') verify(item.name);
       }}
-      onBlur={() => {
-        if (verification && selected.name && selected.name !== '') verify(selected.name);
-      }}
+      disabled={disabled}
     >
       <div className="relative">
         <div className="relative w-full cursor-default overflow-hidden rounded-[8.62px] border border-[#DEE6F7] bg-white text-left focus-visible:outline-none sm:text-sm tablet:rounded-[10px] tablet:border-[3px]">
@@ -58,7 +58,6 @@ const CustomCombobox = ({
             displayValue={(item) => item.name}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
-            disabled
             onKeyDown={(e) => (e.key === 'Tab' && handleTab(id)) || (e.key === 'Enter' && handleTab(id, 'Enter'))}
           />
           {isArrow && (
