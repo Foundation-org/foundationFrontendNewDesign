@@ -89,7 +89,9 @@ const CopyDialogue = ({
   const { mutateAsync: handleCreateCustomLink } = useMutation({
     mutationFn: createCustomLink,
     onSuccess: (resp) => {
+      toast.success('Custom link generated successfully.');
       setPostLink(resp.data.data.link);
+      setCreateCustom(false);
     },
     onError: (error) => {
       toast.error(error.response.data.message);
@@ -163,67 +165,89 @@ const CopyDialogue = ({
           </p>
           <div className="flex rounded-[9.42px] border border-[#DEE6F7] tablet:rounded-[15px] tablet:border-[3px]">
             {createCustom ? (
-              <div className="flex">
-                <p className="truncate text-[9.42px] font-normal text-[#435059] tablet:text-[26px] laptop:w-[32.7vw] desktop:w-[32rem]">
+              <div className="flex h-[62.92px] items-center">
+                <p className="pl-[9.43px] text-[9.42px] font-normal leading-[9.42px] text-[#435059] tablet:pl-4 tablet:text-[26px] tablet:leading-[30px]">
                   {url}
                 </p>
                 <input
                   type="text"
-                  className="w-full bg-transparent pl-[9.43px] pr-[1.58rem] text-[9.42px] font-normal text-[#435059] [outline:none] tablet:pl-4 tablet:text-[26px] tablet:leading-[30px]"
+                  className="w-full bg-transparent pr-[1.58rem] text-[9.42px] font-normal text-[#435059] [outline:none] tablet:text-[26px] tablet:leading-[30px]"
                   value={link}
-                  onChange={(e) => setLink(e.target.value)}
+                  onChange={(e) => {
+                    const inputValue = e.target.value;
+                    if (inputValue.length <= 10) {
+                      setLink(inputValue);
+                    } else {
+                      setLink(inputValue.slice(0, 10));
+                    }
+                  }}
                 />
               </div>
             ) : (
-              <div className="w-full rounded-l-[9.42px] py-[6px] pl-[9.43px] pr-[1.58rem] tablet:py-[14px] tablet:pl-4 tablet:leading-[30px] laptop:rounded-l-[26px] laptop:pr-[70px]">
-                <p className="w-[48vw] truncate text-[9.42px] font-normal text-[#435059] tablet:text-[26px] laptop:w-[32.7vw] desktop:w-[32rem]">
+              <div className="flex w-full items-center rounded-l-[9.42px] pl-[9.43px] pr-[1.58rem] tablet:pl-4 laptop:rounded-l-[26px] laptop:pr-[70px]">
+                <p className="w-[48vw] truncate text-[9.42px] font-normal leading-[9.42px] text-[#435059] tablet:text-[26px] tablet:leading-[30px] laptop:w-[32.7vw] desktop:w-[32rem]">
                   {isLoading ? <p className="italic">Generating link..</p> : url + postLink}
                 </p>
               </div>
             )}
-
-            <button
-              className="rounded-r-[9px] bg-[#DEE6F7] px-[11px] py-[6px] tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"
-              onClick={() => {
-                copyToClipboard();
-                toast.success('Link Copied!');
-              }}
-            >
-              <Copy color="#8BAAC0" />
-            </button>
+            {!createCustom && (
+              <button
+                className="rounded-r-[9px] bg-[#DEE6F7] px-[11px] py-[6px] tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"
+                onClick={() => {
+                  copyToClipboard();
+                  toast.success('Link Copied!');
+                }}
+              >
+                <Copy color="#8BAAC0" />
+              </button>
+            )}
           </div>
         </div>
         <div className={'mx-[10px] mt-[0.48rem] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'}>
           {!createCustom ? (
-            <Button
-              variant={'submit'}
-              className={'w-fit min-w-fit whitespace-nowrap'}
-              onClick={() => setCreateCustom(true)}
-            >
-              Create Custom Link
-            </Button>
+            <div className="flex items-center gap-[25px]">
+              <Button
+                variant={'submit'}
+                className={'w-fit min-w-fit whitespace-nowrap'}
+                onClick={() => setCreateCustom(true)}
+              >
+                Create Custom Link
+              </Button>
+              <Button
+                variant={'submit'}
+                className={'w-fit min-w-fit whitespace-nowrap'}
+                onClick={() => navigate('/dashboard/profile/shared-links')}
+              >
+                Manage My Shared Links
+              </Button>
+            </div>
           ) : (
-            <Button
-              variant={'submit'}
-              className={'w-fit min-w-fit whitespace-nowrap'}
-              onClick={() => {
-                handleCreateCustomLink({
-                  questStartData,
-                  uuid: persistedUserInfo.uuid,
-                  link,
-                });
-              }}
-            >
-              Create Custom Link
-            </Button>
+            <div className="flex items-center gap-[25px]">
+              <Button
+                variant={'cancel'}
+                className={'w-fit min-w-fit whitespace-nowrap'}
+                onClick={() => setCreateCustom(false)}
+              >
+                Go Back
+              </Button>
+              <Button
+                variant={'submit'}
+                className={'w-fit min-w-fit whitespace-nowrap'}
+                onClick={() => {
+                  handleCreateCustomLink({
+                    questStartData,
+                    uuid: persistedUserInfo.uuid,
+                    link,
+                  });
+                }}
+              >
+                Create
+                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                  (-2.50 FDX)
+                </span>
+              </Button>
+            </div>
           )}
-          <Button
-            variant={'submit'}
-            className={'w-fit min-w-fit whitespace-nowrap'}
-            onClick={() => navigate('/dashboard/profile/shared-links')}
-          >
-            Manage My Shared Links
-          </Button>
         </div>
       </div>
     </div>

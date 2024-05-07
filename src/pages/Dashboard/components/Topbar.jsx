@@ -42,7 +42,7 @@ const Topbar = () => {
         <div className="relative flex w-full items-center justify-between px-4 py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
           <Link
             to={'/dashboard'}
-            className="flex justify-center"
+            className="relative flex justify-center"
             onClick={() => {
               dispatch(createQuestActions.resetCreateQuest());
             }}
@@ -50,9 +50,9 @@ const Topbar = () => {
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/foundation_logo.svg`}
               alt="foundation_logo"
-              className="h-[15px] w-3 tablet:h-[47px] tablet:w-[38px]"
+              className="h-2 w-[92.44px] tablet:h-auto tablet:w-auto"
             />
-            <span className="absolute -right-[26px] bottom-[2px] whitespace-nowrap font-poppins text-[7px] font-medium text-[#D0E4F2] tablet:-bottom-3 tablet:-right-8 tablet:left-0 tablet:text-[12px]">
+            <span className="absolute -bottom-[3px] -right-[24px] w-fit whitespace-nowrap font-poppins text-[7px] font-medium text-[#D0E4F2] tablet:-bottom-[18px] tablet:-right-8 tablet:left-0 tablet:text-[12px]">
               v 1.10.7
             </span>
 
