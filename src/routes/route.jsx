@@ -38,6 +38,7 @@ import RedemptionCenter from '../pages/Dashboard/pages/Treasury/RedemptionCenter
 import Ledger from '../pages/Dashboard/pages/Treasury/Ledger';
 import TreasuryLayout from '../pages/Dashboard/pages/Treasury/TreasuryLayout';
 import UserSettings from '../pages/Dashboard/pages/Profile/pages/UserSettings';
+import Feedback from '../pages/Dashboard/pages/Profile/pages/feedback';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -153,6 +154,14 @@ export function Router() {
                     element={
                       <ErrorBoundary>
                         <UserSettings />
+                      </ErrorBoundary>
+                    }
+                  />
+                  <Route
+                    path="feedback"
+                    element={
+                      <ErrorBoundary>
+                        <Feedback />
                       </ErrorBoundary>
                     }
                   />
