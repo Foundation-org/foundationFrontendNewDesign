@@ -8,6 +8,9 @@ import Copy from '../../../assets/optionbar/Copy';
 import { Button } from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { userInfo, userInfoById } from '../../../services/api/userAuth';
+import { addUser } from '../../../features/auth/authSlice';
+import { FaSpinner } from 'react-icons/fa';
 
 const CopyDialogue = ({
   handleClose,
@@ -87,10 +90,41 @@ const CopyDialogue = ({
     uniqueLinkQuestSetting();
   }, []);
 
-  const { mutateAsync: handleCreateCustomLink } = useMutation({
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+  });
+
+  const handleUserInfo = async () => {
+    try {
+      const resp = await getUserInfo();
+
+      if (resp?.status === 200) {
+        if (resp.data) {
+          dispatch(addUser(resp?.data));
+          localStorage.setItem('userData', JSON.stringify(resp?.data));
+          if (!localStorage.getItem('uuid')) {
+            localStorage.setItem('uuid', resp.data.uuid);
+          }
+        }
+
+        if (!resp.data) {
+          const res = await userInfoById(localStorage.getItem('uuid'));
+          dispatch(addUser(res?.data));
+        }
+      }
+
+      // setResponse(resp?.data);
+    } catch (e) {
+      console.log({ e });
+      toast.error(e.response.data.message.split(':')[1]);
+    }
+  };
+
+  const { mutateAsync: handleCreateCustomLink, isPending } = useMutation({
     mutationFn: createCustomLink,
     onSuccess: (resp) => {
       toast.success('Custom link generated successfully.');
+      handleUserInfo();
       queryClient.setQueriesData(['posts'], (oldData) => {
         return {
           ...oldData,
@@ -262,11 +296,18 @@ const CopyDialogue = ({
                     link,
                   });
                 }}
+                disabled={isPending}
               >
-                Create
-                <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                  (-2.50 FDX)
-                </span>
+                {isPending ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : (
+                  <>
+                    Create{' '}
+                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                      (-2.50 FDX)
+                    </span>
+                  </>
+                )}
               </Button>
             </div>
           )}
