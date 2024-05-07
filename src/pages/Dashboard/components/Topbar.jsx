@@ -47,12 +47,21 @@ const Topbar = () => {
               dispatch(createQuestActions.resetCreateQuest());
             }}
           >
-            <h1 className="relative font-neuropol text-[12px] font-normal text-white tablet:text-[20px]">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/foundation_logo.svg`}
+              alt="foundation_logo"
+              className="h-[15px] w-3 tablet:h-[47px] tablet:w-[38px]"
+            />
+            <span className="absolute -right-[26px] bottom-[2px] whitespace-nowrap font-poppins text-[7px] font-medium text-[#D0E4F2] tablet:-bottom-3 tablet:-right-8 tablet:left-0 tablet:text-[12px]">
+              v 1.10.7
+            </span>
+
+            {/* <h1 className="relative font-neuropol text-[12px] font-normal text-white tablet:text-[20px]">
               FOUNDATION{' '}
               <span className="absolute -right-[26px] bottom-[2px] whitespace-nowrap font-poppins text-[7px] font-medium text-[#D0E4F2] tablet:-bottom-3 tablet:-right-8 tablet:left-0 tablet:text-[12px]">
                 v 1.10.7
               </span>
-            </h1>
+            </h1> */}
 
             {/* <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="" /> */}
           </Link>

@@ -163,12 +163,17 @@ const CopyDialogue = ({
           </p>
           <div className="flex rounded-[9.42px] border border-[#DEE6F7] tablet:rounded-[15px] tablet:border-[3px]">
             {createCustom ? (
-              <input
-                type="text"
-                className="w-full bg-transparent pl-[9.43px] pr-[1.58rem] text-[9.42px] font-normal text-[#435059] [outline:none] tablet:pl-4 tablet:text-[26px] tablet:leading-[30px]"
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
-              />
+              <div className="flex">
+                <p className="truncate text-[9.42px] font-normal text-[#435059] tablet:text-[26px] laptop:w-[32.7vw] desktop:w-[32rem]">
+                  {url}
+                </p>
+                <input
+                  type="text"
+                  className="w-full bg-transparent pl-[9.43px] pr-[1.58rem] text-[9.42px] font-normal text-[#435059] [outline:none] tablet:pl-4 tablet:text-[26px] tablet:leading-[30px]"
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)}
+                />
+              </div>
             ) : (
               <div className="w-full rounded-l-[9.42px] py-[6px] pl-[9.43px] pr-[1.58rem] tablet:py-[14px] tablet:pl-4 tablet:leading-[30px] laptop:rounded-l-[26px] laptop:pr-[70px]">
                 <p className="w-[48vw] truncate text-[9.42px] font-normal text-[#435059] tablet:text-[26px] laptop:w-[32.7vw] desktop:w-[32rem]">
