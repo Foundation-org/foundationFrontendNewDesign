@@ -2,43 +2,36 @@ import { GrClose } from 'react-icons/gr';
 import { FaSpinner } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { sharedLinksFilters, updateSharedLinkSearch } from '../../../../../../features/profile/sharedLinks';
-import * as questUtilsActions from '../../../../../../features/quest/utilsSlice';
-import DisabledLinkPopup from '../../../../../../components/dialogue-boxes/DisabledLinkPopup';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useDebounce } from '../../../../../../utils/useDebounce';
 import api from '../../../../../../services/api/Axios';
 import { FeedbackCard } from './components/FeedbackCard';
+import { feedbackFilters, updateFeedbackSearch } from '../../../../../../features/profile/feedbackSlice';
 
 export default function Feedback() {
   const dispatch = useDispatch();
   const { ref, inView } = useInView();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const questUtils = useSelector(questUtilsActions.getQuestUtils);
-  const getSharedLinksFilters = useSelector(sharedLinksFilters);
-  const [sharedlinkSearch, setSharedlinkSearch] = useState('');
+  const getFeedbackFilters = useSelector(feedbackFilters);
+  const [feedbackSearch, setFeedbackSearch] = useState('');
 
-  const handleSharedLinkSearch = (e) => {
-    setSharedlinkSearch(e.target.value);
+  const handleFeedbackSearch = (e) => {
+    setFeedbackSearch(e.target.value);
   };
 
-  const debouncedSharedSearch = useDebounce(sharedlinkSearch, 1000);
+  const debouncedFeedbackSearch = useDebounce(feedbackSearch, 1000);
 
   useEffect(() => {
-    dispatch(updateSharedLinkSearch(debouncedSharedSearch));
-  }, [debouncedSharedSearch]);
+    dispatch(updateFeedbackSearch(debouncedFeedbackSearch));
+  }, [debouncedFeedbackSearch]);
 
   useEffect(() => {
-    if (getSharedLinksFilters.searchData === '') {
-      setSharedlinkSearch('');
+    if (getFeedbackFilters.searchData === '') {
+      setFeedbackSearch('');
     }
-  }, [getSharedLinksFilters.searchData]);
-
-  const showHidePostClose = () => {
-    dispatch(questUtilsActions.updateDialogueBox({ type: null, status: false, link: null, id: null }));
-  };
+  }, [getFeedbackFilters.searchData]);
 
   const fetchPosts = async function getInfoQuestions({ pageParam }) {
     const params = {
@@ -49,7 +42,7 @@ export default function Feedback() {
       uuid: persistedUserInfo.uuid,
       sort: 'Newest First',
       Page: 'Feedback',
-      terms: '',
+      terms: getFeedbackFilters.searchData,
       type: 'All',
       moderationRatingInitial: 0,
       moderationRatingFinal: 100,
@@ -61,7 +54,7 @@ export default function Feedback() {
   };
 
   const { data, status, error, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery({
-    queryKey: ['feedback', getSharedLinksFilters.searchData],
+    queryKey: ['feedback', getFeedbackFilters.searchData],
     queryFn: fetchPosts,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
@@ -93,7 +86,6 @@ export default function Feedback() {
   return (
     <div>
       <div className="mx-[15px] my-2 mr-4 flex justify-between tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
-        <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} />
         <h1 className="text-[12px] font-semibold leading-[17px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
           Feedback
         </h1>
@@ -103,9 +95,9 @@ export default function Feedback() {
               type="text"
               id="floating_outlined"
               className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full appearance-none rounded-[3.55px] border-[0.71px] border-[#707175] bg-transparent py-2 pl-2 pr-8 text-[6px] leading-[7.25px] text-[#707175] focus:outline-none focus:ring-0 tablet:rounded-[10px] tablet:border-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-              value={sharedlinkSearch}
+              value={feedbackSearch}
               placeholder=""
-              onChange={handleSharedLinkSearch}
+              onChange={handleFeedbackSearch}
             />
             <label
               htmlFor="floating_outlined"
@@ -113,17 +105,17 @@ export default function Feedback() {
             >
               Search
             </label>
-            {getSharedLinksFilters.searchData && (
+            {getFeedbackFilters.searchData && (
               <button
                 className="absolute right-1.5 top-[55%] -translate-y-1/2 transform tablet:right-3 tablet:top-1/2 "
                 onClick={() => {
-                  dispatch(updateSharedLinkSearch(''));
+                  dispatch(updateFeedbackSearch(''));
                 }}
               >
                 <GrClose className="h-2 w-2 text-[#ACACAC] tablet:h-4 tablet:w-4 dark:text-white" />
               </button>
             )}
-            {!getSharedLinksFilters.searchData && (
+            {!getFeedbackFilters.searchData && (
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
                 alt="search"
@@ -139,7 +131,7 @@ export default function Feedback() {
           {content}
           {!isFetching ? (
             <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
-              {getSharedLinksFilters.searchData && data?.pages[0].length == 0 ? (
+              {getFeedbackFilters.searchData && data?.pages[0].length == 0 ? (
                 <div className="my-[15vh] flex  flex-col items-center justify-center">
                   {persistedTheme === 'dark' ? (
                     <img
@@ -162,18 +154,18 @@ export default function Feedback() {
                         persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                       }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                       onClick={() => {
-                        dispatch(updateSharedLinkSearch(''));
+                        dispatch(updateFeedbackSearch(''));
                       }}
                     >
                       Clear Search
                     </button>
                   </div>
                 </div>
-              ) : !getSharedLinksFilters.searchData && data?.pages[0].length === 0 ? (
+              ) : !getFeedbackFilters.searchData && data?.pages[0].length === 0 ? (
                 <p className="text-center text-[4vw] laptop:text-[2vw]">
                   <b>No Feedback posts!</b>
                 </p>
-              ) : !getSharedLinksFilters.searchData ? (
+              ) : !getFeedbackFilters.searchData ? (
                 <p className="text-center text-[4vw] laptop:text-[2vw]">
                   <b>No more posts!</b>
                 </p>
@@ -187,7 +179,7 @@ export default function Feedback() {
                       persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
                     }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                     onClick={() => {
-                      dispatch(updateSharedLinkSearch(''));
+                      dispatch(updateFeedbackSearch(''));
                     }}
                   >
                     Clear Search

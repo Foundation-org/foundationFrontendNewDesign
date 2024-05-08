@@ -96,7 +96,7 @@ const QuestStartSection = () => {
       } else {
         if (posts.length == index + 1) {
           return (
-            <div key={index + 1} id={post._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
+            <div key={post._id} id={post._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
               <QuestionCardWithToggle
                 innerRef={ref}
                 questStartData={post}
@@ -106,7 +106,7 @@ const QuestStartSection = () => {
           );
         } else {
           return (
-            <div key={index + 1} id={post._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
+            <div key={post._id} id={post._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
               <QuestionCardWithToggle
                 questStartData={post}
                 playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
