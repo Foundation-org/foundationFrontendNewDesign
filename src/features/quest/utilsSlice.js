@@ -85,6 +85,9 @@ export const utilsSlice = createSlice({
     setPlayingPlayerId: (state, action) => {
       state.playerPlayingId = action.payload;
     },
+    resetPlayingIds: (state) => {
+      state.playingIds = initialState.playingIds;
+    },
     setIsShowPlayer: (state, action) => {
       state.isShowPlayer = action.payload;
     },
@@ -113,6 +116,7 @@ export const {
   setIsShowPlayer,
   addPlayerId,
   toggleLoop,
+  resetPlayingIds,
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;
