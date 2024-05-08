@@ -27,7 +27,7 @@ const Guests = () => {
     }
   }, [isFullScreen]);
 
-  const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state);
+  const { data: singleQuestResp } = useGetSingleQuest(persistedUserInfo?.uuid, location.state.questId);
 
   const handleStartTest = useCallback(
     (testId) => {
@@ -110,6 +110,7 @@ const Guests = () => {
                         handleStartTest={handleStartTest}
                         expandedView={true}
                         setSubmitResponse={setSubmitResponse}
+                        questType={location.state.questType}
                       />
                     </div>
                   )}

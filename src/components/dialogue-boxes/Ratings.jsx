@@ -8,6 +8,7 @@ import * as homeFilterActions from '../../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../../features/sidebar/bookmarkFilterSlice';
 import { useLocation } from 'react-router-dom';
 import { isEqual } from 'lodash';
+import { setIsShowPlayer, setPlayingPlayerId } from '../../features/quest/utilsSlice';
 
 export const StatusFiltersList = [
   {
@@ -203,6 +204,8 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
   const handleSubmit = () => {
     console.log({ selectedOptions });
     // if (filterValues.type !== '') {
+    dispatch(setIsShowPlayer(false));
+    dispatch(setPlayingPlayerId(''));
     dispatch(homeFilterActions.setFilterByType(filterValues.type));
     dispatch(homeFilterActions.setFilterByStatus(filterValues.status));
     dispatch(homeFilterActions.setFilterByMedia(filterValues.media));

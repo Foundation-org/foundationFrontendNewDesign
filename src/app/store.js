@@ -18,6 +18,7 @@ import pictureMediaReducer from '../features/createQuest/pictureMediaSlice';
 import ledgerReducer from '../features/profile/legerSlice';
 import hiddenPostReducer from '../features/profile/hiddenPosts';
 import sharedLinksReducer from '../features/profile/sharedLinks';
+import feedbackReducer from '../features/profile/feedbackSlice';
 
 const persistConfig = {
   key: 'persist-store',
@@ -40,6 +41,7 @@ const reducer = combineReducers({
   ledger: ledgerReducer,
   hiddenPosts: hiddenPostReducer,
   sharedLinks: sharedLinksReducer,
+  feedback: feedbackReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);

@@ -38,9 +38,8 @@ import RedemptionCenter from '../pages/Dashboard/pages/Treasury/RedemptionCenter
 import Ledger from '../pages/Dashboard/pages/Treasury/Ledger';
 import TreasuryLayout from '../pages/Dashboard/pages/Treasury/TreasuryLayout';
 import UserSettings from '../pages/Dashboard/pages/Profile/pages/UserSettings';
-import Feedback from '../pages/Dashboard/pages/Profile/pages/feedback';
 
-export function Router() {
+export function MaintenanceRouter() {
   const persistedUser = useSelector((state) => state.auth.user);
   const ROLES = {
     User: 'user',
@@ -56,15 +55,15 @@ export function Router() {
           {/* Public */}
           <Routes>
             <Route path="/maintenance" element={<Maintenance />} />
-            <Route path="/" element={<Welcome />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/term-of-service" element={<TermOfService />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/verifycode" element={<VerifyCode />} />
-            <Route path="/auth0" element={<DashboardRedirect />} />
-            <Route path="/p/:id" element={<GuestRedirect />} />
+            <Route path="/" element={<Maintenance />} />
+            <Route path="/signin" element={<Maintenance />} />
+            <Route path="/signup" element={<Maintenance />} />
+            <Route path="/term-of-service" element={<Maintenance />} />
+            <Route path="/privacy-policy" element={<Maintenance />} />
+            <Route path="/verify-email" element={<Maintenance />} />
+            <Route path="/verifycode" element={<Maintenance />} />
+            <Route path="/auth0" element={<Maintenance />} />
+            <Route path="/p/:id" element={<Maintenance />} />
             <Route
               path="/dashboard/treasury/:code"
               element={<Navigate to="/" state={{ from: '/dashboard/treasury/:code' }} />}
@@ -78,34 +77,34 @@ export function Router() {
           <Routes>
             <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
               <Route path="/maintenance" element={<Maintenance />} />
-              <Route path="/dashboard/faq/" element={<CustomerSupport />}>
-                <Route path="" element={<Faq />} />
-                <Route path="contact-us" element={<ContactUs />} />
+              <Route path="/dashboard/faq/" element={<Maintenance />}>
+                <Route path="" element={<Maintenance />} />
+                <Route path="contact-us" element={<Maintenance />} />
               </Route>
               <Route
                 path="/dashboard/"
                 element={
                   <ErrorBoundary>
-                    <Dashboard />
+                    <Maintenance />
                   </ErrorBoundary>
                 }
               >
-                <Route path="" element={<QuestStartSection />} />
-                <Route path="quest" element={<Quest />} />
-                <Route path="bookmark" element={<Bookmark />} />
-                <Route path="treasury/" element={<TreasuryLayout />}>
-                  <Route path="" element={<RedemptionCenter />} />
-                  <Route path="ledger" element={<Ledger />} />
+                <Route path="" element={<Maintenance />} />
+                <Route path="quest" element={<Maintenance />} />
+                <Route path="bookmark" element={<Maintenance />} />
+                <Route path="treasury/" element={<Maintenance />}>
+                  <Route path="" element={<Maintenance />} />
+                  <Route path="ledger" element={<Maintenance />} />
                 </Route>
-                <Route path="treasury/:code" element={<TreasuryLayout />}>
-                  <Route path="" element={<RedemptionCenter />} />
-                  <Route path="ledger" element={<Ledger />} />
+                <Route path="treasury/:code" element={<Maintenance />}>
+                  <Route path="" element={<Maintenance />} />
+                  <Route path="ledger" element={<Maintenance />} />
                 </Route>
                 <Route
                   path="profile/"
                   element={
                     <ErrorBoundary>
-                      <Profile />
+                      <Maintenance />
                     </ErrorBoundary>
                   }
                 >
@@ -113,7 +112,7 @@ export function Router() {
                     path=""
                     element={
                       <ErrorBoundary>
-                        <VerificationBadges />
+                        <Maintenance />
                       </ErrorBoundary>
                     }
                   />
@@ -121,7 +120,7 @@ export function Router() {
                     path="contributions"
                     element={
                       <ErrorBoundary>
-                        <Contributions />
+                        <Maintenance />
                       </ErrorBoundary>
                     }
                   />
@@ -129,7 +128,7 @@ export function Router() {
                     path="ledger"
                     element={
                       <ErrorBoundary>
-                        <BasicTable />
+                        <Maintenance />
                       </ErrorBoundary>
                     }
                   />
@@ -137,7 +136,7 @@ export function Router() {
                     path="hidden-posts"
                     element={
                       <ErrorBoundary>
-                        <HiddenPosts />
+                        <Maintenance />
                       </ErrorBoundary>
                     }
                   />
@@ -145,7 +144,7 @@ export function Router() {
                     path="shared-links"
                     element={
                       <ErrorBoundary>
-                        <SharedLinks />
+                        <Maintenance />
                       </ErrorBoundary>
                     }
                   />
@@ -153,26 +152,18 @@ export function Router() {
                     path="user-settings"
                     element={
                       <ErrorBoundary>
-                        <UserSettings />
+                        <Maintenance />
                       </ErrorBoundary>
                     }
                   />
-                  <Route
-                    path="feedback"
-                    element={
-                      <ErrorBoundary>
-                        <Feedback />
-                      </ErrorBoundary>
-                    }
-                  />
-                  <Route path="change-password" element={<ChangePassword />} />
+                  <Route path="change-password" element={<Maintenance />} />
                 </Route>
               </Route>
               <Route
                 path="/profile/"
                 element={
                   <ErrorBoundary>
-                    <Profile />
+                    <Maintenance />
                   </ErrorBoundary>
                 }
               >
@@ -180,7 +171,7 @@ export function Router() {
                   path=""
                   element={
                     <ErrorBoundary>
-                      <Contributions />
+                      <Maintenance />
                     </ErrorBoundary>
                   }
                 />
@@ -188,7 +179,7 @@ export function Router() {
                   path="verification-badges"
                   element={
                     <ErrorBoundary>
-                      <VerificationBadges />
+                      <Maintenance />
                     </ErrorBoundary>
                   }
                 />
@@ -196,7 +187,7 @@ export function Router() {
                   path="ledger"
                   element={
                     <ErrorBoundary>
-                      <BasicTable />
+                      <Maintenance />
                     </ErrorBoundary>
                   }
                 />
@@ -204,7 +195,7 @@ export function Router() {
                   path="hidden-posts"
                   element={
                     <ErrorBoundary>
-                      <HiddenPosts />
+                      <Maintenance />
                     </ErrorBoundary>
                   }
                 />
@@ -212,25 +203,25 @@ export function Router() {
                   path="shared-links"
                   element={
                     <ErrorBoundary>
-                      <SharedLinks />
+                      <Maintenance />
                     </ErrorBoundary>
                   }
                 />
-                <Route path="change-password" element={<ChangePassword />} />
+                <Route path="change-password" element={<Maintenance />} />
               </Route>
-              <Route path="/shared-links/result" element={<SharedLinkResults />} />
-              <Route path="/quest/:isFullScreen" element={<Guests />} />
-              <Route path="/p/:id" element={<SingleQuest />} />
-              <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />
-              <Route path="/verify-email" element={<VerifyEmail />} />
-              <Route path="/guest-signup" element={<Signup />} />
+              <Route path="/shared-links/result" element={<Maintenance />} />
+              <Route path="/quest/:isFullScreen" element={<Maintenance />} />
+              <Route path="/p/:id" element={<Maintenance />} />
+              <Route path="/badgeverifycode" element={<Maintenance />} />
+              <Route path="/verify-email" element={<Maintenance />} />
+              <Route path="/guest-signup" element={<Maintenance />} />
               <Route
                 path="/signin"
-                element={persistedUser.role === 'user' ? <Navigate to="/dashboard" /> : <Signin />}
+                element={persistedUser.role === 'user' ? <Navigate to="/dashboard" /> : <Maintenance />}
               />
 
-              <Route path="/verifycode" element={<VerifyCode />} />
-              <Route path="*" element={<Navigate to="/dashboard" />} />
+              <Route path="/verifycode" element={<Maintenance />} />
+              <Route path="*" element={<Maintenance to="/dashboard" />} />
             </Route>
           </Routes>
         </>

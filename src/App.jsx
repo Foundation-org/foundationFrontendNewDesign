@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Router } from './routes/route';
 import { Toaster, toast } from 'sonner';
 import SEO from './utils/SEO';
+import { MaintenanceRouter } from './routes/maintenance';
 // import SEO from './utils/SEO';
 
 function App() {
@@ -119,6 +120,7 @@ function App() {
         type={'website'}
       />
       <Router />
+      {/* <MaintenanceRouter /> */}
       <Toaster position="top-right" expand={true} theme={persistedTheme === 'dark' ? 'dark' : 'light'} richColors />
     </div>
   );

@@ -480,55 +480,57 @@ export default function RedemptionCenter() {
               </p>
             </div>
             <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
-              {history?.data?.data?.map((item, index) => (
-                <div key={index + 1}>
-                  <div
-                    className={`flex flex-col justify-between gap-2 py-2  pl-[13px] pr-4 tablet:h-[112px] tablet:gap-4  tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:h-[67px] laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
-                  >
-                    <div className="flex items-center gap-[10px] tablet:gap-[35px]">
-                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
-                        {item.amount}
-                      </p>
-                      <div className="flex items-center text-[10px] font-medium leading-normal tablet:text-[20px]">
-                        <div className="tooltip text-start" data-tip={item.description}>
-                          <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[189px] tablet:max-w-[189px]">
-                            {item.description}
-                          </p>
+              {history?.data?.data
+                ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .map((item, index) => (
+                  <div key={index + 1}>
+                    <div
+                      className={`flex flex-col justify-between gap-2 py-2  pl-[13px] pr-4 tablet:h-[112px] tablet:gap-4  tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:h-[67px] laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                    >
+                      <div className="flex items-center gap-[10px] tablet:gap-[35px]">
+                        <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
+                          {item.amount}
+                        </p>
+                        <div className="flex items-center text-[10px] font-medium leading-normal tablet:text-[20px]">
+                          <div className="tooltip text-start" data-tip={item.description}>
+                            <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[189px] tablet:max-w-[189px]">
+                              {item.description}
+                            </p>
+                          </div>
                         </div>
+                        <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal tablet:min-w-36 tablet:max-w-36 tablet:text-[20px]">
+                          {item.code}
+                        </p>
+                        <p className="leading-normals min-w-[40px] max-w-[40px] text-[10px] font-medium tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
+                          {/* {calculateExpiry(item.expiry)} */}
+                          Never
+                        </p>
                       </div>
-                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal tablet:min-w-36 tablet:max-w-36 tablet:text-[20px]">
-                        {item.code}
-                      </p>
-                      <p className="leading-normals min-w-[40px] max-w-[40px] text-[10px] font-medium tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
-                        {/* {calculateExpiry(item.expiry)} */}
-                        Never
-                      </p>
+                      <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
+                        <p
+                          className={`text-[9px] font-medium leading-normal tablet:text-[20px] ${index === 0 && isPulse ? 'text-[#049952]' : 'text-[#A3A3A3]'}`}
+                        >
+                          Redeemed
+                        </p>
+                        <p className="text-[9px] font-medium leading-normal tablet:text-[20px]">
+                          {formatDate(item.createdAt)}
+                        </p>
+                        <img
+                          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                          alt="trash"
+                          className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
+                          onClick={() => {
+                            setDeleteHistoryCode(item.code);
+                            setIsDeleteModal(true);
+                          }}
+                        />
+                      </div>
                     </div>
-                    <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
-                      <p
-                        className={`text-[9px] font-medium leading-normal tablet:text-[20px] ${index === 0 && isPulse ? 'text-[#049952]' : 'text-[#A3A3A3]'}`}
-                      >
-                        Redeemed
-                      </p>
-                      <p className="text-[9px] font-medium leading-normal tablet:text-[20px]">
-                        {formatDate(item.createdAt)}
-                      </p>
-                      <img
-                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                        alt="trash"
-                        className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
-                        onClick={() => {
-                          setDeleteHistoryCode(item.code);
-                          setIsDeleteModal(true);
-                        }}
-                      />
-                    </div>
+                    {index !== history?.data?.data.length - 1 && (
+                      <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
+                    )}
                   </div>
-                  {index !== history?.data?.data.length - 1 && (
-                    <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
-                  )}
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         )}

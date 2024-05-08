@@ -14,10 +14,10 @@ const Quest = () => {
   return (
     <div className="w-full bg-[#F2F3F5] pb-8 md:pb-12 tablet:h-[calc(100vh-96px)] laptop:h-[calc(100vh-70px)] dark:bg-[#242424]">
       {/* <Navbar handleTab={handleTab} tab={tab} /> */}
-      <div className="mx-auto max-w-[778px]">
+      <div className="fixed left-auto right-auto w-full max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
         <CreateSlider setTab={setTab} tab={tab} />
       </div>
-      <div className="no-scrollbar h-[calc(100dvh-141.89px)] overflow-y-auto tablet:mx-6 tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.63px)]">
+      <div className="no-scrollbar mt-10 h-[calc(100dvh-141.89px)] overflow-y-auto tablet:mx-6 tablet:mt-[77.63px] tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.63px)]">
         {tab === 0 && <YesNo />}
         {tab === 1 && <MultipleChoice />}
         {tab === 2 && <RankChoice />}

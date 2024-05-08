@@ -2,12 +2,15 @@ import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createUpdateUniqueLink, generateImage } from '../../../services/api/questsApi';
+import { createCustomLink, createUpdateUniqueLink, generateImage } from '../../../services/api/questsApi';
 import { addSharedLinkPost } from '../../../features/quest/utilsSlice';
 import Copy from '../../../assets/optionbar/Copy';
 import { Button } from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { userInfo, userInfoById } from '../../../services/api/userAuth';
+import { addUser } from '../../../features/auth/authSlice';
+import { FaSpinner } from 'react-icons/fa';
 
 const CopyDialogue = ({
   handleClose,
@@ -22,12 +25,15 @@ const CopyDialogue = ({
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
   const [postLink, setPostLink] = useState(questStartData?.userQuestSetting?.link || '');
   let url = `${protocol}//${host}/p/`;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [createCustom, setCreateCustom] = useState(false);
+  const [link, setLink] = useState('');
 
   const copyToClipboard = async () => {
     const textToCopy = url + postLink;
@@ -84,6 +90,70 @@ const CopyDialogue = ({
     uniqueLinkQuestSetting();
   }, []);
 
+  const { mutateAsync: getUserInfo } = useMutation({
+    mutationFn: userInfo,
+  });
+
+  const handleUserInfo = async () => {
+    try {
+      const resp = await getUserInfo();
+
+      if (resp?.status === 200) {
+        if (resp.data) {
+          dispatch(addUser(resp?.data));
+          localStorage.setItem('userData', JSON.stringify(resp?.data));
+          if (!localStorage.getItem('uuid')) {
+            localStorage.setItem('uuid', resp.data.uuid);
+          }
+        }
+
+        if (!resp.data) {
+          const res = await userInfoById(localStorage.getItem('uuid'));
+          dispatch(addUser(res?.data));
+        }
+      }
+
+      // setResponse(resp?.data);
+    } catch (e) {
+      console.log({ e });
+      toast.error(e.response.data.message.split(':')[1]);
+    }
+  };
+
+  const { mutateAsync: handleCreateCustomLink, isPending } = useMutation({
+    mutationFn: createCustomLink,
+    onSuccess: (resp) => {
+      toast.success('Custom link generated successfully.');
+      handleUserInfo();
+      queryClient.setQueriesData(['posts'], (oldData) => {
+        return {
+          ...oldData,
+          pages: oldData?.pages?.map((page) => {
+            const updatedPage = page.map((item) => {
+              if (item._id === resp.data.data.questForeignKey) {
+                return {
+                  ...item,
+                  userQuestSetting: {
+                    ...item.userQuestSetting,
+                    link: resp.data.data.link,
+                  },
+                };
+              }
+              return item;
+            });
+            return updatedPage;
+          }),
+        };
+      });
+
+      setPostLink(resp.data.data.link);
+      setCreateCustom(false);
+    },
+    onError: (error) => {
+      toast.error(error.response.data.message);
+    },
+  });
+
   return (
     <div className="relative w-[90vw] laptop:w-[52.6rem]">
       <div className="social-blue-gradiant relative flex items-center gap-[10px] rounded-t-[9.251px] px-[15px] py-1 tablet:gap-4 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-[8px]">
@@ -122,8 +192,7 @@ const CopyDialogue = ({
           </svg>
         </div>
       </div>
-      <div className="flex flex-col justify-center px-[40px] py-[15px] tablet:py-[44px] laptop:px-[80px]">
-        {/* {createdBy === persistedUserInfo?.uuid ? (
+      {/* {createdBy === persistedUserInfo?.uuid ? (
           <div className="relative flex h-fit w-full items-center justify-center pb-[4.11px] laptop:pb-[10px]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
@@ -145,29 +214,103 @@ const CopyDialogue = ({
         <h1 className="mb-[1.15rem] text-center text-[12px] font-semibold text-[#5B5B5B] tablet:mb-5 tablet:text-[25px]">
           Say Thanks to Contributor
         </h1> */}
-        <p className="mb-[0.48rem] text-center text-[10px] font-semibold text-[#5B5B5B] tablet:mb-[15px] tablet:text-[22px]">
-          Copy Post Address
-        </p>
-        <div className="flex">
-          <div className="w-full rounded-l-[9.42px] bg-[#F3F3F3] py-[10.51px] pl-[9.43px] pr-[1.58rem] tablet:py-[30px] tablet:pl-[26px] tablet:leading-[30px] laptop:rounded-l-[26px] laptop:pr-[70px]">
-            <p className="w-[48vw] truncate text-[9.42px] font-normal text-[#435059] tablet:text-[26px] laptop:w-[32.7vw] desktop:w-[32rem]">
-              {isLoading ? <p className="italic">Generating link..</p> : url + postLink}
-            </p>
+      <div className="flex flex-col justify-center py-[15px] tablet:py-[25px]">
+        <div className="px-[20px] laptop:px-[80px]">
+          <p className="mb-[0.48rem] text-[10px] font-semibold text-[#5B5B5B] tablet:mb-[15px] tablet:text-[22px]">
+            {createCustom ? 'Custom Link Address' : 'Copy Post Address'}
+          </p>
+          <div className="flex rounded-[9.42px] border border-[#DEE6F7] tablet:rounded-[15px] tablet:border-[3px]">
+            {createCustom ? (
+              <div className="flex h-[28.38px] items-center tablet:h-[62.92px]">
+                <p className="pl-[9.43px] text-[9.42px] font-normal leading-[9.42px] text-[#435059] tablet:pl-4 tablet:text-[26px] tablet:leading-[30px]">
+                  {url}
+                </p>
+                <input
+                  type="text"
+                  className="w-full bg-transparent pr-[1.58rem] text-[9.42px] font-normal text-[#435059] [outline:none] tablet:text-[26px] tablet:leading-[30px]"
+                  value={link}
+                  onChange={(e) => {
+                    const inputValue = e.target.value;
+                    if (inputValue.length <= 35) {
+                      setLink(inputValue);
+                    } else {
+                      setLink(inputValue.slice(0, 35));
+                    }
+                  }}
+                />
+              </div>
+            ) : (
+              <div className="flex w-full items-center rounded-l-[9.42px] pl-[9.43px] pr-[1.58rem] tablet:pl-4 laptop:rounded-l-[26px] laptop:pr-[70px]">
+                <p className="w-[48vw] truncate text-[9.42px] font-normal leading-[9.42px] text-[#435059] tablet:text-[26px] tablet:leading-[30px] laptop:w-[32.7vw] desktop:w-[32rem]">
+                  {isLoading ? <p className="italic">Generating link..</p> : url + postLink}
+                </p>
+              </div>
+            )}
+            {!createCustom && (
+              <button
+                className="rounded-r-[9px] bg-[#DEE6F7] px-[11px] py-[6px] tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"
+                onClick={() => {
+                  copyToClipboard();
+                  toast.success('Link Copied!');
+                }}
+              >
+                <Copy color="#8BAAC0" />
+              </button>
+            )}
           </div>
-          <button
-            className="rounded-r-[9.42px] bg-[#DEE6F7] px-[11.7px] py-[6.9px] tablet:px-[30px] laptop:rounded-r-[26px] laptop:py-5"
-            onClick={() => {
-              copyToClipboard();
-              toast.success('Link Copied!');
-            }}
-          >
-            <Copy color="#8BAAC0" />
-          </button>
         </div>
-        <div className={'mt-[0.48rem] flex justify-center tablet:mt-4'}>
-          <Button variant={'submit'} className={'w-fit'} onClick={() => navigate('/dashboard/profile/shared-links')}>
-            Manage My Shared Links
-          </Button>
+        <div className={'mx-[10px] mt-[0.48rem] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'}>
+          {!createCustom ? (
+            <div className="flex items-center gap-[25px]">
+              <Button
+                variant={'submit'}
+                className={'w-fit min-w-fit whitespace-nowrap'}
+                onClick={() => setCreateCustom(true)}
+              >
+                Create Custom Link
+              </Button>
+              <Button
+                variant={'submit'}
+                className={'w-fit min-w-fit whitespace-nowrap'}
+                onClick={() => navigate('/dashboard/profile/shared-links')}
+              >
+                Manage My Shared Links
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-4 tablet:gap-[25px]">
+              <Button
+                variant={'cancel'}
+                className={'w-fit min-w-fit whitespace-nowrap px-2'}
+                onClick={() => setCreateCustom(false)}
+              >
+                Go Back
+              </Button>
+              <Button
+                variant={'submit'}
+                className={'w-fit min-w-fit whitespace-nowrap'}
+                onClick={() => {
+                  handleCreateCustomLink({
+                    questStartData,
+                    uuid: persistedUserInfo.uuid,
+                    link,
+                  });
+                }}
+                disabled={isPending}
+              >
+                {isPending ? (
+                  <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                ) : (
+                  <>
+                    Create{' '}
+                    <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
+                      (-2.50 FDX)
+                    </span>
+                  </>
+                )}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -175,3 +318,4 @@ const CopyDialogue = ({
 };
 
 export default CopyDialogue;
+//

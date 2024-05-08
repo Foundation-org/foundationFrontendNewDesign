@@ -1,4 +1,4 @@
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import BookmarkIcon from '../../pages/Dashboard/pages/QuestStartSection/components/BookmarkIcon';
 
@@ -37,7 +37,7 @@ const CardTopbar = ({
   // } else ratingImage = 'post-a.svg';
 
   return (
-    <div className="flex flex-col justify-between border-[#D9D9D9] px-2 pt-2 tablet:px-5 tablet:pt-4 laptop:px-5">
+    <div className="flex flex-col justify-between border-[#D9D9D9] px-2 pt-2 tablet:px-5 tablet:pt-4">
       <div className="flex items-start justify-between border-[#D9D9D9]">
         <div className="flex flex-col gap-[10px] tablet:gap-[18px]">
           <div className="flex items-start gap-2 tablet:gap-4 ">
@@ -75,6 +75,7 @@ const CardTopbar = ({
             </div>
           </div>
         </div>
+
         {postProperties === 'HiddenPosts' ? (
           // <div className="flex items-center gap-2">
           //   <h1 className="text-[0.57375rem] font-medium text-[#9A9A9A] tablet:text-[1.26144rem] laptop:text-[1rem]">

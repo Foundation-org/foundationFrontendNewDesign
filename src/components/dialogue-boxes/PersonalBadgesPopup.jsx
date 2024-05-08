@@ -186,8 +186,7 @@ const PersonalBadgesPopup = ({
       }
     }
   }, [date, selected, name, check, prevInfo]);
-  console.log(name && name !== prevInfo && !check);
-  console.log(hollow);
+
   const { data: apiResp } = useQuery({
     queryKey: ['validate-name', (title === 'First Name' || title === 'Last Name') && debounceName],
     queryFn: () =>
@@ -379,26 +378,42 @@ const PersonalBadgesPopup = ({
         {data && data.length >= 1 ? (
           <>
             <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-              <CustomCombobox
-                items={questions}
-                selected={selected}
-                setSelected={setSelected}
-                placeholder={placeholder}
-                query={query}
-                setQuery={setQuery}
-              />
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                placeholder={placeholder2}
-                className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
-              />
-              {isError && (
-                <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
-              )}
+              <div className="my-[5px] w-full ">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  Security question
+                </p>
+                <div className="z-20 flex flex-col gap-[10px] tablet:gap-[15px]">
+                  <CustomCombobox
+                    items={questions}
+                    selected={selected}
+                    setSelected={setSelected}
+                    query={query}
+                    setQuery={setQuery}
+                    placeholder={edit ? (selected?.name ? placeholder : 'Loading...') : placeholder}
+                    disabled={edit ? (selected?.name ? false : true) : false}
+                  />
+                </div>
+              </div>
+              <div className="w-full">
+                <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
+                  Answer
+                </p>
+                <input
+                  type="text"
+                  value={edit ? (name ? name : 'Loading...') : name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  placeholder={placeholder2}
+                  disabled={edit ? (name ? false : true) : false}
+                  className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${
+                    edit ? (name ? '' : 'caret-hidden') : ''
+                  }`}
+                />
+                {isError && (
+                  <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
+                )}
+              </div>
             </div>
             <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
               {edit && (
@@ -431,13 +446,13 @@ const PersonalBadgesPopup = ({
           <div className="relative">
             <input
               type="text"
-              value={name}
+              value={edit ? (name ? name : 'Loading...') : name}
               disabled
               placeholder={placeholder2}
               className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
             />
             <div className="mt-[10px] flex justify-between gap-2 tablet:mt-5">
-              <Button variant="submit" onClick={() => getLocation()}>
+              <Button variant="submit" onClick={() => getLocation()} disabled={edit ? (name ? false : true) : false}>
                 Get Current location
               </Button>
               <div className="flex justify-between gap-[13px] tablet:gap-[35px]">
@@ -472,13 +487,16 @@ const PersonalBadgesPopup = ({
           <div className="relative">
             <input
               type="text"
-              value={name}
+              value={edit ? (name ? name : 'Loading...') : name}
               onChange={(e) => {
                 setCheck(true);
                 setName(e.target.value);
               }}
               placeholder={placeholder}
-              className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
+              disabled={edit ? (name ? false : true) : false}
+              className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${
+                edit ? (name ? '' : 'caret-hidden') : ''
+              }`}
             />
             {isError && (
               <p className="absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
@@ -528,10 +546,11 @@ const PersonalBadgesPopup = ({
             items={cities}
             selected={selected}
             setSelected={setSelected}
-            placeholder={placeholder}
+            placeholder={edit ? (selected?.name ? placeholder : 'Loading...') : placeholder}
             query={query}
             setQuery={setQuery}
             type={'city'}
+            disabled={edit ? (selected?.name ? false : true) : false}
           />
           {isError && (
             <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
@@ -574,7 +593,13 @@ const PersonalBadgesPopup = ({
         {/* {data && data.length >= 1 ? (
           <> */}
         <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
-          <Listbox items={relationshipData} selected={selected} setSelected={setSelected} placeholder={placeholder} />
+          <Listbox
+            items={relationshipData}
+            selected={selected}
+            setSelected={setSelected}
+            placeholder={edit ? (selected?.name ? placeholder : 'Loading...') : placeholder}
+            disabled={edit ? (selected?.name ? false : true) : false}
+          />
           {isError && (
             <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
           )}
@@ -651,13 +676,22 @@ const PersonalBadgesPopup = ({
         {title === 'Last Name' && renderInputField('Last Name', name, handleNameChange, placeholder, apiResp)}
         {title === 'Date of Birth' && (
           <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-            <input
-              type="date"
-              id="dateInput"
-              value={date}
-              onChange={handleDateChange}
-              className="revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
-            />
+            {!date && edit ? (
+              <input
+                type="text"
+                value="Loading..."
+                disabled={true}
+                className={`caret-hidden w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]`}
+              />
+            ) : (
+              <input
+                type="date"
+                id="dateInput"
+                value={date} // Assuming date is a valid string in YYYY-MM-DD format
+                onChange={handleDateChange}
+                className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
+              />
+            )}
             <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
               {edit && (
                 <Button
