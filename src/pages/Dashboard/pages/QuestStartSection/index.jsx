@@ -443,20 +443,22 @@ const QuestStartSection = () => {
     posts.map((post, index) => {
       if (posts.length == index + 1) {
         return (
-          <QuestionCardWithToggle
-            innerRef={ref}
-            key={post._id}
-            questStartData={post}
-            playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
-          />
+          <div key={post._id} id={post._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
+            <QuestionCardWithToggle
+              innerRef={ref}
+              questStartData={post}
+              playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+            />
+          </div>
         );
       } else {
         return (
-          <QuestionCardWithToggle
-            key={post._id}
-            questStartData={post}
-            playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
-          />
+          <div key={post._id} id={post._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
+            <QuestionCardWithToggle
+              questStartData={post}
+              playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+            />
+          </div>
         );
       }
     }),
