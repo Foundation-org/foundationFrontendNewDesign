@@ -391,7 +391,7 @@ const QuestBottombar = ({
                     className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
                     onClick={() => {
                       navigate('/quest/isfullscreen', {
-                        state: questStartData._id,
+                        state: { questId: questStartData._id },
                       });
                     }}
                   >

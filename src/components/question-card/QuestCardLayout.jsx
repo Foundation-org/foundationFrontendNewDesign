@@ -48,6 +48,7 @@ const QuestCardLayout = ({
   questStartData,
   playing,
   postProperties,
+  questType,
   children,
   // isBookmarked,
   // setPlayingPlayerId,
@@ -120,6 +121,8 @@ const QuestCardLayout = ({
   });
 
   const handleBookmark = () => {
+    if (questType === 'feedback') return;
+
     setbookmarkStatus((prevIsBookmarked) => !prevIsBookmarked);
     if (bookmarkStatus) {
       const params = {

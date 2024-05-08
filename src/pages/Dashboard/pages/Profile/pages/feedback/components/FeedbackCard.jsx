@@ -1,7 +1,10 @@
 import { hideReasons } from '../../../../../../../constants/hiddenPosts';
 import { Button } from '../../../../../../../components/ui/Button';
+import { useNavigate } from 'react-router-dom';
 
 export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
+  const navigate = useNavigate();
+
   return (
     <div
       ref={innerRef}
@@ -74,7 +77,12 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
         })}
       </div>
       <div className="mb-[0.94rem] mr-[14.4px] flex justify-end tablet:mb-6 tablet:mr-[3.44rem]">
-        <Button variant="submit">View</Button>
+        <Button
+          variant="submit"
+          onClick={() => navigate('/quest/isfullscreen', { state: { questId: post._id, questType: 'feedback' } })}
+        >
+          View
+        </Button>
       </div>
     </div>
   );
