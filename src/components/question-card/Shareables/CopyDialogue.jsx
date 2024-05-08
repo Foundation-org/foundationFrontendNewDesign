@@ -231,10 +231,10 @@ const CopyDialogue = ({
                   value={link}
                   onChange={(e) => {
                     const inputValue = e.target.value;
-                    if (inputValue.length <= 10) {
+                    if (inputValue.length <= 35) {
                       setLink(inputValue);
                     } else {
-                      setLink(inputValue.slice(0, 10));
+                      setLink(inputValue.slice(0, 35));
                     }
                   }}
                 />

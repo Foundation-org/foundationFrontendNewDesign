@@ -54,7 +54,7 @@ const QuestCard = ({ innerRef, persistedUserInfo, post }) => {
           </div>
           <div className="flex items-center gap-[15px]">
             <h4 className="text-[0.75rem] font-normal leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
-              {post.hiddenCount} Post Hidden
+              {post.hiddenCount} Times Hidden
             </h4>
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/hidden-eye.svg`}
