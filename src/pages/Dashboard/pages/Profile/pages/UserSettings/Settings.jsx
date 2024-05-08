@@ -3,17 +3,20 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../../components/ui/Button';
 import { changeTheme } from '../../../../../../features/utils/utilsSlice';
-import { signOut } from '../../../../../../services/api/userAuth';
+import { signOut, updateUserSettings, userInfo } from '../../../../../../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { resetFilters } from '../../../../../../features/sidebar/filtersSlice';
 import { useNavigate } from 'react-router-dom';
+import { addUser } from '../../../../../../features/auth/authSlice';
 
 export const Settings = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [checkState, setCheckState] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [defaultSort, setDefaultSort] = useState(persistedUserInfo.userSettings.defaultSort || false);
 
   useEffect(() => {
     if (persistedTheme === 'light') {
@@ -47,6 +50,29 @@ export const Settings = () => {
     navigate('/guest-signup');
   };
 
+  const handleUserInfo = async () => {
+    try {
+      const resp = await userInfo();
+      if (resp.status === 200) {
+        dispatch(addUser(resp.data));
+      }
+    } catch (e) {
+      toast.error(e.response.data.message.split(':')[1]);
+    }
+  };
+
+  const { mutateAsync: handleUserSettings } = useMutation({
+    mutationFn: updateUserSettings,
+    onSuccess: () => {
+      handleUserInfo();
+      console.log('updateUserSettings', resp);
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error(error.response.data.message.split(':')[1]);
+    },
+  });
+
   return (
     <div className="space-y-2 tablet:space-y-[15px]">
       <h1 className="text-[12px] font-semibold text-black tablet:text-[22px] tablet:font-medium">User Settings</h1>
@@ -79,15 +105,18 @@ export const Settings = () => {
           <p className="hidden text-[16px] font-medium text-[#ACACAC] tablet:block">Enable Default Sort.</p>
         </div>
         <Switch
-          checked={false}
-          onChange={() => toast.info('Feature coming soon.')}
-          className={`${false ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
+          checked={defaultSort}
+          onChange={(e) => {
+            setDefaultSort(e);
+            handleUserSettings({ uuid: persistedUserInfo.uuid, darkMode: false, defaultSort: e });
+          }}
+          className={`${defaultSort ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
         >
           <span className="sr-only">Use setting</span>
           <span
             aria-hidden="true"
             className={`${
-              false ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#4A8DBD]'
+              defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#4A8DBD]'
             }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
           />

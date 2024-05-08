@@ -133,7 +133,7 @@ export const EmbededVideo = ({
                 modestbranding: 1, // Hide YouTube logo
                 showinfo: 0, // Hide video title and uploader info
                 autoplay: 0, // Disable autoplay
-                loop: 1, // Enable looping
+                // loop: 1, // Enable looping
               },
             },
           }}

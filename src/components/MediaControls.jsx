@@ -55,34 +55,21 @@ export default function MediaControls() {
 
       <button
         onClick={() => dispatch(toggleMedia(questUtilsState.isMediaPlaying === true ? false : true))}
-        className="flex w-[22px] min-w-[22px] items-center justify-center"
+        className="flex size-6 items-center justify-center tablet:size-[33px]"
       >
         {!questUtilsState.isMediaPlaying ? (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            // width="21"
-            // height="25"
-            viewBox="0 0 21 25"
-            fill="none"
-            className="size-6 tablet:h-[28px] tablet:w-6"
-          >
+          <svg className="size-6 tablet:size-[33px]" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="17.3346" cy="16.6667" r="16.6667" fill="#7C7C7C" />
             <path
-              d="M19.5253 13.3939C20.3609 12.8717 20.3609 11.6547 19.5253 11.1325L2.04003 0.204789C1.15194 -0.350236 0 0.288241 0 1.3355V23.1909C0 24.2381 1.15194 24.8766 2.04003 24.3216L19.5253 13.3939Z"
-              fill="#707175"
+              d="M13.9961 12.041C13.9961 11.8501 14.0486 11.6628 14.1479 11.4997C14.2472 11.3367 14.3894 11.204 14.5591 11.1163C14.7287 11.0286 14.9192 10.9893 15.1097 11.0025C15.3002 11.0158 15.4834 11.0812 15.6392 11.1915L22.9281 16.3581C23.0635 16.4538 23.1741 16.5804 23.2506 16.7275C23.3272 16.8746 23.3675 17.0378 23.3682 17.2036C23.3689 17.3693 23.33 17.5329 23.2547 17.6806C23.1794 17.8283 23.07 17.9559 22.9354 18.0528L15.6465 23.2964C15.491 23.4085 15.3076 23.4756 15.1164 23.4901C14.9252 23.5047 14.7337 23.4662 14.5631 23.3788C14.3924 23.2915 14.2491 23.1588 14.1491 22.9953C14.049 22.8318 13.9961 22.6438 13.9961 22.4521V12.041Z"
+              fill="white"
             />
           </svg>
         ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            // width="19"
-            // height="28"
-            viewBox="0 0 19 28"
-            fill="none"
-            className="size-6 tablet:h-[28px] tablet:w-6"
-            // className="h-[28px] w-[19px]"
-          >
-            <rect x="0.152344" width="5.50743" height="27.1422" rx="0.941346" fill="#707175" />
-            <rect x="12.7383" width="5.50743" height="27.1422" rx="0.941346" fill="#707175" />
+          <svg className="size-6 tablet:size-[33px]" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16.9089" cy="16.9523" r="16.6667" fill="#7C7C7C" />
+            <rect x="12.625" y="10.7622" width="2.53541" height="12.4952" rx="0.89652" fill="white" />
+            <rect x="18.418" y="10.7622" width="2.53541" height="12.4952" rx="0.89652" fill="white" />
           </svg>
         )}
       </button>
