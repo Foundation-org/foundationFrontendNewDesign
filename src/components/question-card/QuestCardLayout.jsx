@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CardTopbar from './CardTopbar';
 import QuestBottombar from './QuestBottombar';
 import { getQuestionTitle } from '../../utils/questionCard/SingleQuestCard';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
 import { addBookmarkResponse, removeBookmarkResponse, updateDialogueBox } from '../../features/quest/utilsSlice';
 import { useDispatch } from 'react-redux';
@@ -238,7 +238,16 @@ const QuestCardLayout = ({
       className="max-w-[730px] rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000] "
       ref={imageGetter}
     >
-      {postProperties === 'SharedLinks' && (
+      {questStartData?.suppressed && (
+        <div className="flex items-center justify-between rounded-t-[12.3px] border-b-[1.834px] border-[#D9D9D9] bg-[#FEECEC] px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-[#FF2C2C] tablet:rounded-t-[13.842px] tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px]">
+          <h4 className="">SUPRESSED</h4>
+          <Link to="/dashboard/profile/feedback" className="underline">
+            See Why
+          </Link>
+        </div>
+      )}
+
+      {postProperties === 'SharedLinks' && !questStartData?.suppressed && (
         <div className="mb-2 flex justify-between border-b border-[#D9D9D9] px-2 py-2 tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-4 laptop:px-5">
           <div className="max-w-48 tablet:max-w-[18rem] lgTablet:max-w-[28rem] laptop:max-w-fit">
             <h1 className="truncate text-wrap text-[10px] font-semibold text-[#707175] tablet:text-[20px] tablet:font-medium">

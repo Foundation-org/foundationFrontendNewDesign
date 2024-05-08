@@ -90,7 +90,7 @@ const QuestStartSection = () => {
         return (
           <div className="flex flex-col gap-4 rounded-[13.842px] border-[1.846px] border-[#D9D9D9] bg-[#F4F8FF] px-[44px] py-6">
             <h1 className="text-[22px] font-bold leading-normal text-[#5B5B5B]">Did you know?</h1>
-            <p className="text-[18px] font-normal leading-[25px] text-[#7C7C7C]">{post.content}</p>
+            <p className="text-[18px] font-normal leading-[25px] text-[#7C7C7C]">{post.text}</p>
           </div>
         );
       } else {
