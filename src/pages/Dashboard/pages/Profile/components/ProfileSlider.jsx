@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '../../../../../components/ui/Button';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const createItems = [
   { id: 1, title: 'Verfication Badges', path: '/dashboard/profile', to: '' },
@@ -14,6 +14,7 @@ const createItems = [
 
 export default function ProfileSlider({ setTab, tab }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -25,6 +26,7 @@ export default function ProfileSlider({ setTab, tab }) {
     }
 
     setTab(id);
+    navigate(id);
   };
 
   const handleLeftArrowClick = () => {
@@ -110,7 +112,7 @@ export default function ProfileSlider({ setTab, tab }) {
       >
         {createItems.map((item) => {
           if (windowWidth >= 744 && item.id === 0) {
-            return null; // Ignore item with id 0 when window width is less than or equal to 744
+            return null;
           } else {
             let startX = 0;
             let startY = 0;
@@ -128,20 +130,16 @@ export default function ProfileSlider({ setTab, tab }) {
             };
 
             return (
-              <Link
-                id={`profile-btn-${item.path}`}
+              <Button
                 key={item.id}
-                to={item.to}
+                id={`profile-btn-${item.path}`}
+                variant={'topics'}
+                className={`${tab === item.path ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
               >
-                <Button
-                  variant={'topics'}
-                  className={`${tab === item.path ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
-                >
-                  {item.title}
-                </Button>
-              </Link>
+                {item.title}
+              </Button>
             );
           }
         })}

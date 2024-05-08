@@ -221,7 +221,7 @@ const CopyDialogue = ({
           </p>
           <div className="flex rounded-[9.42px] border border-[#DEE6F7] tablet:rounded-[15px] tablet:border-[3px]">
             {createCustom ? (
-              <div className="flex h-[62.92px] items-center">
+              <div className="flex h-[28.38px] items-center tablet:h-[62.92px]">
                 <p className="pl-[9.43px] text-[9.42px] font-normal leading-[9.42px] text-[#435059] tablet:pl-4 tablet:text-[26px] tablet:leading-[30px]">
                   {url}
                 </p>
@@ -278,10 +278,10 @@ const CopyDialogue = ({
               </Button>
             </div>
           ) : (
-            <div className="flex items-center gap-[25px]">
+            <div className="flex items-center gap-4 tablet:gap-[25px]">
               <Button
                 variant={'cancel'}
-                className={'w-fit min-w-fit whitespace-nowrap'}
+                className={'w-fit min-w-fit whitespace-nowrap px-2'}
                 onClick={() => setCreateCustom(false)}
               >
                 Go Back

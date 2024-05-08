@@ -96,24 +96,22 @@ const QuestStartSection = () => {
       } else {
         if (posts.length == index + 1) {
           return (
-            // <div key={index + 1} id={posts._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
-            <QuestionCardWithToggle
-              innerRef={ref}
-              key={post._id}
-              questStartData={post}
-              playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
-            />
-            // </div>
+            <div key={index + 1} id={post._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
+              <QuestionCardWithToggle
+                innerRef={ref}
+                questStartData={post}
+                playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+              />
+            </div>
           );
         } else {
           return (
-            // <div key={index + 1} id={posts._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
-            <QuestionCardWithToggle
-              key={post._id}
-              questStartData={post}
-              playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
-            />
-            // </div>
+            <div key={index + 1} id={post._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
+              <QuestionCardWithToggle
+                questStartData={post}
+                playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+              />
+            </div>
           );
         }
       }
