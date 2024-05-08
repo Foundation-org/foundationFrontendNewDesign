@@ -18,7 +18,7 @@ const initialState = {
   isMediaPlaying: false,
   playerPlayingId: '',
   isShowPlayer: false,
-  loop: false,
+  loop: true,
 };
 
 export const utilsSlice = createSlice({
