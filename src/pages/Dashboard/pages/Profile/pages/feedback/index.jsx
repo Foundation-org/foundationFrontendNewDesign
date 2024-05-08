@@ -163,7 +163,7 @@ export default function Feedback() {
                 </div>
               ) : !getFeedbackFilters.searchData && data?.pages[0].length === 0 ? (
                 <p className="text-center text-[4vw] laptop:text-[2vw]">
-                  <b>No Feedback posts!</b>
+                  <b>No feedback posts!</b>
                 </p>
               ) : !getFeedbackFilters.searchData ? (
                 <p className="text-center text-[4vw] laptop:text-[2vw]">
