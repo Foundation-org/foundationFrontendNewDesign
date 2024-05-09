@@ -359,6 +359,19 @@ const QuestionCardWithToggle = (props) => {
   });
 
   const handleSubmit = () => {
+    if (persistedUserInfo.role === 'guest' && !location.pathname.startsWith('/p')) {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
+      return;
+    }
+
     setLoading(true);
     if (
       questStartData.whichTypeQuestion === 'agree/disagree' ||
