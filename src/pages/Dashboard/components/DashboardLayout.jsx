@@ -39,14 +39,24 @@ export default function DashboardLayout({ children }) {
     toast.error(treasuryError.response.data.message.split(':')[1]);
   }
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
+  const { mutateAsync: getUserInfoById } = useMutation({
+    mutationFn: userInfoById,
+    onSuccess: (res) => {
+      dispatch(addUser(res?.data));
+      if (res?.data?.requiredAction) {
+        setModalVisible(true);
+      }
+    },
+    onError: (e) => {
+      console.log({ e });
+    },
   });
 
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
+  useQuery({
+    queryKey: ['userInfo'],
+    queryFn: userInfo,
+    onSuccess: (resp) => {
+      console.log('userInfo', resp);
       if (resp?.status === 200) {
         // Cookie Calling
         if (resp.data) {
@@ -58,30 +68,20 @@ export default function DashboardLayout({ children }) {
           }
         }
 
-        // LocalStorage Calling
         if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-          if (res?.data?.requiredAction) {
-            setModalVisible(true);
-          }
+          getUserInfoById();
         }
 
         if (resp?.data?.requiredAction) {
           setModalVisible(true);
         }
       }
-
-      // setResponse(resp?.data);
-    } catch (e) {
+    },
+    onError: (e) => {
       console.log({ e });
       toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
-
-  useEffect(() => {
-    handleUserInfo();
-  }, []);
+    },
+  });
 
   const handleGuestLogout = async () => {
     navigate('/guest-signup');

@@ -24,8 +24,11 @@ export const signOut = async () => {
 };
 
 export const userInfo = async () => {
-  return await api.post('/user/userInfo');
-  // return await api.post('/user/userInfo', { uuid: localStorage.getItem('uuid') });
+  return await api.get(`/user/userInfo/${localStorage.getItem('uuid')}`);
+};
+
+export const userInfoById = async () => {
+  return await api.post('/user/userInfoById', { uuid: localStorage.getItem('uuid') });
 };
 
 export const getTreasuryAmount = async () => {
@@ -36,10 +39,6 @@ export const getTreasuryAmount = async () => {
   } else {
     return res.data.data;
   }
-};
-
-export const userInfoById = async (uuid) => {
-  return await api.post('/user/userInfoById', { uuid });
 };
 
 export const updateUserSettings = async ({ uuid, darkMode, defaultSort, systemNotifications, emailNotifications }) => {
