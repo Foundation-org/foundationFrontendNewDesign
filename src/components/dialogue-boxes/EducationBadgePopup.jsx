@@ -10,36 +10,6 @@ import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
 import BadgeRemovePopup from './badgeRemovePopup';
 
-const workForm = [
-  {
-    label: 'Compaany Name',
-    items: [
-      { id: 1, name: 'Item 1' },
-      { id: 2, name: 'Item 2' },
-    ],
-    placeholder: 'Company Here',
-  },
-  {
-    label: 'Tittle',
-    items: [
-      { id: 1, name: 'Item 1' },
-      { id: 2, name: 'Item 2' },
-    ],
-    placeholder: 'Job Title Here',
-  },
-];
-
-const workFormTwo = [
-  {
-    label: 'Employement Type',
-    placeholder: 'Job Title Here',
-  },
-  {
-    label: 'Mode of Job',
-    placeholder: 'Job Title Here',
-  },
-];
-
 const School = {
   label: 'School',
   type: 'school',
@@ -569,6 +539,7 @@ const EducationBadgePopup = ({
                 setQuery={setQuery}
                 id={1}
                 handleTab={handleTab}
+                disabled={edit ? (field1Data.name ? false : true) : false}
               />
             </div>
             <div className="mb-4 mt-[15px] flex gap-[6.5px] tablet:mb-5 tablet:mt-[25px] tablet:gap-[10px]">
@@ -590,6 +561,7 @@ const EducationBadgePopup = ({
                   handleTab={handleTab}
                   verification={true}
                   wordsCheck={true}
+                  disabled={edit ? (field2Data.name ? false : true) : false}
                 />
                 {/* <input
                   id="input-2"
@@ -633,6 +605,7 @@ const EducationBadgePopup = ({
                   id={3}
                   handleTab={handleTab}
                   verification={true}
+                  disabled={edit ? (field5Data.name ? false : true) : false}
                 />
                 {/* <input
                   id="input-3"
@@ -679,7 +652,8 @@ const EducationBadgePopup = ({
                   <input
                     type="text"
                     value="Loading..."
-                    className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                    disabled={true}
+                    className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                   />
                 ) : (
                   <input
@@ -703,7 +677,8 @@ const EducationBadgePopup = ({
                     <input
                       type="text"
                       value="Loading..."
-                      className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                      disabled={true}
+                      className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                     />
                   ) : (
                     <input

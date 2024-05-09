@@ -23,6 +23,7 @@ import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import * as authActions from '../../../../../features/auth/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Button } from '../../../../../components/ui/Button.jsx';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -782,43 +783,48 @@ const QuestionCardWithToggle = (props) => {
         questStartData={questStartData}
         playing={props.playing}
         postProperties={postProperties}
-        // setPlayingPlayerId={props.setPlayingPlayerId}
-        // setIsPlaying={props.setIsPlaying}
-        // setIsShowPlayer={props.setIsShowPlayer}
-        // isPlaying={props.isPlaying}
+        questType={props.questType}
       >
         {renderQuestContent()}
-        <ButtonGroup
-          questStartData={questStartData}
-          id={questStartData._id}
-          btnText={questStartData.startStatus}
-          handleStartTest={handleStartTest}
-          viewResult={viewResult}
-          handleViewResults={handleViewResults}
-          setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-          whichTypeQuestion={questStartData.whichTypeQuestion}
-          handleToggleCheck={handleToggleCheck}
-          handleRankedChoice={handleRankedChoice}
-          rankedAnswers={rankedAnswers}
-          setRankedAnswers={setRankedAnswers}
-          answersSelection={answersSelection}
-          setAnswerSelection={setAnswerSelection}
-          startStatus={questStartData.startStatus}
-          setLoadingDetail={setLoadingDetail}
-          handleOpen={handleAddOption}
-          usersAddTheirAns={questStartData.usersAddTheirAns}
-          answers={questStartData.QuestAnswers}
-          title={getQuestionTitle(questStartData.whichTypeQuestion)}
-          handleSubmit={handleSubmit}
-          loading={loading}
-          startTest={startTest}
-          handleChange={handleChange}
-          addOptionField={addOptionField}
-          setAddOptionField={setAddOptionField}
-          checkOptionStatus={checkOptionStatus}
-          postProperties={postProperties}
-          SharedLinkButton={SharedLinkButton}
-        />
+        {props.questType !== 'feedback' ? (
+          <ButtonGroup
+            questStartData={questStartData}
+            id={questStartData._id}
+            btnText={questStartData.startStatus}
+            handleStartTest={handleStartTest}
+            viewResult={viewResult}
+            handleViewResults={handleViewResults}
+            setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
+            whichTypeQuestion={questStartData.whichTypeQuestion}
+            handleToggleCheck={handleToggleCheck}
+            handleRankedChoice={handleRankedChoice}
+            rankedAnswers={rankedAnswers}
+            setRankedAnswers={setRankedAnswers}
+            answersSelection={answersSelection}
+            setAnswerSelection={setAnswerSelection}
+            startStatus={questStartData.startStatus}
+            setLoadingDetail={setLoadingDetail}
+            handleOpen={handleAddOption}
+            usersAddTheirAns={questStartData.usersAddTheirAns}
+            answers={questStartData.QuestAnswers}
+            title={getQuestionTitle(questStartData.whichTypeQuestion)}
+            handleSubmit={handleSubmit}
+            loading={loading}
+            startTest={startTest}
+            handleChange={handleChange}
+            addOptionField={addOptionField}
+            setAddOptionField={setAddOptionField}
+            checkOptionStatus={checkOptionStatus}
+            postProperties={postProperties}
+            SharedLinkButton={SharedLinkButton}
+          />
+        ) : (
+          <div className="mr-[14.4px] flex justify-end tablet:mr-[3.44rem]">
+            <Button variant="cancel" onClick={() => navigate('/dashboard/profile/feedback')}>
+              Go Back
+            </Button>
+          </div>
+        )}
       </QuestCardLayout>
     </div>
   );

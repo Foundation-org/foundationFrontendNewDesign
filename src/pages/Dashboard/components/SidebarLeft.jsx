@@ -122,14 +122,6 @@ const SidebarLeft = () => {
     localStorage.setItem('selectedButtonId', userData?.States.selectedBtnId);
   }, [localStorage.getItem('userData')]);
 
-  // useEffect(() => {
-  //   if (pathname === '/dashboard/bookmark') {
-  //     setBookmarkFilters({ ...filterStates, columns: filterStates.topics });
-  //   } else {
-  //     setFilters({ ...filterStates, selectedBtnId: localStorage.getItem('selectedButtonId') });
-  //   }
-  // }, [filterStates]);
-
   // Search
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -315,14 +307,14 @@ const SidebarLeft = () => {
           </div>
         </div> */}
 
-      <div className="">
+      <div>
         {questUtilsState.isShowPlayer && (
           <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
             <div className="relative">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
                 alt="mediaCloseIcon"
-                className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black tablet:-right-[14px] tablet:-top-[14px] tablet:h-10 tablet:w-10 dark:text-white"
+                className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black tablet:-right-[14px] tablet:-top-[18px] tablet:size-[33px] dark:text-white"
                 onClick={() => {
                   dispatch(setIsShowPlayer(false));
                   dispatch(setPlayingPlayerId(''));

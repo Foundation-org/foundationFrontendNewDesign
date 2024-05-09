@@ -8,7 +8,7 @@ import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice
 import * as QuestServices from '../services/queries/quest';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { setFilterStates } from '../services/api/userAuth';
-import { setIsShowPlayer, setPlayingPlayerId } from '../features/quest/utilsSlice';
+import { setIsShowPlayer, setPlayingPlayerId, resetPlayingIds } from '../features/quest/utilsSlice';
 
 function Slider({ isFetching }) {
   let filtersActions;
@@ -126,6 +126,7 @@ function Slider({ isFetching }) {
           // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
+          dispatch(resetPlayingIds());
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
@@ -151,6 +152,7 @@ function Slider({ isFetching }) {
           // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
+          dispatch(resetPlayingIds());
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
@@ -176,6 +178,7 @@ function Slider({ isFetching }) {
           // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
+          dispatch(resetPlayingIds());
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterBySort(''));
@@ -201,6 +204,7 @@ function Slider({ isFetching }) {
           // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
+          dispatch(resetPlayingIds());
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterBySort(''));
           dispatch(filtersActions.setFilterByScope('All'));
@@ -223,27 +227,14 @@ function Slider({ isFetching }) {
         break;
       case 'topics':
         if (filterStates.topics?.Block && filterStates.topics?.Block.list.includes(data)) return;
-        // setSliderloading(true);
+
         dispatch(setIsShowPlayer(false));
         dispatch(setPlayingPlayerId(''));
+        dispatch(resetPlayingIds());
         dispatch(filtersActions.setBookmarks(false));
-        dispatch(homeFilterActions.setBlockTopics([data]));
+        dispatch(filtersActions.setBlockTopics([data]));
         dispatch(filtersActions.setFilterBySort(''));
         dispatch(filtersActions.setFilterByScope('All'));
-        setFilters({
-          ...filterStates,
-          filterBySort: '',
-          filterByScope: '',
-          bookmarks: false,
-          topics: {
-            ...filterStates.topics,
-            Block: {
-              ...filterStates.topics.Block,
-              list: [data],
-            },
-          },
-          selectedBtnId: localStorage.getItem('selectedButtonId'),
-        });
         break;
       default:
         break;
@@ -319,7 +310,7 @@ function Slider({ isFetching }) {
             Bookmarks
           </Button>
         </div>
-        <div className="flex gap-[6.75px]  tablet:gap-[13.82px]">
+        <div className="flex gap-[6.75px] tablet:gap-[13.82px]">
           {filterStates.topics?.All?.list.map((item, index) => {
             const isItemBlocked = filterStates.topics?.Block && filterStates.topics?.Block?.list?.includes(item);
             let startX = 0;
@@ -334,6 +325,20 @@ function Slider({ isFetching }) {
               const distance = Math.sqrt((e.clientX - startX) ** 2 + (e.clientY - startY) ** 2);
               if (distance < 5) {
                 // queryClient.invalidateQueries('FeedData');
+                setFilters({
+                  ...filterStates,
+                  filterBySort: '',
+                  filterByScope: '',
+                  bookmarks: false,
+                  topics: {
+                    ...filterStates.topics,
+                    Block: {
+                      ...filterStates.topics.Block,
+                      list: [item],
+                    },
+                  },
+                  selectedBtnId: `topic-${index}`,
+                });
                 handleButtonSelection('topics', item, `topic-${index}`);
               }
             };
@@ -342,7 +347,7 @@ function Slider({ isFetching }) {
               <Button
                 variant={'topics'}
                 className={`${isItemBlocked ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
-                key={index + 1}
+                key={index}
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
                 disabled={isFetching}

@@ -5,9 +5,11 @@ import SingleAnswer from '../../../../../components/question-card/options/Single
 import SingleAnswerMultipleChoice from '../../../../../components/question-card/options/SingleAnswerMultipleChoice';
 import RankedResult from '../../../components/RankedResult';
 import SortIcon from '../../../../../assets/SortIcon';
+import { useSelector } from 'react-redux';
 
 const Result = (props) => {
   const { isFullScreen } = useParams();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [selectedOption, setSelectedOption] = useState(1);
   const [contendedOption, setCcontendedOption] = useState(1);
   const [sortedAnswers, setSortedAnswers] = useState();
@@ -232,13 +234,16 @@ const Result = (props) => {
     if (selectedOption === 2) {
       const rankedNewData = sortAnswersByAscDesc(props, 'descending');
       setSortedAnswers(rankedNewData);
+
+      const sortedDescendingByPercentage = sortAnswersDataByPercentage(answersData, 'descending');
+      setAnswersData(sortedDescendingByPercentage);
     }
 
     if (selectedOption === 3) {
       const rankedNewData = sortAnswersByAscDesc(props, 'ascending');
       setSortedAnswers(rankedNewData);
     }
-  }, [selectedOption, props.questStartData]);
+  }, [selectedOption, props.questStartData, answersData]);
 
   useEffect(() => {
     if (contendedOption === 1) {
@@ -267,8 +272,6 @@ const Result = (props) => {
   function sortAnswersDataByPercentage(answersData, sortOrder) {
     const data = [...answersData];
 
-    console.log('dataToBeSorted', data);
-
     return data.sort((a, b) => {
       let percentageA = parseFloat(a.percentage === undefined ? '0%' : a.percentage);
       let percentageB = parseFloat(b.percentage === undefined ? '0%' : b.percentage);
@@ -286,9 +289,14 @@ const Result = (props) => {
   }
 
   useEffect(() => {
-    setSelectedOption(1);
     setAnswersData(getQuestionData());
   }, [props.questStartData]);
+
+  useEffect(() => {
+    if (persistedUserInfo.userSettings.defaultSort) {
+      setSelectedOption(2);
+    }
+  }, [persistedUserInfo]);
 
   return (
     <div className="flex flex-col gap-[5.7px] tablet:gap-[10px]" style={{ minHeight: `${props.cardSize}px ` }}>

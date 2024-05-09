@@ -6,8 +6,8 @@ import { useMutation } from '@tanstack/react-query';
 import { resendOtp, sendOtp, verifyOtp } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 
 const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUserInfo }) => {
   const [phone, setPhone] = useState();
@@ -134,11 +134,12 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
               placeholder={'Phone Number here'}
               className="mb-[10px] mt-1 w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:mb-5 tablet:mt-[15px] tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
             /> */}
-             <PhoneInput
+            <PhoneInput
               placeholder="Enter phone number"
               value={phone}
               className="mb-[10px] mt-1 w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:mb-5 tablet:mt-[15px] tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
-              onChange={setPhone}/>
+              onChange={setPhone}
+            />
             <div className="flex justify-end">
               <Button
                 variant="submit"
@@ -159,7 +160,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
               OTP Verification
             </h1>
             <p className="my-[10px] text-[9.28px] font-normal leading-[9.28px] text-[#707175] tablet:my-[15px] tablet:text-[18px] tablet:leading-[20px]">
-              We Will send you a one time password on this{' '}
+              We will send you a one time password on this{' '}
               <span className="font-semibold">{otpResp?.data?.data?.phoneNumber}</span>
             </p>
             <div className="flex flex-col space-y-16">
@@ -169,7 +170,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
                     <input
                       ref={refs[index]}
                       className="flex h-full w-full flex-col items-center justify-center rounded-[6px] border border-[#DEE6F7] bg-[#FBFBFB] text-center text-[14px] outline-none focus:ring-0 tablet:rounded-[15px] tablet:border-[3px] tablet:text-[26px]"
-                      type="text"
+                      type="number"
                       maxLength={1}
                       value={digit}
                       onChange={(e) => handleChange(index, e)}

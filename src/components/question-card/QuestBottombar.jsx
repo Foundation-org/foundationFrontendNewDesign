@@ -141,6 +141,11 @@ const QuestBottombar = ({
     transform: 'translate(-50%, -50%)',
   };
   const showHidePostOpen = () => {
+    if (questStartData.uuid === persistedUserInfo.uuid) {
+      toast.warning('You cannot hide your own post.');
+      return;
+    }
+
     setCheckboxStates(data.map(() => false));
     setModalVisible(true);
   };
@@ -157,7 +162,7 @@ const QuestBottombar = ({
 
   return (
     <div
-      className={`relative flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] py-2 tablet:px-5  tablet:py-[0.63rem]`}
+      className={`relative flex items-center justify-between border-t-2 border-[#D9D9D9] px-[0.57rem] py-[5px] tablet:px-5  tablet:py-[11px]`}
     >
       <ShowHidePostPopup
         handleClose={showHidePostClose}
@@ -190,7 +195,7 @@ const QuestBottombar = ({
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
           alt="trash"
-          className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
+          className="h-3 w-[9px] cursor-pointer tablet:h-[30px] tablet:w-[25px]"
           onClick={showDisableSharedLinkPopup}
         />
       ) : (
@@ -391,7 +396,7 @@ const QuestBottombar = ({
                     className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
                     onClick={() => {
                       navigate('/quest/isfullscreen', {
-                        state: questStartData._id,
+                        state: { questId: questStartData._id },
                       });
                     }}
                   >

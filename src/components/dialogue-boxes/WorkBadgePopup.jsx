@@ -499,6 +499,7 @@ const WorkBadgePopup = ({
                 onChange={(e) => {
                   setField1Data({ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: e.target.value });
                 }}
+                disabled={edit ? (field1Data.name ? false : true) : false}
                 onKeyDown={(e) => (e.key === 'Tab' && handleTab(1)) || (e.key === 'Enter' && handleTab(1, 'Enter'))}
                 id="input-1"
                 placeholder={field1.placeholder}
@@ -522,6 +523,7 @@ const WorkBadgePopup = ({
                 setHollow={setHollow}
                 setError={setIsError}
                 verification={true}
+                disabled={edit ? (field2Data?.name ? false : true) : false}
               />
               {isError && (
                 <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
@@ -551,6 +553,7 @@ const WorkBadgePopup = ({
                     selected={field4Data}
                     setSelected={setField4Data}
                     placeholder={edit ? (field4Data?.name ? field4.placeholder : 'Loading...') : field4.placeholder}
+                    disabled={edit ? (field4Data?.name ? false : true) : false}
                   />
                 </div>
               </div>
@@ -577,7 +580,8 @@ const WorkBadgePopup = ({
                   <input
                     type="text"
                     value="Loading..."
-                    className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                    disabled={true}
+                    className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                   />
                 ) : (
                   <input
@@ -600,7 +604,8 @@ const WorkBadgePopup = ({
                     <input
                       type="text"
                       value="Loading..."
-                      className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                      disabled={true}
+                      className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                     />
                   ) : (
                     <input
