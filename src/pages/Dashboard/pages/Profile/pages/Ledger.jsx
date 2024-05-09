@@ -156,6 +156,8 @@ export default function BasicTable() {
     };
   }, [columnSizes, table]);
 
+  console.log('table', table.getRowModel().rows);
+
   return (
     <div className="mb-6 overflow-y-auto">
       {/* <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px]  tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
@@ -300,7 +302,7 @@ export default function BasicTable() {
                                   ? 'My Account'
                                   : cell.column.id === 'txTo' &&
                                       cell.getValue() !== 'DAO Treasury' &&
-                                      cell.getValue() !== 'DAO'
+                                      cell.getValue() !== 'dao'
                                     ? `User`
                                     : cell.getValue() === 'dao'
                                       ? 'DAO'
