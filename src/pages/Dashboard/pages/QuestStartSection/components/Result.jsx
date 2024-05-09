@@ -234,6 +234,9 @@ const Result = (props) => {
     if (selectedOption === 2) {
       const rankedNewData = sortAnswersByAscDesc(props, 'descending');
       setSortedAnswers(rankedNewData);
+
+      const sortedDescendingByPercentage = sortAnswersDataByPercentage(answersData, 'descending');
+      setAnswersData(sortedDescendingByPercentage);
     }
 
     if (selectedOption === 3) {
