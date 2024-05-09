@@ -238,7 +238,7 @@ const QuestCardLayout = ({
       className="max-w-[730px] rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000] "
       ref={imageGetter}
     >
-      {questStartData?.suppressed && (
+      {questStartData?.suppressed && questStartData?.uuid === localStorage.getItem('uuid') && (
         <div className="flex items-center justify-between rounded-t-[12.3px] border-b-[1.834px] border-[#D9D9D9] bg-[#FEECEC] px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-[#FF2C2C] tablet:rounded-t-[13.842px] tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px]">
           <h4 className="">SUPRESSED</h4>
           <Link to="/dashboard/profile/feedback" className="underline">
