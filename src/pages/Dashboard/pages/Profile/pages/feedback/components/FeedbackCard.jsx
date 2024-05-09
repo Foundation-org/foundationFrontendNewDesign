@@ -10,7 +10,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
       ref={innerRef}
       className="max-w-[730px] rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000] "
     >
-      <div className="mb-2 flex justify-between border-b border-[#D9D9D9] px-2 py-2 tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-4 laptop:px-5">
+      <div className="mb-2 flex justify-between border-b border-[#D9D9D9] px-2 py-[5px] tablet:mb-5 tablet:border-b-2 tablet:px-5 tablet:py-[11px] laptop:px-5">
         <div className="flex w-full items-center justify-between gap-[10px] tablet:gap-[18px]">
           <div className="flex items-center gap-2 tablet:gap-4 ">
             {post.uuid === persistedUserInfo?.uuid ? (

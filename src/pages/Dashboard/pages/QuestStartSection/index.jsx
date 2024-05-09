@@ -11,9 +11,12 @@ import { printEndMessage } from '../../../../utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { Button } from '../../../../components/ui/Button';
+import { useNavigate } from 'react-router-dom';
 
 const QuestStartSection = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { ref, inView } = useInView();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const filterStates = useSelector(filtersActions.getFilters);
@@ -88,9 +91,22 @@ const QuestStartSection = () => {
         dispatch(questUtilsActions.addPlayerId(post._id));
       if (post.id === 'system_notification') {
         return (
-          <div className="flex flex-col gap-4 rounded-[13.842px] border-[1.846px] border-[#D9D9D9] bg-[#F4F8FF] px-[44px] py-6">
-            <h1 className="text-[22px] font-bold leading-normal text-[#5B5B5B]">Did you know?</h1>
-            <p className="text-[18px] font-normal leading-[25px] text-[#7C7C7C]">{post.text}</p>
+          <div className="flex flex-col gap-2 rounded-[13.842px] border-[1.846px] border-[#D9D9D9] bg-[#F4F8FF] px-7 py-[14px] tablet:gap-4 tablet:px-[44px] tablet:py-6">
+            <h1 className="text-[13px] font-bold leading-normal text-[#5B5B5B] tablet:text-[22px]">{post.header}</h1>
+            <p className="text-[12px] font-normal leading-normal text-[#7C7C7C] tablet:text-[18px] tablet:leading-[25px]">
+              {post.text}
+            </p>
+            <div className="flex justify-end">
+              <Button
+                variant="submit"
+                className="w-fit"
+                onClick={() => {
+                  navigate(post.buttonUrl);
+                }}
+              >
+                {post.buttonText}
+              </Button>
+            </div>
           </div>
         );
       } else {

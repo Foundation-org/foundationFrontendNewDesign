@@ -27,7 +27,7 @@ const Tabs = ({ handleSelectedTab, active }) => {
           handleSelectedTab('/dashboard/profile/verification-badges');
         }}
       >
-        Verfication Badges
+        Verification Badges
       </Link>
       <Link
         to={'ledger'}
