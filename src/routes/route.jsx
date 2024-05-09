@@ -47,7 +47,7 @@ export function Router() {
     Guest: 'guest',
   };
 
-  // console.log({ persistedUser });
+  console.log({ persistedUser });
 
   return (
     <>

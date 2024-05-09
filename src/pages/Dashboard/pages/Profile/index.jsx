@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 // import { changeTheme } from '../../../../features/utils/utilsSlice';
 // import Topbar from '../../components/Topbar';
 // import Tabs from './components/Tabs';
 // import { toast } from 'sonner';
 // import api from '../../../../services/api/Axios';
 import FallBack from '../../../ErrorBoundry/FallBack';
-import { ErrorBoundary } from 'react-error-boundary';
-import { useMutation } from '@tanstack/react-query';
-import { userInfo } from '../../../../services/api/userAuth';
-import { addUser } from '../../../../features/auth/authSlice';
+// import { ErrorBoundary } from 'react-error-boundary';
+// import { useMutation } from '@tanstack/react-query';
+// import { userInfo } from '../../../../services/api/userAuth';
+// import { addUser } from '../../../../features/auth/authSlice';
 import ProfileSlider from './components/ProfileSlider';
 
 const Profile = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
   // const { showBoundary } = useErrorBoundary();
@@ -59,19 +59,19 @@ const Profile = () => {
   //     toast.error(error.response.data.message.split(':')[1]);
   //   }
   // };
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-    onSuccess: (resp) => {
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(addUser(resp.data));
-        }
-      }
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
+  // const { mutateAsync: getUserInfo } = useMutation({
+  //   mutationFn: userInfo,
+  //   onSuccess: (resp) => {
+  //     if (resp?.status === 200) {
+  //       if (resp.data) {
+  //         dispatch(addUser(resp.data));
+  //       }
+  //     }
+  //   },
+  //   onError: (err) => {
+  //     console.log(err);
+  //   },
+  // });
 
   // const getTreasuryAmount = async () => {
   //   try {
@@ -85,19 +85,45 @@ const Profile = () => {
   //   }
   // };
 
-  useEffect(() => {
-    getUserInfo();
-    // getTreasuryAmount();
-  }, []);
+  // useEffect(() => {
+  //   getUserInfo();
+  //   // getTreasuryAmount();
+  // }, []);
 
   return (
-    <ErrorBoundary
+    <div
+      className={`${selectedTab !== '/dashboard/profile/ledger' ? '' : 'laptop:-mt-[133px]'} w-full bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]`}
+    >
+      <div
+        className={`${selectedTab === '/dashboard/profile/ledger' ? 'mx-auto max-w-[778px]' : 'fixed left-auto right-auto w-full max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]'}`}
+      >
+        <ProfileSlider tab={selectedTab} setTab={setSelectedTab} />
+      </div>
+      <div
+        className={`${selectedTab !== '/dashboard/profile/ledger' ? 'max-w-[778px]' : 'max-w-[1440px] pb-16 laptop:mt-[60px]'} no-scrollbar mx-auto mt-10 h-[calc(100dvh-141px)] overflow-y-scroll tablet:mt-[77.63px] tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.63px)]`}
+      >
+        <Outlet />
+      </div>
+    </div>
+  );
+};
+
+export default Profile;
+
+{
+  /* <div className="fixed left-auto right-auto w-full max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]"> */
+}
+{
+  /* <ErrorBoundary
       FallbackComponent={FallBack}
       onError={(error, errorInfo) => {
         console.log(error);
       }}
-    >
-      {/* <div className="mx-[18px] mt-[10px] flex items-center justify-between tablet:mx-8 tablet:mt-[25px] laptop:mx-[110px]">
+    ></ErrorBoundary> */
+}
+
+{
+  /* <div className="mx-[18px] mt-[10px] flex items-center justify-between tablet:mx-8 tablet:mt-[25px] laptop:mx-[110px]">
           <div className="flex w-full items-center justify-between gap-[5.16px] tablet:gap-[15px] laptop:gap-[19.4px]">
             <div className="flex items-center gap-[5.16px] tablet:gap-[15px]">
               <div
@@ -134,8 +160,10 @@ const Profile = () => {
                   <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
                 </p>
               </div>
-            </div> */}
-      {/* <div>
+            </div> */
+}
+{
+  /* <div>
               <h4 className="heading">My Profile</h4>
               <div className="flex items-center gap-1 tablet:gap-[13px]">
                 <p className="text-[8px] font-medium leading-none text-[#7C7C7C] tablet:text-[15px] laptop:text-[18px] dark:text-white">
@@ -161,9 +189,13 @@ const Profile = () => {
               </Switch>
               <p className="text-[8px] dark:text-white tablet:text-[16px]">Dark</p> 
               </div>
-            </div> */}
-      {/* </div> */}
-      {/* <div className="flex gap-[5.16px] tablet:gap-[15px]">
+            </div> */
+}
+{
+  /* </div> */
+}
+{
+  /* <div className="flex gap-[5.16px] tablet:gap-[15px]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
               alt="badge"
@@ -175,26 +207,11 @@ const Profile = () => {
                 <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
               </p>
             </div>
-          </div> */}
-      {/* </div> */}
-      {/* <Tabs handleSelectedTab={handleSelectedTab} active={selectedTab} /> */}
-      <div
-        className={`${selectedTab !== '/dashboard/profile/ledger' ? '' : 'laptop:-mt-[133px]'} w-full bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]`}
-      >
-        {/* <div className="fixed left-auto right-auto w-full max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]"> */}
-        <div
-          className={`${selectedTab === '/dashboard/profile/ledger' ? 'mx-auto max-w-[778px]' : 'fixed left-auto right-auto w-full max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]'}`}
-        >
-          <ProfileSlider tab={selectedTab} setTab={setSelectedTab} />
-        </div>
-        <div
-          className={`${selectedTab !== '/dashboard/profile/ledger' ? 'max-w-[778px]' : 'max-w-[1440px] pb-16 laptop:mt-[60px]'} no-scrollbar mx-auto mt-10 h-[calc(100dvh-141px)] overflow-y-scroll tablet:mt-[77.63px] tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.63px)]`}
-        >
-          <Outlet />
-        </div>
-      </div>
-    </ErrorBoundary>
-  );
-};
-
-export default Profile;
+          </div> */
+}
+{
+  /* </div> */
+}
+{
+  /* <Tabs handleSelectedTab={handleSelectedTab} active={selectedTab} /> */
+}

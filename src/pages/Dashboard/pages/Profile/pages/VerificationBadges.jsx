@@ -2,9 +2,9 @@ import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { userInfo } from '../../../../../services/api/userAuth';
+// import { userInfo } from '../../../../../services/api/userAuth';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { addUser } from '../../../../../features/auth/authSlice';
+// import { addUser } from '../../../../../features/auth/authSlice';
 import Button from '../components/Button';
 import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
@@ -102,30 +102,30 @@ const VerificationBadges = () => {
 
   const handleBadgesClose = () => setModalVisible(false);
 
-  const handleUserInfo = async (id) => {
-    try {
-      const resp = await userInfo(id);
+  // const handleUserInfo = async (id) => {
+  //   try {
+  //     const resp = await userInfo(id);
 
-      if (resp.status === 200) {
-        setIsLoading(false);
-        dispatch(addUser(resp.data));
-      }
+  //     if (resp.status === 200) {
+  //       setIsLoading(false);
+  //       dispatch(addUser(resp.data));
+  //     }
 
-      setFetchUser(resp.data);
-    } catch (e) {
-      showBoundary(e);
-      toast.error(e.response.data.message.split(':')[1]);
-    } finally {
-      setPageLoading(false);
-    }
-  };
+  //     setFetchUser(resp.data);
+  //   } catch (e) {
+  //     showBoundary(e);
+  //     toast.error(e.response.data.message.split(':')[1]);
+  //   } finally {
+  //     setPageLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    handleUserInfo();
-    if (searchParams.get('social')) {
-      handleSocialBadges();
-    }
-  }, []);
+  // useEffect(() => {
+  //   // handleUserInfo();
+  //   if (searchParams.get('social')) {
+  //     handleSocialBadges();
+  //   }
+  // }, []);
 
   const checkSocial = (name) => fetchUser?.badges?.some((i) => i.accountName === name);
 
