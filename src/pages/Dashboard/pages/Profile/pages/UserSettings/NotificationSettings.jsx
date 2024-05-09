@@ -34,13 +34,13 @@ export default function NotificationSettings() {
           <Switch
             checked={false}
             onChange={() => toast.info('Feature coming soon.')}
-            className={`${false ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
+            className={`${false ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
           >
             <span className="sr-only">Use setting</span>
             <span
               aria-hidden="true"
               className={`${
-                false ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#4A8DBD]'
+                false ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
               }
       pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
             />
@@ -54,7 +54,7 @@ export default function NotificationSettings() {
               setSystemNotifications(e);
               handleUserSettings({ uuid: persistedUserInfo.uuid, systemNotifications: e });
             }}
-            className={`${systemNotifications ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
+            className={`${systemNotifications ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
           >
             <span className="sr-only">Use setting</span>
             <span
@@ -62,7 +62,7 @@ export default function NotificationSettings() {
               className={`${
                 systemNotifications
                   ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
-                  : 'translate-x-[1px] bg-[#4A8DBD]'
+                  : 'translate-x-[1px] bg-[#707175]'
               }
       pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
             />

@@ -86,13 +86,13 @@ export const Settings = () => {
           checked={checkState}
           onChange={() => toast.info('Feature coming soon.')}
           // onChange={handleTheme}
-          className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
+          className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
         >
           <span className="sr-only">Use setting</span>
           <span
             aria-hidden="true"
             className={`${
-              checkState ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#4A8DBD]'
+              checkState ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
             }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
           />
@@ -110,13 +110,13 @@ export const Settings = () => {
             setDefaultSort(e);
             handleUserSettings({ uuid: persistedUserInfo.uuid, darkMode: false, defaultSort: e });
           }}
-          className={`${defaultSort ? 'bg-[#BEDEF4]' : 'bg-[#BEDEF4]'} switch_basic_design`}
+          className={`${defaultSort ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
         >
           <span className="sr-only">Use setting</span>
           <span
             aria-hidden="true"
             className={`${
-              defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#4A8DBD]'
+              defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
             }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
           />
