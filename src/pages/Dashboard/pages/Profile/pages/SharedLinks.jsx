@@ -384,7 +384,7 @@ export default function SharedLinks() {
                 </div>
               ) : !getSharedLinksFilters.searchData && data?.pages[0].length === 0 ? (
                 <p className="text-center text-[4vw] laptop:text-[2vw]">
-                  <b>No Shared posts!</b>
+                  <b>No shared posts!</b>
                 </p>
               ) : !getSharedLinksFilters.searchData ? (
                 <p className="text-center text-[4vw] laptop:text-[2vw]">
@@ -455,7 +455,7 @@ export default function SharedLinks() {
                   </div>
                 ) : !getSharedLinksFilters.searchData && allData.length === 0 ? (
                   <p className="text-center text-[4vw] laptop:text-[2vw]">
-                    <b>No Shared posts!</b>
+                    <b>No shared posts!</b>
                   </p>
                 ) : !getSharedLinksFilters.searchData ? (
                   <p className="text-center text-[4vw] laptop:text-[2vw]">
