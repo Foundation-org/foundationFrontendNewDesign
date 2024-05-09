@@ -14,7 +14,6 @@ import * as HomepageApis from '../../services/api/homepageApis';
 import { EmbededVideo } from './EmbededVideo';
 import { isImageUrl } from '../../utils/embeddedutils';
 import { EmbededImage } from './EmbededImage';
-import { toPng } from 'html-to-image';
 import DeletePostPopup from '../dialogue-boxes/DeletePostPopup';
 
 const data = [
