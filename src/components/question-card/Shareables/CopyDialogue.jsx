@@ -136,6 +136,7 @@ const CopyDialogue = ({
                   userQuestSetting: {
                     ...item.userQuestSetting,
                     link: resp.data.data.link,
+                    linkCustomized: true,
                   },
                 };
               }
@@ -230,6 +231,7 @@ const CopyDialogue = ({
                   className="w-full bg-transparent pr-[1.58rem] text-[9.42px] font-normal text-[#435059] [outline:none] tablet:text-[26px] tablet:leading-[30px]"
                   value={link}
                   onChange={(e) => {
+                    if (questStartData?.userQuestSetting?.linkCustomized) return;
                     const inputValue = e.target.value;
                     if (inputValue.length <= 35) {
                       setLink(inputValue);
@@ -265,7 +267,12 @@ const CopyDialogue = ({
               <Button
                 variant={'submit'}
                 className={'w-fit min-w-fit whitespace-nowrap'}
-                onClick={() => setCreateCustom(true)}
+                onClick={() => {
+                  setCreateCustom(true);
+                  if (questStartData?.userQuestSetting?.linkCustomized) {
+                    setLink(questStartData.userQuestSetting.link);
+                  }
+                }}
               >
                 Create Custom Link
               </Button>
@@ -296,7 +303,7 @@ const CopyDialogue = ({
                     link,
                   });
                 }}
-                disabled={isPending}
+                disabled={isPending || questStartData?.userQuestSetting?.linkCustomized}
               >
                 {isPending ? (
                   <FaSpinner className="animate-spin text-[#EAEAEA]" />

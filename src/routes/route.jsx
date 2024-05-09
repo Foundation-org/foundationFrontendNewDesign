@@ -78,6 +78,7 @@ export function Router() {
           <Routes>
             <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
               <Route path="/maintenance" element={<Maintenance />} />
+              <Route path="/welcome" element={<Welcome />} />
               <Route path="/dashboard/faq/" element={<CustomerSupport />}>
                 <Route path="" element={<Faq />} />
                 <Route path="contact-us" element={<ContactUs />} />
