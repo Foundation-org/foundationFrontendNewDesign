@@ -8,8 +8,8 @@ const createItems = [
   { id: 3, title: 'Hidden Posts', path: '/dashboard/profile/hidden-posts', to: 'hidden-posts' },
   { id: 4, title: 'Shared Links', path: '/dashboard/profile/shared-links', to: 'shared-links' },
   { id: 5, title: 'User Setting', path: '/dashboard/profile/user-settings', to: 'user-settings' },
-  { id: 2, title: 'Ledger', path: '/dashboard/profile/ledger', to: 'ledger' },
   { id: 6, title: 'Feedback', path: '/dashboard/profile/feedback', to: 'feedback' },
+  { id: 2, title: 'Ledger', path: '/dashboard/profile/ledger', to: 'ledger' },
 ];
 
 export default function ProfileSlider({ setTab, tab }) {
