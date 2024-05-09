@@ -42,11 +42,13 @@ export const userInfoById = async (uuid) => {
   return await api.post('/user/userInfoById', { uuid });
 };
 
-export const updateUserSettings = async ({ uuid, darkMode, defaultSort }) => {
+export const updateUserSettings = async ({ uuid, darkMode, defaultSort, systemNotifications, emailNotifications }) => {
   return await api.post('user/updateUserSettings', {
     uuid,
     darkMode,
     defaultSort,
+    systemNotifications,
+    emailNotifications,
   });
 };
 
