@@ -41,7 +41,7 @@ const OpenChoice = () => {
       if (resp.status === 201) {
         setTimeout(() => {
           navigate('/dashboard');
-          queryClient.invalidateQueries('userInfo');
+          queryClient.invalidateQueries(['userInfo']);
           setLoading(false);
           dispatch(createQuestAction.resetCreateQuest());
           dispatch(pictureMediaAction.resetToInitialState());

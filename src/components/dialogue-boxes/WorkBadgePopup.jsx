@@ -194,7 +194,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
         uuid: localStorage.getItem('uuid'),
       });
       if (addBadge.status === 200) {
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
         toast.success('Badge Added Successfully!');
 
         const companySaved = await api.post(`/addBadge/company/add`, {
@@ -249,7 +249,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
       type: type,
     });
     if (companies.status === 200) {
-      queryClient.invalidateQueries('userInfo');
+      queryClient.invalidateQueries(['userInfo']);
     }
   };
 
@@ -288,7 +288,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
         id: prevInfo.id,
       });
       if (updateBadge.status === 200) {
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
         toast.success('Info Updated Successfully');
         if (prevInfo.CompanyName !== field1Data.name) {
           const companySaved = await api.post(`/addBadge/company/add`, {

@@ -67,7 +67,7 @@ export default function BadgeRemovePopup({
 
       if (removeBadge.status === 200) {
         toast.success('Badge Removed Successfully!');
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setIsLoading(false);
         setIsPersonalPopup(false);

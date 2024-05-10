@@ -52,36 +52,38 @@ export default function DashboardLayout({ children }) {
     },
   });
 
-  useQuery({
+  const {
+    data: userInfoData,
+    isSuccess: userInfoSuccess,
+    isError: userInfoError,
+  } = useQuery({
     queryKey: ['userInfo'],
     queryFn: userInfo,
-    onSuccess: (resp) => {
-      console.log('userInfo', resp);
-      if (resp?.status === 200) {
-        // Cookie Calling
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          localStorage.setItem('userData', JSON.stringify(resp?.data));
-          // Set into local storage
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        if (!resp.data) {
-          getUserInfoById();
-        }
-
-        if (resp?.data?.requiredAction) {
-          setModalVisible(true);
-        }
-      }
-    },
-    onError: (e) => {
-      console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    },
   });
+
+  if (userInfoSuccess && userInfoData?.status === 200) {
+    if (userInfoData.data) {
+      dispatch(addUser(userInfoData?.data));
+      localStorage.setItem('userData', JSON.stringify(userInfoData?.data));
+      // Set into local storage
+      if (!localStorage.getItem('uuid')) {
+        localStorage.setItem('uuid', userInfoData.data.uuid);
+      }
+    }
+
+    if (!userInfoData.data) {
+      getUserInfoById();
+    }
+
+    if (userInfoData?.data?.requiredAction) {
+      setModalVisible(true);
+    }
+  }
+
+  if (userInfoError) {
+    console.log({ userInfoError });
+    toast.error(userInfoError.response.data.message.split(':')[1]);
+  }
 
   const handleGuestLogout = async () => {
     navigate('/guest-signup');
@@ -96,7 +98,7 @@ export default function DashboardLayout({ children }) {
         primary: true,
       });
       if (res.status === 200) {
-        localStorage.setItem('uId', res.data.uuid);
+        localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userLoggedIn', res.data.uuid);
         localStorage.removeItem('isGuestMode');
         localStorage.setItem('jwt', res.data.token);

@@ -82,7 +82,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
     mutationFn: createCustomLink,
     onSuccess: (resp) => {
       toast.success('Custom link generated successfully.');
-      queryClient.invalidateQueries('userInfo');
+      queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['posts'], (oldData) => {
         return {
           ...oldData,

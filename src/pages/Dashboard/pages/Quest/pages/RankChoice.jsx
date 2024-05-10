@@ -40,7 +40,7 @@ const RankChoice = () => {
       if (resp.status === 201) {
         setTimeout(() => {
           navigate('/dashboard');
-          queryClient.invalidateQueries('userInfo');
+          queryClient.invalidateQueries(['userInfo']);
           setLoading(false);
           setAddOption(false);
           setChangedOption('');

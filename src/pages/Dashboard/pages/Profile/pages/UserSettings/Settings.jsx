@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { resetFilters } from '../../../../../../features/sidebar/filtersSlice';
 import { useNavigate } from 'react-router-dom';
+import { addUser } from '../../../../../../features/auth/authSlice';
 
 export const Settings = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ export const Settings = () => {
     mutationFn: signOut,
     onSuccess: () => {
       dispatch(resetFilters());
+      dispatch(addUser(null));
       localStorage.clear();
       navigate('/signin');
     },
@@ -52,7 +54,7 @@ export const Settings = () => {
   const { mutateAsync: handleUserSettings } = useMutation({
     mutationFn: updateUserSettings,
     onSuccess: () => {
-      queryClient.invalidateQueries('userInfo');
+      queryClient.invalidateQueries(['userInfo']);
       console.log('updateUserSettings', resp);
     },
     onError: (error) => {

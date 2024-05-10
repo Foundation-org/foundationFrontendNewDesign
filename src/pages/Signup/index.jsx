@@ -204,7 +204,7 @@ export default function Signup() {
         primary: true,
       });
       if (res.status === 200) {
-        localStorage.setItem('uId', res.data.uuid);
+        localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userLoggedIn', res.data.uuid);
         localStorage.removeItem('isGuestMode');
         localStorage.setItem('jwt', res.data.token);

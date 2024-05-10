@@ -302,7 +302,7 @@ const PersonalBadgesPopup = ({
       });
       if (addBadge.status === 200) {
         toast.success('Badge Updated Successfully!');
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
       }
     } catch (error) {
@@ -353,7 +353,7 @@ const PersonalBadgesPopup = ({
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
       }
     } catch (error) {

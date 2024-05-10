@@ -104,7 +104,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
 
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setLoading(false);
       }

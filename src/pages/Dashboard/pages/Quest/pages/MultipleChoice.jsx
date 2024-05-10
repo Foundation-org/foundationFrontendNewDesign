@@ -41,7 +41,7 @@ const MultipleChoice = () => {
       if (resp.status === 201) {
         setTimeout(() => {
           navigate('/dashboard');
-          queryClient.invalidateQueries('userInfo');
+          queryClient.invalidateQueries(['userInfo']);
           // toast.success('Successfully Created');
           setLoading(false);
 

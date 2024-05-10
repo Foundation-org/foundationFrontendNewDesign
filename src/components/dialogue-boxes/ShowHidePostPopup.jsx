@@ -44,7 +44,7 @@ export default function ShowHidePostPopup({
     onSuccess: (resp) => {
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
-      queryClient.invalidateQueries('userInfo');
+      queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['posts'], (oldData) => {
         return {
           ...oldData,
@@ -66,7 +66,7 @@ export default function ShowHidePostPopup({
     onSuccess: (resp) => {
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
-      queryClient.invalidateQueries('userInfo');
+      queryClient.invalidateQueries(['userInfo']);
 
       queryClient.setQueriesData(['posts'], (oldData) => {
         // if (oldData.pages[0].length <= 1) {

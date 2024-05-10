@@ -280,7 +280,7 @@ const QuestionCardWithToggle = (props) => {
 
       if (resp.data.message === 'Start Quest Created Successfully') {
         setLoading(false);
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
       }
 
       if (persistedUserInfo.role === 'guest') {
@@ -301,7 +301,7 @@ const QuestionCardWithToggle = (props) => {
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: questServices.updateChangeAnsStartQuest,
     onSuccess: (resp) => {
-      queryClient.invalidateQueries('userInfo');
+      queryClient.invalidateQueries(['userInfo']);
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
         toast.warning('You have selected the same option as last time. Your option was not changed.');

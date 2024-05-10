@@ -39,7 +39,7 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
       // showBoundary(error);
@@ -109,7 +109,7 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
       }
       if (addBadge?.status === 200) {
         toast.success('Badge Added Successfully!');
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
       console.error(error);

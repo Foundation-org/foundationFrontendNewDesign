@@ -109,7 +109,7 @@ const VerificationBadges = () => {
       });
       if (removeBadge.status === 200) {
         toast.success('Badge Removed Successfully!');
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
       }
     } catch (e) {
       console.log(e);
@@ -141,7 +141,7 @@ const VerificationBadges = () => {
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
       console.log(provider);

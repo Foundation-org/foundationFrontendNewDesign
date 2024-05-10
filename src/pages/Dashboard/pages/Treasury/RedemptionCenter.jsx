@@ -33,7 +33,7 @@ export default function RedemptionCenter() {
     mutationFn: createRedeeemCode,
     onSuccess: (resp) => {
       toast.success('Redemption Code created successfully');
-      queryClient.invalidateQueries('userInfo');
+      queryClient.invalidateQueries(['userInfo']);
       queryClient.invalidateQueries('unredeemedData');
       setExpiry('30 days');
       setDescription('');
@@ -77,7 +77,7 @@ export default function RedemptionCenter() {
   const { mutateAsync: addRedemptionCode } = useMutation({
     mutationFn: addRedeemCode,
     onSuccess: (resp) => {
-      queryClient.invalidateQueries('userInfo');
+      queryClient.invalidateQueries(['userInfo']);
       queryClient.invalidateQueries('history');
       toast.success('Code Redeemed Successfully');
       setCode('');

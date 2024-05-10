@@ -290,7 +290,7 @@ const QuestionCard = (props) => {
         setSubmitResponse(resp.data.data);
         setLoading(false);
 
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
       }
       handleViewResults(questStartData._id);
 
@@ -305,7 +305,7 @@ const QuestionCard = (props) => {
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: updateChangeAnsStartQuest,
     onSuccess: (resp) => {
-      queryClient.invalidateQueries('userInfo');
+      queryClient.invalidateQueries(['userInfo']);
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
         toast.warning('You have selected the same option as last time. Your option was not changed.');

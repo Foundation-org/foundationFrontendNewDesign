@@ -41,13 +41,13 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
       }
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setEmail('');
       }
       if (addBadge.status === 201) {
         toast.success('Please check your Email to verify');
-        queryClient.invalidateQueries('userInfo');
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setEmail('');
       }

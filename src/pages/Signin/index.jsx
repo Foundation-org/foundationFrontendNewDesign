@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { signIn, userInfo } from '../../services/api/userAuth';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/Button';
 import Typography from '../../components/Typography';
@@ -23,6 +23,7 @@ export default function Signin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { authO } = useParams();
+  const queryClient = useQueryClient();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [provider, setProvider] = useState('');
@@ -33,10 +34,8 @@ export default function Signin() {
   const [isReferral, setIsReferral] = useState(false);
   const [referralCode, setReferralCode] = useState(null);
   const [uuid, setUuid] = useState();
-
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  // console.log(provider, profile);
 
   const handleReferralOpen = () => {
     setIsReferral((prev) => !prev);
@@ -85,11 +84,8 @@ export default function Signin() {
         const resp = await userSignin({ email, password });
 
         if (resp.status === 200) {
-          // localStorage.setItem("userLoggedIn", resp.data.uuid);
-          // localStorage.setItem("uId", resp.data.uuid);
           localStorage.removeItem('isGuestMode');
-          await getUserInfo();
-          // localStorage.setItem("jwt", resp.data.token);
+          queryClient.invalidateQueries(['userInfo']);
           setEmail('');
           setPassword('');
         }
@@ -129,38 +125,43 @@ export default function Signin() {
     },
   });
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-    onSuccess: (res) => {
-      setUuid(res.data?.uuid);
-      console.log('User info fetched:', res.data);
-      if (res.data?.verification === false) {
+  const {
+    data: userInfoData,
+    isSuccess: userInfoSuccess,
+    isError: userInfoError,
+  } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: userInfo,
+  });
+
+  if (userInfoSuccess && userInfoData?.status === 200) {
+    if (userInfoData.data) {
+      setUuid(userInfoData.data?.uuid);
+
+      if (userInfoData.data?.verification === false) {
         toast.warning('Please check you email and verify your account first');
-        sendEmail({ userEmail: res.data?.email });
+        sendEmail({ userEmail: userInfoData.data?.email });
       }
-      if (res.data?.verification === true) {
-        dispatch(addUser(res.data));
+      if (userInfoData.data?.verification === true) {
+        dispatch(addUser(userInfoData.data));
         navigate('/dashboard');
       }
-    },
-    onError: (error) => {
-      console.error('Error fetching user info:', error);
-      localStorage.setItem('loggedIn', 'false');
-    },
-  });
+    }
+  }
+
+  if (userInfoError) {
+    console.log({ userInfoError });
+    localStorage.setItem('loggedIn', 'false');
+  }
 
   const handleSignInSocial = async (data) => {
     try {
       const res = await api.post(`/user/signInUser/social`, {
         data,
       });
-      // if(res.data.required_action){
+
       if (res.status === 200) {
         localStorage.setItem('uuid', res.data.uuid);
-        // localStorage.setItem('userLoggedIn', res.data.uuid);
-        // localStorage.removeItem('isGuestMode');
-        // localStorage.setItem('jwt', res.data.token);
-        // navigate('/dashboard');
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
         navigate('/dashboard');
@@ -174,11 +175,8 @@ export default function Signin() {
 
   useEffect(() => {
     if (authO === 'auth0') {
-      getUserInfo();
+      queryClient.invalidateQueries(['userInfo']);
     }
-    // if (localStorage.getItem('uuid')) {
-    //   navigate('/dashboard');
-    // }
   }, [authO]);
 
   const customModalStyle = {
