@@ -15,7 +15,6 @@ import ButtonGroup from '../../../../../components/question-card/ButtonGroup';
 import QuestInfoText from '../../../../../components/question-card/QuestInfoText';
 import Spacing from '../../../../../components/question-card/Spacing.jsx';
 import QuestCardLayout from '../../../../../components/question-card/QuestCardLayout';
-import ConditionalTextFullScreen from '../../../../../components/question-card/ConditionalTextFullScreen';
 
 import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
@@ -712,8 +711,7 @@ const QuestionCardWithToggle = (props) => {
     if (viewResult !== questStartData._id && openResults !== true) {
       return (
         <>
-          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
-
+          <Spacing questStartData={questStartData} show={true} />
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -729,15 +727,13 @@ const QuestionCardWithToggle = (props) => {
             setCheckOptionStatus={setCheckOptionStatus}
             postProperties={postProperties}
           />
-          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
-          {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
+          <QuestInfoText questStartData={questStartData} show={true} />
         </>
       );
     } else {
       return (
         <>
-          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
-
+          <Spacing questStartData={questStartData} show={true} />
           <Result
             questStartData={questStartData}
             id={questStartData._id}
@@ -756,8 +752,7 @@ const QuestionCardWithToggle = (props) => {
             cardSize={cardSize}
             postProperties={postProperties}
           />
-          {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
-          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          <QuestInfoText questStartData={questStartData} show={true} />
         </>
       );
     }
@@ -775,29 +770,19 @@ const QuestionCardWithToggle = (props) => {
         {props.questType !== 'feedback' ? (
           <ButtonGroup
             questStartData={questStartData}
-            id={questStartData._id}
-            btnText={questStartData.startStatus}
             handleStartTest={handleStartTest}
             viewResult={viewResult}
             handleViewResults={handleViewResults}
             setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-            whichTypeQuestion={questStartData.whichTypeQuestion}
             handleToggleCheck={handleToggleCheck}
-            handleRankedChoice={handleRankedChoice}
-            rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
             answersSelection={answersSelection}
             setAnswerSelection={setAnswerSelection}
-            startStatus={questStartData.startStatus}
-            setLoadingDetail={setLoadingDetail}
             handleOpen={handleAddOption}
-            usersAddTheirAns={questStartData.usersAddTheirAns}
-            answers={questStartData.QuestAnswers}
             title={getQuestionTitle(questStartData.whichTypeQuestion)}
             handleSubmit={handleSubmit}
             loading={loading}
             startTest={startTest}
-            handleChange={handleChange}
             addOptionField={addOptionField}
             setAddOptionField={setAddOptionField}
             checkOptionStatus={checkOptionStatus}

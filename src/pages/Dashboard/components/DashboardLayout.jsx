@@ -241,11 +241,9 @@ export default function DashboardLayout({ children }) {
                     <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
                       {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
                     </p>
-                    {/* <div className="" onClick={handleGuestLogout}> */}
                     <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]" onClick={handleGuestLogout}>
                       Create Account
                     </Anchor>
-                    {/* </div> */}
                   </div>
                 </div>
               ) : (

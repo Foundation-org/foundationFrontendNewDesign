@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import * as filtersActions from '../../../../features/sidebar/filtersSlice';
 import * as questUtilsActions from '../../../../features/quest/utilsSlice';
 import MediaControls from '../../../../components/MediaControls';
@@ -5,18 +6,14 @@ import SidebarLeft from '../../components/SidebarLeft';
 import QuestionCardWithToggle from './components/QuestionCardWithToggle';
 import Slider from '../../../../components/Slider';
 import api from '../../../../services/api/Axios';
-
-import { useEffect } from 'react';
 import { printEndMessage } from '../../../../utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Button } from '../../../../components/ui/Button';
-import { useNavigate } from 'react-router-dom';
+import SystemNotificationCard from '../../../../components/posts/SystemNotificationCard';
 
 const QuestStartSection = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { ref, inView } = useInView();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const filterStates = useSelector(filtersActions.getFilters);
@@ -90,25 +87,7 @@ const QuestStartSection = () => {
       if (post.url?.length > 0 && !post.url[0]?.includes('flickr') && post.url[0] !== '')
         dispatch(questUtilsActions.addPlayerId(post._id));
       if (post.id === 'system_notification') {
-        return (
-          <div className="flex flex-col gap-2 rounded-[13.842px] border-[1.846px] border-[#D9D9D9] bg-[#F4F8FF] px-7 py-[14px] tablet:gap-4 tablet:px-[44px] tablet:py-6">
-            <h1 className="text-[13px] font-bold leading-normal text-[#5B5B5B] tablet:text-[22px]">{post.header}</h1>
-            <p className="text-[12px] font-normal leading-normal text-[#7C7C7C] tablet:text-[18px] tablet:leading-[25px]">
-              {post.text}
-            </p>
-            <div className="flex justify-end">
-              <Button
-                variant="submit"
-                className="w-fit"
-                onClick={() => {
-                  navigate(post.buttonUrl);
-                }}
-              >
-                {post.buttonText}
-              </Button>
-            </div>
-          </div>
-        );
+        return <SystemNotificationCard post={post} />;
       } else {
         if (posts.length == index + 1) {
           return (

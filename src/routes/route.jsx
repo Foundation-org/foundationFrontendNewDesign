@@ -18,7 +18,6 @@ import BasicTable from '../pages/Dashboard/pages/Profile/pages/Ledger';
 import ChangePassword from '../pages/Dashboard/pages/Profile/pages/ChangePassword';
 import QuestStartSection from '../pages/Dashboard/pages/QuestStartSection';
 import Quest from '../pages/Dashboard/pages/Quest/Quest';
-import Bookmark from '../pages/Dashboard/pages/Bookmark';
 import DashboardRedirect from '../pages/DashboardRedirect';
 import VerifyCode from '../pages/Signup/VerifyCode';
 import BadgeVerifyCode from '../pages/Signup/BadgeVerifyCode';
@@ -93,7 +92,6 @@ export function Router() {
               >
                 <Route path="" element={<QuestStartSection />} />
                 <Route path="quest" element={<Quest />} />
-                <Route path="bookmark" element={<Bookmark />} />
                 <Route path="treasury/" element={<TreasuryLayout />}>
                   <Route path="" element={<RedemptionCenter />} />
                   <Route path="ledger" element={<Ledger />} />
