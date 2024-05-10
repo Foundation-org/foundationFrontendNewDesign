@@ -9,9 +9,11 @@ import { isBrowser, isMobile } from 'react-device-detect';
 import { useSDK } from '@metamask/sdk-react';
 import '@farcaster/auth-kit/styles.css';
 import { AuthKitProvider, SignInButton, useProfile, useSignIn } from '@farcaster/auth-kit';
+import { useQueryClient } from '@tanstack/react-query';
 
-export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup }) {
+export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
   const { sdk } = useSDK();
+  const queryClient = useQueryClient();
 
   const connect = async () => {
     try {
@@ -37,7 +39,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
-        handleUserInfo();
+        queryClient.invalidateQueries('userInfo');
       }
     } catch (error) {
       // showBoundary(error);
@@ -107,7 +109,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
       }
       if (addBadge?.status === 200) {
         toast.success('Badge Added Successfully!');
-        handleUserInfo();
+        queryClient.invalidateQueries('userInfo');
       }
     } catch (error) {
       console.error(error);

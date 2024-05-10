@@ -2,14 +2,15 @@ import { toast } from 'sonner';
 import { useState, useRef, useEffect } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../ui/Button';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { resendOtp, sendOtp, verifyOtp } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 
-const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUserInfo }) => {
+const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
+  const queryClient = useQueryClient();
   const [phone, setPhone] = useState();
   const [otpResp, setOtpResp] = useState();
   const [otp, setOTP] = useState(['', '', '', '', '', '']);
@@ -103,8 +104,8 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
 
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
+        queryClient.invalidateQueries('userInfo');
         handleClose();
-        handleUserInfo();
         setLoading(false);
       }
     } catch (error) {

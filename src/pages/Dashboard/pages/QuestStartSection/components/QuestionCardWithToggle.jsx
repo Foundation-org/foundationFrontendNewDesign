@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { validateInterval } from '../../../../../utils';
-import { userInfo } from '../../../../../services/api/userAuth';
-import { addUser } from '../../../../../features/auth/authSlice';
 import { questSelectionInitial } from '../../../../../constants/quests';
 import { resetQuests } from '../../../../../features/quest/questsSlice';
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
@@ -21,7 +19,6 @@ import ConditionalTextFullScreen from '../../../../../components/question-card/C
 
 import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
-import * as authActions from '../../../../../features/auth/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button.jsx';
 
@@ -271,24 +268,6 @@ const QuestionCardWithToggle = (props) => {
     props.setSingleQuestResp(getQuest.response.data.data[0]);
   };
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-    onSuccess: (resp) => {
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(authActions.addUser(resp?.data));
-
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-      }
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
-
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
@@ -301,7 +280,7 @@ const QuestionCardWithToggle = (props) => {
 
       if (resp.data.message === 'Start Quest Created Successfully') {
         setLoading(false);
-        getUserInfo();
+        queryClient.invalidateQueries('userInfo');
       }
 
       if (persistedUserInfo.role === 'guest') {
@@ -322,7 +301,7 @@ const QuestionCardWithToggle = (props) => {
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: questServices.updateChangeAnsStartQuest,
     onSuccess: (resp) => {
-      getUserInfo();
+      queryClient.invalidateQueries('userInfo');
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
         toast.warning('You have selected the same option as last time. Your option was not changed.');
@@ -346,11 +325,6 @@ const QuestionCardWithToggle = (props) => {
           ),
         }));
       }
-      userInfo(persistedUserInfo?.uuid || localStorage.getItem('uuid')).then((resp) => {
-        if (resp.status === 200) {
-          dispatch(addUser(resp.data));
-        }
-      });
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);

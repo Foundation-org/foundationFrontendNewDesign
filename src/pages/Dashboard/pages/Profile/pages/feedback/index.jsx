@@ -5,9 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useDebounce } from '../../../../../../utils/useDebounce';
-import api from '../../../../../../services/api/Axios';
 import { FeedbackCard } from './components/FeedbackCard';
 import { feedbackFilters, updateFeedbackSearch } from '../../../../../../features/profile/feedbackSlice';
+import api from '../../../../../../services/api/Axios';
 
 export default function Feedback() {
   const dispatch = useDispatch();

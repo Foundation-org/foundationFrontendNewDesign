@@ -3,8 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { validateInterval } from '../../../../../utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { userInfo } from '../../../../../services/api/userAuth';
-import { addUser } from '../../../../../features/auth/authSlice';
 import { updateChangeAnsStartQuest } from '../../../../../services/api/questsApi';
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
 
@@ -18,7 +16,6 @@ import ConditionalTextFullScreen from '../../../../../components/question-card/C
 import * as questAction from '../../../../../features/quest/questsSlice';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import * as questServices from '../../../../../services/api/questsApi';
-import * as authActions from '../../../../../features/auth/authSlice';
 import { questSelectionInitial } from '../../../../../constants/quests';
 import Spacing from '../../../../../components/question-card/Spacing';
 
@@ -286,44 +283,17 @@ const QuestionCard = (props) => {
     setAnswerSelection((prevAnswers) => updateAnswersSelectionForRanked(prevAnswers, actionPayload));
   };
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-    onSuccess: (resp) => {
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(authActions.addUser(resp?.data));
-
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-      }
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
-
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
       if (resp.data.message === 'Start Quest Created Successfully') {
-        // toast.success('Successfully Completed');
         setSubmitResponse(resp.data.data);
         setLoading(false);
-        // setPagination(questStartData.pagination);
 
-        // setTimeout(() => {
-        //   queryClient.invalidateQueries({ queryKey: ['FeedData'] });
-        // }, 500);
-        getUserInfo();
+        queryClient.invalidateQueries('userInfo');
       }
       handleViewResults(questStartData._id);
-      userInfo(persistedUserInfo?.uuid).then((resp) => {
-        if (resp.status === 200) {
-          dispatch(addUser(resp.data));
-        }
-      });
+
       setLoading(false);
     },
     onError: (err) => {
@@ -335,7 +305,7 @@ const QuestionCard = (props) => {
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: updateChangeAnsStartQuest,
     onSuccess: (resp) => {
-      getUserInfo();
+      queryClient.invalidateQueries('userInfo');
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
         toast.warning('You have selected the same option as last time. Your option was not changed.');
@@ -345,21 +315,10 @@ const QuestionCard = (props) => {
         toast.warning('You can change your option once every 1 hour.');
       }
       if (resp.data.message === 'Start Quest Updated Successfully') {
-        // toast.success('Successfully Changed');
         setLoading(false);
         setSubmitResponse(resp.data.data);
-        // setPagination(questStartData.pagination);
-
-        // setTimeout(() => {
-        //   queryClient.invalidateQueries({ queryKey: ['FeedData'] });
-        // }, 500);
         handleViewResults(questStartData._id);
       }
-      userInfo().then((resp) => {
-        if (resp.status === 200) {
-          dispatch(addUser(resp.data));
-        }
-      });
 
       dispatch(questUtilsActions.resetaddOptionLimit());
     },

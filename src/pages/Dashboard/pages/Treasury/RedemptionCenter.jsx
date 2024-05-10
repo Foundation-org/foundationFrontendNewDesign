@@ -8,13 +8,10 @@ import {
   createRedeeemCode,
   getHistoryData,
   getUnredeemedData,
-  // redeemCode,
 } from '../../../../services/api/redemptionApi';
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import DeleteHistoryPopup from '../../../../components/dialogue-boxes/deleteHistoryPopup';
-import { userInfo } from '../../../../services/api/userAuth';
-import { addUser } from '../../../../features/auth/authSlice';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
@@ -32,25 +29,11 @@ export default function RedemptionCenter() {
 
   const handleClose = () => setIsDeleteModal(false);
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-    onSuccess: (resp) => {
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(addUser(resp.data));
-        }
-      }
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
-
   const { mutateAsync: createRedemptionCode, isPending: createPending } = useMutation({
     mutationFn: createRedeeemCode,
     onSuccess: (resp) => {
-      getUserInfo();
       toast.success('Redemption Code created successfully');
+      queryClient.invalidateQueries('userInfo');
       queryClient.invalidateQueries('unredeemedData');
       setExpiry('30 days');
       setDescription('');
@@ -94,7 +77,7 @@ export default function RedemptionCenter() {
   const { mutateAsync: addRedemptionCode } = useMutation({
     mutationFn: addRedeemCode,
     onSuccess: (resp) => {
-      getUserInfo();
+      queryClient.invalidateQueries('userInfo');
       queryClient.invalidateQueries('history');
       toast.success('Code Redeemed Successfully');
       setCode('');

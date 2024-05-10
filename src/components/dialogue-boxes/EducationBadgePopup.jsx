@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { validation } from '../../services/api/badgesApi';
 
 import PopUp from '../ui/PopUp';
@@ -45,11 +45,10 @@ const EducationBadgePopup = ({
   title,
   logo,
   placeholder,
-  handleUserInfo,
   fetchUser,
-  setFetchUser,
   setIsPersonalPopup,
 }) => {
+  const queryClient = useQueryClient();
   const [universities, setUniversities] = useState([]);
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
@@ -179,7 +178,7 @@ const EducationBadgePopup = ({
         uuid: localStorage.getItem('uuid'),
       });
       if (addBadge.status === 200) {
-        handleUserInfo();
+        queryClient.invalidateQueries('userInfo');
         toast.success('Badge Added Successfully!');
         if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
@@ -217,7 +216,7 @@ const EducationBadgePopup = ({
       type: type,
     });
     if (companies.status === 200) {
-      handleUserInfo();
+      queryClient.invalidateQueries('userInfo');
     }
   };
   console.log(field2Data, field5Data);
@@ -269,7 +268,7 @@ const EducationBadgePopup = ({
         id: prevInfo.id,
       });
       if (updateBadge.status === 200) {
-        handleUserInfo();
+        queryClient.invalidateQueries('userInfo');
         toast.success('Info Updated Successfully');
         if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
@@ -415,7 +414,6 @@ const EducationBadgePopup = ({
             type={deleteModalState?.type}
             badgeType={deleteModalState?.badgeType}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
             setIsLoading={setRemoveLoading}
             loading={RemoveLoading}

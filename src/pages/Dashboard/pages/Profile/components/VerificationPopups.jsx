@@ -6,9 +6,11 @@ import { Button } from '../../../../../components/ui/Button';
 import api from '../../../../../services/api/Axios';
 import PopUp from '../../../../../components/ui/PopUp';
 import { useErrorBoundary } from 'react-error-boundary';
+import { useQueryClient } from '@tanstack/react-query';
 
 const REDIRECT_URI = window.location.href;
-const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, selectedBadge, handleUserInfo }) => {
+const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, selectedBadge }) => {
+  const queryClient = useQueryClient();
   const { showBoundary } = useErrorBoundary();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
@@ -39,14 +41,14 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
       }
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
+        queryClient.invalidateQueries('userInfo');
         handleClose();
-        handleUserInfo();
         setEmail('');
       }
       if (addBadge.status === 201) {
         toast.success('Please check your Email to verify');
+        queryClient.invalidateQueries('userInfo');
         handleClose();
-        handleUserInfo();
         setEmail('');
       }
     } catch (error) {

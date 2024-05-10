@@ -6,7 +6,7 @@ import VerificationPopups from '../../components/VerificationPopups';
 import Button from '../../components/Button';
 import AddCellPhonePopup from '../../../../../../components/dialogue-boxes/AddCellPhonePopup';
 
-export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePopup }) {
+export default function Contact({ fetchUser, handleRemoveBadgePopup }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isPopup, setIsPopup] = useState(false);
@@ -104,7 +104,6 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Personal-Email-2xa.png`}
             placeholder="Personal email here"
             selectedBadge={seletedBadge}
-            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -117,7 +116,6 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Work-Email-2xa.png`}
             placeholder="Work email here"
             selectedBadge={seletedBadge}
-            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -130,7 +128,6 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Education-Email-2xa.png`}
             placeholder="Educational Email here"
             selectedBadge={seletedBadge}
-            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -143,7 +140,6 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
               title="Phone Number"
               logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
               selectedBadge={seletedBadge}
-              handleUserInfo={handleUserInfo}
               handleClose={handleClose}
               type={'cell-phone'}
             />

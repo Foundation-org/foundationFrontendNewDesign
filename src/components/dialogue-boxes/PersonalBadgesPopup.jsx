@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { validation } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
@@ -37,12 +37,11 @@ const PersonalBadgesPopup = ({
   title,
   logo,
   placeholder,
-  handleUserInfo,
   edit,
   fetchUser,
-  setFetchUser,
   setIsPersonalPopup,
 }) => {
+  const queryClient = useQueryClient();
   const { showBoundary } = useErrorBoundary();
   const [selected, setSelected] = useState();
   const [name, setName] = useState('');
@@ -303,7 +302,7 @@ const PersonalBadgesPopup = ({
       });
       if (addBadge.status === 200) {
         toast.success('Badge Updated Successfully!');
-        handleUserInfo();
+        queryClient.invalidateQueries('userInfo');
         handleClose();
       }
     } catch (error) {
@@ -354,7 +353,7 @@ const PersonalBadgesPopup = ({
       });
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
-        handleUserInfo();
+        queryClient.invalidateQueries('userInfo');
         handleClose();
       }
     } catch (error) {
@@ -665,7 +664,6 @@ const PersonalBadgesPopup = ({
           type={deleteModalState?.type}
           badgeType={deleteModalState?.badgeType}
           fetchUser={fetchUser}
-          setFetchUser={setFetchUser}
           setIsPersonalPopup={setIsPersonalPopup}
           setIsLoading={setRemoveLoading}
           loading={RemoveLoading}

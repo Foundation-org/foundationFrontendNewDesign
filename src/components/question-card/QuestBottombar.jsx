@@ -357,17 +357,7 @@ const QuestBottombar = ({
                 customStyle={customModalStyle}
                 customClasses="rounded-[10px] tablet:rounded-[26px]"
               >
-                <CopyDialogue
-                  handleClose={handleCopyClose}
-                  id={id}
-                  uniqueShareLink={uniqueShareLink}
-                  questStartData={questStartData}
-                  createdBy={createdBy}
-                  img={img}
-                  alt={alt}
-                  badgeCount={badgeCount}
-                  // getImage={getImage}
-                />
+                <CopyDialogue handleClose={handleCopyClose} questStartData={questStartData} />
               </BasicModal>
             </div>
           )}

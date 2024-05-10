@@ -7,6 +7,7 @@ import CustomCombobox from '../ui/Combobox';
 import ListBox from '../ui/ListBox';
 import { FaSpinner } from 'react-icons/fa';
 import BadgeRemovePopup from './badgeRemovePopup';
+import { useQueryClient } from '@tanstack/react-query';
 
 const CompanyName = {
   label: 'Company Name',
@@ -53,18 +54,8 @@ const endingYear = {
   type: 'endingYear',
 };
 
-const WorkBadgePopup = ({
-  isPopup,
-  setIsPopup,
-  type,
-  title,
-  logo,
-  placeholder,
-  handleUserInfo,
-  fetchUser,
-  setFetchUser,
-  setIsPersonalPopup,
-}) => {
+const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, fetchUser, setIsPersonalPopup }) => {
+  const queryClient = useQueryClient();
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
   const [delloading, setDelLoading] = useState(false);
@@ -203,7 +194,7 @@ const WorkBadgePopup = ({
         uuid: localStorage.getItem('uuid'),
       });
       if (addBadge.status === 200) {
-        handleUserInfo();
+        queryClient.invalidateQueries('userInfo');
         toast.success('Badge Added Successfully!');
 
         const companySaved = await api.post(`/addBadge/company/add`, {
@@ -258,7 +249,7 @@ const WorkBadgePopup = ({
       type: type,
     });
     if (companies.status === 200) {
-      handleUserInfo();
+      queryClient.invalidateQueries('userInfo');
     }
   };
 
@@ -297,7 +288,7 @@ const WorkBadgePopup = ({
         id: prevInfo.id,
       });
       if (updateBadge.status === 200) {
-        handleUserInfo();
+        queryClient.invalidateQueries('userInfo');
         toast.success('Info Updated Successfully');
         if (prevInfo.CompanyName !== field1Data.name) {
           const companySaved = await api.post(`/addBadge/company/add`, {
@@ -372,7 +363,6 @@ const WorkBadgePopup = ({
             type={deleteModalState?.type}
             badgeType={deleteModalState?.badgeType}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
             setIsLoading={setRemoveLoading}
             loading={RemoveLoading}

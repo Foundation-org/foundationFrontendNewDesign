@@ -62,7 +62,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
       </h1>
       <div className="mb-3 ml-7 mt-2 grid grid-cols-2 gap-x-[23px] gap-y-2 tablet:mb-[26px] tablet:ml-[60px] tablet:mt-[15px] tablet:gap-x-[50px] tablet:gap-y-[15px] ">
         {hideReasons.map((item) => {
-          const feedbackItem = post.feedback.find((feedback) => feedback.id === item.title);
+          const feedbackItem = post?.feedback?.find((feedback) => feedback.id === item.title);
           const feedbackCount = feedbackItem ? feedbackItem.count : 0;
           const feedbackViolated = feedbackItem ? feedbackItem.violated : false;
 
