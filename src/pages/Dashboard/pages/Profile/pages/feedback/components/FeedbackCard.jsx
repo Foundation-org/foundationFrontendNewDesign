@@ -37,7 +37,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
               </div>
             )}
 
-            {post.suppressed && (
+            {post.feedback.some((item) => item.violated === true) && (
               <div className="mt-[1.5px] flex items-center gap-1.5 pr-5 tablet:mt-[3px] tablet:gap-3 tablet:pr-6">
                 <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#FF2C2C] tablet:text-[1.25rem] tablet:leading-[23px]">
                   SUPRESSED
