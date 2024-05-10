@@ -95,8 +95,6 @@ export default function Signin() {
       // } else {
       //   toast.error('Google recaptcha failed');
       // }
-
-      // console.log(resp);
     } catch (e) {
       console.log(e);
       if (e.response.data === 'Wrong Password') {
@@ -115,44 +113,44 @@ export default function Signin() {
     }
   };
 
-  const { mutateAsync: sendEmail } = useMutation({
-    mutationFn: sendVerificationEmail,
-    onSuccess: (res) => {
-      console.log('Email sent');
-    },
-    onError: (error) => {
-      console.error('Email not sent', error);
-    },
-  });
+  // const { mutateAsync: sendEmail } = useMutation({
+  //   mutationFn: sendVerificationEmail,
+  //   onSuccess: (res) => {
+  //     console.log('Email sent');
+  //   },
+  //   onError: (error) => {
+  //     console.error('Email not sent', error);
+  //   },
+  // });
 
-  const {
-    data: userInfoData,
-    isSuccess: userInfoSuccess,
-    isError: userInfoError,
-  } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: userInfo,
-  });
+  // const {
+  //   data: userInfoData,
+  //   isSuccess: userInfoSuccess,
+  //   isError: userInfoError,
+  // } = useQuery({
+  //   queryKey: ['userInfo'],
+  //   queryFn: userInfo,
+  // });
 
-  if (userInfoSuccess && userInfoData?.status === 200) {
-    if (userInfoData.data) {
-      setUuid(userInfoData.data?.uuid);
+  // if (userInfoSuccess && userInfoData?.status === 200) {
+  //   if (userInfoData.data) {
+  //     setUuid(userInfoData.data?.uuid);
 
-      if (userInfoData.data?.verification === false) {
-        toast.warning('Please check you email and verify your account first');
-        sendEmail({ userEmail: userInfoData.data?.email });
-      }
-      if (userInfoData.data?.verification === true) {
-        dispatch(addUser(userInfoData.data));
-        navigate('/dashboard');
-      }
-    }
-  }
+  //     if (userInfoData.data?.verification === false) {
+  //       toast.warning('Please check you email and verify your account first');
+  //       sendEmail({ userEmail: userInfoData.data?.email });
+  //     }
+  //     if (userInfoData.data?.verification === true) {
+  //       dispatch(addUser(userInfoData.data));
+  //       navigate('/dashboard');
+  //     }
+  //   }
+  // }
 
-  if (userInfoError) {
-    console.log({ userInfoError });
-    localStorage.setItem('loggedIn', 'false');
-  }
+  // if (userInfoError) {
+  //   console.log({ userInfoError });
+  //   localStorage.setItem('loggedIn', 'false');
+  // }
 
   const handleSignInSocial = async (data) => {
     try {
@@ -173,11 +171,11 @@ export default function Signin() {
     }
   };
 
-  useEffect(() => {
-    if (authO === 'auth0') {
-      queryClient.invalidateQueries(['userInfo']);
-    }
-  }, [authO]);
+  // useEffect(() => {
+  //   if (authO === 'auth0') {
+  //     queryClient.invalidateQueries(['userInfo']);
+  //   }
+  // }, [authO]);
 
   const customModalStyle = {
     backgroundColor: '#FCFCFD',
