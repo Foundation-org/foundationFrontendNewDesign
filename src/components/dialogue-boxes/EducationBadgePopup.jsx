@@ -350,7 +350,6 @@ const EducationBadgePopup = ({
       setHollow(true);
     } else {
       if (response.data.message !== 'Accepted') {
-        console.log('ran');
         setField2Data({ ...field2Data, name: response.data.message });
       }
       setIsError(false);

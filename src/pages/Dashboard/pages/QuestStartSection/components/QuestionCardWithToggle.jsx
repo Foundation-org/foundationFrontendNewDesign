@@ -333,6 +333,19 @@ const QuestionCardWithToggle = (props) => {
   });
 
   const handleSubmit = () => {
+    if (persistedUserInfo.role === 'guest' && !location.pathname.startsWith('/p')) {
+      toast.warning(
+        <p>
+          Please{' '}
+          <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+            Create an Account
+          </span>{' '}
+          to unlock this feature
+        </p>,
+      );
+      return;
+    }
+
     setLoading(true);
     if (
       questStartData.whichTypeQuestion === 'agree/disagree' ||
@@ -547,7 +560,6 @@ const QuestionCardWithToggle = (props) => {
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser && getQuestUtilsState.addOptionLimit === 1) {
           // If user Add his own option
-          console.log('added answer ran');
           answerSelected.push({
             question: rankedAnswers[i].label,
             addedAnswerByUser: true,
