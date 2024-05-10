@@ -71,7 +71,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
               key={item.id}
               className={`${post.suppressedReason === item.title && item.title === 'Invalid Media' ? 'font-semibold text-[#DC1010]' : feedbackViolated ? 'font-semibold text-[#DC1010]' : feedbackCount >= 1 ? 'text-[#4A8DBD]' : 'font-normal text-[#BABABA]'} text-[10px] tablet:text-[18px]`}
             >
-              {feedbackCount} {item.title}
+              {post.suppressedReason === item.title && item.title === 'Invalid Media' ? 1 : feedbackCount} {item.title}
             </p>
           );
         })}

@@ -26,13 +26,11 @@ export const EmbededVideo = ({
 
   const handleVideoEnded = () => {
     if (questUtilsState.loop === true) {
-      console.log('ran', questUtilsState.loop);
       if (playerRef.current) {
         playerRef.current.seekTo(0);
         playerRef.current.getInternalPlayer().play(); // Resume playback
       }
     } else {
-      console.log('else ran');
       const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
       if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
         dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
@@ -74,6 +72,7 @@ export const EmbededVideo = ({
           url={mediaURL}
           className="react-player"
           onError={(e) => {
+            console.log('hamza', e);
             // toast.error('Invalid URL');
             console.log('Invalid URl', questId);
             suppressPost(questId);
