@@ -9,7 +9,7 @@ export default function MediaControls() {
 
   const scrollToPlayingCard = () => {
     const playingCard = document.getElementById('playing-card');
-    console.log(playingCard);
+
     if (playingCard) {
       playingCard.scrollIntoView({ behavior: 'smooth' });
     }

@@ -339,7 +339,6 @@ const QuestionCard = ({
       for (let i = 0; i < rankedAnswers.length; i++) {
         if (rankedAnswers[i].addedOptionByUser) {
           // If user Add his own option
-          console.log('added answer ran');
           answerSelected.push({
             question: rankedAnswers[i].label,
             addedAnswerByUser: true,
