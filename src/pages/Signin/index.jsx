@@ -205,7 +205,7 @@ export default function Signin() {
           className="h-[45px] w-[58px]"
         />
       </div>
-      <div className="flex h-full w-full flex-col items-center bg-white md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
+      {/* <div className="flex h-full w-full flex-col items-center bg-white md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle" className="text-center tablet:text-left">
             Sign in
@@ -247,7 +247,8 @@ export default function Signin() {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
+      
       <div className="hidden h-screen w-fit items-center px-32 lg:flex">
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
