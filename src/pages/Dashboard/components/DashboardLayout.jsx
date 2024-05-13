@@ -301,6 +301,8 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/shared-links/result' &&
             location.pathname !== '/dashboard/profile/user-settings' &&
             location.pathname !== '/dashboard/profile/feedback' &&
+            location.pathname !== '/dashboard/help/about' &&
+            location.pathname !== '/dashboard/help/faq' &&
             !location.pathname.startsWith('/p/') && <SidebarLeft />}
 
           {/* HiddenPost Search */}
@@ -487,7 +489,9 @@ export default function DashboardLayout({ children }) {
           {location.pathname !== '/dashboard/quest' &&
             location.pathname !== '/dashboard/profile/ledger' &&
             location.pathname !== '/dashboard/treasury' &&
-            location.pathname !== '/dashboard/treasury/ledger' && <SidebarRight />}
+            location.pathname !== '/dashboard/treasury/ledger' &&
+            location.pathname !== '/dashboard/help/about' &&
+            location.pathname !== '/dashboard/help/faq' && <SidebarRight />}
         </div>
       </div>
       {/* Mobile Children */}

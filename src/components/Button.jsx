@@ -25,7 +25,7 @@ const Button = ({
         size === 'medium',
       'px-2 text-[2.5vw] sm:text-[2.3vw] lg:text-[1vw] font-[500] text-center h-[36px] sm:h-[50px] lg:h-[60px] w-full border-[1px] border-gray-200 dark:border-white whitespace-nowrap':
         size === 'login-btn',
-      'taller:text-[20px] taller:h-[44px] text-[14.91px] md:text-[29.257px] font-[500] text-center py-3 h-[33.23px] md:h-[67.2px] w-full':
+      'taller:text-[20px] taller:h-[44px] text-[14.91px] md:text-[29.257px] font-[500] text-center py-3 h-[33.23px] md:h-[67.2px] w-fit':
         size === 'large',
     },
     {
