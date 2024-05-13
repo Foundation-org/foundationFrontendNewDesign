@@ -273,7 +273,7 @@ export default function DashboardLayout({ children }) {
             </div>
           </div>
         )}
-        {/* Desktop */}
+        {/* Desktop Left Side */}
         <div className="hidden tablet:block">
           <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
             <div className="flex items-center gap-[15px]">
@@ -431,7 +431,7 @@ export default function DashboardLayout({ children }) {
           location.pathname !== '/dashboard/treasury/ledger' &&
           location.pathname !== '/dashboard/profile/ledger' &&
           children}
-        {/* Right Side */}
+        {/* Desktop Right Side */}
         <div className="hidden tablet:block">
           <div className="mr-[31px] mt-5 hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
             {persistedUserInfo.role !== 'user' ? (
@@ -490,6 +490,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/treasury/ledger' && <SidebarRight />}
         </div>
       </div>
+      {/* Mobile Children */}
       {(location.pathname === '/dashboard/treasury' ||
         location.pathname === '/dashboard/treasury/ledger' ||
         location.pathname === '/dashboard/profile/ledger') &&
