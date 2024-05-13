@@ -87,7 +87,6 @@ export function Router() {
                 <Route path="faq" element={<Faq />} />
               </Route>
               <Route path="quest" element={<Quest />} />
-              <Route path="bookmark" element={<Bookmark />} />
               <Route path="treasury/" element={<TreasuryLayout />}>
                 <Route path="" element={<RedemptionCenter />} />
                 <Route path="ledger" element={<Ledger />} />
