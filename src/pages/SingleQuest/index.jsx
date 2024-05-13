@@ -38,6 +38,7 @@ const SingleQuest = () => {
 
   const questByUniqueShareLink = async () => {
     const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
+    console.log('🚀 ~ questByUniqueShareLink ~ getQuest:', getQuest);
 
     if (getQuest.error === 'This link is not active') {
       setError(getQuest.error);

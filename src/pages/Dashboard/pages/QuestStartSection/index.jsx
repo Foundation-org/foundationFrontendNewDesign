@@ -85,9 +85,9 @@ const QuestStartSection = () => {
   const content = data?.pages.map((posts) =>
     posts.map((post, index) => {
       if (post.url?.length > 0 && !post.url[0]?.includes('flickr') && post.url[0] !== '')
-        dispatch(questUtilsActions.addPlayerId(post._id));
+        <React.Fragment key={index + 1}>{dispatch(questUtilsActions.addPlayerId(post._id))}</React.Fragment>;
       if (post.id === 'system_notification') {
-        return <SystemNotificationCard post={post} />;
+        return <SystemNotificationCard post={post} key={index + 1} />;
       } else {
         if (posts.length == index + 1) {
           return (

@@ -3,17 +3,17 @@ import { useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../features/auth/authSlice';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { createGuestMode } from '../../services/api/userAuth';
+// import { useLocation, useNavigate } from 'react-router-dom';
 
 const GuestRedirect = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const { search } = useLocation();
-  const params = new URLSearchParams(search);
-  console.log('🚀 ~ GuestRedirect ~ params:', params);
+  // const { search } = useLocation();
+  // const params = new URLSearchParams(search);
+  // console.log('🚀 ~ GuestRedirect ~ params:', params);
 
   const { mutateAsync: createGuest } = useMutation({
     mutationFn: createGuestMode,

@@ -39,6 +39,15 @@ export default function DashboardLayout({ children }) {
     toast.error(treasuryError.response.data.message.split(':')[1]);
   }
 
+  const {
+    data: userInfoData,
+    isSuccess: userInfoSuccess,
+    isError: userInfoError,
+  } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: userInfo,
+  });
+
   const { mutateAsync: getUserInfoById } = useMutation({
     mutationFn: userInfoById,
     onSuccess: (res) => {
@@ -52,42 +61,28 @@ export default function DashboardLayout({ children }) {
     },
   });
 
-  const {
-    data: userInfoData,
-    isSuccess: userInfoSuccess,
-    isError: userInfoError,
-  } = useQuery({
-    queryKey: ['userInfo'],
-    queryFn: userInfo,
-  });
-
-  if (userInfoSuccess && userInfoData?.status === 200) {
-    if (userInfoData.data) {
-      dispatch(addUser(userInfoData?.data));
-      localStorage.setItem('userData', JSON.stringify(userInfoData?.data));
-      // Set into local storage
-      if (!localStorage.getItem('uuid')) {
-        localStorage.setItem('uuid', userInfoData.data.uuid);
-      }
-    }
-
-    if (!userInfoData.data) {
+  useEffect(() => {
+    if (userInfoSuccess && !userInfoData?.data) {
       getUserInfoById();
     }
+  }, [userInfoSuccess, userInfoData, getUserInfoById]);
 
-    if (userInfoData?.data?.requiredAction) {
-      setModalVisible(true);
+  useEffect(() => {
+    // Handle userInfoData when successfully fetched
+    if (userInfoSuccess && userInfoData?.status === 200) {
+      if (userInfoData.data) {
+        dispatch(addUser(userInfoData.data));
+        localStorage.setItem('userData', JSON.stringify(userInfoData.data));
+        // Set into local storage
+        if (!localStorage.getItem('uuid')) {
+          localStorage.setItem('uuid', userInfoData.data.uuid);
+        }
+      }
+      if (userInfoData?.data?.requiredAction) {
+        setModalVisible(true);
+      }
     }
-  }
-
-  if (userInfoError) {
-    console.log({ userInfoError });
-    toast.error(userInfoError.response.data.message.split(':')[1]);
-  }
-
-  const handleGuestLogout = async () => {
-    navigate('/guest-signup');
-  };
+  }, [userInfoSuccess, userInfoData, dispatch, setModalVisible]);
 
   const handleEmailType = async (value) => {
     try {
@@ -107,6 +102,10 @@ export default function DashboardLayout({ children }) {
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
     }
+  };
+
+  const handleGuestLogout = async () => {
+    navigate('/guest-signup');
   };
 
   // Hidden post Search
