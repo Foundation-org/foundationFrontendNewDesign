@@ -82,7 +82,7 @@ export default function Signin() {
       <div className="flex h-full flex-col items-center bg-white md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle" className="text-center tablet:text-left">
-            {location.pathname === '/signin' ? 'Login' : 'login with Email'}
+            {location.pathname === '/signin' ? 'Login' : 'Login with Email'}
           </Typography>
           {location.pathname === '/signin' && (
             <div className="mt-5 tablet:mt-[45px]">
