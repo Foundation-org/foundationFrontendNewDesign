@@ -29,7 +29,6 @@ const CredentialRegister = () => {
   const cnfmPassInputType = showCnfmPassword ? 'text' : 'password';
 
   const handlePopupOpen = () => setIspopup(true);
-  const handlePopupClose = () => setIspopup(false);
 
   const handleReferralOpen = () => setIsReferral(true);
 
@@ -103,7 +102,6 @@ const CredentialRegister = () => {
     if (localStorage.getItem('isGuestMode')) {
       handleGuestSignup();
     } else {
-      console.log('1');
       handleReferralOpen();
     }
   };
@@ -286,6 +284,7 @@ const CredentialRegister = () => {
           setReferralCode={setReferralCode}
           setErrorMessage={setErrorMessage}
           handlePopupOpen={handlePopupOpen}
+          socialAccount={null}
         />
       </BasicModal>
     </>

@@ -83,6 +83,7 @@ export default function Signup() {
   };
 
   const handleSignUpSocial = async (data) => {
+    console.log('before');
     setSocialAccount({ isSocial: true, data });
     if (localStorage.getItem('isGuestMode')) {
       handleSignUpSocialGuest(data);
@@ -93,6 +94,7 @@ export default function Signup() {
   };
 
   const handleSignUpSocialAfterReferral = async (data) => {
+    console.log('after');
     setSocialAccount({ isSocial: true, data });
 
     try {

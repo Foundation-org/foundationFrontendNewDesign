@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../components/Input';
 import Anchor from '../../../components/Anchor';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -7,6 +7,9 @@ import Button from '../../../components/Button';
 import { FaSpinner } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { signIn } from '../../../services/api/userAuth';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { addUser } from '../../../features/auth/authSlice';
 
 const CredentialLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,7 +18,8 @@ const CredentialLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [capthaToken, setCaptchaToken] = useState('');
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const onEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -49,9 +53,12 @@ const CredentialLogin = () => {
 
         if (resp.status === 200) {
           localStorage.removeItem('isGuestMode');
-          queryClient.invalidateQueries(['userInfo']);
           setEmail('');
           setPassword('');
+          localStorage.setItem('uuid', resp.data.uuid);
+          dispatch(addUser(resp.data));
+
+          navigate('/dashboard');
         }
       } else {
         toast.warning('Please complete the reCAPTCHA challenge before proceeding.');

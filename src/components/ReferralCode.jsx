@@ -24,7 +24,6 @@ const ReferralCode = ({
   handlePopupOpen,
   setErrorMessage,
   socialAccount,
-  setIsLoadingSocial,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,8 +53,8 @@ const ReferralCode = ({
         toast.warning('Password does not match');
       }
     } catch (e) {
-      setErrorMessage(e.response.data.message.split(':')[1]);
-      // toast.error(e.response.data.message.split(':')[1]);
+      // setErrorMessage(e.response.data.message.split(':')[1]);
+      toast.error(e.response.data.message.split(':')[1]);
       handlePopupOpen();
     } finally {
       setIsLoading(false);
@@ -80,12 +79,11 @@ const ReferralCode = ({
   const { mutateAsync: handleReferral } = useMutation({
     mutationFn: referral,
     onSuccess: (resp) => {
-      setIsLoadingSocial(false);
       setIsLoading(false);
       toast.success('Referral code verified');
       setRefLoading(false);
       handleClose();
-      socialAccount.isSocial ? handleSocialSignup() : handleSignup();
+      socialAccount?.isSocial ? handleSocialSignup() : handleSignup();
     },
     onError: (err) => {
       console.log(err);
