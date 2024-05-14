@@ -6,18 +6,17 @@ const SideNavbar = () => {
   const navigate = useNavigate();
 
   return (
-    // <div>
-    <div className="ml-[31px] w-full max-w-[18.75rem] items-center justify-center gap-[15px] laptop:flex laptop:flex-col">
+    <div className="ml-[31px] hidden w-full max-w-[18.75rem] flex-col items-center justify-center gap-[15px] laptop:flex">
       <Button
         variant={location.pathname === '/dashboard/quest' ? 'submit' : 'hollow-submit'}
-        className="bg-white tablet:w-full"
+        className="w-full bg-white"
         onClick={() => navigate('/dashboard/quest')}
       >
         Create Post
       </Button>
       <Button
         variant={location.pathname === '/dashboard/profile' ? 'submit' : 'hollow-submit'}
-        className="bg-white tablet:w-full"
+        className="w-full bg-white"
         onClick={() => navigate('/dashboard/profile')}
       >
         Add Badge
@@ -27,23 +26,3 @@ const SideNavbar = () => {
 };
 
 export default SideNavbar;
-
-{
-  /* <div className="ml-[31px] flex w-full max-w-[18.75rem] flex-row items-center justify-center gap-[15px] laptop:hidden">
-        <Button
-          variant={location.pathname === '/dashboard/quest' ? 'submit' : 'hollow-submit'}
-          className="bg-white"
-          onClick={() => navigate('/dashboard/quest')}
-        >
-          Create Post
-        </Button>
-        <Button
-          variant={location.pathname === '/dashboard/profile' ? 'submit' : 'hollow-submit'}
-          className="bg-white"
-          onClick={() => navigate('/dashboard/profile')}
-        >
-          Add Badge
-        </Button>
-      </div> */
-}
-//  </div>

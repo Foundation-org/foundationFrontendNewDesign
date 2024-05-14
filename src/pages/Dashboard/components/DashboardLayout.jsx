@@ -202,7 +202,7 @@ export default function DashboardLayout({ children }) {
 
       <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
-        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-[#DEE6F7] px-5 tablet:hidden">
+        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-[#DEE6F7] px-5 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
           {/* <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
             <div className="flex items-center gap-2">
               <img
@@ -260,21 +260,36 @@ export default function DashboardLayout({ children }) {
                   </p>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <h4 className="heading">My Balance</h4>
-                  <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                    {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
+                  <h4 className="heading underline">FDX Balance</h4>
+                  <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
+                    {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
                   </p>
                 </div>
               </div>
             )}
           </div>
-          <SideNavbar />
+          <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
+            <Button
+              variant={location.pathname === '/dashboard/quest' ? 'submit' : 'hollow-submit'}
+              className="bg-white tablet:w-full"
+              onClick={() => navigate('/dashboard/quest')}
+            >
+              Create Post
+            </Button>
+            <Button
+              variant={location.pathname === '/dashboard/profile' ? 'submit' : 'hollow-submit'}
+              className="bg-white tablet:w-full"
+              onClick={() => navigate('/dashboard/profile')}
+            >
+              Add Badge
+            </Button>
+          </div>
         </div>
 
         {/* Desktop Left Side */}
         <div className="hidden tablet:block">
           <div
-            className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]"
+            className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]"
             onClick={() => navigate('/dashboard/treasury')}
           >
             <div className="flex items-center gap-[15px]">

@@ -17,7 +17,7 @@ const Quest = () => {
       <div className="fixed left-auto right-auto w-full max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
         <CreateSlider setTab={setTab} tab={tab} />
       </div>
-      <div className="no-scrollbar mt-10 h-[calc(100dvh-141.89px)] overflow-y-auto tablet:mx-6 tablet:mt-[77.63px] tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-147.63px)]">
+      <div className="no-scrollbar mt-10 h-[calc(100dvh-141.89px)] overflow-y-auto tablet:mx-6 tablet:mt-[77.63px] tablet:h-[calc(100dvh-173.63px)] laptop:h-[calc(100dvh-184px)]">
         {tab === 0 && <YesNo />}
         {tab === 1 && <MultipleChoice />}
         {tab === 2 && <RankChoice />}

@@ -123,7 +123,7 @@ const QuestStartSection = () => {
           <div className="fixed left-auto right-auto max-w-full tablet:max-w-[778px]  laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
             <Slider isFetching={isFetching} />
           </div>
-          <div className="no-scrollbar mt-10 flex h-[calc(100dvh-147.63px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mt-[77.63px] tablet:gap-5 tablet:px-6 tablet:pb-5">
+          <div className="no-scrollbar mt-10 flex h-[calc(100dvh-184px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mt-[77.63px] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
             {content}
             {printEndMessage(data?.pages[0], filterStates.bookmarks, isFetching)}
           </div>
