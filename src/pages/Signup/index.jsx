@@ -78,15 +78,32 @@ export default function Signup() {
       toast.error(error.response.data.message.split(':')[1]);
       setIsLoading(false);
       setIsLoadingSocial(false);
-    } finally {
+    }
+  };
+
+  const handleSignUpGuestSocialBadges = async (data) => {
+    try {
+      data.uuid = localStorage.getItem('uuid');
+      const res = await api.post(`/user//signUpGuest/SocialBadges`, data);
+      if (res.status === 200) {
+        dispatch(addUser(res.data));
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+      setIsLoading(false);
+      setIsLoadingSocial(false);
     }
   };
 
   const handleSignUpSocial = async (data) => {
-    console.log('before');
     setSocialAccount({ type: provider, data });
     if (localStorage.getItem('isGuestMode')) {
-      handleSignUpSocialGuest(data);
+      if (provider === 'google') {
+        handleSignUpSocialGuest(data);
+      } else {
+        handleSignUpGuestSocialBadges(data);
+      }
     } else {
       handleReferralOpen();
       return;

@@ -8,15 +8,15 @@ const SideNavbar = () => {
   return (
     <div className="ml-[31px] hidden w-full max-w-[18.75rem] flex-col items-center justify-center gap-[15px] laptop:flex">
       <Button
-        variant={location.pathname === '/dashboard/quest' ? 'submit' : 'hollow-submit'}
+        variant={location.pathname === '/dashboard/quest' ? 'submit' : 'hollow-submit2'}
         className="w-full bg-white"
         onClick={() => navigate('/dashboard/quest')}
       >
         Create Post
       </Button>
       <Button
-        variant={location.pathname === '/dashboard/profile' ? 'submit' : 'hollow-submit'}
-        className="w-full bg-white"
+        variant={location.pathname === '/dashboard/profile' ? 'submit' : 'hollow-submit2'}
+        className="w-full bg-white "
         onClick={() => navigate('/dashboard/profile')}
       >
         Add Badge

@@ -219,7 +219,7 @@ export default function DashboardLayout({ children }) {
             </div>
           </div> */}
 
-          <div className="h-fit rounded-[15px]">
+          <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
             {persistedUserInfo.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-2">
                 <div className="relative h-fit w-fit">
@@ -270,14 +270,14 @@ export default function DashboardLayout({ children }) {
           </div>
           <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
             <Button
-              variant={location.pathname === '/dashboard/quest' ? 'submit' : 'hollow-submit'}
+              variant={location.pathname === '/dashboard/quest' ? 'submit' : 'hollow-submit2'}
               className="bg-white tablet:w-full"
               onClick={() => navigate('/dashboard/quest')}
             >
               Create Post
             </Button>
             <Button
-              variant={location.pathname === '/dashboard/profile' ? 'submit' : 'hollow-submit'}
+              variant={location.pathname === '/dashboard/profile' ? 'submit' : 'hollow-submit2'}
               className="bg-white tablet:w-full"
               onClick={() => navigate('/dashboard/profile')}
             >
