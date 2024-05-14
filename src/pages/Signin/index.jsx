@@ -1,10 +1,10 @@
 import { toast } from 'sonner';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { signIn, userInfo } from '../../services/api/userAuth';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/Button';
 import Typography from '../../components/Typography';
 import SocialLogins from '../../components/SocialLogins';
@@ -18,10 +18,10 @@ import ReferralCode from '../../components/ReferralCode';
 import { sendVerificationEmail } from '../../services/api/authentication';
 import Loader from '../Signup/components/Loader';
 import { referralModalStyle } from '../../constants/styles';
-import CredentialLogin from './components/CredentialLogin';
 
 export default function Signin() {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { authO } = useParams();
   const queryClient = useQueryClient();
@@ -77,43 +77,35 @@ export default function Signin() {
           persistedTheme === 'dark' ? 'bg-dark' : 'bg-blue'
         } flex h-[65px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
-        <img
-          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`}
-          alt="logo"
-          className="h-[45px] w-[58px]"
-        />
+        <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>
-      <div className="flex h-full w-[calc(100%-36.11%)] flex-col items-center bg-white md:justify-center lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
+      <div className="flex h-full flex-col items-center bg-white md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle" className="text-center tablet:text-left">
-            Login
+            {location.pathname === '/signin' ? 'Login' : 'login with Email'}
           </Typography>
-          <div className="my-5 tablet:my-[45px]">
-            <SocialLogins
-              setProvider={setProvider}
-              setProfile={setProfile}
-              handleSignInSocial={handleSignInSocial}
-              isLogin={true}
-              setIsLoadingSocial={setIsLoadingSocial}
-            />
-            <div className="min-w-80 max-w-80">
-              <Button
-                size="login-btn"
-                color="gray"
-                onClick={() => {
-                  setIsLoadingSocial(true);
-                }}
-              >
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email-login.svg`}
-                  className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] "
-                />
-                Continue with Email
-              </Button>
+          {location.pathname === '/signin' && (
+            <div className="mt-5 tablet:mt-[45px]">
+              <SocialLogins
+                setProvider={setProvider}
+                setProfile={setProfile}
+                handleSignInSocial={handleSignInSocial}
+                isLogin={true}
+                setIsLoadingSocial={setIsLoadingSocial}
+              />
+              <div className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
+                <Button size="login-btn" color="gray" onClick={() => navigate('/signin/credentials')}>
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email-login.svg`}
+                    className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] lg:mr-3 "
+                  />
+                  Continue with Email
+                </Button>
+              </div>
             </div>
-          </div>
-          <CredentialLogin />
-          <div className="flex justify-center gap-3">
+          )}
+          <Outlet />
+          <div className="mt-5 flex justify-center gap-3 tablet:mt-14">
             <Typography variant="textBase" className="text-gray-100 dark:text-gray">
               Don’t have an account?
             </Typography>

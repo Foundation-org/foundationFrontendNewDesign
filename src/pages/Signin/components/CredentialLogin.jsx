@@ -128,7 +128,7 @@ const CredentialLogin = () => {
 
   return (
     <>
-      <form className="mt-[50px] flex w-full flex-col gap-11 text-gray-600 laptop:my-11 5xl:gap-14 short:gap-[38px] dark:text-white">
+      <form className="mt-[50px] flex w-full flex-col gap-11 text-gray-600 tablet:my-16 5xl:gap-14 short:gap-[38px] dark:text-white">
         <div className="relative grid w-full grid-cols-[1fr] items-center">
           <Input
             type="email"
@@ -158,7 +158,7 @@ const CredentialLogin = () => {
           ) : null}
         </div>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 tablet:gap-14">
           <div>
             <div className="relative grid w-full grid-cols-[1fr] items-center">
               <Input
@@ -220,6 +220,7 @@ const CredentialLogin = () => {
         }}
         // disabled={isLoading === true ? true : false}
       >
+        Sign in
         {/* {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Sign in'} */}
       </Button>
     </>

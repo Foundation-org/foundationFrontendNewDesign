@@ -37,6 +37,8 @@ import Ledger from '../pages/Dashboard/pages/Treasury/Ledger';
 import TreasuryLayout from '../pages/Dashboard/pages/Treasury/TreasuryLayout';
 import UserSettings from '../pages/Dashboard/pages/Profile/pages/UserSettings';
 import Feedback from '../pages/Dashboard/pages/Profile/pages/feedback';
+import CredentialLogin from '../pages/Signin/components/CredentialLogin';
+import CredentialRegister from '../pages/Signup/components/CredentialRegister';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -53,8 +55,12 @@ export function Router() {
         <Routes>
           <Route path="/maintenance" element={<Maintenance />} />
           <Route path="/" element={<Welcome />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin/" element={<Signin />}>
+            <Route path="credentials" element={<CredentialLogin />} />
+          </Route>
+          <Route path="/signup" element={<Signup />}>
+            <Route path="credentials" element={<CredentialRegister />} />
+          </Route>
           <Route path="/term-of-service" element={<TermOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/verify-email" element={<VerifyEmail />} />

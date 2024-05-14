@@ -2,8 +2,7 @@ import classNames from 'classnames';
 
 const Typography = ({ children, variant = 'textBase', color = '', align = 'left', className }) => {
   const variants = {
-    textTitle:
-      'tall:text-[32px] text-[20.396px] tablet:text-[35px] tablet:leading-[35px] font-[700] text-black dark:text-white',
+    textTitle: 'text-[18px] tablet:text-[35px] tablet:leading-[35px] font-[700] text-black dark:text-white',
     'textTitle-2': 'text-[21.023px] md:text-[40px] 5xl:text-[52px] font-[700] text-[#344054] dark:text-white',
     textInfo:
       'short:text-[16px] tall:text-[20px] text-[13.426px] md:text-[26.331px] 5xl:text-[30px] font-normal tacking-[2.633px] text-gray-300 dark:text-white text-center',
