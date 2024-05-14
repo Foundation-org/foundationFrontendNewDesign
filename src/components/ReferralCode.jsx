@@ -75,6 +75,20 @@ const ReferralCode = ({
       setRefLoading(false);
     }
   };
+  const handleSocialBadgesSignUp = async () => {
+    try {
+      const res = await api.post(`/signUpUser/socialBadges`, socialAccount.data);
+      if (res.status === 200) {
+        localStorage.setItem('uuid', res.data.uuid);
+        dispatch(addUser(res.data));
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
+    } finally {
+      setRefLoading(false);
+    }
+  };
 
   const { mutateAsync: handleReferral } = useMutation({
     mutationFn: referral,
@@ -83,7 +97,11 @@ const ReferralCode = ({
       toast.success('Referral code verified');
       setRefLoading(false);
       handleClose();
-      socialAccount?.isSocial ? handleSocialSignup() : handleSignup();
+      socialAccount?.type
+        ? socialAccount?.type === 'google'
+          ? handleSocialSignup()
+          : handleSocialBadgesSignUp()
+        : handleSignup();
     },
     onError: (err) => {
       console.log(err);

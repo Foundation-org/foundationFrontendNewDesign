@@ -84,7 +84,7 @@ export default function Signup() {
 
   const handleSignUpSocial = async (data) => {
     console.log('before');
-    setSocialAccount({ isSocial: true, data });
+    setSocialAccount({ type: provider, data });
     if (localStorage.getItem('isGuestMode')) {
       handleSignUpSocialGuest(data);
     } else {
@@ -95,7 +95,7 @@ export default function Signup() {
 
   const handleSignUpSocialAfterReferral = async (data) => {
     console.log('after');
-    setSocialAccount({ isSocial: true, data });
+    setSocialAccount({ type: provider, data });
 
     try {
       const res = await api.post(`/user/signUpUser/social`, {
