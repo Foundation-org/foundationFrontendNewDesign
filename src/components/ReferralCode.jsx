@@ -78,7 +78,7 @@ const ReferralCode = ({
 
   const handleSocialBadgesSignUp = async () => {
     try {
-      const res = await api.post(`/signUpUser/socialBadges`, socialAccount.data);
+      const res = await api.post(`user/signUpUser/socialBadges`, socialAccount);
       if (res.status === 200) {
         localStorage.setItem('uuid', res.data.uuid);
         dispatch(addUser(res.data));
@@ -98,11 +98,17 @@ const ReferralCode = ({
       toast.success('Referral code verified');
       setRefLoading(false);
       handleClose();
-      socialAccount?.type
-        ? socialAccount?.type === 'google'
-          ? handleSocialSignup()
-          : handleSocialBadgesSignUp()
-        : handleSignup();
+      console.log(socialAccount);
+      if (socialAccount?.type) {
+        console.log('if type');
+        if (socialAccount?.type === 'google') {
+          handleSocialSignup();
+        } else {
+          handleSocialBadgesSignUp();
+        }
+      } else {
+        handleSignup();
+      }
     },
     onError: (err) => {
       console.log(err);

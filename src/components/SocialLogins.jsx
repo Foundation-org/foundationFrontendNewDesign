@@ -27,7 +27,7 @@ const SocialLogins = ({
           setProvider(provider);
           setProfile(data);
           data['provider'] = provider;
-          isLogin ? handleSignInSocial(data) : handleSignUpSocial(data);
+          isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
         }}
         onReject={(err) => {
           setIsLoadingSocial(false);
@@ -54,9 +54,10 @@ const SocialLogins = ({
         // isOnlyGetToken
         appId={import.meta.env.VITE_FB_APP_ID}
         onResolve={({ provider, data }) => {
+          console.log(provider);
           setProvider(provider);
           setProfile(data);
-          isLogin ? handleSignInSocial(data) : handleSignUpSocial(data);
+          isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
         }}
         redirect_uri={REDIRECT_URI}
         onReject={(err) => {

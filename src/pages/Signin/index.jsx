@@ -44,11 +44,16 @@ export default function Signin() {
     setIsLoadingSocial(false);
   };
 
-  const handleSignInSocial = async (data) => {
+  const handleSignInSocial = async (data, provider) => {
     try {
-      const res = await api.post(`/user/signInUser/social`, {
-        data,
-      });
+      let res;
+      if (provider === 'google') {
+        res = await api.post(`/user/signInUser/social`, {
+          data,
+        });
+      } else {
+        res = await api.post(`/user/signInUser/socialBadges`, { data, provider });
+      }
 
       if (res.status === 200) {
         localStorage.setItem('uuid', res.data.uuid);
