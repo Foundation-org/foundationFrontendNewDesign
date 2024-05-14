@@ -7,6 +7,9 @@ import Anchor from '../../../components/Anchor';
 import { useMutation } from '@tanstack/react-query';
 import { signUpGuest } from '../../../services/api/userAuth';
 import ReCAPTCHA from 'react-google-recaptcha';
+import BasicModal from '../../../components/BasicModal';
+import { referralModalStyle } from '../../../constants/styles';
+import ReferralCode from '../../../components/ReferralCode';
 
 const CredentialRegister = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -17,9 +20,23 @@ const CredentialRegister = () => {
   const [showCnfmPassword, setShowCnfmPassword] = useState(false);
   const [termConditionCheck, setTermConditionCheck] = useState(false);
   const [captchaToken, setCaptchaToken] = useState('');
+  const [isReferral, setIsReferral] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [referralCode, setReferralCode] = useState(null);
+  const [isPopup, setIspopup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const inputType = showPassword ? 'text' : 'password';
   const cnfmPassInputType = showCnfmPassword ? 'text' : 'password';
+
+  const handlePopupOpen = () => setIspopup(true);
+  const handlePopupClose = () => setIspopup(false);
+
+  const handleReferralOpen = () => setIsReferral(true);
+
+  const handleReferralClose = () => {
+    setIsReferral(false);
+    setIsLoading(false);
+  };
 
   function onChange(value) {
     setCaptchaToken(value);
@@ -82,10 +99,11 @@ const CredentialRegister = () => {
     // if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
 
-    setIsLoadingSocial(true);
+    // setIsLoadingSocial(true);
     if (localStorage.getItem('isGuestMode')) {
       handleGuestSignup();
     } else {
+      console.log('1');
       handleReferralOpen();
     }
   };
@@ -249,6 +267,27 @@ const CredentialRegister = () => {
       >
         Create Account
       </Button>
+      <BasicModal
+        open={isReferral}
+        handleClose={handleReferralClose}
+        customStyle={referralModalStyle}
+        customClasses="rounded-[10px] tablet:rounded-[26px]"
+      >
+        <ReferralCode
+          handleClose={handleReferralClose}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          password={password}
+          reTypePassword={reTypePassword}
+          email={email}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          referralCode={referralCode}
+          setReferralCode={setReferralCode}
+          setErrorMessage={setErrorMessage}
+          handlePopupOpen={handlePopupOpen}
+        />
+      </BasicModal>
     </>
   );
 };

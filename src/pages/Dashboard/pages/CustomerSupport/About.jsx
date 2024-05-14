@@ -1,21 +1,21 @@
 const About = () => {
   return (
     <div>
-      <div className="space-y-[0.63rem] px-[1.13rem] pt-3 text-[#7C7C7C] tablet:space-y-5 tablet:pt-[1.56rem]">
+      <div className="space-y-[0.63rem] px-[1.87rem] pt-3 text-[#7C7C7C] tablet:space-y-5 tablet:px-16 tablet:pt-[1.56rem]">
         <h1 className="text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           You have data. You can sell it.
         </h1>
         <p className="text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
           Almost every aspect of your life is an asset.
         </p>
-        <p className="text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-normal">
+        <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
           Your education, eye color, marital status, shopping habits, and even your opinions. All of those attributes
           create personal data that is desired and used by brands and corporations every day, and the only benefit to
           you is more and more targeted ads.
         </p>
       </div>
-      <div className="mt-5 bg-[#238AD4] px-12 py-[1.3rem] text-white tablet:py-6">
-        <p className="text-center text-[0.6875rem] font-normal leading-[145.455%] tablet:text-start tablet:text-[1.125rem] tablet:leading-[179.006%]">
+      <div className="mt-4 bg-[#238AD4] px-[1.87rem] py-[1.3rem] text-white tablet:px-16 tablet:py-6">
+        <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-start tablet:text-[1.125rem] tablet:leading-[179.006%]">
           Foundation is a digital platform that enables you to securely add and monetize your personal data - putting
           the money you earn from sharing your data with companies in your wallet, not someone elses.
         </p>

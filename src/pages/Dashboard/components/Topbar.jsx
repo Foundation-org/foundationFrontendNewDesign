@@ -15,25 +15,65 @@ const Topbar = () => {
 
   return (
     <div className="bg-[#389CE3]">
-      <div className="static mx-auto flex h-[58px] max-h-[58px] min-h-[58px] w-full max-w-[1378px] flex-col items-center justify-between pb-2 tablet:h-24 tablet:min-h-24 laptop:h-[92px] laptop:max-h-[70px] laptop:min-h-[70px] laptop:flex-row laptop:pb-0">
-        {/* logo */}
-        <div className="relative flex w-full items-center justify-between px-4 py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:justify-center laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
-          <Link
-            to={'/dashboard'}
-            className="relative flex justify-center"
-            onClick={() => {
-              dispatch(createQuestActions.resetCreateQuest());
-            }}
-          >
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/foundation_logo.svg`}
-              alt="foundation_logo"
-              className="h-2 w-[92.44px] tablet:h-auto tablet:w-auto"
-            />
-            <span className="absolute -bottom-[3px] -right-[24px] w-fit whitespace-nowrap font-poppins text-[7px] font-medium text-[#D0E4F2] tablet:-bottom-[18px] tablet:-right-8 tablet:left-0 tablet:text-[12px]">
-              v 1.11.4
-            </span>
-          </Link>
+      <div className="static mx-auto flex h-[58px] max-h-[58px] min-h-[58px] w-full max-w-[1378px] flex-col items-center justify-between tablet:h-24 tablet:min-h-24 laptop:h-[92px] laptop:max-h-[70px] laptop:min-h-[70px] laptop:flex-row">
+        <div className="relative flex h-full w-full items-center justify-between px-4 py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
+          <div className="flex w-full items-center justify-between gap-12">
+            <Link
+              to={'/dashboard'}
+              className="relative flex justify-center"
+              onClick={() => {
+                dispatch(createQuestActions.resetCreateQuest());
+              }}
+            >
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/${location.pathname === '/dashboard' ? 'home-filled.svg' : 'home.svg'}`}
+                alt="foundation_logo"
+                className="size-5 tablet:size-8"
+              />
+            </Link>
+            <Link
+              to={'/dashboard'}
+              className="flex items-center justify-center gap-[6px]"
+              onClick={() => {
+                dispatch(createQuestActions.resetCreateQuest());
+              }}
+            >
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/foundation_logo.svg`}
+                alt="foundation_logo"
+                className="h-[10px] w-auto tablet:h-auto"
+              />
+              <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium text-[#D0E4F2] tablet:pt-1 tablet:text-[12px]">
+                v 1.11.4
+              </span>
+            </Link>
+            <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
+              {TopbarItems.map((item) => (
+                <Link
+                  to={item.path}
+                  className={`${
+                    item.activePaths?.some((path) => location.pathname === path) ||
+                    location.pathname === `${item.path}/`
+                      ? 'text-white'
+                      : persistedTheme === 'dark'
+                        ? 'text-[#92959D]'
+                        : 'text-[#BEDEF4]'
+                  } flex h-full items-center`}
+                  onClick={() => {
+                    dispatch(createQuestActions.resetCreateQuest());
+                    dispatch(pictureMediaAction.resetToInitialState());
+                    dispatch(addSharedLinkPost(null));
+                  }}
+                >
+                  <img
+                    src={item.icon}
+                    alt="arrow-right"
+                    className={`${item.title === 'Faqs' ? 'size-5 tablet:size-8' : 'size-[16px] tablet:size-7'}`}
+                  />
+                </Link>
+              ))}
+            </div>
+          </div>
           {persistedUserInfo.role !== 'user' && (
             <div
               className="flex h-full items-center justify-center space-x-2 laptop:hidden"
@@ -66,9 +106,8 @@ const Topbar = () => {
               </div>
             </div>
           )}
-
-          <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
-            {persistedUserInfo.role === 'user' && (
+        </div>
+        {/* {persistedUserInfo.role === 'user' && (
               <div
                 className="flex cursor-pointer items-center gap-[2.4px] tablet:hidden"
                 onClick={() => {
@@ -97,17 +136,41 @@ const Topbar = () => {
                   </p>
                 </div>
               </div>
-            )}
-            <Link to={'/dashboard/help/about'} className="flex h-full items-center">
+            )} */}
+        {/* <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
+            {TopbarItems.map((item) => (
+              <Link
+                to={item.path}
+                className={`${
+                  item.activePaths?.some((path) => location.pathname === path) || location.pathname === `${item.path}/`
+                    ? 'text-white'
+                    : persistedTheme === 'dark'
+                      ? 'text-[#92959D]'
+                      : 'text-[#BEDEF4]'
+                } flex h-full items-center`}
+                onClick={() => {
+                  dispatch(createQuestActions.resetCreateQuest());
+                  dispatch(pictureMediaAction.resetToInitialState());
+                  dispatch(addSharedLinkPost(null));
+                }}
+              >
+                <img
+                  src={item.icon}
+                  alt="arrow-right"
+                  className={`${item.title === 'Faqs' ? 'size-5' : 'size-[16px]'}`}
+                />
+              </Link>
+            ))}
+          </div> */}
+        {/* <Link to={'/dashboard/help/about'} className="flex h-full items-center">
               <img
                 src="/assets/navbar/faqlogo.png"
                 alt="arrow-right"
                 className="h-[15px] w-[15px] tablet:h-[32px] tablet:w-[32px] laptop:h-[36px] laptop:w-[36px]"
               />
-            </Link>
-          </div>
-        </div>
-        <ul className="flex w-full items-end justify-around px-4 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-0 laptop:gap-0">
+            </Link> */}
+
+        {/* <ul className="flex w-full items-end justify-around px-4 text-[28px] font-semibold leading-normal text-[#DADADA] 2xl:text-[30px] tablet:px-0 laptop:gap-0">
           {TopbarItems?.map((item) => (
             <li key={item.id} className="relative flex items-center">
               <Link
@@ -137,14 +200,31 @@ const Topbar = () => {
               </Link>
             </li>
           ))}
-        </ul>
+        </ul> */}
         <div className="hidden h-full w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
-          <Link
-            to={'/dashboard/help/about'}
-            className={`${location.pathname === '/dashboard/help/about' || location.pathname === '/dashboard/help/faq' ? 'bg-[#2B85C5]' : ''} flex h-full items-center`}
-          >
-            <img src="/assets/navbar/faqlogo.png" alt="arrow-right" className="h-[30px] w-[30px]" />
-          </Link>
+          {TopbarItems.map((item) => (
+            <Link
+              to={item.path}
+              className={`${
+                item.activePaths?.some((path) => location.pathname === path) || location.pathname === `${item.path}/`
+                  ? 'text-white'
+                  : persistedTheme === 'dark'
+                    ? 'text-[#92959D]'
+                    : 'text-[#BEDEF4]'
+              } flex h-full items-center`}
+              onClick={() => {
+                dispatch(createQuestActions.resetCreateQuest());
+                dispatch(pictureMediaAction.resetToInitialState());
+                dispatch(addSharedLinkPost(null));
+              }}
+            >
+              <img
+                src={item.icon}
+                alt="arrow-right"
+                className={`${item.title === 'Faqs' ? 'size-[30px]' : 'size-[26px]'}`}
+              />
+            </Link>
+          ))}
         </div>
       </div>
     </div>

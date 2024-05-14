@@ -16,6 +16,7 @@ import SidebarLeft from './SidebarLeft';
 import api from '../../../services/api/Axios';
 import Anchor from '../../../components/Anchor';
 import PopUp from '../../../components/ui/PopUp';
+import SideNavbar from '../../../components/SideNavbar';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -201,81 +202,81 @@ export default function DashboardLayout({ children }) {
 
       <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
-        {location.pathname !== '/dashboard' && (
-          <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white px-5 tablet:hidden">
-            <div
-              className="h-fit rounded-[15px] bg-white dark:bg-[#000]"
-              onClick={() => navigate('/dashboard/treasury')}
-            >
-              <div className="flex items-center gap-2">
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
-                  alt="badge"
-                  className="size-[25px]"
-                />
-                <div className="flex flex-col gap-1">
-                  <h4 className="heading">Treasury</h4>
+        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-[#DEE6F7] px-5 tablet:hidden">
+          {/* <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
+            <div className="flex items-center gap-2">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
+                alt="badge"
+                className="size-[25px]"
+              />
+              <div className="flex flex-col gap-1">
+                <h4 className="heading">Treasury</h4>
+                <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
+                  {treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX
+                </p>
+              </div>
+            </div>
+          </div> */}
+
+          <div className="h-fit rounded-[15px]">
+            {persistedUserInfo.role !== 'user' ? (
+              <div className="flex cursor-pointer items-center gap-2">
+                <div className="relative h-fit w-fit">
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
+                    alt="badge"
+                    className="h-[25px] w-5"
+                  />
+                  <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
+                    G
+                  </p>
+                </div>
+                <div className="flex flex-col">
+                  <h4 className="heading">Guest User</h4>
                   <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                    {treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX
+                    {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
+                  </p>
+                  <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]" onClick={handleGuestLogout}>
+                    Create Account
+                  </Anchor>
+                </div>
+              </div>
+            ) : (
+              <div
+                className="flex cursor-pointer items-center gap-2"
+                onClick={() => {
+                  navigate('/dashboard/profile');
+                }}
+              >
+                <div className="relative flex items-center justify-center">
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
+                    alt="badge"
+                    className="h-[25px] w-5"
+                  />
+                  <p className="absolute bottom-2 z-50 text-[9.5px] font-medium text-[#7A7016]">
+                    {persistedUserInfo?.badges?.length}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <h4 className="heading">My Balance</h4>
+                  <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
+                    {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
                   </p>
                 </div>
               </div>
-            </div>
-
-            <div className="h-fit rounded-[15px] bg-white dark:bg-[#000]">
-              {persistedUserInfo.role !== 'user' ? (
-                <div className="flex cursor-pointer items-center gap-2">
-                  <div className="relative h-fit w-fit">
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
-                      alt="badge"
-                      className="h-[25px] w-5"
-                    />
-                    <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
-                      G
-                    </p>
-                  </div>
-                  <div className="flex flex-col">
-                    <h4 className="heading">Guest User</h4>
-                    <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                      {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
-                    </p>
-                    <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]" onClick={handleGuestLogout}>
-                      Create Account
-                    </Anchor>
-                  </div>
-                </div>
-              ) : (
-                <div
-                  className="flex cursor-pointer items-center gap-2"
-                  onClick={() => {
-                    navigate('/dashboard/profile');
-                  }}
-                >
-                  <div className="relative flex items-center justify-center">
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
-                      alt="badge"
-                      className="h-[25px] w-5"
-                    />
-                    <p className="absolute bottom-2 z-50 text-[9.5px] font-medium text-[#7A7016]">
-                      {persistedUserInfo?.badges?.length}
-                    </p>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <h4 className="heading">My Balance</h4>
-                    <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                      {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
+            )}
           </div>
-        )}
+          <SideNavbar />
+        </div>
+
         {/* Desktop Left Side */}
         <div className="hidden tablet:block">
-          <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+          <div
+            className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]"
+            onClick={() => navigate('/dashboard/treasury')}
+          >
             <div className="flex items-center gap-[15px]">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
@@ -290,6 +291,10 @@ export default function DashboardLayout({ children }) {
               </div>
             </div>
           </div>
+          {location.pathname !== '/dashboard/profile/ledger' && location.pathname !== '/dashboard/treasury' && (
+            <SideNavbar />
+          )}
+
           {location.pathname !== '/dashboard/quest' &&
             location.pathname !== '/dashboard/profile' &&
             location.pathname !== '/dashboard/profile/ledger' &&
@@ -428,7 +433,6 @@ export default function DashboardLayout({ children }) {
             </div>
           )}
         </div>
-
         {location.pathname !== '/dashboard/treasury' &&
           location.pathname !== '/dashboard/treasury/ledger' &&
           location.pathname !== '/dashboard/profile/ledger' &&
