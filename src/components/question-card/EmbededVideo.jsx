@@ -75,7 +75,7 @@ export const EmbededVideo = ({
             console.log('hamza', e);
             // toast.error('Invalid URL');
             console.log('Invalid URl', questId);
-            suppressPost(questId);
+            // suppressPost(questId);
           }}
           onStart={() => {
             dispatch(setPlayingPlayerId(questId));
