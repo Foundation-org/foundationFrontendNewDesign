@@ -135,7 +135,7 @@ const CredentialLogin = () => {
 
   return (
     <>
-      <form className="mt-[50px] flex w-full flex-col gap-11 text-gray-600 tablet:my-16 5xl:gap-14 short:gap-[38px] dark:text-white">
+      <form className="mb-5 mt-[50px] flex w-full flex-col gap-11 text-gray-600 tablet:my-16 5xl:gap-14 short:gap-[38px]">
         <div className="relative grid w-full grid-cols-[1fr] items-center">
           <Input
             type="email"
