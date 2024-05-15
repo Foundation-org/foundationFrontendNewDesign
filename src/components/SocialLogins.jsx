@@ -1,7 +1,7 @@
 import { LoginSocialGoogle, LoginSocialFacebook, LoginSocialLinkedin } from 'reactjs-social-login';
 import { useSelector } from 'react-redux';
 import Button from './Button';
-import { TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GithubAuthProvider, TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
 import { authentication } from '../pages/Dashboard/pages/Profile/pages/firebase-config';
 
 const REDIRECT_URI = window.location.href;
@@ -27,6 +27,21 @@ const SocialLogins = ({
         isLogin ? handleSignInSocial(data, 'twitter') : handleSignUpSocial(data, 'twitter');
       })
       .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const loginWithGithub = () => {
+    const provider = new GithubAuthProvider();
+    signInWithPopup(authentication, provider)
+      .then((data) => {
+        console.log('github data', data);
+        setProvider('github');
+        setProfile(data);
+        isLogin ? handleSignInSocial(data, 'github') : handleSignUpSocial(data, 'github');
+      })
+      .catch((err) => {
+        showBoundary(err);
         console.log(err);
       });
   };
@@ -144,6 +159,21 @@ const SocialLogins = ({
             className="mr-2 size-[22px] md:size-8 lg:mr-3"
           />
           Continue with Twitter
+        </Button>
+      </div>
+      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
+        <Button
+          size="login-btn"
+          color="gray"
+          onClick={() => {
+            loginWithGithub();
+          }}
+        >
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`}
+            className="mr-2 size-[22px] md:size-8 lg:mr-3"
+          />
+          Continue with Github
         </Button>
       </div>
     </div>
