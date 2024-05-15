@@ -319,7 +319,7 @@ const MultipleChoice = () => {
     <CreateQuestWrapper
       quest="M/R"
       handleTab={handleTab}
-      type={'Poll'}
+      type={'Post'}
       msg={'Ask a question where anyone can select a single option from a list of choices'}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>

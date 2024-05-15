@@ -211,7 +211,7 @@ const YesNo = () => {
   return (
     <CreateQuestWrapper
       handleTab={handleTab}
-      type={'Poll'}
+      type={'Post'}
       msg={'Ask a question that allows for a straightforward "Yes" or "No" response'}
     >
       <div className="flex flex-col gap-[5px] tablet:gap-[15px]">

@@ -315,7 +315,7 @@ const OpenChoice = () => {
     <CreateQuestWrapper
       quest="OpenChoice"
       handleTab={handleTab}
-      type={'Poll'}
+      type={'Post'}
       msg={'Ask a question where anyone can select multiple options from a list of choices'}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>

@@ -305,7 +305,7 @@ const RankChoice = () => {
     <CreateQuestWrapper
       quest="M/R"
       handleTab={handleTab}
-      type={'Poll'}
+      type={'Post'}
       msg={'Create a selection of choices that can be arranged in order of preference.'}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>
