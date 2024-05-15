@@ -275,14 +275,14 @@ export default function DashboardLayout({ children }) {
             {persistedUserInfo.role === 'user' ? (
               <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
                 <Button
-                  variant={location.pathname === '/dashboard/quest' ? 'submit2' : 'hollow-submit2'}
+                  variant="hollow-submit2"
                   className="bg-white tablet:w-full"
                   onClick={() => navigate('/dashboard/quest')}
                 >
                   Create Post
                 </Button>
                 <Button
-                  variant={location.pathname === '/dashboard/profile' ? 'submit2' : 'hollow-submit2'}
+                  variant="hollow-submit2"
                   className="bg-white tablet:w-full"
                   onClick={() => navigate('/dashboard/profile')}
                 >
@@ -337,10 +337,17 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/help/faq' &&
             !location.pathname.startsWith('/p/') && <SidebarLeft />}
 
-          {location.pathname !== '/dashboard/profile/ledger' &&
-            location.pathname !== '/dashboard/treasury' &&
+          {location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/dashboard/help/about' &&
-            location.pathname !== '/dashboard/help/faq' && <SideNavbar />}
+            location.pathname !== '/dashboard/help/faq' &&
+            location.pathname !== '/dashboard/quest' &&
+            location.pathname !== '/dashboard/profile' &&
+            location.pathname !== '/dashboard/profile/ledger' &&
+            location.pathname !== '/dashboard/profile/hidden-posts' &&
+            location.pathname !== '/dashboard/profile/shared-links' &&
+            location.pathname !== '/dashboard/profile/user-settings' &&
+            location.pathname !== '/dashboard/profile/feedback' && <SideNavbar />}
 
           {questUtilsState.isShowPlayer && (
             <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
