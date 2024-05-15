@@ -16,6 +16,7 @@ import SidebarLeft from './SidebarLeft';
 import api from '../../../services/api/Axios';
 import Anchor from '../../../components/Anchor';
 import PopUp from '../../../components/ui/PopUp';
+import SideNavbar from '../../../components/SideNavbar';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -39,53 +40,50 @@ export default function DashboardLayout({ children }) {
     toast.error(treasuryError.response.data.message.split(':')[1]);
   }
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
+  const {
+    data: userInfoData,
+    isSuccess: userInfoSuccess,
+    isError: userInfoError,
+  } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: userInfo,
   });
 
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
-      if (resp?.status === 200) {
-        // Cookie Calling
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          localStorage.setItem('userData', JSON.stringify(resp?.data));
-          // Set into local storage
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        // LocalStorage Calling
-        if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-          if (res?.data?.requiredAction) {
-            setModalVisible(true);
-          }
-        }
-
-        if (resp?.data?.requiredAction) {
-          setModalVisible(true);
-        }
+  const { mutateAsync: getUserInfoById } = useMutation({
+    mutationFn: userInfoById,
+    onSuccess: (res) => {
+      dispatch(addUser(res?.data));
+      if (res?.data?.requiredAction) {
+        setModalVisible(true);
       }
-
-      // setResponse(resp?.data);
-    } catch (e) {
+    },
+    onError: (e) => {
       console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
+    },
+  });
 
   useEffect(() => {
-    handleUserInfo();
-  }, []);
+    if (userInfoSuccess && !userInfoData?.data) {
+      getUserInfoById();
+    }
+  }, [userInfoSuccess, userInfoData, getUserInfoById]);
 
-  const handleGuestLogout = async () => {
-    navigate('/guest-signup');
-  };
+  useEffect(() => {
+    // Handle userInfoData when successfully fetched
+    if (userInfoSuccess && userInfoData?.status === 200) {
+      if (userInfoData.data) {
+        dispatch(addUser(userInfoData.data));
+        localStorage.setItem('userData', JSON.stringify(userInfoData.data));
+        // Set into local storage
+        if (!localStorage.getItem('uuid')) {
+          localStorage.setItem('uuid', userInfoData.data.uuid);
+        }
+      }
+      if (userInfoData?.data?.requiredAction) {
+        setModalVisible(true);
+      }
+    }
+  }, [userInfoSuccess, userInfoData, dispatch, setModalVisible]);
 
   const handleEmailType = async (value) => {
     try {
@@ -96,7 +94,7 @@ export default function DashboardLayout({ children }) {
         primary: true,
       });
       if (res.status === 200) {
-        localStorage.setItem('uId', res.data.uuid);
+        localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userLoggedIn', res.data.uuid);
         localStorage.removeItem('isGuestMode');
         localStorage.setItem('jwt', res.data.token);
@@ -105,6 +103,10 @@ export default function DashboardLayout({ children }) {
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
     }
+  };
+
+  const handleGuestLogout = async () => {
+    navigate('/guest-signup');
   };
 
   // Hidden post Search
@@ -200,28 +202,25 @@ export default function DashboardLayout({ children }) {
 
       <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
-        {location.pathname !== '/dashboard' && (
-          <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white px-5 tablet:hidden">
-            <div
-              className="h-fit rounded-[15px] bg-white dark:bg-[#000]"
-              onClick={() => navigate('/dashboard/treasury')}
-            >
-              <div className="flex items-center gap-2">
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
-                  alt="badge"
-                  className="size-[25px]"
-                />
-                <div className="flex flex-col gap-1">
-                  <h4 className="heading">Treasury</h4>
-                  <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                    {treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX
-                  </p>
-                </div>
+        {location.pathname !== '/dashboard/help/about' && location.pathname !== '/dashboard/help/faq' && (
+          <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-[#DEE6F7] px-5 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
+            {/* <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
+            <div className="flex items-center gap-2">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
+                alt="badge"
+                className="size-[25px]"
+              />
+              <div className="flex flex-col gap-1">
+                <h4 className="heading">Treasury</h4>
+                <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
+                  {treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX
+                </p>
               </div>
             </div>
+          </div> */}
 
-            <div className="h-fit rounded-[15px] bg-white dark:bg-[#000]">
+            <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
               {persistedUserInfo.role !== 'user' ? (
                 <div className="flex cursor-pointer items-center gap-2">
                   <div className="relative h-fit w-fit">
@@ -234,16 +233,14 @@ export default function DashboardLayout({ children }) {
                       G
                     </p>
                   </div>
-                  <div className="flex flex-col">
-                    <h4 className="heading">Guest User</h4>
+                  <div className="flex flex-col gap-1">
+                    <h4 className="heading">My Balance (Guest)</h4>
                     <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
                       {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
                     </p>
-                    {/* <div className="" onClick={handleGuestLogout}> */}
-                    <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]" onClick={handleGuestLogout}>
-                      Create Account
-                    </Anchor>
-                    {/* </div> */}
+                    {/* <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]" onClick={handleGuestLogout}>
+                    Create Account
+                  </Anchor> */}
                   </div>
                 </div>
               ) : (
@@ -257,26 +254,56 @@ export default function DashboardLayout({ children }) {
                     <img
                       src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
                       alt="badge"
-                      className="h-[25px] w-5"
+                      className="h-[28px] w-[23px]"
                     />
-                    <p className="absolute bottom-2 z-50 text-[9.5px] font-medium text-[#7A7016]">
+                    <p className="absolute left-1/2 top-[40%] z-50 mb-1 -translate-x-1/2 -translate-y-1/2 transform text-[14px] font-medium leading-[14px] text-[#7A7016]">
                       {persistedUserInfo?.badges?.length}
                     </p>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <h4 className="heading">My Balance</h4>
-                    <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                      {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
+                    <h4 className="heading underline">FDX Balance</h4>
+                    <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
+                      {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
                     </p>
                   </div>
                 </div>
               )}
             </div>
+            {persistedUserInfo.role === 'user' ? (
+              <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
+                <Button
+                  variant={location.pathname === '/dashboard/quest' ? 'submit2' : 'hollow-submit2'}
+                  className="bg-white tablet:w-full"
+                  onClick={() => navigate('/dashboard/quest')}
+                >
+                  Create Post
+                </Button>
+                <Button
+                  variant={location.pathname === '/dashboard/profile' ? 'submit2' : 'hollow-submit2'}
+                  className="bg-white tablet:w-full"
+                  onClick={() => navigate('/dashboard/profile')}
+                >
+                  Add Badge
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant="submit2"
+                // className="bg-white tablet:w-full"
+                onClick={() => navigate('/guest-signup')}
+              >
+                Sign up
+              </Button>
+            )}
           </div>
         )}
-        {/* Desktop */}
+
+        {/* Desktop Left Side */}
         <div className="hidden tablet:block">
-          <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+          <div
+            className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]"
+            onClick={() => navigate('/dashboard/treasury')}
+          >
             <div className="flex items-center gap-[15px]">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
@@ -291,6 +318,7 @@ export default function DashboardLayout({ children }) {
               </div>
             </div>
           </div>
+
           {location.pathname !== '/dashboard/quest' &&
             location.pathname !== '/dashboard/profile' &&
             location.pathname !== '/dashboard/profile/ledger' &&
@@ -302,11 +330,18 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/shared-links/result' &&
             location.pathname !== '/dashboard/profile/user-settings' &&
             location.pathname !== '/dashboard/profile/feedback' &&
+            location.pathname !== '/dashboard/help/about' &&
+            location.pathname !== '/dashboard/help/faq' &&
             !location.pathname.startsWith('/p/') && <SidebarLeft />}
+
+          {location.pathname !== '/dashboard/profile/ledger' &&
+            location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/help/about' &&
+            location.pathname !== '/dashboard/help/faq' && <SideNavbar />}
 
           {/* HiddenPost Search */}
           {location.pathname === '/dashboard/profile/hidden-posts' && (
-            <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
@@ -347,7 +382,7 @@ export default function DashboardLayout({ children }) {
 
           {/* SharedLinks Search */}
           {location.pathname === '/dashboard/profile/shared-links' && (
-            <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
@@ -388,7 +423,7 @@ export default function DashboardLayout({ children }) {
 
           {/* Feedback Search */}
           {location.pathname === '/dashboard/profile/feedback' && (
-            <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
@@ -427,12 +462,11 @@ export default function DashboardLayout({ children }) {
             </div>
           )}
         </div>
-
         {location.pathname !== '/dashboard/treasury' &&
           location.pathname !== '/dashboard/treasury/ledger' &&
           location.pathname !== '/dashboard/profile/ledger' &&
           children}
-        {/* Right Side */}
+        {/* Desktop Right Side */}
         <div className="hidden tablet:block">
           <div className="mr-[31px] mt-5 hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
             {persistedUserInfo.role !== 'user' ? (
@@ -488,9 +522,12 @@ export default function DashboardLayout({ children }) {
           {location.pathname !== '/dashboard/quest' &&
             location.pathname !== '/dashboard/profile/ledger' &&
             location.pathname !== '/dashboard/treasury' &&
-            location.pathname !== '/dashboard/treasury/ledger' && <SidebarRight />}
+            location.pathname !== '/dashboard/treasury/ledger' &&
+            location.pathname !== '/dashboard/help/about' &&
+            location.pathname !== '/dashboard/help/faq' && <SidebarRight />}
         </div>
       </div>
+      {/* Mobile Children */}
       {(location.pathname === '/dashboard/treasury' ||
         location.pathname === '/dashboard/treasury/ledger' ||
         location.pathname === '/dashboard/profile/ledger') &&

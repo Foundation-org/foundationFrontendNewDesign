@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import * as filtersActions from '../../../../features/sidebar/filtersSlice';
 import * as questUtilsActions from '../../../../features/quest/utilsSlice';
 import MediaControls from '../../../../components/MediaControls';
@@ -5,18 +6,14 @@ import SidebarLeft from '../../components/SidebarLeft';
 import QuestionCardWithToggle from './components/QuestionCardWithToggle';
 import Slider from '../../../../components/Slider';
 import api from '../../../../services/api/Axios';
-
-import { useEffect } from 'react';
 import { printEndMessage } from '../../../../utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Button } from '../../../../components/ui/Button';
-import { useNavigate } from 'react-router-dom';
+import SystemNotificationCard from '../../../../components/posts/SystemNotificationCard';
 
 const QuestStartSection = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { ref, inView } = useInView();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const filterStates = useSelector(filtersActions.getFilters);
@@ -88,27 +85,9 @@ const QuestStartSection = () => {
   const content = data?.pages.map((posts) =>
     posts.map((post, index) => {
       if (post.url?.length > 0 && !post.url[0]?.includes('flickr') && post.url[0] !== '')
-        dispatch(questUtilsActions.addPlayerId(post._id));
+        <React.Fragment key={index + 1}>{dispatch(questUtilsActions.addPlayerId(post._id))}</React.Fragment>;
       if (post.id === 'system_notification') {
-        return (
-          <div className="flex flex-col gap-2 rounded-[13.842px] border-[1.846px] border-[#D9D9D9] bg-[#F4F8FF] px-7 py-[14px] tablet:gap-4 tablet:px-[44px] tablet:py-6">
-            <h1 className="text-[13px] font-bold leading-normal text-[#5B5B5B] tablet:text-[22px]">{post.header}</h1>
-            <p className="text-[12px] font-normal leading-normal text-[#7C7C7C] tablet:text-[18px] tablet:leading-[25px]">
-              {post.text}
-            </p>
-            <div className="flex justify-end">
-              <Button
-                variant="submit"
-                className="w-fit"
-                onClick={() => {
-                  navigate(post.buttonUrl);
-                }}
-              >
-                {post.buttonText}
-              </Button>
-            </div>
-          </div>
-        );
+        return <SystemNotificationCard post={post} key={index + 1} />;
       } else {
         if (posts.length == index + 1) {
           return (
@@ -144,7 +123,7 @@ const QuestStartSection = () => {
           <div className="fixed left-auto right-auto max-w-full tablet:max-w-[778px]  laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
             <Slider isFetching={isFetching} />
           </div>
-          <div className="no-scrollbar mt-10 flex h-[calc(100dvh-147.63px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mt-[77.63px] tablet:gap-5 tablet:px-6 tablet:pb-5">
+          <div className="no-scrollbar mt-10 flex h-[calc(100dvh-184px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mt-[77.63px] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
             {content}
             {printEndMessage(data?.pages[0], filterStates.bookmarks, isFetching)}
           </div>

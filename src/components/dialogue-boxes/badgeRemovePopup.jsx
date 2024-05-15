@@ -1,12 +1,9 @@
 import PopUp from '../ui/PopUp';
 import { Button } from '../ui/Button';
-import { userInfo } from '../../services/api/userAuth';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { addUser } from '../../features/auth/authSlice';
 import { toast } from 'sonner';
 import api from '../../services/api/Axios';
 import { FaSpinner } from 'react-icons/fa';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function BadgeRemovePopup({
   handleClose,
@@ -15,27 +12,13 @@ export default function BadgeRemovePopup({
   image,
   accountName,
   fetchUser,
-  setFetchUser,
   type,
   badgeType,
   setIsPersonalPopup,
   setIsLoading,
   loading,
 }) {
-  const dispatch = useDispatch();
-
-  const handleUserInfo = async () => {
-    try {
-      const resp = await userInfo();
-      if (resp.status === 200) {
-        dispatch(addUser(resp.data));
-      }
-
-      setFetchUser(resp.data);
-    } catch (e) {
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
+  const queryClient = useQueryClient();
 
   const handleRemoveBadge = async () => {
     // setIsLoading(true);
@@ -84,7 +67,7 @@ export default function BadgeRemovePopup({
 
       if (removeBadge.status === 200) {
         toast.success('Badge Removed Successfully!');
-        handleUserInfo();
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setIsLoading(false);
         setIsPersonalPopup(false);

@@ -10,7 +10,7 @@ const Button = ({
   onClick,
 }) => {
   const buttonClasses = classNames(
-    'inline-flex justify-center items-center py-0 rounded-[6.043px] 2xl:rounded-[11.703px]',
+    'inline-flex items-center py-0 rounded-[6.043px] 2xl:rounded-[11.703px]',
     {
       'bg-dark-blue text-white': color === 'blue',
       'bg-white dark:bg-dark-gray text-black dark:text-white': color === 'gray',
@@ -20,12 +20,12 @@ const Button = ({
       'disabled:bg-gray-300 disabled:cursor-not-allowed': disabled,
     },
     {
-      'text-[13px] font-[500] px-[10px] h-[30px] gap-[15px]': size === 'small',
-      'px-2 text-[8.951px] md:text-[17.554px] font-[500] text-center h-[34.3px] taller:h-[52px] md:h-[67.2px] w-fit border-[1px] border-gray-200 dark:border-white whitespace-nowrap':
+      'text-[13px] justify-center font-[500] px-[10px] h-[30px] gap-[15px]': size === 'small',
+      'px-2 text-[8.951px] justify-center md:text-[17.554px] font-[500] text-center h-[34.3px] taller:h-[52px] md:h-[67.2px] w-fit border-[1px] border-gray-200 dark:border-white whitespace-nowrap':
         size === 'medium',
-      'px-2 text-[2.5vw] sm:text-[2.3vw] lg:text-[1vw] font-[500] text-center h-[36px] sm:h-[50px] lg:h-[60px] w-full border-[1px] border-gray-200 dark:border-white whitespace-nowrap':
+      'px-2 lg:px-4 text-[2.5vw] sm:text-[2.3vw] lg:text-[1vw] font-[500] text-center h-[36px] sm:h-[50px] lg:h-[60px] w-full border-[1px] border-gray-200 dark:border-white whitespace-nowrap':
         size === 'login-btn',
-      'taller:text-[20px] taller:h-[44px] text-[14.91px] md:text-[29.257px] font-[500] text-center py-3 h-[33.23px] md:h-[67.2px] w-full':
+      'taller:text-[20px] justify-center taller:h-[44px] text-[14.91px] md:text-[29.257px] font-[500] text-center py-3 h-[33.23px] md:h-[67.2px] w-full':
         size === 'large',
     },
     {

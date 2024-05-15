@@ -1,13 +1,14 @@
-const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
+const QuestInfoText = ({ questStartData, show, postProperties }) => {
   const renderQuestInfoText = () => {
     if (show) {
       return (
         <>
-          {questType === 'ranked choise' ? (
+          {questStartData.whichTypeQuestion === 'ranked choise' ? (
             <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-[#85898C] tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px]">
               Drag and drop options in your order of preference
             </h4>
-          ) : questType === 'multiple choise' || questType === 'open choice' ? (
+          ) : questStartData.whichTypeQuestion === 'multiple choise' ||
+            questStartData.whichTypeQuestion === 'open choice' ? (
             questStartData.userCanSelectMultiple ? (
               <h4 className="py-[0.38rem] text-center text-[7.5px] font-normal leading-3 text-[#85898C] tablet:py-[10px] tablet:text-[1rem] tablet:leading-[30px]">
                 You can select <strong>multiple</strong> options
@@ -27,7 +28,7 @@ const QuestInfoText = ({ questStartData, questType, show, postProperties }) => {
     } else {
       return (
         <>
-          {questType === 'ranked choise' ? (
+          {questStartData.whichTypeQuestion === 'ranked choise' ? (
             postProperties === 'SharedLinks' ? (
               <div className="my-2 ml-10 flex gap-1 tablet:my-5 tablet:ml-[86px] tablet:gap-20">
                 <div className="flex items-center gap-[1px] tablet:gap-2">

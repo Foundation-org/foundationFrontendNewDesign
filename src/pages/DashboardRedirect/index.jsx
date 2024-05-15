@@ -1,28 +1,32 @@
-import { useMutation } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { userInfo } from '../../services/api/userAuth';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { userInfo } from '../../services/api/userAuth';
 import { addUser } from '../../features/auth/authSlice';
 
 const DashboardRedirect = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-    onSuccess: (res) => {
-      dispatch(addUser(res.data));
-      navigate('/dashboard');
-    },
-    onError: (error) => {
-      console.error('Error fetching user info:', error);
-    },
+  const {
+    data: userInfoData,
+    isSuccess: userInfoSuccess,
+    isError: userInfoError,
+  } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: userInfo,
   });
 
-  useEffect(() => {
-    getUserInfo();
-  }, []);
+  if (userInfoSuccess && userInfoData?.status === 200) {
+    if (userInfoData.data) {
+      dispatch(addUser(userInfoData?.data));
+      navigate('/dashboard');
+    }
+  }
+
+  if (userInfoError) {
+    console.log({ userInfoError });
+  }
 
   return (
     <div className="dark:bg flex h-full min-h-screen justify-center bg-white pt-8 text-lg text-[#7C7C7C] dark:bg-black dark:text-[#B8B8B8]">

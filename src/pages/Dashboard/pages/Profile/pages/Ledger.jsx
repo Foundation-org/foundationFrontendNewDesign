@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useDebounce } from '../../../../../utils/useDebounce';
 import { getAllLedgerData, searchLedger } from '../../../../../services/api/userAuth';
 import { Columns } from '../components/LedgerUtils';
@@ -130,21 +129,11 @@ export default function BasicTable() {
     if (data) {
       setLedgerData(data);
     }
-    // console.log("🚀 ~ file: Ledger.jsx:57 ~ handlePageClick ~ page:", page)
-    // console.log("testing...", table.setPageIndex(page - 1));
   };
-
-  // useEffect(() => {
-  //   setCurrentPage(table.getState().pagination.pageIndex + 1);
-  //   console.log("🚀 ~ file: Ledger.jsx:64 ~ useEffect ~ table.getState().pagination.pageIndex:", table.getState().pagination)
-  // }, [table.getState().pagination.pageIndex]);
-  // console.log("🚀 ~ file: Ledger.jsx:84 ~ useEffect ~ pagination:", pagination)
-  // console.log("🚀 ~ file: Ledger.jsx:64 ~ useEffect ~ setCurrentPage:", currentPage)
 
   const visibleButtons = 5;
   const rangeStart = Math.max(1, currentPage - Math.floor(visibleButtons / 2));
   const rangeEnd = Math.min(totalPages, rangeStart + visibleButtons - 1);
-  // console.log("🚀 ~ file: Ledger.jsx:121 ~ BasicTable ~ rangeEnd:", rangeEnd)
 
   useEffect(() => {
     return () => {
@@ -155,8 +144,6 @@ export default function BasicTable() {
       });
     };
   }, [columnSizes, table]);
-
-  console.log('table', table.getRowModel().rows);
 
   return (
     <div className="mb-6 overflow-y-auto">
@@ -280,35 +267,24 @@ export default function BasicTable() {
                           },
                         }}
                       >
-                        {/* {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )} */}
-                        {
-                          // console.log(cell.getValue())
-                          // console.log(cell.column.id) //txID
-                        }
-                        {
-                          cell.column.id === 'txID'
-                            ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
-                            : cell.column.id === 'txDate'
-                              ? format(new Date(cell.getValue()), 'dd MMM yyyy, hh:mm a')
-                              : cell.column.id === 'txFrom' &&
-                                  cell.getValue() !== 'DAO Treasury' &&
-                                  cell.getValue() !== 'dao' &&
-                                  cell.getValue() !== persistedUserInfo?.uuid
-                                ? `User`
-                                : cell.getValue() === persistedUserInfo?.uuid
-                                  ? 'My Account'
-                                  : cell.column.id === 'txTo' &&
-                                      cell.getValue() !== 'DAO Treasury' &&
-                                      cell.getValue() !== 'dao'
-                                    ? `User`
-                                    : cell.getValue() === 'dao'
-                                      ? 'DAO'
-                                      : cell.getValue()
-                          // txDate
-                        }
+                        {cell.column.id === 'txID'
+                          ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
+                          : cell.column.id === 'txDate'
+                            ? format(new Date(cell.getValue()), 'dd MMM yyyy, hh:mm a')
+                            : cell.column.id === 'txFrom' &&
+                                cell.getValue() !== 'DAO Treasury' &&
+                                cell.getValue() !== 'dao' &&
+                                cell.getValue() !== persistedUserInfo?.uuid
+                              ? `User`
+                              : cell.getValue() === persistedUserInfo?.uuid
+                                ? 'My Account'
+                                : cell.column.id === 'txTo' &&
+                                    cell.getValue() !== 'DAO Treasury' &&
+                                    cell.getValue() !== 'dao'
+                                  ? `User`
+                                  : cell.getValue() === 'dao'
+                                    ? 'DAO'
+                                    : cell.getValue()}
                       </td>
                     ))}
                   </tr>
@@ -381,6 +357,5 @@ export default function BasicTable() {
         </div>
       </div>
     </div>
-    // </div>
   );
 }

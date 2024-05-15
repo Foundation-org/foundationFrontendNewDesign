@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { validateInterval } from '../../../../../utils';
-import { userInfo } from '../../../../../services/api/userAuth';
-import { addUser } from '../../../../../features/auth/authSlice';
 import { questSelectionInitial } from '../../../../../constants/quests';
 import { resetQuests } from '../../../../../features/quest/questsSlice';
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
@@ -17,11 +15,9 @@ import ButtonGroup from '../../../../../components/question-card/ButtonGroup';
 import QuestInfoText from '../../../../../components/question-card/QuestInfoText';
 import Spacing from '../../../../../components/question-card/Spacing.jsx';
 import QuestCardLayout from '../../../../../components/question-card/QuestCardLayout';
-import ConditionalTextFullScreen from '../../../../../components/question-card/ConditionalTextFullScreen';
 
 import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
-import * as authActions from '../../../../../features/auth/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button.jsx';
 
@@ -271,24 +267,6 @@ const QuestionCardWithToggle = (props) => {
     props.setSingleQuestResp(getQuest.response.data.data[0]);
   };
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-    onSuccess: (resp) => {
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(authActions.addUser(resp?.data));
-
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-      }
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
-
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
@@ -301,7 +279,7 @@ const QuestionCardWithToggle = (props) => {
 
       if (resp.data.message === 'Start Quest Created Successfully') {
         setLoading(false);
-        getUserInfo();
+        queryClient.invalidateQueries(['userInfo']);
       }
 
       if (persistedUserInfo.role === 'guest') {
@@ -322,7 +300,7 @@ const QuestionCardWithToggle = (props) => {
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: questServices.updateChangeAnsStartQuest,
     onSuccess: (resp) => {
-      getUserInfo();
+      queryClient.invalidateQueries(['userInfo']);
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
         toast.warning('You have selected the same option as last time. Your option was not changed.');
@@ -346,11 +324,6 @@ const QuestionCardWithToggle = (props) => {
           ),
         }));
       }
-      userInfo(persistedUserInfo?.uuid || localStorage.getItem('uuid')).then((resp) => {
-        if (resp.status === 200) {
-          dispatch(addUser(resp.data));
-        }
-      });
     },
     onError: (err) => {
       toast.error(err.response.data.message.split(':')[1]);
@@ -738,8 +711,7 @@ const QuestionCardWithToggle = (props) => {
     if (viewResult !== questStartData._id && openResults !== true) {
       return (
         <>
-          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
-
+          <Spacing questStartData={questStartData} show={true} />
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -755,15 +727,13 @@ const QuestionCardWithToggle = (props) => {
             setCheckOptionStatus={setCheckOptionStatus}
             postProperties={postProperties}
           />
-          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
-          {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
+          <QuestInfoText questStartData={questStartData} show={true} />
         </>
       );
     } else {
       return (
         <>
-          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
-
+          <Spacing questStartData={questStartData} show={true} />
           <Result
             questStartData={questStartData}
             id={questStartData._id}
@@ -782,8 +752,7 @@ const QuestionCardWithToggle = (props) => {
             cardSize={cardSize}
             postProperties={postProperties}
           />
-          {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
-          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          <QuestInfoText questStartData={questStartData} show={true} />
         </>
       );
     }
@@ -801,29 +770,19 @@ const QuestionCardWithToggle = (props) => {
         {props.questType !== 'feedback' ? (
           <ButtonGroup
             questStartData={questStartData}
-            id={questStartData._id}
-            btnText={questStartData.startStatus}
             handleStartTest={handleStartTest}
             viewResult={viewResult}
             handleViewResults={handleViewResults}
             setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-            whichTypeQuestion={questStartData.whichTypeQuestion}
             handleToggleCheck={handleToggleCheck}
-            handleRankedChoice={handleRankedChoice}
-            rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
             answersSelection={answersSelection}
             setAnswerSelection={setAnswerSelection}
-            startStatus={questStartData.startStatus}
-            setLoadingDetail={setLoadingDetail}
             handleOpen={handleAddOption}
-            usersAddTheirAns={questStartData.usersAddTheirAns}
-            answers={questStartData.QuestAnswers}
             title={getQuestionTitle(questStartData.whichTypeQuestion)}
             handleSubmit={handleSubmit}
             loading={loading}
             startTest={startTest}
-            handleChange={handleChange}
             addOptionField={addOptionField}
             setAddOptionField={setAddOptionField}
             checkOptionStatus={checkOptionStatus}

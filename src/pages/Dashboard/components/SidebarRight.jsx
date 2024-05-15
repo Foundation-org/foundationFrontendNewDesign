@@ -113,7 +113,7 @@ const SidebarRight = () => {
     onSuccess: (resp) => {
       localStorage.setItem('isGuestMode', resp.data.isGuestMode);
       localStorage.setItem('jwt', resp.data.token);
-      localStorage.setItem('uId', resp.data.uuid);
+      localStorage.setItem('uuid', resp.data.uuid);
     },
     onError: (err) => {
       toast.error(err.response.data);

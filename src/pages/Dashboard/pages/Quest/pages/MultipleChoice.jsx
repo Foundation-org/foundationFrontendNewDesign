@@ -15,8 +15,6 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import * as questServices from '../../../../../services/api/questsApi';
-import { userInfo, userInfoById } from '../../../../../services/api/userAuth';
-import { addUser } from '../../../../../features/auth/authSlice';
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -37,43 +35,13 @@ const MultipleChoice = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-  });
-
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          localStorage.setItem('userData', JSON.stringify(resp?.data));
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-        }
-      }
-
-      // setResponse(resp?.data);
-    } catch (e) {
-      console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
-
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
           navigate('/dashboard');
-          handleUserInfo();
+          queryClient.invalidateQueries(['userInfo']);
           // toast.success('Successfully Created');
           setLoading(false);
 
@@ -351,7 +319,7 @@ const MultipleChoice = () => {
     <CreateQuestWrapper
       quest="M/R"
       handleTab={handleTab}
-      type={'Poll'}
+      type={'Post'}
       msg={'Ask a question where anyone can select a single option from a list of choices'}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>

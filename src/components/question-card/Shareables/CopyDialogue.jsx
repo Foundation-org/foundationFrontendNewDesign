@@ -8,21 +8,9 @@ import Copy from '../../../assets/optionbar/Copy';
 import { Button } from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { userInfo, userInfoById } from '../../../services/api/userAuth';
-import { addUser } from '../../../features/auth/authSlice';
 import { FaSpinner } from 'react-icons/fa';
 
-const CopyDialogue = ({
-  handleClose,
-  id,
-  uniqueShareLink,
-  createdBy,
-  img,
-  alt,
-  badgeCount,
-  questStartData,
-  // getImage,
-}) => {
+const CopyDialogue = ({ handleClose, questStartData }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -90,41 +78,11 @@ const CopyDialogue = ({
     uniqueLinkQuestSetting();
   }, []);
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-  });
-
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          localStorage.setItem('userData', JSON.stringify(resp?.data));
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-        }
-      }
-
-      // setResponse(resp?.data);
-    } catch (e) {
-      console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
-
   const { mutateAsync: handleCreateCustomLink, isPending } = useMutation({
     mutationFn: createCustomLink,
     onSuccess: (resp) => {
       toast.success('Custom link generated successfully.');
-      handleUserInfo();
+      queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['posts'], (oldData) => {
         return {
           ...oldData,
@@ -325,4 +283,3 @@ const CopyDialogue = ({
 };
 
 export default CopyDialogue;
-//

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../../components/ui/Button';
 import { changeTheme } from '../../../../../../features/utils/utilsSlice';
-import { signOut, updateUserSettings, userInfo } from '../../../../../../services/api/userAuth';
+import { signOut, updateUserSettings } from '../../../../../../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { resetFilters } from '../../../../../../features/sidebar/filtersSlice';
@@ -37,6 +37,7 @@ export const Settings = () => {
     mutationFn: signOut,
     onSuccess: () => {
       dispatch(resetFilters());
+      dispatch(addUser(null));
       localStorage.clear();
       navigate('/signin');
     },
@@ -50,21 +51,10 @@ export const Settings = () => {
     navigate('/guest-signup');
   };
 
-  const handleUserInfo = async () => {
-    try {
-      const resp = await userInfo();
-      if (resp.status === 200) {
-        dispatch(addUser(resp.data));
-      }
-    } catch (e) {
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
-
   const { mutateAsync: handleUserSettings } = useMutation({
     mutationFn: updateUserSettings,
     onSuccess: () => {
-      handleUserInfo();
+      queryClient.invalidateQueries(['userInfo']);
       console.log('updateUserSettings', resp);
     },
     onError: (error) => {

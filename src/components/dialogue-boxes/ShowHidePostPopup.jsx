@@ -6,10 +6,7 @@ import { toast } from 'sonner';
 import PopUp from '../ui/PopUp';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
-import { userInfo } from '../../services/api/userAuth';
 import { useDispatch } from 'react-redux';
-
-import * as authActions from '../../features/auth/authSlice';
 import * as questsActions from '../../features/quest/utilsSlice';
 import { useNavigate } from 'react-router-dom';
 
@@ -42,35 +39,13 @@ export default function ShowHidePostPopup({
     setSelectedTitle(data[index].title);
   };
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-    onSuccess: (resp) => {
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(authActions.addUser(resp?.data));
-
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-      }
-    },
-    onError: (err) => {
-      console.log(err);
-    },
-  });
-
   const { mutateAsync: hidePost } = useMutation({
     mutationFn: hideQuest,
     onSuccess: (resp) => {
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
-      getUserInfo();
-
+      queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['posts'], (oldData) => {
-        // if (oldData.pages[0].length <= 1) {
-        //   queryClient.invalidateQueries(['posts']);
-        // } else {
         return {
           ...oldData,
           pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
@@ -91,7 +66,7 @@ export default function ShowHidePostPopup({
     onSuccess: (resp) => {
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('Post hidden successfully');
-      getUserInfo();
+      queryClient.invalidateQueries(['userInfo']);
 
       queryClient.setQueriesData(['posts'], (oldData) => {
         // if (oldData.pages[0].length <= 1) {
