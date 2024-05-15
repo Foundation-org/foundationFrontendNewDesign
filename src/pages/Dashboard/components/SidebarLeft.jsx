@@ -104,7 +104,7 @@ const SidebarLeft = () => {
         setSelectedOptions={setSelectedOptions}
         setFilters={setFilters}
       />
-      <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+      <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
         <div className="relative">
           <div className="relative h-[45px] w-full">
             <input
@@ -142,7 +142,7 @@ const SidebarLeft = () => {
           )}
         </div>
       </div>
-      <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+      <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
         <div className="flex w-full flex-col items-center justify-center gap-[25px]">
           <button
             onClick={() => {

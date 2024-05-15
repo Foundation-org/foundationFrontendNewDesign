@@ -202,8 +202,9 @@ export default function DashboardLayout({ children }) {
 
       <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
-        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-[#DEE6F7] px-5 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
-          {/* <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
+        {location.pathname !== '/dashboard/help/about' && location.pathname !== '/dashboard/help/faq' && (
+          <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-[#DEE6F7] px-5 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
+            {/* <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
             <div className="flex items-center gap-2">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
@@ -219,77 +220,88 @@ export default function DashboardLayout({ children }) {
             </div>
           </div> */}
 
-          <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
-            {persistedUserInfo.role !== 'user' ? (
-              <div className="flex cursor-pointer items-center gap-2">
-                <div className="relative h-fit w-fit">
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
-                    alt="badge"
-                    className="h-[25px] w-5"
-                  />
-                  <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
-                    G
-                  </p>
-                </div>
-                <div className="flex flex-col">
-                  <h4 className="heading">Guest User</h4>
-                  <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                    {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
-                  </p>
-                  <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]" onClick={handleGuestLogout}>
+            <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
+              {persistedUserInfo.role !== 'user' ? (
+                <div className="flex cursor-pointer items-center gap-2">
+                  <div className="relative h-fit w-fit">
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
+                      alt="badge"
+                      className="h-[25px] w-5"
+                    />
+                    <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
+                      G
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <h4 className="heading">My Balance (Guest)</h4>
+                    <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
+                      {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
+                    </p>
+                    {/* <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]" onClick={handleGuestLogout}>
                     Create Account
-                  </Anchor>
+                  </Anchor> */}
+                  </div>
                 </div>
+              ) : (
+                <div
+                  className="flex cursor-pointer items-center gap-2"
+                  onClick={() => {
+                    navigate('/dashboard/profile');
+                  }}
+                >
+                  <div className="relative flex items-center justify-center">
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
+                      alt="badge"
+                      className="h-[28px] w-[23px]"
+                    />
+                    <p className="absolute left-1/2 top-[40%] z-50 mb-1 -translate-x-1/2 -translate-y-1/2 transform text-[14px] font-medium leading-[14px] text-[#7A7016]">
+                      {persistedUserInfo?.badges?.length}
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <h4 className="heading underline">FDX Balance</h4>
+                    <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
+                      {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+            {persistedUserInfo.role === 'user' ? (
+              <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
+                <Button
+                  variant={location.pathname === '/dashboard/quest' ? 'submit2' : 'hollow-submit2'}
+                  className="bg-white tablet:w-full"
+                  onClick={() => navigate('/dashboard/quest')}
+                >
+                  Create Post
+                </Button>
+                <Button
+                  variant={location.pathname === '/dashboard/profile' ? 'submit2' : 'hollow-submit2'}
+                  className="bg-white tablet:w-full"
+                  onClick={() => navigate('/dashboard/profile')}
+                >
+                  Add Badge
+                </Button>
               </div>
             ) : (
-              <div
-                className="flex cursor-pointer items-center gap-2"
-                onClick={() => {
-                  navigate('/dashboard/profile');
-                }}
+              <Button
+                variant="submit2"
+                // className="bg-white tablet:w-full"
+                onClick={() => navigate('/guest-signup')}
               >
-                <div className="relative flex items-center justify-center">
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
-                    alt="badge"
-                    className="h-[25px] w-5"
-                  />
-                  <p className="absolute bottom-2 z-50 text-[9.5px] font-medium text-[#7A7016]">
-                    {persistedUserInfo?.badges?.length}
-                  </p>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <h4 className="heading underline">FDX Balance</h4>
-                  <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
-                    {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0}
-                  </p>
-                </div>
-              </div>
+                Sign up
+              </Button>
             )}
           </div>
-          <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
-            <Button
-              variant={location.pathname === '/dashboard/quest' ? 'submit' : 'hollow-submit2'}
-              className="bg-white tablet:w-full"
-              onClick={() => navigate('/dashboard/quest')}
-            >
-              Create Post
-            </Button>
-            <Button
-              variant={location.pathname === '/dashboard/profile' ? 'submit' : 'hollow-submit2'}
-              className="bg-white tablet:w-full"
-              onClick={() => navigate('/dashboard/profile')}
-            >
-              Add Badge
-            </Button>
-          </div>
-        </div>
+        )}
 
         {/* Desktop Left Side */}
         <div className="hidden tablet:block">
           <div
-            className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]"
+            className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]"
             onClick={() => navigate('/dashboard/treasury')}
           >
             <div className="flex items-center gap-[15px]">
@@ -306,9 +318,6 @@ export default function DashboardLayout({ children }) {
               </div>
             </div>
           </div>
-          {location.pathname !== '/dashboard/profile/ledger' && location.pathname !== '/dashboard/treasury' && (
-            <SideNavbar />
-          )}
 
           {location.pathname !== '/dashboard/quest' &&
             location.pathname !== '/dashboard/profile' &&
@@ -325,9 +334,14 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/help/faq' &&
             !location.pathname.startsWith('/p/') && <SidebarLeft />}
 
+          {location.pathname !== '/dashboard/profile/ledger' &&
+            location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/help/about' &&
+            location.pathname !== '/dashboard/help/faq' && <SideNavbar />}
+
           {/* HiddenPost Search */}
           {location.pathname === '/dashboard/profile/hidden-posts' && (
-            <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
@@ -368,7 +382,7 @@ export default function DashboardLayout({ children }) {
 
           {/* SharedLinks Search */}
           {location.pathname === '/dashboard/profile/shared-links' && (
-            <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
@@ -409,7 +423,7 @@ export default function DashboardLayout({ children }) {
 
           {/* Feedback Search */}
           {location.pathname === '/dashboard/profile/feedback' && (
-            <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input

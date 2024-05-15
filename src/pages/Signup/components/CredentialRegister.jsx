@@ -239,8 +239,8 @@ const CredentialRegister = () => {
           <ReCAPTCHA sitekey={import.meta.env.VITE_GOOGLE_RECAPTCH_SITE_KEY} onChange={onChange} theme="light" />
         )}
       </div>
-      <div className="mb-12 flex items-start taller:mb-7">
-        <div className="form-control mt-[7px] md:mt-0">
+      <div className="mb-12 flex w-full items-center taller:mb-7">
+        <div className="form-control">
           <label className="label flex cursor-pointer gap-[11.5px] p-0">
             <input
               type="checkbox"

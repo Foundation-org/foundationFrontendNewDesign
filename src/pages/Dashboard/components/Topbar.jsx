@@ -66,15 +66,20 @@ const Topbar = () => {
                   }}
                 >
                   <img
-                    src={item.icon}
+                    src={
+                      item.activePaths?.some((path) => location.pathname === path) ||
+                      location.pathname === `${item.path}/`
+                        ? item.iconSelected
+                        : item.icon
+                    }
                     alt="arrow-right"
-                    className={`${item.title === 'Faqs' ? 'size-5 tablet:size-8' : 'size-[16px] tablet:size-7'}`}
+                    className="size-5 tablet:size-8"
                   />
                 </Link>
               ))}
             </div>
           </div>
-          {persistedUserInfo.role !== 'user' && (
+          {/* {persistedUserInfo.role !== 'user' && (
             <div
               className="flex h-full items-center justify-center space-x-2 laptop:hidden"
               onClick={() => {
@@ -105,7 +110,7 @@ const Topbar = () => {
                 </h3>
               </div>
             </div>
-          )}
+          )} */}
         </div>
         {/* {persistedUserInfo.role === 'user' && (
               <div
@@ -219,9 +224,13 @@ const Topbar = () => {
               }}
             >
               <img
-                src={item.icon}
+                src={
+                  item.activePaths?.some((path) => location.pathname === path) || location.pathname === `${item.path}/`
+                    ? item.iconSelected
+                    : item.icon
+                }
                 alt="arrow-right"
-                className={`${item.title === 'Faqs' ? 'size-[30px]' : 'size-[26px]'}`}
+                className="size-8"
               />
             </Link>
           ))}

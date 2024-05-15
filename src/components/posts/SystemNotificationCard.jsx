@@ -12,8 +12,8 @@ const SystemNotificationCard = ({ post }) => {
       </p>
       <div className="flex justify-end">
         <Button
-          variant="submit"
-          className="w-fit"
+          variant="hollow-submit"
+          className="w-fit bg-white"
           onClick={() => {
             navigate(post.buttonUrl);
           }}

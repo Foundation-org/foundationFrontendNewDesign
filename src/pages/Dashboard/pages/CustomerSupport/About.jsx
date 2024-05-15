@@ -22,7 +22,7 @@ const About = () => {
       </div>
       <div className="bg-[#F5F6F8] px-11 py-5 text-[#707175]">
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.375rem] tablet:leading-normal">
-          You have data. You can sell it.
+          How Foundation works
         </h1>
         <div className="tablet:sapce-y-[2.2rem] mt-5 space-y-6 tablet:mt-[1.6rem]">
           <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">

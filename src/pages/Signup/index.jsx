@@ -191,13 +191,15 @@ export default function Signup() {
       <div className="flex h-screen flex-col items-center bg-white md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-bl-[65px] lg:rounded-tl-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
           <Typography variant="textTitle">
-            {location.pathname === '/signup' ? 'Create an Account' : 'Create Account with Email'}
+            {location.pathname === '/signup' || location.pathname === '/guest-signup'
+              ? 'Create an Account'
+              : 'Create Account with Email'}
           </Typography>
           {isPopup ? (
             <SocialLoginsDummy />
           ) : (
             <>
-              {location.pathname === '/signup' && (
+              {(location.pathname === '/signup' || location.pathname === '/guest-signup') && (
                 <div className="mt-5 tablet:mt-[45px]">
                   <SocialLogins
                     setProvider={setProvider}
@@ -206,7 +208,17 @@ export default function Signup() {
                     setIsLoadingSocial={setIsLoadingSocial}
                   />
                   <div className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
-                    <Button size="login-btn" color="gray" onClick={() => navigate('/signup/credentials')}>
+                    <Button
+                      size="login-btn"
+                      color="gray"
+                      onClick={() => {
+                        if (location.pathname === '/signup') {
+                          navigate('/signup/credentials');
+                        } else {
+                          navigate('/guest-signup/credentials');
+                        }
+                      }}
+                    >
                       <img
                         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email-login.svg`}
                         className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] lg:mr-3 "

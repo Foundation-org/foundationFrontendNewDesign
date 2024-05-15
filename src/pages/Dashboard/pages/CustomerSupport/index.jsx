@@ -12,7 +12,7 @@ const CustomerSupport = () => {
   // tablet:bg-[#F2F3F5]
   return (
     <div className="h-dvh min-h-dvh">
-      <div className="flex items-center justify-center gap-[0.96rem] bg-white py-[0.8rem] tablet:bg-[#F2F3F5]">
+      <div className="flex items-center justify-center gap-[0.96rem] bg-[#F2F3F5] py-[0.8rem]">
         {list.map((item) => (
           <Button
             key={item.id}

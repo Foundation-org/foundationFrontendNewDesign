@@ -57,6 +57,7 @@ export const TopbarItems = [
       '/dashboard/profile/user-settings',
     ],
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile.svg`,
+    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile-filled.svg`,
   },
   // {
   //   id: 2,
@@ -70,6 +71,7 @@ export const TopbarItems = [
     title: 'Faqs',
     path: '/dashboard/help/about',
     activePaths: ['/dashboard/help/about', '/dashboard/help/faq'],
-    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/navbar/faqlogo.png`,
+    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/faq.svg`,
+    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/faq-filled.svg`,
   },
 ];
