@@ -5,6 +5,7 @@ import { Button } from '../../../../components/ui/Button';
 import { sendContactUsEmail } from '../../../../services/api/DialogueApis';
 import { FaSpinner } from 'react-icons/fa';
 import Topbar from '../../components/Topbar';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 
 const ContactUs = () => {
   const [loading, setIsloading] = useState(false);
@@ -67,8 +68,10 @@ const ContactUs = () => {
               value={payload.email}
               onChange={handleChange}
             />
-            <textarea
+            <TextareaAutosize
               name="message"
+              aria-label="message"
+              minRows={3}
               placeholder="Your Message*"
               className="mt-3 w-full rounded-[10px] border-2 border-[#DEE6F7] bg-[#FDFDFD] p-[14px] text-[10px] font-normal leading-[13px] text-[#909090] focus:outline-none tablet:mt-5 tablet:border-[3px] tablet:p-5 tablet:text-[18px] tablet:leading-[23px]"
               value={payload.message}

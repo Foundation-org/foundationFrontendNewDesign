@@ -17,6 +17,8 @@ import api from '../../../services/api/Axios';
 import Anchor from '../../../components/Anchor';
 import PopUp from '../../../components/ui/PopUp';
 import SideNavbar from '../../../components/SideNavbar';
+import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId } from '../../../features/quest/utilsSlice';
+import MediaControls from '../../../components/MediaControls';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -30,6 +32,7 @@ export default function DashboardLayout({ children }) {
   const [hiddenSearch, setHiddenSearch] = useState('');
   const [sharedlinkSearch, setSharedlinkSearch] = useState('');
   const [feedbackSearch, setFeedbackSearch] = useState('');
+  const questUtilsState = useSelector(getQuestUtils);
 
   const { data: treasuryAmount, error: treasuryError } = useQuery({
     queryKey: ['treasury'],
@@ -338,6 +341,23 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/treasury' &&
             location.pathname !== '/dashboard/help/about' &&
             location.pathname !== '/dashboard/help/faq' && <SideNavbar />}
+
+          {questUtilsState.isShowPlayer && (
+            <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
+              <div className="relative">
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
+                  alt="mediaCloseIcon"
+                  className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black tablet:-right-[14px] tablet:-top-[18px] tablet:size-[33px] dark:text-white"
+                  onClick={() => {
+                    dispatch(setIsShowPlayer(false));
+                    dispatch(setPlayingPlayerId(''));
+                  }}
+                />
+              </div>
+              <MediaControls />
+            </div>
+          )}
 
           {/* HiddenPost Search */}
           {location.pathname === '/dashboard/profile/hidden-posts' && (
