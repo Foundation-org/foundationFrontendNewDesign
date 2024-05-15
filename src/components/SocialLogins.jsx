@@ -1,6 +1,8 @@
-import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
+import { LoginSocialGoogle, LoginSocialFacebook, LoginSocialLinkedin } from 'reactjs-social-login';
 import { useSelector } from 'react-redux';
 import Button from './Button';
+import { TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
+import { authentication } from '../pages/Dashboard/pages/Profile/pages/firebase-config';
 
 const REDIRECT_URI = window.location.href;
 
@@ -13,6 +15,21 @@ const SocialLogins = ({
   setIsLoadingSocial,
 }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
+
+  const loginWithTwitter = () => {
+    const provider = new TwitterAuthProvider();
+    console.log(authentication);
+    signInWithPopup(authentication, provider)
+      .then((data) => {
+        console.log('twitter data', data);
+        setProvider('twitter');
+        setProfile(data);
+        isLogin ? handleSignInSocial(data, 'twitter') : handleSignUpSocial(data, 'twitter');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="mb-2 flex flex-col gap-2 rounded-[6.043px] lg:mb-[1.56rem] 2xl:rounded-[11.703px] laptop:justify-between laptop:gap-[1.56rem]">
@@ -83,6 +100,53 @@ const SocialLogins = ({
           <span className="inline-block align-middle">Continue with Facebook</span>
         </button>
       </LoginSocialFacebook>
+      <LoginSocialLinkedin
+        // isOnlyGetToken
+        client_id={import.meta.env.VITE_LINKEDIN_KEY}
+        client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
+        onResolve={({ provider, data }) => {
+          console.log(provider);
+          setProvider(provider);
+          setProfile(data);
+          isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
+        }}
+        // scope="email,openid,profile,w_member_social"
+        redirect_uri={REDIRECT_URI}
+        onReject={(err) => {
+          console.log(err);
+        }}
+      >
+        <Button
+          size="login-btn"
+          color="gray"
+          onClick={() => {
+            setIsLoadingSocial(true);
+          }}
+        >
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
+            alt="LinkedIn"
+            // className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] lg:mr-3"
+            className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] lg:mr-3"
+          />
+          Continue with LinkedIn
+        </Button>
+      </LoginSocialLinkedin>
+      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
+        <Button
+          size="login-btn"
+          color="gray"
+          onClick={() => {
+            loginWithTwitter();
+          }}
+        >
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`}
+            className="mr-2 h-[22px] w-[22px] tablet:mr-3 tablet:size-[45px]"
+          />
+          Continue with Twitter
+        </Button>
+      </div>
     </div>
   );
 };
