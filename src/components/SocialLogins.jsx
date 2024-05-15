@@ -126,8 +126,7 @@ const SocialLogins = ({
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
             alt="LinkedIn"
-            // className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] lg:mr-3"
-            className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] lg:mr-3"
+            className="mr-2 size-[22px] md:size-8 lg:mr-3"
           />
           Continue with LinkedIn
         </Button>
@@ -142,7 +141,7 @@ const SocialLogins = ({
         >
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`}
-            className="mr-2 h-[22px] w-[22px] tablet:mr-3 tablet:size-[45px]"
+            className="mr-2 size-[22px] md:size-8 lg:mr-3"
           />
           Continue with Twitter
         </Button>
