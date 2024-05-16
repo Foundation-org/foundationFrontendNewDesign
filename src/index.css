@@ -914,6 +914,7 @@ input[type='number'] {
 
 .carousel .thumbs-wrapper {
   margin: 0 !important;
+  height: fit-content !important;
 }
 
 .carousel.carousel-slider > div > div {

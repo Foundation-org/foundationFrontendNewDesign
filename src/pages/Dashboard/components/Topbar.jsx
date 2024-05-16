@@ -44,7 +44,7 @@ const Topbar = () => {
                 className="h-[10px] w-auto tablet:h-auto"
               />
               <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium text-[#D0E4F2] tablet:pt-1 tablet:text-[12px]">
-                v 1.11.8
+                v 1.11.9
               </span>
             </Link>
             <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
