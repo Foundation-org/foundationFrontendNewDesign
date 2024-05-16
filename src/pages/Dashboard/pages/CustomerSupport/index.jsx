@@ -10,9 +10,9 @@ const CustomerSupport = () => {
     { id: 2, title: "FAQ's", path: '/dashboard/help/faq' },
     { id: 3, title: 'Contact Us', path: '/dashboard/help/contact-us' },
   ];
-  // tablet:bg-[#F2F3F5]
+
   return (
-    <div className="h-dvh min-h-dvh tablet:px-6">
+    <div className="h-dvh min-h-dvh w-full tablet:px-6">
       <div className="flex items-center justify-center gap-[0.96rem] bg-[#F2F3F5] py-[0.8rem]">
         {list.map((item) => (
           <Button
@@ -25,7 +25,7 @@ const CustomerSupport = () => {
           </Button>
         ))}
       </div>
-      <div className="no-scrollbar mx-auto mb-10 h-[calc(100dvh-98px)] w-full overflow-y-auto bg-white tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem]">
+      <div className="no-scrollbar mx-auto mb-10 h-[calc(100dvh-98px)] w-full overflow-y-auto tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem]">
         <Outlet />
       </div>
     </div>

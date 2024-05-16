@@ -70,7 +70,7 @@ export const TopbarItems = [
     id: 2,
     title: 'Faqs',
     path: '/dashboard/help/about',
-    activePaths: ['/dashboard/help/about', '/dashboard/help/faq'],
+    activePaths: ['/dashboard/help/about', '/dashboard/help/faq', '/dashboard/help/contact-us'],
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/faq.svg`,
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/faq-filled.svg`,
   },
