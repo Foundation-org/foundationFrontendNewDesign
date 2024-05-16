@@ -231,7 +231,7 @@ const VerificationBadges = () => {
             </div>
             {checkSocial('facebook') ? (
               <Button
-                color={checkSocial('facebook') ? 'red' : 'blue'}
+                color={checkSocial('facebook') ? (checkPrimary('facebook') ? 'yellow' : 'red') : 'blue'}
                 onClick={() => {
                   if (persistedUserInfo?.role === 'guest') {
                     handleGuestBadgeAdd();
@@ -244,15 +244,20 @@ const VerificationBadges = () => {
                       });
                   }
                 }}
+                disabled={checkPrimary('facebook')}
               >
-                {checkSocial('facebook') ? 'Remove' : 'Add Badge'}
+                {checkSocial('facebook') ? (checkPrimary('facebook') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                   {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
                 </span>
               </Button>
             ) : persistedUserInfo?.role === 'guest' ? (
-              <Button color={checkSocial('github') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
-                {checkSocial('facebook') ? 'Remove' : 'Add Badge'}
+              <Button
+                color={checkSocial('facebook') ? (checkPrimary('facebook') ? 'yellow' : 'red') : 'blue'}
+                onClick={handleGuestBadgeAdd}
+                disabled={checkPrimary('facebook')}
+              >
+                {checkSocial('facebook') ? (checkPrimary('facebook') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                   {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
                 </span>
@@ -301,7 +306,7 @@ const VerificationBadges = () => {
             {checkSocial('linkedin') ? (
               <>
                 <Button
-                  color={checkSocial('linkedin') ? 'red' : 'blue'}
+                  color={checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'yellow' : 'red') : 'blue'}
                   onClick={() => {
                     if (persistedUserInfo?.role === 'guest') {
                       handleGuestBadgeAdd();
@@ -314,8 +319,10 @@ const VerificationBadges = () => {
                         });
                     }
                   }}
+                  disabled={checkPrimary('linkedin')}
                 >
-                  {checkSocial('linkedin') ? 'Remove' : 'Add Badge'}
+                  {checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'Added' : 'Remove') : 'Add Badge'}
+
                   <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                     {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                   </span>
@@ -323,7 +330,7 @@ const VerificationBadges = () => {
               </>
             ) : persistedUserInfo?.role === 'guest' ? (
               <Button
-                color={checkSocial('linkedin') ? 'red' : 'blue'}
+                color={checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'yellow' : 'red') : 'blue'}
                 onClick={() => {
                   toast.warning(
                     <p>
@@ -339,8 +346,9 @@ const VerificationBadges = () => {
                   );
                   return;
                 }}
+                disabled={checkPrimary('linkedin')}
               >
-                {checkSocial('linkedin') ? 'Remove' : 'Add Badge'}
+                {checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                   {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
                 </span>
@@ -398,7 +406,7 @@ const VerificationBadges = () => {
             </div>
             {checkSocial('twitter') ? (
               <Button
-                color={checkSocial('twitter') ? 'red' : 'blue'}
+                color={checkSocial('twitter') ? (checkPrimary('twitter') ? 'yellow' : 'red') : 'blue'}
                 onClick={() => {
                   if (persistedUserInfo?.role === 'guest') {
                     handleGuestBadgeAdd();
@@ -411,27 +419,33 @@ const VerificationBadges = () => {
                       });
                   }
                 }}
+                disabled={checkPrimary('twitter')}
               >
-                {checkSocial('twitter') ? 'Remove' : 'Add Badge'}
+                {checkSocial('twitter') ? (checkPrimary('twitter') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                   {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                 </span>
               </Button>
             ) : persistedUserInfo?.role === 'guest' ? (
-              <Button color={checkSocial('twitter') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
-                {checkSocial('twitter') ? 'Remove' : 'Add Badge'}
+              <Button
+                color={checkSocial('twitter') ? (checkPrimary('twitter') ? 'yellow' : 'red') : 'blue'}
+                onClick={handleGuestBadgeAdd}
+                disabled={checkPrimary('twitter')}
+              >
+                {checkSocial('twitter') ? (checkPrimary('twitter') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                   {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                 </span>
               </Button>
             ) : (
               <Button
-                color={checkSocial('twitter') ? 'red' : 'blue'}
+                color={checkSocial('twitter') ? (checkPrimary('twitter') ? 'yellow' : 'red') : 'blue'}
                 onClick={() => {
                   loginWithTwitter();
                 }}
+                disabled={checkPrimary('twitter')}
               >
-                {checkSocial('twitter') ? 'Remove' : 'Add Badge'}
+                {checkSocial('twitter') ? (checkPrimary('twitter') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                   {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
                 </span>
@@ -467,7 +481,7 @@ const VerificationBadges = () => {
             {checkSocial('instagram') ? (
               <>
                 <Button
-                  color={checkSocial('instagram') ? 'red' : 'blue'}
+                  color={checkSocial('instagram') ? (checkPrimary('instagram') ? 'yellow' : 'red') : 'blue'}
                   onClick={() => {
                     if (persistedUserInfo?.role === 'guest') {
                       handleGuestBadgeAdd();
@@ -480,16 +494,21 @@ const VerificationBadges = () => {
                         });
                     }
                   }}
+                  disabled={checkPrimary('instagram')}
                 >
-                  {checkSocial('instagram') ? 'Remove' : 'Add Badge'}
+                  {checkSocial('instagram') ? (checkPrimary('instagram') ? 'Added' : 'Remove') : 'Add Badge'}
                   <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                     {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                   </span>
                 </Button>
               </>
             ) : persistedUserInfo?.role === 'guest' ? (
-              <Button color={checkSocial('instagram') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
-                {checkSocial('instagram') ? 'Remove' : 'Add Badge'}
+              <Button
+                color={checkSocial('instagram') ? (checkPrimary('instagram') ? 'yellow' : 'red') : 'blue'}
+                onClick={handleGuestBadgeAdd}
+                disabled={checkPrimary('instagram')}
+              >
+                {checkSocial('instagram') ? (checkPrimary('instagram') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px] ">
                   {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
                 </span>
@@ -534,7 +553,7 @@ const VerificationBadges = () => {
             </div>
             {checkSocial('github') ? (
               <Button
-                color={checkSocial('github') ? 'red' : 'blue'}
+                color={checkSocial('github') ? (checkPrimary('github') ? 'yellow' : 'red') : 'blue'}
                 onClick={() => {
                   if (persistedUserInfo?.role === 'guest') {
                     handleGuestBadgeAdd();
@@ -547,15 +566,20 @@ const VerificationBadges = () => {
                       });
                   }
                 }}
+                disabled={checkPrimary('github')}
               >
-                {checkSocial('github') ? 'Remove' : 'Add Badge'}
+                {checkSocial('github') ? (checkPrimary('github') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                   {checkSocial('github') ? '' : '(+0.96 FDX)'}
                 </span>
               </Button>
             ) : persistedUserInfo?.role === 'guest' ? (
-              <Button color={checkSocial('github') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
-                {checkSocial('github') ? 'Remove' : 'Add Badge'}
+              <Button
+                color={checkSocial('github') ? (checkPrimary('github') ? 'yellow' : 'red') : 'blue'}
+                onClick={handleGuestBadgeAdd}
+                disabled={checkPrimary('github')}
+              >
+                {checkSocial('github') ? (checkPrimary('github') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                   {checkSocial('github') ? '' : '(+0.96 FDX)'}
                 </span>
