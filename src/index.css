@@ -967,7 +967,7 @@ input[type='number'] {
 }
 
 #fullscreen_carousel_container > div:first-child {
-  height: 100vh !important;
+  height: 100dvh !important;
   display: flex;
   flex-direction: column;
   align-items: center;
