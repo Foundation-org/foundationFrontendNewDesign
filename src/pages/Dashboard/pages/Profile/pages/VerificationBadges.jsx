@@ -29,6 +29,8 @@ const VerificationBadges = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
 
+  const checkPrimary = (itemType) => persistedUserInfo?.badges?.some((i) => i.type === itemType && i.primary === true);
+
   const loginWithYoutube = () => {};
 
   const handleSoundCloud = () => {
@@ -203,6 +205,15 @@ const VerificationBadges = () => {
         <div className="flex flex-col items-center gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]">
           {/* Facebook */}
           <div className="flex items-center gap-[8.5px] laptop:gap-5">
+            <div className="absolute -left-5 tablet:-left-[42px]">
+              {checkPrimary('facebook') && (
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/primary.svg`}
+                  alt="primary"
+                  className="size-[15px] tablet:size-[30px]"
+                />
+              )}
+            </div>
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`}
               alt="Facebook"
