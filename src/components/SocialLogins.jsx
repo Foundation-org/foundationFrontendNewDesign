@@ -56,7 +56,9 @@ const SocialLogins = ({
         body: JSON.stringify({
           clientId: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
           clientSecret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
-          redirectUri: REDIRECT_URI,
+          redirectUri: isLogin
+            ? `${import.meta.env.VITE_CLIENT_URL}/signin`
+            : `${import.meta.env.VITE_CLIENT_URL}/signup`,
           code: code,
         }),
       });
