@@ -121,7 +121,7 @@ export default function Ledger() {
         } mx-[17px] mb-10 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-[25px] tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:rounded-[18px]`}
       >
         <LedgerTableTopbar
-          isTreasury={true}
+          isTreasury={false}
           sort={sort}
           setsort={setsort}
           filterText={filterText}

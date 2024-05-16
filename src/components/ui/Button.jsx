@@ -107,6 +107,8 @@ Button.propTypes = {
     'personal-work',
     'social-btn',
     'hollow-submit',
+    'hollow-submit2',
+    'submit2',
     'getintouch',
     'danger',
     'submit-green',

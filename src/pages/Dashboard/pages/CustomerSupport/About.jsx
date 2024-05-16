@@ -1,7 +1,7 @@
 const About = () => {
   return (
-    <div>
-      <div className="space-y-[0.63rem] px-[1.87rem] pt-3 text-[#7C7C7C] tablet:space-y-5 tablet:px-16 tablet:pt-[1.56rem]">
+    <div className="bg-white">
+      <div className="space-y-[0.63rem] px-8 pt-3 text-[#7C7C7C] tablet:space-y-5 tablet:px-16 tablet:pt-[1.56rem]">
         <h1 className="text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           You have data. You can sell it.
         </h1>
@@ -14,13 +14,13 @@ const About = () => {
           you is more and more targeted ads.
         </p>
       </div>
-      <div className="mt-4 bg-[#238AD4] px-[1.87rem] py-[1.3rem] text-white tablet:px-16 tablet:py-6">
+      <div className="mt-4 bg-[#238AD4] px-8 py-[1.3rem] text-white tablet:px-16 tablet:py-6">
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-start tablet:text-[1.125rem] tablet:leading-[179.006%]">
           Foundation is a digital platform that enables you to securely add and monetize your personal data - putting
           the money you earn from sharing your data with companies in your wallet, not someone elses.
         </p>
       </div>
-      <div className="bg-[#F5F6F8] px-11 py-5 text-[#707175]">
+      <div className="bg-[#F5F6F8] px-8 py-5 text-[#707175] tablet:px-16">
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.375rem] tablet:leading-normal">
           How Foundation works
         </h1>
@@ -76,7 +76,7 @@ const About = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center gap-[0.69rem] px-11 py-5 text-[#707175] tablet:gap-5 tablet:px-[4.62rem] tablet:py-[1.8rem]">
+      <div className="flex flex-col items-center justify-center gap-[0.69rem] px-8 py-5 text-[#707175] tablet:gap-5 tablet:px-16 tablet:py-[1.8rem]">
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/about/lock.svg`}
           alt="account"
@@ -90,7 +90,7 @@ const About = () => {
           shared is when YOU decide it should be, with the benefit of monetizing from it.
         </p>
       </div>
-      <div className="mt-5 flex flex-col items-center gap-5 bg-[#156DB4] px-12 py-[1.3rem] text-white tablet:mt-0 tablet:gap-[1.56rem] tablet:py-[1.92rem]">
+      <div className="mt-5 flex flex-col items-center gap-[15px] bg-[#156DB4] px-12 py-[1.3rem] text-white tablet:mt-0 tablet:gap-[1.56rem] tablet:py-[1.92rem]">
         <h1 className="text-center text-[0.875rem] font-normal leading-[161.2%] tablet:text-[1.56rem] tablet:font-bold">
           Join Foundation BETA
         </h1>
@@ -101,7 +101,7 @@ const About = () => {
           Already have an account? Log in
         </p>
       </div>
-      <div className="flex flex-col gap-[0.69rem] p-8 text-[#707175] tablet:gap-[1.56rem] tablet:px-[4.52rem] tablet:pb-[3.12rem] tablet:pt-[1.88rem]">
+      <div className="flex flex-col gap-[0.69rem] p-8 text-[#707175] tablet:gap-[1.56rem] tablet:px-16 tablet:pb-[3.12rem] tablet:pt-[1.88rem]">
         <h5 className="text-[0.75rem] font-normal italic leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[161%]">
           “Owning our personal data liberates us from being slaves to the system, giving us the freedom to live life on
           our terms.“

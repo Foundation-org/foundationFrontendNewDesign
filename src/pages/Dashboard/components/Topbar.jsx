@@ -15,7 +15,7 @@ const Topbar = () => {
 
   return (
     <div className="bg-[#389CE3]">
-      <div className="static mx-auto flex h-[58px] max-h-[58px] min-h-[58px] w-full max-w-[1378px] flex-col items-center justify-between tablet:h-24 tablet:min-h-24 laptop:h-[92px] laptop:max-h-[70px] laptop:min-h-[70px] laptop:flex-row">
+      <div className="static mx-auto flex h-[48px] max-h-[48px] min-h-[48px] w-full max-w-[1378px] flex-col items-center justify-between tablet:h-24 tablet:min-h-24 laptop:h-[92px] laptop:max-h-[70px] laptop:min-h-[70px] laptop:flex-row">
         <div className="relative flex h-full w-full items-center justify-between px-4 py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
           <div className="flex w-full items-center justify-between gap-12">
             <Link
@@ -44,13 +44,15 @@ const Topbar = () => {
                 className="h-[10px] w-auto tablet:h-auto"
               />
               <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium text-[#D0E4F2] tablet:pt-1 tablet:text-[12px]">
-                v 1.11.4
+                v 1.11.10
               </span>
             </Link>
+            {/* Mobile */}
             <div className="flex w-fit items-center justify-end gap-3 text-[11.8px] font-semibold leading-normal text-white tablet:w-[149.47px] tablet:gap-8 tablet:text-[21.4px] laptop:hidden laptop:gap-[78px]">
               {TopbarItems.map((item) => (
                 <Link
-                  to={item.path}
+                  key={item.id}
+                  to={persistedUserInfo.role === 'guest' && item.id === 1 ? item.signupPath : item.path}
                   className={`${
                     item.activePaths?.some((path) => location.pathname === path) ||
                     location.pathname === `${item.path}/`
@@ -67,10 +69,12 @@ const Topbar = () => {
                 >
                   <img
                     src={
-                      item.activePaths?.some((path) => location.pathname === path) ||
-                      location.pathname === `${item.path}/`
-                        ? item.iconSelected
-                        : item.icon
+                      persistedUserInfo.role === 'guest' && item.id === 1
+                        ? item.signupIcon
+                        : item.activePaths?.some((path) => location.pathname === path) ||
+                            location.pathname === `${item.path}/`
+                          ? item.iconSelected
+                          : item.icon
                     }
                     alt="arrow-right"
                     className="size-5 tablet:size-8"
@@ -206,10 +210,12 @@ const Topbar = () => {
             </li>
           ))}
         </ul> */}
+        {/* Desktop */}
         <div className="hidden h-full w-[23rem] min-w-[23rem] cursor-pointer items-center justify-center gap-6 text-[28px] font-semibold leading-normal text-white 2xl:w-[25rem] 2xl:text-[30px] laptop:flex laptop:w-[18.25rem] laptop:min-w-[18.25rem] laptop:gap-[35px]">
           {TopbarItems.map((item) => (
             <Link
-              to={item.path}
+              key={item.id}
+              to={persistedUserInfo.role === 'guest' && item.id === 1 ? item.signupPath : item.path}
               className={`${
                 item.activePaths?.some((path) => location.pathname === path) || location.pathname === `${item.path}/`
                   ? 'text-white'
@@ -225,9 +231,12 @@ const Topbar = () => {
             >
               <img
                 src={
-                  item.activePaths?.some((path) => location.pathname === path) || location.pathname === `${item.path}/`
-                    ? item.iconSelected
-                    : item.icon
+                  persistedUserInfo.role === 'guest' && item.id === 1
+                    ? item.signupIcon
+                    : item.activePaths?.some((path) => location.pathname === path) ||
+                        location.pathname === `${item.path}/`
+                      ? item.iconSelected
+                      : item.icon
                 }
                 alt="arrow-right"
                 className="size-8"

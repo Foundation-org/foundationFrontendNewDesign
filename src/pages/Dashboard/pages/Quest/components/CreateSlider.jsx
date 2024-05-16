@@ -5,7 +5,7 @@ const createItems = [
   { id: 0, title: 'Yes/No' },
   { id: 1, title: 'Multiple Choice' },
   { id: 5, title: 'Open Choice' },
-  { id: 2, title: 'Rank Choice' },
+  { id: 2, title: 'Ranked Choice' },
   { id: 3, title: 'Agree/Disagree' },
   { id: 4, title: 'Like/Dislike' },
 ];

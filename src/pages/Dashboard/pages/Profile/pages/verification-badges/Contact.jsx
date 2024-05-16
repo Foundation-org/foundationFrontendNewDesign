@@ -52,9 +52,18 @@ export default function Contact({ fetchUser, handleRemoveBadgePopup }) {
   const ContactItem = ({ item, index, persistedTheme, checkContact, checkPrimary, handleClickContactBadgeEmail }) => {
     return (
       <div
-        className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5 ${item.disabled && 'opacity-[60%]'}`}
+        className={`relative flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5 ${item.disabled && 'opacity-[60%]'}`}
         key={index}
       >
+        <div className="absolute -left-5 tablet:-left-[42px]">
+          {checkPrimary(item.type) && (
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/primary.svg`}
+              alt="primary"
+              className="size-[15px] tablet:size-[30px]"
+            />
+          )}
+        </div>
         <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
         <div
           className={`${

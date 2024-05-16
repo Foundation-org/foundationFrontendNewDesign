@@ -8,7 +8,7 @@ const Faq = () => {
   const [view, setView] = useState(1);
 
   return (
-    <div className="no-scrollbar h-[calc(100dvh-151px)]  w-full overflow-scroll overflow-y-auto bg-white text-[#707175] tablet:h-[calc(100dvh-96px)] laptop:h-[calc(100dvh-70px)]">
+    <div className="no-scrollbar h-[calc(100dvh-98px)]  w-full overflow-scroll overflow-y-auto bg-white text-[#707175] tablet:h-[calc(100dvh-96px)] laptop:h-[calc(100dvh-70px)]">
       <h1 className="mx-[1.13rem] my-[0.94rem] text-[14px] font-semibold leading-none -tracking-[2%] tablet:mx-[35px] tablet:my-6 tablet:text-[25px]">
         General
       </h1>

@@ -22,9 +22,10 @@ export default function SharedLinkResults() {
       setAllQuestData(response.data.data[0]);
     } catch (error) {
       console.error('API call failed:', error);
-    } finally {
-      // setLoading(false);
     }
+    // finally {
+    //   // setLoading(false);
+    // }
   };
 
   const getSharedResult = async () => {

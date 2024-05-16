@@ -14,6 +14,7 @@ import { useQueryClient } from '@tanstack/react-query';
 export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
   const { sdk } = useSDK();
   const queryClient = useQueryClient();
+  const checkSecondary = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType && i.secondary === true);
 
   const connect = async () => {
     try {
@@ -50,6 +51,7 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
   const checkPassKeyBadge = (accountName, type, value) => {
     return fetchUser?.badges.some((badge) => badge.accountName === accountName && badge.type === type);
   };
+
   const handlePasskey = async (title, type, value) => {
     try {
       // Device Detect
@@ -116,6 +118,7 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
       toast.error(error.response.data.message.split(':')[1]);
     }
   };
+
   const config = {
     // relay: "https://relay.farcaster.xyz",
     rpcUrl: 'https://mainnet.optimism.io',
@@ -124,6 +127,7 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
   };
 
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+
   const triggerFarcaster = () => {
     setIsButtonClicked(true);
     const a = document.querySelector('._1n3pr301');
@@ -131,6 +135,7 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
     // setTimeout(() => {
     // }, 1000);
   };
+
   return (
     <>
       <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
@@ -263,6 +268,13 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
             className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5  ${item.disabled ? 'opacity-[60%]' : ''}`}
             key={index}
           >
+            {checkSecondary(item.type) && (
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/secondary.svg`}
+                alt="primary"
+                className="size-[15px] tablet:size-[30px]"
+              />
+            )}
             <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
             <div
               className={`${
