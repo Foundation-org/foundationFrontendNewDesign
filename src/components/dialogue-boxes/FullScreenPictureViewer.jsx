@@ -24,7 +24,7 @@ export default function FullScreenPictureViewer({ handleClose, modalVisible, con
         sx={mergedStyle}
         className={`${customClasses} relative z-[1000] flex h-full w-full items-center justify-center border-none outline-none`}
       >
-        <div className="absolute right-4 top-4 z-[100000] cursor-pointer" onClick={handleClose}>
+        <div className="absolute right-[10px] top-[10px] z-[100000] cursor-pointer" onClick={handleClose}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="51"

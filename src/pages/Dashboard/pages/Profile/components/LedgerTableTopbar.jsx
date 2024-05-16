@@ -27,8 +27,7 @@ const LedgerTableTopbar = ({
       {!isTreasury ? (
         <div className="flex gap-[10.97px] tablet:gap-5 laptop:gap-[63px]">
           {/* profile */}
-
-          <div className="flex gap-[5.51px] tablet:gap-[13px]">
+          {/* <div className="flex gap-[5.51px] tablet:gap-[13px]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/person.svg`}
               alt="person icon"
@@ -42,7 +41,7 @@ const LedgerTableTopbar = ({
                 <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* treasury */}
           <div className="flex gap-[5.51px] tablet:gap-[13px]">

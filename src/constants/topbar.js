@@ -48,9 +48,12 @@ export const TopbarItems = [
     id: 1,
     title: 'Profile',
     path: '/dashboard/profile',
+    signupPath: '/guest-signup',
     activePaths: [
       '/dashboard/profile',
       '/dashboard/profile/verification-badges',
+      '/dashboard/profile/contributions',
+      '/dashboard/profile/feedback',
       '/dashboard/profile/ledger',
       '/dashboard/profile/hidden-posts',
       '/dashboard/profile/shared-links',
@@ -58,6 +61,7 @@ export const TopbarItems = [
     ],
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile.svg`,
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile-filled.svg`,
+    signupIcon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/signup.svg`,
   },
   // {
   //   id: 2,
