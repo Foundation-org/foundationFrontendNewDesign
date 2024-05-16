@@ -335,12 +335,14 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/feedback' &&
             location.pathname !== '/dashboard/help/about' &&
             location.pathname !== '/dashboard/help/faq' &&
+            location.pathname !== '/dashboard/help/contact-us' &&
             !location.pathname.startsWith('/p/') && <SidebarLeft />}
 
           {location.pathname !== '/dashboard/treasury' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/dashboard/help/about' &&
             location.pathname !== '/dashboard/help/faq' &&
+            location.pathname !== '/dashboard/help/contact-us' &&
             location.pathname !== '/dashboard/quest' &&
             location.pathname !== '/dashboard/profile' &&
             location.pathname !== '/dashboard/profile/ledger' &&
@@ -549,7 +551,8 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/treasury' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/dashboard/help/about' &&
-            location.pathname !== '/dashboard/help/faq' && <SidebarRight />}
+            location.pathname !== '/dashboard/help/faq' &&
+            location.pathname !== '/dashboard/help/contact-us' && <SidebarRight />}
         </div>
       </div>
       {/* Mobile Children */}

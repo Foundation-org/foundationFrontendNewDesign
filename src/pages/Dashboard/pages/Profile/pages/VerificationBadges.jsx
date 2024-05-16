@@ -29,7 +29,8 @@ const VerificationBadges = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
 
-  const checkPrimary = (itemType) => persistedUserInfo?.badges?.some((i) => i.type === itemType && i.primary === true);
+  const checkPrimary = (itemType) =>
+    persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
 
   const loginWithYoutube = () => {};
 
@@ -439,7 +440,16 @@ const VerificationBadges = () => {
           </div>
 
           {/* Instagram */}
-          <div className="flex items-center gap-[8.5px] laptop:gap-5">
+          <div className="relative flex items-center gap-[8.5px] laptop:gap-5">
+            <div className="absolute -left-5 tablet:-left-[42px]">
+              {checkPrimary('instagram') && (
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/primary.svg`}
+                  alt="primary"
+                  className="size-[15px] tablet:size-[30px]"
+                />
+              )}
+            </div>
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`}
               alt="Instagram"

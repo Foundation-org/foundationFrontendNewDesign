@@ -78,7 +78,6 @@ export function Router() {
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
             <Route path="/maintenance" element={<Maintenance />} />
             <Route path="/welcome" element={<Welcome />} />
-            <Route path="/contact-us" element={<ContactUs />} />
             <Route
               path="/dashboard/"
               element={
@@ -91,6 +90,7 @@ export function Router() {
               <Route path="help" element={<CustomerSupport />}>
                 <Route path="about" element={<About />} />
                 <Route path="faq" element={<Faq />} />
+                <Route path="contact-us" element={<ContactUs />} />
               </Route>
               <Route path="quest" element={<Quest />} />
               <Route path="treasury/" element={<TreasuryLayout />}>

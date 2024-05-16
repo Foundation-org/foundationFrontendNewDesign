@@ -8,6 +8,7 @@ const Button = ({
   group = '',
   disabled = false,
   onClick,
+  className,
 }) => {
   const buttonClasses = classNames(
     'inline-flex items-center py-0 rounded-[6.043px] 2xl:rounded-[11.703px]',
@@ -33,6 +34,7 @@ const Button = ({
       'rounded-none': group === 'middle',
       'rounded-l-none': group === 'right',
     },
+    className,
   );
 
   return (

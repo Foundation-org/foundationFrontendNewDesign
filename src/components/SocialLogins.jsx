@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Button from './Button';
 import { GithubAuthProvider, TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
 import { authentication } from '../pages/Dashboard/pages/Profile/pages/firebase-config';
+import { InstagramLogin } from '@amraneze/react-instagram-login';
 
 const REDIRECT_URI = window.location.href;
 
@@ -41,9 +42,38 @@ const SocialLogins = ({
         isLogin ? handleSignInSocial(data, 'github') : handleSignUpSocial(data, 'github');
       })
       .catch((err) => {
-        showBoundary(err);
         console.log(err);
       });
+  };
+
+  const loginInWithInsta = async (code) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/user/get-insta-token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          clientId: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
+          clientSecret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
+          redirectUri: REDIRECT_URI,
+          code: code,
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log('instagaram data', data);
+        setProvider('instagram');
+        setProfile(data);
+        isLogin ? handleSignInSocial(data, 'instagram') : handleSignUpSocial(data, 'instagram');
+      } else {
+        const data = await response.json();
+        console.error('Error fetching Instagram profile:', data);
+      }
+    } catch (error) {
+      console.log({ error });
+      console.error('Error fetching Instagram profile:', error.message);
+    }
   };
 
   return (
@@ -175,6 +205,25 @@ const SocialLogins = ({
           />
           Continue with Github
         </Button>
+      </div>
+      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
+        <InstagramLogin
+          clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
+          onSuccess={(code) => {
+            console.log(code), loginInWithInsta(code);
+          }}
+          onFailure={(err) => console.log('error', err)}
+          redirectUri={window.location.href}
+          cssClass={'hideBack'}
+        >
+          <Button size="login-btn" color="gray" className="w-full min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`}
+              className="mr-2 size-[22px] md:size-8 lg:mr-3"
+            />
+            Continue with Instagram
+          </Button>
+        </InstagramLogin>
       </div>
     </div>
   );

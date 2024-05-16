@@ -42,9 +42,9 @@ const ContactUs = () => {
 
   return (
     <div>
-      <Topbar />
+      {/* <Topbar /> */}
       <div className="h-[calc(100dvh-58px)] w-full bg-white tablet:h-[calc(100dvh-96px)] laptop:h-[calc(100dvh-70px)]">
-        <div className="flex w-full flex-col gap-1 bg-[#4A8DBD] py-3 text-[#E7E7E7] tablet:gap-2 tablet:py-[47px]">
+        {/* <div className="flex w-full flex-col gap-1 bg-[#4A8DBD] py-3 text-[#E7E7E7] tablet:gap-2 tablet:py-[47px]">
           <p className="text-center text-[7px] font-semibold leading-none tablet:text-[11.77px]">Support</p>
           <h1 className="text-center text-[12px] font-semibold leading-none -tracking-[2%] tablet:text-[35.3px]">
             Get in Touch
@@ -52,7 +52,7 @@ const ContactUs = () => {
           <p className="text-center text-[8px] font-normal leading-none tablet:text-[14.71px]">
             Have any questions? We're here to assist you.
           </p>
-        </div>
+        </div> */}
         <div className="flex flex-col items-center justify-center gap-10 bg-white px-6 py-[30px] tablet:px-7 tablet:py-12 laptop:flex-row laptop:gap-0 laptop:p-[100px]">
           <div className="hidden tablet:block laptop:w-1/2">
             <h1 className=" text-center text-[14px] font-bold leading-none -tracking-[2%] text-[#292929] tablet:text-[40px]">
