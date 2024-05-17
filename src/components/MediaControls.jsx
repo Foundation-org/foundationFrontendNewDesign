@@ -3,7 +3,7 @@ import { getQuestUtils, toggleMedia } from '../features/quest/utilsSlice';
 import * as questUtilsActions from '../features/quest/utilsSlice';
 import { useSelector } from 'react-redux';
 
-export default function MediaControls() {
+export default function MediaControls({ hasNextPage }) {
   const dispatch = useDispatch();
   const questUtilsState = useSelector(getQuestUtils);
 
@@ -29,15 +29,16 @@ export default function MediaControls() {
 
   const playNext = () => {
     const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
+    console.log(index + 1, questUtilsState.playingIds.length, hasNextPage);
     if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
       dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
       dispatch(questUtilsActions.toggleMedia(true));
+    } else if (index !== -1 && index + 1 >= questUtilsState.playingIds.length && hasNextPage === false) {
+      dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
+      dispatch(questUtilsActions.toggleMedia(true));
     }
-    //  else if (index !== -1 && index + 1 >= questUtilsState.playingIds.length) {
-    //   dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
-    //   dispatch(questUtilsActions.toggleMedia(true));
-    // }
   };
+  console.log(hasNextPage);
 
   return (
     <div className="my-5 flex w-max items-center justify-center gap-2 rounded-[9.211px] border-[2.86px] border-[#CECFD1] bg-white px-4 py-2 tablet:w-fit tablet:max-w-[300px] tablet:gap-3 tablet:rounded-[14px] tablet:py-3">
@@ -82,7 +83,7 @@ export default function MediaControls() {
         onClick={playNext}
         className={`${
           questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId) + 1 >=
-          questUtilsState.playingIds.length
+            questUtilsState.playingIds.length && hasNextPage === true
             ? 'opacity-[60%]'
             : 'opacity-[100%]'
         } size-6 cursor-pointer tablet:size-[33px]`}

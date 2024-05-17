@@ -46,6 +46,7 @@ const data = [
 const QuestCardLayout = ({
   questStartData,
   playing,
+  hasNextPage,
   postProperties,
   questType,
   children,
@@ -283,6 +284,8 @@ const QuestCardLayout = ({
             url={questStartData.url}
             questId={questStartData._id}
             playing={playing}
+            hasNextPage={hasNextPage}
+
             // setPlayingPlayerId={setPlayingPlayerId}
             // setIsPlaying={setIsPlaying}
             // setIsShowPlayer={setIsShowPlayer}

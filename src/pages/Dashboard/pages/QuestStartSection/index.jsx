@@ -96,6 +96,7 @@ const QuestStartSection = () => {
                 innerRef={ref}
                 questStartData={post}
                 playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+                hasNextPage={hasNextPage}
               />
             </div>
           );
@@ -105,6 +106,7 @@ const QuestStartSection = () => {
               <QuestionCardWithToggle
                 questStartData={post}
                 playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
+                hasNextPage={hasNextPage}
               />
             </div>
           );
@@ -141,7 +143,7 @@ const QuestStartSection = () => {
                 }}
               />
             </div>
-            <MediaControls />
+            <MediaControls hasNextPage={hasNextPage} />
           </div>
         )}
       </div>

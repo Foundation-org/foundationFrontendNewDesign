@@ -769,6 +769,7 @@ const QuestionCardWithToggle = (props) => {
       <QuestCardLayout
         questStartData={questStartData}
         playing={props.playing}
+        hasNextPage={props.hasNextPage}
         postProperties={postProperties}
         questType={props.questType}
       >
