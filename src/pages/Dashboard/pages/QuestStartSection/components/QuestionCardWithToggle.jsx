@@ -30,7 +30,7 @@ const QuestionCardWithToggle = (props) => {
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   const { innerRef, questStartData, postProperties, SharedLinkButton } = props;
-  const { isSingleQuest, postLink, guestResult } = props;
+  const { isSingleQuest, postLink } = props;
 
   let questData;
 
@@ -262,10 +262,10 @@ const QuestionCardWithToggle = (props) => {
     }
   }, [questStartData]);
 
-  const questByUniqueShareLink = async () => {
-    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-1)[0]);
-    props.setSingleQuestResp(getQuest.response.data.data[0]);
-  };
+  // const questByUniqueShareLink = async () => {
+  //   const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-1)[0]);
+  //   props.setSingleQuestResp(getQuest.response.data.data[0]);
+  // };
 
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
@@ -280,15 +280,21 @@ const QuestionCardWithToggle = (props) => {
       if (resp.data.message === 'Start Quest Created Successfully') {
         setLoading(false);
         queryClient.invalidateQueries(['userInfo']);
+
+        queryClient.setQueryData(['questByShareLink'], (oldData) => ({
+          ...resp.data.data,
+        }));
       }
 
-      if (persistedUserInfo.role === 'guest') {
-        questByUniqueShareLink();
-      }
-      if (location.pathname.startsWith('/p/') || location.pathname.startsWith('/quest/')) {
+      // if (persistedUserInfo.role === 'guest') {
+      //   questByUniqueShareLink();
+      // }
+      if (location.pathname.startsWith('/quest/')) {
         props.setSubmitResponse(resp.data.data);
       }
-      handleViewResults(questStartData._id);
+      if (!location.pathname.startsWith('/p/')) {
+        handleViewResults(questStartData._id);
+      }
     },
     onError: (err) => {
       console.log(err);
@@ -313,7 +319,7 @@ const QuestionCardWithToggle = (props) => {
         setLoading(false);
         handleViewResults(questStartData._id);
 
-        if (location.pathname.startsWith('/p/') || location.pathname.startsWith('/quest/')) {
+        if (location.pathname.startsWith('/quest/')) {
           props.setSubmitResponse(resp.data.data);
         }
 
@@ -668,14 +674,14 @@ const QuestionCardWithToggle = (props) => {
         handleStartTest(questStartData._id);
       }
       if (questStartData.startStatus === 'change answer') {
-        if (!guestResult) {
-          setOpenResults(false);
-          handleViewResults(questStartData._id);
-        } else {
-          navigate('/shared-links/result', {
-            state: { questId: questStartData._id, link: location.pathname.split('/').pop() },
-          });
-        }
+        // if (!guestResult) {
+        setOpenResults(false);
+        handleViewResults(questStartData._id);
+        // } else {
+        //   navigate('/shared-links/result', {
+        //     state: { questId: questStartData._id, link: location.pathname.split('/').pop() },
+        //   });
+        // }
       }
       if (questStartData.startStatus === 'completed') {
         setOpenResults(true);
