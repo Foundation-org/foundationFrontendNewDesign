@@ -26,7 +26,7 @@ const GuestRedirect = () => {
     if (persistedUserInfo === null) {
       createGuest();
     }
-  }, [persistedUserInfo]);
+  }, [persistedUserInfo, dispatch]);
 
   return (
     <div className="flex h-full min-h-screen justify-center bg-white pt-8 text-lg text-[#7C7C7C] dark:bg-black dark:text-[#B8B8B8]">
@@ -36,10 +36,3 @@ const GuestRedirect = () => {
 };
 
 export default GuestRedirect;
-// if User exist no matter guest/normal
-// if (persistedUserInfo) {
-//   navigate(`/quest/post/${params}`);
-// }  // If User not exist  // const { search } = useLocation();
-// const params = new URLSearchParams(search);
-// console.log('🚀 ~ GuestRedirect ~ params:', params);  // const navigate = useNavigate();
-// import { useLocation, useNavigate } from 'react-router-dom';

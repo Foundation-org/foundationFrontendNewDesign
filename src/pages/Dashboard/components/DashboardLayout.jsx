@@ -66,7 +66,7 @@ export default function DashboardLayout({ children }) {
   });
 
   useEffect(() => {
-    if (userInfoSuccess && !userInfoData?.data) {
+    if (userInfoError && !userInfoData?.data) {
       getUserInfoById();
     }
   }, [userInfoSuccess, userInfoData, getUserInfoById]);
@@ -74,7 +74,7 @@ export default function DashboardLayout({ children }) {
   useEffect(() => {
     // Handle userInfoData when successfully fetched
     if (userInfoSuccess && userInfoData?.status === 200) {
-      if (userInfoData.data) {
+      if (userInfoData.data && persistedUserInfo.role === 'user') {
         dispatch(addUser(userInfoData.data));
         localStorage.setItem('userData', JSON.stringify(userInfoData.data));
         // Set into local storage

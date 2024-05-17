@@ -1,48 +1,19 @@
 import { Helmet } from 'react-helmet-async';
 import { useEffect } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from '../../features/auth/authSlice';
+import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
-import { createGuestMode } from '../../services/api/userAuth';
 import { questImpression } from '../../services/api/questsApi';
 import { getQuestByUniqueShareLink } from '../../services/api/homepageApis';
 import Topbar from '../Dashboard/components/Topbar';
 import DashboardLayout from '../Dashboard/components/DashboardLayout';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import SEO from '../../utils/SEO';
-// import { useState } from 'react';
 
 const SingleQuest = () => {
   let { id } = useParams();
-  console.log({ id });
   const location = useLocation();
-  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  // const [singleQuestResp, setSingleQuestResp] = useState(null);
-  // const [submitResponse, setSubmitResponse] = useState();
-  // const [error, setError] = useState('');
-
-  // const { mutateAsync: createGuest } = useMutation({
-  //   mutationFn: createGuestMode,
-  //   onSuccess: (resp) => {
-  //     // const getQuest = getQuestByUniqueShareLink(location.pathname.split('/').pop());
-  //     // setSingleQuestResp(getQuest.response.data.data[0]);
-
-  //     dispatch(addUser(resp?.data));
-  //     localStorage.setItem('isGuestMode', resp.data.isGuestMode);
-  //     localStorage.setItem('uuid', resp.data.uuid);
-  //   },
-  //   onError: (err) => {
-  //     toast.error(err.response.data);
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   if (persistedUserInfo === null) {
-  //     createGuest();
-  //   }
-  // }, [persistedUserInfo]);
 
   const {
     data: singleQuestData,
@@ -59,18 +30,6 @@ const SingleQuest = () => {
       questImpression(id);
     }
   }, [isSuccess, singleQuestData]);
-
-  console.log('singleQuestData', singleQuestData);
-  // const questByUniqueShareLink = async () => {
-  //   const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
-  //   console.log('🚀 ~ questByUniqueShareLink ~ getQuest:', getQuest);
-
-  //   if (getQuest.error === 'This link is not active') {
-  //     setError(getQuest.error);
-  //   } else {
-  //     setSingleQuestResp(getQuest.response.data.data[0]);
-  //   }
-  // };
 
   return (
     <>
@@ -134,11 +93,8 @@ const SingleQuest = () => {
                 <QuestionCardWithToggle
                   questStartData={singleQuestData}
                   isBookmarked={false}
-                  // setSingleQuestResp={setSingleQuestResp}
-                  // setSubmitResponse={setSubmitResponse}
                   isSingleQuest={location.pathname.includes('/p/') ? true : false}
                   postLink={id}
-                  // guestResult={singleQuestData.startStatus === 'change answer' ? true : false}
                 />
               </div>
             )}
