@@ -51,7 +51,7 @@ export function Router() {
 
   return (
     <>
-      {!persistedUser ? (
+      {!localStorage.getItem('uuid') ? (
         <Routes>
           <Route path="/maintenance" element={<Maintenance />} />
           <Route path="/" element={<Welcome />} />

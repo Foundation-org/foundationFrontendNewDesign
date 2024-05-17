@@ -23,26 +23,26 @@ const SingleQuest = () => {
   // const [submitResponse, setSubmitResponse] = useState();
   // const [error, setError] = useState('');
 
-  const { mutateAsync: createGuest } = useMutation({
-    mutationFn: createGuestMode,
-    onSuccess: (resp) => {
-      // const getQuest = getQuestByUniqueShareLink(location.pathname.split('/').pop());
-      // setSingleQuestResp(getQuest.response.data.data[0]);
+  // const { mutateAsync: createGuest } = useMutation({
+  //   mutationFn: createGuestMode,
+  //   onSuccess: (resp) => {
+  //     // const getQuest = getQuestByUniqueShareLink(location.pathname.split('/').pop());
+  //     // setSingleQuestResp(getQuest.response.data.data[0]);
 
-      dispatch(addUser(resp?.data));
-      localStorage.setItem('isGuestMode', resp.data.isGuestMode);
-      localStorage.setItem('uuid', resp.data.uuid);
-    },
-    onError: (err) => {
-      toast.error(err.response.data);
-    },
-  });
+  //     dispatch(addUser(resp?.data));
+  //     localStorage.setItem('isGuestMode', resp.data.isGuestMode);
+  //     localStorage.setItem('uuid', resp.data.uuid);
+  //   },
+  //   onError: (err) => {
+  //     toast.error(err.response.data);
+  //   },
+  // });
 
-  useEffect(() => {
-    if (persistedUserInfo === null) {
-      createGuest();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (persistedUserInfo === null) {
+  //     createGuest();
+  //   }
+  // }, [persistedUserInfo]);
 
   const {
     data: singleQuestData,
@@ -60,7 +60,7 @@ const SingleQuest = () => {
     }
   }, [isSuccess, singleQuestData]);
 
-  // console.log('singleQuestData', singleQuestData);
+  console.log('singleQuestData', singleQuestData);
   // const questByUniqueShareLink = async () => {
   //   const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').pop());
   //   console.log('🚀 ~ questByUniqueShareLink ~ getQuest:', getQuest);
