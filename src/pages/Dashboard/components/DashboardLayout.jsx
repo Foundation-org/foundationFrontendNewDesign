@@ -303,8 +303,8 @@ export default function DashboardLayout({ children }) {
                   </div>
                 ) : (
                   <Button
-                    variant="submit2"
-                    // className="bg-white tablet:w-full"
+                    variant="hollow-submit2"
+                    className="bg-white tablet:w-full"
                     onClick={() => navigate('/guest-signup')}
                   >
                     Sign up

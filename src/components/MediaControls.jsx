@@ -36,7 +36,7 @@ export default function MediaControls() {
   };
 
   return (
-    <div className="mt-5 flex w-max items-center justify-center gap-2 rounded-[9.211px] border-[2.86px] border-[#CECFD1] bg-white px-4 py-2 tablet:w-fit tablet:max-w-[300px] tablet:gap-3 tablet:rounded-[14px] tablet:py-3">
+    <div className="my-5 flex w-max items-center justify-center gap-2 rounded-[9.211px] border-[2.86px] border-[#CECFD1] bg-white px-4 py-2 tablet:w-fit tablet:max-w-[300px] tablet:gap-3 tablet:rounded-[14px] tablet:py-3">
       {/* {questUtilsState.loop ? 'Loop' : 'Series'} */}
       <img
         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/player/${questUtilsState.loop ? 'loop.svg' : 'series.svg'}`}
