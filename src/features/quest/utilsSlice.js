@@ -19,6 +19,7 @@ const initialState = {
   playerPlayingId: '',
   isShowPlayer: false,
   loop: true,
+  hasNextPage: true,
 };
 
 export const utilsSlice = createSlice({
@@ -79,6 +80,9 @@ export const utilsSlice = createSlice({
     toggleMedia: (state, action) => {
       state.isMediaPlaying = action.payload;
     },
+    setNextPage: (state, action) => {
+      state.hasNextPage = action.payload;
+    },
     toggleLoop: (state, action) => {
       state.loop = action.payload;
     },
@@ -112,6 +116,7 @@ export const {
   addBookmarkResponse,
   removeBookmarkResponse,
   toggleMedia,
+  setNextPage,
   setPlayingPlayerId,
   setIsShowPlayer,
   addPlayerId,

@@ -15,7 +15,6 @@ export const EmbededVideo = ({
   questId,
   // setPlayingPlayerId,
   playing,
-  hasNextPage,
   // setIsShowPlayer,
   // setIsPlaying,
   // isPlaying,
@@ -35,7 +34,11 @@ export const EmbededVideo = ({
       const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
       if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
         dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
-      } else if (index !== -1 && index + 1 >= questUtilsState.playingIds.length && hasNextPage === false) {
+      } else if (
+        index !== -1 &&
+        index + 1 >= questUtilsState.playingIds.length &&
+        questUtilsState.hasNextPage === false
+      ) {
         dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
       }
     }
