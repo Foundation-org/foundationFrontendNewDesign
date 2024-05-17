@@ -119,7 +119,7 @@ const QuestStartSection = () => {
         <div className="block tablet:hidden">
           <SidebarLeft />
         </div>
-        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-101px)] min-h-[calc(100dvh-101px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
+        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
           <div className="fixed left-auto right-auto max-w-full tablet:max-w-[778px]  laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
             <Slider isFetching={isFetching} />
           </div>

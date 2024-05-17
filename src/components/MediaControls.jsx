@@ -14,9 +14,11 @@ export default function MediaControls() {
       playingCard.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
   const runLoop = () => {
     dispatch(questUtilsActions.toggleLoop(!questUtilsState.loop));
   };
+
   const playPrevious = () => {
     const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
     if (index !== -1 && index - 1 >= 0) {
@@ -24,6 +26,7 @@ export default function MediaControls() {
       dispatch(questUtilsActions.toggleMedia(true));
     }
   };
+
   const playNext = () => {
     const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
     if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
