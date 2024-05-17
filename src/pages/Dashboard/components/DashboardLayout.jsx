@@ -302,11 +302,7 @@ export default function DashboardLayout({ children }) {
                     </Button>
                   </div>
                 ) : (
-                  <Button
-                    variant="hollow-submit2"
-                    className="bg-white tablet:w-full"
-                    onClick={() => navigate('/guest-signup')}
-                  >
+                  <Button variant="hollow-submit2" className="bg-white" onClick={() => navigate('/guest-signup')}>
                     Sign up
                   </Button>
                 )}

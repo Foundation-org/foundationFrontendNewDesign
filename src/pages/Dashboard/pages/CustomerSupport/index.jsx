@@ -13,7 +13,7 @@ const CustomerSupport = () => {
 
   return (
     <div className="h-dvh min-h-dvh w-full bg-[#F2F3F5] tablet:px-6">
-      <div className="flex items-center justify-center gap-[6.75px] py-[0.8rem] tablet:gap-[0.96rem]">
+      <div className="flex items-center justify-center gap-[6.75px] py-2 tablet:gap-[0.96rem] tablet:py-[14.82px]">
         {list.map((item) => (
           <Button
             key={item.id}
