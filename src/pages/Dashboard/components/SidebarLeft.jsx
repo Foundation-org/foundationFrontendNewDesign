@@ -96,7 +96,7 @@ const SidebarLeft = () => {
   }, [ratingsDialogue]);
 
   return (
-    <div>
+    <div className={`${persistedUserInfo.role === 'guest' && location.pathname === '/' ? 'hidden' : 'block'}`}>
       <Ratings
         modalVisible={ratingsDialogue}
         handleClose={hideRatingDialogue}

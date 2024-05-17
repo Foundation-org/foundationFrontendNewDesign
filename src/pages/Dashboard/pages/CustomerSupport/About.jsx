@@ -1,4 +1,8 @@
+import { useNavigate } from 'react-router-dom';
+
 const About = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white">
       <div className="space-y-[0.63rem] px-8 pt-3 text-[#7C7C7C] tablet:space-y-5 tablet:px-16 tablet:pt-[1.56rem]">
@@ -94,11 +98,17 @@ const About = () => {
         <h1 className="text-center text-[0.875rem] font-normal leading-[161.2%] tablet:text-[1.56rem] tablet:font-bold">
           Join Foundation BETA
         </h1>
-        <button className="w-48 rounded-[0.31rem] bg-white py-[0.6rem] text-center text-[0.75rem] font-semibold text-[#156DB4] tablet:w-[24.3rem] tablet:rounded-[0.75rem] tablet:py-3 tablet:text-[1.25rem]">
+        <button
+          className="w-48 rounded-[0.31rem] bg-white py-[0.6rem] text-center text-[0.75rem] font-semibold text-[#156DB4] tablet:w-[24.3rem] tablet:rounded-[0.75rem] tablet:py-3 tablet:text-[1.25rem]"
+          onClick={() => navigate('/guest-signup')}
+        >
           Sign up
         </button>
         <p className="text-center text-[0.75rem] font-normal leading-[161.2%] tablet:text-[1.125rem]">
-          Already have an account? Log in
+          Already have an account?{' '}
+          <span className="cursor-pointer" onClick={() => navigate('/signin')}>
+            Log in
+          </span>
         </p>
       </div>
       <div className="flex flex-col gap-[0.69rem] p-8 text-[#707175] tablet:gap-[1.56rem] tablet:px-16 tablet:pb-[3.12rem] tablet:pt-[1.88rem]">

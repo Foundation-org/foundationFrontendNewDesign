@@ -64,7 +64,7 @@ const ContactUs = () => {
       />
       <Button
         variant="submit"
-        className="w-fit py-5"
+        className="w-fit tablet:py-5"
         onClick={() => {
           setIsloading(true);
           userSendEmail(payload);

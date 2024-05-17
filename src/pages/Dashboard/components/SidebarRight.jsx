@@ -108,30 +108,32 @@ const SidebarRight = () => {
     },
   ];
 
-  const { mutateAsync: createGuest } = useMutation({
-    mutationFn: createGuestMode,
-    onSuccess: (resp) => {
-      localStorage.setItem('isGuestMode', resp.data.isGuestMode);
-      localStorage.setItem('jwt', resp.data.token);
-      localStorage.setItem('uuid', resp.data.uuid);
-    },
-    onError: (err) => {
-      toast.error(err.response.data);
-    },
-  });
+  // const { mutateAsync: createGuest } = useMutation({
+  //   mutationFn: createGuestMode,
+  //   onSuccess: (resp) => {
+  //     localStorage.setItem('isGuestMode', resp.data.isGuestMode);
+  //     localStorage.setItem('jwt', resp.data.token);
+  //     localStorage.setItem('uuid', resp.data.uuid);
+  //   },
+  //   onError: (err) => {
+  //     toast.error(err.response.data);
+  //   },
+  // });
 
-  useEffect(() => {
-    if (persistedUserInfo) {
-      const uId = persistedUserInfo?.uuid;
+  // useEffect(() => {
+  //   if (persistedUserInfo) {
+  //     const uId = persistedUserInfo?.uuid;
 
-      if (!uId) {
-        createGuest();
-      }
-    }
-  }, []);
+  //     if (!uId) {
+  //       createGuest();
+  //     }
+  //   }
+  // }, []);
 
   return (
-    <div className="no-scrollbar my-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto rounded-[15px] bg-white py-[25px] pl-[1.3rem] pr-[2.1rem] tablet:my-[15px] laptop:block dark:bg-[#000]">
+    <div
+      className={`${persistedUserInfo.role === 'guest' && location.pathname === '/' ? 'hidden' : 'no-scrollbar my-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto rounded-[15px] bg-white py-[25px] pl-[1.3rem] pr-[2.1rem] tablet:my-[15px] laptop:block dark:bg-[#000]'} `}
+    >
       <p className="font-inter mb-[25px] text-center text-[10.79px] font-medium leading-[18px] text-[#616161] tablet:text-[18px] dark:text-[#D2D2D2]">
         My Contributions
       </p>

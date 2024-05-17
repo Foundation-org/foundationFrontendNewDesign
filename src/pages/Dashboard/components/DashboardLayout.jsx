@@ -66,7 +66,7 @@ export default function DashboardLayout({ children }) {
   });
 
   useEffect(() => {
-    if (userInfoSuccess && !userInfoData?.data) {
+    if (userInfoError && !userInfoData?.data) {
       getUserInfoById();
     }
   }, [userInfoSuccess, userInfoData, getUserInfoById]);
@@ -74,7 +74,7 @@ export default function DashboardLayout({ children }) {
   useEffect(() => {
     // Handle userInfoData when successfully fetched
     if (userInfoSuccess && userInfoData?.status === 200) {
-      if (userInfoData.data) {
+      if (userInfoData.data && persistedUserInfo.role === 'user') {
         dispatch(addUser(userInfoData.data));
         localStorage.setItem('userData', JSON.stringify(userInfoData.data));
         // Set into local storage
@@ -302,11 +302,7 @@ export default function DashboardLayout({ children }) {
                     </Button>
                   </div>
                 ) : (
-                  <Button
-                    variant="submit2"
-                    // className="bg-white tablet:w-full"
-                    onClick={() => navigate('/guest-signup')}
-                  >
+                  <Button variant="hollow-submit2" className="bg-white" onClick={() => navigate('/guest-signup')}>
                     Sign up
                   </Button>
                 )}
@@ -365,22 +361,34 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/user-settings' &&
             location.pathname !== '/dashboard/profile/feedback' && <SideNavbar />}
 
-          {questUtilsState.isShowPlayer && (
-            <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
-              <div className="relative">
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
-                  alt="mediaCloseIcon"
-                  className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black tablet:-right-[14px] tablet:-top-[18px] tablet:size-[33px] dark:text-white"
-                  onClick={() => {
-                    dispatch(setIsShowPlayer(false));
-                    dispatch(setPlayingPlayerId(''));
-                  }}
-                />
+          {questUtilsState.isShowPlayer &&
+            location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/treasury/ledger' &&
+            location.pathname !== '/dashboard/help/about' &&
+            location.pathname !== '/dashboard/help/faq' &&
+            location.pathname !== '/dashboard/help/contact-us' &&
+            location.pathname !== '/dashboard/quest' &&
+            location.pathname !== '/dashboard/profile' &&
+            location.pathname !== '/dashboard/profile/ledger' &&
+            location.pathname !== '/dashboard/profile/hidden-posts' &&
+            location.pathname !== '/dashboard/profile/shared-links' &&
+            location.pathname !== '/dashboard/profile/user-settings' &&
+            location.pathname !== '/dashboard/profile/feedback' && (
+              <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
+                <div className="relative">
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
+                    alt="mediaCloseIcon"
+                    className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black tablet:-right-[14px] tablet:-top-[18px] tablet:size-[33px] dark:text-white"
+                    onClick={() => {
+                      dispatch(setIsShowPlayer(false));
+                      dispatch(setPlayingPlayerId(''));
+                    }}
+                  />
+                </div>
+                <MediaControls />
               </div>
-              <MediaControls />
-            </div>
-          )}
+            )}
 
           {/* HiddenPost Search */}
           {location.pathname === '/dashboard/profile/hidden-posts' && (

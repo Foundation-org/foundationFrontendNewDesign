@@ -10,6 +10,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import BasicModal from '../../../components/BasicModal';
 import { referralModalStyle } from '../../../constants/styles';
 import ReferralCode from '../../../components/ReferralCode';
+import { toast } from 'sonner';
 
 const CredentialRegister = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -75,6 +76,7 @@ const CredentialRegister = () => {
     try {
       if (password === reTypePassword) {
         const resp = await guestSignup({ email, password, uuid: localStorage.getItem('uuid') });
+        console.log(resp);
         if (resp.status === 200) {
           toast.success('A verification email has been sent to your email address. Please check your inbox.');
 

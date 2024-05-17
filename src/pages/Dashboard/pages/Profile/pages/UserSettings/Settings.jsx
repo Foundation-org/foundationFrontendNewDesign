@@ -113,24 +113,26 @@ export const Settings = () => {
         </Switch>
       </div>
       {/* Logout */}
-      <Button
-        variant="submit"
-        className="flex items-center gap-[5px] tablet:gap-[10px]"
-        onClick={() => {
-          if (localStorage.getItem('isGuestMode')) {
-            handleGuestSignout();
-          } else {
-            handleSignout();
-          }
-        }}
-      >
-        <img
-          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/logout-icon.svg`}
-          alt="logout-icon"
-          className="size-[14px] tablet:size-[25px]"
-        />
-        Logout
-      </Button>
+      {persistedUserInfo.role === 'user' && (
+        <Button
+          variant="submit"
+          className="flex items-center gap-[5px] tablet:gap-[10px]"
+          onClick={() => {
+            if (localStorage.getItem('isGuestMode')) {
+              handleGuestSignout();
+            } else {
+              handleSignout();
+            }
+          }}
+        >
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/logout-icon.svg`}
+            alt="logout-icon"
+            className="size-[14px] tablet:size-[25px]"
+          />
+          Logout
+        </Button>
+      )}
     </div>
   );
 };

@@ -29,7 +29,6 @@ import Faq from '../pages/Dashboard/pages/CustomerSupport/Faq';
 import ContactUs from '../pages/Dashboard/pages/CustomerSupport/ContactUs';
 import CustomerSupport from '../pages/Dashboard/pages/CustomerSupport';
 import GuestRedirect from '../pages/DashboardRedirect/GuestRedirect';
-import Maintenance from '../pages/Maintenance/maintenance';
 import Welcome from '../pages/Welcome/welcome';
 import SharedLinkResults from '../pages/Dashboard/pages/Profile/pages/shared-links/SharedLinkResults';
 import RedemptionCenter from '../pages/Dashboard/pages/Treasury/RedemptionCenter';
@@ -39,6 +38,7 @@ import UserSettings from '../pages/Dashboard/pages/Profile/pages/UserSettings';
 import Feedback from '../pages/Dashboard/pages/Profile/pages/feedback';
 import CredentialLogin from '../pages/Signin/components/CredentialLogin';
 import CredentialRegister from '../pages/Signup/components/CredentialRegister';
+import GuestCustomerSupport from '../pages/Dashboard/pages/CustomerSupport/GuestCustomerSupport';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -51,22 +51,27 @@ export function Router() {
 
   return (
     <>
-      {!persistedUser ? (
+      {!localStorage.getItem('uuid') ? (
         <Routes>
-          <Route path="/maintenance" element={<Maintenance />} />
-          <Route path="/" element={<Welcome />} />
+          {/* <Route path="/" element={<Welcome />} /> */}
+          {/* <Route path="/" element={<GuestCustomerSupport />}>
+            <Route path="about" element={<About />} />
+            <Route path="faq" element={<Faq />} />
+            <Route path="contact-us" element={<ContactUs />} />
+          </Route> */}
           <Route path="/signin/" element={<Signin />}>
             <Route path="credentials" element={<CredentialLogin />} />
           </Route>
           <Route path="/signup" element={<Signup />}>
             <Route path="credentials" element={<CredentialRegister />} />
           </Route>
-          <Route path="/term-of-service" element={<TermOfService />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/verify-email" element={<VerifyEmail />} />
-          <Route path="/verifycode" element={<VerifyCode />} />
+          {/* <Route path="/term-of-service" element={<TermOfService />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} /> */}
+          {/* <Route path="/verify-email" element={<VerifyEmail />} /> */}
+          {/* <Route path="/verifycode" element={<VerifyCode />} /> */}
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/p/:id" element={<GuestRedirect />} />
+          <Route path="/" element={<GuestRedirect />} />
           <Route
             path="/dashboard/treasury/:code"
             element={<Navigate to="/" state={{ from: '/dashboard/treasury/:code' }} />}
@@ -76,7 +81,13 @@ export function Router() {
       ) : (
         <Routes>
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
-            <Route path="/maintenance" element={<Maintenance />} />
+            <Route path="/" element={<GuestCustomerSupport />}>
+              <Route path="" element={<About />} />
+              <Route path="faq" element={<Faq />} />
+              <Route path="contact-us" element={<ContactUs />} />
+            </Route>
+            <Route path="/term-of-service" element={<TermOfService />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/welcome" element={<Welcome />} />
             <Route
               path="/dashboard/"
@@ -230,7 +241,7 @@ export function Router() {
               <Route path="credentials" element={<CredentialLogin />} />
             </Route>
             <Route path="/verifycode" element={<VerifyCode />} />
-            <Route path="*" element={<Navigate to="/dashboard" />} />
+            <Route path="*" element={persistedUser.role === 'user' && <Navigate to="/dashboard" />} />
           </Route>
         </Routes>
       )}
