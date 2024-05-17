@@ -81,9 +81,10 @@ export default function Signup() {
     }
   };
 
-  const handleSignUpGuestSocialBadges = async (data) => {
+  const handleSignUpGuestSocialBadges = async (data, provider) => {
     try {
       data.uuid = localStorage.getItem('uuid');
+      data.type = provider;
       const res = await api.post(`/user/signUpGuest/SocialBadges`, data);
       if (res.status === 200) {
         dispatch(addUser(res.data));
@@ -103,7 +104,7 @@ export default function Signup() {
       if (provider === 'google') {
         handleSignUpSocialGuest(data);
       } else {
-        handleSignUpGuestSocialBadges(data);
+        handleSignUpGuestSocialBadges(data, provider);
       }
     } else {
       handleReferralOpen();
