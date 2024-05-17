@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import SystemNotificationCard from '../../../../components/posts/SystemNotificationCard';
+import { Log } from 'ethers';
 
 const QuestStartSection = () => {
   const dispatch = useDispatch();
@@ -77,6 +78,7 @@ const QuestStartSection = () => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
+    dispatch(questUtilsActions.setNextPage(hasNextPage));
   }, [inView, hasNextPage, fetchNextPage]);
 
   if (status === 'error') {
@@ -96,7 +98,6 @@ const QuestStartSection = () => {
                 innerRef={ref}
                 questStartData={post}
                 playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
-                hasNextPage={hasNextPage}
               />
             </div>
           );
@@ -106,7 +107,6 @@ const QuestStartSection = () => {
               <QuestionCardWithToggle
                 questStartData={post}
                 playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
-                hasNextPage={hasNextPage}
               />
             </div>
           );
@@ -143,7 +143,7 @@ const QuestStartSection = () => {
                 }}
               />
             </div>
-            <MediaControls hasNextPage={hasNextPage} />
+            <MediaControls />
           </div>
         )}
       </div>
