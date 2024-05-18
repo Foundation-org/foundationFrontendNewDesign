@@ -15,6 +15,7 @@ const GuestRedirect = () => {
       localStorage.setItem('isGuestMode', resp.data.isGuestMode);
       localStorage.setItem('jwt', resp.data.token);
       localStorage.setItem('uuid', resp.data.uuid);
+      localStorage.setItem('userData', JSON.stringify(resp.data));
       dispatch(addUser(resp.data));
     },
     onError: (err) => {

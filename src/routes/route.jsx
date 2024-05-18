@@ -81,7 +81,10 @@ export function Router() {
       ) : (
         <Routes>
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
-            <Route path="/" element={<GuestCustomerSupport />}>
+            <Route
+              path="/"
+              element={persistedUser.role === 'user' ? <Navigate to="/dashboard" /> : <GuestCustomerSupport />}
+            >
               <Route path="" element={<About />} />
               <Route path="faq" element={<Faq />} />
               <Route path="contact-us" element={<ContactUs />} />
