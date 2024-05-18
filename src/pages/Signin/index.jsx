@@ -57,11 +57,14 @@ export default function Signin() {
 
       if (res.status === 200) {
         localStorage.setItem('uuid', res.data.uuid);
+        localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
+        console.log('called', res.data);
         dispatch(addUser(res.data));
         navigate('/dashboard');
       }
     } catch (error) {
+      console.log({ error });
       toast.error(error.response.data.message.split(':')[1]);
     } finally {
       setIsLoadingSocial(false);

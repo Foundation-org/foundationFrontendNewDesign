@@ -85,10 +85,10 @@ export default function Feedback() {
 
   return (
     <div>
-      <div className="mx-[15px] my-2 mr-4 flex justify-between tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
-        <h1 className="text-[12px] font-semibold leading-[17px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
+      <div className="mx-[15px] my-2 mr-4 flex justify-end tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
+        {/* <h1 className="text-[12px] font-semibold leading-[17px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
           Feedback
-        </h1>
+        </h1> */}
         <div className="relative">
           <div className="relative h-[15.96px] w-[128px] tablet:h-[45px] tablet:w-[337px]">
             <input

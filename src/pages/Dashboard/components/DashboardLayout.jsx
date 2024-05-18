@@ -55,6 +55,7 @@ export default function DashboardLayout({ children }) {
   const { mutateAsync: getUserInfoById } = useMutation({
     mutationFn: userInfoById,
     onSuccess: (res) => {
+      console.log('called2', res.data);
       dispatch(addUser(res?.data));
       if (res?.data?.requiredAction) {
         setModalVisible(true);
@@ -75,8 +76,9 @@ export default function DashboardLayout({ children }) {
     // Handle userInfoData when successfully fetched
     if (userInfoSuccess && userInfoData?.status === 200) {
       if (userInfoData.data && persistedUserInfo.role === 'user') {
-        dispatch(addUser(userInfoData.data));
-        localStorage.setItem('userData', JSON.stringify(userInfoData.data));
+        console.log('called3', userInfoData.data);
+        // dispatch(addUser(userInfoData.data));
+        // localStorage.setItem('userData', JSON.stringify(userInfoData.data));
         // Set into local storage
         if (!localStorage.getItem('uuid')) {
           localStorage.setItem('uuid', userInfoData.data.uuid);
@@ -284,7 +286,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/feedback' &&
             location.pathname !== '/dashboard/quest' && (
               <>
-                {persistedUserInfo.role === 'user' ? (
+                {persistedUserInfo.role === 'user' && location.pathname !== '/' ? (
                   <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
                     <Button
                       variant="hollow-submit2"
