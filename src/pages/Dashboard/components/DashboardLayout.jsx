@@ -241,7 +241,7 @@ export default function DashboardLayout({ children }) {
                 <div className="flex flex-col gap-1">
                   <h4 className="heading">My Balance (Guest)</h4>
                   <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                    {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
+                    <p>{userInfoData.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </p>
                   {/* <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]" onClick={handleGuestLogout}>
                     Create Account
@@ -262,13 +262,13 @@ export default function DashboardLayout({ children }) {
                     className="h-[28px] w-[23px]"
                   />
                   <p className="absolute left-1/2 top-[40%] z-50 mb-1 -translate-x-1/2 -translate-y-1/2 transform text-[14px] font-medium leading-[14px] text-[#7A7016]">
-                    {persistedUserInfo?.badges?.length}
+                    {userInfoData?.badges?.length}
                   </p>
                 </div>
                 <div className="flex flex-col gap-1">
                   <h4 className="heading underline">My Balance</h4>
                   <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
-                    {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
+                    {userInfoData?.data.balance ? userInfoData?.data.balance.toFixed(2) : 0} FDX
                   </p>
                 </div>
               </div>
@@ -537,7 +537,7 @@ export default function DashboardLayout({ children }) {
                 <div className="flex flex-col gap-1">
                   <h4 className="heading border-b-2">My Balance (Guest)</h4>
                   <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-                    <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
+                    <p>{userInfoData.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </div>
                   <div className="h-[10px]" onClick={handleGuestLogout}>
                     <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Create Account</Anchor>
@@ -564,7 +564,7 @@ export default function DashboardLayout({ children }) {
                 <div className="flex flex-col gap-1">
                   <h4 className="heading border-b-2">My Balance</h4>
                   <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-                    <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
+                    <p>{userInfoData?.data.balance ? userInfoData?.data.balance.toFixed(2) : 0} FDX</p>
                   </div>
                 </div>
               </div>
@@ -576,7 +576,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/dashboard/help/about' &&
             location.pathname !== '/dashboard/help/faq' &&
-            location.pathname !== '/dashboard/help/contact-us' && <SidebarRight />}
+            location.pathname !== '/dashboard/help/contact-us' && <SidebarRight userData={userInfoData?.data} />}
         </div>
       </div>
       {/* Mobile Children */}
