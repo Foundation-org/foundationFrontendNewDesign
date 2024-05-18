@@ -1,9 +1,10 @@
-import { LoginSocialGoogle, LoginSocialFacebook, LoginSocialLinkedin } from 'reactjs-social-login';
+import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
 import { useSelector } from 'react-redux';
 import Button from './Button';
 import { GithubAuthProvider, TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
 import { authentication } from '../pages/Dashboard/pages/Profile/pages/firebase-config';
 import { InstagramLogin } from '@amraneze/react-instagram-login';
+import { LoginSocialLinkedin } from '../pages/Dashboard/pages/Profile/pages/ReactLinkedIn';
 
 const REDIRECT_URI = window.location.href;
 
@@ -179,6 +180,37 @@ const SocialLogins = ({
           Continue with LinkedIn
         </Button>
       </LoginSocialLinkedin> */}
+      <LoginSocialLinkedin
+        // isOnlyGetToken
+        client_id={import.meta.env.VITE_LINKEDIN_KEY}
+        client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
+        onResolve={({ provider, data }) => {
+          console.log(provider);
+          setProvider(provider);
+          setProfile(data);
+          isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
+        }}
+        redirect_uri={REDIRECT_URI}
+        // scope="email,openid,profile,w_member_social"
+        onReject={(err) => {
+          toast.error('An error occured');
+        }}
+      >
+        <Button
+          size="login-btn"
+          color="gray"
+          onClick={() => {
+            setIsLoadingSocial(true);
+          }}
+        >
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
+            alt="LinkedIn"
+            className="mr-2 size-[22px] md:size-8 lg:mr-3"
+          />
+          Continue with LinkedIn
+        </Button>
+      </LoginSocialLinkedin>
       <div className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
         <Button
           size="login-btn"
