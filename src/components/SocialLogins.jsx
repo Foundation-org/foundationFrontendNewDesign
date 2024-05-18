@@ -147,7 +147,7 @@ const SocialLogins = ({
           <span className="inline-block align-middle">Continue with Facebook</span>
         </button>
       </LoginSocialFacebook>
-      <LoginSocialLinkedin
+      {/* <LoginSocialLinkedin
         // isOnlyGetToken
         client_id={import.meta.env.VITE_LINKEDIN_KEY}
         client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
@@ -178,7 +178,7 @@ const SocialLogins = ({
           />
           Continue with LinkedIn
         </Button>
-      </LoginSocialLinkedin>
+      </LoginSocialLinkedin> */}
       <div className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
         <Button
           size="login-btn"
