@@ -527,7 +527,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
               }
             }}
           >
-            Clear Filter
+            Clear Filters
           </Button>
 
           <Button variant={'submit'} onClick={handleSubmit}>
