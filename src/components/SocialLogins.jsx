@@ -162,6 +162,7 @@ const SocialLogins = ({
         onReject={(err) => {
           console.log(err);
         }}
+        scope={'email'}
       >
         <Button
           size="login-btn"
