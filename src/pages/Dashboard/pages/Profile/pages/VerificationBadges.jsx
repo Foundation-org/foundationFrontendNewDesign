@@ -372,9 +372,9 @@ const VerificationBadges = () => {
                 }}
               >
                 <Button
-                  // color={checkSocial('linkedin') ? 'red' : 'blue'}
-                  disabled={true}
-                  color="gray"
+                  color={checkSocial('linkedin') ? 'red' : 'blue'}
+                  // disabled={true}
+                  // color="gray"
                   onClick={() => {
                     checkSocial('linkedin') && handleRemoveBadge('linkedin');
                   }}

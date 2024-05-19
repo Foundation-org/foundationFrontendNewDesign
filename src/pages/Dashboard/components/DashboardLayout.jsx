@@ -77,7 +77,7 @@ export default function DashboardLayout({ children }) {
     if (userInfoSuccess && userInfoData?.status === 200) {
       if (userInfoData.data && persistedUserInfo.role === 'user') {
         console.log('called3', userInfoData.data);
-        // dispatch(addUser(userInfoData.data));
+        dispatch(addUser(userInfoData.data));
         // localStorage.setItem('userData', JSON.stringify(userInfoData.data));
         // Set into local storage
         if (!localStorage.getItem('uuid')) {

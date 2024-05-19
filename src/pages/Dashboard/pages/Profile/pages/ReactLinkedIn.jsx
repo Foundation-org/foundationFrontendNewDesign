@@ -45,15 +45,17 @@ export const LoginSocialLinkedin = ({
   onReject,
   onResolve,
 }) => {
+  const popupWindowURL = new URL(window.location.href);
+  const code = popupWindowURL.searchParams.get('code');
+  const statePopup = popupWindowURL.searchParams.get('state');
+
   useEffect(() => {
-    const popupWindowURL = new URL(window.location.href);
-    const code = popupWindowURL.searchParams.get('code');
-    const state = popupWindowURL.searchParams.get('state');
-    if (state?.includes('_linkedin') && code) {
+
+    if (statePopup?.includes('_linkedin') && code) {
       localStorage.setItem('linkedin', code);
       window.close();
     }
-  }, []);
+  }, [code, statePopup]);
 
   const getProfile = useCallback(
     (data) => {
