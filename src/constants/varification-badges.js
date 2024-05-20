@@ -137,6 +137,20 @@ export const web3 = [
   },
 ];
 
+export const legacy = [
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+    title: 'Password',
+    ButtonColor: 'blue',
+    ButtonText: 'Add Badge',
+    NoOfButton: 1,
+    type: 'password',
+    disabled: false,
+    accountName: '',
+    badgeType: '',
+  },
+];
+
 export const personal = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/firstname.png`,

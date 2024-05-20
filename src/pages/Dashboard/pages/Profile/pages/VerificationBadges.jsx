@@ -18,6 +18,7 @@ import { InstagramLogin } from '@amraneze/react-instagram-login';
 import Contact from './verification-badges/Contact';
 import { useErrorBoundary } from 'react-error-boundary';
 import { useQueryClient } from '@tanstack/react-query';
+import Legacy from './verification-badges/Legacy';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -723,7 +724,8 @@ const VerificationBadges = () => {
         </div> */}
         </div>
 
-        <Web3 fetchUser={persistedUserInfo} handleRemoveBadgePopup={handleRemoveBadgePopup} type={'web3'} />
+        <Web3 fetchUser={persistedUserInfo} />
+        {/* <Legacy fetchUser={persistedUserInfo} handleRemoveBadgePopup={handleRemoveBadgePopup} type={'legacy'} /> */}
         <Personal fetchUser={persistedUserInfo} handleRemoveBadgePopup={handleRemoveBadgePopup} />
       </div>
     </div>
