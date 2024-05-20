@@ -9,7 +9,7 @@ const RequireAuth = ({ allowedRoles }) => {
 
   const isRoleAllowed = allowedRoles.includes(persistedUser?.role);
 
-  return isRoleAllowed ? <Outlet /> : <Navigate to="/" />;
+  return isRoleAllowed ? <Outlet /> : <Navigate to="/help/about" />;
 };
 
 export default RequireAuth;

@@ -82,10 +82,10 @@ export function Router() {
         <Routes>
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
             <Route
-              path="/"
+              path="/help"
               element={persistedUser.role === 'user' ? <Navigate to="/dashboard" /> : <GuestCustomerSupport />}
             >
-              <Route path="" element={<About />} />
+              <Route path="about" element={<About />} />
               <Route path="faq" element={<Faq />} />
               <Route path="contact-us" element={<ContactUs />} />
             </Route>
@@ -244,7 +244,10 @@ export function Router() {
               <Route path="credentials" element={<CredentialLogin />} />
             </Route>
             <Route path="/verifycode" element={<VerifyCode />} />
-            <Route path="*" element={persistedUser.role === 'user' && <Navigate to="/dashboard" />} />
+            <Route
+              path="*"
+              element={persistedUser.role === 'user' ? <Navigate to="/dashboard" /> : <Navigate to={'/help/about'} />}
+            />
           </Route>
         </Routes>
       )}

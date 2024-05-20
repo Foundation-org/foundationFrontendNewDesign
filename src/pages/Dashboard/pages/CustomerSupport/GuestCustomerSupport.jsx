@@ -17,9 +17,9 @@ const GuestCustomerSupport = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const list = [
-    { id: 1, title: 'About', path: '/' },
-    { id: 2, title: "FAQ's", path: '/faq' },
-    { id: 3, title: 'Contact Us', path: '/contact-us' },
+    { id: 1, title: 'About', path: '/help/about' },
+    { id: 2, title: "FAQ's", path: '/help/faq' },
+    { id: 3, title: 'Contact Us', path: '/help/contact-us' },
   ];
 
   const { mutateAsync: createGuest } = useMutation({
