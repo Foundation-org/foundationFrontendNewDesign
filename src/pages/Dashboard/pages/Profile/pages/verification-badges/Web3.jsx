@@ -75,7 +75,6 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
           body: JSON.stringify(attResp),
         });
         const verificationJSON = await verificationResp.json();
-        console.log('🚀 ~ handleRegistration ~ verificationResp:', verificationResp);
 
         if (verificationJSON && verificationJSON.verified) {
           value = attResp;
@@ -107,7 +106,6 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
         });
         setIsButtonClicked(false);
         // alert("testing...   ")
-        console.log('🚀 ~ handlePasskey ~ value:', value);
       }
       if (addBadge?.status === 200) {
         toast.success('Badge Added Successfully!');

@@ -59,7 +59,6 @@ export default function Signin() {
         localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
-        console.log('called', res.data);
         dispatch(addUser(res.data));
         navigate('/dashboard');
       }

@@ -34,7 +34,6 @@ const QuestionCard = ({
   lastInteractedAt,
   questStartData,
 }) => {
-  console.log('🚀 ~ questStartData:', questStartData);
   const dispatch = useDispatch();
   const quests = useSelector(getQuests);
   const persistedTheme = useSelector((state) => state.utils.theme);

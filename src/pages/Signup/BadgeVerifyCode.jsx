@@ -87,7 +87,6 @@ const BadgeVerifyCode = () => {
       }
     } catch (error) {
       console.log('Error during API request:', error.message);
-      console.log('🚀 ~ useEffect ~ error:', error);
       toast.error(error.response.data.message.split(':')[1]);
     }
   };

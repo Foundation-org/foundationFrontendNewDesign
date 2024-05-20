@@ -55,7 +55,6 @@ export default function DashboardLayout({ children }) {
   const { mutateAsync: getUserInfoById } = useMutation({
     mutationFn: userInfoById,
     onSuccess: (res) => {
-      console.log('called2', res.data);
       dispatch(addUser(res?.data));
       if (res?.data?.requiredAction) {
         setModalVisible(true);
@@ -76,7 +75,6 @@ export default function DashboardLayout({ children }) {
     // Handle userInfoData when successfully fetched
     if (userInfoSuccess && userInfoData?.status === 200) {
       if (userInfoData.data && persistedUserInfo.role === 'user') {
-        console.log('called3', userInfoData.data);
         dispatch(addUser(userInfoData.data));
         // localStorage.setItem('userData', JSON.stringify(userInfoData.data));
         // Set into local storage
@@ -239,7 +237,7 @@ export default function DashboardLayout({ children }) {
                   </p>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <h4 className="heading">My Balance (Guest)</h4>
+                  <h4 className="heading w-fit border-b">My Balance (Guest)</h4>
                   <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
                     <p>{userInfoData && userInfoData?.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </p>
@@ -265,8 +263,8 @@ export default function DashboardLayout({ children }) {
                     {userInfoData && userInfoData?.data?.badges?.length}
                   </p>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <h4 className="heading underline">My Balance</h4>
+                <div className="flex h-7 flex-col justify-between">
+                  <h4 className="heading w-fit border-b">My Balance</h4>
                   <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
                     {userInfoData && userInfoData?.data.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
                   </p>
@@ -327,8 +325,8 @@ export default function DashboardLayout({ children }) {
                 alt="badge"
                 className="size-[47px]"
               />
-              <div className="flex flex-col gap-1">
-                <h4 className="heading border-b-2">Treasury</h4>
+              <div className="flex h-[47px] flex-col justify-between">
+                <h4 className="heading w-fit border-b-2">Treasury</h4>
                 <p className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
                   <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
                 </p>
@@ -539,15 +537,17 @@ export default function DashboardLayout({ children }) {
                     G
                   </p>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <h4 className="heading border-b-2">My Balance (Guest)</h4>
+                {/* <div className="flex flex-col"> */}
+                <div className="flex h-[47px] flex-col justify-between">
+                  <h4 className="heading w-fit border-b-2">My Balance (Guest)</h4>
                   <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
                     <p>{userInfoData && userInfoData.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </div>
-                  <div className="h-[10px]" onClick={handleGuestLogout}>
+                </div>{' '}
+                {/* <div className="h-[10px]" onClick={handleGuestLogout}>
                     <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Create Account</Anchor>
-                  </div>
-                </div>
+                  </div> */}
+                {/* </div> */}
               </div>
             ) : (
               <div
@@ -566,8 +566,8 @@ export default function DashboardLayout({ children }) {
                     {userInfoData && userInfoData?.data?.badges?.length}
                   </p>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <h4 className="heading border-b-2">My Balance</h4>
+                <div className="flex h-[47px] flex-col justify-between">
+                  <h4 className="heading w-fit border-b-2">My Balance</h4>
                   <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
                     <p>{userInfoData && userInfoData?.data.balance ? userInfoData?.data.balance.toFixed(2) : 0} FDX</p>
                   </div>

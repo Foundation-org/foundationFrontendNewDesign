@@ -83,7 +83,7 @@ export default function AddMedia({ handleTab }) {
     if (getMediaStates.isMedia.type === 'EmbedVideo') {
       if (youtubeBaseURLs.some((baseURL) => value?.includes(baseURL))) {
         const videoId = extractYouTubeVideoId(value);
-
+        console.log('videoId', videoId);
         dispatch(createQuestAction.checkIsUrlAlreayExists({ id: videoId, url: getMediaStates.url }));
       } else {
         toast.warning('YouTube links are supported.');
