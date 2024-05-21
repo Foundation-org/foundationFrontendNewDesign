@@ -14,7 +14,7 @@ function Slider({ isFetching }) {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const { pathname } = location;
   if (pathname === '/dashboard/bookmark') {
@@ -110,8 +110,9 @@ function Slider({ isFetching }) {
     },
   });
 
-  const handleButtonSelection = (type, data, id) => {
+  const handleButtonSelection = async (type, data, id) => {
     // Save the id of the selected button in localStorage for scrolling it into view
+    await queryClient.cancelQueries();
     localStorage.setItem('selectedButtonId', id);
     const selectedButton = document.getElementById(id);
     if (selectedButton) {
