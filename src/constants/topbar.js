@@ -46,6 +46,14 @@
 export const TopbarItems = [
   {
     id: 1,
+    title: 'Lists',
+    path: '/dashboard/lists',
+    activePaths: ['/dashboard/lists'],
+    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/list.svg`,
+    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/list_filled.svg`,
+  },
+  {
+    id: 2,
     title: 'Profile',
     path: '/dashboard/profile',
     signupPath: '/guest-signup',
@@ -71,7 +79,7 @@ export const TopbarItems = [
   //   icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/chat.svg`,
   // },
   {
-    id: 2,
+    id: 3,
     title: 'Faqs',
     path: '/dashboard/help/about',
     activePaths: ['/dashboard/help/about', '/dashboard/help/faq', '/dashboard/help/contact-us'],

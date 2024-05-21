@@ -351,7 +351,8 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/help/about' &&
             location.pathname !== '/help/faq' &&
             location.pathname !== '/help/contact-us' &&
-            !location.pathname.startsWith('/p/') && <SidebarLeft />}
+            !location.pathname.startsWith('/p/') &&
+            location.pathname !== '/dashboard/lists' && <SidebarLeft />}
 
           {location.pathname !== '/dashboard/treasury' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
@@ -364,7 +365,8 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/hidden-posts' &&
             location.pathname !== '/dashboard/profile/shared-links' &&
             location.pathname !== '/dashboard/profile/user-settings' &&
-            location.pathname !== '/dashboard/profile/feedback' && <SideNavbar />}
+            location.pathname !== '/dashboard/profile/feedback' &&
+            location.pathname !== '/dashboard/lists' && <SideNavbar />}
 
           {questUtilsState.isShowPlayer &&
             location.pathname !== '/dashboard/treasury' &&

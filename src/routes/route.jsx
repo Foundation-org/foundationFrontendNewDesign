@@ -39,6 +39,7 @@ import Feedback from '../pages/Dashboard/pages/Profile/pages/feedback';
 import CredentialLogin from '../pages/Signin/components/CredentialLogin';
 import CredentialRegister from '../pages/Signup/components/CredentialRegister';
 import GuestCustomerSupport from '../pages/Dashboard/pages/CustomerSupport/GuestCustomerSupport';
+import Lists from '../pages/Dashboard/pages/Lists';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -106,6 +107,7 @@ export function Router() {
                 <Route path="faq" element={<Faq />} />
                 <Route path="contact-us" element={<ContactUs />} />
               </Route>
+              <Route path="lists" element={<Lists />} />
               <Route path="quest" element={<Quest />} />
               <Route path="treasury/" element={<TreasuryLayout />}>
                 <Route path="" element={<RedemptionCenter />} />
