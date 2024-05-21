@@ -14,6 +14,7 @@ import FbDialogue from '../question-card/Shareables/FbDialogue';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
+import AddToListPopup from '../dialogue-boxes/AddToListPopup';
 const data = [
   {
     id: 1,
@@ -70,6 +71,7 @@ const QuestBottombar = ({
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [addToList, setAddToList] = useState(false);
   const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
 
   const handleCopyOpen = () => {
@@ -149,8 +151,13 @@ const QuestBottombar = ({
     setCheckboxStates(data.map(() => false));
     setModalVisible(true);
   };
+
   const showHidePostClose = () => {
     setModalVisible(false);
+  };
+
+  const addToListPopupClose = () => {
+    setAddToList(false);
   };
 
   const moderationRatingCount = questStartData?.moderationRatingCount;
@@ -172,6 +179,7 @@ const QuestBottombar = ({
         modalVisible={modalVisible}
         questStartData={questStartData}
       />
+      <AddToListPopup handleClose={addToListPopupClose} modalVisible={addToList} questStartData={questStartData} />
       {/* {postProperties === 'SharedLinks' && (
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
@@ -333,13 +341,13 @@ const QuestBottombar = ({
       </div>
 
       {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
-        <div className="flex items-center justify-center gap-[8px] tablet:gap-[30px]">
+        <div className="flex items-center justify-center gap-[8px] tablet:gap-[25px]">
           {postProperties !== 'HiddenPosts' &&
             postProperties !== 'SharedLinks' &&
             questStartData.startStatus === '' &&
             createdBy === localStorage.getItem('uuid') && (
               <img
-                src="/assets/hiddenposts/unhide/deletePost.png"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/deletePost.png`}
                 alt="eye-latest"
                 className="h-3 w-[9px] cursor-pointer tablet:h-[22px] tablet:w-[17px]"
                 onClick={() => setDelModalVisible(true)}
@@ -368,7 +376,7 @@ const QuestBottombar = ({
           )}
           {postProperties === 'HiddenPosts' ? null : postProperties === 'SharedLinks' ? null : (
             <img
-              src="/assets/hiddenposts/unhide/icon1.png"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/icon1.png`}
               alt="eye-latest"
               className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
               onClick={showHidePostOpen}
@@ -410,6 +418,13 @@ const QuestBottombar = ({
                 )}
               </div>
             )}
+
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/addToList.svg`}
+            alt="addToList"
+            className="h-[9.5px] w-3 cursor-pointer tablet:h-[20px] tablet:w-[25.5px]"
+            onClick={() => setAddToList(true)}
+          />
         </div>
       )}
 
