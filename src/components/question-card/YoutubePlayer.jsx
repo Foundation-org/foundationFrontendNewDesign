@@ -1,0 +1,79 @@
+import React, { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
+
+let loadYT;
+
+const YouTubePlayer = ({ YTid, width = 640, height = 390, playing, questId, handleVideoEnded }) => {
+  const dispatch = useDispatch();
+  const youtubePlayerAnchor = useRef(null);
+  const playerRef = useRef(null);
+  const playingRef = useRef(playing);
+  const questIdRef = useRef(questId);
+
+  // Update the ref value whenever questId changes
+  useEffect(() => {
+    questIdRef.current = questId;
+  }, [questId]);
+
+  useEffect(() => {
+    playingRef.current = playing;
+  }, [playing]);
+
+  useEffect(() => {
+    if (!loadYT) {
+      loadYT = new Promise((resolve) => {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        window.onYouTubeIframeAPIReady = () => resolve(window.YT);
+      });
+    }
+
+    loadYT.then((YT) => {
+      playerRef.current = new YT.Player(youtubePlayerAnchor.current, {
+        height,
+        width,
+        videoId: YTid,
+        playerVars: {
+          autoplay: playingRef.current ? 1 : 0,
+          mute: 1,
+        },
+        events: {
+          onStateChange: (event) => {
+            if (event.data == YT.PlayerState.PLAYING) {
+              dispatch(setPlayingPlayerId(questIdRef.current));
+              dispatch(toggleMedia(true));
+              dispatch(setIsShowPlayer(true));
+            }
+            if (event.data == YT.PlayerState.PAUSED) {
+              dispatch(toggleMedia(false));
+            }
+            if (event.data == YT.PlayerState.ENDED) {
+              handleVideoEnded();
+            }
+          },
+          onError: (e) => {
+            if (onError) onError(e);
+          },
+        },
+      });
+    });
+  }, [YTid, width, height, dispatch]);
+
+  // Effect to start/stop video based on 'playing' prop
+  useEffect(() => {
+    if (playerRef.current) {
+      if (playing) {
+        playerRef.current.playVideo();
+      } else {
+        playerRef.current.pauseVideo();
+      }
+    }
+  }, [playing]);
+
+  return <div className="youtube-iframe" ref={youtubePlayerAnchor}></div>;
+};
+
+export default YouTubePlayer;

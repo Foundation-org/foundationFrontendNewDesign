@@ -100,11 +100,11 @@ body {
   display: none;
 }
 
-iframe {
-  width: 302px !important;
-  /* height: 77px !important; */
-  border-radius: 4px;
-}
+/* iframe {
+  width: 302px !important; */
+/* height: 77px !important; */
+/* border-radius: 4px; */
+/* } */
 
 #green-checkbox input[type='checkbox'] {
   appearance: none;
@@ -785,10 +785,12 @@ input[type='number'] {
   width: 100% !important;
   height: 80px !important;
 }
+
 .oembedIframeYoutube {
   width: 100% !important;
   height: 370px !important;
 }
+
 .react-player {
   padding-top: 0px !important;
 }
@@ -1030,4 +1032,26 @@ input[type='number'] {
 
 .carousel .control-next.control-arrow:before {
   border: 0px !important;
+}
+
+.youtube-iframe {
+  height: 180px !important;
+  width: 100% !important;
+}
+
+.soundcloud-iframe {
+  height: 180px !important;
+  width: 100% !important;
+}
+
+@media only screen and (min-width: 744px) {
+  .youtube-iframe {
+    height: 371px !important;
+    width: 100% !important;
+  }
+
+  .soundcloud-iframe {
+    height: fit-content !important;
+    width: 100% !important;
+  }
 }
