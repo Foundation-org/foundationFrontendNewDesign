@@ -80,7 +80,7 @@ const SocialLogins = ({
   };
 
   return (
-    <div className="mb-2 flex flex-col gap-2 rounded-[6.043px] lg:mb-[1.56rem] 2xl:rounded-[11.703px] laptop:justify-between laptop:gap-[1.56rem]">
+    <div className="mb-2 flex flex-col gap-2 rounded-[6.043px] 2xl:rounded-[11.703px] laptop:mb-[1.56rem] laptop:justify-between laptop:gap-[1.56rem]">
       <LoginSocialGoogle
         // isOnlyGetToken
         client_id={import.meta.env.VITE_GG_APP_ID}
