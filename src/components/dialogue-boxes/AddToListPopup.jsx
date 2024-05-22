@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
 import { Button } from '../ui/Button';
 import { toast } from 'sonner';
@@ -10,39 +10,40 @@ import { useDispatch } from 'react-redux';
 import * as questsActions from '../../features/quest/utilsSlice';
 import { useNavigate } from 'react-router-dom';
 import { GrClose } from 'react-icons/gr';
+import { createList, fetchLists } from '../../services/api/listsApi';
 
 export default function AddToListPopup({ handleClose, modalVisible, questStartData }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [listName, setListName] = useState('');
   const [search, setSearch] = useState('');
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
 
-  //   const { mutateAsync: hidePost } = useMutation({
-  //     mutationFn: hideQuest,
-  //     onSuccess: (resp) => {
-  //       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
-  //       toast.success('Post hidden successfully');
-  //       queryClient.invalidateQueries(['userInfo']);
-  //       queryClient.setQueriesData(['posts'], (oldData) => {
-  //         return {
-  //           ...oldData,
-  //           pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-  //         };
-  //       });
+  const { mutateAsync: createNewList } = useMutation({
+    mutationFn: createList,
+    onSuccess: (resp) => {
+      // dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
+      toast.success('New list created.');
+      queryClient.invalidateQueries(['lists']);
+      // queryClient.setQueriesData(['posts'], (oldData) => {
+      //   return {
+      //     ...oldData,
+      //     pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
+      //   };
+      // });
 
-  //       setIsLoading(false);
-  //       handleClose();
-  //     },
-  //     onError: (err) => {
-  //       setIsLoading(false);
-  //       console.log(err);
-  //     },
-  //   });
+      // setIsLoading(false);
+      // handleClose();
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
 
   //   const { mutateAsync: updateHiddenPost } = useMutation({
   //     mutationFn: updateHiddenQuest,
@@ -110,6 +111,21 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   //     }
   //   };
 
+  const {
+    data: listData,
+    isError,
+    isPending,
+  } = useQuery({
+    queryFn: fetchLists,
+    queryKey: ['lists'],
+  });
+
+  console.log('listData', listData);
+
+  if (isError) {
+    console.log('some eror occur');
+  }
+
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/addToListWhite.svg`}
@@ -129,13 +145,22 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
           <input
             type="text"
             className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-[23px] w-full min-w-[280px] appearance-none rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-transparent py-[5px] pl-[6px] pr-8 text-[10px] font-normal leading-[10px] text-[#707175] focus:outline-none focus:ring-0 tablet:h-full tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-            //   value={search}
+            value={listName}
             placeholder="List here"
-            //   onChange={handleSearch}
+            onChange={(e) => setListName(e.target.value)}
           />
         </div>
         <div className="mt-2 flex justify-end tablet:mt-[25px]">
-          <Button variant={'cancel'} className={'bg-[#7C7C7C]'}>
+          <Button
+            variant={'cancel'}
+            className={'bg-[#7C7C7C]'}
+            onClick={() =>
+              createNewList({
+                userUuid: persistedUserInfo.uuid,
+                category: listName,
+              })
+            }
+          >
             Create
           </Button>
         </div>
