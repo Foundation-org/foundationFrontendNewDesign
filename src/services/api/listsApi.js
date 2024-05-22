@@ -18,14 +18,19 @@ export const createList = async (data) => {
   }
 };
 
-export const addPostinAList = async () => {
+export const addPostinAList = async (data) => {
   try {
-    const resp = await api.get(`user/userList/addPostInCategoryInUserList`, {
-      userUuid,
-      categoryId,
-      data: { post: 'Data' },
-    });
+    const resp = await api.post(`user/userList/addPostInCategoryInUserList`, data);
     return resp;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const findPostsByCategoryId = async (data) => {
+  try {
+    const resp = await api.get(`/user/userList/findCategoryById/${data.userUuid}/${data.categoryId}`);
+    return resp.data.userList;
   } catch (err) {
     return err;
   }

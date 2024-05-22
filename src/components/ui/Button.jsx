@@ -78,6 +78,12 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'topics'
         ? 'h-6 whitespace-nowrap rounded-[0.28688rem] border px-[4.9px] py-[6.5px] text-[0.57944rem] font-semibold focus:outline-none focus:ring-0 tablet:h-12 tablet:rounded-[0.9375rem] tablet:border-[1.86px] tablet:px-[12px] tablet:py-[13px] tablet:text-[20px] tablet:leading-[20px]'
         : '',
+      variant === 'submit-fit'
+        ? 'addoption-boxShadow h-[1.375rem] w-fit rounded-[0.28688rem] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
+        : '',
+      variant === 'cancel-fit'
+        ? 'addoption-boxShadow h-[1.375rem] max-w-[10.8125rem] rounded-[0.28688rem] bg-[#707175] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem]'
+        : '',
       className,
     )}
     {...props}
@@ -115,5 +121,6 @@ Button.propTypes = {
     'topics',
     'share-link',
     'addEmbeded',
+    'submit-fit',
   ]),
 };

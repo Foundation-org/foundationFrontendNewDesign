@@ -40,6 +40,7 @@ import CredentialLogin from '../pages/Signin/components/CredentialLogin';
 import CredentialRegister from '../pages/Signup/components/CredentialRegister';
 import GuestCustomerSupport from '../pages/Dashboard/pages/CustomerSupport/GuestCustomerSupport';
 import Lists from '../pages/Dashboard/pages/Lists';
+import PostsByList from '../pages/Dashboard/pages/Lists/PostsByList';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -108,6 +109,7 @@ export function Router() {
                 <Route path="contact-us" element={<ContactUs />} />
               </Route>
               <Route path="lists" element={<Lists />} />
+              <Route path="postsbylist/:categoryId" element={<PostsByList />} />
               <Route path="quest" element={<Quest />} />
               <Route path="treasury/" element={<TreasuryLayout />}>
                 <Route path="" element={<RedemptionCenter />} />

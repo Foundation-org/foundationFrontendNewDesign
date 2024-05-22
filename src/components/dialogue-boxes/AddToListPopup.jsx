@@ -1,24 +1,19 @@
+import { toast } from 'sonner';
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { hideQuest, updateHiddenQuest } from '../../services/api/questsApi';
 import { Button } from '../ui/Button';
-import { toast } from 'sonner';
-import PopUp from '../ui/PopUp';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
-import * as questsActions from '../../features/quest/utilsSlice';
-import { useNavigate } from 'react-router-dom';
 import { GrClose } from 'react-icons/gr';
-import { createList, fetchLists } from '../../services/api/listsApi';
+import { addPostinAList, createList, fetchLists } from '../../services/api/listsApi';
+import PopUp from '../ui/PopUp';
 
 export default function AddToListPopup({ handleClose, modalVisible, questStartData }) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [listName, setListName] = useState('');
   const [search, setSearch] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -27,89 +22,26 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   const { mutateAsync: createNewList } = useMutation({
     mutationFn: createList,
     onSuccess: (resp) => {
-      // dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
       toast.success('New list created.');
       queryClient.invalidateQueries(['lists']);
-      // queryClient.setQueriesData(['posts'], (oldData) => {
-      //   return {
-      //     ...oldData,
-      //     pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-      //   };
-      // });
-
-      // setIsLoading(false);
-      // handleClose();
+      setListName('');
     },
     onError: (err) => {
       console.log(err);
     },
   });
 
-  //   const { mutateAsync: updateHiddenPost } = useMutation({
-  //     mutationFn: updateHiddenQuest,
-  //     onSuccess: (resp) => {
-  //       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
-  //       toast.success('Post hidden successfully');
-  //       queryClient.invalidateQueries(['userInfo']);
-
-  //       queryClient.setQueriesData(['posts'], (oldData) => {
-  //         // if (oldData.pages[0].length <= 1) {
-  //         //   queryClient.invalidateQueries(['posts']);
-  //         // } else {
-  //         return {
-  //           ...oldData,
-  //           pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
-  //         };
-  //       });
-
-  //       setIsLoading(false);
-  //       handleClose();
-  //     },
-  //     onError: (err) => {
-  //       setIsLoading(false);
-  //       console.log(err);
-  //     },
-  //   });
-
-  //   const handleHiddenPostApiCall = () => {
-  //     setIsLoading(true);
-  //     if (persistedUserInfo?.role === 'guest') {
-  //       toast.warning(
-  //         <p>
-  //           Please{' '}
-  //           <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-  //             Create an Account
-  //           </span>{' '}
-  //           to unlock this feature
-  //         </p>,
-  //       );
-  //       setIsLoading(false);
-  //       return;
-  //     } else {
-  //       if (selectedTitle === '') {
-  //         toast.warning('You must select a reason before submitting.');
-  //         setIsLoading(false);
-  //         return;
-  //       } else {
-  //         if (questStartData?.userQuestSetting) {
-  //           updateHiddenPost({
-  //             uuid: persistedUserInfo?.uuid,
-  //             questForeignKey: questStartData._id,
-  //             hidden: true,
-  //             hiddenMessage: selectedTitle,
-  //           });
-  //         } else {
-  //           hidePost({
-  //             uuid: persistedUserInfo?.uuid,
-  //             questForeignKey: questStartData._id,
-  //             hidden: true,
-  //             hiddenMessage: selectedTitle,
-  //             Question: questStartData.Question,
-  //           });
-  //         }
-  //       }
-  //     }
-  //   };
+  const { mutateAsync: addPostInList, isPending: isLoading } = useMutation({
+    mutationFn: addPostinAList,
+    onSuccess: (resp) => {
+      toast.success('Post added in a list.');
+      queryClient.invalidateQueries(['lists']);
+      setSelectedOption('');
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
 
   const {
     data: listData,
@@ -120,7 +52,13 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     queryKey: ['lists'],
   });
 
-  console.log('listData', listData);
+  const handleCheckboxChange = (option) => {
+    if (selectedOption === option) {
+      setSelectedOption('');
+    } else {
+      setSelectedOption(option);
+    }
+  };
 
   if (isError) {
     console.log('some eror occur');
@@ -201,58 +139,46 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
             )}
           </div>
           <div className="mt-3 space-y-3 tablet:mt-[15px] tablet:space-y-[15px]">
-            <div className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5">
-              <div className="w-fit space-y-2 tablet:space-y-5">
-                <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
-                  Technology
-                </h4>
-                <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
-                  03 Post
-                </h4>
+            {listData?.map((item) => (
+              <div
+                key={item._id}
+                className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
+              >
+                <div className="w-fit space-y-2 tablet:space-y-5">
+                  <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
+                    {item.category}
+                  </h4>
+                  <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
+                    {item.post.length} Post{item.post.length > 1 ? 's' : ''}
+                  </h4>
+                </div>
+                <div id="custom-rating-checkbox" className="flex h-full items-center">
+                  <input
+                    id="small-checkbox"
+                    type="checkbox"
+                    className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                    checked={selectedOption === item._id}
+                    onChange={() => handleCheckboxChange(item._id)}
+                    readOnly
+                  />
+                </div>
               </div>
-              <div id="custom-rating-checkbox" className="flex h-full items-center">
-                <input
-                  id="small-checkbox"
-                  type="checkbox"
-                  className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                  //   checked={selectedOptions.includes('everyone')}
-                  //   onChange={() => handleCheckboxChange('everyone')}
-                  readOnly
-                />
-              </div>
-            </div>
-            <div className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5">
-              <div className="w-fit space-y-2 tablet:space-y-5">
-                <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
-                  Technology
-                </h4>
-                <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
-                  03 Post
-                </h4>
-              </div>
-              <div id="custom-rating-checkbox" className="flex h-full items-center">
-                <input
-                  id="small-checkbox"
-                  type="checkbox"
-                  className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                  //   checked={selectedOptions.includes('everyone')}
-                  //   onChange={() => handleCheckboxChange('everyone')}
-                  readOnly
-                />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
         <div className="mt-[10px] flex justify-end gap-4 tablet:mt-[25px]">
           <Button
             variant={'submit'}
             className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
-            // onClick={() => {
-            //   handleHiddenPostApiCall();
-            // }}
+            onClick={() => {
+              addPostInList({
+                userUuid: persistedUserInfo.uuid,
+                categoryId: selectedOption,
+                questForeginKey: questStartData._id,
+              });
+            }}
           >
-            Add to List
-            {/* {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'} */}
+            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Add to List'}
           </Button>
         </div>
       </div>
