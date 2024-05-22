@@ -4,12 +4,26 @@ import { Reorder } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import Copy from '../../../../assets/Copy';
 import BasicModal from '../../../../components/BasicModal';
+import CopyDialogue from '../../../../components/question-card/Shareables/CopyDialogue';
 
 const initialItems = ['🍅 Tomato', '🥒 Cucumber', '🧀 Cheese', '🥬 Lettuce'];
 
 const Lists = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [items, setItems] = useState(initialItems);
+  const [copyModal, setCopyModal] = useState(false);
+
+  const customModalStyle = {
+    backgroundColor: '#FCFCFD',
+    boxShadow: 'none',
+    border: '0px',
+    outline: 'none',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  };
+
+  const handleCopyClose = () => setCopyModal(false);
 
   return (
     <div className="no-scrollbar flex h-full w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:my-[0.94rem] tablet:gap-5 tablet:px-6 tablet:pb-5">
@@ -76,23 +90,29 @@ const Lists = () => {
           <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.125rem] tablet:leading-[23px]">
             06 Posts
           </h4>
-          <div className="flex  items-center gap-[0.17rem]  tablet:gap-[6px]">
+          <div className="flex items-center gap-[0.17rem] tablet:gap-[1.62rem]">
             <div
-              // onClick={() => {
-              //   handleCopyOpen();
-              // }}
+              onClick={() => {
+                setCopyModal(true);
+              }}
               className="cursor-pointer"
             >
               {persistedTheme === 'dark' ? <Copy /> : <Copy />}
             </div>
             <BasicModal
-              // open={copyModal}
-              // handleClose={handleCopyClose}
-              // customStyle={customModalStyle}
+              open={copyModal}
+              handleClose={handleCopyClose}
+              customStyle={customModalStyle}
               customClasses="rounded-[10px] tablet:rounded-[26px]"
             >
-              {/* <CopyDialogue handleClose={handleCopyClose} questStartData={questStartData} /> */}
+              <CopyDialogue handleClose={handleCopyClose} />
             </BasicModal>
+            <div className="flex items-center gap-[0.56rem]">
+              <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copyblue.svg`} alt="copy icon" />{' '}
+              <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#389CE3] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
+                Copy Link
+              </h4>
+            </div>
           </div>
         </div>
       </div>

@@ -11,11 +11,6 @@ import * as questsActions from '../../features/quest/utilsSlice';
 import { useNavigate } from 'react-router-dom';
 import { GrClose } from 'react-icons/gr';
 
-const customStyle = {
-  width: '100%',
-  minWidth: 'auto',
-};
-
 export default function AddToListPopup({ handleClose, modalVisible, questStartData }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -122,11 +117,35 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
       open={modalVisible}
       handleClose={handleClose}
       isBackground={false}
-      customStyle={customStyle}
     >
       <div className="px-[27px] py-3 tablet:px-[74px] tablet:py-[37px]">
+        <div className="flex flex-col gap-2 tablet:gap-[10px]">
+          <label
+            htmlFor=""
+            className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold"
+          >
+            Create List
+          </label>
+          <input
+            type="text"
+            className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-[23px] w-full min-w-[280px] appearance-none rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-transparent py-[5px] pl-[6px] pr-8 text-[10px] font-normal leading-[10px] text-[#707175] focus:outline-none focus:ring-0 tablet:h-full tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
+            //   value={search}
+            placeholder="List here"
+            //   onChange={handleSearch}
+          />
+        </div>
+        <div className="mt-2 flex justify-end tablet:mt-[25px]">
+          <Button variant={'cancel'} className={'bg-[#7C7C7C]'}>
+            Create
+          </Button>
+        </div>
+
+        <hr className="mx-auto my-3 h-[0.86px] max-w-[90%] bg-[#9C9C9C] tablet:my-[25px] tablet:h-[1.325px] tablet:max-w-[645px]" />
         <div>
-          <div className="relative">
+          <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold">
+            Lists
+          </h4>
+          <div className="relative my-3 tablet:my-[25px]">
             <div className="relative h-[23px] w-full tablet:h-[46px]">
               <input
                 type="text"
@@ -156,32 +175,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
               />
             )}
           </div>
-          <div className="mt-3 flex flex-col gap-2 tablet:mt-[25px] tablet:gap-[10px]">
-            <label
-              htmlFor=""
-              className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold"
-            >
-              Create List
-            </label>
-            <input
-              type="text"
-              className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-[23px] w-full min-w-[280px] appearance-none rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-transparent py-[5px] pl-[6px] pr-8 text-[10px] font-normal leading-[10px] text-[#707175] focus:outline-none focus:ring-0 tablet:h-full tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-              //   value={search}
-              placeholder="List here"
-              //   onChange={handleSearch}
-            />
-          </div>
-          <div className="mt-2 flex justify-end tablet:mt-[25px]">
-            <Button variant={'cancel'} className={'bg-[#7C7C7C]'}>
-              Create
-            </Button>
-          </div>
-        </div>
-        <hr className="mx-auto my-3 h-[0.86px] max-w-[90%] bg-[#9C9C9C] tablet:my-[25px] tablet:h-[1.325px] tablet:max-w-[645px]" />
-        <div>
-          <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold">
-            Lists
-          </h4>
           <div className="mt-3 space-y-3 tablet:mt-[15px] tablet:space-y-[15px]">
             <div className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5">
               <div className="w-fit space-y-2 tablet:space-y-5">
