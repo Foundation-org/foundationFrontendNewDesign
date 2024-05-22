@@ -138,7 +138,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
               />
             )}
           </div>
-          <div className="mt-3 space-y-3 tablet:mt-[15px] tablet:space-y-[15px]">
+          <div className="no-scrollbar mt-3 h-[280px] space-y-3 overflow-y-auto tablet:mt-[15px] tablet:space-y-[15px]">
             {listData?.map((item) => (
               <div
                 key={item._id}
