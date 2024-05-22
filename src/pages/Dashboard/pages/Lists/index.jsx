@@ -38,6 +38,14 @@ const Lists = () => {
 
   return (
     <div className="no-scrollbar flex h-[calc(100vh-70px)] w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:my-[0.94rem] tablet:gap-5 tablet:px-6 tablet:pb-5">
+      <BasicModal
+        open={copyModal}
+        handleClose={handleCopyClose}
+        customStyle={referralModalStyle}
+        customClasses="rounded-[10px] tablet:rounded-[26px]"
+      >
+        <CopyDialogue handleClose={handleCopyClose} />
+      </BasicModal>
       <Reorder.Group onReorder={setItems} values={items} className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
         {items?.map((item) => (
           <div
@@ -119,14 +127,6 @@ const Lists = () => {
                 >
                   {persistedTheme === 'dark' ? <Copy /> : <Copy />}
                 </div>
-                <BasicModal
-                  open={copyModal}
-                  handleClose={handleCopyClose}
-                  customStyle={referralModalStyle}
-                  customClasses="rounded-[10px] tablet:rounded-[26px]"
-                >
-                  <CopyDialogue handleClose={handleCopyClose} />
-                </BasicModal>
                 <div className="flex items-center gap-[0.56rem]">
                   <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copyblue.svg`} alt="copy icon" />{' '}
                   <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#389CE3] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
