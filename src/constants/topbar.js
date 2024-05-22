@@ -46,22 +46,6 @@
 export const TopbarItems = [
   {
     id: 1,
-    title: 'Treasury',
-    path: '/dashboard/treasury',
-    activePaths: ['/dashboard/treasury'],
-    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury_logo_unselected.svg`,
-    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury_logo_selected.svg`,
-  },
-  {
-    id: 2,
-    title: 'Lists',
-    path: '/dashboard/lists',
-    activePaths: ['/dashboard/lists'],
-    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/list.svg`,
-    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/list_filled.svg`,
-  },
-  {
-    id: 3,
     title: 'Profile',
     path: '/dashboard/profile',
     signupPath: '/guest-signup',
@@ -78,6 +62,22 @@ export const TopbarItems = [
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile.svg`,
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile-filled.svg`,
     signupIcon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/signup.svg`,
+  },
+  {
+    id: 2,
+    title: 'Treasury',
+    path: '/dashboard/treasury',
+    activePaths: ['/dashboard/treasury'],
+    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury_logo_unselected.svg`,
+    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury_logo_selected.svg`,
+  },
+  {
+    id: 2,
+    title: 'Lists',
+    path: '/dashboard/lists',
+    activePaths: ['/dashboard/lists'],
+    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/list.svg`,
+    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/list_filled.svg`,
   },
   // {
   //   id: 2,
