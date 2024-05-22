@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import Copy from '../../../../assets/Copy';
 import BasicModal from '../../../../components/BasicModal';
 import CopyDialogue from '../../../../components/question-card/Shareables/CopyDialogue';
+import { useQuery } from '@tanstack/react-query';
+import { fetchLists } from '../../../../services/api/listsApi';
 
 const initialItems = ['🍅 Tomato', '🥒 Cucumber', '🧀 Cheese', '🥬 Lettuce'];
 
@@ -24,6 +26,21 @@ const Lists = () => {
   };
 
   const handleCopyClose = () => setCopyModal(false);
+
+  const {
+    data: listData,
+    isError,
+    isPending,
+  } = useQuery({
+    queryFn: fetchLists,
+    queryKey: ['lists'],
+  });
+
+  console.log('listData', listData);
+
+  if (isError) {
+    console.log('some eror occur');
+  }
 
   return (
     <div className="no-scrollbar flex h-full w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:my-[0.94rem] tablet:gap-5 tablet:px-6 tablet:pb-5">
