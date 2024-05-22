@@ -73,7 +73,7 @@ function SoundcloudWidget({ SCurl, playing, questId, handleVideoEnded }) {
       style={{ border: 'none', width: '100%' }}
       scrolling="no"
       allow="autoplay"
-      src={`https://w.soundcloud.com/player/?url=${SCurl}`}
+      src={`https://w.soundcloud.com/player/?url=${SCurl}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_playcount=false&sharing=false&buying=false&download=false&single_active=true`}
     ></iframe>
   );
 }

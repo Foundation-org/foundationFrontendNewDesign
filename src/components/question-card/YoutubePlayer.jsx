@@ -38,7 +38,7 @@ const YouTubePlayer = ({ YTid, width = 640, height = 390, playing, questId, hand
         videoId: YTid,
         playerVars: {
           autoplay: playingRef.current ? 1 : 0,
-          mute: 1,
+          mute: playingRef.current ? 1 : 0,
         },
         events: {
           onStateChange: (event) => {
