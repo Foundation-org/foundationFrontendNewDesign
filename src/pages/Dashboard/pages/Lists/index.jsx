@@ -56,7 +56,6 @@ const Lists = () => {
               <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
                 {item.category}
               </h4>
-              <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/trash-icon.svg`} alt="trash-icon" />
             </div>
 
             <div className="my-[0.94rem] mr-[2.25rem]">
@@ -127,12 +126,7 @@ const Lists = () => {
                 >
                   {persistedTheme === 'dark' ? <Copy /> : <Copy />}
                 </div>
-                <div className="flex items-center gap-[0.56rem]">
-                  <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copyblue.svg`} alt="copy icon" />{' '}
-                  <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#389CE3] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
-                    Copy Link
-                  </h4>
-                </div>
+                <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/trash-icon.svg`} alt="trash-icon" />
               </div>
             </div>
           </div>

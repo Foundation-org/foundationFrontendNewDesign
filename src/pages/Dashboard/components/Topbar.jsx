@@ -17,7 +17,7 @@ const Topbar = () => {
     <div className="bg-[#389CE3]">
       <div className="static mx-auto flex h-[48px] max-h-[48px] min-h-[48px] w-full max-w-[1378px] flex-col items-center justify-between tablet:h-24 tablet:min-h-24 laptop:h-[92px] laptop:max-h-[70px] laptop:min-h-[70px] laptop:flex-row">
         <div className="relative flex h-full w-full items-center justify-between px-4 py-2 tablet:min-w-[18.25rem] laptop:w-[18.25rem] laptop:px-0 laptop:py-0 5xl:w-[23rem] 5xl:min-w-[23rem]">
-          <div className="flex w-full items-center justify-between gap-12">
+          <div className="flex w-full items-center gap-[25px]">
             <Link
               to={'/dashboard'}
               className="relative flex justify-center"
@@ -33,7 +33,7 @@ const Topbar = () => {
             </Link>
             <Link
               to={'/dashboard'}
-              className="flex items-center justify-center gap-[6px]"
+              className="flex flex-col"
               onClick={() => {
                 dispatch(createQuestActions.resetCreateQuest());
               }}
@@ -43,7 +43,7 @@ const Topbar = () => {
                 alt="foundation_logo"
                 className="h-[10px] w-auto tablet:h-auto"
               />
-              <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium text-[#D0E4F2] tablet:pt-1 tablet:text-[12px]">
+              <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium text-[#D0E4F2] tablet:pt-1 tablet:text-[13px] tablet:leading-[13px]">
                 v 1.12.3
               </span>
             </Link>

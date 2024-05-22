@@ -37,6 +37,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
       toast.success('Post added in a list.');
       queryClient.invalidateQueries(['lists']);
       setSelectedOption('');
+      handleClose();
     },
     onError: (err) => {
       console.log(err);
@@ -51,6 +52,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     queryFn: fetchLists,
     queryKey: ['lists'],
   });
+  console.log('🚀 ~ AddToListPopup ~ listData:', listData);
 
   const handleCheckboxChange = (option) => {
     if (selectedOption === option) {
@@ -103,84 +105,91 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
           </Button>
         </div>
 
-        <hr className="mx-auto my-3 h-[0.86px] max-w-[90%] bg-[#9C9C9C] tablet:my-[25px] tablet:h-[1.325px] tablet:max-w-[645px]" />
-        <div>
-          <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold">
-            Lists
-          </h4>
-          <div className="relative my-3 tablet:my-[25px]">
-            <div className="relative h-[23px] w-full tablet:h-[46px]">
-              <input
-                type="text"
-                id="floating_outlined"
-                className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full min-w-[280px] appearance-none rounded-[8px] border-[0.59px] border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
-                value={search}
-                placeholder=""
-                onChange={handleSearch}
-              />
-              <label
-                htmlFor="floating_outlined"
-                className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-[9px]  text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
-              >
-                Search
-              </label>
-            </div>
-            {search && (
-              <button className="absolute right-3 top-1/2 translate-y-[-50%] transform" onClick={() => setSearch('')}>
-                <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
-              </button>
-            )}
-            {!search && (
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
-                alt="search"
-                className="absolute right-3 top-1/2 h-4 w-4 translate-y-[-50%] transform"
-              />
-            )}
-          </div>
-          <div className="no-scrollbar mt-3 h-[280px] space-y-3 overflow-y-auto tablet:mt-[15px] tablet:space-y-[15px]">
-            {listData?.map((item) => (
-              <div
-                key={item._id}
-                className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
-              >
-                <div className="w-fit space-y-2 tablet:space-y-5">
-                  <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
-                    {item.category}
-                  </h4>
-                  <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
-                    {item.post.length} Post{item.post.length > 1 ? 's' : ''}
-                  </h4>
-                </div>
-                <div id="custom-rating-checkbox" className="flex h-full items-center">
+        {listData?.length >= 1 && (
+          <>
+            <hr className="mx-auto my-3 h-[0.86px] max-w-[90%] bg-[#9C9C9C] tablet:my-[25px] tablet:h-[1.325px] tablet:max-w-[645px]" />
+            <div>
+              <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold">
+                Lists
+              </h4>
+              <div className="relative my-3 tablet:my-[25px]">
+                <div className="relative h-[23px] w-full tablet:h-[46px]">
                   <input
-                    id="small-checkbox"
-                    type="checkbox"
-                    className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                    checked={selectedOption === item._id}
-                    onChange={() => handleCheckboxChange(item._id)}
-                    readOnly
+                    type="text"
+                    id="floating_outlined"
+                    className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-full w-full min-w-[280px] appearance-none rounded-[8px] border-[0.59px] border-[#707175] bg-transparent py-2 pl-5 pr-8 text-sm text-[#707175] focus:outline-none focus:ring-0 tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
+                    value={search}
+                    placeholder=""
+                    onChange={handleSearch}
                   />
+                  <label
+                    htmlFor="floating_outlined"
+                    className="peer-focus:text-blue-600 peer-focus:dark:text-blue-500 te xt-sm absolute left-[15px] start-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-[9px]  text-[#707175] duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 tablet:text-[17px] rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:bg-[#0A0A0C]"
+                  >
+                    Search
+                  </label>
                 </div>
+                {search && (
+                  <button
+                    className="absolute right-3 top-1/2 translate-y-[-50%] transform"
+                    onClick={() => setSearch('')}
+                  >
+                    <GrClose className="h-4 w-4 text-[#ACACAC] dark:text-white" />
+                  </button>
+                )}
+                {!search && (
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search.svg`}
+                    alt="search"
+                    className="absolute right-3 top-1/2 h-4 w-4 translate-y-[-50%] transform"
+                  />
+                )}
               </div>
-            ))}
-          </div>
-        </div>
-        <div className="mt-[10px] flex justify-end gap-4 tablet:mt-[25px]">
-          <Button
-            variant={'submit'}
-            className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
-            onClick={() => {
-              addPostInList({
-                userUuid: persistedUserInfo.uuid,
-                categoryId: selectedOption,
-                questForeginKey: questStartData._id,
-              });
-            }}
-          >
-            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Add to List'}
-          </Button>
-        </div>
+              <div className="no-scrollbar mt-3 h-fit max-h-[280px] space-y-3 overflow-y-auto tablet:mt-[15px] tablet:space-y-[15px]">
+                {listData?.map((item) => (
+                  <div
+                    key={item._id}
+                    className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
+                  >
+                    <div className="w-fit space-y-2 tablet:space-y-5">
+                      <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
+                        {item.category}
+                      </h4>
+                      <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
+                        {item.post.length} Post{item.post.length > 1 ? 's' : ''}
+                      </h4>
+                    </div>
+                    <div id="custom-rating-checkbox" className="flex h-full items-center">
+                      <input
+                        id="small-checkbox"
+                        type="checkbox"
+                        className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                        checked={selectedOption === item._id}
+                        onChange={() => handleCheckboxChange(item._id)}
+                        readOnly
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="mt-[10px] flex justify-end gap-4 tablet:mt-[25px]">
+              <Button
+                variant={'submit'}
+                className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
+                onClick={() => {
+                  addPostInList({
+                    userUuid: persistedUserInfo.uuid,
+                    categoryId: selectedOption,
+                    questForeginKey: questStartData._id,
+                  });
+                }}
+              >
+                {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Add to List'}
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </PopUp>
   );
