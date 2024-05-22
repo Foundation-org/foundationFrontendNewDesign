@@ -4,11 +4,14 @@ import { Button } from '../../../../components/ui/Button';
 import { useQuery } from '@tanstack/react-query';
 import { findPostsByCategoryId } from '../../../../services/api/listsApi';
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 const ManageList = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   let { categoryId } = useParams();
+
+  const [addPost, setAddPost] = useState(false);
 
   const {
     data: listData,
@@ -110,8 +113,56 @@ const ManageList = () => {
             </div>
           </div>
         ))}
+        {addPost && (
+          <div className="flex w-full items-center rounded-r-[0.33rem] bg-transparent tablet:w-full tablet:rounded-[10px]">
+            <div
+              className={`${
+                false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+              } dragIconWrapper border-y border-s tablet:border-y-[3px] tablet:border-s-[3px]`}
+            >
+              {persistedTheme === 'dark' ? (
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`}
+                  alt="six dots"
+                  className="h-[8.8px] tablet:h-[18px]"
+                />
+              ) : (
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`}
+                  alt="six dots"
+                  className="h-[8.8px] tablet:h-[18px]"
+                />
+              )}
+            </div>
+            <TextareaAutosize
+              // id={`input-${number}`}
+              // onChange={(e) => handleChange(e.target.value)}
+              // onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value)}
+              // value={item.questForeginKey.Question}
+              placeholder=""
+              // tabIndex={number + 2}
+              // autoFocus={number >= 5 ? true : false}
+              // onKeyDown={(e) =>
+              //   (e.key === 'Tab' && handleTab(number)) || (e.key === 'Enter' && handleTab(number, 'Enter'))
+              // }
+              className={`${
+                false
+                  ? 'border-[#5FA3D5] bg-[#F2F6FF]'
+                  : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
+              } box-border flex w-full resize-none items-center border-y pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:px-[11px] tablet:py-[10px] tablet:text-[18px] tablet:leading-[18px] dark:text-[#7C7C7C]`}
+            />
+            <div className="ml-[11px]" onClick={() => setAddPost(false)}>
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                alt="trash"
+                className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
+              />
+            </div>
+          </div>
+        )}
       </div>
-      <Button variant={'addOption-fit'} className="mt-[25px]">
+
+      <Button variant={'addOption-fit'} className="mt-[25px]" onClick={() => setAddPost(true)}>
         + Add Post
       </Button>
       <div className="mt-[37px] flex items-center justify-end gap-[1.56rem]">
