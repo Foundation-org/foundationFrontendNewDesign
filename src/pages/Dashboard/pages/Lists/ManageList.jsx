@@ -111,16 +111,14 @@ const ManageList = () => {
           </div>
         ))}
       </div>
-      <Button variant={'cancel'} className={'mt-[25px] bg-[#D9D9D9] text-[#435059]'}>
+      <Button variant={'addOption-fit'} className="mt-[25px]">
         + Add Post
       </Button>
-      <div className="mt-[37px] flex items-center gap-[1.56rem]">
+      <div className="mt-[37px] flex items-center justify-end gap-[1.56rem]">
         <Button variant="submit-fit" className="w-fit">
           Save
         </Button>
-        <Button variant="cancel" className="w-fit bg-[#7C7C7C]">
-          Cancel
-        </Button>
+        <Button variant="cancel-fit">Cancel</Button>
       </div>
     </div>
   );

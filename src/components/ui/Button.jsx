@@ -82,7 +82,10 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
         ? 'addoption-boxShadow h-[1.375rem] w-fit rounded-[0.28688rem] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
         : '',
       variant === 'cancel-fit'
-        ? 'addoption-boxShadow h-[1.375rem] max-w-[10.8125rem] rounded-[0.28688rem] bg-[#707175] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem]'
+        ? 'addoption-boxShadow h-[1.375rem] w-fit rounded-[0.28688rem] bg-[#7C7C7C] px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
+        : '',
+      variant === 'addOption-fit'
+        ? 'addoption-boxShadow h-[1.375rem] w-fit rounded-[0.28688rem] bg-[#D9D9D9] px-[6.63px] text-[0.625rem] font-semibold text-[#435059] tablet:h-[3.125rem] tablet:rounded-[0.9375rem] tablet:px-[13px] tablet:text-[1.25rem] laptop:px-[17px]'
         : '',
       className,
     )}
@@ -122,5 +125,6 @@ Button.propTypes = {
     'share-link',
     'addEmbeded',
     'submit-fit',
+    'addOption-fit',
   ]),
 };
