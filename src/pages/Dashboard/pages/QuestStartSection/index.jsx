@@ -84,7 +84,6 @@ const QuestStartSection = () => {
   if (status === 'error') {
     return <p>Error: {error.message}</p>;
   }
-  console.log('from query', hasNextPage);
 
   // const content = data?.pages.map((posts) =>
   //   posts.map((post, index) => {
