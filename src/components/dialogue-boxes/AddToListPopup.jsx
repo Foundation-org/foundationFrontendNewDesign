@@ -184,7 +184,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                   });
                 }}
               >
-                {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Add to List'}
+                {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               </Button>
             </div>
           </>
