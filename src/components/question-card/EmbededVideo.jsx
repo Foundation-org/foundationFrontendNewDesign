@@ -151,7 +151,7 @@ export const EmbededVideo = ({
               },
             },
             youtube: {
-              playerVars: {
+              playerVars: {s
                 modestbranding: 1, // Hide YouTube logo
                 showinfo: 0, // Hide video title and uploader info
                 autoplay: 0, // Disable autoplay
@@ -170,9 +170,9 @@ export const EmbededVideo = ({
           handleVideoEnded={handleVideoEnded}
         />
       )}
-      {identifyMediaUrl(url[0]) === 'SoundCloud' && (
+      {/* {identifyMediaUrl(url[0]) === 'SoundCloud' && (
         <SoundcloudWidget SCurl={mediaURL} playing={playing} questId={questId} handleVideoEnded={handleVideoEnded} />
-      )}
+      )} */}
     </div>
   );
 };
