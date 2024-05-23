@@ -2,61 +2,84 @@ import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
 import { useSelector } from 'react-redux';
+import * as questUtilsActions from '../../features/quest/utilsSlice';
 
 function SoundcloudWidget({ SCurl, playing, questId }) {
-  const iframeRef = useRef(null);
   const dispatch = useDispatch();
+  const iframeRef = useRef(null);
   const questUtilsState = useSelector(getQuestUtils);
+  const playerRef = useRef(null);
+  const questUtilsStatRef = useRef(null);
+  const playingRef = useRef(null);
+  const questIdRef = useRef(null);
+
+  useEffect(() => {
+    questUtilsStatRef.current = questUtilsState;
+  }, [questUtilsState]);
+
+  useEffect(() => {
+    playingRef.current = playing;
+  }, [playing]);
+
+  useEffect(() => {
+    questIdRef.current = questId;
+  }, [questId]);
 
   useEffect(() => {
     const widget = SC.Widget(iframeRef.current);
-
-    widget.bind(SC.Widget.Events.READY, () => {
-      console.log('SoundCloud Widget Ready');
-    });
+    playerRef.current = widget;
 
     widget.bind(SC.Widget.Events.PLAY, () => {
-      dispatch(setPlayingPlayerId(questId));
-
-      if (!playing) {
+      if (playingRef.current === false) {
+        dispatch(setPlayingPlayerId(questIdRef.current));
         dispatch(toggleMedia(true));
+        dispatch(setIsShowPlayer(true));
       }
-      dispatch(setIsShowPlayer(true));
     });
 
     widget.bind(SC.Widget.Events.PAUSE, () => {
-      console.log('SoundCloud Widget Pause');
-      if (playing) {
+      if (playingRef.current) {
         dispatch(toggleMedia(false));
       }
     });
 
     widget.bind(SC.Widget.Events.FINISH, () => {
-      console.log('SoundCloud Widget Finish');
+      handleVideoEnded();
     });
 
     widget.bind(SC.Widget.Events.ERROR, (error) => {
       console.error('SoundCloud Widget Error', error);
-      handleVideoEnded();
     });
   }, []);
 
+  useEffect(() => {
+    if (playerRef.current) {
+      if (playing) {
+        playerRef.current.play();
+      } else {
+        playerRef.current.pause();
+      }
+    }
+  }, [playing]);
+
   const handleVideoEnded = () => {
-    if (questUtilsState.loop === true) {
+    if (questUtilsStatRef.current.loop === true) {
       if (playerRef.current) {
         playerRef.current.seekTo(0);
-        playerRef.current.getInternalPlayer().play(); // Resume playback
+        playerRef.current.play(); // Resume playback
       }
     } else {
-      const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
-      if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
-        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
+      const index = questUtilsStatRef.current.playingIds.findIndex(
+        (mediaId) => mediaId === questUtilsStatRef.current.playerPlayingId,
+      );
+      if (index !== -1 && index + 1 < questUtilsStatRef.current.playingIds.length) {
+        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsStatRef.current.playingIds[index + 1]));
       } else if (
         index !== -1 &&
-        index + 1 >= questUtilsState.playingIds.length &&
-        questUtilsState.hasNextPage === false
+        index + 1 >= questUtilsStatRef.current.playingIds.length &&
+        questUtilsStatRef.current.hasNextPage === false
       ) {
-        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
+        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsStatRef.current.playingIds[0]));
       }
     }
   };
