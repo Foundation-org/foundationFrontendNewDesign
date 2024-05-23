@@ -107,7 +107,7 @@ const YouTubePlayer = ({ YTid, width = 640, height = 390, playing, questId }) =>
     }
   };
 
-  return <div className="youtube-iframe" ref={youtubePlayerAnchor}></div>;
+  return <div className="youtube-iframe" id="youtube-player" ref={youtubePlayerAnchor}></div>;
 };
 
 export default YouTubePlayer;

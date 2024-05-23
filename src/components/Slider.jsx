@@ -110,16 +110,16 @@ function Slider({ isFetching }) {
     },
   });
 
-  const handleButtonSelection = async (type, data, id) => {
+  const handleButtonSelection = (type, data, id) => {
     // Save the id of the selected button in localStorage for scrolling it into view
-    await queryClient.cancelQueries();
+    queryClient.cancelQueries('posts');
     localStorage.setItem('selectedButtonId', id);
     const selectedButton = document.getElementById(id);
     if (selectedButton) {
       selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    if (isFetching) return;
+    // if (isFetching) return;
 
     switch (type) {
       case 'newest-first':
@@ -269,7 +269,7 @@ function Slider({ isFetching }) {
               // queryClient.invalidateQueries('FeedData');
               handleButtonSelection('newest-first', null, 'newButton');
             }}
-            disabled={isFetching}
+            // disabled={isFetching}
             id={'newButton'}
           >
             New!
@@ -281,7 +281,7 @@ function Slider({ isFetching }) {
               // queryClient.invalidateQueries('FeedData');
               handleButtonSelection('most-popular', null, 'trendingButton');
             }}
-            disabled={isFetching}
+            // disabled={isFetching}
             id={'trendingButton'}
           >
             Trending!
@@ -293,7 +293,7 @@ function Slider({ isFetching }) {
               // queryClient.invalidateQueries('FeedData');
               handleButtonSelection('my-posts', null, 'myPostButton');
             }}
-            disabled={isFetching}
+            // disabled={isFetching}
             id={'myPostButton'}
           >
             My Posts
@@ -305,7 +305,7 @@ function Slider({ isFetching }) {
               // queryClient.invalidateQueries('FeedData');
               handleButtonSelection('bookmarks', null, 'bookmarkButton');
             }}
-            disabled={isFetching}
+            // disabled={isFetching}
             id={'bookmarkButton'}
           >
             Bookmarks
@@ -351,7 +351,7 @@ function Slider({ isFetching }) {
                 key={index}
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
-                disabled={isFetching}
+                // disabled={isFetching}
                 id={`topic-${index}`}
               >
                 {item}

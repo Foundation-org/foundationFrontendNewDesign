@@ -11,7 +11,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import SystemNotificationCard from '../../../../components/posts/SystemNotificationCard';
-import { Log } from 'ethers';
 
 const QuestStartSection = () => {
   const dispatch = useDispatch();
@@ -20,7 +19,7 @@ const QuestStartSection = () => {
   const filterStates = useSelector(filtersActions.getFilters);
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
 
-  const fetchPosts = async function getInfoQuestions({ pageParam }) {
+  const fetchPosts = async function getInfoQuestions({ pageParam, signal }) {
     const params = {
       _page: pageParam,
       _limit: 5,
@@ -47,7 +46,7 @@ const QuestStartSection = () => {
       params.blockedTerms = JSON.stringify(filterStates.topics.Block.list);
     }
 
-    const response = await api.get('/infoquestions/getQuestsAll', { params });
+    const response = await api.get('/infoquestions/getQuestsAll', { params, signal });
 
     return response.data.data;
   };
@@ -66,7 +65,7 @@ const QuestStartSection = () => {
       filterStates.bookmarks,
       filterStates.filterByMedia,
     ],
-    queryFn: fetchPosts,
+    queryFn: ({ pageParam, signal }) => fetchPosts({ pageParam, signal }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const nexPage = lastPage.length ? allPages.length + 1 : undefined;
