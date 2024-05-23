@@ -21,10 +21,10 @@ export const EmbededVideo = ({
   // setIsPlaying,
   // isPlaying,
 }) => {
-  const playerRef = useRef(null);
+  // const playerRef = useRef(null);
   const [mediaURL, setMediaURL] = useState(url[0]);
-  const dispatch = useDispatch();
-  const questUtilsState = useSelector(getQuestUtils);
+  // const dispatch = useDispatch();
+  // const questUtilsState = useSelector(getQuestUtils);
 
   // const handleVideoEnded = () => {
   //   if (questUtilsState.loop === true) {

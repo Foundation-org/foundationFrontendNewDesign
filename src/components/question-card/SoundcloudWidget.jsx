@@ -30,17 +30,15 @@ function SoundcloudWidget({ SCurl, playing, questId }) {
     playerRef.current = widget;
 
     widget.bind(SC.Widget.Events.PLAY, () => {
-      if (playingRef.current === false) {
-        dispatch(setPlayingPlayerId(questIdRef.current));
-        dispatch(toggleMedia(true));
-        dispatch(setIsShowPlayer(true));
-      }
+      dispatch(setPlayingPlayerId(questId));
+      dispatch(toggleMedia(true));
+      dispatch(setIsShowPlayer(true));
     });
 
     widget.bind(SC.Widget.Events.PAUSE, () => {
-      if (playingRef.current) {
-        dispatch(toggleMedia(false));
-      }
+      widget.isPaused((playerIsPaused) => {
+        if (playerIsPaused) dispatch(toggleMedia(false));
+      });
     });
 
     widget.bind(SC.Widget.Events.FINISH, () => {
@@ -50,17 +48,19 @@ function SoundcloudWidget({ SCurl, playing, questId }) {
     widget.bind(SC.Widget.Events.ERROR, (error) => {
       console.error('SoundCloud Widget Error', error);
     });
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (playerRef.current) {
-      if (playing) {
+    if (!playerRef.current) return; // player loaded async - make sure available
+
+    playerRef.current.isPaused((playerIsPaused) => {
+      if (playing && playerIsPaused) {
         playerRef.current.play();
-      } else {
+      } else if (!playing && !playerIsPaused) {
         playerRef.current.pause();
       }
-    }
-  }, [playing]);
+    });
+  }, [playing, playerRef.current]);
 
   const handleVideoEnded = () => {
     if (questUtilsStatRef.current.loop === true) {
