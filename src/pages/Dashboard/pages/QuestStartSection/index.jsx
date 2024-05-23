@@ -78,7 +78,7 @@ const QuestStartSection = () => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-    // dispatch(questUtilsActions.setNextPage(hasNextPage));
+    dispatch(questUtilsActions.setNextPage(hasNextPage));
   }, [inView, hasNextPage, fetchNextPage]);
 
   if (status === 'error') {
@@ -121,12 +121,7 @@ const QuestStartSection = () => {
   const content = data?.pages.map((posts) =>
     posts.map((post, index) => {
       if (post.id === 'system_notification') {
-        return (
-          <div className="flex flex-col gap-4 rounded-[13.842px] border-[1.846px] border-[#D9D9D9] bg-[#F4F8FF] px-[44px] py-6">
-            <h1 className="text-[22px] font-bold leading-normal text-[#5B5B5B]">Did you know?</h1>
-            <p className="text-[18px] font-normal leading-[25px] text-[#7C7C7C]">{post.content}</p>
-          </div>
-        );
+        return <SystemNotificationCard post={post} key={index + 1} />;
       } else {
         if (posts.length == index + 1) {
           return (

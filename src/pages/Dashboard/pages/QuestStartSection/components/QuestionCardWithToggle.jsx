@@ -144,6 +144,10 @@ const QuestionCardWithToggle = (props) => {
   }, [questStartData.QuestAnswers, windowWidth]);
 
   useEffect(() => {
+    if (post.url?.length > 0 && !post.url[0]?.includes('flickr') && post.url[0] !== '') {
+      dispatch(questUtilsActions.addPlayerId(post._id));
+    }
+
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
