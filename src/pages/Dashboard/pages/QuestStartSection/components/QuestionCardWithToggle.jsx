@@ -769,7 +769,7 @@ const QuestionCardWithToggle = (props) => {
   };
 
   return (
-    <div ref={innerRef}>
+    <div ref={innerRef} id={questStartData._id === getQuestUtilsState.playerPlayingId ? 'playing-card' : ''}>
       <QuestCardLayout
         questStartData={questStartData}
         playing={props.playing}

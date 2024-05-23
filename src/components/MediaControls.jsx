@@ -47,7 +47,9 @@ export default function MediaControls() {
       {/* {questUtilsState.loop ? 'Loop' : 'Series'} */}
       <img
         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/player/${questUtilsState.loop ? 'loop.svg' : 'series.svg'}`}
-        onClick={runLoop}
+        onClick={() => {
+          runLoop();
+        }}
         className="size-6 cursor-pointer tablet:size-[33px]"
       />
       <img

@@ -13,6 +13,8 @@ const YouTubePlayer = ({ YTid, width = 640, height = 390, playing, questId }) =>
   const playingRef = useRef(playing);
   const questIdRef = useRef(questId);
   const questUtilsState = useSelector(getQuestUtils);
+  const playingIdsRef = useRef(null);
+
   // Update the ref value whenever questId changes
   useEffect(() => {
     questIdRef.current = questId;
@@ -21,6 +23,10 @@ const YouTubePlayer = ({ YTid, width = 640, height = 390, playing, questId }) =>
   useEffect(() => {
     playingRef.current = playing;
   }, [playing]);
+
+  useEffect(() => {
+    playingIdsRef.current = questUtilsState;
+  }, [questUtilsState]);
 
   useEffect(() => {
     if (!loadYT) {
@@ -44,6 +50,7 @@ const YouTubePlayer = ({ YTid, width = 640, height = 390, playing, questId }) =>
         },
         events: {
           onStateChange: (event) => {
+            console.log('event', event.data, YT.PlayerState);
             if (event.data == YT.PlayerState.PLAYING) {
               dispatch(setPlayingPlayerId(questIdRef.current));
               dispatch(toggleMedia(true));
@@ -76,24 +83,23 @@ const YouTubePlayer = ({ YTid, width = 640, height = 390, playing, questId }) =>
   }, [playing]);
 
   const handleVideoEnded = () => {
-    console.log('first', questUtilsState.loop);
-    if (questUtilsState.loop === true) {
+    if (playingIdsRef.current.loop) {
       if (playerRef.current) {
-        console.log('player', playerRef.current);
         playerRef.current.seekTo(0);
-        playerRef.current.playVideo(); // Resume playback
+        playerRef.current.playVideo();
       }
     } else {
-      console.log('player', playerRef.current);
-      const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
-      if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
-        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
+      const index = playingIdsRef.current.playingIds.findIndex(
+        (mediaId) => mediaId === playingIdsRef.current.playerPlayingId,
+      );
+      if (index !== -1 && index + 1 < playingIdsRef.current.playingIds.length) {
+        dispatch(questUtilsActions.setPlayingPlayerId(playingIdsRef.current.playingIds[index + 1]));
       } else if (
         index !== -1 &&
-        index + 1 >= questUtilsState.playingIds.length &&
-        questUtilsState.hasNextPage === false
+        index + 1 >= playingIdsRef.current.playingIds.length &&
+        playingIdsRef.current.hasNextPage === false
       ) {
-        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
+        dispatch(questUtilsActions.setPlayingPlayerId(playingIdsRef.current.playingIds[0]));
       }
     }
   };
