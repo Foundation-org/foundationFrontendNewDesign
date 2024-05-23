@@ -72,7 +72,7 @@ export const TopbarItems = [
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury_logo_selected.svg`,
   },
   {
-    id: 2,
+    id: 3,
     title: 'Lists',
     path: '/dashboard/lists',
     activePaths: ['/dashboard/lists'],

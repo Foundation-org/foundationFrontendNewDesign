@@ -26,25 +26,25 @@ export const EmbededVideo = ({
   const dispatch = useDispatch();
   const questUtilsState = useSelector(getQuestUtils);
 
-  const handleVideoEnded = () => {
-    if (questUtilsState.loop === true) {
-      if (playerRef.current) {
-        playerRef.current.seekTo(0);
-        playerRef.current.getInternalPlayer().play(); // Resume playback
-      }
-    } else {
-      const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
-      if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
-        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
-      } else if (
-        index !== -1 &&
-        index + 1 >= questUtilsState.playingIds.length &&
-        questUtilsState.hasNextPage === false
-      ) {
-        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
-      }
-    }
-  };
+  // const handleVideoEnded = () => {
+  //   if (questUtilsState.loop === true) {
+  //     if (playerRef.current) {
+  //       playerRef.current.seekTo(0);
+  //       playerRef.current.getInternalPlayer().play(); // Resume playback
+  //     }
+  //   } else {
+  //     const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
+  //     if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
+  //       dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
+  //     } else if (
+  //       index !== -1 &&
+  //       index + 1 >= questUtilsState.playingIds.length &&
+  //       questUtilsState.hasNextPage === false
+  //     ) {
+  //       dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     const handleResize = () => {
@@ -151,7 +151,7 @@ export const EmbededVideo = ({
               },
             },
             youtube: {
-              playerVars: {s
+              playerVars: {
                 modestbranding: 1, // Hide YouTube logo
                 showinfo: 0, // Hide video title and uploader info
                 autoplay: 0, // Disable autoplay
@@ -167,12 +167,12 @@ export const EmbededVideo = ({
           YTid={getYouTubeId(url[0])}
           playing={playing}
           questId={questId}
-          handleVideoEnded={handleVideoEnded}
+          // handleVideoEnded={handleVideoEnded}
         />
       )}
-      {/* {identifyMediaUrl(url[0]) === 'SoundCloud' && (
-        <SoundcloudWidget SCurl={mediaURL} playing={playing} questId={questId} handleVideoEnded={handleVideoEnded} />
-      )} */}
+      {identifyMediaUrl(url[0]) === 'SoundCloud' && (
+        <SoundcloudWidget SCurl={mediaURL} playing={playing} questId={questId} />
+      )}
     </div>
   );
 };

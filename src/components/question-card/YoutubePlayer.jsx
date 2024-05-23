@@ -1,16 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
+import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
+import { useSelector } from 'react-redux';
+import * as questUtilsActions from '../../features/quest/utilsSlice';
 
 let loadYT;
 
-const YouTubePlayer = ({ YTid, width = 640, height = 390, playing, questId, handleVideoEnded }) => {
+const YouTubePlayer = ({ YTid, width = 640, height = 390, playing, questId }) => {
   const dispatch = useDispatch();
   const youtubePlayerAnchor = useRef(null);
   const playerRef = useRef(null);
   const playingRef = useRef(playing);
   const questIdRef = useRef(questId);
-
+  const questUtilsState = useSelector(getQuestUtils);
   // Update the ref value whenever questId changes
   useEffect(() => {
     questIdRef.current = questId;
@@ -72,6 +74,29 @@ const YouTubePlayer = ({ YTid, width = 640, height = 390, playing, questId, hand
       }
     }
   }, [playing]);
+
+  const handleVideoEnded = () => {
+    console.log('first', questUtilsState.loop);
+    if (questUtilsState.loop === true) {
+      if (playerRef.current) {
+        console.log('player', playerRef.current);
+        playerRef.current.seekTo(0);
+        playerRef.current.playVideo(); // Resume playback
+      }
+    } else {
+      console.log('player', playerRef.current);
+      const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
+      if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
+        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
+      } else if (
+        index !== -1 &&
+        index + 1 >= questUtilsState.playingIds.length &&
+        questUtilsState.hasNextPage === false
+      ) {
+        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
+      }
+    }
+  };
 
   return <div className="youtube-iframe" ref={youtubePlayerAnchor}></div>;
 };

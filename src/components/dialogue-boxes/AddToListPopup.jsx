@@ -52,7 +52,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     queryFn: fetchLists,
     queryKey: ['lists'],
   });
-  console.log('🚀 ~ AddToListPopup ~ listData:', listData);
 
   const handleCheckboxChange = (option) => {
     if (selectedOption === option) {
