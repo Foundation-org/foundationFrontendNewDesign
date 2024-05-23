@@ -50,14 +50,17 @@ const YouTubePlayer = ({ YTid, width = 640, height = 390, playing, questId }) =>
         },
         events: {
           onStateChange: (event) => {
-            console.log('event', event.data, YT.PlayerState);
             if (event.data == YT.PlayerState.PLAYING) {
-              dispatch(setPlayingPlayerId(questIdRef.current));
-              dispatch(toggleMedia(true));
-              dispatch(setIsShowPlayer(true));
+              if (!playingRef.current) {
+                dispatch(setPlayingPlayerId(questIdRef.current));
+                dispatch(toggleMedia(true));
+                dispatch(setIsShowPlayer(true));
+              }
             }
             if (event.data == YT.PlayerState.PAUSED) {
-              dispatch(toggleMedia(false));
+              if (playingRef.current) {
+                dispatch(toggleMedia(false));
+              }
             }
             if (event.data == YT.PlayerState.ENDED) {
               handleVideoEnded();

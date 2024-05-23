@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import loadscript from 'load-script';
-import { useDispatch } from 'react-redux';
-import { setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
 
 // SoundCloud widget API
 //  https://developers.soundcloud.com/docs/api/html5-widget
 
-function SoundcloudWidget({ SCurl, playing, questId, handleVideoEnded }) {
+function SoundcloudWidget({ SCurl, playing, questId }) {
   // state
   const dispatch = useDispatch();
+  const questUtilsState = useSelector(getQuestUtils);
 
   // populated once SoundCloud Widget API is loaded and initialized
   const [player, setPlayer] = useState(null);
@@ -17,6 +18,26 @@ function SoundcloudWidget({ SCurl, playing, questId, handleVideoEnded }) {
   const iframeRef = useRef(null);
 
   // initialization - load soundcloud widget API and set SC event listeners
+  const handleVideoEnded = () => {
+    console.log('running');
+    if (questUtilsState.loop) {
+      if (player) {
+        player.seekTo(0);
+        player.play();
+      }
+    } else {
+      const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
+      if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
+        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
+      } else if (
+        index !== -1 &&
+        index + 1 >= questUtilsState.playingIds.length &&
+        questUtilsState.hasNextPage === false
+      ) {
+        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
+      }
+    }
+  };
   useEffect(() => {
     // use load-script module to load SC Widget API
     loadscript('https://w.soundcloud.com/player/api.js', () => {
@@ -57,9 +78,9 @@ function SoundcloudWidget({ SCurl, playing, questId, handleVideoEnded }) {
     if (!player) return; // player loaded async - make sure available
 
     player.isPaused((playerIsPaused) => {
-      if (playing && playerIsPaused) {
+      if (!playing && playerIsPaused) {
         player.play();
-      } else if (!playing && !playerIsPaused) {
+      } else if (playing && !playerIsPaused) {
         player.pause();
       }
     });
