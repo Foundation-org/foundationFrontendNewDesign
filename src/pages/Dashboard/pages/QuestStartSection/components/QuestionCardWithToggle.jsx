@@ -144,8 +144,8 @@ const QuestionCardWithToggle = (props) => {
   }, [questStartData.QuestAnswers, windowWidth]);
 
   useEffect(() => {
-    if (post.url?.length > 0 && !post.url[0]?.includes('flickr') && post.url[0] !== '') {
-      dispatch(questUtilsActions.addPlayerId(post._id));
+    if (questStartData.url?.length > 0 && !questStartData.url[0]?.includes('flickr') && questStartData.url[0] !== '') {
+      dispatch(questUtilsActions.addPlayerId(questStartData._id));
     }
 
     const handleResize = () => {
