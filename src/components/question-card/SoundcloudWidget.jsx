@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
-import { useSelector } from 'react-redux';
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 
 function SoundcloudWidget({ SCurl, playing, questId }) {
@@ -12,6 +11,7 @@ function SoundcloudWidget({ SCurl, playing, questId }) {
   const questUtilsStatRef = useRef(null);
   const playingRef = useRef(null);
   const questIdRef = useRef(null);
+  const userInitiatedRef = useRef(false); // Ref to track user-initiated actions
 
   useEffect(() => {
     questUtilsStatRef.current = questUtilsState;
@@ -30,6 +30,11 @@ function SoundcloudWidget({ SCurl, playing, questId }) {
     playerRef.current = widget;
 
     widget.bind(SC.Widget.Events.PLAY, () => {
+      if (playingRef.current) {
+        userInitiatedRef.current = false;
+        return;
+      }
+      userInitiatedRef.current = true;
       widget.isPaused((playerIsPaused) => {
         if (!playerIsPaused) {
           dispatch(setPlayingPlayerId(questId));
@@ -40,9 +45,14 @@ function SoundcloudWidget({ SCurl, playing, questId }) {
     });
 
     widget.bind(SC.Widget.Events.PAUSE, () => {
-      widget.isPaused((playerIsPaused) => {
-        if (playerIsPaused) dispatch(toggleMedia(false));
-      });
+      if (!playingRef.current) {
+        userInitiatedRef.current = false;
+        return;
+      }
+      userInitiatedRef.current = true;
+      if (playingRef.current === true) {
+        dispatch(toggleMedia(false));
+      }
     });
 
     widget.bind(SC.Widget.Events.FINISH, () => {
@@ -52,14 +62,25 @@ function SoundcloudWidget({ SCurl, playing, questId }) {
     widget.bind(SC.Widget.Events.ERROR, (error) => {
       console.error('SoundCloud Widget Error', error);
     });
-  }, [dispatch]);
+
+    return () => {
+      widget.unbind(SC.Widget.Events.PLAY);
+      widget.unbind(SC.Widget.Events.PAUSE);
+      widget.unbind(SC.Widget.Events.FINISH);
+    };
+  }, [dispatch, questId]);
 
   useEffect(() => {
-    if (!playerRef.current) return; // player loaded async - make sure available
+    if (!playerRef.current) return;
+
+    if (userInitiatedRef.current) {
+      userInitiatedRef.current = false;
+      return;
+    }
 
     if (playing) {
       playerRef.current.play();
-    } else if (!playing) {
+    } else {
       playerRef.current.pause();
     }
   }, [playing]);
@@ -68,7 +89,7 @@ function SoundcloudWidget({ SCurl, playing, questId }) {
     if (questUtilsStatRef.current.loop === true) {
       if (playerRef.current) {
         playerRef.current.seekTo(0);
-        playerRef.current.play(); // Resume playback
+        playerRef.current.play();
       }
     } else {
       const index = questUtilsStatRef.current.playingIds.findIndex(

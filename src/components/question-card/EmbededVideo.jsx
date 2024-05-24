@@ -159,16 +159,11 @@ export const EmbededVideo = ({
               },
             },
           }}
-          onEnded={() => handleVideoEnded()}
+          onEnded={() => handleVideoEnded()}      // handleVideoEnded={handleVideoEnded}
         />
       </div> */}
       {identifyMediaUrl(url[0]) === 'YouTube' && (
-        <YouTubePlayer
-          YTid={getYouTubeId(url[0])}
-          playing={playing}
-          questId={questId}
-          // handleVideoEnded={handleVideoEnded}
-        />
+        <YouTubePlayer YTid={getYouTubeId(url[0])} playing={playing} questId={questId} />
       )}
       {identifyMediaUrl(url[0]) === 'SoundCloud' && (
         <SoundcloudWidget SCurl={mediaURL} playing={playing} questId={questId} />

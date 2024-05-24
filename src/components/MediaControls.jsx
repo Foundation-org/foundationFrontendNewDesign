@@ -26,7 +26,7 @@ export default function MediaControls() {
       dispatch(questUtilsActions.toggleMedia(true));
     }
   };
-  console.log('from redux', questUtilsState.hasNextPage);
+  // console.log('from redux', questUtilsState.hasNextPage);
   const playNext = () => {
     const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
     if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
