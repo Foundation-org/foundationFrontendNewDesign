@@ -1,15 +1,17 @@
 // import { toast } from 'sonner';
-import { useState, useRef, useEffect } from 'react';
-// import ReactPlayer from 'react-player/lazy';
-// import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useState, useEffect, useRef } from 'react';
+import ReactPlayer from 'react-player/lazy';
+import { useDispatch, useSelector } from 'react-redux';
+
+// // import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
+// import { useDispatch } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 
-import { suppressPost } from '../../services/api/questsApi';
-import YouTubePlayer from './YoutubePlayer';
-import SoundcloudWidget from './SoundcloudWidget';
+// import { suppressPost } from '../../services/api/questsApi';
+// import YouTubePlayer from './YoutubePlayer';
+// import SoundcloudWidget from './SoundcloudWidget';
 
 export const EmbededVideo = ({
   description,
@@ -21,30 +23,30 @@ export const EmbededVideo = ({
   // setIsPlaying,
   // isPlaying,
 }) => {
-  // const playerRef = useRef(null);
+  const playerRef = useRef(null);
   const [mediaURL, setMediaURL] = useState(url[0]);
-  // const dispatch = useDispatch();
-  // const questUtilsState = useSelector(getQuestUtils);
+  const dispatch = useDispatch();
+  const questUtilsState = useSelector(getQuestUtils);
 
-  // const handleVideoEnded = () => {
-  //   if (questUtilsState.loop === true) {
-  //     if (playerRef.current) {
-  //       playerRef.current.seekTo(0);
-  //       playerRef.current.getInternalPlayer().play(); // Resume playback
-  //     }
-  //   } else {
-  //     const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
-  //     if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
-  //       dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
-  //     } else if (
-  //       index !== -1 &&
-  //       index + 1 >= questUtilsState.playingIds.length &&
-  //       questUtilsState.hasNextPage === false
-  //     ) {
-  //       dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
-  //     }
-  //   }
-  // };
+  const handleVideoEnded = () => {
+    if (questUtilsState.loop === true) {
+      if (playerRef.current) {
+        playerRef.current.seekTo(0);
+        playerRef.current.getInternalPlayer().play(); // Resume playback
+      }
+    } else {
+      const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
+      if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
+        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
+      } else if (
+        index !== -1 &&
+        index + 1 >= questUtilsState.playingIds.length &&
+        questUtilsState.hasNextPage === false
+      ) {
+        dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
+      }
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -89,7 +91,7 @@ export const EmbededVideo = ({
       <h2 className="mb-1 ml-2 text-[8px] font-medium text-[#7C7C7C] tablet:mb-2 tablet:ml-3 tablet:text-[14.692px]">
         {description}
       </h2>
-      {/* <div>
+      <div>
         <ReactPlayer
           ref={playerRef}
           url={mediaURL}
@@ -159,15 +161,15 @@ export const EmbededVideo = ({
               },
             },
           }}
-          onEnded={() => handleVideoEnded()}      // handleVideoEnded={handleVideoEnded}
+          onEnded={() => handleVideoEnded()} // handleVideoEnded={handleVideoEnded}
         />
-      </div> */}
-      {identifyMediaUrl(url[0]) === 'YouTube' && (
+      </div>
+      {/* {identifyMediaUrl(url[0]) === 'YouTube' && (
         <YouTubePlayer YTid={getYouTubeId(url[0])} playing={playing} questId={questId} />
       )}
       {identifyMediaUrl(url[0]) === 'SoundCloud' && (
         <SoundcloudWidget SCurl={mediaURL} playing={playing} questId={questId} />
-      )}
+      )} */}
     </div>
   );
 };
