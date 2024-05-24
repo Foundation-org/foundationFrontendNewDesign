@@ -7,26 +7,30 @@ import { FaSpinner } from 'react-icons/fa';
 import { GrClose } from 'react-icons/gr';
 import { addPostinAList, createList, fetchLists } from '../../services/api/listsApi';
 import PopUp from '../ui/PopUp';
+import { useEffect } from 'react';
+import { LinearProgress } from '@mui/material';
 
 export default function AddToListPopup({ handleClose, modalVisible, questStartData }) {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [listName, setListName] = useState('');
   const [search, setSearch] = useState('');
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState([]);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
 
-  const { mutateAsync: createNewList } = useMutation({
+  const { mutateAsync: createNewList, isPending: IsLoadingCreate } = useMutation({
     mutationFn: createList,
     onSuccess: (resp) => {
       toast.success('New list created.');
       queryClient.invalidateQueries(['lists']);
       setListName('');
+      setCreateLoading(false);
     },
     onError: (err) => {
+      setCreateLoading(false);
       console.log(err);
     },
   });
@@ -36,7 +40,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     onSuccess: (resp) => {
       toast.success('Post added in a list.');
       queryClient.invalidateQueries(['lists']);
-      setSelectedOption('');
       handleClose();
     },
     onError: (err) => {
@@ -53,17 +56,36 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     queryKey: ['lists'],
   });
 
-  const handleCheckboxChange = (option) => {
-    if (selectedOption === option) {
-      setSelectedOption('');
-    } else {
-      setSelectedOption(option);
-    }
-  };
-
   if (isError) {
     console.log('some eror occur');
   }
+
+  const addMatchingQuestIds = (data, questId) => {
+    let temp = [];
+    data.forEach((item) => {
+      item.post.forEach((postItem) => {
+        if (postItem.questForeginKey._id === questId) {
+          temp.push(item._id);
+        }
+      });
+    });
+    setSelectedOption((prev) => [...prev, ...temp]);
+  };
+
+  const handleCheckboxChange = (itemId) => {
+    setSelectedOption((prevSelectedOption) => {
+      if (prevSelectedOption.includes(itemId)) {
+        return prevSelectedOption.filter((id) => id !== itemId);
+      } else {
+        return [...prevSelectedOption, itemId];
+      }
+    });
+  };
+
+  console.log(selectedOption);
+  useEffect(() => {
+    addMatchingQuestIds(listData, questStartData._id);
+  }, [listData]);
 
   return (
     <PopUp
@@ -93,14 +115,14 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
           <Button
             variant={'cancel'}
             className={'bg-[#7C7C7C]'}
-            onClick={() =>
+            onClick={() => {
               createNewList({
                 userUuid: persistedUserInfo.uuid,
                 category: listName,
-              })
-            }
+              });
+            }}
           >
-            Create
+            {IsLoadingCreate === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
           </Button>
         </div>
 
@@ -160,10 +182,10 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                     </div>
                     <div id="custom-rating-checkbox" className="flex h-full items-center">
                       <input
-                        id="small-checkbox"
+                        id={`checkbox-${item._id}`}
                         type="checkbox"
                         className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                        checked={selectedOption === item._id}
+                        checked={selectedOption.includes(item._id)}
                         onChange={() => handleCheckboxChange(item._id)}
                         readOnly
                       />
@@ -179,7 +201,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                 onClick={() => {
                   addPostInList({
                     userUuid: persistedUserInfo.uuid,
-                    categoryId: selectedOption,
+                    categoryIdArray: selectedOption,
                     questForeginKey: questStartData._id,
                   });
                 }}
