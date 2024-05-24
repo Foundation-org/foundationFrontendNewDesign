@@ -71,14 +71,14 @@ export const TopbarItems = [
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury_logo_unselected.svg`,
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury_logo_selected.svg`,
   },
-  {
-    id: 3,
-    title: 'Lists',
-    path: '/dashboard/lists',
-    activePaths: ['/dashboard/lists'],
-    icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/list.svg`,
-    iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/list_filled.svg`,
-  },
+  // {
+  //   id: 3,
+  //   title: 'Lists',
+  //   path: '/dashboard/lists',
+  //   activePaths: ['/dashboard/lists'],
+  //   icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/list.svg`,
+  //   iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/list_filled.svg`,
+  // },
   // {
   //   id: 2,
   //   title: 'Chat',
