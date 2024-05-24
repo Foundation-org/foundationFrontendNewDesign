@@ -424,7 +424,7 @@ const QuestBottombar = ({
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/addToList.svg`}
             alt="addToList"
-            className="h-[9.5px] w-3 cursor-pointer tablet:h-[20px] tablet:w-[25.5px]"
+            className="h-3 w-3 cursor-pointer tablet:h-[23px] tablet:w-[22px]"
             onClick={() => setAddToList(true)}
           />
         </div>

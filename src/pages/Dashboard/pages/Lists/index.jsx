@@ -9,14 +9,17 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchLists } from '../../../../services/api/listsApi';
 import { useNavigate } from 'react-router-dom';
 import { referralModalStyle } from '../../../../constants/styles';
+import DeleteListPopup from '../../../../components/dialogue-boxes/DeleteListPopup';
 
 const Lists = () => {
   const navigate = useNavigate();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [items, setItems] = useState([]);
   const [copyModal, setCopyModal] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleCopyClose = () => setCopyModal(false);
+  const handleClose = () => setModalVisible(false);
 
   const {
     data: listData = [],
@@ -46,6 +49,15 @@ const Lists = () => {
       >
         <CopyDialogue handleClose={handleCopyClose} />
       </BasicModal>
+      {modalVisible && (
+        <DeleteListPopup
+          handleClose={handleClose}
+          modalVisible={modalVisible}
+          title={'Delete List'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
+          // id={item._id}
+        />
+      )}
       <Reorder.Group onReorder={setItems} values={items} className="flex flex-col gap-[5.7px] tablet:gap-[10px]">
         {items?.map((item) => (
           <div
@@ -126,7 +138,14 @@ const Lists = () => {
                 >
                   {persistedTheme === 'dark' ? <Copy /> : <Copy />}
                 </div>
-                <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/trash-icon.svg`} alt="trash-icon" />
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/trash-icon.svg`}
+                  alt="trash-icon"
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setModalVisible(true);
+                  }}
+                />
               </div>
             </div>
           </div>

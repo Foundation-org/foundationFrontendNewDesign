@@ -24,13 +24,16 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   const { mutateAsync: createNewList, isPending: IsLoadingCreate } = useMutation({
     mutationFn: createList,
     onSuccess: (resp) => {
-      toast.success('New list created.');
-      queryClient.invalidateQueries(['lists']);
-      setListName('');
-      setCreateLoading(false);
+      if (resp.status === 200) {
+        toast.success('New list created.');
+        queryClient.invalidateQueries(['lists']);
+        setListName('');
+      }
+      if (resp.response.status === 500) {
+        toast.warning('List with a similar name already exists.');
+      }
     },
     onError: (err) => {
-      setCreateLoading(false);
       console.log(err);
     },
   });
@@ -38,9 +41,11 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   const { mutateAsync: addPostInList, isPending: isLoading } = useMutation({
     mutationFn: addPostinAList,
     onSuccess: (resp) => {
-      toast.success('Post added in a list.');
-      queryClient.invalidateQueries(['lists']);
-      handleClose();
+      if (resp.status === 200) {
+        toast.success('Post added in a list.');
+        queryClient.invalidateQueries(['lists']);
+        handleClose();
+      }
     },
     onError: (err) => {
       console.log(err);
@@ -62,13 +67,14 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
 
   const addMatchingQuestIds = (data, questId) => {
     let temp = [];
-    data.forEach((item) => {
-      item.post.forEach((postItem) => {
-        if (postItem.questForeginKey._id === questId) {
-          temp.push(item._id);
-        }
+    data &&
+      data.forEach((item) => {
+        item.post.forEach((postItem) => {
+          if (postItem.questForeginKey._id === questId) {
+            temp.push(item._id);
+          }
+        });
       });
-    });
     setSelectedOption((prev) => [...prev, ...temp]);
   };
 
@@ -82,7 +88,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     });
   };
 
-  console.log(selectedOption);
   useEffect(() => {
     addMatchingQuestIds(listData, questStartData._id);
   }, [listData]);
@@ -206,7 +211,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                   });
                 }}
               >
-                {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
               </Button>
             </div>
           </>
