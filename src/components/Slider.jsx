@@ -124,14 +124,6 @@ function Slider({ isFetching }) {
     switch (type) {
       case 'newest-first':
         if (filterStates.filterBySort !== 'Newest First') {
-          // setSliderloading(true);
-          dispatch(setIsShowPlayer(false));
-          dispatch(setPlayingPlayerId(''));
-          dispatch(resetPlayingIds());
-          dispatch(filtersActions.setBookmarks(false));
-          dispatch(homeFilterActions.setBlockTopics([]));
-          dispatch(filtersActions.setFilterByScope('All'));
-          dispatch(filtersActions.setFilterBySort('Newest First'));
           setFilters({
             ...filterStates,
             filterBySort: 'Newest First',
@@ -146,10 +138,6 @@ function Slider({ isFetching }) {
               },
             },
           });
-        }
-        break;
-      case 'most-popular':
-        if (filterStates.filterBySort !== 'Most Popular') {
           // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
@@ -157,7 +145,11 @@ function Slider({ isFetching }) {
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
-          dispatch(filtersActions.setFilterBySort('Most Popular'));
+          dispatch(filtersActions.setFilterBySort('Newest First'));
+        }
+        break;
+      case 'most-popular':
+        if (filterStates.filterBySort !== 'Most Popular') {
           setFilters({
             ...filterStates,
             filterByScope: '',
@@ -172,18 +164,18 @@ function Slider({ isFetching }) {
               },
             },
           });
-        }
-        break;
-      case 'my-posts':
-        if (filterStates.filterByScope !== 'Me') {
           // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
           dispatch(resetPlayingIds());
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
-          dispatch(filtersActions.setFilterBySort(''));
-          dispatch(filtersActions.setFilterByScope('Me'));
+          dispatch(filtersActions.setFilterByScope(true));
+          dispatch(filtersActions.setFilterBySort('Most Popular'));
+        }
+        break;
+      case 'my-posts':
+        if (filterStates.filterByScope !== 'Me') {
           setFilters({
             ...filterStates,
             filterByScope: 'Me',
@@ -198,18 +190,18 @@ function Slider({ isFetching }) {
               },
             },
           });
-        }
-        break;
-      case 'bookmarks':
-        if (filterStates.bookmarks !== true) {
           // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
           dispatch(resetPlayingIds());
+          dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterBySort(''));
-          dispatch(filtersActions.setFilterByScope('All'));
-          dispatch(filtersActions.setBookmarks(true));
+          dispatch(filtersActions.setFilterByScope('Me'));
+        }
+        break;
+      case 'bookmarks':
+        if (filterStates.bookmarks !== true) {
           setFilters({
             ...filterStates,
             filterBySort: '',
@@ -224,6 +216,14 @@ function Slider({ isFetching }) {
               },
             },
           });
+          // setSliderloading(true);
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
+          dispatch(resetPlayingIds());
+          dispatch(homeFilterActions.setBlockTopics([]));
+          dispatch(filtersActions.setFilterBySort(''));
+          dispatch(filtersActions.setFilterByScope('All'));
+          dispatch(filtersActions.setBookmarks(true));
         }
         break;
       case 'topics':
