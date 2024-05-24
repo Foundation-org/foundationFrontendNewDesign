@@ -94,14 +94,7 @@ export function Router() {
             <Route path="/term-of-service" element={<TermOfService />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/welcome" element={<Welcome />} />
-            <Route
-              path="/dashboard/"
-              element={
-                <ErrorBoundary>
-                  <Dashboard />
-                </ErrorBoundary>
-              }
-            >
+            <Route path="/dashboard/" element={<Dashboard />}>
               <Route path="" element={<QuestStartSection />} />
               <Route path="help" element={<CustomerSupport />}>
                 <Route path="about" element={<About />} />
