@@ -179,7 +179,9 @@ const QuestBottombar = ({
         modalVisible={modalVisible}
         questStartData={questStartData}
       />
-      <AddToListPopup handleClose={addToListPopupClose} modalVisible={addToList} questStartData={questStartData} />
+      {addToList && (
+        <AddToListPopup handleClose={addToListPopupClose} modalVisible={addToList} questStartData={questStartData} />
+      )}
       {/* {postProperties === 'SharedLinks' && (
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
