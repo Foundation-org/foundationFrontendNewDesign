@@ -35,13 +35,13 @@ function SoundcloudWidget({ SCurl, playing, questId }) {
         return;
       }
       userInitiatedRef.current = true;
-      widget.isPaused((playerIsPaused) => {
-        if (!playerIsPaused) {
-          dispatch(setPlayingPlayerId(questId));
-          dispatch(toggleMedia(true));
-          dispatch(setIsShowPlayer(true));
-        }
-      });
+      // widget.isPaused((playerIsPaused) => {
+      if (!playingRef.current) {
+        dispatch(setPlayingPlayerId(questId));
+        dispatch(toggleMedia(true));
+        dispatch(setIsShowPlayer(true));
+      }
+      // });
     });
 
     widget.bind(SC.Widget.Events.PAUSE, () => {
@@ -62,12 +62,6 @@ function SoundcloudWidget({ SCurl, playing, questId }) {
     widget.bind(SC.Widget.Events.ERROR, (error) => {
       console.error('SoundCloud Widget Error', error);
     });
-
-    return () => {
-      widget.unbind(SC.Widget.Events.PLAY);
-      widget.unbind(SC.Widget.Events.PAUSE);
-      widget.unbind(SC.Widget.Events.FINISH);
-    };
   }, [dispatch, questId]);
 
   useEffect(() => {
