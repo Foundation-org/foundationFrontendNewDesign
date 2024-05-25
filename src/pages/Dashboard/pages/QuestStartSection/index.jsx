@@ -160,7 +160,7 @@ const QuestStartSection = () => {
           </div>
         </div>
         {questUtils.isShowPlayer && (
-          <div className="absolute bottom-8 left-1/2 block -translate-x-1/2 laptop:hidden">
+          <div className="absolute bottom-0 left-1/2 block -translate-x-1/2 laptop:hidden">
             <div className="relative">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
