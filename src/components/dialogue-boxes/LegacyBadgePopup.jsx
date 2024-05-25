@@ -47,6 +47,7 @@ const LegacyBadgePopup = ({
       setReTypePassword('');
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
+      localStorage.setItem('legacyHash', hashPassword);
       console.log(hashPassword);
       setIsLoading(false);
     } else {

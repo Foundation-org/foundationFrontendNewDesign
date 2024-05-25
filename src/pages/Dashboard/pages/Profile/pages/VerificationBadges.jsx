@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
-import { LoginSocialFacebook } from 'reactjs-social-login';
+import { LoginSocialFacebook } from './ReactFacebook';
 import { LoginSocialLinkedin } from './ReactLinkedIn';
 import { LoginSocialYoutube } from './ReactYoutube';
 import VerificationPopups from '../components/VerificationPopups';
@@ -265,7 +265,7 @@ const VerificationBadges = () => {
               </Button>
             ) : (
               <LoginSocialFacebook
-                appId={import.meta.env.VITE_FB_APP_ID}
+                client_id={import.meta.env.VITE_FB_APP_ID}
                 onResolve={({ provider, data }) => {
                   console.log(provider, data);
                   setIsLoading(true);

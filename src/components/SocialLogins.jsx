@@ -1,10 +1,11 @@
-import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
+import { LoginSocialGoogle } from 'reactjs-social-login';
 import { useSelector } from 'react-redux';
 import Button from './Button';
 import { GithubAuthProvider, TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
 import { authentication } from '../pages/Dashboard/pages/Profile/pages/firebase-config';
 import { InstagramLogin } from '@amraneze/react-instagram-login';
 import { LoginSocialLinkedin } from '../pages/Dashboard/pages/Profile/pages/ReactLinkedIn';
+import { LoginSocialFacebook } from '../pages/Dashboard/pages/Profile/pages/ReactFacebook';
 
 const REDIRECT_URI = window.location.href;
 
