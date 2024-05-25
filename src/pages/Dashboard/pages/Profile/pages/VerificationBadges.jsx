@@ -206,7 +206,7 @@ const VerificationBadges = () => {
         {/* all */}
         <div className="flex flex-col items-center gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]">
           {/* Facebook */}
-          <div className="flex items-center gap-[8.5px] laptop:gap-5">
+          <div className="relative flex items-center gap-[8.5px] laptop:gap-5">
             <div className="absolute -left-5 tablet:-left-[42px]">
               {checkPrimary('facebook') && (
                 <img
