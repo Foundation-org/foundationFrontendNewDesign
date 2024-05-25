@@ -49,7 +49,7 @@ export default function DashboardLayout({ children }) {
     isSuccess: userInfoSuccess,
     isError: userInfoError,
   } = useQuery({
-    queryKey: ['userInfo'],
+    queryKey: ['userInfo', localStorage.getItem('uuid')],
     queryFn: userInfo,
   });
 
@@ -70,7 +70,7 @@ export default function DashboardLayout({ children }) {
     if (userInfoError && !userInfoData?.data) {
       getUserInfoById();
     }
-  }, [userInfoSuccess, userInfoData, getUserInfoById]);
+  }, [userInfoError, userInfoData, getUserInfoById]);
 
   useEffect(() => {
     // Handle userInfoData when successfully fetched
