@@ -118,7 +118,7 @@ const SocialLogins = ({
       </LoginSocialGoogle>
       <LoginSocialFacebook
         // isOnlyGetToken
-        appId={import.meta.env.VITE_FB_APP_ID}
+        client_id={import.meta.env.VITE_FB_APP_ID}
         onResolve={({ provider, data }) => {
           console.log(provider);
           setProvider(provider);
