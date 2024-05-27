@@ -85,7 +85,7 @@ export default function Signup() {
     try {
       data.uuid = localStorage.getItem('uuid');
       data.type = provider;
-      const res = await api.post(`/user/signUpGuest/SocialBadges`, data);
+      const res = await api.post(`/user/signUpGuest/SocialBadges`, { data, type: provider });
       if (res.status === 200) {
         dispatch(addUser(res.data));
         navigate('/dashboard');
