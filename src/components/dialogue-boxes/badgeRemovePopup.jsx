@@ -41,6 +41,11 @@ export default function BadgeRemovePopup({
           type: type,
           uuid: fetchUser.uuid,
         });
+      } else if (badgeType === 'password') {
+        removeBadge = await api.post('/addPasswordBadgesUpdate', {
+          uuid: fetchUser.uuid,
+          eyk: localStorage.getItem('legacyHash'),
+        });
       } else if (badgeType === 'passkey') {
         removeBadge = await api.post(`/removePasskey`, {
           type: type,
@@ -66,6 +71,9 @@ export default function BadgeRemovePopup({
       }
 
       if (removeBadge.status === 200) {
+        if (type === 'password') {
+          localStorage.removeItem('legacyHash');
+        }
         toast.success('Badge Removed Successfully!');
         queryClient.invalidateQueries(['userInfo']);
         handleClose();

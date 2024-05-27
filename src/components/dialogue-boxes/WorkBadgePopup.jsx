@@ -188,11 +188,15 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
         setLoading(false);
         return;
       }
-      const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, {
+      const payload = {
         data,
         type,
         uuid: localStorage.getItem('uuid'),
-      });
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.eyk = localStorage.getItem('legacyHash');
+      }
+      const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
         queryClient.invalidateQueries(['userInfo']);
         toast.success('Badge Added Successfully!');

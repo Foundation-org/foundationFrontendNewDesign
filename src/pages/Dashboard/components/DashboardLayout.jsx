@@ -268,7 +268,7 @@ export default function DashboardLayout({ children }) {
                 <div className="flex h-7 flex-col justify-between">
                   <h4 className="heading w-fit border-b">My Balance</h4>
                   <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
-                    {userInfoData && userInfoData?.data.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
+                    {userInfoData && userInfoData?.data.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX log
                   </p>
                 </div>
               </div>

@@ -6,7 +6,12 @@ import VerificationPopups from '../../components/VerificationPopups';
 import Button from '../../components/Button';
 import AddCellPhonePopup from '../../../../../../components/dialogue-boxes/AddCellPhonePopup';
 
-export default function Contact({ fetchUser, handleRemoveBadgePopup }) {
+export default function Contact({
+  fetchUser,
+  handleRemoveBadgePopup,
+  handleOpenPasswordConfirmation,
+  checkLegacyBadge,
+}) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isPopup, setIsPopup] = useState(false);
@@ -31,10 +36,13 @@ export default function Contact({ fetchUser, handleRemoveBadgePopup }) {
     return;
   };
 
-  const handleClickContactBadgeEmail = (type, title, image) => {
+  const handleClickContactBadgeEmail = async (type, title, image) => {
     if (persistedUserInfo?.role === 'guest') {
       handleGuestBadgeAdd();
     } else {
+      if (checkLegacyBadge()) {
+        await handleOpenPasswordConfirmation();
+      }
       if (!checkContact(type)) {
         setIsPopup(true);
         setSelectedBadge(type);

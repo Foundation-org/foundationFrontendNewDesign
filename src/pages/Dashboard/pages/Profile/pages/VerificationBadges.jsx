@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
@@ -19,6 +19,7 @@ import Contact from './verification-badges/Contact';
 import { useErrorBoundary } from 'react-error-boundary';
 import { useQueryClient } from '@tanstack/react-query';
 import Legacy from './verification-badges/Legacy';
+import LegacyConfirmationPopup from '../../../../../components/dialogue-boxes/LegacyConfirmationPopup';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -29,15 +30,13 @@ const VerificationBadges = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
+  const [isPasswordConfirmation, setIsPasswordConfirmation] = useState();
+  const legacyPromiseRef = useRef();
 
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
 
-  const loginWithYoutube = () => {};
-
-  const handleSoundCloud = () => {
-    // window.location.href = `https://secure.soundcloud.com/authorize?client_id=${'clientId'}&redirect_uri=${'redirectUri'}&response_type=code`;
-  };
+  const checkLegacyBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.legacy ? true : false));
 
   const loginInWithInsta = async (code) => {
     try {
@@ -170,9 +169,19 @@ const VerificationBadges = () => {
     return;
   };
 
-  const handleRemoveBadgePopup = (item) => {
+  const handleRemoveBadgePopup = async (item) => {
+    if (checkLegacyBadge()) {
+      await handleOpenPasswordConfirmation();
+    }
     setDeleteModalState(item);
     setModalVisible(true);
+  };
+
+  const handleOpenPasswordConfirmation = () => {
+    setIsPasswordConfirmation(true);
+    return new Promise((resolve) => {
+      legacyPromiseRef.current = resolve;
+    });
   };
 
   return (
@@ -190,6 +199,14 @@ const VerificationBadges = () => {
           fetchUser={persistedUserInfo}
         />
       )}
+      <LegacyConfirmationPopup
+        isPopup={isPasswordConfirmation}
+        setIsPopup={setIsPasswordConfirmation}
+        title="Password"
+        type={'password'}
+        logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`}
+        legacyPromiseRef={legacyPromiseRef}
+      />
       {isLoading && <Loader />}
 
       <div
@@ -197,7 +214,12 @@ const VerificationBadges = () => {
           persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
         } relative mx-[15px] mb-8 flex flex-col gap-[7px] rounded-[13.7px] px-5 pb-[17.57px] pt-[14px] tablet:mx-6 tablet:gap-4 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5 laptop:gap-5 laptop:px-[40px]`}
       >
-        <Contact fetchUser={persistedUserInfo} handleRemoveBadgePopup={handleRemoveBadgePopup} />
+        <Contact
+          fetchUser={persistedUserInfo}
+          handleRemoveBadgePopup={handleRemoveBadgePopup}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+        />
 
         <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
           Social
@@ -233,10 +255,13 @@ const VerificationBadges = () => {
             {checkSocial('facebook') ? (
               <Button
                 color={checkSocial('facebook') ? (checkPrimary('facebook') ? 'yellow' : 'red') : 'blue'}
-                onClick={() => {
+                onClick={async () => {
                   if (persistedUserInfo?.role === 'guest') {
                     handleGuestBadgeAdd();
                   } else {
+                    if (checkLegacyBadge()) {
+                      await handleOpenPasswordConfirmation();
+                    }
                     checkSocial('facebook') &&
                       handleRemoveBadgePopup({
                         title: 'facebook',
@@ -266,8 +291,10 @@ const VerificationBadges = () => {
             ) : (
               <LoginSocialFacebook
                 client_id={import.meta.env.VITE_FB_APP_ID}
-                onResolve={({ provider, data }) => {
-                  console.log(provider, data);
+                onResolve={async ({ provider, data }) => {
+                  if (checkLegacyBadge()) {
+                    await handleOpenPasswordConfirmation();
+                  }
                   setIsLoading(true);
                   handleAddBadge(provider, data);
                 }}
@@ -308,10 +335,14 @@ const VerificationBadges = () => {
               <>
                 <Button
                   color={checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'yellow' : 'red') : 'blue'}
-                  onClick={() => {
+                  onClick={async () => {
                     if (persistedUserInfo?.role === 'guest') {
                       handleGuestBadgeAdd();
                     } else {
+                      if (checkLegacyBadge()) {
+                        await handleOpenPasswordConfirmation();
+                      }
+
                       checkSocial('linkedin') &&
                         handleRemoveBadgePopup({
                           title: 'LinkedIn',
@@ -359,7 +390,10 @@ const VerificationBadges = () => {
                 // isOnlyGetToken
                 client_id={import.meta.env.VITE_LINKEDIN_KEY}
                 client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
-                onResolve={({ provider, data }) => {
+                onResolve={async ({ provider, data }) => {
+                  if (checkLegacyBadge()) {
+                    await handleOpenPasswordConfirmation();
+                  }
                   console.log(provider, data);
                   setIsLoading(true);
                   handleAddBadge(provider, data);
@@ -376,9 +410,6 @@ const VerificationBadges = () => {
                   color={checkSocial('linkedin') ? 'red' : 'blue'}
                   // disabled={true}
                   // color="gray"
-                  onClick={() => {
-                    checkSocial('linkedin') && handleRemoveBadge('linkedin');
-                  }}
                 >
                   {checkSocial('linkedin') ? 'Remove' : 'Add Badge'}
                   <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
@@ -408,10 +439,14 @@ const VerificationBadges = () => {
             {checkSocial('twitter') ? (
               <Button
                 color={checkSocial('twitter') ? (checkPrimary('twitter') ? 'yellow' : 'red') : 'blue'}
-                onClick={() => {
+                onClick={async () => {
                   if (persistedUserInfo?.role === 'guest') {
                     handleGuestBadgeAdd();
                   } else {
+                    if (checkLegacyBadge()) {
+                      await handleOpenPasswordConfirmation();
+                    }
+
                     checkSocial('twitter') &&
                       handleRemoveBadgePopup({
                         title: 'twitter',
@@ -441,7 +476,10 @@ const VerificationBadges = () => {
             ) : (
               <Button
                 color={checkSocial('twitter') ? (checkPrimary('twitter') ? 'yellow' : 'red') : 'blue'}
-                onClick={() => {
+                onClick={async () => {
+                  if (checkLegacyBadge()) {
+                    await handleOpenPasswordConfirmation();
+                  }
                   loginWithTwitter();
                 }}
                 disabled={checkPrimary('twitter')}
@@ -483,10 +521,14 @@ const VerificationBadges = () => {
               <>
                 <Button
                   color={checkSocial('instagram') ? (checkPrimary('instagram') ? 'yellow' : 'red') : 'blue'}
-                  onClick={() => {
+                  onClick={async () => {
                     if (persistedUserInfo?.role === 'guest') {
                       handleGuestBadgeAdd();
                     } else {
+                      if (checkLegacyBadge()) {
+                        await handleOpenPasswordConfirmation();
+                      }
+
                       checkSocial('instagram') &&
                         handleRemoveBadgePopup({
                           title: 'instagram',
@@ -517,8 +559,11 @@ const VerificationBadges = () => {
             ) : (
               <InstagramLogin
                 clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-                onSuccess={(code) => {
-                  console.log(code), loginInWithInsta(code);
+                onSuccess={async (code) => {
+                  if (checkLegacyBadge()) {
+                    await handleOpenPasswordConfirmation();
+                  }
+                  loginInWithInsta(code);
                 }}
                 onFailure={(err) => console.log('error', err)}
                 redirectUri={window.location.href}
@@ -555,10 +600,13 @@ const VerificationBadges = () => {
             {checkSocial('github') ? (
               <Button
                 color={checkSocial('github') ? (checkPrimary('github') ? 'yellow' : 'red') : 'blue'}
-                onClick={() => {
+                onClick={async () => {
                   if (persistedUserInfo?.role === 'guest') {
                     handleGuestBadgeAdd();
                   } else {
+                    if (checkLegacyBadge()) {
+                      await handleOpenPasswordConfirmation();
+                    }
                     checkSocial('github') &&
                       handleRemoveBadgePopup({
                         title: 'github',
@@ -588,7 +636,10 @@ const VerificationBadges = () => {
             ) : (
               <Button
                 color={checkSocial('github') ? 'red' : 'blue'}
-                onClick={() => {
+                onClick={async () => {
+                  if (checkLegacyBadge()) {
+                    await handleOpenPasswordConfirmation();
+                  }
                   loginWithGithub();
                 }}
               >
@@ -724,9 +775,22 @@ const VerificationBadges = () => {
         </div> */}
         </div>
 
-        <Web3 fetchUser={persistedUserInfo} />
-        {/* <Legacy fetchUser={persistedUserInfo} handleRemoveBadgePopup={handleRemoveBadgePopup} type={'legacy'} /> */}
-        <Personal fetchUser={persistedUserInfo} handleRemoveBadgePopup={handleRemoveBadgePopup} />
+        <Web3
+          fetchUser={persistedUserInfo}
+          handleRemoveBadgePopup={handleRemoveBadgePopup}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+        />
+        <Legacy
+          fetchUser={persistedUserInfo}
+          handleRemoveBadgePopup={handleRemoveBadgePopup}
+          checkLegacyBadge={checkLegacyBadge}
+        />
+        <Personal
+          fetchUser={persistedUserInfo}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+        />
       </div>
     </div>
   );

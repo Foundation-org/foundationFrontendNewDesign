@@ -345,12 +345,18 @@ const PersonalBadgesPopup = ({
     }
 
     try {
-      const addBadge = await api.post(`/addBadge/personal/add`, {
+      const payload = {
         personal: {
           [type]: value,
         },
         uuid: localStorage.getItem('uuid'),
-      });
+      };
+
+      if (localStorage.getItem('legacyHash')) {
+        payload.eyk = localStorage.getItem('legacyHash');
+      }
+
+      const addBadge = await api.post(`/addBadge/personal/add`, payload);
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
         queryClient.invalidateQueries(['userInfo']);

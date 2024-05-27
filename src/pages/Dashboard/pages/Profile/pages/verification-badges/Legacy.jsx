@@ -3,9 +3,10 @@ import { legacy } from '../../../../../../constants/varification-badges';
 import Button from '../../components/Button';
 import LegacyBadgePopup from '../../../../../../components/dialogue-boxes/LegacyBadgePopup';
 
-const Legacy = ({ fetchUser }) => {
+const Legacy = ({ fetchUser, handleRemoveBadgePopup, checkLegacyBadge }) => {
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
   const [edit, setEdit] = useState(false);
+  checkLegacyBadge();
 
   return (
     <>
@@ -20,6 +21,7 @@ const Legacy = ({ fetchUser }) => {
         setEdit={setEdit}
         fetchUser={fetchUser}
         setIsPersonalPopup={setIsPersonalPopup}
+        handleRemoveBadgePopup={handleRemoveBadgePopup}
       />
       <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
         Legacy
@@ -39,16 +41,21 @@ const Legacy = ({ fetchUser }) => {
               </h1>
             </div>
             <Button
-              color={item.ButtonColor}
+              color={checkLegacyBadge() ? 'red' : 'blue'}
               disabled={item.disabled}
               onClick={() => {
-                setIsPersonalPopup(true);
+                checkLegacyBadge()
+                  ? handleRemoveBadgePopup({
+                      title: 'Password',
+                      type: 'password',
+                      image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+                    })
+                  : setIsPersonalPopup(true);
               }}
             >
-              {item.ButtonText}
-
+              {checkLegacyBadge() ? 'Remove' : 'Add Badge'}
               <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                (+0.96 FDX)
+                {checkLegacyBadge() ? '' : '(+0.96 FDX)'}
               </span>
             </Button>
           </div>

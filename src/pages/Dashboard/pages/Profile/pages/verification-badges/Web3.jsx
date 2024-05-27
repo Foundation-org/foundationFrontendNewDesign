@@ -11,7 +11,7 @@ import '@farcaster/auth-kit/styles.css';
 import { AuthKitProvider, SignInButton, useProfile, useSignIn } from '@farcaster/auth-kit';
 import { useQueryClient } from '@tanstack/react-query';
 
-export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
+export default function Web3({ fetchUser, handleRemoveBadgePopup, handleOpenPasswordConfirmation, checkLegacyBadge }) {
   const { sdk } = useSDK();
   const queryClient = useQueryClient();
   const checkSecondary = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType && i.secondary === true);
@@ -32,12 +32,14 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
 
   const handleWeb3 = async (accounts) => {
     try {
-      const addBadge = await api.post(`/addBadge/web3/add`, {
+      const payload = {
         web3: {
           ['etherium-wallet']: accounts,
         },
         uuid: fetchUser.uuid,
-      });
+      };
+
+      const addBadge = await api.post(`/addBadge/web3/add`, payload);
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
         queryClient.invalidateQueries(['userInfo']);
@@ -287,7 +289,10 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup }) {
               color={
                 checkPassKeyBadge(item.accountName, item.type) || checkWeb3Badge(item.type) ? 'red' : item.ButtonColor
               }
-              onClick={() => {
+              onClick={async () => {
+                if (item.type === 'etherium-wallet') {
+                  if (checkLegacyBadge()) await handleOpenPasswordConfirmation();
+                }
                 item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)
                   ? triggerFarcaster()
                   : item.type === 'etherium-wallet'

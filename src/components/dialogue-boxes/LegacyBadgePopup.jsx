@@ -6,6 +6,8 @@ import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'sonner';
 import bcrypt from 'bcryptjs';
 import PasswordStrengthBar from 'react-password-strength-bar';
+import api from '../../services/api/Axios';
+import { useQueryClient } from '@tanstack/react-query';
 
 const LegacyBadgePopup = ({
   isPopup,
@@ -17,6 +19,7 @@ const LegacyBadgePopup = ({
   edit,
   fetchUser,
   setIsPersonalPopup,
+  handleRemoveBadgePopup,
 }) => {
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
@@ -30,6 +33,7 @@ const LegacyBadgePopup = ({
   const [isLoading, setIsLoading] = useState(false);
   const inputType = showPassword ? 'text' : 'password';
   const cnfmPassInputType = showCnfmPassword ? 'text' : 'password';
+  const queryClient = useQueryClient();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -48,8 +52,20 @@ const LegacyBadgePopup = ({
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
       localStorage.setItem('legacyHash', hashPassword);
-      console.log(hashPassword);
-      setIsLoading(false);
+      try {
+        const resp = await api.post('/addPasswordBadgesUpdate', {
+          uuid: localStorage.getItem('uuid'),
+          eyk: hashPassword,
+        });
+        if (resp.status === 200) {
+          toast.success('Badge Added Successfully');
+          handleClose();
+          queryClient.invalidateQueries(['userInfo']);
+        }
+      } catch (err) {
+        console.log(err);
+        setIsLoading(false);
+      }
     } else {
       toast.warning('Password does not match');
       setIsLoading(false);
@@ -147,21 +163,21 @@ const LegacyBadgePopup = ({
             </div>
 
             <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
-              {/* {edit && (
-              <Button
-                variant="badge-remove"
-                onClick={() => {
-                  handleRemoveBadgePopup({
-                    title: title,
-                    type: type,
-                    badgeType: 'legacy',
-                    image: logo,
-                  });
-                }}
-              >
-                {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
-              </Button>
-            )} */}
+              {edit && (
+                <Button
+                  variant="badge-remove"
+                  onClick={() => {
+                    handleRemoveBadgePopup({
+                      title: title,
+                      type: type,
+                      badgeType: 'legacy',
+                      image: logo,
+                    });
+                  }}
+                >
+                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+                </Button>
+              )}
 
               <Button variant="submit" onClick={addPasswordBadge}>
                 {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
