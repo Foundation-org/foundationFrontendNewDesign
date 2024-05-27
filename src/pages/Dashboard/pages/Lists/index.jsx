@@ -10,6 +10,7 @@ import { fetchLists } from '../../../../services/api/listsApi';
 import { useNavigate } from 'react-router-dom';
 import { referralModalStyle } from '../../../../constants/styles';
 import DeleteListPopup from '../../../../components/dialogue-boxes/DeleteListPopup';
+import ShareListLink from '../../../../components/dialogue-boxes/ShareListLink';
 
 const Lists = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Lists = () => {
   const [copyModal, setCopyModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [categoryId, setCategoryId] = useState('');
+  const [selectedItem, setSelectedItem] = useState();
 
   const handleCopyClose = () => setCopyModal(false);
   const handleClose = () => setModalVisible(false);
@@ -48,7 +50,7 @@ const Lists = () => {
         customStyle={referralModalStyle}
         customClasses="rounded-[10px] tablet:rounded-[26px]"
       >
-        <CopyDialogue handleClose={handleCopyClose} />
+        <ShareListLink handleClose={handleCopyClose} selectedItem={selectedItem} />
       </BasicModal>
       {modalVisible && (
         <DeleteListPopup
@@ -73,7 +75,6 @@ const Lists = () => {
                   {item.category}
                 </h4>
               </div>
-
               <div className="my-[0.94rem] mr-[2.25rem]">
                 <ul className="space-y-[0.69rem]">
                   {item.post.length >= 1 &&
@@ -126,7 +127,7 @@ const Lists = () => {
                       className="h-2 w-2 tablet:h-6 tablet:w-6"
                     />
                     <h2 className="text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
-                      {item.link === null ? 0 : item.link} Clicks{' '}
+                      {item.clicks === null ? 0 : item.clicks} Clicks{' '}
                     </h2>
                   </div>
                   <div className="flex items-center gap-[1px] tablet:gap-2">
@@ -162,6 +163,7 @@ const Lists = () => {
                 <div className="flex items-center gap-[0.17rem] tablet:gap-[1.62rem]">
                   <div
                     onClick={() => {
+                      setSelectedItem(item);
                       setCopyModal(true);
                     }}
                     className="cursor-pointer"
