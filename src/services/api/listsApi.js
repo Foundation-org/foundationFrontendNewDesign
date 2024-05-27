@@ -1,8 +1,11 @@
 import api from './Axios';
 
-export const fetchLists = async () => {
+export const fetchLists = async (search) => {
+  const userUuid = localStorage.getItem('uuid');
+  const url = search ? `/userlists/userList/${userUuid}/${search}` : `/userlists/userList/${userUuid}`;
+
   try {
-    const resp = await api.get(`/userlists/userList/${localStorage.getItem('uuid')}`);
+    const resp = await api.get(url);
     return resp.data.userList;
   } catch (err) {
     return err;
@@ -33,5 +36,62 @@ export const findPostsByCategoryId = async (data) => {
     return resp.data.userList;
   } catch (err) {
     return err;
+  }
+};
+
+export const deleteList = async (categoryId) => {
+  try {
+    const resp = await api.delete(
+      `/userlists/userList/deleteCategoryFromList/${localStorage.getItem('uuid')}/${categoryId}`,
+    );
+    return resp.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const findCategoryByName = async (data) => {
+  try {
+    const resp = await api.get(`/userlists/userList/findCategoryByName/${data.userUuid}/${data.categoryName}`);
+    return resp.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const updateCategory = async ({ userUuid, categoryId, postId }) => {
+  try {
+    const resp = await api.patch(`/userlists/userList/updateCategoryInUserList/${userUuid}/${categoryId}/${postId}`);
+    return resp.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const updateCategoryName = async ({ userUuid, categoryId, category }) => {
+  try {
+    const resp = await api.patch(`/userlists/userList/updateCategoryInUserList/${userUuid}/${categoryId}`, {
+      category,
+    });
+    return resp.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const searchPosts = async (term, uuid) => {
+  try {
+    if (term !== '') {
+      const response = await api.post(`/search/easySearch?term=${term}`, {
+        moderationRatingFilter: {
+          initial: 0,
+          final: 100,
+        },
+        uuid,
+      });
+      return response.data;
+    }
+  } catch (err) {
+    console.log('err', err);
   }
 };

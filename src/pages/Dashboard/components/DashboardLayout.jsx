@@ -6,7 +6,7 @@ import { Button } from '../../../components/ui/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDebounce } from '../../../utils/useDebounce';
 import { addUser } from '../../../features/auth/authSlice';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getTreasuryAmount, userInfo, userInfoById } from '../../../services/api/userAuth';
 import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
 import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
@@ -25,6 +25,7 @@ export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const { canAddPost } = useParams();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
   const getSharedLinksFilters = useSelector(sharedLinksFilters);
@@ -353,8 +354,8 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/help/faq' &&
             location.pathname !== '/help/contact-us' &&
             !location.pathname.startsWith('/p/') &&
-            !location.pathname.startsWith('/dashboard/postsbylist/') &&
-            location.pathname !== '/dashboard/lists' && <SidebarLeft />}
+            !location.pathname.startsWith('/dashboard/profile/postsbylist/') &&
+            location.pathname !== '/dashboard/profile/lists' && <SidebarLeft />}
 
           {location.pathname !== '/dashboard/treasury' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
@@ -368,8 +369,8 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/shared-links' &&
             location.pathname !== '/dashboard/profile/user-settings' &&
             location.pathname !== '/dashboard/profile/feedback' &&
-            !location.pathname.startsWith('/dashboard/postsbylist/') &&
-            location.pathname !== '/dashboard/lists' && <SideNavbar />}
+            !location.pathname.startsWith('/dashboard/profile/postsbylist/') &&
+            location.pathname !== '/dashboard/profile/lists' && <SideNavbar />}
 
           {questUtilsState.isShowPlayer &&
             location.pathname !== '/dashboard/treasury' &&
@@ -400,7 +401,7 @@ export default function DashboardLayout({ children }) {
               </div>
             )}
 
-          {location.pathname.startsWith('/dashboard/postsbylist/') && <ManageList />}
+          {canAddPost !== 'true' && location.pathname.startsWith('/dashboard/profile/postsbylist/') && <ManageList />}
 
           {/* HiddenPost Search */}
           {location.pathname === '/dashboard/profile/hidden-posts' && (

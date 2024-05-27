@@ -101,8 +101,6 @@ export function Router() {
                 <Route path="faq" element={<Faq />} />
                 <Route path="contact-us" element={<ContactUs />} />
               </Route>
-              <Route path="lists" element={<Lists />} />
-              <Route path="postsbylist/:categoryId" element={<PostsByList />} />
               <Route path="quest" element={<Quest />} />
               <Route path="treasury/" element={<TreasuryLayout />}>
                 <Route path="" element={<RedemptionCenter />} />
@@ -136,6 +134,8 @@ export function Router() {
                     </ErrorBoundary>
                   }
                 />
+                <Route path="lists" element={<Lists />} />
+                <Route path="postsbylist/:categoryId/:canAddPost?" element={<PostsByList />} />
                 <Route
                   path="ledger"
                   element={

@@ -8,7 +8,8 @@ import { GrClose } from 'react-icons/gr';
 import { addPostinAList, createList, fetchLists } from '../../services/api/listsApi';
 import PopUp from '../ui/PopUp';
 import { useEffect } from 'react';
-import { LinearProgress } from '@mui/material';
+import { useDebounce } from '../../utils/useDebounce';
+import DeleteListPopup from './DeleteListPopup';
 
 export default function AddToListPopup({ handleClose, modalVisible, questStartData }) {
   const queryClient = useQueryClient();
@@ -16,6 +17,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   const [listName, setListName] = useState('');
   const [search, setSearch] = useState('');
   const [selectedOption, setSelectedOption] = useState([]);
+  const debouncedSearch = useDebounce(search, 1000);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -57,26 +59,26 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     isError,
     isPending,
   } = useQuery({
-    queryFn: fetchLists,
-    queryKey: ['lists'],
+    queryFn: () => fetchLists(debouncedSearch),
+    queryKey: ['lists', debouncedSearch],
   });
 
   if (isError) {
     console.log('some eror occur');
   }
 
-  const addMatchingQuestIds = (data, questId) => {
-    let temp = [];
-    data &&
-      data.forEach((item) => {
-        item.post.forEach((postItem) => {
-          if (postItem.questForeginKey._id === questId) {
-            temp.push(item._id);
-          }
-        });
-      });
-    setSelectedOption((prev) => [...prev, ...temp]);
-  };
+  // const addMatchingQuestIds = (data, questId) => {
+  //   let temp = [];
+  //   data &&
+  //     data.forEach((item) => {
+  //       item.post.forEach((postItem) => {
+  //         if (postItem.questForeginKey._id === questId) {
+  //           temp.push(item._id);
+  //         }
+  //       });
+  //     });
+  //   setSelectedOption((prev) => [...prev, ...temp]);
+  // };
 
   const handleCheckboxChange = (itemId) => {
     setSelectedOption((prevSelectedOption) => {
@@ -88,9 +90,11 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     });
   };
 
-  useEffect(() => {
-    addMatchingQuestIds(listData, questStartData._id);
-  }, [listData]);
+  // useEffect(() => {
+  //   addMatchingQuestIds(listData, questStartData._id);
+  // }, [listData]);
+
+  console.log('items', listData);
 
   return (
     <PopUp
@@ -100,6 +104,15 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
       handleClose={handleClose}
       isBackground={false}
     >
+      {/* {modalVisible && (
+        <DeleteListPopup
+          handleClose={handleClose}
+          modalVisible={modalVisible}
+          title={'Delete List'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
+          // categoryId={categoryId}
+        />
+      )} */}
       <div className="px-[27px] py-3 tablet:px-[74px] tablet:py-[37px]">
         <div className="flex flex-col gap-2 tablet:gap-[10px]">
           <label

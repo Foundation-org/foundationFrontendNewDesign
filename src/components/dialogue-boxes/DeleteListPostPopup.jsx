@@ -2,14 +2,16 @@ import PopUp from '../ui/PopUp';
 import { toast } from 'sonner';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
-import { deleteList } from '../../services/api/listsApi';
+import { updateCategory } from '../../services/api/listsApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 
-export default function DeleteListPopup({ handleClose, modalVisible, title, image, categoryId }) {
+export default function DeleteListPostPopup({ handleClose, modalVisible, title, image, categoryId, postId }) {
   const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
-  const { mutateAsync: handleDeleteList, isPending } = useMutation({
-    mutationFn: deleteList,
+  const { mutateAsync: handleDeletePost, isPending } = useMutation({
+    mutationFn: updateCategory,
     onSuccess: (resp) => {
       console.log('resp', resp);
       console.log('Post deleted Successfully');
@@ -19,7 +21,7 @@ export default function DeleteListPopup({ handleClose, modalVisible, title, imag
       //   return;
       // }
 
-      toast.success('List deleted successfully');
+      toast.success('Post deleted successfully');
 
       // queryClient.setQueriesData(['lists'], (oldData) => {
       //   console.log('old', oldData);
@@ -28,7 +30,7 @@ export default function DeleteListPopup({ handleClose, modalVisible, title, imag
 
       queryClient.invalidateQueries(['lists']);
 
-      handleClose();
+      //   handleClose();
     },
     onError: (error) => {
       console.log(error);
@@ -40,13 +42,17 @@ export default function DeleteListPopup({ handleClose, modalVisible, title, imag
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
-          Are you sure you want to delete this List?
+          Are you sure you want to delete this Post?
         </h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button
             variant={'submit'}
             onClick={() => {
-              handleDeleteList(categoryId);
+              handleDeletePost({
+                userUuid: persistedUserInfo.uuid,
+                categoryId,
+                postId,
+              });
             }}
           >
             {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'}

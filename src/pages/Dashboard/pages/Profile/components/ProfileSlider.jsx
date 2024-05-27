@@ -6,6 +6,7 @@ const createItems = [
   { id: 1, title: 'Verfication Badges', path: '/dashboard/profile', to: '' },
   { id: 0, title: 'Contributions', path: '/dashboard/profile/contributions', to: 'contributions' },
   { id: 3, title: 'Hidden Posts', path: '/dashboard/profile/hidden-posts', to: 'hidden-posts' },
+  { id: 7, title: 'My Lists', path: '/dashboard/profile/lists', to: 'lists' },
   { id: 4, title: 'Shared Links', path: '/dashboard/profile/shared-links', to: 'shared-links' },
   { id: 5, title: 'User Setting', path: '/dashboard/profile/user-settings', to: 'user-settings' },
   { id: 6, title: 'Feedback', path: '/dashboard/profile/feedback', to: 'feedback' },
