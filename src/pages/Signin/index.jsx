@@ -52,7 +52,7 @@ export default function Signin() {
           data,
         });
       } else {
-        res = await api.post(`/user/signInUser/socialBadges`, { data, provider });
+        res = await api.post(`/user/signInUser/socialBadges`, { data, type: provider });
       }
 
       if (res.status === 200) {
