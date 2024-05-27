@@ -1022,11 +1022,11 @@ input[type='number'] {
 
 .carousel .control-arrow:before,
 .carousel.carousel-slider .control-arrow:before {
-  content: url('/public/assets/svgs/carousl-arrow.svg') !important;
+  content: url('/assets/svgs/carousl-arrow.svg') !important;
 }
 
 .carousel .control-prev.control-arrow:before {
-  content: url('/public/assets/svgs/carousl-arrow-back.svg') !important;
+  content: url('/assets/svgs/carousl-arrow-back.svg') !important;
   border: 0px !important;
 }
 
