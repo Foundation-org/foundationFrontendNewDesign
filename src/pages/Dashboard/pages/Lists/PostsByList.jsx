@@ -1,16 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { findPostsByCategoryId, findPostsBySharedLink } from '../../../../services/api/listsApi';
+import {
+  findPostsByCategoryId,
+  findPostsBySharedLink,
+  updateCategoryViewCount,
+} from '../../../../services/api/listsApi';
 import QuestionCardWithToggle from '../QuestStartSection/components/QuestionCardWithToggle';
 import Topbar from '../../components/Topbar';
 import DashboardLayout from '../../components/DashboardLayout';
+import { useEffect } from 'react';
 
 const PostsByList = () => {
   let { id, categoryId } = useParams();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-
-  console.log('id', id);
 
   const {
     data: listData,
@@ -27,6 +30,12 @@ const PostsByList = () => {
     },
     queryKey: ['postsByCategory', categoryId, persistedUserInfo.uuid, id],
   });
+
+  useEffect(() => {
+    if (isSuccess && listData) {
+      updateCategoryViewCount({ categoryLink: id });
+    }
+  }, [isSuccess, listData]);
 
   const content = listData?.post.map((item) => {
     return (

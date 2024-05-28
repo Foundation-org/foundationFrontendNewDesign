@@ -283,13 +283,12 @@ const QuestionCardWithToggle = (props) => {
 
       if (resp.data.message === 'Start Quest Created Successfully') {
         setLoading(false);
-        queryClient.invalidateQueries(['userInfo']);
+        queryClient.invalidateQueries(['userInfo', 'postsByCategory']);
 
         queryClient.setQueryData(['questByShareLink'], (oldData) => ({
           ...resp.data.data,
         }));
 
-        queryClient.invalidateQueries(['postsByCategory']);
         // queryClient.setQueryData(['postsByCategory'], (oldData) => {
         //   console.log('old', oldData);
         // });

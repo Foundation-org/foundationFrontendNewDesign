@@ -123,3 +123,21 @@ export const findPostsBySharedLink = async ({ id }) => {
     return err;
   }
 };
+
+export const updateCategoryViewCount = async ({ categoryLink }) => {
+  try {
+    const resp = await api.get(`/userlists/categoryViewCount/${categoryLink}`);
+    return resp.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+// export const updateCategoryParticipentsCount = async ({ categoryLink }) => {
+//   try {
+//     const resp = await api.get(`/userlists/categoryParticipentsCount/${categoryLink}`);
+//     return resp.data;
+//   } catch (err) {
+//     return err;
+//   }
+// };
