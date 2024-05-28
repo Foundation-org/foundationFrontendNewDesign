@@ -27,7 +27,12 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     onSuccess: (resp) => {
       if (resp.status === 200) {
         toast.success('New list created.');
+        // console.log('resp', resp.data.userList[resp.data.userList.length - 1]);
         queryClient.invalidateQueries(['lists']);
+        // queryClient.setQueriesData(['lists'], (oldData) => {
+        //   return resp.data.userList;
+        // });
+        setSelectedOption((prev) => [resp.data.userList[resp.data.userList.length - 1]._id, ...prev]);
         setListName('');
       }
       if (resp.response.status === 500) {
@@ -66,19 +71,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     console.log('some error occur');
   }
 
-  // const addMatchingQuestIds = (data, questId) => {
-  //   let temp = [];
-  //   data &&
-  //     data.forEach((item) => {
-  //       item.post.forEach((postItem) => {
-  //         if (postItem.questForeginKey._id === questId) {
-  //           temp.push(item._id);
-  //         }
-  //       });
-  //     });
-  //   setSelectedOption((prev) => [...prev, ...temp]);
-  // };
-
   const handleCheckboxChange = (itemId) => {
     setSelectedOption((prevSelectedOption) => {
       if (prevSelectedOption.includes(itemId)) {
@@ -89,22 +81,23 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     });
   };
 
-  // useEffect(() => {
-  //   addMatchingQuestIds(listData, questStartData._id);
-  // }, [listData]);
+  useEffect(() => {
+    const selectedItems =
+      listData &&
+      listData
+        ?.map((list) => {
+          if (Array.isArray(list.post)) {
+            const matchingPosts = list.post.filter((post) => post.questForeginKey._id === questStartData._id);
+            return matchingPosts.length > 0 ? list._id : null;
+          }
+          return null;
+        })
+        .filter((id) => id !== null);
 
-  const checkIfExists = (userList, questStartDataId) => {
-    for (const user of userList) {
-      for (const post of user.post) {
-        if (post.questForeginKey._id === questStartDataId) {
-          return true;
-        }
-      }
+    if (selectedItems && selectedItems.length > 0) {
+      setSelectedOption((prev) => [...prev, ...selectedItems]);
     }
-    return false;
-  };
-
-  // console.log('items', listData, questStartData._id);
+  }, [listData]);
 
   return (
     <PopUp
@@ -204,7 +197,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                         id={`checkbox-${item._id}`}
                         type="checkbox"
                         className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                        checked={selectedOption.includes(item._id) || checkIfExists(listData, questStartData._id)}
+                        checked={selectedOption.includes(item._id)}
                         onChange={() => handleCheckboxChange(item._id)}
                         readOnly
                       />
