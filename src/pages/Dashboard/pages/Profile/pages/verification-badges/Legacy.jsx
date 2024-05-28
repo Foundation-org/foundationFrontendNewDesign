@@ -18,7 +18,6 @@ const Legacy = ({ fetchUser, handleRemoveBadgePopup, checkLegacyBadge }) => {
         placeholder="Answer Here"
         fetchUser={fetchUser}
         setIsPersonalPopup={setIsPersonalPopup}
-        handleRemoveBadgePopup={handleRemoveBadgePopup}
       />
       <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
         Legacy
@@ -46,6 +45,7 @@ const Legacy = ({ fetchUser, handleRemoveBadgePopup, checkLegacyBadge }) => {
                       title: 'Password',
                       type: 'password',
                       image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+                      badgeType: 'password',
                     })
                   : setIsPersonalPopup(true);
               }}

@@ -8,17 +8,7 @@ import PasswordStrengthBar from 'react-password-strength-bar';
 import api from '../../services/api/Axios';
 import { useQueryClient } from '@tanstack/react-query';
 
-const LegacyBadgePopup = ({
-  isPopup,
-  setIsPopup,
-  type,
-  title,
-  logo,
-  placeholder,
-  fetchUser,
-  setIsPersonalPopup,
-  handleRemoveBadgePopup,
-}) => {
+const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
   const [RemoveLoading, setRemoveLoading] = useState(false);
   const handleClose = () => setIsPopup(false);
   const [password, setPassword] = useState('');
@@ -152,19 +142,6 @@ const LegacyBadgePopup = ({
             </div>
 
             <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
-              <Button
-                variant="badge-remove"
-                onClick={() => {
-                  handleRemoveBadgePopup({
-                    title: title,
-                    type: type,
-                    image: logo,
-                  });
-                }}
-              >
-                {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
-              </Button>
-
               <Button variant="submit" onClick={addPasswordBadge}>
                 {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
               </Button>
