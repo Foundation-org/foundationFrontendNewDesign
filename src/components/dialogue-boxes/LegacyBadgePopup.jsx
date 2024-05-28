@@ -8,6 +8,7 @@ import bcrypt from 'bcryptjs';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import api from '../../services/api/Axios';
 import { useQueryClient } from '@tanstack/react-query';
+import CryptoJS from 'crypto-js';
 
 const LegacyBadgePopup = ({
   isPopup,
@@ -49,22 +50,31 @@ const LegacyBadgePopup = ({
     if (password === reTypePassword) {
       setPassword('');
       setReTypePassword('');
-      const salt = await bcrypt.genSalt(10);
-      const hashPassword = await bcrypt.hash(password, salt);
-      localStorage.setItem('legacyHash', hashPassword);
+
       try {
-        const resp = await api.post('/addPasswordBadgesUpdate', {
-          uuid: localStorage.getItem('uuid'),
-          eyk: hashPassword,
+        const infoc = await api.post('user/infoc', {
+          infoc: password,
         });
-        if (resp.status === 200) {
-          toast.success('Badge Added Successfully');
-          handleClose();
-          queryClient.invalidateQueries(['userInfo']);
+        if (infoc.status === 200) {
+          console.log('password hashed', infoc);
+          localStorage.setItem('legacyHash', infoc.data.data);
+          try {
+            const resp = await api.post('/addPasswordBadgesUpdate', {
+              uuid: localStorage.getItem('uuid'),
+              eyk: infoc.data.data,
+            });
+            if (resp.status === 200) {
+              toast.success('Badge Added Successfully');
+              handleClose();
+              queryClient.invalidateQueries(['userInfo']);
+            }
+          } catch (err) {
+            console.log(err);
+            setIsLoading(false);
+          }
         }
       } catch (err) {
         console.log(err);
-        setIsLoading(false);
       }
     } else {
       toast.warning('Password does not match');

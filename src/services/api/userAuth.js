@@ -24,7 +24,7 @@ export const signOut = async () => {
 };
 
 export const userInfo = async () => {
-  return await api.get(`/user/userInfo/${localStorage.getItem('uuid')}`);
+  return await api.get(`/user/userInfo/${localStorage.getItem('uuid')}/${localStorage.getItem('legacyHash')}`);
 };
 
 export const userInfoById = async () => {
