@@ -24,10 +24,16 @@ const Legacy = ({ fetchUser, handleRemoveBadgePopup, checkLegacyBadge }) => {
       </h1>
       <div className="flex flex-col items-center gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]">
         {legacy.map((item, index) => (
-          <div
-            className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5  ${item.disabled ? 'opacity-[60%]' : ''}`}
-            key={index}
-          >
+          <div className="relative flex items-center gap-[8.5px] laptop:gap-5" key={index}>
+            <div className="absolute -left-5 tablet:-left-[42px]">
+              {checkLegacyBadge() && (
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/secondary.svg`}
+                  alt="primary"
+                  className="size-[15px] tablet:size-[30px]"
+                />
+              )}
+            </div>
             <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
             <div
               className={` flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
