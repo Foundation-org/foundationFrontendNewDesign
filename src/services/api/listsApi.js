@@ -95,20 +95,3 @@ export const searchPosts = async (term, uuid) => {
     console.log('err', err);
   }
 };
-
-export const generateCategoryShareLink = async (userUuid, categoryId, customizedLink) => {
-  console.log('first', userUuid, categoryId, customizedLink);
-  try {
-    const params = {
-      customizedLink,
-    };
-
-    const response = await api.get(`/userlists/userList/generateCategoryShareLink/${userUuid}/${categoryId}`, {
-      params,
-    });
-
-    return response;
-  } catch (err) {
-    console.log('err', err);
-  }
-};
