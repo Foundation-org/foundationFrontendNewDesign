@@ -338,7 +338,11 @@ const ButtonGroup = ({
   }
 
   if (persistedUserInfo?.role === 'guest') {
-    if (location.pathname.includes('/p/') || location.pathname === '/quest/isfullscreen') {
+    if (
+      location.pathname.includes('/p/') ||
+      location.pathname.includes('/l/') ||
+      location.pathname === '/quest/isfullscreen'
+    ) {
       return (
         <>
           {questStartData.startStatus === '' ? (
@@ -394,7 +398,7 @@ const ButtonGroup = ({
                       : false
                 }
               >
-                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
+                {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'SubmitHamza'}
                 {questStartData.startStatus !== 'change answer' && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
                     (+0.96 FDX)

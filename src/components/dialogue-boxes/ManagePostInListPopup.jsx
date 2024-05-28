@@ -13,14 +13,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { TextareaAutosize } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import DeleteListPostPopup from './DeleteListPostPopup';
 
 export default function ManagePostInListPopup({ handleClose, modalVisible, title, image, categoryId }) {
   const queryClient = useQueryClient();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [deletePostPopup, setDeletePostPopup] = useState(false);
-  const [postId, setPostId] = useState('');
   const [categoryName, setCategoryName] = useState('');
   const [searchPost, setSearchPost] = useState('');
   const [searchResult, setSearchResult] = useState([]);
@@ -40,10 +37,6 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
   useEffect(() => {
     setCategoryName(listData?.category);
   }, [listData]);
-
-  const handleCloseDeletePost = () => {
-    setDeletePostPopup(false);
-  };
 
   const { mutateAsync: handleDeleteList, isPending } = useMutation({
     mutationFn: deleteList,
@@ -109,6 +102,7 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
         queryClient.invalidateQueries(['lists']);
         setSearchPost('');
         setSearchResult([]);
+        handleClose();
       }
     },
     onError: (err) => {
@@ -128,16 +122,14 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
     handleSearchPost();
   }, [searchPost]);
 
+  useEffect(() => {
+    if (searchPost === '') {
+      setSelectedPostId('');
+    }
+  }, [searchPost]);
+
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
-      {deletePostPopup && (
-        <DeleteListPostPopup
-          handleClose={handleCloseDeletePost}
-          modalVisible={deletePostPopup}
-          categoryId={categoryId}
-          postId={postId}
-        />
-      )}
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
         <div className="mb-5 flex">
           <TextareaAutosize
@@ -169,65 +161,6 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
           </button>
         </div>
         <div className="flex flex-col gap-[15px]">
-          {listData?.post.map((item) => (
-            <div
-              key={item._id}
-              className="flex w-full items-center rounded-r-[0.33rem] bg-transparent tablet:w-full tablet:rounded-[10px]"
-            >
-              <div
-                className={`${
-                  false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-                } dragIconWrapper border-y border-s tablet:border-y-[3px] tablet:border-s-[3px]`}
-              >
-                {persistedTheme === 'dark' ? (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`}
-                    alt="six dots"
-                    className="h-[8.8px] tablet:h-[18px]"
-                  />
-                ) : (
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`}
-                    alt="six dots"
-                    className="h-[8.8px] tablet:h-[18px]"
-                  />
-                )}
-              </div>
-              <TextareaAutosize
-                // id={`input-${number}`}
-                // onChange={(e) => handleChange(e.target.value)}
-                // onBlur={(e) => e.target.value.trim() !== '' && answerVerification(e.target.value)}
-                value={item.questForeginKey.Question}
-                // placeholder="Add your own option"
-                // tabIndex={number + 2}
-                // autoFocus={number >= 5 ? true : false}
-                // onKeyDown={(e) =>
-                //   (e.key === 'Tab' && handleTab(number)) || (e.key === 'Enter' && handleTab(number, 'Enter'))
-                // }
-                className={`${
-                  false
-                    ? 'border-[#5FA3D5] bg-[#F2F6FF]'
-                    : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                } box-border flex w-full resize-none items-center border-y pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-r-[10px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:px-[11px] tablet:py-[10px] tablet:text-[18px] tablet:leading-[18px] dark:text-[#7C7C7C]`}
-              />
-              <div
-                className="ml-[11px]"
-                // onClick={() => {
-                //   removeOption(id, number);
-                // }}
-                onClick={() => {
-                  setPostId(item._id), item, setDeletePostPopup(true);
-                }}
-              >
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                  alt="trash"
-                  className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
-                />
-              </div>
-            </div>
-          ))}
-          {/* {addPost && ( */}
           <div className="flex w-full items-center rounded-r-[0.33rem] bg-transparent tablet:w-full tablet:rounded-[10px]">
             <div className="w-full rounded-[15px] border-[3px] border-[#DEE6F7]">
               <div className="flex">
@@ -262,31 +195,25 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
                 />
               </div>
               {/* To Render and Select The Post */}
-              <ul className="leading-noraml text-[15.7px] font-medium text-[#707175]">
-                {searchResult?.map((item) => (
-                  <li
-                    key={item._id}
-                    className="cursor-pointer border-b-[3px] border-[#DEE6F7] px-4 py-2 last:border-b-0"
-                    onClick={() => {
-                      setSearchPost(item.Question);
-                      setSelectedPostId(item._id);
-                    }}
-                  >
-                    {item.Question}
-                  </li>
-                ))}
+              <ul className="leading-noraml h-fit max-h-56 overflow-y-auto text-[15.7px] font-medium text-[#707175]">
+                {selectedPostId === '' &&
+                  searchPost !== '' &&
+                  searchResult?.map((item) => (
+                    <li
+                      key={item._id}
+                      className="cursor-pointer border-b-[3px] border-[#DEE6F7] px-4 py-2 last:border-b-0"
+                      onClick={() => {
+                        setSearchPost(item.Question);
+                        setSelectedPostId(item._id);
+                        setSearchResult([]);
+                      }}
+                    >
+                      {item.Question}
+                    </li>
+                  ))}
               </ul>
             </div>
-            <div className="ml-[11px]" onClick={() => setAddPost(false)}>
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                alt="trash"
-                className="h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
-              />
-            </div>
           </div>
-
-          {/* )} */}
         </div>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button

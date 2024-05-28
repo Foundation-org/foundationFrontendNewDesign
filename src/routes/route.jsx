@@ -73,6 +73,7 @@ export function Router() {
           {/* <Route path="/verifycode" element={<VerifyCode />} /> */}
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/p/:id" element={<GuestRedirect />} />
+          <Route path="/l/:id" element={<GuestRedirect />} />
           <Route path="/" element={<GuestRedirect />} />
           <Route
             path="/dashboard/treasury/:code"
@@ -135,7 +136,7 @@ export function Router() {
                   }
                 />
                 <Route path="lists" element={<Lists />} />
-                <Route path="postsbylist/:categoryId/:canAddPost?" element={<PostsByList />} />
+                <Route path="postsbylist/:categoryId" element={<PostsByList />} />
                 <Route
                   path="ledger"
                   element={
@@ -232,6 +233,7 @@ export function Router() {
             <Route path="/shared-links/result" element={<SharedLinkResults />} />
             <Route path="/quest/:isFullScreen" element={<Guests />} />
             <Route path="/p/:id" element={<SingleQuest />} />
+            <Route path="/l/:id" element={<PostsByList />} />
             <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/guest-signup" element={<Signup />}>

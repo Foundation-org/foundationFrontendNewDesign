@@ -19,7 +19,7 @@ import PopUp from '../../../components/ui/PopUp';
 import SideNavbar from '../../../components/SideNavbar';
 import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId } from '../../../features/quest/utilsSlice';
 import MediaControls from '../../../components/MediaControls';
-import ManageList from '../pages/Lists/ManageList';
+// import ManageList from '../pages/Lists/ManageList';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -401,7 +401,7 @@ export default function DashboardLayout({ children }) {
               </div>
             )}
 
-          {canAddPost !== 'true' && location.pathname.startsWith('/dashboard/profile/postsbylist/') && <ManageList />}
+          {/* {canAddPost !== 'true' && location.pathname.startsWith('/dashboard/profile/postsbylist/') && <ManageList />} */}
 
           {/* HiddenPost Search */}
           {location.pathname === '/dashboard/profile/hidden-posts' && (

@@ -13,8 +13,8 @@ export default function DeleteListPostPopup({ handleClose, modalVisible, title, 
   const { mutateAsync: handleDeletePost, isPending } = useMutation({
     mutationFn: updateCategory,
     onSuccess: (resp) => {
-      console.log('resp', resp);
-      console.log('Post deleted Successfully');
+      // console.log('resp', resp);
+      // console.log('Post deleted Successfully');
 
       // if (resp.response.status === 500) {
       //   toast.warning('Something goes wrong.');
@@ -29,8 +29,7 @@ export default function DeleteListPostPopup({ handleClose, modalVisible, title, 
       // });
 
       queryClient.invalidateQueries(['lists']);
-
-      //   handleClose();
+      handleClose();
     },
     onError: (error) => {
       console.log(error);

@@ -288,6 +288,13 @@ const QuestionCardWithToggle = (props) => {
         queryClient.setQueryData(['questByShareLink'], (oldData) => ({
           ...resp.data.data,
         }));
+
+        queryClient.invalidateQueries(['postsByCategory']);
+        // queryClient.setQueryData(['postsByCategory'], (oldData) => {
+        //   console.log('old', oldData);
+        // });
+
+        // postsByCategory;
       }
 
       // if (persistedUserInfo.role === 'guest') {
@@ -296,7 +303,7 @@ const QuestionCardWithToggle = (props) => {
       if (location.pathname.startsWith('/quest/')) {
         props.setSubmitResponse(resp.data.data);
       }
-      if (!location.pathname.startsWith('/p/')) {
+      if (!location.pathname.startsWith('/p/' || !location.pathname.startsWith('/l'))) {
         handleViewResults(questStartData._id);
       }
     },
@@ -342,7 +349,11 @@ const QuestionCardWithToggle = (props) => {
   });
 
   const handleSubmit = () => {
-    if (persistedUserInfo.role === 'guest' && !location.pathname.startsWith('/p')) {
+    if (
+      persistedUserInfo.role === 'guest' &&
+      !location.pathname.startsWith('/p') &&
+      !location.pathname.startsWith('/l')
+    ) {
       toast.warning(
         <p>
           Please{' '}

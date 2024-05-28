@@ -2,7 +2,7 @@ import api from './Axios';
 
 export const fetchLists = async (search) => {
   const userUuid = localStorage.getItem('uuid');
-  const url = search ? `/userlists/userList/${userUuid}/${search}` : `/userlists/userList/${userUuid}`;
+  const url = search ? `/userlists/userList/${userUuid}/?categoryName=${search}` : `/userlists/userList/${userUuid}`;
 
   try {
     const resp = await api.get(url);
@@ -61,7 +61,9 @@ export const findCategoryByName = async (data) => {
 
 export const updateCategory = async ({ userUuid, categoryId, postId }) => {
   try {
-    const resp = await api.patch(`/userlists/userList/updateCategoryInUserList/${userUuid}/${categoryId}/${postId}`);
+    const resp = await api.patch(
+      `/userlists/userList/updateCategoryInUserList/${userUuid}/${categoryId}/?postId=${postId}`,
+    );
     return resp.data;
   } catch (err) {
     return err;
@@ -110,5 +112,14 @@ export const generateCategoryShareLink = async (userUuid, categoryId, customized
     return response;
   } catch (err) {
     console.log('err', err);
+  }
+};
+
+export const findPostsBySharedLink = async ({ id }) => {
+  try {
+    const resp = await api.get(`/userlists/findCategoryByLink/${id}`);
+    return resp.data.category;
+  } catch (err) {
+    return err;
   }
 };

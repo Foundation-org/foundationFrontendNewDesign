@@ -9,7 +9,6 @@ import { addPostinAList, createList, fetchLists } from '../../services/api/lists
 import PopUp from '../ui/PopUp';
 import { useEffect } from 'react';
 import { useDebounce } from '../../utils/useDebounce';
-import DeleteListPopup from './DeleteListPopup';
 
 export default function AddToListPopup({ handleClose, modalVisible, questStartData }) {
   const queryClient = useQueryClient();
@@ -64,7 +63,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   });
 
   if (isError) {
-    console.log('some eror occur');
+    console.log('some error occur');
   }
 
   // const addMatchingQuestIds = (data, questId) => {
@@ -94,7 +93,18 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   //   addMatchingQuestIds(listData, questStartData._id);
   // }, [listData]);
 
-  console.log('items', listData);
+  const checkIfExists = (userList, questStartDataId) => {
+    for (const user of userList) {
+      for (const post of user.post) {
+        if (post.questForeginKey._id === questStartDataId) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  // console.log('items', listData, questStartData._id);
 
   return (
     <PopUp
@@ -104,15 +114,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
       handleClose={handleClose}
       isBackground={false}
     >
-      {/* {modalVisible && (
-        <DeleteListPopup
-          handleClose={handleClose}
-          modalVisible={modalVisible}
-          title={'Delete List'}
-          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
-          // categoryId={categoryId}
-        />
-      )} */}
       <div className="px-[27px] py-3 tablet:px-[74px] tablet:py-[37px]">
         <div className="flex flex-col gap-2 tablet:gap-[10px]">
           <label
@@ -203,7 +204,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                         id={`checkbox-${item._id}`}
                         type="checkbox"
                         className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                        checked={selectedOption.includes(item._id)}
+                        checked={selectedOption.includes(item._id) || checkIfExists(listData, questStartData._id)}
                         onChange={() => handleCheckboxChange(item._id)}
                         readOnly
                       />
