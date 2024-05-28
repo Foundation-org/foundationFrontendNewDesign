@@ -354,6 +354,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/help/faq' &&
             location.pathname !== '/help/contact-us' &&
             !location.pathname.startsWith('/p/') &&
+            !location.pathname.startsWith('/l/') &&
             !location.pathname.startsWith('/dashboard/profile/postsbylist/') &&
             location.pathname !== '/dashboard/profile/lists' && <SidebarLeft />}
 

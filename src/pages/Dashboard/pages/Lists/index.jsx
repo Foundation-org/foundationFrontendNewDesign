@@ -226,7 +226,7 @@ const Lists = () => {
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/trash-icon.svg`}
                     alt="trash-icon"
-                    className="h-[15px] w-3 cursor-pointer"
+                    className="h-[15px] w-3 cursor-pointer tablet:h-[25px] tablet:w-5"
                     onClick={() => {
                       setCategoryId(categoryItem._id);
                       setModalVisible(true);
