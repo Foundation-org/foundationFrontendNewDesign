@@ -4,11 +4,9 @@ import PopUp from '../ui/PopUp';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'sonner';
-import bcrypt from 'bcryptjs';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import api from '../../services/api/Axios';
 import { useQueryClient } from '@tanstack/react-query';
-import CryptoJS from 'crypto-js';
 
 const LegacyBadgePopup = ({
   isPopup,

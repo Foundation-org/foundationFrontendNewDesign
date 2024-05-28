@@ -24,7 +24,19 @@ export const signOut = async () => {
 };
 
 export const userInfo = async () => {
-  return await api.get(`/user/userInfo/${localStorage.getItem('uuid')}/${localStorage.getItem('legacyHash')}`);
+  const uuid = localStorage.getItem('uuid');
+  const legacyHash = localStorage.getItem('legacyHash');
+
+  // Construct the base URL
+  let url = `/user/userInfo/${uuid}`;
+
+  // Conditionally add the legacyHash parameter if it exists
+  if (legacyHash) {
+    url += `/?infoc=${legacyHash}`;
+  }
+
+  // Make the API call
+  return await api.get(url);
 };
 
 export const userInfoById = async () => {
