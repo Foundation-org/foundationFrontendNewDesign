@@ -13,23 +13,6 @@ import BasicModal from '../../../../components/BasicModal';
 import ManagePostInListPopup from '../../../../components/dialogue-boxes/ManagePostInListPopup';
 import DeleteListPostPopup from '../../../../components/dialogue-boxes/DeleteListPostPopup';
 
-const initialItems = [
-  {
-    category: 'My First List',
-    posts: [
-      { _id: 1, questForeginKey: { _id: 1, Question: '🍅 Tomato' } },
-      { _id: 2, questForeginKey: { _id: 2, Question: '🥒 Cucumber' } },
-    ],
-  },
-  {
-    category: 'My Second List',
-    posts: [
-      { _id: 1, questForeginKey: { _id: 1, Question: '🧀 Cheese' } },
-      { _id: 2, questForeginKey: { _id: 2, Question: '🥬 Lettuce' } },
-    ],
-  },
-];
-
 const Lists = () => {
   const navigate = useNavigate();
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -41,7 +24,6 @@ const Lists = () => {
   const [categoryId, setCategoryId] = useState('');
   const [selectedItem, setSelectedItem] = useState();
   const [postId, setPostId] = useState('');
-  const [dummy, setDummy] = useState(initialItems);
 
   const handleCopyClose = () => setCopyModal(false);
   const handleClose = () => setModalVisible(false);
@@ -66,11 +48,10 @@ const Lists = () => {
     console.log('some eror occur');
   }
 
-  console.log('items', items);
   const handleReorder = (newPosts, categoryIndex) => {
-    setDummy((prevItems) => {
+    setItems((prevItems) => {
       const updatedItems = [...prevItems];
-      updatedItems[categoryIndex].posts = newPosts;
+      updatedItems[categoryIndex].post = newPosts;
       return updatedItems;
     });
   };
