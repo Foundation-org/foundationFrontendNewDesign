@@ -10,7 +10,7 @@ const SystemNotificationCard = ({ post }) => {
       <p className="text-[13px] font-normal leading-normal text-[#7C7C7C] tablet:text-[18px] tablet:leading-[25px]">
         {post.text}
       </p>
-      <div className="flex justify-end tablet:mt-2">
+      <div className="flex justify-end tablet:my-2">
         <Button
           variant="hollow-submit"
           className="w-fit bg-white"
