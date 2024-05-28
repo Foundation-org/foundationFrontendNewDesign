@@ -15,16 +15,12 @@ const LegacyBadgePopup = ({
   title,
   logo,
   placeholder,
-  edit,
   fetchUser,
   setIsPersonalPopup,
   handleRemoveBadgePopup,
 }) => {
   const [RemoveLoading, setRemoveLoading] = useState(false);
-  const [deleteModalState, setDeleteModalState] = useState();
-  const [modalVisible, setModalVisible] = useState(false);
   const handleClose = () => setIsPopup(false);
-  const handleBadgesClose = () => setModalVisible(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showCnfmPassword, setShowCnfmPassword] = useState(false);
@@ -79,23 +75,8 @@ const LegacyBadgePopup = ({
       setIsLoading(false);
     }
   };
-
   return (
     <>
-      {modalVisible && (
-        <BadgeRemovePopup
-          handleClose={handleBadgesClose}
-          modalVisible={modalVisible}
-          title={deleteModalState?.title}
-          image={deleteModalState?.image}
-          type={deleteModalState?.type}
-          badgeType={deleteModalState?.badgeType}
-          fetchUser={fetchUser}
-          setIsPersonalPopup={setIsPersonalPopup}
-          setIsLoading={setRemoveLoading}
-          loading={RemoveLoading}
-        />
-      )}
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
         <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
           <div className="flex flex-col gap-[10px] tablet:gap-[15px]">
@@ -171,21 +152,18 @@ const LegacyBadgePopup = ({
             </div>
 
             <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">
-              {edit && (
-                <Button
-                  variant="badge-remove"
-                  onClick={() => {
-                    handleRemoveBadgePopup({
-                      title: title,
-                      type: type,
-                      badgeType: 'legacy',
-                      image: logo,
-                    });
-                  }}
-                >
-                  {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
-                </Button>
-              )}
+              <Button
+                variant="badge-remove"
+                onClick={() => {
+                  handleRemoveBadgePopup({
+                    title: title,
+                    type: type,
+                    image: logo,
+                  });
+                }}
+              >
+                {RemoveLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Remove'}
+              </Button>
 
               <Button variant="submit" onClick={addPasswordBadge}>
                 {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}

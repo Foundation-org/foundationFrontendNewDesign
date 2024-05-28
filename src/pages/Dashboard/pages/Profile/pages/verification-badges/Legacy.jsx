@@ -5,7 +5,6 @@ import LegacyBadgePopup from '../../../../../../components/dialogue-boxes/Legacy
 
 const Legacy = ({ fetchUser, handleRemoveBadgePopup, checkLegacyBadge }) => {
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
-  const [edit, setEdit] = useState(false);
   checkLegacyBadge();
 
   return (
@@ -17,8 +16,6 @@ const Legacy = ({ fetchUser, handleRemoveBadgePopup, checkLegacyBadge }) => {
         type={'password'}
         logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`}
         placeholder="Answer Here"
-        edit={edit}
-        setEdit={setEdit}
         fetchUser={fetchUser}
         setIsPersonalPopup={setIsPersonalPopup}
         handleRemoveBadgePopup={handleRemoveBadgePopup}

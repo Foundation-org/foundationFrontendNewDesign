@@ -173,6 +173,7 @@ const VerificationBadges = () => {
     if (checkLegacyBadge()) {
       await handleOpenPasswordConfirmation();
     }
+    console.log('called', item);
     setDeleteModalState(item);
     setModalVisible(true);
   };

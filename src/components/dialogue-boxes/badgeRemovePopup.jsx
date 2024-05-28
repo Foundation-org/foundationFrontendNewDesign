@@ -22,10 +22,10 @@ export default function BadgeRemovePopup({
 
   const handleRemoveBadge = async () => {
     // setIsLoading(true);
+    console.log(type);
 
     try {
       let removeBadge;
-
       if (badgeType === 'contact') {
         removeBadge = await api.post(`/removeContactBadge`, {
           type: type,
@@ -41,7 +41,7 @@ export default function BadgeRemovePopup({
           type: type,
           uuid: fetchUser.uuid,
         });
-      } else if (badgeType === 'password') {
+      } else if (type === 'password') {
         removeBadge = await api.post('/addPasswordBadgesUpdate', {
           uuid: fetchUser.uuid,
           eyk: localStorage.getItem('legacyHash'),
