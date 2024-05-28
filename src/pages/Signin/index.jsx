@@ -100,7 +100,7 @@ export default function Signin() {
                 isLogin={true}
                 setIsLoadingSocial={setIsLoadingSocial}
               />
-              <div className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
+              <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
                 <Button size="login-btn" color="gray" onClick={() => navigate('/signin/credentials')}>
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email-login.svg`}

@@ -99,7 +99,7 @@ const SocialLogins = ({
           setIsLoadingSocial(false);
           console.log(err);
         }}
-        className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]"
+        className="max-w-auto min-w-[145px] lg:min-w-[305px] "
       >
         <Button
           size="login-btn"
@@ -129,7 +129,7 @@ const SocialLogins = ({
         onReject={(err) => {
           console.log(err);
         }}
-        className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]"
+        className="max-w-auto min-w-[145px] lg:min-w-[305px] "
       >
         <button
           className="flex h-[36px] w-full items-center whitespace-nowrap rounded-[6.043px] border-[1px] border-gray-200 bg-white px-2 text-center text-[2.3vw] font-[500] text-black sm:h-[50px] sm:text-[2.1vw] lg:h-[60px] lg:text-[.98vw] 2xl:rounded-[11.703px] 2xl:px-4 dark:border-white dark:bg-dark-gray dark:text-white "
@@ -212,7 +212,7 @@ const SocialLogins = ({
           Continue with LinkedIn
         </Button>
       </LoginSocialLinkedin>
-      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
+      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <Button
           size="login-btn"
           color="gray"
@@ -227,7 +227,7 @@ const SocialLogins = ({
           Continue with Twitter
         </Button>
       </div>
-      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
+      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <Button
           size="login-btn"
           color="gray"
@@ -242,7 +242,7 @@ const SocialLogins = ({
           Continue with Github
         </Button>
       </div>
-      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
+      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <InstagramLogin
           clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
           onSuccess={(code) => {
@@ -252,7 +252,7 @@ const SocialLogins = ({
           redirectUri={window.location.href}
           cssClass={'hideBack'}
         >
-          <Button size="login-btn" color="gray" className="w-full min-w-[145px] lg:min-w-[305px] lg:max-w-[305px]">
+          <Button size="login-btn" color="gray" className="w-full min-w-[145px] lg:min-w-[305px] ">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`}
               className="mr-2 size-[22px] md:size-8 lg:mr-3"

@@ -131,38 +131,23 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-        <div className="mb-5 flex">
+        <div className="mb-2 flex tablet:mb-5">
           <TextareaAutosize
-            // id="input-2"
-            // aria-label="multiple choice question"
-            // onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
             onChange={(e) => setCategoryName(e.target.value)}
             value={categoryName}
-            // placeholder={
-            //   quest === 'M/R' || quest === 'OpenChoice'
-            //     ? 'Make a statement or pose a question'
-            //     : quest === 'Statement'
-            //       ? 'Make a statement'
-            //       : 'Pose a question'
-            // }
-            // tabIndex={3}
-            // onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(2, 'Enter'))}
-            className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[10px] tablet:text-[18px] tablet:leading-[18px] laptop:rounded-l-[0.625rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+            className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[4px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[10px] tablet:text-[18px] tablet:leading-[18px] laptop:rounded-l-[0.625rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
           />
           <button
-            id="new"
             className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012]`}
           >
             <div className="flex h-[75%] w-[50px] items-center justify-center border-l-[0.7px] border-[#DEE6F7] text-[#0FB063] tablet:w-[100px] tablet:border-l-[3px] laptop:w-[60px]">
               OK
-              {/* {createQuestSlice.questionTyping ? `${createQuestSlice.question.length}/350` : questionStatus.name} */}
             </div>
-            {/* <Tooltip optionStatus={questionStatus} /> */}
           </button>
         </div>
         <div className="flex flex-col gap-[15px]">
-          <div className="flex w-full items-center rounded-r-[0.33rem] bg-transparent tablet:w-full tablet:rounded-[10px]">
-            <div className="w-full rounded-[15px] border-[3px] border-[#DEE6F7]">
+          <div className="flex w-full items-center rounded-[5.387px] bg-transparent tablet:w-full tablet:rounded-[10px]">
+            <div className="w-full rounded-[5.387px] border border-[#DEE6F7] tablet:rounded-[15px] tablet:border-[3px]">
               <div className="flex">
                 <div
                   className={`${
@@ -188,20 +173,18 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
                   value={searchPost}
                   placeholder="Search Post"
                   className={`${
-                    false
-                      ? 'border-[#5FA3D5] bg-[#F2F6FF]'
-                      : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
-                  } flex w-full resize-none items-center border-y pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-r-[10px] tablet:border-b-[3px] tablet:px-[11px] tablet:py-[10px] tablet:text-[18px] tablet:leading-[18px] dark:text-[#7C7C7C]`}
+                    selectedPostId === '' && searchPost !== '' ? 'border-b border-[#DEE6F7]' : ''
+                  } flex w-full resize-none items-center bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-r-[10px] tablet:px-[11px] tablet:py-[10px] tablet:text-[18px] tablet:leading-[18px] dark:text-[#7C7C7C]`}
                 />
               </div>
               {/* To Render and Select The Post */}
-              <ul className="leading-noraml h-fit max-h-56 overflow-y-auto text-[15.7px] font-medium text-[#707175]">
+              <ul className="leading-noraml h-fit max-h-56 overflow-y-auto text-[10px] font-medium text-[#707175] tablet:text-[15.7px]">
                 {selectedPostId === '' &&
                   searchPost !== '' &&
                   searchResult?.map((item) => (
                     <li
                       key={item._id}
-                      className="cursor-pointer border-b-[3px] border-[#DEE6F7] px-4 py-2 last:border-b-0"
+                      className="cursor-pointer border-b border-[#DEE6F7] px-4 py-[6px] last:border-b-0 tablet:border-b-[3px] tablet:py-2"
                       onClick={() => {
                         setSearchPost(item.Question);
                         setSelectedPostId(item._id);

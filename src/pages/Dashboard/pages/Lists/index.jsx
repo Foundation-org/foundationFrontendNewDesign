@@ -80,7 +80,7 @@ const Lists = () => {
           handleClose={handleAddPostClose}
           modalVisible={addPostModal}
           title={'Add Post'}
-          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/lists/white-list-icon.svg`}
           categoryId={categoryId}
         />
       )}
@@ -88,6 +88,8 @@ const Lists = () => {
         <DeleteListPostPopup
           handleClose={handleCloseDeletePost}
           modalVisible={deletePostPopup}
+          title={'Delete Post'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
           categoryId={categoryId}
           postId={postId}
         />
@@ -99,9 +101,9 @@ const Lists = () => {
           {items?.map((categoryItem, categoryIndex) => (
             <div
               key={categoryItem._id}
-              className="mx-auto w-full max-w-[730px] rounded-[12.3px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000]"
+              className="mx-auto w-full max-w-[730px] rounded-[7px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000]"
             >
-              <div className="flex items-center justify-between border-b-[0.125rem] border-[#D9D9D9] px-[1.56rem] py-[0.87rem]">
+              <div className="flex items-center justify-between border-b-[0.125rem] border-[#D9D9D9] px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
                 <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
                   {categoryItem.category}
                 </h4>
@@ -112,8 +114,8 @@ const Lists = () => {
                 onReorder={(newPosts) => handleReorder(newPosts, categoryIndex)}
                 className="flex flex-col gap-[5.7px] tablet:gap-[10px]"
               >
-                <div className="my-[0.94rem] mr-[2.25rem]">
-                  <ul className="space-y-[0.69rem]">
+                <div className="mx-7 my-[10px] tablet:my-[0.94rem] tablet:mr-[2.25rem]">
+                  <ul className="space-y-[5.34px] tablet:space-y-[0.69rem]">
                     {categoryItem.post.length >= 1 &&
                       categoryItem.post.map((post) => (
                         <Reorder.Item value={post} key={post._id} className="cursor-pointer">
@@ -164,7 +166,7 @@ const Lists = () => {
                       ))}
                   </ul>
 
-                  <div className="my-2 ml-10 flex gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
+                  <div className="my-2 ml-10 flex items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
                     <div className="flex items-center gap-[1px] tablet:gap-2">
                       <img
                         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/clicks.svg`}
@@ -187,7 +189,7 @@ const Lists = () => {
                     </div>
                   </div>
 
-                  <div className="flex w-full items-center justify-end gap-[1.4rem]">
+                  <div className="flex w-full items-center justify-end gap-3 tablet:gap-[1.4rem]">
                     <Button
                       variant="cancel"
                       className="bg-[#A3A3A3]"
@@ -207,11 +209,11 @@ const Lists = () => {
                   </div>
                 </div>
               </Reorder.Group>
-              <div className="flex items-center justify-between border-t-[0.125rem] border-[#D9D9D9] px-[1.56rem] py-[0.87rem]">
-                <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.125rem] tablet:leading-[23px]">
+              <div className="flex items-center justify-between border-t-[0.125rem] border-[#D9D9D9] px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
+                <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[1.125rem] tablet:font-semibold tablet:leading-[18px]">
                   {categoryItem.post.length} Post{categoryItem.post.length > 1 ? 's' : ''}
                 </h4>
-                <div className="flex items-center gap-[0.17rem] tablet:gap-[1.62rem]">
+                <div className="flex items-center gap-3 tablet:gap-[1.62rem]">
                   <div
                     onClick={() => {
                       setSelectedItem(categoryItem);
@@ -224,7 +226,7 @@ const Lists = () => {
                   <img
                     src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/trash-icon.svg`}
                     alt="trash-icon"
-                    className="cursor-pointer"
+                    className="h-[15px] w-3 cursor-pointer"
                     onClick={() => {
                       setCategoryId(categoryItem._id);
                       setModalVisible(true);
