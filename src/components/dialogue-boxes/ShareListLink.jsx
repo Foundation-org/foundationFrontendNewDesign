@@ -115,10 +115,10 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
       </div>
 
       {/* Dialogue box body */}
-      <div className="flex flex-col justify-center py-[15px] tablet:py-[25px]">
+      <div className="ta blet:py-[25px] flex flex-col justify-center py-[15px]">
         <div className="px-[20px] laptop:px-[80px]">
           <p className="mb-[0.48rem] text-[10px] font-semibold text-[#5B5B5B] tablet:mb-[15px] tablet:text-[22px]">
-            {createCustom ? 'Custom Link Address' : 'Copy Post Address'}
+            {createCustom ? 'Custom Link Address' : 'Copy List Address'}
           </p>
           <div className="flex rounded-[9.42px] border border-[#DEE6F7] tablet:rounded-[15px] tablet:border-[3px]">
             {createCustom ? (
@@ -181,7 +181,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
                 className={'w-fit min-w-fit whitespace-nowrap'}
                 onClick={() => navigate('/dashboard/profile/shared-links')}
               >
-                Manage My Shared Links
+                Manage My Shared Lists
               </Button>
             </div>
           ) : (

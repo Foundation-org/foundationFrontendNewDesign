@@ -4,10 +4,10 @@ import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
 import {
   addPostinAList,
-  deleteList,
-  findPostsByCategoryId,
+  // deleteList,
+  // findPostsByCategoryId,
   searchPosts,
-  updateCategoryName,
+  // updateCategoryName,
 } from '../../services/api/listsApi';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { TextareaAutosize } from '@mui/material';
@@ -18,81 +18,81 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
   const queryClient = useQueryClient();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [categoryName, setCategoryName] = useState('');
+  // const [categoryName, setCategoryName] = useState('');
   const [searchPost, setSearchPost] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState('');
 
-  const {
-    data: listData,
-    isError,
-    isSuccess,
-  } = useQuery({
-    queryFn: async () => {
-      return await findPostsByCategoryId({ userUuid: persistedUserInfo.uuid, categoryId });
-    },
-    queryKey: ['postsByCategory', categoryId, persistedUserInfo.uuid],
-  });
+  // const {
+  //   data: listData,
+  //   isError,
+  //   isSuccess,
+  // } = useQuery({
+  //   queryFn: async () => {
+  //     return await findPostsByCategoryId({ userUuid: persistedUserInfo.uuid, categoryId });
+  //   },
+  //   queryKey: ['postsByCategory', categoryId, persistedUserInfo.uuid],
+  // });
 
-  useEffect(() => {
-    setCategoryName(listData?.category);
-  }, [listData]);
+  // useEffect(() => {
+  //   setCategoryName(listData?.category);
+  // }, [listData]);
 
-  const { mutateAsync: handleDeleteList, isPending } = useMutation({
-    mutationFn: deleteList,
-    onSuccess: (resp) => {
-      console.log('resp', resp);
-      console.log('Post deleted Successfully');
+  // const { mutateAsync: handleDeleteList, isPending } = useMutation({
+  //   mutationFn: deleteList,
+  //   onSuccess: (resp) => {
+  //     console.log('resp', resp);
+  //     console.log('Post deleted Successfully');
 
-      // if (resp.response.status === 500) {
-      //   toast.warning('Something goes wrong.');
-      //   return;
-      // }
+  //     // if (resp.response.status === 500) {
+  //     //   toast.warning('Something goes wrong.');
+  //     //   return;
+  //     // }
 
-      toast.success('List deleted successfully');
+  //     toast.success('List deleted successfully');
 
-      // queryClient.setQueriesData(['lists'], (oldData) => {
-      //   console.log('old', oldData);
-      //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));
-      // });
+  //     // queryClient.setQueriesData(['lists'], (oldData) => {
+  //     //   console.log('old', oldData);
+  //     //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));
+  //     // });
 
-      queryClient.invalidateQueries(['lists']);
+  //     queryClient.invalidateQueries(['lists']);
 
-      handleClose();
-    },
-    onError: (error) => {
-      console.log(error);
-      // toast.warning(error.response.data.message);
-    },
-  });
+  //     handleClose();
+  //   },
+  //   onError: (error) => {
+  //     console.log(error);
+  //     // toast.warning(error.response.data.message);
+  //   },
+  // });
 
-  const { mutateAsync: handleChangeCategoryName } = useMutation({
-    mutationFn: updateCategoryName,
-    onSuccess: (resp) => {
-      console.log('resp', resp);
-      console.log('Category name updated Successfully');
+  // const { mutateAsync: handleChangeCategoryName } = useMutation({
+  //   mutationFn: updateCategoryName,
+  //   onSuccess: (resp) => {
+  //     console.log('resp', resp);
+  //     console.log('Category name updated Successfully');
 
-      // if (resp.response.status === 500) {
-      //   toast.warning('Something goes wrong.');
-      //   return;
-      // }
+  //     // if (resp.response.status === 500) {
+  //     //   toast.warning('Something goes wrong.');
+  //     //   return;
+  //     // }
 
-      toast.success('Category name updated successfully');
+  //     toast.success('Category name updated successfully');
 
-      // queryClient.setQueriesData(['lists'], (oldData) => {
-      //   console.log('old', oldData);
-      //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));
-      // });
+  //     // queryClient.setQueriesData(['lists'], (oldData) => {
+  //     //   console.log('old', oldData);
+  //     //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));
+  //     // });
 
-      queryClient.invalidateQueries(['lists']);
+  //     queryClient.invalidateQueries(['lists']);
 
-      // handleClose();
-    },
-    onError: (error) => {
-      console.log(error);
-      // toast.warning(error.response.data.message);
-    },
-  });
+  //     // handleClose();
+  //   },
+  //   onError: (error) => {
+  //     console.log(error);
+  //     // toast.warning(error.response.data.message);
+  //   },
+  // });
 
   const { mutateAsync: addPostInList, isPending: isLoading } = useMutation({
     mutationFn: addPostinAList,
@@ -131,7 +131,7 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-        <div className="mb-2 flex tablet:mb-5">
+        {/* <div className="mb-2 flex tablet:mb-5">
           <TextareaAutosize
             onChange={(e) => setCategoryName(e.target.value)}
             value={categoryName}
@@ -144,12 +144,12 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
               OK
             </div>
           </button>
-        </div>
+        </div> */}
         <div className="flex flex-col gap-[15px]">
           <div className="flex w-full items-center rounded-[5.387px] bg-transparent tablet:w-full tablet:rounded-[10px]">
             <div className="w-full rounded-[5.387px] border border-[#DEE6F7] tablet:rounded-[15px] tablet:border-[3px]">
-              <div className="flex">
-                <div
+              {/* <div className="flex"> */}
+              {/* <div
                   className={`${
                     false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
                   } dragIconWrapper border-y border-s tablet:border-y-[3px] tablet:border-s-[3px]`}
@@ -167,16 +167,16 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
                       className="h-[8.8px] tablet:h-[18px]"
                     />
                   )}
-                </div>
-                <TextareaAutosize
-                  onChange={(e) => setSearchPost(e.target.value)}
-                  value={searchPost}
-                  placeholder="Search Post"
-                  className={`${
-                    selectedPostId === '' && searchPost !== '' ? 'border-b border-[#DEE6F7] tablet:border-b-[3px]' : ''
-                  } flex w-full resize-none items-center bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-r-[10px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px] dark:text-[#7C7C7C]`}
-                />
-              </div>
+                </div> */}
+              <TextareaAutosize
+                onChange={(e) => setSearchPost(e.target.value)}
+                value={searchPost}
+                placeholder="Search Post"
+                className={`${
+                  selectedPostId === '' && searchPost !== '' ? 'border-b border-[#DEE6F7] tablet:border-b-[3px]' : ''
+                } flex w-full resize-none items-center bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px] dark:text-[#7C7C7C]`}
+              />
+              {/* </div> */}
               {/* To Render and Select The Post */}
               <ul className="leading-noraml h-fit max-h-56 overflow-y-auto text-[10px] font-medium text-[#707175] tablet:text-[15.7px]">
                 {selectedPostId === '' &&
@@ -202,22 +202,14 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
           <Button
             variant={'submit'}
             onClick={() => {
-              if (selectedPostId === '') {
-                handleChangeCategoryName({
-                  userUuid: persistedUserInfo.uuid,
-                  categoryId,
-                  category: categoryName,
-                });
-              } else {
-                addPostInList({
-                  userUuid: persistedUserInfo.uuid,
-                  categoryIdArray: [categoryId],
-                  questForeginKey: selectedPostId,
-                });
-              }
+              addPostInList({
+                userUuid: persistedUserInfo.uuid,
+                categoryIdArray: [categoryId],
+                questForeginKey: selectedPostId,
+              });
             }}
           >
-            {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
+            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
           </Button>
           <Button variant={'cancel'} onClick={handleClose}>
             Cancel

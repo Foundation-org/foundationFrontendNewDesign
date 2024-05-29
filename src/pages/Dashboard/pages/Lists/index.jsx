@@ -12,6 +12,7 @@ import Copy from '../../../../assets/Copy';
 import BasicModal from '../../../../components/BasicModal';
 import ManagePostInListPopup from '../../../../components/dialogue-boxes/ManagePostInListPopup';
 import DeleteListPostPopup from '../../../../components/dialogue-boxes/DeleteListPostPopup';
+import EditListNameDialogue from '../../../../components/dialogue-boxes/EditListNameDialogue';
 
 const Lists = () => {
   const navigate = useNavigate();
@@ -21,14 +22,17 @@ const Lists = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [addPostModal, setAddPostModal] = useState(false);
   const [deletePostPopup, setDeletePostPopup] = useState(false);
+  const [editListPopup, setEditListPopup] = useState(false);
   const [categoryId, setCategoryId] = useState('');
   const [selectedItem, setSelectedItem] = useState();
   const [postId, setPostId] = useState('');
+  const [listName, setListName] = useState('');
 
   const handleCopyClose = () => setCopyModal(false);
   const handleClose = () => setModalVisible(false);
   const handleAddPostClose = () => setAddPostModal(false);
   const handleCloseDeletePost = () => setDeletePostPopup(false);
+  const handleCloseEditList = () => setEditListPopup(false);
 
   const {
     data: listData = [],
@@ -55,6 +59,8 @@ const Lists = () => {
       return updatedItems;
     });
   };
+
+  console.log('listData', listData);
 
   return (
     <div className="no-scrollbar flex h-[calc(100vh-70px)] w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:my-[0.94rem] tablet:gap-5 tablet:px-6 tablet:pb-5">
@@ -94,8 +100,22 @@ const Lists = () => {
           postId={postId}
         />
       )}
+      {editListPopup && (
+        <EditListNameDialogue
+          handleClose={handleCloseEditList}
+          modalVisible={editListPopup}
+          title={'Edit List Name'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/lists/white-list-icon.svg`}
+          categoryId={categoryId}
+          listData={listName}
+        />
+      )}
       {items.length < 1 ? (
-        <p className="text-center">No Record Found</p>
+        <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
+          <p className="text-center text-[4vw] laptop:text-[2vw]">
+            <b>No Record Found!</b>
+          </p>
+        </div>
       ) : (
         <>
           {items?.map((categoryItem, categoryIndex) => (
@@ -103,9 +123,19 @@ const Lists = () => {
               key={categoryItem._id}
               className="mx-auto w-full max-w-[730px] rounded-[7px] border-2 border-[#D9D9D9] bg-white tablet:rounded-[15px] dark:border-white dark:bg-[#000]"
             >
-              <div className="flex items-center justify-between border-b-[0.125rem] border-[#D9D9D9] px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
+              <div className="flex items-center gap-2 border-b-[0.125rem] border-[#D9D9D9] px-3 py-1 tablet:px-[1.56rem] tablet:py-[0.87rem]">
                 <h4 className="text-[0.75rem] font-semibold leading-[15px] text-[#7C7C7C] tablet:text-[1.25rem] tablet:leading-[23px]">
                   {categoryItem.category}
+                </h4>
+                <h4
+                  className="cursor-pointer text-[0.75rem] font-normal leading-[15px] text-[#7C7C7C] underline tablet:text-[1.25rem] tablet:leading-[23px]"
+                  onClick={() => {
+                    setCategoryId(categoryItem._id);
+                    setListName(categoryItem.category);
+                    setEditListPopup(true);
+                  }}
+                >
+                  Edit List Name
                 </h4>
               </div>
               <Reorder.Group
