@@ -72,6 +72,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
   const [deleteModalState, setDeleteModalState] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [RemoveLoading, setRemoveLoading] = useState(false);
+  const [fetchingEdit, setFetchingEdit] = useState(false);
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
@@ -357,6 +358,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
       } else {
         setField6Data(data.endingYear);
       }
+      setFetchingEdit(false);
     }
   };
   const handleRemoveBadgePopup = (item) => {
@@ -437,7 +439,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
                         alt="Edit Icon"
                         className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
                         onClick={() => {
-                          setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                          setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
                         }}
                       />
                       <img
@@ -502,11 +504,11 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
               /> */}
               <input
                 type="text"
-                value={edit ? (field1Data.name ? field1Data.name : 'Loading...') : field1Data.name}
+                value={edit ? (!fetchingEdit ? field1Data.name : 'Loading...') : field1Data.name}
                 onChange={(e) => {
                   setField1Data({ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: e.target.value });
                 }}
-                disabled={edit ? (field1Data.name ? false : true) : false}
+                disabled={fetchingEdit ? true : false}
                 onKeyDown={(e) => (e.key === 'Tab' && handleTab(1)) || (e.key === 'Enter' && handleTab(1, 'Enter'))}
                 id="input-1"
                 placeholder={field1.placeholder}
@@ -583,7 +585,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field5.label}
                 </p>
-                {!field5Data && edit ? (
+                {fetchingEdit ? (
                   <input
                     type="text"
                     value="Loading..."
@@ -607,7 +609,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
                   <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field6.label}
                   </p>
-                  {!field6Data && edit ? (
+                  {fetchingEdit ? (
                     <input
                       type="text"
                       value="Loading..."
