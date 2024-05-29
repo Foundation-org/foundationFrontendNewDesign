@@ -63,8 +63,8 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     isError,
     isPending,
   } = useQuery({
-    queryFn: () => fetchLists(debouncedSearch),
-    queryKey: ['lists', debouncedSearch],
+    queryFn: fetchLists,
+    queryKey: ['lists'],
   });
 
   if (isError) {
@@ -179,31 +179,38 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                 )}
               </div>
               <div className="no-scrollbar mt-3 h-fit max-h-[160px] space-y-3 overflow-y-auto tablet:mt-[15px] tablet:max-h-[280px] tablet:space-y-[15px]">
-                {listData?.map((item) => (
-                  <div
-                    key={item._id}
-                    className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
-                  >
-                    <div className="w-fit space-y-2 tablet:space-y-5">
-                      <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
-                        {item.category}
-                      </h4>
-                      <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
-                        {item.post.length} Post{item.post.length > 1 ? 's' : ''}
-                      </h4>
+                {listData
+                  ?.filter((list) => {
+                    if (debouncedSearch === '') {
+                      return true;
+                    }
+                    return list.category.toLowerCase().includes(debouncedSearch.toLowerCase());
+                  })
+                  .map((item) => (
+                    <div
+                      key={item._id}
+                      className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
+                    >
+                      <div className="w-fit space-y-2 tablet:space-y-5">
+                        <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
+                          {item.category}
+                        </h4>
+                        <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
+                          {item.post.length} Post{item.post.length > 1 ? 's' : ''}
+                        </h4>
+                      </div>
+                      <div id="custom-rating-checkbox" className="flex h-full items-center">
+                        <input
+                          id={`checkbox-${item._id}`}
+                          type="checkbox"
+                          className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                          checked={selectedOption.includes(item._id)}
+                          onChange={() => handleCheckboxChange(item._id)}
+                          readOnly
+                        />
+                      </div>
                     </div>
-                    <div id="custom-rating-checkbox" className="flex h-full items-center">
-                      <input
-                        id={`checkbox-${item._id}`}
-                        type="checkbox"
-                        className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                        checked={selectedOption.includes(item._id)}
-                        onChange={() => handleCheckboxChange(item._id)}
-                        readOnly
-                      />
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
             <div className="mt-[10px] flex justify-end gap-4 tablet:mt-[25px]">
