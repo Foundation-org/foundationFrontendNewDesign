@@ -40,9 +40,6 @@ export default function Contact({
     if (persistedUserInfo?.role === 'guest') {
       handleGuestBadgeAdd();
     } else {
-      if (checkLegacyBadge()) {
-        await handleOpenPasswordConfirmation();
-      }
       if (!checkContact(type)) {
         setIsPopup(true);
         setSelectedBadge(type);

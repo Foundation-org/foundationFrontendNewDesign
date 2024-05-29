@@ -262,9 +262,6 @@ const VerificationBadges = () => {
                   if (persistedUserInfo?.role === 'guest') {
                     handleGuestBadgeAdd();
                   } else {
-                    if (checkLegacyBadge()) {
-                      await handleOpenPasswordConfirmation();
-                    }
                     checkSocial('facebook') &&
                       handleRemoveBadgePopup({
                         title: 'facebook',
@@ -342,10 +339,6 @@ const VerificationBadges = () => {
                     if (persistedUserInfo?.role === 'guest') {
                       handleGuestBadgeAdd();
                     } else {
-                      if (checkLegacyBadge()) {
-                        await handleOpenPasswordConfirmation();
-                      }
-
                       checkSocial('linkedin') &&
                         handleRemoveBadgePopup({
                           title: 'LinkedIn',
@@ -446,10 +439,6 @@ const VerificationBadges = () => {
                   if (persistedUserInfo?.role === 'guest') {
                     handleGuestBadgeAdd();
                   } else {
-                    if (checkLegacyBadge()) {
-                      await handleOpenPasswordConfirmation();
-                    }
-
                     checkSocial('twitter') &&
                       handleRemoveBadgePopup({
                         title: 'twitter',
@@ -528,10 +517,6 @@ const VerificationBadges = () => {
                     if (persistedUserInfo?.role === 'guest') {
                       handleGuestBadgeAdd();
                     } else {
-                      if (checkLegacyBadge()) {
-                        await handleOpenPasswordConfirmation();
-                      }
-
                       checkSocial('instagram') &&
                         handleRemoveBadgePopup({
                           title: 'instagram',
@@ -607,9 +592,6 @@ const VerificationBadges = () => {
                   if (persistedUserInfo?.role === 'guest') {
                     handleGuestBadgeAdd();
                   } else {
-                    if (checkLegacyBadge()) {
-                      await handleOpenPasswordConfirmation();
-                    }
                     checkSocial('github') &&
                       handleRemoveBadgePopup({
                         title: 'github',
