@@ -1,22 +1,23 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const yourPosts = [
-  { id: 1, title: 'Posts you’ve created', val: 10 },
-  { id: 1, title: 'Engagement with your posts', val: 10 },
-  { id: 1, title: 'Posts you’ve created', val: 10 },
-  { id: 1, title: 'Objections received', val: 10 },
-  { id: 1, title: 'Number of posts hidden', val: 10 },
-];
+const SummarySidebar = ({ userData }) => {
+  const yourPosts = [
+    { id: 1, title: 'Posts you’ve created', val: (userData && userData?.questsCreated) || 0 },
+    { id: 1, title: 'Engagement with your posts', val: (userData && userData?.yourPostEngaged) || 0 },
+    { id: 1, title: 'Objections received', val: (userData && userData?.contentionsOnAddedAns) || 0 },
+    { id: 1, title: 'Agreements received', val: (userData && userData?.selectionsOnAddedAns) || 0 },
+    { id: 1, title: 'Number of posts hidden', val: (userData && userData?.yourHiddenPostCounter) || 0 },
+  ];
 
-const othersPosts = [
-  { id: 1, title: 'Posts you’ve engaged with', val: 10 },
-  { id: 1, title: 'Options added', val: 10 },
-  { id: 1, title: 'Change of answers', val: 10 },
-  { id: 1, title: 'Objections given', val: 10 },
-  { id: 1, title: 'Hidden posts', val: 10 },
-];
+  const othersPosts = [
+    { id: 1, title: 'Posts you’ve engaged with', val: (userData && userData?.selectionsOnAddedAns) || 0 },
+    { id: 1, title: 'Options added', val: (userData && userData?.addedAnswers) || 0 },
+    { id: 1, title: 'Change of answers', val: (userData && userData?.changedAnswers) || 0 },
+    { id: 1, title: 'Objections given', val: (userData && userData?.contentionsGiven) || 0 },
+    { id: 1, title: 'Hidden posts', val: (userData && userData?.violationCounter) || 0 },
+  ];
 
-const SummarySidebar = () => {
   return (
     <div>
       <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white px-6 py-[23px] laptop:block dark:bg-[#000]">
@@ -28,10 +29,13 @@ const SummarySidebar = () => {
               <p className="text-[16px] font-medium leading-[118.75%]">{item.val}</p>
             </div>
           ))}
-          <p className="font-noraml cursor-pointer text-[14px] leading-[121.4%] text-[#4A8DBD] hover:underline">
+          <Link
+            to={'/dashboard/profile/hidden-posts'}
+            className="font-noraml cursor-pointer text-[14px] leading-[121.4%] text-[#4A8DBD] hover:underline"
+          >
             See why your posts were
             <br /> hidden {'>'}
-          </p>
+          </Link>
         </div>
       </div>
       {/* Other posts */}
@@ -44,10 +48,13 @@ const SummarySidebar = () => {
               <p className="text-[16px] font-medium leading-[118.75%]">{item.val}</p>
             </div>
           ))}
-          <p className="font-noraml cursor-pointer text-[14px] leading-[121.4%] text-[#4A8DBD] hover:underline">
+          <Link
+            to={'/dashboard/profile/hidden-posts'}
+            className="font-noraml cursor-pointer text-[14px] leading-[121.4%] text-[#4A8DBD] hover:underline"
+          >
             View posts you’ve hidden
             <br /> and why {'>'}
-          </p>
+          </Link>
         </div>
       </div>
     </div>

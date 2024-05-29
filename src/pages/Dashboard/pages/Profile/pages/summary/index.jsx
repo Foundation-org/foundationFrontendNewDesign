@@ -84,13 +84,15 @@ const Summary = () => {
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Posts you’ve created
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">{persistedUserInfo?.questsCreated}</h5>
             </div>
             <div className="max-w-24 tablet:max-w-full">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Number of engagements
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.yourPostEngaged}
+              </h5>
             </div>
           </div>
           <div className="my-[15px] flex w-full justify-center tablet:my-6 tablet:justify-end">
@@ -107,7 +109,9 @@ const Summary = () => {
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Posts you’ve hidden
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.yourHiddenPostCounter}
+              </h5>
             </div>
           </div>
           <div className="mt-[15px] flex w-full justify-center tablet:mt-5 tablet:justify-end">
@@ -146,7 +150,7 @@ const Summary = () => {
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Posts you’ve shared
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">3</h5>
             </div>
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
@@ -197,7 +201,9 @@ const Summary = () => {
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Hidden posts
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">4/10</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.yourHiddenPostCounter}/10
+              </h5>
             </div>
             <div>
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
