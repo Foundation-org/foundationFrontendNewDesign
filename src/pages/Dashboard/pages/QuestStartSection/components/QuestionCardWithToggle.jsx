@@ -20,6 +20,7 @@ import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button.jsx';
+import { updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -304,6 +305,10 @@ const QuestionCardWithToggle = (props) => {
       }
       if (!location.pathname.startsWith('/p/' || !location.pathname.startsWith('/l'))) {
         handleViewResults(questStartData._id);
+      }
+
+      if (location.pathname.startsWith('/l/')) {
+        updateCategoryParticipentsCount({ categoryLink: location.pathname.split('/')[2] });
       }
     },
     onError: (err) => {
