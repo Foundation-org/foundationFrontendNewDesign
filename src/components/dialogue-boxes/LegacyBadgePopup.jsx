@@ -40,7 +40,6 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
           infoc: password,
         });
         if (infoc.status === 200) {
-          console.log('password hashed', infoc);
           localStorage.setItem('legacyHash', infoc.data.data);
           try {
             const resp = await api.post('/addPasswordBadgesUpdate', {

@@ -84,10 +84,14 @@ const PersonalBadgesPopup = ({
   }, [query]);
 
   const FetchData = async () => {
-    const info = await api.post(`/addBadge/personal/getPersonalBadge`, {
+    const payload = {
       uuid: localStorage.getItem('uuid'),
       type: type,
-    });
+    };
+    if (localStorage.getItem('legacyHash')) {
+      payload.infoc = localStorage.getItem('legacyHash');
+    }
+    const info = await api.post(`/addBadge/personal/getPersonalBadge`, payload);
     setPrevInfo(info?.data?.obj);
     if (type === 'firstName' || type === 'lastName' || type === 'geolocation') {
       setName(info?.data?.obj);
@@ -295,11 +299,15 @@ const PersonalBadgesPopup = ({
     }
 
     try {
-      const addBadge = await api.post(`/addBadge/personal/updatePersonalBadge`, {
+      const payload = {
         newData: value,
         type: type,
         uuid: localStorage.getItem('uuid'),
-      });
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
+      const addBadge = await api.post(`/addBadge/personal/updatePersonalBadge`, payload);
       if (addBadge.status === 200) {
         toast.success('Badge Updated Successfully!');
         queryClient.invalidateQueries(['userInfo']);
@@ -353,7 +361,7 @@ const PersonalBadgesPopup = ({
       };
 
       if (localStorage.getItem('legacyHash')) {
-        payload.eyk = localStorage.getItem('legacyHash');
+        payload.infoc = localStorage.getItem('legacyHash');
       }
 
       const addBadge = await api.post(`/addBadge/personal/add`, payload);

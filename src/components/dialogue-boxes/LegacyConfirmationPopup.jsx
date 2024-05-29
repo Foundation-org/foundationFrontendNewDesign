@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import PopUp from '../ui/PopUp';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
-import bcrypt from 'bcryptjs';
+import api from '../../services/api/Axios';
+import { toast } from 'sonner';
 
 const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromiseRef }) => {
   const handleClose = () => setIsPopup(false);
@@ -18,13 +19,29 @@ const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromi
   const validatePassword = async () => {
     setIsLoading(true);
     setPassword('');
-    const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(password, salt);
-    localStorage.setItem('legacyHash', hashPassword);
-    if (legacyPromiseRef.current) {
-      setIsPopup(false);
-      setIsLoading(false);
-      legacyPromiseRef.current();
+
+    try {
+      const infoc = await api.post('user/infoc', {
+        infoc: password,
+      });
+      if (infoc.status === 200) {
+        if (localStorage.getItem('legacyHash')) {
+          if (infoc.data.data !== localStorage.getItem('legacyHash')) {
+            toast.error('Wrong Password');
+            setIsLoading(false);
+            return;
+          }
+        } else {
+          localStorage.setItem('legacyHash', infoc.data.data);
+        }
+        if (legacyPromiseRef.current) {
+          setIsPopup(false);
+          setIsLoading(false);
+          legacyPromiseRef.current();
+        }
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 

@@ -35,6 +35,9 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
         data['provider'] = provider;
         data['type'] = selectedBadge;
         data['uuid'] = localStorage.getItem('uuid');
+        if (localStorage.getItem('legacyHash')) {
+          data['infoc'] = localStorage.getItem('legacyHash');
+        }
         addBadge = await api.post(`/addBadge/contact`, {
           ...data,
         });

@@ -194,7 +194,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
         uuid: localStorage.getItem('uuid'),
       };
       if (localStorage.getItem('legacyHash')) {
-        payload.eyk = localStorage.getItem('legacyHash');
+        payload.infoc = localStorage.getItem('legacyHash');
       }
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
@@ -247,11 +247,16 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
   };
 
   const handleDelete = async (id) => {
-    const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, {
+    const payload = {
       id: id,
       uuid: localStorage.getItem('uuid'),
       type: type,
-    });
+    };
+    if (localStorage.getItem('legacyHash')) {
+      payload.infoc = localStorage.getItem('legacyHash');
+    }
+
+    const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, payload);
     if (companies.status === 200) {
       queryClient.invalidateQueries(['userInfo']);
     }
@@ -284,13 +289,17 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
 
         return;
       }
-
-      const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, {
+      const payload = {
         newData,
         type,
         uuid: localStorage.getItem('uuid'),
         id: prevInfo.id,
-      });
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
+
+      const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, payload);
       if (updateBadge.status === 200) {
         queryClient.invalidateQueries(['userInfo']);
         toast.success('Info Updated Successfully');
@@ -322,11 +331,15 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
   };
 
   const handleEdit = async (id) => {
-    const info = await api.post(`/addBadge/personal/getWorkOrEducation`, {
+    const payload = {
       id: id,
       uuid: localStorage.getItem('uuid'),
       type: type,
-    });
+    };
+    if (localStorage.getItem('legacyHash')) {
+      payload.infoc = localStorage.getItem('legacyHash');
+    }
+    const info = await api.post(`/addBadge/personal/getWorkOrEducation`, payload);
     setPrevInfo(info?.data?.obj);
     if (info.status === 200) {
       setHollow(false);

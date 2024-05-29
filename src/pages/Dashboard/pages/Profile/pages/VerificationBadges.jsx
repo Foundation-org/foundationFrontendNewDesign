@@ -135,13 +135,16 @@ const VerificationBadges = () => {
       } else if (provider === 'youtube') {
         id = data.items[0].id;
       }
-
-      const addBadge = await api.post(`/addBadge`, {
+      const payload = {
         data,
         provider,
         badgeAccountId: id,
         uuid: persistedUserInfo.uuid,
-      });
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
+      const addBadge = await api.post(`/addBadge`, payload);
       if (addBadge.status === 200) {
         toast.success('Badge Added Successfully!');
         queryClient.invalidateQueries(['userInfo']);
@@ -173,7 +176,6 @@ const VerificationBadges = () => {
     if (checkLegacyBadge()) {
       await handleOpenPasswordConfirmation();
     }
-    console.log('called', item);
     setDeleteModalState(item);
     setModalVisible(true);
   };

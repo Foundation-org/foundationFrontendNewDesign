@@ -38,6 +38,9 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup, handleOpenPass
         },
         uuid: fetchUser.uuid,
       };
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
 
       const addBadge = await api.post(`/addBadge/web3/add`, payload);
       if (addBadge.status === 200) {
