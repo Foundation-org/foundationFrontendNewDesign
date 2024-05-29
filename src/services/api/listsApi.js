@@ -141,3 +141,12 @@ export const updateCategoryParticipentsCount = async ({ categoryLink }) => {
     return err;
   }
 };
+
+export const updatePostOrder = async ({ order, userUuid, categoryId }) => {
+  try {
+    const resp = await api.post(`userlists/userList/updatePostOrder`, { order, userUuid, categoryId });
+    return resp;
+  } catch (err) {
+    return err;
+  }
+};

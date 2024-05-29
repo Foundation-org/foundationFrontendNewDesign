@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Button } from '../../../../components/ui/Button';
 import { Reorder } from 'framer-motion';
 import { useSelector } from 'react-redux';
-import { useQuery } from '@tanstack/react-query';
-import { fetchLists } from '../../../../services/api/listsApi';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchLists, updatePostOrder } from '../../../../services/api/listsApi';
 import { useNavigate } from 'react-router-dom';
 import { referralModalStyle } from '../../../../constants/styles';
 import DeleteListPopup from '../../../../components/dialogue-boxes/DeleteListPopup';
@@ -13,10 +13,13 @@ import BasicModal from '../../../../components/BasicModal';
 import ManagePostInListPopup from '../../../../components/dialogue-boxes/ManagePostInListPopup';
 import DeleteListPostPopup from '../../../../components/dialogue-boxes/DeleteListPostPopup';
 import EditListNameDialogue from '../../../../components/dialogue-boxes/EditListNameDialogue';
+import { toast } from 'sonner';
 
 const Lists = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [items, setItems] = useState([]);
   const [copyModal, setCopyModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -60,7 +63,25 @@ const Lists = () => {
     });
   };
 
-  console.log('listData', listData);
+  console.log('listData', items);
+
+  const { mutateAsync: updatePostsOrder } = useMutation({
+    mutationFn: updatePostOrder,
+    onSuccess: (resp) => {
+      if (resp.status === 200) {
+        toast.success('Order updated successfully');
+      }
+      queryClient.invalidateQueries('lists');
+    },
+    onError: (err) => {
+      console.log('err', err);
+    },
+  });
+
+  const handleSavePostsOrder = (posts, categoryId) => {
+    const ids = posts.map((item) => item._id);
+    updatePostsOrder({ order: ids, userUuid: persistedUserInfo.uuid, categoryId });
+  };
 
   return (
     <div className="no-scrollbar flex h-[calc(100vh-70px)] w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:my-[0.94rem] tablet:gap-5 tablet:px-6 tablet:pb-5">
@@ -128,7 +149,7 @@ const Lists = () => {
                   {categoryItem.category}
                 </h4>
                 <h4
-                  className="cursor-pointer text-[0.75rem] font-normal leading-[15px] text-[#7C7C7C] underline tablet:text-[1.25rem] tablet:leading-[23px]"
+                  className="cursor-pointer text-[9px] font-normal leading-[9px] text-[#7C7C7C] underline tablet:text-[1rem] tablet:leading-[23px]"
                   onClick={() => {
                     setCategoryId(categoryItem._id);
                     setListName(categoryItem.category);
@@ -147,53 +168,55 @@ const Lists = () => {
                 <div className="mx-7 my-[10px] tablet:my-[0.94rem] tablet:mr-[2.25rem]">
                   <ul className="space-y-[5.34px] tablet:space-y-[0.69rem]">
                     {categoryItem.post.length >= 1 &&
-                      categoryItem.post.map((post) => (
-                        <Reorder.Item value={post} key={post._id} className="cursor-pointer">
-                          <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
-                            <div
-                              className={`${
-                                false
-                                  ? 'border-[#5FA3D5]'
-                                  : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
-                              } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
-                            >
-                              <div className="flex w-full items-center rounded-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
-                                <div
-                                  className={`${
-                                    false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-                                  } tablet:rounded-x-[10px] flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:px-[7px] tablet:py-[10px]`}
-                                  style={{
-                                    backgroundImage: `url(${
-                                      persistedTheme === 'dark'
-                                        ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`
-                                        : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`
-                                    })`,
-                                  }}
-                                />
-                                <div
-                                  className={`${
-                                    false
-                                      ? 'border-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]'
-                                      : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-                                  } flex w-full justify-between rounded-r-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
-                                >
-                                  <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
-                                    {post.questForeginKey.Question}
-                                  </h1>
+                      categoryItem.post
+                        // .sort((a, b) => new Date(a.order) - new Date(b.order))
+                        .map((post) => (
+                          <Reorder.Item value={post} key={post._id} className="cursor-pointer">
+                            <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
+                              <div
+                                className={`${
+                                  false
+                                    ? 'border-[#5FA3D5]'
+                                    : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
+                                } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
+                              >
+                                <div className="flex w-full items-center rounded-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
+                                  <div
+                                    className={`${
+                                      false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                                    } tablet:rounded-x-[10px] flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:px-[7px] tablet:py-[10px]`}
+                                    style={{
+                                      backgroundImage: `url(${
+                                        persistedTheme === 'dark'
+                                          ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`
+                                          : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`
+                                      })`,
+                                    }}
+                                  />
+                                  <div
+                                    className={`${
+                                      false
+                                        ? 'border-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]'
+                                        : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                                    } flex w-full justify-between rounded-r-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
+                                  >
+                                    <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
+                                      {post.questForeginKey.Question}
+                                    </h1>
+                                  </div>
                                 </div>
                               </div>
+                              <img
+                                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                                alt="trash"
+                                className="ml-[11px] h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
+                                onClick={() => {
+                                  setCategoryId(categoryItem._id), setPostId(post._id), setDeletePostPopup(true);
+                                }}
+                              />
                             </div>
-                            <img
-                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                              alt="trash"
-                              className="ml-[11px] h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
-                              onClick={() => {
-                                setCategoryId(categoryItem._id), setPostId(post._id), setDeletePostPopup(true);
-                              }}
-                            />
-                          </div>
-                        </Reorder.Item>
-                      ))}
+                          </Reorder.Item>
+                        ))}
                   </ul>
 
                   <div className="my-2 ml-10 flex items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
@@ -232,9 +255,32 @@ const Lists = () => {
                     </Button>
                     <Button
                       variant="submit"
-                      onClick={() => navigate(`/dashboard/profile/postsbylist/${categoryItem._id}`)}
+                      onClick={() =>
+                        navigate('/shared-list-link/result', {
+                          state: { categoryItem: categoryItem._id },
+                        })
+                      }
                     >
                       View
+                    </Button>
+                    {/* <Button
+                      variant={'submit-green'}
+                      onClick={() => {
+                        navigate('/shared-list-link/result', {
+                          state: { categoryItem: categoryItem._id },
+                        });
+                      }}
+                      className={'w-full whitespace-nowrap tablet:min-w-fit tablet:px-[25px] laptop:px-[25px]'}
+                    >
+                      Show My List Results
+                    </Button> */}
+                    <Button
+                      variant="submit"
+                      onClick={() => {
+                        handleSavePostsOrder(categoryItem.post, categoryItem._id);
+                      }}
+                    >
+                      Save
                     </Button>
                   </div>
                 </div>

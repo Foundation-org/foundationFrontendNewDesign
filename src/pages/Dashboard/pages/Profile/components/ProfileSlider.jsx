@@ -3,7 +3,8 @@ import { Button } from '../../../../../components/ui/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const createItems = [
-  { id: 1, title: 'Verfication Badges', path: '/dashboard/profile', to: '' },
+  { id: 8, title: 'Summary', path: '/dashboard/profile', to: '' },
+  { id: 1, title: 'Verfication Badges', path: '/dashboard/profile/verification-badges', to: '' },
   { id: 0, title: 'Contributions', path: '/dashboard/profile/contributions', to: 'contributions' },
   { id: 3, title: 'Hidden Posts', path: '/dashboard/profile/hidden-posts', to: 'hidden-posts' },
   { id: 7, title: 'My Lists', path: '/dashboard/profile/lists', to: 'lists' },

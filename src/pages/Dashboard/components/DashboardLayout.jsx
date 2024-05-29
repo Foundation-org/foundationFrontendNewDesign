@@ -19,6 +19,7 @@ import PopUp from '../../../components/ui/PopUp';
 import SideNavbar from '../../../components/SideNavbar';
 import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId } from '../../../features/quest/utilsSlice';
 import MediaControls from '../../../components/MediaControls';
+import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
 // import ManageList from '../pages/Lists/ManageList';
 
 export default function DashboardLayout({ children }) {
@@ -356,6 +357,8 @@ export default function DashboardLayout({ children }) {
             !location.pathname.startsWith('/p/') &&
             !location.pathname.startsWith('/l/') &&
             !location.pathname.startsWith('/dashboard/profile/postsbylist/') &&
+            location.pathname !== '/shared-list-link/result' &&
+            location.pathname !== '/dashboard/profile/verification-badges' &&
             location.pathname !== '/dashboard/profile/lists' && <SidebarLeft />}
 
           {location.pathname !== '/dashboard/treasury' &&
@@ -370,7 +373,9 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/shared-links' &&
             location.pathname !== '/dashboard/profile/user-settings' &&
             location.pathname !== '/dashboard/profile/feedback' &&
+            location.pathname !== '/shared-list-link/result' &&
             !location.pathname.startsWith('/dashboard/profile/postsbylist/') &&
+            location.pathname !== '/dashboard/profile/verification-badges' &&
             location.pathname !== '/dashboard/profile/lists' && <SideNavbar />}
 
           {questUtilsState.isShowPlayer &&
@@ -584,6 +589,17 @@ export default function DashboardLayout({ children }) {
               </div>
             )}
           </div>
+          {/* {location.pathname !== '/dashboard/quest' &&
+            location.pathname !== '/dashboard/profile/ledger' &&
+            location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/treasury/ledger' &&
+            location.pathname !== '/dashboard/help/about' &&
+            location.pathname !== '/dashboard/help/faq' &&
+            location.pathname !== '/dashboard/help/contact-us' &&
+            location.pathname !== '/help/about' &&
+            location.pathname !== '/help/faq' &&
+            location.pathname !== '/dashboard/profile' &&
+            location.pathname !== '/help/contact-us' && <SidebarRight userData={userInfoData?.data} />} */}
           {location.pathname !== '/dashboard/quest' &&
             location.pathname !== '/dashboard/profile/ledger' &&
             location.pathname !== '/dashboard/treasury' &&
@@ -593,7 +609,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/help/contact-us' &&
             location.pathname !== '/help/about' &&
             location.pathname !== '/help/faq' &&
-            location.pathname !== '/help/contact-us' && <SidebarRight userData={userInfoData?.data} />}
+            location.pathname !== '/help/contact-us' && <SummarySidebar userData={userInfoData?.data} />}
         </div>
       </div>
       {/* Mobile Children */}
