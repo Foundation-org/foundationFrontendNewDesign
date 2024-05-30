@@ -1,7 +1,7 @@
 import PopUp from '../ui/PopUp';
 import { toast } from 'sonner';
 import { Button } from '../ui/Button';
-import { FaSpinner } from 'react-icons/fa';
+// import { FaSpinner } from 'react-icons/fa';
 import { deleteList, updateCategoryName } from '../../services/api/listsApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TextareaAutosize } from '@mui/material';
@@ -21,14 +21,14 @@ export default function EditListNameDialogue({ handleClose, modalVisible, title,
     mutationFn: updateCategoryName,
     onSuccess: (resp) => {
       console.log('resp', resp);
-      console.log('Category name updated Successfully');
+      console.log('List name updated Successfully');
 
       // if (resp.response.status === 500) {
       //   toast.warning('Something goes wrong.');
       //   return;
       // }
 
-      toast.success('Category name updated successfully');
+      toast.success('List name updated successfully');
 
       // queryClient.setQueriesData(['lists'], (oldData) => {
       //   console.log('old', oldData);
@@ -37,7 +37,7 @@ export default function EditListNameDialogue({ handleClose, modalVisible, title,
 
       queryClient.invalidateQueries(['lists']);
 
-      // handleClose();
+      handleClose();
     },
     onError: (error) => {
       console.log(error);

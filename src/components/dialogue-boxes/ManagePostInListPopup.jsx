@@ -14,7 +14,8 @@ import { TextareaAutosize } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-export default function ManagePostInListPopup({ handleClose, modalVisible, title, image, categoryId }) {
+export default function ManagePostInListPopup({ handleClose, modalVisible, title, image, categoryId, selectedItem }) {
+  console.log('🚀 ~ ManagePostInListPopup ~ selectedItem:', selectedItem);
   const queryClient = useQueryClient();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -128,6 +129,23 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
     }
   }, [searchPost]);
 
+  const handleAddPost = async () => {
+    if (selectedItem?.post.length > 0) {
+      selectedItem.post.map((item) => {
+        if (item.questForeginKey._id === selectedPostId) {
+          toast.warning('Post already added in a list.');
+          return;
+        } else {
+          addPostInList({
+            userUuid: persistedUserInfo.uuid,
+            categoryIdArray: [categoryId],
+            questForeginKey: selectedPostId,
+          });
+        }
+      });
+    }
+  };
+
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
@@ -202,11 +220,7 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
           <Button
             variant={'submit'}
             onClick={() => {
-              addPostInList({
-                userUuid: persistedUserInfo.uuid,
-                categoryIdArray: [categoryId],
-                questForeginKey: selectedPostId,
-              });
+              handleAddPost();
             }}
           >
             {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}

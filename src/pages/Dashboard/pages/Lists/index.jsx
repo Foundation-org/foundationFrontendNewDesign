@@ -131,6 +131,7 @@ const Lists = () => {
           title={'Add Post'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/lists/white-list-icon.svg`}
           categoryId={categoryId}
+          selectedItem={selectedItem}
         />
       )}
       {deletePostPopup && (
@@ -270,6 +271,7 @@ const Lists = () => {
                         variant="cancel"
                         className="bg-[#A3A3A3]"
                         onClick={() => {
+                          setSelectedItem(categoryItem);
                           setCategoryId(categoryItem._id);
                           setAddPostModal(true);
                         }}
