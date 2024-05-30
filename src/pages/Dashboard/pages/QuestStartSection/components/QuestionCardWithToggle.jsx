@@ -279,6 +279,10 @@ const QuestionCardWithToggle = (props) => {
       if (resp.status === 200) {
         queryClient.invalidateQueries(['postsByCategory']);
         setLoading(false);
+
+        if (location.pathname.startsWith('/l/')) {
+          updateCategoryParticipentsCount({ categoryLink: location.pathname.split('/')[2] });
+        }
       }
       // queryClient.setQueriesData(['posts'], (oldData) => ({
       //   ...oldData,
@@ -310,10 +314,6 @@ const QuestionCardWithToggle = (props) => {
       // }
       // if (!location.pathname.startsWith('/p/' || !location.pathname.startsWith('/l'))) {
       //   handleViewResults(questStartData._id);
-      // }
-
-      // if (location.pathname.startsWith('/l/')) {
-      //   updateCategoryParticipentsCount({ categoryLink: location.pathname.split('/')[2] });
       // }
     },
     onError: (err) => {
