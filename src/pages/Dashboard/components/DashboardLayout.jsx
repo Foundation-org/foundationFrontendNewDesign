@@ -284,6 +284,8 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/shared-links' &&
             location.pathname !== '/dashboard/profile/user-settings' &&
             location.pathname !== '/dashboard/profile/post-activity' &&
+            location.pathname !== '/dashboard/profile/verification-badges' &&
+            location.pathname !== '/dashboard/profile/lists' &&
             location.pathname !== '/dashboard/profile/feedback' &&
             location.pathname !== '/dashboard/quest' &&
             location.pathname !== '/dashboard/treasury' &&
