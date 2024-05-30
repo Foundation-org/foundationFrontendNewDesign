@@ -126,6 +126,9 @@ export default function HiddenPosts() {
 
   return (
     <>
+      <h1 className="mx-5 my-3 text-[12px] font-normal leading-[133%] text-[#85898C] tablet:hidden tablet:text-[16px] tablet:leading-normal">
+        Creating posts is a great way to earn FDX. Especially if others engage with them.
+      </h1>
       <div className="mx-[15px] my-2 mr-4 flex justify-end tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
         {/* <h1 className="text-[12px] font-semibold leading-[17px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
           Hidden Posts

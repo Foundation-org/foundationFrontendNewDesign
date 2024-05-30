@@ -40,7 +40,7 @@ const Summary = () => {
             </h1>{' '}
           </div>
           <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
-            3/10
+            {persistedUserInfo.badges.length}/24
           </h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
@@ -49,7 +49,7 @@ const Summary = () => {
             more FDX while you’re at it!
           </h1>
           <div className="mt-5 flex w-full justify-center tablet:justify-end">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile')}>
+            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/verification-badges')}>
               Add Badge
             </Button>
           </div>
@@ -66,13 +66,13 @@ const Summary = () => {
                 className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
               />
               <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#7A7016] tablet:top-[40%] tablet:text-[13px]">
-                {persistedUserInfo.badges.length}
+                {persistedUserInfo?.badges.length}
               </p>
             </div>
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Post Activity</h1>
           </div>
           <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
-            3/10
+            {persistedUserInfo?.questsCreated}
           </h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
@@ -96,7 +96,7 @@ const Summary = () => {
             </div>
           </div>
           <div className="my-[15px] flex w-full justify-center tablet:my-6 tablet:justify-end">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile')}>
+            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/verification-badges')}>
               Add Badge
             </Button>
           </div>
@@ -115,7 +115,7 @@ const Summary = () => {
             </div>
           </div>
           <div className="mt-[15px] flex w-full justify-center tablet:mt-5 tablet:justify-end">
-            <Button variant={'submit'} onClick={() => navigate('dashboard/profile/hidden-posts')}>
+            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/hidden-posts')}>
               View hidden posts
             </Button>
           </div>
@@ -213,7 +213,7 @@ const Summary = () => {
             </div>
           </div>
           <div className="mt-[15px] flex w-full justify-center tablet:mt-6 tablet:justify-end">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile')}>
+            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/feedback')}>
               View all post feedback
             </Button>
           </div>

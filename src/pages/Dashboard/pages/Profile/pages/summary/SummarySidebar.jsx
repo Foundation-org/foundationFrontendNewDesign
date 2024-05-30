@@ -30,7 +30,7 @@ const SummarySidebar = ({ userData }) => {
             </div>
           ))}
           <Link
-            to={'/dashboard/profile/hidden-posts'}
+            to={'/dashboard/profile/feedback'}
             className="font-noraml cursor-pointer text-[14px] leading-[121.4%] text-[#4A8DBD] hover:underline"
           >
             See why your posts were
