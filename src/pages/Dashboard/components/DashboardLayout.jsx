@@ -344,6 +344,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/shared-links' &&
             location.pathname !== '/dashboard/profile/user-settings' &&
             location.pathname !== '/dashboard/profile/feedback' &&
+            location.pathname !== '/dashboard/profile/post-activity' &&
             location.pathname !== '/dashboard/treasury' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/quest/isfullscreen' &&
@@ -372,6 +373,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/hidden-posts' &&
             location.pathname !== '/dashboard/profile/shared-links' &&
             location.pathname !== '/dashboard/profile/user-settings' &&
+            location.pathname !== '/dashboard/profile/post-activity' &&
             location.pathname !== '/dashboard/profile/feedback' &&
             location.pathname !== '/shared-list-link/result' &&
             !location.pathname.startsWith('/dashboard/profile/postsbylist/') &&
@@ -602,6 +604,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/help/contact-us' && <SidebarRight userData={userInfoData?.data} />} */}
           {location.pathname !== '/dashboard/quest' &&
             location.pathname !== '/dashboard/profile/ledger' &&
+            location.pathname !== '/dashboard/profile/post-activity' &&
             location.pathname !== '/dashboard/treasury' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/dashboard/help/about' &&
