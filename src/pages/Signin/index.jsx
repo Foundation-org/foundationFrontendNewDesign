@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { signIn, userInfo } from '../../services/api/userAuth';
@@ -18,6 +18,7 @@ import ReferralCode from '../../components/ReferralCode';
 import { sendVerificationEmail } from '../../services/api/authentication';
 import Loader from '../Signup/components/Loader';
 import { referralModalStyle } from '../../constants/styles';
+import LegacyConfirmationPopup from '../../components/dialogue-boxes/LegacyConfirmationPopup';
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -34,6 +35,8 @@ export default function Signin() {
   const [uuid, setUuid] = useState();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [isPasswordConfirmation, setIsPasswordConfirmation] = useState();
+  const legacyPromiseRef = useRef();
 
   const handleReferralOpen = () => {
     setIsReferral((prev) => !prev);
@@ -54,13 +57,17 @@ export default function Signin() {
       } else {
         res = await api.post(`/user/signInUser/socialBadges`, { data, type: provider });
       }
-
-      if (res.status === 200) {
-        localStorage.setItem('uuid', res.data.uuid);
-        localStorage.setItem('userData', JSON.stringify(res.data));
-        localStorage.removeItem('isGuestMode');
-        dispatch(addUser(res.data));
-        navigate('/dashboard');
+      if (res.data.isPasswordEncryption) {
+        setUuid(res.data.uuid);
+        await handleOpenPasswordConfirmation();
+      } else {
+        if (res.status === 200) {
+          localStorage.setItem('uuid', res.data.uuid);
+          localStorage.setItem('userData', JSON.stringify(res.data));
+          localStorage.removeItem('isGuestMode');
+          dispatch(addUser(res.data));
+          navigate('/dashboard');
+        }
       }
     } catch (error) {
       console.log({ error });
@@ -70,14 +77,25 @@ export default function Signin() {
     }
   };
 
-  // useEffect(() => {
-  //   if (authO === 'auth0') {
-  //     queryClient.invalidateQueries(['userInfo']);
-  //   }
-  // }, [authO]);
+  const handleOpenPasswordConfirmation = () => {
+    setIsPasswordConfirmation(true);
+    return new Promise((resolve) => {
+      legacyPromiseRef.current = resolve;
+    });
+  };
 
   return (
     <div className="flex h-dvh w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
+      <LegacyConfirmationPopup
+        isPopup={isPasswordConfirmation}
+        setIsPopup={setIsPasswordConfirmation}
+        title="Confirm Password"
+        type={'password'}
+        logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`}
+        legacyPromiseRef={legacyPromiseRef}
+        login={true}
+        uuid={uuid}
+      />
       {isLoadingSocial && <Loader />}
       <div
         className={`${

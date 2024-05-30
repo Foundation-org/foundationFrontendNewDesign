@@ -4,13 +4,18 @@ import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
 import api from '../../services/api/Axios';
 import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
-const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromiseRef }) => {
+const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromiseRef, login, uuid }) => {
   const handleClose = () => setIsPopup(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const inputType = showPassword ? 'text' : 'password';
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -19,29 +24,53 @@ const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromi
   const validatePassword = async () => {
     setIsLoading(true);
     setPassword('');
-
-    try {
-      const infoc = await api.post('user/infoc', {
-        infoc: password,
-      });
-      if (infoc.status === 200) {
-        if (localStorage.getItem('legacyHash')) {
-          if (infoc.data.data !== localStorage.getItem('legacyHash')) {
-            toast.error('Wrong Password');
+    if (login) {
+      try {
+        const infoc = await api.post('/user/runtimeSignInPassword', {
+          infoc: password,
+          userUuid: uuid,
+        });
+        if (infoc.status === 200) {
+          console.log(infoc.data);
+          localStorage.setItem('legacyHash', infoc.data.hash);
+          localStorage.setItem('uuid', infoc.data.user.uuid);
+          localStorage.setItem('userData', JSON.stringify(infoc.data.user));
+          localStorage.removeItem('isGuestMode');
+          dispatch(addUser(infoc.data.user));
+          navigate('/dashboard');
+          if (legacyPromiseRef.current) {
+            setIsPopup(false);
             setIsLoading(false);
-            return;
+            legacyPromiseRef.current();
           }
-        } else {
-          localStorage.setItem('legacyHash', infoc.data.data);
         }
-        if (legacyPromiseRef.current) {
-          setIsPopup(false);
-          setIsLoading(false);
-          legacyPromiseRef.current();
-        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
+    } else {
+      try {
+        const infoc = await api.post('user/infoc', {
+          infoc: password,
+        });
+        if (infoc.status === 200) {
+          if (localStorage.getItem('legacyHash')) {
+            if (infoc.data.data !== localStorage.getItem('legacyHash')) {
+              toast.error('Wrong Password');
+              setIsLoading(false);
+              return;
+            }
+          } else {
+            localStorage.setItem('legacyHash', infoc.data.data);
+          }
+          if (legacyPromiseRef.current) {
+            setIsPopup(false);
+            setIsLoading(false);
+            legacyPromiseRef.current();
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
