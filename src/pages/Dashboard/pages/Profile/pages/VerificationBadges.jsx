@@ -209,7 +209,6 @@ const VerificationBadges = () => {
         type={'password'}
         logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`}
         legacyPromiseRef={legacyPromiseRef}
-        login={true}
       />
       {isLoading && <Loader />}
 
