@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { formatCountNumber } from '../../../../../utils/utils';
+import { Link } from 'react-router-dom';
 
 const Contributions = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -91,12 +92,165 @@ const Contributions = () => {
   const firstHalf = list.slice(0, Math.ceil(list.length / 2));
   const secondHalf = list.slice(Math.ceil(list.length / 2));
 
+  const yourPosts = [
+    {
+      id: 1,
+      title: 'Posts you’ve created',
+      value: 10,
+    },
+    {
+      id: 2,
+      title: 'Engagement with your posts',
+      value: 10,
+    },
+    {
+      id: 3,
+      title: 'Objections received',
+      value: 10,
+    },
+    {
+      id: 4,
+      title: 'Agreements received',
+      value: 10,
+    },
+    {
+      id: 5,
+      title: 'Number of posts hidden',
+      value: 10,
+    },
+  ];
+
+  const othersPosts = [
+    { id: 1, title: 'Posts you’ve engaged with', val: 0 },
+    { id: 2, title: 'Options added', val: 0 },
+    { id: 3, title: 'Change of answers', val: 0 },
+    { id: 4, title: 'Objections given', val: 0 },
+    { id: 5, title: 'Hidden posts', val: 0 },
+  ];
+
   return (
-    <div className="mt-4">
+    <div className="mx-[15px] my-4 flex max-w-[778px] flex-col gap-[15px] overflow-y-auto tablet:mx-6">
       {/* <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
         My Contributions
       </h1> */}
-      <div
+      <div className="mx-auto w-full">
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center gap-2">
+            {persistedUserInfo?.uuid && persistedUserInfo.role === 'user' ? (
+              <div className="relative h-fit w-fit">
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
+                  alt={'badge'}
+                  className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+                />
+                <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#7A7016] tablet:top-[40%] tablet:text-[13px]">
+                  {persistedUserInfo.badges.length}
+                </p>
+              </div>
+            ) : (
+              <div className="relative z-50 h-fit w-fit">
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
+                  alt={'badge'}
+                  className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+                />
+                <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#F6F6F6] tablet:top-[40%] tablet:text-[13px]">
+                  {persistedUserInfo.badges.length}
+                </p>
+              </div>
+            )}
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Your Posts</h1>{' '}
+          </div>
+          <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
+            {persistedUserInfo.badges.length}/24
+          </h1>
+        </div>
+        <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
+          {yourPosts.map((item) => (
+            <div key={item.id} className="flex items-center justify-between text-[#7C7C7C]">
+              <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
+              <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.value}</h4>
+            </div>
+          ))}
+          <Link
+            to={'/dashboard/profile/feedback'}
+            className="font-noraml cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline tablet:text-[14px] tablet:leading-[121.4%]"
+          >
+            See why your posts were hidden {'>'}
+          </Link>
+        </div>
+      </div>
+      <div className="mx-auto w-full">
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center gap-2">
+            <div className="relative z-50 h-fit w-fit">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
+                alt={'badge'}
+                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+              />
+              <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#F6F6F6] tablet:top-[40%] tablet:text-[13px]">
+                {persistedUserInfo.role === 'user' ? 0 : persistedUserInfo.badges.length}
+              </p>
+            </div>
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Other Posts</h1>{' '}
+          </div>
+          <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
+            {persistedUserInfo.role === 'user' ? 0 : persistedUserInfo.badges.length}/24
+          </h1>
+        </div>
+        <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
+          {othersPosts.map((item) => (
+            <div key={item.id} className="flex items-center justify-between text-[#7C7C7C]">
+              <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
+              <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.val}</h4>
+            </div>
+          ))}
+          <Link
+            to={'/dashboard/profile/feedback'}
+            className="font-noraml cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline tablet:text-[14px] tablet:leading-[121.4%]"
+          >
+            See why your posts were hidden {'>'}
+          </Link>
+        </div>
+      </div>
+      <div className="mx-auto w-full">
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center gap-2">
+            <div className="relative z-50 h-fit w-fit">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/post-activity/coc-icon.svg`}
+                alt={'badge'}
+                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+              />
+              <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#F6F6F6] tablet:top-[40%] tablet:text-[13px]">
+                {persistedUserInfo.badges.length}
+              </p>
+            </div>
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
+              Code of Conduct
+            </h1>{' '}
+          </div>
+          <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
+            {persistedUserInfo.badges.length}/24
+          </h1>
+        </div>
+        <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
+          <div className="flex items-center justify-between text-[#7C7C7C]">
+            <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">
+              Number of code of conduct violations
+            </h4>
+            <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">5</h4>
+          </div>
+          <Link
+            to={'/dashboard/profile/feedback'}
+            className="font-noraml cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline tablet:text-[14px] tablet:leading-[121.4%]"
+          >
+            View code of conduct {'>'}
+          </Link>
+        </div>
+      </div>
+      {/* <div
         className={`${
           persistedTheme === 'dark' ? 'dark-shadow-inside border-2 border-[#858585] dark:border-white' : 'shadow-inside'
         } relative ml-[42px] mr-[59px] hidden h-[183px] rounded-[45px] laptop:block`}
@@ -123,8 +277,8 @@ const Contributions = () => {
             </div>
           ))}
         </div>
-      </div>
-      <div className="flex flex-col gap-[30px] tablet:gap-16 laptop:hidden">
+      </div> */}
+      {/* <div className="flex flex-col gap-[30px] tablet:gap-16 laptop:hidden">
         <div
           className={`${
             persistedTheme === 'dark' ? 'dark-shadow-inside border-[1px] border-[#858585]' : 'shadow-inside'
@@ -181,7 +335,7 @@ const Contributions = () => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

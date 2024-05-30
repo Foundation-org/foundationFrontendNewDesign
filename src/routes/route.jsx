@@ -138,7 +138,7 @@ export function Router() {
                   }
                 />
                 <Route
-                  path="contributions"
+                  path="post-activity"
                   element={
                     <ErrorBoundary>
                       <Contributions />

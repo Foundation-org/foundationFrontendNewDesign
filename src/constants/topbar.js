@@ -52,7 +52,7 @@ export const TopbarItems = [
     activePaths: [
       '/dashboard/profile',
       '/dashboard/profile/verification-badges',
-      '/dashboard/profile/contributions',
+      '/dashboard/profile/post-activity',
       '/dashboard/profile/feedback',
       '/dashboard/profile/ledger',
       '/dashboard/profile/hidden-posts',
