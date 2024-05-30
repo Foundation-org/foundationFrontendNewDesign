@@ -41,7 +41,7 @@ const PostsByList = () => {
     listData?.post?.map((item) => {
       return (
         <div key={item._id}>
-          <QuestionCardWithToggle questStartData={item.questForeginKey} />
+          <QuestionCardWithToggle questStartData={item.questForeginKey} categoryId={item._id} />
         </div>
       );
     }) ?? null;

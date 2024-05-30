@@ -31,7 +31,7 @@ const QuestionCardWithToggle = (props) => {
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   const { innerRef, questStartData, postProperties, SharedLinkButton } = props;
-  const { isSingleQuest, postLink } = props;
+  const { isSingleQuest, postLink, categoryId } = props;
 
   let questData;
 
@@ -477,7 +477,7 @@ const QuestionCardWithToggle = (props) => {
         }
       } else {
         if (location.pathname.startsWith('/l/')) {
-          startGuestListQuest(params);
+          startGuestListQuest({ params, categoryId });
         } else {
           startQuest(params);
         }
@@ -611,7 +611,7 @@ const QuestionCardWithToggle = (props) => {
 
         if (length !== 0) {
           if (location.pathname.startsWith('/l/')) {
-            startGuestListQuest(params);
+            startGuestListQuest({ params, categoryId });
           } else {
             startQuest(params);
           } // Start Quest API CALL
@@ -724,7 +724,7 @@ const QuestionCardWithToggle = (props) => {
           return;
         }
         if (location.pathname.startsWith('/l/')) {
-          startGuestListQuest(params);
+          startGuestListQuest({ params, categoryId });
         } else {
           startQuest(params);
         }

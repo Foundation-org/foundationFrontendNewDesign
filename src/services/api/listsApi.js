@@ -151,10 +151,10 @@ export const updatePostOrder = async ({ order, userUuid, categoryId }) => {
   }
 };
 
-export const submitListResponse = async (params) => {
+export const submitListResponse = async ({ params, categoryId }) => {
   try {
     const resp = await api.post(`/userlists/submitResponse`, {
-      postId: params.questId,
+      postId: categoryId,
       data: {
         created: params.answer.created,
         selected: params.answer.selected,
