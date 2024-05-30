@@ -20,7 +20,7 @@ import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button.jsx';
-import { updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
+import { submitListResponse, updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
 
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
@@ -272,6 +272,57 @@ const QuestionCardWithToggle = (props) => {
   //   props.setSingleQuestResp(getQuest.response.data.data[0]);
   // };
 
+  const { mutateAsync: startGuestListQuest } = useMutation({
+    mutationFn: submitListResponse,
+    onSuccess: (resp) => {
+      console.log('resp', resp);
+      if (resp.status === 200) {
+        queryClient.invalidateQueries(['postsByCategory']);
+        setLoading(false);
+      }
+      // queryClient.setQueriesData(['posts'], (oldData) => ({
+      //   ...oldData,
+      //   pages: oldData?.pages?.map((page) =>
+      //     page.map((item) => (item._id === resp.data.data._id ? resp.data.data : item)),
+      //   ),
+      // }));
+
+      // if (resp.data.message === 'Start Quest Created Successfully') {
+      //   setLoading(false);
+      //   queryClient.invalidateQueries(['userInfo', 'postsByCategory']);
+
+      //   queryClient.setQueryData(['questByShareLink'], (oldData) => ({
+      //     ...resp.data.data,
+      //   }));
+
+      //   // queryClient.setQueryData(['postsByCategory'], (oldData) => {
+      //   //   console.log('old', oldData);
+      //   // });
+
+      //   // postsByCategory;
+      // }
+
+      // // if (persistedUserInfo.role === 'guest') {
+      // //   questByUniqueShareLink();
+      // // }
+      // if (location.pathname.startsWith('/quest/')) {
+      //   props.setSubmitResponse(resp.data.data);
+      // }
+      // if (!location.pathname.startsWith('/p/' || !location.pathname.startsWith('/l'))) {
+      //   handleViewResults(questStartData._id);
+      // }
+
+      // if (location.pathname.startsWith('/l/')) {
+      //   updateCategoryParticipentsCount({ categoryLink: location.pathname.split('/')[2] });
+      // }
+    },
+    onError: (err) => {
+      console.log({ err });
+      toast.error(err.response.data.message.split(':')[1]);
+      setLoading(false);
+    },
+  });
+
   const { mutateAsync: startQuest } = useMutation({
     mutationFn: questServices.createStartQuest,
     onSuccess: (resp) => {
@@ -425,7 +476,11 @@ const QuestionCardWithToggle = (props) => {
           changeAnswer(params);
         }
       } else {
-        startQuest(params);
+        if (location.pathname.startsWith('/l/')) {
+          startGuestListQuest(params);
+        } else {
+          startQuest(params);
+        }
       }
     } else if (
       questStartData.whichTypeQuestion === 'multiple choise' ||
@@ -555,7 +610,11 @@ const QuestionCardWithToggle = (props) => {
         }
 
         if (length !== 0) {
-          startQuest(params); // Start Quest API CALL
+          if (location.pathname.startsWith('/l/')) {
+            startGuestListQuest(params);
+          } else {
+            startQuest(params);
+          } // Start Quest API CALL
 
           const updatedArray = answersSelection.map((item, index) => {
             if (index === answersSelection.length - 1) {
@@ -664,7 +723,11 @@ const QuestionCardWithToggle = (props) => {
           setLoading(false);
           return;
         }
-        startQuest(params);
+        if (location.pathname.startsWith('/l/')) {
+          startGuestListQuest(params);
+        } else {
+          startQuest(params);
+        }
 
         const updatedArray = rankedAnswers.map((item, index) => {
           if (item?.addedOptionByUser === true) {

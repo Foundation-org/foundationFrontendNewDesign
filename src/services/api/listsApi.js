@@ -117,7 +117,7 @@ export const generateCategoryShareLink = async (userUuid, categoryId, customized
 
 export const findPostsBySharedLink = async ({ id }) => {
   try {
-    const resp = await api.get(`/userlists/findCategoryByLink/${id}`);
+    const resp = await api.get(`/userlists/findCategoryByLink/${id}?uuid=${localStorage.getItem('uuid')}`);
     return resp.data.category;
   } catch (err) {
     return err;
@@ -145,6 +145,23 @@ export const updateCategoryParticipentsCount = async ({ categoryLink }) => {
 export const updatePostOrder = async ({ order, userUuid, categoryId }) => {
   try {
     const resp = await api.post(`userlists/userList/updatePostOrder`, { order, userUuid, categoryId });
+    return resp;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const submitListResponse = async (params) => {
+  try {
+    const resp = await api.post(`/userlists/submitResponse`, {
+      postId: params.questId,
+      data: {
+        created: params.answer.created,
+        selected: params.answer.selected,
+      },
+      addedAnswer: params.addedAnswer,
+      uuid: params.uuid,
+    });
     return resp;
   } catch (err) {
     return err;
