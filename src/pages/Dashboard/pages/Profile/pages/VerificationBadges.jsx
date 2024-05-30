@@ -127,7 +127,7 @@ const VerificationBadges = () => {
       } else if (provider === 'instagram') {
         id = data.user_id;
       } else if (provider === 'facebook') {
-        id = data.userID;
+        id = data.id;
       } else if (provider === 'twitter') {
         id = data.user.uid;
       } else if (provider === 'github') {
@@ -205,7 +205,7 @@ const VerificationBadges = () => {
       <LegacyConfirmationPopup
         isPopup={isPasswordConfirmation}
         setIsPopup={setIsPasswordConfirmation}
-        title="Password"
+        title="Confirm Password"
         type={'password'}
         logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`}
         legacyPromiseRef={legacyPromiseRef}

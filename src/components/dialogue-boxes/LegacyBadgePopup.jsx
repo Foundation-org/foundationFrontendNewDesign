@@ -30,7 +30,6 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
 
   const addPasswordBadge = async () => {
     setIsLoading(true);
-    console.log(password, reTypePassword);
     if (password === reTypePassword) {
       setPassword('');
       setReTypePassword('');
@@ -49,6 +48,7 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
             if (resp.status === 200) {
               toast.success('Badge Added Successfully');
               handleClose();
+              setIsLoading(false);
               queryClient.invalidateQueries(['userInfo']);
             }
           } catch (err) {

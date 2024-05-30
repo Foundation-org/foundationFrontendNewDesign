@@ -71,6 +71,7 @@ const EducationBadgePopup = ({
   const [deleteModalState, setDeleteModalState] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [RemoveLoading, setRemoveLoading] = useState(false);
+  const [fetchingEdit, setFetchingEdit] = useState(false);
 
   const searchDegreeAndFields = async (type, query) => {
     try {
@@ -306,6 +307,8 @@ const EducationBadgePopup = ({
       toast.error(error.response.data.message.split(':')[1]);
       handleClose();
     }
+
+    setFetchingEdit(false);
   };
 
   const handleEdit = async (id) => {
@@ -487,7 +490,7 @@ const EducationBadgePopup = ({
                         alt="Edit Icon"
                         className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
                         onClick={() => {
-                          setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                          setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
                         }}
                       />
                       <img
@@ -658,7 +661,7 @@ const EducationBadgePopup = ({
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field3.label}
                 </p>
-                {!field3Data && edit ? (
+                {fetchingEdit ? (
                   <input
                     type="text"
                     value="Loading..."
@@ -683,7 +686,7 @@ const EducationBadgePopup = ({
                   <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field4.label}
                   </p>
-                  {!field4Data && edit ? (
+                  {fetchingEdit ? (
                     <input
                       type="text"
                       value="Loading..."

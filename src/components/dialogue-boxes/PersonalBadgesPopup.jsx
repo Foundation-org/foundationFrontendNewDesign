@@ -56,6 +56,7 @@ const PersonalBadgesPopup = ({
   const [prevInfo, setPrevInfo] = useState();
   const handleClose = () => setIsPopup(false);
   const [hollow, setHollow] = useState(edit ? false : true);
+  const [fetchingEdit, setFetchingEdit] = useState(false);
 
   const handleNameChange = (e) => setName(e.target.value);
 
@@ -106,14 +107,16 @@ const PersonalBadgesPopup = ({
       setSelected({ name: Object.keys(info?.data?.obj)[0] });
       setName(info?.data?.obj[Object.keys(info?.data?.obj)[0]]);
     }
+    setFetchingEdit(false);
   };
 
   useEffect(() => {
     if (edit) {
+      setFetchingEdit(true);
       FetchData();
     }
   }, []);
-
+  console.log(fetchingEdit);
   useEffect(() => {
     if (edit) {
       if (type === 'dateOfBirth') {
@@ -413,12 +416,12 @@ const PersonalBadgesPopup = ({
                 </p>
                 <input
                   type="text"
-                  value={edit ? (name ? name : 'Loading...') : name}
+                  value={edit ? (!fetchingEdit ? name : 'Loading...') : name}
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
                   placeholder={placeholder2}
-                  disabled={edit ? (name ? false : true) : false}
+                  disabled={fetchingEdit}
                   className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${
                     edit ? (name ? '' : 'caret-hidden') : ''
                   }`}
@@ -459,7 +462,7 @@ const PersonalBadgesPopup = ({
           <div className="relative">
             <input
               type="text"
-              value={edit ? (name ? name : 'Loading...') : name}
+              value={edit ? (!fetchingEdit ? name : 'Loading...') : name}
               disabled
               placeholder={placeholder2}
               className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
@@ -500,13 +503,13 @@ const PersonalBadgesPopup = ({
           <div className="relative">
             <input
               type="text"
-              value={edit ? (name ? name : 'Loading...') : name}
+              value={edit ? (!fetchingEdit ? name : 'Loading...') : name}
               onChange={(e) => {
                 setCheck(true);
                 setName(e.target.value);
               }}
               placeholder={placeholder}
-              disabled={edit ? (name ? false : true) : false}
+              disabled={fetchingEdit}
               className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${
                 edit ? (name ? '' : 'caret-hidden') : ''
               }`}
@@ -688,7 +691,7 @@ const PersonalBadgesPopup = ({
         {title === 'Last Name' && renderInputField('Last Name', name, handleNameChange, placeholder, apiResp)}
         {title === 'Date of Birth' && (
           <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-            {!date && edit ? (
+            {fetchingEdit ? (
               <input
                 type="text"
                 value="Loading..."
