@@ -24,6 +24,7 @@ const ReferralCode = ({
   handlePopupOpen,
   setErrorMessage,
   socialAccount,
+  setIsLoadingSocial,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,82 +33,120 @@ const ReferralCode = ({
     setReferralCode(e.target.value);
   };
 
-  const { mutateAsync: userSignup } = useMutation({
-    mutationFn: signUp,
-  });
+  // const { mutateAsync: userSignup } = useMutation({
+  //   mutationFn: signUp,
+  // });
 
-  const handleSignup = async () => {
-    setIsLoading(true);
+  // const handleSignup = async () => {
+  //   setIsLoading(true);
 
+  //   try {
+  //     if (password === reTypePassword) {
+  //       const resp = await userSignup({ email, password });
+
+  //       if (resp.status === 200) {
+  //         toast.success('A verification email has been sent to your email address. Please check your inbox.');
+
+  //         setEmail('');
+  //         setPassword('');
+  //       }
+  //     } else {
+  //       toast.warning('Password does not match');
+  //     }
+  //   } catch (e) {
+  //     // setErrorMessage(e.response.data.message.split(':')[1]);
+  //     toast.error(e.response.data.message.split(':')[1]);
+  //     handlePopupOpen();
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  // const handleSocialSignup = async () => {
+  //   try {
+  //     const res = await api.post(`/user/signUpUser/social`, socialAccount.data);
+  //     if (res.status === 200) {
+  //       localStorage.setItem('uuid', res.data.uuid);
+  //       dispatch(addUser(res.data));
+  //       navigate('/dashboard');
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.response.data.message.split(':')[1]);
+  //   } finally {
+  //     setRefLoading(false);
+  //   }
+  // };
+
+  // const handleSocialBadgesSignUp = async () => {
+  //   try {
+  //     const res = await api.post(`user/signUpUser/socialBadges`, socialAccount);
+  //     if (res.status === 200) {
+  //       localStorage.setItem('uuid', res.data.uuid);
+  //       dispatch(addUser(res.data));
+  //       navigate('/dashboard');
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.response.data.message.split(':')[1]);
+  //   } finally {
+  //     setRefLoading(false);
+  //   }
+  // };
+
+  const handleSignUpSocialGuest = async (data) => {
     try {
-      if (password === reTypePassword) {
-        const resp = await userSignup({ email, password });
-
-        if (resp.status === 200) {
-          toast.success('A verification email has been sent to your email address. Please check your inbox.');
-
-          setEmail('');
-          setPassword('');
-        }
-      } else {
-        toast.warning('Password does not match');
+      data.uuid = localStorage.getItem('uuid');
+      const res = await api.post(`/user/signUpSocial/guestMode`, data);
+      if (res.status === 200) {
+        localStorage.setItem('uuid', res.data.uuid);
+        localStorage.setItem('userData', JSON.stringify(res.data));
+        localStorage.removeItem('isGuestMode');
+        navigate('/dashboard');
       }
-    } catch (e) {
-      // setErrorMessage(e.response.data.message.split(':')[1]);
-      toast.error(e.response.data.message.split(':')[1]);
-      handlePopupOpen();
-    } finally {
+    } catch (error) {
+      toast.error(error.response.data.message.split(':')[1]);
       setIsLoading(false);
+      setIsLoadingSocial(false);
     }
   };
 
-  const handleSocialSignup = async () => {
+  const handleSignUpGuestSocialBadges = async (data, provider) => {
     try {
-      const res = await api.post(`/user/signUpUser/social`, socialAccount.data);
+      data.uuid = localStorage.getItem('uuid');
+      data.type = provider;
+      const res = await api.post(`/user/signUpGuest/SocialBadges`, { data, type: provider });
       if (res.status === 200) {
         localStorage.setItem('uuid', res.data.uuid);
-        dispatch(addUser(res.data));
+        localStorage.setItem('userData', JSON.stringify(res.data));
+        localStorage.removeItem('isGuestMode');
         navigate('/dashboard');
       }
     } catch (error) {
       toast.error(error.response.data.message.split(':')[1]);
-    } finally {
-      setRefLoading(false);
-    }
-  };
-
-  const handleSocialBadgesSignUp = async () => {
-    try {
-      const res = await api.post(`user/signUpUser/socialBadges`, socialAccount);
-      if (res.status === 200) {
-        localStorage.setItem('uuid', res.data.uuid);
-        dispatch(addUser(res.data));
-        navigate('/dashboard');
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-    } finally {
-      setRefLoading(false);
+      setIsLoading(false);
+      setIsLoadingSocial(false);
     }
   };
 
   const { mutateAsync: handleReferral } = useMutation({
     mutationFn: referral,
-    onSuccess: (resp) => {
+    onSuccess: () => {
       setIsLoading(false);
       toast.success('Referral code verified');
       setRefLoading(false);
       handleClose();
-      console.log(socialAccount);
-      if (socialAccount?.type) {
-        console.log('if type');
-        if (socialAccount?.type === 'google') {
-          handleSocialSignup();
-        } else {
-          handleSocialBadgesSignUp();
-        }
+      // if (socialAccount?.type) {
+      //   if (socialAccount?.type === 'google') {
+      //     handleSocialSignup();
+      //   } else {
+      //     handleSocialBadgesSignUp();
+      //   }
+      // } else {
+      //   handleSignup();
+      // }
+      if (socialAccount?.type === 'google') {
+        handleSignUpSocialGuest(socialAccount?.data);
       } else {
-        handleSignup();
+        handleSignUpGuestSocialBadges(socialAccount?.data, socialAccount?.type);
       }
     },
     onError: (err) => {

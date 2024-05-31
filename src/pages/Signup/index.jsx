@@ -66,60 +66,58 @@ export default function Signup() {
   //   mutationFn: signUp,
   // });
 
-  const handleSignUpSocialGuest = async (data) => {
-    try {
-      data.uuid = localStorage.getItem('uuid');
-      const res = await api.post(`/user/signUpSocial/guestMode`, data);
-      if (res.status === 200) {
-        dispatch(addUser(res.data));
-        localStorage.setItem('uuid', res.data.uuid);
-        localStorage.setItem('userData', JSON.stringify(res.data));
-        localStorage.removeItem('isGuestMode');
-        navigate('/dashboard');
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-      setIsLoading(false);
-      setIsLoadingSocial(false);
-    }
-  };
+  // const handleSignUpSocialGuest = async (data) => {
+  //   try {
+  //     data.uuid = localStorage.getItem('uuid');
+  //     const res = await api.post(`/user/signUpSocial/guestMode`, data);
+  //     if (res.status === 200) {
+  //       localStorage.setItem('uuid', res.data.uuid);
+  //       localStorage.setItem('userData', JSON.stringify(res.data));
+  //       localStorage.removeItem('isGuestMode');
+  //       navigate('/dashboard');
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.response.data.message.split(':')[1]);
+  //     setIsLoading(false);
+  //     setIsLoadingSocial(false);
+  //   }
+  // };
 
-  const handleSignUpGuestSocialBadges = async (data, provider) => {
-    try {
-      data.uuid = localStorage.getItem('uuid');
-      data.type = provider;
-      const res = await api.post(`/user/signUpGuest/SocialBadges`, { data, type: provider });
-      if (res.status === 200) {
-        dispatch(addUser(res.data));
-        localStorage.setItem('uuid', res.data.uuid);
-        localStorage.setItem('userData', JSON.stringify(res.data));
-        localStorage.removeItem('isGuestMode');
-        navigate('/dashboard');
-      }
-    } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
-      setIsLoading(false);
-      setIsLoadingSocial(false);
-    }
-  };
+  // const handleSignUpGuestSocialBadges = async (data, provider) => {
+  //   try {
+  //     data.uuid = localStorage.getItem('uuid');
+  //     data.type = provider;
+  //     const res = await api.post(`/user/signUpGuest/SocialBadges`, { data, type: provider });
+  //     if (res.status === 200) {
+  //       dispatch(addUser(res.data));
+  //       localStorage.setItem('uuid', res.data.uuid);
+  //       localStorage.setItem('userData', JSON.stringify(res.data));
+  //       localStorage.removeItem('isGuestMode');
+  //       navigate('/dashboard');
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.response.data.message.split(':')[1]);
+  //     setIsLoading(false);
+  //     setIsLoadingSocial(false);
+  //   }
+  // };
 
   const handleSignUpSocial = async (data, provider) => {
-    console.log('before');
+    // console.log('before');
     setSocialAccount({ type: provider, data });
-    if (localStorage.getItem('isGuestMode')) {
-      if (provider === 'google') {
-        handleSignUpSocialGuest(data);
-      } else {
-        handleSignUpGuestSocialBadges(data, provider);
-      }
-    } else {
-      handleReferralOpen();
-      return;
-    }
+    // if (localStorage.getItem('isGuestMode')) {
+    //   if (provider === 'google') {
+    //     handleSignUpSocialGuest(data);
+    //   } else {
+    //     handleSignUpGuestSocialBadges(data, provider);
+    //   }
+    // } else {
+    handleReferralOpen();
+    return;
+    // }
   };
 
   const handleSignUpSocialAfterReferral = async (data) => {
-    console.log('after');
     setSocialAccount({ type: provider, data });
 
     try {
