@@ -179,7 +179,8 @@ const Summary = () => {
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-            Sharing posts is a great way to earn FDX - especially if people engage with them.
+            Not everything you post may be everyone’s cup of tea. See what posts you’ve created others have decided to
+            hide and why.
           </h1>
           <div className="mt-6 flex items-center justify-center gap-3 tablet:gap-6">
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">

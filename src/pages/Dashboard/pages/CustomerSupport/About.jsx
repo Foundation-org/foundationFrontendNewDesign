@@ -15,7 +15,7 @@ const About = () => {
           Unlock the potential of your personal data.
         </p>
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
-          Every aspect of your life-from your hobbies and habits to your opinions and achievments-is valueable. With
+          Every aspect of your life-from your hobbies and habits to your opinions and achievements-is valuable. With
           Foundation, you control access to your information and its uses, turning what you already do every day into
           opportunities for earnings.
         </p>

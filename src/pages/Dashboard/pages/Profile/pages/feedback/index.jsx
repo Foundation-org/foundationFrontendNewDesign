@@ -90,7 +90,7 @@ export default function Feedback() {
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/share-posts-logo.svg`}
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/feedback-logo.svg`}
               alt={'badge'}
               className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
             />
@@ -102,24 +102,19 @@ export default function Feedback() {
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-            Creating posts is a great way to earn FDX. Especially if others engage with them.
+            Not everything you post may be everyone’s cup of tea. See what posts you’ve created others have decided to
+            hide and why.
           </h1>
-          <div className="mt-[10px] flex items-center justify-center gap-2 tablet:gap-6">
+          <div className="mt-[10px] flex items-center justify-center gap-2 tablet:mt-4 tablet:gap-6">
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Posts You’ve Shared
+                Hidden posts
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">3</h5>
             </div>
-            <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
-              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Total Shared Link Clicks
-              </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
-            </div>
             <div>
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Total post engagement
+                Supressed posts
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
             </div>

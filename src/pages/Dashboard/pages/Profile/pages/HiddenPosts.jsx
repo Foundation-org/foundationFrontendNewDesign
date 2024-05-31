@@ -143,9 +143,9 @@ export default function HiddenPosts() {
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-            Creating posts is a great way to earn FDX. Especially if others engage with them.
+            Review posts you’ve hidden. You can also unhide posts.
           </h1>
-          <div className="mt-[10px] flex items-center justify-center gap-2 tablet:gap-6">
+          <div className="mt-[10px] flex items-center justify-center gap-2 tablet:mt-4 tablet:gap-6">
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Posts You’ve Shared
