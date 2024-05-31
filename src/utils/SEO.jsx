@@ -1,14 +1,14 @@
-import React from "react";
-import { useEffect } from "react";
-import { Helmet } from "react-helmet-async";
+import React from 'react';
+import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 export default function SEO({ title, description, type, url, image }) {
   return (
     <Helmet>
       <script>
-          {`
+        {`
             window.prerenderReady = false;
           `}
-        </script>
+      </script>
       {/* <!-- Primary Meta Tags --> */}
       <title>{title}</title>
       <meta name="title" content={title} />
