@@ -9,15 +9,15 @@ const About = () => {
     <div className="bg-white">
       <div className="space-y-[0.63rem] px-8 pt-3 text-[#7C7C7C] tablet:space-y-5 tablet:px-16 tablet:pt-[1.56rem]">
         <h1 className="text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
-          You have data. You can sell it.
+          Let Your Data Work for You.
         </h1>
         <p className="text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
-          Almost every aspect of your life is an asset.
+          Unlock the potential of your personal data.
         </p>
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
-          Your education, eye color, marital status, shopping habits, and even your opinions. All of those attributes
-          create personal data that is desired and used by brands and corporations every day, and the only benefit to
-          you is more and more targeted ads.
+          Every aspect of your life-from your hobbies and habits to your opinions and achievments-is valueable. With
+          Foundation, you control access to your information and its uses, turning what you already do every day into
+          opportunities for earnings.
         </p>
       </div>
       <div className="mt-4 bg-[#238AD4] px-8 py-[1.3rem] text-white tablet:px-16 tablet:py-6">
