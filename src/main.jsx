@@ -19,7 +19,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // React Helmet for SEO
 import { HelmetProvider } from 'react-helmet-async';
-
 import { MetaMaskProvider } from '@metamask/sdk-react';
 
 const queryClient = new QueryClient();

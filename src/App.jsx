@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Router } from './routes/route';
-import { Toaster, toast } from 'sonner';
+import { Toaster } from 'sonner';
 import SEO from './utils/SEO';
 import { MaintenanceRouter } from './routes/maintenance';
 // import SEO from './utils/SEO';

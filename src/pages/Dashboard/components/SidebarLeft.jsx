@@ -63,7 +63,7 @@ const SidebarLeft = () => {
       }),
     );
     localStorage.setItem('selectedButtonId', userData?.States.selectedBtnId);
-  }, [localStorage.getItem('userData')]);
+  }, []);
 
   // Search
   const handleSearch = (e) => {

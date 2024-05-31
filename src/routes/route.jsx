@@ -191,56 +191,6 @@ export function Router() {
                 <Route path="change-password" element={<ChangePassword />} />
               </Route>
             </Route>
-            <Route
-              path="/profile/"
-              element={
-                <ErrorBoundary>
-                  <Profile />
-                </ErrorBoundary>
-              }
-            >
-              <Route
-                path=""
-                element={
-                  <ErrorBoundary>
-                    <Contributions />
-                  </ErrorBoundary>
-                }
-              />
-              <Route
-                path="verification-badges"
-                element={
-                  <ErrorBoundary>
-                    <VerificationBadges />
-                  </ErrorBoundary>
-                }
-              />
-              <Route
-                path="ledger"
-                element={
-                  <ErrorBoundary>
-                    <BasicTable />
-                  </ErrorBoundary>
-                }
-              />
-              <Route
-                path="hidden-posts"
-                element={
-                  <ErrorBoundary>
-                    <HiddenPosts />
-                  </ErrorBoundary>
-                }
-              />
-              <Route
-                path="shared-links"
-                element={
-                  <ErrorBoundary>
-                    <SharedLinks />
-                  </ErrorBoundary>
-                }
-              />
-              <Route path="change-password" element={<ChangePassword />} />
-            </Route>
             <Route path="/shared-links/result" element={<SharedLinkResults />} />
             <Route path="/shared-list-link/result" element={<SharedListResults />} />
             <Route path="/quest/:isFullScreen" element={<Guests />} />

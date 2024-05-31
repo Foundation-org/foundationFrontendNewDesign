@@ -106,7 +106,7 @@ const Lists = () => {
   // console.log('reorder', hasReordered);
 
   return (
-    <div className="no-scrollbar flex h-[calc(100vh-70px)] w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:my-[0.94rem] tablet:gap-5 tablet:px-6 tablet:pb-5">
+    <div className="no-scrollbar flex h-[calc(100vh-70px)] w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mb-[0.94rem] tablet:gap-5 tablet:px-6 tablet:pb-5">
       <BasicModal
         open={copyModal}
         handleClose={handleCopyClose}
@@ -154,6 +154,51 @@ const Lists = () => {
           listData={listName}
         />
       )}
+
+      {/* Summary Section */}
+      <div className="mx-auto w-full">
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center gap-2">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/my-list-logo.svg`}
+              alt={'badge'}
+              className="h-[18.5px] w-[14.6px] tablet:h-5 tablet:w-[15px]"
+            />
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">My Lists</h1>
+          </div>
+          {/* <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
+            3/10
+          </h1> */}
+        </div>
+        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+          <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            This collection showcases the topics and ideas. Participate in our survey to help us understand why these
+            posts resonate with you and what you'd like to see more of in the future.
+          </h1>
+          {/* <div className="mt-[10px] flex items-center justify-center gap-2 tablet:mt-4 tablet:gap-6">
+            <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                Posts You’ve Shared
+              </h1>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">3</h5>
+            </div>
+            <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                Total Shared Link Clicks
+              </h1>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
+            </div>
+            <div>
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                Total post engagement
+              </h1>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
+            </div>
+          </div> */}
+        </div>
+      </div>
+
+      {/* Main Content */}
       {items.length < 1 ? (
         <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
           <p className="text-center text-[4vw] laptop:text-[2vw]">

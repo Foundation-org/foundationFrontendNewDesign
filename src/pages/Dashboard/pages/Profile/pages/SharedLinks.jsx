@@ -135,19 +135,14 @@ export default function SharedLinks() {
   return (
     <div>
       {/* Shared Posts Insights */}
-      <div className="mx-[15px] my-3 tablet:hidden">
+      <div className="mx-[15px] mb-3 tablet:mx-6 tablet:mb-5">
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
-            <div className="relative h-fit w-fit">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/share-posts-logo.svg`}
-                alt={'badge'}
-                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
-              />
-              <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#7A7016] tablet:top-[40%] tablet:text-[13px]">
-                {persistedUserInfo.badges.length}
-              </p>
-            </div>
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/share-posts-logo.svg`}
+              alt={'badge'}
+              className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+            />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Shared posts</h1>
           </div>
           <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
@@ -158,7 +153,7 @@ export default function SharedLinks() {
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Sharing posts is a great way to earn FDX - especially if people engage with them.
           </h1>
-          <div className="mt-[10px] flex items-center justify-center gap-2 tablet:gap-6">
+          <div className="mt-[10px] flex items-center justify-center gap-2 tablet:mt-4 tablet:gap-6">
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Posts You’ve Shared

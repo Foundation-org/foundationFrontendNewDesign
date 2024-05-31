@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { GrClose } from 'react-icons/gr';
 import { useEffect, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../../components/ui/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDebounce } from '../../../utils/useDebounce';
@@ -26,6 +26,7 @@ export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const { canAddPost } = useParams();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
@@ -104,6 +105,7 @@ export default function DashboardLayout({ children }) {
         localStorage.setItem('userLoggedIn', res.data.uuid);
         localStorage.removeItem('isGuestMode');
         localStorage.setItem('jwt', res.data.token);
+        queryClient.invalidateQueries(['userInfo']);
         navigate('/dashboard');
       }
     } catch (error) {
@@ -315,6 +317,18 @@ export default function DashboardLayout({ children }) {
                 )}
               </>
             )}
+
+          {persistedUserInfo.role === 'user' && location.pathname.startsWith('/dashboard/profile') && (
+            <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
+              <Button
+                variant="hollow-submit2"
+                className="bg-white tablet:w-full"
+                onClick={() => navigate('/dashboard/treasury')}
+              >
+                Redemption center
+              </Button>
+            </div>
+          )}
         </div>
         {/* )} */}
 

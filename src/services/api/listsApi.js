@@ -167,3 +167,12 @@ export const submitListResponse = async ({ params, categoryId }) => {
     return err;
   }
 };
+
+export const viewListResults = async ({ categoryId }) => {
+  console.log('first', categoryId);
+  try {
+    return await api.get(`/userlists/viewList/${categoryId}/${localStorage.getItem('uuid')}`);
+  } catch (err) {
+    return err;
+  }
+};
