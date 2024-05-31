@@ -59,16 +59,11 @@ const Summary = () => {
       <div>
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
-            <div className="relative h-fit w-fit">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/post-activity-logo.svg`}
-                alt={'badge'}
-                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
-              />
-              <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#7A7016] tablet:top-[40%] tablet:text-[13px]">
-                {persistedUserInfo?.badges.length}
-              </p>
-            </div>
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/post-activity-logo.svg`}
+              alt={'badge'}
+              className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+            />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Post Activity</h1>
           </div>
           <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
@@ -125,16 +120,11 @@ const Summary = () => {
       <div>
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
-            <div className="relative h-fit w-fit">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/share-posts-logo.svg`}
-                alt={'badge'}
-                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
-              />
-              <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#7A7016] tablet:top-[40%] tablet:text-[13px]">
-                {persistedUserInfo.badges.length}
-              </p>
-            </div>
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/share-posts-logo.svg`}
+              alt={'badge'}
+              className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+            />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Shared posts</h1>
           </div>
           <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
@@ -176,16 +166,11 @@ const Summary = () => {
       <div>
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
-            <div className="relative h-fit w-fit">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/feedback-logo.svg`}
-                alt={'badge'}
-                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
-              />
-              <p className="absolute left-1/2 top-[41%] z-50 -translate-x-1/2 -translate-y-1/2 text-[7.3px] font-normal leading-none text-[#7A7016] tablet:top-[40%] tablet:text-[13px]">
-                {persistedUserInfo.badges.length}
-              </p>
-            </div>
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/feedback-logo.svg`}
+              alt={'badge'}
+              className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+            />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Post feedback</h1>
           </div>
           <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
