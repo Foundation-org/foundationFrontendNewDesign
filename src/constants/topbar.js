@@ -58,6 +58,7 @@ export const TopbarItems = [
       '/dashboard/profile/hidden-posts',
       '/dashboard/profile/shared-links',
       '/dashboard/profile/user-settings',
+      '/dashboard/profile/lists',
     ],
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile.svg`,
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/profile-filled.svg`,
