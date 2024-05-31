@@ -41,6 +41,8 @@ import CredentialRegister from '../pages/Signup/components/CredentialRegister';
 import GuestCustomerSupport from '../pages/Dashboard/pages/CustomerSupport/GuestCustomerSupport';
 import Lists from '../pages/Dashboard/pages/Lists';
 import PostsByList from '../pages/Dashboard/pages/Lists/PostsByList';
+import SharedListResults from '../pages/Dashboard/pages/Lists/SharedListResults';
+import Summary from '../pages/Dashboard/pages/Profile/pages/summary';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -73,6 +75,7 @@ export function Router() {
           <Route path="/verifycode" element={<VerifyCode />} />
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/p/:id" element={<GuestRedirect />} />
+          <Route path="/l/:id" element={<GuestRedirect />} />
           <Route path="/" element={<GuestRedirect />} />
           <Route
             path="/dashboard/treasury/:code"
@@ -122,12 +125,20 @@ export function Router() {
                   path=""
                   element={
                     <ErrorBoundary>
+                      <Summary />
+                    </ErrorBoundary>
+                  }
+                />
+                <Route
+                  path="verification-badges"
+                  element={
+                    <ErrorBoundary>
                       <VerificationBadges />
                     </ErrorBoundary>
                   }
                 />
                 <Route
-                  path="contributions"
+                  path="post-activity"
                   element={
                     <ErrorBoundary>
                       <Contributions />
@@ -135,7 +146,8 @@ export function Router() {
                   }
                 />
                 <Route path="lists" element={<Lists />} />
-                <Route path="postsbylist/:categoryId/:canAddPost?" element={<PostsByList />} />
+                <Route path="postsbylist/:categoryId" element={<PostsByList />} />
+
                 <Route
                   path="ledger"
                   element={
@@ -230,8 +242,10 @@ export function Router() {
               <Route path="change-password" element={<ChangePassword />} />
             </Route>
             <Route path="/shared-links/result" element={<SharedLinkResults />} />
+            <Route path="/shared-list-link/result" element={<SharedListResults />} />
             <Route path="/quest/:isFullScreen" element={<Guests />} />
             <Route path="/p/:id" element={<SingleQuest />} />
+            <Route path="/l/:id" element={<PostsByList />} />
             <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path="/guest-signup" element={<Signup />}>

@@ -1,7 +1,9 @@
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const About = () => {
   const navigate = useNavigate();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return (
     <div className="bg-white">
@@ -94,23 +96,25 @@ const About = () => {
           shared is when YOU decide it should be, with the benefit of monetizing from it.
         </p>
       </div>
-      <div className="mt-5 flex flex-col items-center gap-[15px] bg-[#156DB4] px-12 py-[1.3rem] text-white tablet:mt-0 tablet:gap-[1.56rem] tablet:py-[1.92rem]">
-        <h1 className="text-center text-[0.875rem] font-normal leading-[161.2%] tablet:text-[1.56rem] tablet:font-bold">
-          Join Foundation BETA
-        </h1>
-        <button
-          className="w-48 rounded-[0.31rem] bg-white py-[0.6rem] text-center text-[0.75rem] font-semibold text-[#156DB4] tablet:w-[24.3rem] tablet:rounded-[0.75rem] tablet:py-3 tablet:text-[1.25rem]"
-          onClick={() => navigate('/guest-signup')}
-        >
-          Sign up
-        </button>
-        <p className="text-center text-[0.75rem] font-normal leading-[161.2%] tablet:text-[1.125rem]">
-          Already have an account?{' '}
-          <span className="cursor-pointer" onClick={() => navigate('/signin')}>
-            Log in
-          </span>
-        </p>
-      </div>
+      {persistedUserInfo.role !== 'user' && (
+        <div className="mt-5 flex flex-col items-center gap-[15px] bg-[#156DB4] px-12 py-[1.3rem] text-white tablet:mt-0 tablet:gap-[1.56rem] tablet:py-[1.92rem]">
+          <h1 className="text-center text-[0.875rem] font-normal leading-[161.2%] tablet:text-[1.56rem] tablet:font-bold">
+            Join Foundation BETA
+          </h1>
+          <button
+            className="w-48 rounded-[0.31rem] bg-white py-[0.6rem] text-center text-[0.75rem] font-semibold text-[#156DB4] tablet:w-[24.3rem] tablet:rounded-[0.75rem] tablet:py-3 tablet:text-[1.25rem]"
+            onClick={() => navigate('/guest-signup')}
+          >
+            Sign up
+          </button>
+          <p className="text-center text-[0.75rem] font-normal leading-[161.2%] tablet:text-[1.125rem]">
+            Already have an account?{' '}
+            <span className="cursor-pointer" onClick={() => navigate('/signin')}>
+              Log in
+            </span>
+          </p>
+        </div>
+      )}
       <div className="flex flex-col gap-[0.69rem] p-8 text-[#707175] tablet:gap-[1.56rem] tablet:px-16 tablet:pb-[3.12rem] tablet:pt-[1.88rem]">
         <h5 className="text-[0.75rem] font-normal italic leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[161%]">
           “Owning our personal data liberates us from being slaves to the system, giving us the freedom to live life on

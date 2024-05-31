@@ -3,8 +3,10 @@ import { Button } from '../../../../../components/ui/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const createItems = [
-  { id: 1, title: 'Verfication Badges', path: '/dashboard/profile', to: '' },
-  { id: 0, title: 'Contributions', path: '/dashboard/profile/contributions', to: 'contributions' },
+  { id: 8, title: 'Summary', path: '/dashboard/profile', to: '' },
+  { id: 1, title: 'Verfication Badges', path: '/dashboard/profile/verification-badges', to: '' },
+  { id: 0, title: 'Post activity', path: '/dashboard/profile/post-activity', to: 'post-activity' },
+  // { id: 9, title: 'Contributions', path: '/dashboard/profile/contributions' },
   { id: 3, title: 'Hidden Posts', path: '/dashboard/profile/hidden-posts', to: 'hidden-posts' },
   { id: 7, title: 'My Lists', path: '/dashboard/profile/lists', to: 'lists' },
   { id: 4, title: 'Shared Links', path: '/dashboard/profile/shared-links', to: 'shared-links' },
@@ -112,37 +114,37 @@ export default function ProfileSlider({ setTab, tab }) {
         onMouseDown={handleMouseDown}
       >
         {createItems.map((item) => {
-          if (windowWidth >= 744 && item.id === 0) {
-            return null;
-          } else {
-            let startX = 0;
-            let startY = 0;
+          // if (windowWidth >= 744 && item.id === 0) {
+          //   return null;
+          // } else {
+          let startX = 0;
+          let startY = 0;
 
-            const handleMouseDown = (e) => {
-              startX = e.clientX;
-              startY = e.clientY;
-            };
+          const handleMouseDown = (e) => {
+            startX = e.clientX;
+            startY = e.clientY;
+          };
 
-            const handleMouseUp = (e) => {
-              const distance = Math.sqrt((e.clientX - startX) ** 2 + (e.clientY - startY) ** 2);
-              if (distance < 5) {
-                handleTab(item.path);
-              }
-            };
+          const handleMouseUp = (e) => {
+            const distance = Math.sqrt((e.clientX - startX) ** 2 + (e.clientY - startY) ** 2);
+            if (distance < 5) {
+              handleTab(item.path);
+            }
+          };
 
-            return (
-              <Button
-                key={item.id}
-                id={`profile-btn-${item.path}`}
-                variant={'topics'}
-                className={`${tab === item.path ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-              >
-                {item.title}
-              </Button>
-            );
-          }
+          return (
+            <Button
+              key={item.id}
+              id={`profile-btn-${item.path}`}
+              variant={'topics'}
+              className={`${tab === item.path ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+            >
+              {item.title}
+            </Button>
+          );
+          // }
         })}
       </div>
       <button

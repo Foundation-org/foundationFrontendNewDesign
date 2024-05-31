@@ -338,7 +338,11 @@ const ButtonGroup = ({
   }
 
   if (persistedUserInfo?.role === 'guest') {
-    if (location.pathname.includes('/p/') || location.pathname === '/quest/isfullscreen') {
+    if (
+      location.pathname.includes('/p/') ||
+      location.pathname.includes('/l/') ||
+      location.pathname === '/quest/isfullscreen'
+    ) {
       return (
         <>
           {questStartData.startStatus === '' ? (

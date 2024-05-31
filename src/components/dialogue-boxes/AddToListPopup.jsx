@@ -9,7 +9,6 @@ import { addPostinAList, createList, fetchLists } from '../../services/api/lists
 import PopUp from '../ui/PopUp';
 import { useEffect } from 'react';
 import { useDebounce } from '../../utils/useDebounce';
-import DeleteListPopup from './DeleteListPopup';
 
 export default function AddToListPopup({ handleClose, modalVisible, questStartData }) {
   const queryClient = useQueryClient();
@@ -28,7 +27,12 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     onSuccess: (resp) => {
       if (resp.status === 200) {
         toast.success('New list created.');
+        // console.log('resp', resp.data.userList[resp.data.userList.length - 1]);
         queryClient.invalidateQueries(['lists']);
+        // queryClient.setQueriesData(['lists'], (oldData) => {
+        //   return resp.data.userList;
+        // });
+        setSelectedOption((prev) => [resp.data.userList[resp.data.userList.length - 1]._id, ...prev]);
         setListName('');
       }
       if (resp.response.status === 500) {
@@ -59,26 +63,13 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     isError,
     isPending,
   } = useQuery({
-    queryFn: () => fetchLists(debouncedSearch),
-    queryKey: ['lists', debouncedSearch],
+    queryFn: fetchLists,
+    queryKey: ['lists'],
   });
 
   if (isError) {
-    console.log('some eror occur');
+    console.log('some error occur');
   }
-
-  // const addMatchingQuestIds = (data, questId) => {
-  //   let temp = [];
-  //   data &&
-  //     data.forEach((item) => {
-  //       item.post.forEach((postItem) => {
-  //         if (postItem.questForeginKey._id === questId) {
-  //           temp.push(item._id);
-  //         }
-  //       });
-  //     });
-  //   setSelectedOption((prev) => [...prev, ...temp]);
-  // };
 
   const handleCheckboxChange = (itemId) => {
     setSelectedOption((prevSelectedOption) => {
@@ -90,11 +81,23 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     });
   };
 
-  // useEffect(() => {
-  //   addMatchingQuestIds(listData, questStartData._id);
-  // }, [listData]);
+  useEffect(() => {
+    const selectedItems =
+      listData &&
+      listData
+        ?.map((list) => {
+          if (Array.isArray(list.post)) {
+            const matchingPosts = list.post.filter((post) => post.questForeginKey._id === questStartData._id);
+            return matchingPosts.length > 0 ? list._id : null;
+          }
+          return null;
+        })
+        .filter((id) => id !== null);
 
-  console.log('items', listData);
+    if (selectedItems && selectedItems.length > 0) {
+      setSelectedOption((prev) => [...prev, ...selectedItems]);
+    }
+  }, [listData]);
 
   return (
     <PopUp
@@ -104,15 +107,6 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
       handleClose={handleClose}
       isBackground={false}
     >
-      {/* {modalVisible && (
-        <DeleteListPopup
-          handleClose={handleClose}
-          modalVisible={modalVisible}
-          title={'Delete List'}
-          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
-          // categoryId={categoryId}
-        />
-      )} */}
       <div className="px-[27px] py-3 tablet:px-[74px] tablet:py-[37px]">
         <div className="flex flex-col gap-2 tablet:gap-[10px]">
           <label
@@ -184,32 +178,40 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                   />
                 )}
               </div>
-              <div className="no-scrollbar mt-3 h-fit max-h-[280px] space-y-3 overflow-y-auto tablet:mt-[15px] tablet:space-y-[15px]">
-                {listData?.map((item) => (
-                  <div
-                    key={item._id}
-                    className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
-                  >
-                    <div className="w-fit space-y-2 tablet:space-y-5">
-                      <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
-                        {item.category}
-                      </h4>
-                      <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
-                        {item.post.length} Post{item.post.length > 1 ? 's' : ''}
-                      </h4>
+              <div className="no-scrollbar mt-3 h-fit max-h-[160px] space-y-3 overflow-y-auto tablet:mt-[15px] tablet:max-h-[280px] tablet:space-y-[15px]">
+                {listData
+                  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                  ?.filter((list) => {
+                    if (debouncedSearch === '') {
+                      return true;
+                    }
+                    return list.category.toLowerCase().includes(debouncedSearch.toLowerCase());
+                  })
+                  .map((item) => (
+                    <div
+                      key={item._id}
+                      className="flex items-center justify-between rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-[#FBFBFB] p-2 tablet:rounded-[10px] tablet:border-[3px] tablet:p-5"
+                    >
+                      <div className="w-fit space-y-2 tablet:space-y-5">
+                        <h4 className="text-[10px] font-normal leading-[10px] text-[#7C7C7C] tablet:text-[20px] tablet:font-medium tablet:leading-[20px]">
+                          {item.category}
+                        </h4>
+                        <h4 className="text-[8px] font-normal leading-[8px] text-[#9A9A9A] tablet:text-[18px] tablet:font-medium tablet:leading-[18px]">
+                          {item.post.length} Post{item.post.length > 1 ? 's' : ''}
+                        </h4>
+                      </div>
+                      <div id="custom-rating-checkbox" className="flex h-full items-center">
+                        <input
+                          id={`checkbox-${item._id}`}
+                          type="checkbox"
+                          className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
+                          checked={selectedOption.includes(item._id)}
+                          onChange={() => handleCheckboxChange(item._id)}
+                          readOnly
+                        />
+                      </div>
                     </div>
-                    <div id="custom-rating-checkbox" className="flex h-full items-center">
-                      <input
-                        id={`checkbox-${item._id}`}
-                        type="checkbox"
-                        className="checkbox h-[13.5px] w-[13.5px] rounded-full tablet:h-[25px] tablet:w-[25px]"
-                        checked={selectedOption.includes(item._id)}
-                        onChange={() => handleCheckboxChange(item._id)}
-                        readOnly
-                      />
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
             <div className="mt-[10px] flex justify-end gap-4 tablet:mt-[25px]">

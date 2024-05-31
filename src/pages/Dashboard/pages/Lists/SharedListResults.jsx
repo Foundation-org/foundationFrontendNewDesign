@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import Loader from '../../../../../../components/ui/Loader';
-import Topbar from '../../../../components/Topbar';
-import QuestionCardWithToggle from '../../../QuestStartSection/components/QuestionCardWithToggle';
-import { getQuestById } from '../../../../../../services/api/homepageApis';
-import DashboardLayout from '../../../../components/DashboardLayout';
-import { Button } from '../../../../../../components/ui/Button';
+import Loader from '../../../../components/ui/Loader';
 
-export default function SharedLinkResults() {
+import { getQuestById } from '../../../../services/api/homepageApis';
+
+import { Button } from '../../../../components/ui/Button';
+import Topbar from '../../components/Topbar';
+import QuestionCardWithToggle from '../QuestStartSection/components/QuestionCardWithToggle';
+import DashboardLayout from '../../components/DashboardLayout';
+
+export default function SharedListResults() {
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [tab, setTab] = useState(persistedUserInfo.role === 'guest' ? 'All Results' : 'My Link Results');
@@ -49,6 +51,7 @@ export default function SharedLinkResults() {
     await getAllResult();
     setLoading(false);
   };
+
   useEffect(() => {
     render();
   }, []);
@@ -81,7 +84,7 @@ export default function SharedLinkResults() {
                   }`}
                   onClick={() => setTab('My Link Results')}
                 >
-                  My Link Results
+                  My List Results
                 </Button>
               </div>
             )}
