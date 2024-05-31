@@ -72,7 +72,7 @@ export function Router() {
           {/* <Route path="/term-of-service" element={<TermOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} /> */}
           {/* <Route path="/verify-email" element={<VerifyEmail />} /> */}
-          {/* <Route path="/verifycode" element={<VerifyCode />} /> */}
+          <Route path="/verifycode" element={<VerifyCode />} />
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/p/:id" element={<GuestRedirect />} />
           <Route path="/l/:id" element={<GuestRedirect />} />

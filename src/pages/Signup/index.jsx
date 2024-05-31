@@ -72,6 +72,9 @@ export default function Signup() {
       const res = await api.post(`/user/signUpSocial/guestMode`, data);
       if (res.status === 200) {
         dispatch(addUser(res.data));
+        localStorage.setItem('uuid', res.data.uuid);
+        localStorage.setItem('userData', JSON.stringify(res.data));
+        localStorage.removeItem('isGuestMode');
         navigate('/dashboard');
       }
     } catch (error) {
@@ -88,6 +91,9 @@ export default function Signup() {
       const res = await api.post(`/user/signUpGuest/SocialBadges`, { data, type: provider });
       if (res.status === 200) {
         dispatch(addUser(res.data));
+        localStorage.setItem('uuid', res.data.uuid);
+        localStorage.setItem('userData', JSON.stringify(res.data));
+        localStorage.removeItem('isGuestMode');
         navigate('/dashboard');
       }
     } catch (error) {
@@ -111,8 +117,6 @@ export default function Signup() {
       return;
     }
   };
-
-  console.log(provider);
 
   const handleSignUpSocialAfterReferral = async (data) => {
     console.log('after');
@@ -138,11 +142,14 @@ export default function Signup() {
       });
       // if(res.data.required_action){
       if (res.status === 200) {
-        localStorage.setItem('uuid', res.data.uuid);
+        // localStorage.setItem('uuid', res.data.uuid);
         // localStorage.setItem('userLoggedIn', res.data.uuid);
         // localStorage.removeItem('isGuestMode');
         // localStorage.setItem('jwt', res.data.token);
         // navigate('/dashboard');
+        localStorage.setItem('uuid', res.data.uuid);
+        localStorage.setItem('userData', JSON.stringify(res.data));
+        localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
         navigate('/dashboard');
       }
