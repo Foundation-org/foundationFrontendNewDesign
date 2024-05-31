@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 const PostsByList = () => {
   let { id, categoryId } = useParams();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  console.log('first', id, categoryId);
+
   const {
     data: listData,
     isError,

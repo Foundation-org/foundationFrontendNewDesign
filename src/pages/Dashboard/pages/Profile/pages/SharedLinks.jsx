@@ -135,7 +135,7 @@ export default function SharedLinks() {
   return (
     <div>
       {/* Shared Posts Insights */}
-      <div className="mx-[15px] my-3 tablet:hidden">
+      <div className="mx-[15px] mb-3 tablet:mx-6 tablet:mb-5">
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <div className="relative h-fit w-fit">

@@ -106,7 +106,7 @@ const Lists = () => {
   // console.log('reorder', hasReordered);
 
   return (
-    <div className="no-scrollbar flex h-[calc(100vh-70px)] w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:my-[0.94rem] tablet:gap-5 tablet:px-6 tablet:pb-5">
+    <div className="no-scrollbar flex h-[calc(100vh-70px)] w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mb-[0.94rem] tablet:gap-5 tablet:px-6 tablet:pb-5">
       <BasicModal
         open={copyModal}
         handleClose={handleCopyClose}

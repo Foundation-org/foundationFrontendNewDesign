@@ -4,57 +4,70 @@ import { useLocation } from 'react-router-dom';
 
 import Loader from '../../../../components/ui/Loader';
 
-import { getQuestById } from '../../../../services/api/homepageApis';
+// import { getQuestById } from '../../../../services/api/homepageApis';
 
 import { Button } from '../../../../components/ui/Button';
 import Topbar from '../../components/Topbar';
 import QuestionCardWithToggle from '../QuestStartSection/components/QuestionCardWithToggle';
 import DashboardLayout from '../../components/DashboardLayout';
+import { useQuery } from '@tanstack/react-query';
+import { findPostsBySharedLink, viewListResults } from '../../../../services/api/listsApi';
 
 export default function SharedListResults() {
   const location = useLocation();
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [tab, setTab] = useState(persistedUserInfo.role === 'guest' ? 'All Results' : 'My Link Results');
-  const [questData, setQuestData] = useState();
-  const [allQuestData, setAllQuestData] = useState();
-  const [loading, setLoading] = useState(false);
+  const [tab, setTab] = useState(persistedUserInfo.role === 'guest' ? 'All Results' : 'My List Results');
+  // const [questData, setQuestData] = useState();
+  // const [allQuestData, setAllQuestData] = useState();
+  // const [loading, setLoading] = useState(false);
 
-  const getAllResult = async () => {
-    try {
-      const response = await getQuestById(persistedUserInfo?.uuid, location.state.questId);
-      setAllQuestData(response.data.data[0]);
-    } catch (error) {
-      console.error('API call failed:', error);
-    }
-  };
+  // const getAllResult = async () => {
+  //   try {
+  //     const response = await getQuestById(persistedUserInfo?.uuid, location.state.questId);
+  //     setAllQuestData(response.data.data[0]);
+  //   } catch (error) {
+  //     console.error('API call failed:', error);
+  //   }
+  // };
 
-  const getSharedResult = async () => {
-    try {
-      const sharedLink = 'SharedLink';
-      const response = await getQuestById(
-        persistedUserInfo?.uuid,
-        location.state.questId,
-        sharedLink,
-        location.state.link,
-      );
-      setQuestData(response.data.data[0]);
-    } catch (error) {
-      console.error('API call failed:', error);
-    } finally {
-      // setLoading(false);
-    }
-  };
+  // const getSharedResult = async () => {
+  //   try {
+  //     const sharedLink = 'SharedLink';
+  //     const response = await getQuestById(
+  //       persistedUserInfo?.uuid,
+  //       location.state.questId,
+  //       sharedLink,
+  //       location.state.link,
+  //     );
+  //     setQuestData(response.data.data[0]);
+  //   } catch (error) {
+  //     console.error('API call failed:', error);
+  //   } finally {
+  //     // setLoading(false);
+  //   }
+  // };
 
-  const render = async () => {
-    setLoading(true);
-    await getSharedResult();
-    await getAllResult();
-    setLoading(false);
-  };
+  // const render = async () => {
+  //   setLoading(true);
+  //   await getSharedResult();
+  //   await getAllResult();
+  //   setLoading(false);
+  // };
 
-  useEffect(() => {
-    render();
-  }, []);
+  // useEffect(() => {
+  //   render();
+  // }, []);
+
+  const {
+    data: sharedlistData,
+    isPending,
+    isSuccess,
+  } = useQuery({
+    queryFn: async () => {
+      return await viewListResults({ categoryId: location.state.categoryItem });
+    },
+    queryKey: ['postsByCategory', persistedUserInfo.uuid],
+  });
 
   return (
     <>
@@ -78,42 +91,62 @@ export default function SharedListResults() {
                 <Button
                   variant={'topics'}
                   className={`${
-                    tab === 'My Link Results'
+                    tab === 'My List Results'
                       ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white'
                       : 'border-[#ACACAC] bg-white text-[#707175]'
                   }`}
-                  onClick={() => setTab('My Link Results')}
+                  onClick={() => setTab('My List Results')}
                 >
                   My List Results
                 </Button>
               </div>
             )}
 
-            {loading ? (
+            {isPending ? (
               <Loader />
-            ) : tab === 'My Link Results' ? (
-              questData && (
-                <div className="mx-auto px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-[0px]">
-                  <QuestionCardWithToggle
-                    questStartData={questData}
-                    postProperties={'sharedlink-results'}
-                    SharedLinkButton={'shared-links-results-button'}
-                  />
-                </div>
-              )
-            ) : (
-              allQuestData && (
-                <div
-                  className={`${persistedUserInfo?.role === 'guest' ? 'pt-5' : ''} mx-auto px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-0`}
-                >
-                  <QuestionCardWithToggle
-                    questStartData={allQuestData}
-                    postProperties={'actual-results'}
-                    SharedLinkButton={'shared-links-results-button'}
-                  />
-                </div>
-              )
-            )}
+            ) : tab === 'My List Results' ? (
+              <div className="flex flex-col gap-2 tablet:gap-5">
+                {isSuccess &&
+                  sharedlistData.data.category.post.map((item) => (
+                    <div
+                      key={item._id}
+                      className="mx-auto w-full px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-[0px]"
+                    >
+                      <QuestionCardWithToggle
+                        questStartData={item.questForeginKey}
+                        postProperties={'sharedlink-results'}
+                        SharedLinkButton={'shared-links-results-button'}
+                      />
+                    </div>
+                  ))}
+              </div>
+            ) : null}
+
+            {/* {loading ? ( */}
+            {/* <Loader /> */}
+            {/* {tab === 'My Link Results'
+              ? sharedlistData && sharedlistData?.data?.length > 0 && sharedlistData?.data.category.post.length > 0
+                ? sharedlistData.data.category.post.map((item) => (
+                    <div key={item._id} className="mx-auto px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-[0px]">
+                      <QuestionCardWithToggle
+                        questStartData={item.questForeginKey}
+                        postProperties={'sharedlink-results'}
+                        SharedLinkButton={'shared-links-results-button'}
+                      />
+                    </div>
+                  ))
+                : null
+              : allQuestData && (
+                  <div
+                    className={`${persistedUserInfo?.role === 'guest' ? 'pt-5' : ''} mx-auto px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-0`}
+                  >
+                    <QuestionCardWithToggle
+                      questStartData={allQuestData}
+                      postProperties={'actual-results'}
+                      SharedLinkButton={'shared-links-results-button'}
+                    />
+                  </div>
+                )} */}
           </div>
         </DashboardLayout>
       </div>

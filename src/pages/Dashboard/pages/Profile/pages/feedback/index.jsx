@@ -85,7 +85,7 @@ export default function Feedback() {
 
   return (
     <div>
-      <h1 className="mx-5 my-3 text-[12px] font-normal leading-[133%] text-[#85898C] tablet:text-[20px] tablet:leading-[120%]">
+      <h1 className="mx-5 mb-3 text-[12px] font-normal leading-[133%] text-[#85898C] tablet:mx-6 tablet:text-[20px] tablet:leading-[120%]">
         Creating posts is a great way to earn FDX. Especially if others engage with them.
       </h1>
 

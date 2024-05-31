@@ -71,10 +71,10 @@ export default function Signup() {
       data.uuid = localStorage.getItem('uuid');
       const res = await api.post(`/user/signUpSocial/guestMode`, data);
       if (res.status === 200) {
-        dispatch(addUser(res.data));
         localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
+        dispatch(addUser(res.data));
         navigate('/dashboard');
       }
     } catch (error) {
@@ -90,10 +90,10 @@ export default function Signup() {
       data.type = provider;
       const res = await api.post(`/user/signUpGuest/SocialBadges`, { data, type: provider });
       if (res.status === 200) {
-        dispatch(addUser(res.data));
         localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
+        dispatch(addUser(res.data));
         navigate('/dashboard');
       }
     } catch (error) {
