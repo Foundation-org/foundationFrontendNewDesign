@@ -100,12 +100,12 @@ const CredentialRegister = () => {
     // if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
     if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
 
-    // setIsLoadingSocial(true);
-    if (localStorage.getItem('isGuestMode')) {
-      handleGuestSignup();
-    } else {
-      handleReferralOpen();
-    }
+    // // setIsLoadingSocial(true);
+    // if (localStorage.getItem('isGuestMode')) {
+    //   handleGuestSignup();
+    // } else {
+    handleReferralOpen();
+    // }
   };
 
   return (

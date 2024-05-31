@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../components/Input';
 import Anchor from '../../../components/Anchor';
@@ -10,6 +10,7 @@ import { signIn } from '../../../services/api/userAuth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { addUser } from '../../../features/auth/authSlice';
+import LegacyConfirmationPopup from '../../../components/dialogue-boxes/LegacyConfirmationPopup';
 
 const CredentialLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,11 +19,14 @@ const CredentialLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [capthaToken, setCaptchaToken] = useState('');
+  const [uuid, setUuid] = useState();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onEmailChange = (e) => {
     setEmail(e.target.value);
   };
+  const [isPasswordConfirmation, setIsPasswordConfirmation] = useState();
+  const legacyPromiseRef = useRef();
 
   const onPassChange = (e) => {
     setPassword(e.target.value);
@@ -52,13 +56,20 @@ const CredentialLogin = () => {
         const resp = await userSignin({ email, password });
 
         if (resp.status === 200) {
-          localStorage.removeItem('isGuestMode');
-          setEmail('');
-          setPassword('');
-          localStorage.setItem('uuid', resp.data.uuid);
-          dispatch(addUser(resp.data));
+          console.log('hello', resp.data.uuid);
+          if (resp.data.isPasswordEncryption) {
+            setUuid(resp.data.uuid);
+            await handleOpenPasswordConfirmation();
+          } else {
+            localStorage.removeItem('isGuestMode');
+            setEmail('');
+            setPassword('');
+            localStorage.setItem('userData', JSON.stringify(resp.data));
+            localStorage.setItem('uuid', resp.data.uuid);
+            dispatch(addUser(resp.data));
 
-          navigate('/dashboard');
+            navigate('/dashboard');
+          }
         }
       } else {
         toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
@@ -67,7 +78,6 @@ const CredentialLogin = () => {
       //   toast.error('Google recaptcha failed');
       // }
     } catch (e) {
-      console.log(e);
       if (e.response.data === 'Wrong Password') {
         toast.error('Your typed password is incorrect.');
       } else if (
@@ -94,47 +104,25 @@ const CredentialLogin = () => {
     setCaptchaToken(value);
   }
 
-  // const { mutateAsync: sendEmail } = useMutation({
-  //   mutationFn: sendVerificationEmail,
-  //   onSuccess: (res) => {
-  //     console.log('Email sent');
-  //   },
-  //   onError: (error) => {
-  //     console.error('Email not sent', error);
-  //   },
-  // });
-
-  // const {
-  //   data: userInfoData,
-  //   isSuccess: userInfoSuccess,
-  //   isError: userInfoError,
-  // } = useQuery({
-  //   queryKey: ['userInfo'],
-  //   queryFn: userInfo,
-  // });
-
-  // if (userInfoSuccess && userInfoData?.status === 200) {
-  //   if (userInfoData.data) {
-  //     setUuid(userInfoData.data?.uuid);
-
-  //     if (userInfoData.data?.verification === false) {
-  //       toast.warning('Please check you email and verify your account first');
-  //       sendEmail({ userEmail: userInfoData.data?.email });
-  //     }
-  //     if (userInfoData.data?.verification === true) {
-  //       dispatch(addUser(userInfoData.data));
-  //       navigate('/dashboard');
-  //     }
-  //   }
-  // }
-
-  // if (userInfoError) {
-  //   console.log({ userInfoError });
-  //   localStorage.setItem('loggedIn', 'false');
-  // }
+  const handleOpenPasswordConfirmation = () => {
+    setIsPasswordConfirmation(true);
+    return new Promise((resolve) => {
+      legacyPromiseRef.current = resolve;
+    });
+  };
 
   return (
     <>
+      <LegacyConfirmationPopup
+        isPopup={isPasswordConfirmation}
+        setIsPopup={setIsPasswordConfirmation}
+        title="Confirm Password"
+        type={'password'}
+        logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`}
+        legacyPromiseRef={legacyPromiseRef}
+        login={true}
+        uuid={uuid}
+      />
       <form className="mb-5 mt-[50px] flex w-full flex-col gap-11 text-gray-600 tablet:my-16 5xl:gap-14 short:gap-[38px]">
         <div className="relative grid w-full grid-cols-[1fr] items-center">
           <Input

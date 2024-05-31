@@ -26,6 +26,7 @@ const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromi
     setPassword('');
     if (login) {
       try {
+        console.log('uuid', uuid);
         const infoc = await api.post('/user/runtimeSignInPassword', {
           infoc: password,
           userUuid: uuid,
@@ -44,8 +45,9 @@ const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromi
             legacyPromiseRef.current();
           }
         }
-      } catch (err) {
-        console.log(err);
+      } catch (e) {
+        toast.error(e.response.data.message.split(':')[0]);
+        setIsLoading(false);
       }
     } else {
       try {

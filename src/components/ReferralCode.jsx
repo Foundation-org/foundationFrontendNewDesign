@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import { Button } from './ui/Button';
-import { signUp } from '../services/api/userAuth';
+import { signUp, signUpGuest } from '../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
 import { referral } from '../services/api/authentication';
 import api from '../services/api/Axios';
@@ -33,34 +33,34 @@ const ReferralCode = ({
     setReferralCode(e.target.value);
   };
 
-  // const { mutateAsync: userSignup } = useMutation({
-  //   mutationFn: signUp,
-  // });
+  const { mutateAsync: userSignup } = useMutation({
+    mutationFn: signUpGuest,
+  });
 
-  // const handleSignup = async () => {
-  //   setIsLoading(true);
+  const handleSignup = async () => {
+    setIsLoading(true);
 
-  //   try {
-  //     if (password === reTypePassword) {
-  //       const resp = await userSignup({ email, password });
+    try {
+      if (password === reTypePassword) {
+        const resp = await userSignup({ email, password, uuid: localStorage.getItem('uuid') });
 
-  //       if (resp.status === 200) {
-  //         toast.success('A verification email has been sent to your email address. Please check your inbox.');
+        if (resp.status === 200) {
+          toast.success('A verification email has been sent to your email address. Please check your inbox.');
 
-  //         setEmail('');
-  //         setPassword('');
-  //       }
-  //     } else {
-  //       toast.warning('Password does not match');
-  //     }
-  //   } catch (e) {
-  //     // setErrorMessage(e.response.data.message.split(':')[1]);
-  //     toast.error(e.response.data.message.split(':')[1]);
-  //     handlePopupOpen();
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+          setEmail('');
+          setPassword('');
+        }
+      } else {
+        toast.warning('Password does not match');
+      }
+    } catch (e) {
+      // setErrorMessage(e.response.data.message.split(':')[1]);
+      toast.error(e.response.data.message.split(':')[1]);
+      handlePopupOpen();
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // const handleSocialSignup = async () => {
   //   try {
@@ -96,10 +96,13 @@ const ReferralCode = ({
     try {
       data.uuid = localStorage.getItem('uuid');
       const res = await api.post(`/user/signUpSocial/guestMode`, data);
+      console.log('new', res);
       if (res.status === 200) {
         localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
+        dispatch(addUser(res.data));
+
         navigate('/dashboard');
       }
     } catch (error) {
@@ -118,6 +121,7 @@ const ReferralCode = ({
         localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
+        dispatch(addUser(res.data));
         navigate('/dashboard');
       }
     } catch (error) {
@@ -143,10 +147,14 @@ const ReferralCode = ({
       // } else {
       //   handleSignup();
       // }
-      if (socialAccount?.type === 'google') {
-        handleSignUpSocialGuest(socialAccount?.data);
+      if (socialAccount?.type) {
+        if (socialAccount?.type === 'google') {
+          handleSignUpSocialGuest(socialAccount?.data);
+        } else {
+          handleSignUpGuestSocialBadges(socialAccount?.data, socialAccount?.type);
+        }
       } else {
-        handleSignUpGuestSocialBadges(socialAccount?.data, socialAccount?.type);
+        handleSignup();
       }
     },
     onError: (err) => {

@@ -350,6 +350,15 @@ const VerificationBadges = () => {
 
           {/* LinkedIn */}
           <div className="flex items-center gap-[8.5px] opacity-[100%] laptop:gap-5">
+            <div className="absolute -left-5 tablet:-left-[42px]">
+              {checkPrimary('linkedin') && (
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/primary.svg`}
+                  alt="primary"
+                  className="size-[15px] tablet:size-[30px]"
+                />
+              )}
+            </div>
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
               alt="LinkedIn"
@@ -451,6 +460,15 @@ const VerificationBadges = () => {
 
           {/* Twitter */}
           <div className="flex items-center gap-[8.5px] laptop:gap-5">
+            <div className="absolute -left-5 tablet:-left-[42px]">
+              {checkPrimary('twitter') && (
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/primary.svg`}
+                  alt="primary"
+                  className="size-[15px] tablet:size-[30px]"
+                />
+              )}
+            </div>
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`}
               alt="Twitter"
@@ -604,6 +622,15 @@ const VerificationBadges = () => {
 
           {/* Github */}
           <div className="flex items-center gap-[8.5px] laptop:gap-5">
+            <div className="absolute -left-5 tablet:-left-[42px]">
+              {checkPrimary('github') && (
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/primary.svg`}
+                  alt="primary"
+                  className="size-[15px] tablet:size-[30px]"
+                />
+              )}
+            </div>
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`}
               alt="Github"
