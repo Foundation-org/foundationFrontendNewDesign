@@ -105,7 +105,7 @@ export default function SharedListResults() {
             {isPending ? (
               <Loader />
             ) : tab === 'My List Results' ? (
-              <div className="flex flex-col gap-2 tablet:gap-5">
+              <div className="mb-5 flex flex-col gap-2 tablet:gap-5">
                 {isSuccess &&
                   sharedlistData.data.category.post.map((item) => (
                     <div
