@@ -15,7 +15,7 @@ const UserSettings = () => {
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/settings-logo.svg`}
               alt={'badge'}
-              className="h-[18.5px] w-[14.6px] tablet:h-5 tablet:w-[15px]"
+              className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-[15px]"
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Settings</h1>
           </div>
