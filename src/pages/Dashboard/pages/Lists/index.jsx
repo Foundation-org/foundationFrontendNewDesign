@@ -113,7 +113,7 @@ const Lists = () => {
         customStyle={referralModalStyle}
         customClasses="rounded-[10px] tablet:rounded-[26px]"
       >
-        <CopyDialogue handleClose={handleCopyClose} />
+        <ShareListLink handleClose={handleCopyClose} selectedItem={selectedItem} />
       </BasicModal>
       {modalVisible && (
         <DeleteListPopup
@@ -202,7 +202,7 @@ const Lists = () => {
       {items.length < 1 ? (
         <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
           <p className="text-center text-[4vw] laptop:text-[2vw]">
-            <b>No Record Found!</b>
+            <b>No record found!</b>
           </p>
         </div>
       ) : (

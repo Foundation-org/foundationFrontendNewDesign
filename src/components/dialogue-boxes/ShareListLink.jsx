@@ -179,7 +179,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
               <Button
                 variant={'submit'}
                 className={'w-fit min-w-fit whitespace-nowrap'}
-                onClick={() => navigate('/dashboard/profile/shared-links')}
+                onClick={() => navigate('/shared-list-link/result')}
               >
                 Manage My Shared Lists
               </Button>
