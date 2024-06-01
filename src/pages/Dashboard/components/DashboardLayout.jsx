@@ -229,7 +229,7 @@ export default function DashboardLayout({ children }) {
           </div> */}
 
           <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
-            {persistedUserInfo.role !== 'user' ? (
+            {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-2">
                 <div className="relative h-fit w-fit">
                   <img
@@ -271,7 +271,7 @@ export default function DashboardLayout({ children }) {
                 <div className="flex h-7 flex-col justify-between">
                   <h4 className="heading w-fit border-b">My Balance</h4>
                   <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
-                    {userInfoData && userInfoData?.data.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX log
+                    {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX log
                   </p>
                 </div>
               </div>
@@ -293,7 +293,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/treasury' &&
             location.pathname !== '/dashboard/treasury/ledger' && (
               <>
-                {persistedUserInfo.role === 'user' && location.pathname !== '/' ? (
+                {persistedUserInfo?.role === 'user' && location.pathname !== '/' ? (
                   <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
                     <Button
                       variant="hollow-submit2"
@@ -318,7 +318,7 @@ export default function DashboardLayout({ children }) {
               </>
             )}
 
-          {persistedUserInfo.role === 'user' && location.pathname.startsWith('/dashboard/profile') && (
+          {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/dashboard/profile') && (
             <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
               <Button
                 variant="hollow-submit2"
@@ -557,7 +557,7 @@ export default function DashboardLayout({ children }) {
         {/* Desktop Right Side */}
         <div className="hidden tablet:block">
           <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
-            {persistedUserInfo.role !== 'user' ? (
+            {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-[15px]">
                 <div className="relative h-fit w-fit">
                   <img
@@ -601,7 +601,9 @@ export default function DashboardLayout({ children }) {
                 <div className="flex h-[47px] flex-col justify-between">
                   <h4 className="heading w-fit border-b-2">My Balance</h4>
                   <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-                    <p>{userInfoData && userInfoData?.data.balance ? userInfoData?.data.balance.toFixed(2) : 0} FDX</p>
+                    <p>
+                      {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
+                    </p>
                   </div>
                 </div>
               </div>

@@ -88,7 +88,7 @@ export function Router() {
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
             <Route
               path="/help"
-              element={persistedUser.role === 'user' ? <Navigate to="/dashboard" /> : <GuestCustomerSupport />}
+              element={persistedUser?.role === 'user' ? <Navigate to="/dashboard" /> : <GuestCustomerSupport />}
             >
               <Route path="about" element={<About />} />
               <Route path="faq" element={<Faq />} />
@@ -201,13 +201,13 @@ export function Router() {
             <Route path="/guest-signup" element={<Signup />}>
               <Route path="credentials" element={<CredentialRegister />} />
             </Route>
-            <Route path="/signin/" element={persistedUser.role === 'user' ? <Navigate to="/dashboard" /> : <Signin />}>
+            <Route path="/signin/" element={persistedUser?.role === 'user' ? <Navigate to="/dashboard" /> : <Signin />}>
               <Route path="credentials" element={<CredentialLogin />} />
             </Route>
             <Route path="/verifycode" element={<VerifyCode />} />
             <Route
               path="*"
-              element={persistedUser.role === 'user' ? <Navigate to="/dashboard" /> : <Navigate to={'/help/about'} />}
+              element={persistedUser?.role === 'user' ? <Navigate to="/dashboard" /> : <Navigate to={'/help/about'} />}
             />
           </Route>
         </Routes>

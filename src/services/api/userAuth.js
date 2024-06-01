@@ -38,8 +38,9 @@ export const userInfo = async () => {
 
     // Make the API call
     return await api.get(url);
-  } catch (err) {
-    console.log('err', err);
+  } catch (error) {
+    console.log('err', error);
+    // throw error.response.data.message;
   }
 };
 
