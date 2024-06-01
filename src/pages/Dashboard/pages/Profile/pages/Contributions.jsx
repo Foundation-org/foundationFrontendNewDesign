@@ -141,9 +141,6 @@ const Contributions = () => {
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Post Activity</h1>
           </div>
-          {/* <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
-            3/10
-          </h1> */}
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
@@ -154,13 +151,15 @@ const Contributions = () => {
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Posts you’ve created
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">3</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">{persistedUserInfo?.questsCreated}</h5>
             </div>
             <div>
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Number of engagements
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.yourPostEngaged}
+              </h5>
             </div>
           </div>
         </div>

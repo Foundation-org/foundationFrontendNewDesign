@@ -224,7 +224,7 @@ const VerificationBadges = () => {
             </h1>
           </div>
           <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
-            3/10
+            {persistedUserInfo.badges.length}/24
           </h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
