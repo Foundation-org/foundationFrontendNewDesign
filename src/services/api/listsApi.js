@@ -176,3 +176,11 @@ export const viewListResults = async ({ categoryId }) => {
     return err;
   }
 };
+
+export const viewListAllResults = async ({ categoryId }) => {
+  try {
+    return await api.get(`/userlists/viewListAll/${categoryId}/${localStorage.getItem('uuid')}`);
+  } catch (err) {
+    return err;
+  }
+};
