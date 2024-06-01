@@ -327,7 +327,11 @@ const ButtonGroup = ({
                 </p>,
               );
             } else {
-              navigate('/dashboard/profile/shared-links');
+              if (location.pathname === '/shared-list-link/result') {
+                navigate('/dashboard/profile/lists');
+              } else {
+                navigate('/dashboard/profile/shared-links');
+              }
             }
           }}
         >

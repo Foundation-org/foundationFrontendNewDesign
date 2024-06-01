@@ -97,7 +97,7 @@ const SocialLogins = ({
         }}
         onReject={(err) => {
           setIsLoadingSocial(false);
-          console.log(err);
+          console.log('err', err);
         }}
         className="max-w-auto min-w-[145px] lg:min-w-[305px] "
       >
@@ -186,6 +186,7 @@ const SocialLogins = ({
         client_id={import.meta.env.VITE_LINKEDIN_KEY}
         client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
         onResolve={({ provider, data }) => {
+          setIsLoadingSocial(false);
           console.log(provider);
           setProvider(provider);
           setProfile(data);
@@ -194,6 +195,8 @@ const SocialLogins = ({
         redirect_uri={REDIRECT_URI}
         // scope="email,openid,profile,w_member_social"
         onReject={(err) => {
+          console.log('err', err);
+          setIsLoadingSocial(false);
           toast.error('An error occured');
         }}
       >
