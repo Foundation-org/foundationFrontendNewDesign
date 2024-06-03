@@ -89,8 +89,8 @@ export default function BadgeRemovePopup({
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose} remove={true}>
       <div className="px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
-          Are you sure you want to remove this badge? 'If you remove this badge, you will not be able to add it again
-          for 30 days.'
+          Are you sure you want to remove this badge? If you remove this badge, you will not be able to add it again for
+          30 days.
         </h1>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button variant={'submit'} onClick={handleRemoveBadge}>

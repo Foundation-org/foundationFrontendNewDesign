@@ -160,7 +160,7 @@ const Lists = () => {
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/my-list-logo.svg`}
               alt={'badge'}
-              className="h-[17.5px] w-[14.6px] tablet:h-[29px] tablet:w-[15px]"
+              className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-[15px]"
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">My Lists</h1>
           </div>
