@@ -114,7 +114,7 @@ const QuestBottombar = ({
       }
 
       const timeDifference = currentDate - createdAtDate;
-      const seconds = Math.floor(timeDifference / 1000);
+      const seconds = Math.floor(Math.max(timeDifference / 1000, 0));
       const minutes = Math.floor(seconds / 60);
       const hours = Math.floor(minutes / 60);
       const days = Math.floor(hours / 24);
@@ -390,7 +390,8 @@ const QuestBottombar = ({
           postProperties !== 'sharedlink-results' &&
           postProperties !== 'actual-results' &&
           !window.location.href.includes('/p/') &&
-          !location.pathname.includes('/l/') ? (
+          !location.pathname.includes('/l/') &&
+          !location.pathname === '/quest/isfullscreen' ? (
             <div className="flex justify-center ">
               {isFullScreen === undefined ? (
                 <div
@@ -412,9 +413,6 @@ const QuestBottombar = ({
                       fill="#85898C"
                     />
                   </svg>
-                  {/* <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem] laptop:text-[1.25rem]">
-                  Full Screen
-                </p> */}
                 </div>
               ) : (
                 <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem]">&#x200B;</p>

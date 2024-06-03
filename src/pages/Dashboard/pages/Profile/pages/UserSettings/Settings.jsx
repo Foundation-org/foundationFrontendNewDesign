@@ -69,7 +69,7 @@ export const Settings = () => {
       {/* Change Theme */}
       <div className="flex items-center justify-between rounded-[6.749px] border-[1.85px] border-[#DEE6F7] bg-[#FDFDFD] px-4 py-3 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5">
         <div>
-          <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Mode</h1>
+          <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Dark Mode</h1>
           <p className="hidden text-[16px] font-medium text-[#ACACAC] tablet:block">Switch to Dark Mode</p>
         </div>
         <Switch
