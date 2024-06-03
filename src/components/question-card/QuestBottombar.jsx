@@ -391,7 +391,7 @@ const QuestBottombar = ({
           postProperties !== 'actual-results' &&
           !window.location.href.includes('/p/') &&
           !location.pathname.includes('/l/') &&
-          !location.pathname === '/quest/isfullscreen' ? (
+          location.pathname !== '/quest/isfullscreen' ? (
             <div className="flex justify-center ">
               {isFullScreen === undefined ? (
                 <div
