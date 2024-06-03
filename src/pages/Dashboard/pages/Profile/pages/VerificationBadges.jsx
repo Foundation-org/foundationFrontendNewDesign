@@ -293,7 +293,7 @@ const VerificationBadges = () => {
           persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
         } relative mx-4 mb-8 flex flex-col gap-[7px] rounded-b-[13.7px] px-5 pb-[17.57px] pt-2 tablet:mx-6 tablet:gap-4 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5 laptop:gap-5 laptop:px-[40px]`}
       >
-        <h1 className="text-[12px] font-normal leading-[133%] text-[#85898C] tablet:hidden tablet:text-[16px] tablet:leading-normal">
+        <h1 className="mb-[10px] mt-[2px] text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
           Have your data be more desirable for brands and research firms to purchase with more verified info and earn
           more FDX while you’re at it!
         </h1>
