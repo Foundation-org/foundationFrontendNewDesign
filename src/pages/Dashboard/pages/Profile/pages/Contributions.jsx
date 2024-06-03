@@ -1,131 +1,119 @@
 import { useSelector } from 'react-redux';
-import { formatCountNumber } from '../../../../../utils/utils';
+// import { formatCountNumber } from '../../../../../utils/utils';
 import { Link } from 'react-router-dom';
 
 const Contributions = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const persistedTheme = useSelector((state) => state.utils.theme);
+  // const persistedTheme = useSelector((state) => state.utils.theme);
 
-  const list = [
-    {
-      id: 1,
-      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon1.svg`,
-      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon11.svg`,
-      alt: 'icon1',
-      title: 'Posts-Created',
-      value: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0,
-    },
-    {
-      id: 2,
-      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon2.svg`,
-      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon12.svg`,
-      alt: 'icon1',
-      title: 'Posts-Engaged',
-      value: (persistedUserInfo && persistedUserInfo?.yourPostEngaged) || 0,
-    },
-    {
-      id: 3,
-      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/your-post-engaged.svg`,
-      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/your-post-engaged.svg`,
-      alt: 'your-post-engaged',
-      title: 'Your Posts-Engaged',
-      value: (persistedUserInfo && persistedUserInfo?.usersAnswered) || 0,
-    },
-    {
-      id: 4,
-      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon5.svg`,
-      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon15.svg`,
-      alt: 'icon1',
-      title: 'Selections-Changed',
-      value: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0,
-    },
-    {
-      id: 5,
-      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/couter-eye.svg`,
-      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/couter-eye.svg`,
-      alt: 'icon5',
-      title: 'Your Posts-Hidden',
-      value: (persistedUserInfo && persistedUserInfo?.yourHiddenPostCounter) || 0,
-    },
-    {
-      id: 6,
-      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon6.svg`,
-      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon16.svg`,
-      alt: 'icon1',
-      title: 'Options-Added',
-      value: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0,
-    },
-    {
-      id: 7,
-      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon7.svg`,
-      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon17.svg`,
-      alt: 'icon1',
-      title: 'Agreement-Received',
-      value: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0,
-    },
-    {
-      id: 8,
-      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon8.svg`,
-      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon18.svg`,
-      alt: 'icon1',
-      title: 'Objections-Received',
-      value: (persistedUserInfo && persistedUserInfo?.contentionsOnAddedAns) || 0,
-    },
-    {
-      id: 9,
-      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon9.svg`,
-      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon19.svg`,
-      alt: 'icon1',
-      title: 'Objections-Given',
-      value: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0,
-    },
-    {
-      id: 10,
-      icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/last.svg`,
-      iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon20.svg`,
-      alt: 'icon1',
-      title: 'Code of-Conduct Fails',
-      value: (persistedUserInfo && persistedUserInfo?.violationCounter) || 0,
-    },
-  ];
+  // const list = [
+  //   {
+  //     id: 1,
+  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon1.svg`,
+  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon11.svg`,
+  //     alt: 'icon1',
+  //     title: 'Posts-Created',
+  //     value: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0,
+  //   },
+  //   {
+  //     id: 2,
+  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon2.svg`,
+  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon12.svg`,
+  //     alt: 'icon1',
+  //     title: 'Posts-Engaged',
+  //     value: (persistedUserInfo && persistedUserInfo?.yourPostEngaged) || 0,
+  //   },
+  //   {
+  //     id: 3,
+  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/your-post-engaged.svg`,
+  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/your-post-engaged.svg`,
+  //     alt: 'your-post-engaged',
+  //     title: 'Your Posts-Engaged',
+  //     value: (persistedUserInfo && persistedUserInfo?.usersAnswered) || 0,
+  //   },
+  //   {
+  //     id: 4,
+  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon5.svg`,
+  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon15.svg`,
+  //     alt: 'icon1',
+  //     title: 'Selections-Changed',
+  //     value: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0,
+  //   },
+  //   {
+  //     id: 5,
+  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/couter-eye.svg`,
+  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/couter-eye.svg`,
+  //     alt: 'icon5',
+  //     title: 'Your Posts-Hidden',
+  //     value: (persistedUserInfo && persistedUserInfo?.yourHiddenPostCounter) || 0,
+  //   },
+  //   {
+  //     id: 6,
+  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon6.svg`,
+  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon16.svg`,
+  //     alt: 'icon1',
+  //     title: 'Options-Added',
+  //     value: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0,
+  //   },
+  //   {
+  //     id: 7,
+  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon7.svg`,
+  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon17.svg`,
+  //     alt: 'icon1',
+  //     title: 'Agreement-Received',
+  //     value: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0,
+  //   },
+  //   {
+  //     id: 8,
+  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon8.svg`,
+  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon18.svg`,
+  //     alt: 'icon1',
+  //     title: 'Objections-Received',
+  //     value: (persistedUserInfo && persistedUserInfo?.contentionsOnAddedAns) || 0,
+  //   },
+  //   {
+  //     id: 9,
+  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon9.svg`,
+  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon19.svg`,
+  //     alt: 'icon1',
+  //     title: 'Objections-Given',
+  //     value: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0,
+  //   },
+  //   {
+  //     id: 10,
+  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/last.svg`,
+  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon20.svg`,
+  //     alt: 'icon1',
+  //     title: 'Code of-Conduct Fails',
+  //     value: (persistedUserInfo && persistedUserInfo?.violationCounter) || 0,
+  //   },
+  // ];
 
-  const firstHalf = list.slice(0, Math.ceil(list.length / 2));
-  const secondHalf = list.slice(Math.ceil(list.length / 2));
+  // const firstHalf = list.slice(0, Math.ceil(list.length / 2));
+  // const secondHalf = list.slice(Math.ceil(list.length / 2));
 
   const yourPosts = [
-    {
-      id: 1,
-      title: 'Posts you’ve created',
-      value: 10,
-    },
-    {
-      id: 2,
-      title: 'Engagement with your posts',
-      value: 10,
-    },
-    {
-      id: 3,
-      title: 'Objections received',
-      value: 10,
-    },
-    {
-      id: 4,
-      title: 'Agreements received',
-      value: 10,
-    },
+    { id: 1, title: 'Posts you’ve created', val: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0 },
+    { id: 2, title: 'Engagement with your posts', val: (persistedUserInfo && persistedUserInfo?.yourPostEngaged) || 0 },
+    { id: 3, title: 'Objections received', val: (persistedUserInfo && persistedUserInfo?.contentionsOnAddedAns) || 0 },
+    { id: 4, title: 'Agreements received', val: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0 },
     {
       id: 5,
       title: 'Number of posts hidden',
-      value: 10,
+      val: (persistedUserInfo && persistedUserInfo?.yourHiddenPostCounter) || 0,
     },
   ];
 
   const othersPosts = [
-    { id: 1, title: 'Posts you’ve engaged with', val: 0 },
-    { id: 2, title: 'Options added', val: 0 },
-    { id: 3, title: 'Change of answers', val: 0 },
-    { id: 4, title: 'Objections given', val: 0 },
-    { id: 5, title: 'Hidden posts', val: 0 },
+    {
+      id: 1,
+      title: 'Posts you’ve engaged with',
+      val: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0,
+    },
+    { id: 2, title: 'Options added', val: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0 },
+    { id: 3, title: 'Change of answers', val: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0 },
+    { id: 4, title: 'Objections given', val: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0 },
+    { id: 5, title: 'Hidden posts', val: (persistedUserInfo && persistedUserInfo?.violationCounter) || 0 },
   ];
 
   return (
@@ -166,9 +154,6 @@ const Contributions = () => {
       </div>
 
       {/* Main Content */}
-      {/* <h1 className="mb-[25px] ml-[26px] mt-[6px] text-[12px] font-bold leading-normal text-[#4A8DBD] tablet:mb-[54px] tablet:ml-[46px] tablet:text-[24.99px] tablet:font-semibold laptop:ml-[156px] laptop:text-[32px] dark:text-[#B8B8B8]">
-        My Contributions
-      </h1> */}
       <div className="mx-auto w-full">
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
@@ -197,20 +182,20 @@ const Contributions = () => {
             )}
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Your Posts</h1>{' '}
           </div>
-          <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
+          {/* <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
             {persistedUserInfo.badges.length}/24
-          </h1>
+          </h1> */}
         </div>
         <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
           {yourPosts.map((item) => (
             <div key={item.id} className="flex items-center justify-between text-[#7C7C7C]">
               <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.title}</h4>
-              <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.value}</h4>
+              <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">{item.val}</h4>
             </div>
           ))}
           <Link
             to={'/dashboard/profile/feedback'}
-            className="font-noraml cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline tablet:text-[14px] tablet:leading-[121.4%]"
+            className="font-noraml -mt-2 cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
           >
             See why your posts were hidden {'>'}
           </Link>
@@ -231,9 +216,9 @@ const Contributions = () => {
             </div>
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Other Posts</h1>{' '}
           </div>
-          <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
+          {/* <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
             {persistedUserInfo.role === 'user' ? 0 : persistedUserInfo.badges.length}/24
-          </h1>
+          </h1> */}
         </div>
         <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
           {othersPosts.map((item) => (
@@ -244,7 +229,7 @@ const Contributions = () => {
           ))}
           <Link
             to={'/dashboard/profile/feedback'}
-            className="font-noraml cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline tablet:text-[14px] tablet:leading-[121.4%]"
+            className="font-noraml -mt-2 cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
           >
             See why your posts were hidden {'>'}
           </Link>
@@ -267,20 +252,22 @@ const Contributions = () => {
               Code of Conduct
             </h1>{' '}
           </div>
-          <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
+          {/* <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
             {persistedUserInfo.badges.length}/24
-          </h1>
+          </h1> */}
         </div>
         <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
           <div className="flex items-center justify-between text-[#7C7C7C]">
             <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">
               Number of code of conduct violations
             </h4>
-            <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">5</h4>
+            <h4 className="text-center text-[12px] font-medium leading-[153%] tablet:text-[18px]">
+              {(persistedUserInfo && persistedUserInfo?.violationCounter) || 0}
+            </h4>
           </div>
           <Link
             to={'/dashboard/profile/feedback'}
-            className="font-noraml cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline tablet:text-[14px] tablet:leading-[121.4%]"
+            className="font-noraml -mt-2 cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
           >
             View code of conduct {'>'}
           </Link>

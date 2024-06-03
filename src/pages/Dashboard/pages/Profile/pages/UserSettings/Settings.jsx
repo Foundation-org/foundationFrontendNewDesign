@@ -70,7 +70,7 @@ export const Settings = () => {
       <div className="flex items-center justify-between rounded-[6.749px] border-[1.85px] border-[#DEE6F7] bg-[#FDFDFD] px-4 py-3 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5">
         <div>
           <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Dark Mode</h1>
-          <p className="hidden text-[16px] font-medium text-[#ACACAC] tablet:block">Switch to Dark Mode</p>
+          <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">Switch to Dark Mode</p>
         </div>
         <Switch
           checked={checkState}
@@ -92,7 +92,7 @@ export const Settings = () => {
       <div className="flex items-center justify-between rounded-[6.749px] border-[1.85px] border-[#DEE6F7] bg-[#FDFDFD] px-4 py-3 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5">
         <div className="">
           <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Default Sort</h1>
-          <p className="hidden text-[16px] font-medium text-[#ACACAC] tablet:block">Enable Default Sort.</p>
+          <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">Enable Default Sort.</p>
         </div>
         <Switch
           checked={defaultSort}

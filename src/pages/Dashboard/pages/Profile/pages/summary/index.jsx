@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../../components/ui/Button';
 
 const Summary = () => {
@@ -203,6 +203,20 @@ const Summary = () => {
             </Button>
           </div>
         </div>
+      </div>
+      <div className="flex w-full flex-col gap-1 tablet:gap-4">
+        <Link
+          to="/dashboard/profile/user-settings"
+          className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline tablet:text-[16px]"
+        >
+          User Settings {'>'}
+        </Link>
+        <Link
+          to="/dashboard/profile/ledger"
+          className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline tablet:text-[16px]"
+        >
+          History {'>'}
+        </Link>
       </div>
     </div>
   );
