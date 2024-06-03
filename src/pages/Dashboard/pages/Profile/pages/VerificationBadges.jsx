@@ -864,7 +864,6 @@ const VerificationBadges = () => {
         </div>
 
         <Web3
-          fetchUser={persistedUserInfo}
           handleRemoveBadgePopup={handleRemoveBadgePopup}
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
           checkLegacyBadge={checkLegacyBadge}

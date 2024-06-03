@@ -11,10 +11,12 @@ import '@farcaster/auth-kit/styles.css';
 import { AuthKitProvider, SignInButton, useProfile, useSignIn } from '@farcaster/auth-kit';
 import { useQueryClient } from '@tanstack/react-query';
 
-export default function Web3({ fetchUser, handleRemoveBadgePopup, handleOpenPasswordConfirmation, checkLegacyBadge }) {
+export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirmation, checkLegacyBadge }) {
   const { sdk } = useSDK();
   const queryClient = useQueryClient();
-  const checkSecondary = (itemType) => fetchUser?.badges?.some((i) => i.type === itemType && i.secondary === true);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const checkSecondary = (itemType) =>
+    persistedUserInfo?.badges?.some((i) => i.type === itemType && i.secondary === true);
 
   const connect = async () => {
     try {
@@ -28,7 +30,7 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup, handleOpenPass
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const checkWeb3Badge = (itemType) =>
-    fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
+    persistedUserInfo?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
 
   const handleWeb3 = async (accounts) => {
     try {
@@ -36,7 +38,7 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup, handleOpenPass
         web3: {
           ['etherium-wallet']: accounts,
         },
-        uuid: fetchUser.uuid,
+        uuid: persistedUserInfo.uuid,
       };
       if (localStorage.getItem('legacyHash')) {
         payload.infoc = localStorage.getItem('legacyHash');
@@ -54,7 +56,7 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup, handleOpenPass
   };
 
   const checkPassKeyBadge = (accountName, type, value) => {
-    return fetchUser?.badges.some((badge) => badge.accountName === accountName && badge.type === type);
+    return persistedUserInfo?.badges.some((badge) => badge.accountName === accountName && badge.type === type);
   };
 
   const handlePasskey = async (title, type, value) => {
@@ -93,7 +95,7 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup, handleOpenPass
       let addBadge;
       if (title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile') {
         addBadge = await api.post(`/addBadge/passkey/add`, {
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           accountId: value.id,
           accountName: 'Passkey',
           isVerified: true,
@@ -102,7 +104,7 @@ export default function Web3({ fetchUser, handleRemoveBadgePopup, handleOpenPass
         });
       } else if (title.trim() === 'Farcaster') {
         addBadge = await api.post(`/addBadge/addFarCasterBadge/add`, {
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           accountId: value.fid,
           accountName: title,
           isVerified: true,
