@@ -2,7 +2,7 @@ import api from './Axios';
 
 export const fetchLists = async (search) => {
   const userUuid = localStorage.getItem('uuid');
-  const url = search ? `/userlists/userList/${userUuid}/?categoryName=${search}` : `/userlists/userList/${userUuid}`;
+  const url = search ? `/userlists/userList/${userUuid}` : `/userlists/userList/${userUuid}`;
 
   try {
     const resp = await api.get(url);

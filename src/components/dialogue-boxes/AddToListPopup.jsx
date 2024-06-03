@@ -35,7 +35,8 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
         setSelectedOption((prev) => [resp.data.userList[resp.data.userList.length - 1]._id, ...prev]);
         setListName('');
       }
-      if (resp.response.status === 500) {
+
+      if (resp?.response?.status === 500) {
         toast.warning('List with a similar name already exists.');
       }
     },
