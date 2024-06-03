@@ -127,7 +127,7 @@ export default function HiddenPosts() {
   return (
     <>
       {/* Summary Section */}
-      <div className="mx-[15px] mb-3 tablet:mx-6 tablet:mb-5">
+      <div className="mx-4 mb-3 tablet:mx-6 tablet:mb-5">
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img

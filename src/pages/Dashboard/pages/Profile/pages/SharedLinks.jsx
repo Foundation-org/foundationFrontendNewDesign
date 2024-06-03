@@ -135,7 +135,7 @@ export default function SharedLinks() {
   return (
     <div>
       {/* Shared Posts Insights */}
-      <div className="mx-[15px] mb-3 tablet:mx-6 tablet:mb-5">
+      <div className="mx-4 mb-3 tablet:mx-6 tablet:mb-5">
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
@@ -143,7 +143,7 @@ export default function SharedLinks() {
               alt={'badge'}
               className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
             />
-            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Shared posts</h1>
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Shared links</h1>
           </div>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
