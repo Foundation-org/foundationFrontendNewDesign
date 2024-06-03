@@ -107,13 +107,17 @@ export default function Feedback() {
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Hidden posts
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">3</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.feedBackQuestsStatistics.otherHidingOurQuestsCount}
+              </h5>
             </div>
             <div>
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Supressed posts
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.feedBackQuestsStatistics.suppressQuestsCount}
+              </h5>
             </div>
           </div>
         </div>
