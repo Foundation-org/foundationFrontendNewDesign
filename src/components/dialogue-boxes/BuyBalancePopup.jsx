@@ -46,23 +46,23 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
 
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose} isBackground={true} autoSize={true}>
-      <div className="flex flex-col gap-[15px] px-[18px] py-[10px] tablet:px-[55px] tablet:py-[25px]">
-        <div className="flex items-center tablet:gap-5">
-          <button className="flex w-full flex-col gap-1 rounded-[8px] border-[2.64px] border-[#4A8DBD] px-4 py-7">
+      <div className="flex flex-col gap-2 px-[18px] py-[10px] tablet:gap-[15px] tablet:px-[55px] tablet:py-[25px]">
+        <div className="flex items-center gap-[10px] tablet:gap-5">
+          <button className="flex w-full flex-col gap-1 rounded-[8px] border-[2.64px] border-[#4A8DBD] px-4 py-3 tablet:py-7">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/Stripe.svg`}
               alt="Stripe"
-              className="tablet:h-6 tablet:w-[60px]"
+              className="h-5 w-12 tablet:h-6 tablet:w-[60px]"
             />
             <h1 className="text-[10px] font-semibold leading-[12px] text-[#727F96] tablet:text-[18px] tablet:leading-[18px]">
               Stripe
             </h1>
           </button>
-          <button className="flex w-full flex-col gap-1 rounded-[8px] border-[2.64px] border-[#E0E0E0] px-4 py-7">
+          <button className="flex w-full flex-col gap-1 rounded-[8px] border-[2.64px] border-[#E0E0E0] px-4 py-3 tablet:py-7">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/PayPal2.svg`}
               alt="Stripe"
-              className="tablet:h-[24px] tablet:w-[112px]"
+              className="h-[15px] w-[70px] tablet:h-[24px] tablet:w-[112px]"
             />{' '}
             <h1 className="text-[10px] font-semibold leading-[12px] text-[#727F96] tablet:text-[18px] tablet:leading-[18px]">
               Paypal
@@ -78,7 +78,7 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
           </label>
           <input
             type="text"
-            className="rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white p-4 text-[18px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none"
+            className="w-full rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white px-2 py-[2px] text-[12px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none tablet:p-4 tablet:text-[18px]"
           />
         </div>
         <div className="flex gap-3">
@@ -91,7 +91,7 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
             </label>
             <input
               type="text"
-              className="rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white p-4 text-[18px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none"
+              className="w-full rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white px-2 py-[2px] text-[12px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none tablet:p-4 tablet:text-[18px]"
               placeholder="MM/YY"
             />
           </div>
@@ -104,21 +104,21 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
             </label>
             <input
               type="text"
-              className="rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white p-4 text-[18px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none"
+              className="w-full rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white px-2 py-[2px] text-[12px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none tablet:p-4 tablet:text-[18px]"
               placeholder="CVC"
             />
           </div>
         </div>
         <div className="flex gap-3">
           <div className="flex w-full flex-col gap-2">
-            <div className="flex flex-col gap-2">
+            <div className="flex w-full flex-col gap-2">
               <p className="text-[10px] font-semibold leading-[12px] text-[#707175] tablet:text-[18px] tablet:leading-[18px]">
                 Country
               </p>
               <div className="dropdown w-full">
                 <label
                   tabIndex={0}
-                  className="flex items-center justify-between rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white p-4 text-[18px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none"
+                  className="flex w-full items-center justify-between rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white px-2 py-[2px] text-[12px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none tablet:p-4 tablet:text-[18px]"
                   onClick={toggleDropdown}
                 >
                   Select Contry
@@ -151,11 +151,6 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
                 )}
               </div>
             </div>
-            {/* <input
-              type="text"
-              className="rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white p-4 text-[18px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none"
-              placeholder="MM/YY"
-            /> */}
           </div>
           <div className="flex w-full flex-col gap-2">
             <label
@@ -166,7 +161,7 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
             </label>
             <input
               type="text"
-              className="rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white p-4 text-[18px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none"
+              className="w-full rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white px-2 py-[2px] text-[12px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none tablet:p-4 tablet:text-[18px]"
               placeholder="90123"
             />
           </div>

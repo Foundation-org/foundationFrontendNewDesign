@@ -41,7 +41,7 @@ const PopUp = ({
               <img
                 src={logo}
                 alt="popup logo"
-                className={`${autoSize ? '' : 'h-6 w-6 tablet:h-[50px] tablet:w-[50px]'}`}
+                className={`${autoSize ? 'size-[15px] tablet:size-auto' : 'h-6 w-6 tablet:h-[50px] tablet:w-[50px]'}`}
               />
             </div>
             <p className="text-[12px] font-bold text-white tablet:text-[25px] tablet:font-medium">{title}</p>
