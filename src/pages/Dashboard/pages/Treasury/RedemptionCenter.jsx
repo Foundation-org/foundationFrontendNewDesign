@@ -12,6 +12,7 @@ import {
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import DeleteHistoryPopup from '../../../../components/dialogue-boxes/deleteHistoryPopup';
+import BuyBalance from './components/BuyBalance';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
@@ -232,12 +233,12 @@ export default function RedemptionCenter() {
   }, [isPulse]);
 
   return (
-    <div className="mx-auto flex max-w-[1278px] flex-col gap-[10px] px-5 pb-12 tablet:gap-[25px]">
+    <div className="mx-auto flex max-w-[1278px] flex-col gap-[10px] px-5 pb-12 tablet:gap-[25px] laptop:px-0">
       <div>
         <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-5 tablet:text-[24px]">
           Redemption center
         </h1>
-        <div className="flex flex-col gap-2 tablet:gap-[78px] laptop:flex-row">
+        <div className="flex flex-col gap-2 tablet:gap-6 laptop:flex-row">
           {/* Create */}
           <div className="w-full rounded-[5.85px] border-[0.72px] border-[#4A8DBD] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">
             <div className="flex justify-between">
@@ -273,9 +274,9 @@ export default function RedemptionCenter() {
             {/* <p className="my-[5px] text-[7.5px] font-normal leading-normal text-[#85898C] tablet:my-[15px] tablet:text-[14.7px]">
               Create FDX and maximize your access to all features.
             </p> */}
-            <div className="mt-[5px] flex items-center gap-5 tablet:mt-5 tablet:gap-9">
+            <div className="mt-[5px] flex items-center gap-5 tablet:mt-5 tablet:gap-6">
               <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">FDX</h2>
-              <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[187px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
+              <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[124px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
                 <FaMinus
                   className="w-[7px] cursor-pointer tablet:w-[23px]"
                   onClick={() => {
@@ -321,23 +322,26 @@ export default function RedemptionCenter() {
               </Button>
             </div>
           </div>
+          <BuyBalance />
           {/* Add  */}
-          <div className="w-full rounded-[5.85px] border-[0.72px] border-[#F2DB12] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">
-            <h1 className="mb-2 text-[10px] font-semibold leading-normal text-[#707175] tablet:mb-4 tablet:text-[22px]">
-              Add Redemption Code
-            </h1>
-            {/* <p className="my-[5px] text-[7.5px] font-normal leading-normal text-[#85898C] tablet:my-[15px] tablet:text-[14.7px]">
-              You can add redemption code and earn reworded coins
-            </p> */}
-            <div className="mt-[5px] flex items-center gap-4 tablet:mt-5 tablet:gap-9">
-              <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">Code</h2>
-              <input
-                type="text"
-                placeholder="eg (rG57HK)"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
-              />
+          <div className="flex w-full flex-col justify-between rounded-[5.85px] border-[0.72px] border-[#F2DB12] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">
+            <div>
+              <h1 className="mb-2 text-[10px] font-semibold leading-normal text-[#707175] tablet:mb-4 tablet:text-[22px]">
+                Add Redemption Code
+              </h1>
+              {/* <p className="my-[5px] text-[7.5px] font-normal leading-normal text-[#85898C] tablet:my-[15px] tablet:text-[14.7px]">
+                You can add redemption code and earn reworded coins
+              </p> */}
+              <div className="mt-[5px] flex items-center gap-4 tablet:mt-5 tablet:gap-9">
+                <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">Code</h2>
+                <input
+                  type="text"
+                  placeholder="eg (rG57HK)"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
+                />
+              </div>
             </div>
             <div className="flex w-full justify-end">
               <Button variant={'cancel'} onClick={handleAdd}>
