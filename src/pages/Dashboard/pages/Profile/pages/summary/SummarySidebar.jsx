@@ -31,7 +31,7 @@ const SummarySidebar = ({ userData }) => {
           ))}
           <Link
             to={'/dashboard/profile/feedback'}
-            className="font-noraml cursor-pointer text-[14px] leading-[121.4%] text-[#4A8DBD] hover:underline"
+            className="font-noraml cursor-pointer text-[14px] leading-[121.4%] text-[#4A8DBD] hover:underline tablet:-mt-3"
           >
             See why your posts were
             <br /> hidden {'>'}
@@ -50,7 +50,7 @@ const SummarySidebar = ({ userData }) => {
           ))}
           <Link
             to={'/dashboard/profile/hidden-posts'}
-            className="font-noraml cursor-pointer text-[14px] leading-[121.4%] text-[#4A8DBD] hover:underline"
+            className="font-noraml cursor-pointer text-[14px] leading-[121.4%] text-[#4A8DBD] hover:underline tablet:-mt-3"
           >
             View posts you’ve hidden
             <br /> and why {'>'}

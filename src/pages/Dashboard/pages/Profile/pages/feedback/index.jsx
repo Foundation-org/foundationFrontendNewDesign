@@ -96,9 +96,6 @@ export default function Feedback() {
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Hidden Posts</h1>
           </div>
-          <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
-            3/10
-          </h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
@@ -124,9 +121,6 @@ export default function Feedback() {
 
       {/* Main Content */}
       <div className="mx-[15px] my-2 mr-4 flex justify-end tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
-        {/* <h1 className="text-[12px] font-semibold leading-[17px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
-          Feedback
-        </h1> */}
         <div className="relative">
           <div className="relative h-[15.96px] w-[128px] tablet:h-[45px] tablet:w-[337px]">
             <input

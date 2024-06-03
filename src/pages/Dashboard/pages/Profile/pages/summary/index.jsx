@@ -66,9 +66,6 @@ const Summary = () => {
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Post Activity</h1>
           </div>
-          <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
-            {persistedUserInfo?.questsCreated}
-          </h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
@@ -91,8 +88,8 @@ const Summary = () => {
             </div>
           </div>
           <div className="my-[15px] flex w-full justify-center tablet:my-6 tablet:justify-end">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/verification-badges')}>
-              Add Badge
+            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/post-activity')}>
+              View all post activity
             </Button>
           </div>
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
@@ -127,9 +124,6 @@ const Summary = () => {
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Shared posts</h1>
           </div>
-          <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
-            3/10
-          </h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
@@ -173,9 +167,6 @@ const Summary = () => {
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Post feedback</h1>
           </div>
-          <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
-            3/10
-          </h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">

@@ -145,9 +145,6 @@ export default function SharedLinks() {
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Shared posts</h1>
           </div>
-          <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
-            3/10
-          </h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
@@ -158,19 +155,19 @@ export default function SharedLinks() {
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Posts You’ve Shared
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">3</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">0</h5>
             </div>
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Total Shared Link Clicks
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">0</h5>
             </div>
             <div>
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Total post engagement
               </h1>
-              <h5 className="text-center text-[18px] font-normal text-[#85898C]">10</h5>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">0</h5>
             </div>
           </div>
         </div>
@@ -178,9 +175,6 @@ export default function SharedLinks() {
 
       <div className="mx-[15px] my-2 mr-4 flex justify-end tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
         <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} />
-        {/* <h1 className="text-[12px] font-semibold leading-[17px] text-[#4A8DBD] tablet:text-[25px] tablet:font-semibold  tablet:leading-[30px] dark:text-[#B8B8B8]">
-          Shared Links
-        </h1> */}
         <div className="relative">
           <div className="relative h-[15.96px] w-[128px] tablet:h-[45px] tablet:w-[337px]">
             <input
