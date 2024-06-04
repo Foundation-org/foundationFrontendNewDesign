@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '../../../../../components/ui/Button';
 
 const createItems = [
@@ -13,6 +13,7 @@ const createItems = [
 export default function CreateSlider({ setTab, tab }) {
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [isEnd, setIsEnd] = useState(false);
 
   const handleTab = (id) => {
     const selectedButton = document.getElementById(`create-btn-${id}`);
@@ -26,9 +27,10 @@ export default function CreateSlider({ setTab, tab }) {
   const handleLeftArrowClick = () => {
     const container = document.getElementById('buttonContainer');
     const scrollAmount = container.clientWidth / 2;
-    setScrollPosition(scrollPosition - scrollAmount);
+    const newScrollPosition = scrollPosition - scrollAmount;
+    setScrollPosition(newScrollPosition);
     container.scrollTo({
-      left: scrollPosition - scrollAmount,
+      left: newScrollPosition,
       behavior: 'smooth',
     });
   };
@@ -36,9 +38,10 @@ export default function CreateSlider({ setTab, tab }) {
   const handleRightArrowClick = () => {
     const container = document.getElementById('buttonContainer');
     const scrollAmount = container.clientWidth / 2;
-    setScrollPosition(scrollPosition + scrollAmount);
+    const newScrollPosition = scrollPosition + scrollAmount;
+    setScrollPosition(newScrollPosition);
     container.scrollTo({
-      left: scrollPosition + scrollAmount,
+      left: newScrollPosition,
       behavior: 'smooth',
     });
   };
@@ -55,14 +58,8 @@ export default function CreateSlider({ setTab, tab }) {
     const handleMouseMove = (e) => {
       const dx = e.pageX - startX;
       container.scrollLeft = initialScrollLeft - dx;
-      // if (dx < 0) {
-      //   setScrollPosition(startX - e.pageX);
-      //   localStorage.setItem('sliderScrollPosition', startX - e.pageX);
-      // } else {
-      //   setScrollPosition(e.pageX - startX);
-      //   localStorage.setItem('sliderScrollPosition', e.pageX - startX);
-      // }
       setScrollPosition(container.scrollLeft);
+      checkIfEnd(container);
     };
 
     const handleMouseUp = () => {
@@ -86,6 +83,7 @@ export default function CreateSlider({ setTab, tab }) {
       const dx = e.touches[0].pageX - startX;
       container.scrollLeft = initialScrollLeft - dx;
       setScrollPosition(container.scrollLeft);
+      checkIfEnd(container);
     };
 
     const handleTouchEnd = () => {
@@ -97,21 +95,33 @@ export default function CreateSlider({ setTab, tab }) {
     document.addEventListener('touchend', handleTouchEnd);
   };
 
+  const checkIfEnd = (container) => {
+    const atEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth;
+    setIsEnd(atEnd);
+  };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    checkIfEnd(container);
+  }, [scrollPosition]);
+
   return (
-    <div className="flex items-center justify-center px-4 py-2 tablet:px-6 tablet:py-[14.82px]">
+    <div className="relative flex items-center justify-center px-4 py-2 tablet:px-6 tablet:py-[14.82px]">
       {scrollPosition > 0 && (
-        <button
-          onClick={handleLeftArrowClick}
-          className="size-[10px] min-w-[10px] max-w-[10px] rotate-180 tablet:size-5 tablet:min-w-5 tablet:max-w-5"
-          style={{
-            background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '100% 100%',
-          }}
-        ></button>
+        <div className="absolute left-4 top-1/2 flex h-full w-3 -translate-y-1/2 items-center bg-[#F3F4F5] tablet:left-5 tablet:w-6">
+          <button
+            onClick={handleLeftArrowClick}
+            className="size-[10px] min-w-[10px] max-w-[10px] rotate-180 tablet:size-5 tablet:min-w-5 tablet:max-w-5"
+            style={{
+              background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: '100% 100%',
+            }}
+          ></button>
+        </div>
       )}
       <div
-        className="no-scrollbar mx-[5px] flex items-center gap-[6.75px] overflow-x-scroll tablet:mx-4 tablet:gap-[13.82px]"
+        className="no-scrollbar flex items-center gap-[6.75px] overflow-x-scroll tablet:gap-[13.82px]"
         id="buttonContainer"
         ref={containerRef}
         onMouseDown={handleMouseDown}
@@ -151,15 +161,19 @@ export default function CreateSlider({ setTab, tab }) {
           );
         })}
       </div>
-      <button
-        onClick={handleRightArrowClick}
-        className="size-[10px] min-w-[10px] max-w-[10px] tablet:size-5 tablet:min-w-5 tablet:max-w-5"
-        style={{
-          background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '100% 100%',
-        }}
-      ></button>
+      {!isEnd && (
+        <div className="absolute right-4 top-1/2 flex h-full w-3 -translate-y-1/2 items-center bg-[#F3F4F5] pl-1 tablet:right-5 tablet:w-6">
+          <button
+            onClick={handleRightArrowClick}
+            className="size-[10px] min-w-[10px] max-w-[10px] tablet:size-5 tablet:min-w-5 tablet:max-w-5"
+            style={{
+              background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: '100% 100%',
+            }}
+          ></button>
+        </div>
+      )}
     </div>
   );
 }
