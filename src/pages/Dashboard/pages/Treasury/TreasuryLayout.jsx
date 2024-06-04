@@ -104,7 +104,7 @@ const TreasuryLayout = () => {
                   : 'border-[#ACACAC] bg-white text-[#707175]'
               }`}
             >
-              Ledger
+              Treasury Activity
             </Button>
           </Link>
         </div>

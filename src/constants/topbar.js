@@ -68,7 +68,7 @@ export const TopbarItems = [
     id: 2,
     title: 'Treasury',
     path: '/dashboard/treasury',
-    activePaths: ['/dashboard/treasury'],
+    activePaths: ['/dashboard/treasury', '/dashboard/treasury/ledger'],
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury_logo_unselected.svg`,
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury_logo_selected.svg`,
   },

@@ -103,7 +103,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
   return (
     <PopUp
       logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/addToListWhite.svg`}
-      title={'Add to List'}
+      title={'Add to My Lists'}
       open={modalVisible}
       handleClose={handleClose}
       isBackground={false}
