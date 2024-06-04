@@ -9,10 +9,10 @@ const createItems = [
   // { id: 9, title: 'Contributions', path: '/dashboard/profile/contributions' },
   { id: 3, title: 'Hidden Posts', path: '/dashboard/profile/hidden-posts', to: 'hidden-posts' },
   { id: 7, title: 'My Lists', path: '/dashboard/profile/lists', to: 'lists' },
-  { id: 4, title: 'Shared Links', path: '/dashboard/profile/shared-links', to: 'shared-links' },
-  { id: 5, title: 'User Settings', path: '/dashboard/profile/user-settings', to: 'user-settings' },
+  { id: 4, title: 'Shared Posts', path: '/dashboard/profile/shared-links', to: 'shared-links' },
   { id: 6, title: 'Posts Feedback', path: '/dashboard/profile/feedback', to: 'feedback' },
-  { id: 2, title: 'Ledger', path: '/dashboard/profile/ledger', to: 'ledger' },
+  { id: 5, title: 'User Settings', path: '/dashboard/profile/user-settings', to: 'user-settings' },
+  { id: 2, title: 'My Activity', path: '/dashboard/profile/ledger', to: 'ledger' },
 ];
 
 export default function ProfileSlider({ setTab, tab }) {
@@ -96,17 +96,17 @@ export default function ProfileSlider({ setTab, tab }) {
 
   return (
     <div className="flex items-center justify-center px-4 py-2 tablet:px-6 tablet:py-[14.82px]">
-      {scrollPosition > 0 && (
-        <button
-          onClick={handleLeftArrowClick}
-          className="size-[10px] min-w-[10px] max-w-[10px] rotate-180 tablet:size-5 tablet:min-w-5 tablet:max-w-5"
-          style={{
-            background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '100% 100%',
-          }}
-        ></button>
-      )}
+      {/* {scrollPosition > 0 && ( */}
+      <button
+        onClick={handleLeftArrowClick}
+        className="size-[10px] min-w-[10px] max-w-[10px] rotate-180 tablet:size-5 tablet:min-w-5 tablet:max-w-5"
+        style={{
+          background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '100% 100%',
+        }}
+      ></button>
+      {/* )} */}
       <div
         className="no-scrollbar mx-[5px] flex items-center gap-[6.75px] overflow-x-scroll tablet:mx-4 tablet:gap-[13.82px]"
         id="buttonContainer"

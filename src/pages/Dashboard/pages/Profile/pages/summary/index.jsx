@@ -60,7 +60,7 @@ const Summary = () => {
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/post-activity-logo.svg`}
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/post-activity-logo2.svg`}
               alt={'badge'}
               className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
             />
@@ -109,6 +109,55 @@ const Summary = () => {
           <div className="mt-[15px] flex w-full justify-center tablet:mt-5 tablet:justify-end">
             <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/hidden-posts')}>
               View hidden posts
+            </Button>
+          </div>
+        </div>
+      </div>
+      {/* My Lists */}
+      <div>
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center gap-2">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/my-list-logo.svg`}
+              alt={'badge'}
+              className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-[15px]"
+            />
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">My Lists</h1>
+          </div>
+        </div>
+        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+          <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            Sharing posts is a great way to earn FDX - especially if people engage with them.
+          </h1>
+          <div className="mt-[10px] flex items-center justify-center gap-2 tablet:mt-4 tablet:gap-6">
+            <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                Lists You’ve Shared
+              </h1>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.myListStatistics.totalSharedListsCount}
+              </h5>
+            </div>
+            <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                Total Shared List Clicks
+              </h1>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.myListStatistics.totalSharedListsClicksCount}
+              </h5>
+            </div>
+            <div>
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                Total List Engagements
+              </h1>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.myListStatistics.totalSharedListsParticipentsCount}
+              </h5>
+            </div>
+          </div>
+          <div className="mt-[15px] flex w-full justify-center tablet:mt-6 tablet:justify-end">
+            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/lists')}>
+              View all shared lists
             </Button>
           </div>
         </div>
@@ -204,7 +253,8 @@ const Summary = () => {
           </div>
         </div>
       </div>
-      <div className="flex w-full flex-col gap-1 tablet:gap-4">
+      {/* Other Links */}
+      <div className="mt-[2px] flex w-full flex-col gap-3 tablet:gap-[15px]">
         <Link
           to="/dashboard/profile/user-settings"
           className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline tablet:text-[16px]"
@@ -215,7 +265,7 @@ const Summary = () => {
           to="/dashboard/profile/ledger"
           className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline tablet:text-[16px]"
         >
-          History {'>'}
+          My Activity {'>'}
         </Link>
       </div>
     </div>

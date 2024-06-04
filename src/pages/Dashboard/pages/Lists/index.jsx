@@ -154,7 +154,7 @@ const Lists = () => {
       )}
 
       {/* Summary Section */}
-      <div className="mx-auto w-full">
+      <div>
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
@@ -167,9 +167,34 @@ const Lists = () => {
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-            This collection showcases the topics and ideas. Participate in our survey to help us understand why these
-            posts resonate with you and what you'd like to see more of in the future.
+            Sharing posts is a great way to earn FDX - especially if people engage with them.
           </h1>
+          <div className="mt-[10px] flex items-center justify-center gap-2 tablet:mt-4 tablet:gap-6">
+            <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                Lists You’ve Shared
+              </h1>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.myListStatistics.totalSharedListsCount}
+              </h5>
+            </div>
+            <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                Total Shared List Clicks
+              </h1>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.myListStatistics.totalSharedListsClicksCount}
+              </h5>
+            </div>
+            <div>
+              <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                Total List Engagements
+              </h1>
+              <h5 className="text-center text-[18px] font-normal text-[#85898C]">
+                {persistedUserInfo?.myListStatistics.totalSharedListsParticipentsCount}
+              </h5>
+            </div>
+          </div>
         </div>
       </div>
 
