@@ -42,7 +42,7 @@ export default function SharedListResults() {
       <Topbar />
       <div className="bg-[#F2F3F5] dark:bg-[#242424]">
         <DashboardLayout>
-          <div className="no-scrollbar h-[calc(100dvh-101px)] w-full overflow-y-auto tablet:h-[calc(100vh-70px)]">
+          <div className="no-scrollbar h-[calc(100dvh-91px)] w-full tablet:h-[calc(100vh-70px)]">
             {persistedUserInfo?.role === 'user' && (
               <div className="my-2 flex justify-center gap-[15px] tablet:gap-5 laptop:my-[14.82px] laptop:gap-[35px]">
                 <Button
@@ -74,7 +74,7 @@ export default function SharedListResults() {
               allDataPending ? (
                 <Loader />
               ) : (
-                <div className="mb-5 flex flex-col gap-2 tablet:gap-5">
+                <div className="no-scrollbar mb-5 flex h-[calc(100vh-115px)] flex-col gap-2 overflow-y-auto pb-8 tablet:h-[calc(100vh-118px)] tablet:gap-5 tablet:pb-12">
                   {allDataSuccess &&
                     sharedlistAllData.data.category.post.map((item) => (
                       <div
@@ -96,7 +96,7 @@ export default function SharedListResults() {
               isPending ? (
                 <Loader />
               ) : (
-                <div className="mb-5 flex flex-col gap-2 tablet:gap-5">
+                <div className="no-scrollbar mb-5 flex h-[calc(100vh-115px)] flex-col gap-2 overflow-y-auto pb-8 tablet:h-[calc(100vh-118px)] tablet:gap-5 tablet:pb-12">
                   {isSuccess &&
                     sharedlistData.data.category.post.map((item) => (
                       <div
