@@ -175,7 +175,7 @@ const Lists = () => {
                 Lists You’ve Shared
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">
-                {persistedUserInfo?.myListStatistics.totalSharedListsCount}
+                {persistedUserInfo?.myListStatistics?.totalSharedListsCount}
               </h5>
             </div>
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
@@ -183,7 +183,7 @@ const Lists = () => {
                 Total Shared List Clicks
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">
-                {persistedUserInfo?.myListStatistics.totalSharedListsClicksCount}
+                {persistedUserInfo?.myListStatistics?.totalSharedListsClicksCount}
               </h5>
             </div>
             <div>
@@ -191,7 +191,7 @@ const Lists = () => {
                 Total List Engagements
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">
-                {persistedUserInfo?.myListStatistics.totalSharedListsParticipentsCount}
+                {persistedUserInfo?.myListStatistics?.totalSharedListsParticipentsCount}
               </h5>
             </div>
           </div>

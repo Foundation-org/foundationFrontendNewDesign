@@ -151,7 +151,7 @@ export const updatePostOrder = async ({ order, userUuid, categoryId }) => {
   }
 };
 
-export const submitListResponse = async ({ params, categoryId }) => {
+export const submitListResponse = async ({ params, categoryId, categoryLink }) => {
   try {
     const resp = await api.post(`/userlists/submitResponse`, {
       postId: categoryId,
@@ -161,6 +161,7 @@ export const submitListResponse = async ({ params, categoryId }) => {
       },
       addedAnswer: params.addedAnswer,
       uuid: params.uuid,
+      categoryLink,
     });
     return resp;
   } catch (err) {

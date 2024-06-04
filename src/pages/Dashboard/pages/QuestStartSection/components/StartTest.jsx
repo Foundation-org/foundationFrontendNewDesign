@@ -55,11 +55,6 @@ const StartTest = ({
         i === index ? { ...answer, contend: contend, check: false } : { ...answer, contend: false },
       ),
     );
-    // setAnswerSelection((prevAnswers) =>
-    //   prevAnswers.map((answer, i) =>
-    //     i === index ? { ...answer, contend: !answer.contend, check: false } : { ...answer, contend: false },
-    //   ),
-    // );
   };
 
   function findLabelChecked(array, labelToFind) {

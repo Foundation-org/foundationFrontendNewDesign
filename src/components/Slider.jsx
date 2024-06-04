@@ -53,13 +53,7 @@ function Slider({ isFetching }) {
     const handleMouseMove = (e) => {
       const dx = e.pageX - startX;
       container.scrollLeft = initialScrollLeft - dx;
-      if (dx < 0) {
-        setScrollPosition(startX - e.pageX);
-        localStorage.setItem('sliderScrollPosition', startX - e.pageX);
-      } else {
-        setScrollPosition(e.pageX - startX);
-        localStorage.setItem('sliderScrollPosition', e.pageX - startX);
-      }
+      setScrollPosition(container.scrollLeft);
     };
 
     const handleMouseUp = () => {
@@ -69,6 +63,29 @@ function Slider({ isFetching }) {
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleTouchStart = (e) => {
+    const container = containerRef.current;
+
+    if (!container) return;
+
+    const startX = e.touches[0].pageX;
+    const initialScrollLeft = container.scrollLeft;
+
+    const handleTouchMove = (e) => {
+      const dx = e.touches[0].pageX - startX;
+      container.scrollLeft = initialScrollLeft - dx;
+      setScrollPosition(container.scrollLeft);
+    };
+
+    const handleTouchEnd = () => {
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
   };
 
   useEffect(() => {
@@ -244,22 +261,23 @@ function Slider({ isFetching }) {
 
   return (
     <div className="flex items-center px-4 py-2 tablet:px-6 tablet:py-[14.82px]">
-      {/* {scrollPosition > 0 && ( */}
-      <button
-        onClick={handleLeftArrowClick}
-        className="size-[10px] min-w-[10px] max-w-[10px] rotate-180 tablet:size-5 tablet:min-w-5 tablet:max-w-5"
-        style={{
-          background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '100% 100%',
-        }}
-      ></button>
-      {/* )} */}
+      {scrollPosition > 0 && (
+        <button
+          onClick={handleLeftArrowClick}
+          className="size-[10px] min-w-[10px] max-w-[10px] rotate-180 tablet:size-5 tablet:min-w-5 tablet:max-w-5"
+          style={{
+            background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '100% 100%',
+          }}
+        ></button>
+      )}
       <div
         className="no-scrollbar mx-[5px] flex items-center gap-[6.75px] overflow-x-scroll tablet:mx-4 tablet:gap-[13.82px]"
         id="buttonContainer"
         ref={containerRef}
         onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
       >
         <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
           <Button
