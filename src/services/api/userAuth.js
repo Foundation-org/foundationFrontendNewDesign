@@ -37,9 +37,15 @@ export const userInfo = async () => {
     }
 
     // Make the API call
-    return await api.get(url);
+    const data = await api.get(url);
+    console.log('userInfoData', data);
+    return data;
+    // return await api.get(url);
   } catch (error) {
-    console.log('err', error);
+    console.log('userInfoError', error);
+    if (error?.response?.data?.message === 'User not found') {
+      localStorage.clear();
+    }
     // throw error.response.data.message;
   }
 };
