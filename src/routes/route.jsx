@@ -52,31 +52,30 @@ export function Router() {
   };
 
   // console.log({ persistedUser });
-
   return (
     <>
-      {!localStorage.getItem('uuid') ? (
+      {!persistedUser?.uuid ? (
         <Routes>
-          {/* <Route path="/" element={<Welcome />} /> */}
-          {/* <Route path="/" element={<GuestCustomerSupport />}>
+          {/* <Route path="/" element={<Welcome />} />
+          <Route path="/" element={<GuestCustomerSupport />}>
             <Route path="about" element={<About />} />
             <Route path="faq" element={<Faq />} />
             <Route path="contact-us" element={<ContactUs />} />
-          </Route> */}
+          </Route>
+          <Route path="/term-of-service" element={<TermOfService />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/verify-email" element={<VerifyEmail />} /> */}
+          <Route path="/" element={<GuestRedirect />} />
           <Route path="/signin/" element={<Signin />}>
             <Route path="credentials" element={<CredentialLogin />} />
           </Route>
           <Route path="/signup" element={<Signup />}>
             <Route path="credentials" element={<CredentialRegister />} />
           </Route>
-          {/* <Route path="/term-of-service" element={<TermOfService />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} /> */}
-          {/* <Route path="/verify-email" element={<VerifyEmail />} /> */}
           <Route path="/verifycode" element={<VerifyCode />} />
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/p/:id" element={<GuestRedirect />} />
           <Route path="/l/:id" element={<GuestRedirect />} />
-          <Route path="/" element={<GuestRedirect />} />
           <Route
             path="/dashboard/treasury/:code"
             element={<Navigate to="/" state={{ from: '/dashboard/treasury/:code' }} />}
