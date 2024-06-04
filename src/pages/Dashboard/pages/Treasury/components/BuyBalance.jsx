@@ -68,66 +68,68 @@ const BuyBalance = () => {
           <h1 className="text-[10px] font-semibold leading-normal text-[#707175] tablet:text-[22px]">Buy balance</h1>
           <p className="text-[7px] font-normal leading-normal text-[#85898C] tablet:text-[14.765px]">*2.5$ = 1 FDX</p>
         </div>
-        <div className="flex items-center gap-5 tablet:gap-6">
-          <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">$</h2>
-          <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#FCD3AD] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[124px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
-            <FaMinus
-              className="w-[7px] cursor-pointer tablet:w-[23px]"
-              onClick={() => {
-                if (fdx * 1 - 1 > 0) setFdx(fdx - 1);
-                else setFdx(0);
-              }}
-            />
-            <input
-              type="number"
-              className="hide-input-arrows w-full bg-transparent text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] focus:outline-none tablet:text-[20px]"
-              value={fdx === 0 ? '' : fdx}
-              placeholder="0"
-              onChange={(e) => {
-                let x = parseFloat(e.target.value);
-                if (!isNaN(x)) {
-                  x = Math.round(x * 100) / 100;
-                  if (Number.isInteger(x)) {
-                    setFdx(x.toString());
+        <div className="flex flex-row items-center justify-between tablet:flex-col tablet:items-start">
+          <div className="flex items-center gap-5 tablet:gap-6">
+            <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">$</h2>
+            <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#FCD3AD] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[124px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
+              <FaMinus
+                className="w-[7px] cursor-pointer tablet:w-[23px]"
+                onClick={() => {
+                  if (fdx * 1 - 1 > 0) setFdx(fdx - 1);
+                  else setFdx(0);
+                }}
+              />
+              <input
+                type="number"
+                className="hide-input-arrows w-full bg-transparent text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] focus:outline-none tablet:text-[20px]"
+                value={fdx === 0 ? '' : fdx}
+                placeholder="0"
+                onChange={(e) => {
+                  let x = parseFloat(e.target.value);
+                  if (!isNaN(x)) {
+                    x = Math.round(x * 100) / 100;
+                    if (Number.isInteger(x)) {
+                      setFdx(x.toString());
+                    } else {
+                      setFdx(x);
+                    }
                   } else {
-                    setFdx(x);
+                    setFdx(0);
                   }
-                } else {
-                  setFdx(0);
-                }
-              }}
-            />
+                }}
+              />
 
-            <FaPlus
-              className="w-[7px] cursor-pointer tablet:w-[23px]"
-              onClick={() => {
-                if (persistedUserInfo.balance - 1 > fdx) {
-                  setFdx(fdx * 1 + 1);
-                } else {
-                  setFdx(fdx * 1 + (Math.floor(persistedUserInfo.balance) - fdx));
-                }
-              }}
-            />
+              <FaPlus
+                className="w-[7px] cursor-pointer tablet:w-[23px]"
+                onClick={() => {
+                  if (persistedUserInfo.balance - 1 > fdx) {
+                    setFdx(fdx * 1 + 1);
+                  } else {
+                    setFdx(fdx * 1 + (Math.floor(persistedUserInfo.balance) - fdx));
+                  }
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-[10px] tablet:mt-[14px] tablet:gap-6">
+            <button className="rounded-[4px] border border-[#D9D9D9] p-1 tablet:rounded-[10px] tablet:border-2 tablet:p-2">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/Stripe.svg`}
+                alt="Stripe"
+                className="h-2 w-4 tablet:h-4 tablet:w-9"
+              />
+            </button>
+            <button className="rounded-[4px] border border-[#D9D9D9] px-1 py-[2px] tablet:rounded-[10px] tablet:border-2 tablet:px-2 tablet:py-1">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/PayPal.svg`}
+                alt="Stripe"
+                className="h-3 w-[13.3px] tablet:h-[25px] tablet:w-[30px]"
+              />
+            </button>
           </div>
         </div>
-        <div className="mt-[14px] flex items-center tablet:gap-6">
-          <button className="rounded-[10px] border-2 border-[#D9D9D9] p-2">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/Stripe.svg`}
-              alt="Stripe"
-              className="tablet:h-4 tablet:w-9"
-            />
-          </button>
-          <button className="rounded-[10px] border-2 border-[#D9D9D9] px-2 py-1">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/PayPal.svg`}
-              alt="Stripe"
-              className="tablet:h-[25px] tablet:w-[30px]"
-            />
-          </button>
-        </div>
       </div>
-      <div className="flex w-full justify-end">
+      <div className="mt-[18px] flex w-full justify-end tablet:mt-0">
         <Button variant={'cancel'} onClick={handleCreate}>
           {/* {createPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Buy'} */}
           Buy
