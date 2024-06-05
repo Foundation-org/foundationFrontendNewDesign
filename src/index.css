@@ -1056,32 +1056,31 @@ input[type='number'] {
   }
 }
 
-/* Test */
+/* CREATE / PROFILE / HOME Slider */
+
+@layer components {
+  .slider-link {
+    @apply flex h-6 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-[0.28688rem] border px-[4.9px] py-[6.5px] text-[0.57944rem] font-semibold [outline:none] focus:outline-none focus:ring-0 disabled:cursor-not-allowed tablet:h-12 tablet:rounded-[0.9375rem] tablet:border-[1.86px] tablet:px-[12px] tablet:py-[13px] tablet:text-[20px] tablet:leading-[20px];
+  }
+}
 
 .scrollable-tabs-container {
-  font-family: 'Roboto', sans-serif;
-  background: #000;
-  max-width: 700px;
-  margin: 16px auto;
-  border-radius: 4px;
+  max-width: 768px;
+  margin: 8px 16px;
   overflow: hidden;
   position: relative;
 }
 
-.scrollable-tabs-container svg {
-  width: 24px;
-  height: 24px;
-  padding: 8px;
+.scrollable-tabs-container img {
+  width: 10px;
+  height: 10px;
   cursor: pointer;
-  color: #fff;
-  border-radius: 50%;
   pointer-events: auto;
 }
 
 .scrollable-tabs-container ul {
   display: flex;
-  gap: 16px;
-  padding: 12px 24px;
+  gap: 6.75px;
   margin: 0;
   list-style: none;
   overflow-x: scroll;
@@ -1102,31 +1101,15 @@ input[type='number'] {
   display: none;
 }
 
-.scrollable-tabs-container a {
-  color: #fff;
-  text-decoration: none;
-  background: #333;
-  padding: 4px 24px;
-  display: inline-block;
-  border-radius: 4px;
-  user-select: none;
-  white-space: nowrap;
-}
-
-.scrollable-tabs-container a.active {
-  background: #fff;
-  color: #000;
-}
-
 .scrollable-tabs-container .right-arrow,
 .scrollable-tabs-container .left-arrow {
   position: absolute;
   height: 100%;
-  width: 100px;
+  width: 30px;
   top: 0;
   display: none;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 4px;
   pointer-events: none;
 }
 
@@ -1137,14 +1120,31 @@ input[type='number'] {
 
 .scrollable-tabs-container .right-arrow {
   right: 0;
-  background: linear-gradient(to left, #000 50%, transparent);
+  background-color: #f3f4f5;
   justify-content: flex-end;
 }
 
 .scrollable-tabs-container .left-arrow {
-  background: linear-gradient(to right, #000 50%, transparent);
+  background-color: #f3f4f5;
 }
 
-.scrollable-tabs-container svg:hover {
-  background: #333;
+@media only screen and (min-width: 744px) {
+  .scrollable-tabs-container {
+    margin: 14.8px 1.5rem;
+  }
+
+  .scrollable-tabs-container img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .scrollable-tabs-container .right-arrow,
+  .scrollable-tabs-container .left-arrow {
+    width: 50px;
+    padding: 0 10px;
+  }
+
+  .scrollable-tabs-container ul {
+    gap: 16px;
+  }
 }

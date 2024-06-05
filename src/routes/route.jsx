@@ -43,6 +43,12 @@ import Lists from '../pages/Dashboard/pages/Lists';
 import PostsByList from '../pages/Dashboard/pages/Lists/PostsByList';
 import SharedListResults from '../pages/Dashboard/pages/Lists/SharedListResults';
 import Summary from '../pages/Dashboard/pages/Profile/pages/summary';
+import YesNo from '../pages/Dashboard/pages/Quest/pages/YesNo';
+import MultipleChoice from '../pages/Dashboard/pages/Quest/pages/MultipleChoice';
+import OpenChoice from '../pages/Dashboard/pages/Quest/pages/OpenChoice';
+import RankChoice from '../pages/Dashboard/pages/Quest/pages/RankChoice';
+import AgreeDisagree from '../pages/Dashboard/pages/Quest/pages/AgreeDisagree';
+import LikeDislike from '../pages/Dashboard/pages/Quest/pages/LikeDislikeQuest';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -103,7 +109,14 @@ export function Router() {
                 <Route path="faq" element={<Faq />} />
                 <Route path="contact-us" element={<ContactUs />} />
               </Route>
-              <Route path="quest" element={<Quest />} />
+              <Route path="quest/" element={<Quest />}>
+                <Route path="" element={<YesNo />} />
+                <Route path="multiple-choice" element={<MultipleChoice />} />
+                <Route path="open-choice" element={<OpenChoice />} />
+                <Route path="ranked-choice" element={<RankChoice />} />
+                <Route path="agree-disagree" element={<AgreeDisagree />} />
+                <Route path="like-dislike" element={<LikeDislike />} />
+              </Route>
               <Route path="treasury/" element={<TreasuryLayout />}>
                 <Route path="" element={<RedemptionCenter />} />
                 <Route path="ledger" element={<Ledger />} />
