@@ -33,16 +33,16 @@ export default function Personal({ fetchUser, handleOpenPasswordConfirmation, ch
       return;
     } else {
       if (checkLegacyBadge()) await handleOpenPasswordConfirmation();
-      if (handlePasskeyConfirmation() === true) {
+      // if (await handlePasskeyConfirmation()) {
 
-        if (edit) {
-          setEdit(true);
-        } else {
-          setEdit(false);
-        }
-        setIsPersonalPopup(true);
-        setSelectedPersonalBadge(type);
+      if (edit) {
+        setEdit(true);
+      } else {
+        setEdit(false);
       }
+      setIsPersonalPopup(true);
+      setSelectedPersonalBadge(type);
+      // }
     }
   };
 
