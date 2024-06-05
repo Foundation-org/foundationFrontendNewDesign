@@ -276,6 +276,7 @@ const QuestionCardWithToggle = (props) => {
     mutationFn: submitListResponse,
     onSuccess: (resp) => {
       if (resp.status === 200) {
+        queryClient.invalidateQueries(['userInfo']);
         queryClient.setQueriesData(['postsByCategory'], (oldData) => {
           if (!oldData || !oldData.post) {
             return oldData;
