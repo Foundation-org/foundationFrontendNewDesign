@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const createItems = [
   { id: 8, title: 'Summary', path: '/dashboard/profile', to: '' },
-  { id: 1, title: 'Verfication Badges', path: '/dashboard/profile/verification-badges', to: '' },
+  { id: 1, title: 'Verification Badges', path: '/dashboard/profile/verification-badges', to: '' },
   { id: 0, title: 'Post activity', path: '/dashboard/profile/post-activity', to: 'post-activity' },
   { id: 3, title: 'Hidden Posts', path: '/dashboard/profile/hidden-posts', to: 'hidden-posts' },
   { id: 6, title: 'Posts Feedback', path: '/dashboard/profile/feedback', to: 'feedback' },
@@ -33,25 +33,27 @@ export default function ProfileSlider({ setTab, tab }) {
   };
 
   const handleLeftArrowClick = () => {
-    const container = document.getElementById('buttonContainer');
+    const container = containerRef.current;
     const scrollAmount = container.clientWidth / 2;
-    const newScrollPosition = scrollPosition - scrollAmount;
+    const newScrollPosition = Math.max(scrollPosition - scrollAmount, 0);
     setScrollPosition(newScrollPosition);
     container.scrollTo({
       left: newScrollPosition,
       behavior: 'smooth',
     });
+    checkIfEnd(container, newScrollPosition);
   };
 
   const handleRightArrowClick = () => {
-    const container = document.getElementById('buttonContainer');
+    const container = containerRef.current;
     const scrollAmount = container.clientWidth / 2;
-    const newScrollPosition = scrollPosition + scrollAmount;
+    const newScrollPosition = Math.min(scrollPosition + scrollAmount, container.scrollWidth - container.clientWidth);
     setScrollPosition(newScrollPosition);
     container.scrollTo({
       left: newScrollPosition,
       behavior: 'smooth',
     });
+    checkIfEnd(container, newScrollPosition);
   };
 
   const handleMouseDown = (e) => {
@@ -65,9 +67,12 @@ export default function ProfileSlider({ setTab, tab }) {
 
     const handleMouseMove = (e) => {
       const dx = e.pageX - startX;
-      container.scrollLeft = initialScrollLeft - dx;
-      setScrollPosition(container.scrollLeft);
-      checkIfEnd(container);
+      const newScrollLeft = initialScrollLeft - dx;
+      if (newScrollLeft >= 0 && newScrollLeft <= container.scrollWidth - container.clientWidth) {
+        container.scrollLeft = newScrollLeft;
+        setScrollPosition(container.scrollLeft);
+        checkIfEnd(container, newScrollLeft);
+      }
     };
 
     const handleMouseUp = () => {
@@ -89,9 +94,12 @@ export default function ProfileSlider({ setTab, tab }) {
 
     const handleTouchMove = (e) => {
       const dx = e.touches[0].pageX - startX;
-      container.scrollLeft = initialScrollLeft - dx;
-      setScrollPosition(container.scrollLeft);
-      checkIfEnd(container);
+      const newScrollLeft = initialScrollLeft - dx;
+      if (newScrollLeft >= 0 && newScrollLeft <= container.scrollWidth - container.clientWidth) {
+        container.scrollLeft = newScrollLeft;
+        setScrollPosition(container.scrollLeft);
+        checkIfEnd(container, newScrollLeft);
+      }
     };
 
     const handleTouchEnd = () => {
@@ -103,9 +111,11 @@ export default function ProfileSlider({ setTab, tab }) {
     document.addEventListener('touchend', handleTouchEnd);
   };
 
-  const checkIfEnd = (container) => {
-    const atEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth;
+  const checkIfEnd = (container, scrollLeft) => {
+    const atEnd = scrollLeft + container.clientWidth >= container.scrollWidth;
+    const atStart = scrollLeft === 0;
     setIsEnd(atEnd);
+    setScrollPosition(scrollLeft);
   };
 
   useEffect(() => {
@@ -122,8 +132,15 @@ export default function ProfileSlider({ setTab, tab }) {
 
   useEffect(() => {
     const container = containerRef.current;
-    checkIfEnd(container);
-  }, [scrollPosition]);
+    const onScroll = () => {
+      setScrollPosition(container.scrollLeft);
+      checkIfEnd(container, container.scrollLeft);
+    };
+    container.addEventListener('scroll', onScroll);
+    return () => {
+      container.removeEventListener('scroll', onScroll);
+    };
+  }, []);
 
   return (
     <div className="relative flex items-center justify-center px-4 py-2 tablet:px-6 tablet:py-[14.82px]">
