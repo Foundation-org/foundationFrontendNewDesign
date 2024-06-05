@@ -8,8 +8,21 @@ import { useDispatch } from 'react-redux';
 import { addUser } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 
-const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromiseRef, login, uuid }) => {
-  const handleClose = () => setIsPopup(false);
+const LegacyConfirmationPopup = ({
+  isPopup,
+  setIsPopup,
+  title,
+  logo,
+  legacyPromiseRef,
+  login,
+  uuid,
+  setIsLoadingSocial,
+}) => {
+  const handleClose = () => {
+    setIsLoadingSocial && setIsLoadingSocial(false);
+    setIsPopup(false);
+  };
+
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

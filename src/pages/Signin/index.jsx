@@ -95,6 +95,7 @@ export default function Signin() {
         legacyPromiseRef={legacyPromiseRef}
         login={true}
         uuid={uuid}
+        setIsLoadingSocial={setIsLoadingSocial}
       />
       {isLoadingSocial && <Loader />}
       <div
