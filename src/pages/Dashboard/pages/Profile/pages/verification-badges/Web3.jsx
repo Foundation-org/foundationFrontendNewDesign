@@ -72,7 +72,9 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
       if (title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile') {
         const resp = await fetch(`${import.meta.env.VITE_API_URL}/generate-registration-options`);
         const data = await resp.json();
+        console.log("data", data);
         const attResp = await startRegistration(data);
+        console.log('attResp', attResp);
         attResp.challenge = data.challenge;
         const verificationResp = await fetch(`${import.meta.env.VITE_API_URL}/verify-registration`, {
           method: 'POST',
@@ -82,6 +84,7 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
           body: JSON.stringify(attResp),
         });
         const verificationJSON = await verificationResp.json();
+        console.log("veriResp", verificationJSON);
 
         if (verificationJSON && verificationJSON.verified) {
           value = attResp;
@@ -94,6 +97,7 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
       }
       let addBadge;
       if (title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile') {
+        console.log("detailsStored", value);
         addBadge = await api.post(`/addBadge/passkey/add`, {
           uuid: persistedUserInfo.uuid,
           accountId: value.id,
@@ -282,9 +286,8 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
             )}
             <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                 {item.title}
@@ -303,20 +306,20 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
                   : item.type === 'etherium-wallet'
                     ? checkWeb3Badge(item.type)
                       ? handleRemoveBadgePopup({
-                          title: item.title,
-                          image: item.image,
-                          type: item.type,
-                          badgeType: 'etherium-wallet',
-                        })
+                        title: item.title,
+                        image: item.image,
+                        type: item.type,
+                        badgeType: 'etherium-wallet',
+                      })
                       : connect()
                     : checkPassKeyBadge(item.accountName, item.type)
                       ? handleRemoveBadgePopup({
-                          title: item.title,
-                          image: item.image,
-                          type: item.type,
-                          badgeType: item.badgeType,
-                          accountName: item.accountName,
-                        })
+                        title: item.title,
+                        image: item.image,
+                        type: item.type,
+                        badgeType: item.badgeType,
+                        accountName: item.accountName,
+                      })
                       : handlePasskey(item?.title, item?.type);
               }}
               disabled={item.disabled}
