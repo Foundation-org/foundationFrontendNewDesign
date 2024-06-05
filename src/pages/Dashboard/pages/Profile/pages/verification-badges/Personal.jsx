@@ -8,7 +8,7 @@ import api from '../../../../../../services/api/Axios';
 import EducationBadgePopup from '../../../../../../components/dialogue-boxes/EducationBadgePopup';
 import WorkBadgePopup from '../../../../../../components/dialogue-boxes/WorkBadgePopup';
 
-export default function Personal({ fetchUser, handleOpenPasswordConfirmation, checkLegacyBadge }) {
+export default function Personal({ fetchUser, handleOpenPasswordConfirmation, checkLegacyBadge, handlePasskeyConfirmation }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
@@ -33,13 +33,16 @@ export default function Personal({ fetchUser, handleOpenPasswordConfirmation, ch
       return;
     } else {
       if (checkLegacyBadge()) await handleOpenPasswordConfirmation();
-      if (edit) {
-        setEdit(true);
-      } else {
-        setEdit(false);
+      if (handlePasskeyConfirmation() === true) {
+
+        if (edit) {
+          setEdit(true);
+        } else {
+          setEdit(false);
+        }
+        setIsPersonalPopup(true);
+        setSelectedPersonalBadge(type);
       }
-      setIsPersonalPopup(true);
-      setSelectedPersonalBadge(type);
     }
   };
 

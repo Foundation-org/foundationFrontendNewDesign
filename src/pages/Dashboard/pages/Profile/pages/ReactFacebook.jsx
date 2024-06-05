@@ -44,15 +44,15 @@ export const LoginSocialFacebook = ({
   onReject,
   onResolve,
 }) => {
+  const popupWindowURL = new URL(window.location.href);
+  const code = popupWindowURL.searchParams.get('code');
+  const statePopup = popupWindowURL.searchParams.get('state');
   useEffect(() => {
-    const popupWindowURL = new URL(window.location.href);
-    const code = popupWindowURL.searchParams.get('code');
-    const statePopup = popupWindowURL.searchParams.get('state');
     if (statePopup?.includes('_facebook') && code) {
       localStorage.setItem('facebook', code);
       window.close();
     }
-  }, [window.location.href]);
+  }, [popupWindowURL, code, statePopup]);
 
   const getAccessToken = useCallback(
     (code) => {
@@ -107,9 +107,8 @@ export const LoginSocialFacebook = ({
 
   const onLogin = useCallback(() => {
     onLoginStart && onLoginStart();
-    const oauthUrl = `${FACEBOOK_URL}?response_type=${response_type}&client_id=${client_id}&scope=${scope}&state=${
-      state + '_facebook'
-    }&redirect_uri=${redirect_uri}`;
+    const oauthUrl = `${FACEBOOK_URL}?response_type=${response_type}&client_id=${client_id}&scope=${scope}&state=${state + '_facebook'
+      }&redirect_uri=${redirect_uri}`;
     const width = 450;
     const height = 730;
     const left = window.screen.width / 2 - width / 2;
@@ -118,13 +117,13 @@ export const LoginSocialFacebook = ({
       oauthUrl,
       'Facebook',
       'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' +
-        width +
-        ', height=' +
-        height +
-        ', top=' +
-        top +
-        ', left=' +
-        left,
+      width +
+      ', height=' +
+      height +
+      ', top=' +
+      top +
+      ', left=' +
+      left,
     );
   }, [onLoginStart, response_type, client_id, scope, state, redirect_uri]);
 
