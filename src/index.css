@@ -1105,7 +1105,7 @@ input[type='number'] {
 .scrollable-tabs-container .left-arrow {
   position: absolute;
   height: 100%;
-  width: 30px;
+  width: 18px;
   top: 0;
   display: none;
   align-items: center;
