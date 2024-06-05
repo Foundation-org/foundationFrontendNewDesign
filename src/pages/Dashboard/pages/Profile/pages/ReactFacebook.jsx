@@ -44,16 +44,15 @@ export const LoginSocialFacebook = ({
   onReject,
   onResolve,
 }) => {
-  const popupWindowURL = new URL(window.location.href);
-  const code = popupWindowURL.searchParams.get('code');
-  const statePopup = popupWindowURL.searchParams.get('state');
-
   useEffect(() => {
+    const popupWindowURL = new URL(window.location.href);
+    const code = popupWindowURL.searchParams.get('code');
+    const statePopup = popupWindowURL.searchParams.get('state');
     if (statePopup?.includes('_facebook') && code) {
       localStorage.setItem('facebook', code);
       window.close();
     }
-  }, [code, statePopup]);
+  }, [window.location.href]);
 
   const getAccessToken = useCallback(
     (code) => {

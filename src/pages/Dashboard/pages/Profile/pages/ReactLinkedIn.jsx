@@ -45,17 +45,15 @@ export const LoginSocialLinkedin = ({
   onReject,
   onResolve,
 }) => {
-  const popupWindowURL = new URL(window.location.href);
-  const code = popupWindowURL.searchParams.get('code');
-  const statePopup = popupWindowURL.searchParams.get('state');
-
   useEffect(() => {
-
+    const popupWindowURL = new URL(window.location.href);
+    const code = popupWindowURL.searchParams.get('code');
+    const statePopup = popupWindowURL.searchParams.get('state');
     if (statePopup?.includes('_linkedin') && code) {
       localStorage.setItem('linkedin', code);
       window.close();
     }
-  }, [code, statePopup]);
+  }, [window.location.href]);
 
   const getProfile = useCallback(
     (data) => {
@@ -76,20 +74,21 @@ export const LoginSocialLinkedin = ({
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${data.access_token}`,
-            'Content-Type': 'application/json' // Specify content type
+            Authorization: `Bearer ${data.access_token}`,
+            'Content-Type': 'application/json', // Specify content type
           },
-          body: JSON.stringify({ // Stringify the body object
-            access_token: data.access_token
-          })
-        }
+          body: JSON.stringify({
+            // Stringify the body object
+            access_token: data.access_token,
+          }),
+        },
       )
-      // axios
-      //   .get('https://api.linkedin.com/v2/userinfo', {
-      //     headers: {
-      //       Authorization: `Bearer ${data.access_token}`,
-      //     },
-      //   })
+        // axios
+        //   .get('https://api.linkedin.com/v2/userinfo', {
+        //     headers: {
+        //       Authorization: `Bearer ${data.access_token}`,
+        //     },
+        //   })
         .then((res) => res.json())
         .then((res) => {
           const response = { ...data };
@@ -138,12 +137,13 @@ export const LoginSocialLinkedin = ({
             method: 'POST',
             headers: {
               // 'Authorization': `Bearer ${data.access_token}`,
-              'Content-Type': 'application/json' // Specify content type
+              'Content-Type': 'application/json', // Specify content type
             },
-            body: JSON.stringify({ // Stringify the body object
-              ...params
-            })
-          }
+            body: JSON.stringify({
+              // Stringify the body object
+              ...params,
+            }),
+          },
         )
           .then((response) => response.json())
           .then((response) => {
@@ -151,7 +151,7 @@ export const LoginSocialLinkedin = ({
             // else getProfile(response);
           })
           .catch((err) => {
-            console.log("before.... error.........");
+            console.log('before.... error.........');
             onReject(err);
           });
       }
@@ -182,7 +182,7 @@ export const LoginSocialLinkedin = ({
   useEffect(() => {
     // Add the event listener when the component mounts
     window.addEventListener('storage', onChangeLocalStorage);
-  
+
     // Clean up by removing the event listener when the component unmounts
     return () => {
       window.removeEventListener('storage', onChangeLocalStorage);
