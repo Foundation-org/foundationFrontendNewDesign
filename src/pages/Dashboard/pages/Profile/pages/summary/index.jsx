@@ -136,7 +136,7 @@ const Summary = () => {
                 Hidden posts
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">
-                {persistedUserInfo?.feedBackQuestsStatistics.otherHidingOurQuestsCount}
+                {persistedUserInfo?.feedBackQuestsStatistics?.otherHidingOurQuestsCount}
               </h5>
             </div>
             <div>
@@ -144,7 +144,7 @@ const Summary = () => {
                 Supressed posts
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">
-                {persistedUserInfo?.feedBackQuestsStatistics.suppressQuestsCount}
+                {persistedUserInfo?.feedBackQuestsStatistics?.suppressQuestsCount}
               </h5>
             </div>
           </div>

@@ -22,14 +22,32 @@ export default function ProfileSlider({ setTab, tab }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isEnd, setIsEnd] = useState(false);
 
-  const handleTab = (id) => {
-    const selectedButton = document.getElementById(`profile-btn-${id}`);
+  console.log('scrollPosition', scrollPosition);
+
+  const handleTab = (path) => {
+    const selectedButton = document.getElementById(`profile-btn-${path}`);
+    console.log('selectedButton', selectedButton);
     if (selectedButton) {
-      selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const container = containerRef.current;
+      const containerRect = container.getBoundingClientRect();
+      const buttonRect = selectedButton.getBoundingClientRect();
+
+      const offset = buttonRect.left - containerRect.left;
+      const isVisible = offset >= 0 && offset + buttonRect.width <= containerRect.width;
+
+      if (!isVisible) {
+        const scrollAmount = offset < 0 ? offset : offset - containerRect.width + buttonRect.width;
+        const newScrollPosition = container.scrollLeft + scrollAmount;
+        setScrollPosition(newScrollPosition);
+        container.scrollTo({
+          left: newScrollPosition,
+          behavior: 'smooth',
+        });
+      }
     }
 
-    setTab(id);
-    navigate(id);
+    setTab(path);
+    navigate(path);
   };
 
   const handleLeftArrowClick = () => {
