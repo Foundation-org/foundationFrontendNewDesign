@@ -64,6 +64,8 @@ export default function CreateSlider() {
     if (currentTabRef) {
       currentTabRef.scrollIntoView({
         behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest',
       });
     }
   }, [location.pathname]);

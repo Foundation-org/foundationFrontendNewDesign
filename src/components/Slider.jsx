@@ -247,7 +247,7 @@ function Slider() {
     const selectedButtonId = localStorage.getItem('selectedButtonId');
     const selectedButton = document.getElementById(selectedButtonId);
     if (selectedButton) {
-      selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      selectedButton.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
   }, [filterStates.topics]);
 

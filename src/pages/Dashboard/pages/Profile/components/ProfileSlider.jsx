@@ -64,6 +64,8 @@ export default function ProfileSlider() {
     if (currentTabRef) {
       currentTabRef.scrollIntoView({
         behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest',
       });
     }
   }, [location.pathname]);
