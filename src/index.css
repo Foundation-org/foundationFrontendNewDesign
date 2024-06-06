@@ -1065,8 +1065,7 @@ input[type='number'] {
 }
 
 .scrollable-tabs-container {
-  max-width: 768px;
-  margin: 8px 16px;
+  padding: 8px 16px;
   overflow: hidden;
   position: relative;
 }
@@ -1130,7 +1129,7 @@ input[type='number'] {
 
 @media only screen and (min-width: 744px) {
   .scrollable-tabs-container {
-    margin: 14.8px 1.5rem;
+    padding: 14.8px 1.5rem;
   }
 
   .scrollable-tabs-container img {
@@ -1140,7 +1139,7 @@ input[type='number'] {
 
   .scrollable-tabs-container .right-arrow,
   .scrollable-tabs-container .left-arrow {
-    width: 50px;
+    width: 44px;
     padding: 0 10px;
   }
 
