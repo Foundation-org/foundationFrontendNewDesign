@@ -18,3 +18,14 @@ export const profileItems = [
   { id: 5, title: 'User Settings', path: '/dashboard/profile/user-settings', to: 'user-settings' },
   { id: 2, title: 'My Activity', path: '/dashboard/profile/ledger', to: 'ledger' },
 ];
+
+export const treasuryItems = [
+  {
+    path: '/dashboard/treasury',
+    label: 'Redemption center',
+  },
+  {
+    path: '/dashboard/treasury/ledger',
+    label: 'Treasury Activity',
+  },
+];
