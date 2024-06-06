@@ -145,7 +145,7 @@ const QuestStartSection = () => {
   );
 
   return (
-    <div className="w-full bg-[#F2F3F5] dark:bg-black">
+    <div className="mx-auto w-full max-w-[1440px] bg-[#F2F3F5] laptop:mx-[331px] desktop:mx-auto dark:bg-black">
       <div className="relative mx-auto flex w-full max-w-[778px] flex-col laptop:flex-row">
         <div className="block tablet:hidden">
           <SidebarLeft />

@@ -11,23 +11,19 @@ import { getTreasuryAmount, userInfo, userInfoById } from '../../../services/api
 import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
 import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
 import { feedbackFilters, updateFeedbackSearch } from '../../../features/profile/feedbackSlice';
-import SidebarRight from './SidebarRight';
 import SidebarLeft from './SidebarLeft';
 import api from '../../../services/api/Axios';
-import Anchor from '../../../components/Anchor';
 import PopUp from '../../../components/ui/PopUp';
 import SideNavbar from '../../../components/SideNavbar';
 import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId } from '../../../features/quest/utilsSlice';
 import MediaControls from '../../../components/MediaControls';
 import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
-// import ManageList from '../pages/Lists/ManageList';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { canAddPost } = useParams();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
   const getSharedLinksFilters = useSelector(sharedLinksFilters);
@@ -208,26 +204,9 @@ export default function DashboardLayout({ children }) {
         </div>
       </PopUp>
 
-      <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
+      <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
-        {/* {location.pathname !== '/dashboard/help/about' && location.pathname !== '/dashboard/help/faq' && ( */}
         <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-[#DEE6F7] px-5 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
-          {/* <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
-            <div className="flex items-center gap-2">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
-                alt="badge"
-                className="size-[25px]"
-              />
-              <div className="flex flex-col gap-1">
-                <h4 className="heading">Treasury</h4>
-                <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                  {treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX
-                </p>
-              </div>
-            </div>
-          </div> */}
-
           <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
             {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-2">
@@ -246,9 +225,6 @@ export default function DashboardLayout({ children }) {
                   <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
                     <p>{userInfoData && userInfoData?.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </p>
-                  {/* <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]" onClick={handleGuestLogout}>
-                    Create Account
-                  </Anchor> */}
                 </div>
               </div>
             ) : (
@@ -289,7 +265,6 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/verification-badges' &&
             location.pathname !== '/dashboard/profile/lists' &&
             location.pathname !== '/dashboard/profile/feedback' &&
-            // location.pathname !== '/dashboard/quest' &&
             !location.pathname.startsWith('/dashboard/quest') &&
             location.pathname !== '/dashboard/treasury' &&
             location.pathname !== '/dashboard/treasury/ledger' && (
@@ -331,10 +306,9 @@ export default function DashboardLayout({ children }) {
             </div>
           )}
         </div>
-        {/* )} */}
 
         {/* Desktop Left Side */}
-        <div className="hidden tablet:block">
+        <div className="left-0 top-0 hidden tablet:block laptop:absolute">
           <div
             className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]"
             onClick={() => navigate('/dashboard/treasury')}
@@ -553,12 +527,9 @@ export default function DashboardLayout({ children }) {
             </div>
           )}
         </div>
-        {location.pathname !== '/dashboard/treasury' &&
-          location.pathname !== '/dashboard/treasury/ledger' &&
-          location.pathname !== '/dashboard/profile/ledger' &&
-          children}
+        {location.pathname !== '/dashboard/treasury' && location.pathname !== '/dashboard/treasury/ledger' && children}
         {/* Desktop Right Side */}
-        <div className="hidden tablet:block">
+        <div className="right-0 top-0 hidden tablet:block laptop:absolute">
           <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
             {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-[15px]">
@@ -572,17 +543,12 @@ export default function DashboardLayout({ children }) {
                     G
                   </p>
                 </div>
-                {/* <div className="flex flex-col"> */}
                 <div className="flex h-[47px] flex-col justify-between">
                   <h4 className="heading w-fit border-b-2">My Balance (Guest)</h4>
                   <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
                     <p>{userInfoData && userInfoData.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </div>
-                </div>{' '}
-                {/* <div className="h-[10px]" onClick={handleGuestLogout}>
-                    <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Create Account</Anchor>
-                  </div> */}
-                {/* </div> */}
+                </div>
               </div>
             ) : (
               <div
@@ -612,19 +578,8 @@ export default function DashboardLayout({ children }) {
               </div>
             )}
           </div>
-          {/* {location.pathname !== '/dashboard/quest' &&
-            location.pathname !== '/dashboard/profile/ledger' &&
-            location.pathname !== '/dashboard/treasury' &&
-            location.pathname !== '/dashboard/treasury/ledger' &&
-            location.pathname !== '/dashboard/help/about' &&
-            location.pathname !== '/dashboard/help/faq' &&
-            location.pathname !== '/dashboard/help/contact-us' &&
-            location.pathname !== '/help/about' &&
-            location.pathname !== '/help/faq' &&
-            location.pathname !== '/dashboard/profile' &&
-            location.pathname !== '/help/contact-us' && <SidebarRight userData={userInfoData?.data} />} */}
+
           {!location.pathname.startsWith('/dashboard/quest') &&
-            // location.pathname !== '/dashboard/quest' &&
             location.pathname !== '/dashboard/profile/ledger' &&
             location.pathname !== '/dashboard/profile/post-activity' &&
             location.pathname !== '/dashboard/treasury' &&
@@ -638,10 +593,7 @@ export default function DashboardLayout({ children }) {
         </div>
       </div>
       {/* Mobile Children */}
-      {(location.pathname === '/dashboard/treasury' ||
-        location.pathname === '/dashboard/treasury/ledger' ||
-        location.pathname === '/dashboard/profile/ledger') &&
-        children}
+      {(location.pathname === '/dashboard/treasury' || location.pathname === '/dashboard/treasury/ledger') && children}
     </div>
   );
 }
