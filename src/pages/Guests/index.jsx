@@ -50,7 +50,7 @@ const Guests = () => {
       <Topbar />
       <div className="w-full bg-[#F2F3F5]">
         <DashboardLayout>
-          <div className="flex h-[calc(100dvh-101px)] w-full tablet:h-[calc(100vh-96px)] laptop:h-[calc(100vh-70px)] dark:bg-[#242424]">
+          <div className="mx-auto flex h-[calc(100dvh-101px)] w-full max-w-[1440px] tablet:h-[calc(100vh-96px)] laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 desktop:mx-auto desktop:px-0 dark:bg-[#242424]">
             <div className="no-scrollbar w-full overflow-y-auto py-2 tablet:px-6 tablet:py-5 laptop:px-0">
               {isFullScreen !== 'isfullscreen' && (
                 <div className="mb-7 flex justify-center gap-5 tablet:mb-[3.81rem] tablet:gap-[5.69rem]">

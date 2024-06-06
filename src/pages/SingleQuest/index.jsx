@@ -86,7 +86,7 @@ const SingleQuest = () => {
       <Topbar />
       <div className="w-full bg-[#F2F3F5]">
         <DashboardLayout>
-          <div className="no-scrollbar h-[calc(100vh-58px)] w-full overflow-y-auto py-2 tablet:h-[calc(100vh-101px)] laptop:h-[calc(100vh-70px)] laptop:py-5">
+          <div className="no-scrollbar mx-auto h-[calc(100vh-58px)] w-full max-w-[1440px] overflow-y-auto py-2 tablet:h-[calc(100vh-101px)] laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 laptop:py-5 desktop:mx-auto desktop:px-0">
             {error !== '' ? <p className="text-center text-[24px] font-bold tablet:text-[25px]">{error}</p> : null}
             {singleQuestData && (
               <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px] ">
