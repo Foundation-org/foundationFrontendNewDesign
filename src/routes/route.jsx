@@ -49,6 +49,7 @@ import OpenChoice from '../pages/Dashboard/pages/Quest/pages/OpenChoice';
 import RankChoice from '../pages/Dashboard/pages/Quest/pages/RankChoice';
 import AgreeDisagree from '../pages/Dashboard/pages/Quest/pages/AgreeDisagree';
 import LikeDislike from '../pages/Dashboard/pages/Quest/pages/LikeDislikeQuest';
+import Stripe from '../components/payments/stripe';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -102,6 +103,7 @@ export function Router() {
             <Route path="/term-of-service" element={<TermOfService />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/welcome" element={<Welcome />} />
+            <Route path="/test" element={<Stripe />} />
             <Route path="/dashboard/" element={<Dashboard />}>
               <Route path="" element={<QuestStartSection />} />
               <Route path="help" element={<CustomerSupport />}>
