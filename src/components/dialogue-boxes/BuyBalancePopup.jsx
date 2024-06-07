@@ -5,10 +5,11 @@ import { FaSpinner } from 'react-icons/fa';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteQuest } from '../../services/api/questsApi';
 import { toast } from 'sonner';
+import Stripe from '../payments/Stripe';
 
 export const items = ['Pakistan', 'Afghanistan', 'Albania'];
 
-export default function BuyBalancePopup({ handleClose, modalVisible, title, image, id }) {
+export default function BuyBalancePopup({ handleClose, modalVisible, title, image, stripeClientSecret }) {
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setIsLoading] = useState(false);
@@ -69,7 +70,7 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
             </h1>
           </button>
         </div>
-        <div className="flex flex-col gap-2">
+        {/* <div className="flex flex-col gap-2">
           <label
             htmlFor="cardNumber"
             className="text-[10px] font-semibold leading-[12px] text-[#707175] tablet:text-[18px] tablet:leading-[18px]"
@@ -165,7 +166,9 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
               placeholder="90123"
             />
           </div>
-        </div>
+        </div> */}
+
+        <Stripe clientSecret={stripeClientSecret} />
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[5px] tablet:gap-[34px]">
           <Button
             variant={'submit'}

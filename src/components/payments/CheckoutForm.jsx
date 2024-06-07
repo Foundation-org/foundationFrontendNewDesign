@@ -1,10 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { spay } from '../../services/api/payments';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryClient = useQueryClient();
+
+  const persistedUserInfo = useSelector((state) => state.auth.user);
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -19,8 +28,22 @@ export default function CheckoutForm() {
       return;
     }
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent.status) {
+    const clearQueryParams = () => {
+      navigate(
+        {
+          pathname: location.pathname,
+          search: '',
+        },
+        { replace: true },
+      );
+    };
+
+    stripe.retrievePaymentIntent(clientSecret).then((resp) => {
+      spay({ charge: resp?.paymentIntent, userUuid: persistedUserInfo.uuid });
+      localStorage.removeItem('scs');
+      clearQueryParams();
+      queryClient.invalidateQueries(['userInfo']);
+      switch (resp?.paymentIntent.status) {
         case 'succeeded':
           setMessage('Payment succeeded!');
           break;
@@ -48,15 +71,13 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
-    const resp = await stripe.confirmPayment({
+    const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: 'https://localhost:5173/test',
+        return_url: 'https://localhost:5173/dashboard/treasury',
       },
     });
-
-    console.log('resp', resp);
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to

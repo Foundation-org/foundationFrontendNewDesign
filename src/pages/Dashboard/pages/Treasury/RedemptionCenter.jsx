@@ -322,7 +322,7 @@ export default function RedemptionCenter() {
               </Button>
             </div>
           </div>
-          <BuyBalance />
+          {/* <BuyBalance /> */}
           {/* Add  */}
           <div className="flex w-full flex-col justify-between rounded-[5.85px] border-[0.72px] border-[#F2DB12] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">
             <div>

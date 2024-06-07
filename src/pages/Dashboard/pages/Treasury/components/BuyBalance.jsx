@@ -1,56 +1,55 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../../../../../components/ui/Button';
 import { FaMinus, FaPlus, FaSpinner } from 'react-icons/fa6';
 import BuyBalancePopup from '../../../../../components/dialogue-boxes/BuyBalancePopup';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const BuyBalance = () => {
-  const [fdx, setFdx] = useState(0);
+  const location = useLocation();
+  const [dollar, setDollar] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState('stripe');
+  const [stripeClientSecret, setStripeClientSecret] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleClose = () => setModalVisible(false);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
+  const handleClose = () => setModalVisible(false);
   const handleCreate = () => {
     setModalVisible(true);
-    // const persistedUserInfo = JSON.parse(localStorage.getItem('userInfo'));
-
-    // if (persistedUserInfo?.role === 'guest') {
-    //   toast.warning(
-    //     <p>
-    //       Please{' '}
-    //       <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
-    //         Create an Account
-    //       </span>{' '}
-    //       to unlock this feature
-    //     </p>,
-    //   );
-    //   return;
-    // } else {
-    //   if (fdx === 0) return toast.error('Please select the amount');
-    //   if (description === '') return toast.error('You cannot leave the description field blank');
-    //   let newExpiryDate;
-    //   if (expiry === '30 days') {
-    //     const currentDate = new Date();
-    //     currentDate.setDate(currentDate.getDate() + 30);
-    //     newExpiryDate = currentDate.toISOString().split('T')[0];
-    //   } else if (expiry === '7 days') {
-    //     const currentDate = new Date();
-    //     currentDate.setDate(currentDate.getDate() + 7);
-    //     newExpiryDate = currentDate.toISOString();
-    //   } else {
-    //     newExpiryDate = null;
-    //   }
-    //   const params = {
-    //     creator: persistedUserInfo._id,
-    //     owner: persistedUserInfo._id,
-    //     uuid: persistedUserInfo.uuid,
-    //     amount: fdx,
-    //     description: description,
-    //     to: 'any',
-    //     expiry: newExpiryDate,
-    //   };
-    //   createRedemptionCode(params);
-    // }
   };
+
+  const getQueryParams = (query) => {
+    return new URLSearchParams(query);
+  };
+
+  const queryParams = getQueryParams(location.search);
+  const redirectStatus = queryParams.get('redirect_status');
+
+  useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
+    if (dollar > 10) {
+      axios
+        .post(`${BASE_URL}/finance/getStripePaymentIntent`, { amount: dollar, currency: 'usd' })
+        .then((response) => {
+          console.log('resp', response);
+          localStorage.setItem('scs', response.data.clientSecret);
+          setStripeClientSecret(response.data.clientSecret);
+        })
+        .catch((error) => {
+          console.error('Error creating payment intent:', error);
+        });
+    }
+  }, [dollar]);
+
+  useEffect(() => {
+    if (redirectStatus === 'succeeded') {
+      setModalVisible(true);
+    }
+  }, [redirectStatus]);
 
   return (
     <div className="flex w-full flex-col justify-between rounded-[5.85px] border-[0.72px] border-[#FFB877] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">
@@ -60,6 +59,7 @@ const BuyBalance = () => {
           modalVisible={modalVisible}
           title={'Buy Balance'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/buyBalancelogo.svg`}
+          stripeClientSecret={stripeClientSecret}
           //   id={questStartData._id}
         />
       )}
@@ -75,26 +75,26 @@ const BuyBalance = () => {
               <FaMinus
                 className="w-[7px] cursor-pointer tablet:w-[23px]"
                 onClick={() => {
-                  if (fdx * 1 - 1 > 0) setFdx(fdx - 1);
-                  else setFdx(0);
+                  if (dollar * 1 - 1 > 0) setDollar(dollar - 1);
+                  else setDollar(0);
                 }}
               />
               <input
                 type="number"
                 className="hide-input-arrows w-full bg-transparent text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] focus:outline-none tablet:text-[20px]"
-                value={fdx === 0 ? '' : fdx}
+                value={dollar === 0 ? '' : dollar}
                 placeholder="0"
                 onChange={(e) => {
                   let x = parseFloat(e.target.value);
                   if (!isNaN(x)) {
                     x = Math.round(x * 100) / 100;
                     if (Number.isInteger(x)) {
-                      setFdx(x.toString());
+                      setDollar(x.toString());
                     } else {
-                      setFdx(x);
+                      setDollar(x);
                     }
                   } else {
-                    setFdx(0);
+                    setDollar(0);
                   }
                 }}
               />
@@ -102,24 +102,30 @@ const BuyBalance = () => {
               <FaPlus
                 className="w-[7px] cursor-pointer tablet:w-[23px]"
                 onClick={() => {
-                  if (persistedUserInfo.balance - 1 > fdx) {
-                    setFdx(fdx * 1 + 1);
+                  if (persistedUserInfo.balance - 1 > dollar) {
+                    setDollar(dollar * 1 + 1);
                   } else {
-                    setFdx(fdx * 1 + (Math.floor(persistedUserInfo.balance) - fdx));
+                    setDollar(dollar * 1 + (Math.floor(persistedUserInfo.balance) - dollar));
                   }
                 }}
               />
             </div>
           </div>
           <div className="flex items-center gap-[10px] tablet:mt-[14px] tablet:gap-6">
-            <button className="rounded-[4px] border border-[#D9D9D9] p-1 tablet:rounded-[10px] tablet:border-2 tablet:p-2">
+            <button
+              className={`${paymentMethod === 'stripe' ? 'border-[#FCD3AD]' : 'border-[#D9D9D9]'} rounded-[4px] border p-1 tablet:rounded-[10px] tablet:border-2 tablet:p-2`}
+              onClick={() => setPaymentMethod('stripe')}
+            >
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/Stripe.svg`}
                 alt="Stripe"
                 className="h-2 w-4 tablet:h-4 tablet:w-9"
               />
             </button>
-            <button className="rounded-[4px] border border-[#D9D9D9] px-1 py-[2px] tablet:rounded-[10px] tablet:border-2 tablet:px-2 tablet:py-1">
+            <button
+              className={`${paymentMethod === 'paypal' ? 'border-[#FCD3AD]' : 'border-[#D9D9D9]'} rounded-[4px] border px-1 py-[2px] tablet:rounded-[10px] tablet:border-2 tablet:px-2 tablet:py-1`}
+              onClick={() => setPaymentMethod('paypal')}
+            >
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/PayPal.svg`}
                 alt="Stripe"
