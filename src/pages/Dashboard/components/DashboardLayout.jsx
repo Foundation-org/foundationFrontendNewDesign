@@ -281,7 +281,7 @@ export default function DashboardLayout({ children }) {
                     <Button
                       variant="hollow-submit2"
                       className="bg-white tablet:w-full"
-                      onClick={() => navigate('/dashboard/profile')}
+                      onClick={() => navigate('/dashboard/profile/verification-badges')}
                     >
                       Add Badge
                     </Button>

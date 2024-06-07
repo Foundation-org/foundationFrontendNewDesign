@@ -20,7 +20,7 @@ const SideNavbar = () => {
       <Button
         variant={location.pathname === '/dashboard/profile' ? 'submit2' : 'hollow-submit2'}
         className="w-full max-w-[212px] bg-white"
-        onClick={() => navigate('/dashboard/profile')}
+        onClick={() => navigate('/dashboard/profile/verification-badges')}
       >
         Add Badge
       </Button>
