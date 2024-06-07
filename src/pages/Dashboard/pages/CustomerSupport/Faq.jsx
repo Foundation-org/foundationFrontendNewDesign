@@ -1,11 +1,18 @@
 import { faqData, faqData2 } from '../../../../constants/faq';
-import { Button } from '../../../../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const Faq = () => {
   const navigate = useNavigate();
-  const [view, setView] = useState(1);
+  const [openItems, setOpenItems] = useState([]);
+
+  const toggleItem = (id) => {
+    if (openItems.includes(id)) {
+      setOpenItems(openItems.filter((item) => item !== id));
+    } else {
+      setOpenItems([...openItems, id]);
+    }
+  };
 
   return (
     <div className="no-scrollbar h-[calc(100dvh-98px)]  w-full overflow-scroll overflow-y-auto bg-white text-[#707175] tablet:h-[calc(100dvh-96px)] laptop:h-[calc(100dvh-70px)]">
@@ -16,19 +23,19 @@ const Faq = () => {
         <div>
           <button
             key={item.id}
-            className={`${item.id === view ? 'border-y-[0.5px] tablet:border-y' : 'border-t-[0.5px] tablet:border-t'} flex w-full items-center gap-[5px] border-black px-[1.13rem]`}
-            onClick={() => setView(item.id)}
+            className={`${openItems.includes(item.id) ? 'border-y-[0.5px] tablet:border-y' : 'border-t-[0.5px] tablet:border-t'} flex w-full items-center gap-[5px] border-black px-[1.13rem]`}
+            onClick={() => toggleItem(item.id)}
           >
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/arrow.svg`}
               alt="account"
-              className={`${item.id === view ? 'rotate-180' : ''} size-5 tablet:size-[1.875rem]`}
+              className={`${openItems.includes(item.id) ? 'rotate-180' : ''} size-5 tablet:size-[1.875rem]`}
             />
             <h1 className="my-[0.94rem] text-start text-[12px] font-medium leading-none tablet:my-6 tablet:text-[22px] tablet:leading-[137.2%]">
               {item.title}
             </h1>
           </button>
-          {item.id === view && (
+          {openItems.includes(item.id) && (
             <div className="flex flex-col gap-2 bg-[#F5F6F8] px-[1.94rem] py-[0.62rem] tablet:gap-4 tablet:px-[50px] tablet:py-[15px]">
               {item.desc.map((i, index) => (
                 <p
@@ -49,19 +56,19 @@ const Faq = () => {
         <div>
           <button
             key={item.id}
-            className={`${item.id === view ? 'border-y-[0.5px] tablet:border-y' : 'border-t-[0.5px] tablet:border-t'} flex w-full items-center gap-[5px] border-black px-[1.13rem]`}
-            onClick={() => setView(item.id)}
+            className={`${openItems.includes(item.id) ? 'border-y-[0.5px] tablet:border-y' : 'border-t-[0.5px] tablet:border-t'} flex w-full items-center gap-[5px] border-black px-[1.13rem]`}
+            onClick={() => toggleItem(item.id)}
           >
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/arrow.svg`}
               alt="account"
-              className={`${item.id === view ? 'rotate-180' : ''} size-5 tablet:size-[1.875rem]`}
+              className={`${openItems.includes(item.id) ? 'rotate-180' : ''} size-5 tablet:size-[1.875rem]`}
             />
             <h1 className="my-[0.94rem] text-start text-[12px] font-medium leading-none tablet:my-6 tablet:text-[22px] tablet:leading-[137.2%]">
               {item.title}
             </h1>
           </button>
-          {item.id === view && (
+          {openItems.includes(item.id) && (
             <div className="flex flex-col gap-2 bg-[#F5F6F8] px-[1.94rem] py-[0.62rem] tablet:gap-4 tablet:px-[50px] tablet:py-[15px]">
               <ul className="ml-3 list-decimal tablet:ml-5">
                 {item.steps &&
