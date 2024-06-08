@@ -56,21 +56,12 @@ const Lists = () => {
     console.log('some eror occur');
   }
 
-  // const handleReorder = (newPosts, categoryIndex) => {
-  //   setItems((prevItems) => {
-  //     const updatedItems = [...prevItems];
-  //     updatedItems[categoryIndex].post = newPosts;
-  //     return updatedItems;
-  //   });
-  // };
-
-  // console.log('listData', items);
-
   const { mutateAsync: updatePostsOrder } = useMutation({
     mutationFn: updatePostOrder,
     onSuccess: (resp) => {
       if (resp.status === 200) {
         toast.success('Order updated successfully');
+        setHasReordered(false);
       }
       queryClient.invalidateQueries('lists');
     },
@@ -89,15 +80,17 @@ const Lists = () => {
       const updatedItems = [...prevItems];
       updatedItems[categoryIndex].post = newPosts;
 
-      const data = [...listData[categoryIndex].post];
-      const isDifferent = updatedItems.some((item, index) => item.post._id !== data[index]._id);
-      setHasReordered(isDifferent);
+      const data = [...newPosts].map((post) => post.order);
+      const isAscending = data.every((value, index, array) => {
+        if (index === 0) return true;
+        return value >= array[index - 1];
+      });
 
-      // const originalPosts = [...listData[categoryIndex].post.map((post) => post._id)];
-      // const newPostIds = [...updatedItems.map((post) => post._id)];
-      // console.log('first', originalPosts, newPostIds);
-      // const isDifferent = !originalPosts.every((id, index) => id === newPostIds[index]);
-      // setHasReordered(isDifferent);
+      if (isAscending) {
+        setHasReordered(false);
+      } else {
+        setHasReordered(true);
+      }
 
       return updatedItems;
     });
