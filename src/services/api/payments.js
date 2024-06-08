@@ -10,3 +10,14 @@ export const spay = async ({ charge, userUuid }) => {
     return err;
   }
 };
+
+export const paypalPay = async ({ charge, userUuid }) => {
+  try {
+    return await api.post(`/finance/ppay`, {
+      charge,
+      userUuid,
+    });
+  } catch (err) {
+    return err;
+  }
+};
