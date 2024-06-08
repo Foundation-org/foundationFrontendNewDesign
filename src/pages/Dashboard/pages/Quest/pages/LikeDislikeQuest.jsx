@@ -209,7 +209,7 @@ const LikeDislike = () => {
     <CreateQuestWrapper
       quest="Statement"
       handleTab={handleTab}
-      type={'Statement'}
+      type={'Post'}
       msg={'Make a statement that anyone can "Like" or "Dislike"'}
     >
       <div className="flex flex-col gap-[5px] tablet:gap-[15px]">

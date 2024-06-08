@@ -211,7 +211,7 @@ const AgreeDisagree = () => {
     <CreateQuestWrapper
       quest="Statement"
       handleTab={handleTab}
-      type={'Statement'}
+      type={'Post'}
       msg={'Make a statement that anyone can "Agree" or "Disagree" with'}
     >
       <div className="flex flex-col gap-[5px] tablet:gap-[15px]">

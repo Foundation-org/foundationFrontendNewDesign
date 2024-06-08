@@ -175,7 +175,7 @@ const SidebarLeft = () => {
           </div>
         )} */}
         {/* sidebar mobile */}
-        <div className="block bg-white px-[15px] py-[10px] tablet:px-[37px] tablet:py-5 laptop:hidden laptop:py-[26px] dark:bg-[#0A0A0C]">
+        <div className="block bg-white px-4 py-[10px] tablet:px-[37px] tablet:py-5 laptop:hidden laptop:py-[26px] dark:bg-[#0A0A0C]">
           <div className="flex h-[23px] w-full items-center justify-between gap-2 tablet:h-[36px]">
             <button
               className={`${

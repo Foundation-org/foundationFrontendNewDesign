@@ -206,7 +206,7 @@ export default function DashboardLayout({ children }) {
 
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
-        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-[#DEE6F7] px-5 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
+        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-[#DEE6F7] px-4 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
           <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
             {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-2">
@@ -301,7 +301,19 @@ export default function DashboardLayout({ children }) {
                 className="bg-white tablet:w-full"
                 onClick={() => navigate('/dashboard/treasury')}
               >
-                Redemption center
+                Treasury
+              </Button>
+            </div>
+          )}
+
+          {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/dashboard/treasury') && (
+            <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
+              <Button
+                variant="hollow-submit2"
+                className="bg-white tablet:w-full"
+                onClick={() => navigate('/dashboard/profile')}
+              >
+                My Profile
               </Button>
             </div>
           )}

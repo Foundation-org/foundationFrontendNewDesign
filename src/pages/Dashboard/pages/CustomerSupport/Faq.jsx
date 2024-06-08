@@ -1,10 +1,12 @@
 import { faqData, faqData2 } from '../../../../constants/faq';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const Faq = () => {
   const navigate = useNavigate();
   const [openItems, setOpenItems] = useState([]);
+  const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const toggleItem = (id) => {
     if (openItems.includes(id)) {
@@ -100,7 +102,13 @@ const Faq = () => {
         </h1>
         <button
           className="w-48 rounded-[0.31rem] bg-white py-[0.6rem] text-center text-[0.75rem] font-semibold text-[#4A8DBD] tablet:w-[24.3rem] tablet:rounded-[0.75rem] tablet:py-3 tablet:text-[1.25rem]"
-          onClick={() => navigate('/contact-us')}
+          onClick={() => {
+            if (persistedUserInfo.role === 'user') {
+              navigate('/dashboard/help/contact-us');
+            } else {
+              navigate('/help/contact-us');
+            }
+          }}
         >
           Contact Us
         </button>

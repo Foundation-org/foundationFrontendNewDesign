@@ -81,14 +81,14 @@ export default function CreateSlider() {
       </div>
       <ul ref={tabsListRef} onMouseDown={() => setDragging(true)} onMouseMove={drag}>
         {createQuestItems.map((tab, index) => (
-          <li key={index} ref={(el) => (tabRefs.current[tab.id] = el)} className={index === 3 ? 'flex' : ''}>
+          <li key={index} ref={(el) => (tabRefs.current[tab.id] = el)} className={index === 2 ? 'flex' : ''}>
             <Link
               className={`${location.pathname === tab.path ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'} slider-link`}
               to={tab.path}
             >
               {tab.title}
             </Link>
-            {index === 3 && (
+            {index === 2 && (
               <div className="ml-[6.75px] min-w-[1.4px] bg-[#CECECE] tablet:ml-[13.82px] tablet:min-w-[2.4px]" />
             )}
           </li>
