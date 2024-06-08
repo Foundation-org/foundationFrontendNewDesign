@@ -57,10 +57,10 @@ export default function Contact({
   const ContactItem = ({ item, index, persistedTheme, checkContact, checkPrimary, handleClickContactBadgeEmail }) => {
     return (
       <div
-        className={`relative flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5 ${item.disabled && 'opacity-[60%]'}`}
+        className={`relative flex items-center justify-center gap-[10px] tablet:justify-start laptop:justify-center laptop:gap-2 desktop:justify-start desktop:gap-5 ${item.disabled && 'opacity-[60%]'}`}
         key={index}
       >
-        <div className="absolute -left-5 tablet:-left-[42px]">
+        <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
           {checkPrimary(item.type) && (
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/primary.svg`}
@@ -73,7 +73,7 @@ export default function Contact({
         <div
           className={`${
             persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-          } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
+          } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
         >
           <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
             {item.title}
