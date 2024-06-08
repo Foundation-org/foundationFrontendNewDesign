@@ -7,48 +7,48 @@ import { deleteQuest } from '../../services/api/questsApi';
 import { toast } from 'sonner';
 import Stripe from '../payments/Stripe';
 
-export const items = ['Pakistan', 'Afghanistan', 'Albania'];
+// export const items = ['Pakistan', 'Afghanistan', 'Albania'];
 
 export default function BuyBalancePopup({ handleClose, modalVisible, title, image, stripeClientSecret }) {
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setIsLoading] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
-  const { mutateAsync: handleDeletePost } = useMutation({
-    mutationFn: deleteQuest,
-    onSuccess: () => {
-      console.log('Post deleted Successfully');
-      setIsLoading(false);
+  // const { mutateAsync: handleDeletePost } = useMutation({
+  //   mutationFn: deleteQuest,
+  //   onSuccess: () => {
+  //     console.log('Post deleted Successfully');
+  //     setIsLoading(false);
 
-      queryClient.setQueriesData(['posts'], (oldData) => {
-        return {
-          ...oldData,
-          pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== id)),
-        };
-      });
+  //     queryClient.setQueriesData(['posts'], (oldData) => {
+  //       return {
+  //         ...oldData,
+  //         pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== id)),
+  //       };
+  //     });
 
-      queryClient.invalidateQueries('treasury');
-    },
-    onError: (error) => {
-      console.log(error.response.data.message);
-      if (error.response.data.message === "Quest is involved in Discussion, Quest can't be deleted.") {
-        toast.warning(error.response.data.message);
-        setIsLoading(false);
-        return;
-      }
+  //     queryClient.invalidateQueries('treasury');
+  //   },
+  //   onError: (error) => {
+  //     console.log(error.response.data.message);
+  //     if (error.response.data.message === "Quest is involved in Discussion, Quest can't be deleted.") {
+  //       toast.warning(error.response.data.message);
+  //       setIsLoading(false);
+  //       return;
+  //     }
 
-      setIsLoading(false);
-    },
-  });
+  //     setIsLoading(false);
+  //   },
+  // });
 
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose} isBackground={true} autoSize={true}>
       <div className="flex flex-col gap-2 px-[18px] py-[10px] tablet:gap-[15px] tablet:px-[55px] tablet:py-[25px]">
-        <div className="flex items-center gap-[10px] tablet:gap-5">
+        {/* <div className="flex items-center gap-[10px] tablet:gap-5">
           <button className="flex w-full flex-col gap-1 rounded-[8px] border-[2.64px] border-[#4A8DBD] px-4 py-3 tablet:py-7">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/Stripe.svg`}
@@ -69,7 +69,7 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
               Paypal
             </h1>
           </button>
-        </div>
+        </div> */}
         {/* <div className="flex flex-col gap-2">
           <label
             htmlFor="cardNumber"
@@ -169,7 +169,7 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
         </div> */}
 
         <Stripe clientSecret={stripeClientSecret} />
-        <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[5px] tablet:gap-[34px]">
+        {/* <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[5px] tablet:gap-[34px]">
           <Button
             variant={'submit'}
             onClick={() => {
@@ -179,7 +179,7 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
           >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
           </Button>
-        </div>
+        </div> */}
       </div>
     </PopUp>
   );

@@ -26,7 +26,6 @@ export default function RedemptionCenter() {
   const [radeemLoading, setRadeemLoading] = useState('');
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteHistoryCode, setDeleteHistoryCode] = useState(false);
-  const dispatch = useDispatch();
 
   const handleClose = () => setIsDeleteModal(false);
 
@@ -47,11 +46,14 @@ export default function RedemptionCenter() {
 
   useEffect(() => {
     const url = window.location.href;
-    const extractedCode = url.substring(url.lastIndexOf('/') + 1);
-    if (extractedCode !== 'treasury') {
-      setCode(extractedCode);
+    // const extractedCode = url.substring(url.lastIndexOf('/') + 1);
+    const extractedCode = new URL(url).pathname;
+    if (extractedCode !== '/dashboard/treasury') {
+      const parts = extractedCode.split('/');
+      const extractedText = parts[2];
+      setCode(extractedText);
       setTimeout(() => {
-        if (extractedCode) toast.info('Hit add to redeem');
+        if (extractedText) toast.info('Hit add to redeem');
       }, 500);
     }
   }, []);

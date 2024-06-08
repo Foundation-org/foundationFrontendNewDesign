@@ -4,18 +4,29 @@ import { spay } from '../../services/api/payments';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { Button } from '../ui/Button';
+import { FaSpinner } from 'react-icons/fa';
+import { toast } from 'sonner';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const clearQueryParams = () => {
+    navigate(
+      {
+        pathname: location.pathname,
+        search: '',
+      },
+      { replace: true },
+    );
+  };
 
   useEffect(() => {
     if (!stripe) {
@@ -28,36 +39,39 @@ export default function CheckoutForm() {
       return;
     }
 
-    const clearQueryParams = () => {
-      navigate(
-        {
-          pathname: location.pathname,
-          search: '',
-        },
-        { replace: true },
-      );
+    const handlePaymentIntent = async () => {
+      try {
+        const resp = await stripe.retrievePaymentIntent(clientSecret);
+
+        if (resp?.paymentIntent) {
+          await spay({ charge: resp.paymentIntent, userUuid: persistedUserInfo.uuid });
+          localStorage.removeItem('scs');
+          clearQueryParams();
+          queryClient.invalidateQueries(['userInfo']);
+
+          switch (resp.paymentIntent.status) {
+            case 'succeeded':
+              toast.success('Payment succeeded!');
+              break;
+            case 'processing':
+              console.log('Your payment is processing');
+              break;
+            case 'requires_payment_method':
+              toast.warning('Your payment was not successful, please try again.');
+              break;
+            default:
+              toast.error('Something went wrong.');
+              break;
+          }
+        } else {
+          console.log('Something went wrong retrieving the payment intent.');
+        }
+      } catch (error) {
+        toast.error('An error occurred: ' + error.message);
+      }
     };
 
-    stripe.retrievePaymentIntent(clientSecret).then((resp) => {
-      spay({ charge: resp?.paymentIntent, userUuid: persistedUserInfo.uuid });
-      localStorage.removeItem('scs');
-      clearQueryParams();
-      queryClient.invalidateQueries(['userInfo']);
-      switch (resp?.paymentIntent.status) {
-        case 'succeeded':
-          setMessage('Payment succeeded!');
-          break;
-        case 'processing':
-          setMessage('Your payment is processing.');
-          break;
-        case 'requires_payment_method':
-          setMessage('Your payment was not successful, please try again.');
-          break;
-        default:
-          setMessage('Something went wrong.');
-          break;
-      }
-    });
+    handlePaymentIntent();
   }, [stripe]);
 
   const handleSubmit = async (e) => {
@@ -85,9 +99,9 @@ export default function CheckoutForm() {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message);
+      toast.error(error.message);
     } else {
-      setMessage('An unexpected error occurred.');
+      toast.error('An unexpected error occurred.');
     }
 
     setIsLoading(false);
@@ -100,11 +114,11 @@ export default function CheckoutForm() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">{isLoading ? <div className="spinner" id="spinner"></div> : 'Pay now'}</span>
-      </button>
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
+      <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[34px]">
+        <Button variant={'submit'} disabled={isLoading || !stripe || !elements}>
+          {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Pay now'}
+        </Button>
+      </div>
     </form>
   );
 }

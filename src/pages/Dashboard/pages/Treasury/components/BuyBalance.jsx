@@ -29,13 +29,12 @@ const BuyBalance = () => {
   const queryParams = getQueryParams(location.search);
   const redirectStatus = queryParams.get('redirect_status');
 
+  // Create Stripe PaymentIntent as soon as the dollar value changes
   useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
     if (dollar > 10) {
       axios
         .post(`${BASE_URL}/finance/getStripePaymentIntent`, { amount: dollar, currency: 'usd' })
         .then((response) => {
-          console.log('resp', response);
           localStorage.setItem('scs', response.data.clientSecret);
           setStripeClientSecret(response.data.clientSecret);
         })
@@ -60,7 +59,6 @@ const BuyBalance = () => {
           title={'Buy Balance'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/buyBalancelogo.svg`}
           stripeClientSecret={stripeClientSecret}
-          //   id={questStartData._id}
         />
       )}
       <div>
