@@ -75,7 +75,7 @@ export const TypeFiltersList = [
   },
   {
     id: 5,
-    title: 'Rank Choice',
+    title: 'Ranked Choice',
     val: 'ranked choise',
   },
   {

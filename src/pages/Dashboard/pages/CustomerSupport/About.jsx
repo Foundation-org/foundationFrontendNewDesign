@@ -115,16 +115,16 @@ const About = () => {
           </p>
         </div>
       )}
-      <div className="flex flex-col gap-[0.69rem] p-8 text-[#707175] tablet:gap-[1.56rem] tablet:px-16 tablet:pb-[3.12rem] tablet:pt-[1.88rem]">
-        {/* <h5 className="text-[0.75rem] font-normal italic leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[161%]">
+      {/* <div className="flex flex-col gap-[0.69rem] p-8 text-[#707175] tablet:gap-[1.56rem] tablet:px-16 tablet:pb-[3.12rem] tablet:pt-[1.88rem]">
+        <h5 className="text-[0.75rem] font-normal italic leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[161%]">
           “Owning our personal data liberates us from being slaves to the system, giving us the freedom to live life on
           our terms.“
-        </h5> */}
+        </h5>
         <h5 className="text-[0.75rem] font-semibold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[161%]">
           Justin Leffew <br />
           CEO Foundation Internet Organization
         </h5>
-      </div>
+      </div> */}
     </div>
   );
 };

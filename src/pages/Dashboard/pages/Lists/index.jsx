@@ -30,7 +30,7 @@ const Lists = () => {
   const [selectedItem, setSelectedItem] = useState();
   const [postId, setPostId] = useState('');
   const [listName, setListName] = useState('');
-  const [hasReordered, setHasReordered] = useState(false);
+  const [hasReordered, setHasReordered] = useState('');
 
   const handleCopyClose = () => setCopyModal(false);
   const handleClose = () => setModalVisible(false);
@@ -53,7 +53,7 @@ const Lists = () => {
   }, [isSuccess, listData]);
 
   if (isError) {
-    console.log('some eror occur');
+    console.log('some error occur');
   }
 
   const { mutateAsync: updatePostsOrder } = useMutation({
@@ -75,7 +75,7 @@ const Lists = () => {
     updatePostsOrder({ order: ids, userUuid: persistedUserInfo.uuid, categoryId });
   };
 
-  const handleReorder = (newPosts, categoryIndex) => {
+  const handleReorder = (newPosts, categoryIndex, categoryId) => {
     setItems((prevItems) => {
       const updatedItems = [...prevItems];
       updatedItems[categoryIndex].post = newPosts;
@@ -87,9 +87,9 @@ const Lists = () => {
       });
 
       if (isAscending) {
-        setHasReordered(false);
+        setHasReordered('');
       } else {
-        setHasReordered(true);
+        setHasReordered(categoryId);
       }
 
       return updatedItems;
@@ -224,61 +224,59 @@ const Lists = () => {
                 <Reorder.Group
                   axis="y"
                   values={categoryItem.post}
-                  onReorder={(newPosts) => handleReorder(newPosts, categoryIndex)}
+                  onReorder={(newPosts) => handleReorder(newPosts, categoryIndex, categoryItem._id)}
                   className="flex flex-col gap-[5.7px] tablet:gap-[10px]"
                 >
                   <div className="mx-7 my-[10px] tablet:my-[0.94rem] tablet:mr-[2.25rem]">
                     <ul className="space-y-[5.34px] tablet:space-y-[0.69rem]">
                       {categoryItem.post.length >= 1 &&
-                        categoryItem.post
-                          // .sort((a, b) => new Date(a.order) - new Date(b.order))
-                          .map((post) => (
-                            <Reorder.Item value={post} key={post._id} className="cursor-pointer">
-                              <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
-                                <div
-                                  className={`${
-                                    false
-                                      ? 'border-[#5FA3D5]'
-                                      : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
-                                  } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
-                                >
-                                  <div className="flex w-full items-center rounded-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
-                                    <div
-                                      className={`${
-                                        false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-                                      } tablet:rounded-x-[10px] flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:px-[7px] tablet:py-[10px]`}
-                                      style={{
-                                        backgroundImage: `url(${
-                                          persistedTheme === 'dark'
-                                            ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`
-                                            : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`
-                                        })`,
-                                      }}
-                                    />
-                                    <div
-                                      className={`${
-                                        false
-                                          ? 'border-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]'
-                                          : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-                                      } flex w-full justify-between rounded-r-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
-                                    >
-                                      <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
-                                        {post.questForeginKey.Question}
-                                      </h1>
-                                    </div>
+                        categoryItem.post.map((post) => (
+                          <Reorder.Item value={post} key={post._id} className="cursor-pointer">
+                            <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
+                              <div
+                                className={`${
+                                  false
+                                    ? 'border-[#5FA3D5]'
+                                    : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
+                                } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
+                              >
+                                <div className="flex w-full items-center rounded-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
+                                  <div
+                                    className={`${
+                                      false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                                    } tablet:rounded-x-[10px] flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:px-[7px] tablet:py-[10px]`}
+                                    style={{
+                                      backgroundImage: `url(${
+                                        persistedTheme === 'dark'
+                                          ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`
+                                          : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`
+                                      })`,
+                                    }}
+                                  />
+                                  <div
+                                    className={`${
+                                      false
+                                        ? 'border-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]'
+                                        : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                                    } flex w-full justify-between rounded-r-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
+                                  >
+                                    <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
+                                      {post.questForeginKey.Question}
+                                    </h1>
                                   </div>
                                 </div>
-                                <img
-                                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
-                                  alt="trash"
-                                  className="ml-[11px] h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
-                                  onClick={() => {
-                                    setCategoryId(categoryItem._id), setPostId(post._id), setDeletePostPopup(true);
-                                  }}
-                                />
                               </div>
-                            </Reorder.Item>
-                          ))}
+                              <img
+                                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
+                                alt="trash"
+                                className="ml-[11px] h-3 w-[9px] cursor-pointer tablet:h-[33px] tablet:w-[25px]"
+                                onClick={() => {
+                                  setCategoryId(categoryItem._id), setPostId(post._id), setDeletePostPopup(true);
+                                }}
+                              />
+                            </div>
+                          </Reorder.Item>
+                        ))}
                     </ul>
 
                     <div className="my-2 ml-10 flex items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
@@ -337,7 +335,7 @@ const Lists = () => {
                     >
                       Show My List Results
                     </Button> */}
-                      {hasReordered ? (
+                      {categoryItem._id === hasReordered && hasReordered !== '' ? (
                         <Button
                           variant="submit"
                           onClick={() => {
