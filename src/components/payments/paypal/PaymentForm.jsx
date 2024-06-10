@@ -42,10 +42,9 @@ async function createOrderCallback() {
   }
 }
 
-async function onApproveCallback(data, actions, persistedUserInfo) {
-  console.log('first', data, actions, persistedUserInfo);
+async function onApproveCallback(data, actions) {
   try {
-    const response = await fetch(`${url}/finance/${data.orderID}/captureOrderCall`, {
+    const response = await fetch(`${url}/finance/${data.data.orderID}/captureOrderCall`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +63,7 @@ async function onApproveCallback(data, actions, persistedUserInfo) {
     const errorDetail = orderData?.details?.[0];
 
     // this actions.restart() behavior only applies to the Buttons component
-    if (errorDetail?.issue === 'INSTRUMENT_DECLINED' && !data.card && actions) {
+    if (errorDetail?.issue === 'INSTRUMENT_DECLINED' && !data.data.card && actions) {
       // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
       // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
       return actions.restart();
@@ -83,8 +82,8 @@ async function onApproveCallback(data, actions, persistedUserInfo) {
     } else {
       // (3) Successful transaction -> Show confirmation or thank you message
       // Or go to another URL:  actions.redirect('thank_you.html');
-      console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-      await paypalPay({ charge: orderData, userUuid: persistedUserInfo.uuid });
+      // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+      await paypalPay({ charge: orderData, userUuid: data.uuid });
       return `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`;
     }
   } catch (error) {
@@ -107,7 +106,7 @@ const SubmitPayment = ({ onHandleMessage }) => {
         // These fields are optional for Sandbox but mandatory for production integration
         cardholderName: cardHolderName?.current?.value,
       })
-      .then(async (data) => onHandleMessage(await onApproveCallback(data, persistedUserInfo)))
+      .then(async (data) => onHandleMessage(await onApproveCallback({ data, uuid: persistedUserInfo.uuid })))
       .catch((orderData) => {
         onHandleMessage(`Sorry, your transaction could not be processed...${JSON.stringify(orderData)}`);
       });
@@ -128,7 +127,7 @@ export const PaymentForm = () => {
   const [message, setMessage] = useState('');
   return (
     <div className={styles.form}>
-      <PayPalButtons
+      {/* <PayPalButtons
         style={{
           shape: 'rect',
           //color:'blue' change the default color of the buttons
@@ -137,7 +136,7 @@ export const PaymentForm = () => {
         styles={{ marginTop: '4px', marginBottom: '4px' }}
         createOrder={createOrderCallback}
         onApprove={async (data) => setMessage(await onApproveCallback(data))}
-      />
+      /> */}
 
       <PayPalHostedFieldsProvider createOrder={createOrderCallback}>
         <div style={{ marginTop: '4px', marginBottom: '4px' }}>
