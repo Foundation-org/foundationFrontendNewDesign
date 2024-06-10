@@ -36,8 +36,8 @@ export default function NotificationSettings() {
         <CloseEmailNotificationPopup
           handleClose={handleCloseModal}
           modalVisible={modalVisible}
-          title={'Close Email Notification'}
-          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/lists/white-list-icon.svg`}
+          title={'Email Notification'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email-icon.svg`}
           emailNotifications={emailNotifications}
           setEmailNotifications={setEmailNotifications}
         />

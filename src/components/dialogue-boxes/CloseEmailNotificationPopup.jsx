@@ -38,13 +38,13 @@ export default function CloseEmailNotificationPopup({
 
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose}>
-      <div className="space-y-[10px] px-[18px] py-[10px] tablet:space-y-[25px] tablet:px-[55px] tablet:py-[25px]">
+      <div className="space-y-2 px-[18px] py-[10px] tablet:space-y-[15px] tablet:px-[55px] tablet:py-[25px]">
         <h1 className="text-[10px] font-medium leading-[12px] text-[#707175] tablet:text-[20px] tablet:leading-[24.2px]">
-          Are you sure you want to close email notification?
+          Please enter your email address to turn off your email notifications.
         </h1>
         <input
           type="email"
-          placeholder="Enter Email"
+          placeholder="Enter email address"
           required
           onChange={(e) => setEmail(e.target.value)}
           className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
