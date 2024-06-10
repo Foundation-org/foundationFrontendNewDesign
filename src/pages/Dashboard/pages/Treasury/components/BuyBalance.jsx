@@ -1,24 +1,30 @@
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button';
 import { FaMinus, FaPlus, FaSpinner } from 'react-icons/fa6';
+import { paypalTokenGenerate } from '../../../../../services/api/payments';
 import BuyBalancePopup from '../../../../../components/dialogue-boxes/BuyBalancePopup';
-import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 const BuyBalance = () => {
   const location = useLocation();
   const [dollar, setDollar] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState('stripe');
+  const [paymentMethod, setPaymentMethod] = useState(null);
   const [stripeClientSecret, setStripeClientSecret] = useState('');
+  const [clientToken, setClientToken] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const handleClose = () => setModalVisible(false);
   const handleCreate = () => {
+    if (dollar < 2.5) return toast.warning('Minimum amount is 2.5$');
+    if (!paymentMethod) return toast.warning('Select a payment method');
     setModalVisible(true);
   };
 
@@ -29,20 +35,31 @@ const BuyBalance = () => {
   const queryParams = getQueryParams(location.search);
   const redirectStatus = queryParams.get('redirect_status');
 
-  // Create Stripe PaymentIntent as soon as the dollar value changes
   useEffect(() => {
-    if (dollar > 10) {
-      axios
-        .post(`${BASE_URL}/finance/getStripePaymentIntent`, { amount: dollar, currency: 'usd' })
-        .then((response) => {
+    const createPaymentIntent = async () => {
+      setIsLoading(true);
+      try {
+        if (paymentMethod === 'stripe' && dollar > 2.5) {
+          const response = await axios.post(`${BASE_URL}/finance/getStripePaymentIntent`, {
+            amount: dollar,
+            currency: 'usd',
+          });
           localStorage.setItem('scs', response.data.clientSecret);
           setStripeClientSecret(response.data.clientSecret);
-        })
-        .catch((error) => {
-          console.error('Error creating payment intent:', error);
-        });
-    }
-  }, [dollar]);
+        }
+        if (paymentMethod === 'paypal' && dollar > 2.5) {
+          const token = await paypalTokenGenerate();
+          setClientToken(token);
+        }
+      } catch (error) {
+        console.error('Error creating payment intent:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    createPaymentIntent();
+  }, [paymentMethod, dollar]);
 
   useEffect(() => {
     if (redirectStatus === 'succeeded') {
@@ -58,7 +75,10 @@ const BuyBalance = () => {
           modalVisible={modalVisible}
           title={'Buy Balance'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/buyBalancelogo.svg`}
+          paymentMethod={paymentMethod}
+          dollar={dollar}
           stripeClientSecret={stripeClientSecret}
+          clientToken={clientToken}
         />
       )}
       <div>
@@ -134,9 +154,8 @@ const BuyBalance = () => {
         </div>
       </div>
       <div className="mt-[18px] flex w-full justify-end tablet:mt-0">
-        <Button variant={'cancel'} onClick={handleCreate}>
-          {/* {createPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Buy'} */}
-          Buy
+        <Button variant={'cancel'} onClick={handleCreate} disabled={isLoading}>
+          {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Buy'}
         </Button>
       </div>
     </div>
