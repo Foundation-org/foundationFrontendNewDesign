@@ -61,12 +61,20 @@ export const getTreasuryAmount = async () => {
   }
 };
 
-export const updateUserSettings = async ({ uuid, darkMode, defaultSort, systemNotifications, emailNotifications }) => {
+export const updateUserSettings = async ({
+  uuid,
+  darkMode,
+  defaultSort,
+  systemNotifications,
+  email,
+  emailNotifications,
+}) => {
   return await api.post('user/updateUserSettings', {
     uuid,
     darkMode,
     defaultSort,
     systemNotifications,
+    email,
     emailNotifications,
   });
 };

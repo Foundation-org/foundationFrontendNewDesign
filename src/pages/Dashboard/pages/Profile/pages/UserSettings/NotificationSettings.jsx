@@ -4,18 +4,23 @@ import { updateUserSettings } from '../../../../../../services/api/userAuth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import CloseEmailNotificationPopup from '../../../../../../components/dialogue-boxes/CloseEmailNotificationPopup';
 
 export default function NotificationSettings() {
-  const queryClinet = useQueryClient();
+  const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const [modalVisible, setModalVisible] = useState(false);
   const [systemNotifications, setSystemNotifications] = useState(
     persistedUserInfo.notificationSettings.systemNotifications || false,
+  );
+  const [emailNotifications, setEmailNotifications] = useState(
+    persistedUserInfo.notificationSettings.emailNotifications || false,
   );
 
   const { mutateAsync: handleUserSettings } = useMutation({
     mutationFn: updateUserSettings,
     onSuccess: () => {
-      queryClinet.invalidateQueries(['posts']);
+      queryClient.invalidateQueries(['posts']);
     },
     onError: (error) => {
       console.log(error);
@@ -23,8 +28,20 @@ export default function NotificationSettings() {
     },
   });
 
+  const handleCloseModal = () => setModalVisible(false);
+
   return (
     <div className="space-y-2 tablet:space-y-[15px]">
+      {modalVisible && (
+        <CloseEmailNotificationPopup
+          handleClose={handleCloseModal}
+          modalVisible={modalVisible}
+          title={'Close Email Notification'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/lists/white-list-icon.svg`}
+          emailNotifications={emailNotifications}
+          setEmailNotifications={setEmailNotifications}
+        />
+      )}
       <h1 className="text-[12px] font-semibold text-black tablet:text-[22px] tablet:font-medium">
         Notification Settings
       </h1>
@@ -32,15 +49,20 @@ export default function NotificationSettings() {
         <div className="flex items-center justify-between">
           <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Email notifications</h1>
           <Switch
-            checked={false}
-            onChange={() => toast.info('Feature coming soon.')}
-            className={`${false ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
+            checked={emailNotifications}
+            // onChange={() => toast.info('Feature coming soon.')}
+            onChange={(e) => {
+              setModalVisible(true);
+            }}
+            className={`${emailNotifications ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
           >
             <span className="sr-only">Use setting</span>
             <span
               aria-hidden="true"
               className={`${
-                false ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
+                emailNotifications
+                  ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                  : 'translate-x-[1px] bg-[#707175]'
               }
       pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
             />
