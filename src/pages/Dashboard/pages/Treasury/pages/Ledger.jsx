@@ -1,24 +1,22 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useDebounce } from '../../../../utils/useDebounce';
+import { useDebounce } from '../../../../../utils/useDebounce';
 import {
   getAllRadeemLedgerData,
   getAllRedemptionLedgerData,
   searchRedemptionLedger,
-} from '../../../../services/api/userAuth';
-import { Columns } from '../Profile/components/LedgerUtils';
+} from '../../../../../services/api/userAuth';
+import { Columns } from '../../Profile/components/LedgerUtils';
 import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import { useSelector, useDispatch } from 'react-redux';
-import LedgerTableTopbar from '../Profile/components/LedgerTableTopbar';
+import LedgerTableTopbar from '../../Profile/components/LedgerTableTopbar';
 import { format } from 'date-fns';
-import { updateColumnSize } from '../../../../features/profile/legerSlice';
-// import { useErrorBoundary } from 'react-error-boundary';
+import { updateColumnSize } from '../../../../../features/profile/legerSlice';
 
 export default function Ledger() {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const columnSizes = useSelector((state) => state.ledger);
-  // const { showBoundary } = useErrorBoundary();
   const itemsPerPage = 10;
   const rowsPerPage = 10;
   const [totalPages, setTotalPages] = useState(null);
@@ -37,7 +35,6 @@ export default function Ledger() {
       }
     } catch (err) {
       console.log('err', err);
-      // showBoundary(err);
     }
   };
 
@@ -55,7 +52,6 @@ export default function Ledger() {
       }
     } catch (err) {
       console.log('err', err);
-      // showBoundary(err);
     }
   };
 

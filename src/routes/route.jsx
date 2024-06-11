@@ -31,9 +31,6 @@ import CustomerSupport from '../pages/Dashboard/pages/CustomerSupport';
 import GuestRedirect from '../pages/DashboardRedirect/GuestRedirect';
 import Welcome from '../pages/Welcome/welcome';
 import SharedLinkResults from '../pages/Dashboard/pages/Profile/pages/shared-links/SharedLinkResults';
-import RedemptionCenter from '../pages/Dashboard/pages/Treasury/RedemptionCenter';
-import Ledger from '../pages/Dashboard/pages/Treasury/Ledger';
-import TreasuryLayout from '../pages/Dashboard/pages/Treasury/TreasuryLayout';
 import UserSettings from '../pages/Dashboard/pages/Profile/pages/UserSettings';
 import Feedback from '../pages/Dashboard/pages/Profile/pages/feedback';
 import CredentialLogin from '../pages/Signin/components/CredentialLogin';
@@ -50,6 +47,13 @@ import RankChoice from '../pages/Dashboard/pages/Quest/pages/RankChoice';
 import AgreeDisagree from '../pages/Dashboard/pages/Quest/pages/AgreeDisagree';
 import LikeDislike from '../pages/Dashboard/pages/Quest/pages/LikeDislikeQuest';
 import Test from '../components/Test';
+// TREASURY
+import TreasuryLayout from '../pages/Dashboard/pages/Treasury/TreasuryLayout';
+import TreasurySummary from '../pages/Dashboard/pages/Treasury/pages/TreasurySummary';
+import RewardSchedule from '../pages/Dashboard/pages/Treasury/pages/RewardSchedule';
+import BuyFDX from '../pages/Dashboard/pages/Treasury/pages/BuyFDX';
+import RedemptionCenter from '../pages/Dashboard/pages/Treasury/pages/RedemptionCenter';
+import Ledger from '../pages/Dashboard/pages/Treasury/pages/Ledger';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -120,11 +124,17 @@ export function Router() {
                 <Route path="like-dislike" element={<LikeDislike />} />
               </Route>
               <Route path="treasury/" element={<TreasuryLayout />}>
-                <Route path="" element={<RedemptionCenter />} />
+                <Route path="" element={<TreasurySummary />} />
+                <Route path="reward-schedule" element={<RewardSchedule />} />
+                <Route path="buy-fdx" element={<BuyFDX />} />
+                <Route path="redemption-center" element={<RedemptionCenter />} />
                 <Route path="ledger" element={<Ledger />} />
               </Route>
               <Route path="treasury/:code" element={<TreasuryLayout />}>
-                <Route path="" element={<RedemptionCenter />} />
+                <Route path="" element={<TreasurySummary />} />
+                <Route path="reward-schedule" element={<RewardSchedule />} />
+                <Route path="buy-fdx" element={<BuyFDX />} />
+                <Route path="redemption-center" element={<RedemptionCenter />} />
                 <Route path="ledger" element={<Ledger />} />
               </Route>
               <Route

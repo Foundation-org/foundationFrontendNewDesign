@@ -8,10 +8,10 @@ const About = () => {
   return (
     <div className="bg-white">
       <div className="space-y-[0.63rem] px-8 pt-3 text-[#7C7C7C] tablet:space-y-5 tablet:px-16 tablet:pt-[1.56rem]">
-        <h1 className="text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
-          Let Your Data Work for You.
+        <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
+          Let Your Data Work for You
         </h1>
-        <p className="text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
+        <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
           Unlock the potential of your personal data.
         </p>
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">

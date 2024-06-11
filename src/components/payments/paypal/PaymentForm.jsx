@@ -88,6 +88,7 @@ export const PaymentForm = ({ dollar, handleClose }) => {
         if (transaction.status === 'COMPLETED') {
           toast.success('Payment successful');
           queryClient.invalidateQueries(['userInfo']);
+          localStorage.removeItem('paymentMethod');
           handleClose();
         } else {
           toast.error('Payment failed');

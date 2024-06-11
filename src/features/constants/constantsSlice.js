@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    constants: null,
+  constants: null,
 };
 
 export const constantsSlice = createSlice({
-    name: 'systemConstants',
-    initialState,
-    reducers: {
-        saveConstants: (state, action) => {
-            state.constants = action.payload;
-        }
+  name: 'systemConstants',
+  initialState,
+  reducers: {
+    saveConstants: (state, action) => {
+      state.constants = action.payload;
     },
+  },
 });
 
 export const { saveConstants } = constantsSlice.actions;

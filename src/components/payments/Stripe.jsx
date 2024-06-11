@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './CheckoutForm';
@@ -10,6 +10,13 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 const Stripe = ({ clientSecret }) => {
   const [localClientSecret, setLocalClientSecret] = useState(clientSecret || localStorage.getItem('scs'));
+  console.log('loca', localStorage.getItem('scs'));
+
+  useEffect(() => {
+    if (!localClientSecret) {
+      setLocalClientSecret(localStorage.getItem('scs'));
+    }
+  }, [localStorage.getItem('scs')]);
 
   const appearance = {
     theme: 'stripe',

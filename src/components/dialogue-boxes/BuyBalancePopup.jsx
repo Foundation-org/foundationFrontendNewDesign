@@ -7,7 +7,6 @@ export default function BuyBalancePopup({
   modalVisible,
   title,
   image,
-  paymentMethod,
   dollar,
   stripeClientSecret,
   clientToken,
@@ -15,8 +14,10 @@ export default function BuyBalancePopup({
   return (
     <PopUp logo={image} title={title} open={modalVisible} handleClose={handleClose} isBackground={true} autoSize={true}>
       <div className="flex flex-col gap-2 px-[18px] py-[10px] tablet:gap-[15px] tablet:px-[55px] tablet:py-[25px]">
-        {paymentMethod === 'stripe' && <Stripe clientSecret={stripeClientSecret} />}
-        {paymentMethod === 'paypal' && <Paypal clientToken={clientToken} dollar={dollar} handleClose={handleClose} />}
+        {localStorage.getItem('paymentMethod') === 'stripe' && <Stripe clientSecret={stripeClientSecret} />}
+        {localStorage.getItem('paymentMethod') && (
+          <Paypal clientToken={clientToken} dollar={dollar} handleClose={handleClose} />
+        )}
       </div>
     </PopUp>
   );

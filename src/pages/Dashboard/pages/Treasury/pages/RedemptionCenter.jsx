@@ -1,18 +1,17 @@
 import { FaPlus, FaMinus } from 'react-icons/fa6';
-import { Button } from '../../../../components/ui/Button';
+import { Button } from '../../../../../components/ui/Button';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   addRedeemCode,
   createRedeeemCode,
   getHistoryData,
   getUnredeemedData,
-} from '../../../../services/api/redemptionApi';
+} from '../../../../../services/api/redemptionApi';
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
-import DeleteHistoryPopup from '../../../../components/dialogue-boxes/deleteHistoryPopup';
-import BuyBalance from './components/BuyBalance';
+import DeleteHistoryPopup from '../../../../../components/dialogue-boxes/deleteHistoryPopup';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
@@ -48,7 +47,7 @@ export default function RedemptionCenter() {
     const url = window.location.href;
     // const extractedCode = url.substring(url.lastIndexOf('/') + 1);
     const extractedCode = new URL(url).pathname;
-    if (extractedCode !== '/dashboard/treasury') {
+    if (extractedCode !== '/dashboard/treasury/redemption-center') {
       const parts = extractedCode.split('/');
       const extractedText = parts[2];
       setCode(extractedText);
@@ -235,33 +234,23 @@ export default function RedemptionCenter() {
   }, [isPulse]);
 
   return (
-    <div className="mx-auto flex max-w-[1278px] flex-col gap-[10px] px-5 pb-12 tablet:gap-[25px] laptop:px-0">
-      <div>
-        <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-5 tablet:text-[24px]">
-          Redemption center
-        </h1>
-        <div className="flex flex-col gap-2 tablet:gap-6 laptop:flex-row">
-          {/* Create */}
-          <div className="w-full rounded-[5.85px] border-[0.72px] border-[#4A8DBD] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">
-            <div className="flex justify-between">
-              <h1 className="mb-2 text-[10px] font-semibold leading-normal text-[#707175] tablet:mb-4 tablet:text-[22px]">
+    <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
+      <div className="flex flex-col gap-2 tablet:gap-6">
+        {/* Create */}
+        <div>
+          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+            <div className="flex items-center gap-2">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/redemption-code-activity.svg`}
+                alt={'redemption-code-activity'}
+                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+              />
+              <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
                 Create Redemption Code
               </h1>
-              {/* <div className="flex items-baseline gap-[10px]">
-                <p className="text-[7px] font-normal leading-normal text-[#85898C] tablet:text-[14.765px]">
-                  Expires in
-                </p>
-                <select
-                  value={expiry}
-                  onChange={(e) => setExpiry(e.target.value)}
-                  className="h-[13px] min-w-[40px] max-w-[40px] rounded-[2.706px] border-[2.279px] border-[#DEE6F7] bg-[#F9F9F9] text-[7.49px] font-semibold text-[#7C7C7C] focus:outline-none tablet:h-7 tablet:min-w-[82px] tablet:max-w-[82px] tablet:rounded-[5.376px] tablet:text-[13.6px]"
-                >
-                  <option value="30 days">30 days</option>
-                  <option value="7 days">7 days</option>
-                  <option value="Never">Never</option>
-                </select>
-              </div> */}
             </div>
+          </div>
+          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
             <input
               type="text"
               value={description}
@@ -271,12 +260,12 @@ export default function RedemptionCenter() {
                 }
               }}
               placeholder="Description here....."
-              className="w-full rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] p-1 text-[10px] font-medium leading-normal text-[#707175] focus:outline-none tablet:rounded-[7.07px] tablet:border-[3px] tablet:px-4 tablet:py-3 tablet:text-[16px]"
+              className="w-full max-w-[368px] rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] p-1 text-[10px] font-medium leading-normal text-[#707175] focus:outline-none tablet:rounded-[7.07px] tablet:border-[3px] tablet:px-4 tablet:py-3 tablet:text-[16px]"
             />
-            {/* <p className="my-[5px] text-[7.5px] font-normal leading-normal text-[#85898C] tablet:my-[15px] tablet:text-[14.7px]">
+            <p className="text-[7.5px] font-normal leading-normal text-[#85898C] tablet:text-[14.7px]">
               Create FDX and maximize your access to all features.
-            </p> */}
-            <div className="mt-[5px] flex items-center gap-5 tablet:mt-5 tablet:gap-6">
+            </p>
+            <div className="flex items-center gap-5 tablet:gap-6">
               <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">FDX</h2>
               <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[124px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
                 <FaMinus
@@ -318,91 +307,103 @@ export default function RedemptionCenter() {
                 />
               </div>
             </div>
-            <div className="flex w-full justify-end">
-              <Button variant={'cancel'} onClick={handleCreate}>
+            <div className="flex w-full justify-center">
+              <Button variant={'submit'} onClick={handleCreate}>
                 {createPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               </Button>
             </div>
           </div>
-          <BuyBalance />
-          {/* Add  */}
-          <div className="flex w-full flex-col justify-between rounded-[5.85px] border-[0.72px] border-[#F2DB12] bg-white px-4 py-[11px] tablet:rounded-[15px] tablet:border-[1.846px] tablet:px-[25px] tablet:py-[25px]">
-            <div>
-              <h1 className="mb-2 text-[10px] font-semibold leading-normal text-[#707175] tablet:mb-4 tablet:text-[22px]">
+        </div>
+        {/* Add  */}
+        <div>
+          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+            <div className="flex items-center gap-2">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/add-redemption.svg`}
+                alt={'add-redemption'}
+                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+              />
+              <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
                 Add Redemption Code
               </h1>
-              {/* <p className="my-[5px] text-[7.5px] font-normal leading-normal text-[#85898C] tablet:my-[15px] tablet:text-[14.7px]">
-                You can add redemption code and earn reworded coins
-              </p> */}
-              <div className="mt-[5px] flex items-center gap-4 tablet:mt-5 tablet:gap-9">
-                <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">Code</h2>
-                <input
-                  type="text"
-                  placeholder="eg (rG57HK)"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-[#F2E56D] bg-[#FFFEF3] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
-                />
-              </div>
             </div>
-            <div className="flex w-full justify-end">
-              <Button variant={'cancel'} onClick={handleAdd}>
+          </div>
+          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
+            <p className="text-[7.5px] font-normal leading-normal text-[#85898C] tablet:text-[14.7px]">
+              You can add redemption code and earn reworded coins
+            </p>
+            <div className="flex items-center gap-4 tablet:gap-9">
+              <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">Code</h2>
+              <input
+                type="text"
+                placeholder="eg (rG57HK)"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#FFFEF3] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
+              />
+            </div>
+            <div className="flex w-full justify-center">
+              <Button variant={'submit'} onClick={handleAdd}>
                 {addCodeLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
               </Button>
             </div>
           </div>
         </div>
-      </div>
-      <div>
-        <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
-          Un-Redeemed Codes
-        </h1>
-        {!unredeemedData || unredeemedData.data.data.length === 0 ? (
-          <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white py-2 tablet:rounded-[15px] tablet:py-6">
-            <p className="text-center text-[11px] font-medium leading-normal text-[#C9C8C8] tablet:text-[22px]">
-              Your have no un-redeemed codes
-            </p>
-          </div>
-        ) : (
-          <div>
-            <div className="mb-2 ml-3 flex items-center gap-[10px] tablet:mb-[13px] tablet:ml-[60px] tablet:gap-[35px]">
-              <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[22px]">
-                FDX
-              </p>
-              <p className="min-w-[95px] max-w-[95px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[189px] tablet:max-w-[189px] tablet:text-[22px]">
-                Description
-              </p>
-              <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-36 tablet:max-w-36 tablet:text-[22px]">
-                Code
-              </p>
-              <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-20 tablet:max-w-20 tablet:text-[22px]">
-                Expires
-              </p>
+        {/* UnRedeemed Code */}
+        <div>
+          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+            <div className="flex items-center gap-2">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/un-radeem.svg`}
+                alt={'un-radeem'}
+                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+              />
+              <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
+                Un-Redeemed Codes
+              </h1>
             </div>
-            <div className="rounded-[5.85px] border-[1.84px] border-[#0FB063] bg-white tablet:rounded-[15px]">
-              {unredeemedData?.data?.data?.map((item, index) => (
-                <div key={index + 1}>
-                  <div className="flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-4 tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:flex-row laptop:items-center laptop:gap-0">
-                    <div className="flex items-center gap-[10px] tablet:gap-[35px]">
-                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
-                        {item.amount}
-                      </p>
-                      <div className=" flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[20px]">
-                        <div className="tooltip text-start" data-tip={item.description}>
-                          <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[189px] tablet:max-w-[189px]">
-                            {item.description}
-                          </p>
-                        </div>
-                      </div>
-                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-36 tablet:max-w-36 tablet:text-[20px]">
-                        {item.code}
-                      </p>
-                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
+          </div>
+          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-9 tablet:py-[18.73px]">
+            <div className="rounded-[7.546px] border-[2.792px] border-[#D9D9D9]">
+              <div className="grid grid-cols-12 border-b-[2.792px] border-[#D9D9D9]">
+                <div className="col-span-2 px-[15px] py-3">
+                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Code</h1>
+                </div>
+                <div className="col-span-6 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Description</h1>
+                </div>
+                <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">FDX cost</h1>
+                </div>
+                <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9]  px-[15px] py-3">
+                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Expiration date</h1>
+                </div>
+              </div>
+              {!unredeemedData || unredeemedData.data.data.length === 0 ? (
+                <div className="bg-white py-2 tablet:py-6">
+                  <p className="text-center text-[11px] font-medium leading-normal text-[#C9C8C8] tablet:text-[22px]">
+                    Your have no un-redeemed codes
+                  </p>
+                </div>
+              ) : (
+                unredeemedData?.data?.data?.map((item, index) => (
+                  <div className="grid grid-cols-12" key={index + 1}>
+                    <div className="col-span-2 px-[15px] py-3">
+                      <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.code}</h1>
+                    </div>
+                    <div className="col-span-6 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                      <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.description}</h1>
+                    </div>
+                    <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                      <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.amount} FDX</h1>
+                    </div>
+                    <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                      <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">
                         {/* {calculateExpiry(item.expiry)} */}
                         Never
-                      </p>
+                      </h1>
                     </div>
-                    <div className="flex items-center justify-end gap-[10px] tablet:gap-[25px]">
+                    <div className="col-span-12 flex w-full justify-center gap-6 border-y-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                       <Button
                         variant="share-link"
                         className={'max-w-[141px] tablet:h-[50px]'}
@@ -428,79 +429,78 @@ export default function RedemptionCenter() {
                       </Button>
                     </div>
                   </div>
-                  {index !== unredeemedData?.data?.data.length - 1 && (
-                    <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
-                  )}
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+        {/* Referral code activity */}
+        <div>
+          <DeleteHistoryPopup
+            isDeleteModal={isDeleteModal}
+            handleClose={handleClose}
+            deleteHistoryCode={deleteHistoryCode}
+          />
+          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+            <div className="flex items-center gap-2">
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/raferral-code-activity.svg`}
+                alt={'raferral-code-activity'}
+                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+              />
+              <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
+                Referral code activity
+              </h1>
+            </div>
+          </div>
+          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-9 tablet:py-[18.73px]">
+            <div className="rounded-[7.546px] border-[2.792px] border-[#D9D9D9]">
+              <div className="grid grid-cols-12 border-b-[2.792px] border-[#D9D9D9]">
+                <div className="col-span-2 px-[15px] py-3">
+                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Code</h1>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-      <div>
-        <DeleteHistoryPopup
-          isDeleteModal={isDeleteModal}
-          handleClose={handleClose}
-          deleteHistoryCode={deleteHistoryCode}
-        />
-        <h1 className="mb-2 text-[12px] font-semibold leading-normal text-[#707175] tablet:mb-6 tablet:text-[24px]">
-          History
-        </h1>
-        {!history || history.data.data.length === 0 ? (
-          <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white py-2 tablet:rounded-[15px] tablet:py-6">
-            <p className="text-center text-[11px] font-medium leading-normal text-[#C9C8C8] tablet:text-[22px]">
-              You have no records.
-            </p>
-          </div>
-        ) : (
-          <div>
-            <div className="mb-2 ml-3 flex items-center gap-[10px] tablet:mb-[13px] tablet:ml-[60px] tablet:gap-[35px]">
-              <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[22px]">
-                FDX
-              </p>
-              <p className="min-w-[95px] max-w-[95px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[189px] tablet:max-w-[189px] tablet:text-[22px]">
-                Description
-              </p>
-              <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-36 tablet:max-w-36 tablet:text-[22px]">
-                Code
-              </p>
-              <p className="min-w-[40px] max-w-[40px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-20 tablet:max-w-20 tablet:text-[22px]">
-                Expires
-              </p>
-            </div>
-            <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
-              {history?.data?.data
-                ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                .map((item, index) => (
-                  <div key={index + 1}>
+                <div className="col-span-6 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Description</h1>
+                </div>
+                <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">FDX cost</h1>
+                </div>
+                <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9]  px-[15px] py-3">
+                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Expiration date</h1>
+                </div>
+              </div>
+              {!history || history.data.data.length === 0 ? (
+                <div className="border-[#D9D9D9] bg-white py-2 tablet:py-6">
+                  <p className="text-center text-[11px] font-medium leading-normal text-[#C9C8C8] tablet:text-[22px]">
+                    You have no records.
+                  </p>
+                </div>
+              ) : (
+                history?.data?.data
+                  ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                  .map((item, index) => (
                     <div
-                      className={`flex flex-col justify-between gap-2 py-2  pl-[13px] pr-4 tablet:h-[112px] tablet:gap-4  tablet:py-5 tablet:pl-[60px] tablet:pr-6 laptop:h-[67px] laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                      className={`grid grid-cols-12 ${index === 0 && isPulse ? 'text-[#049952]' : 'text-[#A3A3A3]'}`}
+                      key={index + 1}
                     >
-                      <div className="flex items-center gap-[10px] tablet:gap-[35px]">
-                        <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal tablet:min-w-12 tablet:max-w-12 tablet:text-[20px]">
-                          {item.amount}
-                        </p>
-                        <div className="flex items-center text-[10px] font-medium leading-normal tablet:text-[20px]">
-                          <div className="tooltip text-start" data-tip={item.description}>
-                            <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[189px] tablet:max-w-[189px]">
-                              {item.description}
-                            </p>
-                          </div>
-                        </div>
-                        <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal tablet:min-w-36 tablet:max-w-36 tablet:text-[20px]">
-                          {item.code}
-                        </p>
-                        <p className="leading-normals min-w-[40px] max-w-[40px] text-[10px] font-medium tablet:min-w-20 tablet:max-w-20 tablet:text-[20px]">
+                      <div className="col-span-2 px-[15px] py-3">
+                        <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.code}</h1>
+                      </div>
+                      <div className="col-span-6 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                        <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">
+                          {item.description}
+                        </h1>
+                      </div>
+                      <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                        <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.amount} FDX</h1>
+                      </div>
+                      <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                        <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">
                           {/* {calculateExpiry(item.expiry)} */}
                           Never
-                        </p>
+                        </h1>
                       </div>
-                      <div className="flex items-center justify-end gap-[10px] tablet:gap-[35px]">
-                        <p
-                          className={`text-[9px] font-medium leading-normal tablet:text-[20px] ${index === 0 && isPulse ? 'text-[#049952]' : 'text-[#A3A3A3]'}`}
-                        >
-                          Redeemed
-                        </p>
+                      <div className="col-span-12 flex w-full justify-center gap-6 border-y-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                         <p className="text-[9px] font-medium leading-normal tablet:text-[20px]">
                           {formatDate(item.createdAt)}
                         </p>
@@ -515,14 +515,11 @@ export default function RedemptionCenter() {
                         />
                       </div>
                     </div>
-                    {index !== history?.data?.data.length - 1 && (
-                      <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
-                    )}
-                  </div>
-                ))}
+                  ))
+              )}
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

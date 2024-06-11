@@ -46,6 +46,7 @@ export default function CheckoutForm() {
         if (resp?.paymentIntent) {
           await spay({ charge: resp.paymentIntent, userUuid: persistedUserInfo.uuid });
           localStorage.removeItem('scs');
+          localStorage.removeItem('paymentMethod');
           clearQueryParams();
           queryClient.invalidateQueries(['userInfo']);
 
@@ -67,6 +68,7 @@ export default function CheckoutForm() {
           console.log('Something went wrong retrieving the payment intent.');
         }
       } catch (error) {
+        localStorage.removeItem('paymentMethod');
         toast.error('An error occurred: ' + error.message);
       }
     };
@@ -89,7 +91,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: 'https://localhost:5173/dashboard/treasury',
+        return_url: 'https://localhost:5173/dashboard/treasury/buy-fdx',
       },
     });
 

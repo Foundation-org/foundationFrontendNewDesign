@@ -21,11 +21,24 @@ export const profileItems = [
 
 export const treasuryItems = [
   {
+    id: 0,
+    title: 'Summary',
     path: '/dashboard/treasury',
-    label: 'Redemption center',
   },
   {
-    path: '/dashboard/treasury/ledger',
-    label: 'Treasury Activity',
+    id: 1,
+    title: 'Reward Schedule',
+    path: '/dashboard/treasury/reward-schedule',
   },
+  {
+    id: 2,
+    title: 'Buy FDX',
+    path: '/dashboard/treasury/buy-fdx',
+  },
+  {
+    id: 3,
+    title: 'Redemption center',
+    path: '/dashboard/treasury/redemption-center',
+  },
+  { id: 4, title: 'Treasury Activity', path: '/dashboard/treasury/ledger' },
 ];

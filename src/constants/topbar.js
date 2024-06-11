@@ -1,48 +1,3 @@
-// export const TopbarItems = [
-//   {
-//     id: 1,
-//     title: 'Home',
-//     path: '/dashboard',
-//     activePaths: ['/dashboard'],
-//     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/home-white.svg`,
-//   },
-//   {
-//     id: 2,
-//     title: 'Create',
-//     path: '/dashboard/quest',
-//     activePaths: ['/dashboard/quest'],
-//     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/create.svg`,
-//   },
-//   {
-//     id: 3,
-//     title: 'Profile',
-//     path: '/dashboard/profile',
-//     activePaths: [
-//       '/dashboard/profile',
-//       '/dashboard/profile/verification-badges',
-//       '/dashboard/profile/ledger',
-//       '/dashboard/profile/hidden-posts',
-//       '/dashboard/profile/shared-links',
-//       '/dashboard/profile/user-settings',
-//     ],
-//     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/profile-logo.svg`,
-//   },
-//   {
-//     id: 4,
-//     title: 'Treasury',
-//     path: '/dashboard/treasury',
-//     activePaths: ['/dashboard/treasury', '/dashboard/treasury/ledger'],
-//     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury/treasury-logo.svg`,
-//   },
-//   // {
-//   //   id: 5,
-//   //   title: 'Bookmarks',
-//   //   path: '/dashboard/bookmark',
-//   //   activePaths: ['/dashboard/bookmark'],
-//   //   icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/bookmark/darkbookmark2.png`,
-//   // },
-// ];
-
 export const TopbarItems = [
   {
     id: 1,
@@ -68,7 +23,13 @@ export const TopbarItems = [
     id: 2,
     title: 'Treasury',
     path: '/dashboard/treasury',
-    activePaths: ['/dashboard/treasury', '/dashboard/treasury/ledger'],
+    activePaths: [
+      '/dashboard/treasury',
+      '/dashboard/treasury/reward-schedule',
+      '/dashboard/treasury/buy-fdx',
+      '/dashboard/treasury/redemption-center',
+      '/dashboard/treasury/ledger',
+    ],
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury_logo_unselected.svg`,
     iconSelected: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/treasury_logo_selected.svg`,
   },

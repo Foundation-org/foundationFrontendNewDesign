@@ -84,39 +84,6 @@ const QuestStartSection = () => {
     return <p>Error: {error.message}</p>;
   }
 
-  // const content = data?.pages.map((posts) =>
-  //   posts.map((post, index) => {
-  //     if (post.url?.length > 0 && !post.url[0]?.includes('flickr') && post.url[0] !== '')
-  //       if (post.id === 'system_notification') {
-  //         // <React.Fragment key={index + 1}>{dispatch(questUtilsActions.addPlayerId(post._id))}</React.Fragment>;
-  //         return <SystemNotificationCard post={post} key={index + 1} />;
-  //       } else {
-  //         if (posts.length == index + 1) {
-  //           return (
-  //             <div key={post._id} id={post._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
-  //               <QuestionCardWithToggle
-  //                 innerRef={ref}
-  //                 questStartData={post}
-  //                 playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
-  //                 // hasNextPage={hasNextPage}
-  //               />
-  //             </div>
-  //           );
-  //         } else {
-  //           return (
-  //             <div key={post._id} id={post._id === questUtils.playerPlayingId ? 'playing-card' : ''}>
-  //               <QuestionCardWithToggle
-  //                 questStartData={post}
-  //                 playing={post._id === questUtils.playerPlayingId && questUtils.isMediaPlaying}
-  //                 // hasNextPage={hasNextPage}
-  //               />
-  //             </div>
-  //           );
-  //         }
-  //       }
-  //   }),
-  // );
-
   const content = data?.pages.map((posts) =>
     posts.map((post, index) => {
       if (post.id === 'system_notification') {

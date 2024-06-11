@@ -46,11 +46,9 @@ export default function DashboardLayout({ children }) {
 
   useEffect(() => {
     if (constants) {
-      dispatch(saveConstants(constants))
+      dispatch(saveConstants(constants));
     }
-  }, [constants])
-
-
+  }, [constants]);
 
   const {
     data: userInfoData,
@@ -276,6 +274,9 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/feedback' &&
             !location.pathname.startsWith('/dashboard/quest') &&
             location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/treasury/reward-schedule' &&
+            location.pathname !== '/dashboard/treasury/buy-fdx' &&
+            location.pathname !== '/dashboard/treasury/redemption-center' &&
             location.pathname !== '/dashboard/treasury/ledger' && (
               <>
                 {persistedUserInfo?.role === 'user' && location.pathname !== '/' ? (
@@ -358,6 +359,9 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/feedback' &&
             location.pathname !== '/dashboard/profile/post-activity' &&
             location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/treasury/reward-schedule' &&
+            location.pathname !== '/dashboard/treasury/buy-fdx' &&
+            location.pathname !== '/dashboard/treasury/redemption-center' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/quest/isfullscreen' &&
             location.pathname !== '/shared-links/result' &&
@@ -375,6 +379,9 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/lists' && <SidebarLeft />}
 
           {location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/treasury/reward-schedule' &&
+            location.pathname !== '/dashboard/treasury/buy-fdx' &&
+            location.pathname !== '/dashboard/treasury/redemption-center' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/dashboard/help/about' &&
             location.pathname !== '/dashboard/help/faq' &&
@@ -395,6 +402,9 @@ export default function DashboardLayout({ children }) {
 
           {questUtilsState.isShowPlayer &&
             location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/treasury/reward-schedule' &&
+            location.pathname !== '/dashboard/treasury/buy-fdx' &&
+            location.pathname !== '/dashboard/treasury/redemption-center' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/dashboard/help/about' &&
             location.pathname !== '/dashboard/help/faq' &&
@@ -548,7 +558,7 @@ export default function DashboardLayout({ children }) {
             </div>
           )}
         </div>
-        {location.pathname !== '/dashboard/treasury' && location.pathname !== '/dashboard/treasury/ledger' && children}
+        {children}
         {/* Desktop Right Side */}
         <div className="right-0 top-0 hidden tablet:block laptop:absolute">
           <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
@@ -604,6 +614,9 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/ledger' &&
             location.pathname !== '/dashboard/profile/post-activity' &&
             location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/treasury/reward-schedule' &&
+            location.pathname !== '/dashboard/treasury/buy-fdx' &&
+            location.pathname !== '/dashboard/treasury/redemption-center' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/dashboard/help/about' &&
             location.pathname !== '/dashboard/help/faq' &&
@@ -614,7 +627,7 @@ export default function DashboardLayout({ children }) {
         </div>
       </div>
       {/* Mobile Children */}
-      {(location.pathname === '/dashboard/treasury' || location.pathname === '/dashboard/treasury/ledger') && children}
+      {/* {(location.pathname === '/dashboard/treasury' || location.pathname === '/dashboard/treasury/ledger') && children} */}
     </div>
   );
 }
