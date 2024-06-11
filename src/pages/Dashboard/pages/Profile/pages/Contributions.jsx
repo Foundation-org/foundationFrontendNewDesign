@@ -228,10 +228,10 @@ const Contributions = () => {
             </div>
           ))}
           <Link
-            to={'/dashboard/profile/feedback'}
-            className="font-noraml -mt-2 cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+            to={'/dashboard/profile/hidden-posts'}
+            className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
           >
-            See why your posts were hidden {'>'}
+            View posts you’ve hidden and why {'>'}
           </Link>
         </div>
       </div>
