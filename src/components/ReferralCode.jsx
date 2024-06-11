@@ -9,6 +9,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { addUser } from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
+import showToast from './ui/Toast';
 
 const ReferralCode = ({
   handleClose,
@@ -45,8 +46,7 @@ const ReferralCode = ({
         const resp = await userSignup({ email, password, uuid: localStorage.getItem('uuid') });
 
         if (resp.status === 200) {
-          toast.success('A verification email has been sent to your email address. Please check your inbox.');
-
+          showToast('success', 'verificationEmailSent');
           setEmail('');
           setPassword('');
         }
@@ -55,7 +55,7 @@ const ReferralCode = ({
       }
     } catch (e) {
       // setErrorMessage(e.response.data.message.split(':')[1]);
-      toast.error(e.response.data.message.split(':')[1]);
+      showToast('error', {}, e.response.data.message.split(':')[1]);
       handlePopupOpen();
     } finally {
       setIsLoading(false);
