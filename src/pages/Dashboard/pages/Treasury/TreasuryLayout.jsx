@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import TreasurySlider from './components/treasurySlider';
+import TreasurySlider from './components/TreasurySlider';
 
 const TreasuryLayout = () => {
   const location = useLocation();
