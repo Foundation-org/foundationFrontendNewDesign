@@ -13,11 +13,14 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
+import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 
 const AgreeDisagree = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+  const persistedContants = useSelector(getConstantsValues);
+
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
@@ -255,7 +258,7 @@ const AgreeDisagree = () => {
             <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()}>
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-                (-0.1 FDX)
+                (-{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
               </span>
             </Button>
           </div>

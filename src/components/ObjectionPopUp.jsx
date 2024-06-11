@@ -3,10 +3,12 @@ import { Button } from './ui/Button';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PopUp from './ui/PopUp';
+import { getConstantsValues } from '../features/constants/constantsSlice';
 
 export default function ObjectionPopUp({ modalVisible, handleClose, handleContendChange, option }) {
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedContants = useSelector(getConstantsValues);
 
   return (
     <PopUp
@@ -43,7 +45,7 @@ export default function ObjectionPopUp({ modalVisible, handleClose, handleConten
               }
             }}
           >
-            Object <span className="pl-1 text-[6px] leading-[0px] tablet:pl-2 tablet:text-[15px] ">(-0.1 FDX)</span>
+            Object <span className="pl-1 text-[6px] leading-[0px] tablet:pl-2 tablet:text-[15px] ">(-{persistedContants?.QUEST_OPTION_CONTENTION_GIVEN_AMOUNT} FDX)</span>
           </Button>
           <Button
             variant="danger"

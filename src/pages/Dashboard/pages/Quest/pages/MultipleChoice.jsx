@@ -15,6 +15,7 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import * as questServices from '../../../../../services/api/questsApi';
+import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const MultipleChoice = () => {
   const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedContants = useSelector(getConstantsValues);
 
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
@@ -426,7 +428,7 @@ const MultipleChoice = () => {
           >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
             <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-              (-0.1 FDX)
+              (-{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
             </span>
           </Button>
         </div>

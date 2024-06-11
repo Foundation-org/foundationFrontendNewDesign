@@ -7,10 +7,12 @@ import { toast } from 'sonner';
 import api from '../../../../../../services/api/Axios';
 import EducationBadgePopup from '../../../../../../components/dialogue-boxes/EducationBadgePopup';
 import WorkBadgePopup from '../../../../../../components/dialogue-boxes/WorkBadgePopup';
+import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 
 export default function Personal({ fetchUser, handleOpenPasswordConfirmation, checkLegacyBadge, handlePasskeyConfirmation }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedContants = useSelector(getConstantsValues);
 
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
   const [seletedPersonalBadge, setSelectedPersonalBadge] = useState('');
@@ -251,8 +253,7 @@ export default function Personal({ fetchUser, handleOpenPasswordConfirmation, ch
         {checkPersonalBadge(item.type) ? 'Edit' : item.ButtonText}
         {!checkPersonalBadge(item.type) && (
           <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-            (+0.96 FDX)
-          </span>
+            (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)</span>
         )}
       </Button>
     </div>

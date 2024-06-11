@@ -11,6 +11,7 @@ import * as questUtilsActions from '../../features/quest/utilsSlice';
 import * as filterActions from '../../features/sidebar/filtersSlice';
 import * as filterBookmarkActions from '../../features/sidebar/bookmarkFilterSlice';
 import UnHidePostPopup from '../dialogue-boxes/UnHidePostPopup';
+import { getConstantsValues } from '../../features/constants/constantsSlice';
 
 const ButtonGroup = ({
   questStartData,
@@ -39,6 +40,7 @@ const ButtonGroup = ({
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [modalVisible, setModalVisible] = useState(false);
+  const persistedContants = useSelector(getConstantsValues);
 
   let filterState;
 
@@ -50,8 +52,8 @@ const ButtonGroup = ({
 
   const uuidExists = questStartData.QuestAnswers
     ? questStartData.QuestAnswers?.some(
-        (item) => item.uuid === persistedUserInfo?.uuid || item.uuid === localStorage.getItem('uId'),
-      )
+      (item) => item.uuid === persistedUserInfo?.uuid || item.uuid === localStorage.getItem('uId'),
+    )
     : false;
 
   function updateAnswerSelection(apiResponse, answerSelectionArray, type) {
@@ -405,7 +407,8 @@ const ButtonGroup = ({
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                 {questStartData.startStatus !== 'change answer' && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                    (+0.96 FDX)
+                    (+ {persistedContants?.QUEST_COMPLETED_AMOUNT})
+
                   </span>
                 )}
               </Button>
@@ -531,7 +534,8 @@ const ButtonGroup = ({
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}{' '}
               {questStartData.startStatus !== 'change answer' && (
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                  (+0.96 FDX)
+                  (+ {persistedContants?.QUEST_COMPLETED_AMOUNT})
+
                 </span>
               )}
             </Button>
@@ -646,7 +650,7 @@ const ButtonGroup = ({
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               {questStartData.startStatus !== 'change answer' && (
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-                  (+0.96 FDX)
+                  (+ {persistedContants?.QUEST_COMPLETED_AMOUNT})
                 </span>
               )}
             </Button>

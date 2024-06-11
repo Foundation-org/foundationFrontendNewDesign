@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useDebounce } from '../../../utils/useDebounce';
 import { addUser } from '../../../features/auth/authSlice';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { getTreasuryAmount, userInfo, userInfoById } from '../../../services/api/userAuth';
+import { getConstants, userInfo, userInfoById } from '../../../services/api/userAuth';
 import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
 import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
 import { feedbackFilters, updateFeedbackSearch } from '../../../features/profile/feedbackSlice';
@@ -18,6 +18,7 @@ import SideNavbar from '../../../components/SideNavbar';
 import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId } from '../../../features/quest/utilsSlice';
 import MediaControls from '../../../components/MediaControls';
 import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
+import { saveConstants } from '../../../features/constants/constantsSlice';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -33,15 +34,23 @@ export default function DashboardLayout({ children }) {
   const [sharedlinkSearch, setSharedlinkSearch] = useState('');
   const [feedbackSearch, setFeedbackSearch] = useState('');
   const questUtilsState = useSelector(getQuestUtils);
-
-  const { data: treasuryAmount, error: treasuryError } = useQuery({
-    queryKey: ['treasury'],
-    queryFn: getTreasuryAmount,
+  const { data: constants, error: constantsError } = useQuery({
+    queryKey: ['constants'],
+    queryFn: getConstants,
   });
 
-  if (treasuryError) {
-    toast.error(treasuryError.response.data.message.split(':')[1]);
+  console.log(constants);
+  if (constantsError) {
+    console.log(constantsError);
   }
+
+  useEffect(() => {
+    if (constants) {
+      dispatch(saveConstants(constants))
+    }
+  }, [constants])
+
+
 
   const {
     data: userInfoData,
@@ -334,7 +343,7 @@ export default function DashboardLayout({ children }) {
               <div className="flex h-[47px] flex-col justify-between">
                 <h4 className="heading w-fit border-b-2">Treasury</h4>
                 <p className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-                  <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
+                  <span>{constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX</span>
                 </p>
               </div>
             </div>

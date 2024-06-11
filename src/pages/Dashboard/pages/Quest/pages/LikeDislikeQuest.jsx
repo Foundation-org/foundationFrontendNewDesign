@@ -28,6 +28,7 @@ const LikeDislike = () => {
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
+  const persistedContants = useSelector(getConstantsValues);
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
@@ -242,7 +243,7 @@ const LikeDislike = () => {
             <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()}>
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-                (-0.1 FDX)
+                (-{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
               </span>
             </Button>
           </div>

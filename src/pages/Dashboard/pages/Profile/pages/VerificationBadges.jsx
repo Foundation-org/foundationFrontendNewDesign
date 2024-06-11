@@ -21,6 +21,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import Legacy from './verification-badges/Legacy';
 import LegacyConfirmationPopup from '../../../../../components/dialogue-boxes/LegacyConfirmationPopup';
 import { startRegistration } from '@simplewebauthn/browser';
+import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const VerificationBadges = () => {
   const [deleteModalState, setDeleteModalState] = useState();
   const [isPasswordConfirmation, setIsPasswordConfirmation] = useState();
   const legacyPromiseRef = useRef();
+  const persistedContants = useSelector(getConstantsValues);
 
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
@@ -306,9 +308,8 @@ const VerificationBadges = () => {
         </h1>
       </div>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
-        } relative mx-4 mb-8 flex flex-col gap-[7px] rounded-b-[13.7px] px-5 pb-[17.57px] pt-2 tablet:mx-6 tablet:gap-4 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5 laptop:gap-5 laptop:px-5 desktop:px-[40px]`}
+        className={`${persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
+          } relative mx-4 mb-8 flex flex-col gap-[7px] rounded-b-[13.7px] px-5 pb-[17.57px] pt-2 tablet:mx-6 tablet:gap-4 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5 laptop:gap-5 laptop:px-5 desktop:px-[40px]`}
       >
         <h1 className="mb-[10px] mt-[2px] text-[12px] font-medium leading-[113%] text-[#85898C] tablet:hidden tablet:text-[16px] tablet:leading-normal">
           Have your data be more desirable for brands and research firms to purchase with more verified info and earn
@@ -340,9 +341,8 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                 Facebook
@@ -367,7 +367,7 @@ const VerificationBadges = () => {
               >
                 {checkSocial('facebook') ? (checkPrimary('facebook') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
+                  {checkSocial('facebook') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             ) : persistedUserInfo?.role === 'guest' ? (
@@ -378,7 +378,7 @@ const VerificationBadges = () => {
               >
                 {checkSocial('facebook') ? (checkPrimary('facebook') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
+                  {checkSocial('facebook') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             ) : (
@@ -401,7 +401,7 @@ const VerificationBadges = () => {
                 <Button color={checkSocial('facebook') ? 'red' : 'blue'}>
                   {checkSocial('facebook') ? '' : 'Add Badge'}
                   <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                    {checkSocial('facebook') ? '' : '(+0.96 FDX)'}
+                    {checkSocial('facebook') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                   </span>
                 </Button>
               </LoginSocialFacebook>
@@ -425,9 +425,8 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                 Linked In
@@ -454,7 +453,7 @@ const VerificationBadges = () => {
                   {checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'Added' : 'Remove') : 'Add Badge'}
 
                   <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                    {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
+                    {checkSocial('linkedin') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                   </span>
                 </Button>
               </>
@@ -480,7 +479,7 @@ const VerificationBadges = () => {
               >
                 {checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
+                  {checkSocial('linkedin') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             ) : (
@@ -506,12 +505,12 @@ const VerificationBadges = () => {
               >
                 <Button
                   color={checkSocial('linkedin') ? 'red' : 'blue'}
-                  // disabled={true}
-                  // color="gray"
+                // disabled={true}
+                // color="gray"
                 >
                   {checkSocial('linkedin') ? 'Remove' : 'Add Badge'}
                   <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                    {checkSocial('linkedin') ? '' : '(+0.96 FDX)'}
+                    {checkSocial('linkedin') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                   </span>
                 </Button>
               </LoginSocialLinkedin>
@@ -535,9 +534,8 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                 Twitter
@@ -562,7 +560,7 @@ const VerificationBadges = () => {
               >
                 {checkSocial('twitter') ? (checkPrimary('twitter') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
+                  {checkSocial('twitter') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             ) : persistedUserInfo?.role === 'guest' ? (
@@ -573,7 +571,7 @@ const VerificationBadges = () => {
               >
                 {checkSocial('twitter') ? (checkPrimary('twitter') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
+                  {checkSocial('twitter') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             ) : (
@@ -589,7 +587,7 @@ const VerificationBadges = () => {
               >
                 {checkSocial('twitter') ? (checkPrimary('twitter') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  {checkSocial('twitter') ? '' : '(+0.96 FDX)'}
+                  {checkSocial('twitter') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             )}
@@ -612,9 +610,8 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                 Instagram
@@ -640,7 +637,7 @@ const VerificationBadges = () => {
                 >
                   {checkSocial('instagram') ? (checkPrimary('instagram') ? 'Added' : 'Remove') : 'Add Badge'}
                   <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                    {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
+                    {checkSocial('instagram') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                   </span>
                 </Button>
               </>
@@ -652,7 +649,7 @@ const VerificationBadges = () => {
               >
                 {checkSocial('instagram') ? (checkPrimary('instagram') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px] ">
-                  {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
+                  {checkSocial('instagram') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             ) : (
@@ -673,7 +670,7 @@ const VerificationBadges = () => {
                 >
                   {checkSocial('instagram') ? '' : 'Add Badge'}
                   <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                    {checkSocial('instagram') ? '' : '(+0.96 FDX)'}
+                    {checkSocial('instagram') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                   </span>
                 </div>
               </InstagramLogin>
@@ -697,9 +694,8 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
             />
             <div
-              className={`${
-                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                 Github
@@ -724,7 +720,7 @@ const VerificationBadges = () => {
               >
                 {checkSocial('github') ? (checkPrimary('github') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  {checkSocial('github') ? '' : '(+0.96 FDX)'}
+                  {checkSocial('github') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             ) : persistedUserInfo?.role === 'guest' ? (
@@ -735,7 +731,7 @@ const VerificationBadges = () => {
               >
                 {checkSocial('github') ? (checkPrimary('github') ? 'Added' : 'Remove') : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  {checkSocial('github') ? '' : '(+0.96 FDX)'}
+                  {checkSocial('github') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             ) : (
@@ -750,7 +746,7 @@ const VerificationBadges = () => {
               >
                 {checkSocial('github') ? 'Remove' : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  {checkSocial('github') ? '' : '(+0.96 FDX)'}
+                  {checkSocial('github') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             )}
@@ -788,14 +784,14 @@ const VerificationBadges = () => {
             >
               {checkSocial('youtube') ? 'Remove' : 'Add Badge'}
               <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
+                {checkSocial('youtube') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
               </span>
             </Button>
           ) : persistedUserInfo?.role === 'guest' ? (
             <Button color={checkSocial('youtube') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
               {checkSocial('youtube') ? 'Remove' : 'Add Badge'}
               <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                {checkSocial('youtube') ? '' : '(+0.96 FDX)'}
+                {checkSocial('youtube') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
               </span>
             </Button>
           ) : (
@@ -818,7 +814,7 @@ const VerificationBadges = () => {
               <Button color={'blue'}>
                 {'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  {'(+0.96 FDX)'}
+                  {`(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             </LoginSocialYoutube>
@@ -858,7 +854,7 @@ const VerificationBadges = () => {
               >
                 {checkSocial('soundcloud') ? 'Remove' : 'Add Badge'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
+                  {checkSocial('soundcloud') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>
               </Button>
             </>
@@ -866,14 +862,14 @@ const VerificationBadges = () => {
             <Button color={checkSocial('soundcloud') ? 'red' : 'blue'} onClick={handleGuestBadgeAdd}>
               {checkSocial('soundcloud') ? 'Remove' : 'Add Badge'}
               <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
+                {checkSocial('soundcloud') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
               </span>
             </Button>
           ) : (
             <Button color={'gray'} onClick={handleSoundCloud} disabled={true}>
               {checkSocial('soundcloud') ? '' : 'Add Badge'}
               <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                {checkSocial('soundcloud') ? '' : '(+0.96 FDX)'}
+                {checkSocial('soundcloud') ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
               </span>
             </Button>
           )}

@@ -9,11 +9,14 @@ import { Button } from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FaSpinner } from 'react-icons/fa';
+import { getConstantsValues } from '../../../features/constants/constantsSlice';
 
 const CopyDialogue = ({ handleClose, questStartData }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const persistedContants = useSelector(getConstantsValues);
+
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
   const [postLink, setPostLink] = useState(questStartData?.userQuestSetting?.link || '');
@@ -269,7 +272,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
                   <>
                     Create{' '}
                     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                      (-2.50 FDX)
+                      (-{persistedContants?.USER_QUEST_SETTING_LINK_CUSTOMIZATION_DEDUCTION_AMOUNT} FDX)
                     </span>
                   </>
                 )}

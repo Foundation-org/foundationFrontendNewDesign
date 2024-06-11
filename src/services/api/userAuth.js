@@ -61,6 +61,13 @@ export const getTreasuryAmount = async () => {
   }
 };
 
+export const getConstants = async () => {
+  const res = await api.get(`user/getConstants`);
+  localStorage.setItem('Constants', res?.data);
+  return res?.data;
+
+};
+
 export const updateUserSettings = async ({
   uuid,
   darkMode,

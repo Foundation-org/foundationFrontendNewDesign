@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { legacy } from '../../../../../../constants/varification-badges';
 import Button from '../../components/Button';
 import LegacyBadgePopup from '../../../../../../components/dialogue-boxes/LegacyBadgePopup';
+import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
+import { useSelector } from 'react-redux';
 
 const Legacy = ({ fetchUser, handleRemoveBadgePopup, checkLegacyBadge }) => {
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
+  const persistedContants = useSelector(getConstantsValues);
+
   checkLegacyBadge();
 
   return (
@@ -48,17 +52,17 @@ const Legacy = ({ fetchUser, handleRemoveBadgePopup, checkLegacyBadge }) => {
               onClick={() => {
                 checkLegacyBadge()
                   ? handleRemoveBadgePopup({
-                      title: 'Password',
-                      type: 'password',
-                      image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
-                      badgeType: 'password',
-                    })
+                    title: 'Password',
+                    type: 'password',
+                    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+                    badgeType: 'password',
+                  })
                   : setIsPersonalPopup(true);
               }}
             >
               {checkLegacyBadge() ? 'Remove' : 'Add Badge'}
               <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                {checkLegacyBadge() ? '' : '(+0.96 FDX)'}
+                {checkLegacyBadge() ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
               </span>
             </Button>
           </div>

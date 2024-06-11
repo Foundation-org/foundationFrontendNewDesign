@@ -19,6 +19,7 @@ import ledgerReducer from '../features/profile/legerSlice';
 import hiddenPostReducer from '../features/profile/hiddenPosts';
 import sharedLinksReducer from '../features/profile/sharedLinks';
 import feedbackReducer from '../features/profile/feedbackSlice';
+import systemConstantsReducer from '../features/constants/constantsSlice'
 
 const persistConfig = {
   key: 'persist-store',
@@ -29,6 +30,7 @@ const persistConfig = {
 
 const reducer = combineReducers({
   utils: utilsReducer,
+  systemConstants: systemConstantsReducer,
   auth: authReducer,
   filters: filterReducer,
   bookmarkFilters: bookmarkFilterReducer,

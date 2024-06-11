@@ -8,11 +8,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import { FaSpinner } from 'react-icons/fa';
 import { generateCategoryShareLink } from '../../services/api/listsApi';
 import Copy from '../../assets/optionbar/Copy';
+import { getConstantsValues } from '../../features/constants/constantsSlice';
 
 const ShareListLink = ({ handleClose, selectedItem }) => {
   console.log('selectedItem', selectedItem);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const persistedContants = useSelector(getConstantsValues);
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
@@ -201,7 +203,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
               >
                 Create{' '}
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                  (-2.50 FDX)
+                  (-{persistedContants?.USER_QUEST_SETTING_LINK_CUSTOMIZATION_DEDUCTION_AMOUNT} FDX)
                 </span>
               </Button>
             </div>
