@@ -7,17 +7,17 @@ const About = () => {
 
   return (
     <div className="bg-white">
-      <div className="space-y-[0.63rem] px-8 pt-3 text-[#7C7C7C] tablet:space-y-5 tablet:px-16 tablet:pt-[1.56rem]">
+      <div className="space-y-[0.63rem] px-8 pt-3 text-[#7C7C7C] tablet:space-y-2 tablet:px-16 tablet:pt-[1.56rem]">
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           Let Your Data Work for You
         </h1>
-        <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
+        {/* <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
           Unlock the potential of your personal data.
-        </p>
+        </p> */}
         <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
-          Every aspect of your life-from your hobbies and habits to your opinions and achievements-is valuable. With
-          Foundation, you control access to your information and its uses, turning what you already do every day into
-          opportunities for earnings.
+          Unlock the potential of your personal data. Every aspect of your life-from your hobbies and habits to your
+          opinions and achievements-is valuable. With Foundation, you control access to your information and its uses,
+          turning what you already do every day into opportunities for earnings.
         </p>
       </div>
       <div className="mt-4 bg-[#238AD4] px-8 py-[1.3rem] text-white tablet:px-16 tablet:py-6">
@@ -27,10 +27,10 @@ const About = () => {
         </p>
       </div>
       <div className="bg-[#F5F6F8] px-8 py-5 text-[#707175] tablet:px-16">
-        <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.375rem] tablet:leading-normal">
+        <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           How Foundation works
         </h1>
-        <div className="tablet:sapce-y-[2.2rem] mt-5 space-y-6 tablet:mt-[1.6rem]">
+        <div className="tablet:sapce-y-[2.2rem] mt-[10px] space-y-[15px] tablet:mt-3">
           <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/about/account.svg`}
