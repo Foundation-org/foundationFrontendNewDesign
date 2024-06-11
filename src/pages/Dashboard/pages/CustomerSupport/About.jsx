@@ -30,7 +30,7 @@ const About = () => {
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           How Foundation works
         </h1>
-        <div className="tablet:sapce-y-[2.2rem] mt-[10px] space-y-[15px] tablet:mt-3">
+        <div className="mt-[10px] space-y-[15px] tablet:mt-[2.2rem] tablet:space-y-[2.2rem]">
           <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/about/account.svg`}
