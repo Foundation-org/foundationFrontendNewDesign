@@ -95,10 +95,12 @@ const RewardSchedule = () => {
               {persistedUserInfo?.rewardSchedual?.addingBadgeFdx} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              hardcoded {/* +10 FDX */}
+              {persistedUserInfo?.feeSchedual?.creatingPostLinkFdx > 0 && '+'}
+              {persistedUserInfo?.feeSchedual?.creatingPostLinkFdx} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              hardcoded {/* +10 FDX */}
+              {persistedUserInfo?.feeSchedual?.creatingListLinkFdx > 0 && '+'}
+              {persistedUserInfo?.feeSchedual?.creatingListLinkFdx} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               {persistedUserInfo?.feeSchedual?.creatingPostFdx > 0 && '+'}
