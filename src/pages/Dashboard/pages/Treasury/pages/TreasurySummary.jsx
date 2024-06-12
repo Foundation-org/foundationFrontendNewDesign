@@ -46,7 +46,7 @@ const TreasurySummary = () => {
               {persistedUserInfo?.fdxSpent}
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              hardcoded
+              {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned}
             </p>
           </div>
         </div>
@@ -73,40 +73,41 @@ const TreasurySummary = () => {
           <p className="mt-1 text-[10px] font-normal leading-[160%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             *Values subject to change.
           </p>
-          <div className="mt-2 grid grid-cols-5 justify-items-center tablet:px-11 tablet:py-[18.73px]">
-            <div className="col-span-2 space-y-2">
-              <h1 className="text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
+          <div className="mt-2 grid grid-flow-col grid-rows-3 justify-items-center gap-2 tablet:px-11 tablet:py-[18.73px]">
+            <div className="grid w-full grid-cols-3 justify-items-center">
+              <h1 className="w-full text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
                 Post participation
               </h1>
-              <h1 className="text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
-                Engagement with my posts
-              </h1>
-              <h1 className="text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
-                Creating a post
-              </h1>
-            </div>
-            <div className="col-span-1 space-y-2">
-              <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
+              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 =
               </h1>
-              <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-                =
-              </h1>
-              <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-                =
-              </h1>
-            </div>
-            <div className="col-span-2 space-y-2 text-end">
-              <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
+              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 {persistedUserInfo?.rewardSchedual?.postParticipationFdx > 0 && '+'}
                 {persistedUserInfo?.rewardSchedual?.postParticipationFdx} FDX
               </h1>
-              <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-                {persistedUserInfo?.rewardSchedual?.myEngagementInPostFdx > 0 && '+'}
-                {persistedUserInfo?.rewardSchedual?.myEngagementInPostFdx} FDX
+            </div>
+            <div className="grid w-full grid-cols-3 justify-items-center">
+              <h1 className="text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
+                Engagement with my posts
               </h1>
-              <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-                hardcoded {/* +10 FDX */}
+              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
+                =
+              </h1>
+              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
+                {persistedUserInfo?.rewardSchedual?.postParticipationFdx > 0 && '+'}
+                {persistedUserInfo?.rewardSchedual?.postParticipationFdx} FDX
+              </h1>
+            </div>
+            <div className="grid w-full grid-cols-3 justify-items-center">
+              <h1 className="w-full text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
+                Creating a post
+              </h1>
+              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
+                =
+              </h1>
+              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
+                {persistedUserInfo?.feeSchedual?.creatingPostFdx > 0 && '+'}
+                {persistedUserInfo?.feeSchedual?.creatingPostFdx} FDX
               </h1>
             </div>
           </div>
@@ -148,12 +149,12 @@ const TreasurySummary = () => {
               </h1>
             </div>
             <div>
-              <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
+              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 =
               </h1>
             </div>
             <div className="text-end">
-              <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
+              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 $ 2.50 USD
               </h1>
             </div>

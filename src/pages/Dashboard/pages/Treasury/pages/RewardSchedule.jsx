@@ -37,7 +37,7 @@ const RewardSchedule = () => {
               {persistedUserInfo?.fdxSpent}
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              hardcoded
+              {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned}
             </p>
           </div>
         </div>
@@ -101,13 +101,18 @@ const RewardSchedule = () => {
               hardcoded {/* +10 FDX */}
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              hardcoded {/* +10 FDX */}
+              {persistedUserInfo?.feeSchedual?.creatingPostFdx > 0 && '+'}
+              {persistedUserInfo?.feeSchedual?.creatingPostFdx} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              hardcoded {/* +10 FDX */}
+              {persistedUserInfo?.feeSchedual?.creatingListFdx > 0 && '+'}
+              {persistedUserInfo?.feeSchedual?.creatingListFdx} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              hardcoded {/* +10 FDX */}
+              <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                {persistedUserInfo?.feeSchedual?.creatingPostCustomLinkFdx > 0 && '+'}
+                {persistedUserInfo?.feeSchedual?.creatingPostCustomLinkFdx} FDX
+              </p>
             </p>
           </div>
         </div>
