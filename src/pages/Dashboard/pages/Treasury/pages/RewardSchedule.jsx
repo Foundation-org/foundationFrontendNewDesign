@@ -1,6 +1,8 @@
-import { Button } from '../../../../../components/ui/Button';
+import { useSelector } from 'react-redux';
 
 const RewardSchedule = () => {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+
   return (
     <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
       {/* Total FDX */}
@@ -29,13 +31,13 @@ const RewardSchedule = () => {
           </div>
           <div className="space-y-2 text-end">
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              200.96
+              {persistedUserInfo?.fdxEarned}
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              100
+              {persistedUserInfo?.fdxSpent}
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              5
+              hardcoded
             </p>
           </div>
         </div>
@@ -81,16 +83,31 @@ const RewardSchedule = () => {
           </div>
           <div className="space-y-2 text-end">
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              +10 FDX
+              {persistedUserInfo?.rewardSchedual?.postParticipationFdx > 0 && '+'}
+              {persistedUserInfo?.rewardSchedual?.postParticipationFdx} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              +10 FDX
+              {persistedUserInfo?.rewardSchedual?.myEngagementInPostFdx > 0 && '+'}
+              {persistedUserInfo?.rewardSchedual?.myEngagementInPostFdx} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              +10 FDX
+              {persistedUserInfo?.rewardSchedual?.addingBadgeFdx > 0 && '+'}
+              {persistedUserInfo?.rewardSchedual?.addingBadgeFdx} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              +10 FDX
+              hardcoded {/* +10 FDX */}
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              hardcoded {/* +10 FDX */}
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              hardcoded {/* +10 FDX */}
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              hardcoded {/* +10 FDX */}
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              hardcoded {/* +10 FDX */}
             </p>
           </div>
         </div>

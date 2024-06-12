@@ -31,16 +31,22 @@ const TreasurySummary = () => {
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               FDX spent:
             </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              FDX Redeemed:
+            </p>
           </div>
           <div className="space-y-2 text-end">
             <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-              100.96
+              {persistedUserInfo?.fdxEarned + persistedUserInfo?.fdxSpent}
             </h1>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              200.96
+              {persistedUserInfo?.fdxEarned}
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              100
+              {persistedUserInfo?.fdxSpent}
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              hardcoded
             </p>
           </div>
         </div>
@@ -55,7 +61,7 @@ const TreasurySummary = () => {
               className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-              Rewards & Fees (as of 6/4/2024)
+              Rewards & Fees (as of {new Date().toLocaleDateString()})
             </h1>
           </div>
         </div>
@@ -69,13 +75,13 @@ const TreasurySummary = () => {
           </p>
           <div className="mt-2 grid grid-cols-5 justify-items-center tablet:px-11 tablet:py-[18.73px]">
             <div className="col-span-2 space-y-2">
-              <h1 className="text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-center tablet:text-[18px] tablet:leading-normal">
+              <h1 className="text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
                 Post participation
               </h1>
-              <h1 className="text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-center tablet:text-[18px] tablet:leading-normal">
+              <h1 className="text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
                 Engagement with my posts
               </h1>
-              <h1 className="text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-center tablet:text-[18px] tablet:leading-normal">
+              <h1 className="text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
                 Creating a post
               </h1>
             </div>
@@ -92,18 +98,20 @@ const TreasurySummary = () => {
             </div>
             <div className="col-span-2 space-y-2 text-end">
               <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-                +10 FDX
+                {persistedUserInfo?.rewardSchedual?.postParticipationFdx > 0 && '+'}
+                {persistedUserInfo?.rewardSchedual?.postParticipationFdx} FDX
               </h1>
               <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-                +10 FDX
+                {persistedUserInfo?.rewardSchedual?.myEngagementInPostFdx > 0 && '+'}
+                {persistedUserInfo?.rewardSchedual?.myEngagementInPostFdx} FDX
               </h1>
               <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-                +10 FDX
+                hardcoded {/* +10 FDX */}
               </h1>
             </div>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/post-activity')}>
+            <Button variant={'submit'} onClick={() => navigate('dashboard/treasury/reward-schedule')}>
               View all
             </Button>
           </div>
@@ -119,7 +127,7 @@ const TreasurySummary = () => {
               className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-              FDX Value (as of 6/4/2024)
+              FDX Value (as of {new Date().toLocaleDateString()})
             </h1>
           </div>
         </div>
@@ -151,7 +159,7 @@ const TreasurySummary = () => {
             </div>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/post-activity')}>
+            <Button variant={'submit'} onClick={() => navigate('/dashboard/treasury/buy-fdx')}>
               Buy More FDX
             </Button>
           </div>
@@ -178,7 +186,7 @@ const TreasurySummary = () => {
                 Total codes I’ve created
               </h1>
               <h1 className="col-span-2 border-l-[2.792px] border-[#D9D9D9] py-2 text-center text-[12px] font-medium leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
-                2
+                {persistedUserInfo?.redemptionStatistics?.myTotalRedemptionCodeCreationCount}
               </h1>
             </div>
             <div className="grid grid-cols-8 border-b-[2.792px] border-[#D9D9D9] pl-2 tablet:pl-8">
@@ -186,7 +194,7 @@ const TreasurySummary = () => {
                 FDX spent to create codes
               </h1>
               <h1 className="col-span-2 border-l-[2.792px] border-[#D9D9D9] py-2 text-center text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
-                20 FDX
+                {persistedUserInfo?.redemptionStatistics?.createCodeFdxSpent} FDX
               </h1>
             </div>
             <div className="grid grid-cols-8 pl-2 tablet:pl-8">
@@ -194,12 +202,12 @@ const TreasurySummary = () => {
                 FDX earned from codes redeemed
               </h1>
               <h1 className="col-span-2 border-l-[2.792px] border-[#D9D9D9] py-2 text-center text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
-                0
+                {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned} FDX
               </h1>
             </div>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/post-activity')}>
+            <Button variant={'submit'} onClick={() => navigate('/dashboard/treasury/redemption-center')}>
               Redemption Center
             </Button>
           </div>
