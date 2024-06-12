@@ -318,7 +318,9 @@ const VerificationBadges = () => {
           more FDX while you’re at it!
         </h1>
 
-        <Contact fetchUser={persistedUserInfo} handleRemoveBadgePopup={handleRemoveBadgePopup} />
+        <Contact fetchUser={persistedUserInfo} handleRemoveBadgePopup={handleRemoveBadgePopup}
+          checkLegacyBadge={checkLegacyBadge}
+        />
 
         <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
           Social
@@ -883,11 +885,11 @@ const VerificationBadges = () => {
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
           checkLegacyBadge={checkLegacyBadge}
         />
-        <Legacy
+        {/* <Legacy
           fetchUser={persistedUserInfo}
           handleRemoveBadgePopup={handleRemoveBadgePopup}
           checkLegacyBadge={checkLegacyBadge}
-        />
+        /> */}
         <Personal
           fetchUser={persistedUserInfo}
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
