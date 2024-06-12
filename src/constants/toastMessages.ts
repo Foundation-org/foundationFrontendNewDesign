@@ -12,7 +12,7 @@ export const toastMessages = {
   wrongPassword: 'Wrong Password',
   referalVerified: 'Referral code verified',
   referalInvalid: 'Referral code is not valid.',
-  generalError: 'An error occured',
+  generalError: 'An error occurred',
   otpSent: 'OTP sent Successfully',
   otpVerified: 'OTP verified Successfully',
   otpEmptyBlock: 'You cannot leave a block blank',
@@ -20,7 +20,7 @@ export const toastMessages = {
   badgeAdded: 'Badge Added Successfully!',
   badgeRemoval: 'Badge Removed Successfully!',
   badgeUpdated: 'Badge Updated Successfully!',
-  errorAddingBadge: 'An error occured while adding badge',
+  errorAddingBadge: 'An error occurred while adding badge',
   newList: 'New list created.',
   listAlreadyExists: 'List with a similar name already exists.',
   postAddedtoList: 'Post added in a list.',
@@ -42,10 +42,11 @@ export const toastMessages = {
   infoAlreadySaved: 'Information already saved',
   infoUpdated: 'Info Updated Successfully',
   emptyUrl: 'Url cannot be empty',
-  failedGettingLocation: 'It seems like location services are off or denied. To proceed, please enable location in your device settings and try again.',
+  failedGettingLocation:
+    'It seems like location services are off or denied. To proceed, please enable location in your device settings and try again.',
   locationNotSupported: "Your browser doesn't support geolocation.",
   selectSecQuestion: 'Please select a question first!',
-  emptyAnswer: "Answer field cannot be empty.",
+  emptyAnswer: 'Answer field cannot be empty.',
   linkCreated: 'Link created successfully',
   emptyLink: 'Link cannot be empty',
   linkAlready: 'Link already created',
@@ -85,7 +86,7 @@ export const toastMessages = {
   redemptionCreated: 'Redemption Code created successfully',
   redeemAdd: 'Hit add to redeem',
   redemptionSuccessful: 'Code Redeemed Successfully',
-  enterCode: 'Enter some code to Redeeem',
+  enterCode: 'Enter some code to Redeem',
   selectAmount: 'Please select the amount',
   shareLinkCopied: 'Share Link copied!',
   codeCopied: 'Code Copied!',
@@ -97,10 +98,4 @@ export const toastMessages = {
   verifyCode: 'Please Open the verification Page from the email',
   termsAndConditions: 'Please accept the terms and conditions to continue!',
   emailVerified: 'Email verified successfully.',
-
-
-
-
-
-
 } as const;

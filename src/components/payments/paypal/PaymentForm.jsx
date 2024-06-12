@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { useState, useRef } from 'react';
 import { Button } from '../../ui/Button';
 import { useSelector } from 'react-redux';
@@ -6,6 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { paypalPay } from '../../../services/api/payments';
 import { PayPalHostedFieldsProvider, PayPalHostedField, usePayPalHostedFields } from '@paypal/react-paypal-js';
 import { FaSpinner } from 'react-icons/fa6';
+import showToast from '../../ui/Toast';
 
 export const url = import.meta.env.VITE_API_URL;
 
@@ -86,12 +86,12 @@ export const PaymentForm = ({ dollar, handleClose }) => {
         // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
         await paypalPay({ charge: orderData, userUuid: data.uuid });
         if (transaction.status === 'COMPLETED') {
-          showToast('success', 'paymentSuccessful')
+          showToast('success', 'paymentSuccessful');
           queryClient.invalidateQueries(['userInfo']);
           localStorage.removeItem('paymentMethod');
           handleClose();
         } else {
-          showToast('warning', 'paymentUnsuccessful')
+          showToast('warning', 'paymentUnsuccessful');
         }
         return `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`;
       }
@@ -146,7 +146,7 @@ export const PaymentForm = ({ dollar, handleClose }) => {
             }}
             className="h-[60px] w-full rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white px-2 py-[2px] text-[12px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none tablet:p-4 tablet:text-[18px]"
           />
-          <div className="mt-2 flex justify-between gap-2">
+          <div className="my-2 flex justify-between gap-2">
             <PayPalHostedField
               id="expiration-date"
               hostedFieldType="expirationDate"

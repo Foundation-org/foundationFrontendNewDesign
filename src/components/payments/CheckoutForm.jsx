@@ -9,7 +9,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'sonner';
 import showToast from '../ui/Toast';
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ handleClose }) {
   const stripe = useStripe();
   const elements = useElements();
   const location = useLocation();
@@ -46,31 +46,32 @@ export default function CheckoutForm() {
 
         if (resp?.paymentIntent) {
           await spay({ charge: resp.paymentIntent, userUuid: persistedUserInfo.uuid });
-          localStorage.removeItem('scs');
-          localStorage.removeItem('paymentMethod');
           clearQueryParams();
           queryClient.invalidateQueries(['userInfo']);
 
           switch (resp.paymentIntent.status) {
             case 'succeeded':
-              showToast('success', 'paymentSuccessful')
+              showToast('success', 'paymentSuccessful');
               break;
             case 'processing':
               console.log('Your payment is processing');
               break;
             case 'requires_payment_method':
-              showToast('warning', 'paymentUnsuccessful')
+              showToast('warning', 'paymentUnsuccessful');
 
             default:
-              showToast('error', 'somethingWrong')
+              showToast('error', 'somethingWrong');
               break;
           }
         } else {
           console.log('Something went wrong retrieving the payment intent.');
         }
       } catch (error) {
+        showToast('error', 'error', {}, error.message);
+      } finally {
+        localStorage.removeItem('scs');
         localStorage.removeItem('paymentMethod');
-        showToast('error', 'error', {}, error.message)
+        handleClose();
       }
     };
 
@@ -102,10 +103,9 @@ export default function CheckoutForm() {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      showToast('error', 'error', {}, error.message)
-
+      showToast('error', 'error', {}, error.message);
     } else {
-      showToast('error', 'unexpectedError')
+      showToast('error', 'unexpectedError');
     }
 
     setIsLoading(false);

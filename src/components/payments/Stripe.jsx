@@ -8,9 +8,8 @@ import CheckoutForm from './CheckoutForm';
 // This is your test publishable API key.
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
-const Stripe = ({ clientSecret }) => {
+const Stripe = ({ clientSecret, handleClose }) => {
   const [localClientSecret, setLocalClientSecret] = useState(clientSecret || localStorage.getItem('scs'));
-  console.log('loca', localStorage.getItem('scs'));
 
   useEffect(() => {
     if (!localClientSecret) {
@@ -31,7 +30,7 @@ const Stripe = ({ clientSecret }) => {
     <>
       {(localClientSecret || localStorage.getItem('scs')) && (
         <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm />
+          <CheckoutForm handleClose={handleClose} />
         </Elements>
       )}
     </>

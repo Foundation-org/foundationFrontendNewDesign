@@ -370,7 +370,7 @@ export default function RedemptionCenter() {
                 <div className="col-span-2 px-1 py-2 tablet:col-span-3 tablet:px-3">
                   <h1 className="text-[10px] font-semibold text-[#85898C] tablet:text-[16px]">Code</h1>
                 </div>
-                <div className="col-span-3 border-l-[2.792px] border-[#D9D9D9]  px-1 py-2 tablet:px-3">
+                <div className="col-span-3 border-l-[2.792px] border-[#D9D9D9] px-1  py-2 tablet:col-span-2 tablet:px-3">
                   <h1 className="text-[10px] font-semibold text-[#85898C] tablet:text-[16px]">Description</h1>
                 </div>
                 <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9]  px-1 py-2 tablet:px-3">
@@ -401,7 +401,7 @@ export default function RedemptionCenter() {
                     className={`grid grid-cols-12 border-b-[2.792px] border-[#D9D9D9] ${unredeemedData?.data?.data.length > 1 && unredeemedData?.data?.data.length - 1 === index ? 'border-b-0' : ''}`}
                     key={index + 1}
                   >
-                    <div className="col-span-2 px-1  py-2 tablet:col-span-3 tablet:px-3">
+                    <div className="col-span-2 px-1 py-2  tablet:col-span-3 tablet:px-3">
                       <h1 className="break-words text-[10px] font-normal text-[#85898C] tablet:text-[16px]">
                         {item.code}
                       </h1>

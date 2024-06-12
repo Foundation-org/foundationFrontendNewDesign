@@ -40,7 +40,6 @@ export default function DashboardLayout({ children }) {
     queryFn: getConstants,
   });
 
-  console.log(constants);
   if (constantsError) {
     console.log(constantsError);
   }
@@ -113,7 +112,7 @@ export default function DashboardLayout({ children }) {
         navigate('/dashboard');
       }
     } catch (error) {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
   };
 
