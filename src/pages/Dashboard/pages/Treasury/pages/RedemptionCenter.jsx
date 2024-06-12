@@ -363,26 +363,26 @@ export default function RedemptionCenter() {
               </h1>
             </div>
           </div>
-          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-9 tablet:py-[18.73px]">
+          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-2 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-9 tablet:py-[18.73px]">
             <div className="rounded-[7.546px] border-[2.792px] border-[#D9D9D9]">
               <div className="grid grid-cols-12 border-b-[2.792px] border-[#D9D9D9]">
-                <div className="col-span-3 px-3 py-2">
-                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Code</h1>
+                <div className="col-span-2 px-1 py-2 tablet:col-span-3 tablet:px-3">
+                  <h1 className="text-[10px] font-semibold text-[#85898C] tablet:text-[16px]">Code</h1>
                 </div>
-                <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-3 py-2">
-                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Description</h1>
+                <div className="col-span-3 border-l-[2.792px] border-[#D9D9D9]  px-1 py-2 tablet:px-3">
+                  <h1 className="text-[10px] font-semibold text-[#85898C] tablet:text-[16px]">Description</h1>
                 </div>
-                <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-3 py-2">
-                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">FDX cost</h1>
+                <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9]  px-1 py-2 tablet:px-3">
+                  <h1 className="text-[10px] font-semibold text-[#85898C] tablet:text-[16px]">FDX cost</h1>
                 </div>
-                <div className="col-span-1 border-l-[2.792px] border-[#D9D9D9] px-1 py-2">
-                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Share</h1>
+                <div className="col-span-1 border-l-[2.792px] border-[#D9D9D9] px-[2px] py-2 tablet:px-1">
+                  <h1 className="break-words text-[10px] font-semibold text-[#85898C] tablet:text-[16px]">Share</h1>
                 </div>
-                <div className="col-span-1 border-l-[2.792px] border-[#D9D9D9] px-1 py-2">
-                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Copy</h1>
+                <div className="col-span-1 border-l-[2.792px] border-[#D9D9D9] px-[2px] py-2 tablet:px-1">
+                  <h1 className="break-words text-[10px] font-semibold text-[#85898C] tablet:text-[16px]">Copy</h1>
                 </div>
-                <div className="col-span-3 border-l-[2.792px] border-[#D9D9D9] px-3 py-2">
-                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]"></h1>
+                <div className="col-span-3 border-l-[2.792px] border-[#D9D9D9]  px-1 py-2 tablet:px-3">
+                  <h1 className="text-[10px] font-semibold text-[#85898C] tablet:text-[16px]"></h1>
                 </div>
                 {/* <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9]  px-[15px] py-3">
                   <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Expiration date</h1>
@@ -400,16 +400,18 @@ export default function RedemptionCenter() {
                     className={`grid grid-cols-12 border-b-[2.792px] border-[#D9D9D9] ${unredeemedData?.data?.data.length > 1 && unredeemedData?.data?.data.length - 1 === index ? 'border-b-0' : ''}`}
                     key={index + 1}
                   >
-                    <div className="col-span-3 px-3 py-2">
-                      <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.code}</h1>
+                    <div className="col-span-2 px-1  py-2 tablet:col-span-3 tablet:px-3">
+                      <h1 className="break-words text-[10px] font-normal text-[#85898C] tablet:text-[16px]">
+                        {item.code}
+                      </h1>
                     </div>
-                    <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-3 py-2">
-                      <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.description}</h1>
+                    <div className="col-span-3 border-l-[2.792px] border-[#D9D9D9] px-1  py-2 tablet:col-span-2 tablet:px-3">
+                      <h1 className="text-[10px] font-normal text-[#85898C] tablet:text-[16px]">{item.description}</h1>
                     </div>
-                    <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-3 py-2">
-                      <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.amount} FDX</h1>
+                    <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9]  px-1 py-2 tablet:px-3">
+                      <h1 className="text-[10px] font-normal text-[#85898C] tablet:text-[16px]">{item.amount} FDX</h1>
                     </div>
-                    <div className="col-span-1 border-l-[2.792px] border-[#D9D9D9] px-3 py-2">
+                    <div className="col-span-1 border-l-[2.792px] border-[#D9D9D9]  px-1 py-2 tablet:px-3">
                       <img
                         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/sharelink.svg`}
                         alt="copy"
@@ -420,7 +422,7 @@ export default function RedemptionCenter() {
                         }}
                       />
                     </div>
-                    <div className="col-span-1 border-l-[2.792px] border-[#D9D9D9] px-3 py-2">
+                    <div className="col-span-1 border-l-[2.792px] border-[#D9D9D9]  px-1 py-2 tablet:px-3">
                       <img
                         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copy.svg`}
                         alt="copy"
@@ -431,8 +433,12 @@ export default function RedemptionCenter() {
                         }}
                       />
                     </div>
-                    <div className="col-span-3 flex w-full justify-center border-l-[2.792px] border-[#D9D9D9] px-3 py-2">
-                      <Button variant="result" className={'max-w-[124px]'} onClick={() => handleRedeeem(item.code)}>
+                    <div className="col-span-3 flex w-full justify-center border-l-[2.792px] border-[#D9D9D9]  px-1 py-2 tablet:px-3">
+                      <Button
+                        variant="result"
+                        className={'tablet:max-w-[124px]'}
+                        onClick={() => handleRedeeem(item.code)}
+                      >
                         {radeemLoading === item.code ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Redeem'}
                       </Button>
                     </div>
@@ -492,20 +498,20 @@ export default function RedemptionCenter() {
               </h1>
             </div>
           </div>
-          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-9 tablet:py-[18.73px]">
+          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-2 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-9 tablet:py-[18.73px]">
             <div className="rounded-[7.546px] border-[2.792px] border-[#D9D9D9]">
               <div className="grid grid-cols-12 border-b-[2.792px] border-[#D9D9D9]">
-                <div className="col-span-3 px-[15px] py-3">
-                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Code</h1>
+                <div className="col-span-3 px-1 py-2 tablet:px-[15px] tablet:py-3">
+                  <h1 className="text-[10px] font-semibold text-[#85898C] tablet:text-[16px]">Code</h1>
                 </div>
-                <div className="col-span-4 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
-                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Description</h1>
+                <div className="col-span-4 border-l-[2.792px] border-[#D9D9D9] px-1 py-2 tablet:px-[15px] tablet:py-3">
+                  <h1 className="text-[10px] font-semibold text-[#85898C] tablet:text-[16px]">Description</h1>
                 </div>
-                <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
-                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">FDX cost</h1>
+                <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-1 py-2 tablet:px-[15px] tablet:py-3">
+                  <h1 className="text-[10px] font-semibold text-[#85898C] tablet:text-[16px]">FDX cost</h1>
                 </div>
-                <div className="col-span-3 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
-                  <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Redeemed date</h1>
+                <div className="col-span-3 border-l-[2.792px] border-[#D9D9D9] px-1 py-2 tablet:px-[15px] tablet:py-3">
+                  <h1 className="text-[10px] font-semibold text-[#85898C] tablet:text-[16px]">Redeemed date</h1>
                 </div>
                 {/* <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9]  px-[15px] py-3">
                   <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Expiration date</h1>
@@ -525,19 +531,19 @@ export default function RedemptionCenter() {
                       className={`grid grid-cols-12 border-b border-[#D9D9D9] ${index === 0 && isPulse ? 'text-[#049952]' : 'text-[#A3A3A3]'} ${history?.data?.data.length > 1 && history?.data?.data.length - 1 === index ? 'border-b-0' : ''}`}
                       key={index + 1}
                     >
-                      <div className="col-span-3 px-[15px] py-3">
-                        <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.code}</h1>
+                      <div className="col-span-3 px-1 py-2 tablet:px-[15px] tablet:py-3">
+                        <h1 className="text-[10px] font-normal text-[#85898C] tablet:text-[16px]">{item.code}</h1>
                       </div>
-                      <div className="col-span-4 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
-                        <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">
+                      <div className="col-span-4 border-l-[2.792px] border-[#D9D9D9] px-1 py-2 tablet:px-[15px] tablet:py-3">
+                        <h1 className="text-[10px] font-normal text-[#85898C] tablet:text-[16px]">
                           {item.description}
                         </h1>
                       </div>
-                      <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
-                        <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.amount} FDX</h1>
+                      <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-1 py-2 tablet:px-[15px] tablet:py-3">
+                        <h1 className="text-[10px] font-normal text-[#85898C] tablet:text-[16px]">{item.amount} FDX</h1>
                       </div>
-                      <div className="col-span-3 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
-                        <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">
+                      <div className="col-span-3 border-l-[2.792px] border-[#D9D9D9] px-1 py-2 tablet:px-[15px] tablet:py-3">
+                        <h1 className="text-[10px] font-normal text-[#85898C] tablet:text-[16px]">
                           {formatDate(item.createdAt)}
                         </h1>
                       </div>
