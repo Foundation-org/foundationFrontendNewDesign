@@ -198,20 +198,20 @@ export default function RedemptionCenter() {
     }
   };
 
-  const calculateExpiry = (expiry) => {
-    if (expiry) {
-      const targetDate = new Date(expiry);
-      const currentDate = new Date();
-      // Calculate the difference in milliseconds
-      const differenceMs = targetDate - currentDate;
-      // Convert milliseconds to days
-      const differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
+  // const calculateExpiry = (expiry) => {
+  //   if (expiry) {
+  //     const targetDate = new Date(expiry);
+  //     const currentDate = new Date();
+  //     // Calculate the difference in milliseconds
+  //     const differenceMs = targetDate - currentDate;
+  //     // Convert milliseconds to days
+  //     const differenceDays = Math.ceil(differenceMs / (1000 * 60 * 60 * 24));
 
-      return differenceDays + ' ' + 'days'; // Output the difference in days
-    } else {
-      return 'Never';
-    }
-  };
+  //     return differenceDays + ' ' + 'days'; // Output the difference in days
+  //   } else {
+  //     return 'Never';
+  //   }
+  // };
 
   function formatDate(timestamp) {
     const date = new Date(timestamp);
@@ -366,18 +366,18 @@ export default function RedemptionCenter() {
           <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-9 tablet:py-[18.73px]">
             <div className="rounded-[7.546px] border-[2.792px] border-[#D9D9D9]">
               <div className="grid grid-cols-12 border-b-[2.792px] border-[#D9D9D9]">
-                <div className="col-span-2 px-[15px] py-3">
+                <div className="col-span-3 px-[15px] py-3">
                   <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Code</h1>
                 </div>
-                <div className="col-span-6 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                <div className="col-span-5 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                   <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Description</h1>
                 </div>
                 <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                   <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">FDX cost</h1>
                 </div>
-                <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9]  px-[15px] py-3">
+                {/* <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9]  px-[15px] py-3">
                   <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Expiration date</h1>
-                </div>
+                </div> */}
               </div>
               {!unredeemedData || unredeemedData.data.data.length === 0 ? (
                 <div className="bg-white py-2 tablet:py-6">
@@ -388,21 +388,21 @@ export default function RedemptionCenter() {
               ) : (
                 unredeemedData?.data?.data?.map((item, index) => (
                   <div className="grid grid-cols-12" key={index + 1}>
-                    <div className="col-span-2 px-[15px] py-3">
+                    <div className="col-span-3 px-[15px] py-3">
                       <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.code}</h1>
                     </div>
-                    <div className="col-span-6 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                    <div className="col-span-5 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                       <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.description}</h1>
                     </div>
                     <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                       <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.amount} FDX</h1>
                     </div>
-                    <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                    {/* <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                       <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">
-                        {/* {calculateExpiry(item.expiry)} */}
+                        {calculateExpiry(item.expiry)}
                         Never
                       </h1>
-                    </div>
+                    </div> */}
                     <div className="col-span-12 flex w-full justify-center gap-6 border-y-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                       <Button
                         variant="share-link"
@@ -456,18 +456,18 @@ export default function RedemptionCenter() {
           <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-9 tablet:py-[18.73px]">
             <div className="rounded-[7.546px] border-[2.792px] border-[#D9D9D9]">
               <div className="grid grid-cols-12 border-b-[2.792px] border-[#D9D9D9]">
-                <div className="col-span-2 px-[15px] py-3">
+                <div className="col-span-3 px-[15px] py-3">
                   <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Code</h1>
                 </div>
-                <div className="col-span-6 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                <div className="col-span-5 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                   <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Description</h1>
                 </div>
                 <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                   <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">FDX cost</h1>
                 </div>
-                <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9]  px-[15px] py-3">
+                {/* <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9]  px-[15px] py-3">
                   <h1 className="text-[12px] font-semibold text-[#85898C] tablet:text-[16px]">Expiration date</h1>
-                </div>
+                </div> */}
               </div>
               {!history || history.data.data.length === 0 ? (
                 <div className="border-[#D9D9D9] bg-white py-2 tablet:py-6">
@@ -483,10 +483,10 @@ export default function RedemptionCenter() {
                       className={`grid grid-cols-12 ${index === 0 && isPulse ? 'text-[#049952]' : 'text-[#A3A3A3]'}`}
                       key={index + 1}
                     >
-                      <div className="col-span-2 px-[15px] py-3">
+                      <div className="col-span-3 px-[15px] py-3">
                         <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.code}</h1>
                       </div>
-                      <div className="col-span-6 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                      <div className="col-span-5 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                         <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">
                           {item.description}
                         </h1>
@@ -494,17 +494,17 @@ export default function RedemptionCenter() {
                       <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                         <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">{item.amount} FDX</h1>
                       </div>
-                      <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
+                      {/* <div className="col-span-2 border-l-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                         <h1 className="text-[12px] font-normal text-[#85898C] tablet:text-[16px]">
-                          {/* {calculateExpiry(item.expiry)} */}
+                          {calculateExpiry(item.expiry)}
                           Never
                         </h1>
-                      </div>
+                      </div> */}
                       <div className="col-span-12 flex w-full justify-center gap-6 border-y-[2.792px] border-[#D9D9D9] px-[15px] py-3">
                         <p className="text-[9px] font-medium leading-normal tablet:text-[20px]">
                           {formatDate(item.createdAt)}
                         </p>
-                        <img
+                        {/* <img
                           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
                           alt="trash"
                           className="h-3 w-[9px] cursor-pointer tablet:h-[23px] tablet:w-[17.6px]"
@@ -512,7 +512,7 @@ export default function RedemptionCenter() {
                             setDeleteHistoryCode(item.code);
                             setIsDeleteModal(true);
                           }}
-                        />
+                        /> */}
                       </div>
                     </div>
                   ))

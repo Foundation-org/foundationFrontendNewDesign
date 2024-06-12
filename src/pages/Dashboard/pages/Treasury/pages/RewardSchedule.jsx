@@ -23,6 +23,9 @@ const RewardSchedule = () => {
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               FDX spent:
             </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              FDX redeemed:
+            </p>
           </div>
           <div className="space-y-2 text-end">
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
@@ -30,6 +33,9 @@ const RewardSchedule = () => {
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               100
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              5
             </p>
           </div>
         </div>
@@ -63,8 +69,23 @@ const RewardSchedule = () => {
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               Sharing lists
             </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              Creating a post
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              Creating list
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              Create custom link
+            </p>
           </div>
           <div className="space-y-2 text-end">
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              +10 FDX
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              +10 FDX
+            </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               +10 FDX
             </p>
@@ -75,7 +96,7 @@ const RewardSchedule = () => {
         </div>
       </div>
       {/* Fee schedule */}
-      <div>
+      {/* <div>
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
@@ -110,7 +131,7 @@ const RewardSchedule = () => {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* Transaction fee */}
       <div>
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">

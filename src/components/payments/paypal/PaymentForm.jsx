@@ -166,7 +166,7 @@ export const PaymentForm = ({ dollar, handleClose }) => {
               className="h-[60px] w-full rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white px-2 py-[2px] text-[12px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none tablet:p-4 tablet:text-[18px]"
             />
           </div>
-          <div className="my-2 flex justify-between gap-2">
+          {/* <div className="my-2 flex justify-between gap-2">
             <input
               id="card-holder"
               type="text"
@@ -180,7 +180,7 @@ export const PaymentForm = ({ dollar, handleClose }) => {
               placeholder="Country Code"
               className="h-[60px] w-full rounded-[8px] border-[2.64px] border-[#E0E0E0] bg-white px-2 py-[2px] text-[12px] font-medium leading-[20px] text-[#A5ACB8] focus:outline-none tablet:p-4 tablet:text-[18px]"
             />
-          </div>
+          </div> */}
           <SubmitPayment onHandleMessage={setMessage} />
         </div>
       </PayPalHostedFieldsProvider>
