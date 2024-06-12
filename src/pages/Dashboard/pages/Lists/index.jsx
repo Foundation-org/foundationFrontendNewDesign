@@ -14,6 +14,7 @@ import ManagePostInListPopup from '../../../../components/dialogue-boxes/ManageP
 import DeleteListPostPopup from '../../../../components/dialogue-boxes/DeleteListPostPopup';
 import EditListNameDialogue from '../../../../components/dialogue-boxes/EditListNameDialogue';
 import { toast } from 'sonner';
+import showToast from '../../../../components/ui/Toast';
 
 const Lists = () => {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const Lists = () => {
     mutationFn: updatePostOrder,
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        toast.success('Order updated successfully');
+        showToast('success', 'orderUpdated')
         setHasReordered(false);
       }
       queryClient.invalidateQueries('lists');
@@ -234,31 +235,27 @@ const Lists = () => {
                           <Reorder.Item value={post} key={post._id} className="cursor-pointer">
                             <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
                               <div
-                                className={`${
-                                  false
+                                className={`${false
                                     ? 'border-[#5FA3D5]'
                                     : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
-                                } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
+                                  } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
                               >
                                 <div className="flex w-full items-center rounded-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
                                   <div
-                                    className={`${
-                                      false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-                                    } tablet:rounded-x-[10px] flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:px-[7px] tablet:py-[10px]`}
+                                    className={`${false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                                      } tablet:rounded-x-[10px] flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:px-[7px] tablet:py-[10px]`}
                                     style={{
-                                      backgroundImage: `url(${
-                                        persistedTheme === 'dark'
+                                      backgroundImage: `url(${persistedTheme === 'dark'
                                           ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`
                                           : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`
-                                      })`,
+                                        })`,
                                     }}
                                   />
                                   <div
-                                    className={`${
-                                      false
+                                    className={`${false
                                         ? 'border-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]'
                                         : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-                                    } flex w-full justify-between rounded-r-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
+                                      } flex w-full justify-between rounded-r-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
                                   >
                                     <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
                                       {post.questForeginKey.Question}

@@ -86,12 +86,12 @@ export const PaymentForm = ({ dollar, handleClose }) => {
         // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
         await paypalPay({ charge: orderData, userUuid: data.uuid });
         if (transaction.status === 'COMPLETED') {
-          toast.success('Payment successful');
+          showToast('success', 'paymentSuccessful')
           queryClient.invalidateQueries(['userInfo']);
           localStorage.removeItem('paymentMethod');
           handleClose();
         } else {
-          toast.error('Payment failed');
+          showToast('warning', 'paymentUnsuccessful')
         }
         return `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`;
       }

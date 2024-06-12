@@ -8,6 +8,7 @@ import ListBox from '../ui/ListBox';
 import { FaSpinner } from 'react-icons/fa';
 import BadgeRemovePopup from './badgeRemovePopup';
 import { useQueryClient } from '@tanstack/react-query';
+import showToast from '../ui/Toast';
 
 const CompanyName = {
   label: 'Company Name',
@@ -85,12 +86,12 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
       const newArr = queryExists
         ? [...jb.data]
         : [
-            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-            ...jb.data.map((jb) => ({
-              ...jb,
-              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-            })),
-          ];
+          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+          ...jb.data.map((jb) => ({
+            ...jb,
+            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+          })),
+        ];
 
       setJobs(newArr);
     } catch (err) {
@@ -173,19 +174,19 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
         field6Data === undefined ||
         field6Data === ''
       ) {
-        toast.error('You cannot leave the field blank');
+        showToast('error', 'blankField');
         setLoading(false);
         return;
       }
 
       if (field6Data < field5Data) {
-        toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        showToast('warning', 'DateEarlierStart')
         setLoading(false);
 
         return;
       }
-      if (field6Data < field5Data) {
-        toast.warning('Please ensure the ending date is not same as the starting date.');
+      if (field6Data === field5Data) {
+        showToast('warning', 'DateSameStart')
         setLoading(false);
         return;
       }
@@ -200,7 +201,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
         queryClient.invalidateQueries(['userInfo']);
-        toast.success('Badge Added Successfully!');
+        showToast('success', 'badgeAdded')
 
         const companySaved = await api.post(`/addBadge/company/add`, {
           name: field1Data.name,
@@ -223,7 +224,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
         setLoading(false);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
       handleClose();
     }
   };
@@ -273,19 +274,19 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
         prevInfo.startingYear === field5Data &&
         prevInfo.endingYear === field6Data
       ) {
-        toast.error('Information already saved');
+        showToast('warning', 'infoAlreadySaved')
         setLoading(false);
 
         return;
       }
       if (field6Data < field5Data) {
-        toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        showToast('warning', 'DateEarlierStart')
         setLoading(false);
 
         return;
       }
-      if (field6Data < field5Data) {
-        toast.warning('Please ensure the ending date is not same as the starting date.');
+      if (field6Data === field5Data) {
+        showToast('warning', 'DateSameStart')
         setLoading(false);
 
         return;
@@ -303,7 +304,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
       const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, payload);
       if (updateBadge.status === 200) {
         queryClient.invalidateQueries(['userInfo']);
-        toast.success('Info Updated Successfully');
+        showToast('success', 'infoUpdated');
         if (prevInfo.CompanyName !== field1Data.name) {
           const companySaved = await api.post(`/addBadge/company/add`, {
             name: field1Data.name,
@@ -326,7 +327,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
         setLoading(false);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
       handleClose();
     }
   };

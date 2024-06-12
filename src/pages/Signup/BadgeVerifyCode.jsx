@@ -5,6 +5,7 @@ import { url } from '../../services/api/Axios';
 import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../features/auth/authSlice';
 import { Button as UiButton } from '../../components/ui/Button';
+import showToast from '../../components/ui/Toast';
 
 const BadgeVerifyCode = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const BadgeVerifyCode = () => {
             let verificationToken = token.substr(token.length - 6);
             setVerificationCode(Array.from(verificationToken)); // Create an array from the token
           } else {
-            toast.error('Please Open the verification Page from the email');
+            showToast('error', 'verifyCode')
           }
           document.addEventListener('keypress', handleKeyPress);
 
@@ -53,7 +54,7 @@ const BadgeVerifyCode = () => {
       })
       .catch((error) => {
         console.error('Error:', error.message);
-        toast.error(error.response.data.message.split(':')[1]);
+        showToast('error', 'error', {}, error.response.data.message.split(':')[1])
       });
   }, []);
 
@@ -78,7 +79,7 @@ const BadgeVerifyCode = () => {
       });
 
       if (response.status === 200) {
-        toast.success('Email verified successfully.');
+        showToast('error', 'emailVerified')
 
         const data = await response.json();
         dispatch(addUser(data));
@@ -87,7 +88,7 @@ const BadgeVerifyCode = () => {
       }
     } catch (error) {
       console.log('Error during API request:', error.message);
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
     }
   };
 

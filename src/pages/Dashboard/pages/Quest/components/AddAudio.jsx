@@ -10,6 +10,7 @@ import { soundcloudUnique, youtubeBaseURLs } from '../../../../../constants/addM
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import ReactPlayer from 'react-player/lazy';
 import './Player.css';
+import showToast from '../../../../../components/ui/Toast';
 
 export default function AddAudio({ handleTab }) {
   const playerRef = useRef(null);
@@ -48,7 +49,7 @@ export default function AddAudio({ handleTab }) {
   useEffect(() => {
     // Check if the URL is a SoundCloud playlist
     if (getMediaStates.url?.includes(soundcloudUnique) && getMediaStates.url?.includes('/sets/')) {
-      toast.error('We do not support SoundCloud playlists');
+      showToast('error', 'soundCloudPlaylistNot')
       dispatch(createQuestAction.clearUrl());
       return;
     }
@@ -58,7 +59,7 @@ export default function AddAudio({ handleTab }) {
       youtubeBaseURLs.some((baseURL) => getMediaStates.url?.includes(baseURL)) &&
       getMediaStates.url.includes('list=')
     ) {
-      toast.error('We do not support YouTube playlists');
+      showToast('error', 'youtubePlaylistNot')
       dispatch(createQuestAction.clearUrl());
       return;
     }
@@ -88,7 +89,7 @@ export default function AddAudio({ handleTab }) {
       const urlId = extractPartFromUrl(value);
       dispatch(createQuestAction.checkIsUrlAlreayExists({ id: urlId, url: getMediaStates.url }));
     } else {
-      toast.warning('YouTube and SoundCloud links are supported.');
+      showToast('error', 'youtubeSoundCloudLinks')
     }
   };
 
@@ -177,7 +178,7 @@ export default function AddAudio({ handleTab }) {
                 url={getMediaStates.url}
                 className="react-player"
                 onError={(e) => {
-                  toast.error('Invalid URL'), dispatch(createQuestAction.clearUrl());
+                  showToast('error', 'invalidUrl'), dispatch(createQuestAction.clearUrl());
                 }}
                 width="100%"
                 height="100%"

@@ -19,6 +19,7 @@ import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId } from '../../../fea
 import MediaControls from '../../../components/MediaControls';
 import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
 import { saveConstants } from '../../../features/constants/constantsSlice';
+import showToast from '../../../components/ui/Toast';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
@@ -97,7 +98,7 @@ export default function DashboardLayout({ children }) {
 
   const handleEmailType = async (value) => {
     try {
-      if (!value) return toast.error('Please select the email type!');
+      if (!value) return showToast('warning', 'emailType');
       setModalVisible(false);
       const res = await api.patch(`/updateBadge/${persistedUserInfo._id}/${persistedUserInfo.badges[0]._id}`, {
         type: value,
@@ -112,7 +113,7 @@ export default function DashboardLayout({ children }) {
         navigate('/dashboard');
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
     }
   };
 

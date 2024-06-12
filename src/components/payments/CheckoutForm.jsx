@@ -7,6 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'sonner';
+import showToast from '../ui/Toast';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -52,16 +53,16 @@ export default function CheckoutForm() {
 
           switch (resp.paymentIntent.status) {
             case 'succeeded':
-              toast.success('Payment succeeded!');
+              showToast('success', 'paymentSuccessful')
               break;
             case 'processing':
               console.log('Your payment is processing');
               break;
             case 'requires_payment_method':
-              toast.warning('Your payment was not successful, please try again.');
-              break;
+              showToast('warning', 'paymentUnsuccessful')
+
             default:
-              toast.error('Something went wrong.');
+              showToast('error', 'somethingWrong')
               break;
           }
         } else {
@@ -69,7 +70,7 @@ export default function CheckoutForm() {
         }
       } catch (error) {
         localStorage.removeItem('paymentMethod');
-        toast.error('An error occurred: ' + error.message);
+        showToast('error', 'error', {}, error.message)
       }
     };
 
@@ -101,9 +102,10 @@ export default function CheckoutForm() {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === 'card_error' || error.type === 'validation_error') {
-      toast.error(error.message);
+      showToast('error', 'error', {}, error.message)
+
     } else {
-      toast.error('An unexpected error occurred.');
+      showToast('error', 'unexpectedError')
     }
 
     setIsLoading(false);

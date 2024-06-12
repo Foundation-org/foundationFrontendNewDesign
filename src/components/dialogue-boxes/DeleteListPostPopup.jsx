@@ -5,6 +5,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { updateCategory } from '../../services/api/listsApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
+import showToast from '../ui/Toast';
 
 export default function DeleteListPostPopup({ handleClose, modalVisible, title, image, categoryId, postId }) {
   const queryClient = useQueryClient();
@@ -21,8 +22,7 @@ export default function DeleteListPostPopup({ handleClose, modalVisible, title, 
       //   return;
       // }
 
-      toast.success('Post deleted successfully');
-
+      showToast('success', 'deletePost')
       // queryClient.setQueriesData(['lists'], (oldData) => {
       //   console.log('old', oldData);
       //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));

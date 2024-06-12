@@ -5,6 +5,7 @@ import { url } from '../../services/api/Axios';
 import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../features/auth/authSlice';
 import { Button as UiButton } from '../../components/ui/Button';
+import showToast from '../../components/ui/Toast';
 
 const VerifyCode = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const VerifyCode = () => {
             let verificationToken = urlQuery.substr(urlQuery.length - 6);
             setVerificationCode(Array.from(verificationToken)); // Create an array from the token
           } else {
-            toast.error('Please Open the verification Page from the email');
+            showToast('error', 'verifyCode')
           }
 
           // Attach the event listener to the whole document
@@ -104,7 +105,7 @@ const VerifyCode = () => {
       });
 
       if (response.status === 200) {
-        toast.success('Email verified successfully.');
+        showToast('success', 'emailVerified')
 
         // await handleUserInfo();
 

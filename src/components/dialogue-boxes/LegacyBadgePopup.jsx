@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import api from '../../services/api/Axios';
 import { useQueryClient } from '@tanstack/react-query';
+import showToast from '../ui/Toast';
 
 const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
   const [RemoveLoading, setRemoveLoading] = useState(false);
@@ -46,7 +47,7 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
               eyk: infoc.data.data,
             });
             if (resp.status === 200) {
-              toast.success('Badge Added Successfully');
+              showToast('success', 'badgeAdded');
               handleClose();
               setIsLoading(false);
               queryClient.invalidateQueries(['userInfo']);
@@ -60,7 +61,7 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
         console.log(err);
       }
     } else {
-      toast.warning('Password does not match');
+      showToast('error', 'passwordMismatched')
       setIsLoading(false);
     }
   };

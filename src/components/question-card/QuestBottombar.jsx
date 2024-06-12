@@ -15,6 +15,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
 import AddToListPopup from '../dialogue-boxes/AddToListPopup';
+import showToast from '../ui/Toast';
 const data = [
   {
     id: 1,
@@ -87,7 +88,7 @@ const QuestBottombar = ({
       );
       return;
     } else if (questStartData?.moderationRatingCount >= 1) {
-      toast.warning('Sharing adult posts is prohibited.');
+      showToast('warning', 'AdultPost')
     } else {
       setCopyModal(true);
     }
@@ -144,7 +145,7 @@ const QuestBottombar = ({
   };
   const showHidePostOpen = () => {
     if (questStartData.uuid === persistedUserInfo.uuid) {
-      toast.warning('You cannot hide your own post.');
+      showToast('warning', 'hidingOwnPost')
       return;
     }
 
@@ -386,12 +387,12 @@ const QuestBottombar = ({
           )}
 
           {postProperties !== 'HiddenPosts' &&
-          postProperties !== 'SharedLinks' &&
-          postProperties !== 'sharedlink-results' &&
-          postProperties !== 'actual-results' &&
-          !window.location.href.includes('/p/') &&
-          !location.pathname.includes('/l/') &&
-          location.pathname !== '/quest/isfullscreen' ? (
+            postProperties !== 'SharedLinks' &&
+            postProperties !== 'sharedlink-results' &&
+            postProperties !== 'actual-results' &&
+            !window.location.href.includes('/p/') &&
+            !location.pathname.includes('/l/') &&
+            location.pathname !== '/quest/isfullscreen' ? (
             <div className="flex justify-center ">
               {isFullScreen === undefined ? (
                 <div

@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { updateUserSettings } from '../../services/api/userAuth';
 import { useSelector } from 'react-redux';
+import showToast from '../ui/Toast';
 
 export default function CloseEmailNotificationPopup({
   handleClose,
@@ -23,7 +24,7 @@ export default function CloseEmailNotificationPopup({
   const { mutateAsync: handleUserSettings } = useMutation({
     mutationFn: updateUserSettings,
     onSuccess: () => {
-      toast.success('Email notification closed successfully');
+      showToast('success', 'emailNotificationClosed');
       queryClient.invalidateQueries(['userInfo']);
       setEmailNotifications(!emailNotifications);
       setIsLoading(false);
@@ -32,7 +33,7 @@ export default function CloseEmailNotificationPopup({
     onError: (error) => {
       console.log(error);
       setIsLoading(false);
-      toast.error(error.response.data.message);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
     },
   });
 
@@ -53,7 +54,7 @@ export default function CloseEmailNotificationPopup({
           <Button
             variant={'submit'}
             onClick={() => {
-              if (email === '') return toast.warning('Email cannot be empty.');
+              if (email === '') return showToast('warning', 'emptyEmail');
               setIsLoading(true);
               handleUserSettings({ uuid: persistedUserInfo.uuid, email, emailNotifications: !emailNotifications });
             }}

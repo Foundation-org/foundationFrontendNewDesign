@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { addUser } from '../../../features/auth/authSlice';
 import LegacyConfirmationPopup from '../../../components/dialogue-boxes/LegacyConfirmationPopup';
+import showToast from '../../../components/ui/Toast';
 
 const CredentialLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -72,22 +73,23 @@ const CredentialLogin = () => {
           }
         }
       } else {
-        toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
+        showToast('warning',)
       }
       // } else {
       //   toast.error('Google recaptcha failed');
       // }
     } catch (e) {
       if (e.response.data === 'Wrong Password') {
-        toast.error('Your typed password is incorrect.');
+        showToast('error', 'incorrectTypedPassword');
       } else if (
         e.response.data.message === 'An error occurred while signInUser Auth: data and hash arguments required'
       ) {
-        toast.error('Your typed password is incorrect.');
+        showToast('error', 'incorrectTypedPassword');
       } else if (e.response.data.message === 'An error occurred while signInUser Auth: User not Found') {
-        toast.error('Oops! User not found');
+        showToast('error', 'userNotFound')
       } else {
-        toast.error(e.response.data.message.split(':')[1]);
+        showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+
       }
     }
     // finally {
@@ -213,7 +215,7 @@ const CredentialLogin = () => {
         onClick={() => {
           handleSignin();
         }}
-        // disabled={isLoading === true ? true : false}
+      // disabled={isLoading === true ? true : false}
       >
         Sign in
         {/* {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Sign in'} */}

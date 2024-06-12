@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { resetFilters } from '../../../../../../features/sidebar/filtersSlice';
 import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../../../../../features/auth/authSlice';
+import showToast from '../../../../../../components/ui/Toast';
 
 export const Settings = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ export const Settings = () => {
     },
     onError: (error) => {
       console.log(error);
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
     },
   });
 
@@ -59,7 +60,8 @@ export const Settings = () => {
     },
     onError: (error) => {
       console.log(error);
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+
     },
   });
 
@@ -74,16 +76,15 @@ export const Settings = () => {
         </div>
         <Switch
           checked={checkState}
-          onChange={() => toast.info('Feature coming soon.')}
+          onChange={() => showToast('info', 'featureComingSoon')}
           // onChange={handleTheme}
           className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
         >
           <span className="sr-only">Use setting</span>
           <span
             aria-hidden="true"
-            className={`${
-              checkState ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
-            }
+            className={`${checkState ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
+              }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
           />
         </Switch>
@@ -105,9 +106,8 @@ export const Settings = () => {
           <span className="sr-only">Use setting</span>
           <span
             aria-hidden="true"
-            className={`${
-              defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
-            }
+            className={`${defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
+              }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
           />
         </Switch>

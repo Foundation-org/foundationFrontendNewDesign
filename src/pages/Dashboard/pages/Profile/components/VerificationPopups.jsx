@@ -7,7 +7,7 @@ import api from '../../../../../services/api/Axios';
 import PopUp from '../../../../../components/ui/PopUp';
 import { useErrorBoundary } from 'react-error-boundary';
 import { useQueryClient } from '@tanstack/react-query';
-
+import showToast from '../../../../../components/ui/Toast'
 const REDIRECT_URI = window.location.href;
 const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, selectedBadge }) => {
   const queryClient = useQueryClient();
@@ -24,7 +24,7 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
     try {
       let addBadge;
       if (legacy) {
-        if (email === '') return toast.warning('Please enter your email address');
+        if (email === '') return showToast('warning', 'emptyEmail');
         addBadge = await api.post(`/addBadge/contact`, {
           legacy,
           email,
@@ -43,20 +43,20 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
         });
       }
       if (addBadge.status === 200) {
-        toast.success('Badge Added Successfully!');
+        showToast('success', 'badgeAdded')
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setEmail('');
       }
       if (addBadge.status === 201) {
-        toast.success('Please check your Email to verify');
+        showToast('success', 'verifyEmail')
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setEmail('');
       }
     } catch (error) {
       showBoundary(error);
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
       handleClose();
       setEmail('');
     } finally {
@@ -89,7 +89,7 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
           >
             <Button
               variant="social-btn"
-              // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
+            // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
             >
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}

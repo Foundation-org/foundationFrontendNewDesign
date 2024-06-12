@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TextareaAutosize } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
+import showToast from '../ui/Toast'
 export default function EditListNameDialogue({ handleClose, modalVisible, title, image, categoryId, listData }) {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -27,8 +27,7 @@ export default function EditListNameDialogue({ handleClose, modalVisible, title,
       //   toast.warning('Something goes wrong.');
       //   return;
       // }
-
-      toast.success('List name updated successfully');
+      showToast('success', 'listNameUpdate')
 
       // queryClient.setQueriesData(['lists'], (oldData) => {
       //   console.log('old', oldData);

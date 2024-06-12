@@ -6,6 +6,7 @@ import { authentication } from '../pages/Dashboard/pages/Profile/pages/firebase-
 import { InstagramLogin } from '@amraneze/react-instagram-login';
 import { LoginSocialLinkedin } from '../pages/Dashboard/pages/Profile/pages/ReactLinkedIn';
 import { LoginSocialFacebook } from '../pages/Dashboard/pages/Profile/pages/ReactFacebook';
+import showToast from './ui/Toast';
 
 const REDIRECT_URI = window.location.href;
 
@@ -107,7 +108,7 @@ const SocialLogins = ({
           onClick={() => {
             setIsLoadingSocial(true);
           }}
-          // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
+        // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
         >
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
@@ -133,7 +134,7 @@ const SocialLogins = ({
       >
         <button
           className="flex h-[36px] w-full items-center whitespace-nowrap rounded-[6.043px] border-[1px] border-gray-200 bg-white px-2 text-center text-[2.3vw] font-[500] text-black sm:h-[50px] sm:text-[2.1vw] lg:h-[60px] lg:text-[.98vw] 2xl:rounded-[11.703px] 2xl:px-4 dark:border-white dark:bg-dark-gray dark:text-white "
-          // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/facebook`, '_self')}
+        // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/facebook`, '_self')}
         >
           {persistedTheme === 'dark' ? (
             <img
@@ -197,7 +198,7 @@ const SocialLogins = ({
         onReject={(err) => {
           console.log('err', err);
           setIsLoadingSocial(false);
-          toast.error('An error occured');
+          showToast('error', 'generalError')
         }}
       >
         <Button

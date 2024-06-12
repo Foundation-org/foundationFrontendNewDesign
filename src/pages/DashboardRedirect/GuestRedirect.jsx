@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../features/auth/authSlice';
 import { createGuestMode } from '../../services/api/userAuth';
 import { useNavigate } from 'react-router-dom';
+import showToast from '../../components/ui/Toast';
 
 const GuestRedirect = () => {
   const dispatch = useDispatch();

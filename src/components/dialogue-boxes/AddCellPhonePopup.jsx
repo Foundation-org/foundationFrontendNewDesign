@@ -8,6 +8,7 @@ import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
+import showToast from '../ui/Toast';
 
 const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
   const queryClient = useQueryClient();
@@ -61,12 +62,12 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
   const { mutateAsync: verifyOtpCode } = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (resp) => {
-      toast.success('OTP verified Successfully');
+      showToast('success', 'otpVerified');
       handleAddContactBadge();
     },
     onError: (err) => {
       setLoading(false);
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
     },
   });
 
@@ -74,11 +75,11 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
     mutationFn: sendOtp,
     onSuccess: (resp) => {
       setOtpResp(resp);
-      toast.success('OTP sent Successfully');
+      showToast('success', 'otpSent')
       setIsRunning(true);
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
     },
   });
 
@@ -86,11 +87,11 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
     mutationFn: resendOtp,
     onSuccess: (resp) => {
       setOtpResp(resp);
-      toast.success('OTP sent Successfully');
+      showToast('success', 'otpSent')
       setIsRunning(true);
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
     },
   });
 
@@ -103,14 +104,14 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
       });
 
       if (addBadge.status === 200) {
-        toast.success('Badge Added Successfully!');
+        showToast('success', 'badgeAdded');
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setLoading(false);
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
       handleClose();
     } finally {
       setLoading(false);
@@ -210,10 +211,10 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
                       setLoading(true);
                       verifyOtpCode({ phone: otpResp?.data?.data?.phoneNumber, otpString });
                     } else {
-                      toast.error('OTP exipred');
+                      showToast('error', 'otpExpired')
                     }
                   } else {
-                    toast.error('You cannot leave a block blank');
+                    showToast('warning', 'otpEmptyBlock')
                   }
                 }}
               >

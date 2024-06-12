@@ -11,7 +11,7 @@ import '@farcaster/auth-kit/styles.css';
 import { AuthKitProvider, SignInButton, useProfile, useSignIn } from '@farcaster/auth-kit';
 import { useQueryClient } from '@tanstack/react-query';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
-
+import showToast from '../../../../../../components/ui/Toast'
 export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirmation, checkLegacyBadge }) {
   const { sdk } = useSDK();
   const persistedContants = useSelector(getConstantsValues);
@@ -49,7 +49,7 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
 
       const addBadge = await api.post(`/addBadge/web3/add`, payload);
       if (addBadge.status === 200) {
-        toast.success('Badge Added Successfully!');
+        showToast('success', 'badgeAdded')
         queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
@@ -66,10 +66,10 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
     try {
       // Device Detect
       if (type === 'desktop' && !isBrowser) {
-        return toast.warning('Please switch to desktop!');
+        return showToast('warning', 'switchDesktop')
       }
       if (type === 'mobile' && !isMobile) {
-        return toast.warning('Please switch to mobile!');
+        return showToast('warning', 'switchMobile')
       }
       // let value;
       if (title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile') {
@@ -90,7 +90,7 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
         if (verificationJSON && verificationJSON.verified) {
           value = attResp;
         } else {
-          toast.error(`Oh no, something went wrong!`);
+          showToast('error', 'somethingWrong')
         }
       }
       if (value === '') {
@@ -119,12 +119,12 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
         // alert("testing...   ")
       }
       if (addBadge?.status === 200) {
-        toast.success('Badge Added Successfully!');
+        showToast('success', 'badgeAdded')
         queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
       console.error(error);
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
     }
   };
 

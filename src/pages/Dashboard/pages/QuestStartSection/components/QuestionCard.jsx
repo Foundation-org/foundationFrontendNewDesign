@@ -18,6 +18,7 @@ import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import * as questServices from '../../../../../services/api/questsApi';
 import { questSelectionInitial } from '../../../../../constants/quests';
 import Spacing from '../../../../../components/question-card/Spacing';
+import showToast from '../../../../../components/ui/Toast';
 
 const QuestionCard = (props) => {
   const dispatch = useDispatch();
@@ -297,7 +298,7 @@ const QuestionCard = (props) => {
       setLoading(false);
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
       setLoading(false);
     },
   });
@@ -308,11 +309,11 @@ const QuestionCard = (props) => {
       queryClient.invalidateQueries(['userInfo']);
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
-        toast.warning('You have selected the same option as last time. Your option was not changed.');
+        showToast('warning', 'selectedSameOptions')
       }
       if (resp.data.message === 'You can change your answer once every 1 hour') {
         setLoading(false);
-        toast.warning('You can change your option once every 1 hour.');
+        showToast('warning', 'changeOptionTimePeriod')
       }
       if (resp.data.message === 'Start Quest Updated Successfully') {
         setLoading(false);
@@ -323,7 +324,7 @@ const QuestionCard = (props) => {
       dispatch(questUtilsActions.resetaddOptionLimit());
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
       setLoading(false);
 
       dispatch(questUtilsActions.resetaddOptionLimit());
@@ -382,7 +383,7 @@ const QuestionCard = (props) => {
       };
 
       if (!params.answer.selected) {
-        toast.warning("Oops! You haven't selected anything yet.");
+        showToast('warning', 'emptySelection')
         setLoading(false);
         return;
       }
@@ -466,7 +467,7 @@ const QuestionCard = (props) => {
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            toast.error('You cannot leave the added option blank');
+            showToast('warning', 'optionBlank')
             setLoading(false);
             return;
           }
@@ -493,7 +494,7 @@ const QuestionCard = (props) => {
 
             setAnswerSelection(updatedArray);
           } else {
-            toast.warning("Oops! You haven't selected anything yet.");
+            showToast('warning', 'emptySelection')
             setLoading(false);
           }
         }
@@ -510,7 +511,7 @@ const QuestionCard = (props) => {
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          toast.error('You cannot leave the added option blank');
+          showToast('warning', 'optionBlank')
           setLoading(false);
           return;
         }
@@ -537,7 +538,7 @@ const QuestionCard = (props) => {
 
           setAnswerSelection(updatedArray);
         } else {
-          toast.warning("Oops! You haven't selected anything yet.");
+          showToast('warning', 'emptySelection')
           setLoading(false);
         }
       }
@@ -594,7 +595,7 @@ const QuestionCard = (props) => {
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            toast.error('You cannot leave the added option blank');
+            showToast('warning', 'optionBlank')
             setLoading(false);
             return;
           }
@@ -613,7 +614,7 @@ const QuestionCard = (props) => {
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          toast.error('You cannot leave the added option blank');
+          showToast('warning', 'optionBlank')
           setLoading(false);
           return;
         }

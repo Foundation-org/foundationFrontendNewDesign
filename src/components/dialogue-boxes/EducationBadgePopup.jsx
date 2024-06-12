@@ -9,6 +9,7 @@ import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
 import BadgeRemovePopup from './badgeRemovePopup';
+import showToast from '../ui/Toast';
 
 const School = {
   label: 'School',
@@ -81,12 +82,12 @@ const EducationBadgePopup = ({
       const newArr = queryExists
         ? [...jb.data]
         : [
-            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-            ...jb.data.map((jb) => ({
-              ...jb,
-              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-            })),
-          ];
+          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+          ...jb.data.map((jb) => ({
+            ...jb,
+            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+          })),
+        ];
 
       setEduData(newArr);
     } catch (err) {
@@ -149,25 +150,26 @@ const EducationBadgePopup = ({
         field5Data.name === undefined ||
         field5Data.name === ''
       ) {
-        toast.error('You cannot leave the field blank');
+        showToast('error', 'blankField');
         setLoading(false);
         return;
       }
 
       if (field4Data < field3Data) {
-        toast.warning('Please ensure the graduation date is not earlier than the start date.');
+        showToast('error', 'graduationDateEarlierStart')
         setLoading(false);
         return;
       }
       if (field4Data === field3Data) {
-        toast.warning('Please ensure the graduation date is not the same as the start date.');
+        showToast('error', 'graduationDateSameStart')
         setLoading(false);
         return;
       }
 
       if (existingData) {
         if (existingData.some((item) => item.id === field1Data.id)) {
-          toast.warning('School already exists');
+          showToast('error', 'schoolAlreadyExist')
+
           setLoading(false);
           return;
         }
@@ -183,7 +185,7 @@ const EducationBadgePopup = ({
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
         queryClient.invalidateQueries(['userInfo']);
-        toast.success('Badge Added Successfully!');
+        showToast('success', 'badgeAdded')
         if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
             name: field2Data.name,
@@ -240,17 +242,17 @@ const EducationBadgePopup = ({
         field5Data.name === undefined ||
         field5Data.name === ''
       ) {
-        toast.error('You cannot leave the field blank');
+        showToast('warning', 'blankField');
         setLoading(false);
         return;
       }
       if (field4Data < field3Data) {
-        toast.warning('Please ensure the graduation date is not earlier than the start date.');
+        showToast('warning', 'graduationDateSameStart')
         setLoading(false);
         return;
       }
       if (field4Data === field3Data) {
-        toast.warning('Please ensure the graduation date is not the same as the start date.');
+        showToast('warning', 'graduationDateSameStart')
         setLoading(false);
         return;
       }
@@ -262,7 +264,7 @@ const EducationBadgePopup = ({
         prevInfo.startingYear === field3Data &&
         prevInfo.graduationYear === field4Data
       ) {
-        toast.error('Information already saved');
+        showToast('warning', 'infoAlreadySaved')
         setLoading(false);
         return;
       }
@@ -279,7 +281,7 @@ const EducationBadgePopup = ({
       const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, payload);
       if (updateBadge.status === 200) {
         queryClient.invalidateQueries(['userInfo']);
-        toast.success('Info Updated Successfully');
+        showToast('success', 'infoUpdated');
         if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
             name: field2Data.name,
@@ -304,7 +306,7 @@ const EducationBadgePopup = ({
         setLoading(false);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
       handleClose();
     }
 

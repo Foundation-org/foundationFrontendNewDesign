@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../../../features/auth/authSlice';
+import showToast from '../../../../components/ui/Toast';
 
 const GuestCustomerSupport = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const GuestCustomerSupport = () => {
       dispatch(addUser(resp?.data));
     },
     onError: (err) => {
-      toast.error(err.response.data);
+      showToast('error', 'error', {}, err.response.data)
     },
   });
 

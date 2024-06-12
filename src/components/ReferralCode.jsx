@@ -51,7 +51,7 @@ const ReferralCode = ({
           setPassword('');
         }
       } else {
-        toast.warning('Password does not match');
+        showToast('error', 'passwordMismatched')
       }
     } catch (e) {
       // setErrorMessage(e.response.data.message.split(':')[1]);
@@ -71,7 +71,7 @@ const ReferralCode = ({
   //       navigate('/dashboard');
   //     }
   //   } catch (error) {
-  //     toast.error(error.response.data.message.split(':')[1]);
+  showToast('error', {}, e.response.data.message.split(':')[1]);
   //   } finally {
   //     setRefLoading(false);
   //   }
@@ -86,7 +86,7 @@ const ReferralCode = ({
   //       navigate('/dashboard');
   //     }
   //   } catch (error) {
-  //     toast.error(error.response.data.message.split(':')[1]);
+  showToast('error', {}, e.response.data.message.split(':')[1]);
   //   } finally {
   //     setRefLoading(false);
   //   }
@@ -106,7 +106,7 @@ const ReferralCode = ({
         navigate('/dashboard');
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
       setIsLoading(false);
       setIsLoadingSocial(false);
     }
@@ -125,7 +125,8 @@ const ReferralCode = ({
         navigate('/dashboard');
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+
       setIsLoading(false);
       setIsLoadingSocial(false);
     }
@@ -135,7 +136,7 @@ const ReferralCode = ({
     mutationFn: referral,
     onSuccess: () => {
       setIsLoading(false);
-      toast.success('Referral code verified');
+      showToast('success', 'referalVerified');
       setRefLoading(false);
       handleClose();
       // if (socialAccount?.type) {
@@ -160,7 +161,7 @@ const ReferralCode = ({
     onError: (err) => {
       console.log(err);
       setRefLoading(false);
-      toast.error('Referral code is not valid.');
+      showToast('error', 'referalInvalid')
     },
   });
 

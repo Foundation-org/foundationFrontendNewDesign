@@ -22,6 +22,7 @@ import Legacy from './verification-badges/Legacy';
 import LegacyConfirmationPopup from '../../../../../components/dialogue-boxes/LegacyConfirmationPopup';
 import { startRegistration } from '@simplewebauthn/browser';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+import showToast from '../../../../../components/ui/Toast';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -114,7 +115,7 @@ const VerificationBadges = () => {
         uuid: persistedUserInfo.uuid,
       });
       if (removeBadge.status === 200) {
-        toast.success('Badge Removed Successfully!');
+        showToast('success', 'badgeRemoval')
         queryClient.invalidateQueries(['userInfo']);
       }
     } catch (e) {
@@ -149,13 +150,14 @@ const VerificationBadges = () => {
       }
       const addBadge = await api.post(`/addBadge`, payload);
       if (addBadge.status === 200) {
-        toast.success('Badge Added Successfully!');
+        showToast('success', 'badgeAdded')
         queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
       console.log(provider);
       if (provider !== 'instagram') {
-        toast.error(error.response.data.message.split(':')[1]);
+        showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+
       }
     } finally {
       setIsLoading(false);
@@ -393,7 +395,7 @@ const VerificationBadges = () => {
                 }}
                 redirect_uri={window.location.href}
                 onReject={(err) => {
-                  toast.error('An error occured while adding badge');
+                  showToast('error', 'errorAddingBadge')
                   setIsLoading(false);
                   console.log(err);
                 }}
@@ -498,7 +500,7 @@ const VerificationBadges = () => {
                 redirect_uri={window.location.href}
                 // scope="email,openid,profile,w_member_social"
                 onReject={(err) => {
-                  toast.error('An error occured while adding badge');
+                  showToast('error', 'errorAddingBadge')
                   setIsLoading(false);
                   console.log(err);
                 }}
@@ -806,7 +808,7 @@ const VerificationBadges = () => {
               redirect_uri={window.location.href}
               scope="openid profile email https://www.googleapis.com/auth/youtube.readonly"
               onReject={(err) => {
-                toast.error('An error occured while adding badge');
+                  showToast('error','errorAddingBadge')
                 setIsLoading(false);
                 console.log(err);
               }}

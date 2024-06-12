@@ -4,6 +4,7 @@ import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
 import { deleteList } from '../../services/api/listsApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import showToast from '../ui/Toast';
 
 export default function DeleteListPopup({ handleClose, modalVisible, title, image, categoryId }) {
   const queryClient = useQueryClient();
@@ -19,8 +20,7 @@ export default function DeleteListPopup({ handleClose, modalVisible, title, imag
       //   return;
       // }
 
-      toast.success('List deleted successfully');
-
+      showToast('success', 'deleteList')
       // queryClient.setQueriesData(['lists'], (oldData) => {
       //   console.log('old', oldData);
       //   return oldData?.map((page) => page.filter((item) => item._id !== categoryId));

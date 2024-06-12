@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import CloseEmailNotificationPopup from '../../../../../../components/dialogue-boxes/CloseEmailNotificationPopup';
+import showToast from '../../../../../../components/ui/Toast';
 
 export default function NotificationSettings() {
   const queryClient = useQueryClient();
@@ -24,7 +25,7 @@ export default function NotificationSettings() {
     },
     onError: (error) => {
       console.log(error);
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
     },
   });
 
@@ -59,11 +60,10 @@ export default function NotificationSettings() {
             <span className="sr-only">Use setting</span>
             <span
               aria-hidden="true"
-              className={`${
-                emailNotifications
-                  ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
-                  : 'translate-x-[1px] bg-[#707175]'
-              }
+              className={`${emailNotifications
+                ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                : 'translate-x-[1px] bg-[#707175]'
+                }
       pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
             />
           </Switch>
@@ -81,11 +81,10 @@ export default function NotificationSettings() {
             <span className="sr-only">Use setting</span>
             <span
               aria-hidden="true"
-              className={`${
-                systemNotifications
-                  ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
-                  : 'translate-x-[1px] bg-[#707175]'
-              }
+              className={`${systemNotifications
+                ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                : 'translate-x-[1px] bg-[#707175]'
+                }
       pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
             />
           </Switch>

@@ -1,13 +1,13 @@
 import { toast } from 'sonner';
 import { Button } from '../ui/Button';
-
+import showToast from '../ui/Toast'
 const EmbedeDialogue = ({ handleClose, setIsShowPreview, url, setUrl }) => {
   const validate = () => {
     if (url !== '') {
       handleClose();
       setIsShowPreview(true);
     } else {
-      toast.warning('Url cannot be empty');
+      showToast('error', 'emptyUrl')
     }
   };
   return (

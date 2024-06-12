@@ -16,6 +16,7 @@ import * as createQuestAction from '../../../../../features/createQuest/createQu
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import * as questServices from '../../../../../services/api/questsApi';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+import showToast from '../../../../../components/ui/Toast';
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ const RankChoice = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return toast.warning('Post cannot be empty');
+      return showToast('warning', 'emptyPost')
     }
 
     // getTopicOfValidatedQuestion
@@ -91,7 +92,7 @@ const RankChoice = () => {
     });
     // If any error captured
     if (errorMessage) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong')
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
@@ -99,15 +100,16 @@ const RankChoice = () => {
     });
     // If found null
     if (!moderationRating) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong')
     }
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return toast.error('You cannot leave the description empty.');
+      return showToast('warning', 'emptyPostDescription')
     }
 
     if (optionsValue.length <= 2) {
       setLoading(false);
-      return toast.warning('The minimum number of options should be 3.');
+      return showToast('warning', 'minOptionLimitRanked')
+
     }
 
     const params = {
@@ -127,7 +129,7 @@ const RankChoice = () => {
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
 
     if (isEmptyAnswer) {
-      return toast.warning('Option cannot be empty');
+      return showToast('warning', 'emptyOption')
     }
     if (!checkHollow()) {
       createQuest(params);
@@ -364,7 +366,7 @@ const RankChoice = () => {
           if (optionsValue.length < 50) {
             addNewOption();
           } else {
-            toast.warning('You cannot add more than 50 options');
+            return showToast('warning', 'optionLimit')
           }
         }}
       >

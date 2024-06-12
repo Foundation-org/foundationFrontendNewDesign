@@ -5,6 +5,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { useMutation } from '@tanstack/react-query';
 import { changePassword } from '../../../../../services/api/userAuth';
 import Form from '../components/Form';
+import showToast from '../../../../../components/ui/Toast';
 
 const ChangePassword = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -43,11 +44,10 @@ const ChangePassword = () => {
           setLoading(false);
         }
       } catch (err) {
-        toast.error(err.response.data.error);
         setLoading(false);
       }
     } else {
-      toast.warning('Passwords do not match. Please make sure your new password and retype password match.');
+      showToast('warning', 'passwordMismatched')
       setLoading(false);
     }
   };
@@ -83,9 +83,8 @@ const ChangePassword = () => {
       </h1>
       <form onSubmit={savePassword}>
         <div
-          className={`${
-            persistedTheme === 'dark' ? 'dark-shadow-inside' : 'shadow-inside'
-          }  relative mx-6 h-full rounded-[11px] pb-[45px] pt-[12.9px] tablet:mx-6 tablet:rounded-[24.8px] tablet:pb-[88px] tablet:pt-[50px] laptop:mx-[106px] laptop:rounded-[45px]`}
+          className={`${persistedTheme === 'dark' ? 'dark-shadow-inside' : 'shadow-inside'
+            }  relative mx-6 h-full rounded-[11px] pb-[45px] pt-[12.9px] tablet:mx-6 tablet:rounded-[24.8px] tablet:pb-[88px] tablet:pt-[50px] laptop:mx-[106px] laptop:rounded-[45px]`}
         >
           <div className="mx-5 flex flex-col items-center gap-5 tablet:mx-6 tablet:gap-6 laptop:mx-12 laptop:gap-[100px]">
             <Form
@@ -101,9 +100,9 @@ const ChangePassword = () => {
               showNewPass={showNewPass}
               toggleVisibilityNewCnfrmPass={toggleVisibilityNewCnfrmPass}
               showNewCnfrmPass={showNewCnfrmPass}
-              //   toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}
-              //   handleCancel={handleCancel}
-              //   email={email}
+            //   toggleCnfmPasswordVisibility={toggleCnfmPasswordVisibility}
+            //   handleCancel={handleCancel}
+            //   email={email}
             />
             {/* <div className="flex w-full flex-col gap-3 2xl:gap-[21px]">
               <label className="ml-[6.4px] text-[10px] font-semibold leading-normal text-[#7C7C7C] 2xl:text-[24px] tablet:ml-[25px] tablet:text-[20px] 3xl:text-[30px] dark:text-[#CBCBCB]">

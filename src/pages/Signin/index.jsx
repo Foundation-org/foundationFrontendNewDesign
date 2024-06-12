@@ -19,6 +19,7 @@ import { sendVerificationEmail } from '../../services/api/authentication';
 import Loader from '../Signup/components/Loader';
 import { referralModalStyle } from '../../constants/styles';
 import LegacyConfirmationPopup from '../../components/dialogue-boxes/LegacyConfirmationPopup';
+import showToast from '../../components/ui/Toast';
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ export default function Signin() {
       }
     } catch (error) {
       console.log({ error });
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
     } finally {
       setIsLoadingSocial(false);
     }
@@ -99,9 +100,8 @@ export default function Signin() {
       />
       {isLoadingSocial && <Loader />}
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>

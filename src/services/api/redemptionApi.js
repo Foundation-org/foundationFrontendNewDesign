@@ -1,3 +1,4 @@
+import showToast from '../../components/ui/Toast';
 import api from './Axios';
 import { toast } from 'sonner';
 
@@ -39,7 +40,8 @@ export const getUnredeemedData = async (id, uuid) => {
   try {
     return await api.get(`/redeem/getUnredeemedById/${id}/${uuid}`);
   } catch (error) {
-    toast.error(error.response.data.message.split(':')[1]);
+    showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+
   }
 };
 
@@ -47,6 +49,7 @@ export const getHistoryData = async (id, uuid) => {
   try {
     return await api.get(`/redeem/getRedeemHistoryById/${id}/${uuid}`);
   } catch (error) {
-    toast.error(error.response.data.message.split(':')[1]);
+    showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+
   }
 };

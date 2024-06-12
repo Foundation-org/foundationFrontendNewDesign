@@ -24,6 +24,7 @@ import { addUser } from '../../features/auth/authSlice';
 import { useMutation } from '@tanstack/react-query';
 import { referralModalStyle } from '../../constants/styles';
 import CredentialRegister from './components/CredentialRegister';
+import showToast from '../../components/ui/Toast';
 
 const REDIRECT_URI = window.location.href;
 
@@ -129,7 +130,7 @@ export default function Signup() {
         setResData(res.data);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
     }
   };
 
@@ -152,13 +153,13 @@ export default function Signup() {
         navigate('/dashboard');
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
     }
   };
 
   const handleEmailType = async (value) => {
     try {
-      if (!value) return toast.error('Please select the email type!');
+      if (!value) return showToast('warning', 'emailType')
       setModalVisible(false);
       const res = await api.patch(`/updateBadge/${resData.userId}/${resData.badgeId}`, {
         type: value,
@@ -172,7 +173,7 @@ export default function Signup() {
         navigate('/dashboard');
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
     }
   };
 
@@ -181,9 +182,8 @@ export default function Signup() {
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>

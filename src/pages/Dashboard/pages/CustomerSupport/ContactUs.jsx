@@ -1,10 +1,9 @@
-import { toast } from 'sonner';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Button } from '../../../../components/ui/Button';
 import { sendContactUsEmail } from '../../../../services/api/DialogueApis';
 import { FaSpinner } from 'react-icons/fa';
-import Topbar from '../../components/Topbar';
+import showToast from '../../../../components/ui/Toast';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 
 const ContactUs = () => {
@@ -26,7 +25,7 @@ const ContactUs = () => {
   const { mutateAsync: userSendEmail } = useMutation({
     mutationFn: sendContactUsEmail,
     onSuccess: (resp) => {
-      toast.success('Support request received!');
+      showToast('success', 'supportRequest')
       setPayload({
         email: '',
         subject: 'Email Sent Through Contact Us Form',
@@ -34,8 +33,8 @@ const ContactUs = () => {
       });
       setIsloading(false);
     },
-    onError: (err) => {
-      toast.error(err.response.data);
+    onError: (error) => {
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
       setIsloading(false);
     },
   });

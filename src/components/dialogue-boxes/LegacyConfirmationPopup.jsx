@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
+import showToast from '../ui/Toast';
 
 const LegacyConfirmationPopup = ({
   isPopup,
@@ -58,8 +59,8 @@ const LegacyConfirmationPopup = ({
             legacyPromiseRef.current();
           }
         }
-      } catch (e) {
-        toast.error(e.response.data.message.split(':')[0]);
+      } catch (error) {
+        showToast('error', 'error', {}, error.response.data.message.split(':')[1])
         setIsLoading(false);
       }
     } else {
@@ -70,7 +71,7 @@ const LegacyConfirmationPopup = ({
         if (infoc.status === 200) {
           if (localStorage.getItem('legacyHash')) {
             if (infoc.data.data !== localStorage.getItem('legacyHash')) {
-              toast.error('Wrong Password');
+              showToast('error', 'passwordMismatched')
               setIsLoading(false);
               return;
             }

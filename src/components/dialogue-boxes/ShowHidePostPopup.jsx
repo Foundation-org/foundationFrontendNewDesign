@@ -9,6 +9,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import * as questsActions from '../../features/quest/utilsSlice';
 import { useNavigate } from 'react-router-dom';
+import showToast from '../ui/Toast';
 
 const customStyle = {
   width: 'fit-content',
@@ -43,7 +44,7 @@ export default function ShowHidePostPopup({
     mutationFn: hideQuest,
     onSuccess: (resp) => {
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
-      toast.success('Post hidden successfully');
+      showToast('success', 'postHidden')
       queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['posts'], (oldData) => {
         return {
@@ -65,7 +66,7 @@ export default function ShowHidePostPopup({
     mutationFn: updateHiddenQuest,
     onSuccess: (resp) => {
       dispatch(questsActions.addHiddenPosts(resp.data.data.questForeignKey));
-      toast.success('Post hidden successfully');
+      showToast('success', 'postHidden')
       queryClient.invalidateQueries(['userInfo']);
 
       queryClient.setQueriesData(['posts'], (oldData) => {
@@ -103,7 +104,7 @@ export default function ShowHidePostPopup({
       return;
     } else {
       if (selectedTitle === '') {
-        toast.warning('You must select a reason before submitting.');
+        showToast('warning', 'hiddenReason')
         setIsLoading(false);
         return;
       } else {

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { deleteHistory } from '../../services/api/redemptionApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import showToast from '../ui/Toast';
 
 export default function DeleteHistoryPopup({ isDeleteModal, handleClose, deleteHistoryCode }) {
   const queryClient = useQueryClient();
@@ -14,16 +15,16 @@ export default function DeleteHistoryPopup({ isDeleteModal, handleClose, deleteH
     mutationFn: deleteHistory,
     onSuccess: (resp) => {
       queryClient.invalidateQueries('history');
-      toast.success('History Removed Successfully');
+      showToast('success', 'deleteHistory');
       handleClose();
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
     },
   });
 
   const handleDeleteHistory = () => {
-    if (deleteHistoryCode === '') return toast.error('Enter some code to Delete');
+    if (deleteHistoryCode === '') return showToast('warning', 'emptyCodeToDelete');
 
     const params = {
       uuid: persistedUserInfo?.uuid,

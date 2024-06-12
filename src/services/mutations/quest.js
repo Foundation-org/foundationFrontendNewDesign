@@ -1,6 +1,7 @@
 import { toast } from 'sonner';
 import { createStartQuest, updateChangeAnsStartQuest } from '../api/questsApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import showToast from '../../components/ui/Toast';
 
 export function useStartQuest() {
   const queryClient = useQueryClient();
@@ -27,7 +28,8 @@ export function useChangeAnswer() {
 
     onSettled: async (_, error) => {
       if (error) {
-        toast.error(error.response.data.message.split(':')[1]);
+        showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+
       } else {
         // toast.success('Successfully Completed');
         await queryClient.invalidateQueries({ queryKey: ['FeedData'] });

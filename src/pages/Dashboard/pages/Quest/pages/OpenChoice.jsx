@@ -16,6 +16,7 @@ import * as createQuestAction from '../../../../../features/createQuest/createQu
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import * as questServices from '../../../../../services/api/questsApi';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+import showToast from '../../../../../components/ui/Toast';
 
 const OpenChoice = () => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const OpenChoice = () => {
 
     onError: (err) => {
       if (err.response) {
-        toast.error(err.response.data.message.split(':')[1]);
+        showToast('error', 'error', {}, err.response.data.message.split(':')[1])
       }
       setMultipleOption(false);
       setAddOption(false);
@@ -85,7 +86,7 @@ const OpenChoice = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return toast.warning('Post cannot be empty');
+      return showToast('warning', 'emptyPost')
     }
 
     // getTopicOfValidatedQuestion
@@ -94,7 +95,7 @@ const OpenChoice = () => {
     });
     // If any error captured
     if (errorMessage) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong')
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
@@ -102,10 +103,10 @@ const OpenChoice = () => {
     });
     // If found null
     if (!moderationRating) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong')
     }
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return toast.error('You cannot leave the description empty.');
+      return showToast('warning', 'emptyPostDescription')
     }
 
     const params = {
@@ -128,7 +129,7 @@ const OpenChoice = () => {
 
     if (isEmptyAnswer) {
       setLoading(false);
-      return toast.warning('Option cannot be empty');
+      return showToast('warning', 'emptyOption')
     }
     if (!checkHollow()) {
       createQuest(params);
@@ -374,7 +375,7 @@ const OpenChoice = () => {
           if (optionsValue.length < 50) {
             addNewOption();
           } else {
-            toast.warning('You cannot add more than 50 options');
+            return showToast('warning', 'optionLimit')
           }
         }}
       >

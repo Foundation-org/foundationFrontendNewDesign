@@ -9,6 +9,7 @@ import { addPostinAList, createList, fetchLists } from '../../services/api/lists
 import PopUp from '../ui/PopUp';
 import { useEffect } from 'react';
 import { useDebounce } from '../../utils/useDebounce';
+import showToast from '../ui/Toast';
 
 export default function AddToListPopup({ handleClose, modalVisible, questStartData }) {
   const queryClient = useQueryClient();
@@ -26,18 +27,14 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     mutationFn: createList,
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        toast.success('New list created.');
-        // console.log('resp', resp.data.userList[resp.data.userList.length - 1]);
+        showToast('success', 'newList')
         queryClient.invalidateQueries(['lists']);
-        // queryClient.setQueriesData(['lists'], (oldData) => {
-        //   return resp.data.userList;
-        // });
         setSelectedOption((prev) => [resp.data.userList[resp.data.userList.length - 1]._id, ...prev]);
         setListName('');
       }
 
       if (resp?.response?.status === 500) {
-        toast.warning('List with a similar name already exists.');
+        showToast('warning', 'listAlreadyExists')
       }
     },
     onError: (err) => {
@@ -49,7 +46,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     mutationFn: addPostinAList,
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        toast.success('Post added in a list.');
+        showToast('success', 'postAddedtoList');
         queryClient.invalidateQueries(['lists']);
         handleClose();
       }

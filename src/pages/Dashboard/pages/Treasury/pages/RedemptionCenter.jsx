@@ -12,6 +12,7 @@ import {
 import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import DeleteHistoryPopup from '../../../../../components/dialogue-boxes/deleteHistoryPopup';
+import showToast from '../../../../../components/ui/Toast';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
@@ -31,7 +32,7 @@ export default function RedemptionCenter() {
   const { mutateAsync: createRedemptionCode, isPending: createPending } = useMutation({
     mutationFn: createRedeeemCode,
     onSuccess: (resp) => {
-      toast.success('Redemption Code created successfully');
+      showToast('success', 'redemptionCreated')
       queryClient.invalidateQueries(['userInfo']);
       queryClient.invalidateQueries('unredeemedData');
       setExpiry('30 days');
@@ -39,7 +40,7 @@ export default function RedemptionCenter() {
       setFdx(0);
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
     },
   });
 
@@ -52,7 +53,7 @@ export default function RedemptionCenter() {
       const extractedText = parts[2];
       setCode(extractedText);
       setTimeout(() => {
-        if (extractedText) toast.info('Hit add to redeem');
+        if (extractedText) showToast('info', 'redeemAdd')
       }, 500);
     }
   }, []);
@@ -81,7 +82,7 @@ export default function RedemptionCenter() {
     onSuccess: (resp) => {
       queryClient.invalidateQueries(['userInfo']);
       queryClient.invalidateQueries('history');
-      toast.success('Code Redeemed Successfully');
+      showToast('success', 'redemptionSuccessful')
       setCode('');
       setIsPulse(true);
       setAddCodeLoading(false);
@@ -90,7 +91,7 @@ export default function RedemptionCenter() {
     onError: (err) => {
       setAddCodeLoading(false);
       setRadeemLoading('');
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
     },
   });
 
@@ -133,7 +134,7 @@ export default function RedemptionCenter() {
       );
       return;
     } else {
-      if (code === '') return toast.error('Enter some code to Redeeem');
+      if (code === '') return showToast('warning', 'enterCode')
       setAddCodeLoading(true);
 
       const params = {
@@ -145,7 +146,7 @@ export default function RedemptionCenter() {
   };
 
   const handleRedeeem = (code) => {
-    if (code === '') return toast.error('Enter some code to Redeem');
+    if (code === '') return showToast('warning', 'enterCode')
     setRadeemLoading(code);
 
     const params = {
@@ -168,8 +169,8 @@ export default function RedemptionCenter() {
       );
       return;
     } else {
-      if (fdx === 0) return toast.error('Please select the amount');
-      if (description === '') return toast.error('You cannot leave the description field blank');
+      if (fdx === 0) return showToast('warning', 'selectAmount');
+      if (description === '') return showToast('warning', 'emptyPostDescription');
       let newExpiryDate;
 
       if (expiry === '30 days') {
@@ -418,7 +419,7 @@ export default function RedemptionCenter() {
                         className="h-3 w-3 cursor-pointer tablet:h-[23px] tablet:w-[23px]"
                         onClick={() => {
                           handleShareLink(item.code);
-                          toast.success('Share Link copied!');
+                          showToast('success', 'shareLinkCopied')
                         }}
                       />
                     </div>
@@ -429,7 +430,7 @@ export default function RedemptionCenter() {
                         className="h-3 w-3 cursor-pointer tablet:h-[23px] tablet:w-[23px]"
                         onClick={() => {
                           copyToClipboard(item.code);
-                          toast.success('Code Copied!');
+                          showToast('success', 'codeCopied')
                         }}
                       />
                     </div>

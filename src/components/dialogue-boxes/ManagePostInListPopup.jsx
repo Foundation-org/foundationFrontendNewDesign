@@ -13,6 +13,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { TextareaAutosize } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import showToast from '../ui/Toast';
 
 export default function ManagePostInListPopup({ handleClose, modalVisible, title, image, categoryId, selectedItem }) {
   console.log('🚀 ~ ManagePostInListPopup ~ selectedItem:', selectedItem);
@@ -99,7 +100,8 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
     mutationFn: addPostinAList,
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        toast.success('Post added in a list.');
+        showToast('success', 'postAddedtoList');
+
         queryClient.invalidateQueries(['lists']);
         setSearchPost('');
         setSearchResult([]);
@@ -133,7 +135,7 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
     if (selectedItem?.post.length > 0) {
       selectedItem.post.map((item) => {
         if (item.questForeginKey._id === selectedPostId) {
-          toast.warning('Post already added in a list.');
+          showToast('error', 'postAlreadyinList');
           return;
         } else {
           addPostInList({
@@ -190,9 +192,8 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
                 onChange={(e) => setSearchPost(e.target.value)}
                 value={searchPost}
                 placeholder="Search Post"
-                className={`${
-                  selectedPostId === '' && searchPost !== '' ? 'border-b border-[#DEE6F7] tablet:border-b-[3px]' : ''
-                } flex w-full resize-none items-center bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px] dark:text-[#7C7C7C]`}
+                className={`${selectedPostId === '' && searchPost !== '' ? 'border-b border-[#DEE6F7] tablet:border-b-[3px]' : ''
+                  } flex w-full resize-none items-center bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px] dark:text-[#7C7C7C]`}
               />
               {/* </div> */}
               {/* To Render and Select The Post */}

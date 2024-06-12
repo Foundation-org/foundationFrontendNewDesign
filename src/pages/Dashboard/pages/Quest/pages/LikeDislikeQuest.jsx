@@ -13,6 +13,7 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
+import showToast from '../../../../../components/ui/Toast';
 
 const LikeDislike = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const LikeDislike = () => {
     },
     onError: (err) => {
       if (err.response) {
-        toast.error(err.response.data.message.split(':')[1]);
+        showToast('error', 'error', {}, err.response.data.message.split(':')[1])
         setChangedOption('');
         setChangeState(false);
       }
@@ -90,7 +91,7 @@ const LikeDislike = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return toast.warning('Post cannot be empty');
+      return showToast('warning', 'emptyPost')
     }
 
     // getTopicOfValidatedQuestion
@@ -99,7 +100,7 @@ const LikeDislike = () => {
     });
     // If any error captured
     if (errorMessage) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong')
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
@@ -107,10 +108,10 @@ const LikeDislike = () => {
     });
     // If found null
     if (!moderationRating) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong')
     }
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return toast.error('You cannot leave the description empty.');
+      return showToast('warning', 'emptyPostDescription')
     }
 
     const params = {

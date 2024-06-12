@@ -7,6 +7,7 @@ import { paypalTokenGenerate } from '../../../../../services/api/payments';
 import BuyBalancePopup from '../../../../../components/dialogue-boxes/BuyBalancePopup';
 import axios from 'axios';
 import { toast } from 'sonner';
+import showToast from '../../../../../components/ui/Toast';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -23,8 +24,8 @@ const BuyBalance = () => {
 
   const handleClose = () => setModalVisible(false);
   const handleCreate = () => {
-    if (dollar < 2.5) return toast.warning('Minimum amount is 2.5$');
-    if (!paymentMethod) return toast.warning('Select a payment method');
+    if (dollar < 2.5) return showToast('warning', 'minAmount')
+    if (!paymentMethod) return showToast('warning', 'paymentMethod')
     setModalVisible(true);
     localStorage.setItem('paymentMethod', paymentMethod);
   };

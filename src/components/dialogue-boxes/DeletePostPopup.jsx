@@ -5,6 +5,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteQuest } from '../../services/api/questsApi';
 import { toast } from 'sonner';
+import showToast from '../ui/Toast';
 
 export default function DeletePostPopup({ handleClose, modalVisible, title, image, id }) {
   const queryClient = useQueryClient();
@@ -28,7 +29,8 @@ export default function DeletePostPopup({ handleClose, modalVisible, title, imag
     onError: (error) => {
       console.log(error.response.data.message);
       if (error.response.data.message === "Quest is involved in Discussion, Quest can't be deleted.") {
-        toast.warning(error.response.data.message);
+        showToast('error', 'error', {}, error.response.data.message)
+
         setIsLoading(false);
         return;
       }

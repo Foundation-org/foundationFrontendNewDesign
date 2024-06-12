@@ -9,6 +9,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { generateCategoryShareLink } from '../../services/api/listsApi';
 import Copy from '../../assets/optionbar/Copy';
 import { getConstantsValues } from '../../features/constants/constantsSlice';
+import showToast from '../ui/Toast';
 
 const ShareListLink = ({ handleClose, selectedItem }) => {
   console.log('selectedItem', selectedItem);
@@ -59,17 +60,16 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
     try {
       if (selectedItem.isLinkUserCustomized === false) {
         if (link === '') {
-          toast.error('Link cannot be empty');
-          return;
+          showToast('error', 'emptyLink'); return;
         }
         const res = await generateCategoryShareLink(persistedUserInfo.uuid, selectedItem._id, link);
         if (res.status === 200) {
           setPostLink(res.data.link);
           setCreateCustom(false);
-          toast.success('Link created successfully');
+          showToast('success', 'linkCreated')
         }
       } else {
-        toast.warning('Link already created');
+        showToast('warning', 'linkAlready')
       }
     } catch (err) {
       console.log('err', err);
@@ -155,7 +155,8 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
                 className="rounded-r-[9px] bg-[#DEE6F7] px-[11px] py-[6px] tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"
                 onClick={() => {
                   copyToClipboard();
-                  toast.success('Link Copied!');
+                  showToast('success', 'copyLink')
+
                 }}
               >
                 <Copy color="#8BAAC0" />

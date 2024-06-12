@@ -11,6 +11,7 @@ import BasicModal from '../../../components/BasicModal';
 import { referralModalStyle } from '../../../constants/styles';
 import ReferralCode from '../../../components/ReferralCode';
 import { toast } from 'sonner';
+import showToast from '../../../components/ui/Toast';
 
 const CredentialRegister = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -78,14 +79,14 @@ const CredentialRegister = () => {
         const resp = await guestSignup({ email, password, uuid: localStorage.getItem('uuid') });
         console.log(resp);
         if (resp.status === 200) {
-          toast.success('A verification email has been sent to your email address. Please check your inbox.');
+          showToast('success', 'verificationEmailSent')
 
           setEmail('');
           setPassword('');
           setIsLoading(false);
         }
       } else {
-        toast.warning('Password does not match');
+        showToast('error', 'passwordMismatched')
         setIsLoading(false);
       }
     } catch (e) {
@@ -97,8 +98,7 @@ const CredentialRegister = () => {
   };
 
   const handleSignup = async () => {
-    // if (!captchaToken) return toast.warning('Please complete the reCAPTCHA challenge before proceeding.');
-    if (!termConditionCheck) return toast.warning('Please accept the terms and conditions to continue!');
+    if (!termConditionCheck) return showToast('warning', 'termsAndConditions')
 
     // // setIsLoadingSocial(true);
     // if (localStorage.getItem('isGuestMode')) {
@@ -254,7 +254,7 @@ const CredentialRegister = () => {
         </div>
         <label className="ml-4 text-[10.2px] text-gray-100 tablet:text-base 5xl:text-[22px] short:text-[12px] dark:text-white">
           Creating an account means you have agreed with our <Anchor href="/term-of-service">Terms of Service</Anchor> &{' '}
-          <Anchor href="/privacy-policy">Privacy Policy</Anchor>.         
+          <Anchor href="/privacy-policy">Privacy Policy</Anchor>.
         </label>
       </div>
       <Button

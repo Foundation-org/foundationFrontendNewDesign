@@ -5,6 +5,7 @@ import { Button } from '../ui/Button';
 import { useMutation } from '@tanstack/react-query';
 import { sendOtp, verifyOtp } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
+import showToast from '../ui/Toast'
 
 const PhoneOtpVerificationPopup = ({ isPopup, title, logo, handleClose, otpResp }) => {
   const [otp, setOTP] = useState(['', '', '', '', '', '']);
@@ -35,12 +36,13 @@ const PhoneOtpVerificationPopup = ({ isPopup, title, logo, handleClose, otpResp 
   const { mutateAsync: verifyOtpCode, isPending } = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (resp) => {
-      toast.success('OTP verified Successfully');
+      showToast('success', verifyOtp);
       localStorage.removeItem('isOtpSent');
       handleClose();
     },
-    onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+    onError: (error) => {
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+
     },
   });
   console.log(otpResp);

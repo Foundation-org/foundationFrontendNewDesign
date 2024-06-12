@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FaSpinner } from 'react-icons/fa';
 import { getConstantsValues } from '../../../features/constants/constantsSlice';
+import showToast from '../../ui/Toast';
 
 const CopyDialogue = ({ handleClose, questStartData }) => {
   const dispatch = useDispatch();
@@ -84,7 +85,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
   const { mutateAsync: handleCreateCustomLink, isPending } = useMutation({
     mutationFn: createCustomLink,
     onSuccess: (resp) => {
-      toast.success('Custom link generated successfully.');
+      showToast('success', 'customLinkGenerated');
       queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['posts'], (oldData) => {
         return {
@@ -112,7 +113,8 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
       setCreateCustom(false);
     },
     onError: (error) => {
-      toast.error(error.response.data.message);
+      showToast('error', 'error', {}, error.response.data.message)
+
     },
   });
 
@@ -214,7 +216,8 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
                 className="rounded-r-[9px] bg-[#DEE6F7] px-[11px] py-[6px] tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"
                 onClick={() => {
                   copyToClipboard();
-                  toast.success('Link Copied!');
+                  showToast('success', 'copyLink');
+
                 }}
               >
                 <Copy color="#8BAAC0" />

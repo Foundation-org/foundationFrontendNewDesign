@@ -21,7 +21,7 @@ import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button.jsx';
 import { submitListResponse, updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
-
+import showToast from '../../../../../components/ui/Toast'
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -299,7 +299,7 @@ const QuestionCardWithToggle = (props) => {
     },
     onError: (err) => {
       console.log({ err });
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
       setLoading(false);
     },
   });
@@ -345,7 +345,7 @@ const QuestionCardWithToggle = (props) => {
     },
     onError: (err) => {
       console.log(err);
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
       setLoading(false);
     },
   });
@@ -356,10 +356,10 @@ const QuestionCardWithToggle = (props) => {
       queryClient.invalidateQueries(['userInfo']);
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
-        toast.warning('You have selected the same option as last time. Your option was not changed.');
+        showToast('warning', 'selectedSameOptions')
       }
       if (resp.data.message === 'You can change your answer once every 1 hour') {
-        toast.warning('You can change your option once every 1 hour.');
+        showToast('warning', 'changeOptionTimePeriod')
         setLoading(false);
       }
       if (resp.data.message === 'Start Quest Updated Successfully') {
@@ -379,7 +379,7 @@ const QuestionCardWithToggle = (props) => {
       }
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
       setLoading(false);
     },
   });
@@ -441,7 +441,7 @@ const QuestionCardWithToggle = (props) => {
       };
 
       if (!params.answer.selected) {
-        toast.warning("Oops! You haven't selected anything yet.");
+        showToast('warning', 'emptySelection')
         setLoading(false);
         return;
       }
@@ -532,7 +532,7 @@ const QuestionCardWithToggle = (props) => {
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            toast.error('You cannot leave the added option blank');
+            showToast('warning', 'optionBlank')
             setLoading(false);
             return;
           }
@@ -560,7 +560,7 @@ const QuestionCardWithToggle = (props) => {
 
             setAnswerSelection(updatedArray);
           } else {
-            toast.warning("Oops! You haven't selected anything yet.");
+            showToast('warning', 'emptySelection')
             setLoading(false);
           }
         }
@@ -578,7 +578,7 @@ const QuestionCardWithToggle = (props) => {
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          toast.error('You cannot leave the added option blank');
+          showToast('warning', 'optionBlank')
           setLoading(false);
           return;
         }
@@ -610,7 +610,7 @@ const QuestionCardWithToggle = (props) => {
 
           setAnswerSelection(updatedArray);
         } else {
-          toast.warning("Oops! You haven't selected anything yet.");
+          showToast('warning', 'emptySelection')
           setLoading(false);
         }
       }
@@ -667,7 +667,7 @@ const QuestionCardWithToggle = (props) => {
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            toast.error('You cannot leave the added option blank');
+            showToast('warning', 'optionBlank')
             setLoading(false);
             return;
           }
@@ -700,7 +700,7 @@ const QuestionCardWithToggle = (props) => {
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          toast.error('You cannot leave the added option blank');
+          showToast('warning', 'optionBlank')
           setLoading(false);
           return;
         }

@@ -2,6 +2,7 @@ import { toast } from 'sonner';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { sendEmail } from '../../../services/api/DialogueApis';
+import showToast from '../../ui/Toast';
 
 const EmailDialogue = ({ handleClose, id }) => {
   const { protocol, host } = window.location;
@@ -32,7 +33,8 @@ const EmailDialogue = ({ handleClose, id }) => {
       handleClose();
     },
     onError: (err) => {
-      toast.error(err.response.data);
+      showToast('error', 'error', {}, err.response.data)
+
     },
   });
 
