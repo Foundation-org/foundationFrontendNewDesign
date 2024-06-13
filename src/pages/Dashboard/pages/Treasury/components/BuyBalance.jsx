@@ -4,8 +4,11 @@ import { Button } from '../../../../../components/ui/Button';
 import BuyBalancePopup from '../../../../../components/dialogue-boxes/BuyBalancePopup';
 import showToast from '../../../../../components/ui/Toast';
 import { useSelector } from 'react-redux';
+import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 
-const conversionRate = 2.5;
+
+const persistedContants = useSelector(getConstantsValues);
+const conversionRate = persistedContants?.FDX_CONVERSION_RATE_WRT_USD;
 
 const BuyBalance = () => {
   const location = useLocation();
@@ -33,7 +36,7 @@ const BuyBalance = () => {
   };
 
   const handleCreate = () => {
-    if (dollar < 2.5) return showToast('warning', 'minAmount');
+    if (dollar < persistedContants?.FDX_CONVERSION_RATE_WRT_USD) return showToast('warning', 'minAmount');
     setModalVisible(true);
   };
 
