@@ -51,7 +51,7 @@ const ReferralCode = ({
           setPassword('');
         }
       } else {
-        showToast('error', 'passwordMismatched')
+        showToast('error', 'passwordMismatched');
       }
     } catch (e) {
       // setErrorMessage(e.response.data.message.split(':')[1]);
@@ -71,7 +71,7 @@ const ReferralCode = ({
   //       navigate('/dashboard');
   //     }
   //   } catch (error) {
-  showToast('error', {}, e.response.data.message.split(':')[1]);
+  // showToast('error', {}, e.response.data.message.split(':')[1]);
   //   } finally {
   //     setRefLoading(false);
   //   }
@@ -86,7 +86,7 @@ const ReferralCode = ({
   //       navigate('/dashboard');
   //     }
   //   } catch (error) {
-  showToast('error', {}, e.response.data.message.split(':')[1]);
+  // showToast('error', {}, e.response.data.message.split(':')[1]);
   //   } finally {
   //     setRefLoading(false);
   //   }
@@ -106,7 +106,7 @@ const ReferralCode = ({
         navigate('/dashboard');
       }
     } catch (error) {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       setIsLoading(false);
       setIsLoadingSocial(false);
     }
@@ -125,7 +125,7 @@ const ReferralCode = ({
         navigate('/dashboard');
       }
     } catch (error) {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
 
       setIsLoading(false);
       setIsLoadingSocial(false);
@@ -161,7 +161,7 @@ const ReferralCode = ({
     onError: (err) => {
       console.log(err);
       setRefLoading(false);
-      showToast('error', 'referalInvalid')
+      showToast('error', 'referalInvalid');
     },
   });
 
