@@ -114,7 +114,7 @@ const TreasurySummary = () => {
             </div>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
-            <Button variant={'submit'} onClick={() => navigate('dashboard/treasury/reward-schedule')}>
+            <Button variant={'submit'} onClick={() => navigate('/dashboard/treasury/reward-schedule')}>
               View all
             </Button>
           </div>
