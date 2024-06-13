@@ -9,7 +9,7 @@ import EducationBadgePopup from '../../../../../../components/dialogue-boxes/Edu
 import WorkBadgePopup from '../../../../../../components/dialogue-boxes/WorkBadgePopup';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 
-export default function Personal({ fetchUser, handleOpenPasswordConfirmation, checkLegacyBadge, handlePasskeyConfirmation }) {
+export default function Personal({ fetchUser, handleOpenPasswordConfirmation, checkLegacyBadge, handlePasskeyConfirmation, getAskPassword }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
@@ -34,7 +34,7 @@ export default function Personal({ fetchUser, handleOpenPasswordConfirmation, ch
       );
       return;
     } else {
-      if (checkLegacyBadge()) await handleOpenPasswordConfirmation();
+      if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword)) await handleOpenPasswordConfirmation();
       // if (await handlePasskeyConfirmation()) {
 
       if (edit) {

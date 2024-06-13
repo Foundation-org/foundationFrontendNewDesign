@@ -12,7 +12,7 @@ import { AuthKitProvider, SignInButton, useProfile, useSignIn } from '@farcaster
 import { useQueryClient } from '@tanstack/react-query';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../../components/ui/Toast'
-export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirmation, checkLegacyBadge }) {
+export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirmation, checkLegacyBadge, getAskPassword }) {
   const { sdk } = useSDK();
   const persistedContants = useSelector(getConstantsValues);
 
@@ -299,7 +299,9 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
               }
               onClick={async () => {
                 if (item.type === 'etherium-wallet') {
-                  if (checkLegacyBadge()) await handleOpenPasswordConfirmation();
+
+                  if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword))
+                    await handleOpenPasswordConfirmation();
                 }
                 item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)
                   ? triggerFarcaster()

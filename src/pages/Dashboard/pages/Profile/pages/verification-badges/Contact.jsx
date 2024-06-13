@@ -13,6 +13,7 @@ export default function Contact({
   handleRemoveBadgePopup,
   handleOpenPasswordConfirmation,
   checkLegacyBadge,
+  getAskPassword
 }) {
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
 
@@ -42,11 +43,14 @@ export default function Contact({
     );
     return;
   };
-
   const handleClickContactBadgeEmail = async (type, title, image) => {
     if (persistedUserInfo?.role === 'guest') {
       handleGuestBadgeAdd();
     } else {
+
+      if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword)) {
+        await handleOpenPasswordConfirmation()
+      }
       if (!checkContact(type)) {
         setIsPopup(true);
         setSelectedBadge(type);

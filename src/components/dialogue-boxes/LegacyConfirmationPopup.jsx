@@ -71,7 +71,7 @@ const LegacyConfirmationPopup = ({
         if (infoc.status === 200) {
           if (localStorage.getItem('legacyHash')) {
             if (infoc.data.data !== localStorage.getItem('legacyHash')) {
-              showToast('error', 'passwordMismatched')
+              showToast('error', 'wrongPassword')
               setIsLoading(false);
               return;
             }

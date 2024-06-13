@@ -23,6 +23,7 @@ import LegacyConfirmationPopup from '../../../../../components/dialogue-boxes/Le
 import { startRegistration } from '@simplewebauthn/browser';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../components/ui/Toast';
+import { getAskPassword } from '../../../../../features/profile/userSettingSlice';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const VerificationBadges = () => {
   const [isPasswordConfirmation, setIsPasswordConfirmation] = useState();
   const legacyPromiseRef = useRef();
   const persistedContants = useSelector(getConstantsValues);
+  const getAskPasswordFromRedux = useSelector(getAskPassword);
 
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
@@ -178,7 +180,8 @@ const VerificationBadges = () => {
   };
 
   const handleRemoveBadgePopup = async (item) => {
-    if (checkLegacyBadge()) {
+    console.log(item);
+    if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPasswordFromRedux) || item.type === 'password') {
       await handleOpenPasswordConfirmation();
     }
     setDeleteModalState(item);
@@ -319,7 +322,7 @@ const VerificationBadges = () => {
         </h1>
 
         <Contact fetchUser={persistedUserInfo} handleRemoveBadgePopup={handleRemoveBadgePopup}
-          checkLegacyBadge={checkLegacyBadge}
+          checkLegacyBadge={checkLegacyBadge} handleOpenPasswordConfirmation={handleOpenPasswordConfirmation} getAskPassword={getAskPasswordFromRedux}
         />
 
         <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
@@ -389,7 +392,7 @@ const VerificationBadges = () => {
               <LoginSocialFacebook
                 client_id={import.meta.env.VITE_FB_APP_ID}
                 onResolve={async ({ provider, data }) => {
-                  if (checkLegacyBadge()) {
+                  if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPasswordFromRedux)) {
                     await handleOpenPasswordConfirmation();
                   }
                   setIsLoading(true);
@@ -492,7 +495,7 @@ const VerificationBadges = () => {
                 client_id={import.meta.env.VITE_LINKEDIN_KEY}
                 client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
                 onResolve={async ({ provider, data }) => {
-                  if (checkLegacyBadge()) {
+                  if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPasswordFromRedux)) {
                     await handleOpenPasswordConfirmation();
                   }
                   console.log(provider, data);
@@ -582,7 +585,7 @@ const VerificationBadges = () => {
               <Button
                 color={checkSocial('twitter') ? (checkPrimary('twitter') ? 'yellow' : 'red') : 'blue'}
                 onClick={async () => {
-                  if (checkLegacyBadge()) {
+                  if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPasswordFromRedux)) {
                     await handleOpenPasswordConfirmation();
                   }
                   loginWithTwitter();
@@ -660,7 +663,7 @@ const VerificationBadges = () => {
               <InstagramLogin
                 clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
                 onSuccess={async (code) => {
-                  if (checkLegacyBadge()) {
+                  if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPasswordFromRedux)) {
                     await handleOpenPasswordConfirmation();
                   }
                   loginInWithInsta(code);
@@ -742,7 +745,7 @@ const VerificationBadges = () => {
               <Button
                 color={checkSocial('github') ? 'red' : 'blue'}
                 onClick={async () => {
-                  if (checkLegacyBadge()) {
+                  if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPasswordFromRedux)) {
                     await handleOpenPasswordConfirmation();
                   }
                   loginWithGithub();
@@ -884,6 +887,7 @@ const VerificationBadges = () => {
           handleRemoveBadgePopup={handleRemoveBadgePopup}
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
           checkLegacyBadge={checkLegacyBadge}
+          getAskPassword={getAskPasswordFromRedux}
         />
         {/* <Legacy
           fetchUser={persistedUserInfo}
@@ -895,6 +899,7 @@ const VerificationBadges = () => {
           handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
           checkLegacyBadge={checkLegacyBadge}
           handlePasskeyConfirmation={handlePasskeyConfirmation}
+          getAskPassword={getAskPasswordFromRedux}
         />
       </div>
     </div>
