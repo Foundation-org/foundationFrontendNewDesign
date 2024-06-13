@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { resetFilters } from '../features/sidebar/filtersSlice';
+import { addUser } from '../features/auth/authSlice';
 
 const RequireAuth = ({ allowedRoles }) => {
   // const location = useLocation();
@@ -15,6 +17,11 @@ const RequireAuth = ({ allowedRoles }) => {
     if (!persistedUser) {
       localStorage.clear();
       navigate('/');
+    } else if (persistedUser?.isPasswordEncryption && !localStorage.getItem('legacyHash')) {
+      localStorage.clear();
+      dispatch(resetFilters());
+      dispatch(addUser(null));
+      navigate('/signin');
     }
   }, [persistedUser]);
 
