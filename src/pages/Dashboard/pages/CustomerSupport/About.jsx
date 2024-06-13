@@ -26,22 +26,22 @@ const About = () => {
           the money you earn from sharing your data with companies in your wallet, not someone elses.
         </p>
       </div>
-      <div className="bg-[#F5F6F8] px-8 py-5 text-[#707175] tablet:px-16">
+      <div className="bg-[#F5F6F8] px-8 py-3 text-[#707175] tablet:px-16 tablet:py-5">
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           How Foundation works
         </h1>
-        <div className="mt-[10px] space-y-[15px] tablet:mt-[2.2rem] tablet:space-y-[2.2rem]">
+        <div className="mt-3 space-y-[15px] tablet:mt-2 tablet:space-y-4">
           <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/about/account.svg`}
               alt="account"
               className="size-5 tablet:size-[1.875rem]"
             />
-            <div className="space-y-[0.6rem] tablet:space-y-4">
-              <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
+            <div className="space-y-[0.6rem] tablet:space-y-1">
+              <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-normal">
                 Create an account
               </h5>
-              <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
+              <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
                 Build your profile, and start earning tokens.
               </p>
             </div>
@@ -52,14 +52,14 @@ const About = () => {
               alt="conversation"
               className="size-5 tablet:h-[1.875rem] tablet:w-[2.13rem]"
             />
-            <div className="space-y-[0.6rem] tablet:space-y-4">
-              <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
+            <div className="space-y-[0.6rem] tablet:space-y-1">
+              <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
                 Use your expertise to add to the conversation
               </h5>
-              <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[161.2%]">
+              <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
                 Create your own posts or engage with others within the crowd-sourced feed to earn more tokens.
               </p>
-              <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[161.2%]">
+              <p className="text-[0.75rem] font-normal leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
                 Every post is anonymous, so the focus can stay on the conversation, not personal attacks.
               </p>
             </div>
@@ -70,8 +70,8 @@ const About = () => {
               alt="account"
               className="size-5 tablet:size-[1.875rem]"
             />
-            <div className="space-y-[0.6rem] tablet:space-y-4">
-              <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[161.2%]">
+            <div className="space-y-[0.6rem] tablet:space-y-1">
+              <h5 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
                 The more you participate, the stronger your profile of data assets,{' '}
                 <span className="font-normal">
                   and the more likely you are to start earning from brands and research firms who want to purchase your
