@@ -11,7 +11,7 @@ const Button = ({
   className,
 }) => {
   const buttonClasses = classNames(
-    'inline-flex items-center py-0 rounded-[6.043px] 2xl:rounded-[11.703px]',
+    'inline-flex items-center py-0 rounded-[6.043px] 2xl:rounded-[11.703px] flex justify-center items-center',
     {
       'bg-dark-blue text-white': color === 'blue',
       'bg-white dark:bg-dark-gray text-black dark:text-white': color === 'gray',
@@ -39,7 +39,7 @@ const Button = ({
 
   return (
     <button type={type} className={buttonClasses} disabled={disabled} onClick={onClick}>
-      {children}
+      <div className="flex min-w-[115px] items-center">{children}</div>
     </button>
   );
 };
