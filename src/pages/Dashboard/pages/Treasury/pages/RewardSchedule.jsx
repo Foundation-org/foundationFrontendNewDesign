@@ -100,14 +100,14 @@ const RewardSchedule = () => {
               {persistedContants?.LIST_SHARE} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              +{persistedContants?.QUEST_CREATED_AMOUNT} FDX
+              -{persistedContants?.QUEST_CREATED_AMOUNT} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               {persistedContants?.LIST_CREATE} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                +{persistedContants?.USER_QUEST_SETTING_LINK_CUSTOMIZATION_DEDUCTION_AMOUNT} FDX
+                -{persistedContants?.USER_QUEST_SETTING_LINK_CUSTOMIZATION_DEDUCTION_AMOUNT} FDX
               </p>
             </p>
           </div>

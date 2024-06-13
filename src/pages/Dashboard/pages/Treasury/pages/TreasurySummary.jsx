@@ -108,7 +108,7 @@ const TreasurySummary = () => {
                 =
               </h1>
               <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                +{persistedContants?.QUEST_CREATED_AMOUNT} FDX
+                -{persistedContants?.QUEST_CREATED_AMOUNT} FDX
               </h1>
             </div>
           </div>
