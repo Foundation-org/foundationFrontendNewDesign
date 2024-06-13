@@ -3,8 +3,8 @@ import api from './Axios';
 export const fetchPurchasedFdxHistory = async (userUuid) => {
   try {
     const resp = await api.get(`/finance/purchasedFdxHistory/${userUuid}`);
-    return resp.data.history;
+    return resp.data; // Ensure that the data from the response is returned
   } catch (err) {
-    return err;
+    throw err; // Throw error instead of returning it
   }
 };
