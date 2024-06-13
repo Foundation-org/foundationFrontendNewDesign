@@ -8,8 +8,8 @@ import { getConstantsValues } from '../../../../../features/constants/constantsS
 
 const BuyBalance = () => {
   const location = useLocation();
-  const [fdx, setFdx] = useState(0);
-  const [dollar, setDollar] = useState(0);
+  const [fdx, setFdx] = useState('');
+  const [dollar, setDollar] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const persistedContants = useSelector(getConstantsValues);
   const persistedUserInfo = useSelector((state) => state.auth.user);
