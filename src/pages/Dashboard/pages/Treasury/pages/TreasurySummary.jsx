@@ -8,6 +8,8 @@ const TreasurySummary = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
 
+  console.log('persistedContants', persistedContants);
+
   return (
     <div className=" mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
       {/* Your FDX */}
@@ -84,8 +86,7 @@ const TreasurySummary = () => {
                 =
               </h1>
               <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                {persistedUserInfo?.rewardSchedual?.postParticipationFdx > 0 && '+'}
-                {persistedUserInfo?.rewardSchedual?.postParticipationFdx} FDX
+                +{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX
               </h1>
             </div>
             <div className="grid w-full grid-cols-3 justify-items-center">
@@ -96,8 +97,7 @@ const TreasurySummary = () => {
                 =
               </h1>
               <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                {persistedUserInfo?.rewardSchedual?.postParticipationFdx > 0 && '+'}
-                {persistedUserInfo?.rewardSchedual?.postParticipationFdx} FDX
+                +{persistedContants?.QUEST_OWNER_ACCOUNT} FDX
               </h1>
             </div>
             <div className="grid w-full grid-cols-3 justify-items-center">
@@ -108,8 +108,7 @@ const TreasurySummary = () => {
                 =
               </h1>
               <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                {persistedUserInfo?.feeSchedual?.creatingPostFdx > 0 && '+'}
-                {persistedUserInfo?.feeSchedual?.creatingPostFdx} FDX
+                +{persistedContants?.QUEST_CREATED_AMOUNT} FDX
               </h1>
             </div>
           </div>

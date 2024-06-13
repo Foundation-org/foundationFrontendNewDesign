@@ -1,7 +1,9 @@
 import { useSelector } from 'react-redux';
+import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 
 const RewardSchedule = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedContants = useSelector(getConstantsValues);
 
   return (
     <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
@@ -83,37 +85,29 @@ const RewardSchedule = () => {
           </div>
           <div className="space-y-2 text-end">
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.rewardSchedual?.postParticipationFdx > 0 && '+'}
-              {persistedUserInfo?.rewardSchedual?.postParticipationFdx} FDX
+              +{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.rewardSchedual?.myEngagementInPostFdx > 0 && '+'}
-              {persistedUserInfo?.rewardSchedual?.myEngagementInPostFdx} FDX
+              +{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.rewardSchedual?.addingBadgeFdx > 0 && '+'}
-              {persistedUserInfo?.rewardSchedual?.addingBadgeFdx} FDX
+              +{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.feeSchedual?.creatingPostLinkFdx > 0 && '+'}
-              {persistedUserInfo?.feeSchedual?.creatingPostLinkFdx} FDX
+              {persistedContants?.POST_SHARE} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.feeSchedual?.creatingListLinkFdx > 0 && '+'}
-              {persistedUserInfo?.feeSchedual?.creatingListLinkFdx} FDX
+              {persistedContants?.LIST_SHARE} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.feeSchedual?.creatingPostFdx > 0 && '+'}
-              {persistedUserInfo?.feeSchedual?.creatingPostFdx} FDX
+              +{persistedContants?.QUEST_CREATED_AMOUNT} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.feeSchedual?.creatingListFdx > 0 && '+'}
-              {persistedUserInfo?.feeSchedual?.creatingListFdx} FDX
+              {persistedContants?.LIST_CREATE} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                {persistedUserInfo?.feeSchedual?.creatingPostCustomLinkFdx > 0 && '+'}
-                {persistedUserInfo?.feeSchedual?.creatingPostCustomLinkFdx} FDX
+                +{persistedContants?.USER_QUEST_SETTING_LINK_CUSTOMIZATION_DEDUCTION_AMOUNT} FDX
               </p>
             </p>
           </div>
@@ -169,7 +163,9 @@ const RewardSchedule = () => {
               Transaction fee
             </h1>
           </div>
-          <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">4%</h1>
+          <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
+            {persistedContants?.TRANSECTION}
+          </h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
