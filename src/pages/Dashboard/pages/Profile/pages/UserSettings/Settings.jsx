@@ -153,7 +153,7 @@ export const Settings = () => {
               alt={'feed settings'}
               className="h-[18.5px] w-[14.6px] tablet:size-5"
             />
-            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Badge Settings</h1>
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Encryption Settings</h1>
           </div>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
