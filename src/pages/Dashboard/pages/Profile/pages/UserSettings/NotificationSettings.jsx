@@ -1,5 +1,4 @@
 import { Switch } from '@headlessui/react';
-import { toast } from 'sonner';
 import { updateUserSettings } from '../../../../../../services/api/userAuth';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -25,7 +24,7 @@ export default function NotificationSettings() {
     },
     onError: (error) => {
       console.log(error);
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     },
   });
 
@@ -43,51 +42,65 @@ export default function NotificationSettings() {
           setEmailNotifications={setEmailNotifications}
         />
       )}
-      <h1 className="text-[12px] font-semibold text-black tablet:text-[22px] tablet:font-medium">
-        Notification Settings
-      </h1>
-      <div className="flex flex-col gap-3 rounded-[6.749px] border-[1.85px] border-[#DEE6F7] bg-[#FDFDFD] px-4 py-3 tablet:gap-6 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5">
-        <div className="flex items-center justify-between">
-          <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Email notifications</h1>
-          <Switch
-            checked={emailNotifications}
-            // onChange={() => toast.info('Feature coming soon.')}
-            onChange={(e) => {
-              setModalVisible(true);
-            }}
-            className={`${emailNotifications ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
-          >
-            <span className="sr-only">Use setting</span>
-            <span
-              aria-hidden="true"
-              className={`${emailNotifications
-                ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
-                : 'translate-x-[1px] bg-[#707175]'
-                }
-      pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
+      <div className="mx-auto w-full">
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center gap-2">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/notification-icon.svg`}
+              alt={'notification-icon'}
+              className="h-[18.5px] w-[14.6px] tablet:h-[25px] tablet:w-5"
             />
-          </Switch>
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
+              Notification Settings
+            </h1>
+          </div>
         </div>
-        <div className="flex items-center justify-between">
-          <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">System notifications</h1>
-          <Switch
-            checked={systemNotifications}
-            onChange={(e) => {
-              setSystemNotifications(e);
-              handleUserSettings({ uuid: persistedUserInfo.uuid, systemNotifications: e });
-            }}
-            className={`${systemNotifications ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
-          >
-            <span className="sr-only">Use setting</span>
-            <span
-              aria-hidden="true"
-              className={`${systemNotifications
-                ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
-                : 'translate-x-[1px] bg-[#707175]'
-                }
+        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+          <div className="flex flex-col gap-3 rounded-[6.749px] tablet:gap-6 tablet:rounded-[15px]">
+            <div className="flex items-center justify-between">
+              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Email notifications</h1>
+              <Switch
+                checked={emailNotifications}
+                onChange={(e) => {
+                  setModalVisible(true);
+                }}
+                className={`${emailNotifications ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
+              >
+                <span className="sr-only">Use setting</span>
+                <span
+                  aria-hidden="true"
+                  className={`${
+                    emailNotifications
+                      ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                      : 'translate-x-[1px] bg-[#707175]'
+                  }
       pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
-            />
-          </Switch>
+                />
+              </Switch>
+            </div>
+            <div className="flex items-center justify-between">
+              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">System notifications</h1>
+              <Switch
+                checked={systemNotifications}
+                onChange={(e) => {
+                  setSystemNotifications(e);
+                  handleUserSettings({ uuid: persistedUserInfo.uuid, systemNotifications: e });
+                }}
+                className={`${systemNotifications ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
+              >
+                <span className="sr-only">Use setting</span>
+                <span
+                  aria-hidden="true"
+                  className={`${
+                    systemNotifications
+                      ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                      : 'translate-x-[1px] bg-[#707175]'
+                  }
+      pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
+                />
+              </Switch>
+            </div>
+          </div>
         </div>
       </div>
     </div>

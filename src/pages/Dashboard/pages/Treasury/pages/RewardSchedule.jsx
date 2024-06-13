@@ -31,13 +31,13 @@ const RewardSchedule = () => {
           </div>
           <div className="space-y-2 text-end">
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.fdxEarned}
+              {persistedUserInfo?.fdxEarned} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.fdxSpent}
+              {persistedUserInfo?.fdxSpent} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned}
+              {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned} FDX
             </p>
           </div>
         </div>
@@ -169,10 +169,13 @@ const RewardSchedule = () => {
               Transaction fee
             </h1>
           </div>
+          <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">4%</h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-            To run foundation need to .... charge fee too,
+            We charge a transaction fee to keep the platform running smoothly for you. We want You to be in charge of
+            your data, tokens, and what you do with them, and want to ensure the platform can function properly for you
+            to do so. Foundation charges a 4% fee for transactions to help with run costs.
           </p>
         </div>
       </div>

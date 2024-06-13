@@ -44,7 +44,7 @@ export const Settings = () => {
     },
     onError: (error) => {
       console.log(error);
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     },
   });
 
@@ -60,58 +60,89 @@ export const Settings = () => {
     },
     onError: (error) => {
       console.log(error);
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
-
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     },
   });
 
   return (
     <div className="space-y-2 tablet:space-y-[15px]">
-      <h1 className="text-[12px] font-semibold text-black tablet:text-[22px] tablet:font-medium">User Settings</h1>
       {/* Change Theme */}
-      <div className="flex items-center justify-between rounded-[6.749px] border-[1.85px] border-[#DEE6F7] bg-[#FDFDFD] px-4 py-3 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5">
-        <div>
-          <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Dark Mode</h1>
-          <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">Switch to Dark Mode</p>
+      <div className="mx-auto w-full">
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center gap-2">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/display-settings.svg`}
+              alt={'display settings'}
+              className="h-[18.5px] w-[14.6px] tablet:h-[22px] tablet:w-[25.8px]"
+            />
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
+              Display Settings
+            </h1>
+          </div>
         </div>
-        <Switch
-          checked={checkState}
-          onChange={() => showToast('info', 'featureComingSoon')}
-          // onChange={handleTheme}
-          className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
-        >
-          <span className="sr-only">Use setting</span>
-          <span
-            aria-hidden="true"
-            className={`${checkState ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
-              }
+        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+          <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
+            <div>
+              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Mode</h1>
+              <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">Switch to Dark Mode</p>
+            </div>
+            <Switch
+              checked={checkState}
+              onChange={() => showToast('info', 'featureComingSoon')}
+              // onChange={handleTheme}
+              className={`${checkState ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
+            >
+              <span className="sr-only">Use setting</span>
+              <span
+                aria-hidden="true"
+                className={`${
+                  checkState ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
+                }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
-          />
-        </Switch>
+              />
+            </Switch>
+          </div>
+        </div>
       </div>
       {/* Default Sort */}
-      <div className="flex items-center justify-between rounded-[6.749px] border-[1.85px] border-[#DEE6F7] bg-[#FDFDFD] px-4 py-3 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5">
-        <div className="">
-          <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Default Sort</h1>
-          <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">Enable Default Sort.</p>
+      <div className="mx-auto w-full">
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center gap-2">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/feed-settings.svg`}
+              alt={'feed settings'}
+              className="h-[18.5px] w-[14.6px] tablet:size-5"
+            />
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Feed Settings</h1>
+          </div>
         </div>
-        <Switch
-          checked={defaultSort}
-          onChange={(e) => {
-            setDefaultSort(e);
-            handleUserSettings({ uuid: persistedUserInfo.uuid, darkMode: false, defaultSort: e });
-          }}
-          className={`${defaultSort ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
-        >
-          <span className="sr-only">Use setting</span>
-          <span
-            aria-hidden="true"
-            className={`${defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
-              }
+        <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
+          <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
+            <div className="">
+              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Default Sort</h1>
+              <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">Enable Default Sort.</p>
+            </div>
+            <Switch
+              checked={defaultSort}
+              onChange={(e) => {
+                setDefaultSort(e);
+                handleUserSettings({ uuid: persistedUserInfo.uuid, darkMode: false, defaultSort: e });
+              }}
+              className={`${defaultSort ? 'bg-[#BEDEF4]' : 'bg-[#D9D9D9]'} switch_basic_design`}
+            >
+              <span className="sr-only">Use setting</span>
+              <span
+                aria-hidden="true"
+                className={`${
+                  defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
+                }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
-          />
-        </Switch>
+              />
+            </Switch>
+          </div>
+        </div>
       </div>
+
       {/* Logout */}
       {persistedUserInfo.role === 'user' && (
         <Button
