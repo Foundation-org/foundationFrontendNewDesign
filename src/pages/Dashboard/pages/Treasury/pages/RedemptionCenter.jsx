@@ -244,7 +244,7 @@ export default function RedemptionCenter() {
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/redemption-code-activity.svg`}
                 alt={'redemption-code-activity'}
-                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+                className="size-[15px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
               />
               <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
                 Create Redemption Code
@@ -322,7 +322,7 @@ export default function RedemptionCenter() {
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/add-redemption.svg`}
                 alt={'add-redemption'}
-                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+                className="h-[14px] w-[18px] min-w-[14.6px] tablet:h-[22.7px] tablet:w-[27.8px]"
               />
               <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
                 Add Redemption Code
@@ -357,7 +357,7 @@ export default function RedemptionCenter() {
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/un-radeem.svg`}
                 alt={'un-radeem'}
-                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+                className="h-[13.9px] w-[14.8px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
               />
               <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
                 Un-Redeemed Codes
