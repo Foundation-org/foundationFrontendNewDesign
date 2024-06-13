@@ -13,7 +13,7 @@ export default function Contact({
   handleRemoveBadgePopup,
   handleOpenPasswordConfirmation,
   checkLegacyBadge,
-  getAskPassword
+  getAskPassword,
 }) {
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
 
@@ -47,9 +47,8 @@ export default function Contact({
     if (persistedUserInfo?.role === 'guest') {
       handleGuestBadgeAdd();
     } else {
-
       if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword)) {
-        await handleOpenPasswordConfirmation()
+        await handleOpenPasswordConfirmation();
       }
       if (!checkContact(type)) {
         setIsPopup(true);
@@ -82,8 +81,9 @@ export default function Contact({
         </div>
         <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
         <div
-          className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-            } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+          className={`${
+            persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+          } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
         >
           <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
             {item.title}
@@ -206,7 +206,10 @@ export default function Contact({
             />
           ))}
           {legacy.map((item, index) => (
-            <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5" key={index}>
+            <div
+              className="relative flex items-center justify-between gap-[8.5px] laptop:gap-2 desktop:gap-5"
+              key={index}
+            >
               <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
                 {checkLegacyBadge() && (
                   <img
@@ -230,11 +233,11 @@ export default function Contact({
                 onClick={() => {
                   checkLegacyBadge()
                     ? handleRemoveBadgePopup({
-                      title: 'Password',
-                      type: 'password',
-                      image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
-                      badgeType: 'password',
-                    })
+                        title: 'Password',
+                        type: 'password',
+                        image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+                        badgeType: 'password',
+                      })
                     : setIsPersonalPopup(true);
                 }}
               >

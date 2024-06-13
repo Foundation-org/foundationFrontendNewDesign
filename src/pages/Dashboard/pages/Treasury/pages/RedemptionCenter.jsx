@@ -390,7 +390,7 @@ export default function RedemptionCenter() {
                       <div key={index + 1}>
                         <div className="flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-4 tablet:px-3 tablet:py-[13.4px] laptop:flex-row laptop:items-center laptop:gap-0">
                           <div className="flex items-center gap-[10px] tablet:gap-2">
-                            <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:max-w-[10ch] tablet:text-[16px]">
+                            <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[16px]">
                               {item.code}
                             </p>
                             <div className=" flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[16px]">
