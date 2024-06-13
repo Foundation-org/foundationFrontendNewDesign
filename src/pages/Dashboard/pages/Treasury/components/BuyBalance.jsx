@@ -6,16 +6,14 @@ import showToast from '../../../../../components/ui/Toast';
 import { useSelector } from 'react-redux';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 
-
-const persistedContants = useSelector(getConstantsValues);
-const conversionRate = persistedContants?.FDX_CONVERSION_RATE_WRT_USD;
-
 const BuyBalance = () => {
   const location = useLocation();
   const [fdx, setFdx] = useState(0);
   const [dollar, setDollar] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const persistedContants = useSelector(getConstantsValues);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const conversionRate = persistedContants?.FDX_CONVERSION_RATE_WRT_USD;
 
   const handleClose = () => {
     localStorage.removeItem('scs');
