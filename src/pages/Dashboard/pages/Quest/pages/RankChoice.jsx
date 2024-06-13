@@ -17,6 +17,7 @@ import * as pictureMediaAction from '../../../../../features/createQuest/picture
 import * as questServices from '../../../../../services/api/questsApi';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../components/ui/Toast';
+import { POST_MAX_OPTION_LIMIT, POST_OPTIONS_CHAR_LIMIT, RANKED_CHOICE_MIN_OPTION_LIMIT } from '../../../../../constants/Values/constants';
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -106,7 +107,7 @@ const RankChoice = () => {
       return showToast('warning', 'emptyPostDescription')
     }
 
-    if (optionsValue.length <= 2) {
+    if (optionsValue.length <= RANKED_CHOICE_MIN_OPTION_LIMIT) {
       setLoading(false);
       return showToast('warning', 'minOptionLimitRanked')
 
@@ -137,7 +138,7 @@ const RankChoice = () => {
   };
 
   const handleChange = (index, value) => {
-    if (value.length <= 200) {
+    if (value.length <= POST_OPTIONS_CHAR_LIMIT) {
       dispatch(createQuestAction.addOptionById({ id: `index-${index}`, option: value }));
     }
   };
@@ -363,7 +364,7 @@ const RankChoice = () => {
         variant="addOption"
         className="ml-[30px] mt-2 tablet:ml-[50px] tablet:mt-[15px]"
         onClick={() => {
-          if (optionsValue.length < 50) {
+          if (optionsValue.length < POST_MAX_OPTION_LIMIT) {
             addNewOption();
           } else {
             return showToast('warning', 'optionLimit')

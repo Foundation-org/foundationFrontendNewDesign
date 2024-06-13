@@ -7,6 +7,7 @@ import * as pictureMediaAction from '../../../../../features/createQuest/picture
 import AddMedia from './AddMedia';
 import AddPictures from './AddPictures';
 import AddPictureUrls from './AddPictureUrls';
+import { POST_QUESTION_CHAR_LIMIT } from '../../../../../constants/Values/constants';
 
 export default function CreateQuestWrapper({ quest, type, handleTab, msg, children }) {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
 
-    if (inputValue.length <= 350) {
+    if (inputValue.length <= POST_QUESTION_CHAR_LIMIT) {
       dispatch(createQuestAction.addQuestion(inputValue));
     }
   };
@@ -33,9 +34,8 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
   return (
     <div>
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-        } mx-auto mb-[10px] max-w-[90%] rounded-[8.006px] bg-white py-3 tablet:mb-[15px] tablet:max-w-[730px] tablet:rounded-[39px] tablet:py-[27px] laptop:py-[25px] dark:bg-[#141618]`}
+        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+          } mx-auto mb-[10px] max-w-[90%] rounded-[8.006px] bg-white py-3 tablet:mb-[15px] tablet:max-w-[730px] tablet:rounded-[39px] tablet:py-[27px] laptop:py-[25px] dark:bg-[#141618]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] laptop:leading-[25px] dark:text-[#D8D8D8]">
           Create a {type}

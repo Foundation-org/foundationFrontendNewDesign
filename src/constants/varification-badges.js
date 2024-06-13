@@ -140,7 +140,7 @@ export const web3 = [
 export const legacy = [
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
-    title: 'Password',
+    title: 'Data Encryption',
     ButtonColor: 'blue',
     ButtonText: 'Add Badge',
     NoOfButton: 1,

@@ -17,6 +17,7 @@ import * as pictureMediaAction from '../../../../../features/createQuest/picture
 import * as questServices from '../../../../../services/api/questsApi';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../components/ui/Toast';
+import { POST_MAX_OPTION_LIMIT } from '../../../../../constants/Values/constants';
 
 const OpenChoice = () => {
   const navigate = useNavigate();
@@ -137,7 +138,7 @@ const OpenChoice = () => {
   };
 
   const handleChange = (index, value) => {
-    if (value.length <= 200) {
+    if (value.length <= POST_OPTIONS_CHAR_LIMIT) {
       dispatch(createQuestAction.addOptionById({ id: `index-${index}`, option: value }));
     }
   };
@@ -372,7 +373,7 @@ const OpenChoice = () => {
         variant="addOption"
         className="ml-[30px] mt-2 tablet:ml-[50px] tablet:mt-[15px]"
         onClick={() => {
-          if (optionsValue.length < 50) {
+          if (optionsValue.length < POST_MAX_OPTION_LIMIT) {
             addNewOption();
           } else {
             return showToast('warning', 'optionLimit')

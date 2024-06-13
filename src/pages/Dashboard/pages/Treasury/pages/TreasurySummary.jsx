@@ -1,10 +1,12 @@
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button';
+import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 
 const TreasurySummary = () => {
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedContants = useSelector(getConstantsValues);
 
   return (
     <div className=" mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
@@ -155,7 +157,7 @@ const TreasurySummary = () => {
             </div>
             <div className="text-end">
               <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                $ 2.50 USD
+                $ {persistedContants?.FDX_CONVERSION_RATE_WRT_USD} USD
               </h1>
             </div>
           </div>
