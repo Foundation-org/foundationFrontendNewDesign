@@ -25,7 +25,7 @@ const ContactUs = () => {
   const { mutateAsync: userSendEmail } = useMutation({
     mutationFn: sendContactUsEmail,
     onSuccess: (resp) => {
-      showToast('success', 'supportRequest')
+      showToast('success', 'supportRequest');
       setPayload({
         email: '',
         subject: 'Email Sent Through Contact Us Form',
@@ -34,7 +34,7 @@ const ContactUs = () => {
       setIsloading(false);
     },
     onError: (error) => {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       setIsloading(false);
     },
   });
@@ -57,7 +57,7 @@ const ContactUs = () => {
         aria-label="message"
         minRows={3}
         placeholder="Your Message*"
-        className="w-full rounded-[10px] border-2 border-[#DEE6F7] bg-[#FDFDFD] p-[14px] text-[10px] font-normal leading-[13px] text-[#909090] focus:outline-none tablet:border-[3px] tablet:p-5 tablet:text-[18px] tablet:leading-[23px]"
+        className="w-full rounded-[10px] border-2 border-[#DEE6F7] bg-[#FDFDFD] p-[6px] text-[10px] font-normal leading-[13px] text-[#909090] focus:outline-none tablet:border-[3px] tablet:p-5 tablet:text-[18px] tablet:leading-[23px]"
         value={payload.message}
         onChange={handleChange}
       />
