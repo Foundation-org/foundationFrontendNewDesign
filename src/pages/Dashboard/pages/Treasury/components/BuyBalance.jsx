@@ -24,13 +24,22 @@ const BuyBalance = () => {
   const handleFdxChange = (e) => {
     const fdxValue = e.target.value;
     setFdx(fdxValue);
-    setDollar((fdxValue * conversionRate).toFixed(2));
+    if (fdxValue !== '' && fdxValue != 0) {
+      setDollar((fdxValue * conversionRate).toFixed(2));
+    }
+    else {
+      setDollar('')
+    }
   };
 
   const handleDollarChange = (e) => {
     const dollarValue = e.target.value;
-    setDollar(dollarValue);
-    setFdx((dollarValue / conversionRate).toFixed(2));
+    setDollar(dollarValue)
+    if (dollarValue !== '' && dollarValue != 0) {
+      setFdx((dollarValue / conversionRate).toFixed(2));
+    } else {
+      setFdx('')
+    }
   };
 
   const handleCreate = () => {
