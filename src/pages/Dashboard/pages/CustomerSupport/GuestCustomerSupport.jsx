@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../../../features/auth/authSlice';
 import showToast from '../../../../components/ui/Toast';
-import Breadcrumb from '../../../../components/BreadCrumb';
+import Breadcrumb from '../../../../components/Breadcrumb';
 
 const GuestCustomerSupport = () => {
   const navigate = useNavigate();

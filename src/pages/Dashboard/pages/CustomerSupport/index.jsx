@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../components/ui/Button';
-import Breadcrumb from '../../../../components/BreadCrumb';
+import Breadcrumb from '../../../../components/Breadcrumb';
 
 const CustomerSupport = () => {
   const navigate = useNavigate();
