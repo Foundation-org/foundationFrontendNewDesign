@@ -333,14 +333,14 @@ export default function RedemptionCenter() {
             <p className="text-[7.5px] font-normal leading-normal text-[#85898C] tablet:text-[14.7px]">
               You can add redemption code and earn reworded coins
             </p>
-            <div className="flex items-center gap-4 tablet:gap-9">
+            <div className="flex items-center gap-5 tablet:gap-6">
               <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">Code</h2>
               <input
                 type="text"
                 placeholder="eg (rG57HK)"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#FFFEF3] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
+                className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
               />
             </div>
             <div className="flex w-full justify-center">
@@ -385,7 +385,7 @@ export default function RedemptionCenter() {
                       FDX
                     </p>
                   </div>
-                  <div className="rounded-[5.85px] border-[1.84px] border-[#0FB063] bg-white tablet:rounded-[10px]">
+                  <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[10px]">
                     {unredeemedData?.data?.data?.map((item, index) => (
                       <div key={index + 1}>
                         <div className="flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-4 tablet:px-3 tablet:py-[13.4px] laptop:flex-row laptop:items-center laptop:gap-0">

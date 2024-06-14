@@ -41,20 +41,20 @@ const FdxActivity = () => {
         <div className="flex flex-col gap-[5px] rounded-b-[10px] bg-[#FDFDFD] tablet:gap-[15px]">
           <div>
             <div className="mb-2 ml-3 flex items-center justify-between tablet:mb-[13px] tablet:ml-5">
-              <div className="flex items-center gap-[10px] tablet:gap-5">
-                <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                  Provider
+              <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
+                <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                  Created
                 </p>
-                <p className="min-w-[95px] max-w-[95px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[150px] tablet:max-w-[150px] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
                   Dollar Spent
                 </p>
-                <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[150px] tablet:max-w-[150px] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
                   FDX Purchased
                 </p>
+                <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                  Provider
+                </p>
               </div>
-              <p className="min-w-[65px] max-w-[65px] pr-5 text-end text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[140px] tablet:max-w-[140px] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                Created
-              </p>
             </div>
             <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
               {!isLoading &&
@@ -62,27 +62,20 @@ const FdxActivity = () => {
                 historyData?.history
                   ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                   ?.map((item, index) => (
-                    <div key={item._id}>
-                      <div
-                        className={`flex justify-between gap-2 py-2 pl-[13px] pr-4 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0`}
-                      >
-                        <div className="flex items-center gap-[10px] tablet:gap-5">
-                          <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal tablet:min-w-[10ch] tablet:max-w-[10ch] tablet:text-[16px]">
-                            {item?.providerName}
-                          </p>
-                          <div className="flex items-center text-[10px] font-medium leading-normal tablet:text-[16px]">
-                            <div className="tooltip text-start">
-                              <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[150px] tablet:max-w-[150px]">
-                                {item?.dollarSpent}
-                              </p>
-                            </div>
-                          </div>
-                          <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal tablet:min-w-[150px] tablet:max-w-[150px] tablet:text-[16px]">
-                            {item?.fdxPurchased}
-                          </p>
-                        </div>
-                        <p className="text-[9px] font-medium leading-normal tablet:text-[16px]">
+                    <div
+                      key={item._id}
+                      className={`flex justify-between gap-2 py-2 pl-[13px] pr-4 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0`}
+                    >
+                      <div className="flex w-full items-center justify-between gap-[10px] tablet:gap-5">
+                        <p className="text-[10px] font-medium leading-normal tablet:text-[16px]">
                           {formatDate(item.createdAt)}
+                        </p>
+                        <p className="text-[10px] font-medium leading-normal tablet:text-[16px]">
+                          {item?.providerName}
+                        </p>
+                        <p className="text-[10px] font-medium leading-normal tablet:text-[16px]">{item?.dollarSpent}</p>
+                        <p className="text-[10px] font-medium leading-normal tablet:text-[16px]">
+                          {item?.fdxPurchased}
                         </p>
                       </div>
                       {index !== historyData?.history?.data?.data.length - 1 && (
