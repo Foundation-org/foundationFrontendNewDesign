@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const About = () => {
   const navigate = useNavigate();
@@ -7,10 +7,10 @@ const About = () => {
 
   return (
     <div className="bg-white">
-      <div className="space-y-[0.63rem] px-8 pt-3 text-[#7C7C7C] tablet:space-y-2 tablet:px-16 tablet:pt-[1.56rem]">
-        <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
-          Let Your Data Work for You
-        </h1>
+      <h1 className="py-3 text-center text-[0.875rem] font-bold leading-[0.875rem] text-[#707175] tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
+        Let Your Data Work for You
+      </h1>
+      <div className="-mt-[2px] space-y-[0.63rem]  px-8 text-[#7C7C7C] tablet:mt-0 tablet:space-y-2 tablet:px-16">
         {/* <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">
           Unlock the potential of your personal data.
         </p> */}
@@ -30,7 +30,7 @@ const About = () => {
         <h1 className="text-center text-[0.875rem] font-bold leading-[0.875rem] tablet:text-[1.25rem] tablet:leading-[1.25rem]">
           How Foundation works
         </h1>
-        <div className="mt-3 space-y-[15px] tablet:mt-2 tablet:space-y-4">
+        <div className="mt-3 space-y-[15px] tablet:mt-3 tablet:space-y-4">
           <div className="flex items-start gap-[0.8rem] tablet:gap-[1.15rem]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/about/account.svg`}
