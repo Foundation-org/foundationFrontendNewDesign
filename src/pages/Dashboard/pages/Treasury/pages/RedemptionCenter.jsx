@@ -370,8 +370,8 @@ export default function RedemptionCenter() {
               </div>
             ) : (
               <div>
-                <div className="mb-2 ml-3 flex tablet:mx-3 tablet:mb-[9px] tablet:gap-4">
-                  <div className="flex w-full items-center justify-between gap-[10px] tablet:gap-2 desktop:max-w-[433px]">
+                <div className="mx-3 mb-2 flex tablet:mx-3 tablet:mb-[9px] tablet:gap-5">
+                  <div className="flex w-full items-center justify-start gap-[10px] tablet:gap-2 desktop:max-w-[422px]">
                     <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[18px] tablet:leading-[134.149%]">
                       Created
                     </p>
@@ -386,7 +386,7 @@ export default function RedemptionCenter() {
                     </p>
                   </div>
                   <div className="hidden items-center tablet:gap-2 desktop:flex">
-                    <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:text-[18px] tablet:leading-[134.149%]">
+                    <p className="min-w-[51px] max-w-[51px] text-[10px] font-bold leading-normal text-[#707175] tablet:text-[18px] tablet:leading-[134.149%]">
                       Share
                     </p>
                     <p className="min-w-[95px] max-w-[95px] text-[10px] font-bold leading-normal text-[#707175] tablet:text-[18px]">
@@ -401,9 +401,9 @@ export default function RedemptionCenter() {
                   {unredeemedData?.data?.data?.map((item, index) => (
                     <div key={index + 1}>
                       <div
-                        className={`flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-5 tablet:px-3 tablet:py-[13.4px] laptop:items-center desktop:flex-row ${index === 0 && createRadeemPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                        className={`flex flex-col justify-between gap-2 px-3 py-2 tablet:gap-5 tablet:px-3 tablet:py-[13.4px] laptop:items-center desktop:flex-row ${index === 0 && createRadeemPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
                       >
-                        <div className="flex w-full items-center justify-between gap-[10px] tablet:gap-2">
+                        <div className="flex w-full items-center justify-start gap-[10px] tablet:gap-2">
                           <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[16px]">
                             {formatDate(item.createdAt)}
                           </p>
