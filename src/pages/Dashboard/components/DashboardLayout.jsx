@@ -235,29 +235,52 @@ export default function DashboardLayout({ children }) {
                 </div>
               </div>
             ) : (
-              <div
-                className="flex cursor-pointer items-center gap-2"
-                onClick={() => {
-                  navigate('/dashboard/profile');
-                }}
-              >
-                <div className="relative flex items-center justify-center">
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
-                    alt="badge"
-                    className="h-[28px] w-[23px]"
-                  />
-                  <p className="absolute left-1/2 top-[40%] z-50 mb-1 -translate-x-1/2 -translate-y-1/2 transform text-[14px] font-medium leading-[14px] text-[#7A7016]">
-                    {userInfoData && userInfoData?.data?.badges?.length}
-                  </p>
-                </div>
-                <div className="flex h-7 flex-col justify-between">
-                  <h4 className="heading w-fit border-b">My Balance</h4>
-                  <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
-                    {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
-                  </p>
-                </div>
-              </div>
+              <>
+                {location.pathname.startsWith('/dashboard/profile') ? (
+                  <div
+                    className="flex cursor-pointer items-center gap-2"
+                    onClick={() => {
+                      navigate('/dashboard/profile');
+                    }}
+                  >
+                    <div className="relative flex items-center justify-center">
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
+                        alt="badge"
+                        className="h-[28px] w-[23px]"
+                      />
+                      <p className="absolute left-1/2 top-[40%] z-50 mb-1 -translate-x-1/2 -translate-y-1/2 transform text-[14px] font-medium leading-[14px] text-[#7A7016]">
+                        {userInfoData && userInfoData?.data?.badges?.length}
+                      </p>
+                    </div>
+                    <div className="flex h-7 flex-col justify-between">
+                      <h4 className="heading w-fit border-b">My Balance</h4>
+                      <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
+                        {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className="flex cursor-pointer items-center gap-2"
+                    onClick={() => {
+                      navigate('/dashboard/treasury');
+                    }}
+                  >
+                    <img
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
+                      alt="badge"
+                      className="size-7"
+                    />
+                    <div className="flex h-7 flex-col justify-between">
+                      <h4 className="heading w-fit border-b">Treasury</h4>
+                      <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
+                        {constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </div>
           {location.pathname !== '/dashboard/help/about' &&
