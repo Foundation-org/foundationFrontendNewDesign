@@ -6,7 +6,7 @@ import showToast from '../../../../../components/ui/Toast';
 import { useSelector } from 'react-redux';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 
-const BuyBalance = () => {
+const BuyBalance = ({ triggerPulse }) => {
   const location = useLocation();
   const [fdx, setFdx] = useState('');
   const [dollar, setDollar] = useState('');
@@ -26,19 +26,18 @@ const BuyBalance = () => {
     setFdx(fdxValue);
     if (fdxValue !== '' && fdxValue != 0) {
       setDollar((fdxValue * conversionRate).toFixed(2));
-    }
-    else {
-      setDollar('')
+    } else {
+      setDollar('');
     }
   };
 
   const handleDollarChange = (e) => {
     const dollarValue = e.target.value;
-    setDollar(dollarValue)
+    setDollar(dollarValue);
     if (dollarValue !== '' && dollarValue != 0) {
       setFdx((dollarValue / conversionRate).toFixed(2));
     } else {
-      setFdx('')
+      setFdx('');
     }
   };
 
@@ -69,6 +68,7 @@ const BuyBalance = () => {
           title={'Buy Balance'}
           image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/buyBalancelogo.svg`}
           dollar={dollar}
+          triggerPulse={triggerPulse}
         />
       )}
       <div>

@@ -8,7 +8,7 @@ import { FaSpinner } from 'react-icons/fa6';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-export default function BuyBalancePopup({ handleClose, modalVisible, title, image, dollar }) {
+export default function BuyBalancePopup({ handleClose, modalVisible, title, image, dollar, triggerPulse }) {
   const [paymentMethod, setPaymentMethod] = useState(null || localStorage.getItem('paymentMethod'));
   const [stripeClientSecret, setStripeClientSecret] = useState('');
   const [clientToken, setClientToken] = useState(null);
@@ -82,9 +82,11 @@ export default function BuyBalancePopup({ handleClose, modalVisible, title, imag
             <FaSpinner className="size-14 animate-spin text-[#4A8DBD]" />
           </div>
         ) : paymentMethod === 'stripe' ? (
-          <Stripe clientSecret={stripeClientSecret} handleClose={handleClose} />
+          <Stripe clientSecret={stripeClientSecret} handleClose={handleClose} triggerPulse={triggerPulse} />
         ) : (
-          paymentMethod === 'paypal' && <Paypal clientToken={clientToken} dollar={dollar} handleClose={handleClose} />
+          paymentMethod === 'paypal' && (
+            <Paypal clientToken={clientToken} dollar={dollar} handleClose={handleClose} triggerPulse={triggerPulse} />
+          )
         )}
       </div>
     </PopUp>

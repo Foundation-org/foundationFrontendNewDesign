@@ -3,7 +3,7 @@ import { PaymentForm } from './PaymentForm';
 
 const clientId = import.meta.env.VITE_PAYPAL_CLIENT_ID;
 
-const Paypal = ({ clientToken, dollar, handleClose }) => {
+const Paypal = ({ clientToken, dollar, handleClose, triggerPulse }) => {
   const initialOptions = {
     'client-id': clientId,
     'data-client-token': clientToken,
@@ -16,7 +16,7 @@ const Paypal = ({ clientToken, dollar, handleClose }) => {
     <>
       {clientToken ? (
         <PayPalScriptProvider options={initialOptions}>
-          <PaymentForm dollar={dollar} handleClose={handleClose} />
+          <PaymentForm dollar={dollar} handleClose={handleClose} triggerPulse={triggerPulse} />
         </PayPalScriptProvider>
       ) : (
         <h4>WAITING ON CLIENT TOKEN</h4>

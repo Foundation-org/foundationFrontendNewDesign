@@ -13,6 +13,8 @@ import { toast } from 'sonner';
 import { FaSpinner } from 'react-icons/fa';
 import DeleteHistoryPopup from '../../../../../components/dialogue-boxes/deleteHistoryPopup';
 import showToast from '../../../../../components/ui/Toast';
+import { formatDate } from '../../../../../utils/utils';
+import usePulse from '../../../../../hooks/usePulse';
 
 export default function RedemptionCenter() {
   const queryClient = useQueryClient();
@@ -26,6 +28,7 @@ export default function RedemptionCenter() {
   const [radeemLoading, setRadeemLoading] = useState('');
   const [isDeleteModal, setIsDeleteModal] = useState(false);
   const [deleteHistoryCode, setDeleteHistoryCode] = useState(false);
+  const [createRadeemPulse, triggerCreateRadeemPulse] = usePulse(5000);
 
   const handleClose = () => setIsDeleteModal(false);
 
@@ -35,6 +38,7 @@ export default function RedemptionCenter() {
       showToast('success', 'redemptionCreated');
       queryClient.invalidateQueries(['userInfo']);
       queryClient.invalidateQueries('unredeemedData');
+      triggerCreateRadeemPulse();
       setExpiry('30 days');
       setDescription('');
       setFdx(0);
@@ -214,16 +218,6 @@ export default function RedemptionCenter() {
   //   }
   // };
 
-  function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    const formattedDate = `${day}-${month}-${year}`;
-    return formattedDate;
-  }
-
   useEffect(() => {
     if (isPulse) {
       const timer = setTimeout(() => {
@@ -388,7 +382,9 @@ export default function RedemptionCenter() {
                   <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[10px]">
                     {unredeemedData?.data?.data?.map((item, index) => (
                       <div key={index + 1}>
-                        <div className="flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-4 tablet:px-3 tablet:py-[13.4px] laptop:flex-row laptop:items-center laptop:gap-0">
+                        <div
+                          className={`flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-4 tablet:px-3 tablet:py-[13.4px] laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && createRadeemPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                        >
                           <div className="flex items-center gap-[10px] tablet:gap-2">
                             <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[16px]">
                               {item.code}

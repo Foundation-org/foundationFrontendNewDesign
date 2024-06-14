@@ -3,7 +3,7 @@ import { fetchPurchasedFdxHistory } from '../../../../../services/api/Treasury';
 import { useSelector } from 'react-redux';
 import { formatDate } from '../../../../../utils/utils';
 
-const FdxActivity = () => {
+const FdxActivity = ({ isPulse }) => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   const {
@@ -55,7 +55,7 @@ const FdxActivity = () => {
                   ?.map((item, index) => (
                     <div
                       key={item._id}
-                      className={`flex w-full justify-between gap-2 px-3 py-2 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0 ${index !== historyData?.history?.length - 1 && 'border-b-[1.84px] border-[#D9D9D9]'}`}
+                      className={`flex w-full justify-between gap-2 px-3 py-2 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0 ${index !== historyData?.history?.length - 1 && 'border-b-[1.84px] border-[#D9D9D9]'} ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
                     >
                       <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
                         <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">

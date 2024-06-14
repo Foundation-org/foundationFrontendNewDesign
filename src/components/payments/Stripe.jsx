@@ -8,7 +8,7 @@ import CheckoutForm from './CheckoutForm';
 // This is your test publishable API key.
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
-const Stripe = ({ clientSecret, handleClose }) => {
+const Stripe = ({ clientSecret, handleClose, triggerPulse }) => {
   const [localClientSecret, setLocalClientSecret] = useState(clientSecret || localStorage.getItem('scs'));
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Stripe = ({ clientSecret, handleClose }) => {
     <>
       {(localClientSecret || localStorage.getItem('scs')) && (
         <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm handleClose={handleClose} />
+          <CheckoutForm handleClose={handleClose} triggerPulse={triggerPulse} />
         </Elements>
       )}
     </>

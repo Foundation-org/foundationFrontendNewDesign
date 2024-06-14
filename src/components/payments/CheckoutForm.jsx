@@ -9,7 +9,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'sonner';
 import showToast from '../ui/Toast';
 
-export default function CheckoutForm({ handleClose }) {
+export default function CheckoutForm({ handleClose, triggerPulse }) {
   const stripe = useStripe();
   const elements = useElements();
   const location = useLocation();
@@ -48,6 +48,7 @@ export default function CheckoutForm({ handleClose }) {
           await spay({ charge: resp.paymentIntent, userUuid: persistedUserInfo.uuid });
           clearQueryParams();
           queryClient.invalidateQueries(['userInfo']);
+          triggerPulse();
 
           switch (resp.paymentIntent.status) {
             case 'succeeded':

@@ -9,7 +9,7 @@ import showToast from '../../ui/Toast';
 
 export const url = import.meta.env.VITE_API_URL;
 
-export const PaymentForm = ({ dollar, handleClose }) => {
+export const PaymentForm = ({ dollar, handleClose, triggerPulse }) => {
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -87,6 +87,7 @@ export const PaymentForm = ({ dollar, handleClose }) => {
         await paypalPay({ charge: orderData, userUuid: data.uuid });
         if (transaction.status === 'COMPLETED') {
           showToast('success', 'paymentSuccessful');
+          triggerPulse();
           queryClient.invalidateQueries(['userInfo']);
           localStorage.removeItem('paymentMethod');
           handleClose();
