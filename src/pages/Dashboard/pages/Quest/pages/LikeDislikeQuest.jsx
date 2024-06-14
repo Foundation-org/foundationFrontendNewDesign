@@ -12,6 +12,8 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 
 import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import showToast from '../../../../../components/ui/Toast';
 
