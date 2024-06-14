@@ -54,6 +54,7 @@ import RewardSchedule from '../pages/Dashboard/pages/Treasury/pages/RewardSchedu
 import BuyFDX from '../pages/Dashboard/pages/Treasury/pages/BuyFDX';
 import RedemptionCenter from '../pages/Dashboard/pages/Treasury/pages/RedemptionCenter';
 import Ledger from '../pages/Dashboard/pages/Treasury/pages/Ledger';
+import useScrollToTop from '../hooks/useScrollToTop';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -61,6 +62,8 @@ export function Router() {
     User: 'user',
     Guest: 'guest',
   };
+
+  useScrollToTop();
 
   // console.log({ persistedUser });
   return (

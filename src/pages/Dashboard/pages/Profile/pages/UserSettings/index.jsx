@@ -9,7 +9,8 @@ const UserSettings = () => {
   return (
     <div className="mx-4 space-y-2 pb-6 tablet:mx-6 tablet:space-y-[15px]">
       {/* Summary Section */}
-      <div className="mx-auto w-full">
+      <div className="mx-auto w-full" id='scrollToTop'
+      >
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
