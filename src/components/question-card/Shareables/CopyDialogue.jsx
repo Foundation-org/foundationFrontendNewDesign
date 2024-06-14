@@ -113,8 +113,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
       setCreateCustom(false);
     },
     onError: (error) => {
-      showToast('error', 'error', {}, error.response.data.message)
-
+      showToast('error', 'error', {}, error.response.data.message);
     },
   });
 
@@ -217,7 +216,6 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
                 onClick={() => {
                   copyToClipboard();
                   showToast('success', 'copyLink');
-
                 }}
               >
                 <Copy color="#8BAAC0" />
@@ -275,7 +273,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
                   <>
                     Create{' '}
                     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                      (-{persistedContants?.USER_QUEST_SETTING_LINK_CUSTOMIZATION_DEDUCTION_AMOUNT} FDX)
+                      (-{persistedContants?.USER_LIST_LINK_CUSTOMIZATION_DEDUCTION_AMOUNT} FDX)
                     </span>
                   </>
                 )}
