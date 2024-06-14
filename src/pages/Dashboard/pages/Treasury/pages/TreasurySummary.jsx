@@ -11,7 +11,7 @@ const TreasurySummary = () => {
   return (
     <div className=" mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
       {/* Your FDX */}
-      <div id='scrollToTop'>
+      <div id="scrollToTop">
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
@@ -194,7 +194,7 @@ const TreasurySummary = () => {
                 FDX spent to create codes
               </h1>
               <h1 className="col-span-2 border-l-[2.792px] border-[#D9D9D9] py-2 text-center text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
-                {persistedUserInfo?.redemptionStatistics?.createCodeFdxSpent} FDX
+                {persistedUserInfo?.redemptionStatistics?.createCodeFdxSpent?.toFixed(2)} FDX
               </h1>
             </div>
             <div className="grid grid-cols-8 pl-2 tablet:pl-8">
@@ -202,7 +202,7 @@ const TreasurySummary = () => {
                 FDX earned from codes redeemed
               </h1>
               <h1 className="col-span-2 border-l-[2.792px] border-[#D9D9D9] py-2 text-center text-[12px] font-normal leading-[113%] text-[#85898C] tablet:py-3 tablet:text-[16px] tablet:leading-normal">
-                {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned} FDX
+                {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned?.toFixed(2)} FDX
               </h1>
             </div>
           </div>
