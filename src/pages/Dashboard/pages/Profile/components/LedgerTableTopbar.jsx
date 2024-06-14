@@ -44,7 +44,8 @@ const LedgerTableTopbar = ({
           </div> */}
 
           {/* treasury */}
-          <div className="flex gap-[5.51px] tablet:gap-[13px]">
+          <div className="flex gap-[5.51px] tablet:gap-[13px]"
+          >
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.png`}
               alt="person icon"
@@ -94,9 +95,8 @@ const LedgerTableTopbar = ({
             </h1>
           </button>
           <div
-            className={`${
-              selectedOption ? 'flex duration-200 ease-in-out' : 'hidden'
-            } absolute z-50 -mt-3 w-10 flex-col gap-1 rounded-md bg-gray px-1 py-[5px] text-left text-black tablet:mt-1 tablet:w-20 laptop:mt-2 laptop:w-32 laptop:gap-2 laptop:py-2`}
+            className={`${selectedOption ? 'flex duration-200 ease-in-out' : 'hidden'
+              } absolute z-50 -mt-3 w-10 flex-col gap-1 rounded-md bg-gray px-1 py-[5px] text-left text-black tablet:mt-1 tablet:w-20 laptop:mt-2 laptop:w-32 laptop:gap-2 laptop:py-2`}
           >
             <p
               className="cursor-pointer rounded-md text-[7px] duration-200 ease-in-out hover:bg-white tablet:text-[10px] laptop:px-2 laptop:text-[16px]"

@@ -233,7 +233,7 @@ export default function RedemptionCenter() {
       <div className="flex flex-col gap-2 tablet:gap-6">
         {/* Create */}
         <div>
-          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]" id='scrollToTop'>
             <div className="flex items-center gap-2">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/redemption-code-activity.svg`}
