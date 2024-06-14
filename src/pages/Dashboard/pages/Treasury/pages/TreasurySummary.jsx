@@ -41,16 +41,16 @@ const TreasurySummary = () => {
           </div>
           <div className="space-y-2 text-end">
             <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-              {persistedUserInfo?.fdxEarned + persistedUserInfo?.fdxSpent} FDX
+              {(persistedUserInfo?.fdxEarned + persistedUserInfo?.fdxSpent)?.toFixed(2)} FDX
             </h1>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.fdxEarned} FDX
+              {persistedUserInfo?.fdxEarned?.toFixed(2)} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.fdxSpent} FDX
+              {persistedUserInfo?.fdxSpent?.toFixed(2)} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned} FDX
+              {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned?.toFixed(2)} FDX
             </p>
           </div>
         </div>

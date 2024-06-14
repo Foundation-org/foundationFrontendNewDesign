@@ -368,30 +368,49 @@ export default function RedemptionCenter() {
                 </div>
               ) : (
                 <div>
-                  <div className="mb-2 ml-3 flex items-center gap-[10px] tablet:mb-[9px] tablet:ml-3 tablet:gap-2">
-                    <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[18px] tablet:leading-[134.149%]">
-                      Code
-                    </p>
-                    <p className="min-w-[95px] max-w-[95px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[151px] tablet:max-w-[151px] tablet:text-[18px]">
-                      Description
-                    </p>
-                    <p className="min-w-[20px] max-w-[20px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[18px]">
-                      FDX
-                    </p>
+                  <div className="mb-2 ml-3 flex tablet:mx-3 tablet:mb-[9px] tablet:gap-4">
+                    <div className="flex max-w-[433px] items-center gap-[10px] tablet:gap-2">
+                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[18px] tablet:leading-[134.149%]">
+                        Created
+                      </p>
+                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[18px] tablet:leading-[134.149%]">
+                        Code
+                      </p>
+                      <p className="min-w-[95px] max-w-[95px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[140px] tablet:max-w-[140px] tablet:text-[18px]">
+                        Description
+                      </p>
+                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[18px]">
+                        FDX
+                      </p>
+                    </div>
+                    <div className="hidden items-center tablet:flex tablet:gap-2">
+                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-fit tablet:max-w-fit tablet:text-[18px] tablet:leading-[134.149%]">
+                        Share
+                      </p>
+                      <p className="min-w-[95px] max-w-[95px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-fit tablet:max-w-fit tablet:text-[18px]">
+                        Copy
+                      </p>
+                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[18px]">
+                        {' '}
+                      </p>
+                    </div>
                   </div>
                   <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[10px]">
                     {unredeemedData?.data?.data?.map((item, index) => (
                       <div key={index + 1}>
                         <div
-                          className={`flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-4 tablet:px-3 tablet:py-[13.4px] laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && createRadeemPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                          className={`flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-5 tablet:px-3 tablet:py-[13.4px] laptop:flex-row laptop:items-center ${index === 0 && createRadeemPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
                         >
                           <div className="flex items-center gap-[10px] tablet:gap-2">
+                            <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[16px]">
+                              {formatDate(item.createdAt)}
+                            </p>
                             <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[16px]">
                               {item.code}
                             </p>
                             <div className=" flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[16px]">
                               <div className="tooltip text-start" data-tip={item.description}>
-                                <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[151px] tablet:max-w-[151px]">
+                                <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[140px] tablet:max-w-[140px]">
                                   {item.description}
                                 </p>
                               </div>
@@ -400,27 +419,29 @@ export default function RedemptionCenter() {
                               {item.amount}
                             </p>
                           </div>
-                          <div className="flex items-center justify-end gap-[10px] tablet:gap-[15px]">
-                            <Button
-                              variant="share-link"
-                              className={'max-w-[141px] tablet:h-[50px] tablet:max-h-[37px] tablet:max-w-[93px]'}
-                              onClick={() => {
-                                handleShareLink(item.code);
-                                toast.success('Share Link copied!');
-                              }}
-                            >
-                              Share
-                            </Button>
-                            <Button
-                              variant="share-link-submit"
-                              className={'max-w-[152px] tablet:max-h-[37px] tablet:max-w-[88px]'}
-                              onClick={() => {
-                                copyToClipboard(item.code);
-                                toast.success('Code Copied!');
-                              }}
-                            >
-                              Copy
-                            </Button>
+                          <div className="flex items-center justify-end gap-4 tablet:gap-2">
+                            <div className="tablet:min-w-[51px] tablet:max-w-[51px]">
+                              <img
+                                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/sharelink.svg`}
+                                alt="copy"
+                                className="h-3 w-3 cursor-pointer tablet:h-[23px] tablet:w-[23px]"
+                                onClick={() => {
+                                  handleShareLink(item.code);
+                                  showToast('success', 'shareLinkCopied');
+                                }}
+                              />
+                            </div>
+                            <div className="tablet:min-w-[46.2px] tablet:max-w-[46.2px]">
+                              <img
+                                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copy.svg`}
+                                alt="copy"
+                                className="h-3 w-3 cursor-pointer tablet:h-[23px] tablet:w-[23px]"
+                                onClick={() => {
+                                  copyToClipboard(item.code);
+                                  showToast('success', 'codeCopied');
+                                }}
+                              />
+                            </div>
                             <Button
                               variant="result"
                               className={'max-w-[124px] tablet:max-h-[37px] tablet:max-w-[115px]'}
@@ -478,6 +499,9 @@ export default function RedemptionCenter() {
                   <div className="mx-3 mb-2 flex items-center justify-between tablet:mx-5 tablet:mb-[13px]">
                     <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
                       <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                        Redeemed
+                      </p>
+                      <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
                         Code
                       </p>
                       <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
@@ -485,9 +509,6 @@ export default function RedemptionCenter() {
                       </p>
                       <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
                         FDX
-                      </p>
-                      <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                        Redeemed
                       </p>
                     </div>
                   </div>
@@ -501,6 +522,9 @@ export default function RedemptionCenter() {
                         >
                           <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
                             <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
+                              {formatDate(item.createdAt)}
+                            </p>
+                            <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
                               {item.code}
                             </p>
                             <div className="tooltip text-start" data-tip={item.description}>
@@ -510,9 +534,6 @@ export default function RedemptionCenter() {
                             </div>
                             <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
                               {item.amount}
-                            </p>
-                            <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
-                              {formatDate(item.createdAt)}
                             </p>
                           </div>
                         </div>
