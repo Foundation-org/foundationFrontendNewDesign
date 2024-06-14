@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import ProfileSlider from './components/ProfileSlider';
-import BreadCrumb from '../../../../components/BreadCrumb';
+import Breadcrumb from '../../../../components/Breadcrumb';
 
 const Profile = () => {
   const location = useLocation();
@@ -9,7 +9,7 @@ const Profile = () => {
     <div
       className={`${location.pathname !== '/dashboard/profile/ledger' ? 'mx-auto max-w-[1440px] laptop:mx-[331px] desktop:mx-auto' : ''} w-full bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]`}
     >
-      <BreadCrumb />
+      <Breadcrumb />
       <div className="fixed left-1/2 flex w-full max-w-full -translate-x-1/2 justify-center laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
         <ProfileSlider />
       </div>
