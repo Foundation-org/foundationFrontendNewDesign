@@ -48,7 +48,7 @@ export default function NotificationSettings() {
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/notification-icon.svg`}
               alt={'notification-icon'}
-              className="h-[18.5px] w-[14.6px] tablet:h-[25px] tablet:w-5"
+              className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-6"
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
               Notification Settings

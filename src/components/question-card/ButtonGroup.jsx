@@ -52,8 +52,8 @@ const ButtonGroup = ({
 
   const uuidExists = questStartData.QuestAnswers
     ? questStartData.QuestAnswers?.some(
-      (item) => item.uuid === persistedUserInfo?.uuid || item.uuid === localStorage.getItem('uId'),
-    )
+        (item) => item.uuid === persistedUserInfo?.uuid || item.uuid === localStorage.getItem('uId'),
+      )
     : false;
 
   function updateAnswerSelection(apiResponse, answerSelectionArray, type) {
@@ -407,8 +407,7 @@ const ButtonGroup = ({
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                 {questStartData.startStatus !== 'change answer' && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                    (+ {persistedContants?.QUEST_COMPLETED_AMOUNT})
-
+                    (+{persistedContants?.QUEST_COMPLETED_AMOUNT})
                   </span>
                 )}
               </Button>
@@ -534,8 +533,7 @@ const ButtonGroup = ({
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}{' '}
               {questStartData.startStatus !== 'change answer' && (
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                  (+ {persistedContants?.QUEST_COMPLETED_AMOUNT})
-
+                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT})
                 </span>
               )}
             </Button>
@@ -650,7 +648,7 @@ const ButtonGroup = ({
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               {questStartData.startStatus !== 'change answer' && (
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-                  (+ {persistedContants?.QUEST_COMPLETED_AMOUNT})
+                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT})
                 </span>
               )}
             </Button>

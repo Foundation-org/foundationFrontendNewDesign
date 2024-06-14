@@ -76,7 +76,7 @@ export const Settings = () => {
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/display-settings.svg`}
               alt={'display settings'}
-              className="h-[18.5px] w-[14.6px] tablet:h-[22px] tablet:w-[25.8px]"
+              className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-6"
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
               Display Settings
@@ -98,8 +98,9 @@ export const Settings = () => {
               <span className="sr-only">Use setting</span>
               <span
                 aria-hidden="true"
-                className={`${checkState ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
-                  }
+                className={`${
+                  checkState ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
+                }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
               />
             </Switch>
@@ -113,7 +114,7 @@ export const Settings = () => {
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/feed-settings.svg`}
               alt={'feed settings'}
-              className="h-[18.5px] w-[14.6px] tablet:size-5"
+              className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-6"
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Feed Settings</h1>
           </div>
@@ -135,14 +136,14 @@ export const Settings = () => {
               <span className="sr-only">Use setting</span>
               <span
                 aria-hidden="true"
-                className={`${defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
-                  }
+                className={`${
+                  defaultSort ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
+                }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
               />
             </Switch>
           </div>
         </div>
-
       </div>
 
       <div className="mx-auto w-full">
@@ -151,16 +152,20 @@ export const Settings = () => {
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/encrypt.svg`}
               alt={'feed settings'}
-              className="h-[18.5px] w-[14.6px] tablet:size-5"
+              className="h-[18.5px] w-[14.6px] tablet:h-[29px] tablet:w-6"
             />
-            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Encryption Settings</h1>
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
+              Encryption Settings
+            </h1>
           </div>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <div className="flex items-center justify-between rounded-[6.749px] tablet:rounded-[15px]">
             <div className="">
               <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Ask Password</h1>
-              <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">Ask for the password every time when encrypting or decrypting.</p>
+              <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">
+                Ask for the password every time when encrypting or decrypting.
+              </p>
             </div>
             <Switch
               checked={askPasswordEverytime}
@@ -173,14 +178,16 @@ export const Settings = () => {
               <span className="sr-only">Use setting</span>
               <span
                 aria-hidden="true"
-                className={`${askPasswordEverytime ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6' : 'translate-x-[1px] bg-[#707175]'
-                  }
+                className={`${
+                  askPasswordEverytime
+                    ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
+                    : 'translate-x-[1px] bg-[#707175]'
+                }
         pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
               />
             </Switch>
           </div>
         </div>
-
       </div>
 
       {/* Logout */}
