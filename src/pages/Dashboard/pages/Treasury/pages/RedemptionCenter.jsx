@@ -230,319 +230,320 @@ export default function RedemptionCenter() {
 
   return (
     <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
-      <div className="flex flex-col gap-2 tablet:gap-6">
-        {/* Create */}
-        <div>
-          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]" id='scrollToTop'>
-            <div className="flex items-center gap-2">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/redemption-code-activity.svg`}
-                alt={'redemption-code-activity'}
-                className="size-[15px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+      {/* Create */}
+      <div>
+        <div
+          className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]"
+          id="scrollToTop"
+        >
+          <div className="flex items-center gap-2">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/redemption-code-activity.svg`}
+              alt={'redemption-code-activity'}
+              className="size-[15px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+            />
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
+              Create Redemption Code
+            </h1>
+          </div>
+        </div>
+        <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => {
+              if (e.target.value.length <= 35) {
+                setDescription(e.target.value);
+              }
+            }}
+            placeholder="Description here....."
+            className="w-full max-w-[368px] rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] p-1 text-[10px] font-medium leading-normal text-[#707175] focus:outline-none tablet:rounded-[7.07px] tablet:border-[3px] tablet:px-4 tablet:py-3 tablet:text-[16px]"
+          />
+          <p className="text-[7.5px] font-normal leading-normal text-[#85898C] tablet:text-[14.7px]">
+            Create FDX and maximize your access to all features.
+          </p>
+          <div className="flex items-center gap-5 tablet:gap-6">
+            <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">FDX</h2>
+            <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[124px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
+              <FaMinus
+                className="w-[7px] cursor-pointer tablet:w-[23px]"
+                onClick={() => {
+                  if (fdx * 1 - 1 > 0) setFdx(fdx - 1);
+                  else setFdx(0);
+                }}
               />
-              <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-                Create Redemption Code
-              </h1>
+              <input
+                type="number"
+                className="hide-input-arrows w-full bg-transparent text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] focus:outline-none tablet:text-[20px]"
+                value={fdx === 0 ? '' : fdx}
+                placeholder="0"
+                onChange={(e) => {
+                  let x = parseFloat(e.target.value);
+                  if (!isNaN(x)) {
+                    x = Math.round(x * 100) / 100;
+                    if (Number.isInteger(x)) {
+                      setFdx(x.toString());
+                    } else {
+                      setFdx(x);
+                    }
+                  } else {
+                    setFdx(0);
+                  }
+                }}
+              />
+
+              <FaPlus
+                className="w-[7px] cursor-pointer tablet:w-[23px]"
+                onClick={() => {
+                  if (persistedUserInfo.balance - 1 > fdx) {
+                    setFdx(fdx * 1 + 1);
+                  } else {
+                    setFdx(fdx * 1 + (Math.floor(persistedUserInfo.balance) - fdx));
+                  }
+                }}
+              />
             </div>
           </div>
-          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
+          <div className="flex w-full justify-center">
+            <Button variant={'submit'} onClick={handleCreate}>
+              {createPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
+            </Button>
+          </div>
+        </div>
+      </div>
+      {/* Add  */}
+      <div>
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center gap-2">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/add-redemption.svg`}
+              alt={'add-redemption'}
+              className="h-[14px] w-[18px] min-w-[14.6px] tablet:h-[22.7px] tablet:w-[27.8px]"
+            />
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
+              Add Redemption Code
+            </h1>
+          </div>
+        </div>
+        <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
+          <p className="text-[7.5px] font-normal leading-normal text-[#85898C] tablet:text-[14.7px]">
+            You can add redemption code and earn reworded coins
+          </p>
+          <div className="flex items-center gap-5 tablet:gap-6">
+            <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">Code</h2>
             <input
               type="text"
-              value={description}
-              onChange={(e) => {
-                if (e.target.value.length <= 35) {
-                  setDescription(e.target.value);
-                }
-              }}
-              placeholder="Description here....."
-              className="w-full max-w-[368px] rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] p-1 text-[10px] font-medium leading-normal text-[#707175] focus:outline-none tablet:rounded-[7.07px] tablet:border-[3px] tablet:px-4 tablet:py-3 tablet:text-[16px]"
+              placeholder="eg (rG57HK)"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
             />
-            <p className="text-[7.5px] font-normal leading-normal text-[#85898C] tablet:text-[14.7px]">
-              Create FDX and maximize your access to all features.
-            </p>
-            <div className="flex items-center gap-5 tablet:gap-6">
-              <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">FDX</h2>
-              <div className="flex w-full max-w-[70px] items-center justify-between rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-[6px] py-[3px] text-[#7C7C7C] tablet:max-w-[124px] tablet:rounded-[7px] tablet:border-[3px] tablet:px-[18px] tablet:py-2">
-                <FaMinus
-                  className="w-[7px] cursor-pointer tablet:w-[23px]"
-                  onClick={() => {
-                    if (fdx * 1 - 1 > 0) setFdx(fdx - 1);
-                    else setFdx(0);
-                  }}
-                />
-                <input
-                  type="number"
-                  className="hide-input-arrows w-full bg-transparent text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] focus:outline-none tablet:text-[20px]"
-                  value={fdx === 0 ? '' : fdx}
-                  placeholder="0"
-                  onChange={(e) => {
-                    let x = parseFloat(e.target.value);
-                    if (!isNaN(x)) {
-                      x = Math.round(x * 100) / 100;
-                      if (Number.isInteger(x)) {
-                        setFdx(x.toString());
-                      } else {
-                        setFdx(x);
-                      }
-                    } else {
-                      setFdx(0);
-                    }
-                  }}
-                />
-
-                <FaPlus
-                  className="w-[7px] cursor-pointer tablet:w-[23px]"
-                  onClick={() => {
-                    if (persistedUserInfo.balance - 1 > fdx) {
-                      setFdx(fdx * 1 + 1);
-                    } else {
-                      setFdx(fdx * 1 + (Math.floor(persistedUserInfo.balance) - fdx));
-                    }
-                  }}
-                />
-              </div>
-            </div>
-            <div className="flex w-full justify-center">
-              <Button variant={'submit'} onClick={handleCreate}>
-                {createPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
-              </Button>
-            </div>
+          </div>
+          <div className="flex w-full justify-center">
+            <Button variant={'submit'} onClick={handleAdd}>
+              {addCodeLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
+            </Button>
           </div>
         </div>
-        {/* Add  */}
-        <div>
-          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
-            <div className="flex items-center gap-2">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/add-redemption.svg`}
-                alt={'add-redemption'}
-                className="h-[14px] w-[18px] min-w-[14.6px] tablet:h-[22.7px] tablet:w-[27.8px]"
-              />
-              <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-                Add Redemption Code
-              </h1>
-            </div>
-          </div>
-          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
-            <p className="text-[7.5px] font-normal leading-normal text-[#85898C] tablet:text-[14.7px]">
-              You can add redemption code and earn reworded coins
-            </p>
-            <div className="flex items-center gap-5 tablet:gap-6">
-              <h2 className="text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[20px]">Code</h2>
-              <input
-                type="text"
-                placeholder="eg (rG57HK)"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                className="min-w-[80px] max-w-[80px] rounded-[2.76px] border-[1.17px] border-[#DEE6F7] bg-[#F9F9F9] px-2 py-1 text-[7.8px] font-semibold leading-[7.8px] text-[#7C7C7C] focus:outline-none tablet:min-w-[230px] tablet:max-w-[230px] tablet:rounded-[7.07px] tablet:border-[3px] tablet:py-2 tablet:text-[25px] tablet:leading-[25px]"
-              />
-            </div>
-            <div className="flex w-full justify-center">
-              <Button variant={'submit'} onClick={handleAdd}>
-                {addCodeLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'}
-              </Button>
-            </div>
+      </div>
+      {/* UnRedeemed Code */}
+      <div>
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center gap-2">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/un-radeem.svg`}
+              alt={'un-radeem'}
+              className="h-[13.9px] w-[14.8px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+            />
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
+              Un-Redeemed Codes
+            </h1>
           </div>
         </div>
-        {/* UnRedeemed Code */}
-        <div>
-          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
-            <div className="flex items-center gap-2">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/un-radeem.svg`}
-                alt={'un-radeem'}
-                className="h-[13.9px] w-[14.8px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
-              />
-              <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-                Un-Redeemed Codes
-              </h1>
-            </div>
-          </div>
-          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-2 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-4 tablet:py-[18.73px]">
-            <div>
-              {!unredeemedData || unredeemedData.data.data.length === 0 ? (
-                <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white py-2 tablet:rounded-[15px] tablet:py-6">
-                  <p className="text-center text-[11px] font-medium leading-normal text-[#C9C8C8] tablet:text-[22px]">
-                    Your have no un-redeemed codes
-                  </p>
-                </div>
-              ) : (
-                <div>
-                  <div className="mb-2 ml-3 flex tablet:mx-3 tablet:mb-[9px] tablet:gap-4">
-                    <div className="flex max-w-[433px] items-center gap-[10px] tablet:gap-2">
-                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[18px] tablet:leading-[134.149%]">
-                        Created
-                      </p>
-                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[18px] tablet:leading-[134.149%]">
-                        Code
-                      </p>
-                      <p className="min-w-[95px] max-w-[95px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[140px] tablet:max-w-[140px] tablet:text-[18px]">
-                        Description
-                      </p>
-                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[18px]">
-                        FDX
-                      </p>
-                    </div>
-                    <div className="hidden items-center tablet:flex tablet:gap-2">
-                      <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-fit tablet:max-w-fit tablet:text-[18px] tablet:leading-[134.149%]">
-                        Share
-                      </p>
-                      <p className="min-w-[95px] max-w-[95px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-fit tablet:max-w-fit tablet:text-[18px]">
-                        Copy
-                      </p>
-                      <p className="min-w-[20px] max-w-[20px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[18px]">
-                        {' '}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[10px]">
-                    {unredeemedData?.data?.data?.map((item, index) => (
-                      <div key={index + 1}>
-                        <div
-                          className={`flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-5 tablet:px-3 tablet:py-[13.4px] laptop:flex-row laptop:items-center ${index === 0 && createRadeemPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
-                        >
-                          <div className="flex items-center gap-[10px] tablet:gap-2">
-                            <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[16px]">
-                              {formatDate(item.createdAt)}
-                            </p>
-                            <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[16px]">
-                              {item.code}
-                            </p>
-                            <div className=" flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[16px]">
-                              <div className="tooltip text-start" data-tip={item.description}>
-                                <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[140px] tablet:max-w-[140px]">
-                                  {item.description}
-                                </p>
-                              </div>
-                            </div>
-                            <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[16px]">
-                              {item.amount}
-                            </p>
-                          </div>
-                          <div className="flex items-center justify-end gap-4 tablet:gap-2">
-                            <div className="tablet:min-w-[51px] tablet:max-w-[51px]">
-                              <img
-                                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/sharelink.svg`}
-                                alt="copy"
-                                className="h-3 w-3 cursor-pointer tablet:h-[23px] tablet:w-[23px]"
-                                onClick={() => {
-                                  handleShareLink(item.code);
-                                  showToast('success', 'shareLinkCopied');
-                                }}
-                              />
-                            </div>
-                            <div className="tablet:min-w-[46.2px] tablet:max-w-[46.2px]">
-                              <img
-                                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copy.svg`}
-                                alt="copy"
-                                className="h-3 w-3 cursor-pointer tablet:h-[23px] tablet:w-[23px]"
-                                onClick={() => {
-                                  copyToClipboard(item.code);
-                                  showToast('success', 'codeCopied');
-                                }}
-                              />
-                            </div>
-                            <Button
-                              variant="result"
-                              className={'max-w-[124px] tablet:max-h-[37px] tablet:max-w-[115px]'}
-                              onClick={() => handleRedeeem(item.code)}
-                            >
-                              {radeemLoading === item.code ? (
-                                <FaSpinner className="animate-spin text-[#EAEAEA]" />
-                              ) : (
-                                'Redeem'
-                              )}
-                            </Button>
-                          </div>
-                        </div>
-                        {index !== unredeemedData?.data?.data.length - 1 && (
-                          <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        {/* Referral code activity */}
-        <div>
-          <DeleteHistoryPopup
-            isDeleteModal={isDeleteModal}
-            handleClose={handleClose}
-            deleteHistoryCode={deleteHistoryCode}
-          />
-          <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
-            <div className="flex items-center gap-2">
-              <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/raferral-code-activity.svg`}
-                alt={'raferral-code-activity'}
-                className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
-              />
-              <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-                Redemption code activity
-              </h1>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-2 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-[15.5px] tablet:py-[18.73px]">
-            {!history || history.data.data.length === 0 ? (
+        <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-2 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-4 tablet:py-[18.73px]">
+          <div>
+            {!unredeemedData || unredeemedData.data.data.length === 0 ? (
               <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white py-2 tablet:rounded-[15px] tablet:py-6">
                 <p className="text-center text-[11px] font-medium leading-normal text-[#C9C8C8] tablet:text-[22px]">
-                  You have no records.
+                  Your have no un-redeemed codes
                 </p>
               </div>
             ) : (
-              <div className="flex flex-col gap-[5px] rounded-b-[10px] bg-[#FDFDFD] tablet:gap-[15px]">
-                <div>
-                  <div className="mx-3 mb-2 flex items-center justify-between tablet:mx-5 tablet:mb-[13px]">
-                    <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
-                      <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                        Redeemed
-                      </p>
-                      <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                        Code
-                      </p>
-                      <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                        Description
-                      </p>
-                      <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                        FDX
-                      </p>
-                    </div>
+              <div>
+                <div className="mb-2 ml-3 flex tablet:mx-3 tablet:mb-[9px] tablet:gap-4">
+                  <div className="flex max-w-[433px] items-center gap-[10px] tablet:gap-2">
+                    <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[18px] tablet:leading-[134.149%]">
+                      Created
+                    </p>
+                    <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[18px] tablet:leading-[134.149%]">
+                      Code
+                    </p>
+                    <p className="min-w-[95px] max-w-[95px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-[140px] tablet:max-w-[140px] tablet:text-[18px]">
+                      Description
+                    </p>
+                    <p className="min-w-[20px] max-w-[20px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[18px]">
+                      FDX
+                    </p>
                   </div>
-                  <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
-                    {history?.data?.data
-                      ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                      ?.map((item, index) => (
-                        <div
-                          key={item._id}
-                          className={`flex w-full justify-between gap-2 px-3 py-2 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0 ${index !== history?.data?.data?.length - 1 && 'border-b-[1.84px] border-[#D9D9D9]'} ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
-                        >
-                          <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
-                            <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
-                              {formatDate(item.createdAt)}
-                            </p>
-                            <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
-                              {item.code}
-                            </p>
+                  <div className="hidden items-center tablet:flex tablet:gap-2">
+                    <p className="min-w-[65px] max-w-[65px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-fit tablet:max-w-fit tablet:text-[18px] tablet:leading-[134.149%]">
+                      Share
+                    </p>
+                    <p className="min-w-[95px] max-w-[95px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-fit tablet:max-w-fit tablet:text-[18px]">
+                      Copy
+                    </p>
+                    <p className="min-w-[20px] max-w-[20px] text-[10px] font-bold leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[18px]">
+                      {' '}
+                    </p>
+                  </div>
+                </div>
+                <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[10px]">
+                  {unredeemedData?.data?.data?.map((item, index) => (
+                    <div key={index + 1}>
+                      <div
+                        className={`flex flex-col justify-between gap-2 py-2 pl-[13px] pr-4 tablet:gap-5 tablet:px-3 tablet:py-[13.4px] laptop:flex-row laptop:items-center ${index === 0 && createRadeemPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                      >
+                        <div className="flex items-center gap-[10px] tablet:gap-2">
+                          <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[16px]">
+                            {formatDate(item.createdAt)}
+                          </p>
+                          <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[16px]">
+                            {item.code}
+                          </p>
+                          <div className=" flex items-center text-[10px] font-medium leading-normal text-[#707175] tablet:text-[16px]">
                             <div className="tooltip text-start" data-tip={item.description}>
-                              <p className="truncate text-start text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
+                              <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[140px] tablet:max-w-[140px]">
                                 {item.description}
                               </p>
                             </div>
-                            <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
-                              {item.amount}
-                            </p>
                           </div>
+                          <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-12 tablet:max-w-12 tablet:text-[16px]">
+                            {item.amount}
+                          </p>
                         </div>
-                      ))}
-                  </div>
+                        <div className="flex items-center justify-end gap-4 tablet:gap-2">
+                          <div className="tablet:min-w-[51px] tablet:max-w-[51px]">
+                            <img
+                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/sharelink.svg`}
+                              alt="copy"
+                              className="h-3 w-3 cursor-pointer tablet:h-[23px] tablet:w-[23px]"
+                              onClick={() => {
+                                handleShareLink(item.code);
+                                showToast('success', 'shareLinkCopied');
+                              }}
+                            />
+                          </div>
+                          <div className="tablet:min-w-[46.2px] tablet:max-w-[46.2px]">
+                            <img
+                              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/copy.svg`}
+                              alt="copy"
+                              className="h-3 w-3 cursor-pointer tablet:h-[23px] tablet:w-[23px]"
+                              onClick={() => {
+                                copyToClipboard(item.code);
+                                showToast('success', 'codeCopied');
+                              }}
+                            />
+                          </div>
+                          <Button
+                            variant="result"
+                            className={'max-w-[124px] tablet:max-h-[37px] tablet:max-w-[115px]'}
+                            onClick={() => handleRedeeem(item.code)}
+                          >
+                            {radeemLoading === item.code ? (
+                              <FaSpinner className="animate-spin text-[#EAEAEA]" />
+                            ) : (
+                              'Redeem'
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+                      {index !== unredeemedData?.data?.data.length - 1 && (
+                        <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
           </div>
+        </div>
+      </div>
+      {/* Referral code activity */}
+      <div>
+        <DeleteHistoryPopup
+          isDeleteModal={isDeleteModal}
+          handleClose={handleClose}
+          deleteHistoryCode={deleteHistoryCode}
+        />
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
+          <div className="flex items-center gap-2">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/raferral-code-activity.svg`}
+              alt={'raferral-code-activity'}
+              className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+            />
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
+              Redemption code activity
+            </h1>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-2 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-[15.5px] tablet:py-[18.73px]">
+          {!history || history.data.data.length === 0 ? (
+            <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white py-2 tablet:rounded-[15px] tablet:py-6">
+              <p className="text-center text-[11px] font-medium leading-normal text-[#C9C8C8] tablet:text-[22px]">
+                You have no records.
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-[5px] rounded-b-[10px] bg-[#FDFDFD] tablet:gap-[15px]">
+              <div>
+                <div className="mx-3 mb-2 flex items-center justify-between tablet:mx-5 tablet:mb-[13px]">
+                  <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
+                    <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                      Redeemed
+                    </p>
+                    <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                      Code
+                    </p>
+                    <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                      Description
+                    </p>
+                    <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                      FDX
+                    </p>
+                  </div>
+                </div>
+                <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
+                  {history?.data?.data
+                    ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                    ?.map((item, index) => (
+                      <div
+                        key={item._id}
+                        className={`flex w-full justify-between gap-2 px-3 py-2 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0 ${index !== history?.data?.data?.length - 1 && 'border-b-[1.84px] border-[#D9D9D9]'} ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                      >
+                        <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
+                          <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
+                            {formatDate(item.createdAt)}
+                          </p>
+                          <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
+                            {item.code}
+                          </p>
+                          <div className="tooltip text-start" data-tip={item.description}>
+                            <p className="truncate text-start text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
+                              {item.description}
+                            </p>
+                          </div>
+                          <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
+                            {item.amount}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
