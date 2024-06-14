@@ -1,5 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../components/ui/Button';
+import Breadcrumb from '../../../../components/BreadCrumb';
 
 const CustomerSupport = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const CustomerSupport = () => {
 
   return (
     <div className="h-dvh min-h-dvh w-full bg-[#F2F3F5] tablet:px-6">
+      <Breadcrumb />
       <div className="flex items-center justify-center gap-[6.75px] py-2 tablet:gap-[0.96rem] tablet:py-[14.82px]">
         {list.map((item) => (
           <Button
@@ -26,7 +28,7 @@ const CustomerSupport = () => {
         ))}
       </div>
       <div
-        className={`no-scrollbar mx-auto mb-10 h-[calc(100dvh-131px)] w-full overflow-y-auto tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem] ${location.pathname === '/dashboard/help/contact-us' && 'px-3'}`}
+        className={`no-scrollbar mx-auto mb-10 h-[calc(100dvh-174px)] w-full overflow-y-auto tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem] ${location.pathname === '/dashboard/help/contact-us' && 'px-3'}`}
       >
         <Outlet />
       </div>
