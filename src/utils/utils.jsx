@@ -5,3 +5,13 @@ export const formatCountNumber = (num) => {
   }
   return num.toLocaleString();
 };
+
+export function formatDate(timestamp) {
+  const date = new Date(timestamp);
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  return formattedDate;
+}

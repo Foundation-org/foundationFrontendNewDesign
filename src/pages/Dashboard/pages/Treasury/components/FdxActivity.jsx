@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchPurchasedFdxHistory } from '../../../../../services/api/Treasury';
 import { useSelector } from 'react-redux';
+import { formatDate } from '../../../../../utils/utils';
 
 const FdxActivity = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -14,16 +15,6 @@ const FdxActivity = () => {
     queryFn: () => fetchPurchasedFdxHistory(persistedUserInfo.uuid),
     queryKey: ['fdxPurchasedHistory'],
   });
-
-  function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    const formattedDate = `${day}-${month}-${year}`;
-    return formattedDate;
-  }
 
   return (
     <div>
@@ -40,7 +31,7 @@ const FdxActivity = () => {
       <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-2 py-[10px] tablet:border-[1.85px] tablet:px-5 tablet:py-[18.73px]">
         <div className="flex flex-col gap-[5px] rounded-b-[10px] bg-[#FDFDFD] tablet:gap-[15px]">
           <div>
-            <div className="mb-2 ml-3 flex items-center justify-between tablet:mb-[13px] tablet:ml-5">
+            <div className="mx-3 mb-2 flex items-center justify-between tablet:mx-5 tablet:mb-[13px]">
               <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
                 <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
                   Created
@@ -49,7 +40,7 @@ const FdxActivity = () => {
                   Dollar Spent
                 </p>
                 <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                  FDX Purchased
+                  FDX Bought
                 </p>
                 <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
                   Provider
@@ -64,23 +55,22 @@ const FdxActivity = () => {
                   ?.map((item, index) => (
                     <div
                       key={item._id}
-                      className={`flex justify-between gap-2 py-2 pl-[13px] pr-4 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0`}
+                      className={`flex w-full justify-between gap-2 px-3 py-2 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0 ${index !== historyData?.history?.length - 1 && 'border-b-[1.84px] border-[#D9D9D9]'}`}
                     >
-                      <div className="flex w-full items-center justify-between gap-[10px] tablet:gap-5">
-                        <p className="text-[10px] font-medium leading-normal tablet:text-[16px]">
+                      <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
+                        <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
                           {formatDate(item.createdAt)}
                         </p>
-                        <p className="text-[10px] font-medium leading-normal tablet:text-[16px]">
-                          {item?.providerName}
+                        <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
+                          {item?.dollarSpent}
                         </p>
-                        <p className="text-[10px] font-medium leading-normal tablet:text-[16px]">{item?.dollarSpent}</p>
-                        <p className="text-[10px] font-medium leading-normal tablet:text-[16px]">
+                        <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
                           {item?.fdxPurchased}
                         </p>
+                        <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
+                          {item?.providerName}
+                        </p>
                       </div>
-                      {index !== historyData?.history?.data?.data.length - 1 && (
-                        <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
-                      )}
                     </div>
                   ))}
             </div>

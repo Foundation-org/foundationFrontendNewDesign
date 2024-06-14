@@ -477,55 +477,51 @@ export default function RedemptionCenter() {
                 </p>
               </div>
             ) : (
-              <div>
-                <div className="mb-2 ml-3 flex items-center justify-between tablet:mb-[13px] tablet:ml-5">
-                  <div className="flex items-center gap-[10px] tablet:gap-5">
-                    <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[105px] tablet:max-w-[105px] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                      Code
-                    </p>
-                    <p className="min-w-[95px] max-w-[95px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[250px] tablet:max-w-[250px] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                      Description
-                    </p>
-                    <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[82px] tablet:max-w-[82px] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                      FDX
-                    </p>
+              <div className="flex flex-col gap-[5px] rounded-b-[10px] bg-[#FDFDFD] tablet:gap-[15px]">
+                <div>
+                  <div className="mx-3 mb-2 flex items-center justify-between tablet:mx-5 tablet:mb-[13px]">
+                    <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
+                      <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                        Code
+                      </p>
+                      <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                        Description
+                      </p>
+                      <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                        FDX
+                      </p>
+                      <p className="text-[10px] font-medium leading-normal text-[#707175] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
+                        Redeemed
+                      </p>
+                    </div>
                   </div>
-                  <p className="min-w-[65px] max-w-[65px] pr-5 text-end text-[10px] font-medium leading-normal text-[#707175] tablet:min-w-[140px] tablet:max-w-[140px] tablet:text-[18px] tablet:font-bold tablet:leading-[120%]">
-                    Redeemed
-                  </p>
-                </div>
-                <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
-                  {history?.data?.data
-                    ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                    .map((item, index) => (
-                      <div key={index + 1}>
+                  <div className="rounded-[5.85px] border-[1.84px] border-[#D9D9D9] bg-white tablet:rounded-[15px]">
+                    {history?.data?.data
+                      ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                      ?.map((item, index) => (
                         <div
-                          className={`flex justify-between gap-2 py-2 pl-[13px] pr-4 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0 ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
+                          key={item._id}
+                          className={`flex w-full justify-between gap-2 px-3 py-2 tablet:h-[112px] tablet:gap-4 tablet:px-5 tablet:py-5 laptop:h-[57px] laptop:flex-row laptop:items-center laptop:gap-0 ${index !== history?.data?.data?.length - 1 && 'border-b-[1.84px] border-[#D9D9D9]'} ${index === 0 && isPulse ? 'animate-pulse bg-[#EEF8EA] text-[#049952]' : 'text-[#707175]'}`}
                         >
-                          <div className="flex items-center gap-[10px] tablet:gap-5">
-                            <p className="min-w-[65px] max-w-[65px] text-[10px] font-medium leading-normal tablet:min-w-[10ch] tablet:max-w-[10ch] tablet:text-[16px]">
+                          <div className="grid w-full grid-cols-4 gap-[10px] tablet:gap-5">
+                            <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
                               {item.code}
                             </p>
-                            <div className="flex items-center text-[10px] font-medium leading-normal tablet:text-[16px]">
-                              <div className="tooltip text-start" data-tip={item.description}>
-                                <p className="min-w-[95px] max-w-[95px] truncate tablet:min-w-[250px] tablet:max-w-[250px]">
-                                  {item.description}
-                                </p>
-                              </div>
+                            <div className="tooltip text-start" data-tip={item.description}>
+                              <p className="truncate text-start text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
+                                {item.description}
+                              </p>
                             </div>
-                            <p className="min-w-[20px] max-w-[20px] text-[10px] font-medium leading-normal tablet:min-w-[82px] tablet:max-w-[82px] tablet:text-[16px]">
+                            <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
                               {item.amount}
                             </p>
+                            <p className="text-[10px] font-medium leading-normal tablet:min-w-[152px] tablet:max-w-[152px] tablet:text-[16px]">
+                              {formatDate(item.createdAt)}
+                            </p>
                           </div>
-                          <p className="text-[9px] font-medium leading-normal tablet:text-[16px]">
-                            {formatDate(item.createdAt)}
-                          </p>
                         </div>
-                        {index !== history?.data?.data.length - 1 && (
-                          <div className="mx-[7px] h-[1.84px] rounded-md bg-[#EEE] tablet:mx-6" />
-                        )}
-                      </div>
-                    ))}
+                      ))}
+                  </div>
                 </div>
               </div>
             )}
