@@ -23,8 +23,8 @@ export const hideReasons = [
     id: 5,
     title: 'Duplicate / Similar Post',
   },
-  {
-    id: 6,
-    title: 'Invalid Media',
-  },
+  // {
+  //   id: 6,
+  //   title: 'Invalid Media',
+  // },
 ];

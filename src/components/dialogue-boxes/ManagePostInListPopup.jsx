@@ -131,21 +131,24 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
     }
   }, [searchPost]);
 
-  const handleAddPost = async () => {
+  useEffect(() => {
+    console.log('selectedItem', selectedItem);
     if (selectedItem?.post.length > 0) {
       selectedItem.post.map((item) => {
         if (item.questForeginKey._id === selectedPostId) {
           showToast('error', 'postAlreadyinList');
           return;
-        } else {
-          addPostInList({
-            userUuid: persistedUserInfo.uuid,
-            categoryIdArray: [categoryId],
-            questForeginKey: selectedPostId,
-          });
         }
       });
     }
+  }, [selectedPostId]);
+
+  const handleAddPost = async () => {
+    addPostInList({
+      userUuid: persistedUserInfo.uuid,
+      categoryIdArray: [categoryId],
+      questForeginKey: selectedPostId,
+    });
   };
 
   return (
@@ -192,8 +195,9 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
                 onChange={(e) => setSearchPost(e.target.value)}
                 value={searchPost}
                 placeholder="Search Post"
-                className={`${selectedPostId === '' && searchPost !== '' ? 'border-b border-[#DEE6F7] tablet:border-b-[3px]' : ''
-                  } flex w-full resize-none items-center bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px] dark:text-[#7C7C7C]`}
+                className={`${
+                  selectedPostId === '' && searchPost !== '' ? 'border-b border-[#DEE6F7] tablet:border-b-[3px]' : ''
+                } flex w-full resize-none items-center bg-white px-[9.24px] py-[6.84px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-[10px] tablet:px-[11px] tablet:py-3 tablet:text-[18px] tablet:leading-[18px] dark:text-[#7C7C7C]`}
               />
               {/* </div> */}
               {/* To Render and Select The Post */}
