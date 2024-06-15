@@ -218,7 +218,7 @@ const ReferralCode = ({
             variant="submit"
             onClick={() => {
               setRefLoading(true);
-              const data = { code: referralCode };
+              const data = { code: referralCode.trim() };
               handleReferral(data);
             }}
           >
