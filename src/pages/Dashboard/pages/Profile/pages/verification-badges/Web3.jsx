@@ -11,8 +11,13 @@ import '@farcaster/auth-kit/styles.css';
 import { AuthKitProvider, SignInButton, useProfile, useSignIn } from '@farcaster/auth-kit';
 import { useQueryClient } from '@tanstack/react-query';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
-import showToast from '../../../../../../components/ui/Toast'
-export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirmation, checkLegacyBadge, getAskPassword }) {
+import showToast from '../../../../../../components/ui/Toast';
+export default function Web3({
+  handleRemoveBadgePopup,
+  handleOpenPasswordConfirmation,
+  checkLegacyBadge,
+  getAskPassword,
+}) {
   const { sdk } = useSDK();
   const persistedContants = useSelector(getConstantsValues);
 
@@ -49,7 +54,7 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
 
       const addBadge = await api.post(`/addBadge/web3/add`, payload);
       if (addBadge.status === 200) {
-        showToast('success', 'badgeAdded')
+        showToast('success', 'badgeAdded');
         queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
@@ -66,10 +71,10 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
     try {
       // Device Detect
       if (type === 'desktop' && !isBrowser) {
-        return showToast('warning', 'switchDesktop')
+        return showToast('warning', 'switchDesktop');
       }
       if (type === 'mobile' && !isMobile) {
-        return showToast('warning', 'switchMobile')
+        return showToast('warning', 'switchMobile');
       }
       // let value;
       if (title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile') {
@@ -90,7 +95,7 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
         if (verificationJSON && verificationJSON.verified) {
           value = attResp;
         } else {
-          showToast('error', 'somethingWrong')
+          showToast('error', 'somethingWrong');
         }
       }
       if (value === '') {
@@ -119,12 +124,12 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
         // alert("testing...   ")
       }
       if (addBadge?.status === 200) {
-        showToast('success', 'badgeAdded')
+        showToast('success', 'badgeAdded');
         queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
       console.error(error);
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
   };
 
@@ -286,8 +291,9 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
             )}
             <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
             <div
-              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              className={`${
+                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+              } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                 {item.title}
@@ -299,8 +305,10 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
               }
               onClick={async () => {
                 if (item.type === 'etherium-wallet') {
-
-                  if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword))
+                  if (
+                    (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
+                    (checkLegacyBadge() && getAskPassword)
+                  )
                     await handleOpenPasswordConfirmation();
                 }
                 item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)
@@ -308,20 +316,20 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
                   : item.type === 'etherium-wallet'
                     ? checkWeb3Badge(item.type)
                       ? handleRemoveBadgePopup({
-                        title: item.title,
-                        image: item.image,
-                        type: item.type,
-                        badgeType: 'etherium-wallet',
-                      })
+                          title: item.title,
+                          image: item.image,
+                          type: item.type,
+                          badgeType: 'etherium-wallet',
+                        })
                       : connect()
                     : checkPassKeyBadge(item.accountName, item.type)
                       ? handleRemoveBadgePopup({
-                        title: item.title,
-                        image: item.image,
-                        type: item.type,
-                        badgeType: item.badgeType,
-                        accountName: item.accountName,
-                      })
+                          title: item.title,
+                          image: item.image,
+                          type: item.type,
+                          badgeType: item.badgeType,
+                          accountName: item.accountName,
+                        })
                       : handlePasskey(item?.title, item?.type);
               }}
               disabled={item.disabled}
@@ -329,7 +337,7 @@ export default function Web3({ handleRemoveBadgePopup, handleOpenPasswordConfirm
               {checkPassKeyBadge(item.accountName, item.type) || checkWeb3Badge(item.type) ? 'Remove' : item.ButtonText}
               {!checkPassKeyBadge(item.accountName, item.type) && !checkWeb3Badge(item.type) && (
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  (+ {persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
+                  (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
                 </span>
               )}
             </Button>
