@@ -60,7 +60,7 @@ const LegacyConfirmationPopup = ({
           }
         }
       } catch (error) {
-        showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+        showToast('error', 'error', {}, error.response.data.message.split(':')[0])
         setIsLoading(false);
       }
     } else {
