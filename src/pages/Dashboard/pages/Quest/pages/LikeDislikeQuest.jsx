@@ -16,6 +16,7 @@ import { getConstantsValues } from '../../../../../features/constants/constantsS
 
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import showToast from '../../../../../components/ui/Toast';
+import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 
 const LikeDislike = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const LikeDislike = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
+          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           navigate('/dashboard');
           queryClient.invalidateQueries(['userInfo']);
           setLoading(false);

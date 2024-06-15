@@ -18,6 +18,7 @@ import * as questServices from '../../../../../services/api/questsApi';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../components/ui/Toast';
 import { POST_MAX_OPTION_LIMIT, POST_OPTIONS_CHAR_LIMIT, RANKED_CHOICE_MIN_OPTION_LIMIT } from '../../../../../constants/Values/constants';
+import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ const RankChoice = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
+          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           navigate('/dashboard');
           queryClient.invalidateQueries(['userInfo']);
           setLoading(false);

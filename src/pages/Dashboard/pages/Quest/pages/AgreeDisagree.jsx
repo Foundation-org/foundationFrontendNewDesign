@@ -15,6 +15,7 @@ import * as createQuestAction from '../../../../../features/createQuest/createQu
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../components/ui/Toast';
+import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 
 const AgreeDisagree = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const AgreeDisagree = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
+          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           navigate('/dashboard');
           queryClient.invalidateQueries(['userInfo']);
           setLoading(false);

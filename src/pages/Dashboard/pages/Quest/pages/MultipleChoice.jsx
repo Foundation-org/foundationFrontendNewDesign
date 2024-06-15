@@ -18,6 +18,7 @@ import * as questServices from '../../../../../services/api/questsApi';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../components/ui/Toast';
 import { POST_MAX_OPTION_LIMIT } from '../../../../../constants/Values/constants';
+import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const MultipleChoice = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
+          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           navigate('/dashboard');
           queryClient.invalidateQueries(['userInfo']);
           // toast.success('Successfully Created');
