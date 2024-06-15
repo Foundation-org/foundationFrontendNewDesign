@@ -236,7 +236,7 @@ export default function DashboardLayout({ children }) {
               </div>
             ) : (
               <>
-                {location.pathname.startsWith('/dashboard/profile') ? (
+                {location.pathname !== '/dashboard/treasury' ? (
                   <div
                     className="flex cursor-pointer items-center gap-2"
                     onClick={() => {
