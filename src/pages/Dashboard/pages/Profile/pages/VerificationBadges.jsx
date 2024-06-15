@@ -16,7 +16,7 @@ import Personal from './verification-badges/Personal';
 import Web3 from './verification-badges/Web3';
 import { InstagramLogin } from '@amraneze/react-instagram-login';
 import Contact from './verification-badges/Contact';
-import { useErrorBoundary } from 'react-error-boundary';
+// import { useErrorBoundary } from 'react-error-boundary';
 import { useQueryClient } from '@tanstack/react-query';
 import Legacy from './verification-badges/Legacy';
 import LegacyConfirmationPopup from '../../../../../components/dialogue-boxes/LegacyConfirmationPopup';
@@ -28,7 +28,7 @@ import { getAskPassword } from '../../../../../features/profile/userSettingSlice
 const VerificationBadges = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { showBoundary } = useErrorBoundary();
+  // const { showBoundary } = useErrorBoundary();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
@@ -83,7 +83,7 @@ const VerificationBadges = () => {
         handleAddBadge('twitter', data);
       })
       .catch((err) => {
-        showBoundary(err);
+        // showBoundary(err);
         console.log(err);
       });
   };
@@ -96,7 +96,7 @@ const VerificationBadges = () => {
         handleAddBadge('github', data);
       })
       .catch((err) => {
-        showBoundary(err);
+        // showBoundary(err);
         console.log(err);
       });
   };
