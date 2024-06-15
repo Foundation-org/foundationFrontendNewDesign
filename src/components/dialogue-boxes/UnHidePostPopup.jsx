@@ -20,8 +20,8 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
   const { mutateAsync: hidePost } = useMutation({
     mutationFn: updateHiddenQuest,
     onSuccess: (resp) => {
-      showToast('success', 'postUnhidden')
-
+      showToast('success', 'postUnhidden');
+      queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['hiddenPosts'], (oldData) => {
         // if (oldData.pages[0].length <= 1) {
         //   queryClient.invalidateQueries(['hiddenPosts']);
