@@ -417,7 +417,7 @@ export const printEndMessage = (
       ) : !filterStates.searchData && allData && allData?.length === 0 ? (
         <>{printNoRecordsMessage(persistedTheme, isBookmarked, filterStates, dispatch, setFilters, resetOtherStates)}</>
       ) : !filterStates.searchData ? (
-        <div className="text-center text-[4vw] tablet:text-[2vw]">
+        <div className="text-center text-[4vw] laptop:text-[2vw]">
           {isBookmarked ? (
             <div className="flex flex-col items-center gap-[6px] tablet:gap-4">
               <b>{!resultPreferencesForBookmark ? 'No more matching bookmarks found!' : 'No more bookmarks!'}</b>

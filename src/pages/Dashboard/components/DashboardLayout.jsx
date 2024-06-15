@@ -272,7 +272,7 @@ export default function DashboardLayout({ children }) {
                       alt="badge"
                       className="size-7"
                     />
-                    <div className="flex h-7 flex-col justify-between">
+                    <div className="flex h-7 flex-col justify-between gap-1">
                       <h4 className="heading w-fit border-b">Treasury</h4>
                       <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
                         {constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX

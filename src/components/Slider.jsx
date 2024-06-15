@@ -74,21 +74,6 @@ function Slider() {
     };
   }, [dragging]);
 
-  // useEffect(() => {
-  //   const allTopics = filterStates.topics?.All?.list || [];
-  //   const blockedList = filterStates.topics?.Block?.list || [];
-
-  //   const currentTab = allTopics.findIndex((item) => blockedList.includes(item));
-
-  //   const currentTabIndex = currentTab ? currentTab : 0;
-  //   const currentTabRef = tabRefs.current[currentTabIndex];
-  //   if (currentTabRef) {
-  //     currentTabRef.scrollIntoView({
-  //       behavior: 'smooth',
-  //     });
-  //   }
-  // }, [filterStates.topics]);
-
   const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
 
   useEffect(() => {
