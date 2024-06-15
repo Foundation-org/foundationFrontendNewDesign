@@ -240,7 +240,7 @@ const VerificationBadges = () => {
 
       {/* Summary Section desktop */}
       <div className="mx-6 mb-[15px] hidden tablet:block">
-        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]" id='scrollToTop'>
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             {persistedUserInfo?.uuid && persistedUserInfo.role === 'user' ? (
               <div className="relative h-fit w-fit">
