@@ -8,8 +8,7 @@ const RewardSchedule = () => {
   return (
     <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
       {/* Total FDX */}
-      <div id='scrollToTop'>
-
+      <div id="scrollToTop">
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
@@ -78,6 +77,15 @@ const RewardSchedule = () => {
               Creating a post
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              Adding an option to a post
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              Giving content to a post
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              Removing content from a post
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               Creating list
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
@@ -89,7 +97,7 @@ const RewardSchedule = () => {
               +{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              +{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX
+              +{persistedContants?.QUEST_OWNER_ACCOUNT} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               +{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX
@@ -102,6 +110,15 @@ const RewardSchedule = () => {
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               -{persistedContants?.QUEST_CREATED_AMOUNT} FDX
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              {persistedContants?.QUEST_OPTION_ADDED_AMOUNT} FDX
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              -{persistedContants?.QUEST_OPTION_CONTENTION_GIVEN_AMOUNT} FDX
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              {persistedContants?.QUEST_OPTION_CONTENTION_REMOVED_AMOUNT} FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               {persistedContants?.LIST_CREATE} FDX
