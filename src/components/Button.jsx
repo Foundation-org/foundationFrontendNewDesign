@@ -39,7 +39,9 @@ const Button = ({
 
   return (
     <button type={type} className={buttonClasses} disabled={disabled} onClick={onClick}>
-      <div className="flex min-w-[75px] items-center tablet:min-w-[136px]">{children}</div>
+      <div className="flex min-w-[75px] max-w-[75px] items-center tablet:min-w-[136px] tablet:max-w-[136px]">
+        {children}
+      </div>
     </button>
   );
 };
