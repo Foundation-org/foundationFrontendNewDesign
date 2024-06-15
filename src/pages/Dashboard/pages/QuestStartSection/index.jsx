@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import SystemNotificationCard from '../../../../components/posts/SystemNotificationCard';
+import ShowAdultDisabledPopup from '../../../../components/dialogue-boxes/ShowAdultDisabledPopup';
 
 const QuestStartSection = () => {
   const dispatch = useDispatch();
@@ -113,6 +114,16 @@ const QuestStartSection = () => {
 
   return (
     <div className="mx-auto w-full max-w-[1440px] bg-[#F2F3F5] laptop:mx-[331px] desktop:mx-auto dark:bg-black">
+      {questUtils.adultFilterPopup.rating === 1 && (
+        <ShowAdultDisabledPopup
+          handleClose={() => {
+            dispatch(questUtilsActions.addAdultFilterPopup({ rating: 0 }));
+          }}
+          modalVisible={questUtils.adultFilterPopup.rating === 1}
+          title={'Your Adult Filter disabled'}
+          image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
+        />
+      )}
       <div className="relative mx-auto flex w-full max-w-[778px] flex-col laptop:flex-row">
         <div className="block tablet:hidden">
           <SidebarLeft />

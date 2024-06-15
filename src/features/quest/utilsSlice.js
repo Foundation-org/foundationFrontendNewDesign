@@ -20,6 +20,9 @@ const initialState = {
   isShowPlayer: false,
   loop: true,
   hasNextPage: true,
+  adultFilterPopup: {
+    rating: 0,
+  },
 };
 
 export const utilsSlice = createSlice({
@@ -100,6 +103,9 @@ export const utilsSlice = createSlice({
         state.playingIds.push(action.payload);
       }
     },
+    addAdultFilterPopup: (state, action) => {
+      state.adultFilterPopup.rating = action.payload.rating;
+    },
   },
 });
 
@@ -122,6 +128,7 @@ export const {
   addPlayerId,
   toggleLoop,
   resetPlayingIds,
+  addAdultFilterPopup,
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;

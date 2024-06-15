@@ -15,6 +15,7 @@ import * as createQuestAction from '../../../../../features/createQuest/createQu
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../components/ui/Toast';
+import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 
 const YesNo = () => {
   const navigate = useNavigate();
@@ -37,8 +38,8 @@ const YesNo = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
+          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           navigate('/dashboard');
-
           setLoading(false);
           setChangedOption('');
           setChangeState(false);
@@ -50,7 +51,7 @@ const YesNo = () => {
     },
     onError: (err) => {
       if (err.response) {
-        showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+        showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
         setChangedOption('');
         setChangeState(false);
       }
@@ -91,7 +92,7 @@ const YesNo = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return showToast('warning', 'emptyPost')
+      return showToast('warning', 'emptyPost');
     }
 
     const { questTopic, errorMessage } = await questServices.getTopicOfValidatedQuestion({
@@ -100,7 +101,7 @@ const YesNo = () => {
 
     // If any error captured
     if (errorMessage) {
-      return showToast('error', 'somethingWrong')
+      return showToast('error', 'somethingWrong');
     }
 
     // ModerationRatingCount
@@ -110,11 +111,11 @@ const YesNo = () => {
 
     // If found null
     if (!moderationRating) {
-      return showToast('error', 'somethingWrong')
+      return showToast('error', 'somethingWrong');
     }
 
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return showToast('warning', 'emptyPostDescription')
+      return showToast('warning', 'emptyPostDescription');
     }
 
     const params = {
@@ -221,23 +222,6 @@ const YesNo = () => {
         <YesNoOptions answer={'Yes'} />
         <YesNoOptions answer={'No'} />
       </div>
-      {/* <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] tablet:mb-[10px] tablet:mt-5 tablet:text-[16px] dark:text-[#D8D8D8]">
-        &#x200B;
-      </p> */}
-      {/* <div className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
-          <h5
-            id="setting"
-            className="text-center text-[10px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[25px]"
-          >
-            Settings
-          </h5>
-          <ChangeChoiceOption
-            changedOption={changedOption}
-            changeState={changeState}
-            setChangeState={setChangeState}
-            setChangedOption={setChangedOption}
-          />
-        </div> */}
       <div className="flex w-full justify-end">
         {hollow ? (
           <div className="pr-[30px] pt-2 tablet:pr-[50px] tablet:pt-[25px]">
@@ -248,7 +232,7 @@ const YesNo = () => {
         ) : (
           <div className="pr-[30px] pt-2 tablet:pr-[50px] tablet:pt-[25px]">
             <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}{' '}
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[0px] tablet:pl-[10px] tablet:text-[13px]">
                 (-{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
               </span>
