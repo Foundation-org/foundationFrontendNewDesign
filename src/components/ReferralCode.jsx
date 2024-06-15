@@ -169,7 +169,7 @@ const ReferralCode = ({
     <div className="relative w-[90vw] laptop:w-[52.6rem]">
       <div className="social-blue-gradiant relative flex items-center gap-[10px] rounded-t-[9.251px] px-[15px] py-1 tablet:gap-4 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-[8px]">
         <div className="w-fit rounded-full bg-white px-[6px] py-[8px] tablet:p-[15px]">
-          {/* <svg
+          <svg
             className="h-[9px] w-[13px] tablet:h-[19px] tablet:w-[19px]"
             viewBox="0 0 19 19"
             fill="none"
@@ -179,7 +179,7 @@ const ReferralCode = ({
               d="M8.00355 18.6818L8.30717 11.9382L2.61825 15.5977L0.87642 12.5614L6.9169 9.47727L0.87642 6.39311L2.61825 3.35689L8.30717 7.01633L8.00355 0.272726H11.4712L11.1676 7.01633L16.8565 3.35689L18.5984 6.39311L12.5579 9.47727L18.5984 12.5614L16.8565 15.5977L11.1676 11.9382L11.4712 18.6818H8.00355Z"
               fill="#161616"
             />
-          </svg> */}
+          </svg>
         </div>
         <p className="text-[12px] font-bold text-white tablet:text-[20px] tablet:font-medium">Referral Code</p>
         <div
