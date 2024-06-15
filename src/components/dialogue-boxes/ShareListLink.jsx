@@ -60,16 +60,18 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
     try {
       if (selectedItem.isLinkUserCustomized === false) {
         if (link === '') {
-          showToast('error', 'emptyLink'); return;
+          showToast('error', 'emptyLink');
+          return;
         }
         const res = await generateCategoryShareLink(persistedUserInfo.uuid, selectedItem._id, link);
         if (res.status === 200) {
           setPostLink(res.data.link);
           setCreateCustom(false);
-          showToast('success', 'linkCreated')
+          queryClient.invalidateQueries(['userInfo']);
+          showToast('success', 'linkCreated');
         }
       } else {
-        showToast('warning', 'linkAlready')
+        showToast('warning', 'linkAlready');
       }
     } catch (err) {
       console.log('err', err);
@@ -155,8 +157,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
                 className="rounded-r-[9px] bg-[#DEE6F7] px-[11px] py-[6px] tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"
                 onClick={() => {
                   copyToClipboard();
-                  showToast('success', 'copyLink')
-
+                  showToast('success', 'copyLink');
                 }}
               >
                 <Copy color="#8BAAC0" />
