@@ -123,7 +123,7 @@ const QuestStartSection = () => {
             }}
             modalVisible={questUtils.adultFilterPopup.rating === 1}
             title={'Adult Post Error'}
-            image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/delIcon.svg`}
+            image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/adult_icon.svg`}
           />
         )}
       <div className="relative mx-auto flex w-full max-w-[778px] flex-col laptop:flex-row">
