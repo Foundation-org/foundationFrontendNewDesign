@@ -345,7 +345,7 @@ const getDuplicateStatus = () => ({
 const getRejectedStatus = () => ({
   name: 'Rejected',
   color: 'text-[#b00f0f]',
-  tooltipName: 'Please review your text for proper grammar while keeping our code of conduct in mind.',
+  tooltipName: 'Invalid Url!',
   tooltipStyle: 'tooltip-error',
   showToolTipMsg: true,
 });
