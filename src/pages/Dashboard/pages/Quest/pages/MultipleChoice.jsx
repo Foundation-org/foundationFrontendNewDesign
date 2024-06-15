@@ -19,6 +19,7 @@ import { getConstantsValues } from '../../../../../features/constants/constantsS
 import showToast from '../../../../../components/ui/Toast';
 import { POST_MAX_OPTION_LIMIT } from '../../../../../constants/Values/constants';
 import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
+import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const MultipleChoice = () => {
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
+  const filterStates = useSelector(filtersActions.getFilters);
 
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
@@ -45,7 +47,10 @@ const MultipleChoice = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
-          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          if (filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0) {
+            dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          }
           navigate('/dashboard');
           queryClient.invalidateQueries(['userInfo']);
           // toast.success('Successfully Created');

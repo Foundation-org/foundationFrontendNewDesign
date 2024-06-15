@@ -19,6 +19,7 @@ import { getConstantsValues } from '../../../../../features/constants/constantsS
 import showToast from '../../../../../components/ui/Toast';
 import { POST_MAX_OPTION_LIMIT, POST_OPTIONS_CHAR_LIMIT, RANKED_CHOICE_MIN_OPTION_LIMIT } from '../../../../../constants/Values/constants';
 import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
+import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -38,13 +39,16 @@ const RankChoice = () => {
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-
+  const filterStates = useSelector(filtersActions.getFilters);
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
-          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          if (filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0) {
+            dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          }
           navigate('/dashboard');
           queryClient.invalidateQueries(['userInfo']);
           setLoading(false);

@@ -13,6 +13,7 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import showToast from '../../../../../components/ui/Toast';
@@ -21,6 +22,8 @@ import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 const LikeDislike = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const filterStates = useSelector(filtersActions.getFilters);
+
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
@@ -39,7 +42,10 @@ const LikeDislike = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
-          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          if (filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0) {
+            dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          }
           navigate('/dashboard');
           queryClient.invalidateQueries(['userInfo']);
           setLoading(false);

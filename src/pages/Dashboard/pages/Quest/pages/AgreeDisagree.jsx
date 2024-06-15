@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateQuestion } from '../../../../../features/createQuest/createQuestSlice';
+import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
+
 
 import YesNoOptions from '../components/YesNoOptions';
 import CreateQuestWrapper from '../components/CreateQuestWrapper';
@@ -22,6 +24,7 @@ const AgreeDisagree = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const persistedContants = useSelector(getConstantsValues);
+  const filterStates = useSelector(filtersActions.getFilters);
 
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
@@ -39,7 +42,10 @@ const AgreeDisagree = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
-          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          if (filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0) {
+            dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          }
           navigate('/dashboard');
           queryClient.invalidateQueries(['userInfo']);
           setLoading(false);
