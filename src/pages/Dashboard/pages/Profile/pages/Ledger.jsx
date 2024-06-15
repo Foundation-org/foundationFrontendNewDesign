@@ -151,8 +151,9 @@ export default function BasicTable() {
         Ledger
       </h1> */}
       <div
-        className={`${persistedTheme === 'dark' ? 'ledger-dark' : 'ledger-light bg-white'
-          } mx-[17px] mb-5 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
+        className={`${
+          persistedTheme === 'dark' ? 'ledger-dark' : 'ledger-light bg-white'
+        } mx-[17px] mb-5 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-6 tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:mx-[106px] laptop:rounded-[45px]`}
       >
         <LedgerTableTopbar
           sort={sort}
@@ -161,32 +162,33 @@ export default function BasicTable() {
           setFilterText={setFilterText}
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
-          id='scrollToTop'
+          id="scrollToTop"
         />
-        <div className="no-scrollbar w-full overflow-auto tablet:h-[600px]" >
+        <div className="no-scrollbar w-full overflow-auto tablet:h-[600px]">
           <table
+            className="w-full"
             // style={{ width: table.getCenterTotalSize() }}
-            style={{
-              minWidth:
-                window.innerWidth <= 1700 && window.innerWidth >= 744
-                  ? '600px'
-                  : window.innerWidth <= 744 && window.innerWidth >= 0
-                    ? '350px'
-                    : 'auto',
-              width:
-                window.innerWidth <= 1700 && window.innerWidth >= 900
-                  ? '100%'
-                  : window.innerWidth <= 900 && window.innerWidth >= 744
-                    ? '120%'
-                    : window.innerWidth <= 744 && window.innerWidth >= 0
-                      ? '100%'
-                      : table.getCenterTotalSize(),
-            }}
-            {...{
-              style: {
-                width: table.getCenterTotalSize(),
-              },
-            }}
+            // style={{
+            //   minWidth:
+            //     window.innerWidth <= 1700 && window.innerWidth >= 744
+            //       ? '600px'
+            //       : window.innerWidth <= 744 && window.innerWidth >= 0
+            //         ? '350px'
+            //         : 'auto',
+            //   width:
+            //     window.innerWidth <= 1700 && window.innerWidth >= 900
+            //       ? '100%'
+            //       : window.innerWidth <= 900 && window.innerWidth >= 744
+            //         ? '120%'
+            //         : window.innerWidth <= 744 && window.innerWidth >= 0
+            //           ? '100%'
+            //           : table.getCenterTotalSize(),
+            // }}
+            // {...{
+            //   style: {
+            //     width: table.getCenterTotalSize(),
+            //   },
+            // }}
           >
             <thead
               style={{ width: table.getTotalSize() }}
@@ -195,7 +197,7 @@ export default function BasicTable() {
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr
                   key={headerGroup.id}
-                // className="border-0 border-b border-[#EEEEEE]"
+                  // className="border-0 border-b border-[#EEEEEE]"
                 >
                   {headerGroup.headers.map((header) => (
                     <th
@@ -272,15 +274,15 @@ export default function BasicTable() {
                           : cell.column.id === 'txDate'
                             ? format(new Date(cell.getValue()), 'dd MMM yyyy, hh:mm a')
                             : cell.column.id === 'txFrom' &&
-                              cell.getValue() !== 'DAO Treasury' &&
-                              cell.getValue() !== 'dao' &&
-                              cell.getValue() !== persistedUserInfo?.uuid
+                                cell.getValue() !== 'DAO Treasury' &&
+                                cell.getValue() !== 'dao' &&
+                                cell.getValue() !== persistedUserInfo?.uuid
                               ? `User`
                               : cell.getValue() === persistedUserInfo?.uuid
                                 ? 'My Account'
                                 : cell.column.id === 'txTo' &&
-                                  cell.getValue() !== 'DAO Treasury' &&
-                                  cell.getValue() !== 'dao'
+                                    cell.getValue() !== 'DAO Treasury' &&
+                                    cell.getValue() !== 'dao'
                                   ? `User`
                                   : cell.getValue() === 'dao'
                                     ? 'DAO'
@@ -320,20 +322,21 @@ export default function BasicTable() {
               )}
               {rangeStart && rangeEnd
                 ? [...Array(rangeEnd - rangeStart + 1)].map((_, index) => {
-                  const pageNumber = rangeStart + index;
-                  return (
-                    <button
-                      className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] pt-[2px] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:pt-[0px] tablet:text-[13px] ${pageNumber === currentPage
-                        ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-[#252D37]'
-                        : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]'
+                    const pageNumber = rangeStart + index;
+                    return (
+                      <button
+                        className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] pt-[2px] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:pt-[0px] tablet:text-[13px] ${
+                          pageNumber === currentPage
+                            ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-[#252D37]'
+                            : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]'
                         }`}
-                      key={pageNumber}
-                      onClick={() => handlePageClick(pageNumber)}
-                    >
-                      {pageNumber}
-                    </button>
-                  );
-                })
+                        key={pageNumber}
+                        onClick={() => handlePageClick(pageNumber)}
+                      >
+                        {pageNumber}
+                      </button>
+                    );
+                  })
                 : null}
               {rangeEnd < totalPages && (
                 <button className="mr-2 bg-white/0 text-[9px] font-medium text-black tablet:mr-4 tablet:text-[16px] dark:text-[#B3B3B3]">

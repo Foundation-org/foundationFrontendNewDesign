@@ -129,27 +129,28 @@ export default function Ledger() {
         />
         <div className="no-scrollbar relative w-full overflow-auto tablet:h-[600px]">
           <table
-            style={{
-              minWidth:
-                window.innerWidth <= 1700 && window.innerWidth >= 744
-                  ? '600px'
-                  : window.innerWidth <= 744 && window.innerWidth >= 0
-                    ? '350px'
-                    : 'auto',
-              width:
-                window.innerWidth <= 1700 && window.innerWidth >= 900
-                  ? '100%'
-                  : window.innerWidth <= 900 && window.innerWidth >= 744
-                    ? '120%'
-                    : window.innerWidth <= 744 && window.innerWidth >= 0
-                      ? '100%'
-                      : table.getCenterTotalSize(),
-            }}
-            {...{
-              style: {
-                width: table.getCenterTotalSize(),
-              },
-            }}
+            className="w-full"
+            // style={{
+            //   minWidth:
+            //     window.innerWidth <= 1700 && window.innerWidth >= 744
+            //       ? '600px'
+            //       : window.innerWidth <= 744 && window.innerWidth >= 0
+            //         ? '350px'
+            //         : 'auto',
+            //   width:
+            //     window.innerWidth <= 1700 && window.innerWidth >= 900
+            //       ? '100%'
+            //       : window.innerWidth <= 900 && window.innerWidth >= 744
+            //         ? '120%'
+            //         : window.innerWidth <= 744 && window.innerWidth >= 0
+            //           ? '100%'
+            //           : table.getCenterTotalSize(),
+            // }}
+            // {...{
+            //   style: {
+            //     width: table.getCenterTotalSize(),
+            //   },
+            // }}
           >
             <thead
               style={{ width: table.getTotalSize() }}
