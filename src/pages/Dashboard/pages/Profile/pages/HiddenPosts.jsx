@@ -152,7 +152,7 @@ export default function HiddenPosts() {
                 Posts you’ve hidden
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">
-                {persistedUserInfo?.yourHiddenPostCounter}
+                {persistedUserInfo?.questsActivity?.myHiddenQuestsCount}
               </h5>
             </div>
           </div>
