@@ -327,7 +327,7 @@ export default function DashboardLayout({ children }) {
               </>
             )}
 
-          {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/dashboard/profile') && (
+          {/* {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/dashboard/profile') && (
             <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
               <Button
                 variant="hollow-submit2"
@@ -337,7 +337,7 @@ export default function DashboardLayout({ children }) {
                 Treasury
               </Button>
             </div>
-          )}
+          )} */}
 
           {/*
           {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/dashboard/treasury') && (
