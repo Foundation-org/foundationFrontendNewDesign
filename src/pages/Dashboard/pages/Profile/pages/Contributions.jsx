@@ -184,7 +184,7 @@ const Contributions = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Your Posts</h1>{' '}
           </div>
           {/* <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
-            {persistedUserInfo.badges.length}/24
+            {persistedUserInfo.badges.length}/22
           </h1> */}
         </div>
         <div className="flex flex-col gap-2 rounded-b-[10px] border-[1.85px] border-[#D9D9D9] bg-[#FDFDFD] px-[15px] py-[10px] tablet:gap-[25px] tablet:p-[25px]">
