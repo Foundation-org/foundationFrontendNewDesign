@@ -116,13 +116,13 @@ const QuestStartSection = () => {
     <div className="mx-auto w-full max-w-[1440px] bg-[#F2F3F5] laptop:mx-[331px] desktop:mx-auto dark:bg-black">
       {filterStates?.moderationRatingFilter?.initial === 0 &&
         filterStates?.moderationRatingFilter?.final === 0 &&
-        questUtils.adultFilterPopup.rating === 1 && (
+        questUtils.adultFilterPopup.rating !== 0 && (
           <ShowAdultDisabledPopup
             handleClose={() => {
               dispatch(questUtilsActions.addAdultFilterPopup({ rating: 0 }));
             }}
-            modalVisible={questUtils.adultFilterPopup.rating === 1}
-            title={'Adult Post Error'}
+            modalVisible={questUtils.adultFilterPopup.rating !== 0}
+            title={'Adult Post Warning'}
             image={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/adult_icon.svg`}
           />
         )}
