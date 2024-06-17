@@ -72,7 +72,7 @@ const Lists = () => {
   });
 
   const handleSavePostsOrder = (posts, categoryId) => {
-    const ids = posts.map((item) => item._id);
+    const ids = posts?.map((item) => item._id);
     updatePostsOrder({ order: ids, userUuid: persistedUserInfo.uuid, categoryId });
   };
 
@@ -81,7 +81,7 @@ const Lists = () => {
       const updatedItems = [...prevItems];
       updatedItems[categoryIndex].post = newPosts;
 
-      const data = [...newPosts].map((post) => post.order);
+      const data = [...newPosts]?.map((post) => post.order);
       const isAscending = data.every((value, index, array) => {
         if (index === 0) return true;
         return value >= array[index - 1];
@@ -232,8 +232,8 @@ const Lists = () => {
                 >
                   <div className="mx-7 my-[10px] tablet:my-[0.94rem] tablet:mr-[2.25rem]">
                     <ul className="space-y-[5.34px] tablet:space-y-[0.69rem]">
-                      {categoryItem.post.length >= 1 &&
-                        categoryItem.post.map((post) => (
+                      {categoryItem?.post?.length >= 1 &&
+                        categoryItem?.post?.map((post) => (
                           <Reorder.Item value={post} key={post._id} className="cursor-pointer">
                             <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
                               <div
@@ -282,6 +282,14 @@ const Lists = () => {
                         ))}
                     </ul>
 
+                    {listData[categoryIndex]?.post?.length <= 0 && (
+                      <div className="my-2 ml-10 flex w-full items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
+                        <h2 className="text-center text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[24px] tablet:leading-[21.78px]">
+                          This list has no posts
+                        </h2>
+                      </div>
+                    )}
+
                     <div className="my-2 ml-10 flex items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
                       <div className="flex items-center gap-[1px] tablet:gap-2">
                         <img
@@ -304,14 +312,6 @@ const Lists = () => {
                         </h2>
                       </div>
                     </div>
-
-                    {listData[categoryIndex].post.length <= 0 && (
-                      <div className="my-2 ml-10 flex items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
-                        <h2 className="text-center text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
-                          This list has no posts
-                        </h2>
-                      </div>
-                    )}
 
                     <div className="flex w-full items-center justify-end gap-3 tablet:gap-[1.4rem]">
                       <Button
