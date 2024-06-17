@@ -617,7 +617,7 @@ const VerificationBadges = () => {
           </div>
 
           {/* Instagram */}
-          <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
             <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
               {checkPrimary('instagram') && (
                 <img
@@ -701,7 +701,7 @@ const VerificationBadges = () => {
                 </div>
               </InstagramLogin>
             )}
-          </div>
+          </div> */}
 
           {/* Github */}
           <div className="flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
