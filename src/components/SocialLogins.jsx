@@ -108,7 +108,7 @@ const SocialLogins = ({
           onClick={() => {
             setIsLoadingSocial(true);
           }}
-        // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
+          // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
         >
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
@@ -138,7 +138,7 @@ const SocialLogins = ({
           onClick={() => {
             setIsLoadingSocial(true);
           }}
-        // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
+          // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
         >
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/facebook-white.svg`}
@@ -147,38 +147,40 @@ const SocialLogins = ({
           Facebook
         </Button>
       </LoginSocialFacebook>
-      {/* <LoginSocialLinkedin
-        // isOnlyGetToken
-        client_id={import.meta.env.VITE_LINKEDIN_KEY}
-        client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
-        onResolve={({ provider, data }) => {
-          console.log(provider);
-          setProvider(provider);
-          setProfile(data);
-          isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
-        }}
-        // scope="email,openid,profile,w_member_social"
-        redirect_uri={REDIRECT_URI}
-        onReject={(err) => {
-          console.log(err);
-        }}
-        scope={'email'}
-      >
+      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
+        <InstagramLogin
+          clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
+          onSuccess={(code) => {
+            console.log(code), loginInWithInsta(code);
+          }}
+          onFailure={(err) => console.log('error', err)}
+          redirectUri={window.location.href}
+          cssClass={'hideBack'}
+        >
+          <Button size="login-btn" color="gray" className="w-full min-w-[145px] lg:min-w-[305px] ">
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`}
+              className="mr-2 size-[22px] md:size-8 lg:mr-3"
+            />
+            Instagram
+          </Button>
+        </InstagramLogin>
+      </div>
+      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <Button
           size="login-btn"
           color="gray"
           onClick={() => {
-            setIsLoadingSocial(true);
+            loginWithTwitter();
           }}
         >
           <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
-            alt="LinkedIn"
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`}
             className="mr-2 size-[22px] md:size-8 lg:mr-3"
           />
-          Continue with LinkedIn
+          Twitter
         </Button>
-      </LoginSocialLinkedin> */}
+      </div>
       <LoginSocialLinkedin
         // isOnlyGetToken
         client_id={import.meta.env.VITE_LINKEDIN_KEY}
@@ -218,21 +220,6 @@ const SocialLogins = ({
           size="login-btn"
           color="gray"
           onClick={() => {
-            loginWithTwitter();
-          }}
-        >
-          <img
-            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Twitter-2x.png`}
-            className="mr-2 size-[22px] md:size-8 lg:mr-3"
-          />
-          Twitter
-        </Button>
-      </div>
-      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
-        <Button
-          size="login-btn"
-          color="gray"
-          onClick={() => {
             loginWithGithub();
           }}
         >
@@ -243,25 +230,38 @@ const SocialLogins = ({
           Github
         </Button>
       </div>
-      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
-        <InstagramLogin
-          clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
-          onSuccess={(code) => {
-            console.log(code), loginInWithInsta(code);
+      {/* <LoginSocialLinkedin
+        // isOnlyGetToken
+        client_id={import.meta.env.VITE_LINKEDIN_KEY}
+        client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
+        onResolve={({ provider, data }) => {
+          console.log(provider);
+          setProvider(provider);
+          setProfile(data);
+          isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
+        }}
+        // scope="email,openid,profile,w_member_social"
+        redirect_uri={REDIRECT_URI}
+        onReject={(err) => {
+          console.log(err);
+        }}
+        scope={'email'}
+      >
+        <Button
+          size="login-btn"
+          color="gray"
+          onClick={() => {
+            setIsLoadingSocial(true);
           }}
-          onFailure={(err) => console.log('error', err)}
-          redirectUri={window.location.href}
-          cssClass={'hideBack'}
         >
-          <Button size="login-btn" color="gray" className="w-full min-w-[145px] lg:min-w-[305px] ">
-            <img
-              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`}
-              className="mr-2 size-[22px] md:size-8 lg:mr-3"
-            />
-            Instagram
-          </Button>
-        </InstagramLogin>
-      </div>
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`}
+            alt="LinkedIn"
+            className="mr-2 size-[22px] md:size-8 lg:mr-3"
+          />
+          Continue with LinkedIn
+        </Button>
+      </LoginSocialLinkedin> */}
     </div>
   );
 };

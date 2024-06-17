@@ -37,6 +37,8 @@ export default function SharedListResults() {
     queryKey: ['postsByCategory', persistedUserInfo.uuid],
   });
 
+  console.log('hamza', sharedlistAllData.data.category.post);
+
   return (
     <>
       <Topbar />
@@ -65,7 +67,7 @@ export default function SharedListResults() {
                   }`}
                   onClick={() => setTab('My List Results')}
                 >
-                  My List Results
+                  All List Results
                 </Button>
               </div>
             )}
@@ -74,21 +76,31 @@ export default function SharedListResults() {
               allDataPending ? (
                 <Loader />
               ) : (
-                <div className="no-scrollbar mb-5 flex h-[calc(100vh-115px)] flex-col gap-2 overflow-y-auto pb-8 tablet:h-[calc(100vh-118px)] tablet:gap-5 tablet:pb-12">
-                  {allDataSuccess &&
-                    sharedlistAllData.data.category.post.map((item) => (
-                      <div
-                        key={item._id}
-                        className="mx-auto w-full px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-[0px]"
-                      >
-                        <QuestionCardWithToggle
-                          questStartData={item.questForeginKey}
-                          postProperties={'sharedlink-results'}
-                          SharedLinkButton={'shared-links-results-button'}
-                        />
-                      </div>
-                    ))}
-                </div>
+                <>
+                  {allDataSuccess && sharedlistAllData?.data.category.post.length <= 0 ? (
+                    <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
+                      <p className="text-center text-[4vw] laptop:text-[2vw]">
+                        <b>No posts in this list!</b>
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="no-scrollbar mb-5 flex h-[calc(100vh-115px)] flex-col gap-2 overflow-y-auto pb-8 tablet:h-[calc(100vh-118px)] tablet:gap-5 tablet:pb-12">
+                      {allDataSuccess &&
+                        sharedlistAllData.data.category.post.map((item) => (
+                          <div
+                            key={item._id}
+                            className="mx-auto w-full px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-[0px]"
+                          >
+                            <QuestionCardWithToggle
+                              questStartData={item.questForeginKey}
+                              postProperties={'sharedlink-results'}
+                              SharedLinkButton={'shared-links-results-button'}
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </>
               )
             ) : null}
 
@@ -96,21 +108,31 @@ export default function SharedListResults() {
               isPending ? (
                 <Loader />
               ) : (
-                <div className="no-scrollbar mb-5 flex h-[calc(100vh-115px)] flex-col gap-2 overflow-y-auto pb-8 tablet:h-[calc(100vh-118px)] tablet:gap-5 tablet:pb-12">
-                  {isSuccess &&
-                    sharedlistData.data.category.post.map((item) => (
-                      <div
-                        key={item._id}
-                        className="mx-auto w-full px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-[0px]"
-                      >
-                        <QuestionCardWithToggle
-                          questStartData={item.questForeginKey}
-                          postProperties={'sharedlink-results'}
-                          SharedLinkButton={'shared-links-results-button'}
-                        />
-                      </div>
-                    ))}
-                </div>
+                <>
+                  {isSuccess && sharedlistData?.data.category.post.length <= 0 ? (
+                    <div className="flex justify-center gap-4 px-4 pb-8 pt-3 tablet:py-[27px]">
+                      <p className="text-center text-[4vw] laptop:text-[2vw]">
+                        <b>No posts in this list!</b>
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="no-scrollbar mb-5 flex h-[calc(100vh-115px)] flex-col gap-2 overflow-y-auto pb-8 tablet:h-[calc(100vh-118px)] tablet:gap-5 tablet:pb-12">
+                      {isSuccess &&
+                        sharedlistData.data.category.post.map((item) => (
+                          <div
+                            key={item._id}
+                            className="mx-auto w-full px-4 tablet:max-w-[730px] tablet:px-6 laptop:px-[0px]"
+                          >
+                            <QuestionCardWithToggle
+                              questStartData={item.questForeginKey}
+                              postProperties={'sharedlink-results'}
+                              SharedLinkButton={'shared-links-results-button'}
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </>
               )
             ) : null}
           </div>

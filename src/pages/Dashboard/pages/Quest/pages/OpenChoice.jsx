@@ -17,7 +17,7 @@ import * as pictureMediaAction from '../../../../../features/createQuest/picture
 import * as questServices from '../../../../../services/api/questsApi';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../components/ui/Toast';
-import { POST_MAX_OPTION_LIMIT } from '../../../../../constants/Values/constants';
+import { POST_MAX_OPTION_LIMIT, POST_OPTIONS_CHAR_LIMIT } from '../../../../../constants/Values/constants';
 import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 
@@ -47,8 +47,10 @@ const OpenChoice = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
-          if (filterStates?.moderationRatingFilter?.initial === 0 &&
-            filterStates?.moderationRatingFilter?.final === 0) {
+          if (
+            filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0
+          ) {
             dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           }
           navigate('/dashboard');
@@ -65,7 +67,7 @@ const OpenChoice = () => {
 
     onError: (err) => {
       if (err.response) {
-        showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+        showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       }
       setMultipleOption(false);
       setAddOption(false);
@@ -94,7 +96,7 @@ const OpenChoice = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return showToast('warning', 'emptyPost')
+      return showToast('warning', 'emptyPost');
     }
 
     // getTopicOfValidatedQuestion
@@ -103,7 +105,7 @@ const OpenChoice = () => {
     });
     // If any error captured
     if (errorMessage) {
-      return showToast('error', 'somethingWrong')
+      return showToast('error', 'somethingWrong');
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
@@ -111,10 +113,10 @@ const OpenChoice = () => {
     });
     // If found null
     if (!moderationRating) {
-      return showToast('error', 'somethingWrong')
+      return showToast('error', 'somethingWrong');
     }
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return showToast('warning', 'emptyPostDescription')
+      return showToast('warning', 'emptyPostDescription');
     }
 
     const params = {
@@ -137,7 +139,7 @@ const OpenChoice = () => {
 
     if (isEmptyAnswer) {
       setLoading(false);
-      return showToast('warning', 'emptyOption')
+      return showToast('warning', 'emptyOption');
     }
     if (!checkHollow()) {
       createQuest(params);
@@ -383,7 +385,7 @@ const OpenChoice = () => {
           if (optionsValue.length < POST_MAX_OPTION_LIMIT) {
             addNewOption();
           } else {
-            return showToast('warning', 'optionLimit')
+            return showToast('warning', 'optionLimit');
           }
         }}
       >

@@ -97,6 +97,8 @@ const Lists = () => {
     });
   };
 
+  // console.log('listData', listData[0].post.length <= 0);
+
   return (
     <div className="no-scrollbar flex h-[calc(100vh-70px)] w-full flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mb-[0.94rem] tablet:gap-5 tablet:px-6 tablet:pb-5">
       <BasicModal
@@ -149,8 +151,7 @@ const Lists = () => {
 
       {/* Summary Section */}
       <div>
-        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]"
-        >
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/summary/my-list-logo.svg`}
@@ -236,27 +237,31 @@ const Lists = () => {
                           <Reorder.Item value={post} key={post._id} className="cursor-pointer">
                             <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
                               <div
-                                className={`${false
+                                className={`${
+                                  false
                                     ? 'border-[#5FA3D5]'
                                     : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
-                                  } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
+                                } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
                               >
                                 <div className="flex w-full items-center rounded-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
                                   <div
-                                    className={`${false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-                                      } tablet:rounded-x-[10px] flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:px-[7px] tablet:py-[10px]`}
+                                    className={`${
+                                      false ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                                    } tablet:rounded-x-[10px] flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:px-[7px] tablet:py-[10px]`}
                                     style={{
-                                      backgroundImage: `url(${persistedTheme === 'dark'
+                                      backgroundImage: `url(${
+                                        persistedTheme === 'dark'
                                           ? `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots-dark.svg`
                                           : `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/six-dots.svg`
-                                        })`,
+                                      })`,
                                     }}
                                   />
                                   <div
-                                    className={`${false
+                                    className={`${
+                                      false
                                         ? 'border-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]'
                                         : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
-                                      } flex w-full justify-between rounded-r-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
+                                    } flex w-full justify-between rounded-r-[4.7px] bg-white tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
                                   >
                                     <h1 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
                                       {post.questForeginKey.Question}
@@ -300,6 +305,14 @@ const Lists = () => {
                       </div>
                     </div>
 
+                    {listData[categoryIndex].post.length <= 0 && (
+                      <div className="my-2 ml-10 flex items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
+                        <h2 className="text-center text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[18px] tablet:leading-[21.78px]">
+                          This list has no posts
+                        </h2>
+                      </div>
+                    )}
+
                     <div className="flex w-full items-center justify-end gap-3 tablet:gap-[1.4rem]">
                       <Button
                         variant="cancel"
@@ -312,16 +325,18 @@ const Lists = () => {
                       >
                         + Add Post
                       </Button>
-                      <Button
-                        variant="submit"
-                        onClick={() =>
-                          navigate('/shared-list-link/result', {
-                            state: { categoryItem: categoryItem._id },
-                          })
-                        }
-                      >
-                        View
-                      </Button>
+                      {listData[categoryIndex].post.length > 0 && (
+                        <Button
+                          variant="submit"
+                          onClick={() =>
+                            navigate('/shared-list-link/result', {
+                              state: { categoryItem: categoryItem._id },
+                            })
+                          }
+                        >
+                          View
+                        </Button>
+                      )}
                       {/* <Button
                       variant={'submit-green'}
                       onClick={() => {
