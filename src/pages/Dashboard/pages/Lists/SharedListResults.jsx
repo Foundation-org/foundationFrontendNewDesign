@@ -37,8 +37,6 @@ export default function SharedListResults() {
     queryKey: ['postsByCategory', persistedUserInfo.uuid],
   });
 
-  console.log('hamza', sharedlistAllData.data.category.post);
-
   return (
     <>
       <Topbar />
@@ -56,7 +54,7 @@ export default function SharedListResults() {
                   }`}
                   onClick={() => setTab('All Results')}
                 >
-                  All Results
+                  All List Results
                 </Button>
                 <Button
                   variant={'topics'}
@@ -67,7 +65,7 @@ export default function SharedListResults() {
                   }`}
                   onClick={() => setTab('My List Results')}
                 >
-                  All List Results
+                  My List Results
                 </Button>
               </div>
             )}

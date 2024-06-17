@@ -325,7 +325,7 @@ const Lists = () => {
                       >
                         + Add Post
                       </Button>
-                      {listData[categoryIndex].post.length > 0 && (
+                      {listData[categoryIndex]?.post?.length > 0 && (
                         <Button
                           variant="submit"
                           onClick={() =>

@@ -147,7 +147,7 @@ const SocialLogins = ({
           Facebook
         </Button>
       </LoginSocialFacebook>
-      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
+      {/* <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <InstagramLogin
           clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
           onSuccess={(code) => {
@@ -165,7 +165,7 @@ const SocialLogins = ({
             Instagram
           </Button>
         </InstagramLogin>
-      </div>
+      </div> */}
       <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <Button
           size="login-btn"
