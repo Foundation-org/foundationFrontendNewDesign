@@ -21,6 +21,8 @@ const GuestCustomerSupport = () => {
   const list = [
     { id: 1, title: 'About', path: '/help/about' },
     { id: 2, title: "FAQ's", path: '/help/faq' },
+    { id: 3, title: 'Terms of Service', path: '/dashboard/help/terms-of-service' },
+    { id: 4, title: 'Privacy Policy', path: '/dashboard/help/privacy-policy' },
     { id: 3, title: 'Contact Us', path: '/help/contact-us' },
   ];
 
