@@ -9,7 +9,9 @@ const CustomerSupport = () => {
   const list = [
     { id: 1, title: 'About', path: '/dashboard/help/about' },
     { id: 2, title: "FAQ's", path: '/dashboard/help/faq' },
-    { id: 3, title: 'Contact Us', path: '/dashboard/help/contact-us' },
+    { id: 3, title: 'Terms of Service', path: '/dashboard/help/terms-of-service' },
+    { id: 4, title: 'Privacy Policy', path: '/dashboard/help/privacy-policy' },
+    { id: 5, title: 'Contact Us', path: '/dashboard/help/contact-us' },
   ];
 
   return (

@@ -55,9 +55,13 @@ export const TopbarItems = [
     activePaths: [
       '/help/about',
       '/help/faq',
+      '/help/terms-of-service',
+      '/help/privacy-policy',
       '/help/contact-us',
       '/dashboard/help/about',
       '/dashboard/help/faq',
+      '/help/help/terms-of-service',
+      '/help/help/privacy-policy',
       '/dashboard/help/contact-us',
     ],
     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/faq.svg`,

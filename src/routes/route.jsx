@@ -26,6 +26,8 @@ import TermOfService from '../pages/Signup/pages/TermOfService';
 import PrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 import About from '../pages/Dashboard/pages/CustomerSupport/About';
 import Faq from '../pages/Dashboard/pages/CustomerSupport/Faq';
+import TermsOfService from '../pages/Dashboard/pages/CustomerSupport/TermsOfService';
+import PrivacyPolicyy from '../pages/Dashboard/pages/CustomerSupport/PrivacyPolicy';
 import ContactUs from '../pages/Dashboard/pages/CustomerSupport/ContactUs';
 import CustomerSupport from '../pages/Dashboard/pages/CustomerSupport';
 import GuestRedirect from '../pages/DashboardRedirect/GuestRedirect';
@@ -108,7 +110,6 @@ export function Router() {
               <Route path="contact-us" element={<ContactUs />} />
             </Route>
             <Route path="/term-of-service" element={<TermOfService />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/test" element={<Test />} />
             <Route path="/dashboard/" element={<Dashboard />}>
@@ -116,6 +117,8 @@ export function Router() {
               <Route path="help" element={<CustomerSupport />}>
                 <Route path="about" element={<About />} />
                 <Route path="faq" element={<Faq />} />
+                <Route path="terms-of-service" element={<TermsOfService />} />
+                <Route path="privacy-policy" element={<PrivacyPolicyy />} />
                 <Route path="contact-us" element={<ContactUs />} />
               </Route>
               <Route path="quest/" element={<Quest />}>
