@@ -1,4 +1,9 @@
-import { useSelector } from 'react-redux';
+// import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getConstants } from '../../../../../services/api/userAuth';
+import { saveConstants } from '../../../../../features/constants/constantsSlice';
 
 const LedgerTableTopbar = ({
   isTreasury,
@@ -9,7 +14,23 @@ const LedgerTableTopbar = ({
   selectedOption,
   setSelectedOption,
 }) => {
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const { data: constants, error: constantsError } = useQuery({
+    queryKey: ['constants'],
+    queryFn: getConstants,
+  });
+
+  if (constantsError) {
+    console.log(constantsError);
+  }
+
+  useEffect(() => {
+    if (constants) {
+      dispatch(saveConstants(constants));
+    }
+  }, [constants]);
+
 
   const handleDropdown = () => {
     setSelectedOption(!selectedOption);
@@ -57,9 +78,11 @@ const LedgerTableTopbar = ({
               </h1>
               <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
                 <p>
-                  {localStorage.getItem('treasuryAmount') && !isNaN(localStorage.getItem('treasuryAmount'))
+                  {constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX
+
+                  {/* {localStorage.getItem('treasuryAmount') && !isNaN(localStorage.getItem('treasuryAmount'))
                     ? Number(localStorage.getItem('treasuryAmount')).toFixed(2) + ' FDX'
-                    : '0 FDX'}
+                    : '0 FDX'} */}
                 </p>
               </div>
             </div>
