@@ -111,9 +111,9 @@ const LedgerTableTopbar = ({
         <div className="relative h-[12.6px] w-[40%] rounded-[3.34px] border-[1.153px] border-[#C1C1C1] bg-white tablet:h-[32px] tablet:w-[130px] tablet:rounded-[11.526px] laptop:h-[43.3px] laptop:w-[240px] dark:bg-[#080A0C]">
           <button
             onClick={handleDropdown}
-            className="h-full w-[54px] gap-1 px-[5px] tablet:w-full tablet:px-[10px] laptop:px-[17px]"
+            className="h-full w-[54px] gap-1 px-[2px] whitespace-nowrap tablet:w-full tablet:px-[10px] laptop:px-[17px]"
           >
-            <h1 className="relative -top-[10.4px] text-[5.79px] font-normal leading-normal -tracking-[0.2px] text-[#7E7E7E] tablet:top-[1px] tablet:text-[10px] laptop:text-[20.021px]">
+            <h1 className="relative -top-[10.4px] whitespace-nowrap text-[5.77px] font-normal leading-normal -tracking-[0.2px] text-[#7E7E7E] tablet:top-[1px] tablet:text-[10px] laptop:text-[20.021px]">
               Sort by : <span className=" font-semibold capitalize  text-[#3D3C42] dark:text-[#B5B5B5]">{sort}</span>
             </h1>
           </button>
