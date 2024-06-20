@@ -58,7 +58,7 @@ export const termsAndConditionsArray = [
       },
       {
         heading: 'Prohibited Uses of Intellectual Property:',
-        text: 'Unless explicitly authorized in these Terms or by the owner of the materials, you may not:\n- Copy, reproduce, aggregate, republish, upload, post, publicly display, encode, translate, transmit, distribute, sell, license, or otherwise exploit for any commercial purpose whatsoever, any part of the Services, the Content, or any related intellectual property.\n- Use our Marks or any similar marks in any way that might cause confusion or disparage or discredit Foundation Internet Organization, Inc.',
+        text: 'Unless explicitly authorized in these Terms or by the owner of the materials, you may not:',
         list: [
           'Copy, reproduce, aggregate, republish, upload, post, publicly display, encode, translate, transmit, distribute, sell, license, or otherwise exploit for any commercial purpose whatsoever, any part of the Services, the Content, or any related intellectual property.',
           'Use our Marks or any similar marks in any way that might cause confusion or disparage or discredit Foundation Internet Organization, Inc.',
@@ -91,7 +91,7 @@ export const termsAndConditionsArray = [
       },
       {
         heading: 'Legal Capacity and Compliance:',
-        text: 'You represent that you have the legal capacity to enter into these Terms and will comply with them in full. This means you confirm that you are of legal age in your jurisdiction to form a binding contract and are not a person barred from using the Services under the laws of your country of residence or any other applicable jurisdiction. ',
+        text: 'You represent that you have the legal capacity to enter into these Terms and will comply with them in full. This means you confirm that you are of legal age in your jurisdiction to form a binding contract and are not a person barred from using the Services under the laws of your country of residence or any other applicable jurisdiction.',
       },
       {
         heading: 'Non-Automated Use:',
@@ -104,6 +104,10 @@ export const termsAndConditionsArray = [
       {
         heading: 'No Impersonation or Fraudulent Activity:',
         text: 'You must not impersonate another person, user, or entity, or falsely represent your identity or affiliation with any person, user, or entity, including using another user’s account information, or providing false identity information to gain access to or use the Services.',
+      },
+      {
+        heading: 'Maintenance of Information Accuracy:',
+        text: 'You agree to promptly update any registration information and other submitted data to maintain its accuracy, currency, and completeness. Failure to keep information updated may result in the inability to access certain parts of the Services and may lead us to close or suspend your account.',
       },
       {
         heading: 'User Conduct:',
@@ -1041,7 +1045,7 @@ export const termsAndConditionsArray = [
       {
         heading: 'Adherence to Legal Standards',
         list: [
-          '9. Compliance with Laws: Comply with all applicable laws and regulations in your use of the platform.',
+          'Compliance with Laws: Comply with all applicable laws and regulations in your use of the platform.',
           'Reporting Illegal Activities: Report any illegal activities or content you encounter on the platform.',
         ],
       },
