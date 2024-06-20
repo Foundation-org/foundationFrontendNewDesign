@@ -64,7 +64,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
           return;
         }
         const res = await generateCategoryShareLink(persistedUserInfo.uuid, selectedItem._id, link);
-        if (res.status === 200) {
+        if (res?.status && res.status === 200) {
           setPostLink(res.data.link);
           setCreateCustom(false);
           queryClient.invalidateQueries(['userInfo']);
@@ -74,7 +74,7 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
         showToast('warning', 'linkAlready');
       }
     } catch (err) {
-      console.log('err', err);
+      console.log('err', err.response?.data?.message.split(':')[1]);
     }
   };
 

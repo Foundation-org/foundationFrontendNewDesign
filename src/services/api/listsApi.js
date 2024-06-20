@@ -1,3 +1,4 @@
+import showToast from '../../components/ui/Toast';
 import api from './Axios';
 
 export const fetchLists = async (search) => {
@@ -111,7 +112,9 @@ export const generateCategoryShareLink = async (userUuid, categoryId, customized
 
     return response;
   } catch (err) {
-    console.log('err', err);
+    // console.log(err.response?.data?.message);
+    showToast('error', 'error', {}, err.response?.data?.message.split(':')[1]);
+
   }
 };
 
