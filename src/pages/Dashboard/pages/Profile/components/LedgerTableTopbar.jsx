@@ -97,7 +97,7 @@ const LedgerTableTopbar = ({
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search2.svg`}
             alt="search icon"
-            className="absolute left-1 top-1/2 h-2 w-2 -translate-y-[50%] transform tablet:left-[9.22px] tablet:h-[16px] tablet:w-[16px] laptop:h-[27px] laptop:w-[27px]"
+            className="absolute left-1 top-[48%] h-2 w-2 -translate-y-[50%] transform tablet:left-[9.22px] tablet:h-[16px] tablet:w-[16px] laptop:h-[27px] laptop:w-[27px]"
           />
           <input
             type="text"
