@@ -81,7 +81,7 @@ const TreasurySummary = () => {
               <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 =
               </h1>
-              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
+              <h1 className="w-full text-center text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 +{persistedConstants?.QUEST_COMPLETED_AMOUNT} FDX
               </h1>
             </div>
@@ -92,7 +92,7 @@ const TreasurySummary = () => {
               <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 =
               </h1>
-              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
+              <h1 className="w-full text-center text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 -{persistedConstants?.QUEST_CREATED_AMOUNT} FDX
               </h1>
             </div>
@@ -103,7 +103,7 @@ const TreasurySummary = () => {
               <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 =
               </h1>
-              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
+              <h1 className="w-full text-center text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 {persistedConstants?.MY_POST_ENGAGEMENT} FDX
               </h1>
             </div>
@@ -141,12 +141,12 @@ const TreasurySummary = () => {
               </h1>
             </div>
             <div>
-              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
+              <h1 className="w-full text-center text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 =
               </h1>
             </div>
             <div className="text-end">
-              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
+              <h1 className="w-full text-center text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
                 $ {persistedConstants?.FDX_CONVERSION_RATE_WRT_USD} USD
               </h1>
             </div>
