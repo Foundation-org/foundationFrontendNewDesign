@@ -21,7 +21,7 @@ export const faqData = [
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/2.png`,
     title: 'Can I earn money using Foundation?',
     desc: [
-      'Yes, sort of. While you cannot monetize with Foundation right now, the more tokens you build up today, the more you have to monetize by cashing out, trading, etc. later on when the feature becomes available [coming soon late 2024].',
+      'Yes, sort of. While you cannot monetize with Foundation right now, the more tokens you build up today, the more you have to monetize by cashing out, trading, etc. later on when the feature becomes available [coming soon - late 2024].',
     ],
   },
   {
@@ -30,8 +30,8 @@ export const faqData = [
     title: 'What is FDX?',
     desc: [
       'FDX is the utility token that Foundation uses within the Foundation network. When you join, you will be able to start engaging with posts, adding badges, etc. All of those things add to your FDX token balance.',
-      'You can use your FDX balance to create your own posts and object to posts.',
-      'In the future, you will be able to monetize that token balance.',
+      'You can use your FDX balance to create your own posts, object to posts, create lists, and much more.',
+      "In the future, you'll be able to sell your FDX tokens directly back to the platform for dollars in your bank account",
     ],
   },
   {
@@ -57,23 +57,30 @@ export const faqData2 = [
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/1.png`,
     title: 'How do I create a post?',
     steps: ['Select “Create”', 'Choose what type of post you want', 'Post for all to see!'],
-    desc: [
-      'All posts are anonymous the focus can be on the topics, not the trolls!',
-      'Posts cost 0.1FDX to create. You earn 0.1FDX for every person that engages with your post.',
-    ],
+    desc: ['All posts are anonymous.You earn FDX for every person that engages with your post.'],
   },
   {
     id: 8,
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/2.png`,
     title: 'How do I engage with other posts?',
     desc: [
-      'Go to the homepage with the feed and start answering polls and multiple choice questions! You can also filter  posts so you’re only viewing user qualified content - less fake news!',
-      'Some posts allow you to add additional answer options and you can do that too by selecting “Add option”.',
-      'You earn 0.96FDX everytime you engage with a post. You can change your answers at any time. All of your answers are anonymous.',
+      'You earn FDX every time you engage with a post.',
+      'Go to the homepage with the feed and start engaging in posts. You can participate in single or multiple choice posts, share posts, and add posts to a shared list.',
+      'Some posts allow you to add addition al answer options and you can do that too by selecting “Add option”.',
+      'All of your participation is anonymous.',
     ],
   },
   {
     id: 9,
+    img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/2.png`,
+    title: 'What are shared lists?',
+    desc: [
+      'You can add posts to your own custom lists that you create. Lists can act as surveys, questionnaires and playlists. ',
+      'Sharing your lists is another way to earn FDX.',
+    ],
+  },
+  {
+    id: 10,
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/3.png`,
     title: 'Why can’t I see who posted?',
     desc: [
@@ -82,7 +89,7 @@ export const faqData2 = [
     ],
   },
   {
-    id: 10,
+    id: 11,
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
     title: 'Does Foundation control accuracy of posts?',
     desc: [
@@ -90,25 +97,24 @@ export const faqData2 = [
     ],
   },
   {
-    id: 11,
+    id: 12,
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
     title: 'What are verification badges?',
     desc: [
-      'Not every post requires a certain level of   verification/authenticity, however, if you want to increase the authenticity of the questions or answers you post you can do so by adding verification badges to your profile.',
-      'You earn 0.96FDX by adding a verification badge.',
+      'Not every post requires a certain level of verification/authenticity, however, if you want to increase the authenticity of the questions or answers you post you can do so by adding verification badges to your profile.',
       'The more verification badges you have, the more you will be contributing to lessen misinformation that shows up in the feed.',
     ],
   },
   {
-    id: 12,
+    id: 13,
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
     title: 'What are the objection & reporting systems?',
     desc: [
-      'If there’s an answer option to a multiple, open, or ranked choice question you don’t think should be there, you can object it [for 0.1FDX]. You can earn the FDX back by removing the objection as well',
+      'If there’s an option to a multiple, open, or ranked choice post you don’t think should be there, you can object it. It costs FDX add an objection, buy you can get it back by removing the objection later as well.',
     ],
   },
   {
-    id: 13,
+    id: 14,
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
     title: 'Code of conduct',
     desc: [
