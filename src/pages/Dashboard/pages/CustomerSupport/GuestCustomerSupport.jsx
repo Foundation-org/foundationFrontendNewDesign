@@ -4,7 +4,6 @@ import Topbar from '../../components/Topbar';
 import DashboardLayout from '../../components/DashboardLayout';
 import { createGuestMode } from '../../../../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -63,7 +62,7 @@ const GuestCustomerSupport = () => {
             ))}
           </div>
           <div
-            className={`no-scrollbar mx-auto mb-10 h-[calc(100dvh-174px)] w-full overflow-y-auto tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem] ${location.pathname === '/contact-us' && 'px-3'}`}
+            className={`no-scrollbar mx-auto mb-10 h-[calc(100dvh-174px)] w-full overflow-y-auto tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem] ${location.pathname === '/contact-us' && 'px-3 tablet:px-0'}`}
           >
             <Outlet />
           </div>

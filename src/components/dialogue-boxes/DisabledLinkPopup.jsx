@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { Button } from '../ui/Button';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateSharedLinkStatus } from '../../services/api/questsApi';
@@ -9,7 +9,6 @@ import * as questUtilsActions from '../../features/quest/utilsSlice';
 import PopUp from '../ui/PopUp';
 
 export default function DisabledLinkPopup({ handleClose, modalVisible }) {
-  // const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
@@ -19,13 +18,9 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
     mutationFn: updateSharedLinkStatus,
     onSuccess: (resp) => {
       toast.success(resp?.data.message);
-      // console.log('first', questUtils.sharedQuestStatus.type);
-      // dispatch(questUtilsActions.addHiddenPostId(questUtils.sharedQuestStatus.id));
+      queryClient.invalidateQueries(['userInfo']);
       if (questUtils.sharedQuestStatus.type === 'Delete') {
         queryClient.setQueriesData(['sharedLink'], (oldData) => {
-          // if (oldData.pages[0].length <= 1) {
-          //   queryClient.invalidateQueries(['sharedLink']);
-          // } else {
           return {
             ...oldData,
             pages: oldData?.pages?.map((page) => page.filter((item) => item._id !== resp.data.data.questForeignKey)),
@@ -43,12 +38,8 @@ export default function DisabledLinkPopup({ handleClose, modalVisible }) {
             ),
           ),
         }));
-
-        //  updatedQuestData[questIndex].userQuestSetting.linkStatus = 'Disable';
-        // dispatch(questUtilsActions.addDisabledPostId(questUtils.sharedQuestStatus.id));
       }
       if (questUtils.sharedQuestStatus.type === 'Enable') {
-        // dispatch(questUtilsActions.addEnablePostId(questUtils.sharedQuestStatus.id));
         queryClient.setQueriesData(['sharedLink'], (oldData) => ({
           ...oldData,
           pages: oldData?.pages?.map((page) =>

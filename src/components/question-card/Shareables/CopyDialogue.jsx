@@ -60,6 +60,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
+        queryClient.invalidateQueries(['userInfo']);
       }
     } else if (questStartData?.userQuestSetting && !questStartData?.userQuestSetting?.link) {
       data.isGenerateLink = true;
@@ -72,6 +73,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
+        queryClient.invalidateQueries(['userInfo']);
       }
     } else {
       setIsLoading(false);

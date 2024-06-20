@@ -283,9 +283,7 @@ export default function DashboardLayout({ children }) {
               </>
             )}
           </div>
-          {location.pathname !== '/dashboard/help/about' &&
-            location.pathname !== '/dashboard/help/faq' &&
-            location.pathname !== '/dashboard/help/contact-us' &&
+          {!location.pathname.startsWith('/dashboard/help/') &&
             location.pathname !== '/dashboard/profile' &&
             location.pathname !== '/dashboard/profile/ledger' &&
             location.pathname !== '/dashboard/profile/hidden-posts' &&
@@ -389,9 +387,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/quest/isfullscreen' &&
             location.pathname !== '/shared-links/result' &&
-            location.pathname !== '/dashboard/help/about' &&
-            location.pathname !== '/dashboard/help/faq' &&
-            location.pathname !== '/dashboard/help/contact-us' &&
+            !location.pathname.startsWith('/dashboard/help/') &&
             location.pathname !== '/help/about' &&
             location.pathname !== '/help/faq' &&
             location.pathname !== '/help/contact-us' &&
@@ -407,9 +403,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/treasury/buy-fdx' &&
             location.pathname !== '/dashboard/treasury/redemption-center' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
-            location.pathname !== '/dashboard/help/about' &&
-            location.pathname !== '/dashboard/help/faq' &&
-            location.pathname !== '/dashboard/help/contact-us' &&
+            !location.pathname.startsWith('/dashboard/help/') &&
             // location.pathname !== '/dashboard/quest' &&
             !location.pathname.startsWith('/dashboard/quest') &&
             location.pathname !== '/dashboard/profile' &&
@@ -424,39 +418,22 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/profile/verification-badges' &&
             location.pathname !== '/dashboard/profile/lists' && <SideNavbar />}
 
-          {questUtilsState.isShowPlayer &&
-            // location.pathname !== '/dashboard/treasury' &&
-            // location.pathname !== '/dashboard/treasury/reward-schedule' &&
-            // location.pathname !== '/dashboard/treasury/buy-fdx' &&
-            // location.pathname !== '/dashboard/treasury/redemption-center' &&
-            // location.pathname !== '/dashboard/treasury/ledger' &&
-            // location.pathname !== '/dashboard/help/about' &&
-            // location.pathname !== '/dashboard/help/faq' &&
-            // location.pathname !== '/dashboard/help/contact-us' &&
-            // // location.pathname !== '/dashboard/quest' &&
-            // !location.pathname.startsWith('/dashboard/quest') &&
-            // location.pathname !== '/dashboard/profile' &&
-            // location.pathname !== '/dashboard/profile/ledger' &&
-            // location.pathname !== '/dashboard/profile/hidden-posts' &&
-            // location.pathname !== '/dashboard/profile/shared-links' &&
-            // location.pathname !== '/dashboard/profile/user-settings' &&
-            // location.pathname !== '/dashboard/profile/feedback' && (
-            location.pathname === '/dashboard' && (
-              <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
-                <div className="relative">
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
-                    alt="mediaCloseIcon"
-                    className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black tablet:-right-[14px] tablet:-top-[18px] tablet:size-[33px] dark:text-white"
-                    onClick={() => {
-                      dispatch(setIsShowPlayer(false));
-                      dispatch(setPlayingPlayerId(''));
-                    }}
-                  />
-                </div>
-                <MediaControls />
+          {questUtilsState.isShowPlayer && location.pathname === '/dashboard' && (
+            <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
+              <div className="relative">
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
+                  alt="mediaCloseIcon"
+                  className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black tablet:-right-[14px] tablet:-top-[18px] tablet:size-[33px] dark:text-white"
+                  onClick={() => {
+                    dispatch(setIsShowPlayer(false));
+                    dispatch(setPlayingPlayerId(''));
+                  }}
+                />
               </div>
-            )}
+              <MediaControls />
+            </div>
+          )}
 
           {/* {canAddPost !== 'true' && location.pathname.startsWith('/dashboard/profile/postsbylist/') && <ManageList />} */}
 
@@ -643,9 +620,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/dashboard/treasury/buy-fdx' &&
             location.pathname !== '/dashboard/treasury/redemption-center' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
-            location.pathname !== '/dashboard/help/about' &&
-            location.pathname !== '/dashboard/help/faq' &&
-            location.pathname !== '/dashboard/help/contact-us' &&
+            !location.pathname.startsWith('/dashboard/help/') &&
             location.pathname !== '/help/about' &&
             location.pathname !== '/help/faq' &&
             location.pathname !== '/help/contact-us' && <SummarySidebar userData={userInfoData?.data} />}

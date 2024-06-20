@@ -253,3 +253,5 @@ export const personal = [
     disabled: false,
   },
 ];
+
+export const badgesTotalLength = contacts.length + socials.length + web3.length + legacy.length + personal.length;

@@ -88,7 +88,7 @@ const QuestBottombar = ({
       );
       return;
     } else if (questStartData?.moderationRatingCount >= 1) {
-      showToast('warning', 'AdultPost')
+      showToast('warning', 'AdultPost');
     } else {
       setCopyModal(true);
     }
@@ -145,7 +145,7 @@ const QuestBottombar = ({
   };
   const showHidePostOpen = () => {
     if (questStartData.uuid === persistedUserInfo.uuid) {
-      showToast('warning', 'hidingOwnPost')
+      showToast('warning', 'hidingOwnPost');
       return;
     }
 
@@ -387,12 +387,12 @@ const QuestBottombar = ({
           )}
 
           {postProperties !== 'HiddenPosts' &&
-            postProperties !== 'SharedLinks' &&
-            postProperties !== 'sharedlink-results' &&
-            postProperties !== 'actual-results' &&
-            !window.location.href.includes('/p/') &&
-            !location.pathname.includes('/l/') &&
-            location.pathname !== '/quest/isfullscreen' ? (
+          postProperties !== 'SharedLinks' &&
+          postProperties !== 'sharedlink-results' &&
+          postProperties !== 'actual-results' &&
+          !window.location.href.includes('/p/') &&
+          !location.pathname.includes('/l/') &&
+          location.pathname !== '/quest/isfullscreen' ? (
             <div className="flex justify-center ">
               {isFullScreen === undefined ? (
                 <div

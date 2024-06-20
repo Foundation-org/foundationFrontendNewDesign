@@ -30,7 +30,7 @@ const CustomerSupport = () => {
         ))}
       </div>
       <div
-        className={`no-scrollbar mx-auto mb-10 h-[calc(100dvh-174px)] w-full overflow-y-auto tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem] ${location.pathname === '/dashboard/help/contact-us' && 'px-3'}`}
+        className={`no-scrollbar mx-auto mb-10 h-[calc(100dvh-174px)] w-full overflow-y-auto tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem] ${location.pathname === '/dashboard/help/contact-us' && 'px-3 tablet:px-0'}`}
       >
         <Outlet />
       </div>

@@ -41,8 +41,10 @@ const YesNo = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
-          if (filterStates?.moderationRatingFilter?.initial === 0 &&
-            filterStates?.moderationRatingFilter?.final === 0) {
+          if (
+            filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0
+          ) {
             dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           }
           navigate('/dashboard');
