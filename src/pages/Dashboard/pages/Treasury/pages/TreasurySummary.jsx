@@ -100,7 +100,7 @@ const TreasurySummary = () => {
               </div>
             </div>
           </div>
-          <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
+          <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
             <Button variant={'submit'} onClick={() => navigate('/dashboard/treasury/reward-schedule')}>
               View all
             </Button>
@@ -134,7 +134,7 @@ const TreasurySummary = () => {
               $ {persistedConstants?.FDX_CONVERSION_RATE_WRT_USD} USD
             </p>
           </div>
-          <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
+          <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
             <Button variant={'submit'} onClick={() => navigate('/dashboard/treasury/buy-fdx')}>
               Buy More FDX
             </Button>
@@ -182,7 +182,7 @@ const TreasurySummary = () => {
               </h1>
             </div>
           </div>
-          <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
+          <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
             <Button variant={'submit'} onClick={() => navigate('/dashboard/treasury/redemption-center')}>
               Redemption Center
             </Button>

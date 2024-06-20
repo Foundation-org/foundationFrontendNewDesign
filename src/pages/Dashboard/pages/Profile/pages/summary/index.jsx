@@ -50,7 +50,7 @@ const Summary = () => {
             Have your data be more desirable for brands and research firms to purchase with more verified info and earn
             more FDX while you’re at it!
           </h1>
-          <div className="mt-3 flex w-full justify-center ">
+          <div className="mt-3 flex w-full justify-center tablet:mt-5">
             <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/verification-badges')}>
               Add Badge
             </Button>
@@ -73,7 +73,7 @@ const Summary = () => {
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Creating posts is a great way to earn FDX. Especially if others engage with them.
           </h1>
-          <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-6">
+          <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-5">
             <div className="max-w-28 border-r border-[#707175] pr-6 tablet:max-w-full">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Posts you’ve created
@@ -89,7 +89,7 @@ const Summary = () => {
               </h5>
             </div>
           </div>
-          <div className="my-3 flex w-full justify-center tablet:my-6 ">
+          <div className="my-3 flex w-full justify-center tablet:my-5 ">
             <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/post-activity')}>
               View all post activity
             </Button>
@@ -98,7 +98,7 @@ const Summary = () => {
             Not every post may be for you - and that’s ok. If you decide to unhide a post, you can earn FDX by engaging
             with it.
           </h1>
-          <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-6">
+          <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-5">
             <div className="">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Posts you’ve hidden
@@ -150,7 +150,7 @@ const Summary = () => {
               </h5>
             </div>
           </div>
-          <div className="mt-3 flex w-full justify-center tablet:mt-6 ">
+          <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
             <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/feedback')}>
               View all post feedback
             </Button>
@@ -200,7 +200,7 @@ const Summary = () => {
               </h5>
             </div>
           </div>
-          <div className="mt-3 flex w-full justify-center tablet:mt-6 ">
+          <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
             <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/shared-links')}>
               View all shared posts
             </Button>
@@ -223,7 +223,7 @@ const Summary = () => {
           <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Sharing lists is a great way to earn FDX - especially if people engage with them.
           </h1>
-          <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-4 tablet:gap-6">
+          <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Lists You’ve Shared
@@ -249,7 +249,7 @@ const Summary = () => {
               </h5>
             </div>
           </div>
-          <div className="mt-3 flex w-full justify-center tablet:mt-6 ">
+          <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
             <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/lists')}>
               View all shared lists
             </Button>

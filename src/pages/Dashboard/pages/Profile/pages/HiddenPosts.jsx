@@ -143,7 +143,7 @@ export default function HiddenPosts() {
             Not every post may be for you - and that’s ok. If you decide to unhide a post, you can earn FDX by engaging
             with it.
           </h1>
-          <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-4 tablet:gap-6">
+          <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
             <div className="max-w-28 pr-3 tablet:max-w-full tablet:pr-6">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
                 Posts you’ve hidden
