@@ -84,7 +84,7 @@ const RewardSchedule = () => {
           <p className="mt-1 text-[10px] font-normal leading-[160%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             *Values subject to change.
           </p>
-          <div className="flex w-full items-center justify-between rounded-b-[10px] pt-[10px] tablet:px-11 tablet:pt-5">
+          <div className="flex w-full items-center justify-between rounded-b-[10px] pt-3 tablet:px-11 tablet:pt-5">
             <div className="space-y-2">
               {rewardAndFeesList.map((item, index) => (
                 <p
