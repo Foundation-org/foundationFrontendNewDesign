@@ -329,7 +329,7 @@ const OpenChoice = () => {
       quest="OpenChoice"
       handleTab={handleTab}
       type={'Post'}
-      msg={'Ask a question where anyone can select multiple options from a list of choices'}
+      msg={'Participants can select more than one option from a list of choices'}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId={`optionsValue-${Date.now()}`}>

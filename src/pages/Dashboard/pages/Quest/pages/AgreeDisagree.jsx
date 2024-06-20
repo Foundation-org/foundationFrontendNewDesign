@@ -224,7 +224,7 @@ const AgreeDisagree = () => {
       quest="Statement"
       handleTab={handleTab}
       type={'Post'}
-      msg={'Make a statement that anyone can "Agree" or "Disagree" with'}
+      msg={'Participants can only "Agree" or "Disagree" with this post'}
     >
       <div className="flex flex-col gap-[5px] tablet:gap-[15px]">
         <YesNoOptions answer={'Agree'} />

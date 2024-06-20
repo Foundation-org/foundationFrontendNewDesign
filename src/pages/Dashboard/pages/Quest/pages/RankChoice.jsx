@@ -317,7 +317,7 @@ const RankChoice = () => {
       quest="M/R"
       handleTab={handleTab}
       type={'Post'}
-      msg={'Create a selection of choices that can be arranged in order of preference.'}
+      msg={'Participants can arrange these options in their order of preference'}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId={`optionsValue-${Date.now()}`}>
