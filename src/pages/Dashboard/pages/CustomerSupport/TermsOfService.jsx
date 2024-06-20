@@ -69,7 +69,6 @@ const TermOfService = () => {
                 </li>
               ))}
             </ul>
-            <br />
             {section.endText && (
               <p className="term_policy_paragraph text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
                 {section.endText}

@@ -27,7 +27,7 @@ export const treasuryItems = [
   },
   {
     id: 1,
-    title: 'Reward Schedule',
+    title: 'Rewards & Fees',
     path: '/dashboard/treasury/reward-schedule',
   },
   {

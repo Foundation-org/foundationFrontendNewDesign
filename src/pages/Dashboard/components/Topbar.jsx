@@ -27,7 +27,7 @@ const Topbar = () => {
                 }}
               >
                 <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/${location.pathname === '/dashboard' ? 'home-filled.svg' : 'new-home3.svg'}`}
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/${location.pathname === '/dashboard' ? 'home-filled.svg' : 'icon_home.png'}`}
                   alt="foundation_logo"
                   className="size-5 tablet:size-8"
                 />
@@ -45,7 +45,7 @@ const Topbar = () => {
                   className="h-[10px] w-auto tablet:h-auto"
                 />
                 <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium text-[#D0E4F2] tablet:pt-1 tablet:text-[13px] tablet:leading-[13px]">
-                  v 1.13.52
+                  v 1.13.68
                 </span>
               </Link>
             </div>
