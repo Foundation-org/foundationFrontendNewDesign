@@ -217,11 +217,16 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
                 variant={'submit'}
                 className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
                 onClick={() => {
-                  addPostInList({
-                    userUuid: persistedUserInfo.uuid,
-                    categoryIdArray: selectedOption,
-                    questForeginKey: questStartData._id,
-                  });
+                  if (selectedOption.length === 0) {
+                    showToast('warning', 'emptyPostList')
+                  } else {
+
+                    addPostInList({
+                      userUuid: persistedUserInfo.uuid,
+                      categoryIdArray: selectedOption,
+                      questForeginKey: questStartData._id,
+                    });
+                  }
                 }}
               >
                 {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
