@@ -162,9 +162,9 @@ export function Router() {
                 <Route
                   path="verification-badges"
                   element={
-                    // <ErrorBoundary>
-                    <VerificationBadges />
-                    // </ErrorBoundary>
+                    <ErrorBoundary>
+                      <VerificationBadges />
+                    </ErrorBoundary>
                   }
                 />
                 <Route

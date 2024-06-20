@@ -247,7 +247,7 @@ export default function BasicTable() {
             </thead>
             <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] tablet:text-[1rem] laptop:text-[0.875rem]">
               {table.getRowModel().rows.length === 0 ? (
-                <h4 className="mt-12 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem]">No results found</h4>
+                <h4 className="mt-3 tablet:mt-10 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem] text-center ">No results found</h4>
               ) : (
                 table.getRowModel().rows.map((row) => (
                   <tr
@@ -324,8 +324,8 @@ export default function BasicTable() {
                   return (
                     <button
                       className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] pt-[2px] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:pt-[0px] tablet:text-[13px] ${pageNumber === currentPage
-                          ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-[#252D37]'
-                          : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]'
+                        ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-[#252D37]'
+                        : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]'
                         }`}
                       key={pageNumber}
                       onClick={() => handlePageClick(pageNumber)}

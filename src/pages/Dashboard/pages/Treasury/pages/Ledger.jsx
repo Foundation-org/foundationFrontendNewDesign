@@ -114,9 +114,8 @@ export default function Ledger() {
   return (
     <div className="overflow-y-auto">
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'ledger-dark' : 'ledger-light bg-white'
-        } mx-[17px] mb-10 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-[25px] tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:rounded-[18px]`}
+        className={`${persistedTheme === 'dark' ? 'ledger-dark' : 'ledger-light bg-white'
+          } mx-[17px] mb-10 rounded-[7.89px] px-[0.59rem] py-[13px] text-left tablet:mx-[25px] tablet:rounded-[10.4px] tablet:px-[1.36rem] tablet:py-[30px] laptop:rounded-[18px]`}
       >
         <LedgerTableTopbar
           isTreasury={false}
@@ -130,27 +129,27 @@ export default function Ledger() {
         <div className="no-scrollbar relative w-full overflow-auto tablet:h-[600px]">
           <table
             className="w-full"
-            // style={{
-            //   minWidth:
-            //     window.innerWidth <= 1700 && window.innerWidth >= 744
-            //       ? '600px'
-            //       : window.innerWidth <= 744 && window.innerWidth >= 0
-            //         ? '350px'
-            //         : 'auto',
-            //   width:
-            //     window.innerWidth <= 1700 && window.innerWidth >= 900
-            //       ? '100%'
-            //       : window.innerWidth <= 900 && window.innerWidth >= 744
-            //         ? '120%'
-            //         : window.innerWidth <= 744 && window.innerWidth >= 0
-            //           ? '100%'
-            //           : table.getCenterTotalSize(),
-            // }}
-            // {...{
-            //   style: {
-            //     width: table.getCenterTotalSize(),
-            //   },
-            // }}
+          // style={{
+          //   minWidth:
+          //     window.innerWidth <= 1700 && window.innerWidth >= 744
+          //       ? '600px'
+          //       : window.innerWidth <= 744 && window.innerWidth >= 0
+          //         ? '350px'
+          //         : 'auto',
+          //   width:
+          //     window.innerWidth <= 1700 && window.innerWidth >= 900
+          //       ? '100%'
+          //       : window.innerWidth <= 900 && window.innerWidth >= 744
+          //         ? '120%'
+          //         : window.innerWidth <= 744 && window.innerWidth >= 0
+          //           ? '100%'
+          //           : table.getCenterTotalSize(),
+          // }}
+          // {...{
+          //   style: {
+          //     width: table.getCenterTotalSize(),
+          //   },
+          // }}
           >
             <thead
               style={{ width: table.getTotalSize() }}
@@ -186,9 +185,8 @@ export default function Ledger() {
               {table.getRowModel().rows.length === 0 ? (
                 <div>
                   <h4 className="mt-4 text-[0.4rem] md:text-[.88rem] tablet:mt-20 laptop:text-[1.2rem]">&#x200B;</h4>
-                  <h4 className="absolute left-1/2 top-[25px] -translate-x-1/2 transform text-[12px] tablet:top-1/2 tablet:text-[32px]">
-                    No results found
-                  </h4>
+                  <h4 className="mt-3 tablet:mt-10 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem] text-center ">No results found</h4>
+
                 </div>
               ) : (
                 table.getRowModel().rows.map((row) => (
@@ -212,15 +210,15 @@ export default function Ledger() {
                           : cell.column.id === 'txDate'
                             ? format(new Date(cell.getValue()), 'dd MMM yyyy, hh:mm a')
                             : cell.column.id === 'txFrom' &&
-                                cell.getValue() !== 'DAO Treasury' &&
-                                cell.getValue() !== 'dao' &&
-                                cell.getValue() !== persistedUserInfo?.uuid
+                              cell.getValue() !== 'DAO Treasury' &&
+                              cell.getValue() !== 'dao' &&
+                              cell.getValue() !== persistedUserInfo?.uuid
                               ? `User`
                               : cell.getValue() === persistedUserInfo?.uuid
                                 ? 'My Account'
                                 : cell.column.id === 'txTo' &&
-                                    cell.getValue() !== 'DAO Treasury' &&
-                                    cell.getValue() !== 'dao'
+                                  cell.getValue() !== 'DAO Treasury' &&
+                                  cell.getValue() !== 'dao'
                                   ? `User`
                                   : cell.getValue() === 'dao'
                                     ? 'DAO'
@@ -255,21 +253,20 @@ export default function Ledger() {
               )}
               {rangeStart && rangeEnd
                 ? [...Array(rangeEnd - rangeStart + 1)].map((_, index) => {
-                    const pageNumber = rangeStart + index;
-                    return (
-                      <button
-                        className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] pt-[2px] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:pt-[0px] tablet:text-[13px] ${
-                          pageNumber === currentPage
-                            ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-[#252D37]'
-                            : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]'
+                  const pageNumber = rangeStart + index;
+                  return (
+                    <button
+                      className={`flex h-[0.91rem] w-[0.92rem] items-center justify-center rounded-[0.15rem] pt-[2px] text-[0.45rem] tablet:h-[28px] tablet:w-[27px] tablet:rounded-md tablet:pt-[0px] tablet:text-[13px] ${pageNumber === currentPage
+                        ? 'border border-solid border-[#5932EA] bg-[#4A8DBD] text-white dark:border-none dark:bg-[#252D37]'
+                        : 'bg-[#F5F5F5] text-[#4A4A4A] dark:bg-[#A5A5A5]'
                         }`}
-                        key={pageNumber}
-                        onClick={() => handlePageClick(pageNumber)}
-                      >
-                        {pageNumber}
-                      </button>
-                    );
-                  })
+                      key={pageNumber}
+                      onClick={() => handlePageClick(pageNumber)}
+                    >
+                      {pageNumber}
+                    </button>
+                  );
+                })
                 : null}
               {rangeEnd < totalPages && (
                 <button className="mr-2 bg-white/0 text-[9px] font-medium text-black tablet:mr-4 tablet:text-[16px] dark:text-[#B3B3B3]">
