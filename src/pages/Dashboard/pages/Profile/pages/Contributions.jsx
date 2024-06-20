@@ -119,8 +119,7 @@ const Contributions = () => {
   return (
     <div className="mx-4 mb-4 flex max-w-[778px] flex-col gap-[15px] overflow-y-auto tablet:mx-6">
       {/* Summary Section */}
-      <div className="mx-auto w-full"
-      >
+      <div className="mx-auto w-full">
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
@@ -267,8 +266,8 @@ const Contributions = () => {
             </h4>
           </div>
           <Link
-            to={'/dashboard/profile/feedback'}
-            className="font-noraml -mt-2 cursor-pointer text-[9px] leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
+            to={'/dashboard/help/terms-of-service'}
+            className="-mt-2 cursor-pointer text-[9px] font-normal leading-[119%] text-[#4A8DBD] hover:underline tablet:-mt-6 tablet:text-[14px] tablet:leading-[121.4%]"
           >
             View code of conduct {'>'}
           </Link>
