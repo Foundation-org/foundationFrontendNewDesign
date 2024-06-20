@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 
+const rewardAndFeesList = ['Post participation', 'Creating a post', 'My post engagement'];
+
 const TreasurySummary = () => {
   const navigate = useNavigate();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -39,7 +41,7 @@ const TreasurySummary = () => {
           </div>
           <div className="space-y-2 text-end">
             <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-              {(persistedUserInfo?.fdxEarned + persistedUserInfo?.fdxSpent)?.toFixed(2)} FDX
+              {persistedUserInfo?.balance?.toFixed(2)} FDX
             </h1>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               {persistedUserInfo?.fdxEarned?.toFixed(2)} FDX
@@ -66,46 +68,36 @@ const TreasurySummary = () => {
           </div>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-          <h1 className="text-[12px] font-normal leading-[133%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-            When you engage with the Foundation platform, you can earn AND spend FDX. You can view the latest reward and
-            fee values below.
-          </h1>
-          <p className="mt-1 text-[10px] font-normal leading-[160%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-            *Values subject to change.
-          </p>
-          <div className="mt-2 grid grid-flow-col grid-rows-3 justify-items-center gap-2 tablet:px-11 tablet:py-[18.73px]">
-            <div className="grid w-full grid-cols-3 justify-items-center">
-              <h1 className="w-full text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
-                Post participation
-              </h1>
-              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                =
-              </h1>
-              <h1 className="w-full text-center text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                +{persistedConstants?.QUEST_COMPLETED_AMOUNT} FDX
-              </h1>
-            </div>
-            <div className="grid w-full grid-cols-3 justify-items-center">
-              <h1 className="w-full text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
-                Creating a post
-              </h1>
-              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                =
-              </h1>
-              <h1 className="w-full text-center text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                -{persistedConstants?.QUEST_CREATED_AMOUNT} FDX
-              </h1>
-            </div>
-            <div className="grid w-full grid-cols-3 justify-items-center">
-              <h1 className="w-full text-end text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-start tablet:text-[18px] tablet:leading-normal">
-                My post engagement
-              </h1>
-              <h1 className="text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                =
-              </h1>
-              <h1 className="w-full text-center text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                {persistedConstants?.MY_POST_ENGAGEMENT} FDX
-              </h1>
+          <div className="flex flex-col justify-between">
+            <h1 className="text-[12px] font-normal leading-[133%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              When you engage with the Foundation platform, you can earn AND spend FDX. You can view the latest reward
+              and fee values below.
+            </h1>
+            <p className="mt-1 text-[10px] font-normal leading-[160%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              *Values subject to change.
+            </p>
+            <div className="flex w-full items-center justify-between rounded-b-[10px] pt-[10px] tablet:px-11 tablet:pt-5">
+              <div className="space-y-2">
+                {rewardAndFeesList.map((item, index) => (
+                  <p
+                    key={index + 1}
+                    className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal"
+                  >
+                    {item}
+                  </p>
+                ))}
+              </div>
+              <div className="space-y-2 text-end">
+                <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                  +{persistedConstants?.QUEST_COMPLETED_AMOUNT} FDX
+                </p>
+                <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                  -{persistedConstants?.QUEST_CREATED_AMOUNT} FDX
+                </p>
+                <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+                  {persistedConstants?.MY_POST_ENGAGEMENT} FDX
+                </p>
+              </div>
             </div>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
@@ -134,22 +126,13 @@ const TreasurySummary = () => {
           <p className="mt-1 text-[10px] font-normal leading-[160%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             *Values subject to change.
           </p>
-          <div className="grid grid-cols-3 justify-items-center  px-5 py-[10px] tablet:px-11 tablet:py-[18.73px]">
-            <div>
-              <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-                1 FDX token
-              </h1>
-            </div>
-            <div>
-              <h1 className="w-full text-center text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                =
-              </h1>
-            </div>
-            <div className="text-end">
-              <h1 className="w-full text-center text-[12px] leading-[113%] text-[#85898C] tablet:text-[18px] tablet:font-semibold tablet:leading-normal">
-                $ {persistedConstants?.FDX_CONVERSION_RATE_WRT_USD} USD
-              </h1>
-            </div>
+          <div className="flex justify-between pt-[10px] tablet:px-11 tablet:pt-5">
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              1 FDX
+            </p>
+            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              $ {persistedConstants?.FDX_CONVERSION_RATE_WRT_USD} USD
+            </p>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
             <Button variant={'submit'} onClick={() => navigate('/dashboard/treasury/buy-fdx')}>

@@ -76,7 +76,7 @@ const RewardSchedule = () => {
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Rewards & Fees</h1>
           </div>
         </div>
-        <div className="flex flex-col justify-between rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-16 tablet:py-[18.73px]">
+        <div className="flex flex-col justify-between rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-5 tablet:py-[18.73px]">
           <h1 className="text-[12px] font-normal leading-[133%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             When you engage with the Foundation platform, you can earn AND spend FDX. You can view the latest reward and
             fee values below.
@@ -84,7 +84,7 @@ const RewardSchedule = () => {
           <p className="mt-1 text-[10px] font-normal leading-[160%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             *Values subject to change.
           </p>
-          <div className="flex w-full items-center justify-between rounded-b-[10px] py-[10px] tablet:py-[18.73px]">
+          <div className="flex w-full items-center justify-between rounded-b-[10px] pt-[10px] tablet:px-11 tablet:pt-5">
             <div className="space-y-2">
               {rewardAndFeesList.map((item, index) => (
                 <p
