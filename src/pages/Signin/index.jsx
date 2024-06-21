@@ -20,6 +20,8 @@ import Loader from '../Signup/components/Loader';
 import { referralModalStyle } from '../../constants/styles';
 import LegacyConfirmationPopup from '../../components/dialogue-boxes/LegacyConfirmationPopup';
 import showToast from '../../components/ui/Toast';
+import { GithubAuthProvider, TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
+import { authentication } from '../Dashboard/pages/Profile/pages/firebase-config';
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -31,21 +33,89 @@ export default function Signin() {
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingSocial, setIsLoadingSocial] = useState(false);
-  const [isReferral, setIsReferral] = useState(false);
-  const [referralCode, setReferralCode] = useState(null);
+
   const [uuid, setUuid] = useState();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isPasswordConfirmation, setIsPasswordConfirmation] = useState();
   const legacyPromiseRef = useRef();
+  const googleRef = useRef(null);
+  const fbRef = useRef(null);
+  const linkedInRef = useRef(null);
+  const instaRef = useRef(null);
+  const [clickedButtonName, setClickedButtonName] = useState('');
 
-  const handleReferralOpen = () => {
-    setIsReferral((prev) => !prev);
+
+  const loginWithGithub = () => {
+    const provider = new GithubAuthProvider();
+    signInWithPopup(authentication, provider)
+      .then((data) => {
+        console.log('github data', data);
+        setProvider('github');
+        setProfile(data);
+        handleSignInSocial(data, 'github');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+  const loginWithTwitter = () => {
+    const provider = new TwitterAuthProvider();
+    console.log(authentication);
+    signInWithPopup(authentication, provider)
+      .then((data) => {
+        console.log('twitter data', data);
+        setProvider('twitter');
+        setProfile(data);
+        handleSignInSocial(data, 'twitter');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-  const handleReferralClose = () => {
-    setIsReferral(false);
-    setIsLoadingSocial(false);
+  const triggerLogin = async () => {
+    console.log(clickedButtonName);
+    if (clickedButtonName === 'facebook') {
+
+      if (fbRef.current) {
+        const facebookButton = fbRef.current.querySelector('div'); // or a more specific selector if needed
+        if (facebookButton) {
+          facebookButton.click();
+        }
+      }
+    }
+    if (clickedButtonName === 'google') {
+
+      if (googleRef.current) {
+        const facebookButton = googleRef.current.querySelector('div'); // or a more specific selector if needed
+        if (facebookButton) {
+          facebookButton.click();
+        }
+      }
+    }
+    if (clickedButtonName === 'linkedin') {
+
+      if (linkedInRef.current) {
+        const facebookButton = linkedInRef.current.querySelector('div'); // or a more specific selector if needed
+        if (facebookButton) {
+          facebookButton.click();
+        }
+      }
+    }
+    if (clickedButtonName === 'github') {
+
+      loginWithGithub();
+
+    }
+    if (clickedButtonName === 'twitter') {
+
+      loginWithTwitter();
+
+    }
+
+
+
   };
 
   const handleSignInSocial = async (data, provider) => {
@@ -116,8 +186,14 @@ export default function Signin() {
                 setProvider={setProvider}
                 setProfile={setProfile}
                 handleSignInSocial={handleSignInSocial}
-                isLogin={true}
                 setIsLoadingSocial={setIsLoadingSocial}
+                googleRef={googleRef}
+                fbRef={fbRef}
+                linkedInRef={linkedInRef}
+                instaRef={instaRef}
+                setClickedButtonName={setClickedButtonName}
+                isLogin={true}
+                triggerLogin={triggerLogin}
               />
               <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
                 <Button size="login-btn" color="gray" onClick={() => navigate('/signin/credentials')}>
@@ -150,19 +226,6 @@ export default function Signin() {
           className="h-[20vh] w-[23vw]"
         />
       </div>
-      <BasicModal
-        open={isReferral}
-        handleClose={handleReferralClose}
-        customStyle={referralModalStyle}
-        customClasses="rounded-[10px] tablet:rounded-[26px]"
-      >
-        <ReferralCode
-          handleClose={handleReferralClose}
-          referralCode={referralCode}
-          setReferralCode={setReferralCode}
-          uuid={uuid}
-        />
-      </BasicModal>
     </div>
   );
 }
