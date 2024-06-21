@@ -278,7 +278,7 @@ const VerificationBadges = () => {
           </h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-          <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+          <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Have your data be more desirable for brands and research firms to purchase with more verified info and earn
             more FDX while you’re at it!
           </h1>
@@ -456,30 +456,28 @@ const VerificationBadges = () => {
               </h1>
             </div>
             {checkSocial('linkedin') ? (
-              <>
-                <Button
-                  color={checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'yellow' : 'red') : 'blue'}
-                  onClick={async () => {
-                    if (persistedUserInfo?.role === 'guest') {
-                      handleGuestBadgeAdd();
-                    } else {
-                      checkSocial('linkedin') &&
-                        handleRemoveBadgePopup({
-                          title: 'LinkedIn',
-                          image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
-                          accountName: 'linkedin',
-                        });
-                    }
-                  }}
-                  disabled={checkPrimary('linkedin')}
-                >
-                  {checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'Added' : 'Remove') : 'Add Badge'}
+              <Button
+                color={checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'yellow' : 'red') : 'blue'}
+                onClick={async () => {
+                  if (persistedUserInfo?.role === 'guest') {
+                    handleGuestBadgeAdd();
+                  } else {
+                    checkSocial('linkedin') &&
+                      handleRemoveBadgePopup({
+                        title: 'LinkedIn',
+                        image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
+                        accountName: 'linkedin',
+                      });
+                  }
+                }}
+                disabled={checkPrimary('linkedin')}
+              >
+                {checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'Added' : 'Remove') : 'Add Badge'}
 
-                  <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                    {checkSocial('linkedin') ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
-                  </span>
-                </Button>
-              </>
+                <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
+                  {checkSocial('linkedin') ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
+                </span>
+              </Button>
             ) : persistedUserInfo?.role === 'guest' ? (
               <Button
                 color={checkSocial('linkedin') ? (checkPrimary('linkedin') ? 'yellow' : 'red') : 'blue'}
@@ -528,6 +526,7 @@ const VerificationBadges = () => {
                   setIsLoading(false);
                   console.log(err);
                 }}
+                className="flex"
               >
                 <Button
                   color={checkSocial('linkedin') ? 'red' : 'blue'}
