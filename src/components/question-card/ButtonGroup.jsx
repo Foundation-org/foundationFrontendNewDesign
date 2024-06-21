@@ -407,7 +407,7 @@ const ButtonGroup = ({
                 {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
                 {questStartData.startStatus !== 'change answer' && (
                   <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                    (+{persistedContants?.QUEST_COMPLETED_AMOUNT})
+                    (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                   </span>
                 )}
               </Button>
@@ -533,7 +533,7 @@ const ButtonGroup = ({
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}{' '}
               {questStartData.startStatus !== 'change answer' && (
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT})
+                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
               )}
             </Button>
@@ -648,7 +648,7 @@ const ButtonGroup = ({
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Submit'}
               {questStartData.startStatus !== 'change answer' && (
                 <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT})
+                  (+{persistedContants?.QUEST_COMPLETED_AMOUNT} FDX)
                 </span>
               )}
             </Button>

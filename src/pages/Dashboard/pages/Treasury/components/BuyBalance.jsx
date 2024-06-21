@@ -1,10 +1,11 @@
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button';
 import BuyBalancePopup from '../../../../../components/dialogue-boxes/BuyBalancePopup';
 import showToast from '../../../../../components/ui/Toast';
-import { useSelector } from 'react-redux';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+import { FaSpinner } from 'react-icons/fa';
 
 const BuyBalance = ({ triggerPulse }) => {
   const location = useLocation();
@@ -123,10 +124,21 @@ const BuyBalance = ({ triggerPulse }) => {
               />
             </div>
           </div>
+          {console.log('dollar', dollar)}
           <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
-            <Button variant={'submit'} onClick={handleCreate}>
+            {/* <Button variant={'submit'} onClick={handleCreate}>
               Buy More FDX
-            </Button>
+            </Button> */}
+            {dollar * 1 < 2.5 ? (
+              <Button variant="submit-hollow" onClick={handleCreate}>
+                Buy More FDX
+              </Button>
+            ) : (
+              <Button variant="submit" onClick={handleCreate}>
+                {/* {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Add'} */}
+                Buy More FDX
+              </Button>
+            )}
           </div>
         </div>
       </div>
