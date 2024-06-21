@@ -171,7 +171,7 @@ const Contributions = () => {
             ) : (
               <div className="relative z-50 h-fit w-fit">
                 <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/icon_badge.svg`}
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
                   alt={'badge'}
                   className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
                 />
@@ -206,7 +206,7 @@ const Contributions = () => {
           <div className="flex items-center gap-2">
             <div className="relative z-50 h-fit w-fit">
               <img
-                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/badge.svg`}
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/badge_icon.png`}
                 alt={'badge'}
                 className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
               />

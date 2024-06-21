@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 // import { signUp } from '../../services/api/userAuth';
 // import { useMutation } from '@tanstack/react-query';
@@ -25,6 +25,8 @@ import { useMutation } from '@tanstack/react-query';
 import { referralModalStyle } from '../../constants/styles';
 import CredentialRegister from './components/CredentialRegister';
 import showToast from '../../components/ui/Toast';
+import { GithubAuthProvider, TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
+import { authentication } from '../Dashboard/pages/Profile/pages/firebase-config';
 
 const REDIRECT_URI = window.location.href;
 
@@ -48,8 +50,13 @@ export default function Signup() {
   const [isReferral, setIsReferral] = useState(false);
   const [isLoadingSocial, setIsLoadingSocial] = useState(false);
   const [isPopup, setIspopup] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const [socialAccount, setSocialAccount] = useState({ isSocial: false, data: null });
+  const googleRef = useRef(null);
+  const fbRef = useRef(null);
+  const linkedInRef = useRef(null);
+  const instaRef = useRef(null);
+  const [clickedButtonName, setClickedButtonName] = useState('');
+
 
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -63,6 +70,76 @@ export default function Signup() {
     setIsLoading(false);
   };
 
+  const loginWithGithub = () => {
+    const provider = new GithubAuthProvider();
+    signInWithPopup(authentication, provider)
+      .then((data) => {
+        console.log('github data', data);
+        setProvider('github');
+        setProfile(data);
+        handleSignUpSocial(data, 'github');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const loginWithTwitter = () => {
+    const provider = new TwitterAuthProvider();
+    console.log(authentication);
+    signInWithPopup(authentication, provider)
+      .then((data) => {
+        console.log('twitter data', data);
+        setProvider('twitter');
+        setProfile(data);
+        handleSignUpSocial(data, 'twitter');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const triggerLogin = async () => {
+    if (clickedButtonName === 'facebook') {
+
+      if (fbRef.current) {
+        const facebookButton = fbRef.current.querySelector('div'); // or a more specific selector if needed
+        if (facebookButton) {
+          facebookButton.click();
+        }
+      }
+    }
+    if (clickedButtonName === 'google') {
+
+      if (googleRef.current) {
+        const facebookButton = googleRef.current.querySelector('div'); // or a more specific selector if needed
+        if (facebookButton) {
+          facebookButton.click();
+        }
+      }
+    }
+    if (clickedButtonName === 'linkedin') {
+
+      if (linkedInRef.current) {
+        const facebookButton = linkedInRef.current.querySelector('div'); // or a more specific selector if needed
+        if (facebookButton) {
+          facebookButton.click();
+        }
+      }
+    }
+    if (clickedButtonName === 'github') {
+
+      loginWithGithub();
+
+    }
+    if (clickedButtonName === 'twitter') {
+
+      loginWithTwitter();
+
+    }
+
+
+
+  };
   // const { mutateAsync: userSignup } = useMutation({
   //   mutationFn: signUp,
   // });
@@ -113,7 +190,17 @@ export default function Signup() {
     //     handleSignUpGuestSocialBadges(data, provider);
     //   }
     // } else {
-    handleReferralOpen();
+    // handleReferralOpen();
+    if (provider) {
+      if (provider === 'google') {
+        handleSignUpSocialGuest(data);
+      } else {
+        handleSignUpGuestSocialBadges(data, provider);
+      }
+    } else {
+      handleSignup();
+    }
+
     return;
     // }
   };
@@ -177,14 +264,54 @@ export default function Signup() {
     }
   };
 
+
+  const handleSignUpSocialGuest = async (data) => {
+    try {
+      data.uuid = localStorage.getItem('uuid');
+      const res = await api.post(`/user/signUpSocial/guestMode`, data);
+      console.log('new', res);
+      if (res.status === 200) {
+        localStorage.setItem('uuid', res.data.uuid);
+        localStorage.setItem('userData', JSON.stringify(res.data));
+        localStorage.removeItem('isGuestMode');
+        dispatch(addUser(res.data));
+
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+      setIsLoading(false);
+      setIsLoadingSocial(false);
+    }
+  };
+
+  const handleSignUpGuestSocialBadges = async (data, provider) => {
+    try {
+      data.uuid = localStorage.getItem('uuid');
+      data.type = provider;
+      const res = await api.post(`/user/signUpGuest/SocialBadges`, { data, type: provider });
+      if (res.status === 200) {
+        localStorage.setItem('uuid', res.data.uuid);
+        localStorage.setItem('userData', JSON.stringify(res.data));
+        localStorage.removeItem('isGuestMode');
+        dispatch(addUser(res.data));
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+
+      setIsLoading(false);
+      setIsLoadingSocial(false);
+    }
+  };
+
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>
@@ -213,6 +340,12 @@ export default function Signup() {
                     setProfile={setProfile}
                     handleSignUpSocial={handleSignUpSocial}
                     setIsLoadingSocial={setIsLoadingSocial}
+                    handleReferralOpen={handleReferralOpen}
+                    googleRef={googleRef}
+                    fbRef={fbRef}
+                    linkedInRef={linkedInRef}
+                    instaRef={instaRef}
+                    setClickedButtonName={setClickedButtonName}
                   />
                   <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
                     <Button
@@ -267,14 +400,14 @@ export default function Signup() {
           setPassword={setPassword}
           referralCode={referralCode}
           setReferralCode={setReferralCode}
-          setErrorMessage={setErrorMessage}
           handlePopupOpen={handlePopupOpen}
           socialAccount={socialAccount}
           setIsLoadingSocial={setIsLoadingSocial}
+          triggerLogin={triggerLogin}
         />
       </BasicModal>
 
-      <PopUp
+      {/* <PopUp
         open={isPopup}
         handleClose={handlePopupClose}
         logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/popup/googlelogo.svg`}
@@ -282,13 +415,6 @@ export default function Signup() {
       >
         <div className="px-5 py-[14px] tablet:px-[60px] tablet:py-[25px]">
           <p className="text-[9px] font-medium text-black tablet:text-[20px]">{errorMessage}</p>
-          {/* {
-           <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
-              Continue
-            </UiButton> 
-
-            console.log(errorMessage)
-          } */}
           {errorMessage.trim() === 'Email Already Exists' ? (
             <div className="mt-[25px] flex w-full justify-end">
               <UiButton
@@ -330,7 +456,7 @@ export default function Signup() {
             </LoginSocialGoogle>
           )}
         </div>
-      </PopUp>
+      </PopUp> */}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../components/Input';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import { useState } from 'react';
@@ -12,6 +12,13 @@ import { referralModalStyle } from '../../../constants/styles';
 import ReferralCode from '../../../components/ReferralCode';
 import { toast } from 'sonner';
 import showToast from '../../../components/ui/Toast';
+import { LoginSocialGoogle } from 'reactjs-social-login';
+import PopUp from '../../../components/ui/PopUp';
+import { Button as UiButton } from '../../../components/ui/Button';
+import { useNavigate } from 'react-router-dom';
+import api from '../../../services/api/Axios';
+import { addUser } from '../../../features/auth/authSlice';
+
 
 const CredentialRegister = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
@@ -29,6 +36,10 @@ const CredentialRegister = () => {
   const [isLoading, setIsLoading] = useState(false);
   const inputType = showPassword ? 'text' : 'password';
   const cnfmPassInputType = showCnfmPassword ? 'text' : 'password';
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handlePopupClose = () => setIspopup(false);
 
   const handlePopupOpen = () => setIspopup(true);
 
@@ -67,36 +78,25 @@ const CredentialRegister = () => {
     setEmail('');
   };
 
-  const { mutateAsync: guestSignup } = useMutation({
-    mutationFn: signUpGuest,
-  });
-
-  const handleGuestSignup = async () => {
-    setIsLoading(true);
-
+  const handleSignUpSocialGuest = async (data) => {
     try {
-      if (password === reTypePassword) {
-        const resp = await guestSignup({ email, password, uuid: localStorage.getItem('uuid') });
-        console.log(resp);
-        if (resp.status === 200) {
-          showToast('success', 'verificationEmailSent')
+      data.uuid = localStorage.getItem('uuid');
+      const res = await api.post(`/user/signUpSocial/guestMode`, data);
+      console.log('new', res);
+      if (res.status === 200) {
+        localStorage.setItem('uuid', res.data.uuid);
+        localStorage.setItem('userData', JSON.stringify(res.data));
+        localStorage.removeItem('isGuestMode');
+        dispatch(addUser(res.data));
 
-          setEmail('');
-          setPassword('');
-          setIsLoading(false);
-        }
-      } else {
-        showToast('error', 'passwordMismatched')
-        setIsLoading(false);
+        navigate('/dashboard');
       }
-    } catch (e) {
-      setErrorMessage(e.response.data.message.split(':')[1]);
+    } catch (error) {
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       setIsLoading(false);
-    } finally {
-      setIsLoading(false);
+      setIsLoadingSocial(false);
     }
   };
-
   const handleSignup = async () => {
     if (!termConditionCheck) return showToast('warning', 'termsAndConditions')
 
@@ -280,15 +280,71 @@ const CredentialRegister = () => {
           password={password}
           reTypePassword={reTypePassword}
           email={email}
+          setErrorMessage={setErrorMessage}
           setEmail={setEmail}
           setPassword={setPassword}
           referralCode={referralCode}
           setReferralCode={setReferralCode}
-          setErrorMessage={setErrorMessage}
           handlePopupOpen={handlePopupOpen}
-          socialAccount={null}
+          credential={true}
         />
       </BasicModal>
+
+      <PopUp
+        open={isPopup}
+        handleClose={handlePopupClose}
+        logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/popup/googlelogo.svg`}
+        title={'Google Email'}
+      >
+        <div className="px-5 py-[14px] tablet:px-[60px] tablet:py-[25px]">
+          <p className="text-[9px] font-medium text-black tablet:text-[20px]">{errorMessage}</p>
+          {/* {
+           <UiButton variant="submit" className="mt-[10px] tablet:mt-[25px]" onClick={handlePopupClose}>
+              Continue
+            </UiButton> 
+
+            console.log(errorMessage)
+          } */}
+          {errorMessage.trim() === 'Email Already Exists' ? (
+            <div className="mt-[25px] flex w-full justify-end">
+              <UiButton
+                className="mt-[25px] flex w-full justify-end"
+                onClick={() => {
+                  navigate('/signin');
+                }}
+                variant={'submit'}
+              >
+                Login
+              </UiButton>
+            </div>
+          ) : (
+            <LoginSocialGoogle
+              // isOnlyGetToken
+              client_id={import.meta.env.VITE_GG_APP_ID}
+              redirect_uri={window.location.href}
+              scope="openid profile email"
+              iscoveryDocs="claims_supported"
+              // access_type="offline"
+              onResolve={({ provider, data }) => {
+                data['provider'] = provider;
+                handleSignUpSocialGuest(data);
+              }}
+              onReject={(err) => {
+                console.log(err);
+              }}
+              className="mt-[25px] flex w-full justify-end"
+            >
+              <UiButton variant="social-btn">
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
+                  className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] "
+                />{' '}
+                Continue with Google
+              </UiButton>
+            </LoginSocialGoogle>
+          )}
+        </div>
+      </PopUp>
     </>
   );
 };

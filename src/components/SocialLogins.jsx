@@ -7,6 +7,7 @@ import { InstagramLogin } from '@amraneze/react-instagram-login';
 import { LoginSocialLinkedin } from '../pages/Dashboard/pages/Profile/pages/ReactLinkedIn';
 import { LoginSocialFacebook } from '../pages/Dashboard/pages/Profile/pages/ReactFacebook';
 import showToast from './ui/Toast';
+import { useRef } from 'react';
 
 const REDIRECT_URI = window.location.href;
 
@@ -15,100 +16,117 @@ const SocialLogins = ({
   setProfile,
   handleSignUpSocial,
   handleSignInSocial,
-  isLogin,
   setIsLoadingSocial,
+  handleReferralOpen,
+  setClickedButtonName,
+  googleRef,
+  fbRef,
+  linkedInRef,
+  instaRef,
+  isLogin,
+  triggerLogin
 }) => {
-  const persistedTheme = useSelector((state) => state.utils.theme);
+  // const persistedTheme = useSelector((state) => state.utils.theme);
 
-  const loginWithTwitter = () => {
-    const provider = new TwitterAuthProvider();
-    console.log(authentication);
-    signInWithPopup(authentication, provider)
-      .then((data) => {
-        console.log('twitter data', data);
-        setProvider('twitter');
-        setProfile(data);
-        isLogin ? handleSignInSocial(data, 'twitter') : handleSignUpSocial(data, 'twitter');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
-  const loginWithGithub = () => {
-    const provider = new GithubAuthProvider();
-    signInWithPopup(authentication, provider)
-      .then((data) => {
-        console.log('github data', data);
-        setProvider('github');
-        setProfile(data);
-        isLogin ? handleSignInSocial(data, 'github') : handleSignUpSocial(data, 'github');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const loginWithTwitter = () => {
+  //   const provider = new TwitterAuthProvider();
+  //   console.log(authentication);
+  //   signInWithPopup(authentication, provider)
+  //     .then((data) => {
+  //       console.log('twitter data', data);
+  //       setProvider('twitter');
+  //       setProfile(data);
+  //       isLogin ? handleSignInSocial(data, 'twitter') : handleSignUpSocial(data, 'twitter');
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
-  const loginInWithInsta = async (code) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/user/get-insta-token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          clientId: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
-          clientSecret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
-          redirectUri: isLogin
-            ? `${import.meta.env.VITE_CLIENT_URL}/signin`
-            : `${import.meta.env.VITE_CLIENT_URL}/signup`,
-          code: code,
-        }),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log('instagaram data', data);
-        setProvider('instagram');
-        setProfile(data);
-        isLogin ? handleSignInSocial(data, 'instagram') : handleSignUpSocial(data, 'instagram');
-      } else {
-        const data = await response.json();
-        console.error('Error fetching Instagram profile:', data);
-      }
-    } catch (error) {
-      console.log({ error });
-      console.error('Error fetching Instagram profile:', error.message);
-    }
-  };
+  // const loginWithGithub = () => {
+  //   const provider = new GithubAuthProvider();
+  //   signInWithPopup(authentication, provider)
+  //     .then((data) => {
+  //       console.log('github data', data);
+  //       setProvider('github');
+  //       setProfile(data);
+  //       isLogin ? handleSignInSocial(data, 'github') : handleSignUpSocial(data, 'github');
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  // const loginInWithInsta = async (code) => {
+  //   try {
+  //     const response = await fetch(`${import.meta.env.VITE_API_URL}/user/get-insta-token`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         clientId: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
+  //         clientSecret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
+  //         redirectUri: isLogin
+  //           ? `${import.meta.env.VITE_CLIENT_URL}/signin`
+  //           : `${import.meta.env.VITE_CLIENT_URL}/signup`,
+  //         code: code,
+  //       }),
+  //     });
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log('instagaram data', data);
+  //       setProvider('instagram');
+  //       setProfile(data);
+  //       isLogin ? handleSignInSocial(data, 'instagram') : handleSignUpSocial(data, 'instagram');
+  //     } else {
+  //       const data = await response.json();
+  //       console.error('Error fetching Instagram profile:', data);
+  //     }
+  //   } catch (error) {
+  //     console.log({ error });
+  //     console.error('Error fetching Instagram profile:', error.message);
+  //   }
+  // };
+
 
   return (
     <div className="mb-2 flex flex-col gap-2 rounded-[6.043px] 2xl:rounded-[11.703px] laptop:mb-[1.56rem] laptop:justify-between laptop:gap-[1.56rem]">
-      <LoginSocialGoogle
-        // isOnlyGetToken
-        client_id={import.meta.env.VITE_GG_APP_ID}
-        redirect_uri={REDIRECT_URI}
-        scope="openid profile email"
-        iscoveryDocs="claims_supported"
-        // access_type="offline"
-        onResolve={({ provider, data }) => {
-          setProvider(provider);
-          setProfile(data);
-          data['provider'] = provider;
-          isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
-        }}
-        onReject={(err) => {
-          setIsLoadingSocial(false);
-          console.log('err', err);
-        }}
-        className="max-w-auto min-w-[145px] lg:min-w-[305px] "
-      >
+      <div ref={googleRef}>
+        <LoginSocialGoogle
+          // isOnlyGetToken
+          client_id={import.meta.env.VITE_GG_APP_ID}
+          redirect_uri={REDIRECT_URI}
+          scope="openid profile email"
+          iscoveryDocs="claims_supported"
+          // access_type="offline"
+          onResolve={({ provider, data }) => {
+            setProvider(provider);
+            setProfile(data);
+            data['provider'] = provider;
+            isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
+          }}
+          onReject={(err) => {
+            setIsLoadingSocial(false);
+            console.log('err', err);
+          }}
+          className="max-w-auto min-w-[145px] lg:min-w-[305px] "
+        >
+
+        </LoginSocialGoogle>
         <Button
           size="login-btn"
           color="gray"
           onClick={() => {
-            setIsLoadingSocial(true);
+            setClickedButtonName('google');
+            if (isLogin) {
+
+              triggerLogin()
+            } else {
+              handleReferralOpen();
+            }
           }}
-          // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
         >
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
@@ -116,29 +134,38 @@ const SocialLogins = ({
           />
           Google
         </Button>
-      </LoginSocialGoogle>
-      <LoginSocialFacebook
-        // isOnlyGetToken
-        client_id={import.meta.env.VITE_FB_APP_ID}
-        onResolve={({ provider, data }) => {
-          console.log(provider);
-          setProvider(provider);
-          setProfile(data);
-          isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
-        }}
-        redirect_uri={REDIRECT_URI}
-        onReject={(err) => {
-          console.log(err);
-        }}
-        className="max-w-auto min-w-[145px] lg:min-w-[305px] "
-      >
+      </div>
+      <div ref={fbRef}>
+
+        <LoginSocialFacebook
+          // isOnlyGetToken
+          client_id={import.meta.env.VITE_FB_APP_ID}
+          onResolve={({ provider, data }) => {
+            console.log(provider);
+            setProvider(provider);
+            setProfile(data);
+            isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
+          }}
+          redirect_uri={REDIRECT_URI}
+          onReject={(err) => {
+            console.log(err);
+          }}
+          className="max-w-auto min-w-[145px] lg:min-w-[305px] "
+        >
+        </LoginSocialFacebook>
+
         <Button
           size="login-btn"
           color="gray"
           onClick={() => {
-            setIsLoadingSocial(true);
+            setClickedButtonName('facebook');
+            if (isLogin) {
+
+              triggerLogin()
+            } else {
+              handleReferralOpen();
+            }
           }}
-          // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
         >
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/facebook-white.svg`}
@@ -146,8 +173,11 @@ const SocialLogins = ({
           />
           Facebook
         </Button>
-      </LoginSocialFacebook>
-      {/* <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
+
+      </div>
+
+      {/*<div ref={instaRef}>
+       <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <InstagramLogin
           clientId={import.meta.env.VITE_INSTAGRAM_CLIENT_ID}
           onSuccess={(code) => {
@@ -157,21 +187,30 @@ const SocialLogins = ({
           redirectUri={window.location.href}
           cssClass={'hideBack'}
         >
-          <Button size="login-btn" color="gray" className="w-full min-w-[145px] lg:min-w-[305px] ">
+         
+        </InstagramLogin>
+      </div>
+       <Button size="login-btn" color="gray" className="w-full min-w-[145px] lg:min-w-[305px] ">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`}
               className="mr-2 size-[22px] md:size-8 lg:mr-3"
             />
             Instagram
           </Button>
-        </InstagramLogin>
-      </div> */}
+      </div > */}
+
       <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <Button
           size="login-btn"
           color="gray"
           onClick={() => {
-            loginWithTwitter();
+            setClickedButtonName('twitter');
+            if (isLogin) {
+
+              triggerLogin()
+            } else {
+              handleReferralOpen();
+            }
           }}
         >
           <img
@@ -181,30 +220,38 @@ const SocialLogins = ({
           Twitter
         </Button>
       </div>
-      <LoginSocialLinkedin
-        // isOnlyGetToken
-        client_id={import.meta.env.VITE_LINKEDIN_KEY}
-        client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
-        onResolve={({ provider, data }) => {
-          setIsLoadingSocial(false);
-          console.log(provider);
-          setProvider(provider);
-          setProfile(data);
-          isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
-        }}
-        redirect_uri={REDIRECT_URI}
-        // scope="email,openid,profile,w_member_social"
-        onReject={(err) => {
-          console.log('err', err);
-          setIsLoadingSocial(false);
-          showToast('error', 'generalError');
-        }}
-      >
+      <div ref={linkedInRef}>
+        <LoginSocialLinkedin
+          // isOnlyGetToken
+          client_id={import.meta.env.VITE_LINKEDIN_KEY}
+          client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
+          onResolve={({ provider, data }) => {
+            setIsLoadingSocial(false);
+            console.log(provider);
+            setProvider(provider);
+            setProfile(data);
+            isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
+          }}
+          redirect_uri={REDIRECT_URI}
+          // scope="email,openid,profile,w_member_social"
+          onReject={(err) => {
+            console.log('err', err);
+            setIsLoadingSocial(false);
+            showToast('error', 'generalError');
+          }}
+        >
+        </LoginSocialLinkedin>
         <Button
           size="login-btn"
           color="gray"
           onClick={() => {
-            setIsLoadingSocial(true);
+            setClickedButtonName('linkedin');
+            if (isLogin) {
+
+              triggerLogin()
+            } else {
+              handleReferralOpen();
+            }
           }}
         >
           <img
@@ -214,13 +261,19 @@ const SocialLogins = ({
           />
           LinkedIn
         </Button>
-      </LoginSocialLinkedin>
+      </div>
       <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <Button
           size="login-btn"
           color="gray"
           onClick={() => {
-            loginWithGithub();
+            setClickedButtonName('github');
+            if (isLogin) {
+
+              triggerLogin()
+            } else {
+              handleReferralOpen();
+            }
           }}
         >
           <img
