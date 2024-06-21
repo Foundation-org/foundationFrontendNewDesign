@@ -3,18 +3,18 @@ import { Link } from 'react-router-dom';
 const SummarySidebar = ({ userData }) => {
   const yourPosts = [
     { id: 1, title: 'Posts you’ve created', val: (userData && userData?.questsCreated) || 0 },
-    { id: 2, title: 'Engagement with your posts', val: (userData && userData?.yourPostEngaged) || 0 },
+    { id: 2, title: 'Engagements with your posts', val: (userData && userData?.yourPostEngaged) || 0 },
     { id: 3, title: 'Objections received', val: (userData && userData?.contentionsOnAddedAns) || 0 },
     { id: 4, title: 'Agreements received', val: (userData && userData?.selectionsOnAddedAns) || 0 },
-    { id: 5, title: 'Number of posts hidden', val: (userData && userData?.yourHiddenPostCounter) || 0 },
+    { id: 5, title: 'My posts hidden by users', val: (userData && userData?.yourHiddenPostCounter) || 0 },
   ];
 
   const othersPosts = [
     { id: 1, title: 'Posts you’ve engaged with', val: (userData && userData?.selectionsOnAddedAns) || 0 },
     { id: 2, title: 'Options added', val: (userData && userData?.addedAnswers) || 0 },
-    { id: 3, title: 'Change of answers', val: (userData && userData?.changedAnswers) || 0 },
+    { id: 3, title: 'Changing my option', val: (userData && userData?.changedAnswers) || 0 },
     { id: 4, title: 'Objections given', val: (userData && userData?.contentionsGiven) || 0 },
-    { id: 5, title: 'Hidden posts', val: (userData && userData?.violationCounter) || 0 },
+    { id: 5, title: 'Posts I have hidden', val: (userData && userData?.violationCounter) || 0 },
   ];
 
   return (

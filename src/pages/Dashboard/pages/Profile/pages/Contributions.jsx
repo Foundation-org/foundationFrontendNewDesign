@@ -4,102 +4,19 @@ import { Link } from 'react-router-dom';
 
 const Contributions = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  // const persistedTheme = useSelector((state) => state.utils.theme);
-
-  // const list = [
-  //   {
-  //     id: 1,
-  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon1.svg`,
-  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon11.svg`,
-  //     alt: 'icon1',
-  //     title: 'Posts-Created',
-  //     value: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0,
-  //   },
-  //   {
-  //     id: 2,
-  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon2.svg`,
-  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon12.svg`,
-  //     alt: 'icon1',
-  //     title: 'Posts-Engaged',
-  //     value: (persistedUserInfo && persistedUserInfo?.yourPostEngaged) || 0,
-  //   },
-  //   {
-  //     id: 3,
-  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/your-post-engaged.svg`,
-  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/your-post-engaged.svg`,
-  //     alt: 'your-post-engaged',
-  //     title: 'Your Posts-Engaged',
-  //     value: (persistedUserInfo && persistedUserInfo?.usersAnswered) || 0,
-  //   },
-  //   {
-  //     id: 4,
-  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon5.svg`,
-  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon15.svg`,
-  //     alt: 'icon1',
-  //     title: 'Selections-Changed',
-  //     value: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0,
-  //   },
-  //   {
-  //     id: 5,
-  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/couter-eye.svg`,
-  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/couter-eye.svg`,
-  //     alt: 'icon5',
-  //     title: 'Your Posts-Hidden',
-  //     value: (persistedUserInfo && persistedUserInfo?.yourHiddenPostCounter) || 0,
-  //   },
-  //   {
-  //     id: 6,
-  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon6.svg`,
-  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon16.svg`,
-  //     alt: 'icon1',
-  //     title: 'Options-Added',
-  //     value: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0,
-  //   },
-  //   {
-  //     id: 7,
-  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon7.svg`,
-  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon17.svg`,
-  //     alt: 'icon1',
-  //     title: 'Agreement-Received',
-  //     value: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0,
-  //   },
-  //   {
-  //     id: 8,
-  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon8.svg`,
-  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon18.svg`,
-  //     alt: 'icon1',
-  //     title: 'Objections-Received',
-  //     value: (persistedUserInfo && persistedUserInfo?.contentionsOnAddedAns) || 0,
-  //   },
-  //   {
-  //     id: 9,
-  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon9.svg`,
-  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon19.svg`,
-  //     alt: 'icon1',
-  //     title: 'Objections-Given',
-  //     value: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0,
-  //   },
-  //   {
-  //     id: 10,
-  //     icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/last.svg`,
-  //     iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon20.svg`,
-  //     alt: 'icon1',
-  //     title: 'Code of-Conduct Fails',
-  //     value: (persistedUserInfo && persistedUserInfo?.violationCounter) || 0,
-  //   },
-  // ];
-
-  // const firstHalf = list.slice(0, Math.ceil(list.length / 2));
-  // const secondHalf = list.slice(Math.ceil(list.length / 2));
 
   const yourPosts = [
     { id: 1, title: 'Posts you’ve created', val: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0 },
-    { id: 2, title: 'Engagement with your posts', val: (persistedUserInfo && persistedUserInfo?.yourPostEngaged) || 0 },
+    {
+      id: 2,
+      title: 'Engagements with your posts',
+      val: (persistedUserInfo && persistedUserInfo?.yourPostEngaged) || 0,
+    },
     { id: 3, title: 'Objections received', val: (persistedUserInfo && persistedUserInfo?.contentionsOnAddedAns) || 0 },
     { id: 4, title: 'Agreements received', val: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0 },
     {
       id: 5,
-      title: 'Number of posts hidden',
+      title: 'My posts hidden by users',
       val: (persistedUserInfo && persistedUserInfo?.yourHiddenPostCounter) || 0,
     },
   ];
@@ -111,9 +28,9 @@ const Contributions = () => {
       val: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0,
     },
     { id: 2, title: 'Options added', val: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0 },
-    { id: 3, title: 'Change of answers', val: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0 },
+    { id: 3, title: 'Changing my option', val: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0 },
     { id: 4, title: 'Objections given', val: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0 },
-    { id: 5, title: 'Hidden posts', val: (persistedUserInfo && persistedUserInfo?.violationCounter) || 0 },
+    { id: 5, title: 'Posts I have hidden', val: (persistedUserInfo && persistedUserInfo?.violationCounter) || 0 },
   ];
 
   return (
@@ -137,13 +54,13 @@ const Contributions = () => {
           <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-5">
             <div className="max-w-28 border-r border-[#707175] pr-6 tablet:max-w-full">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Posts you’ve created
+                Posts you've created
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">{persistedUserInfo?.questsCreated}</h5>
             </div>
             <div className="max-w-24 tablet:max-w-full">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Number of engagements
+                Engagements with your posts
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">
                 {persistedUserInfo?.yourPostEngaged}

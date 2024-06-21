@@ -76,13 +76,13 @@ const Summary = () => {
           <div className="mt-3 flex items-center justify-center gap-6 tablet:mt-5">
             <div className="max-w-28 border-r border-[#707175] pr-6 tablet:max-w-full">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Posts you’ve created
+                Posts you've created
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">{persistedUserInfo?.questsCreated}</h5>
             </div>
             <div className="max-w-24 tablet:max-w-full">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Number of engagements
+                Engagements with your posts
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">
                 {persistedUserInfo?.yourPostEngaged}

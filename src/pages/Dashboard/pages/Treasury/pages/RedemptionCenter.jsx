@@ -232,14 +232,12 @@ export default function RedemptionCenter() {
     <div className="mx-auto mb-4 flex max-w-[778px] flex-col gap-3 px-4 tablet:mb-8 tablet:gap-6 tablet:px-6">
       {/* Create */}
       <div>
-        <div
-          className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]"
-        >
+        <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/redemption-code-activity.svg`}
               alt={'redemption-code-activity'}
-              className="size-[15px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
+              className="h-[18.5px] w-[15px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
               Create Redemption Code

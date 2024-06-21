@@ -131,7 +131,7 @@ const TreasurySummary = () => {
               1 FDX
             </p>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              $ {persistedConstants?.FDX_CONVERSION_RATE_WRT_USD} USD
+              ${persistedConstants?.FDX_CONVERSION_RATE_WRT_USD} USD
             </p>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mt-5 ">

@@ -139,7 +139,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
             />
           </svg>
         </div>
-        <p className="text-[12px] font-bold text-white tablet:text-[20px] tablet:font-medium">Copy Link</p>
+        <p className="text-[12px] font-bold text-white tablet:text-[20px] tablet:font-medium">Share Post</p>
         <div
           className="absolute right-[12px] top-1/2 -translate-y-1/2 cursor-pointer tablet:right-[26px]"
           onClick={handleClose}
@@ -182,7 +182,9 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
       <div className="flex flex-col justify-center py-[15px] tablet:py-[25px]">
         <div className="px-[20px] laptop:px-[80px]">
           <p className="mb-[0.48rem] text-[10px] font-semibold text-[#5B5B5B] tablet:mb-[15px] tablet:text-[22px]">
-            {createCustom ? 'Custom Link Address' : 'Copy Post Address'}
+            {createCustom
+              ? 'Custom Link Address'
+              : 'Copy the link below to share this post on other platforms. When other people engage with your shared posts, you will earn FDX. '}
           </p>
           <div className="flex rounded-[9.42px] border border-[#DEE6F7] tablet:rounded-[15px] tablet:border-[3px]">
             {createCustom ? (
