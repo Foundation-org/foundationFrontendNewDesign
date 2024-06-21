@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import CreateSlider from './components/CreateSlider';
 
@@ -6,7 +6,7 @@ const Quest = () => {
   const location = useLocation();
   const scrollRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo(0, 0);
     }

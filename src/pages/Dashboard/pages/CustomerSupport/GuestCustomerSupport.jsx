@@ -4,7 +4,7 @@ import Topbar from '../../components/Topbar';
 import DashboardLayout from '../../components/DashboardLayout';
 import { createGuestMode } from '../../../../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../../../features/auth/authSlice';
@@ -44,7 +44,7 @@ const GuestCustomerSupport = () => {
     }
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo(0, 0);
     }

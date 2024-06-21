@@ -1,14 +1,14 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/Breadcrumb';
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 const CustomerSupport = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const scrollRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo(0, 0);
     }
