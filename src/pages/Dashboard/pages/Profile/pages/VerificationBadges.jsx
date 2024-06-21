@@ -315,7 +315,7 @@ const VerificationBadges = () => {
           </h1>
         </div>
         <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
-          {persistedUserInfo.badges.length}/20
+          {persistedUserInfo.badges.length}/{badgesTotalLength}
         </h1>
       </div>
       <div

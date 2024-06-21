@@ -255,3 +255,4 @@ export const personal = [
 ];
 
 export const badgesTotalLength = contacts.length + socials.length + web3.length + legacy.length + personal.length;
+console.log('first', badgesTotalLength);
