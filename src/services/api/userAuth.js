@@ -91,14 +91,16 @@ export const changePassword = async (params) => {
 };
 
 export const getAllLedgerData = async (page, limit, sort) => {
+  const uuid = localStorage.getItem('uuid');
   return await api.get('/ledger/ledgerById', {
-    params: { page, limit, sort },
+    params: { page, limit, sort, uuid },
   });
 };
 
 export const getAllRadeemLedgerData = async (page, limit, sort) => {
+  const uuid = localStorage.getItem('uuid');
   return await api.get('/ledger/ledgerById', {
-    params: { page, limit, sort, txAuth: 'DAO' },
+    params: { page, limit, sort, txAuth: 'DAO', uuid },
   });
 };
 
