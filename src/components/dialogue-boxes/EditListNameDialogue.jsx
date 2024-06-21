@@ -1,13 +1,14 @@
 import PopUp from '../ui/PopUp';
 import { toast } from 'sonner';
 import { Button } from '../ui/Button';
-// import { FaSpinner } from 'react-icons/fa';
+import { FaSpinner } from 'react-icons/fa';
 import { deleteList, updateCategoryName } from '../../services/api/listsApi';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TextareaAutosize } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import showToast from '../ui/Toast'
+import showToast from '../ui/Toast';
+
 export default function EditListNameDialogue({ handleClose, modalVisible, title, image, categoryId, listData }) {
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -17,7 +18,7 @@ export default function EditListNameDialogue({ handleClose, modalVisible, title,
     setCategoryName(listData);
   }, [listData]);
 
-  const { mutateAsync: handleChangeCategoryName } = useMutation({
+  const { mutateAsync: handleChangeCategoryName, isPending } = useMutation({
     mutationFn: updateCategoryName,
     onSuccess: (resp) => {
       console.log('resp', resp);
@@ -27,7 +28,7 @@ export default function EditListNameDialogue({ handleClose, modalVisible, title,
       //   toast.warning('Something goes wrong.');
       //   return;
       // }
-      showToast('success', 'listNameUpdate')
+      showToast('success', 'listNameUpdate');
 
       // queryClient.setQueriesData(['lists'], (oldData) => {
       //   console.log('old', oldData);
@@ -68,6 +69,7 @@ export default function EditListNameDialogue({ handleClose, modalVisible, title,
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
           <Button
             variant={'submit'}
+            disabled={isPending}
             onClick={() => {
               handleChangeCategoryName({
                 userUuid: persistedUserInfo.uuid,
@@ -76,8 +78,7 @@ export default function EditListNameDialogue({ handleClose, modalVisible, title,
               });
             }}
           >
-            Save
-            {/* {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Yes'} */}
+            {isPending === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : ' Save'}
           </Button>
           <Button variant={'cancel'} onClick={handleClose}>
             Cancel

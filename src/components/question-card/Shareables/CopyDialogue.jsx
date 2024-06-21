@@ -209,7 +209,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
               </div>
             ) : (
               <div className="flex w-full items-center rounded-l-[9.42px] pl-[9.43px] pr-[1.58rem] tablet:pl-4 laptop:rounded-l-[26px] laptop:pr-[70px]">
-                <p className="w-[48vw] truncate text-[9.42px] font-normal leading-[9.42px] text-[#435059] tablet:text-[26px] tablet:leading-[30px] laptop:w-[32.7vw] desktop:w-[32rem]">
+                <p className="w-[48vw] truncate text-[9.42px] font-normal leading-normal text-[#435059] tablet:text-[26px] tablet:leading-[30px] laptop:w-[32.7vw] desktop:w-[32rem]">
                   {isLoading ? <p className="italic">Generating link..</p> : url + postLink}
                 </p>
               </div>
