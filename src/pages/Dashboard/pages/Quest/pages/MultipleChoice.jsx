@@ -156,6 +156,8 @@ const MultipleChoice = () => {
   };
 
   const answerVerification = async (id, index, value, extra) => {
+    if (value === '') return;
+
     if (extra) {
       if (extra === value) return;
     }

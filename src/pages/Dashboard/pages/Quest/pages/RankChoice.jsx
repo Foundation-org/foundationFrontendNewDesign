@@ -17,7 +17,11 @@ import * as pictureMediaAction from '../../../../../features/createQuest/picture
 import * as questServices from '../../../../../services/api/questsApi';
 import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../components/ui/Toast';
-import { POST_MAX_OPTION_LIMIT, POST_OPTIONS_CHAR_LIMIT, RANKED_CHOICE_MIN_OPTION_LIMIT } from '../../../../../constants/Values/constants';
+import {
+  POST_MAX_OPTION_LIMIT,
+  POST_OPTIONS_CHAR_LIMIT,
+  RANKED_CHOICE_MIN_OPTION_LIMIT,
+} from '../../../../../constants/Values/constants';
 import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 
@@ -45,8 +49,10 @@ const RankChoice = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
-          if (filterStates?.moderationRatingFilter?.initial === 0 &&
-            filterStates?.moderationRatingFilter?.final === 0) {
+          if (
+            filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0
+          ) {
             dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           }
           navigate('/dashboard');
@@ -90,7 +96,7 @@ const RankChoice = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return showToast('warning', 'emptyPost')
+      return showToast('warning', 'emptyPost');
     }
 
     // getTopicOfValidatedQuestion
@@ -99,7 +105,7 @@ const RankChoice = () => {
     });
     // If any error captured
     if (errorMessage) {
-      return showToast('error', 'somethingWrong')
+      return showToast('error', 'somethingWrong');
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
@@ -107,16 +113,15 @@ const RankChoice = () => {
     });
     // If found null
     if (!moderationRating) {
-      return showToast('error', 'somethingWrong')
+      return showToast('error', 'somethingWrong');
     }
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return showToast('warning', 'emptyPostDescription')
+      return showToast('warning', 'emptyPostDescription');
     }
 
     if (optionsValue.length <= RANKED_CHOICE_MIN_OPTION_LIMIT) {
       setLoading(false);
-      return showToast('warning', 'minOptionLimitRanked')
-
+      return showToast('warning', 'minOptionLimitRanked');
     }
 
     const params = {
@@ -136,7 +141,7 @@ const RankChoice = () => {
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
 
     if (isEmptyAnswer) {
-      return showToast('warning', 'emptyOption')
+      return showToast('warning', 'emptyOption');
     }
     if (!checkHollow()) {
       createQuest(params);
@@ -150,6 +155,8 @@ const RankChoice = () => {
   };
 
   const answerVerification = async (id, index, value, extra) => {
+    if (value === '') return;
+
     if (extra) {
       if (extra === value) return;
     }
@@ -373,7 +380,7 @@ const RankChoice = () => {
           if (optionsValue.length < POST_MAX_OPTION_LIMIT) {
             addNewOption();
           } else {
-            return showToast('warning', 'optionLimit')
+            return showToast('warning', 'optionLimit');
           }
         }}
       >
