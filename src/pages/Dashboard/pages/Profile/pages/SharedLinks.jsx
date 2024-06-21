@@ -147,7 +147,7 @@ export default function SharedLinks() {
           </div>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-          <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+          <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Sharing posts is a great way to earn FDX - especially if people engage with them.
           </h1>
           <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">

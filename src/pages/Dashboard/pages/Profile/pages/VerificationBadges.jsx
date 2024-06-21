@@ -278,7 +278,7 @@ const VerificationBadges = () => {
           </h1>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
-          <h1 className="text-[12px] font-medium leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+          <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Have your data be more desirable for brands and research firms to purchase with more verified info and earn
             more FDX while you’re at it!
           </h1>
