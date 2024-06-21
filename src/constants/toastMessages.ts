@@ -98,5 +98,5 @@ export const toastMessages = {
   verifyCode: 'Please Open the verification Page from the email',
   termsAndConditions: 'Please accept the terms and conditions to continue!',
   emailVerified: 'Email verified successfully.',
-  emptyPostList: 'You cannot save without selecting a post!'
+  emptyPostList: 'You cannot save without selecting a list!'
 } as const;
