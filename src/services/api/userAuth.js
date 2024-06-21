@@ -125,7 +125,7 @@ export const searchLedger = async (uuid, page, limit, sort, term) => {
 
 export const searchRedemptionLedger = async (page, limit, sort, term, uuid) => {
   return await api.post('/ledger/searchLedger', {
-    params: { page, limit, sort, term, type: 'redemption', uuid },
+    params: { page, limit, sort, term, txAuth: 'DAO', uuid },
   });
 };
 
