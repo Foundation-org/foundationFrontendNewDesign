@@ -27,7 +27,7 @@ const Topbar = () => {
                 }}
               >
                 <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/${location.pathname === '/dashboard' ? 'home-filled.svg' : 'icon_home.png'}`}
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/${location.pathname === '/dashboard' ? 'home-filled.svg' : 'home.svg'}`}
                   alt="foundation_logo"
                   className="size-5 tablet:size-8"
                 />

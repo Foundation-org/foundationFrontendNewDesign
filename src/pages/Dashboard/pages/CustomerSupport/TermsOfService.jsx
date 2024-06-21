@@ -29,7 +29,7 @@ const TermOfService = () => {
           you agree not to sue us unless we do something really bad on purpose.
         </p>
       </div>
-      <ul className="mt-[5px] list-decimal space-y-[0.63rem] px-8 text-[#707175] tablet:mt-[15px] tablet:space-y-2 tablet:px-16">
+      <ul className="mt-[10px] list-decimal space-y-[0.63rem] px-8 text-[#707175] tablet:mt-[10px] tablet:space-y-2 tablet:px-16">
         {termsAndConditionsArray.map((section, index) => (
           <li key={index}>
             <h3 className="text-[0.75rem] font-bold leading-[0.875rem] tablet:text-[1.125rem] tablet:leading-[148%]">
