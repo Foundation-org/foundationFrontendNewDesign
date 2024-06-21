@@ -134,7 +134,7 @@ const SocialLogins = ({
           Google
         </Button>
       </div>
-      <div ref={fbRef}>
+      {/* <div ref={fbRef}>
 
         <LoginSocialFacebook
           // isOnlyGetToken
@@ -173,7 +173,7 @@ const SocialLogins = ({
           Facebook
         </Button>
 
-      </div>
+      </div> */}
 
       {/*<div ref={instaRef}>
        <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
