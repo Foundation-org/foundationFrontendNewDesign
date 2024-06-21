@@ -213,24 +213,34 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
               </div>
             </div>
             <div className="mt-[10px] flex justify-end gap-4 tablet:mt-[25px]">
-              <Button
-                variant={'submit'}
-                className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
-                onClick={() => {
-                  if (selectedOption.length === 0) {
-                    showToast('warning', 'emptyPostList')
-                  } else {
+              {selectedOption.length !== 0 ?
+
+                <Button
+                  variant={'submit'}
+                  className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
+                  onClick={() => {
+
 
                     addPostInList({
                       userUuid: persistedUserInfo.uuid,
                       categoryIdArray: selectedOption,
                       questForeginKey: questStartData._id,
                     });
-                  }
-                }}
-              >
-                {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
-              </Button>
+
+                  }}
+                >
+                  {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
+                </Button> :
+                <Button variant="hollow-submit" className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
+                  onClick={() => {
+
+                    showToast('warning', 'emptyPostList')
+
+
+                  }}>
+                  Save
+                </Button>
+              }
             </div>
           </>
         )}

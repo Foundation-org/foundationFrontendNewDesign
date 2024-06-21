@@ -24,7 +24,7 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
   const [searchPost, setSearchPost] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState('');
-
+  const [hollow, setHollow] = useState(true);
   // const {
   //   data: listData,
   //   isError,
@@ -125,17 +125,12 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
     handleSearchPost();
   }, [searchPost]);
 
-  useEffect(() => {
-    if (searchPost === '') {
-      setSelectedPostId('');
-    }
-  }, [searchPost]);
 
   useEffect(() => {
-    console.log('selectedItem', selectedItem);
     if (selectedItem?.post.length > 0) {
       selectedItem.post.map((item) => {
         if (item.questForeginKey._id === selectedPostId) {
+          setHollow(true);
           showToast('error', 'postAlreadyinList');
           return;
         }
@@ -143,17 +138,9 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
     }
   }, [selectedPostId]);
 
-  const handleAddPost = async () => {
-    if (selectedItem?.post.length > 0) {
-      const postAlreadyInList = selectedItem.post.some((item) => {
-        return item.questForeginKey._id === selectedPostId;
-      });
 
-      if (postAlreadyInList) {
-        showToast('error', 'postAlreadyinList');
-        return;
-      }
-    }
+
+  const handleAddPost = async () => {
 
     addPostInList({
       userUuid: persistedUserInfo.uuid,
@@ -204,7 +191,12 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
                   )}
                 </div> */}
               <TextareaAutosize
-                onChange={(e) => setSearchPost(e.target.value)}
+                onChange={(e) => {
+                  setSelectedPostId('');
+                  setSearchPost(e.target.value)
+                  setHollow(true);
+                }
+                }
                 value={searchPost}
                 placeholder="Search Post"
                 className={`${selectedPostId === '' && searchPost !== '' ? 'border-b border-[#DEE6F7] tablet:border-b-[3px]' : ''
@@ -223,6 +215,7 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
                         setSearchPost(item.Question);
                         setSelectedPostId(item._id);
                         setSearchResult([]);
+                        setHollow(false);
                       }}
                     >
                       {item.Question}
@@ -233,14 +226,21 @@ export default function ManagePostInListPopup({ handleClose, modalVisible, title
           </div>
         </div>
         <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-[25px] tablet:gap-[34px]">
-          <Button
-            variant={'submit'}
-            onClick={() => {
-              handleAddPost();
-            }}
-          >
-            {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
-          </Button>
+          {!hollow ?
+            <Button
+              variant={'submit'}
+              onClick={() => {
+                handleAddPost();
+              }}
+            >
+              {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
+            </Button> :
+            <Button
+              variant={'hollow-submit'}
+              disabled={true}
+            >
+              {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
+            </Button>}
           <Button variant={'cancel'} onClick={handleClose}>
             Cancel
           </Button>

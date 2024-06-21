@@ -74,9 +74,11 @@ export default function Signin() {
       });
   }
 
-  const triggerLogin = async () => {
-    console.log(clickedButtonName);
-    if (clickedButtonName === 'facebook') {
+  const triggerLogin = async (value) => {
+    if (!value) {
+      value = clickedButtonName
+    }
+    if (value === 'facebook') {
 
       if (fbRef.current) {
         const facebookButton = fbRef.current.querySelector('div'); // or a more specific selector if needed
@@ -85,7 +87,7 @@ export default function Signin() {
         }
       }
     }
-    if (clickedButtonName === 'google') {
+    if (value === 'google') {
 
       if (googleRef.current) {
         const facebookButton = googleRef.current.querySelector('div'); // or a more specific selector if needed
@@ -94,7 +96,7 @@ export default function Signin() {
         }
       }
     }
-    if (clickedButtonName === 'linkedin') {
+    if (value === 'linkedin') {
 
       if (linkedInRef.current) {
         const facebookButton = linkedInRef.current.querySelector('div'); // or a more specific selector if needed
@@ -103,12 +105,12 @@ export default function Signin() {
         }
       }
     }
-    if (clickedButtonName === 'github') {
+    if (value === 'github') {
 
       loginWithGithub();
 
     }
-    if (clickedButtonName === 'twitter') {
+    if (value === 'twitter') {
 
       loginWithTwitter();
 
