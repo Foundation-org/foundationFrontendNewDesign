@@ -3,6 +3,7 @@ import { GrClose } from 'react-icons/gr';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../../components/ui/Button';
+import * as questUtilsActions from '../../../features/quest/utilsSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDebounce } from '../../../utils/useDebounce';
 import { addUser } from '../../../features/auth/authSlice';
@@ -15,7 +16,7 @@ import SidebarLeft from './SidebarLeft';
 import api from '../../../services/api/Axios';
 import PopUp from '../../../components/ui/PopUp';
 import SideNavbar from '../../../components/SideNavbar';
-import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId } from '../../../features/quest/utilsSlice';
+import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, setAreHiddenPosts } from '../../../features/quest/utilsSlice';
 import MediaControls from '../../../components/MediaControls';
 import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
 import { saveConstants } from '../../../features/constants/constantsSlice';
@@ -26,6 +27,7 @@ export default function DashboardLayout({ children }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
   const getSharedLinksFilters = useSelector(sharedLinksFilters);
@@ -35,6 +37,8 @@ export default function DashboardLayout({ children }) {
   const [sharedlinkSearch, setSharedlinkSearch] = useState('');
   const [feedbackSearch, setFeedbackSearch] = useState('');
   const questUtilsState = useSelector(getQuestUtils);
+  const questUtils = useSelector(questUtilsActions.getQuestUtils);
+
   const { data: constants, error: constantsError } = useQuery({
     queryKey: ['constants'],
     queryFn: getConstants,
@@ -438,7 +442,7 @@ export default function DashboardLayout({ children }) {
           {/* {canAddPost !== 'true' && location.pathname.startsWith('/dashboard/profile/postsbylist/') && <ManageList />} */}
 
           {/* HiddenPost Search */}
-          {location.pathname === '/dashboard/profile/hidden-posts' && (
+          {location.pathname === '/dashboard/profile/hidden-posts' && questUtils.areHiddenPosts && (
             <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
@@ -479,7 +483,7 @@ export default function DashboardLayout({ children }) {
           )}
 
           {/* SharedLinks Search */}
-          {location.pathname === '/dashboard/profile/shared-links' && (
+          {location.pathname === '/dashboard/profile/shared-links' && questUtils.areShareLinks && (
             <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
@@ -520,7 +524,7 @@ export default function DashboardLayout({ children }) {
           )}
 
           {/* Feedback Search */}
-          {location.pathname === '/dashboard/profile/feedback' && (
+          {location.pathname === '/dashboard/profile/feedback' && questUtils.areFeedBackPosts && (
             <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">

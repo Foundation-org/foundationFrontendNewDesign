@@ -23,6 +23,9 @@ const initialState = {
   adultFilterPopup: {
     rating: 0,
   },
+  areHiddenPosts: false,
+  areShareLinks: false,
+  areFeedBackPosts: false
 };
 
 export const utilsSlice = createSlice({
@@ -106,6 +109,15 @@ export const utilsSlice = createSlice({
     addAdultFilterPopup: (state, action) => {
       state.adultFilterPopup.rating = action.payload.rating;
     },
+    setAreHiddenPosts: (state, action) => {
+      state.areHiddenPosts = action.payload
+    },
+    setAreShareLinks: (state, action) => {
+      state.areShareLinks = action.payload
+    },
+    setAreFeedbackPosts: (state, action) => {
+      state.areFeedBackPosts = action.payload
+    }
   },
 });
 
@@ -129,6 +141,9 @@ export const {
   toggleLoop,
   resetPlayingIds,
   addAdultFilterPopup,
+  setAreHiddenPosts,
+  setAreShareLinks,
+  setAreFeedbackPosts
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;
