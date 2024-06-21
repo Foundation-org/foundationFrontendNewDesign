@@ -24,8 +24,9 @@ const ReferralCode = ({
   setReferralCode,
   handlePopupOpen,
   setErrorMessage,
-  socialAccount,
   setIsLoadingSocial,
+  triggerLogin,
+  credential
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,29 +35,35 @@ const ReferralCode = ({
     setReferralCode(e.target.value);
   };
 
-  const { mutateAsync: userSignup } = useMutation({
+  const { mutateAsync: guestSignup } = useMutation({
     mutationFn: signUpGuest,
   });
 
-  const handleSignup = async () => {
+  const handleGuestSignup = async () => {
     setIsLoading(true);
 
     try {
       if (password === reTypePassword) {
-        const resp = await userSignup({ email, password, uuid: localStorage.getItem('uuid') });
-
+        const resp = await guestSignup({ email, password, uuid: localStorage.getItem('uuid') });
+        console.log(resp);
         if (resp.status === 200) {
-          showToast('success', 'verificationEmailSent');
+          showToast('success', 'verificationEmailSent')
+
           setEmail('');
           setPassword('');
+          setIsLoading(false);
         }
       } else {
-        showToast('error', 'passwordMismatched');
+        showToast('error', 'passwordMismatched')
+        setIsLoading(false);
       }
     } catch (e) {
-      // setErrorMessage(e.response.data.message.split(':')[1]);
-      showToast('error', {}, e.response.data.message.split(':')[1]);
-      handlePopupOpen();
+      setErrorMessage(e.response.data.message.split(':')[1]);
+      console.log(e.response.data.message.split(':')[1], e.response.data.message.split(':')[1] === 'Email Already Exists');
+      if (e.response.data.message.split(':')[1].trim() === 'Email Already Exists' || e.response.data.message.split(':')[1].includes('We have detected that this is a Google hosted e-mail')) {
+        handlePopupOpen();
+      }
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
@@ -139,24 +146,13 @@ const ReferralCode = ({
       showToast('success', 'referalVerified');
       setRefLoading(false);
       handleClose();
-      // if (socialAccount?.type) {
-      //   if (socialAccount?.type === 'google') {
-      //     handleSocialSignup();
-      //   } else {
-      //     handleSocialBadgesSignUp();
-      //   }
-      // } else {
-      //   handleSignup();
-      // }
-      if (socialAccount?.type) {
-        if (socialAccount?.type === 'google') {
-          handleSignUpSocialGuest(socialAccount?.data);
-        } else {
-          handleSignUpGuestSocialBadges(socialAccount?.data, socialAccount?.type);
-        }
+      if (!credential) {
+        triggerLogin();
+
       } else {
-        handleSignup();
+        handleGuestSignup();
       }
+
     },
     onError: (err) => {
       console.log(err);
