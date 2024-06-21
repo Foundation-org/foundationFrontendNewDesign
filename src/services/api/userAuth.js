@@ -117,9 +117,9 @@ export const setBookmarkFilterStates = async (state) => {
   return await api.post('/user/setBookmarkStates', state);
 };
 
-export const searchLedger = async (page, limit, sort, term) => {
+export const searchLedger = async (uuid, page, limit, sort, term) => {
   return await api.post('/ledger/searchLedger', {
-    params: { page, limit, sort, term },
+    params: { uuid, page, limit, sort, term },
   });
 };
 

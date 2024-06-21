@@ -51,7 +51,8 @@ export default function BasicTable() {
 
   const findingLedger = async () => {
     try {
-      const data = await searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
+      const uuid = localStorage.getItem('uuid');
+      const data = await searchLedger(uuid, currentPage, itemsPerPage, sort, debouncedSearch);
       if (data) {
         setLedgerData(data);
       }
