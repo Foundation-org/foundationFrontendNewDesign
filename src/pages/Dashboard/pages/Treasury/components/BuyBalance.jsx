@@ -89,7 +89,7 @@ const BuyBalance = ({ triggerPulse }) => {
           <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             Need more FDX?
           </h1>
-          <p className="mt-3 text-[9px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:font-medium tablet:leading-normal">
+          <p className="mt-[10px] text-[9px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:font-medium tablet:leading-normal">
             You can purchase more FDX from the Foundation treasury.
           </p>
           <div className="mt-3 flex flex-col items-center justify-center gap-[6px] tablet:mt-5 tablet:gap-3">
@@ -123,7 +123,7 @@ const BuyBalance = ({ triggerPulse }) => {
               />
             </div>
           </div>
-          <div className="my-[15px] flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
+          <div className="mt-3 flex w-full justify-center tablet:mb-2 tablet:mt-6 ">
             <Button variant={'submit'} onClick={handleCreate}>
               Buy More FDX
             </Button>

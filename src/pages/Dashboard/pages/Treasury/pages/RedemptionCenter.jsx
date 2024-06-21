@@ -244,7 +244,7 @@ export default function RedemptionCenter() {
             </h1>
           </div>
         </div>
-        <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
+        <div className="flex flex-col gap-3 rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
           <input
             type="text"
             value={description}
@@ -322,7 +322,7 @@ export default function RedemptionCenter() {
             </h1>
           </div>
         </div>
-        <div className="flex flex-col gap-[5px] rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
+        <div className="flex flex-col gap-3 rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:gap-[15px] tablet:border-[1.85px] tablet:px-12 tablet:py-[18.73px]">
           <p className="text-[7.5px] font-normal leading-normal text-[#85898C] tablet:text-[14.7px]">
             You can add redemption code and earn reworded coins
           </p>
