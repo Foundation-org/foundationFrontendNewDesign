@@ -311,7 +311,7 @@ const VerificationBadges = () => {
             </div>
           )}
           <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-            Verification badge score
+            Verification Badge Score
           </h1>{' '}
         </div>
         <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
