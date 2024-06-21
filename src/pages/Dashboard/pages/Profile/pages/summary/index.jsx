@@ -38,7 +38,7 @@ const Summary = () => {
               </div>
             )}
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-              Verification badge score
+              Verification Badge Score
             </h1>{' '}
           </div>
           <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
@@ -124,7 +124,7 @@ const Summary = () => {
               alt={'badge'}
               className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
             />
-            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Post feedback</h1>
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Post Feedback</h1>
           </div>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
@@ -167,7 +167,7 @@ const Summary = () => {
               alt={'badge'}
               className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
             />
-            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Shared posts</h1>
+            <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">Shared Posts</h1>
           </div>
         </div>
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">

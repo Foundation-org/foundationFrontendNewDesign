@@ -480,7 +480,7 @@ export default function RedemptionCenter() {
               className="h-[18.5px] w-[14.6px] min-w-[14.6px] tablet:h-[40.714px] tablet:w-[32.134px] tablet:min-w-[32.134px] laptop:h-[29px] laptop:w-[22.888px] laptop:min-w-[22.888px]"
             />
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-              Redemption code activity
+              Redemption Code Activity
             </h1>
           </div>
         </div>

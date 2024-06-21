@@ -270,7 +270,7 @@ const VerificationBadges = () => {
               </div>
             )}
             <h1 className="text-[12px] font-medium text-white tablet:text-[18px] tablet:font-normal">
-              Verification badge score
+              Verification Badge Score
             </h1>
           </div>
           <h1 className="text-[14px] font-normal leading-[114%] text-white tablet:text-[18px] tablet:leading-[88%]">
@@ -319,8 +319,9 @@ const VerificationBadges = () => {
         </h1>
       </div>
       <div
-        className={`${persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
-          } relative mx-4 mb-8 flex flex-col gap-[7px] rounded-b-[13.7px] px-5 pb-[17.57px] pt-2 tablet:mx-6 tablet:gap-4 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5 laptop:gap-5 laptop:px-5 desktop:px-[40px]`}
+        className={`${
+          persistedTheme === 'dark' ? 'dark-shadow-inside' : 'verification-badge-boxShadow bg-white'
+        } relative mx-4 mb-8 flex flex-col gap-[7px] rounded-b-[13.7px] px-5 pb-[17.57px] pt-2 tablet:mx-6 tablet:gap-4 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5 laptop:gap-5 laptop:px-5 desktop:px-[40px]`}
       >
         <h1 className="mb-[5px] mt-[2px] text-[12px] font-medium leading-[113%] text-[#85898C] tablet:hidden tablet:text-[16px] tablet:leading-normal">
           Have your data be more desirable for brands and research firms to purchase with more verified info and earn
@@ -446,8 +447,9 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
             />
             <div
-              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              className={`${
+                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+              }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                 Linked In
@@ -529,8 +531,8 @@ const VerificationBadges = () => {
               >
                 <Button
                   color={checkSocial('linkedin') ? 'red' : 'blue'}
-                // disabled={true}
-                // color="gray"
+                  // disabled={true}
+                  // color="gray"
                 >
                   {checkSocial('linkedin') ? 'Remove' : 'Add Badge'}
                   <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
@@ -558,8 +560,9 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
             />
             <div
-              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              className={`${
+                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+              }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                 Twitter
@@ -724,8 +727,9 @@ const VerificationBadges = () => {
               className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
             />
             <div
-              className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              className={`${
+                persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+              }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                 Github
