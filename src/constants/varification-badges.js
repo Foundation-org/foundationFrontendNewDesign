@@ -67,16 +67,16 @@ export const socials = [
     accountName: 'twitter',
     disabled: true,
   },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
-    title: 'Instagram',
-    ButtonColor: 'gray',
-    ButtonText: 'Add Badge',
-    NoOfButton: 1,
-    // link: '/auth/instagram',
-    accountName: 'instagram',
-    disabled: false,
-  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Instagram-2x.png`,
+  //   title: 'Instagram',
+  //   ButtonColor: 'gray',
+  //   ButtonText: 'Add Badge',
+  //   NoOfButton: 1,
+  //   // link: '/auth/instagram',
+  //   accountName: 'instagram',
+  //   disabled: false,
+  // },
 
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`,
