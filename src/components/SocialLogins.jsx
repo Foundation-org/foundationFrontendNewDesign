@@ -119,11 +119,10 @@ const SocialLogins = ({
           size="login-btn"
           color="gray"
           onClick={() => {
-            setClickedButtonName('google');
             if (isLogin) {
-
-              triggerLogin()
+              triggerLogin('google')
             } else {
+              setClickedButtonName('google');
               handleReferralOpen();
             }
           }}
@@ -158,11 +157,11 @@ const SocialLogins = ({
           size="login-btn"
           color="gray"
           onClick={() => {
-            setClickedButtonName('facebook');
             if (isLogin) {
 
-              triggerLogin()
+              triggerLogin('facebook')
             } else {
+              setClickedButtonName('facebook');
               handleReferralOpen();
             }
           }}
@@ -204,11 +203,11 @@ const SocialLogins = ({
           size="login-btn"
           color="gray"
           onClick={() => {
-            setClickedButtonName('twitter');
             if (isLogin) {
 
-              triggerLogin()
+              triggerLogin('twitter')
             } else {
+              setClickedButtonName('twitter');
               handleReferralOpen();
             }
           }}
@@ -245,11 +244,11 @@ const SocialLogins = ({
           size="login-btn"
           color="gray"
           onClick={() => {
-            setClickedButtonName('linkedin');
             if (isLogin) {
 
-              triggerLogin()
+              triggerLogin('linkedin')
             } else {
+              setClickedButtonName('linkedin');
               handleReferralOpen();
             }
           }}
@@ -267,11 +266,11 @@ const SocialLogins = ({
           size="login-btn"
           color="gray"
           onClick={() => {
-            setClickedButtonName('github');
             if (isLogin) {
 
-              triggerLogin()
+              triggerLogin('github')
             } else {
+              setClickedButtonName('github');
               handleReferralOpen();
             }
           }}
