@@ -1,10 +1,18 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../components/ui/Button';
 import Breadcrumb from '../../../../components/Breadcrumb';
+import { useEffect, useRef } from 'react';
 
 const CustomerSupport = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
 
   const list = [
     { id: 1, title: 'About', path: '/dashboard/help/about' },
@@ -30,6 +38,7 @@ const CustomerSupport = () => {
         ))}
       </div>
       <div
+        ref={scrollRef}
         className={`no-scrollbar mx-auto mb-10 h-[calc(100dvh-174px)] w-full overflow-y-auto tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem] ${location.pathname === '/dashboard/help/contact-us' && 'px-3 tablet:px-0'}`}
       >
         <Outlet />

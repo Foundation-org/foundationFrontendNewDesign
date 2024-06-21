@@ -4,7 +4,7 @@ import Topbar from '../../components/Topbar';
 import DashboardLayout from '../../components/DashboardLayout';
 import { createGuestMode } from '../../../../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../../../features/auth/authSlice';
@@ -16,6 +16,7 @@ const GuestCustomerSupport = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const scrollRef = useRef(null);
 
   const list = [
     { id: 1, title: 'About', path: '/help/about' },
@@ -43,6 +44,12 @@ const GuestCustomerSupport = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
+
   return (
     <div className="bg-[#F2F3F5]">
       <Topbar />
@@ -62,6 +69,7 @@ const GuestCustomerSupport = () => {
             ))}
           </div>
           <div
+            ref={scrollRef}
             className={`no-scrollbar mx-auto mb-10 h-[calc(100dvh-174px)] w-full overflow-y-auto tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem] ${location.pathname === '/contact-us' && 'px-3 tablet:px-0'}`}
           >
             <Outlet />

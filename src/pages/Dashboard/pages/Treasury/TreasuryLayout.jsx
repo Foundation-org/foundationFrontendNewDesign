@@ -1,9 +1,17 @@
+import { useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import TreasurySlider from './components/TreasurySlider';
 import Breadcrumb from '../../../../components/Breadcrumb';
 
 const TreasuryLayout = () => {
   const location = useLocation();
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
 
   return (
     <div
@@ -14,6 +22,7 @@ const TreasuryLayout = () => {
         <TreasurySlider />
       </div>
       <div
+        ref={scrollRef}
         className={`${location.pathname !== '/dashboard/treasury/ledger' ? 'max-w-[778px] laptop:h-[calc(100dvh-147.6px)]' : 'max-w-[1440px] pb-16 laptop:mt-[128px] laptop:h-[calc(100dvh-207.6px)]'} no-scrollbar mx-auto mt-10 h-[calc(100dvh-174px)] overflow-y-scroll tablet:mt-[77.63px] tablet:h-[calc(100dvh-224px)] `}
       >
         <Outlet />
