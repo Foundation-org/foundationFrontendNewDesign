@@ -324,7 +324,7 @@ const VerificationBadges = () => {
         } relative mx-4 mb-8 flex flex-col gap-[7px] rounded-b-[13.7px] px-5 pb-[17.57px] pt-2 tablet:mx-6 tablet:gap-4 tablet:rounded-[15px] tablet:px-[30px] tablet:py-5 laptop:gap-5 laptop:px-5 desktop:px-[40px]`}
       >
         <div className="pb-[5px] pt-[2px] tablet:hidden">
-          <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C]">
+          <h1 className="!text-[12px] font-medium !leading-[13.56px] text-[#85898C]">
             Have your data be more desirable for brands and research firms to purchase with more verified info and earn
             more FDX while you’re at it!
           </h1>
