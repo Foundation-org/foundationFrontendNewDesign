@@ -181,7 +181,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
         </h1> */}
       <div className="flex flex-col justify-center py-[15px] tablet:py-[25px]">
         <div className="px-[20px] laptop:px-[80px]">
-          <p className="mb-[0.48rem] text-[10px] font-semibold text-[#5B5B5B] tablet:mb-[15px] tablet:text-[22px]">
+          <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
             {createCustom
               ? 'Custom Link Address'
               : 'Copy the link below to share this post on other platforms. When other people engage with your shared posts, you will earn FDX. '}
@@ -227,7 +227,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
             )}
           </div>
         </div>
-        <div className={'mx-[10px] mt-[0.48rem] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'}>
+        <div className={'mx-[10px] mt-[10px] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'}>
           {!createCustom ? (
             <div className="flex items-center gap-[25px]">
               <Button
