@@ -8,7 +8,7 @@ const About = () => {
         <div className="bg-white mb-12 pb-5">
             <h1 className="py-3 text-center text-[0.875rem] font-bold leading-[0.875rem] text-[#707175] pb-1 tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">Privacy Policy</h1>
             <p className="text-center text-[0.6875rem] font-normal leading-[0.6875rem] tablet:text-[1.125rem] tablet:leading-[1.125rem]">Last Updated: January 19, 2024</p>
-            <div className="term_policy_paragraph mt-[5px] tablet:mt-[15px] space-y-[0.63rem] px-8 text-[#707175] tablet:space-y-2 tablet:px-16">
+            <div className="term_policy_paragraph mt-[5px] tablet:mt-[15px] space-y-[0.2rem] px-8 text-[#707175] tablet:space-y-2 tablet:px-16">
                 <p className="text-[0.6875rem] font-normal leading-[145.455%] tablet:text-[1.125rem] tablet:leading-normal">
                     This Privacy Notice for Foundation Internet Organization, Inc. ("we," "us," or "our") outlines how and why we
                     might collect, store, use, and/or share ("process") your information when you use our services ("Services").
