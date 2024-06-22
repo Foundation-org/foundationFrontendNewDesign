@@ -8,24 +8,16 @@ import Copy from '../../../assets/optionbar/Copy';
 import { Button } from '../../ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { userInfo, userInfoById } from '../../../services/api/userAuth';
-import { addUser } from '../../../features/auth/authSlice';
 import { FaSpinner } from 'react-icons/fa';
+import { getConstantsValues } from '../../../features/constants/constantsSlice';
+import showToast from '../../ui/Toast';
 
-const CopyDialogue = ({
-  handleClose,
-  id,
-  uniqueShareLink,
-  createdBy,
-  img,
-  alt,
-  badgeCount,
-  questStartData,
-  // getImage,
-}) => {
+const CopyDialogue = ({ handleClose, questStartData }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const persistedContants = useSelector(getConstantsValues);
+
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const { protocol, host } = window.location;
   const [postLink, setPostLink] = useState(questStartData?.userQuestSetting?.link || '');
@@ -68,6 +60,7 @@ const CopyDialogue = ({
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
+        queryClient.invalidateQueries(['userInfo']);
       }
     } else if (questStartData?.userQuestSetting && !questStartData?.userQuestSetting?.link) {
       data.isGenerateLink = true;
@@ -80,6 +73,7 @@ const CopyDialogue = ({
         setPostLink(resp.data.data.link);
         dispatch(addSharedLinkPost(resp.data.data));
         setIsLoading(false);
+        queryClient.invalidateQueries(['userInfo']);
       }
     } else {
       setIsLoading(false);
@@ -90,41 +84,11 @@ const CopyDialogue = ({
     uniqueLinkQuestSetting();
   }, []);
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-  });
-
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          localStorage.setItem('userData', JSON.stringify(resp?.data));
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-        }
-      }
-
-      // setResponse(resp?.data);
-    } catch (e) {
-      console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
-
   const { mutateAsync: handleCreateCustomLink, isPending } = useMutation({
     mutationFn: createCustomLink,
     onSuccess: (resp) => {
-      toast.success('Custom link generated successfully.');
-      handleUserInfo();
+      showToast('success', 'customLinkGenerated');
+      queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['posts'], (oldData) => {
         return {
           ...oldData,
@@ -151,7 +115,7 @@ const CopyDialogue = ({
       setCreateCustom(false);
     },
     onError: (error) => {
-      toast.error(error.response.data.message);
+      showToast('error', 'error', {}, error.response.data.message);
     },
   });
 
@@ -175,7 +139,7 @@ const CopyDialogue = ({
             />
           </svg>
         </div>
-        <p className="text-[12px] font-bold text-white tablet:text-[20px] tablet:font-medium">Copy Link</p>
+        <p className="text-[12px] font-bold text-white tablet:text-[20px] tablet:font-medium">Share Post</p>
         <div
           className="absolute right-[12px] top-1/2 -translate-y-1/2 cursor-pointer tablet:right-[26px]"
           onClick={handleClose}
@@ -217,8 +181,10 @@ const CopyDialogue = ({
         </h1> */}
       <div className="flex flex-col justify-center py-[15px] tablet:py-[25px]">
         <div className="px-[20px] laptop:px-[80px]">
-          <p className="mb-[0.48rem] text-[10px] font-semibold text-[#5B5B5B] tablet:mb-[15px] tablet:text-[22px]">
-            {createCustom ? 'Custom Link Address' : 'Copy Post Address'}
+          <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
+            {createCustom
+              ? 'Custom Link Address'
+              : 'Copy the link below to share this post on other platforms. When other people engage with your shared posts, you will earn FDX. '}
           </p>
           <div className="flex rounded-[9.42px] border border-[#DEE6F7] tablet:rounded-[15px] tablet:border-[3px]">
             {createCustom ? (
@@ -243,7 +209,7 @@ const CopyDialogue = ({
               </div>
             ) : (
               <div className="flex w-full items-center rounded-l-[9.42px] pl-[9.43px] pr-[1.58rem] tablet:pl-4 laptop:rounded-l-[26px] laptop:pr-[70px]">
-                <p className="w-[48vw] truncate text-[9.42px] font-normal leading-[9.42px] text-[#435059] tablet:text-[26px] tablet:leading-[30px] laptop:w-[32.7vw] desktop:w-[32rem]">
+                <p className="w-[48vw] truncate text-[9.42px] font-normal leading-normal text-[#435059] tablet:text-[26px] tablet:leading-[30px] laptop:w-[32.7vw] desktop:w-[32rem]">
                   {isLoading ? <p className="italic">Generating link..</p> : url + postLink}
                 </p>
               </div>
@@ -253,7 +219,7 @@ const CopyDialogue = ({
                 className="rounded-r-[9px] bg-[#DEE6F7] px-[11px] py-[6px] tablet:rounded-r-[10px] tablet:px-5 tablet:py-[14px]"
                 onClick={() => {
                   copyToClipboard();
-                  toast.success('Link Copied!');
+                  showToast('success', 'copyLink');
                 }}
               >
                 <Copy color="#8BAAC0" />
@@ -261,7 +227,7 @@ const CopyDialogue = ({
             )}
           </div>
         </div>
-        <div className={'mx-[10px] mt-[0.48rem] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'}>
+        <div className={'mx-[10px] mt-[10px] flex justify-end gap-4 tablet:mx-[40px] tablet:mt-6 tablet:gap-8'}>
           {!createCustom ? (
             <div className="flex items-center gap-[25px]">
               <Button
@@ -311,7 +277,7 @@ const CopyDialogue = ({
                   <>
                     Create{' '}
                     <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                      (-2.50 FDX)
+                      (-{persistedContants?.USER_LIST_LINK_CUSTOMIZATION_DEDUCTION_AMOUNT} FDX)
                     </span>
                   </>
                 )}
@@ -325,4 +291,3 @@ const CopyDialogue = ({
 };
 
 export default CopyDialogue;
-//

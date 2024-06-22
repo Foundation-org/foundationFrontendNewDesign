@@ -1,4 +1,9 @@
-import { useSelector } from 'react-redux';
+// import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getConstants } from '../../../../../services/api/userAuth';
+import { saveConstants } from '../../../../../features/constants/constantsSlice';
 
 const LedgerTableTopbar = ({
   isTreasury,
@@ -9,7 +14,22 @@ const LedgerTableTopbar = ({
   selectedOption,
   setSelectedOption,
 }) => {
+  const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const { data: constants, error: constantsError } = useQuery({
+    queryKey: ['constants'],
+    queryFn: getConstants,
+  });
+
+  if (constantsError) {
+    console.log(constantsError);
+  }
+
+  useEffect(() => {
+    if (constants) {
+      dispatch(saveConstants(constants));
+    }
+  }, [constants]);
 
   const handleDropdown = () => {
     setSelectedOption(!selectedOption);
@@ -27,8 +47,7 @@ const LedgerTableTopbar = ({
       {!isTreasury ? (
         <div className="flex gap-[10.97px] tablet:gap-5 laptop:gap-[63px]">
           {/* profile */}
-
-          <div className="flex gap-[5.51px] tablet:gap-[13px]">
+          {/* <div className="flex gap-[5.51px] tablet:gap-[13px]">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/person.svg`}
               alt="person icon"
@@ -42,7 +61,7 @@ const LedgerTableTopbar = ({
                 <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* treasury */}
           <div className="flex gap-[5.51px] tablet:gap-[13px]">
@@ -57,9 +76,10 @@ const LedgerTableTopbar = ({
               </h1>
               <div className="flex gap-[2px] text-[5.79px] font-normal leading-normal text-[#616161] tablet:text-[9px] laptop:text-[13.824px]">
                 <p>
-                  {localStorage.getItem('treasuryAmount') && !isNaN(localStorage.getItem('treasuryAmount'))
+                  {constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX
+                  {/* {localStorage.getItem('treasuryAmount') && !isNaN(localStorage.getItem('treasuryAmount'))
                     ? Number(localStorage.getItem('treasuryAmount')).toFixed(2) + ' FDX'
-                    : '0 FDX'}
+                    : '0 FDX'} */}
                 </p>
               </div>
             </div>
@@ -74,23 +94,23 @@ const LedgerTableTopbar = ({
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/search2.svg`}
             alt="search icon"
-            className="absolute left-1 top-1/2 h-2 w-2 -translate-y-[50%] transform tablet:left-[9.22px] tablet:h-[16px] tablet:w-[16px] laptop:h-[27px] laptop:w-[27px]"
+            className="absolute left-1 top-[48%] h-2 w-2 -translate-y-[50%] transform tablet:left-[9.22px] tablet:h-[16px] tablet:w-[16px] laptop:h-[27px] laptop:w-[27px]"
           />
           <input
             type="text"
             onChange={(e) => setFilterText(e.target.value)}
             value={filterText}
             placeholder="Search"
-            className="w-[72px] rounded-[3.34px] border-[1.153px] border-[#C1C1C1] bg-white py-[2.3px] pl-[13.34px] text-[5.79px] font-normal leading-normal -tracking-[0.2px] text-[#B5B7C0] tablet:w-[130px] tablet:rounded-[11.526px] tablet:py-1 tablet:pl-8 tablet:text-[10px] laptop:w-[248px] laptop:py-[8.07px] laptop:pl-[46px] laptop:text-[20px] dark:bg-[#080A0C]"
+            className="w-[72px] rounded-[3.34px] border-[1.153px] border-[#C1C1C1] bg-white py-[2.3px] pl-[13.34px] text-[5.79px] font-normal leading-[5.79px] -tracking-[0.2px] text-[#B5B7C0] tablet:w-[130px] tablet:rounded-[11.526px] tablet:py-1 tablet:pl-8 tablet:text-[10px] laptop:w-[248px] laptop:py-[8.07px] laptop:pl-[46px] laptop:text-[20px] dark:bg-[#080A0C]"
           />
         </div>
         {/* sort */}
         <div className="relative h-[12.6px] w-[40%] rounded-[3.34px] border-[1.153px] border-[#C1C1C1] bg-white tablet:h-[32px] tablet:w-[130px] tablet:rounded-[11.526px] laptop:h-[43.3px] laptop:w-[240px] dark:bg-[#080A0C]">
           <button
             onClick={handleDropdown}
-            className="h-full w-[54px] gap-1 px-[5px] tablet:w-full tablet:px-[10px] laptop:px-[17px]"
+            className="h-full w-[54px] gap-1 whitespace-nowrap px-[2px] tablet:w-full tablet:px-[10px] laptop:px-[17px]"
           >
-            <h1 className="relative -top-[10.4px] text-[5.79px] font-normal leading-normal -tracking-[0.2px] text-[#7E7E7E] tablet:top-[1px] tablet:text-[10px] laptop:text-[20.021px]">
+            <h1 className="relative -top-[10.4px] whitespace-nowrap text-[5.77px] font-normal leading-normal -tracking-[0.2px] text-[#7E7E7E] tablet:top-[1px] tablet:text-[10px] laptop:text-[20.021px]">
               Sort by : <span className=" font-semibold capitalize  text-[#3D3C42] dark:text-[#B5B5B5]">{sort}</span>
             </h1>
           </button>

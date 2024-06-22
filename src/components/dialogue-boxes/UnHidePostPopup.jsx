@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { removeHiddenPosts } from '../../features/quest/utilsSlice';
 import { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
+import showToast from '../ui/Toast';
 
 export default function UnHidePostPopup({ handleClose, modalVisible, questStartData }) {
   const dispatch = useDispatch();
@@ -19,8 +20,8 @@ export default function UnHidePostPopup({ handleClose, modalVisible, questStartD
   const { mutateAsync: hidePost } = useMutation({
     mutationFn: updateHiddenQuest,
     onSuccess: (resp) => {
-      toast.success('Post unhidden successfully');
-
+      showToast('success', 'postUnhidden');
+      queryClient.invalidateQueries(['userInfo']);
       queryClient.setQueriesData(['hiddenPosts'], (oldData) => {
         // if (oldData.pages[0].length <= 1) {
         //   queryClient.invalidateQueries(['hiddenPosts']);

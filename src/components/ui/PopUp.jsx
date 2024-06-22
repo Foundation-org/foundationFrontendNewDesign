@@ -12,6 +12,7 @@ const PopUp = ({
   closeIcon,
   isBackground,
   remove,
+  autoSize,
 }) => {
   const defaultStyle = {
     boxShadow: 'none',
@@ -37,7 +38,11 @@ const PopUp = ({
         <div className="bg-blue-gradiant flex items-center justify-between rounded-t-[9.76px] px-[15px] py-1 tablet:rounded-t-[26px] tablet:px-[30px] tablet:py-2">
           <div className="flex items-center gap-[10px] tablet:gap-[17px]">
             <div className={` ${isBackground ? 'rounded-full bg-white p-1 tablet:p-2' : ''} `}>
-              <img src={logo} alt="popup logo" className="h-6 w-6 tablet:h-[50px] tablet:w-[50px]" />
+              <img
+                src={logo}
+                alt="popup logo"
+                className={`${autoSize ? 'size-[15px] tablet:size-auto' : 'h-6 w-6 tablet:h-[50px] tablet:w-[50px]'}`}
+              />
             </div>
             <p className="text-[12px] font-bold text-white tablet:text-[25px] tablet:font-medium">{title}</p>
           </div>

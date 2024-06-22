@@ -5,6 +5,7 @@ import { url } from '../../services/api/Axios';
 import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../features/auth/authSlice';
 import { Button as UiButton } from '../../components/ui/Button';
+import showToast from '../../components/ui/Toast';
 
 const VerifyCode = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const VerifyCode = () => {
             let verificationToken = urlQuery.substr(urlQuery.length - 6);
             setVerificationCode(Array.from(verificationToken)); // Create an array from the token
           } else {
-            toast.error('Please Open the verification Page from the email');
+            showToast('error', 'verifyCode')
           }
 
           // Attach the event listener to the whole document
@@ -89,57 +90,6 @@ const VerifyCode = () => {
   //   },
   // });
 
-  // const { mutateAsync: getUserInfo } = useMutation({
-  //   mutationFn: userInfo,
-  //   onSuccess: (res) => {
-  //     console.log('User info fetched:', res.data);
-  //     dispatch(addUser(res.data));
-  //   },
-  //   onError: (error) => {
-  //     console.error('Error fetching user info:', error);
-  //     localStorage.setItem('loggedIn', 'false');
-  //   },
-  // });
-
-  // const { mutateAsync: getUserInfo } = useMutation({
-  //   mutationFn: userInfo,
-  // });
-
-  // const handleUserInfo = async () => {
-  //   try {
-  //     const resp = await getUserInfo();
-
-  //     if (resp?.status === 200) {
-  //       // Cookie Calling
-  //       if (resp.data) {
-  //         dispatch(addUser(resp?.data));
-  //         // Set into local storage
-  //         if (!localStorage.getItem('uuid')) {
-  //           localStorage.setItem('uuid', resp.data.uuid);
-  //         }
-  //       }
-
-  //       // LocalStorage Calling
-  //       if (!resp.data) {
-  //         const res = await userInfoById(localStorage.getItem('uuid'));
-  //         dispatch(addUser(res?.data));
-  //         // if (res?.data?.requiredAction) {
-  //         //   setModalVisible(true);
-  //         // }
-  //       }
-
-  //       // if (resp?.data?.requiredAction) {
-  //       //   setModalVisible(true);
-  //       // }
-  //     }
-
-  //     // setResponse(resp?.data);
-  //   } catch (e) {
-  //     console.log({ e });
-  //     // toast.error(e.response.data.message.split(':')[1]);
-  //   }
-  // };
-
   const handleVerify = async (urlQuery) => {
     const apiUrl = `${url}/user/verify?${urlQuery}`;
     const verificationCode = urlQuery.substr(urlQuery.length - 6);
@@ -155,7 +105,7 @@ const VerifyCode = () => {
       });
 
       if (response.status === 200) {
-        toast.success('Email verified successfully.');
+        showToast('success', 'emailVerified')
 
         // await handleUserInfo();
 

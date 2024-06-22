@@ -75,7 +75,7 @@ export const TypeFiltersList = [
   },
   {
     id: 5,
-    title: 'Rank Choice',
+    title: 'Ranked Choice',
     val: 'ranked choise',
   },
   {
@@ -527,7 +527,7 @@ export default function Ratings({ handleClose, modalVisible, selectedOptions, se
               }
             }}
           >
-            Clear Filter
+            Clear Filters
           </Button>
 
           <Button variant={'submit'} onClick={handleSubmit}>

@@ -1,13 +1,17 @@
 // import { toast } from 'sonner';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player/lazy';
-import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+// // import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
+// import { useDispatch } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, toggleMedia } from '../../features/quest/utilsSlice';
 import * as questUtilsActions from '../../features/quest/utilsSlice';
 
-import { suppressPost } from '../../services/api/questsApi';
+// import { suppressPost } from '../../services/api/questsApi';
+// import YouTubePlayer from './YoutubePlayer';
+// import SoundcloudWidget from './SoundcloudWidget';
 
 export const EmbededVideo = ({
   description,
@@ -20,7 +24,7 @@ export const EmbededVideo = ({
   // isPlaying,
 }) => {
   const playerRef = useRef(null);
-  const [mediaURL, setMediaURL] = useState(url);
+  const [mediaURL, setMediaURL] = useState(url[0]);
   const dispatch = useDispatch();
   const questUtilsState = useSelector(getQuestUtils);
 
@@ -34,7 +38,11 @@ export const EmbededVideo = ({
       const index = questUtilsState.playingIds.findIndex((mediaId) => mediaId === questUtilsState.playerPlayingId);
       if (index !== -1 && index + 1 < questUtilsState.playingIds.length) {
         dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[index + 1]));
-      } else if (index !== -1 && index + 1 >= questUtilsState.playingIds.length) {
+      } else if (
+        index !== -1 &&
+        index + 1 >= questUtilsState.playingIds.length &&
+        questUtilsState.hasNextPage === false
+      ) {
         dispatch(questUtilsActions.setPlayingPlayerId(questUtilsState.playingIds[0]));
       }
     }
@@ -43,22 +51,39 @@ export const EmbededVideo = ({
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 744) {
-        // Hide artwork for screens smaller than 400px
-        setMediaURL(`${url}&show_artwork=false`);
+        setMediaURL(`${url[0]}&show_artwork=false`);
       } else {
-        // Show artwork for larger screens
-        setMediaURL(url);
+        setMediaURL(url[0]);
       }
     };
 
-    // Initial call
     handleResize();
 
-    // Event listener for window resize
     window.addEventListener('resize', handleResize);
-    // Cleanup
+
     return () => window.removeEventListener('resize', handleResize);
-  }, [url]);
+  }, [url[0]]);
+
+  function getYouTubeId(url) {
+    const regex =
+      /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  }
+
+  function identifyMediaUrl(url) {
+    const youtubeRegex =
+      /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const soundcloudRegex = /soundcloud\.com\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+/;
+
+    if (youtubeRegex.test(url)) {
+      return 'YouTube';
+    } else if (soundcloudRegex.test(url)) {
+      return 'SoundCloud';
+    } else {
+      return 'Unknown';
+    }
+  }
 
   return (
     // <div className="mx-[22px] mb-2 mt-[12px] flex flex-col justify-start rounded-[9.183px] border border-[#DEE6F7] px-[5px] py-2 tablet:mx-[60px] tablet:mb-[0px] tablet:mt-[23px] tablet:border-[2.755px] tablet:px-2">
@@ -136,19 +161,15 @@ export const EmbededVideo = ({
               },
             },
           }}
-          onEnded={() => handleVideoEnded()}
+          onEnded={() => handleVideoEnded()} // handleVideoEnded={handleVideoEnded}
         />
       </div>
+      {/* {identifyMediaUrl(url[0]) === 'YouTube' && (
+        <YouTubePlayer YTid={getYouTubeId(url[0])} playing={playing} questId={questId} />
+      )}
+      {identifyMediaUrl(url[0]) === 'SoundCloud' && (
+        <SoundcloudWidget SCurl={mediaURL} playing={playing} questId={questId} />
+      )} */}
     </div>
   );
 };
-
-// className={`align-items mx-[22px] mb-2 mt-[12px] flex flex-col justify-start rounded-[9.183px] border border-[#DEE6F7] px-[5px] py-2 tablet:mx-[60px] tablet:mb-[0px] tablet:mt-[23px] tablet:border-[2.755px] tablet:px-2 ${
-//   url
-//     ? youtubeBaseURLs.some((baseURL) => url.includes(baseURL))
-//       ? 'h-[169px] tablet:h-[420px]'
-//       : url.includes(soundcloudUnique)
-//         ? 'h-[162px] tablet:h-[226px]'
-//         : ''
-//     : ''
-// }`}

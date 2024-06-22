@@ -2,14 +2,16 @@ import { toast } from 'sonner';
 import { useState, useRef, useEffect } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../ui/Button';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { resendOtp, sendOtp, verifyOtp } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
+import showToast from '../ui/Toast';
 
-const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUserInfo }) => {
+const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
+  const queryClient = useQueryClient();
   const [phone, setPhone] = useState();
   const [otpResp, setOtpResp] = useState();
   const [otp, setOTP] = useState(['', '', '', '', '', '']);
@@ -60,12 +62,12 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
   const { mutateAsync: verifyOtpCode } = useMutation({
     mutationFn: verifyOtp,
     onSuccess: (resp) => {
-      toast.success('OTP verified Successfully');
+      showToast('success', 'otpVerified');
       handleAddContactBadge();
     },
     onError: (err) => {
       setLoading(false);
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
     },
   });
 
@@ -73,11 +75,11 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
     mutationFn: sendOtp,
     onSuccess: (resp) => {
       setOtpResp(resp);
-      toast.success('OTP sent Successfully');
+      showToast('success', 'otpSent')
       setIsRunning(true);
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
     },
   });
 
@@ -85,11 +87,11 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
     mutationFn: resendOtp,
     onSuccess: (resp) => {
       setOtpResp(resp);
-      toast.success('OTP sent Successfully');
+      showToast('success', 'otpSent')
       setIsRunning(true);
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
     },
   });
 
@@ -102,14 +104,14 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
       });
 
       if (addBadge.status === 200) {
-        toast.success('Badge Added Successfully!');
+        showToast('success', 'badgeAdded');
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
-        handleUserInfo();
         setLoading(false);
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
       handleClose();
     } finally {
       setLoading(false);
@@ -209,10 +211,10 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type, handleUser
                       setLoading(true);
                       verifyOtpCode({ phone: otpResp?.data?.data?.phoneNumber, otpString });
                     } else {
-                      toast.error('OTP exipred');
+                      showToast('error', 'otpExpired')
                     }
                   } else {
-                    toast.error('You cannot leave a block blank');
+                    showToast('warning', 'otpEmptyBlock')
                   }
                 }}
               >

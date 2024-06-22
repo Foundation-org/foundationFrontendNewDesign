@@ -24,8 +24,31 @@ export const signOut = async () => {
 };
 
 export const userInfo = async () => {
-  return await api.post('/user/userInfo');
-  // return await api.post('/user/userInfo', { uuid: localStorage.getItem('uuid') });
+  try {
+    const uuid = localStorage.getItem('uuid');
+    const legacyHash = localStorage.getItem('legacyHash');
+
+    // Construct the base URL
+    let url = `/user/userInfo/${uuid}`;
+
+    // Conditionally add the legacyHash parameter if it exists
+    if (legacyHash) {
+      url += `/?infoc=${legacyHash}`;
+    }
+
+    const data = await api.get(url);
+    return data;
+    // return await api.get(url);
+  } catch (error) {
+    console.log('userInfoError', error);
+    if (error?.response?.data?.message === 'User not found') {
+      localStorage.clear();
+    }
+  }
+};
+
+export const userInfoById = async () => {
+  return await api.post('/user/userInfoById', { uuid: localStorage.getItem('uuid') });
 };
 
 export const getTreasuryAmount = async () => {
@@ -38,16 +61,27 @@ export const getTreasuryAmount = async () => {
   }
 };
 
-export const userInfoById = async (uuid) => {
-  return await api.post('/user/userInfoById', { uuid });
+export const getConstants = async () => {
+  const res = await api.get(`user/getConstants`);
+  localStorage.setItem('Constants', res?.data);
+  return res?.data;
+
 };
 
-export const updateUserSettings = async ({ uuid, darkMode, defaultSort, systemNotifications, emailNotifications }) => {
+export const updateUserSettings = async ({
+  uuid,
+  darkMode,
+  defaultSort,
+  systemNotifications,
+  email,
+  emailNotifications,
+}) => {
   return await api.post('user/updateUserSettings', {
     uuid,
     darkMode,
     defaultSort,
     systemNotifications,
+    email,
     emailNotifications,
   });
 };
@@ -57,14 +91,16 @@ export const changePassword = async (params) => {
 };
 
 export const getAllLedgerData = async (page, limit, sort) => {
+  const uuid = localStorage.getItem('uuid');
   return await api.get('/ledger/ledgerById', {
-    params: { page, limit, sort },
+    params: { page, limit, sort, uuid },
   });
 };
 
 export const getAllRadeemLedgerData = async (page, limit, sort) => {
+  const uuid = localStorage.getItem('uuid');
   return await api.get('/ledger/ledgerById', {
-    params: { page, limit, sort, txAuth: 'DAO' },
+    params: { page, limit, sort, txAuth: 'DAO', uuid },
   });
 };
 
@@ -83,15 +119,15 @@ export const setBookmarkFilterStates = async (state) => {
   return await api.post('/user/setBookmarkStates', state);
 };
 
-export const searchLedger = async (page, limit, sort, term) => {
+export const searchLedger = async (uuid, page, limit, sort, term) => {
   return await api.post('/ledger/searchLedger', {
-    params: { page, limit, sort, term },
+    params: { uuid, page, limit, sort, term },
   });
 };
 
 export const searchRedemptionLedger = async (page, limit, sort, term, uuid) => {
   return await api.post('/ledger/searchLedger', {
-    params: { page, limit, sort, term, type: 'redemption', uuid },
+    params: { page, limit, sort, term, txAuth: 'DAO', uuid },
   });
 };
 
@@ -100,5 +136,10 @@ export const deleteAccount = async (uuid) => {
 };
 
 export const createGuestMode = async () => {
-  return await api.post('/user/create/guestMode');
+  try {
+    const response = await api.post('/user/create/guestMode');
+    return response;
+  } catch (err) {
+    console.log({ err });
+  }
 };

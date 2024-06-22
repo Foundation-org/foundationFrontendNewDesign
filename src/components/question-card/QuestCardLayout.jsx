@@ -15,6 +15,7 @@ import { EmbededVideo } from './EmbededVideo';
 import { isImageUrl } from '../../utils/embeddedutils';
 import { EmbededImage } from './EmbededImage';
 import DeletePostPopup from '../dialogue-boxes/DeletePostPopup';
+import showToast from '../ui/Toast';
 
 const data = [
   {
@@ -94,8 +95,8 @@ const QuestCardLayout = ({
 
       // queryClient.invalidateQueries('FeedData');
     },
-    onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+    onError: (error) => {
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
     },
   });
 
@@ -259,7 +260,7 @@ const QuestCardLayout = ({
             className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
             onClick={() => {
               copyToClipboard();
-              toast.success('Link Copied!');
+              showToast('success', 'copyLink')
             }}
           >
             <img
@@ -283,10 +284,11 @@ const QuestCardLayout = ({
             url={questStartData.url}
             questId={questStartData._id}
             playing={playing}
-            // setPlayingPlayerId={setPlayingPlayerId}
-            // setIsPlaying={setIsPlaying}
-            // setIsShowPlayer={setIsShowPlayer}
-            // isPlaying={isPlaying}
+
+          // setPlayingPlayerId={setPlayingPlayerId}
+          // setIsPlaying={setIsPlaying}
+          // setIsShowPlayer={setIsShowPlayer}
+          // isPlaying={isPlaying}
           />
         ))}
       <CardTopbar

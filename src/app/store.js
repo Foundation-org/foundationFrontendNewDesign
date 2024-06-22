@@ -19,16 +19,19 @@ import ledgerReducer from '../features/profile/legerSlice';
 import hiddenPostReducer from '../features/profile/hiddenPosts';
 import sharedLinksReducer from '../features/profile/sharedLinks';
 import feedbackReducer from '../features/profile/feedbackSlice';
+import systemConstantsReducer from '../features/constants/constantsSlice';
+import userSettingsReducer from '../features/profile/userSettingSlice'
 
 const persistConfig = {
   key: 'persist-store',
   version: 1,
   storage,
-  whitelist: ['utils', 'auth', 'filters', 'bookmarkFilters'],
+  whitelist: ['utils', 'auth', 'filters', 'bookmarkFilters', 'systemConstants', 'userSettings'],
 };
 
 const reducer = combineReducers({
   utils: utilsReducer,
+  systemConstants: systemConstantsReducer,
   auth: authReducer,
   filters: filterReducer,
   bookmarkFilters: bookmarkFilterReducer,
@@ -42,6 +45,7 @@ const reducer = combineReducers({
   hiddenPosts: hiddenPostReducer,
   sharedLinks: sharedLinksReducer,
   feedback: feedbackReducer,
+  userSettings: userSettingsReducer
 });
 
 const persistedReducers = persistReducer(persistConfig, reducer);

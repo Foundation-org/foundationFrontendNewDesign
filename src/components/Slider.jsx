@@ -1,107 +1,86 @@
-import { Button } from './ui/Button';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { setFilterStates } from '../services/api/userAuth';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { setIsShowPlayer, setPlayingPlayerId, resetPlayingIds } from '../features/quest/utilsSlice';
+import * as QuestServices from '../services/queries/quest';
 import * as homeFilterActions from '../features/sidebar/filtersSlice';
 import * as bookmarkFiltersActions from '../features/sidebar/bookmarkFilterSlice';
-import * as QuestServices from '../services/queries/quest';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { setFilterStates } from '../services/api/userAuth';
-import { setIsShowPlayer, setPlayingPlayerId, resetPlayingIds } from '../features/quest/utilsSlice';
 
-function Slider({ isFetching }) {
+function Slider() {
   let filtersActions;
   const dispatch = useDispatch();
   const location = useLocation();
-  // const queryClient = useQueryClient();
+  const rightArrowRef = useRef(null);
+  const leftArrowRef = useRef(null);
+  const tabsListRef = useRef(null);
+  const tabRefs = useRef([]);
+  const queryClient = useQueryClient();
+  const [dragging, setDragging] = useState(false);
 
-  const { pathname } = location;
-  if (pathname === '/dashboard/bookmark') {
+  if (location.pathname === '/dashboard/bookmark') {
     filtersActions = bookmarkFiltersActions;
   } else {
     filtersActions = homeFilterActions;
   }
-  const containerRef = useRef(null);
+
   const filterStates = useSelector(filtersActions.getFilters);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
+
+  const manageIcons = () => {
+    if (tabsListRef.current.scrollLeft >= 20) {
+      leftArrowRef.current.classList.add('active');
+    } else {
+      leftArrowRef.current.classList.remove('active');
+    }
+
+    let maxScrollValue = tabsListRef.current.scrollWidth - tabsListRef.current.clientWidth - 20;
+    if (tabsListRef.current.scrollLeft >= maxScrollValue) {
+      rightArrowRef.current.classList.remove('active');
+    } else {
+      rightArrowRef.current.classList.add('active');
+    }
+  };
+
+  const handleRightArrowClick = () => {
+    tabsListRef.current.scrollLeft += 200;
+    manageIcons();
+  };
+
+  const handleLeftArrowClick = () => {
+    tabsListRef.current.scrollLeft -= 200;
+    manageIcons();
+  };
+
+  const drag = (e) => {
+    if (!dragging) return;
+    tabsListRef.current.classList.add('dragging');
+    tabsListRef.current.scrollLeft -= e.movementX;
+  };
 
   useEffect(() => {
-    const selectedButtonId = localStorage.getItem('selectedButtonId');
-    const selectedButton = document.getElementById(selectedButtonId);
-    if (selectedButton) {
-      selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  }, [filterStates.topics]);
+    const tabsList = tabsListRef.current;
+    const handleMouseUp = () => {
+      setDragging(false);
+      tabsList.classList.remove('dragging');
+    };
+
+    document.addEventListener('mouseup', handleMouseUp);
+    tabsList.addEventListener('scroll', manageIcons);
+
+    return () => {
+      document.removeEventListener('mouseup', handleMouseUp);
+      tabsList.removeEventListener('scroll', manageIcons);
+    };
+  }, [dragging]);
+
+  const { data: topicsData, isSuccess } = QuestServices.useGetAllTopics();
 
   useEffect(() => {
     if (isSuccess) {
       dispatch(homeFilterActions.setTopics(topicsData?.data.data || []));
     }
   }, [topicsData, isSuccess]);
-
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    const container = containerRef.current;
-
-    if (!container) return;
-
-    const startX = e.pageX;
-    const initialScrollLeft = container.scrollLeft;
-
-    const handleMouseMove = (e) => {
-      const dx = e.pageX - startX;
-      container.scrollLeft = initialScrollLeft - dx;
-      if (dx < 0) {
-        setScrollPosition(startX - e.pageX);
-        localStorage.setItem('sliderScrollPosition', startX - e.pageX);
-      } else {
-        setScrollPosition(e.pageX - startX);
-        localStorage.setItem('sliderScrollPosition', e.pageX - startX);
-      }
-    };
-
-    const handleMouseUp = () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-  };
-
-  useEffect(() => {
-    setScrollPosition(0);
-    const container = document.getElementById('buttonContainer');
-
-    container.scrollTo({
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [filterStates.clearFilter]);
-
-  const handleRightArrowClick = () => {
-    const container = document.getElementById('buttonContainer');
-    const scrollAmount = container.clientWidth / 2;
-    setScrollPosition(scrollPosition + scrollAmount);
-    localStorage.setItem('sliderScrollPosition', scrollPosition + scrollAmount);
-    container.scrollTo({
-      left: scrollPosition + scrollAmount,
-      behavior: 'smooth',
-    });
-  };
-
-  const handleLeftArrowClick = () => {
-    const container = document.getElementById('buttonContainer');
-    const scrollAmount = container.clientWidth / 2;
-    setScrollPosition(scrollPosition - scrollAmount);
-    localStorage.setItem('sliderScrollPosition', scrollPosition - scrollAmount);
-    container.scrollTo({
-      left: scrollPosition - scrollAmount,
-      behavior: 'smooth',
-    });
-  };
 
   const { mutateAsync: setFilters } = useMutation({
     mutationFn: setFilterStates,
@@ -111,26 +90,17 @@ function Slider({ isFetching }) {
   });
 
   const handleButtonSelection = (type, data, id) => {
-    // Save the id of the selected button in localStorage for scrolling it into view
+    queryClient.cancelQueries('posts');
+
     localStorage.setItem('selectedButtonId', id);
     const selectedButton = document.getElementById(id);
     if (selectedButton) {
       selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    if (isFetching) return;
-
     switch (type) {
       case 'newest-first':
         if (filterStates.filterBySort !== 'Newest First') {
-          // setSliderloading(true);
-          dispatch(setIsShowPlayer(false));
-          dispatch(setPlayingPlayerId(''));
-          dispatch(resetPlayingIds());
-          dispatch(filtersActions.setBookmarks(false));
-          dispatch(homeFilterActions.setBlockTopics([]));
-          dispatch(filtersActions.setFilterByScope('All'));
-          dispatch(filtersActions.setFilterBySort('Newest First'));
           setFilters({
             ...filterStates,
             filterBySort: 'Newest First',
@@ -145,18 +115,17 @@ function Slider({ isFetching }) {
               },
             },
           });
-        }
-        break;
-      case 'most-popular':
-        if (filterStates.filterBySort !== 'Most Popular') {
-          // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
           dispatch(resetPlayingIds());
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
           dispatch(filtersActions.setFilterByScope('All'));
-          dispatch(filtersActions.setFilterBySort('Most Popular'));
+          dispatch(filtersActions.setFilterBySort('Newest First'));
+        }
+        break;
+      case 'most-popular':
+        if (filterStates.filterBySort !== 'Most Popular') {
           setFilters({
             ...filterStates,
             filterByScope: '',
@@ -171,18 +140,17 @@ function Slider({ isFetching }) {
               },
             },
           });
-        }
-        break;
-      case 'my-posts':
-        if (filterStates.filterByScope !== 'Me') {
-          // setSliderloading(true);
           dispatch(setIsShowPlayer(false));
           dispatch(setPlayingPlayerId(''));
           dispatch(resetPlayingIds());
           dispatch(filtersActions.setBookmarks(false));
           dispatch(homeFilterActions.setBlockTopics([]));
-          dispatch(filtersActions.setFilterBySort(''));
-          dispatch(filtersActions.setFilterByScope('Me'));
+          dispatch(filtersActions.setFilterByScope(true));
+          dispatch(filtersActions.setFilterBySort('Most Popular'));
+        }
+        break;
+      case 'my-posts':
+        if (filterStates.filterByScope !== 'Me') {
           setFilters({
             ...filterStates,
             filterByScope: 'Me',
@@ -197,18 +165,17 @@ function Slider({ isFetching }) {
               },
             },
           });
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
+          dispatch(resetPlayingIds());
+          dispatch(filtersActions.setBookmarks(false));
+          dispatch(homeFilterActions.setBlockTopics([]));
+          dispatch(filtersActions.setFilterBySort(''));
+          dispatch(filtersActions.setFilterByScope('Me'));
         }
         break;
       case 'bookmarks':
         if (filterStates.bookmarks !== true) {
-          // setSliderloading(true);
-          dispatch(setIsShowPlayer(false));
-          dispatch(setPlayingPlayerId(''));
-          dispatch(resetPlayingIds());
-          dispatch(homeFilterActions.setBlockTopics([]));
-          dispatch(filtersActions.setFilterBySort(''));
-          dispatch(filtersActions.setFilterByScope('All'));
-          dispatch(filtersActions.setBookmarks(true));
           setFilters({
             ...filterStates,
             filterBySort: '',
@@ -223,11 +190,31 @@ function Slider({ isFetching }) {
               },
             },
           });
+          dispatch(setIsShowPlayer(false));
+          dispatch(setPlayingPlayerId(''));
+          dispatch(resetPlayingIds());
+          dispatch(homeFilterActions.setBlockTopics([]));
+          dispatch(filtersActions.setFilterBySort(''));
+          dispatch(filtersActions.setFilterByScope('All'));
+          dispatch(filtersActions.setBookmarks(true));
         }
         break;
       case 'topics':
         if (filterStates.topics?.Block && filterStates.topics?.Block.list.includes(data)) return;
-
+        setFilters({
+          ...filterStates,
+          filterBySort: '',
+          filterByScope: '',
+          bookmarks: false,
+          topics: {
+            ...filterStates.topics,
+            Block: {
+              ...filterStates.topics.Block,
+              list: [data],
+            },
+          },
+          selectedBtnId: id,
+        });
         dispatch(setIsShowPlayer(false));
         dispatch(setPlayingPlayerId(''));
         dispatch(resetPlayingIds());
@@ -241,133 +228,91 @@ function Slider({ isFetching }) {
     }
   };
 
+  useEffect(() => {
+    const selectedButtonId = localStorage.getItem('selectedButtonId');
+    const selectedButton = document.getElementById(selectedButtonId);
+    if (selectedButton) {
+      selectedButton.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+  }, [filterStates.topics]);
+
   return (
-    <div className="flex items-center px-4 py-2 tablet:px-6 tablet:py-[14.82px]">
-      {scrollPosition > 0 && (
-        <button
-          onClick={handleLeftArrowClick}
-          className="size-[10px] min-w-[10px] max-w-[10px] rotate-180 tablet:size-5 tablet:min-w-5 tablet:max-w-5"
-          style={{
-            background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '100% 100%',
-          }}
-        ></button>
-      )}
-      <div
-        className="no-scrollbar mx-[5px] flex items-center gap-[6.75px] overflow-x-scroll tablet:mx-4 tablet:gap-[13.82px]"
-        id="buttonContainer"
-        ref={containerRef}
-        onMouseDown={handleMouseDown}
-      >
+    <div className="scrollable-tabs-container">
+      <div ref={leftArrowRef} className="left-arrow" onClick={handleLeftArrowClick}>
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
+          alt="arrow-right.svg"
+          className="size-[10px] rotate-180 tablet:size-6"
+        />
+      </div>
+      <ul ref={tabsListRef} onMouseDown={() => setDragging(true)} onMouseMove={drag}>
         <div className="flex gap-[6.75px] border-r-[2.4px] border-[#CECECE] pr-[6.75px] tablet:gap-[13.82px] tablet:pr-[13.82px] ">
-          <Button
-            variant={'topics'}
-            className={`${filterStates.filterBySort === 'Newest First' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'}`}
+          <Link
+            className={`${filterStates.filterBySort === 'Newest First' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'} slider-link`}
+            to={''}
             onClick={() => {
-              // queryClient.invalidateQueries('FeedData');
               handleButtonSelection('newest-first', null, 'newButton');
             }}
-            disabled={isFetching}
             id={'newButton'}
           >
             New!
-          </Button>
-          <Button
-            variant={'topics'}
-            className={`${filterStates.filterBySort === 'Most Popular' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'}`}
+          </Link>
+          <Link
+            className={`${filterStates.filterBySort === 'Most Popular' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'} slider-link`}
+            to={''}
             onClick={() => {
-              // queryClient.invalidateQueries('FeedData');
               handleButtonSelection('most-popular', null, 'trendingButton');
             }}
-            disabled={isFetching}
             id={'trendingButton'}
           >
             Trending!
-          </Button>
-          <Button
-            variant={'topics'}
-            className={`${filterStates.filterByScope === 'Me' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'}`}
+          </Link>
+          <Link
+            className={`${filterStates.filterByScope === 'Me' ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'} slider-link`}
+            to={''}
             onClick={() => {
-              // queryClient.invalidateQueries('FeedData');
               handleButtonSelection('my-posts', null, 'myPostButton');
             }}
-            disabled={isFetching}
             id={'myPostButton'}
           >
             My Posts
-          </Button>
-          <Button
-            variant={'topics'}
-            className={`${filterStates.bookmarks === true ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'}`}
+          </Link>
+          <Link
+            className={`${filterStates.bookmarks === true ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#ABABAB]'} slider-link`}
+            to={''}
             onClick={() => {
-              // queryClient.invalidateQueries('FeedData');
               handleButtonSelection('bookmarks', null, 'bookmarkButton');
             }}
-            disabled={isFetching}
             id={'bookmarkButton'}
           >
             Bookmarks
-          </Button>
+          </Link>
         </div>
-        <div className="flex gap-[6.75px] tablet:gap-[13.82px]">
-          {filterStates.topics?.All?.list.map((item, index) => {
-            const isItemBlocked = filterStates.topics?.Block && filterStates.topics?.Block?.list?.includes(item);
-            let startX = 0;
-            let startY = 0;
-
-            const handleMouseDown = (e) => {
-              startX = e.clientX;
-              startY = e.clientY;
-            };
-
-            const handleMouseUp = (e) => {
-              const distance = Math.sqrt((e.clientX - startX) ** 2 + (e.clientY - startY) ** 2);
-              if (distance < 5) {
-                // queryClient.invalidateQueries('FeedData');
-                setFilters({
-                  ...filterStates,
-                  filterBySort: '',
-                  filterByScope: '',
-                  bookmarks: false,
-                  topics: {
-                    ...filterStates.topics,
-                    Block: {
-                      ...filterStates.topics.Block,
-                      list: [item],
-                    },
-                  },
-                  selectedBtnId: `topic-${index}`,
-                });
-                handleButtonSelection('topics', item, `topic-${index}`);
-              }
-            };
-
-            return (
-              <Button
-                variant={'topics'}
-                className={`${isItemBlocked ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
-                key={index}
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-                disabled={isFetching}
+        {filterStates.topics?.All?.list.map((tab, index) => {
+          const isItemBlocked = filterStates.topics?.Block && filterStates.topics?.Block?.list?.includes(tab);
+          return (
+            <li key={index} ref={(el) => (tabRefs.current[index] = el)}>
+              <Link
+                className={`${isItemBlocked ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'} slider-link`}
+                to={''}
+                onClick={() => {
+                  handleButtonSelection('topics', tab, `topic-${index}`);
+                }}
                 id={`topic-${index}`}
               >
-                {item}
-              </Button>
-            );
-          })}
-        </div>
+                {tab}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+      <div ref={rightArrowRef} className="right-arrow active" onClick={handleRightArrowClick}>
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
+          alt="arrow-right.svg"
+          className="size-[10px] tablet:size-6"
+        />
       </div>
-      <button
-        onClick={handleRightArrowClick}
-        className="size-[10px] min-w-[10px] max-w-[10px] tablet:size-5 tablet:min-w-5 tablet:max-w-5"
-        style={{
-          background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '100% 100%',
-        }}
-      ></button>
     </div>
   );
 }

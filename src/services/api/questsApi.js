@@ -1,3 +1,4 @@
+import showToast from '../../components/ui/Toast';
 import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
 import { extractPartFromUrl } from '../../utils/embeddedutils';
 import api from './Axios';
@@ -48,7 +49,8 @@ export const createInfoQuest = async (data) => {
       description: data.description,
     });
   } catch (error) {
-    toast.error(error.response.data.message.split(':')[1]);
+    showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+
   }
 };
 

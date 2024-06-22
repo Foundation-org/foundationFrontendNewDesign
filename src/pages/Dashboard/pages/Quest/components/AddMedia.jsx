@@ -10,6 +10,7 @@ import { soundcloudUnique, youtubeBaseURLs } from '../../../../../constants/addM
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import ReactPlayer from 'react-player/lazy';
 import './Player.css';
+import showToast from '../../../../../components/ui/Toast';
 
 export default function AddMedia({ handleTab }) {
   const playerRef = useRef(null);
@@ -48,7 +49,7 @@ export default function AddMedia({ handleTab }) {
   useEffect(() => {
     // Check if the URL is a SoundCloud playlist
     if (getMediaStates.url?.includes(soundcloudUnique) && getMediaStates.url?.includes('/sets/')) {
-      toast.error('We do not support SoundCloud playlists');
+      showToast('error', 'soundCloudPlaylistNot')
       dispatch(createQuestAction.clearUrl());
       return;
     }
@@ -58,7 +59,7 @@ export default function AddMedia({ handleTab }) {
       youtubeBaseURLs.some((baseURL) => getMediaStates.url?.includes(baseURL)) &&
       getMediaStates.url.includes('playlist?list=')
     ) {
-      toast.error('We do not support YouTube playlists');
+      showToast('error', 'youtubePlaylistNot')
       dispatch(createQuestAction.clearUrl());
       return;
     }
@@ -83,10 +84,10 @@ export default function AddMedia({ handleTab }) {
     if (getMediaStates.isMedia.type === 'EmbedVideo') {
       if (youtubeBaseURLs.some((baseURL) => value?.includes(baseURL))) {
         const videoId = extractYouTubeVideoId(value);
-
+        console.log('videoId', videoId);
         dispatch(createQuestAction.checkIsUrlAlreayExists({ id: videoId, url: getMediaStates.url }));
       } else {
-        toast.warning('YouTube links are supported.');
+        showToast('warning', 'youtubeLinks');
       }
     }
 
@@ -95,7 +96,7 @@ export default function AddMedia({ handleTab }) {
         const urlId = extractPartFromUrl(value);
         dispatch(createQuestAction.checkIsUrlAlreayExists({ id: urlId, url: getMediaStates.url }));
       } else {
-        toast.warning('SoundCloud links are supported.');
+        showToast('warning', 'soundCloudLinks');
       }
     }
 
@@ -250,7 +251,7 @@ export default function AddMedia({ handleTab }) {
                 </>
               ) : (
                 <>
-                  {toast.error('Invalid URL')}
+                  {showToast('error', 'invalidUrl')}
                   {dispatch(createQuestAction.clearUrl())}
                 </>
               )}

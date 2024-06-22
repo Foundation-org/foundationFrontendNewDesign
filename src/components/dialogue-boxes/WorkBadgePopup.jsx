@@ -7,6 +7,8 @@ import CustomCombobox from '../ui/Combobox';
 import ListBox from '../ui/ListBox';
 import { FaSpinner } from 'react-icons/fa';
 import BadgeRemovePopup from './badgeRemovePopup';
+import { useQueryClient } from '@tanstack/react-query';
+import showToast from '../ui/Toast';
 
 const CompanyName = {
   label: 'Company Name',
@@ -53,18 +55,8 @@ const endingYear = {
   type: 'endingYear',
 };
 
-const WorkBadgePopup = ({
-  isPopup,
-  setIsPopup,
-  type,
-  title,
-  logo,
-  placeholder,
-  handleUserInfo,
-  fetchUser,
-  setFetchUser,
-  setIsPersonalPopup,
-}) => {
+const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, fetchUser, setIsPersonalPopup }) => {
+  const queryClient = useQueryClient();
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
   const [delloading, setDelLoading] = useState(false);
@@ -81,6 +73,7 @@ const WorkBadgePopup = ({
   const [deleteModalState, setDeleteModalState] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [RemoveLoading, setRemoveLoading] = useState(false);
+  const [fetchingEdit, setFetchingEdit] = useState(false);
 
   const [existingData, setExistingData] = useState();
   const [query, setQuery] = useState('');
@@ -93,12 +86,12 @@ const WorkBadgePopup = ({
       const newArr = queryExists
         ? [...jb.data]
         : [
-            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-            ...jb.data.map((jb) => ({
-              ...jb,
-              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-            })),
-          ];
+          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+          ...jb.data.map((jb) => ({
+            ...jb,
+            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+          })),
+        ];
 
       setJobs(newArr);
     } catch (err) {
@@ -181,30 +174,34 @@ const WorkBadgePopup = ({
         field6Data === undefined ||
         field6Data === ''
       ) {
-        toast.error('You cannot leave the field blank');
+        showToast('error', 'blankField');
         setLoading(false);
         return;
       }
 
       if (field6Data < field5Data) {
-        toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        showToast('warning', 'DateEarlierStart')
         setLoading(false);
 
         return;
       }
-      if (field6Data < field5Data) {
-        toast.warning('Please ensure the ending date is not same as the starting date.');
+      if (field6Data === field5Data) {
+        showToast('warning', 'DateSameStart')
         setLoading(false);
         return;
       }
-      const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, {
+      const payload = {
         data,
         type,
         uuid: localStorage.getItem('uuid'),
-      });
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
+      const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
-        handleUserInfo();
-        toast.success('Badge Added Successfully!');
+        queryClient.invalidateQueries(['userInfo']);
+        showToast('success', 'badgeAdded')
 
         const companySaved = await api.post(`/addBadge/company/add`, {
           name: field1Data.name,
@@ -227,7 +224,7 @@ const WorkBadgePopup = ({
         setLoading(false);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
       handleClose();
     }
   };
@@ -252,13 +249,18 @@ const WorkBadgePopup = ({
   };
 
   const handleDelete = async (id) => {
-    const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, {
+    const payload = {
       id: id,
       uuid: localStorage.getItem('uuid'),
       type: type,
-    });
+    };
+    if (localStorage.getItem('legacyHash')) {
+      payload.infoc = localStorage.getItem('legacyHash');
+    }
+
+    const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, payload);
     if (companies.status === 200) {
-      handleUserInfo();
+      queryClient.invalidateQueries(['userInfo']);
     }
   };
 
@@ -272,33 +274,37 @@ const WorkBadgePopup = ({
         prevInfo.startingYear === field5Data &&
         prevInfo.endingYear === field6Data
       ) {
-        toast.error('Information already saved');
+        showToast('warning', 'infoAlreadySaved')
         setLoading(false);
 
         return;
       }
       if (field6Data < field5Data) {
-        toast.warning('Please ensure the ending date is not earlier than the starting date.');
+        showToast('warning', 'DateEarlierStart')
         setLoading(false);
 
         return;
       }
-      if (field6Data < field5Data) {
-        toast.warning('Please ensure the ending date is not same as the starting date.');
+      if (field6Data === field5Data) {
+        showToast('warning', 'DateSameStart')
         setLoading(false);
 
         return;
       }
-
-      const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, {
+      const payload = {
         newData,
         type,
         uuid: localStorage.getItem('uuid'),
         id: prevInfo.id,
-      });
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
+
+      const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, payload);
       if (updateBadge.status === 200) {
-        handleUserInfo();
-        toast.success('Info Updated Successfully');
+        queryClient.invalidateQueries(['userInfo']);
+        showToast('success', 'infoUpdated');
         if (prevInfo.CompanyName !== field1Data.name) {
           const companySaved = await api.post(`/addBadge/company/add`, {
             name: field1Data.name,
@@ -321,17 +327,21 @@ const WorkBadgePopup = ({
         setLoading(false);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
       handleClose();
     }
   };
 
   const handleEdit = async (id) => {
-    const info = await api.post(`/addBadge/personal/getWorkOrEducation`, {
+    const payload = {
       id: id,
       uuid: localStorage.getItem('uuid'),
       type: type,
-    });
+    };
+    if (localStorage.getItem('legacyHash')) {
+      payload.infoc = localStorage.getItem('legacyHash');
+    }
+    const info = await api.post(`/addBadge/personal/getWorkOrEducation`, payload);
     setPrevInfo(info?.data?.obj);
     if (info.status === 200) {
       setHollow(false);
@@ -349,6 +359,7 @@ const WorkBadgePopup = ({
       } else {
         setField6Data(data.endingYear);
       }
+      setFetchingEdit(false);
     }
   };
   const handleRemoveBadgePopup = (item) => {
@@ -372,7 +383,6 @@ const WorkBadgePopup = ({
             type={deleteModalState?.type}
             badgeType={deleteModalState?.badgeType}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
             setIsLoading={setRemoveLoading}
             loading={RemoveLoading}
@@ -430,7 +440,7 @@ const WorkBadgePopup = ({
                         alt="Edit Icon"
                         className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
                         onClick={() => {
-                          setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                          setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
                         }}
                       />
                       <img
@@ -495,11 +505,11 @@ const WorkBadgePopup = ({
               /> */}
               <input
                 type="text"
-                value={edit ? (field1Data.name ? field1Data.name : 'Loading...') : field1Data.name}
+                value={edit ? (!fetchingEdit ? field1Data.name : 'Loading...') : field1Data.name}
                 onChange={(e) => {
                   setField1Data({ id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: e.target.value });
                 }}
-                disabled={edit ? (field1Data.name ? false : true) : false}
+                disabled={fetchingEdit ? true : false}
                 onKeyDown={(e) => (e.key === 'Tab' && handleTab(1)) || (e.key === 'Enter' && handleTab(1, 'Enter'))}
                 id="input-1"
                 placeholder={field1.placeholder}
@@ -576,7 +586,7 @@ const WorkBadgePopup = ({
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field5.label}
                 </p>
-                {!field5Data && edit ? (
+                {fetchingEdit ? (
                   <input
                     type="text"
                     value="Loading..."
@@ -600,7 +610,7 @@ const WorkBadgePopup = ({
                   <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field6.label}
                   </p>
-                  {!field6Data && edit ? (
+                  {fetchingEdit ? (
                     <input
                       type="text"
                       value="Loading..."

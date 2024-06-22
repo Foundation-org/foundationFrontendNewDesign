@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { validation } from '../../services/api/badgesApi';
 
 import PopUp from '../ui/PopUp';
@@ -9,6 +9,7 @@ import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
 import BadgeRemovePopup from './badgeRemovePopup';
+import showToast from '../ui/Toast';
 
 const School = {
   label: 'School',
@@ -45,11 +46,10 @@ const EducationBadgePopup = ({
   title,
   logo,
   placeholder,
-  handleUserInfo,
   fetchUser,
-  setFetchUser,
   setIsPersonalPopup,
 }) => {
+  const queryClient = useQueryClient();
   const [universities, setUniversities] = useState([]);
   const [field1Data, setField1Data] = useState([]);
   const [field2Data, setField2Data] = useState([]);
@@ -72,6 +72,7 @@ const EducationBadgePopup = ({
   const [deleteModalState, setDeleteModalState] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [RemoveLoading, setRemoveLoading] = useState(false);
+  const [fetchingEdit, setFetchingEdit] = useState(false);
 
   const searchDegreeAndFields = async (type, query) => {
     try {
@@ -81,12 +82,12 @@ const EducationBadgePopup = ({
       const newArr = queryExists
         ? [...jb.data]
         : [
-            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-            ...jb.data.map((jb) => ({
-              ...jb,
-              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-            })),
-          ];
+          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+          ...jb.data.map((jb) => ({
+            ...jb,
+            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+          })),
+        ];
 
       setEduData(newArr);
     } catch (err) {
@@ -138,7 +139,6 @@ const EducationBadgePopup = ({
   };
 
   const handleAddPersonalBadge = async (data) => {
-    console.log('comeimng');
     try {
       if (
         field1Data.name === undefined ||
@@ -150,37 +150,42 @@ const EducationBadgePopup = ({
         field5Data.name === undefined ||
         field5Data.name === ''
       ) {
-        toast.error('You cannot leave the field blank');
+        showToast('error', 'blankField');
         setLoading(false);
         return;
       }
 
       if (field4Data < field3Data) {
-        toast.warning('Please ensure the graduation date is not earlier than the start date.');
+        showToast('error', 'graduationDateEarlierStart')
         setLoading(false);
         return;
       }
       if (field4Data === field3Data) {
-        toast.warning('Please ensure the graduation date is not the same as the start date.');
+        showToast('error', 'graduationDateSameStart')
         setLoading(false);
         return;
       }
 
       if (existingData) {
         if (existingData.some((item) => item.id === field1Data.id)) {
-          toast.warning('School already exists');
+          showToast('error', 'schoolAlreadyExist')
+
           setLoading(false);
           return;
         }
       }
-      const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, {
+      const payload = {
         data,
         type,
         uuid: localStorage.getItem('uuid'),
-      });
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
+      const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
-        handleUserInfo();
-        toast.success('Badge Added Successfully!');
+        queryClient.invalidateQueries(['userInfo']);
+        showToast('success', 'badgeAdded')
         if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
             name: field2Data.name,
@@ -211,16 +216,19 @@ const EducationBadgePopup = ({
     }
   };
   const handleDelete = async (id) => {
-    const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, {
+    const payload = {
       id: id,
       uuid: localStorage.getItem('uuid'),
       type: type,
-    });
+    };
+    if (localStorage.getItem('legacyHash')) {
+      payload.infoc = localStorage.getItem('legacyHash');
+    }
+    const companies = await api.post(`/addBadge/personal/deleteWorkOrEducation`, payload);
     if (companies.status === 200) {
-      handleUserInfo();
+      queryClient.invalidateQueries(['userInfo']);
     }
   };
-  console.log(field2Data, field5Data);
 
   const handleUpdateBadge = async (newData) => {
     try {
@@ -234,17 +242,17 @@ const EducationBadgePopup = ({
         field5Data.name === undefined ||
         field5Data.name === ''
       ) {
-        toast.error('You cannot leave the field blank');
+        showToast('warning', 'blankField');
         setLoading(false);
         return;
       }
       if (field4Data < field3Data) {
-        toast.warning('Please ensure the graduation date is not earlier than the start date.');
+        showToast('warning', 'graduationDateSameStart')
         setLoading(false);
         return;
       }
       if (field4Data === field3Data) {
-        toast.warning('Please ensure the graduation date is not the same as the start date.');
+        showToast('warning', 'graduationDateSameStart')
         setLoading(false);
         return;
       }
@@ -256,21 +264,24 @@ const EducationBadgePopup = ({
         prevInfo.startingYear === field3Data &&
         prevInfo.graduationYear === field4Data
       ) {
-        toast.error('Information already saved');
+        showToast('warning', 'infoAlreadySaved')
         setLoading(false);
         return;
       }
-      console.log(field2Data, field5Data);
-
-      const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, {
+      const payload = {
         newData,
         type,
         uuid: localStorage.getItem('uuid'),
         id: prevInfo.id,
-      });
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
+
+      const updateBadge = await api.post(`/addBadge/personal/updateWorkOrEducation`, payload);
       if (updateBadge.status === 200) {
-        handleUserInfo();
-        toast.success('Info Updated Successfully');
+        queryClient.invalidateQueries(['userInfo']);
+        showToast('success', 'infoUpdated');
         if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
             name: field2Data.name,
@@ -295,17 +306,23 @@ const EducationBadgePopup = ({
         setLoading(false);
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
       handleClose();
     }
+
+    setFetchingEdit(false);
   };
 
   const handleEdit = async (id) => {
-    const info = await api.post(`/addBadge/personal/getWorkOrEducation`, {
+    const payload = {
       id: id,
       uuid: localStorage.getItem('uuid'),
       type: type,
-    });
+    };
+    if (localStorage.getItem('legacyHash')) {
+      payload.infoc = localStorage.getItem('legacyHash');
+    }
+    const info = await api.post(`/addBadge/personal/getWorkOrEducation`, payload);
     setPrevInfo(info?.data?.obj);
     if (info.status === 200) {
       const data = info?.data.obj;
@@ -414,7 +431,6 @@ const EducationBadgePopup = ({
             type={deleteModalState?.type}
             badgeType={deleteModalState?.badgeType}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
             setIsLoading={setRemoveLoading}
             loading={RemoveLoading}
@@ -476,7 +492,7 @@ const EducationBadgePopup = ({
                         alt="Edit Icon"
                         className="h-[12px] w-[12px] tablet:h-[23px] tablet:w-[23px]"
                         onClick={() => {
-                          setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
+                          setFetchingEdit(true), setAddAnotherForm(true), setEdit(true), handleEdit(item.id);
                         }}
                       />
                       <img
@@ -647,7 +663,7 @@ const EducationBadgePopup = ({
                 <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                   {field3.label}
                 </p>
-                {!field3Data && edit ? (
+                {fetchingEdit ? (
                   <input
                     type="text"
                     value="Loading..."
@@ -672,7 +688,7 @@ const EducationBadgePopup = ({
                   <p className="mb-1 text-[9.28px] font-medium leading-[11.23px] text-[#7C7C7C] tablet:mb-[14px] tablet:text-[20px] tablet:leading-[24.2px]">
                     {field4.label}
                   </p>
-                  {!field4Data && edit ? (
+                  {fetchingEdit ? (
                     <input
                       type="text"
                       value="Loading..."

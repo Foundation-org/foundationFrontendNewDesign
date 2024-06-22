@@ -1,6 +1,9 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
+import { toast } from 'sonner';
 
 const BookmarkIcon = ({ bookmarkStatus, persistedTheme, handleBookmark }) => {
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+
   const getBookmarkIcon = () => {
     if (bookmarkStatus) {
       if (persistedTheme !== 'dark') {
@@ -14,7 +17,24 @@ const BookmarkIcon = ({ bookmarkStatus, persistedTheme, handleBookmark }) => {
   };
 
   return (
-    <div onClick={() => handleBookmark()}>
+    <div
+      onClick={() => {
+        if (persistedUserInfo?.role === 'guest') {
+          toast.warning(
+            <p>
+              Please{' '}
+              <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+                Create an Account
+              </span>{' '}
+              to unlock this feature
+            </p>,
+          );
+          return;
+        } else {
+          handleBookmark();
+        }
+      }}
+    >
       <img
         src={getBookmarkIcon()}
         alt="save icon"

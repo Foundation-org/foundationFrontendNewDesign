@@ -11,9 +11,11 @@ import UrlDialogue from '../question-card/Shareables/UrlDialogue';
 import EmailDialogue from '../question-card/Shareables/EmailDialogue';
 import TwitterDialogue from '../question-card/Shareables/TwitterDialogue';
 import FbDialogue from '../question-card/Shareables/FbDialogue';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import ShowHidePostPopup from '../dialogue-boxes/ShowHidePostPopup';
+import AddToListPopup from '../dialogue-boxes/AddToListPopup';
+import showToast from '../ui/Toast';
 const data = [
   {
     id: 1,
@@ -58,7 +60,7 @@ const QuestBottombar = ({
   setDelModalVisible,
 }) => {
   const navigate = useNavigate();
-
+  const location = useLocation();
   const { isFullScreen } = useParams();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -70,6 +72,7 @@ const QuestBottombar = ({
   const [twitterModal, setTwitterModal] = useState(false);
   const [fbModal, setFbModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [addToList, setAddToList] = useState(false);
   const [checkboxStates, setCheckboxStates] = useState(data.map(() => false));
 
   const handleCopyOpen = () => {
@@ -85,7 +88,7 @@ const QuestBottombar = ({
       );
       return;
     } else if (questStartData?.moderationRatingCount >= 1) {
-      toast.warning('Sharing adult posts is prohibited.');
+      showToast('warning', 'AdultPost');
     } else {
       setCopyModal(true);
     }
@@ -112,7 +115,7 @@ const QuestBottombar = ({
       }
 
       const timeDifference = currentDate - createdAtDate;
-      const seconds = Math.floor(timeDifference / 1000);
+      const seconds = Math.floor(Math.max(timeDifference / 1000, 0));
       const minutes = Math.floor(seconds / 60);
       const hours = Math.floor(minutes / 60);
       const days = Math.floor(hours / 24);
@@ -142,15 +145,20 @@ const QuestBottombar = ({
   };
   const showHidePostOpen = () => {
     if (questStartData.uuid === persistedUserInfo.uuid) {
-      toast.warning('You cannot hide your own post.');
+      showToast('warning', 'hidingOwnPost');
       return;
     }
 
     setCheckboxStates(data.map(() => false));
     setModalVisible(true);
   };
+
   const showHidePostClose = () => {
     setModalVisible(false);
+  };
+
+  const addToListPopupClose = () => {
+    setAddToList(false);
   };
 
   const moderationRatingCount = questStartData?.moderationRatingCount;
@@ -172,6 +180,9 @@ const QuestBottombar = ({
         modalVisible={modalVisible}
         questStartData={questStartData}
       />
+      {addToList && (
+        <AddToListPopup handleClose={addToListPopupClose} modalVisible={addToList} questStartData={questStartData} />
+      )}
       {/* {postProperties === 'SharedLinks' && (
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/trash2.svg`}
@@ -333,13 +344,13 @@ const QuestBottombar = ({
       </div>
 
       {postProperties !== 'HiddenPosts' && postProperties !== 'SharedLinks' && (
-        <div className="flex items-center justify-center gap-[8px] tablet:gap-[30px]">
+        <div className="flex items-center justify-center gap-[8px] tablet:gap-[25px]">
           {postProperties !== 'HiddenPosts' &&
             postProperties !== 'SharedLinks' &&
             questStartData.startStatus === '' &&
             createdBy === localStorage.getItem('uuid') && (
               <img
-                src="/assets/hiddenposts/unhide/deletePost.png"
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/deletePost.png`}
                 alt="eye-latest"
                 className="h-3 w-[9px] cursor-pointer tablet:h-[22px] tablet:w-[17px]"
                 onClick={() => setDelModalVisible(true)}
@@ -362,23 +373,13 @@ const QuestBottombar = ({
                 customStyle={customModalStyle}
                 customClasses="rounded-[10px] tablet:rounded-[26px]"
               >
-                <CopyDialogue
-                  handleClose={handleCopyClose}
-                  id={id}
-                  uniqueShareLink={uniqueShareLink}
-                  questStartData={questStartData}
-                  createdBy={createdBy}
-                  img={img}
-                  alt={alt}
-                  badgeCount={badgeCount}
-                  // getImage={getImage}
-                />
+                <CopyDialogue handleClose={handleCopyClose} questStartData={questStartData} />
               </BasicModal>
             </div>
           )}
           {postProperties === 'HiddenPosts' ? null : postProperties === 'SharedLinks' ? null : (
             <img
-              src="/assets/hiddenposts/unhide/icon1.png"
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/hiddenposts/unhide/icon1.png`}
               alt="eye-latest"
               className="h-[8.75px] w-[12.5px] cursor-pointer tablet:h-[17px] tablet:w-[25px]"
               onClick={showHidePostOpen}
@@ -386,40 +387,61 @@ const QuestBottombar = ({
           )}
 
           {postProperties !== 'HiddenPosts' &&
-            postProperties !== 'SharedLinks' &&
-            postProperties !== 'sharedlink-results' &&
-            postProperties !== 'actual-results' &&
-            !window.location.href.includes('/p/') && (
-              <div className="flex  justify-center ">
-                {isFullScreen === undefined ? (
-                  <div
-                    className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
-                    onClick={() => {
-                      navigate('/quest/isfullscreen', {
-                        state: { questId: questStartData._id },
-                      });
-                    }}
+          postProperties !== 'SharedLinks' &&
+          postProperties !== 'sharedlink-results' &&
+          postProperties !== 'actual-results' &&
+          !window.location.href.includes('/p/') &&
+          !location.pathname.includes('/l/') &&
+          location.pathname !== '/quest/isfullscreen' ? (
+            <div className="flex justify-center ">
+              {isFullScreen === undefined ? (
+                <div
+                  className="flex cursor-pointer items-center justify-end gap-1 text-[#85898C] tablet:gap-[0.66rem] dark:text-[#ACACAC] "
+                  onClick={() => {
+                    navigate('/quest/isfullscreen', {
+                      state: { questId: questStartData._id },
+                    });
+                  }}
+                >
+                  <svg
+                    className="h-3 w-3 tablet:h-[23px] tablet:w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 23"
+                    fill="none"
                   >
-                    <svg
-                      className="h-3 w-3 tablet:h-[23px] tablet:w-5"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 23"
-                      fill="none"
-                    >
-                      <path
-                        d="M6.30165 0H0.943359C0.422241 0 0 0.477316 0 1.06641V7.10938C0 7.69846 0.422241 8.17578 0.943359 8.17578C1.46448 8.17578 1.88672 7.69846 1.88672 7.10938V2.13281H6.30165C6.82277 2.13281 7.24501 1.6555 7.24501 1.06641C7.24501 0.477316 6.82277 0 6.30165 0ZM18.5527 13.8633C18.0316 13.8633 17.6094 14.3406 17.6094 14.9297V19.9062H13.2258C12.7046 19.9062 12.2824 20.3836 12.2824 20.9727C12.2824 21.5617 12.7046 22.0391 13.2258 22.0391H18.5527C19.0739 22.0391 19.4961 21.5617 19.4961 20.9727V14.9297C19.4961 14.3406 19.0739 13.8633 18.5527 13.8633ZM6.30165 19.9062H1.88672V14.9297C1.88672 14.3406 1.46448 13.8633 0.943359 13.8633C0.422241 13.8633 0 14.3406 0 14.9297V20.9727C0 21.5617 0.422241 22.0391 0.943359 22.0391H6.30165C6.82277 22.0391 7.24501 21.5617 7.24501 20.9727C7.24501 20.3836 6.82277 19.9062 6.30165 19.9062ZM18.5527 0H13.2258C12.7046 0 12.2824 0.477316 12.2824 1.06641C12.2824 1.6555 12.7046 2.13281 13.2258 2.13281H17.6094V7.10938C17.6094 7.69846 18.0316 8.17578 18.5527 8.17578C19.0739 8.17578 19.4961 7.69846 19.4961 7.10938V1.06641C19.4961 0.477316 19.0739 0 18.5527 0Z"
-                        fill="#85898C"
-                      />
-                    </svg>
-                    {/* <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem] laptop:text-[1.25rem]">
-                  Full Screen
-                </p> */}
-                  </div>
-                ) : (
-                  <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem]">&#x200B;</p>
-                )}
-              </div>
-            )}
+                    <path
+                      d="M6.30165 0H0.943359C0.422241 0 0 0.477316 0 1.06641V7.10938C0 7.69846 0.422241 8.17578 0.943359 8.17578C1.46448 8.17578 1.88672 7.69846 1.88672 7.10938V2.13281H6.30165C6.82277 2.13281 7.24501 1.6555 7.24501 1.06641C7.24501 0.477316 6.82277 0 6.30165 0ZM18.5527 13.8633C18.0316 13.8633 17.6094 14.3406 17.6094 14.9297V19.9062H13.2258C12.7046 19.9062 12.2824 20.3836 12.2824 20.9727C12.2824 21.5617 12.7046 22.0391 13.2258 22.0391H18.5527C19.0739 22.0391 19.4961 21.5617 19.4961 20.9727V14.9297C19.4961 14.3406 19.0739 13.8633 18.5527 13.8633ZM6.30165 19.9062H1.88672V14.9297C1.88672 14.3406 1.46448 13.8633 0.943359 13.8633C0.422241 13.8633 0 14.3406 0 14.9297V20.9727C0 21.5617 0.422241 22.0391 0.943359 22.0391H6.30165C6.82277 22.0391 7.24501 21.5617 7.24501 20.9727C7.24501 20.3836 6.82277 19.9062 6.30165 19.9062ZM18.5527 0H13.2258C12.7046 0 12.2824 0.477316 12.2824 1.06641C12.2824 1.6555 12.7046 2.13281 13.2258 2.13281H17.6094V7.10938C17.6094 7.69846 18.0316 8.17578 18.5527 8.17578C19.0739 8.17578 19.4961 7.69846 19.4961 7.10938V1.06641C19.4961 0.477316 19.0739 0 18.5527 0Z"
+                      fill="#85898C"
+                    />
+                  </svg>
+                </div>
+              ) : (
+                <p className="text-nowrap text-[9px] font-normal tablet:text-[1.125rem]">&#x200B;</p>
+              )}
+            </div>
+          ) : null}
+
+          <img
+            src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/addToList.svg`}
+            alt="addToList"
+            className="h-auto w-3 cursor-pointer tablet:w-[22px]"
+            onClick={() => {
+              if (persistedUserInfo?.role === 'guest') {
+                toast.warning(
+                  <p>
+                    Please{' '}
+                    <span className="cursor-pointer text-[#389CE3] underline" onClick={() => navigate('/guest-signup')}>
+                      Create an Account
+                    </span>{' '}
+                    to unlock this feature
+                  </p>,
+                );
+                return;
+              } else {
+                setAddToList(true);
+              }
+            }}
+          />
         </div>
       )}
 

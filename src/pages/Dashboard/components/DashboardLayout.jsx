@@ -1,26 +1,33 @@
 import { toast } from 'sonner';
 import { GrClose } from 'react-icons/gr';
 import { useEffect, useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../../components/ui/Button';
+import * as questUtilsActions from '../../../features/quest/utilsSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDebounce } from '../../../utils/useDebounce';
 import { addUser } from '../../../features/auth/authSlice';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { getTreasuryAmount, userInfo, userInfoById } from '../../../services/api/userAuth';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { getConstants, userInfo, userInfoById } from '../../../services/api/userAuth';
 import { hiddenPostFilters, updateSearch } from '../../../features/profile/hiddenPosts';
 import { sharedLinksFilters, updateSharedLinkSearch } from '../../../features/profile/sharedLinks';
 import { feedbackFilters, updateFeedbackSearch } from '../../../features/profile/feedbackSlice';
-import SidebarRight from './SidebarRight';
 import SidebarLeft from './SidebarLeft';
 import api from '../../../services/api/Axios';
-import Anchor from '../../../components/Anchor';
 import PopUp from '../../../components/ui/PopUp';
+import SideNavbar from '../../../components/SideNavbar';
+import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, setAreHiddenPosts } from '../../../features/quest/utilsSlice';
+import MediaControls from '../../../components/MediaControls';
+import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
+import { saveConstants } from '../../../features/constants/constantsSlice';
+import showToast from '../../../components/ui/Toast';
 
 export default function DashboardLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const getHiddenPostFilters = useSelector(hiddenPostFilters);
   const getSharedLinksFilters = useSelector(sharedLinksFilters);
@@ -29,83 +36,93 @@ export default function DashboardLayout({ children }) {
   const [hiddenSearch, setHiddenSearch] = useState('');
   const [sharedlinkSearch, setSharedlinkSearch] = useState('');
   const [feedbackSearch, setFeedbackSearch] = useState('');
+  const questUtilsState = useSelector(getQuestUtils);
+  const questUtils = useSelector(questUtilsActions.getQuestUtils);
 
-  const { data: treasuryAmount, error: treasuryError } = useQuery({
-    queryKey: ['treasury'],
-    queryFn: getTreasuryAmount,
+  const { data: constants, error: constantsError } = useQuery({
+    queryKey: ['constants'],
+    queryFn: getConstants,
   });
 
-  if (treasuryError) {
-    toast.error(treasuryError.response.data.message.split(':')[1]);
+  if (constantsError) {
+    console.log(constantsError);
   }
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
+  useEffect(() => {
+    if (constants) {
+      dispatch(saveConstants(constants));
+    }
+  }, [constants]);
+
+  const {
+    data: userInfoData,
+    isSuccess: userInfoSuccess,
+    isError: userInfoError,
+  } = useQuery({
+    queryKey: ['userInfo', localStorage.getItem('uuid')],
+    queryFn: userInfo,
   });
 
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
-      if (resp?.status === 200) {
-        // Cookie Calling
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          localStorage.setItem('userData', JSON.stringify(resp?.data));
-          // Set into local storage
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        // LocalStorage Calling
-        if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-          if (res?.data?.requiredAction) {
-            setModalVisible(true);
-          }
-        }
-
-        if (resp?.data?.requiredAction) {
-          setModalVisible(true);
-        }
+  const { mutateAsync: getUserInfoById } = useMutation({
+    mutationFn: userInfoById,
+    onSuccess: (res) => {
+      dispatch(addUser(res?.data));
+      if (res?.data?.requiredAction) {
+        setModalVisible(true);
       }
-
-      // setResponse(resp?.data);
-    } catch (e) {
+    },
+    onError: (e) => {
       console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
+    },
+  });
 
   useEffect(() => {
-    handleUserInfo();
-  }, []);
+    if (userInfoError && !userInfoData?.data) {
+      getUserInfoById();
+    }
+  }, [userInfoError, userInfoData, getUserInfoById]);
 
-  const handleGuestLogout = async () => {
-    navigate('/guest-signup');
-  };
+  useEffect(() => {
+    // Handle userInfoData when successfully fetched
+    if (userInfoSuccess && userInfoData?.status === 200) {
+      if (userInfoData.data && userInfoData.data.role === 'user') {
+        dispatch(addUser(userInfoData.data));
+        // localStorage.setItem('userData', JSON.stringify(userInfoData.data));
+        // Set into local storage
+        if (!localStorage.getItem('uuid')) {
+          localStorage.setItem('uuid', userInfoData.data.uuid);
+        }
+      }
+      if (userInfoData?.data?.requiredAction) {
+        setModalVisible(true);
+      }
+    }
+  }, [userInfoSuccess, userInfoData, dispatch, setModalVisible]);
 
   const handleEmailType = async (value) => {
     try {
-      if (!value) return toast.error('Please select the email type!');
+      if (!value) return showToast('warning', 'emailType');
       setModalVisible(false);
       const res = await api.patch(`/updateBadge/${persistedUserInfo._id}/${persistedUserInfo.badges[0]._id}`, {
         type: value,
         primary: true,
       });
       if (res.status === 200) {
-        localStorage.setItem('uId', res.data.uuid);
+        localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userLoggedIn', res.data.uuid);
         localStorage.removeItem('isGuestMode');
         localStorage.setItem('jwt', res.data.token);
+        queryClient.invalidateQueries(['userInfo']);
         navigate('/dashboard');
       }
     } catch (error) {
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
   };
+
+  // const handleGuestLogout = async () => {
+  //   navigate('/guest-signup');
+  // };
 
   // Hidden post Search
   const handleHiddenPostSearch = (e) => {
@@ -198,115 +215,235 @@ export default function DashboardLayout({ children }) {
         </div>
       </PopUp>
 
-      <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
+      <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
-        {location.pathname !== '/dashboard' && (
-          <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-white px-5 tablet:hidden">
-            <div
-              className="h-fit rounded-[15px] bg-white dark:bg-[#000]"
-              onClick={() => navigate('/dashboard/treasury')}
-            >
-              <div className="flex items-center gap-2">
-                <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
-                  alt="badge"
-                  className="size-[25px]"
-                />
+        <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-[#DEE6F7] px-4 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
+          <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
+            {persistedUserInfo?.role !== 'user' ? (
+              <div className="flex cursor-pointer items-center gap-2">
+                <div className="relative h-fit w-fit">
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
+                    alt="badge"
+                    className="h-[25px] w-5 tablet:size-[36px]"
+                  />
+                  <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
+                    G
+                  </p>
+                </div>
                 <div className="flex flex-col gap-1">
-                  <h4 className="heading">Treasury</h4>
+                  <h4 className="heading w-fit border-b">My Balance (Guest)</h4>
                   <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                    {treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX
+                    <p>{userInfoData && userInfoData?.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </p>
                 </div>
               </div>
-            </div>
-
-            <div className="h-fit rounded-[15px] bg-white dark:bg-[#000]">
-              {persistedUserInfo.role !== 'user' ? (
-                <div className="flex cursor-pointer items-center gap-2">
-                  <div className="relative h-fit w-fit">
+            ) : (
+              <>
+                {location.pathname !== '/dashboard/treasury' ? (
+                  <div
+                    className="flex cursor-pointer items-center gap-2"
+                    onClick={() => {
+                      navigate('/dashboard/profile');
+                    }}
+                  >
+                    <div className="relative flex items-center justify-center">
+                      <img
+                        src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
+                        alt="badge"
+                        className="h-[28px] w-[23px]"
+                      />
+                      <p className="absolute left-1/2 top-[40%] z-50 mb-1 -translate-x-1/2 -translate-y-1/2 transform text-[14px] font-medium leading-[14px] text-[#7A7016]">
+                        {userInfoData && userInfoData?.data?.badges?.length}
+                      </p>
+                    </div>
+                    <div className="flex h-7 flex-col justify-between">
+                      <h4 className="heading w-fit border-b">My Balance</h4>
+                      <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
+                        {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className="flex cursor-pointer items-center gap-2"
+                    onClick={() => {
+                      navigate('/dashboard/treasury');
+                    }}
+                  >
                     <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/guestBadge.svg`}
+                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
                       alt="badge"
-                      className="h-[25px] w-5"
+                      className="size-7"
                     />
-                    <p className="transform-center absolute z-50 pb-[5px] text-[12px] font-medium leading-normal text-white tablet:pb-3 tablet:text-[20px]">
-                      G
-                    </p>
+                    <div className="flex h-7 flex-col justify-between gap-1">
+                      <h4 className="heading w-fit border-b">Treasury</h4>
+                      <p className="font-inter text-[11px] font-medium leading-[11px] text-[#616161] tablet:text-[16px] dark:text-[#D2D2D2]">
+                        {constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex flex-col">
-                    <h4 className="heading">Guest User</h4>
-                    <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                      {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
-                    </p>
-                    {/* <div className="" onClick={handleGuestLogout}> */}
-                    <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]" onClick={handleGuestLogout}>
-                      Create Account
-                    </Anchor>
-                    {/* </div> */}
-                  </div>
-                </div>
-              ) : (
-                <div
-                  className="flex cursor-pointer items-center gap-2"
-                  onClick={() => {
-                    navigate('/dashboard/profile');
-                  }}
-                >
-                  <div className="relative flex items-center justify-center">
-                    <img
-                      src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/MeBadge.svg`}
-                      alt="badge"
-                      className="h-[25px] w-5"
-                    />
-                    <p className="absolute bottom-2 z-50 text-[9.5px] font-medium text-[#7A7016]">
-                      {persistedUserInfo?.badges?.length}
-                    </p>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <h4 className="heading">My Balance</h4>
-                    <p className="font-inter text-[8px] font-medium leading-[8px] text-[#616161] dark:text-[#D2D2D2]">
-                      {persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
+                )}
+              </>
+            )}
           </div>
-        )}
-        {/* Desktop */}
-        <div className="hidden tablet:block">
-          <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+          {!location.pathname.startsWith('/dashboard/help/') &&
+            location.pathname !== '/dashboard/profile' &&
+            location.pathname !== '/dashboard/profile/ledger' &&
+            location.pathname !== '/dashboard/profile/hidden-posts' &&
+            location.pathname !== '/dashboard/profile/shared-links' &&
+            location.pathname !== '/dashboard/profile/user-settings' &&
+            location.pathname !== '/dashboard/profile/post-activity' &&
+            location.pathname !== '/dashboard/profile/verification-badges' &&
+            location.pathname !== '/dashboard/profile/lists' &&
+            location.pathname !== '/dashboard/profile/feedback' &&
+            !location.pathname.startsWith('/dashboard/quest') &&
+            location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/treasury/reward-schedule' &&
+            location.pathname !== '/dashboard/treasury/buy-fdx' &&
+            location.pathname !== '/dashboard/treasury/redemption-center' &&
+            location.pathname !== '/dashboard/treasury/ledger' && (
+              <>
+                {persistedUserInfo?.role === 'user' && location.pathname !== '/' ? (
+                  <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
+                    <Button
+                      variant="hollow-submit2"
+                      className="bg-white tablet:w-full"
+                      onClick={() => navigate('/dashboard/quest')}
+                    >
+                      Create Post
+                    </Button>
+                    <Button
+                      variant="hollow-submit2"
+                      className="bg-white tablet:w-full"
+                      onClick={() => navigate('/dashboard/profile/verification-badges')}
+                    >
+                      Add Badge
+                    </Button>
+                  </div>
+                ) : (
+                  <Button variant="hollow-submit2" className="bg-white" onClick={() => navigate('/guest-signup')}>
+                    Sign up
+                  </Button>
+                )}
+              </>
+            )}
+
+          {/* {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/dashboard/profile') && (
+            <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
+              <Button
+                variant="hollow-submit2"
+                className="bg-white tablet:w-full"
+                onClick={() => navigate('/dashboard/treasury')}
+              >
+                Treasury
+              </Button>
+            </div>
+          )} */}
+
+          {/*
+          {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/dashboard/treasury') && (
+            <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
+              <Button
+                variant="hollow-submit2"
+                className="bg-white tablet:w-full"
+                onClick={() => navigate('/dashboard/profile')}
+              >
+                My Profile
+              </Button>
+            </div>
+          )} */}
+        </div>
+
+        {/* Desktop Left Side */}
+        <div className="left-0 top-0 hidden tablet:block laptop:absolute">
+          <div
+            className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]"
+            onClick={() => navigate('/dashboard/treasury')}
+          >
             <div className="flex items-center gap-[15px]">
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/treasure.svg`}
                 alt="badge"
                 className="size-[47px]"
               />
-              <div className="flex flex-col gap-1">
-                <h4 className="heading">Treasury</h4>
+              <div className="flex h-[47px] flex-col justify-between">
+                <h4 className="heading w-fit border-b-2">Treasury</h4>
                 <p className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-                  <span>{treasuryAmount ? (treasuryAmount * 1)?.toFixed(2) : 0} FDX</span>
+                  <span>{constants ? (constants.TREASURY_BALANCE * 1)?.toFixed(2) : 0} FDX</span>
                 </p>
               </div>
             </div>
           </div>
-          {location.pathname !== '/dashboard/quest' &&
+
+          {!location.pathname.startsWith('/dashboard/quest') &&
             location.pathname !== '/dashboard/profile' &&
             location.pathname !== '/dashboard/profile/ledger' &&
             location.pathname !== '/dashboard/profile/hidden-posts' &&
             location.pathname !== '/dashboard/profile/shared-links' &&
+            location.pathname !== '/dashboard/profile/user-settings' &&
+            location.pathname !== '/dashboard/profile/feedback' &&
+            location.pathname !== '/dashboard/profile/post-activity' &&
             location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/treasury/reward-schedule' &&
+            location.pathname !== '/dashboard/treasury/buy-fdx' &&
+            location.pathname !== '/dashboard/treasury/redemption-center' &&
             location.pathname !== '/dashboard/treasury/ledger' &&
             location.pathname !== '/quest/isfullscreen' &&
             location.pathname !== '/shared-links/result' &&
+            !location.pathname.startsWith('/dashboard/help/') &&
+            location.pathname !== '/help/about' &&
+            location.pathname !== '/help/faq' &&
+            location.pathname !== '/help/contact-us' &&
+            !location.pathname.startsWith('/p/') &&
+            !location.pathname.startsWith('/l/') &&
+            !location.pathname.startsWith('/dashboard/profile/postsbylist/') &&
+            location.pathname !== '/shared-list-link/result' &&
+            location.pathname !== '/dashboard/profile/verification-badges' &&
+            location.pathname !== '/dashboard/profile/lists' && <SidebarLeft />}
+
+          {location.pathname !== '/dashboard/treasury' &&
+            location.pathname !== '/dashboard/treasury/reward-schedule' &&
+            location.pathname !== '/dashboard/treasury/buy-fdx' &&
+            location.pathname !== '/dashboard/treasury/redemption-center' &&
+            location.pathname !== '/dashboard/treasury/ledger' &&
+            !location.pathname.startsWith('/dashboard/help/') &&
+            // location.pathname !== '/dashboard/quest' &&
+            !location.pathname.startsWith('/dashboard/quest') &&
+            location.pathname !== '/dashboard/profile' &&
+            location.pathname !== '/dashboard/profile/ledger' &&
+            location.pathname !== '/dashboard/profile/hidden-posts' &&
+            location.pathname !== '/dashboard/profile/shared-links' &&
             location.pathname !== '/dashboard/profile/user-settings' &&
+            location.pathname !== '/dashboard/profile/post-activity' &&
             location.pathname !== '/dashboard/profile/feedback' &&
-            !location.pathname.startsWith('/p/') && <SidebarLeft />}
+            location.pathname !== '/shared-list-link/result' &&
+            !location.pathname.startsWith('/dashboard/profile/postsbylist/') &&
+            location.pathname !== '/dashboard/profile/verification-badges' &&
+            location.pathname !== '/dashboard/profile/lists' && <SideNavbar />}
+
+          {questUtilsState.isShowPlayer && location.pathname === '/dashboard' && (
+            <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
+              <div className="relative">
+                <img
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/mediaCloseIcon.svg`}
+                  alt="mediaCloseIcon"
+                  className="absolute -right-3 -top-3 h-6 w-6 cursor-pointer text-black tablet:-right-[14px] tablet:-top-[18px] tablet:size-[33px] dark:text-white"
+                  onClick={() => {
+                    dispatch(setIsShowPlayer(false));
+                    dispatch(setPlayingPlayerId(''));
+                  }}
+                />
+              </div>
+              <MediaControls />
+            </div>
+          )}
+
+          {/* {canAddPost !== 'true' && location.pathname.startsWith('/dashboard/profile/postsbylist/') && <ManageList />} */}
 
           {/* HiddenPost Search */}
-          {location.pathname === '/dashboard/profile/hidden-posts' && (
-            <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+          {location.pathname === '/dashboard/profile/hidden-posts' && questUtils.areHiddenPosts && (
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
@@ -346,8 +483,8 @@ export default function DashboardLayout({ children }) {
           )}
 
           {/* SharedLinks Search */}
-          {location.pathname === '/dashboard/profile/shared-links' && (
-            <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+          {location.pathname === '/dashboard/profile/shared-links' && questUtils.areShareLinks && (
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
@@ -387,8 +524,8 @@ export default function DashboardLayout({ children }) {
           )}
 
           {/* Feedback Search */}
-          {location.pathname === '/dashboard/profile/feedback' && (
-            <div className="my-5 ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+          {location.pathname === '/dashboard/profile/feedback' && questUtils.areFeedBackPosts && (
+            <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
                   <input
@@ -427,15 +564,11 @@ export default function DashboardLayout({ children }) {
             </div>
           )}
         </div>
-
-        {location.pathname !== '/dashboard/treasury' &&
-          location.pathname !== '/dashboard/treasury/ledger' &&
-          location.pathname !== '/dashboard/profile/ledger' &&
-          children}
-        {/* Right Side */}
-        <div className="hidden tablet:block">
-          <div className="mr-[31px] mt-5 hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
-            {persistedUserInfo.role !== 'user' ? (
+        {children}
+        {/* Desktop Right Side */}
+        <div className="right-0 top-0 hidden tablet:block laptop:absolute">
+          <div className="mr-[31px] mt-[15px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
+            {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-[15px]">
                 <div className="relative h-fit w-fit">
                   <img
@@ -447,15 +580,10 @@ export default function DashboardLayout({ children }) {
                     G
                   </p>
                 </div>
-                <div>
-                  <h4 className="heading">Guest User</h4>
-                  {persistedUserInfo?.balance && (
-                    <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-                      <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
-                    </div>
-                  )}
-                  <div className="h-[10px]" onClick={handleGuestLogout}>
-                    <Anchor className="cursor-pointer text-[#4A8DBD] dark:text-[#BAE2FF]">Create Account</Anchor>
+                <div className="flex h-[47px] flex-col justify-between">
+                  <h4 className="heading w-fit border-b-2">My Balance (Guest)</h4>
+                  <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
+                    <p>{userInfoData && userInfoData.data?.balance ? userInfoData.data?.balance.toFixed(2) : 0} FDX</p>
                   </div>
                 </div>
               </div>
@@ -473,28 +601,37 @@ export default function DashboardLayout({ children }) {
                     className="tablet:h-[47px] tablet:w-[38px]"
                   />
                   <p className="transform-center absolute z-50 pb-3 text-[20px] font-medium leading-normal text-[#7A7016]">
-                    {persistedUserInfo?.badges?.length}
+                    {userInfoData && userInfoData?.data?.badges?.length}
                   </p>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <h4 className="heading">My Balance</h4>
+                <div className="flex h-[47px] flex-col justify-between">
+                  <h4 className="heading w-fit border-b-2">My Balance</h4>
                   <div className="font-inter text-[10.79px] text-base font-medium text-[#616161] tablet:text-[18px] tablet:leading-[18px] dark:text-[#D2D2D2]">
-                    <p>{persistedUserInfo?.balance ? persistedUserInfo?.balance.toFixed(2) : 0} FDX</p>
+                    <p>
+                      {userInfoData && userInfoData?.data?.balance ? userInfoData?.data?.balance.toFixed(2) : 0} FDX
+                    </p>
                   </div>
                 </div>
               </div>
             )}
           </div>
-          {location.pathname !== '/dashboard/quest' &&
+
+          {!location.pathname.startsWith('/dashboard/quest') &&
             location.pathname !== '/dashboard/profile/ledger' &&
+            location.pathname !== '/dashboard/profile/post-activity' &&
             location.pathname !== '/dashboard/treasury' &&
-            location.pathname !== '/dashboard/treasury/ledger' && <SidebarRight />}
+            location.pathname !== '/dashboard/treasury/reward-schedule' &&
+            location.pathname !== '/dashboard/treasury/buy-fdx' &&
+            location.pathname !== '/dashboard/treasury/redemption-center' &&
+            location.pathname !== '/dashboard/treasury/ledger' &&
+            !location.pathname.startsWith('/dashboard/help/') &&
+            location.pathname !== '/help/about' &&
+            location.pathname !== '/help/faq' &&
+            location.pathname !== '/help/contact-us' && <SummarySidebar userData={userInfoData?.data} />}
         </div>
       </div>
-      {(location.pathname === '/dashboard/treasury' ||
-        location.pathname === '/dashboard/treasury/ledger' ||
-        location.pathname === '/dashboard/profile/ledger') &&
-        children}
+      {/* Mobile Children */}
+      {/* {(location.pathname === '/dashboard/treasury' || location.pathname === '/dashboard/treasury/ledger') && children} */}
     </div>
   );
 }

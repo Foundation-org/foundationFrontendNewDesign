@@ -4,12 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { validateInterval } from '../../../../../utils';
-import { userInfo } from '../../../../../services/api/userAuth';
-import { addUser } from '../../../../../features/auth/authSlice';
 import { questSelectionInitial } from '../../../../../constants/quests';
 import { resetQuests } from '../../../../../features/quest/questsSlice';
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
-import { getQuestByUniqueShareLink } from '../../../../../services/api/homepageApis';
+// import { getQuestByUniqueShareLink } from '../../../../../services/api/homepageApis';
 
 import Result from './Result';
 import StartTest from './StartTest';
@@ -17,14 +15,13 @@ import ButtonGroup from '../../../../../components/question-card/ButtonGroup';
 import QuestInfoText from '../../../../../components/question-card/QuestInfoText';
 import Spacing from '../../../../../components/question-card/Spacing.jsx';
 import QuestCardLayout from '../../../../../components/question-card/QuestCardLayout';
-import ConditionalTextFullScreen from '../../../../../components/question-card/ConditionalTextFullScreen';
 
 import * as questServices from '../../../../../services/api/questsApi';
 import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
-import * as authActions from '../../../../../features/auth/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button.jsx';
-
+import { submitListResponse, updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
+import showToast from '../../../../../components/ui/Toast'
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -34,7 +31,7 @@ const QuestionCardWithToggle = (props) => {
   const getQuestUtilsState = useSelector(questUtilsActions.getQuestUtils);
 
   const { innerRef, questStartData, postProperties, SharedLinkButton } = props;
-  const { isSingleQuest, postLink, guestResult } = props;
+  const { isSingleQuest, postLink, categoryId } = props;
 
   let questData;
 
@@ -148,6 +145,10 @@ const QuestionCardWithToggle = (props) => {
   }, [questStartData.QuestAnswers, windowWidth]);
 
   useEffect(() => {
+    if (questStartData.url?.length > 0 && !questStartData.url[0]?.includes('flickr') && questStartData.url[0] !== '') {
+      dispatch(questUtilsActions.addPlayerId(questStartData._id));
+    }
+
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
@@ -176,15 +177,15 @@ const QuestionCardWithToggle = (props) => {
     setViewResult(testId);
   };
 
-  const handleChange = () => {
-    setOpenResults(false);
-    // const data = {
-    //   questForeignKey: questStartData._id,
-    //   uuid: persistedUserInfo.uuid,
-    // };
+  // const handleChange = () => {
+  //   setOpenResults(false);
+  //   // const data = {
+  //   //   questForeignKey: questStartData._id,
+  //   //   uuid: persistedUserInfo.uuid,
+  //   // };
 
-    handleStartTest(questStartData._id);
-  };
+  //   handleStartTest(questStartData._id);
+  // };
 
   const handleAddOption = () => {
     const newOption = {
@@ -266,26 +267,40 @@ const QuestionCardWithToggle = (props) => {
     }
   }, [questStartData]);
 
-  const questByUniqueShareLink = async () => {
-    const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-1)[0]);
-    props.setSingleQuestResp(getQuest.response.data.data[0]);
-  };
+  // const questByUniqueShareLink = async () => {
+  //   const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-1)[0]);
+  //   props.setSingleQuestResp(getQuest.response.data.data[0]);
+  // };
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
+  const { mutateAsync: startGuestListQuest } = useMutation({
+    mutationFn: submitListResponse,
     onSuccess: (resp) => {
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(authActions.addUser(resp?.data));
-
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
+      if (resp.status === 200) {
+        queryClient.invalidateQueries(['userInfo']);
+        queryClient.setQueriesData(['postsByCategory'], (oldData) => {
+          if (!oldData || !oldData.post) {
+            return oldData;
           }
+
+          return {
+            ...oldData,
+            post: oldData.post.map((item) =>
+              item._id === resp.data.category.post._id ? resp.data.category.post : item,
+            ),
+          };
+        });
+
+        setLoading(false);
+
+        if (location.pathname.startsWith('/l/')) {
+          updateCategoryParticipentsCount({ categoryLink: location.pathname.split('/')[2] });
         }
       }
     },
     onError: (err) => {
-      console.log(err);
+      console.log({ err });
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+      setLoading(false);
     },
   });
 
@@ -301,20 +316,36 @@ const QuestionCardWithToggle = (props) => {
 
       if (resp.data.message === 'Start Quest Created Successfully') {
         setLoading(false);
-        getUserInfo();
+        queryClient.invalidateQueries(['userInfo', 'postsByCategory']);
+
+        queryClient.setQueryData(['questByShareLink'], (oldData) => ({
+          ...resp.data.data,
+        }));
+
+        // queryClient.setQueryData(['postsByCategory'], (oldData) => {
+        //   console.log('old', oldData);
+        // });
+
+        // postsByCategory;
       }
 
-      if (persistedUserInfo.role === 'guest') {
-        questByUniqueShareLink();
-      }
-      if (location.pathname.startsWith('/p/') || location.pathname.startsWith('/quest/')) {
+      // if (persistedUserInfo.role === 'guest') {
+      //   questByUniqueShareLink();
+      // }
+      if (location.pathname.startsWith('/quest/')) {
         props.setSubmitResponse(resp.data.data);
       }
-      handleViewResults(questStartData._id);
+      if (!location.pathname.startsWith('/p/' || !location.pathname.startsWith('/l'))) {
+        handleViewResults(questStartData._id);
+      }
+
+      if (location.pathname.startsWith('/l/')) {
+        updateCategoryParticipentsCount({ categoryLink: location.pathname.split('/')[2] });
+      }
     },
     onError: (err) => {
       console.log(err);
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
       setLoading(false);
     },
   });
@@ -322,20 +353,20 @@ const QuestionCardWithToggle = (props) => {
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: questServices.updateChangeAnsStartQuest,
     onSuccess: (resp) => {
-      getUserInfo();
+      queryClient.invalidateQueries(['userInfo']);
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
-        toast.warning('You have selected the same option as last time. Your option was not changed.');
+        showToast('warning', 'selectedSameOptions')
       }
       if (resp.data.message === 'You can change your answer once every 1 hour') {
-        toast.warning('You can change your option once every 1 hour.');
+        showToast('warning', 'changeOptionTimePeriod')
         setLoading(false);
       }
       if (resp.data.message === 'Start Quest Updated Successfully') {
         setLoading(false);
         handleViewResults(questStartData._id);
 
-        if (location.pathname.startsWith('/p/') || location.pathname.startsWith('/quest/')) {
+        if (location.pathname.startsWith('/quest/')) {
           props.setSubmitResponse(resp.data.data);
         }
 
@@ -346,20 +377,19 @@ const QuestionCardWithToggle = (props) => {
           ),
         }));
       }
-      userInfo(persistedUserInfo?.uuid || localStorage.getItem('uuid')).then((resp) => {
-        if (resp.status === 200) {
-          dispatch(addUser(resp.data));
-        }
-      });
     },
     onError: (err) => {
-      toast.error(err.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
       setLoading(false);
     },
   });
 
   const handleSubmit = () => {
-    if (persistedUserInfo.role === 'guest' && !location.pathname.startsWith('/p')) {
+    if (
+      persistedUserInfo.role === 'guest' &&
+      !location.pathname.startsWith('/p') &&
+      !location.pathname.startsWith('/l')
+    ) {
       toast.warning(
         <p>
           Please{' '}
@@ -411,7 +441,7 @@ const QuestionCardWithToggle = (props) => {
       };
 
       if (!params.answer.selected) {
-        toast.warning("Oops! You haven't selected anything yet.");
+        showToast('warning', 'emptySelection')
         setLoading(false);
         return;
       }
@@ -427,7 +457,11 @@ const QuestionCardWithToggle = (props) => {
           changeAnswer(params);
         }
       } else {
-        startQuest(params);
+        if (location.pathname.startsWith('/l/')) {
+          startGuestListQuest({ params, categoryId, categoryLink: location.pathname.split('/')[2] });
+        } else {
+          startQuest(params);
+        }
       }
     } else if (
       questStartData.whichTypeQuestion === 'multiple choise' ||
@@ -498,7 +532,7 @@ const QuestionCardWithToggle = (props) => {
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            toast.error('You cannot leave the added option blank');
+            showToast('warning', 'optionBlank')
             setLoading(false);
             return;
           }
@@ -526,7 +560,7 @@ const QuestionCardWithToggle = (props) => {
 
             setAnswerSelection(updatedArray);
           } else {
-            toast.warning("Oops! You haven't selected anything yet.");
+            showToast('warning', 'emptySelection')
             setLoading(false);
           }
         }
@@ -544,7 +578,7 @@ const QuestionCardWithToggle = (props) => {
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          toast.error('You cannot leave the added option blank');
+          showToast('warning', 'optionBlank')
           setLoading(false);
           return;
         }
@@ -557,7 +591,11 @@ const QuestionCardWithToggle = (props) => {
         }
 
         if (length !== 0) {
-          startQuest(params); // Start Quest API CALL
+          if (location.pathname.startsWith('/l/')) {
+            startGuestListQuest({ params, categoryId, categoryLink: location.pathname.split('/')[2] });
+          } else {
+            startQuest(params);
+          } // Start Quest API CALL
 
           const updatedArray = answersSelection.map((item, index) => {
             if (index === answersSelection.length - 1) {
@@ -572,7 +610,7 @@ const QuestionCardWithToggle = (props) => {
 
           setAnswerSelection(updatedArray);
         } else {
-          toast.warning("Oops! You haven't selected anything yet.");
+          showToast('warning', 'emptySelection')
           setLoading(false);
         }
       }
@@ -629,7 +667,7 @@ const QuestionCardWithToggle = (props) => {
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            toast.error('You cannot leave the added option blank');
+            showToast('warning', 'optionBlank')
             setLoading(false);
             return;
           }
@@ -662,11 +700,15 @@ const QuestionCardWithToggle = (props) => {
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          toast.error('You cannot leave the added option blank');
+          showToast('warning', 'optionBlank')
           setLoading(false);
           return;
         }
-        startQuest(params);
+        if (location.pathname.startsWith('/l/')) {
+          startGuestListQuest({ params, categoryId, categoryLink: location.pathname.split('/')[2] });
+        } else {
+          startQuest(params);
+        }
 
         const updatedArray = rankedAnswers.map((item, index) => {
           if (item?.addedOptionByUser === true) {
@@ -695,14 +737,14 @@ const QuestionCardWithToggle = (props) => {
         handleStartTest(questStartData._id);
       }
       if (questStartData.startStatus === 'change answer') {
-        if (!guestResult) {
-          setOpenResults(false);
-          handleViewResults(questStartData._id);
-        } else {
-          navigate('/shared-links/result', {
-            state: { questId: questStartData._id, link: location.pathname.split('/').pop() },
-          });
-        }
+        // if (!guestResult) {
+        setOpenResults(false);
+        handleViewResults(questStartData._id);
+        // } else {
+        //   navigate('/shared-links/result', {
+        //     state: { questId: questStartData._id, link: location.pathname.split('/').pop() },
+        //   });
+        // }
       }
       if (questStartData.startStatus === 'completed') {
         setOpenResults(true);
@@ -711,35 +753,34 @@ const QuestionCardWithToggle = (props) => {
     }
   }, [questStartData]);
 
-  const updateAnswersSelectionForRanked = (prevAnswers, actionPayload) => {
-    const { option, label } = actionPayload;
+  // const updateAnswersSelectionForRanked = (prevAnswers, actionPayload) => {
+  //   const { option, label } = actionPayload;
 
-    const updatedAnswers = prevAnswers.map((answer) => {
-      // Check if the label matches the question
-      if (label.some((item) => item.question === answer.label)) {
-        return { ...answer, check: true };
-        return answer;
-      }
-    });
+  //   const updatedAnswers = prevAnswers.map((answer) => {
+  //     // Check if the label matches the question
+  //     if (label.some((item) => item.question === answer.label)) {
+  //       return { ...answer, check: true };
+  //       return answer;
+  //     }
+  //   });
 
-    return updatedAnswers;
-  };
+  //   return updatedAnswers;
+  // };
 
-  const handleRankedChoice = (option, label) => {
-    const actionPayload = {
-      option,
-      label,
-    };
+  // const handleRankedChoice = (option, label) => {
+  //   const actionPayload = {
+  //     option,
+  //     label,
+  //   };
 
-    setAnswerSelection((prevAnswers) => updateAnswersSelectionForRanked(prevAnswers, actionPayload));
-  };
+  //   setAnswerSelection((prevAnswers) => updateAnswersSelectionForRanked(prevAnswers, actionPayload));
+  // };
 
   const renderQuestContent = () => {
     if (viewResult !== questStartData._id && openResults !== true) {
       return (
         <>
-          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
-
+          <Spacing questStartData={questStartData} show={true} />
           <StartTest
             questStartData={questStartData}
             handleToggleCheck={handleToggleCheck}
@@ -755,15 +796,13 @@ const QuestionCardWithToggle = (props) => {
             setCheckOptionStatus={setCheckOptionStatus}
             postProperties={postProperties}
           />
-          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
-          {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
+          <QuestInfoText questStartData={questStartData} show={true} />
         </>
       );
     } else {
       return (
         <>
-          <Spacing questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
-
+          <Spacing questStartData={questStartData} show={true} />
           <Result
             questStartData={questStartData}
             id={questStartData._id}
@@ -782,15 +821,14 @@ const QuestionCardWithToggle = (props) => {
             cardSize={cardSize}
             postProperties={postProperties}
           />
-          {/* <ConditionalTextFullScreen questStartData={questStartData} show={true} /> */}
-          <QuestInfoText questStartData={questStartData} show={true} questType={questStartData.whichTypeQuestion} />
+          <QuestInfoText questStartData={questStartData} show={true} />
         </>
       );
     }
   };
 
   return (
-    <div ref={innerRef}>
+    <div ref={innerRef} id={questStartData._id === getQuestUtilsState.playerPlayingId ? 'playing-card' : ''}>
       <QuestCardLayout
         questStartData={questStartData}
         playing={props.playing}
@@ -801,29 +839,19 @@ const QuestionCardWithToggle = (props) => {
         {props.questType !== 'feedback' ? (
           <ButtonGroup
             questStartData={questStartData}
-            id={questStartData._id}
-            btnText={questStartData.startStatus}
             handleStartTest={handleStartTest}
             viewResult={viewResult}
             handleViewResults={handleViewResults}
             setHowManyTimesAnsChanged={setHowManyTimesAnsChanged}
-            whichTypeQuestion={questStartData.whichTypeQuestion}
             handleToggleCheck={handleToggleCheck}
-            handleRankedChoice={handleRankedChoice}
-            rankedAnswers={rankedAnswers}
             setRankedAnswers={setRankedAnswers}
             answersSelection={answersSelection}
             setAnswerSelection={setAnswerSelection}
-            startStatus={questStartData.startStatus}
-            setLoadingDetail={setLoadingDetail}
             handleOpen={handleAddOption}
-            usersAddTheirAns={questStartData.usersAddTheirAns}
-            answers={questStartData.QuestAnswers}
             title={getQuestionTitle(questStartData.whichTypeQuestion)}
             handleSubmit={handleSubmit}
             loading={loading}
             startTest={startTest}
-            handleChange={handleChange}
             addOptionField={addOptionField}
             setAddOptionField={setAddOptionField}
             checkOptionStatus={checkOptionStatus}

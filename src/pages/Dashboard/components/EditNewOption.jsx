@@ -12,7 +12,7 @@ const EditNewOption = (props) => {
 
   const handleAddOption = () => {
     if (answer.trim() === '') {
-      toast.error('Option cannot be empty');
+      showToast('warning', 'emptyOption')
       return;
     }
 
@@ -49,9 +49,8 @@ const EditNewOption = (props) => {
         </div>
       </div>
       <button
-        className={` ${
-          persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-        } inset-0 w-full  rounded-[10px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner`}
+        className={` ${persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+          } inset-0 w-full  rounded-[10px] px-5 py-2 text-[20px] font-semibold leading-normal text-[#EAEAEA] shadow-inner`}
         onClick={handleAddOption}
       >
         Submit

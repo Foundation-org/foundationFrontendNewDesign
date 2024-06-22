@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { getQuests, toggleCheck } from '../../../features/quest/questsSlice';
 import SingleAnswer from '../../../components/question-card/options/SingleAnswer';
 import { validateInterval } from '../../../utils';
+import showToast from '../../../components/ui/Toast';
 
 const QuestionCard = ({
   tab,
@@ -169,7 +170,7 @@ const QuestionCard = ({
 
       // if (!(params.answer.selected && params.answer.contended)) {
       if (!params.answer.selected) {
-        toast.warning('You cannot submit without selecting an option');
+        showToast('warning', 'emptySelection')
         return;
       }
 
@@ -253,7 +254,7 @@ const QuestionCard = ({
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            toast.error('You cannot leave the added option blank');
+            showToast('warning', 'optionBlank')
             setLoading(false);
             return;
           }
@@ -279,7 +280,7 @@ const QuestionCard = ({
 
             setAnswerSelection(updatedArray);
           } else {
-            toast.warning('You cannot submit without selecting an option');
+            showToast('warning', 'emptySelection')
             setLoading(false);
           }
         }
@@ -296,7 +297,7 @@ const QuestionCard = ({
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          toast.error('You cannot leave the added option blank');
+          showToast('warning', 'optionBlank')
           setLoading(false);
           return;
         }
@@ -323,7 +324,7 @@ const QuestionCard = ({
 
           setAnswerSelection(updatedArray);
         } else {
-          toast.warning('You cannot submit without selecting an option');
+          showToast('warning', 'emptySelection')
           setLoading(false);
         }
       }
@@ -399,7 +400,7 @@ const QuestionCard = ({
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          toast.error('You cannot leave the added option blank');
+          showToast('warning', 'optionBlank')
           setLoading(false);
           return;
         }

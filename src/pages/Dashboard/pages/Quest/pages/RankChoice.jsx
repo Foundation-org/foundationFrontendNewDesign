@@ -15,8 +15,15 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import * as questServices from '../../../../../services/api/questsApi';
-import { userInfo, userInfoById } from '../../../../../services/api/userAuth';
-import { addUser } from '../../../../../features/auth/authSlice';
+import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+import showToast from '../../../../../components/ui/Toast';
+import {
+  POST_MAX_OPTION_LIMIT,
+  POST_OPTIONS_CHAR_LIMIT,
+  RANKED_CHOICE_MIN_OPTION_LIMIT,
+} from '../../../../../constants/Values/constants';
+import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
+import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -29,50 +36,27 @@ const RankChoice = () => {
   const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedContants = useSelector(getConstantsValues);
 
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-  });
-
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          localStorage.setItem('userData', JSON.stringify(resp?.data));
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-        }
-      }
-
-      // setResponse(resp?.data);
-    } catch (e) {
-      console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
-
+  const filterStates = useSelector(filtersActions.getFilters);
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
+          if (
+            filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0
+          ) {
+            dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          }
           navigate('/dashboard');
-          handleUserInfo();
+          queryClient.invalidateQueries(['userInfo']);
           setLoading(false);
           setAddOption(false);
           setChangedOption('');
@@ -112,7 +96,7 @@ const RankChoice = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return toast.warning('Post cannot be empty');
+      return showToast('warning', 'emptyPost');
     }
 
     // getTopicOfValidatedQuestion
@@ -121,7 +105,7 @@ const RankChoice = () => {
     });
     // If any error captured
     if (errorMessage) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong');
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
@@ -129,15 +113,15 @@ const RankChoice = () => {
     });
     // If found null
     if (!moderationRating) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong');
     }
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return toast.error('You cannot leave the description empty.');
+      return showToast('warning', 'emptyPostDescription');
     }
 
-    if (optionsValue.length <= 2) {
+    if (optionsValue.length <= RANKED_CHOICE_MIN_OPTION_LIMIT) {
       setLoading(false);
-      return toast.warning('The minimum number of options should be 3.');
+      return showToast('warning', 'minOptionLimitRanked');
     }
 
     const params = {
@@ -157,7 +141,7 @@ const RankChoice = () => {
     const isEmptyAnswer = params.QuestAnswers.some((answer) => answer.question.trim() === '');
 
     if (isEmptyAnswer) {
-      return toast.warning('Option cannot be empty');
+      return showToast('warning', 'emptyOption');
     }
     if (!checkHollow()) {
       createQuest(params);
@@ -165,12 +149,14 @@ const RankChoice = () => {
   };
 
   const handleChange = (index, value) => {
-    if (value.length <= 200) {
+    if (value.length <= POST_OPTIONS_CHAR_LIMIT) {
       dispatch(createQuestAction.addOptionById({ id: `index-${index}`, option: value }));
     }
   };
 
   const answerVerification = async (id, index, value, extra) => {
+    if (value === '') return;
+
     if (extra) {
       if (extra === value) return;
     }
@@ -337,8 +323,8 @@ const RankChoice = () => {
     <CreateQuestWrapper
       quest="M/R"
       handleTab={handleTab}
-      type={'Poll'}
-      msg={'Create a selection of choices that can be arranged in order of preference.'}
+      type={'Post'}
+      msg={'Participants can arrange these options in their order of preference'}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId={`optionsValue-${Date.now()}`}>
@@ -391,10 +377,10 @@ const RankChoice = () => {
         variant="addOption"
         className="ml-[30px] mt-2 tablet:ml-[50px] tablet:mt-[15px]"
         onClick={() => {
-          if (optionsValue.length < 50) {
+          if (optionsValue.length < POST_MAX_OPTION_LIMIT) {
             addNewOption();
           } else {
-            toast.warning('You cannot add more than 50 options');
+            return showToast('warning', 'optionLimit');
           }
         }}
       >
@@ -448,7 +434,7 @@ const RankChoice = () => {
             >
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-                (-0.1 FDX)
+                (-{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
               </span>
             </Button>
             {/* <button

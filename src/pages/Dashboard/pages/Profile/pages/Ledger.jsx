@@ -1,5 +1,4 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useDebounce } from '../../../../../utils/useDebounce';
 import { getAllLedgerData, searchLedger } from '../../../../../services/api/userAuth';
 import { Columns } from '../components/LedgerUtils';
@@ -52,7 +51,8 @@ export default function BasicTable() {
 
   const findingLedger = async () => {
     try {
-      const data = await searchLedger(currentPage, itemsPerPage, sort, debouncedSearch);
+      const uuid = localStorage.getItem('uuid');
+      const data = await searchLedger(uuid, currentPage, itemsPerPage, sort, debouncedSearch);
       if (data) {
         setLedgerData(data);
       }
@@ -130,21 +130,11 @@ export default function BasicTable() {
     if (data) {
       setLedgerData(data);
     }
-    // console.log("🚀 ~ file: Ledger.jsx:57 ~ handlePageClick ~ page:", page)
-    // console.log("testing...", table.setPageIndex(page - 1));
   };
-
-  // useEffect(() => {
-  //   setCurrentPage(table.getState().pagination.pageIndex + 1);
-  //   console.log("🚀 ~ file: Ledger.jsx:64 ~ useEffect ~ table.getState().pagination.pageIndex:", table.getState().pagination)
-  // }, [table.getState().pagination.pageIndex]);
-  // console.log("🚀 ~ file: Ledger.jsx:84 ~ useEffect ~ pagination:", pagination)
-  // console.log("🚀 ~ file: Ledger.jsx:64 ~ useEffect ~ setCurrentPage:", currentPage)
 
   const visibleButtons = 5;
   const rangeStart = Math.max(1, currentPage - Math.floor(visibleButtons / 2));
   const rangeEnd = Math.min(totalPages, rangeStart + visibleButtons - 1);
-  // console.log("🚀 ~ file: Ledger.jsx:121 ~ BasicTable ~ rangeEnd:", rangeEnd)
 
   useEffect(() => {
     return () => {
@@ -155,8 +145,6 @@ export default function BasicTable() {
       });
     };
   }, [columnSizes, table]);
-
-  console.log('table', table.getRowModel().rows);
 
   return (
     <div className="mb-6 overflow-y-auto">
@@ -178,28 +166,29 @@ export default function BasicTable() {
         />
         <div className="no-scrollbar w-full overflow-auto tablet:h-[600px]">
           <table
+            className="w-full"
             // style={{ width: table.getCenterTotalSize() }}
-            style={{
-              minWidth:
-                window.innerWidth <= 1700 && window.innerWidth >= 744
-                  ? '600px'
-                  : window.innerWidth <= 744 && window.innerWidth >= 0
-                    ? '350px'
-                    : 'auto',
-              width:
-                window.innerWidth <= 1700 && window.innerWidth >= 900
-                  ? '100%'
-                  : window.innerWidth <= 900 && window.innerWidth >= 744
-                    ? '120%'
-                    : window.innerWidth <= 744 && window.innerWidth >= 0
-                      ? '100%'
-                      : table.getCenterTotalSize(),
-            }}
-            {...{
-              style: {
-                width: table.getCenterTotalSize(),
-              },
-            }}
+            // style={{
+            //   minWidth:
+            //     window.innerWidth <= 1700 && window.innerWidth >= 744
+            //       ? '600px'
+            //       : window.innerWidth <= 744 && window.innerWidth >= 0
+            //         ? '350px'
+            //         : 'auto',
+            //   width:
+            //     window.innerWidth <= 1700 && window.innerWidth >= 900
+            //       ? '100%'
+            //       : window.innerWidth <= 900 && window.innerWidth >= 744
+            //         ? '120%'
+            //         : window.innerWidth <= 744 && window.innerWidth >= 0
+            //           ? '100%'
+            //           : table.getCenterTotalSize(),
+            // }}
+            // {...{
+            //   style: {
+            //     width: table.getCenterTotalSize(),
+            //   },
+            // }}
           >
             <thead
               style={{ width: table.getTotalSize() }}
@@ -260,7 +249,9 @@ export default function BasicTable() {
             </thead>
             <tbody className="text-[0.65rem] font-medium -tracking-[0.0125rem] tablet:text-[1rem] laptop:text-[0.875rem]">
               {table.getRowModel().rows.length === 0 ? (
-                <h4 className="mt-12 text-[0.4rem] md:text-[.88rem] laptop:text-[1.2rem]">No results found</h4>
+                <h4 className="mt-3 text-center text-[0.4rem] md:text-[.88rem] tablet:mt-10 laptop:text-[1.2rem] ">
+                  No results found
+                </h4>
               ) : (
                 table.getRowModel().rows.map((row) => (
                   <tr
@@ -280,35 +271,24 @@ export default function BasicTable() {
                           },
                         }}
                       >
-                        {/* {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )} */}
-                        {
-                          // console.log(cell.getValue())
-                          // console.log(cell.column.id) //txID
-                        }
-                        {
-                          cell.column.id === 'txID'
-                            ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
-                            : cell.column.id === 'txDate'
-                              ? format(new Date(cell.getValue()), 'dd MMM yyyy, hh:mm a')
-                              : cell.column.id === 'txFrom' &&
-                                  cell.getValue() !== 'DAO Treasury' &&
-                                  cell.getValue() !== 'dao' &&
-                                  cell.getValue() !== persistedUserInfo?.uuid
-                                ? `User`
-                                : cell.getValue() === persistedUserInfo?.uuid
-                                  ? 'My Account'
-                                  : cell.column.id === 'txTo' &&
-                                      cell.getValue() !== 'DAO Treasury' &&
-                                      cell.getValue() !== 'dao'
-                                    ? `User`
-                                    : cell.getValue() === 'dao'
-                                      ? 'DAO'
-                                      : cell.getValue()
-                          // txDate
-                        }
+                        {cell.column.id === 'txID'
+                          ? `${cell.getValue().slice(0, 4)}..${cell.getValue().slice(-3)}`
+                          : cell.column.id === 'txDate'
+                            ? format(new Date(cell.getValue()), 'dd MMM yyyy, hh:mm a')
+                            : cell.column.id === 'txFrom' &&
+                                cell.getValue() !== 'DAO Treasury' &&
+                                cell.getValue() !== 'dao' &&
+                                cell.getValue() !== persistedUserInfo?.uuid
+                              ? `User`
+                              : cell.getValue() === persistedUserInfo?.uuid
+                                ? 'My Account'
+                                : cell.column.id === 'txTo' &&
+                                    cell.getValue() !== 'DAO Treasury' &&
+                                    cell.getValue() !== 'dao'
+                                  ? `User`
+                                  : cell.getValue() === 'dao'
+                                    ? 'DAO'
+                                    : cell.getValue()}
                       </td>
                     ))}
                   </tr>
@@ -317,14 +297,16 @@ export default function BasicTable() {
             </tbody>
           </table>
         </div>
-        <div className="max-[880px]:justify-center mt-2 flex flex-wrap items-center justify-between gap-3 tablet:-mt-7 laptop:mt-6">
+        <div className="max-[880px]:justify-center mt-2 flex flex-wrap items-center justify-end gap-3 tablet:-mt-7 laptop:mt-6">
           {/* <p className="text-[0.44rem] text-[#B5B7C0] tablet:text-[1rem] ">
             Showing data {(table.getState().pagination.pageIndex + 1) * 10 - 9}{" "}
             to {(table.getState().pagination.pageIndex + 1) * 10} of{" "}
             {ledgerData?.data?.totalCount} entries
-          </p> */}
-          <p></p>
-          <div className="flex items-center gap-2 tablet:gap-3.5 laptop:mr-[3.46rem]">
+          </p> 
+          <p></p>*/}
+          <div
+            className={`flex items-center gap-2 tablet:gap-3.5 laptop:mr-[3.46rem] ${rangeStart === 1 && rangeEnd === 0 ? 'hidden' : ''}`}
+          >
             <button
               onClick={() => handlePageClick(currentPage - 1)}
               disabled={currentPage === rangeStart && true}
@@ -381,6 +363,5 @@ export default function BasicTable() {
         </div>
       </div>
     </div>
-    // </div>
   );
 }

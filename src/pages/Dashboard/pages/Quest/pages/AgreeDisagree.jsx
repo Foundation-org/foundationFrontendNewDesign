@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateQuestion } from '../../../../../features/createQuest/createQuestSlice';
+import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
+
 
 import YesNoOptions from '../components/YesNoOptions';
 import CreateQuestWrapper from '../components/CreateQuestWrapper';
@@ -13,13 +15,17 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
-import { userInfo, userInfoById } from '../../../../../services/api/userAuth';
-import { addUser } from '../../../../../features/auth/authSlice';
+import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+import showToast from '../../../../../components/ui/Toast';
+import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 
 const AgreeDisagree = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+  const persistedContants = useSelector(getConstantsValues);
+  const filterStates = useSelector(filtersActions.getFilters);
+
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
@@ -31,43 +37,17 @@ const AgreeDisagree = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-  });
-
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          localStorage.setItem('userData', JSON.stringify(resp?.data));
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-        }
-      }
-
-      // setResponse(resp?.data);
-    } catch (e) {
-      console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
-
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
+          if (filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0) {
+            dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          }
           navigate('/dashboard');
-          handleUserInfo();
+          queryClient.invalidateQueries(['userInfo']);
           setLoading(false);
           setChangedOption('');
           setChangeState(false);
@@ -80,7 +60,7 @@ const AgreeDisagree = () => {
     },
     onError: (err) => {
       if (err.response) {
-        toast.error(err.response.data.message.split(':')[1]);
+        showToast('error', 'error', {}, err.response.data.message.split(':')[1])
         setChangedOption('');
         setChangeState(false);
       }
@@ -123,7 +103,7 @@ const AgreeDisagree = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return toast.warning('Post cannot be empty');
+      return showToast('warning', 'emptyPost')
     }
 
     // getTopicOfValidatedQuestion
@@ -132,7 +112,7 @@ const AgreeDisagree = () => {
     });
     // If any error captured
     if (errorMessage) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong')
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
@@ -140,10 +120,10 @@ const AgreeDisagree = () => {
     });
     // If found null
     if (!moderationRating) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong')
     }
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return toast.error('You cannot leave the description empty.');
+      return showToast('warning', 'emptyPostDescription')
     }
 
     const params = {
@@ -243,8 +223,8 @@ const AgreeDisagree = () => {
     <CreateQuestWrapper
       quest="Statement"
       handleTab={handleTab}
-      type={'Statement'}
-      msg={'Make a statement that anyone can "Agree" or "Disagree" with'}
+      type={'Post'}
+      msg={'Participants can only "Agree" or "Disagree" with this post'}
     >
       <div className="flex flex-col gap-[5px] tablet:gap-[15px]">
         <YesNoOptions answer={'Agree'} />
@@ -287,7 +267,7 @@ const AgreeDisagree = () => {
             <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()}>
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
-                (-0.1 FDX)
+                (-{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
               </span>
             </Button>
           </div>

@@ -15,8 +15,11 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import * as questServices from '../../../../../services/api/questsApi';
-import { userInfo, userInfoById } from '../../../../../services/api/userAuth';
-import { addUser } from '../../../../../features/auth/authSlice';
+import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+import showToast from '../../../../../components/ui/Toast';
+import { POST_MAX_OPTION_LIMIT, POST_OPTIONS_CHAR_LIMIT } from '../../../../../constants/Values/constants';
+import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
+import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -29,6 +32,8 @@ const MultipleChoice = () => {
   const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedContants = useSelector(getConstantsValues);
+  const filterStates = useSelector(filtersActions.getFilters);
 
   const [multipleOption, setMultipleOption] = useState(false);
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
@@ -37,43 +42,19 @@ const MultipleChoice = () => {
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
 
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-  });
-
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          localStorage.setItem('userData', JSON.stringify(resp?.data));
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-        }
-      }
-
-      // setResponse(resp?.data);
-    } catch (e) {
-      console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
-
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
+          if (
+            filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0
+          ) {
+            dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          }
           navigate('/dashboard');
-          handleUserInfo();
+          queryClient.invalidateQueries(['userInfo']);
           // toast.success('Successfully Created');
           setLoading(false);
 
@@ -88,7 +69,7 @@ const MultipleChoice = () => {
 
     onError: (err) => {
       if (err.response) {
-        toast.error(err.response.data.message.split(':')[1]);
+        showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       }
 
       setMultipleOption(false);
@@ -118,7 +99,7 @@ const MultipleChoice = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return toast.warning('Post cannot be empty');
+      return showToast('warning', 'emptyPost');
     }
 
     // getTopicOfValidatedQuestion
@@ -127,7 +108,7 @@ const MultipleChoice = () => {
     });
     // If any error captured
     if (errorMessage) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong');
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
@@ -135,10 +116,10 @@ const MultipleChoice = () => {
     });
     // If found null
     if (!moderationRating) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong');
     }
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return toast.error('You cannot leave the description empty.');
+      return showToast('warning', 'emptyPostDescription');
     }
 
     const params = {
@@ -161,7 +142,7 @@ const MultipleChoice = () => {
 
     if (isEmptyAnswer) {
       setLoading(false);
-      return toast.warning('Option cannot be empty');
+      return showToast('warning', 'emptyOption');
     }
     if (!checkHollow()) {
       createQuest(params);
@@ -169,12 +150,14 @@ const MultipleChoice = () => {
   };
 
   const handleChange = (index, value) => {
-    if (value.length <= 200) {
+    if (value.length <= POST_OPTIONS_CHAR_LIMIT) {
       dispatch(createQuestAction.addOptionById({ id: index, option: value }));
     }
   };
 
   const answerVerification = async (id, index, value, extra) => {
+    if (value === '') return;
+
     if (extra) {
       if (extra === value) return;
     }
@@ -351,8 +334,8 @@ const MultipleChoice = () => {
     <CreateQuestWrapper
       quest="M/R"
       handleTab={handleTab}
-      type={'Poll'}
-      msg={'Ask a question where anyone can select a single option from a list of choices'}
+      type={'Post'}
+      msg={'Participants can select only one option from a list of choices'}
     >
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId={`optionsValue-${Date.now()}`}>
@@ -405,10 +388,10 @@ const MultipleChoice = () => {
         variant="addOption"
         className="ml-[30px] mt-2 tablet:ml-[50px] tablet:mt-[15px]"
         onClick={() => {
-          if (optionsValue.length < 50) {
+          if (optionsValue.length < POST_MAX_OPTION_LIMIT) {
             addNewOption();
           } else {
-            toast.warning('You cannot add more than 50 options');
+            return showToast('warning', 'optionLimit');
           }
         }}
       >
@@ -458,7 +441,7 @@ const MultipleChoice = () => {
           >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
             <span className="pl-[5px] text-[7px] font-semibold leading-[1px] tablet:pl-[10px] tablet:text-[13px]">
-              (-0.1 FDX)
+              (-{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
             </span>
           </Button>
         </div>

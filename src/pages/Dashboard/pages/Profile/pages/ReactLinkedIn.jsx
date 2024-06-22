@@ -45,15 +45,15 @@ export const LoginSocialLinkedin = ({
   onReject,
   onResolve,
 }) => {
+  const popupWindowURL = new URL(window.location.href);
+  const code = popupWindowURL.searchParams.get('code');
+  const statePopup = popupWindowURL.searchParams.get('state');
   useEffect(() => {
-    const popupWindowURL = new URL(window.location.href);
-    const code = popupWindowURL.searchParams.get('code');
-    const state = popupWindowURL.searchParams.get('state');
-    if (state?.includes('_linkedin') && code) {
+    if (statePopup?.includes('_linkedin') && code) {
       localStorage.setItem('linkedin', code);
       window.close();
     }
-  }, []);
+  }, [popupWindowURL, code, statePopup]);
 
   const getProfile = useCallback(
     (data) => {
@@ -74,20 +74,21 @@ export const LoginSocialLinkedin = ({
         {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${data.access_token}`,
-            'Content-Type': 'application/json' // Specify content type
+            Authorization: `Bearer ${data.access_token}`,
+            'Content-Type': 'application/json', // Specify content type
           },
-          body: JSON.stringify({ // Stringify the body object
-            access_token: data.access_token
-          })
-        }
+          body: JSON.stringify({
+            // Stringify the body object
+            access_token: data.access_token,
+          }),
+        },
       )
-      // axios
-      //   .get('https://api.linkedin.com/v2/userinfo', {
-      //     headers: {
-      //       Authorization: `Bearer ${data.access_token}`,
-      //     },
-      //   })
+        // axios
+        //   .get('https://api.linkedin.com/v2/userinfo', {
+        //     headers: {
+        //       Authorization: `Bearer ${data.access_token}`,
+        //     },
+        //   })
         .then((res) => res.json())
         .then((res) => {
           const response = { ...data };
@@ -136,12 +137,13 @@ export const LoginSocialLinkedin = ({
             method: 'POST',
             headers: {
               // 'Authorization': `Bearer ${data.access_token}`,
-              'Content-Type': 'application/json' // Specify content type
+              'Content-Type': 'application/json', // Specify content type
             },
-            body: JSON.stringify({ // Stringify the body object
-              ...params
-            })
-          }
+            body: JSON.stringify({
+              // Stringify the body object
+              ...params,
+            }),
+          },
         )
           .then((response) => response.json())
           .then((response) => {
@@ -149,7 +151,7 @@ export const LoginSocialLinkedin = ({
             // else getProfile(response);
           })
           .catch((err) => {
-            console.log("before.... error.........");
+            console.log('before.... error.........');
             onReject(err);
           });
       }
@@ -180,7 +182,7 @@ export const LoginSocialLinkedin = ({
   useEffect(() => {
     // Add the event listener when the component mounts
     window.addEventListener('storage', onChangeLocalStorage);
-  
+
     // Clean up by removing the event listener when the component unmounts
     return () => {
       window.removeEventListener('storage', onChangeLocalStorage);
@@ -190,9 +192,8 @@ export const LoginSocialLinkedin = ({
   const onLogin = useCallback(() => {
     onLoginStart && onLoginStart();
     // window.addEventListener('storage', onChangeLocalStorage, false);
-    const oauthUrl = `${LINKEDIN_URL}/authorization?response_type=${response_type}&client_id=${client_id}&scope=${scope}&state=${
-      state + '_linkedin'
-    }&redirect_uri=${redirect_uri}`;
+    const oauthUrl = `${LINKEDIN_URL}/authorization?response_type=${response_type}&client_id=${client_id}&scope=${scope}&state=${state + '_linkedin'
+      }&redirect_uri=${redirect_uri}`;
     const width = 450;
     const height = 730;
     const left = window.screen.width / 2 - width / 2;
@@ -201,13 +202,13 @@ export const LoginSocialLinkedin = ({
       oauthUrl,
       'Linkedin',
       'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' +
-        width +
-        ', height=' +
-        height +
-        ', top=' +
-        top +
-        ', left=' +
-        left,
+      width +
+      ', height=' +
+      height +
+      ', top=' +
+      top +
+      ', left=' +
+      left,
     );
   }, [onLoginStart, onChangeLocalStorage, response_type, client_id, scope, state, redirect_uri]);
 

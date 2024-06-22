@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { validation } from '../../services/api/badgesApi';
 import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
@@ -11,6 +11,7 @@ import { useErrorBoundary } from 'react-error-boundary';
 import Listbox from '../ui/ListBox';
 import { useDebounce } from '../../utils/useDebounce';
 import BadgeRemovePopup from './badgeRemovePopup';
+import showToast from '../ui/Toast';
 
 const data = [
   { id: 1, name: 'In what city were you born?' },
@@ -37,12 +38,11 @@ const PersonalBadgesPopup = ({
   title,
   logo,
   placeholder,
-  handleUserInfo,
   edit,
   fetchUser,
-  setFetchUser,
   setIsPersonalPopup,
 }) => {
+  const queryClient = useQueryClient();
   const { showBoundary } = useErrorBoundary();
   const [selected, setSelected] = useState();
   const [name, setName] = useState('');
@@ -57,6 +57,7 @@ const PersonalBadgesPopup = ({
   const [prevInfo, setPrevInfo] = useState();
   const handleClose = () => setIsPopup(false);
   const [hollow, setHollow] = useState(edit ? false : true);
+  const [fetchingEdit, setFetchingEdit] = useState(false);
 
   const handleNameChange = (e) => setName(e.target.value);
 
@@ -65,7 +66,7 @@ const PersonalBadgesPopup = ({
     setDate(selectedDate);
   };
 
-  const handleSecurityQuestionChange = (event) => {};
+  const handleSecurityQuestionChange = (event) => { };
   const [query, setQuery] = useState('');
   const [questions, setQuestion] = useState();
 
@@ -75,20 +76,24 @@ const PersonalBadgesPopup = ({
     const newArr = queryExists
       ? [...jb]
       : [
-          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-          ...jb.map((jb) => ({
-            ...jb,
-            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-          })),
-        ];
+        { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+        ...jb.map((jb) => ({
+          ...jb,
+          id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+        })),
+      ];
     setQuestion(newArr);
   }, [query]);
 
   const FetchData = async () => {
-    const info = await api.post(`/addBadge/personal/getPersonalBadge`, {
+    const payload = {
       uuid: localStorage.getItem('uuid'),
       type: type,
-    });
+    };
+    if (localStorage.getItem('legacyHash')) {
+      payload.infoc = localStorage.getItem('legacyHash');
+    }
+    const info = await api.post(`/addBadge/personal/getPersonalBadge`, payload);
     setPrevInfo(info?.data?.obj);
     if (type === 'firstName' || type === 'lastName' || type === 'geolocation') {
       setName(info?.data?.obj);
@@ -103,14 +108,16 @@ const PersonalBadgesPopup = ({
       setSelected({ name: Object.keys(info?.data?.obj)[0] });
       setName(info?.data?.obj[Object.keys(info?.data?.obj)[0]]);
     }
+    setFetchingEdit(false);
   };
 
   useEffect(() => {
     if (edit) {
+      setFetchingEdit(true);
       FetchData();
     }
   }, []);
-
+  console.log(fetchingEdit);
   useEffect(() => {
     if (edit) {
       if (type === 'dateOfBirth') {
@@ -196,16 +203,15 @@ const PersonalBadgesPopup = ({
     setName(position.coords.latitude + ',' + position.coords.longitude);
   };
   const failedToGet = (err) => {
-    toast.error(
-      'It seems like location services are off or denied. To proceed, please enable location in your device settings and try again.',
-    );
+    showToast('error', 'failedGettingLocation')
     console.log(err);
   };
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(gotLocation, failedToGet);
     } else {
-      toast.error("Your browser doesn't support geolocation.");
+      showToast('error', 'locationNotSupported')
+
     }
   };
 
@@ -244,25 +250,25 @@ const PersonalBadgesPopup = ({
   const handleUpdateBadge = async () => {
     if (type === 'firstName' || type === 'lastName' || type === 'geolocation') {
       if (name === prevInfo) {
-        toast.warning('Information already saved');
+        showToast('warning', 'infoAlreadySaved')
         return;
       }
     }
     if (type === 'dateOfBirth') {
       if (date === prevInfo) {
-        toast.warning('Information already saved');
+        showToast('warning', 'infoAlreadySaved')
         return;
       }
     }
     if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus') {
       if (selected.name === prevInfo) {
-        toast.warning('Information already saved');
+        showToast('warning', 'infoAlreadySaved')
         return;
       }
     }
     if (type === 'security-question') {
       if (name === prevInfo[Object.keys(prevInfo)[0]] && selected.name === Object.keys(prevInfo)[0]) {
-        toast.warning('Information already saved');
+        showToast('warning', 'infoAlreadySaved')
         return;
       }
     }
@@ -275,12 +281,12 @@ const PersonalBadgesPopup = ({
         [selected?.name]: name,
       };
       if (!selected) {
-        toast.warning('Please select a question first!');
+        showToast('warning', 'selectSecQuestion')
         setLoading(false);
         return;
       }
       if (!name) {
-        toast.warning('Answer field cannot be empty.');
+        showToast('warning', 'emptyAnswer')
         setLoading(false);
         return;
       }
@@ -290,20 +296,24 @@ const PersonalBadgesPopup = ({
       value = name;
     }
     if (value === '' || value === undefined) {
-      toast.warning('Field cannot be empty!');
+      showToast('warning', 'blankField');
       setLoading(false);
       return;
     }
 
     try {
-      const addBadge = await api.post(`/addBadge/personal/updatePersonalBadge`, {
+      const payload = {
         newData: value,
         type: type,
         uuid: localStorage.getItem('uuid'),
-      });
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
+      const addBadge = await api.post(`/addBadge/personal/updatePersonalBadge`, payload);
       if (addBadge.status === 200) {
-        toast.success('Badge Updated Successfully!');
-        handleUserInfo();
+        showToast('success', 'badgeUpdated');
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
       }
     } catch (error) {
@@ -325,12 +335,12 @@ const PersonalBadgesPopup = ({
         [selected?.name]: name,
       };
       if (!selected) {
-        toast.warning('Please select a question first!');
+        showToast('warning', 'selectSecQuestion')
         setLoading(false);
         return;
       }
       if (!name) {
-        toast.warning('Answer field cannot be empty.');
+        showToast('warning', 'emptyAnswer')
         setLoading(false);
         return;
       }
@@ -340,21 +350,27 @@ const PersonalBadgesPopup = ({
       value = name;
     }
     if (value === '' || value === undefined) {
-      toast.warning('Field cannot be empty!');
+      showToast('warning', 'blankField');
       setLoading(false);
       return;
     }
 
     try {
-      const addBadge = await api.post(`/addBadge/personal/add`, {
+      const payload = {
         personal: {
           [type]: value,
         },
         uuid: localStorage.getItem('uuid'),
-      });
+      };
+
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
+
+      const addBadge = await api.post(`/addBadge/personal/add`, payload);
       if (addBadge.status === 200) {
-        toast.success('Badge Added Successfully!');
-        handleUserInfo();
+        showToast('success', 'badgeAdded')
+        queryClient.invalidateQueries(['userInfo']);
         handleClose();
       }
     } catch (error) {
@@ -400,15 +416,14 @@ const PersonalBadgesPopup = ({
                 </p>
                 <input
                   type="text"
-                  value={edit ? (name ? name : 'Loading...') : name}
+                  value={edit ? (!fetchingEdit ? name : 'Loading...') : name}
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
                   placeholder={placeholder2}
-                  disabled={edit ? (name ? false : true) : false}
-                  className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${
-                    edit ? (name ? '' : 'caret-hidden') : ''
-                  }`}
+                  disabled={fetchingEdit}
+                  className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${edit ? (name ? '' : 'caret-hidden') : ''
+                    }`}
                 />
                 {isError && (
                   <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
@@ -446,7 +461,7 @@ const PersonalBadgesPopup = ({
           <div className="relative">
             <input
               type="text"
-              value={edit ? (name ? name : 'Loading...') : name}
+              value={edit ? (!fetchingEdit ? name : 'Loading...') : name}
               disabled
               placeholder={placeholder2}
               className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
@@ -487,16 +502,15 @@ const PersonalBadgesPopup = ({
           <div className="relative">
             <input
               type="text"
-              value={edit ? (name ? name : 'Loading...') : name}
+              value={edit ? (!fetchingEdit ? name : 'Loading...') : name}
               onChange={(e) => {
                 setCheck(true);
                 setName(e.target.value);
               }}
               placeholder={placeholder}
-              disabled={edit ? (name ? false : true) : false}
-              className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${
-                edit ? (name ? '' : 'caret-hidden') : ''
-              }`}
+              disabled={fetchingEdit}
+              className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${edit ? (name ? '' : 'caret-hidden') : ''
+                }`}
             />
             {isError && (
               <p className="absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
@@ -665,7 +679,6 @@ const PersonalBadgesPopup = ({
           type={deleteModalState?.type}
           badgeType={deleteModalState?.badgeType}
           fetchUser={fetchUser}
-          setFetchUser={setFetchUser}
           setIsPersonalPopup={setIsPersonalPopup}
           setIsLoading={setRemoveLoading}
           loading={RemoveLoading}
@@ -676,7 +689,7 @@ const PersonalBadgesPopup = ({
         {title === 'Last Name' && renderInputField('Last Name', name, handleNameChange, placeholder, apiResp)}
         {title === 'Date of Birth' && (
           <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
-            {!date && edit ? (
+            {fetchingEdit ? (
               <input
                 type="text"
                 value="Loading..."

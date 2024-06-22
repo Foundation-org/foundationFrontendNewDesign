@@ -17,12 +17,12 @@ const SocialLoginsDummy = () => {
         {persistedTheme === 'dark' ? (
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/facebook.svg`}
-            className="mr-1 h-[22px] w-[22px] md:h-12 md:w-[32px] 2xl:mr-3"
+            className="mr-[0.5rem] h-[22px] w-[22px] md:h-12 md:w-[32px] 2xl:mr-3"
           />
         ) : (
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/facebook-white.svg`}
-            className="mr-1 h-[22px] w-[22px] md:h-12 md:w-[32px] 2xl:mr-3"
+            className="mr-[0.5rem] h-[22px] w-[22px] md:h-12 md:w-[32px] 2xl:mr-3"
           />
         )}
         <span className="inline-block align-middle">Continue with Facebook</span>

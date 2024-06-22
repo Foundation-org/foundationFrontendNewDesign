@@ -9,9 +9,22 @@ import { isBrowser, isMobile } from 'react-device-detect';
 import { useSDK } from '@metamask/sdk-react';
 import '@farcaster/auth-kit/styles.css';
 import { AuthKitProvider, SignInButton, useProfile, useSignIn } from '@farcaster/auth-kit';
-
-export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup }) {
+import { useQueryClient } from '@tanstack/react-query';
+import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
+import showToast from '../../../../../../components/ui/Toast';
+export default function Web3({
+  handleRemoveBadgePopup,
+  handleOpenPasswordConfirmation,
+  checkLegacyBadge,
+  getAskPassword,
+}) {
   const { sdk } = useSDK();
+  const persistedContants = useSelector(getConstantsValues);
+
+  const queryClient = useQueryClient();
+  const persistedUserInfo = useSelector((state) => state.auth.user);
+  const checkSecondary = (itemType) =>
+    persistedUserInfo?.badges?.some((i) => i.type === itemType && i.secondary === true);
 
   const connect = async () => {
     try {
@@ -25,19 +38,24 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const checkWeb3Badge = (itemType) =>
-    fetchUser?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
+    persistedUserInfo?.badges?.some((badge) => badge?.web3?.hasOwnProperty(itemType) || false) || false;
 
   const handleWeb3 = async (accounts) => {
     try {
-      const addBadge = await api.post(`/addBadge/web3/add`, {
+      const payload = {
         web3: {
           ['etherium-wallet']: accounts,
         },
-        uuid: fetchUser.uuid,
-      });
+        uuid: persistedUserInfo.uuid,
+      };
+      if (localStorage.getItem('legacyHash')) {
+        payload.infoc = localStorage.getItem('legacyHash');
+      }
+
+      const addBadge = await api.post(`/addBadge/web3/add`, payload);
       if (addBadge.status === 200) {
-        toast.success('Badge Added Successfully!');
-        handleUserInfo();
+        showToast('success', 'badgeAdded');
+        queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
       // showBoundary(error);
@@ -46,22 +64,24 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
   };
 
   const checkPassKeyBadge = (accountName, type, value) => {
-    return fetchUser?.badges.some((badge) => badge.accountName === accountName && badge.type === type);
+    return persistedUserInfo?.badges.some((badge) => badge.accountName === accountName && badge.type === type);
   };
+
   const handlePasskey = async (title, type, value) => {
     try {
       // Device Detect
       if (type === 'desktop' && !isBrowser) {
-        return toast.warning('Please switch to desktop!');
+        return showToast('warning', 'switchDesktop');
       }
       if (type === 'mobile' && !isMobile) {
-        return toast.warning('Please switch to mobile!');
+        return showToast('warning', 'switchMobile');
       }
       // let value;
       if (title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile') {
         const resp = await fetch(`${import.meta.env.VITE_API_URL}/generate-registration-options`);
         const data = await resp.json();
         const attResp = await startRegistration(data);
+        console.log('attResp', attResp);
         attResp.challenge = data.challenge;
         const verificationResp = await fetch(`${import.meta.env.VITE_API_URL}/verify-registration`, {
           method: 'POST',
@@ -71,12 +91,11 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
           body: JSON.stringify(attResp),
         });
         const verificationJSON = await verificationResp.json();
-        console.log('🚀 ~ handleRegistration ~ verificationResp:', verificationResp);
 
         if (verificationJSON && verificationJSON.verified) {
           value = attResp;
         } else {
-          toast.error(`Oh no, something went wrong!`);
+          showToast('error', 'somethingWrong');
         }
       }
       if (value === '') {
@@ -85,7 +104,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
       let addBadge;
       if (title.trim() === 'Passkey Desktop' || title.trim() === 'Passkey Mobile') {
         addBadge = await api.post(`/addBadge/passkey/add`, {
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           accountId: value.id,
           accountName: 'Passkey',
           isVerified: true,
@@ -94,7 +113,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
         });
       } else if (title.trim() === 'Farcaster') {
         addBadge = await api.post(`/addBadge/addFarCasterBadge/add`, {
-          uuid: fetchUser.uuid,
+          uuid: persistedUserInfo.uuid,
           accountId: value.fid,
           accountName: title,
           isVerified: true,
@@ -103,17 +122,17 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
         });
         setIsButtonClicked(false);
         // alert("testing...   ")
-        console.log('🚀 ~ handlePasskey ~ value:', value);
       }
       if (addBadge?.status === 200) {
-        toast.success('Badge Added Successfully!');
-        handleUserInfo();
+        showToast('success', 'badgeAdded');
+        queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
       console.error(error);
-      toast.error(error.response.data.message.split(':')[1]);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
   };
+
   const config = {
     // relay: "https://relay.farcaster.xyz",
     rpcUrl: 'https://mainnet.optimism.io',
@@ -122,6 +141,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
   };
 
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+
   const triggerFarcaster = () => {
     setIsButtonClicked(true);
     const a = document.querySelector('._1n3pr301');
@@ -129,6 +149,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
     // setTimeout(() => {
     // }, 1000);
   };
+
   return (
     <>
       <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
@@ -258,14 +279,21 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
       <div className="flex flex-col items-center gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]">
         {web3.map((item, index) => (
           <div
-            className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5  ${item.disabled ? 'opacity-[60%]' : ''}`}
+            className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-2 desktop:gap-5 ${item.disabled ? 'opacity-[60%]' : ''}`}
             key={index}
           >
+            {checkSecondary(item.type) && (
+              <img
+                src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/secondary.svg`}
+                alt="primary"
+                className="size-[15px] tablet:size-[30px]"
+              />
+            )}
             <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
             <div
               className={`${
                 persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-              } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
+              } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
             >
               <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                 {item.title}
@@ -275,7 +303,14 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
               color={
                 checkPassKeyBadge(item.accountName, item.type) || checkWeb3Badge(item.type) ? 'red' : item.ButtonColor
               }
-              onClick={() => {
+              onClick={async () => {
+                if (item.type === 'etherium-wallet') {
+                  if (
+                    (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
+                    (checkLegacyBadge() && getAskPassword)
+                  )
+                    await handleOpenPasswordConfirmation();
+                }
                 item.accountName === 'Farcaster' && !checkPassKeyBadge(item.accountName, item.type)
                   ? triggerFarcaster()
                   : item.type === 'etherium-wallet'
@@ -302,7 +337,7 @@ export default function Web3({ handleUserInfo, fetchUser, handleRemoveBadgePopup
               {checkPassKeyBadge(item.accountName, item.type) || checkWeb3Badge(item.type) ? 'Remove' : item.ButtonText}
               {!checkPassKeyBadge(item.accountName, item.type) && !checkWeb3Badge(item.type) && (
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                  (+0.96 FDX)
+                  (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
                 </span>
               )}
             </Button>

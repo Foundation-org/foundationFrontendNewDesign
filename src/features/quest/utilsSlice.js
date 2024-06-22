@@ -19,6 +19,13 @@ const initialState = {
   playerPlayingId: '',
   isShowPlayer: false,
   loop: true,
+  hasNextPage: true,
+  adultFilterPopup: {
+    rating: 0,
+  },
+  areHiddenPosts: false,
+  areShareLinks: false,
+  areFeedBackPosts: false
 };
 
 export const utilsSlice = createSlice({
@@ -79,6 +86,9 @@ export const utilsSlice = createSlice({
     toggleMedia: (state, action) => {
       state.isMediaPlaying = action.payload;
     },
+    setNextPage: (state, action) => {
+      state.hasNextPage = action.payload;
+    },
     toggleLoop: (state, action) => {
       state.loop = action.payload;
     },
@@ -96,6 +106,18 @@ export const utilsSlice = createSlice({
         state.playingIds.push(action.payload);
       }
     },
+    addAdultFilterPopup: (state, action) => {
+      state.adultFilterPopup.rating = action.payload.rating;
+    },
+    setAreHiddenPosts: (state, action) => {
+      state.areHiddenPosts = action.payload
+    },
+    setAreShareLinks: (state, action) => {
+      state.areShareLinks = action.payload
+    },
+    setAreFeedbackPosts: (state, action) => {
+      state.areFeedBackPosts = action.payload
+    }
   },
 });
 
@@ -112,11 +134,16 @@ export const {
   addBookmarkResponse,
   removeBookmarkResponse,
   toggleMedia,
+  setNextPage,
   setPlayingPlayerId,
   setIsShowPlayer,
   addPlayerId,
   toggleLoop,
   resetPlayingIds,
+  addAdultFilterPopup,
+  setAreHiddenPosts,
+  setAreShareLinks,
+  setAreFeedbackPosts
 } = utilsSlice.actions;
 
 export default utilsSlice.reducer;

@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateQuestion } from '../../../../../features/createQuest/createQuestSlice';
+import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 
 import YesNoOptions from '../components/YesNoOptions';
 import CreateQuestWrapper from '../components/CreateQuestWrapper';
@@ -13,13 +14,16 @@ import CreateQuestWrapper from '../components/CreateQuestWrapper';
 import * as questServices from '../../../../../services/api/questsApi';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
-import { userInfo, userInfoById } from '../../../../../services/api/userAuth';
-import { addUser } from '../../../../../features/auth/authSlice';
+import { getConstantsValues } from '../../../../../features/constants/constantsSlice';
+import showToast from '../../../../../components/ui/Toast';
+import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 
 const YesNo = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
+  const filterStates = useSelector(filtersActions.getFilters);
+
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
@@ -30,44 +34,20 @@ const YesNo = () => {
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-
-  const { mutateAsync: getUserInfo } = useMutation({
-    mutationFn: userInfo,
-  });
-
-  const handleUserInfo = async () => {
-    try {
-      const resp = await getUserInfo();
-
-      if (resp?.status === 200) {
-        if (resp.data) {
-          dispatch(addUser(resp?.data));
-          localStorage.setItem('userData', JSON.stringify(resp?.data));
-          if (!localStorage.getItem('uuid')) {
-            localStorage.setItem('uuid', resp.data.uuid);
-          }
-        }
-
-        if (!resp.data) {
-          const res = await userInfoById(localStorage.getItem('uuid'));
-          dispatch(addUser(res?.data));
-        }
-      }
-
-      // setResponse(resp?.data);
-    } catch (e) {
-      console.log({ e });
-      toast.error(e.response.data.message.split(':')[1]);
-    }
-  };
+  const persistedContants = useSelector(getConstantsValues);
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
+          if (
+            filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0
+          ) {
+            dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+          }
           navigate('/dashboard');
-          handleUserInfo();
           setLoading(false);
           setChangedOption('');
           setChangeState(false);
@@ -75,12 +55,11 @@ const YesNo = () => {
           dispatch(pictureMediaAction.resetToInitialState());
         }, 500);
       }
-      queryClient.invalidateQueries('FeedData');
-      queryClient.invalidateQueries('treasury');
+      queryClient.invalidateQueries(['userInfo', 'FeedData', 'treasury']);
     },
     onError: (err) => {
       if (err.response) {
-        toast.error(err.response.data.message.split(':')[1]);
+        showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
         setChangedOption('');
         setChangeState(false);
       }
@@ -121,7 +100,7 @@ const YesNo = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return toast.warning('Post cannot be empty');
+      return showToast('warning', 'emptyPost');
     }
 
     const { questTopic, errorMessage } = await questServices.getTopicOfValidatedQuestion({
@@ -130,7 +109,7 @@ const YesNo = () => {
 
     // If any error captured
     if (errorMessage) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong');
     }
 
     // ModerationRatingCount
@@ -140,11 +119,11 @@ const YesNo = () => {
 
     // If found null
     if (!moderationRating) {
-      return toast.error('Oops! Something Went Wrong.');
+      return showToast('error', 'somethingWrong');
     }
 
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return toast.error('You cannot leave the description empty.');
+      return showToast('warning', 'emptyPostDescription');
     }
 
     const params = {
@@ -244,30 +223,13 @@ const YesNo = () => {
   return (
     <CreateQuestWrapper
       handleTab={handleTab}
-      type={'Poll'}
-      msg={'Ask a question that allows for a straightforward "Yes" or "No" response'}
+      type={'Post'}
+      msg={'Participants can give a straightforward "Yes" or "No" response'}
     >
       <div className="flex flex-col gap-[5px] tablet:gap-[15px]">
         <YesNoOptions answer={'Yes'} />
         <YesNoOptions answer={'No'} />
       </div>
-      {/* <p className="my-1 text-center text-[8px] font-normal leading-normal text-[#85898C] tablet:mb-[10px] tablet:mt-5 tablet:text-[16px] dark:text-[#D8D8D8]">
-        &#x200B;
-      </p> */}
-      {/* <div className="mx-[22px] flex flex-col gap-[5.2px] rounded-[0.30925rem] border border-[#DEE6F7] bg-[#FCFCFC] py-[10px] dark:bg-[#212224] tablet:mx-[60px] tablet:gap-[15px] tablet:rounded-[16px] tablet:border-[3px] tablet:py-[25px]">
-          <h5
-            id="setting"
-            className="text-center text-[10px] font-medium leading-normal text-[#435059] dark:text-[#737B82] tablet:text-[19.35px] laptop:text-[25px]"
-          >
-            Settings
-          </h5>
-          <ChangeChoiceOption
-            changedOption={changedOption}
-            changeState={changeState}
-            setChangeState={setChangeState}
-            setChangedOption={setChangedOption}
-          />
-        </div> */}
       <div className="flex w-full justify-end">
         {hollow ? (
           <div className="pr-[30px] pt-2 tablet:pr-[50px] tablet:pt-[25px]">
@@ -278,9 +240,9 @@ const YesNo = () => {
         ) : (
           <div className="pr-[30px] pt-2 tablet:pr-[50px] tablet:pt-[25px]">
             <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()}>
-              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}{' '}
+              {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[0px] tablet:pl-[10px] tablet:text-[13px]">
-                (-0.1 FDX)
+                (-{persistedContants?.QUEST_CREATED_AMOUNT} FDX)
               </span>
             </Button>
           </div>

@@ -1,13 +1,26 @@
 import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { contacts } from '../../../../../../constants/varification-badges';
+import { contacts, legacy } from '../../../../../../constants/varification-badges';
 import VerificationPopups from '../../components/VerificationPopups';
 import Button from '../../components/Button';
 import AddCellPhonePopup from '../../../../../../components/dialogue-boxes/AddCellPhonePopup';
+import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
+import LegacyBadgePopup from '../../../../../../components/dialogue-boxes/LegacyBadgePopup';
 
-export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePopup }) {
+export default function Contact({
+  fetchUser,
+  handleRemoveBadgePopup,
+  handleOpenPasswordConfirmation,
+  checkLegacyBadge,
+  getAskPassword,
+}) {
+  const [isPersonalPopup, setIsPersonalPopup] = useState(false);
+
+  checkLegacyBadge();
   const persistedTheme = useSelector((state) => state.utils.theme);
+  const persistedContants = useSelector(getConstantsValues);
+
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isPopup, setIsPopup] = useState(false);
   const [seletedBadge, setSelectedBadge] = useState('');
@@ -30,11 +43,13 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
     );
     return;
   };
-
-  const handleClickContactBadgeEmail = (type, title, image) => {
+  const handleClickContactBadgeEmail = async (type, title, image) => {
     if (persistedUserInfo?.role === 'guest') {
       handleGuestBadgeAdd();
     } else {
+      if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword)) {
+        await handleOpenPasswordConfirmation();
+      }
       if (!checkContact(type)) {
         setIsPopup(true);
         setSelectedBadge(type);
@@ -52,14 +67,23 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
   const ContactItem = ({ item, index, persistedTheme, checkContact, checkPrimary, handleClickContactBadgeEmail }) => {
     return (
       <div
-        className={`flex items-center justify-center gap-[10px] tablet:justify-start laptop:gap-5 ${item.disabled && 'opacity-[60%]'}`}
+        className={`relative flex items-center justify-center gap-[10px] tablet:justify-start laptop:justify-center laptop:gap-2 desktop:justify-start desktop:gap-5 ${item.disabled && 'opacity-[60%]'}`}
         key={index}
       >
+        <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
+          {checkPrimary(item.type) && (
+            <img
+              src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/primary.svg`}
+              alt="primary"
+              className="size-[15px] tablet:size-[30px]"
+            />
+          )}
+        </div>
         <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
         <div
           className={`${
             persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-          } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:rounded-[15px]`}
+          } flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
         >
           <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
             {item.title}
@@ -72,7 +96,7 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
         >
           {checkContact(item.type) ? (checkPrimary(item.type) ? 'Added' : 'Remove') : item.ButtonText}
           <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-            {checkContact(item.type) ? '' : '(+0.96 FDX)'}
+            {checkContact(item.type) ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
           </span>
         </Button>
       </div>
@@ -104,7 +128,6 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Personal-Email-2xa.png`}
             placeholder="Personal email here"
             selectedBadge={seletedBadge}
-            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -117,7 +140,6 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Work-Email-2xa.png`}
             placeholder="Work email here"
             selectedBadge={seletedBadge}
-            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -130,7 +152,6 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Education-Email-2xa.png`}
             placeholder="Educational Email here"
             selectedBadge={seletedBadge}
-            handleUserInfo={handleUserInfo}
           />
         );
 
@@ -143,7 +164,6 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
               title="Phone Number"
               logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/cellphone-1.png`}
               selectedBadge={seletedBadge}
-              handleUserInfo={handleUserInfo}
               handleClose={handleClose}
               type={'cell-phone'}
             />
@@ -157,6 +177,16 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
 
   return (
     <div>
+      <LegacyBadgePopup
+        isPopup={isPersonalPopup}
+        setIsPopup={setIsPersonalPopup}
+        title="Password"
+        type={'password'}
+        logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`}
+        placeholder="Answer Here"
+        fetchUser={fetchUser}
+        setIsPersonalPopup={setIsPersonalPopup}
+      />
       <h1 className="font-Inter mb-2 text-[9.74px] font-medium text-black tablet:mb-4 tablet:text-[22px] tablet:leading-[18px] dark:text-white">
         Contact
       </h1>
@@ -174,6 +204,49 @@ export default function Contact({ fetchUser, handleUserInfo, handleRemoveBadgePo
               handleClickContactBadgeEmail={handleClickContactBadgeEmail}
               key={index}
             />
+          ))}
+          {legacy.map((item, index) => (
+            <div
+              className="relative flex items-center justify-between gap-[8.5px] laptop:gap-2 desktop:gap-5"
+              key={index}
+            >
+              <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
+                {checkLegacyBadge() && (
+                  <img
+                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/secondary.svg`}
+                    alt="primary"
+                    className="size-[15px] tablet:size-[30px]"
+                  />
+                )}
+              </div>
+              <img src={item.image} alt={item.title} className="h-[6.389vw] w-[6.389vw] tablet:size-[50px]" />
+              <div
+                className={` flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+              >
+                <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
+                  {item.title}
+                </h1>
+              </div>
+              <Button
+                color={checkLegacyBadge() ? 'red' : 'blue'}
+                disabled={item.disabled}
+                onClick={() => {
+                  checkLegacyBadge()
+                    ? handleRemoveBadgePopup({
+                        title: 'Password',
+                        type: 'password',
+                        image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+                        badgeType: 'password',
+                      })
+                    : setIsPersonalPopup(true);
+                }}
+              >
+                {checkLegacyBadge() ? 'Remove' : 'Add Badge'}
+                <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
+                  {checkLegacyBadge() ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
+                </span>
+              </Button>
+            </div>
           ))}
         </div>
       </div>

@@ -1,158 +1,103 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button } from '../../../../../components/ui/Button';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { profileItems } from '../../../../../constants/sliders';
 
-const createItems = [
-  { id: 1, title: 'Verfication Badges', path: '/dashboard/profile', to: '' },
-  { id: 0, title: 'Contributions', path: '/dashboard/profile/contributions', to: 'contributions' },
-  { id: 3, title: 'Hidden Posts', path: '/dashboard/profile/hidden-posts', to: 'hidden-posts' },
-  { id: 4, title: 'Shared Links', path: '/dashboard/profile/shared-links', to: 'shared-links' },
-  { id: 5, title: 'User Setting', path: '/dashboard/profile/user-settings', to: 'user-settings' },
-  { id: 6, title: 'Feedback', path: '/dashboard/profile/feedback', to: 'feedback' },
-  { id: 2, title: 'Ledger', path: '/dashboard/profile/ledger', to: 'ledger' },
-];
-
-export default function ProfileSlider({ setTab, tab }) {
+export default function ProfileSlider() {
   const location = useLocation();
-  const navigate = useNavigate();
-  const containerRef = useRef(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const rightArrowRef = useRef(null);
+  const leftArrowRef = useRef(null);
+  const tabsListRef = useRef(null);
+  const tabRefs = useRef([]);
+  const [dragging, setDragging] = useState(false);
 
-  const handleTab = (id) => {
-    const selectedButton = document.getElementById(`profile-btn-${id}`);
-    if (selectedButton) {
-      selectedButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  const manageIcons = () => {
+    if (tabsListRef.current.scrollLeft >= 20) {
+      leftArrowRef.current.classList.add('active');
+    } else {
+      leftArrowRef.current.classList.remove('active');
     }
 
-    setTab(id);
-    navigate(id);
-  };
-
-  const handleLeftArrowClick = () => {
-    const container = document.getElementById('buttonContainer');
-    const scrollAmount = container.clientWidth / 2;
-    setScrollPosition(scrollPosition - scrollAmount);
-    container.scrollTo({
-      left: scrollPosition - scrollAmount,
-      behavior: 'smooth',
-    });
+    let maxScrollValue = tabsListRef.current.scrollWidth - tabsListRef.current.clientWidth - 20;
+    if (tabsListRef.current.scrollLeft >= maxScrollValue) {
+      rightArrowRef.current.classList.remove('active');
+    } else {
+      rightArrowRef.current.classList.add('active');
+    }
   };
 
   const handleRightArrowClick = () => {
-    const container = document.getElementById('buttonContainer');
-    const scrollAmount = container.clientWidth / 2;
-    setScrollPosition(scrollPosition + scrollAmount);
-    container.scrollTo({
-      left: scrollPosition + scrollAmount,
-      behavior: 'smooth',
-    });
+    tabsListRef.current.scrollLeft += 200;
+    manageIcons();
   };
 
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    const container = containerRef.current;
+  const handleLeftArrowClick = () => {
+    tabsListRef.current.scrollLeft -= 200;
+    manageIcons();
+  };
 
-    if (!container) return;
-
-    const startX = e.pageX;
-    const initialScrollLeft = container.scrollLeft;
-
-    const handleMouseMove = (e) => {
-      const dx = e.pageX - startX;
-      container.scrollLeft = initialScrollLeft - dx;
-      if (dx < 0) {
-        setScrollPosition(startX - e.pageX);
-        localStorage.setItem('sliderScrollPosition', startX - e.pageX);
-      } else {
-        setScrollPosition(e.pageX - startX);
-        localStorage.setItem('sliderScrollPosition', e.pageX - startX);
-      }
-    };
-
-    const handleMouseUp = () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+  const drag = (e) => {
+    if (!dragging) return;
+    tabsListRef.current.classList.add('dragging');
+    tabsListRef.current.scrollLeft -= e.movementX;
   };
 
   useEffect(() => {
-    handleTab(location.pathname);
+    const tabsList = tabsListRef.current;
+    const handleMouseUp = () => {
+      setDragging(false);
+      tabsList.classList.remove('dragging');
+    };
 
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', handleResize);
+    document.addEventListener('mouseup', handleMouseUp);
+    tabsList.addEventListener('scroll', manageIcons);
+
     return () => {
-      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('mouseup', handleMouseUp);
+      tabsList.removeEventListener('scroll', manageIcons);
     };
-  }, []);
+  }, [dragging]);
+
+  useEffect(() => {
+    const currentTab = profileItems.find((item) => item.path === location.pathname);
+    const currentTabIndex = currentTab ? currentTab.id : 0;
+    const currentTabRef = tabRefs.current[currentTabIndex];
+    if (currentTabRef) {
+      currentTabRef.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest',
+      });
+    }
+  }, [location.pathname]);
 
   return (
-    <div className="flex items-center justify-center px-4 py-2 tablet:px-6 tablet:py-[14.82px]">
-      {scrollPosition > 0 && (
-        <button
-          onClick={handleLeftArrowClick}
-          className="size-[10px] min-w-[10px] max-w-[10px] rotate-180 tablet:size-5 tablet:min-w-5 tablet:max-w-5"
-          style={{
-            background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '100% 100%',
-          }}
-        ></button>
-      )}
-      <div
-        className="no-scrollbar mx-[5px] flex items-center gap-[6.75px] overflow-x-scroll tablet:mx-4 tablet:gap-[13.82px]"
-        id="buttonContainer"
-        ref={containerRef}
-        onMouseDown={handleMouseDown}
-      >
-        {createItems.map((item) => {
-          if (windowWidth >= 744 && item.id === 0) {
-            return null;
-          } else {
-            let startX = 0;
-            let startY = 0;
-
-            const handleMouseDown = (e) => {
-              startX = e.clientX;
-              startY = e.clientY;
-            };
-
-            const handleMouseUp = (e) => {
-              const distance = Math.sqrt((e.clientX - startX) ** 2 + (e.clientY - startY) ** 2);
-              if (distance < 5) {
-                handleTab(item.path);
-              }
-            };
-
-            return (
-              <Button
-                key={item.id}
-                id={`profile-btn-${item.path}`}
-                variant={'topics'}
-                className={`${tab === item.path ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'}`}
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-              >
-                {item.title}
-              </Button>
-            );
-          }
-        })}
+    <div className="scrollable-tabs-container">
+      <div ref={leftArrowRef} className="left-arrow" onClick={handleLeftArrowClick}>
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
+          alt="arrow-right.svg"
+          className="size-[10px] rotate-180 tablet:size-6"
+        />
       </div>
-      <button
-        onClick={handleRightArrowClick}
-        className="size-[10px] min-w-[10px] max-w-[10px] tablet:size-5 tablet:min-w-5 tablet:max-w-5"
-        style={{
-          background: `url(${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '100% 100%',
-        }}
-      ></button>
+      <ul ref={tabsListRef} onMouseDown={() => setDragging(true)} onMouseMove={drag}>
+        {profileItems.map((tab, index) => (
+          <li key={index} ref={(el) => (tabRefs.current[tab.id] = el)}>
+            <Link
+              className={`${location.pathname === tab.path ? 'border-[#4A8DBD] bg-[#4A8DBD] text-white' : 'border-[#ACACAC] bg-white text-[#707175]'} slider-link`}
+              to={tab.path}
+            >
+              {tab.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <div ref={rightArrowRef} className="right-arrow active" onClick={handleRightArrowClick}>
+        <img
+          src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
+          alt="arrow-right.svg"
+          className="size-[10px] tablet:size-6"
+        />
+      </div>
     </div>
   );
 }

@@ -4,7 +4,7 @@ const Copy = ({ color, h, w }) => {
       <img
         src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/sharelink.svg`}
         alt="copy"
-        className="h-3 w-3 tablet:h-[23px] tablet:w-[23px]"
+        className="h-3 w-[13.84px] tablet:h-[23px] tablet:w-[23px]"
       />
       {/* <svg
         className="h-3 w-3 md:h-[1.024rem] md:w-[1.024rem] tablet:h-[23px] tablet:w-5 "

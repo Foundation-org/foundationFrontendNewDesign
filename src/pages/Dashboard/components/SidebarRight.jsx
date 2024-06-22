@@ -1,13 +1,9 @@
-import { toast } from 'sonner';
-import { useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
-import { createGuestMode } from '../../../services/api/userAuth';
 import { formatCountNumber } from '../../../utils/utils';
 
-const SidebarRight = () => {
+const SidebarRight = ({ userData }) => {
   const persistedTheme = useSelector((state) => state.utils.theme);
-  const persistedUserInfo = useSelector((state) => state.auth.user);
+  // const userData = useSelector((state) => state.auth.user);
 
   const sidebarList = [
     {
@@ -16,7 +12,7 @@ const SidebarRight = () => {
       iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon11.svg`,
       alt: 'icon1',
       title: 'Posts-Created',
-      value: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0,
+      value: (userData && userData?.questsCreated) || 0,
     },
     {
       id: 2,
@@ -24,7 +20,7 @@ const SidebarRight = () => {
       iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon12.svg`,
       alt: 'icon1',
       title: 'Posts-Engaged',
-      value: (persistedUserInfo && persistedUserInfo?.yourPostEngaged) || 0,
+      value: (userData && userData?.yourPostEngaged) || 0,
     },
     {
       id: 3,
@@ -32,7 +28,7 @@ const SidebarRight = () => {
       iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/your-post-engaged.svg`,
       alt: 'your-post-engaged',
       title: 'Your Posts-Engaged',
-      value: (persistedUserInfo && persistedUserInfo?.usersAnswered) || 0,
+      value: (userData && userData?.usersAnswered) || 0,
     },
     {
       id: 4,
@@ -40,7 +36,7 @@ const SidebarRight = () => {
       iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/couter-eye.svg`,
       alt: 'your-post-hidden',
       title: 'Your Posts-Hidden',
-      value: (persistedUserInfo && persistedUserInfo?.yourHiddenPostCounter) || 0,
+      value: (userData && userData?.yourHiddenPostCounter) || 0,
     },
     // {
     //   id: 3,
@@ -64,7 +60,7 @@ const SidebarRight = () => {
       iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon15.svg`,
       alt: 'icon1',
       title: 'Selections-Changed',
-      value: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0,
+      value: (userData && userData?.changedAnswers) || 0,
     },
     {
       id: 6,
@@ -72,7 +68,7 @@ const SidebarRight = () => {
       iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon16.svg`,
       alt: 'icon1',
       title: 'Options-Added',
-      value: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0,
+      value: (userData && userData?.addedAnswers) || 0,
     },
     {
       id: 7,
@@ -80,7 +76,7 @@ const SidebarRight = () => {
       iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/working.png`,
       alt: 'icon1',
       title: 'Agreement-Received',
-      value: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0,
+      value: (userData && userData?.selectionsOnAddedAns) || 0,
     },
     {
       id: 8,
@@ -88,7 +84,7 @@ const SidebarRight = () => {
       iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon18.svg`,
       alt: 'icon1',
       title: 'Objections-Received',
-      value: (persistedUserInfo && persistedUserInfo?.contentionsOnAddedAns) || 0,
+      value: (userData && userData?.contentionsOnAddedAns) || 0,
     },
     {
       id: 9,
@@ -96,7 +92,7 @@ const SidebarRight = () => {
       iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon19.svg`,
       alt: 'icon1',
       title: 'Objections-Given',
-      value: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0,
+      value: (userData && userData?.contentionsGiven) || 0,
     },
     {
       id: 10,
@@ -104,34 +100,14 @@ const SidebarRight = () => {
       iconLight: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/dashboard/icon20.svg`,
       alt: 'icon1',
       title: 'Code of Conduct-Fails',
-      value: (persistedUserInfo && persistedUserInfo?.violationCounter) || 0,
+      value: (userData && userData?.violationCounter) || 0,
     },
   ];
 
-  const { mutateAsync: createGuest } = useMutation({
-    mutationFn: createGuestMode,
-    onSuccess: (resp) => {
-      localStorage.setItem('isGuestMode', resp.data.isGuestMode);
-      localStorage.setItem('jwt', resp.data.token);
-      localStorage.setItem('uId', resp.data.uuid);
-    },
-    onError: (err) => {
-      toast.error(err.response.data);
-    },
-  });
-
-  useEffect(() => {
-    if (persistedUserInfo) {
-      const uId = persistedUserInfo?.uuid;
-
-      if (!uId) {
-        createGuest();
-      }
-    }
-  }, []);
-
   return (
-    <div className="no-scrollbar my-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto rounded-[15px] bg-white py-[25px] pl-[1.3rem] pr-[2.1rem] tablet:my-[15px] laptop:block dark:bg-[#000]">
+    <div
+      className={`${userData && userData.role === 'guest' && location.pathname === '/' ? 'hidden' : 'no-scrollbar my-5 hidden h-fit max-h-[calc(100vh-96px)] w-[18.75rem] min-w-[18.75rem] overflow-y-auto rounded-[15px] bg-white py-[25px] pl-[1.3rem] pr-[2.1rem] tablet:my-[15px] laptop:block dark:bg-[#000]'} `}
+    >
       <p className="font-inter mb-[25px] text-center text-[10.79px] font-medium leading-[18px] text-[#616161] tablet:text-[18px] dark:text-[#D2D2D2]">
         My Contributions
       </p>

@@ -7,10 +7,12 @@ import { toast } from 'sonner';
 import api from '../../../../../../services/api/Axios';
 import EducationBadgePopup from '../../../../../../components/dialogue-boxes/EducationBadgePopup';
 import WorkBadgePopup from '../../../../../../components/dialogue-boxes/WorkBadgePopup';
+import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 
-export default function Personal({ handleUserInfo, fetchUser, setFetchUser, handleRemoveBadgePopup }) {
+export default function Personal({ fetchUser, handleOpenPasswordConfirmation, checkLegacyBadge, handlePasskeyConfirmation, getAskPassword }) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
+  const persistedContants = useSelector(getConstantsValues);
 
   const [isPersonalPopup, setIsPersonalPopup] = useState(false);
   const [seletedPersonalBadge, setSelectedPersonalBadge] = useState('');
@@ -32,6 +34,9 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
       );
       return;
     } else {
+      if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword)) await handleOpenPasswordConfirmation();
+      // if (await handlePasskeyConfirmation()) {
+
       if (edit) {
         setEdit(true);
       } else {
@@ -39,6 +44,7 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
       }
       setIsPersonalPopup(true);
       setSelectedPersonalBadge(type);
+      // }
     }
   };
 
@@ -57,11 +63,9 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             type={'firstName'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/firstname.png`}
             placeholder="First Name Here"
-            handleUserInfo={handleUserInfo}
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -75,11 +79,9 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             type={'lastName'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/lastname.png`}
             placeholder="Last Name Here"
-            handleUserInfo={handleUserInfo}
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -93,11 +95,9 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             type={'dateOfBirth'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/dob.svg`}
             placeholder="MM/DD/YYYY"
-            handleUserInfo={handleUserInfo}
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -111,11 +111,9 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             type={'currentCity'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/currentcity-1.png`}
             placeholder="Current City here"
-            handleUserInfo={handleUserInfo}
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -129,11 +127,9 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             type={'homeTown'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/hometown.svg`}
             placeholder="Hometown Here"
-            handleUserInfo={handleUserInfo}
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -147,11 +143,9 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             type={'relationshipStatus'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/relationaship-1.png`}
             placeholder="Relationship Here"
-            handleUserInfo={handleUserInfo}
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -165,9 +159,7 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             type={'work'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/work-a.png`}
             placeholder="Work Here"
-            handleUserInfo={handleUserInfo}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -181,9 +173,7 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             type={'education'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`}
             placeholder="Education Here"
-            handleUserInfo={handleUserInfo}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -197,11 +187,9 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             type={'id-passport'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Identity-2x-1.png`}
             placeholder="ID / Passport Here"
-            handleUserInfo={handleUserInfo}
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -215,11 +203,9 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             type={'geolocation'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/education-1.png`}
             placeholder="Geolocation"
-            handleUserInfo={handleUserInfo}
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -233,11 +219,9 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
             type={'security-question'}
             logo={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/securityquestion-a.png`}
             placeholder="Answer Here"
-            handleUserInfo={handleUserInfo}
             edit={edit}
             setEdit={setEdit}
             fetchUser={fetchUser}
-            setFetchUser={setFetchUser}
             setIsPersonalPopup={setIsPersonalPopup}
           />
         );
@@ -269,8 +253,7 @@ export default function Personal({ handleUserInfo, fetchUser, setFetchUser, hand
         {checkPersonalBadge(item.type) ? 'Edit' : item.ButtonText}
         {!checkPersonalBadge(item.type) && (
           <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-            (+0.96 FDX)
-          </span>
+            (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)</span>
         )}
       </Button>
     </div>
