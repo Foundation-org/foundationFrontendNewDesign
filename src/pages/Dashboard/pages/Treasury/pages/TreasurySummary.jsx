@@ -142,7 +142,7 @@ const TreasurySummary = () => {
         </div>
       </div>
       {/* Redemption Code Activity */}
-      <div>
+      {/* <div>
         <div className="flex items-center justify-between rounded-t-[10px] bg-[#4A8DBD] px-5 py-[10px]">
           <div className="flex items-center gap-2">
             <img
@@ -188,7 +188,7 @@ const TreasurySummary = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

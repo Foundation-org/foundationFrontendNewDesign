@@ -35,10 +35,10 @@ export const treasuryItems = [
     title: 'Buy FDX',
     path: '/dashboard/treasury/buy-fdx',
   },
-  {
-    id: 3,
-    title: 'Redemption center',
-    path: '/dashboard/treasury/redemption-center',
-  },
+  // {
+  //   id: 3,
+  //   title: 'Redemption center',
+  //   path: '/dashboard/treasury/redemption-center',
+  // },
   { id: 4, title: 'Treasury Activity', path: '/dashboard/treasury/ledger' },
 ];
