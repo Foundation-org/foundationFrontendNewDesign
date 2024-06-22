@@ -1,19 +1,14 @@
-import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Button } from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-import { FaSpinner } from 'react-icons/fa';
 import { generateCategoryShareLink } from '../../services/api/listsApi';
-import Copy from '../../assets/optionbar/Copy';
 import { getConstantsValues } from '../../features/constants/constantsSlice';
 import showToast from '../ui/Toast';
+import Copy from '../../assets/optionbar/Copy';
 
 const ShareListLink = ({ handleClose, selectedItem }) => {
-  console.log('selectedItem', selectedItem);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const persistedContants = useSelector(getConstantsValues);
   const queryClient = useQueryClient();
@@ -185,7 +180,11 @@ const ShareListLink = ({ handleClose, selectedItem }) => {
               <Button
                 variant={'submit'}
                 className={'w-fit min-w-fit whitespace-nowrap'}
-                onClick={() => navigate('/shared-list-link/result')}
+                onClick={() =>
+                  navigate('/shared-list-link/result', {
+                    state: { categoryItem: selectedItem?._id },
+                  })
+                }
               >
                 Manage My Shared Lists
               </Button>

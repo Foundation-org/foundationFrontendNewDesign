@@ -114,7 +114,6 @@ export const generateCategoryShareLink = async (userUuid, categoryId, customized
   } catch (err) {
     // console.log(err.response?.data?.message);
     showToast('error', 'error', {}, err.response?.data?.message.split(':')[1]);
-
   }
 };
 
@@ -173,7 +172,6 @@ export const submitListResponse = async ({ params, categoryId, categoryLink }) =
 };
 
 export const viewListResults = async ({ categoryId }) => {
-  console.log('first', categoryId);
   try {
     return await api.get(`/userlists/viewList/${categoryId}/${localStorage.getItem('uuid')}`);
   } catch (err) {
