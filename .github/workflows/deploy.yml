@@ -36,6 +36,9 @@ jobs:
       VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
       VITE_FIREBASE_MEASUREMENT_ID: ${{ vars.VITE_FIREBASE_MEASUREMENT_ID }}
       VITE_GG_API_KEY: ${{ vars.VITE_GG_API_KEY }}
+      VITE_STRIPE_PK: ${{ vars.VITE_STRIPE_PK }}
+      VITE_PAYPAL_CLIENT_ID: ${{ vars.VITE_PAYPAL_CLIENT_ID }}
+      VITE_PAYPAL_SECRET_KEY: ${{ vars.VITE_PAYPAL_SECRET_KEY }}
       
     
     strategy:
