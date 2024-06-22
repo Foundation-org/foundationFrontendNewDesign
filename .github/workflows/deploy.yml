@@ -39,7 +39,7 @@ jobs:
       VITE_STRIPE_PK: ${{ vars.VITE_STRIPE_PK }}
       VITE_PAYPAL_CLIENT_ID: ${{ vars.VITE_PAYPAL_CLIENT_ID }}
       VITE_PAYPAL_SECRET_KEY: ${{ vars.VITE_PAYPAL_SECRET_KEY }}
-      
+      VITE_FRONTEND_URL: ${{ vars.VITE_FRONTEND_URL }}
     
     strategy:
       matrix:
