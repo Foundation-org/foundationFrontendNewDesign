@@ -91,13 +91,13 @@ export default function TreasurySlider() {
           </li>
         ))}
       </ul>
-      <div ref={rightArrowRef} className="right-arrow active" onClick={handleRightArrowClick}>
+      {/* <div ref={rightArrowRef} className="right-arrow active" onClick={handleRightArrowClick}>
         <img
           src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/arrow-right.svg`}
           alt="arrow-right.svg"
           className="size-[10px] tablet:size-6"
         />
-      </div>
+      </div> */}
     </div>
   );
 }
