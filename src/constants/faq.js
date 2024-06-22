@@ -66,7 +66,7 @@ export const faqData2 = [
     desc: [
       'You earn FDX every time you engage with a post.',
       'Go to the homepage with the feed and start engaging in posts. You can participate in single or multiple choice posts, share posts, and add posts to a shared list.',
-      'Some posts allow you to add addition al answer options and you can do that too by selecting “Add option”.',
+      'Some posts allow you to add additional answer options and you can do that too by selecting “Add option”.',
       'All of your participation is anonymous.',
     ],
   },
@@ -110,7 +110,7 @@ export const faqData2 = [
     img: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/faq/4.png`,
     title: 'What are the objection & reporting systems?',
     desc: [
-      'If there’s an option to a multiple, open, or ranked choice post you don’t think should be there, you can object it. It costs FDX add an objection, buy you can get it back by removing the objection later as well.',
+      'If there’s an option to a multiple, open, or ranked choice post you don’t think should be there, you can object it. It costs FDX to add an objection, buy you can get it back by removing the objection later as well.',
     ],
   },
   {
