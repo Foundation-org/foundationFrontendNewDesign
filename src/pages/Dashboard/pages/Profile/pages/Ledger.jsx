@@ -7,14 +7,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import LedgerTableTopbar from '../components/LedgerTableTopbar';
 import { format } from 'date-fns';
 import { updateColumnSize } from '../../../../../features/profile/legerSlice';
-import { useErrorBoundary } from 'react-error-boundary';
 
 export default function BasicTable() {
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const columnSizes = useSelector((state) => state.ledger);
-  const { showBoundary } = useErrorBoundary();
   const itemsPerPage = 10;
   const rowsPerPage = 10;
   const [totalPages, setTotalPages] = useState(null);
@@ -45,7 +43,7 @@ export default function BasicTable() {
         setLedgerData(data);
       }
     } catch (err) {
-      showBoundary(err);
+      console.log('err', err);
     }
   };
 
@@ -57,7 +55,7 @@ export default function BasicTable() {
         setLedgerData(data);
       }
     } catch (err) {
-      showBoundary(err);
+      console.log('err', err);
     }
   };
 

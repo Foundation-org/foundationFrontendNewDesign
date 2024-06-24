@@ -7,7 +7,6 @@ import PopUp from '../ui/PopUp';
 import api from '../../services/api/Axios';
 import CustomCombobox from '../ui/Combobox';
 import { FaSpinner } from 'react-icons/fa';
-import { useErrorBoundary } from 'react-error-boundary';
 import Listbox from '../ui/ListBox';
 import { useDebounce } from '../../utils/useDebounce';
 import BadgeRemovePopup from './badgeRemovePopup';
@@ -43,7 +42,6 @@ const PersonalBadgesPopup = ({
   setIsPersonalPopup,
 }) => {
   const queryClient = useQueryClient();
-  const { showBoundary } = useErrorBoundary();
   const [selected, setSelected] = useState();
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
@@ -320,7 +318,6 @@ const PersonalBadgesPopup = ({
         handleClose();
       }
     } catch (error) {
-      showBoundary(error);
       console.log(error);
       handleClose();
     } finally {
@@ -377,7 +374,6 @@ const PersonalBadgesPopup = ({
         handleClose();
       }
     } catch (error) {
-      showBoundary(error);
       console.log(error);
       handleClose();
     } finally {

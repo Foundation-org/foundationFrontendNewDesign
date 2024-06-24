@@ -15,7 +15,6 @@ import Personal from './verification-badges/Personal';
 import Web3 from './verification-badges/Web3';
 import { InstagramLogin } from '@amraneze/react-instagram-login';
 import Contact from './verification-badges/Contact';
-// import { useErrorBoundary } from 'react-error-boundary';
 import { useQueryClient } from '@tanstack/react-query';
 import Legacy from './verification-badges/Legacy';
 import LegacyConfirmationPopup from '../../../../../components/dialogue-boxes/LegacyConfirmationPopup';
@@ -24,13 +23,11 @@ import { getConstantsValues } from '../../../../../features/constants/constantsS
 import showToast from '../../../../../components/ui/Toast';
 import { getAskPassword } from '../../../../../features/profile/userSettingSlice';
 import { badgesTotalLength } from '../../../../../constants/varification-badges';
-import { useErrorBoundary } from 'react-error-boundary';
 import { Button } from '../../../../../components/ui/Button';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { showBoundary } = useErrorBoundary();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(false);
@@ -67,11 +64,9 @@ const VerificationBadges = () => {
         handleAddBadge('instagram', data);
       } else {
         const data = await response.json();
-        // showBoundary(JSON.stringify(data)); // Stringify the error object
         console.error('Error fetching Instagram profile:', data);
       }
     } catch (error) {
-      // showBoundary(JSON.stringify(error)); // Stringify the error object
       console.error('Error fetching Instagram profile:', error.message);
     }
   };
@@ -85,7 +80,6 @@ const VerificationBadges = () => {
         handleAddBadge('twitter', data);
       })
       .catch((err) => {
-        // showBoundary(err);
         console.log(err);
         setIsLoading(false);
       });
@@ -99,7 +93,6 @@ const VerificationBadges = () => {
         handleAddBadge('github', data);
       })
       .catch((err) => {
-        // showBoundary(err);
         console.log(err);
       });
   };

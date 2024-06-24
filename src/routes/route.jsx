@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ErrorBoundary } from '../components/providers/ErrorBoundry';
 import RequireAuth from './RequireAuth';
 
 // pages
@@ -140,81 +139,18 @@ export function Router() {
                 <Route path="redemption-center" element={<RedemptionCenter />} />
                 <Route path="ledger" element={<Ledger />} />
               </Route>
-              <Route
-                path="profile/"
-                element={
-                  <ErrorBoundary>
-                    <Profile />
-                  </ErrorBoundary>
-                }
-              >
-                <Route
-                  path=""
-                  element={
-                    <ErrorBoundary>
-                      <Summary />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="verification-badges"
-                  element={
-                    <ErrorBoundary>
-                      <VerificationBadges />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="post-activity"
-                  element={
-                    <ErrorBoundary>
-                      <Contributions />
-                    </ErrorBoundary>
-                  }
-                />
+              <Route path="profile/" element={<Profile />}>
+                <Route path="" element={<Summary />} />
+                <Route path="verification-badges" element={<VerificationBadges />} />
+                <Route path="post-activity" element={<Contributions />} />
                 <Route path="lists" element={<Lists />} />
                 <Route path="postsbylist/:categoryId" element={<PostsByList />} />
 
-                <Route
-                  path="ledger"
-                  element={
-                    <ErrorBoundary>
-                      <BasicTable />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="hidden-posts"
-                  element={
-                    <ErrorBoundary>
-                      <HiddenPosts />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="shared-links"
-                  element={
-                    <ErrorBoundary>
-                      <SharedLinks />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="user-settings"
-                  element={
-                    <ErrorBoundary>
-                      <UserSettings />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="feedback"
-                  element={
-                    <ErrorBoundary>
-                      <Feedback />
-                    </ErrorBoundary>
-                  }
-                />
+                <Route path="ledger" element={<BasicTable />} />
+                <Route path="hidden-posts" element={<HiddenPosts />} />
+                <Route path="shared-links" element={<SharedLinks />} />
+                <Route path="user-settings" element={<UserSettings />} />
+                <Route path="feedback" element={<Feedback />} />
                 <Route path="change-password" element={<ChangePassword />} />
               </Route>
             </Route>

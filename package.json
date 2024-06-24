@@ -40,7 +40,6 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
-    "react-error-boundary": "^4.0.13",
     "react-facebook": "^9.0.12",
     "react-google-recaptcha": "^3.1.0",
     "react-helmet-async": "^2.0.4",
