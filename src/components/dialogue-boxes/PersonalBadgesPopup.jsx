@@ -424,9 +424,7 @@ const PersonalBadgesPopup = ({
                   }}
                   placeholder={placeholder2}
                   disabled={fetchingEdit}
-                  className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${
-                    edit ? (name ? '' : 'caret-hidden') : ''
-                  }`}
+                  className={`verification_badge_input ${edit ? (name ? '' : 'caret-hidden') : ''}`}
                 />
                 {isError && (
                   <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
@@ -467,7 +465,7 @@ const PersonalBadgesPopup = ({
               value={edit ? (!fetchingEdit ? name : 'Loading...') : name}
               disabled
               placeholder={placeholder2}
-              className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
+              className="verification_badge_input"
             />
             <div className="mt-[10px] flex justify-between gap-2 tablet:mt-5">
               <Button variant="submit" onClick={() => getLocation()} disabled={edit ? (name ? false : true) : false}>
@@ -512,9 +510,7 @@ const PersonalBadgesPopup = ({
               }}
               placeholder={placeholder}
               disabled={fetchingEdit}
-              className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${
-                edit ? (name ? '' : 'caret-hidden') : ''
-              }`}
+              className={`verification_badge_input ${edit ? (name ? '' : 'caret-hidden') : ''}`}
             />
             {isError && (
               <p className="absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
@@ -656,7 +652,7 @@ const PersonalBadgesPopup = ({
               value={name}
               onChange={handleNameChange}
               placeholder={placeholder}
-              className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
+              className="verification_badge_input"
             />
             {isError && (
               <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
@@ -698,7 +694,7 @@ const PersonalBadgesPopup = ({
                 type="text"
                 value="Loading..."
                 disabled={true}
-                className={`caret-hidden w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]`}
+                className={`caret-hidden verification_badge_input`}
               />
             ) : (
               <input
@@ -706,7 +702,7 @@ const PersonalBadgesPopup = ({
                 id="dateInput"
                 value={date} // Assuming date is a valid string in YYYY-MM-DD format
                 onChange={handleDateChange}
-                className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
+                className="verification_badge_input"
               />
             )}
             <div className="mt-[10px] flex justify-end gap-[15px] tablet:mt-5 tablet:gap-[35px]">

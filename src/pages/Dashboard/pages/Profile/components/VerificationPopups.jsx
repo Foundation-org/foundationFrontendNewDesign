@@ -110,7 +110,7 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={placeholder}
-              className="mb-[10px] mt-1 w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:mb-5 tablet:mt-[15px] tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
+              className="verification_badge_input mb-[10px] mt-1 tablet:mb-5 tablet:mt-[15px]"
             />
             <div className="flex justify-end" onClick={() => handleAddContactBadge({ legacy: true })}>
               <Button variant="submit" disabled={loading}>
