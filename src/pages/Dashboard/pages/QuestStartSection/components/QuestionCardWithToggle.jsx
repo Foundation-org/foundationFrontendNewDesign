@@ -311,15 +311,12 @@ const QuestionCardWithToggle = (props) => {
         setLoading(false);
         queryClient.invalidateQueries(['userInfo', 'postsByCategory']);
 
-        queryClient.setQueryData(['questByShareLink'], (oldData) => ({
-          ...resp.data.data,
-        }));
-
-        // queryClient.setQueryData(['postsByCategory'], (oldData) => {
-        //   console.log('old', oldData);
-        // });
-
-        // postsByCategory;
+        queryClient.setQueryData(['questByShareLink'], (oldData) => {
+          return {
+            ...oldData,
+            ...oldData.map((item) => (item?._id === resp.data.data._id ? resp.data.data : item)),
+          };
+        });
       }
 
       // if (persistedUserInfo.role === 'guest') {

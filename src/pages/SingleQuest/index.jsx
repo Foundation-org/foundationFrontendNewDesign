@@ -30,7 +30,7 @@ const SingleQuest = () => {
     if (isSuccess && singleQuestData) {
       questImpression(id);
     }
-  }, [isSuccess, singleQuestData]);
+  }, [isSuccess, singleQuestData?.data?.data]);
 
   return (
     <>
@@ -59,10 +59,10 @@ const SingleQuest = () => {
         </script>
         {/* // Metaprop */}
         <title>Foundation</title>
-        <meta name="description" content={singleQuestData?.Question} />
+        <meta name="description" content={singleQuestData?.data.data?.Question} />
         //OG
         <meta property="og:title" content="Foundation" />
-        <meta property="og:description" content={singleQuestData?.Question} />
+        <meta property="og:description" content={singleQuestData?.data.data?.Question} />
         <meta property="og:type" content="website" />
         {/* <meta name="theme-color" content={seoMeta.color} />
         <meta property="og:video" content={seoMeta.video} />
@@ -79,7 +79,7 @@ const SingleQuest = () => {
         //Note // Twitter
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:title" content="Foundation" />
-        <meta property="twitter:description" content={singleQuestData?.Question} />
+        <meta property="twitter:description" content={singleQuestData?.data?.data?.Question} />
         <meta property="twitter:domain" content="on.foundation" />
         <meta property="twitter:image" content={`${import.meta.env.VITE_CLIENT_URL}/seo.svg`} />
         <meta name="google" content="notranslate"></meta>
@@ -90,7 +90,7 @@ const SingleQuest = () => {
         <DashboardLayout>
           <div className="no-scrollbar mx-auto flex h-[calc(100vh-58px)] w-full max-w-[1440px] flex-col gap-2 overflow-y-auto py-2 tablet:h-[calc(100vh-101px)] tablet:gap-5 laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 laptop:py-5 desktop:mx-auto desktop:px-0">
             {singleQuestData &&
-              singleQuestData.map((item, index) =>
+              singleQuestData?.data.data?.map((item, index) =>
                 item.id === 'guest_notification' ? (
                   <div className="mx-auto w-full max-w-[730px] px-4 tablet:px-0">
                     <SystemNotificationCard post={item} key={index + 1} />
