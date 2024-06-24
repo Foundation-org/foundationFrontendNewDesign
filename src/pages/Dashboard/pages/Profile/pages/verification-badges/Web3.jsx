@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { web3 } from '../../../../../../constants/varification-badges';
 import { startRegistration } from '@simplewebauthn/browser';
-import Button from '../../components/Button';
 import api from '../../../../../../services/api/Axios';
 import { isBrowser, isMobile } from 'react-device-detect';
 import { useSDK } from '@metamask/sdk-react';
@@ -12,6 +11,7 @@ import { AuthKitProvider, SignInButton, useProfile, useSignIn } from '@farcaster
 import { useQueryClient } from '@tanstack/react-query';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import showToast from '../../../../../../components/ui/Toast';
+import { Button } from '../../../../../../components/ui/Button';
 export default function Web3({
   handleRemoveBadgePopup,
   handleOpenPasswordConfirmation,
@@ -300,8 +300,10 @@ export default function Web3({
               </h1>
             </div>
             <Button
-              color={
-                checkPassKeyBadge(item.accountName, item.type) || checkWeb3Badge(item.type) ? 'red' : item.ButtonColor
+              variant={
+                checkPassKeyBadge(item.accountName, item.type) || checkWeb3Badge(item.type)
+                  ? 'verification-badge-remove'
+                  : item.ButtonColor
               }
               onClick={async () => {
                 if (item.type === 'etherium-wallet') {

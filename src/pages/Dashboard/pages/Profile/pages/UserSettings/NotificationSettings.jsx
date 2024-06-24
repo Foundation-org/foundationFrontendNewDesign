@@ -58,7 +58,12 @@ export default function NotificationSettings() {
         <div className="rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:py-[18.73px]">
           <div className="flex flex-col gap-3 rounded-[6.749px] tablet:gap-6 tablet:rounded-[15px]">
             <div className="flex items-center justify-between">
-              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Email notifications</h1>
+              <div>
+                <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Email notifications</h1>{' '}
+                <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">
+                  Get notified of new features, updates and more!
+                </p>
+              </div>
               <Switch
                 checked={emailNotifications}
                 onChange={(e) => {
@@ -69,17 +74,21 @@ export default function NotificationSettings() {
                 <span className="sr-only">Use setting</span>
                 <span
                   aria-hidden="true"
-                  className={`${
+                  className={`switch_base ${
                     emailNotifications
                       ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
                       : 'translate-x-[1px] bg-[#707175]'
-                  }
-      pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
+                  }`}
                 />
               </Switch>
             </div>
             <div className="flex items-center justify-between">
-              <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">System notifications</h1>
+              <div>
+                <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">System notifications</h1>
+                <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">
+                  Helpful messages in your feed to guide you along
+                </p>
+              </div>
               <Switch
                 checked={systemNotifications}
                 onChange={(e) => {
@@ -91,12 +100,11 @@ export default function NotificationSettings() {
                 <span className="sr-only">Use setting</span>
                 <span
                   aria-hidden="true"
-                  className={`${
+                  className={`switch_base ${
                     systemNotifications
                       ? 'translate-x-[9px] bg-[#4A8DBD] tablet:translate-x-6'
                       : 'translate-x-[1px] bg-[#707175]'
-                  }
-      pointer-events-none inline-block h-2 w-2 transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out tablet:h-5 tablet:w-5`}
+                  }`}
                 />
               </Switch>
             </div>

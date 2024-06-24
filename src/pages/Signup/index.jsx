@@ -1,4 +1,4 @@
-import { toast } from 'sonner';
+// import { toast } from 'sonner';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 // import { signUp } from '../../services/api/userAuth';
@@ -57,7 +57,6 @@ export default function Signup() {
   const instaRef = useRef(null);
   const [clickedButtonName, setClickedButtonName] = useState('');
 
-
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   const handlePopupOpen = () => setIspopup(true);
@@ -83,6 +82,7 @@ export default function Signup() {
         console.log(err);
       });
   };
+
   const loginWithTwitter = () => {
     const provider = new TwitterAuthProvider();
     console.log(authentication);
@@ -96,11 +96,10 @@ export default function Signup() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   const triggerLogin = async () => {
     if (clickedButtonName === 'facebook') {
-
       if (fbRef.current) {
         const facebookButton = fbRef.current.querySelector('div'); // or a more specific selector if needed
         if (facebookButton) {
@@ -109,16 +108,15 @@ export default function Signup() {
       }
     }
     if (clickedButtonName === 'google') {
-
       if (googleRef.current) {
         const facebookButton = googleRef.current.querySelector('div'); // or a more specific selector if needed
         if (facebookButton) {
           facebookButton.click();
+          setIsLoadingSocial(true);
         }
       }
     }
     if (clickedButtonName === 'linkedin') {
-
       if (linkedInRef.current) {
         const facebookButton = linkedInRef.current.querySelector('div'); // or a more specific selector if needed
         if (facebookButton) {
@@ -127,19 +125,13 @@ export default function Signup() {
       }
     }
     if (clickedButtonName === 'github') {
-
       loginWithGithub();
-
     }
     if (clickedButtonName === 'twitter') {
-
       loginWithTwitter();
-
     }
-
-
-
   };
+
   // const { mutateAsync: userSignup } = useMutation({
   //   mutationFn: signUp,
   // });
@@ -264,7 +256,6 @@ export default function Signup() {
     }
   };
 
-
   const handleSignUpSocialGuest = async (data) => {
     try {
       data.uuid = localStorage.getItem('uuid');
@@ -310,8 +301,9 @@ export default function Signup() {
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div
-        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${
+          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>

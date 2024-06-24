@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { contacts, legacy } from '../../../../../../constants/varification-badges';
 import VerificationPopups from '../../components/VerificationPopups';
-import Button from '../../components/Button';
+
 import AddCellPhonePopup from '../../../../../../components/dialogue-boxes/AddCellPhonePopup';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
 import LegacyBadgePopup from '../../../../../../components/dialogue-boxes/LegacyBadgePopup';
+import { Button } from '../../../../../../components/ui/Button';
 
 export default function Contact({
   fetchUser,
@@ -90,7 +91,14 @@ export default function Contact({
           </h1>
         </div>
         <Button
-          color={checkContact(item.type) ? (checkPrimary(item.type) ? 'yellow' : 'red') : item.ButtonColor}
+          variant={
+            checkContact(item.type)
+              ? checkPrimary(item.type)
+                ? 'verification-badge-edit'
+                : 'verification-badge-remove'
+              : item.ButtonColor
+          }
+          // color={checkContact(item.type) ? (checkPrimary(item.type) ? 'yellow' : 'red') : item.ButtonColor}
           onClick={() => item.ButtonColor !== 'gray' && handleClickContactBadgeEmail(item.type, item.title, item.image)}
           disabled={checkPrimary(item.type)}
         >
@@ -228,7 +236,8 @@ export default function Contact({
                 </h1>
               </div>
               <Button
-                color={checkLegacyBadge() ? 'red' : 'blue'}
+                variant={checkLegacyBadge() ? 'verification-badge-remove' : 'submit'}
+                // color={checkLegacyBadge() ? 'red' : 'blue'}
                 disabled={item.disabled}
                 onClick={() => {
                   checkLegacyBadge()
@@ -241,7 +250,7 @@ export default function Contact({
                     : setIsPersonalPopup(true);
                 }}
               >
-                {checkLegacyBadge() ? 'Remove' : 'Add Badge'}
+                {checkLegacyBadge() ? 'Remove' : 'Add'}
                 <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                   {checkLegacyBadge() ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
                 </span>

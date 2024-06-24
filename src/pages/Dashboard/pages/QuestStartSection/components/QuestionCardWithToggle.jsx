@@ -7,8 +7,6 @@ import { validateInterval } from '../../../../../utils';
 import { questSelectionInitial } from '../../../../../constants/quests';
 import { resetQuests } from '../../../../../features/quest/questsSlice';
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
-// import { getQuestByUniqueShareLink } from '../../../../../services/api/homepageApis';
-
 import Result from './Result';
 import StartTest from './StartTest';
 import ButtonGroup from '../../../../../components/question-card/ButtonGroup';
@@ -21,7 +19,7 @@ import * as questUtilsActions from '../../../../../features/quest/utilsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../components/ui/Button.jsx';
 import { submitListResponse, updateCategoryParticipentsCount } from '../../../../../services/api/listsApi.js';
-import showToast from '../../../../../components/ui/Toast'
+import showToast from '../../../../../components/ui/Toast';
 const QuestionCardWithToggle = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -267,11 +265,6 @@ const QuestionCardWithToggle = (props) => {
     }
   }, [questStartData]);
 
-  // const questByUniqueShareLink = async () => {
-  //   const getQuest = await getQuestByUniqueShareLink(location.pathname.split('/').slice(-1)[0]);
-  //   props.setSingleQuestResp(getQuest.response.data.data[0]);
-  // };
-
   const { mutateAsync: startGuestListQuest } = useMutation({
     mutationFn: submitListResponse,
     onSuccess: (resp) => {
@@ -299,7 +292,7 @@ const QuestionCardWithToggle = (props) => {
     },
     onError: (err) => {
       console.log({ err });
-      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       setLoading(false);
     },
   });
@@ -345,7 +338,7 @@ const QuestionCardWithToggle = (props) => {
     },
     onError: (err) => {
       console.log(err);
-      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       setLoading(false);
     },
   });
@@ -356,10 +349,10 @@ const QuestionCardWithToggle = (props) => {
       queryClient.invalidateQueries(['userInfo']);
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
-        showToast('warning', 'selectedSameOptions')
+        showToast('warning', 'selectedSameOptions');
       }
       if (resp.data.message === 'You can change your answer once every 1 hour') {
-        showToast('warning', 'changeOptionTimePeriod')
+        showToast('warning', 'changeOptionTimePeriod');
         setLoading(false);
       }
       if (resp.data.message === 'Start Quest Updated Successfully') {
@@ -379,7 +372,7 @@ const QuestionCardWithToggle = (props) => {
       }
     },
     onError: (err) => {
-      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       setLoading(false);
     },
   });
@@ -441,7 +434,7 @@ const QuestionCardWithToggle = (props) => {
       };
 
       if (!params.answer.selected) {
-        showToast('warning', 'emptySelection')
+        showToast('warning', 'emptySelection');
         setLoading(false);
         return;
       }
@@ -532,7 +525,7 @@ const QuestionCardWithToggle = (props) => {
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            showToast('warning', 'optionBlank')
+            showToast('warning', 'optionBlank');
             setLoading(false);
             return;
           }
@@ -560,7 +553,7 @@ const QuestionCardWithToggle = (props) => {
 
             setAnswerSelection(updatedArray);
           } else {
-            showToast('warning', 'emptySelection')
+            showToast('warning', 'emptySelection');
             setLoading(false);
           }
         }
@@ -578,7 +571,7 @@ const QuestionCardWithToggle = (props) => {
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          showToast('warning', 'optionBlank')
+          showToast('warning', 'optionBlank');
           setLoading(false);
           return;
         }
@@ -610,7 +603,7 @@ const QuestionCardWithToggle = (props) => {
 
           setAnswerSelection(updatedArray);
         } else {
-          showToast('warning', 'emptySelection')
+          showToast('warning', 'emptySelection');
           setLoading(false);
         }
       }
@@ -667,7 +660,7 @@ const QuestionCardWithToggle = (props) => {
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            showToast('warning', 'optionBlank')
+            showToast('warning', 'optionBlank');
             setLoading(false);
             return;
           }
@@ -700,7 +693,7 @@ const QuestionCardWithToggle = (props) => {
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          showToast('warning', 'optionBlank')
+          showToast('warning', 'optionBlank');
           setLoading(false);
           return;
         }

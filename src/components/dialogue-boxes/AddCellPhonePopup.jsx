@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { useState, useRef, useEffect } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../ui/Button';
@@ -67,7 +66,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
     },
     onError: (err) => {
       setLoading(false);
-      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
     },
   });
 
@@ -75,11 +74,11 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
     mutationFn: sendOtp,
     onSuccess: (resp) => {
       setOtpResp(resp);
-      showToast('success', 'otpSent')
+      showToast('success', 'otpSent');
       setIsRunning(true);
     },
     onError: (err) => {
-      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
     },
   });
 
@@ -87,11 +86,11 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
     mutationFn: resendOtp,
     onSuccess: (resp) => {
       setOtpResp(resp);
-      showToast('success', 'otpSent')
+      showToast('success', 'otpSent');
       setIsRunning(true);
     },
     onError: (err) => {
-      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
     },
   });
 
@@ -111,7 +110,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
       }
     } catch (error) {
       console.log(error);
-      showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       handleClose();
     } finally {
       setLoading(false);
@@ -129,18 +128,12 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
             >
               {title}
             </p>
-            {/* <input
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder={'Phone Number here'}
-              className="mb-[10px] mt-1 w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:mb-5 tablet:mt-[15px] tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
-            /> */}
             <PhoneInput
               placeholder="Enter phone number"
               value={phone}
-              className="mb-[10px] mt-1 w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:mb-5 tablet:mt-[15px] tablet:rounded-[15px] tablet:border-[3px] tablet:py-[18px] tablet:text-[18px] tablet:leading-[21px]"
+              className="verification_badge_input mb-[10px] mt-1 tablet:mb-5 tablet:mt-[15px]"
               onChange={setPhone}
+              style={{ color: '#707175' }}
             />
             <div className="flex justify-end">
               <Button
@@ -211,10 +204,10 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
                       setLoading(true);
                       verifyOtpCode({ phone: otpResp?.data?.data?.phoneNumber, otpString });
                     } else {
-                      showToast('error', 'otpExpired')
+                      showToast('error', 'otpExpired');
                     }
                   } else {
-                    showToast('warning', 'otpEmptyBlock')
+                    showToast('warning', 'otpEmptyBlock');
                   }
                 }}
               >

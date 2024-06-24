@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ErrorBoundary } from '../components/providers/ErrorBoundry';
 import RequireAuth from './RequireAuth';
 
 // pages
@@ -18,7 +17,6 @@ import SharedLinks from '../pages/Dashboard/pages/Profile/pages/SharedLinks';
 import BasicTable from '../pages/Dashboard/pages/Profile/pages/Ledger';
 import ChangePassword from '../pages/Dashboard/pages/Profile/pages/ChangePassword';
 import QuestStartSection from '../pages/Dashboard/pages/QuestStartSection';
-import Quest from '../pages/Dashboard/pages/Quest/Quest';
 import DashboardRedirect from '../pages/DashboardRedirect';
 import VerifyCode from '../pages/Signup/VerifyCode';
 import BadgeVerifyCode from '../pages/Signup/BadgeVerifyCode';
@@ -27,7 +25,6 @@ import PrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 import About from '../pages/Dashboard/pages/CustomerSupport/About';
 import Faq from '../pages/Dashboard/pages/CustomerSupport/Faq';
 import TermsOfService from '../pages/Dashboard/pages/CustomerSupport/TermsOfService';
-import PrivacyPolicyy from '../pages/Dashboard/pages/CustomerSupport/PrivacyPolicy';
 import ContactUs from '../pages/Dashboard/pages/CustomerSupport/ContactUs';
 import CustomerSupport from '../pages/Dashboard/pages/CustomerSupport';
 import GuestRedirect from '../pages/DashboardRedirect/GuestRedirect';
@@ -42,13 +39,14 @@ import Lists from '../pages/Dashboard/pages/Lists';
 import PostsByList from '../pages/Dashboard/pages/Lists/PostsByList';
 import SharedListResults from '../pages/Dashboard/pages/Lists/SharedListResults';
 import Summary from '../pages/Dashboard/pages/Profile/pages/summary';
+// QUESTS
+import Quest from '../pages/Dashboard/pages/Quest/Quest';
 import YesNo from '../pages/Dashboard/pages/Quest/pages/YesNo';
 import MultipleChoice from '../pages/Dashboard/pages/Quest/pages/MultipleChoice';
 import OpenChoice from '../pages/Dashboard/pages/Quest/pages/OpenChoice';
 import RankChoice from '../pages/Dashboard/pages/Quest/pages/RankChoice';
 import AgreeDisagree from '../pages/Dashboard/pages/Quest/pages/AgreeDisagree';
 import LikeDislike from '../pages/Dashboard/pages/Quest/pages/LikeDislikeQuest';
-import Test from '../components/Test';
 // TREASURY
 import TreasuryLayout from '../pages/Dashboard/pages/Treasury/TreasuryLayout';
 import TreasurySummary from '../pages/Dashboard/pages/Treasury/pages/TreasurySummary';
@@ -56,6 +54,8 @@ import RewardSchedule from '../pages/Dashboard/pages/Treasury/pages/RewardSchedu
 import BuyFDX from '../pages/Dashboard/pages/Treasury/pages/BuyFDX';
 import RedemptionCenter from '../pages/Dashboard/pages/Treasury/pages/RedemptionCenter';
 import Ledger from '../pages/Dashboard/pages/Treasury/pages/Ledger';
+// TEST
+import Test from '../components/Test';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -69,15 +69,6 @@ export function Router() {
     <>
       {!persistedUser?.uuid ? (
         <Routes>
-          {/* <Route path="/" element={<Welcome />} />
-          <Route path="/" element={<GuestCustomerSupport />}>
-            <Route path="about" element={<About />} />
-            <Route path="faq" element={<Faq />} />
-            <Route path="contact-us" element={<ContactUs />} />
-          </Route>
-          <Route path="/term-of-service" element={<TermOfService />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/verify-email" element={<VerifyEmail />} /> */}
           <Route path="/" element={<GuestRedirect />} />
           <Route path="/signin/" element={<Signin />}>
             <Route path="credentials" element={<CredentialLogin />} />
@@ -115,7 +106,7 @@ export function Router() {
                 <Route path="about" element={<About />} />
                 <Route path="faq" element={<Faq />} />
                 <Route path="terms-of-service" element={<TermsOfService />} />
-                <Route path="privacy-policy" element={<PrivacyPolicyy />} />
+                <Route path="privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="contact-us" element={<ContactUs />} />
               </Route>
               <Route path="quest/" element={<Quest />}>
@@ -140,81 +131,17 @@ export function Router() {
                 <Route path="redemption-center" element={<RedemptionCenter />} />
                 <Route path="ledger" element={<Ledger />} />
               </Route>
-              <Route
-                path="profile/"
-                element={
-                  <ErrorBoundary>
-                    <Profile />
-                  </ErrorBoundary>
-                }
-              >
-                <Route
-                  path=""
-                  element={
-                    <ErrorBoundary>
-                      <Summary />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="verification-badges"
-                  element={
-                    <ErrorBoundary>
-                      <VerificationBadges />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="post-activity"
-                  element={
-                    <ErrorBoundary>
-                      <Contributions />
-                    </ErrorBoundary>
-                  }
-                />
+              <Route path="profile/" element={<Profile />}>
+                <Route path="" element={<Summary />} />
+                <Route path="verification-badges" element={<VerificationBadges />} />
+                <Route path="post-activity" element={<Contributions />} />
                 <Route path="lists" element={<Lists />} />
                 <Route path="postsbylist/:categoryId" element={<PostsByList />} />
-
-                <Route
-                  path="ledger"
-                  element={
-                    <ErrorBoundary>
-                      <BasicTable />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="hidden-posts"
-                  element={
-                    <ErrorBoundary>
-                      <HiddenPosts />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="shared-links"
-                  element={
-                    <ErrorBoundary>
-                      <SharedLinks />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="user-settings"
-                  element={
-                    <ErrorBoundary>
-                      <UserSettings />
-                    </ErrorBoundary>
-                  }
-                />
-                <Route
-                  path="feedback"
-                  element={
-                    <ErrorBoundary>
-                      <Feedback />
-                    </ErrorBoundary>
-                  }
-                />
+                <Route path="ledger" element={<BasicTable />} />
+                <Route path="hidden-posts" element={<HiddenPosts />} />
+                <Route path="shared-links" element={<SharedLinks />} />
+                <Route path="user-settings" element={<UserSettings />} />
+                <Route path="feedback" element={<Feedback />} />
                 <Route path="change-password" element={<ChangePassword />} />
               </Route>
             </Route>

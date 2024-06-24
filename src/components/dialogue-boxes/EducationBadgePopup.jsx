@@ -82,12 +82,12 @@ const EducationBadgePopup = ({
       const newArr = queryExists
         ? [...jb.data]
         : [
-          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-          ...jb.data.map((jb) => ({
-            ...jb,
-            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-          })),
-        ];
+            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+            ...jb.data.map((jb) => ({
+              ...jb,
+              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+            })),
+          ];
 
       setEduData(newArr);
     } catch (err) {
@@ -156,19 +156,19 @@ const EducationBadgePopup = ({
       }
 
       if (field4Data < field3Data) {
-        showToast('error', 'graduationDateEarlierStart')
+        showToast('error', 'graduationDateEarlierStart');
         setLoading(false);
         return;
       }
       if (field4Data === field3Data) {
-        showToast('error', 'graduationDateSameStart')
+        showToast('error', 'graduationDateSameStart');
         setLoading(false);
         return;
       }
 
       if (existingData) {
         if (existingData.some((item) => item.id === field1Data.id)) {
-          showToast('error', 'schoolAlreadyExist')
+          showToast('error', 'schoolAlreadyExist');
 
           setLoading(false);
           return;
@@ -185,7 +185,7 @@ const EducationBadgePopup = ({
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
         queryClient.invalidateQueries(['userInfo']);
-        showToast('success', 'badgeAdded')
+        showToast('success', 'badgeAdded');
         if (field2Data.button) {
           const dataSaved = await api.post(`/addBadge/degreesAndFields/add`, {
             name: field2Data.name,
@@ -247,12 +247,12 @@ const EducationBadgePopup = ({
         return;
       }
       if (field4Data < field3Data) {
-        showToast('warning', 'graduationDateSameStart')
+        showToast('warning', 'graduationDateSameStart');
         setLoading(false);
         return;
       }
       if (field4Data === field3Data) {
-        showToast('warning', 'graduationDateSameStart')
+        showToast('warning', 'graduationDateSameStart');
         setLoading(false);
         return;
       }
@@ -264,7 +264,7 @@ const EducationBadgePopup = ({
         prevInfo.startingYear === field3Data &&
         prevInfo.graduationYear === field4Data
       ) {
-        showToast('warning', 'infoAlreadySaved')
+        showToast('warning', 'infoAlreadySaved');
         setLoading(false);
         return;
       }
@@ -306,7 +306,7 @@ const EducationBadgePopup = ({
         setLoading(false);
       }
     } catch (error) {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       handleClose();
     }
 
@@ -594,7 +594,7 @@ const EducationBadgePopup = ({
                   }}
                   onKeyDown={(e) => (e.key === 'Tab' && handleTab(2)) || (e.key === 'Enter' && handleTab(2, 'Enter'))}
                   placeholder={field2.placeholder}
-                  className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
+                  className="verification_badge_input"
                 /> */}
                 {isError && (
                   <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${field2.label}!`}</p>
@@ -638,7 +638,7 @@ const EducationBadgePopup = ({
                   }}
                   onKeyDown={(e) => (e.key === 'Tab' && handleTab(3)) || (e.key === 'Enter' && handleTab(3, 'Enter'))}
                   placeholder={field5.placeholder}
-                  className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
+                  className="verification_badge_input"
                 /> */}
                 {isError2 && (
                   <p className="top-25 absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${field5.label}!`}</p>
@@ -668,7 +668,7 @@ const EducationBadgePopup = ({
                     type="text"
                     value="Loading..."
                     disabled={true}
-                    className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                    className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                   />
                 ) : (
                   <input
@@ -677,7 +677,7 @@ const EducationBadgePopup = ({
                     type="date"
                     value={field3Data}
                     onChange={handlefield3Change}
-                    className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                    className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                   />
                 )}
               </div>
@@ -693,7 +693,7 @@ const EducationBadgePopup = ({
                       type="text"
                       value="Loading..."
                       disabled={true}
-                      className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                      className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                     />
                   ) : (
                     <input
@@ -705,7 +705,7 @@ const EducationBadgePopup = ({
                       value={field4Data}
                       onChange={handlefield4Change}
                       placeholder={field4.placeholder}
-                      className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                      className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                     />
                   )}
                 </div>

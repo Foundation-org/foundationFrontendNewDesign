@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
-import showToast from '../ui/Toast'
+import showToast from '../ui/Toast';
 const CustomCombobox = ({
   items,
   type,
@@ -21,14 +21,14 @@ const CustomCombobox = ({
     query === ''
       ? items
       : items.filter(
-        type === 'city'
-          ? (item) => item?.name?.toLowerCase()
-          : (item) => item?.name?.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
-      );
+          type === 'city'
+            ? (item) => item?.name?.toLowerCase()
+            : (item) => item?.name?.toLowerCase().replace(/\s+/g, '').includes(query.toLowerCase().replace(/\s+/g, '')),
+        );
   const validateSelection = (selection) => {
     const wordCount = selection?.name?.split(' ').filter((word) => word.length > 0).length;
     if (wordCount < 3) {
-      showToast('warning', 'degreeWordsLimit')
+      showToast('warning', 'degreeWordsLimit');
       return false;
     }
     return true;
@@ -50,10 +50,14 @@ const CustomCombobox = ({
       disabled={disabled}
     >
       <div className="relative">
-        <div className="relative w-full cursor-default overflow-hidden rounded-[8.62px] border border-[#DEE6F7] bg-white text-left focus-visible:outline-none sm:text-sm tablet:rounded-[10px] tablet:border-[3px]">
+        <div
+          // className="relative w-full cursor-default overflow-hidden rounded-[8.62px] border border-[#DEE6F7] bg-white text-left focus-visible:outline-none sm:text-sm tablet:rounded-[10px] tablet:border-[3px]"
+          className="verification_badge_input"
+        >
           <Combobox.Input
             id={`input-${id}`}
-            className="w-full bg-transparent py-2 pl-3 pr-4 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus-visible:outline-none tablet:py-3 tablet:pl-7 tablet:pr-10 tablet:text-[18px] tablet:leading-[21.78px]"
+            // className="w-full bg-transparent py-2 pl-3 pr-4 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus-visible:outline-none tablet:py-3 tablet:pl-7 tablet:pr-10 tablet:text-[18px] tablet:leading-[21.78px]"
+            className="w-full bg-transparent focus-visible:outline-none"
             displayValue={(item) => item.name}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={placeholder}
@@ -74,7 +78,7 @@ const CustomCombobox = ({
           leave="transition ease-in duration-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
-        // afterLeave={() => setQuery('')}
+          // afterLeave={() => setQuery('')}
         >
           <Combobox.Options className="absolute z-10 mt-1 max-h-36 w-full overflow-auto rounded-md bg-white py-1 text-base leading-[10px] shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm tablet:max-h-60">
             {filteredItems?.length === 0 && query !== '' ? (
@@ -86,7 +90,8 @@ const CustomCombobox = ({
                 <Combobox.Option
                   key={item.id}
                   className={({ active }) =>
-                    `relative flex cursor-default select-none justify-between gap-2 py-2 pl-[0.75rem] pr-4 text-[10px] tablet:gap-3 tablet:py-3 tablet:pl-11 tablet:text-[16px] ${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
+                    `relative flex cursor-default select-none justify-between gap-2 py-2 pl-[0.75rem] pr-4 text-[10px] tablet:gap-3 tablet:py-3 tablet:pl-11 tablet:text-[16px] ${
+                      active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                     }`
                   }
                   value={item}
@@ -103,8 +108,9 @@ const CustomCombobox = ({
                       {item.button && item.name !== '' && <span>Add</span>}
                       {selected ? (
                         <span
-                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-white' : 'text-[#B6B4B4]'
-                            }`}
+                          className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                            active ? 'text-white' : 'text-[#B6B4B4]'
+                          }`}
                         ></span>
                       ) : null}
                     </>

@@ -48,7 +48,7 @@ export default function CloseEmailNotificationPopup({
           placeholder="Enter email address"
           required
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
+          className="verification_badge_input"
         />
         <div className="flex justify-end gap-[15px] tablet:gap-[34px]">
           <Button

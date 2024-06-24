@@ -5,6 +5,8 @@ import api from '../../services/api/Axios';
 import { FaSpinner } from 'react-icons/fa';
 import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../ui/Toast';
+import { useDispatch } from 'react-redux';
+import { setAskPassword } from '../../features/profile/userSettingSlice';
 
 export default function BadgeRemovePopup({
   handleClose,
@@ -19,6 +21,7 @@ export default function BadgeRemovePopup({
   setIsLoading,
   loading,
 }) {
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
   const handleRemoveBadge = async () => {
@@ -76,13 +79,14 @@ export default function BadgeRemovePopup({
           localStorage.removeItem('legacyHash');
         }
         showToast('success', 'badgeRemoval');
+        dispatch(setAskPassword(removeBadge.data.data.isPasswordEncryption));
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setIsLoading(false);
         setIsPersonalPopup(false);
       }
     } catch (error) {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
   };
 

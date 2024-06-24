@@ -27,14 +27,14 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     mutationFn: createList,
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        showToast('success', 'newList')
+        showToast('success', 'newList');
         queryClient.invalidateQueries(['lists']);
         setSelectedOption((prev) => [resp.data.userList[resp.data.userList.length - 1]._id, ...prev]);
         setListName('');
       }
 
       if (resp?.response?.status === 500) {
-        showToast('warning', 'listAlreadyExists')
+        showToast('warning', 'listAlreadyExists');
       }
     },
     onError: (err) => {
@@ -107,17 +107,21 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     >
       <div className="px-[27px] py-3 tablet:px-[74px] tablet:py-[37px]">
         <div className="flex flex-col gap-2 tablet:gap-[10px]">
-          <label
-            htmlFor=""
-            className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold"
-          >
-            Create List
+          {/* <p className="mb-[10px] text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:mb-5 tablet:text-[16px] tablet:leading-normal">
+            {listData?.length === 0
+              ? 'You currently have no lists created. Enter a list name below and the post will be added to it.'
+              : 'Create List'}
+          </p> */}
+          <label className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold">
+            {listData?.length === 0
+              ? 'You currently have no lists created. Enter a list name below and the post will be added to it.'
+              : 'Create List'}
           </label>
           <input
             type="text"
             className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-[23px] w-full min-w-[280px] appearance-none rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-transparent py-[5px] pl-[6px] pr-8 text-[10px] font-normal leading-[10px] text-[#707175] focus:outline-none focus:ring-0 tablet:h-full tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
             value={listName}
-            placeholder="List here"
+            placeholder="List name"
             onChange={(e) => setListName(e.target.value)}
           />
         </div>
@@ -141,7 +145,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
             <hr className="mx-auto my-3 h-[0.86px] max-w-[90%] bg-[#9C9C9C] tablet:my-[25px] tablet:h-[1.325px] tablet:max-w-[645px]" />
             <div>
               <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold">
-                Lists
+                My lists
               </h4>
               <div className="relative my-3 tablet:my-[25px]">
                 <div className="relative h-[23px] w-full tablet:h-[46px]">
@@ -213,34 +217,31 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
               </div>
             </div>
             <div className="mt-[10px] flex justify-end gap-4 tablet:mt-[25px]">
-              {selectedOption.length !== 0 ?
-
+              {selectedOption.length !== 0 ? (
                 <Button
                   variant={'submit'}
                   className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
                   onClick={() => {
-
-
                     addPostInList({
                       userUuid: persistedUserInfo.uuid,
                       categoryIdArray: selectedOption,
                       questForeginKey: questStartData._id,
                     });
-
                   }}
                 >
                   {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
-                </Button> :
-                <Button variant="hollow-submit" className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
+                </Button>
+              ) : (
+                <Button
+                  variant="hollow-submit"
+                  className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
                   onClick={() => {
-
-                    showToast('warning', 'emptyPostList')
-
-
-                  }}>
+                    showToast('warning', 'emptyPostList');
+                  }}
+                >
                   Save
                 </Button>
-              }
+              )}
             </div>
           </>
         )}

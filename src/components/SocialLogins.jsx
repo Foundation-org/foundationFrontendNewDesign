@@ -24,10 +24,9 @@ const SocialLogins = ({
   linkedInRef,
   instaRef,
   isLogin,
-  triggerLogin
+  triggerLogin,
 }) => {
   // const persistedTheme = useSelector((state) => state.utils.theme);
-
 
   // const loginWithTwitter = () => {
   //   const provider = new TwitterAuthProvider();
@@ -90,7 +89,6 @@ const SocialLogins = ({
   //   }
   // };
 
-
   return (
     <div className="mb-2 flex flex-col gap-2 rounded-[6.043px] 2xl:rounded-[11.703px] laptop:mb-[1.56rem] laptop:justify-between laptop:gap-[1.56rem]">
       <div ref={googleRef}>
@@ -112,15 +110,13 @@ const SocialLogins = ({
             console.log('err', err);
           }}
           className="max-w-auto min-w-[145px] lg:min-w-[305px] "
-        >
-
-        </LoginSocialGoogle>
+        ></LoginSocialGoogle>
         <Button
           size="login-btn"
           color="gray"
           onClick={() => {
             if (isLogin) {
-              triggerLogin('google')
+              triggerLogin('google');
             } else {
               setClickedButtonName('google');
               handleReferralOpen();
@@ -204,8 +200,7 @@ const SocialLogins = ({
           color="gray"
           onClick={() => {
             if (isLogin) {
-
-              triggerLogin('twitter')
+              triggerLogin('twitter');
             } else {
               setClickedButtonName('twitter');
               handleReferralOpen();
@@ -238,15 +233,13 @@ const SocialLogins = ({
             setIsLoadingSocial(false);
             showToast('error', 'generalError');
           }}
-        >
-        </LoginSocialLinkedin>
+        ></LoginSocialLinkedin>
         <Button
           size="login-btn"
           color="gray"
           onClick={() => {
             if (isLogin) {
-
-              triggerLogin('linkedin')
+              triggerLogin('linkedin');
             } else {
               setClickedButtonName('linkedin');
               handleReferralOpen();
@@ -267,8 +260,7 @@ const SocialLogins = ({
           color="gray"
           onClick={() => {
             if (isLogin) {
-
-              triggerLogin('github')
+              triggerLogin('github');
             } else {
               setClickedButtonName('github');
               handleReferralOpen();

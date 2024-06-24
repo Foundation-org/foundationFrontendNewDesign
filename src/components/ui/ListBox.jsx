@@ -7,7 +7,9 @@ export default function ListBox({ items, selected, setSelected, placeholder, dis
     <Listbox value={selected} onChange={setSelected} disabled={disabled}>
       <div className="relative">
         <Listbox.Button className="focus-visible:border-indigo-500 focus-visible:ring-offset-orange-300 relative w-full cursor-pointer rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] py-2 pl-[0.75rem] pr-10 text-left text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 tablet:rounded-[10px] tablet:border-[3px] tablet:py-3 tablet:pl-7 tablet:text-[18px] tablet:leading-[21px]">
-          <span className="block truncate">{selected?.name ? selected.name : placeholder}</span>
+          <span className={`block truncate ${selected?.name ? 'text-[#707175]' : 'text-[#b6b4b4]'}`}>
+            {selected?.name ? selected.name : placeholder}
+          </span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
             <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/downArrow.svg`}

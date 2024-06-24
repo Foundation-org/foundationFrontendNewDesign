@@ -10,7 +10,6 @@ import { feedbackFilters, updateFeedbackSearch } from '../../../../../../feature
 import api from '../../../../../../services/api/Axios';
 import * as questUtilsActions from '../../../../../../features/quest/utilsSlice';
 
-
 export default function Feedback() {
   const dispatch = useDispatch();
   const { ref, inView } = useInView();
@@ -19,7 +18,6 @@ export default function Feedback() {
   const getFeedbackFilters = useSelector(feedbackFilters);
   const [feedbackSearch, setFeedbackSearch] = useState('');
   const questUtils = useSelector(questUtilsActions.getQuestUtils);
-
 
   const handleFeedbackSearch = (e) => {
     setFeedbackSearch(e.target.value);
@@ -128,7 +126,7 @@ export default function Feedback() {
       </div>
 
       {/* Main Content */}
-      {questUtils.areFeedBackPosts &&
+      {questUtils.areFeedBackPosts && (
         <div className="mx-[15px] my-2 mr-4 flex justify-end tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
           <div className="relative">
             <div className="relative h-[15.96px] w-[128px] tablet:h-[45px] tablet:w-[337px]">
@@ -165,7 +163,8 @@ export default function Feedback() {
               )}
             </div>
           </div>
-        </div>}
+        </div>
+      )}
 
       <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-[#242424]">
         <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">
@@ -191,8 +190,9 @@ export default function Feedback() {
                       No matching posts found!
                     </p>
                     <button
-                      className={`${persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                        }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                      className={`${
+                        persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                      }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                       onClick={() => {
                         dispatch(updateFeedbackSearch(''));
                       }}
@@ -201,12 +201,14 @@ export default function Feedback() {
                     </button>
                   </div>
                 </div>
-              ) : !getFeedbackFilters.searchData && data?.pages[0].length === 0 ? dispatch(questUtilsActions.setAreFeedbackPosts(false)) && (
-                <p className="text-center text-[4vw] laptop:text-[2vw]">
-                  <b>No feedback posts!</b>
-                </p>
-              ) : !getFeedbackFilters.searchData && data?.pages[0].length !== 0 ? dispatch(questUtilsActions.setAreFeedbackPostss(true)) && (
-                <></>
+              ) : !getFeedbackFilters.searchData && data?.pages[0].length === 0 ? (
+                dispatch(questUtilsActions.setAreFeedbackPosts(false)) && (
+                  <p className="text-center text-[4vw] laptop:text-[2vw]">
+                    <b>No feedback on your posts!</b>
+                  </p>
+                )
+              ) : !getFeedbackFilters.searchData && data?.pages[0].length !== 0 ? (
+                dispatch(questUtilsActions.setAreFeedbackPostss(true)) && <></>
               ) : !getFeedbackFilters.searchData ? (
                 <p className="text-center text-[4vw] laptop:text-[2vw]">
                   <b>No more posts!</b>
@@ -217,8 +219,9 @@ export default function Feedback() {
                     You are all caught up!
                   </p>
                   <button
-                    className={`${persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                      }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                    className={`${
+                      persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                    }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                     onClick={() => {
                       dispatch(updateFeedbackSearch(''));
                     }}

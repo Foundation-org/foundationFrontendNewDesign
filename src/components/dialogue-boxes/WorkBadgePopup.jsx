@@ -86,12 +86,12 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
       const newArr = queryExists
         ? [...jb.data]
         : [
-          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-          ...jb.data.map((jb) => ({
-            ...jb,
-            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-          })),
-        ];
+            { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+            ...jb.data.map((jb) => ({
+              ...jb,
+              id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+            })),
+          ];
 
       setJobs(newArr);
     } catch (err) {
@@ -180,13 +180,13 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
       }
 
       if (field6Data < field5Data) {
-        showToast('warning', 'DateEarlierStart')
+        showToast('warning', 'DateEarlierStart');
         setLoading(false);
 
         return;
       }
       if (field6Data === field5Data) {
-        showToast('warning', 'DateSameStart')
+        showToast('warning', 'DateSameStart');
         setLoading(false);
         return;
       }
@@ -201,7 +201,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
       const addBadge = await api.post(`/addBadge/personal/addWorkOrEducation`, payload);
       if (addBadge.status === 200) {
         queryClient.invalidateQueries(['userInfo']);
-        showToast('success', 'badgeAdded')
+        showToast('success', 'badgeAdded');
 
         const companySaved = await api.post(`/addBadge/company/add`, {
           name: field1Data.name,
@@ -224,7 +224,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
         setLoading(false);
       }
     } catch (error) {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       handleClose();
     }
   };
@@ -274,19 +274,19 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
         prevInfo.startingYear === field5Data &&
         prevInfo.endingYear === field6Data
       ) {
-        showToast('warning', 'infoAlreadySaved')
+        showToast('warning', 'infoAlreadySaved');
         setLoading(false);
 
         return;
       }
       if (field6Data < field5Data) {
-        showToast('warning', 'DateEarlierStart')
+        showToast('warning', 'DateEarlierStart');
         setLoading(false);
 
         return;
       }
       if (field6Data === field5Data) {
-        showToast('warning', 'DateSameStart')
+        showToast('warning', 'DateSameStart');
         setLoading(false);
 
         return;
@@ -327,7 +327,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
         setLoading(false);
       }
     } catch (error) {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       handleClose();
     }
   };
@@ -513,7 +513,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
                 onKeyDown={(e) => (e.key === 'Tab' && handleTab(1)) || (e.key === 'Enter' && handleTab(1, 'Enter'))}
                 id="input-1"
                 placeholder={field1.placeholder}
-                className="w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px]"
+                className="verification_badge_input"
               />
             </div>
             <div className="mb-[5px] mt-[15px] tablet:mb-[15px]">
@@ -591,7 +591,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
                     type="text"
                     value="Loading..."
                     disabled={true}
-                    className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                    className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                   />
                 ) : (
                   <input
@@ -599,7 +599,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
                     value={field5Data}
                     onChange={handlefield5Change}
                     placeholder={field5.placeholder}
-                    className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                    className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                   />
                 )}
               </div>
@@ -615,7 +615,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
                       type="text"
                       value="Loading..."
                       disabled={true}
-                      className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                      className={`caret-hidden revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                     />
                   ) : (
                     <input
@@ -624,7 +624,7 @@ const WorkBadgePopup = ({ isPopup, setIsPopup, type, title, logo, placeholder, f
                       onChange={handlefield6Change}
                       disabled={isPresent}
                       placeholder={field6.placeholder}
-                      className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
+                      className={`revert-calender-color w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[12px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#707175] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-[28px] tablet:py-3 tablet:text-[18px] tablet:leading-[21px]`}
                     />
                   )}
                 </div>
