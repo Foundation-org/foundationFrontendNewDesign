@@ -209,7 +209,8 @@ const RewardSchedule = () => {
           <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
             We charge a transaction fee to keep the platform running smoothly for you. We want you to be in charge of
             your data, tokens, and what you do with them, and want to ensure the platform can function properly for you
-            to do so. Foundation charges a 4% fee for transactions to help with run costs.
+            to do so. Foundation charges a {persistedConstants?.TRANSACTION} fee for transactions to help with run
+            costs.
           </p>
         </div>
       </div>
