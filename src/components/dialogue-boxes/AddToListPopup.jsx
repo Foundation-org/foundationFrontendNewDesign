@@ -112,11 +112,11 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
               ? 'You currently have no lists created. Enter a list name below and the post will be added to it.'
               : 'Create List'}
           </p> */}
-          <label className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold">
-            {listData?.length === 0
-              ? 'You currently have no lists created. Enter a list name below and the post will be added to it.'
-              : 'Create List'}
-          </label>
+          {listData?.length === 0 && (
+            <label className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold">
+              You currently have no lists created. Enter a list name below and the post will be added to it.
+            </label>
+          )}
           <input
             type="text"
             className="dark:focus:border-blue-500 focus:border-blue-600 peer block h-[23px] w-full min-w-[280px] appearance-none rounded-[4.161px] border-[1.248px] border-[#DEE6F7] bg-transparent py-[5px] pl-[6px] pr-8 text-[10px] font-normal leading-[10px] text-[#707175] focus:outline-none focus:ring-0 tablet:h-full tablet:min-w-full tablet:rounded-[10px] tablet:border-2 tablet:py-2 tablet:pl-5 tablet:text-[18.23px] dark:border-gray-600 dark:text-[#707175]"
