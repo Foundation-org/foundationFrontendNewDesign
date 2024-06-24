@@ -9,6 +9,7 @@ import Topbar from '../Dashboard/components/Topbar';
 import DashboardLayout from '../Dashboard/components/DashboardLayout';
 import QuestionCardWithToggle from '../Dashboard/pages/QuestStartSection/components/QuestionCardWithToggle';
 import SEO from '../../utils/SEO';
+import SystemNotificationCard from '../../components/posts/SystemNotificationCard';
 
 const SingleQuest = () => {
   let { id } = useParams();
@@ -85,19 +86,26 @@ const SingleQuest = () => {
       </Helmet>
       <Topbar />
       <div className="w-full bg-[#F2F3F5]">
+        {error !== '' ? <p className="text-center text-[24px] font-bold tablet:text-[25px]">{error}</p> : null}
         <DashboardLayout>
-          <div className="no-scrollbar mx-auto h-[calc(100vh-58px)] w-full max-w-[1440px] overflow-y-auto py-2 tablet:h-[calc(100vh-101px)] laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 laptop:py-5 desktop:mx-auto desktop:px-0">
-            {error !== '' ? <p className="text-center text-[24px] font-bold tablet:text-[25px]">{error}</p> : null}
-            {singleQuestData && (
-              <div className="mx-auto max-w-[730px] px-4 tablet:px-[0px] ">
-                <QuestionCardWithToggle
-                  questStartData={singleQuestData}
-                  isBookmarked={false}
-                  isSingleQuest={location.pathname.includes('/p/') ? true : false}
-                  postLink={id}
-                />
-              </div>
-            )}
+          <div className="no-scrollbar mx-auto flex h-[calc(100vh-58px)] w-full max-w-[1440px] flex-col gap-2 overflow-y-auto py-2 tablet:h-[calc(100vh-101px)] tablet:gap-5 laptop:mx-[331px] laptop:h-[calc(100vh-70px)] laptop:px-4 laptop:py-5 desktop:mx-auto desktop:px-0">
+            {singleQuestData &&
+              singleQuestData.map((item, index) =>
+                item.id === 'guest_notification' ? (
+                  <div className="mx-auto w-full max-w-[730px] px-4 tablet:px-0">
+                    <SystemNotificationCard post={item} key={index + 1} />
+                  </div>
+                ) : (
+                  <div className="mx-auto w-full max-w-[730px] px-4 tablet:px-0">
+                    <QuestionCardWithToggle
+                      questStartData={item}
+                      isBookmarked={false}
+                      isSingleQuest={location.pathname.includes('/p/') ? true : false}
+                      postLink={id}
+                    />
+                  </div>
+                ),
+              )}
           </div>
         </DashboardLayout>
       </div>

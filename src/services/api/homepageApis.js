@@ -52,7 +52,7 @@ export const getQuestByUniqueShareLink = async (uniqueShareLink) => {
     const response = await api.get(`/infoquestions/getQuest/${uniqueShareLink}/`, {
       params: { uuid: localStorage.getItem('uuid') },
     });
-    return response.data.data[0];
+    return response.data.data;
   } catch (error) {
     const errorMessage = error.response?.data?.message || 'An error occurred while fetching the quest.';
     return errorMessage;
