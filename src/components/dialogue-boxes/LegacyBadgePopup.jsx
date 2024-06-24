@@ -8,6 +8,8 @@ import PasswordStrengthBar from 'react-password-strength-bar';
 import api from '../../services/api/Axios';
 import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../ui/Toast';
+import { setAskPassword } from '../../features/profile/userSettingSlice';
+import { useDispatch } from 'react-redux';
 
 const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
   const [RemoveLoading, setRemoveLoading] = useState(false);
@@ -20,6 +22,7 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
   const inputType = showPassword ? 'text' : 'password';
   const cnfmPassInputType = showCnfmPassword ? 'text' : 'password';
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -50,6 +53,7 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
               showToast('success', 'badgeAdded');
               handleClose();
               setIsLoading(false);
+              dispatch(setAskPassword(resp.data.data.isPasswordEncryption));
               queryClient.invalidateQueries(['userInfo']);
             }
           } catch (err) {
@@ -61,7 +65,7 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
         console.log(err);
       }
     } else {
-      showToast('error', 'passwordMismatched')
+      showToast('error', 'passwordMismatched');
       setIsLoading(false);
     }
   };

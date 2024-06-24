@@ -16,7 +16,12 @@ import SidebarLeft from './SidebarLeft';
 import api from '../../../services/api/Axios';
 import PopUp from '../../../components/ui/PopUp';
 import SideNavbar from '../../../components/SideNavbar';
-import { getQuestUtils, setIsShowPlayer, setPlayingPlayerId, setAreHiddenPosts } from '../../../features/quest/utilsSlice';
+import {
+  getQuestUtils,
+  setIsShowPlayer,
+  setPlayingPlayerId,
+  setAreHiddenPosts,
+} from '../../../features/quest/utilsSlice';
 import MediaControls from '../../../components/MediaControls';
 import SummarySidebar from '../pages/Profile/pages/summary/SummarySidebar';
 import { saveConstants } from '../../../features/constants/constantsSlice';
@@ -240,7 +245,7 @@ export default function DashboardLayout({ children }) {
               </div>
             ) : (
               <>
-                {location.pathname !== '/dashboard/treasury' ? (
+                {!location.pathname?.startsWith('/dashboard/treasury') ? (
                   <div
                     className="flex cursor-pointer items-center gap-2"
                     onClick={() => {

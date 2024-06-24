@@ -66,7 +66,7 @@ const PersonalBadgesPopup = ({
     setDate(selectedDate);
   };
 
-  const handleSecurityQuestionChange = (event) => { };
+  const handleSecurityQuestionChange = (event) => {};
   const [query, setQuery] = useState('');
   const [questions, setQuestion] = useState();
 
@@ -76,12 +76,12 @@ const PersonalBadgesPopup = ({
     const newArr = queryExists
       ? [...jb]
       : [
-        { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
-        ...jb.map((jb) => ({
-          ...jb,
-          id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-        })),
-      ];
+          { id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`, name: query, button: true },
+          ...jb.map((jb) => ({
+            ...jb,
+            id: `${Date.now()}-${Math.floor(Math.random() * 10000)}`,
+          })),
+        ];
     setQuestion(newArr);
   }, [query]);
 
@@ -117,7 +117,7 @@ const PersonalBadgesPopup = ({
       FetchData();
     }
   }, []);
-  console.log(fetchingEdit);
+
   useEffect(() => {
     if (edit) {
       if (type === 'dateOfBirth') {
@@ -199,19 +199,21 @@ const PersonalBadgesPopup = ({
     queryFn: () =>
       validation(title === 'First Name' ? 5 : title === 'Last Name' && 6, name.charAt(0).toUpperCase() + name.slice(1)),
   });
+
   const gotLocation = (position) => {
     setName(position.coords.latitude + ',' + position.coords.longitude);
   };
+
   const failedToGet = (err) => {
-    showToast('error', 'failedGettingLocation')
+    showToast('error', 'failedGettingLocation');
     console.log(err);
   };
+
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(gotLocation, failedToGet);
     } else {
-      showToast('error', 'locationNotSupported')
-
+      showToast('error', 'locationNotSupported');
     }
   };
 
@@ -247,28 +249,29 @@ const PersonalBadgesPopup = ({
       searchCities();
     }
   }, [query]);
+
   const handleUpdateBadge = async () => {
     if (type === 'firstName' || type === 'lastName' || type === 'geolocation') {
       if (name === prevInfo) {
-        showToast('warning', 'infoAlreadySaved')
+        showToast('warning', 'infoAlreadySaved');
         return;
       }
     }
     if (type === 'dateOfBirth') {
       if (date === prevInfo) {
-        showToast('warning', 'infoAlreadySaved')
+        showToast('warning', 'infoAlreadySaved');
         return;
       }
     }
     if (type === 'currentCity' || type === 'homeTown' || type === 'relationshipStatus') {
       if (selected.name === prevInfo) {
-        showToast('warning', 'infoAlreadySaved')
+        showToast('warning', 'infoAlreadySaved');
         return;
       }
     }
     if (type === 'security-question') {
       if (name === prevInfo[Object.keys(prevInfo)[0]] && selected.name === Object.keys(prevInfo)[0]) {
-        showToast('warning', 'infoAlreadySaved')
+        showToast('warning', 'infoAlreadySaved');
         return;
       }
     }
@@ -281,12 +284,12 @@ const PersonalBadgesPopup = ({
         [selected?.name]: name,
       };
       if (!selected) {
-        showToast('warning', 'selectSecQuestion')
+        showToast('warning', 'selectSecQuestion');
         setLoading(false);
         return;
       }
       if (!name) {
-        showToast('warning', 'emptyAnswer')
+        showToast('warning', 'emptyAnswer');
         setLoading(false);
         return;
       }
@@ -335,12 +338,12 @@ const PersonalBadgesPopup = ({
         [selected?.name]: name,
       };
       if (!selected) {
-        showToast('warning', 'selectSecQuestion')
+        showToast('warning', 'selectSecQuestion');
         setLoading(false);
         return;
       }
       if (!name) {
-        showToast('warning', 'emptyAnswer')
+        showToast('warning', 'emptyAnswer');
         setLoading(false);
         return;
       }
@@ -369,7 +372,7 @@ const PersonalBadgesPopup = ({
 
       const addBadge = await api.post(`/addBadge/personal/add`, payload);
       if (addBadge.status === 200) {
-        showToast('success', 'badgeAdded')
+        showToast('success', 'badgeAdded');
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
       }
@@ -381,14 +384,17 @@ const PersonalBadgesPopup = ({
       setLoading(false);
     }
   };
+
   const handleRemoveBadgePopup = (item) => {
     setDeleteModalState(item);
     setModalVisible(true);
   };
+
   const handleBadgesClose = () => setModalVisible(false);
 
   const renderInputField = (title, name, handleNameChange, placeholder, apiResp, data, placeholder2) => {
     const isError = apiResp?.data?.message === 'No';
+
     return (
       <div className="px-5 py-[15px] tablet:px-[60px] tablet:py-[25px] laptop:px-[80px]">
         {data && data.length >= 1 ? (
@@ -422,8 +428,9 @@ const PersonalBadgesPopup = ({
                   }}
                   placeholder={placeholder2}
                   disabled={fetchingEdit}
-                  className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${edit ? (name ? '' : 'caret-hidden') : ''
-                    }`}
+                  className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${
+                    edit ? (name ? '' : 'caret-hidden') : ''
+                  }`}
                 />
                 {isError && (
                   <p className="absolute top-16 ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>
@@ -509,8 +516,9 @@ const PersonalBadgesPopup = ({
               }}
               placeholder={placeholder}
               disabled={fetchingEdit}
-              className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${edit ? (name ? '' : 'caret-hidden') : ''
-                }`}
+              className={`w-full rounded-[8.62px] border border-[#DEE6F7] bg-[#FBFBFB] px-[16px] py-2 text-[9.28px] font-medium leading-[11.23px] text-[#B6B4B4] focus:outline-none tablet:rounded-[10px] tablet:border-[3px] tablet:px-7 tablet:py-3 tablet:text-[18px] tablet:leading-[21px] ${
+                edit ? (name ? '' : 'caret-hidden') : ''
+              }`}
             />
             {isError && (
               <p className="absolute ml-1 text-[6.8px] font-semibold text-[#FF4057] tablet:text-[14px]">{`Invalid ${title}!`}</p>

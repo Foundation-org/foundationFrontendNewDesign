@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    askPassword: true
+  askPassword: false,
 };
 
 export const userSettingsSlice = createSlice({
-    name: 'userSettings',
-    initialState,
-    reducers: {
-        setAskPassword: (state, action) => {
-            state.askPassword = action.payload;
-        },
+  name: 'userSettings',
+  initialState,
+  reducers: {
+    setAskPassword: (state, action) => {
+      state.askPassword = action.payload;
     },
+  },
 });
 
 export const { setAskPassword } = userSettingsSlice.actions;
