@@ -1,15 +1,21 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { personal } from '../../../../../../constants/varification-badges';
-import Button from '../../components/Button';
 import PersonalBadgesPopup from '../../../../../../components/dialogue-boxes/PersonalBadgesPopup';
 import { toast } from 'sonner';
 import api from '../../../../../../services/api/Axios';
 import EducationBadgePopup from '../../../../../../components/dialogue-boxes/EducationBadgePopup';
 import WorkBadgePopup from '../../../../../../components/dialogue-boxes/WorkBadgePopup';
 import { getConstantsValues } from '../../../../../../features/constants/constantsSlice';
+import { Button } from '../../../../../../components/ui/Button';
 
-export default function Personal({ fetchUser, handleOpenPasswordConfirmation, checkLegacyBadge, handlePasskeyConfirmation, getAskPassword }) {
+export default function Personal({
+  fetchUser,
+  handleOpenPasswordConfirmation,
+  checkLegacyBadge,
+  handlePasskeyConfirmation,
+  getAskPassword,
+}) {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
@@ -34,7 +40,8 @@ export default function Personal({ fetchUser, handleOpenPasswordConfirmation, ch
       );
       return;
     } else {
-      if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword)) await handleOpenPasswordConfirmation();
+      if ((checkLegacyBadge() && !localStorage.getItem('legacyHash')) || (checkLegacyBadge() && getAskPassword))
+        await handleOpenPasswordConfirmation();
       // if (await handlePasskeyConfirmation()) {
 
       if (edit) {
@@ -243,8 +250,9 @@ export default function Personal({ fetchUser, handleOpenPasswordConfirmation, ch
           {item.title}
         </h1>
       </div>
+
       <Button
-        color={checkPersonalBadge(item.type) ? 'yellow' : item.ButtonColor}
+        variant={checkPersonalBadge(item.type) ? 'verification-badge-edit' : item.ButtonColor}
         onClick={() => {
           handleClickPesonalBadges(item.type, checkPersonalBadge(item.type) ? true : false);
         }}
@@ -253,7 +261,8 @@ export default function Personal({ fetchUser, handleOpenPasswordConfirmation, ch
         {checkPersonalBadge(item.type) ? 'Edit' : item.ButtonText}
         {!checkPersonalBadge(item.type) && (
           <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-            (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)</span>
+            (+{persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)
+          </span>
         )}
       </Button>
     </div>

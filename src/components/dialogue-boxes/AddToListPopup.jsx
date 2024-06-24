@@ -27,14 +27,14 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
     mutationFn: createList,
     onSuccess: (resp) => {
       if (resp.status === 200) {
-        showToast('success', 'newList')
+        showToast('success', 'newList');
         queryClient.invalidateQueries(['lists']);
         setSelectedOption((prev) => [resp.data.userList[resp.data.userList.length - 1]._id, ...prev]);
         setListName('');
       }
 
       if (resp?.response?.status === 500) {
-        showToast('warning', 'listAlreadyExists')
+        showToast('warning', 'listAlreadyExists');
       }
     },
     onError: (err) => {
@@ -141,7 +141,7 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
             <hr className="mx-auto my-3 h-[0.86px] max-w-[90%] bg-[#9C9C9C] tablet:my-[25px] tablet:h-[1.325px] tablet:max-w-[645px]" />
             <div>
               <h4 className="text-[10px] font-medium leading-normal text-[#7C7C7C] tablet:text-[20px] tablet:font-semibold">
-                Lists
+                My lists
               </h4>
               <div className="relative my-3 tablet:my-[25px]">
                 <div className="relative h-[23px] w-full tablet:h-[46px]">
@@ -213,34 +213,31 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
               </div>
             </div>
             <div className="mt-[10px] flex justify-end gap-4 tablet:mt-[25px]">
-              {selectedOption.length !== 0 ?
-
+              {selectedOption.length !== 0 ? (
                 <Button
                   variant={'submit'}
                   className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
                   onClick={() => {
-
-
                     addPostInList({
                       userUuid: persistedUserInfo.uuid,
                       categoryIdArray: selectedOption,
                       questForeginKey: questStartData._id,
                     });
-
                   }}
                 >
                   {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Save'}
-                </Button> :
-                <Button variant="hollow-submit" className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
+                </Button>
+              ) : (
+                <Button
+                  variant="hollow-submit"
+                  className={'min-w-[68.2px] max-w-[68.2px] rounded-[7.58px] tablet:min-w-[139px] tablet:max-w-[139px]'}
                   onClick={() => {
-
-                    showToast('warning', 'emptyPostList')
-
-
-                  }}>
+                    showToast('warning', 'emptyPostList');
+                  }}
+                >
                   Save
                 </Button>
-              }
+              )}
             </div>
           </>
         )}

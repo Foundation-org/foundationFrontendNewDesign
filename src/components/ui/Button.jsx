@@ -21,6 +21,12 @@ export const Button = ({ className, children, rounded, variant, ...props }) => (
       variant === 'submit'
         ? 'addoption-boxShadow h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] bg-gradient-to-tr from-[#6BA5CF] to-[#389CE3] px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
         : '',
+      variant === 'verification-badge-edit'
+        ? 'addoption-boxShadow h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] bg-[#FAD308] px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
+        : '',
+      variant === 'verification-badge-remove'
+        ? 'addoption-boxShadow h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] bg-[#FF4057] px-[6.63px] text-[0.625rem] font-semibold text-white tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:text-[1.25rem] laptop:px-[17px]'
+        : '',
       variant === 'submit-hollow'
         ? 'h-[1.375rem] min-w-[4.875rem] rounded-[0.28688rem] border-[1.428px] border-[#389CE3] px-[6.63px] text-[0.625rem] font-semibold text-[#389CE3] tablet:h-[3.125rem] tablet:min-w-[10.8125rem] tablet:rounded-[0.9375rem] tablet:border-[3px] tablet:text-[1.25rem] laptop:px-[17px]'
         : '',

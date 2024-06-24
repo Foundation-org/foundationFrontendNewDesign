@@ -281,8 +281,8 @@ const Lists = () => {
                     </ul>
 
                     {listData[categoryIndex]?.post?.length <= 0 && (
-                      <div className="my-2 ml-10 flex w-full items-center gap-1 tablet:my-[27px] tablet:ml-16 tablet:gap-20">
-                        <h2 className="text-center text-[8px] font-semibold leading-[9.68px] text-[#707175] tablet:text-[24px] tablet:leading-[21.78px]">
+                      <div className="flex w-full items-center gap-1 tablet:gap-20">
+                        <h2 className="px-2 pb-[5.6px] pt-[5.6px] text-[8.52px] font-normal leading-[10px] text-[#435059] outline-none tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]">
                           This list has no posts
                         </h2>
                       </div>

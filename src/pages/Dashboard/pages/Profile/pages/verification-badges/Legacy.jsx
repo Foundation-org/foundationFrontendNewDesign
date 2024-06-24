@@ -52,15 +52,15 @@ const Legacy = ({ fetchUser, handleRemoveBadgePopup, checkLegacyBadge }) => {
               onClick={() => {
                 checkLegacyBadge()
                   ? handleRemoveBadgePopup({
-                    title: 'Password',
-                    type: 'password',
-                    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
-                    badgeType: 'password',
-                  })
+                      title: 'Password',
+                      type: 'password',
+                      image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/wallet.svg`,
+                      badgeType: 'password',
+                    })
                   : setIsPersonalPopup(true);
               }}
             >
-              {checkLegacyBadge() ? 'Remove' : 'Add Badge'}
+              {checkLegacyBadge() ? 'Remove' : 'Add'}
               <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
                 {checkLegacyBadge() ? '' : `(+ ${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
               </span>
