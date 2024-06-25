@@ -20,20 +20,20 @@ const Topbar = () => {
           <div className="flex w-full items-center justify-between gap-[25px]">
             <div className="flex items-center gap-[10px] tablet:gap-[25px]">
               <Link
-                to={'/dashboard'}
+                to={'/'}
                 className="relative flex justify-center"
                 onClick={() => {
                   dispatch(createQuestActions.resetCreateQuest());
                 }}
               >
                 <img
-                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/${location.pathname === '/dashboard' ? 'home-filled.svg' : 'home.svg'}`}
+                  src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/${location.pathname === '/' ? 'home-filled.svg' : 'home.svg'}`}
                   alt="foundation_logo"
                   className="size-5 tablet:size-8"
                 />
               </Link>
               <Link
-                to={'/dashboard'}
+                to={'/'}
                 className="flex items-center gap-[5px] tablet:flex-col tablet:items-start tablet:gap-0"
                 onClick={() => {
                   dispatch(createQuestActions.resetCreateQuest());

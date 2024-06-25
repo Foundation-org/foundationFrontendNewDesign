@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { Button } from './ui/Button';
 import { signUp, signUpGuest } from '../services/api/userAuth';
 import { useMutation } from '@tanstack/react-query';
@@ -26,7 +25,7 @@ const ReferralCode = ({
   setErrorMessage,
   setIsLoadingSocial,
   triggerLogin,
-  credential
+  credential,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -47,20 +46,26 @@ const ReferralCode = ({
         const resp = await guestSignup({ email, password, uuid: localStorage.getItem('uuid') });
         console.log(resp);
         if (resp.status === 200) {
-          showToast('success', 'verificationEmailSent')
+          showToast('success', 'verificationEmailSent');
 
           setEmail('');
           setPassword('');
           setIsLoading(false);
         }
       } else {
-        showToast('error', 'passwordMismatched')
+        showToast('error', 'passwordMismatched');
         setIsLoading(false);
       }
     } catch (e) {
       setErrorMessage(e.response.data.message.split(':')[1]);
-      console.log(e.response.data.message.split(':')[1], e.response.data.message.split(':')[1] === 'Email Already Exists');
-      if (e.response.data.message.split(':')[1].trim() === 'Email Already Exists' || e.response.data.message.split(':')[1].includes('We have detected that this is a Google hosted e-mail')) {
+      console.log(
+        e.response.data.message.split(':')[1],
+        e.response.data.message.split(':')[1] === 'Email Already Exists',
+      );
+      if (
+        e.response.data.message.split(':')[1].trim() === 'Email Already Exists' ||
+        e.response.data.message.split(':')[1].includes('We have detected that this is a Google hosted e-mail')
+      ) {
         handlePopupOpen();
       }
       setIsLoading(false);
@@ -75,7 +80,7 @@ const ReferralCode = ({
   //     if (res.status === 200) {
   //       localStorage.setItem('uuid', res.data.uuid);
   //       dispatch(addUser(res.data));
-  //       navigate('/dashboard');
+  //       navigate('/');
   //     }
   //   } catch (error) {
   // showToast('error', {}, e.response.data.message.split(':')[1]);
@@ -90,7 +95,7 @@ const ReferralCode = ({
   //     if (res.status === 200) {
   //       localStorage.setItem('uuid', res.data.uuid);
   //       dispatch(addUser(res.data));
-  //       navigate('/dashboard');
+  //       navigate('/');
   //     }
   //   } catch (error) {
   // showToast('error', {}, e.response.data.message.split(':')[1]);
@@ -110,7 +115,7 @@ const ReferralCode = ({
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
 
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
@@ -129,7 +134,7 @@ const ReferralCode = ({
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
@@ -148,11 +153,9 @@ const ReferralCode = ({
       handleClose();
       if (!credential) {
         triggerLogin();
-
       } else {
         handleGuestSignup();
       }
-
     },
     onError: (err) => {
       console.log(err);

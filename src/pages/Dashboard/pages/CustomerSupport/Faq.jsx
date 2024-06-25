@@ -103,11 +103,7 @@ const Faq = () => {
         <button
           className="w-48 rounded-[0.31rem] bg-white py-[0.6rem] text-center text-[0.75rem] font-semibold text-[#4A8DBD] tablet:w-[24.3rem] tablet:rounded-[0.75rem] tablet:py-3 tablet:text-[1.25rem]"
           onClick={() => {
-            if (persistedUserInfo.role === 'user') {
-              navigate('/dashboard/help/contact-us');
-            } else {
-              navigate('/help/contact-us');
-            }
+            navigate('/help/contact-us');
           }}
         >
           Contact Us

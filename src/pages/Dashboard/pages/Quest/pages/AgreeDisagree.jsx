@@ -8,7 +8,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateQuestion } from '../../../../../features/createQuest/createQuestSlice';
 import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
 
-
 import YesNoOptions from '../components/YesNoOptions';
 import CreateQuestWrapper from '../components/CreateQuestWrapper';
 
@@ -42,11 +41,13 @@ const AgreeDisagree = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
-          if (filterStates?.moderationRatingFilter?.initial === 0 &&
-            filterStates?.moderationRatingFilter?.final === 0) {
+          if (
+            filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0
+          ) {
             dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           }
-          navigate('/dashboard');
+          navigate('/');
           queryClient.invalidateQueries(['userInfo']);
           setLoading(false);
           setChangedOption('');
@@ -60,7 +61,7 @@ const AgreeDisagree = () => {
     },
     onError: (err) => {
       if (err.response) {
-        showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+        showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
         setChangedOption('');
         setChangeState(false);
       }
@@ -103,7 +104,7 @@ const AgreeDisagree = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return showToast('warning', 'emptyPost')
+      return showToast('warning', 'emptyPost');
     }
 
     // getTopicOfValidatedQuestion
@@ -112,7 +113,7 @@ const AgreeDisagree = () => {
     });
     // If any error captured
     if (errorMessage) {
-      return showToast('error', 'somethingWrong')
+      return showToast('error', 'somethingWrong');
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
@@ -120,10 +121,10 @@ const AgreeDisagree = () => {
     });
     // If found null
     if (!moderationRating) {
-      return showToast('error', 'somethingWrong')
+      return showToast('error', 'somethingWrong');
     }
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return showToast('warning', 'emptyPostDescription')
+      return showToast('warning', 'emptyPostDescription');
     }
 
     const params = {

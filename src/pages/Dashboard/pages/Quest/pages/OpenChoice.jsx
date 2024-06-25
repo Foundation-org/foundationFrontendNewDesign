@@ -53,7 +53,7 @@ const OpenChoice = () => {
           ) {
             dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           }
-          navigate('/dashboard');
+          navigate('/');
           queryClient.invalidateQueries(['userInfo']);
           setLoading(false);
           dispatch(createQuestAction.resetCreateQuest());

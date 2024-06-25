@@ -34,7 +34,7 @@ const VerifyCode = () => {
             let verificationToken = urlQuery.substr(urlQuery.length - 6);
             setVerificationCode(Array.from(verificationToken)); // Create an array from the token
           } else {
-            showToast('error', 'verifyCode')
+            showToast('error', 'verifyCode');
           }
 
           // Attach the event listener to the whole document
@@ -105,14 +105,14 @@ const VerifyCode = () => {
       });
 
       if (response.status === 200) {
-        showToast('success', 'emailVerified')
+        showToast('success', 'emailVerified');
 
         // await handleUserInfo();
 
         const data = await response.json();
         dispatch(addUser(data));
         localStorage.setItem('uuid', data.uuid);
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error) {
       console.log('Error during API request:', error.message);

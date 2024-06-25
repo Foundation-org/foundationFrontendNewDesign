@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import RequireAuth from './RequireAuth';
 
@@ -63,16 +63,18 @@ export function Router() {
     User: 'user',
     Guest: 'guest',
   };
+  const location = useLocation();
 
-  // console.log({ persistedUser });
+  console.log('location', location);
+
+  console.log({ persistedUser });
   return (
     <>
       {!persistedUser?.uuid ? (
         <Routes>
-          <Route path="/" element={<GuestRedirect />} />
-          <Route path="/signin/" element={<Signin />}>
-            <Route path="credentials" element={<CredentialLogin />} />
-          </Route>
+          <Route path="/" element={<GuestRedirect redirectUrl="/help/about" />} />
+          <Route path="credentials" element={<CredentialLogin />} />
+          <Route path="/signin/" element={<Signin />}></Route>
           <Route path="/signup" element={<Signup />}>
             <Route path="credentials" element={<CredentialRegister />} />
           </Route>
@@ -80,29 +82,18 @@ export function Router() {
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/p/:id" element={<GuestRedirect />} />
           <Route path="/l/:id" element={<GuestRedirect />} />
-          <Route
-            path="/dashboard/treasury/:code"
-            element={<Navigate to="/" state={{ from: '/dashboard/treasury/:code' }} />}
-          />
+          <Route path="/treasury/:code" element={<Navigate to="/" state={{ from: '/treasury/:code' }} />} />
           <Route path="*" element={<Navigate to="/signin" />} />
         </Routes>
       ) : (
         <Routes>
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
-            <Route
-              path="/help"
-              element={persistedUser?.role === 'user' ? <Navigate to="/dashboard" /> : <GuestCustomerSupport />}
-            >
-              <Route path="about" element={<About />} />
-              <Route path="faq" element={<Faq />} />
-              <Route path="contact-us" element={<ContactUs />} />
-            </Route>
             <Route path="/term-of-service" element={<TermOfService />} />
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/test" element={<Test />} />
-            <Route path="/dashboard/" element={<Dashboard />}>
+            <Route path="/" element={<Dashboard />}>
               <Route path="" element={<QuestStartSection />} />
-              <Route path="help" element={<CustomerSupport />}>
+              <Route path="help/" element={<CustomerSupport />}>
                 <Route path="about" element={<About />} />
                 <Route path="faq" element={<Faq />} />
                 <Route path="terms-of-service" element={<TermsOfService />} />
@@ -155,13 +146,13 @@ export function Router() {
             <Route path="/guest-signup" element={<Signup />}>
               <Route path="credentials" element={<CredentialRegister />} />
             </Route>
-            <Route path="/signin/" element={persistedUser?.role === 'user' ? <Navigate to="/dashboard" /> : <Signin />}>
+            <Route path="/signin/" element={persistedUser?.role === 'user' ? <Navigate to="/" /> : <Signin />}>
               <Route path="credentials" element={<CredentialLogin />} />
             </Route>
             <Route path="/verifycode" element={<VerifyCode />} />
             <Route
               path="*"
-              element={persistedUser?.role === 'user' ? <Navigate to="/dashboard" /> : <Navigate to={'/help/about'} />}
+              element={persistedUser?.role === 'user' ? <Navigate to="/" /> : <Navigate to={'/help/about'} />}
             />
           </Route>
         </Routes>

@@ -20,7 +20,7 @@ const DashboardRedirect = () => {
   if (userInfoSuccess && userInfoData?.status === 200) {
     if (userInfoData.data) {
       dispatch(addUser(userInfoData?.data));
-      navigate('/dashboard');
+      navigate('/');
     }
   }
 

@@ -19,7 +19,7 @@ function Slider() {
   const queryClient = useQueryClient();
   const [dragging, setDragging] = useState(false);
 
-  if (location.pathname === '/dashboard/bookmark') {
+  if (location.pathname === '/bookmark') {
     filtersActions = bookmarkFiltersActions;
   } else {
     filtersActions = homeFilterActions;

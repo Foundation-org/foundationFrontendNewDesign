@@ -44,7 +44,7 @@ const ButtonGroup = ({
 
   let filterState;
 
-  if (location.pathname === '/dashboard/bookmark') {
+  if (location.pathname === '/bookmark') {
     filterState = useSelector(filterBookmarkActions.getFilters);
   } else {
     filterState = useSelector(filterActions.getFilters);
@@ -330,9 +330,9 @@ const ButtonGroup = ({
               );
             } else {
               if (location.pathname === '/shared-list-link/result') {
-                navigate('/dashboard/profile/lists');
+                navigate('/profile/lists');
               } else {
-                navigate('/dashboard/profile/shared-links');
+                navigate('/profile/shared-links');
               }
             }
           }}

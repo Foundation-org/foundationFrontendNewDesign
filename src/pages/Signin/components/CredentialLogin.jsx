@@ -69,11 +69,11 @@ const CredentialLogin = () => {
             localStorage.setItem('uuid', resp.data.uuid);
             dispatch(addUser(resp.data));
 
-            navigate('/dashboard');
+            navigate('/');
           }
         }
       } else {
-        showToast('warning',)
+        showToast('warning');
       }
       // } else {
       //   toast.error('Google recaptcha failed');
@@ -86,10 +86,9 @@ const CredentialLogin = () => {
       ) {
         showToast('error', 'incorrectTypedPassword');
       } else if (e.response.data.message === 'An error occurred while signInUser Auth: User not Found') {
-        showToast('error', 'userNotFound')
+        showToast('error', 'userNotFound');
       } else {
-        showToast('error', 'error', {}, error.response.data.message.split(':')[1])
-
+        showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       }
     }
     // finally {
@@ -215,7 +214,7 @@ const CredentialLogin = () => {
         onClick={() => {
           handleSignin();
         }}
-      // disabled={isLoading === true ? true : false}
+        // disabled={isLoading === true ? true : false}
       >
         Sign in
         {/* {isLoading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Sign in'} */}

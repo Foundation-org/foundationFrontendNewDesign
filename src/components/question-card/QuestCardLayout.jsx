@@ -96,7 +96,7 @@ const QuestCardLayout = ({
       // queryClient.invalidateQueries('FeedData');
     },
     onError: (error) => {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1])
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     },
   });
 
@@ -110,7 +110,7 @@ const QuestCardLayout = ({
         ),
       }));
       // toast.success('Bookmark Removed ');
-      // if (location.pathname === '/dashboard') {
+      // if (location.pathname === '/') {
       // queryClient.invalidateQueries('FeedData');
       // dispatch(removeBookmarkResponse(resp.data.id));
       // }
@@ -242,7 +242,7 @@ const QuestCardLayout = ({
         <div className="flex items-center justify-between rounded-t-[12.3px] border-b-[1.834px] border-[#D9D9D9] bg-[#FEECEC] px-5 py-2 text-[0.75rem] font-semibold leading-[15px] text-[#FF2C2C] tablet:rounded-t-[13.842px] tablet:py-[10px] tablet:text-[1.25rem] tablet:leading-[23px]">
           <h4 className="">SUPRESSED</h4>
           {questStartData.uuid === localStorage.getItem('uuid') && (
-            <Link to="/dashboard/profile/feedback" className="underline">
+            <Link to="/profile/feedback" className="underline">
               See Why
             </Link>
           )}
@@ -260,7 +260,7 @@ const QuestCardLayout = ({
             className="flex cursor-pointer items-center gap-[4.8px] tablet:gap-3"
             onClick={() => {
               copyToClipboard();
-              showToast('success', 'copyLink')
+              showToast('success', 'copyLink');
             }}
           >
             <img
@@ -285,10 +285,10 @@ const QuestCardLayout = ({
             questId={questStartData._id}
             playing={playing}
 
-          // setPlayingPlayerId={setPlayingPlayerId}
-          // setIsPlaying={setIsPlaying}
-          // setIsShowPlayer={setIsShowPlayer}
-          // isPlaying={isPlaying}
+            // setPlayingPlayerId={setPlayingPlayerId}
+            // setIsPlaying={setIsPlaying}
+            // setIsShowPlayer={setIsShowPlayer}
+            // isPlaying={isPlaying}
           />
         ))}
       <CardTopbar

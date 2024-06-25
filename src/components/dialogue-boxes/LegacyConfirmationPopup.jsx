@@ -51,7 +51,7 @@ const LegacyConfirmationPopup = ({
           localStorage.setItem('userData', JSON.stringify(infoc.data.user));
           localStorage.removeItem('isGuestMode');
           dispatch(addUser(infoc.data.user));
-          navigate('/dashboard');
+          navigate('/');
           if (legacyPromiseRef.current) {
             setIsPopup(false);
             setIsLoading(false);

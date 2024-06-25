@@ -45,7 +45,6 @@ export default function Signin() {
   const instaRef = useRef(null);
   const [clickedButtonName, setClickedButtonName] = useState('');
 
-
   const loginWithGithub = () => {
     const provider = new GithubAuthProvider();
     signInWithPopup(authentication, provider)
@@ -72,14 +71,13 @@ export default function Signin() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   const triggerLogin = async (value) => {
     if (!value) {
-      value = clickedButtonName
+      value = clickedButtonName;
     }
     if (value === 'facebook') {
-
       if (fbRef.current) {
         const facebookButton = fbRef.current.querySelector('div'); // or a more specific selector if needed
         if (facebookButton) {
@@ -88,7 +86,6 @@ export default function Signin() {
       }
     }
     if (value === 'google') {
-
       if (googleRef.current) {
         const facebookButton = googleRef.current.querySelector('div'); // or a more specific selector if needed
         if (facebookButton) {
@@ -97,7 +94,6 @@ export default function Signin() {
       }
     }
     if (value === 'linkedin') {
-
       if (linkedInRef.current) {
         const facebookButton = linkedInRef.current.querySelector('div'); // or a more specific selector if needed
         if (facebookButton) {
@@ -106,18 +102,11 @@ export default function Signin() {
       }
     }
     if (value === 'github') {
-
       loginWithGithub();
-
     }
     if (value === 'twitter') {
-
       loginWithTwitter();
-
     }
-
-
-
   };
 
   const handleSignInSocial = async (data, provider) => {
@@ -139,7 +128,7 @@ export default function Signin() {
           localStorage.setItem('userData', JSON.stringify(res.data));
           localStorage.removeItem('isGuestMode');
           dispatch(addUser(res.data));
-          navigate('/dashboard');
+          navigate('/');
         }
       }
     } catch (error) {
@@ -172,8 +161,9 @@ export default function Signin() {
       />
       {isLoadingSocial && <Loader />}
       <div
-        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${
+          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>

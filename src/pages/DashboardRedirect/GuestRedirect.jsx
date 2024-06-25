@@ -7,7 +7,7 @@ import { createGuestMode } from '../../services/api/userAuth';
 import { useNavigate } from 'react-router-dom';
 import showToast from '../../components/ui/Toast';
 
-const GuestRedirect = () => {
+const GuestRedirect = ({ redirectUrl }) => {
   const dispatch = useDispatch();
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
@@ -20,6 +20,9 @@ const GuestRedirect = () => {
       localStorage.setItem('uuid', resp.data.uuid);
       localStorage.setItem('userData', JSON.stringify(resp.data));
       dispatch(addUser(resp.data));
+      if (redirectUrl) {
+        navigate(redirectUrl);
+      }
     },
     onError: (err) => {
       toast.error(err.response.data);
@@ -30,7 +33,7 @@ const GuestRedirect = () => {
     if (persistedUserInfo === null) {
       createGuest();
     } else {
-      navigate('/dashboard');
+      navigate('/');
     }
   }, [persistedUserInfo, dispatch]);
 

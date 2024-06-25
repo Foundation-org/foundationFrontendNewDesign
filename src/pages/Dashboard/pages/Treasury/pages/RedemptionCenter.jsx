@@ -52,7 +52,7 @@ export default function RedemptionCenter() {
     const url = window.location.href;
     // const extractedCode = url.substring(url.lastIndexOf('/') + 1);
     const extractedCode = new URL(url).pathname;
-    if (extractedCode !== '/dashboard/treasury/redemption-center') {
+    if (extractedCode !== '/treasury/redemption-center') {
       const parts = extractedCode.split('/');
       const extractedText = parts[2];
       setCode(extractedText);

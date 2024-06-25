@@ -121,10 +121,10 @@ export default ({ data }) => {
               >
                 <img alt={index} src={item} />
               </div>
-              {location.pathname === '/dashboard/quest' && (
+              {location.pathname === '/quest' && (
                 <p
                   onClick={() => {
-                    if (location.pathname === '/dashboard/quest') {
+                    if (location.pathname === '/quest') {
                       dispatch(delOption({ id: `index-${index}` }));
                     }
                   }}

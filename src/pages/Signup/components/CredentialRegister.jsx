@@ -19,7 +19,6 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../../services/api/Axios';
 import { addUser } from '../../../features/auth/authSlice';
 
-
 const CredentialRegister = () => {
   const persistedTheme = useSelector((state) => state.utils.theme);
   const [email, setEmail] = useState('');
@@ -36,8 +35,8 @@ const CredentialRegister = () => {
   const [isLoading, setIsLoading] = useState(false);
   const inputType = showPassword ? 'text' : 'password';
   const cnfmPassInputType = showCnfmPassword ? 'text' : 'password';
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handlePopupClose = () => setIspopup(false);
 
@@ -89,7 +88,7 @@ const CredentialRegister = () => {
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
 
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
@@ -98,7 +97,7 @@ const CredentialRegister = () => {
     }
   };
   const handleSignup = async () => {
-    if (!termConditionCheck) return showToast('warning', 'termsAndConditions')
+    if (!termConditionCheck) return showToast('warning', 'termsAndConditions');
 
     // // setIsLoadingSocial(true);
     // if (localStorage.getItem('isGuestMode')) {

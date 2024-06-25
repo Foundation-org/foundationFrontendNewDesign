@@ -15,11 +15,11 @@ const CustomerSupport = () => {
   }, [location.pathname]);
 
   const list = [
-    { id: 1, title: 'About', path: '/dashboard/help/about' },
-    { id: 2, title: "FAQ's", path: '/dashboard/help/faq' },
-    { id: 3, title: 'Terms of Service', path: '/dashboard/help/terms-of-service' },
-    { id: 4, title: 'Privacy Policy', path: '/dashboard/help/privacy-policy' },
-    { id: 5, title: 'Contact Us', path: '/dashboard/help/contact-us' },
+    { id: 1, title: 'About', path: '/help/about' },
+    { id: 2, title: "FAQ's", path: '/help/faq' },
+    { id: 3, title: 'Terms of Service', path: '/help/terms-of-service' },
+    { id: 4, title: 'Privacy Policy', path: '/help/privacy-policy' },
+    { id: 5, title: 'Contact Us', path: '/help/contact-us' },
   ];
 
   return (
@@ -39,7 +39,7 @@ const CustomerSupport = () => {
       </div>
       <div
         ref={scrollRef}
-        className={`no-scrollbar mx-auto mb-10 h-[calc(100dvh-174px)] w-full overflow-y-auto tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem] ${location.pathname === '/dashboard/help/contact-us' && 'px-3 tablet:px-0'}`}
+        className={`no-scrollbar mx-auto mb-10 h-[calc(100dvh-174px)] w-full overflow-y-auto tablet:h-[calc(100dvh-143.6px)] tablet:max-w-[730px] tablet:rounded-t-[0.86513rem] ${location.pathname === '/help/contact-us' && 'px-3 tablet:px-0'}`}
       >
         <Outlet />
       </div>
