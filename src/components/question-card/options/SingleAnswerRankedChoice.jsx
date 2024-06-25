@@ -240,7 +240,7 @@ const SingleAnswerRankedChoice = (props) => {
         {...props.dragHandleProps}
         className={`${
           props.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
-        } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
+        } flex w-full touch-none items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
       >
         <div className="flex w-full items-center rounded-l-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
           {props.btnText !== 'Results' && (
