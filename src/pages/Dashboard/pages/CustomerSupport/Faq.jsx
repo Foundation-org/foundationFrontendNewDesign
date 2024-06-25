@@ -22,7 +22,7 @@ const Faq = () => {
         General
       </h1>
       {faqData.map((item) => (
-        <div>
+        <div key={item.id}>
           <button
             key={item.id}
             className={`${openItems.includes(item.id) ? 'border-y-[0.5px] tablet:border-y' : 'border-t-[0.5px] tablet:border-t'} flex w-full items-center gap-[5px] border-black px-[1.13rem]`}
@@ -55,7 +55,7 @@ const Faq = () => {
         Posting and features
       </h1>
       {faqData2.map((item) => (
-        <div>
+        <div key={item.id}>
           <button
             key={item.id}
             className={`${openItems.includes(item.id) ? 'border-y-[0.5px] tablet:border-y' : 'border-t-[0.5px] tablet:border-t'} flex w-full items-center gap-[5px] border-black px-[1.13rem]`}
