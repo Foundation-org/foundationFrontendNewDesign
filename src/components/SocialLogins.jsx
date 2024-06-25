@@ -143,6 +143,8 @@ const SocialLogins = ({
           }}
           redirect_uri={REDIRECT_URI}
           onReject={(err) => {
+                        setIsLoadingSocial(false);
+
             console.log(err);
           }}
           className="max-w-auto min-w-[145px] lg:min-w-[305px] "
@@ -178,7 +180,10 @@ const SocialLogins = ({
           onSuccess={(code) => {
             console.log(code), loginInWithInsta(code);
           }}
-          onFailure={(err) => console.log('error', err)}
+          onFailure={(err) =>{
+             console.log('error', err)}
+                         setIsLoadingSocial(false);
+}
           redirectUri={window.location.href}
           cssClass={'hideBack'}
         >
@@ -220,7 +225,6 @@ const SocialLogins = ({
           client_id={import.meta.env.VITE_LINKEDIN_KEY}
           client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
           onResolve={({ provider, data }) => {
-            setIsLoadingSocial(false);
             console.log(provider);
             setProvider(provider);
             setProfile(data);

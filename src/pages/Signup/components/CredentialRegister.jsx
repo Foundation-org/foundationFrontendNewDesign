@@ -94,7 +94,6 @@ const CredentialRegister = () => {
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       setIsLoading(false);
-      setIsLoadingSocial(false);
     }
   };
   const handleSignup = async () => {
@@ -263,7 +262,7 @@ const CredentialRegister = () => {
         onClick={() => {
           handleSignup();
         }}
-        disabled={isLoading === true ? true : false}
+        disabled={(isLoading === true ? true : false) || !email || !password || !reTypePassword}
       >
         Create Account
       </Button>
