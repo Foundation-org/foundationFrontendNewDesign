@@ -10,7 +10,7 @@ export const createQuestItems = [
 export const profileItems = [
   { id: 8, title: 'Summary', path: '/profile', to: '' },
   { id: 1, title: 'Verification Badges', path: '/profile/verification-badges', to: '' },
-  { id: 0, title: 'Post activity', path: '/profile/post-activity', to: 'post-activity' },
+  { id: 0, title: 'Post Activity', path: '/profile/post-activity', to: 'post-activity' },
   { id: 3, title: 'Hidden Posts', path: '/profile/hidden-posts', to: 'hidden-posts' },
   { id: 6, title: 'Posts Feedback', path: '/profile/feedback', to: 'feedback' },
   { id: 4, title: 'Shared Posts', path: '/profile/shared-links', to: 'shared-links' },

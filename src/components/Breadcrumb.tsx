@@ -9,7 +9,6 @@ const Breadcrumb = () => {
         {location.pathname.startsWith('/profile') && 'My Profile'}
         {location.pathname.startsWith('/treasury') && 'Treasury'}
         {location.pathname.startsWith('/help') && 'Help'}
-        {location.pathname.startsWith('/help') && 'Help'}
       </h1>
     </div>
   );
