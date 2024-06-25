@@ -3,7 +3,7 @@ import { Tooltip } from '../../../../../utils/Tooltip';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 
 const Options = ({
-  snapshot,
+  isDragging,
   id,
   title,
   answer,
@@ -30,7 +30,7 @@ const Options = ({
     <div
       className={`${
         label ? 'flex flex-col gap-[13px]' : 'flex flex-row items-center gap-[25px]'
-      } mx-[30px] tablet:ml-[50px] tablet:mr-[50px]`}
+      } mx-[30px] cursor-grab touch-none tablet:ml-[50px] tablet:mr-[50px]`}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">
@@ -81,7 +81,7 @@ const Options = ({
             <div className="flex w-full rounded-r-[0.33rem] bg-transparent tablet:w-full tablet:rounded-[10.3px] laptop:rounded-[10px]">
               <div
                 className={`${
-                  snapshot.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                  isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
                 } dragIconWrapper border-y border-s tablet:border-y-[3px] tablet:border-s-[3px]`}
               >
                 {persistedTheme === 'dark' ? (
@@ -100,7 +100,7 @@ const Options = ({
               </div>
               <div
                 className={`${
-                  snapshot.isDragging
+                  isDragging
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
                 } w-5 min-w-5 border-y tablet:border-y-[3px]`}
@@ -117,7 +117,7 @@ const Options = ({
                   (e.key === 'Tab' && handleTab(number)) || (e.key === 'Enter' && handleTab(number, 'Enter'))
                 }
                 className={`${
-                  snapshot.isDragging
+                  isDragging
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
                 } box-border flex w-full resize-none items-center border-y py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:h-[51px] tablet:border-y-[3px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:h-[45px] laptop:text-[18px] dark:text-[#7C7C7C]`}
@@ -125,7 +125,7 @@ const Options = ({
               <div
                 id={`test${number}`}
                 className={`${
-                  snapshot.isDragging
+                  isDragging
                     ? 'border-[#5FA3D5] bg-[#F2F6FF]'
                     : 'border-[#DEE6F7] bg-white dark:border-[#0D1012] dark:bg-[#0D1012]'
                 } relative flex items-center rounded-r-[0.33rem] border-y border-r text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[10px] laptop:text-[1.25rem] ${

@@ -1,12 +1,11 @@
 import { toast } from 'sonner';
+import { Reorder } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import { createInfoQuest, getTopicOfValidatedQuestion } from '../../../../../services/api/questsApi';
-// import ChangeChoiceOption from '../components/ChangeChoiceOption';
 import CustomSwitch from '../../../../../components/CustomSwitch';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '../../../../../components/ui/Button';
 import { updateRankedChoice } from '../../../../../features/createQuest/createQuestSlice';
@@ -37,13 +36,15 @@ const RankChoice = () => {
   const optionsValue = useSelector(createQuestAction.optionsValue);
   const persistedUserInfo = useSelector((state) => state.auth.user);
   const persistedContants = useSelector(getConstantsValues);
+  const filterStates = useSelector(filtersActions.getFilters);
 
   const [addOption, setAddOption] = useState(createQuestSlice.addOption);
   const [changeState, setChangeState] = useState(createQuestSlice.changeState);
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-  const filterStates = useSelector(filtersActions.getFilters);
+  const [dragId, setDragId] = useState(null);
+
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
@@ -182,34 +183,6 @@ const RankChoice = () => {
     );
   };
 
-  const handleOnDragEnd = (result) => {
-    if (!result.destination) {
-      return;
-    }
-
-    if (optionsValue[parseInt(result.draggableId.split('-')[1])].question !== '') {
-      answerVerification(
-        `index-${result.destination.index}`,
-        result.destination.index,
-        optionsValue[parseInt(result.draggableId.split('-')[1])].question,
-        optionsValue[parseInt(result.draggableId.split('-')[1])].chatgptQuestion,
-      );
-    }
-
-    const newTypedValues = [...optionsValue];
-    const [removed] = newTypedValues.splice(result.source.index, 1);
-    newTypedValues.splice(result.destination.index, 0, removed);
-
-    const updatedTypedValues = newTypedValues.map((item, index) => {
-      return {
-        ...item,
-        id: `index-${index}`,
-      };
-    });
-
-    dispatch(createQuestAction.drapAddDrop({ newTypedValues: updatedTypedValues }));
-  };
-
   useEffect(() => {
     let tempOptions = optionsValue.map((item) => {
       return item.question;
@@ -319,6 +292,10 @@ const RankChoice = () => {
     getPicsMediaStates.picUrl,
   ]);
 
+  const handleReorder = (newOrder) => {
+    dispatch(createQuestAction.drapAddDrop({ newTypedValues: newOrder }));
+  };
+
   return (
     <CreateQuestWrapper
       quest="M/R"
@@ -326,53 +303,43 @@ const RankChoice = () => {
       type={'Post'}
       msg={'Participants can arrange these options in their order of preference'}
     >
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId={`optionsValue-${Date.now()}`}>
-          {(provided) => (
-            <ul
-              className="flex flex-col gap-[5px] tablet:gap-[15px]"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {optionsValue.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
-                    <li
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className="w-full"
-                    >
-                      <Options
-                        snapshot={snapshot}
-                        key={index}
-                        title="RankChoice"
-                        id={item.id}
-                        allowInput={true}
-                        label={`Option ${index + 1} #`}
-                        trash={true}
-                        dragable={true}
-                        handleChange={(value) => handleChange(index, value, optionsValue)}
-                        handleOptionSelect={() => handleOptionSelect(index)}
-                        typedValue={item.question}
-                        isTyping={item?.isTyping}
-                        isSelected={item.selected}
-                        optionsCount={optionsValue.length}
-                        removeOption={removeOption}
-                        number={index + 3}
-                        optionStatus={optionsValue[index].optionStatus}
-                        answerVerification={(value) => answerVerification(item.id, index, value)}
-                        handleTab={handleTab}
-                      />
-                    </li>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </ul>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <Reorder.Group
+        onReorder={(newOrder) => handleReorder(newOrder)}
+        values={optionsValue}
+        className="flex flex-col gap-[5px] tablet:gap-[15px]"
+      >
+        {optionsValue.map((item, index) => (
+          <Reorder.Item
+            value={item}
+            key={item.id}
+            onDrag={() => setDragId(item.id)}
+            onDragEnd={() => setDragId(null)}
+            className="w-full"
+          >
+            <Options
+              isDragging={dragId === item.id ? true : false}
+              key={index}
+              title="RankChoice"
+              id={item.id}
+              allowInput={true}
+              label={`Option ${index + 1} #`}
+              trash={true}
+              dragable={true}
+              handleChange={(value) => handleChange(index, value, optionsValue)}
+              handleOptionSelect={() => handleOptionSelect(index)}
+              typedValue={item.question}
+              isTyping={item?.isTyping}
+              isSelected={item.selected}
+              optionsCount={optionsValue.length}
+              removeOption={removeOption}
+              number={index + 3}
+              optionStatus={optionsValue[index].optionStatus}
+              answerVerification={(value) => answerVerification(item.id, index, value)}
+              handleTab={handleTab}
+            />
+          </Reorder.Item>
+        ))}
+      </Reorder.Group>
       <Button
         variant="addOption"
         className="ml-[30px] mt-2 tablet:ml-[50px] tablet:mt-[15px]"
