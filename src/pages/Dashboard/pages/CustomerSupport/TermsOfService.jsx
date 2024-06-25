@@ -2,7 +2,7 @@ import { termsAndConditionsArray } from '../../../../features/term-privacy/term-
 
 const TermsOfService = () => {
   return (
-    <div className="mb-12 bg-white pb-5">
+    <div className="mb-12 bg-white pb-5 tablet:rounded-t-[0.86513rem]">
       <h1 className="py-3 pb-1 text-center text-[0.875rem] font-bold leading-[0.875rem] text-[#707175] tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
         Terms Of Service
       </h1>

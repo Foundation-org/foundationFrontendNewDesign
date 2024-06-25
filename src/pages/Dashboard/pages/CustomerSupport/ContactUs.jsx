@@ -40,7 +40,7 @@ const ContactUs = () => {
   });
 
   return (
-    <div className="flex w-full flex-col gap-3 rounded-[10px] bg-white px-[14px] py-[15px] tablet:gap-[25px] tablet:px-[58px] tablet:pb-10 tablet:pt-[25px]">
+    <div className="flex w-full flex-col gap-3 rounded-[0.86513rem] bg-white px-[14px] py-[15px] tablet:gap-[25px] tablet:px-[58px] tablet:pb-10 tablet:pt-[25px]">
       <h1 className="text-[14px] font-bold leading-none -tracking-[2%] text-[#707175] tablet:text-[20px]">
         Get in Touch With Us
       </h1>
