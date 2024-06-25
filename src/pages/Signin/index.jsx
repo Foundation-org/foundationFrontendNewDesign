@@ -57,7 +57,7 @@ export default function Signin() {
       })
       .catch((err) => {
         console.log(err);
-        setIsLoading(false)
+        setIsLoadingSocial(false);
       });
   };
   const loginWithTwitter = () => {
@@ -72,7 +72,7 @@ export default function Signin() {
       })
       .catch((err) => {
         console.log(err);
-        setIsLoading(false)
+        setIsLoadingSocial(false);
 
       });
   }
