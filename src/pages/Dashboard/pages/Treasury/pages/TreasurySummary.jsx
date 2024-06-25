@@ -27,7 +27,7 @@ const TreasurySummary = () => {
         <div className="flex items-center justify-between rounded-b-[10px] border-[#D9D9D9] bg-[#FDFDFD] px-5 py-[10px] tablet:border-[1.85px] tablet:px-16 tablet:py-[18.73px]">
           <div className="space-y-2">
             <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
-              Total FDX
+              FDX balance
             </h1>
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               FDX earned:
@@ -35,9 +35,9 @@ const TreasurySummary = () => {
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               FDX spent:
             </p>
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-              FDX Redeemed:
-            </p>
+            {/* <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+              FDX redeemed:
+            </p> */}
           </div>
           <div className="space-y-2 text-end">
             <h1 className="text-[12px] font-semibold leading-[113%] text-[#85898C] tablet:text-[18px] tablet:leading-normal">
@@ -49,9 +49,9 @@ const TreasurySummary = () => {
             <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               {persistedUserInfo?.fdxSpent?.toFixed(2)} FDX
             </p>
-            <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+            {/* <p className="text-[12px] font-normal leading-[113%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
               {persistedUserInfo?.redemptionStatistics?.codeRedeemedFdxEarned?.toFixed(2)} FDX
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
@@ -136,7 +136,7 @@ const TreasurySummary = () => {
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
             <Button variant={'submit'} onClick={() => navigate('/dashboard/treasury/buy-fdx')}>
-              Buy More FDX
+              Buy more FDX
             </Button>
           </div>
         </div>

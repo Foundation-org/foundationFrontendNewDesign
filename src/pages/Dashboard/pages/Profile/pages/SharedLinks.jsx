@@ -154,7 +154,7 @@ export default function SharedLinks() {
           <div className="mt-3 flex items-center justify-center gap-2 tablet:mt-5 tablet:gap-6">
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Posts You’ve Shared
+                Posts you’ve shared
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">
                 {persistedUserInfo?.sharedQuestsStatistics.sharedQuests}
@@ -162,7 +162,7 @@ export default function SharedLinks() {
             </div>
             <div className="max-w-28 border-r border-[#707175] pr-3 tablet:max-w-full tablet:pr-6">
               <h1 className="text-center text-[12px] font-semibold leading-[116%] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
-                Total Shared Link Clicks
+                Total shared link clicks
               </h1>
               <h5 className="text-center text-[18px] font-normal text-[#85898C]">
                 {persistedUserInfo?.sharedQuestsStatistics.totalQuestsImpression}
@@ -179,9 +179,12 @@ export default function SharedLinks() {
           </div>
         </div>
       </div>
-      {questUtils.areShareLinks &&
+      {questUtils.areShareLinks && (
         <div className="mx-[15px] my-2 mr-4 flex justify-end tablet:ml-[97px] tablet:mr-[70px] tablet:hidden">
-          <DisabledLinkPopup handleClose={showHidePostClose} modalVisible={questUtils.sharedQuestStatus.isDialogueBox} />
+          <DisabledLinkPopup
+            handleClose={showHidePostClose}
+            modalVisible={questUtils.sharedQuestStatus.isDialogueBox}
+          />
           <div className="relative">
             <div className="relative h-[15.96px] w-[128px] tablet:h-[45px] tablet:w-[337px]">
               <input
@@ -217,7 +220,8 @@ export default function SharedLinks() {
               )}
             </div>
           </div>
-        </div>}
+        </div>
+      )}
 
       <div className="no-scrollbar tablet:w-fulls mx-auto flex h-full max-w-full flex-col overflow-y-auto bg-[#F2F3F5] dark:bg-[#242424]">
         <div className="mx-4 space-y-2 tablet:mx-6 tablet:space-y-5">
@@ -243,8 +247,9 @@ export default function SharedLinks() {
                       No matching posts found!
                     </p>
                     <button
-                      className={`${persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                        }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                      className={`${
+                        persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                      }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                       onClick={() => {
                         dispatch(updateSharedLinkSearch(''));
                       }}
@@ -253,12 +258,14 @@ export default function SharedLinks() {
                     </button>
                   </div>
                 </div>
-              ) : !getSharedLinksFilters.searchData && data?.pages[0].length === 0 ? dispatch(setAreShareLinks(false)) && (
-                <p className="text-center text-[4vw] laptop:text-[2vw]">
-                  <b>No shared posts!</b>
-                </p>
-              ) : !getSharedLinksFilters.searchData && data?.pages[0].length !== 0 ? dispatch(setAreShareLinks(true)) && (
-                <></>
+              ) : !getSharedLinksFilters.searchData && data?.pages[0].length === 0 ? (
+                dispatch(setAreShareLinks(false)) && (
+                  <p className="text-center text-[4vw] laptop:text-[2vw]">
+                    <b>No shared posts!</b>
+                  </p>
+                )
+              ) : !getSharedLinksFilters.searchData && data?.pages[0].length !== 0 ? (
+                dispatch(setAreShareLinks(true)) && <></>
               ) : !getSharedLinksFilters.searchData ? (
                 <p className="text-center text-[4vw] laptop:text-[2vw]">
                   <b>No more shared posts!</b>
@@ -269,8 +276,9 @@ export default function SharedLinks() {
                     You are all caught up!
                   </p>
                   <button
-                    className={`${persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
-                      }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
+                    className={`${
+                      persistedTheme === 'dark' ? 'bg-[#333B46]' : 'bg-gradient-to-r from-[#6BA5CF] to-[#389CE3]'
+                    }  inset-0 w-fit rounded-[0.375rem] px-[0.56rem] py-[0.35rem] text-[0.625rem] font-semibold leading-[1.032] text-white shadow-inner tablet:pt-2 tablet:text-[15px] tablet:leading-normal laptop:w-[192px] laptop:rounded-[0.938rem] laptop:px-5 laptop:py-2 laptop:text-[1.25rem] dark:text-[#EAEAEA]`}
                     onClick={() => {
                       dispatch(updateSharedLinkSearch(''));
                     }}

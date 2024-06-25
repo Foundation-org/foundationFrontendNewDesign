@@ -59,7 +59,7 @@ export default function NotificationSettings() {
           <div className="flex flex-col gap-3 rounded-[6.749px] tablet:gap-6 tablet:rounded-[15px]">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Email notifications</h1>{' '}
+                <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">Email Notifications</h1>{' '}
                 <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">
                   Get notified of new features, updates and more!
                 </p>
@@ -84,7 +84,7 @@ export default function NotificationSettings() {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">System notifications</h1>
+                <h1 className="text-[10px] font-semibold text-[#707175] tablet:text-[20px]">System Notifications</h1>
                 <p className="text-[8px] font-medium text-[#ACACAC] tablet:text-[16px]">
                   Helpful messages in your feed to guide you along
                 </p>
