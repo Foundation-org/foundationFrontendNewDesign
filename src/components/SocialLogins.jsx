@@ -199,7 +199,7 @@ const SocialLogins = ({
           </Button>
       </div > */}
 
-      <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
+      {/* <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <Button
           size="login-btn"
           color="gray"
@@ -218,7 +218,7 @@ const SocialLogins = ({
           />
           Twitter
         </Button>
-      </div>
+      </div> */}
       <div ref={linkedInRef}>
         <LoginSocialLinkedin
           // isOnlyGetToken
