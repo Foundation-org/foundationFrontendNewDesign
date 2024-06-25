@@ -79,6 +79,7 @@ export default function Signup() {
         handleSignUpSocial(data, 'github');
       })
       .catch((err) => {
+        setIsLoadingSocial(false);
         console.log(err);
       });
   };
@@ -94,6 +95,7 @@ export default function Signup() {
         handleSignUpSocial(data, 'twitter');
       })
       .catch((err) => {
+        setIsLoadingSocial(false);
         console.log(err);
       });
   };
@@ -104,6 +106,8 @@ export default function Signup() {
         const facebookButton = fbRef.current.querySelector('div'); // or a more specific selector if needed
         if (facebookButton) {
           facebookButton.click();
+          setIsLoadingSocial(true);
+
         }
       }
     }
@@ -121,13 +125,17 @@ export default function Signup() {
         const facebookButton = linkedInRef.current.querySelector('div'); // or a more specific selector if needed
         if (facebookButton) {
           facebookButton.click();
+          setIsLoadingSocial(true);
+
         }
       }
     }
     if (clickedButtonName === 'github') {
+      setIsLoadingSocial(true);
       loginWithGithub();
     }
     if (clickedButtonName === 'twitter') {
+      setIsLoadingSocial(true);
       loginWithTwitter();
     }
   };
@@ -301,9 +309,8 @@ export default function Signup() {
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>

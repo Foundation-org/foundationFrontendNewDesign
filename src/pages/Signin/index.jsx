@@ -57,6 +57,7 @@ export default function Signin() {
       })
       .catch((err) => {
         console.log(err);
+        setIsLoadingSocial(false);
       });
   };
   const loginWithTwitter = () => {
@@ -71,6 +72,8 @@ export default function Signin() {
       })
       .catch((err) => {
         console.log(err);
+        setIsLoadingSocial(false);
+
       });
   }
 
@@ -84,6 +87,8 @@ export default function Signin() {
         const facebookButton = fbRef.current.querySelector('div'); // or a more specific selector if needed
         if (facebookButton) {
           facebookButton.click();
+          setIsLoadingSocial(true);
+
         }
       }
     }
@@ -93,6 +98,8 @@ export default function Signin() {
         const facebookButton = googleRef.current.querySelector('div'); // or a more specific selector if needed
         if (facebookButton) {
           facebookButton.click();
+          setIsLoadingSocial(true);
+
         }
       }
     }
@@ -102,15 +109,19 @@ export default function Signin() {
         const facebookButton = linkedInRef.current.querySelector('div'); // or a more specific selector if needed
         if (facebookButton) {
           facebookButton.click();
+          setIsLoadingSocial(true);
+
         }
       }
     }
     if (value === 'github') {
+      setIsLoadingSocial(true);
 
       loginWithGithub();
 
     }
     if (value === 'twitter') {
+      setIsLoadingSocial(true);
 
       loginWithTwitter();
 
