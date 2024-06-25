@@ -343,7 +343,6 @@ const QuestionCardWithToggle = (props) => {
   const { mutateAsync: changeAnswer } = useMutation({
     mutationFn: questServices.updateChangeAnsStartQuest,
     onSuccess: (resp) => {
-      queryClient.invalidateQueries(['userInfo']);
       if (resp.data.message === 'Answer has not changed') {
         setLoading(false);
         showToast('warning', 'selectedSameOptions');
@@ -353,6 +352,7 @@ const QuestionCardWithToggle = (props) => {
         setLoading(false);
       }
       if (resp.data.message === 'Start Quest Updated Successfully') {
+        queryClient.invalidateQueries(['userInfo']);
         setLoading(false);
         handleViewResults(questStartData._id);
 
