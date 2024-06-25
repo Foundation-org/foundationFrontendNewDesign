@@ -73,8 +73,9 @@ export function Router() {
       {!persistedUser?.uuid ? (
         <Routes>
           <Route path="/" element={<GuestRedirect redirectUrl="/help/about" />} />
-          <Route path="credentials" element={<CredentialLogin />} />
-          <Route path="/signin/" element={<Signin />}></Route>
+          <Route path="/signin/" element={<Signin />}>
+            <Route path="credentials" element={<CredentialLogin />} />
+          </Route>
           <Route path="/signup" element={<Signup />}>
             <Route path="credentials" element={<CredentialRegister />} />
           </Route>
