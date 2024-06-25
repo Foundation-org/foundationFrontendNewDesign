@@ -1,7 +1,7 @@
 import { privacyPolicyData, summaryPoints } from '../../../features/term-privacy/privacy-policy';
 import TermsPrivacyLayout from '../components/TermsPrivacyLayout';
 
-const PrivacyPolicy = () => {
+const SignUpPrivacyPolicy = () => {
   return (
     <TermsPrivacyLayout title={'Privacy Policy'} timeStamp={'Last Updated: January 19, 2024'}>
       <div className="term_policy_paragraph mt-[5px] tablet:mt-[15px]">
@@ -31,7 +31,7 @@ const PrivacyPolicy = () => {
           ))}
         </ul>
         <p>For more details, review the full privacy notice.</p>
-        <ul className="list-decimal pl-4 tablet:pl-6 mt-3 tablet:mt-6">
+        <ul className="mt-3 list-decimal pl-4 tablet:mt-6 tablet:pl-6">
           {privacyPolicyData.map((item, index) => (
             <li key={index}>
               <h4 className="term_policy_heading">{item.point}</h4>
@@ -53,4 +53,4 @@ const PrivacyPolicy = () => {
   );
 };
 
-export default PrivacyPolicy;
+export default SignUpPrivacyPolicy;
