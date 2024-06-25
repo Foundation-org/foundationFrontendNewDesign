@@ -234,11 +234,11 @@ const SingleAnswerMultipleChoice = (props) => {
           </div>
         ) : (
           <div className="flex w-7 min-w-[28px] items-center justify-center bg-transparent tablet:h-[33px] tablet:w-[26.48px] dark:bg-[#000]">
-            <img
+            {/* <img
               src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/addOptions/blueBadge.svg`}
               alt="blue badge"
               className="h-[15.5px] w-[12.44px] tablet:h-[27px] tablet:w-[21px]"
-            />
+            /> */}
           </div>
         )
       ) : (
