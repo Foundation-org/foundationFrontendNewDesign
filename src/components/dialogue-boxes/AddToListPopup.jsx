@@ -130,6 +130,10 @@ export default function AddToListPopup({ handleClose, modalVisible, questStartDa
             variant={'cancel'}
             className={'bg-[#7C7C7C]'}
             onClick={() => {
+              if (!listName) {
+                showToast('warning', 'emptyList')
+                return
+              }
               createNewList({
                 userUuid: persistedUserInfo.uuid,
                 category: listName,

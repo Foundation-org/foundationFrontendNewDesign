@@ -99,5 +99,6 @@ export const toastMessages = {
   termsAndConditions: 'Please accept the terms and conditions to continue!',
   emailVerified: 'Email verified successfully.',
   emptyPostList: 'You cannot save without selecting a list!',
-  recaptaFailed: 'Google recaptcha failed'
+  recaptaFailed: 'Google recaptcha failed',
+  emptyList: 'List name can not be empty'
 } as const;
