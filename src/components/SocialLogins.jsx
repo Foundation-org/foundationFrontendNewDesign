@@ -233,6 +233,9 @@ const SocialLogins = ({
           redirect_uri={REDIRECT_URI}
           // scope="email,openid,profile,w_member_social"
           onReject={(err) => {
+            if (err === 'Popup closed without completing login.') {
+              return
+            }
             console.log('err', err);
             setIsLoadingSocial(false);
             showToast('error', 'generalError');
