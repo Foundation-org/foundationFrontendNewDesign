@@ -16,7 +16,7 @@ const SidebarLeft = () => {
   const location = useLocation();
   const { pathname } = location;
   let filtersActions;
-  if (pathname === '/dashboard/bookmark') {
+  if (pathname === '/bookmark') {
     filtersActions = bookmarkFiltersActions;
   } else {
     filtersActions = homeFilterActions;
@@ -28,9 +28,7 @@ const SidebarLeft = () => {
   const [ratingsDialogue, setRatingsDialogue] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]); //for ratings
   const [search, setSearch] = useState(
-    pathname === '/dashboard/bookmark'
-      ? persistedUserInfo?.bookmarkStates.searchData
-      : persistedUserInfo?.States.searchData,
+    pathname === '/bookmark' ? persistedUserInfo?.bookmarkStates.searchData : persistedUserInfo?.States.searchData,
   );
 
   const showRatingDialogue = () => setRatingsDialogue(true);

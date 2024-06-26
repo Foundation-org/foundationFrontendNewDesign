@@ -15,7 +15,7 @@ const Profile = () => {
 
   return (
     <div
-      className={`${location.pathname !== '/dashboard/profile/ledger' ? 'mx-auto max-w-[1440px] laptop:mx-[331px] desktop:mx-auto' : ''} w-full bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]`}
+      className={`${location.pathname !== '/profile/ledger' ? 'mx-auto max-w-[1440px] laptop:mx-[331px] desktop:mx-auto' : ''} w-full bg-[#F2F3F5] tablet:h-[calc(100vh-70px)] dark:bg-[#242424]`}
     >
       <Breadcrumb />
       <div className="fixed left-1/2 flex w-full max-w-full -translate-x-1/2 justify-center laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
@@ -23,7 +23,7 @@ const Profile = () => {
       </div>
       <div
         ref={scrollRef}
-        className={`${location.pathname !== '/dashboard/profile/ledger' ? 'max-w-[778px] laptop:h-[calc(100dvh-147.6px)]' : 'max-w-[1440px] pb-16 laptop:mt-[128px] laptop:h-[calc(100dvh-207.6px)]'} no-scrollbar mx-auto mt-10 h-[calc(100dvh-174px)] overflow-y-scroll tablet:mt-[77.63px] tablet:h-[calc(100dvh-224px)] `}
+        className={`${location.pathname !== '/profile/ledger' ? 'max-w-[778px] laptop:h-[calc(100dvh-147.6px)]' : 'max-w-[1440px] pb-16 laptop:mt-[128px] laptop:h-[calc(100dvh-207.6px)]'} no-scrollbar mx-auto mt-10 h-[calc(100dvh-174px)] overflow-y-scroll tablet:mt-[77.63px] tablet:h-[calc(100dvh-224px)] `}
       >
         <Outlet />
       </div>

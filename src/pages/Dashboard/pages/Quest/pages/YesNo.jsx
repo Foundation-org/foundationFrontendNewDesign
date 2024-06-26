@@ -47,7 +47,7 @@ const YesNo = () => {
           ) {
             dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           }
-          navigate('/dashboard');
+          navigate('/');
           setLoading(false);
           setChangedOption('');
           setChangeState(false);

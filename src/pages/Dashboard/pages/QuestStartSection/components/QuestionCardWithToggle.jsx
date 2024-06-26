@@ -854,7 +854,7 @@ const QuestionCardWithToggle = (props) => {
           />
         ) : (
           <div className="mr-[14.4px] flex justify-end tablet:mr-[3.44rem]">
-            <Button variant="cancel" onClick={() => navigate('/dashboard/profile/feedback')}>
+            <Button variant="cancel" onClick={() => navigate('/profile/feedback')}>
               Go Back
             </Button>
           </div>

@@ -6,7 +6,7 @@ const About = () => {
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white tablet:rounded-t-[0.86513rem]">
       <h1 className="py-3 text-center text-[0.875rem] font-bold leading-[0.875rem] text-[#707175] tablet:pb-[10px] tablet:pt-5 tablet:text-[1.25rem] tablet:leading-[1.25rem]">
         Let your data work for you
       </h1>

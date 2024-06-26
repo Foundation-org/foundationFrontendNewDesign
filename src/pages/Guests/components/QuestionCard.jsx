@@ -107,7 +107,7 @@ const QuestionCard = ({
       if (resp.data.message === 'Start Quest Created Successfully') {
         toast.success('Successfully Completed');
         queryClient.invalidateQueries('FeedData');
-        navigate('/dashboard');
+        navigate('/');
       }
       setLoading(false);
     },
@@ -170,7 +170,7 @@ const QuestionCard = ({
 
       // if (!(params.answer.selected && params.answer.contended)) {
       if (!params.answer.selected) {
-        showToast('warning', 'emptySelection')
+        showToast('warning', 'emptySelection');
         return;
       }
 
@@ -254,7 +254,7 @@ const QuestionCard = ({
           const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
           if (isEmptyQuestion) {
-            showToast('warning', 'optionBlank')
+            showToast('warning', 'optionBlank');
             setLoading(false);
             return;
           }
@@ -280,7 +280,7 @@ const QuestionCard = ({
 
             setAnswerSelection(updatedArray);
           } else {
-            showToast('warning', 'emptySelection')
+            showToast('warning', 'emptySelection');
             setLoading(false);
           }
         }
@@ -297,7 +297,7 @@ const QuestionCard = ({
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          showToast('warning', 'optionBlank')
+          showToast('warning', 'optionBlank');
           setLoading(false);
           return;
         }
@@ -324,7 +324,7 @@ const QuestionCard = ({
 
           setAnswerSelection(updatedArray);
         } else {
-          showToast('warning', 'emptySelection')
+          showToast('warning', 'emptySelection');
           setLoading(false);
         }
       }
@@ -400,7 +400,7 @@ const QuestionCard = ({
         const isEmptyQuestion = params.answer.selected.some((item) => item.question.trim() === '');
 
         if (isEmptyQuestion) {
-          showToast('warning', 'optionBlank')
+          showToast('warning', 'optionBlank');
           setLoading(false);
           return;
         }

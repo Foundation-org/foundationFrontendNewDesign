@@ -101,7 +101,7 @@ const TreasurySummary = () => {
             </div>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/treasury/reward-schedule')}>
+            <Button variant={'submit'} onClick={() => navigate('/treasury/reward-schedule')}>
               View all
             </Button>
           </div>
@@ -135,7 +135,7 @@ const TreasurySummary = () => {
             </p>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/treasury/buy-fdx')}>
+            <Button variant={'submit'} onClick={() => navigate('/treasury/buy-fdx')}>
               Buy more FDX
             </Button>
           </div>
@@ -183,7 +183,7 @@ const TreasurySummary = () => {
             </div>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/treasury/redemption-center')}>
+            <Button variant={'submit'} onClick={() => navigate('/treasury/redemption-center')}>
               Redemption Center
             </Button>
           </div>

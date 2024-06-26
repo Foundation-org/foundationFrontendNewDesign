@@ -150,7 +150,7 @@ const FilterContainer = (props) => {
 export default function Ratings({ handleClose, modalVisible, selectedOptions, setSelectedOptions, setFilters }) {
   const location = useLocation();
   let filtersActions;
-  if (location.pathname === '/dashboard/bookmark') {
+  if (location.pathname === '/bookmark') {
     filtersActions = bookmarkFiltersActions;
   } else {
     filtersActions = homeFilterActions;

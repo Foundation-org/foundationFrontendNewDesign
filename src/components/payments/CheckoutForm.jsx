@@ -94,7 +94,7 @@ export default function CheckoutForm({ handleClose, triggerPulse }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${import.meta.env.VITE_FRONTEND_URL}/dashboard/treasury/buy-fdx`,
+        return_url: `${import.meta.env.VITE_FRONTEND_URL}/treasury/buy-fdx`,
       },
     });
 

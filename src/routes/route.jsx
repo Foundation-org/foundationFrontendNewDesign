@@ -20,11 +20,10 @@ import QuestStartSection from '../pages/Dashboard/pages/QuestStartSection';
 import DashboardRedirect from '../pages/DashboardRedirect';
 import VerifyCode from '../pages/Signup/VerifyCode';
 import BadgeVerifyCode from '../pages/Signup/BadgeVerifyCode';
-import TermOfService from '../pages/Signup/pages/TermOfService';
-import PrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 import About from '../pages/Dashboard/pages/CustomerSupport/About';
 import Faq from '../pages/Dashboard/pages/CustomerSupport/Faq';
 import TermsOfService from '../pages/Dashboard/pages/CustomerSupport/TermsOfService';
+import PrivacyPolicy from '../pages/Dashboard/pages/CustomerSupport/PrivacyPolicy';
 import ContactUs from '../pages/Dashboard/pages/CustomerSupport/ContactUs';
 import CustomerSupport from '../pages/Dashboard/pages/CustomerSupport';
 import GuestRedirect from '../pages/DashboardRedirect/GuestRedirect';
@@ -39,6 +38,7 @@ import Lists from '../pages/Dashboard/pages/Lists';
 import PostsByList from '../pages/Dashboard/pages/Lists/PostsByList';
 import SharedListResults from '../pages/Dashboard/pages/Lists/SharedListResults';
 import Summary from '../pages/Dashboard/pages/Profile/pages/summary';
+import TermOfService from '../pages/Signup/pages/TermOfService';
 // QUESTS
 import Quest from '../pages/Dashboard/pages/Quest/Quest';
 import YesNo from '../pages/Dashboard/pages/Quest/pages/YesNo';
@@ -56,6 +56,7 @@ import RedemptionCenter from '../pages/Dashboard/pages/Treasury/pages/Redemption
 import Ledger from '../pages/Dashboard/pages/Treasury/pages/Ledger';
 // TEST
 import Test from '../components/Test';
+import SignUpPrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -69,7 +70,9 @@ export function Router() {
     <>
       {!persistedUser?.uuid ? (
         <Routes>
-          <Route path="/" element={<GuestRedirect />} />
+          <Route path="/" element={<GuestRedirect redirectUrl="/help/about" />} />
+          <Route path="/term-of-service" element={<TermOfService />} />
+          <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} />
           <Route path="/signin/" element={<Signin />}>
             <Route path="credentials" element={<CredentialLogin />} />
           </Route>
@@ -80,29 +83,19 @@ export function Router() {
           <Route path="/auth0" element={<DashboardRedirect />} />
           <Route path="/p/:id" element={<GuestRedirect />} />
           <Route path="/l/:id" element={<GuestRedirect />} />
-          <Route
-            path="/dashboard/treasury/:code"
-            element={<Navigate to="/" state={{ from: '/dashboard/treasury/:code' }} />}
-          />
+          <Route path="/treasury/:code" element={<Navigate to="/" state={{ from: '/treasury/:code' }} />} />
           <Route path="*" element={<Navigate to="/signin" />} />
         </Routes>
       ) : (
         <Routes>
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
-            <Route
-              path="/help"
-              element={persistedUser?.role === 'user' ? <Navigate to="/dashboard" /> : <GuestCustomerSupport />}
-            >
-              <Route path="about" element={<About />} />
-              <Route path="faq" element={<Faq />} />
-              <Route path="contact-us" element={<ContactUs />} />
-            </Route>
             <Route path="/term-of-service" element={<TermOfService />} />
+            <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} />
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/test" element={<Test />} />
-            <Route path="/dashboard/" element={<Dashboard />}>
+            <Route path="/" element={<Dashboard />}>
               <Route path="" element={<QuestStartSection />} />
-              <Route path="help" element={<CustomerSupport />}>
+              <Route path="help/" element={<CustomerSupport />}>
                 <Route path="about" element={<About />} />
                 <Route path="faq" element={<Faq />} />
                 <Route path="terms-of-service" element={<TermsOfService />} />
@@ -155,13 +148,13 @@ export function Router() {
             <Route path="/guest-signup" element={<Signup />}>
               <Route path="credentials" element={<CredentialRegister />} />
             </Route>
-            <Route path="/signin/" element={persistedUser?.role === 'user' ? <Navigate to="/dashboard" /> : <Signin />}>
+            <Route path="/signin/" element={persistedUser?.role === 'user' ? <Navigate to="/" /> : <Signin />}>
               <Route path="credentials" element={<CredentialLogin />} />
             </Route>
             <Route path="/verifycode" element={<VerifyCode />} />
             <Route
               path="*"
-              element={persistedUser?.role === 'user' ? <Navigate to="/dashboard" /> : <Navigate to={'/help/about'} />}
+              element={persistedUser?.role === 'user' ? <Navigate to="/" /> : <Navigate to={'/help/about'} />}
             />
           </Route>
         </Routes>

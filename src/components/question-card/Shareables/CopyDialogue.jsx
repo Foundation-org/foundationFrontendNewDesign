@@ -245,7 +245,7 @@ const CopyDialogue = ({ handleClose, questStartData }) => {
               <Button
                 variant={'submit'}
                 className={'w-fit min-w-fit whitespace-nowrap'}
-                onClick={() => navigate('/dashboard/profile/shared-links')}
+                onClick={() => navigate('/profile/shared-links')}
               >
                 Manage My Shared Links
               </Button>

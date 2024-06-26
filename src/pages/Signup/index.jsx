@@ -152,7 +152,7 @@ export default function Signup() {
   //       localStorage.setItem('uuid', res.data.uuid);
   //       localStorage.setItem('userData', JSON.stringify(res.data));
   //       localStorage.removeItem('isGuestMode');
-  //       navigate('/dashboard');
+  //       navigate('/');
   //     }
   //   } catch (error) {
   //     toast.error(error.response.data.message.split(':')[1]);
@@ -171,7 +171,7 @@ export default function Signup() {
   //       localStorage.setItem('uuid', res.data.uuid);
   //       localStorage.setItem('userData', JSON.stringify(res.data));
   //       localStorage.removeItem('isGuestMode');
-  //       navigate('/dashboard');
+  //       navigate('/');
   //     }
   //   } catch (error) {
   //     toast.error(error.response.data.message.split(':')[1]);
@@ -232,12 +232,12 @@ export default function Signup() {
         // localStorage.setItem('userLoggedIn', res.data.uuid);
         // localStorage.removeItem('isGuestMode');
         // localStorage.setItem('jwt', res.data.token);
-        // navigate('/dashboard');
+        // navigate('/');
         localStorage.setItem('uuid', res.data.uuid);
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
@@ -257,7 +257,7 @@ export default function Signup() {
         localStorage.setItem('userLoggedIn', res.data.uuid);
         localStorage.removeItem('isGuestMode');
         localStorage.setItem('jwt', res.data.token);
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
@@ -275,7 +275,7 @@ export default function Signup() {
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
 
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
@@ -294,7 +294,7 @@ export default function Signup() {
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);

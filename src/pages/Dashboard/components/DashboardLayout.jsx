@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { GrClose } from 'react-icons/gr';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -118,7 +117,7 @@ export default function DashboardLayout({ children }) {
         localStorage.removeItem('isGuestMode');
         localStorage.setItem('jwt', res.data.token);
         queryClient.invalidateQueries(['userInfo']);
-        navigate('/dashboard');
+        navigate('/');
       }
     } catch (error) {
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
@@ -223,7 +222,7 @@ export default function DashboardLayout({ children }) {
       <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between laptop:flex-row">
         {/* Mobile TopBar */}
         <div className="flex h-[43px] min-h-[43px] items-center justify-between bg-[#DEE6F7] px-4 tablet:h-[80px] tablet:pr-[3.25rem] laptop:hidden">
-          <div className="h-fit rounded-[15px]" onClick={() => navigate('/dashboard/treasury')}>
+          <div className="h-fit rounded-[15px]" onClick={() => navigate('/treasury')}>
             {persistedUserInfo?.role !== 'user' ? (
               <div className="flex cursor-pointer items-center gap-2">
                 <div className="relative h-fit w-fit">
@@ -245,11 +244,11 @@ export default function DashboardLayout({ children }) {
               </div>
             ) : (
               <>
-                {!location.pathname?.startsWith('/dashboard/treasury') ? (
+                {!location.pathname?.startsWith('/treasury') ? (
                   <div
                     className="flex cursor-pointer items-center gap-2"
                     onClick={() => {
-                      navigate('/dashboard/profile');
+                      navigate('/profile');
                     }}
                   >
                     <div className="relative flex items-center justify-center">
@@ -273,7 +272,7 @@ export default function DashboardLayout({ children }) {
                   <div
                     className="flex cursor-pointer items-center gap-2"
                     onClick={() => {
-                      navigate('/dashboard/treasury');
+                      navigate('/treasury');
                     }}
                   >
                     <img
@@ -292,36 +291,36 @@ export default function DashboardLayout({ children }) {
               </>
             )}
           </div>
-          {!location.pathname.startsWith('/dashboard/help/') &&
-            location.pathname !== '/dashboard/profile' &&
-            location.pathname !== '/dashboard/profile/ledger' &&
-            location.pathname !== '/dashboard/profile/hidden-posts' &&
-            location.pathname !== '/dashboard/profile/shared-links' &&
-            location.pathname !== '/dashboard/profile/user-settings' &&
-            location.pathname !== '/dashboard/profile/post-activity' &&
-            location.pathname !== '/dashboard/profile/verification-badges' &&
-            location.pathname !== '/dashboard/profile/lists' &&
-            location.pathname !== '/dashboard/profile/feedback' &&
-            !location.pathname.startsWith('/dashboard/quest') &&
-            location.pathname !== '/dashboard/treasury' &&
-            location.pathname !== '/dashboard/treasury/reward-schedule' &&
-            location.pathname !== '/dashboard/treasury/buy-fdx' &&
-            location.pathname !== '/dashboard/treasury/redemption-center' &&
-            location.pathname !== '/dashboard/treasury/ledger' && (
+          {!location.pathname.startsWith('/help/') &&
+            location.pathname !== '/profile' &&
+            location.pathname !== '/profile/ledger' &&
+            location.pathname !== '/profile/hidden-posts' &&
+            location.pathname !== '/profile/shared-links' &&
+            location.pathname !== '/profile/user-settings' &&
+            location.pathname !== '/profile/post-activity' &&
+            location.pathname !== '/profile/verification-badges' &&
+            location.pathname !== '/profile/lists' &&
+            location.pathname !== '/profile/feedback' &&
+            !location.pathname.startsWith('/quest') &&
+            location.pathname !== '/treasury' &&
+            location.pathname !== '/treasury/reward-schedule' &&
+            location.pathname !== '/treasury/buy-fdx' &&
+            location.pathname !== '/treasury/redemption-center' &&
+            location.pathname !== '/treasury/ledger' && (
               <>
                 {persistedUserInfo?.role === 'user' && location.pathname !== '/' ? (
                   <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
                     <Button
                       variant="hollow-submit2"
                       className="bg-white tablet:w-full"
-                      onClick={() => navigate('/dashboard/quest')}
+                      onClick={() => navigate('/quest')}
                     >
                       Create Post
                     </Button>
                     <Button
                       variant="hollow-submit2"
                       className="bg-white tablet:w-full"
-                      onClick={() => navigate('/dashboard/profile/verification-badges')}
+                      onClick={() => navigate('/profile/verification-badges')}
                     >
                       Add Badge
                     </Button>
@@ -334,12 +333,12 @@ export default function DashboardLayout({ children }) {
               </>
             )}
 
-          {/* {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/dashboard/profile') && (
+          {/* {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/profile') && (
             <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
               <Button
                 variant="hollow-submit2"
                 className="bg-white tablet:w-full"
-                onClick={() => navigate('/dashboard/treasury')}
+                onClick={() => navigate('/treasury')}
               >
                 Treasury
               </Button>
@@ -347,12 +346,12 @@ export default function DashboardLayout({ children }) {
           )} */}
 
           {/*
-          {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/dashboard/treasury') && (
+          {persistedUserInfo?.role === 'user' && location.pathname.startsWith('/treasury') && (
             <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
               <Button
                 variant="hollow-submit2"
                 className="bg-white tablet:w-full"
-                onClick={() => navigate('/dashboard/profile')}
+                onClick={() => navigate('/profile')}
               >
                 My Profile
               </Button>
@@ -364,7 +363,7 @@ export default function DashboardLayout({ children }) {
         <div className="left-0 top-0 hidden tablet:block laptop:absolute">
           <div
             className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] cursor-pointer rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]"
-            onClick={() => navigate('/dashboard/treasury')}
+            onClick={() => navigate('/treasury')}
           >
             <div className="flex items-center gap-[15px]">
               <img
@@ -381,53 +380,53 @@ export default function DashboardLayout({ children }) {
             </div>
           </div>
 
-          {!location.pathname.startsWith('/dashboard/quest') &&
-            location.pathname !== '/dashboard/profile' &&
-            location.pathname !== '/dashboard/profile/ledger' &&
-            location.pathname !== '/dashboard/profile/hidden-posts' &&
-            location.pathname !== '/dashboard/profile/shared-links' &&
-            location.pathname !== '/dashboard/profile/user-settings' &&
-            location.pathname !== '/dashboard/profile/feedback' &&
-            location.pathname !== '/dashboard/profile/post-activity' &&
-            location.pathname !== '/dashboard/treasury' &&
-            location.pathname !== '/dashboard/treasury/reward-schedule' &&
-            location.pathname !== '/dashboard/treasury/buy-fdx' &&
-            location.pathname !== '/dashboard/treasury/redemption-center' &&
-            location.pathname !== '/dashboard/treasury/ledger' &&
+          {!location.pathname.startsWith('/quest') &&
+            location.pathname !== '/profile' &&
+            location.pathname !== '/profile/ledger' &&
+            location.pathname !== '/profile/hidden-posts' &&
+            location.pathname !== '/profile/shared-links' &&
+            location.pathname !== '/profile/user-settings' &&
+            location.pathname !== '/profile/feedback' &&
+            location.pathname !== '/profile/post-activity' &&
+            location.pathname !== '/treasury' &&
+            location.pathname !== '/treasury/reward-schedule' &&
+            location.pathname !== '/treasury/buy-fdx' &&
+            location.pathname !== '/treasury/redemption-center' &&
+            location.pathname !== '/treasury/ledger' &&
             location.pathname !== '/quest/isfullscreen' &&
             location.pathname !== '/shared-links/result' &&
-            !location.pathname.startsWith('/dashboard/help/') &&
+            !location.pathname.startsWith('/help/') &&
             location.pathname !== '/help/about' &&
             location.pathname !== '/help/faq' &&
             location.pathname !== '/help/contact-us' &&
             !location.pathname.startsWith('/p/') &&
             !location.pathname.startsWith('/l/') &&
-            !location.pathname.startsWith('/dashboard/profile/postsbylist/') &&
+            !location.pathname.startsWith('/profile/postsbylist/') &&
             location.pathname !== '/shared-list-link/result' &&
-            location.pathname !== '/dashboard/profile/verification-badges' &&
-            location.pathname !== '/dashboard/profile/lists' && <SidebarLeft />}
+            location.pathname !== '/profile/verification-badges' &&
+            location.pathname !== '/profile/lists' && <SidebarLeft />}
 
-          {location.pathname !== '/dashboard/treasury' &&
-            location.pathname !== '/dashboard/treasury/reward-schedule' &&
-            location.pathname !== '/dashboard/treasury/buy-fdx' &&
-            location.pathname !== '/dashboard/treasury/redemption-center' &&
-            location.pathname !== '/dashboard/treasury/ledger' &&
-            !location.pathname.startsWith('/dashboard/help/') &&
-            // location.pathname !== '/dashboard/quest' &&
-            !location.pathname.startsWith('/dashboard/quest') &&
-            location.pathname !== '/dashboard/profile' &&
-            location.pathname !== '/dashboard/profile/ledger' &&
-            location.pathname !== '/dashboard/profile/hidden-posts' &&
-            location.pathname !== '/dashboard/profile/shared-links' &&
-            location.pathname !== '/dashboard/profile/user-settings' &&
-            location.pathname !== '/dashboard/profile/post-activity' &&
-            location.pathname !== '/dashboard/profile/feedback' &&
+          {location.pathname !== '/treasury' &&
+            location.pathname !== '/treasury/reward-schedule' &&
+            location.pathname !== '/treasury/buy-fdx' &&
+            location.pathname !== '/treasury/redemption-center' &&
+            location.pathname !== '/treasury/ledger' &&
+            !location.pathname.startsWith('/help/') &&
+            // location.pathname !== '/quest' &&
+            !location.pathname.startsWith('/quest') &&
+            location.pathname !== '/profile' &&
+            location.pathname !== '/profile/ledger' &&
+            location.pathname !== '/profile/hidden-posts' &&
+            location.pathname !== '/profile/shared-links' &&
+            location.pathname !== '/profile/user-settings' &&
+            location.pathname !== '/profile/post-activity' &&
+            location.pathname !== '/profile/feedback' &&
             location.pathname !== '/shared-list-link/result' &&
-            !location.pathname.startsWith('/dashboard/profile/postsbylist/') &&
-            location.pathname !== '/dashboard/profile/verification-badges' &&
-            location.pathname !== '/dashboard/profile/lists' && <SideNavbar />}
+            !location.pathname.startsWith('/profile/postsbylist/') &&
+            location.pathname !== '/profile/verification-badges' &&
+            location.pathname !== '/profile/lists' && <SideNavbar />}
 
-          {questUtilsState.isShowPlayer && location.pathname === '/dashboard' && (
+          {questUtilsState.isShowPlayer && location.pathname === '/' && (
             <div className="ml-[31px] mt-[30px] hidden max-w-[285px] laptop:block">
               <div className="relative">
                 <img
@@ -444,10 +443,10 @@ export default function DashboardLayout({ children }) {
             </div>
           )}
 
-          {/* {canAddPost !== 'true' && location.pathname.startsWith('/dashboard/profile/postsbylist/') && <ManageList />} */}
+          {/* {canAddPost !== 'true' && location.pathname.startsWith('/profile/postsbylist/') && <ManageList />} */}
 
           {/* HiddenPost Search */}
-          {location.pathname === '/dashboard/profile/hidden-posts' && questUtils.areHiddenPosts && (
+          {location.pathname === '/profile/hidden-posts' && questUtils.areHiddenPosts && (
             <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
@@ -488,7 +487,7 @@ export default function DashboardLayout({ children }) {
           )}
 
           {/* SharedLinks Search */}
-          {location.pathname === '/dashboard/profile/shared-links' && questUtils.areShareLinks && (
+          {location.pathname === '/profile/shared-links' && questUtils.areShareLinks && (
             <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
@@ -529,7 +528,7 @@ export default function DashboardLayout({ children }) {
           )}
 
           {/* Feedback Search */}
-          {location.pathname === '/dashboard/profile/feedback' && questUtils.areFeedBackPosts && (
+          {location.pathname === '/profile/feedback' && questUtils.areFeedBackPosts && (
             <div className="my-[15px] ml-[31px] hidden h-fit w-[18.75rem] min-w-[18.75rem] rounded-[15px] bg-white py-[23px] pl-[1.3rem] pr-[2.1rem] laptop:block dark:bg-[#000]">
               <div className="relative">
                 <div className="relative h-[45px] w-full">
@@ -596,7 +595,7 @@ export default function DashboardLayout({ children }) {
               <div
                 className="flex cursor-pointer items-center gap-[15px]"
                 onClick={() => {
-                  navigate('/dashboard/profile');
+                  navigate('/profile');
                 }}
               >
                 <div className="relative flex size-[47px] items-center justify-center">
@@ -621,22 +620,22 @@ export default function DashboardLayout({ children }) {
             )}
           </div>
 
-          {!location.pathname.startsWith('/dashboard/quest') &&
-            location.pathname !== '/dashboard/profile/ledger' &&
-            location.pathname !== '/dashboard/profile/post-activity' &&
-            location.pathname !== '/dashboard/treasury' &&
-            location.pathname !== '/dashboard/treasury/reward-schedule' &&
-            location.pathname !== '/dashboard/treasury/buy-fdx' &&
-            location.pathname !== '/dashboard/treasury/redemption-center' &&
-            location.pathname !== '/dashboard/treasury/ledger' &&
-            !location.pathname.startsWith('/dashboard/help/') &&
+          {!location.pathname.startsWith('/quest') &&
+            location.pathname !== '/profile/ledger' &&
+            location.pathname !== '/profile/post-activity' &&
+            location.pathname !== '/treasury' &&
+            location.pathname !== '/treasury/reward-schedule' &&
+            location.pathname !== '/treasury/buy-fdx' &&
+            location.pathname !== '/treasury/redemption-center' &&
+            location.pathname !== '/treasury/ledger' &&
+            !location.pathname.startsWith('/help/') &&
             location.pathname !== '/help/about' &&
             location.pathname !== '/help/faq' &&
             location.pathname !== '/help/contact-us' && <SummarySidebar userData={userInfoData?.data} />}
         </div>
       </div>
       {/* Mobile Children */}
-      {/* {(location.pathname === '/dashboard/treasury' || location.pathname === '/dashboard/treasury/ledger') && children} */}
+      {/* {(location.pathname === '/treasury' || location.pathname === '/treasury/ledger') && children} */}
     </div>
   );
 }

@@ -10,7 +10,7 @@ export default function Signup() {
   const persistedTheme = useSelector((state) => state.utils.theme);
 
   useEffect(() => {
-    if (location.state?.from === '/dashboard/treasury/:code' && !localStorage.getItem('guestWelcome')) {
+    if (location.state?.from === '/treasury/:code' && !localStorage.getItem('guestWelcome')) {
       localStorage.setItem('guestWelcome', 'true');
       toast.warning('To radeem this code, please create an account.');
     }

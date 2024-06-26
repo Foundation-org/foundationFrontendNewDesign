@@ -21,7 +21,7 @@ const CredentialLogin = () => {
   const [password, setPassword] = useState('');
   const [capthaToken, setCaptchaToken] = useState('');
   const [uuid, setUuid] = useState();
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onEmailChange = (e) => {
@@ -55,11 +55,10 @@ const CredentialLogin = () => {
       // if (recaptchaResp.success) {
       // if (capthaToken !== '') {
       if (capthaToken === '') {
-
         const resp = await userSignin({ email, password });
         if (resp.status === 200) {
           if (resp.data.isPasswordEncryption) {
-            setIsLoading(false)
+            setIsLoading(false);
             setUuid(resp.data.uuid);
             await handleOpenPasswordConfirmation();
           } else {
@@ -69,31 +68,28 @@ const CredentialLogin = () => {
             localStorage.setItem('userData', JSON.stringify(resp.data));
             localStorage.setItem('uuid', resp.data.uuid);
             dispatch(addUser(resp.data));
-            navigate('/dashboard');
+
+            navigate('/');
           }
         }
       } else {
-        showToast('warning', 'recaptaFailed')
+        showToast('warning', 'recaptaFailed');
       }
-
     } catch (e) {
       if (e.response.data === 'Wrong Password') {
         showToast('error', 'incorrectTypedPassword');
-        setIsLoading(false)
+        setIsLoading(false);
       } else if (
         e.response.data.message === 'An error occurred while signInUser Auth: data and hash arguments required'
       ) {
         showToast('error', 'incorrectTypedPassword');
-        setIsLoading(false)
-
+        setIsLoading(false);
       } else if (e.response.data.message === 'An error occurred while signInUser Auth: User not Found') {
-        showToast('error', 'userNotFound')
-        setIsLoading(false)
-
+        showToast('error', 'userNotFound');
+        setIsLoading(false);
       } else {
-        showToast('error', 'error', {}, error.response.data.message.split(':')[1])
-        setIsLoading(false)
-
+        showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+        setIsLoading(false);
       }
     }
     // finally {
@@ -217,7 +213,7 @@ const CredentialLogin = () => {
         size="large"
         color="blue-200"
         onClick={() => {
-          setIsLoading(true)
+          setIsLoading(true);
           handleSignin();
         }}
         disabled={(isLoading === true ? true : false) || !email || !password}

@@ -29,7 +29,7 @@ const SummarySidebar = ({ userData }) => {
             </div>
           ))}
           <Link
-            to={'/dashboard/profile/feedback'}
+            to={'/profile/feedback'}
             className="font-noraml cursor-pointer text-[14px] leading-[121.4%] text-[#4A8DBD] hover:underline tablet:-mt-3"
           >
             See why your posts were
@@ -48,7 +48,7 @@ const SummarySidebar = ({ userData }) => {
             </div>
           ))}
           <Link
-            to={'/dashboard/profile/hidden-posts'}
+            to={'/profile/hidden-posts'}
             className="font-noraml cursor-pointer text-[14px] leading-[121.4%] text-[#4A8DBD] hover:underline tablet:-mt-3"
           >
             View posts you’ve hidden

@@ -42,11 +42,13 @@ const LikeDislike = () => {
     onSuccess: (resp) => {
       if (resp.status === 201) {
         setTimeout(() => {
-          if (filterStates?.moderationRatingFilter?.initial === 0 &&
-            filterStates?.moderationRatingFilter?.final === 0) {
+          if (
+            filterStates?.moderationRatingFilter?.initial === 0 &&
+            filterStates?.moderationRatingFilter?.final === 0
+          ) {
             dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
           }
-          navigate('/dashboard');
+          navigate('/');
           queryClient.invalidateQueries(['userInfo']);
           setLoading(false);
           setChangedOption('');
@@ -60,7 +62,7 @@ const LikeDislike = () => {
     },
     onError: (err) => {
       if (err.response) {
-        showToast('error', 'error', {}, err.response.data.message.split(':')[1])
+        showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
         setChangedOption('');
         setChangeState(false);
       }
@@ -101,7 +103,7 @@ const LikeDislike = () => {
     }
 
     if (createQuestSlice.question === '') {
-      return showToast('warning', 'emptyPost')
+      return showToast('warning', 'emptyPost');
     }
 
     // getTopicOfValidatedQuestion
@@ -110,7 +112,7 @@ const LikeDislike = () => {
     });
     // If any error captured
     if (errorMessage) {
-      return showToast('error', 'somethingWrong')
+      return showToast('error', 'somethingWrong');
     }
     // ModerationRatingCount
     const moderationRating = await questServices.moderationRating({
@@ -118,10 +120,10 @@ const LikeDislike = () => {
     });
     // If found null
     if (!moderationRating) {
-      return showToast('error', 'somethingWrong')
+      return showToast('error', 'somethingWrong');
     }
     if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return showToast('warning', 'emptyPostDescription')
+      return showToast('warning', 'emptyPostDescription');
     }
 
     const params = {

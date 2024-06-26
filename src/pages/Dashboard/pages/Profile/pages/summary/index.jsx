@@ -51,7 +51,7 @@ const Summary = () => {
             more FDX while you’re at it!
           </h1>
           <div className="mt-3 flex w-full justify-center tablet:mt-5">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/verification-badges')}>
+            <Button variant={'submit'} onClick={() => navigate('/profile/verification-badges')}>
               Add badge
             </Button>
           </div>
@@ -90,7 +90,7 @@ const Summary = () => {
             </div>
           </div>
           <div className="my-3 flex w-full justify-center tablet:my-5 ">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/post-activity')}>
+            <Button variant={'submit'} onClick={() => navigate('/profile/post-activity')}>
               View all post activity
             </Button>
           </div>
@@ -109,7 +109,7 @@ const Summary = () => {
             </div>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/hidden-posts')}>
+            <Button variant={'submit'} onClick={() => navigate('/profile/hidden-posts')}>
               View hidden posts
             </Button>
           </div>
@@ -151,7 +151,7 @@ const Summary = () => {
             </div>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/feedback')}>
+            <Button variant={'submit'} onClick={() => navigate('/profile/feedback')}>
               View all post feedback
             </Button>
           </div>
@@ -201,7 +201,7 @@ const Summary = () => {
             </div>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/shared-links')}>
+            <Button variant={'submit'} onClick={() => navigate('/profile/shared-links')}>
               View all shared posts
             </Button>
           </div>
@@ -250,7 +250,7 @@ const Summary = () => {
             </div>
           </div>
           <div className="mt-3 flex w-full justify-center tablet:mt-5 ">
-            <Button variant={'submit'} onClick={() => navigate('/dashboard/profile/lists')}>
+            <Button variant={'submit'} onClick={() => navigate('/profile/lists')}>
               View all shared lists
             </Button>
           </div>
@@ -259,13 +259,13 @@ const Summary = () => {
       {/* Other Links */}
       <div className="mt-[2px] flex w-full flex-col gap-3 tablet:gap-[15px]">
         <Link
-          to="/dashboard/profile/user-settings"
+          to="/profile/user-settings"
           className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline tablet:text-[16px]"
         >
           User Settings {'>'}
         </Link>
         <Link
-          to="/dashboard/profile/ledger"
+          to="/profile/ledger"
           className="text-[12px] font-medium leading-normal text-[#4A8DBD] hover:underline tablet:text-[16px]"
         >
           My Activity {'>'}

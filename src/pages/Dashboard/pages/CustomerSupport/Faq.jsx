@@ -17,12 +17,12 @@ const Faq = () => {
   };
 
   return (
-    <div className="no-scrollbar h-[calc(100dvh-98px)]  w-full overflow-scroll overflow-y-auto bg-white text-[#707175] tablet:h-[calc(100dvh-96px)] laptop:h-[calc(100dvh-70px)]">
+    <div className="no-scrollbar h-[calc(100dvh-98px)] w-full overflow-scroll overflow-y-auto bg-white text-[#707175] tablet:h-[calc(100dvh-96px)] tablet:rounded-t-[0.86513rem] laptop:h-[calc(100dvh-70px)]">
       <h1 className="mx-[1.13rem] my-[0.94rem] text-[14px] font-semibold leading-none -tracking-[2%] tablet:mx-[35px] tablet:my-6 tablet:text-[25px]">
         General
       </h1>
       {faqData.map((item) => (
-        <div>
+        <div key={item.id}>
           <button
             key={item.id}
             className={`${openItems.includes(item.id) ? 'border-y-[0.5px] tablet:border-y' : 'border-t-[0.5px] tablet:border-t'} flex w-full items-center gap-[5px] border-black px-[1.13rem]`}
@@ -55,7 +55,7 @@ const Faq = () => {
         Posting and features
       </h1>
       {faqData2.map((item) => (
-        <div>
+        <div key={item.id}>
           <button
             key={item.id}
             className={`${openItems.includes(item.id) ? 'border-y-[0.5px] tablet:border-y' : 'border-t-[0.5px] tablet:border-t'} flex w-full items-center gap-[5px] border-black px-[1.13rem]`}
@@ -103,11 +103,7 @@ const Faq = () => {
         <button
           className="w-48 rounded-[0.31rem] bg-white py-[0.6rem] text-center text-[0.75rem] font-semibold text-[#4A8DBD] tablet:w-[24.3rem] tablet:rounded-[0.75rem] tablet:py-3 tablet:text-[1.25rem]"
           onClick={() => {
-            if (persistedUserInfo.role === 'user') {
-              navigate('/dashboard/help/contact-us');
-            } else {
-              navigate('/help/contact-us');
-            }
+            navigate('/help/contact-us');
           }}
         >
           Contact Us
