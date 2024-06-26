@@ -198,7 +198,7 @@ export const LoginSocialLinkedin = ({
     const height = 730;
     const left = window.screen.width / 2 - width / 2;
     const top = window.screen.height / 2 - height / 2;
-    window.open(
+    const popup = window.open(
       oauthUrl,
       'Linkedin',
       'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' +
@@ -210,7 +210,14 @@ export const LoginSocialLinkedin = ({
       ', left=' +
       left,
     );
-  }, [onLoginStart, onChangeLocalStorage, response_type, client_id, scope, state, redirect_uri]);
+
+    const checkPopupClosed = setInterval(() => {
+      if (!popup || popup.closed) {
+        clearInterval(checkPopupClosed);
+        onReject('Popup closed without completing login.');
+      }
+    }, 1000);
+  }, [onLoginStart, response_type, client_id, scope, state, redirect_uri, onReject]);
 
   return (
     <div className={className} onClick={onLogin}>
