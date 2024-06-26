@@ -308,7 +308,7 @@ export default function DashboardLayout({ children }) {
             location.pathname !== '/treasury/redemption-center' &&
             location.pathname !== '/treasury/ledger' && (
               <>
-                {persistedUserInfo?.role === 'user' && location.pathname !== '/' ? (
+                {persistedUserInfo?.role === 'user' ? (
                   <div className="flex w-fit max-w-[18.75rem] items-center gap-[15px] tablet:ml-[31px] tablet:w-full tablet:justify-center laptop:flex-col">
                     <Button
                       variant="hollow-submit2"
