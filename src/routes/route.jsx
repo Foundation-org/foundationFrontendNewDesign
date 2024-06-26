@@ -109,13 +109,13 @@ export function Router() {
                 <Route path="privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="contact-us" element={<ContactUs />} />
               </Route>
-              <Route path="quest/" element={<Quest />}>
-                <Route path="" element={<YesNo />} />
+              <Route path="quest" element={<Quest />}>
+                <Route path="" element={<LikeDislike />} />
+                <Route path="agree-disagree" element={<AgreeDisagree />} />
+                <Route path="yes-no" element={<YesNo />} />
                 <Route path="multiple-choice" element={<MultipleChoice />} />
                 <Route path="open-choice" element={<OpenChoice />} />
                 <Route path="ranked-choice" element={<RankChoice />} />
-                <Route path="agree-disagree" element={<AgreeDisagree />} />
-                <Route path="like-dislike" element={<LikeDislike />} />
               </Route>
               <Route path="treasury/" element={<TreasuryLayout />}>
                 <Route path="" element={<TreasurySummary />} />
