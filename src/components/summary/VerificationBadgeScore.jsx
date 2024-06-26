@@ -51,8 +51,7 @@ export default function VerificationBadgeScore({ isMobile, children }) {
         <h1
           className={`text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal ${isMobile ? 'tablet:hidden' : ''}`}
         >
-          Have your data be more desirable for brands and research firms to purchase with more verified info and earn
-          more FDX while you’re at it!
+          Boost your earnings now and in the future by adding more verified badges to your profile.
         </h1>
         {location.pathname === '/profile' && (
           <div className="mt-3 flex w-full justify-center tablet:mt-5">
