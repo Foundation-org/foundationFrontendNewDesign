@@ -332,11 +332,13 @@ const QuestionCardWithToggle = (props) => {
       if (location.pathname.startsWith('/l/')) {
         updateCategoryParticipentsCount({ categoryLink: location.pathname.split('/')[2] });
       }
+      dispatch(questUtilsActions.resetaddOptionLimit());
     },
     onError: (err) => {
       console.log(err);
       showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       setLoading(false);
+      dispatch(questUtilsActions.resetaddOptionLimit());
     },
   });
 
@@ -367,10 +369,12 @@ const QuestionCardWithToggle = (props) => {
           ),
         }));
       }
+      dispatch(questUtilsActions.resetaddOptionLimit());
     },
     onError: (err) => {
       showToast('error', 'error', {}, err.response.data.message.split(':')[1]);
       setLoading(false);
+      dispatch(questUtilsActions.resetaddOptionLimit());
     },
   });
 
