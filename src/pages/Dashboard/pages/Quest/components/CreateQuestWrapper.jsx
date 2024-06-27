@@ -1,22 +1,30 @@
 import { Tooltip } from '../../../../../utils/Tooltip';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '../../../../../components/ui/Button';
-import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+// import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import AddMedia from './AddMedia';
 import AddPictures from './AddPictures';
 import AddPictureUrls from './AddPictureUrls';
 import { POST_QUESTION_CHAR_LIMIT } from '../../../../../constants/Values/constants';
+import { useRef } from 'react';
 
 export default function CreateQuestWrapper({ quest, type, handleTab, msg, children }) {
   const dispatch = useDispatch();
+  const textareaRef = useRef(null);
   const persistedTheme = useSelector((state) => state.utils.theme);
   const createQuestSlice = useSelector(createQuestAction.getCreate);
   const questionStatus = useSelector(createQuestAction.questionStatus);
   const getMediaStates = useSelector(createQuestAction.getMedia);
   const getPicMediaStates = useSelector(pictureMediaAction.getPicsMedia);
   const getPicsMediaStates = useSelector(createQuestAction.getPicsMedia);
+
+  const autoGrow = () => {
+    const element = textareaRef.current;
+    element.style.height = '5px';
+    element.style.height = `${element.scrollHeight}px`;
+  };
 
   const handleQuestionChange = (e) => {
     const inputValue = e.target.value;
@@ -34,8 +42,9 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
   return (
     <div>
       <div
-        className={`${persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
-          } mx-auto mb-[10px] max-w-[90%] rounded-[8.006px] bg-white py-3 tablet:mb-[15px] tablet:max-w-[730px] tablet:rounded-[39px] tablet:py-[27px] laptop:py-[25px] dark:bg-[#141618]`}
+        className={`${
+          persistedTheme === 'dark' ? 'border-[1px] border-[#858585] tablet:border-[2px]' : ''
+        } mx-auto mb-[10px] max-w-[90%] rounded-[8.006px] bg-white py-3 tablet:mb-[15px] tablet:max-w-[730px] tablet:rounded-[39px] tablet:py-[27px] laptop:py-[25px] dark:bg-[#141618]`}
       >
         <h1 className="text-center text-[10px] font-semibold leading-normal text-[#7C7C7C] tablet:text-[22.81px] laptop:text-[25px] laptop:leading-[25px] dark:text-[#D8D8D8]">
           Create a {type}
@@ -98,7 +107,26 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
         {/* <AddPictures /> */}
         <AddPictureUrls />
         <div className="w-[calc(100%-51.75px] mx-[30px] mb-[10px] mt-3 flex tablet:mx-[50px] tablet:mb-7 tablet:mt-[15px]">
-          <TextareaAutosize
+          <textarea
+            ref={textareaRef}
+            onInput={autoGrow}
+            id="input-2"
+            aria-label="multiple choice question"
+            onChange={handleQuestionChange}
+            onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
+            value={createQuestSlice.question}
+            placeholder={
+              quest === 'M/R' || quest === 'OpenChoice'
+                ? 'Make a statement or pose a question'
+                : quest === 'Statement'
+                  ? 'Make a statement'
+                  : 'Pose a question'
+            }
+            tabIndex={3}
+            onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(2, 'Enter'))}
+            className="box-border flex h-[27px] min-h-[27px] w-full resize-none items-center overflow-hidden rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:h-[51px] tablet:min-h-[51px] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:text-[18px] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+          />
+          {/* <TextareaAutosize
             id="input-2"
             aria-label="multiple choice question"
             onChange={handleQuestionChange}
@@ -114,7 +142,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             tabIndex={3}
             onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(2, 'Enter'))}
             className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
-          />
+          /> */}
           <button
             id="new"
             className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${questionStatus.color}`}
