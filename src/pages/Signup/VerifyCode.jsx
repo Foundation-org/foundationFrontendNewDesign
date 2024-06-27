@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { addUser } from '../../features/auth/authSlice';
 import { Button as UiButton } from '../../components/ui/Button';
 import showToast from '../../components/ui/Toast';
+import { setAskPassword } from '../../features/profile/userSettingSlice';
 
 const VerifyCode = () => {
   const navigate = useNavigate();
@@ -108,7 +109,7 @@ const VerifyCode = () => {
         showToast('success', 'emailVerified');
 
         // await handleUserInfo();
-
+        dispatch(setAskPassword(false));
         const data = await response.json();
         dispatch(addUser(data));
         localStorage.setItem('uuid', data.uuid);

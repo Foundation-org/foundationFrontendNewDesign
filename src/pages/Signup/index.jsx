@@ -27,6 +27,7 @@ import CredentialRegister from './components/CredentialRegister';
 import showToast from '../../components/ui/Toast';
 import { GithubAuthProvider, TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
 import { authentication } from '../Dashboard/pages/Profile/pages/firebase-config';
+import { setAskPassword } from '../../features/profile/userSettingSlice';
 
 const REDIRECT_URI = window.location.href;
 
@@ -107,7 +108,6 @@ export default function Signup() {
         if (facebookButton) {
           facebookButton.click();
           setIsLoadingSocial(true);
-
         }
       }
     }
@@ -126,7 +126,6 @@ export default function Signup() {
         if (facebookButton) {
           facebookButton.click();
           setIsLoadingSocial(true);
-
         }
       }
     }
@@ -200,7 +199,7 @@ export default function Signup() {
     } else {
       handleSignup();
     }
-
+    dispatch(setAskPassword(false));
     return;
     // }
   };
@@ -274,7 +273,7 @@ export default function Signup() {
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
-
+        dispatch(setAskPassword(false));
         navigate('/');
       }
     } catch (error) {
@@ -294,6 +293,7 @@ export default function Signup() {
         localStorage.setItem('userData', JSON.stringify(res.data));
         localStorage.removeItem('isGuestMode');
         dispatch(addUser(res.data));
+        dispatch(setAskPassword(false));
         navigate('/');
       }
     } catch (error) {
@@ -309,8 +309,9 @@ export default function Signup() {
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div
-        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${
+          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>
