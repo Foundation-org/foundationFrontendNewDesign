@@ -1,11 +1,19 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Tooltip } from '../../../../../utils/Tooltip';
-import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+// import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import * as createQuestAction from '../../../../../features/createQuest/createQuestSlice';
+import { useRef } from 'react';
 
 export default function AddPictures({ handleTab }) {
+  const textareaRef = useRef(null);
   const dispatch = useDispatch();
   const getMediaStates = useSelector(createQuestAction.getPicsMedia);
+
+  const autoGrow = () => {
+    const element = textareaRef.current;
+    element.style.height = '5px';
+    element.style.height = `${element.scrollHeight}px`;
+  };
 
   const urlVerification = async (value) => {
     if (getMediaStates.validatedPicUrl === value) return;
@@ -79,7 +87,21 @@ export default function AddPictures({ handleTab }) {
           </div> */}
           {getMediaStates.picUrlStatus.tooltipName !== 'Question is Verified' && (
             <div className="flex">
-              <TextareaAutosize
+              {/* <TextareaAutosize
+                id="input-1"
+                tabIndex={2}
+                onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(1, 'Enter'))}
+                onChange={(e) => {
+                  dispatch(createQuestAction.addPicUrl(e.target.value));
+                }}
+                onBlur={(e) => e.target.value.trim() !== '' && urlVerification(e.target.value.trim())}
+                value={getMediaStates.picUrl}
+                placeholder="Paste Flickr share link or url here..."
+                className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+              /> */}
+              <textarea
+                ref={textareaRef}
+                onInput={autoGrow}
                 id="input-1"
                 tabIndex={2}
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(1, 'Enter'))}

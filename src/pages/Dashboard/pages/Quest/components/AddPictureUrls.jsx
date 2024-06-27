@@ -4,12 +4,20 @@ import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { Button } from '../../../../../components/ui/Button';
 import Carousel from '../../../../../components/ui/Carousel';
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
+import { useRef } from 'react';
 
 export default function AddPictureUrls({ handleTab }) {
+  const textareaRef = useRef(null);
   const dispatch = useDispatch();
   const getPicMediaStates = useSelector(pictureMediaAction.getPicsMedia);
   const getUrlsOptions = useSelector(pictureMediaAction.pictureUrlValues);
   const getPictureUrls = useSelector(pictureMediaAction.validatedPicUrls);
+
+  const autoGrow = () => {
+    const element = textareaRef.current;
+    element.style.height = '5px';
+    element.style.height = `${element.scrollHeight}px`;
+  };
 
   const urlVerification = async (id, value, index) => {
     if (getUrlsOptions[index].validatedPicUrl === value) return;
@@ -70,7 +78,24 @@ export default function AddPictureUrls({ handleTab }) {
               item.picUrlStatus.tooltipName !== 'Answer is Verified' && (
                 <div key={item.id} className="flex w-full items-center justify-between">
                   <div className="flex w-full">
-                    <TextareaAutosize
+                    <textarea
+                      ref={textareaRef}
+                      onInput={autoGrow}
+                      id={item.id}
+                      value={item.picUrl}
+                      onChange={(e) => {
+                        dispatch(pictureMediaAction.addOptionById({ id: `index-${index}`, option: e.target.value }));
+                      }}
+                      tabIndex={index + 2}
+                      onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab(1, 'Enter'))}
+                      onBlur={(e) =>
+                        e.target.value.trim() !== '' && urlVerification(item.id, e.target.value.trim(), index)
+                      }
+                      placeholder="Paste Flickr share link or url here..."
+                      className="box-border flex h-[27px] min-h-[27px] w-full resize-none items-center overflow-hidden rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] py-[7px] pr-2 text-[0.625rem] font-normal leading-[0.625rem] text-[#7C7C7C] focus-visible:outline-none tablet:h-[51px] tablet:min-h-[51px] tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:text-[18px] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
+                    />
+
+                    {/* <TextareaAutosize
                       id={item.id}
                       value={item.picUrl}
                       onChange={(e) => {
@@ -83,7 +108,7 @@ export default function AddPictureUrls({ handleTab }) {
                       }
                       placeholder="Paste Flickr share link or url here..."
                       className="w-full resize-none rounded-l-[5.128px] border-y border-l border-[#DEE6F7] bg-white px-[9.24px] pb-2 pt-[7px] text-[0.625rem] font-medium leading-[13px] text-[#7C7C7C] focus-visible:outline-none tablet:rounded-l-[10.3px] tablet:border-y-[3px] tablet:border-l-[3px] tablet:px-[18px] tablet:py-[11.6px] tablet:text-[1.296rem] tablet:leading-[23px] laptop:rounded-l-[0.625rem] laptop:py-[13px] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] dark:text-[#7C7C7C]"
-                    />
+                    /> */}
                     <button
                       className={`relative rounded-r-[5.128px] border-y border-r border-[#DEE6F7] bg-white text-[0.5rem] font-semibold leading-none tablet:rounded-r-[10.3px] tablet:border-y-[3px] tablet:border-r-[3px] tablet:text-[1rem] laptop:rounded-r-[0.625rem] laptop:text-[1.25rem] dark:border-[#0D1012] dark:bg-[#0D1012] ${item.picUrlStatus.color}`}
                     >
