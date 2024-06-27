@@ -24,9 +24,7 @@ export default function BadgeRemovePopup({
   const queryClient = useQueryClient();
 
   const handleRemoveBadge = async () => {
-    // setIsLoading(true);
-    console.log(type);
-
+    setIsLoading(true);
     try {
       let removeBadge;
       if (badgeType === 'contact') {
@@ -85,6 +83,7 @@ export default function BadgeRemovePopup({
         setIsPersonalPopup(false);
       }
     } catch (error) {
+      setIsLoading(false);
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
   };

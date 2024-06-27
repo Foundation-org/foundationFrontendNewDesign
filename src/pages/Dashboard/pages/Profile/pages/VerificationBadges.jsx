@@ -39,6 +39,7 @@ const VerificationBadges = () => {
   const legacyPromiseRef = useRef();
   const persistedContants = useSelector(getConstantsValues);
   const getAskPasswordFromRedux = useSelector(getAskPassword);
+  const [socialRemoveLoading, setSocialRemoveLoading] = useState(false);
 
   const checkPrimary = (itemType) =>
     persistedUserInfo?.badges?.some((i) => i.accountName === itemType && i.primary === true);
@@ -225,6 +226,8 @@ const VerificationBadges = () => {
           type={deleteModalState?.type}
           badgeType={deleteModalState?.badgeType}
           fetchUser={persistedUserInfo}
+          setIsLoading={setSocialRemoveLoading}
+          loading={socialRemoveLoading}
         />
       )}
       <LegacyConfirmationPopup
@@ -365,9 +368,8 @@ const VerificationBadges = () => {
                 className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
               />
               <div
-                className={`${
-                  persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+                className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                  }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
               >
                 <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                   Linked In
@@ -393,6 +395,7 @@ const VerificationBadges = () => {
                           image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
                           accountName: 'linkedin',
                         });
+
                     }
                   }}
                   disabled={checkPrimary('linkedin')}
@@ -465,9 +468,9 @@ const VerificationBadges = () => {
                 >
                   <Button
                     variant={checkSocial('linkedin') ? 'verification-badge-remove' : 'submit'}
-                    // color={checkSocial('linkedin') ? 'red' : 'blue'}
-                    // disabled={true}
-                    // color="gray"
+                  // color={checkSocial('linkedin') ? 'red' : 'blue'}
+                  // disabled={true}
+                  // color="gray"
                   >
                     {checkSocial('linkedin') ? 'Remove' : 'Add'}
                     <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
@@ -682,9 +685,8 @@ const VerificationBadges = () => {
                 className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
               />
               <div
-                className={`${
-                  persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+                className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                  }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
               >
                 <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                   Github
