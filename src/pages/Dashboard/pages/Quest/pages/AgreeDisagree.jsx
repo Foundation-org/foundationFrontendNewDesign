@@ -40,21 +40,18 @@ const AgreeDisagree = () => {
     mutationFn: questServices.createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        setTimeout(() => {
-          if (
-            filterStates?.moderationRatingFilter?.initial === 0 &&
-            filterStates?.moderationRatingFilter?.final === 0
-          ) {
-            dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
-          }
-          navigate('/');
-          queryClient.invalidateQueries(['userInfo']);
-          setLoading(false);
-          setChangedOption('');
-          setChangeState(false);
-          dispatch(createQuestAction.resetCreateQuest());
-          dispatch(pictureMediaAction.resetToInitialState());
-        }, 500);
+        // setTimeout(() => {
+        if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
+          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+        }
+        navigate('/');
+        queryClient.invalidateQueries(['userInfo']);
+        setLoading(false);
+        setChangedOption('');
+        setChangeState(false);
+        dispatch(createQuestAction.resetCreateQuest());
+        dispatch(pictureMediaAction.resetToInitialState());
+        // }, 500);
       }
       queryClient.invalidateQueries('FeedData');
       queryClient.invalidateQueries('treasury');
@@ -265,7 +262,7 @@ const AgreeDisagree = () => {
           </div>
         ) : (
           <div className="pr-[30px] pt-2 tablet:pr-[50px] tablet:pt-[25px]">
-            <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()}>
+            <Button id="submitButton2" variant="submit" onClick={() => handleSubmit()} disabled={loading}>
               {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
               <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">
                 (-{persistedContants?.QUEST_CREATED_AMOUNT} FDX)

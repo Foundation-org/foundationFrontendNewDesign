@@ -46,21 +46,18 @@ const OpenChoice = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        setTimeout(() => {
-          if (
-            filterStates?.moderationRatingFilter?.initial === 0 &&
-            filterStates?.moderationRatingFilter?.final === 0
-          ) {
-            dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
-          }
-          navigate('/');
-          queryClient.invalidateQueries(['userInfo']);
-          setLoading(false);
-          dispatch(createQuestAction.resetCreateQuest());
-          dispatch(pictureMediaAction.resetToInitialState());
-        }, 500);
+        // setTimeout(() => {
+        if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
+          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+        }
+        navigate('/');
+        queryClient.invalidateQueries(['userInfo']);
+        dispatch(createQuestAction.resetCreateQuest());
+        dispatch(pictureMediaAction.resetToInitialState());
+        // }, 500);
       }
 
+      setLoading(false);
       queryClient.invalidateQueries('FeedData');
       queryClient.invalidateQueries('treasury');
     },
@@ -409,6 +406,7 @@ const OpenChoice = () => {
             variant="submit"
             onClick={() => handleSubmit()}
             className="mr-7 mt-[10px] tablet:mr-[50px] tablet:mt-[25px]"
+            disabled={loading}
           >
             {loading === true ? <FaSpinner className="animate-spin text-[#EAEAEA]" /> : 'Create'}
             <span className="pl-[5px] text-[7px] font-semibold leading-[1px]  tablet:pl-[10px] tablet:text-[13px]">

@@ -48,22 +48,17 @@ const MultipleChoice = () => {
     mutationFn: createInfoQuest,
     onSuccess: (resp) => {
       if (resp.status === 201) {
-        setTimeout(() => {
-          if (
-            filterStates?.moderationRatingFilter?.initial === 0 &&
-            filterStates?.moderationRatingFilter?.final === 0
-          ) {
-            dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
-          }
-          navigate('/');
-          queryClient.invalidateQueries(['userInfo']);
-          setLoading(false);
+        if (filterStates?.moderationRatingFilter?.initial === 0 && filterStates?.moderationRatingFilter?.final === 0) {
+          dispatch(addAdultFilterPopup({ rating: resp.data.moderationRatingCount }));
+        }
+        navigate('/');
+        queryClient.invalidateQueries(['userInfo']);
 
-          dispatch(createQuestAction.resetCreateQuest());
-          dispatch(pictureMediaAction.resetToInitialState());
-        }, 500);
+        dispatch(createQuestAction.resetCreateQuest());
+        dispatch(pictureMediaAction.resetToInitialState());
       }
 
+      setLoading(false);
       queryClient.invalidateQueries('FeedData');
       queryClient.invalidateQueries('treasury');
     },
