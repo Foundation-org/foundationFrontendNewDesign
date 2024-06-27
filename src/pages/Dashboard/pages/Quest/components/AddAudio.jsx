@@ -1,4 +1,3 @@
-import { toast } from 'sonner';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tooltip } from '../../../../../utils/Tooltip';
@@ -49,7 +48,7 @@ export default function AddAudio({ handleTab }) {
   useEffect(() => {
     // Check if the URL is a SoundCloud playlist
     if (getMediaStates.url?.includes(soundcloudUnique) && getMediaStates.url?.includes('/sets/')) {
-      showToast('error', 'soundCloudPlaylistNot')
+      showToast('error', 'soundCloudPlaylistNot');
       dispatch(createQuestAction.clearUrl());
       return;
     }
@@ -59,7 +58,7 @@ export default function AddAudio({ handleTab }) {
       youtubeBaseURLs.some((baseURL) => getMediaStates.url?.includes(baseURL)) &&
       getMediaStates.url.includes('list=')
     ) {
-      showToast('error', 'youtubePlaylistNot')
+      showToast('error', 'youtubePlaylistNot');
       dispatch(createQuestAction.clearUrl());
       return;
     }
@@ -89,7 +88,7 @@ export default function AddAudio({ handleTab }) {
       const urlId = extractPartFromUrl(value);
       dispatch(createQuestAction.checkIsUrlAlreayExists({ id: urlId, url: getMediaStates.url }));
     } else {
-      showToast('error', 'youtubeSoundCloudLinks')
+      showToast('error', 'youtubeSoundCloudLinks');
     }
   };
 

@@ -385,7 +385,7 @@ export const createQuestSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // check description status start
+    // check Video Description status
     builder.addCase(checkDescription.pending, (state, action) => {
       state.media.mediaDescStatus = {
         name: 'Checking',
@@ -409,46 +409,8 @@ export const createQuestSlice = createSlice({
       const { validatedQuestion, errorMessage } = action.payload;
       console.log('error', errorMessage);
       if (errorMessage) {
-        // if (errorMessage === 'DUPLICATION') {
-        //   state.media.desctiption = validatedQuestion;
-        //   state.media.validatedDescription = validatedQuestion;
-        //   // state.questions.questionTyping = false;
-        //   state.media.mediaDescStatus = {
-        //     name: 'Ok',
-        //     color: 'text-[#0FB063]',
-        //     tooltipName: 'Question is Verified',
-        //     tooltipStyle: 'tooltip-success',
-        //     isVerifiedQuestion: true,
-        //     status: false,
-        //   };
-        //   state.media.chatgptMediaDescStatus = {
-        //     name: 'Ok',
-        //     color: 'text-[#0FB063]',
-        //     tooltipName: 'Question is Verified',
-        //     tooltipStyle: 'tooltip-success',
-        //     isVerifiedQuestion: true,
-        //     status: false,
-        //   };
-        // state.media.mediaDescStatus = {
-        //   name: 'Duplicate',
-        //   color: 'text-[#EFD700]',
-        //   tooltipName: 'This post is not unique. A post like this already exists.',
-        //   tooltipStyle: 'tooltip-error',
-        //   duplication: true,
-        //   showToolTipMsg: true,
-        // };
-        // state.media.chatgptMediaDescStatus = {
-        //   name: 'Duplicate',
-        //   color: 'text-[#EFD700]',
-        //   tooltipName: 'This post is not unique. A post like this already exists.',
-        //   tooltipStyle: 'tooltip-error',
-        //   duplication: true,
-        //   showToolTipMsg: true,
-        // };
-        // } else {
         if (errorMessage === 'ERROR') {
           state.media.validatedDescription = state.questions.question;
-          // state.questions.questionTyping = false;
           state.media.mediaDescStatus = {
             name: 'Rejected',
             color: 'text-[#b00f0f]',
@@ -516,7 +478,7 @@ export const createQuestSlice = createSlice({
           state.media.mediaDescStatus = {
             name: 'Duplicate',
             color: 'text-[#EFD700]',
-            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipName: 'The description cannot be the same as the question.',
             tooltipStyle: 'tooltip-error',
             duplication: true,
             showToolTipMsg: true,
@@ -524,7 +486,7 @@ export const createQuestSlice = createSlice({
           state.media.chatgptMediaDescStatus = {
             name: 'Duplicate',
             color: 'text-[#EFD700]',
-            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipName: 'The description cannot be the same as the question.',
             tooltipStyle: 'tooltip-error',
             duplication: true,
             showToolTipMsg: true,
@@ -575,43 +537,6 @@ export const createQuestSlice = createSlice({
     builder.addCase(checkAudioDescription.fulfilled, (state, action) => {
       const { validatedQuestion, errorMessage } = action.payload;
       if (errorMessage) {
-        // if (errorMessage === 'DUPLICATION') {
-        //   state.audio.audioDesc = validatedQuestion;
-        //   state.audio.validatedAudioDesc = validatedQuestion;
-        //   // state.questions.questionTyping = false;
-        //   // state.audio.audioDescStatus = {
-        //   //   name: 'Duplicate',
-        //   //   color: 'text-[#EFD700]',
-        //   //   tooltipName: 'This post is not unique. A post like this already exists.',
-        //   //   tooltipStyle: 'tooltip-error',
-        //   //   duplication: true,
-        //   //   showToolTipMsg: true,
-        //   // };
-        //   // state.audio.chatgptAudioDescStatus = {
-        //   //   name: 'Duplicate',
-        //   //   color: 'text-[#EFD700]',
-        //   //   tooltipName: 'This post is not unique. A post like this already exists.',
-        //   //   tooltipStyle: 'tooltip-error',
-        //   //   duplication: true,
-        //   //   showToolTipMsg: true,
-        //   // };
-        //   state.media.mediaDescStatus = {
-        //     name: 'Ok',
-        //     color: 'text-[#0FB063]',
-        //     tooltipName: 'Question is Verified',
-        //     tooltipStyle: 'tooltip-success',
-        //     isVerifiedQuestion: true,
-        //     status: false,
-        //   };
-        //   state.media.chatgptMediaDescStatus = {
-        //     name: 'Ok',
-        //     color: 'text-[#0FB063]',
-        //     tooltipName: 'Question is Verified',
-        //     tooltipStyle: 'tooltip-success',
-        //     isVerifiedQuestion: true,
-        //     status: false,
-        //   };
-        // } else {
         if (errorMessage === 'ERROR') {
           state.audio.validatedAudioDesc = state.questions.question;
           // state.questions.questionTyping = false;
@@ -1273,47 +1198,6 @@ export const createQuestSlice = createSlice({
       const { validatedQuestion, errorMessage } = action.payload;
       console.log('error', errorMessage);
       if (errorMessage) {
-        // if (errorMessage === 'DUPLICATION') {
-        //   state.questions.question = validatedQuestion;
-        //   state.questions.validatedQuestion = validatedQuestion;
-        //   state.questions.questionTyping = false;
-        //   if (state.media.isMedia.isMedia === true || state.pictureMedia.isPicMedia === true) {
-        //     state.questionReset = {
-        //       name: 'Ok',
-        //       color: 'text-[#0FB063]',
-        //       tooltipName: 'Question is Verified',
-        //       tooltipStyle: 'tooltip-success',
-        //       isVerifiedQuestion: true,
-        //       status: false,
-        //     };
-        //     state.chatgptStatus = {
-        //       name: 'Ok',
-        //       color: 'text-[#0FB063]',
-        //       tooltipName: 'Question is Verified',
-        //       tooltipStyle: 'tooltip-success',
-        //       isVerifiedQuestion: true,
-        //       status: false,
-        //     };
-        //   } else {
-        //     state.questionReset = {
-        //       name: 'Duplicate',
-        //       color: 'text-[#EFD700]',
-        //       tooltipName: 'This post is not unique. A post like this already exists.',
-        //       tooltipStyle: 'tooltip-error',
-        //       duplication: true,
-        //       showToolTipMsg: true,
-        //     };
-        //     state.chatgptStatus = {
-        //       name: 'Duplicate',
-        //       color: 'text-[#EFD700]',
-        //       tooltipName: 'This post is not unique. A post like this already exists.',
-        //       tooltipStyle: 'tooltip-error',
-        //       duplication: true,
-        //       showToolTipMsg: true,
-        //     };
-        //   }
-        // } else {
-
         if (errorMessage === 'ERROR') {
           state.questions.validatedQuestion = state.questions.question;
           state.questions.questionTyping = false;
@@ -1412,7 +1296,7 @@ export const createQuestSlice = createSlice({
           state.questionReset = {
             name: 'Duplicate',
             color: 'text-[#EFD700]',
-            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipName: 'The question cannot be the same as the description.',
             tooltipStyle: 'tooltip-error',
             duplication: true,
             showToolTipMsg: true,
@@ -1420,7 +1304,7 @@ export const createQuestSlice = createSlice({
           state.chatgptStatus = {
             name: 'Duplicate',
             color: 'text-[#EFD700]',
-            tooltipName: 'This post is not unique. A post like this already exists.',
+            tooltipName: 'The question cannot be the same as the description.',
             tooltipStyle: 'tooltip-error',
             duplication: true,
             showToolTipMsg: true,

@@ -116,9 +116,9 @@ const RankChoice = () => {
     if (!moderationRating) {
       return showToast('error', 'somethingWrong');
     }
-    if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return showToast('warning', 'emptyPostDescription');
-    }
+    // if (!getMediaStates.desctiption && getMediaStates.url !== '') {
+    //   return showToast('warning', 'emptyPostDescription');
+    // }
 
     if (optionsValue.length <= RANKED_CHOICE_MIN_OPTION_LIMIT) {
       setLoading(false);
@@ -227,7 +227,7 @@ const RankChoice = () => {
     console.log({ getMediaStates });
     if (
       questionStatus.tooltipName === 'Question is Verified' &&
-      getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      // getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
       getMediaStates.urlStatus.tooltipName === 'Question is Verified' &&
       AllVerified
     ) {
@@ -259,7 +259,7 @@ const RankChoice = () => {
           (value) =>
             value.question !== '' &&
             createQuestSlice.question !== '' &&
-            getMediaStates.desctiption !== '' &&
+            // getMediaStates.desctiption !== '' &&
             getMediaStates.url !== '',
         )
       ) {
@@ -284,7 +284,7 @@ const RankChoice = () => {
     optionsValue,
     createQuestSlice.question,
     getMediaStates.isMedia,
-    getMediaStates.desctiption,
+    // getMediaStates.desctiption,
     getMediaStates.url,
     getMediaStates.urlStatus,
     getPicsMediaStates.isPicMedia,

@@ -122,9 +122,9 @@ const LikeDislike = () => {
     if (!moderationRating) {
       return showToast('error', 'somethingWrong');
     }
-    if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return showToast('warning', 'emptyPostDescription');
-    }
+    // if (!getMediaStates.desctiption && getMediaStates.url !== '') {
+    //   return showToast('warning', 'emptyPostDescription');
+    // }
 
     const params = {
       Question: createQuestSlice.question,
@@ -155,7 +155,7 @@ const LikeDislike = () => {
   const checkMediaHollow = () => {
     if (
       questionStatus.tooltipName === 'Question is Verified' &&
-      getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      // getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
       getMediaStates.urlStatus.tooltipName === 'Question is Verified'
     ) {
       return false;
@@ -183,7 +183,7 @@ const LikeDislike = () => {
       if (
         !checkMediaHollow() &&
         createQuestSlice.question !== '' &&
-        getMediaStates.desctiption !== '' &&
+        // getMediaStates.desctiption !== '' &&
         getMediaStates.url !== ''
       ) {
         setHollow(false);
@@ -207,7 +207,7 @@ const LikeDislike = () => {
     createQuestSlice.question,
     questionStatus.tooltipName,
     getMediaStates.isMedia,
-    getMediaStates.desctiption,
+    // getMediaStates.desctiption,
     getMediaStates.url,
     getMediaStates.urlStatus,
     getPicsMediaStates.isPicMedia,

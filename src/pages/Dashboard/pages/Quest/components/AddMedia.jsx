@@ -49,7 +49,7 @@ export default function AddMedia({ handleTab }) {
   useEffect(() => {
     // Check if the URL is a SoundCloud playlist
     if (getMediaStates.url?.includes(soundcloudUnique) && getMediaStates.url?.includes('/sets/')) {
-      showToast('error', 'soundCloudPlaylistNot')
+      showToast('error', 'soundCloudPlaylistNot');
       dispatch(createQuestAction.clearUrl());
       return;
     }
@@ -59,7 +59,7 @@ export default function AddMedia({ handleTab }) {
       youtubeBaseURLs.some((baseURL) => getMediaStates.url?.includes(baseURL)) &&
       getMediaStates.url.includes('playlist?list=')
     ) {
-      showToast('error', 'youtubePlaylistNot')
+      showToast('error', 'youtubePlaylistNot');
       dispatch(createQuestAction.clearUrl());
       return;
     }
@@ -131,7 +131,7 @@ export default function AddMedia({ handleTab }) {
               className="size-[15px] tablet:size-[41px]"
             />
           </div>
-          <div className="flex">
+          {/* <div className="flex">
             <TextareaAutosize
               id="input-0"
               tabIndex={1}
@@ -154,7 +154,7 @@ export default function AddMedia({ handleTab }) {
               </div>
               <Tooltip optionStatus={getMediaStates.mediaDescStatus} type="media" />
             </button>
-          </div>
+          </div> */}
           {getMediaStates.urlStatus.tooltipName !== 'Question is Verified' && (
             <div className="flex">
               <TextareaAutosize

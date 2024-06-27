@@ -63,7 +63,7 @@ export default function AddPictureUrls({ handleTab }) {
               </div>
             </div>
           ) : (
-            <Carousel data={getPictureUrls} />
+            getPictureUrls?.length >= 1 && <Carousel data={getPictureUrls} />
           )}
           {getUrlsOptions.map(
             (item, index) =>

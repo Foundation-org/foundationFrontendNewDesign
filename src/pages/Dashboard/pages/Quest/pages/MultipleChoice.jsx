@@ -119,9 +119,9 @@ const MultipleChoice = () => {
     if (!moderationRating) {
       return showToast('error', 'somethingWrong');
     }
-    if (!getMediaStates.desctiption && getMediaStates.url !== '') {
-      return showToast('warning', 'emptyPostDescription');
-    }
+    // if (!getMediaStates.desctiption && getMediaStates.url !== '') {
+    //   return showToast('warning', 'emptyPostDescription');
+    // }
 
     const params = {
       Question: createQuestSlice.question,
@@ -238,7 +238,7 @@ const MultipleChoice = () => {
     console.log({ getMediaStates });
     if (
       questionStatus.tooltipName === 'Question is Verified' &&
-      getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
+      // getMediaStates.mediaDescStatus.tooltipName === 'Question is Verified' &&
       getMediaStates.urlStatus.tooltipName === 'Question is Verified' &&
       AllVerified
     ) {
@@ -270,7 +270,7 @@ const MultipleChoice = () => {
           (value) =>
             value.question !== '' &&
             createQuestSlice.question !== '' &&
-            getMediaStates.desctiption !== '' &&
+            // getMediaStates.desctiption !== '' &&
             getMediaStates.url !== '',
         )
       ) {
@@ -295,7 +295,7 @@ const MultipleChoice = () => {
     optionsValue,
     createQuestSlice.question,
     getMediaStates.isMedia,
-    getMediaStates.desctiption,
+    // getMediaStates.desctiption,
     getMediaStates.url,
     getMediaStates.urlStatus,
     getPicsMediaStates.isPicMedia,
