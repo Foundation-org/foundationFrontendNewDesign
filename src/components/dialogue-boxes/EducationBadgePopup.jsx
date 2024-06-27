@@ -325,6 +325,7 @@ const EducationBadgePopup = ({
     const info = await api.post(`/addBadge/personal/getWorkOrEducation`, payload);
     setPrevInfo(info?.data?.obj);
     if (info.status === 200) {
+      setFetchingEdit(false);
       const data = info?.data.obj;
 
       setField1Data({ id: data.id, name: data.school, country: data.country });
