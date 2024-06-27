@@ -68,6 +68,7 @@ export default function BadgeRemovePopup({
             return item;
           }
         });
+
         removeBadge = await api.post(`/removeBadge`, {
           badgeAccountId: findBadge[0].accountId,
           uuid: fetchUser.uuid,
@@ -79,7 +80,6 @@ export default function BadgeRemovePopup({
           localStorage.removeItem('legacyHash');
         }
         showToast('success', 'badgeRemoval');
-        dispatch(setAskPassword(removeBadge.data.data.isPasswordEncryption));
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setIsLoading(false);
