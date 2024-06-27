@@ -234,10 +234,11 @@ const SocialLogins = ({
           // scope="email,openid,profile,w_member_social"
           onReject={(err) => {
             if (err === 'Popup closed without completing login.') {
+              setIsLoadingSocial(false);
               return
             }
-            console.log('err', err);
             setIsLoadingSocial(false);
+            console.log('err', err);
             showToast('error', 'generalError');
           }}
         ></LoginSocialLinkedin>

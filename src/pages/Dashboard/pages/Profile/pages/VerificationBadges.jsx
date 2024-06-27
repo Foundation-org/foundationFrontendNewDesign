@@ -458,6 +458,7 @@ const VerificationBadges = () => {
                   // scope="email,openid,profile,w_member_social"
                   onReject={(err) => {
                     if (err === 'Popup closed without completing login.') {
+                      setIsLoading(false);
                       return;
                     }
                     showToast('error', 'errorAddingBadge');
