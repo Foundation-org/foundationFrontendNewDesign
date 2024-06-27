@@ -49,8 +49,7 @@ export const createInfoQuest = async (data) => {
       description: data.description,
     });
   } catch (error) {
-    showToast('error', 'error', {}, error.response.data.message.split(':')[1])
-
+    showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
   }
 };
 
@@ -323,7 +322,7 @@ export const checkUniqueQuestion = async (question) => {
 
 const updateViolationCounterAPI = async () => {
   // Make an API call to update the violation counter
-  const response = await api.post('/startQuest/updateViolationCounter');
+  const response = await api.post(`/startQuest/updateViolationCounter/${localStorage.getItem('uuid')}`);
   return response.data;
 };
 export default updateViolationCounterAPI;
