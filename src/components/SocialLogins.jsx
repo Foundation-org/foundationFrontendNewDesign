@@ -9,7 +9,7 @@ import { LoginSocialFacebook } from '../pages/Dashboard/pages/Profile/pages/Reac
 import showToast from './ui/Toast';
 import { useRef } from 'react';
 
-const REDIRECT_URI = window.location.href;
+// const REDIRECT_URI = window.location.href;
 
 const SocialLogins = ({
   setProvider,
@@ -25,6 +25,7 @@ const SocialLogins = ({
   instaRef,
   isLogin,
   triggerLogin,
+  RedirectURL
 }) => {
   // const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -95,7 +96,7 @@ const SocialLogins = ({
         <LoginSocialGoogle
           // isOnlyGetToken
           client_id={import.meta.env.VITE_GG_APP_ID}
-          redirect_uri={REDIRECT_URI}
+          redirect_uri={RedirectURL}
           scope="openid profile email"
           iscoveryDocs="claims_supported"
           // access_type="offline"
@@ -141,7 +142,7 @@ const SocialLogins = ({
             setProfile(data);
             isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
           }}
-          redirect_uri={REDIRECT_URI}
+          redirect_uri={RedirectURL}
           onReject={(err) => {
                         setIsLoadingSocial(false);
 
@@ -230,7 +231,7 @@ const SocialLogins = ({
             setProfile(data);
             isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
           }}
-          redirect_uri={REDIRECT_URI}
+          redirect_uri={RedirectURL}
           // scope="email,openid,profile,w_member_social"
           onReject={(err) => {
             if (err === 'Popup closed without completing login.') {
@@ -293,7 +294,7 @@ const SocialLogins = ({
           isLogin ? handleSignInSocial(data, provider) : handleSignUpSocial(data, provider);
         }}
         // scope="email,openid,profile,w_member_social"
-        redirect_uri={REDIRECT_URI}
+        redirect_uri={RedirectURL}
         onReject={(err) => {
           console.log(err);
         }}

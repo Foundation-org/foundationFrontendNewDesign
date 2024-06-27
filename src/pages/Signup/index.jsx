@@ -309,9 +309,8 @@ export default function Signup() {
       {isLoadingSocial && <Loader />}
       <MyModal modalShow={modalVisible} email={profile?.email} handleEmailType={handleEmailType} />
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>
@@ -346,6 +345,7 @@ export default function Signup() {
                     linkedInRef={linkedInRef}
                     instaRef={instaRef}
                     setClickedButtonName={setClickedButtonName}
+                    RedirectURL={window.location.href}
                   />
                   <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
                     <Button

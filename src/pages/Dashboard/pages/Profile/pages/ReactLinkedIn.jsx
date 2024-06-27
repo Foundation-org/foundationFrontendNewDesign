@@ -211,14 +211,19 @@ export const LoginSocialLinkedin = ({
       left,
     );
 
+    // Check if the popup is closed by the user
     const checkPopupClosed = setInterval(() => {
-      if (!popup || popup.closed) {
+      if (popup.closed) {
         clearInterval(checkPopupClosed);
-        onReject('Popup closed without completing login.');
+        const code = localStorage.getItem('linkedin');
+        if (!code) {
+          onReject({ error: 'Popup closed by user' });
+        }
       }
-    }, 1000);
+    }, 500);
   }, [onLoginStart, response_type, client_id, scope, state, redirect_uri, onReject]);
 
+  console.log(window);
   return (
     <div className={className} onClick={onLogin}>
       {children}

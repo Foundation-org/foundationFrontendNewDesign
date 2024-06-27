@@ -170,9 +170,8 @@ export default function Signin() {
       />
       {isLoadingSocial && <Loader />}
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>
@@ -195,6 +194,7 @@ export default function Signin() {
                 setClickedButtonName={setClickedButtonName}
                 isLogin={true}
                 triggerLogin={triggerLogin}
+                RedirectURL={window.location.href}
               />
               <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
                 <Button size="login-btn" color="gray" onClick={() => navigate('/signin/credentials')}>
