@@ -213,7 +213,7 @@ export default function Contact({
               key={index}
             />
           ))}
-          {legacy.map((item, index) => (
+          {/* {legacy.map((item, index) => (
             <div
               className="relative flex items-center justify-between gap-[8.5px] laptop:gap-2 desktop:gap-5"
               key={index}
@@ -256,7 +256,7 @@ export default function Contact({
                 </span>
               </Button>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

@@ -25,6 +25,7 @@ import { getAskPassword } from '../../../../../features/profile/userSettingSlice
 import { badgesTotalLength } from '../../../../../constants/varification-badges';
 import { Button } from '../../../../../components/ui/Button';
 import VerificationBadgeScore from '../../../../../components/summary/VerificationBadgeScore';
+import Privacy from './verification-badges/Privacy';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -251,6 +252,8 @@ const VerificationBadges = () => {
             getAskPassword={getAskPasswordFromRedux}
           />
 
+          <Privacy checkLegacyBadge={checkLegacyBadge} handleRemoveBadgePopup={handleRemoveBadgePopup} />
+
           <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
             Social
           </h1>
@@ -362,8 +365,9 @@ const VerificationBadges = () => {
                 className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
               />
               <div
-                className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                  }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+                className={`${
+                  persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
               >
                 <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                   Linked In
@@ -451,7 +455,7 @@ const VerificationBadges = () => {
                   // scope="email,openid,profile,w_member_social"
                   onReject={(err) => {
                     if (err === 'Popup closed without completing login.') {
-                      return
+                      return;
                     }
                     showToast('error', 'errorAddingBadge');
                     setIsLoading(false);
@@ -461,9 +465,9 @@ const VerificationBadges = () => {
                 >
                   <Button
                     variant={checkSocial('linkedin') ? 'verification-badge-remove' : 'submit'}
-                  // color={checkSocial('linkedin') ? 'red' : 'blue'}
-                  // disabled={true}
-                  // color="gray"
+                    // color={checkSocial('linkedin') ? 'red' : 'blue'}
+                    // disabled={true}
+                    // color="gray"
                   >
                     {checkSocial('linkedin') ? 'Remove' : 'Add'}
                     <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
@@ -678,8 +682,9 @@ const VerificationBadges = () => {
                 className="h-[23px] min-h-[6.389vw] w-[23px] min-w-[6.389vw] tablet:size-[50px] tablet:min-h-[50px] tablet:min-w-[50px]"
               />
               <div
-                className={`${persistedTheme === 'dark' ? 'dark-shadow-input' : ''
-                  }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
+                className={`${
+                  persistedTheme === 'dark' ? 'dark-shadow-input' : ''
+                }flex h-[21.5px] w-[24vw] items-center justify-center rounded-[1.31vw] border border-[#DEE6F7] tablet:h-[50px] tablet:w-[200px] tablet:rounded-[8px] tablet:border-[3px] laptop:w-[180px] laptop:rounded-[15px] desktop:w-[200px]`}
               >
                 <h1 className="text-[2.11vw] font-medium leading-normal text-[#000] tablet:text-[20px] dark:text-[#CACACA]">
                   Github
@@ -885,10 +890,10 @@ const VerificationBadges = () => {
             getAskPassword={getAskPasswordFromRedux}
           />
           {/* <Legacy
-          fetchUser={persistedUserInfo}
-          handleRemoveBadgePopup={handleRemoveBadgePopup}
-          checkLegacyBadge={checkLegacyBadge}
-        /> */}
+            fetchUser={persistedUserInfo}
+            handleRemoveBadgePopup={handleRemoveBadgePopup}
+            checkLegacyBadge={checkLegacyBadge}
+          /> */}
           <Personal
             fetchUser={persistedUserInfo}
             handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
