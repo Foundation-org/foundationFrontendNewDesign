@@ -1,9 +1,16 @@
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 // import { formatCountNumber } from '../../../../../utils/utils';
 import { Link } from 'react-router-dom';
 
 const Contributions = () => {
+  const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    queryClient.invalidateQueries(['userInfo']);
+  }, []);
 
   const yourPosts = [
     { id: 1, title: 'Posts you’ve created', val: (persistedUserInfo && persistedUserInfo?.questsCreated) || 0 },

@@ -67,8 +67,6 @@ export default function DashboardLayout({ children }) {
     queryFn: userInfo,
   });
 
-  console.log(userInfoData?.data);
-
   const { mutateAsync: getUserInfoById } = useMutation({
     mutationFn: userInfoById,
     onSuccess: (res) => {
