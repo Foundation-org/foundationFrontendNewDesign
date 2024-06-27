@@ -3,7 +3,6 @@ import { Button } from '../ui/Button';
 import { useDispatch } from 'react-redux';
 import { FaSpinner } from 'react-icons/fa';
 import { useQueryClient } from '@tanstack/react-query';
-import { setAskPassword } from '../../features/profile/userSettingSlice';
 import PopUp from '../ui/PopUp';
 import showToast from '../ui/Toast';
 import api from '../../services/api/Axios';
@@ -50,7 +49,6 @@ const LegacyBadgePopup = ({ isPopup, setIsPopup, title, logo }) => {
               showToast('success', 'badgeAdded');
               handleClose();
               setIsLoading(false);
-              dispatch(setAskPassword(resp.data.data.isPasswordEncryption));
               queryClient.invalidateQueries(['userInfo']);
             }
           } catch (err) {

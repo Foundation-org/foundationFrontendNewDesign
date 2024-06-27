@@ -6,7 +6,6 @@ import { FaSpinner } from 'react-icons/fa';
 import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../ui/Toast';
 import { useDispatch } from 'react-redux';
-import { setAskPassword } from '../../features/profile/userSettingSlice';
 
 export default function BadgeRemovePopup({
   handleClose,
@@ -25,9 +24,7 @@ export default function BadgeRemovePopup({
   const queryClient = useQueryClient();
 
   const handleRemoveBadge = async () => {
-    // setIsLoading(true);
-    console.log(type);
-
+    setIsLoading(true);
     try {
       let removeBadge;
       if (badgeType === 'contact') {
@@ -86,6 +83,7 @@ export default function BadgeRemovePopup({
         setIsPersonalPopup(false);
       }
     } catch (error) {
+      setIsLoading(false);
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
   };
