@@ -14,7 +14,7 @@ const SummarySidebar = ({ userData }) => {
     { id: 2, title: 'Options added', val: (userData && userData?.addedAnswers) || 0 },
     { id: 3, title: 'Changing my option', val: (userData && userData?.changedAnswers) || 0 },
     { id: 4, title: 'Objections given', val: (userData && userData?.contentionsGiven) || 0 },
-    { id: 5, title: 'Posts I have hidden', val: (userData && userData?.violationCounter) || 0 },
+    { id: 5, title: 'Posts I have hidden', val: (userData && userData?.questsActivity?.myHiddenQuestsCount) || 0 },
   ];
 
   return (

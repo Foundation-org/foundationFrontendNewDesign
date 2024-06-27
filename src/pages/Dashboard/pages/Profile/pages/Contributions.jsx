@@ -30,7 +30,11 @@ const Contributions = () => {
     { id: 2, title: 'Options added', val: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0 },
     { id: 3, title: 'Changing my option', val: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0 },
     { id: 4, title: 'Objections given', val: (persistedUserInfo && persistedUserInfo?.contentionsGiven) || 0 },
-    { id: 5, title: 'Posts I have hidden', val: (persistedUserInfo && persistedUserInfo?.violationCounter) || 0 },
+    {
+      id: 5,
+      title: 'Posts I have hidden',
+      val: (persistedUserInfo && persistedUserInfo?.questsActivity?.myHiddenQuestsCount) || 0,
+    },
   ];
 
   return (
