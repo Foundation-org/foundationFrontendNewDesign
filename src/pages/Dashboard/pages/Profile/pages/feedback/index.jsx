@@ -208,7 +208,7 @@ export default function Feedback() {
                   </p>
                 )
               ) : !getFeedbackFilters.searchData && data?.pages[0].length !== 0 ? (
-                dispatch(questUtilsActions.setAreFeedbackPostss(true)) && <></>
+                dispatch(questUtilsActions.setAreFeedbackPosts(true)) && <></>
               ) : !getFeedbackFilters.searchData ? (
                 <p className="text-center text-[4vw] laptop:text-[2vw]">
                   <b>No more posts!</b>
