@@ -25,7 +25,7 @@ const Contributions = () => {
     {
       id: 1,
       title: 'Posts you’ve engaged with',
-      val: (persistedUserInfo && persistedUserInfo?.selectionsOnAddedAns) || 0,
+      val: (persistedUserInfo && persistedUserInfo?.questsActivity?.myQuestsEngagementCount) || 0,
     },
     { id: 2, title: 'Options added', val: (persistedUserInfo && persistedUserInfo?.addedAnswers) || 0 },
     { id: 3, title: 'Changing my option', val: (persistedUserInfo && persistedUserInfo?.changedAnswers) || 0 },
