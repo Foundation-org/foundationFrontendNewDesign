@@ -6,7 +6,6 @@ import { FaSpinner } from 'react-icons/fa';
 import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../ui/Toast';
 import { useDispatch } from 'react-redux';
-import { setAskPassword } from '../../features/profile/userSettingSlice';
 
 export default function BadgeRemovePopup({
   handleClose,
