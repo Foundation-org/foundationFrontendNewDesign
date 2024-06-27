@@ -1218,8 +1218,8 @@ export const createQuestSlice = createSlice({
             showToolTipMsg: true,
           };
         } else if (
-          state.media.isMedia.isMedia === false &&
-          state.pictureMedia.isPicMedia === false &&
+          // state.media.isMedia.isMedia === false &&
+          // state.pictureMedia.isPicMedia === false &&
           errorMessage === 'DUPLICATION'
         ) {
           console.log('here duplication', state.media.isMedia.isMedia, state.pictureMedia.isPicMedia, errorMessage);
