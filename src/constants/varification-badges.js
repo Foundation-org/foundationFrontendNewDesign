@@ -38,16 +38,16 @@ export const contacts = [
 ];
 
 export const socials = [
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
-    title: 'LinkedIn',
-    ButtonColor: 'gray',
-    ButtonText: 'Add',
-    NoOfButton: 1,
-    // link: '/auth/linkedin',
-    accountName: 'linkedin',
-    disabled: true,
-  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/LinkedIn-2x.png`,
+  //   title: 'LinkedIn',
+  //   ButtonColor: 'gray',
+  //   ButtonText: 'Add',
+  //   NoOfButton: 1,
+  //   // link: '/auth/linkedin',
+  //   accountName: 'linkedin',
+  //   disabled: true,
+  // },
   // {
   //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Facebook-2x.png`,
   //   title: 'Facebook',

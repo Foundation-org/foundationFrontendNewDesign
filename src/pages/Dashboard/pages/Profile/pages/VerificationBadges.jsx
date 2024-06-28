@@ -353,7 +353,7 @@ const VerificationBadges = () => {
           </div> */}
 
             {/* LinkedIn */}
-            <div className="relative flex items-center gap-[8.5px] opacity-[100%] laptop:gap-2 desktop:gap-5">
+            {/* <div className="relative flex items-center gap-[8.5px] opacity-[100%] laptop:gap-2 desktop:gap-5">
               <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
                 {checkPrimary('linkedin') && (
                   <img
@@ -513,7 +513,7 @@ const VerificationBadges = () => {
                   </Button>
                 </LoginSocialLinkedin>
               )}
-            </div>
+            </div> */}
 
             {/* Twitter */}
             {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
