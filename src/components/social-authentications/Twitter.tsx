@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
-import { IResolveParams, LoginSocialTwitter } from 'reactjs-social-login';
+import { IResolveParams } from 'reactjs-social-login';
+import LoginSocialTwitter from './LoginSocialTwitter';
 
 const REDIRECT_URI = window.location.href;
 
