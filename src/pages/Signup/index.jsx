@@ -55,6 +55,7 @@ export default function Signup() {
   const googleRef = useRef(null);
   const fbRef = useRef(null);
   const linkedInRef = useRef(null);
+  const githubRef = useRef(null);
   const instaRef = useRef(null);
   const [clickedButtonName, setClickedButtonName] = useState('');
 
@@ -130,8 +131,13 @@ export default function Signup() {
       }
     }
     if (clickedButtonName === 'github') {
-      setIsLoadingSocial(true);
-      loginWithGithub();
+      if (githubRef.current) {
+        const facebookButton = githubRef.current.querySelector('div'); // or a more specific selector if needed
+        if (facebookButton) {
+          facebookButton.click();
+          setIsLoadingSocial(true);
+        }
+      }
     }
     if (clickedButtonName === 'twitter') {
       setIsLoadingSocial(true);
@@ -344,6 +350,7 @@ export default function Signup() {
                     fbRef={fbRef}
                     linkedInRef={linkedInRef}
                     instaRef={instaRef}
+                    githubRef={githubRef}
                     setClickedButtonName={setClickedButtonName}
                     RedirectURL={window.location.href}
                   />

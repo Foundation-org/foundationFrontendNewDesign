@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
 import { LoginSocialFacebook } from './ReactFacebook';
-import { LoginSocialLinkedin } from './ReactLinkedIn';
+// import { LoginSocialLinkedin } from './ReactLinkedIn';
 import { LoginSocialYoutube } from './ReactYoutube';
 import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
@@ -26,6 +26,7 @@ import { badgesTotalLength } from '../../../../../constants/varification-badges'
 import { Button } from '../../../../../components/ui/Button';
 import VerificationBadgeScore from '../../../../../components/summary/VerificationBadgeScore';
 import Privacy from './verification-badges/Privacy';
+import { LoginSocialGithub, LoginSocialLinkedin } from 'reactjs-social-login';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -136,7 +137,7 @@ const VerificationBadges = () => {
       } else if (provider === 'twitter') {
         id = data.user.uid;
       } else if (provider === 'github') {
-        id = data.user.email;
+        id = data.id;
       } else if (provider === 'youtube') {
         id = data.items[0].id;
       }
@@ -439,6 +440,42 @@ const VerificationBadges = () => {
                   </span>
                 </Button>
               ) : (
+
+                // <LoginSocialLinkedin
+                //   scope="openid,profile,email"
+                //   client_id={import.meta.env.VITE_LINKEDIN_KEY}
+                //   client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
+                //   onResolve={async ({ provider, data }) => {
+                //     if (
+                //       (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
+                //       (checkLegacyBadge() && getAskPasswordFromRedux)
+                //     ) {
+                //       await handleOpenPasswordConfirmation();
+                //     }
+                //     console.log(provider, data);
+                //     setIsLoading(true);
+                //     handleAddBadge(provider, data);
+                //   }}
+                //   redirect_uri={window.location.href}
+                //   onReject={(err) => {
+                //     showToast('error', 'errorAddingBadge');
+                //     setIsLoading(false);
+                //     console.log(err);
+                //   }}
+                // >
+                //   <Button
+                //     variant={checkSocial('linkedin') ? 'verification-badge-remove' : 'submit'}
+                //   // color={checkSocial('linkedin') ? 'red' : 'blue'}
+                //   // disabled={true}
+                //   // color="gray"
+                //   >
+                //     {checkSocial('linkedin') ? 'Remove' : 'Add'}
+                //     <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
+                //       {checkSocial('linkedin') ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
+                //     </span>
+                //   </Button>
+                // </LoginSocialLinkedin>
+
                 <LoginSocialLinkedin
                   // isOnlyGetToken
                   client_id={import.meta.env.VITE_LINKEDIN_KEY}
@@ -457,10 +494,6 @@ const VerificationBadges = () => {
                   redirect_uri={window.location.href}
                   // scope="email,openid,profile,w_member_social"
                   onReject={(err) => {
-                    if (err === 'Popup closed without completing login.') {
-                      setIsLoading(false);
-                      return;
-                    }
                     showToast('error', 'errorAddingBadge');
                     setIsLoading(false);
                     console.log(err);
@@ -741,24 +774,38 @@ const VerificationBadges = () => {
                   </span>
                 </Button>
               ) : (
-                <Button
-                  variant={checkSocial('github') ? 'verification-badge-remove' : 'submit'}
-                  // color={checkSocial('github') ? 'red' : 'blue'}
-                  onClick={async () => {
+                <LoginSocialGithub
+                  client_id={import.meta.env.VITE_GITHUB_CLIENT_ID}
+                  client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
+                  onResolve={async ({ provider, data }) => {
                     if (
                       (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
                       (checkLegacyBadge() && getAskPasswordFromRedux)
                     ) {
                       await handleOpenPasswordConfirmation();
                     }
-                    loginWithGithub();
+                    console.log(provider, data);
+                    setIsLoading(true);
+                    handleAddBadge(provider, data);
+                  }}
+                  redirect_uri={window.location.href}
+                  // scope="email,openid,profile,w_member_social"
+                  onReject={(err) => {
+                    showToast('error', 'errorAddingBadge');
+                    setIsLoading(false);
+                    console.log(err);
                   }}
                 >
-                  {checkSocial('github') ? 'Remove' : 'Add'}
-                  <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                    {checkSocial('github') ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
-                  </span>
-                </Button>
+
+                  <Button
+                    variant={checkSocial('github') ? 'verification-badge-remove' : 'submit'}
+                  >
+                    {checkSocial('github') ? 'Remove' : 'Add'}
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
+                      {checkSocial('github') ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
+                    </span>
+                  </Button>
+                </LoginSocialGithub>
               )}
             </div>
 
