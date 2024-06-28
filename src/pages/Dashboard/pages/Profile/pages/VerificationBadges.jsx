@@ -808,7 +808,7 @@ const VerificationBadges = () => {
                 </LoginSocialGithub>
               )}
             </div>
-
+            {console.log("uri", window.location.href)}
             {/* Youtube  */}
             {/* <div className="flex items-center gap-[10px] laptop:gap-5">
           <img
