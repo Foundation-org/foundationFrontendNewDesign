@@ -1,13 +1,17 @@
-import { LoginSocialGithub, LoginSocialGoogle, LoginSocialLinkedin } from 'reactjs-social-login';
-import { useSelector } from 'react-redux';
-import Button from './Button';
-import { GithubAuthProvider, TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
-import { authentication } from '../pages/Dashboard/pages/Profile/pages/firebase-config';
-import { InstagramLogin } from '@amraneze/react-instagram-login';
+// import { LoginSocialGithub, LoginSocialGoogle, LoginSocialLinkedin } from 'reactjs-social-login';
+// import { useSelector } from 'react-redux';
+// import Button from './Button';
+// import { GithubAuthProvider, TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
+// import { authentication } from '../pages/Dashboard/pages/Profile/pages/firebase-config';
+// import { InstagramLogin } from '@amraneze/react-instagram-login';
 // import { LoginSocialLinkedin } from '../pages/Dashboard/pages/Profile/pages/ReactLinkedIn';
-import { LoginSocialFacebook } from '../pages/Dashboard/pages/Profile/pages/ReactFacebook';
-import showToast from './ui/Toast';
-import { useRef } from 'react';
+// import { LoginSocialFacebook } from '../pages/Dashboard/pages/Profile/pages/ReactFacebook';
+// import showToast from './ui/Toast';
+// import { useRef } from 'react';
+// import { useQuery } from '@tanstack/react-query';
+// import { authSuccess } from '../services/api/authentication';
+import { Button } from './ui/Button';
+import { authMethods } from '../constants/authentication';
 
 // const REDIRECT_URI = window.location.href;
 
@@ -93,7 +97,26 @@ const SocialLogins = ({
 
   return (
     <div className="mb-2 flex flex-col gap-2 rounded-[6.043px] 2xl:rounded-[11.703px] laptop:mb-[1.56rem] laptop:justify-between laptop:gap-[1.56rem]">
-      <div ref={googleRef}>
+      {authMethods.map((item) => (
+        <Button
+          variant="auth"
+          key={item.id}
+          onClick={() => {
+            if (isLogin) {
+              localStorage.setItem('target-url', `${window.location.href}`);
+              triggerLogin(item.provider);
+            } else {
+              localStorage.setItem('target-url', `${window.location.href}`);
+              setClickedButtonName(item.provider);
+              handleReferralOpen();
+            }
+          }}
+        >
+          <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/${item.img}`} className="mr-2 w-[22px] md:w-8 lg:mr-3" />
+          {item.title}
+        </Button>
+      ))}
+      {/* <div ref={googleRef}>
         <LoginSocialGoogle
           // isOnlyGetToken
           client_id={import.meta.env.VITE_GG_APP_ID}
@@ -131,7 +154,7 @@ const SocialLogins = ({
           />
           Google
         </Button>
-      </div>
+      </div> */}
       {/* <div ref={fbRef}>
 
         <LoginSocialFacebook
@@ -174,7 +197,6 @@ const SocialLogins = ({
         </Button>
 
       </div> */}
-
       {/*<div ref={instaRef}>
        <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <InstagramLogin
@@ -200,7 +222,6 @@ const SocialLogins = ({
             Instagram
           </Button>
       </div > */}
-
       {/* <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
         <Button
           size="login-btn"
@@ -245,7 +266,6 @@ const SocialLogins = ({
             showToast('error', 'generalError');
           }} */}
       {/* ></LoginSocialLinkedin> */}
-
       {/* <LoginSocialLinkedin
           scope="openid,profile,email"
           client_id={import.meta.env.VITE_LINKEDIN_KEY}
@@ -304,8 +324,7 @@ const SocialLogins = ({
           Github
         </Button>
       </div> */}
-
-      <div ref={githubRef}>
+      {/* <div ref={githubRef}>
         <LoginSocialGithub
           client_id={import.meta.env.VITE_GITHUB_CLIENT_ID}
           client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
@@ -321,7 +340,6 @@ const SocialLogins = ({
             showToast('error', 'generalError');
           }}
         ></LoginSocialGithub>
-
         <Button
           size="login-btn"
           color="gray"
@@ -341,8 +359,7 @@ const SocialLogins = ({
           />
           Github
         </Button>
-      </div>
-
+      </div> */}
       {/* <LoginSocialLinkedin
         // isOnlyGetToken
         client_id={import.meta.env.VITE_LINKEDIN_KEY}

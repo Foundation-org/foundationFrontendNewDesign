@@ -1,27 +1,17 @@
-import { toast } from 'sonner';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { FaSpinner } from 'react-icons/fa';
-import { signIn, userInfo } from '../../services/api/userAuth';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../features/auth/authSlice';
+import Loader from '../Signup/components/Loader';
+import LegacyConfirmationPopup from '../../components/dialogue-boxes/LegacyConfirmationPopup';
+import showToast from '../../components/ui/Toast';
+import api from '../../services/api/Axios';
 import Button from '../../components/Button';
 import Typography from '../../components/Typography';
 import SocialLogins from '../../components/SocialLogins';
-import ReCAPTCHA from 'react-google-recaptcha';
 import '../../index.css';
-import api from '../../services/api/Axios';
-import { useDispatch } from 'react-redux';
-import { addUser } from '../../features/auth/authSlice';
-import BasicModal from '../../components/BasicModal';
-import ReferralCode from '../../components/ReferralCode';
-import { sendVerificationEmail } from '../../services/api/authentication';
-import Loader from '../Signup/components/Loader';
-import { referralModalStyle } from '../../constants/styles';
-import LegacyConfirmationPopup from '../../components/dialogue-boxes/LegacyConfirmationPopup';
-import showToast from '../../components/ui/Toast';
-import { GithubAuthProvider, TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
-import { authentication } from '../Dashboard/pages/Profile/pages/firebase-config';
 
 export default function Signin() {
   const navigate = useNavigate();
@@ -33,7 +23,6 @@ export default function Signin() {
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingSocial, setIsLoadingSocial] = useState(false);
-
   const [uuid, setUuid] = useState();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -45,36 +34,6 @@ export default function Signin() {
   const githubRef = useRef(null);
   const instaRef = useRef(null);
   const [clickedButtonName, setClickedButtonName] = useState('');
-
-  const loginWithGithub = () => {
-    const provider = new GithubAuthProvider();
-    signInWithPopup(authentication, provider)
-      .then((data) => {
-        console.log('github data', data);
-        setProvider('github');
-        setProfile(data);
-        handleSignInSocial(data, 'github');
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoadingSocial(false);
-      });
-  };
-  const loginWithTwitter = () => {
-    const provider = new TwitterAuthProvider();
-    console.log(authentication);
-    signInWithPopup(authentication, provider)
-      .then((data) => {
-        console.log('twitter data', data);
-        setProvider('twitter');
-        setProfile(data);
-        handleSignInSocial(data, 'twitter');
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoadingSocial(false);
-      });
-  };
 
   const triggerLogin = async (value) => {
     if (!value) {
@@ -118,7 +77,6 @@ export default function Signin() {
     }
     if (value === 'twitter') {
       setIsLoadingSocial(true);
-
       loginWithTwitter();
     }
   };
@@ -175,8 +133,9 @@ export default function Signin() {
       />
       {isLoadingSocial && <Loader />}
       <div
-        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${
+          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>
