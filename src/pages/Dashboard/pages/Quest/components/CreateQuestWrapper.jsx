@@ -113,7 +113,7 @@ export default function CreateQuestWrapper({ quest, type, handleTab, msg, childr
             id="input-2"
             aria-label="multiple choice question"
             onChange={handleQuestionChange}
-            onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value.trim())}
+            onBlur={(e) => e.target.value.trim() !== '' && questionVerification(e.target.value)}
             value={createQuestSlice.question}
             placeholder={
               quest === 'M/R' || quest === 'OpenChoice'
