@@ -27,6 +27,7 @@ import { Button } from '../../../../../components/ui/Button';
 import VerificationBadgeScore from '../../../../../components/summary/VerificationBadgeScore';
 import Privacy from './verification-badges/Privacy';
 import { LoginSocialGithub, LoginSocialLinkedin } from 'reactjs-social-login';
+import Social from './verification-badges/Social';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -257,15 +258,15 @@ const VerificationBadges = () => {
           />
 
           <Privacy checkLegacyBadge={checkLegacyBadge} handleRemoveBadgePopup={handleRemoveBadgePopup} />
-
+          {/* 
           <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
             Social
-          </h1>
+          </h1> */}
 
           {/* all */}
-          <div className="flex flex-col items-center gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]">
-            {/* Facebook */}
-            {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+          {/* <div className="flex flex-col items-center gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]"> */}
+          {/* Facebook */}
+          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
             <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
               {checkPrimary('facebook') && (
                 <img
@@ -352,8 +353,8 @@ const VerificationBadges = () => {
             )}
           </div> */}
 
-            {/* LinkedIn */}
-            {/* <div className="relative flex items-center gap-[8.5px] opacity-[100%] laptop:gap-2 desktop:gap-5">
+          {/* LinkedIn */}
+          {/* <div className="relative flex items-center gap-[8.5px] opacity-[100%] laptop:gap-2 desktop:gap-5">
               <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
                 {checkPrimary('linkedin') && (
                   <img
@@ -515,8 +516,8 @@ const VerificationBadges = () => {
               )}
             </div> */}
 
-            {/* Twitter */}
-            {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+          {/* Twitter */}
+          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
             <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
               {checkPrimary('twitter') && (
                 <img
@@ -615,8 +616,8 @@ const VerificationBadges = () => {
             )}
           </div> */}
 
-            {/* Instagram */}
-            {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+          {/* Instagram */}
+          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
             <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
               {checkPrimary('instagram') && (
                 <img
@@ -702,8 +703,8 @@ const VerificationBadges = () => {
             )}
           </div> */}
 
-            {/* Github */}
-            <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+          {/* Github */}
+          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
               <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
                 {checkPrimary('github') && (
                   <img
@@ -807,10 +808,10 @@ const VerificationBadges = () => {
                   </Button>
                 </LoginSocialGithub>
               )}
-            </div>
-            {console.log("uri", window.location.href)}
-            {/* Youtube  */}
-            {/* <div className="flex items-center gap-[10px] laptop:gap-5">
+            </div> */}
+          {/* {console.log("uri", window.location.href)} */}
+          {/* Youtube  */}
+          {/* <div className="flex items-center gap-[10px] laptop:gap-5">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`}
             alt="Twitter"
@@ -878,8 +879,8 @@ const VerificationBadges = () => {
           )}
         </div> */}
 
-            {/* SoundCloud */}
-            {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
+          {/* SoundCloud */}
+          {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/soundCloud.svg`}
             alt="Sound Cloud"
@@ -931,7 +932,14 @@ const VerificationBadges = () => {
             </Button>
           )}
         </div> */}
-          </div>
+          {/* </div> */}
+          <Social
+            handleRemoveBadgePopup={handleRemoveBadgePopup}
+            handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+            checkLegacyBadge={checkLegacyBadge}
+            checkSocial={checkSocial}
+            checkPrimary={checkPrimary}
+          />
 
           <Web3
             handleRemoveBadgePopup={handleRemoveBadgePopup}

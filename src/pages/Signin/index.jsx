@@ -39,45 +39,25 @@ export default function Signin() {
     if (!value) {
       value = clickedButtonName;
     }
-    if (value === 'facebook') {
-      if (fbRef.current) {
-        const facebookButton = fbRef.current.querySelector('div'); // or a more specific selector if needed
-        if (facebookButton) {
-          facebookButton.click();
-          setIsLoadingSocial(true);
-        }
-      }
-    }
     if (value === 'google') {
-      if (googleRef.current) {
-        const facebookButton = googleRef.current.querySelector('div'); // or a more specific selector if needed
-        if (facebookButton) {
-          facebookButton.click();
-          setIsLoadingSocial(true);
-        }
-      }
+      setIsLoadingSocial(true);
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
     }
     if (value === 'linkedin') {
-      if (linkedInRef.current) {
-        const facebookButton = linkedInRef.current.querySelector('div'); // or a more specific selector if needed
-        if (facebookButton) {
-          facebookButton.click();
-          setIsLoadingSocial(true);
-        }
-      }
+      setIsLoadingSocial(true);
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/linkedin`;
     }
     if (value === 'github') {
-      if (githubRef.current) {
-        const facebookButton = githubRef.current.querySelector('div'); // or a more specific selector if needed
-        if (facebookButton) {
-          facebookButton.click();
-          setIsLoadingSocial(true);
-        }
-      }
+      setIsLoadingSocial(true);
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
+    }
+    if (value === 'facebook') {
+      setIsLoadingSocial(true);
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
     }
     if (value === 'twitter') {
       setIsLoadingSocial(true);
-      loginWithTwitter();
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;
     }
   };
 
@@ -106,8 +86,6 @@ export default function Signin() {
     } catch (error) {
       console.log({ error });
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
-    } finally {
-      setIsLoadingSocial(false);
     }
   };
 
@@ -133,9 +111,8 @@ export default function Signin() {
       />
       {isLoadingSocial && <Loader />}
       <div
-        className={`${
-          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>

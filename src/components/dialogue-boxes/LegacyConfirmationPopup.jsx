@@ -17,10 +17,8 @@ const LegacyConfirmationPopup = ({
   legacyPromiseRef,
   login,
   uuid,
-  setIsLoadingSocial,
 }) => {
   const handleClose = () => {
-    setIsLoadingSocial && setIsLoadingSocial(false);
     setIsPopup(false);
   };
 
