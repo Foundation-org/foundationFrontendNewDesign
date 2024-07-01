@@ -8,6 +8,7 @@ import { setAskPassword } from '../features/profile/userSettingSlice';
 import api from '../services/api/Axios';
 import showToast from './ui/Toast';
 import LegacyConfirmationPopup from './dialogue-boxes/LegacyConfirmationPopup';
+import { FaSpinner } from 'react-icons/fa';
 
 const Authenticating = () => {
   const navigate = useNavigate();
@@ -111,6 +112,7 @@ const Authenticating = () => {
       navigate(pathname);
     }
   };
+
   const handleAddContactBadge = async ({ provider, data }) => {
     try {
       let addBadge;
@@ -223,8 +225,10 @@ const Authenticating = () => {
         login={true}
         uuid={uuid}
       />
-      <div className="flex h-full min-h-screen justify-center bg-white pt-8 text-lg text-[#7C7C7C] dark:bg-black dark:text-[#B8B8B8]">
-        Loading...
+      <div className="flex h-full min-h-screen justify-center bg-[#F5F5F5] text-lg text-[#7C7C7C] dark:bg-black dark:text-[#B8B8B8]">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <FaSpinner className="animate-spin text-[10vw] text-blue tablet:text-[4vw]" /> Authenticating User...
+        </div>
       </div>
     </>
   );
