@@ -24,7 +24,7 @@ const Contributions = () => {
     {
       id: 5,
       title: 'My posts hidden by users',
-      val: (persistedUserInfo && persistedUserInfo?.yourHiddenPostCounter) || 0,
+      val: (persistedUserInfo && persistedUserInfo?.feedBackQuestsStatistics?.otherHidingOurQuestsCount) || 0,
     },
   ];
 
