@@ -104,6 +104,33 @@ const Authenticating = () => {
       navigate(pathname);
     }
   };
+  const handleAddContactBadge = async ({ provider, data }) => {
+    try {
+      let addBadge;
+
+      data['provider'] = provider;
+      data['type'] = localStorage.getItem('selectedBadge');
+      data['uuid'] = localStorage.getItem('uuid');
+      if (localStorage.getItem('legacyHash')) {
+        data['infoc'] = localStorage.getItem('legacyHash');
+      }
+      addBadge = await api.post(`/addBadge/contact`, {
+        ...data,
+      });
+
+      if (addBadge.status === 200) {
+        showToast('success', 'badgeAdded');
+        queryClient.invalidateQueries(['userInfo']);
+      }
+
+    } catch (error) {
+      console.log(error);
+      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
+
+    } finally {
+      navigate(pathname)
+    }
+  };
 
   const handleAddBadge = async (data, provider) => {
     console.log("came", provider, data);
@@ -157,11 +184,16 @@ const Authenticating = () => {
   const url = new URL(redirectTo);
   const pathname = url.pathname;
   if (!isLoading && !isError && isSuccess) {
-    console.log(pathname);
+
+    console.log(authSuccessResp.data.user, authSuccessResp.data.user.provider);
     if (pathname === '/signin') {
       handleSignInSocial(authSuccessResp.data.user, authSuccessResp.data.user.provider)
     } else if (pathname === '/profile/verification-badges') {
-      handleAddBadge(authSuccessResp.data.user, authSuccessResp.data.user.provider)
+      if (authSuccessResp.data.user.provider === 'google') {
+        handleAddContactBadge({ provider: authSuccessResp.data.user.provider, data: authSuccessResp.data.user })
+      } else {
+        handleAddBadge(authSuccessResp.data.user, authSuccessResp.data.user.provider)
+      }
     }
     else {
 

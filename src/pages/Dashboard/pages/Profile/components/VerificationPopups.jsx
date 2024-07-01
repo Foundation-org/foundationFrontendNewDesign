@@ -65,28 +65,15 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
     <div>
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
         <div className="pb-[15px] pt-2 tablet:pb-5 tablet:pt-[30px]">
-          <LoginSocialGoogle
-            // isOnlyGetToken
-            client_id={import.meta.env.VITE_GG_APP_ID}
-            redirect_uri={REDIRECT_URI}
-            scope="openid profile email"
-            iscoveryDocs="claims_supported"
-            // access_type="offline"
-            onResolve={({ provider, data }) => {
-              //   setProvider(provider);
-              //   setProfile(data);
-              //   data['provider'] = provider;
-              //   isLogin ? handleSignInSocial(data) : handleSignUpSocialAfterReferral(data);
-              handleAddContactBadge({ provider, data });
-            }}
-            onReject={(err) => {
-              console.log(err);
-            }}
-            className="flex w-full justify-center"
-          >
+          <div className='flex justify-center w-full'>
+
             <Button
               variant="social-btn"
-              // onClick={() => window.open(`${import.meta.env.VITE_API_URL}/auth/google`, '_self')}
+
+              onClick={() => {
+                localStorage.setItem('selectedBadge', selectedBadge)
+                window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`
+              }}
             >
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
@@ -94,7 +81,8 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
               />{' '}
               Continue with Google
             </Button>
-          </LoginSocialGoogle>
+          </div>
+
           <div className=" px-5 tablet:px-[60px] laptop:px-[80px]">
             <h1 className="my-2 text-center text-[10px] font-medium leading-[12.1px] text-[#707175] tablet:my-[15px] tablet:text-[25px] tablet:leading-[30px]">
               -OR-
