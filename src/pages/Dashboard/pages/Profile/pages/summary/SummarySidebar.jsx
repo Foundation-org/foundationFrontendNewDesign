@@ -6,7 +6,7 @@ const SummarySidebar = ({ userData }) => {
     { id: 2, title: 'Engagements with your posts', val: (userData && userData?.yourPostEngaged) || 0 },
     { id: 3, title: 'Objections received', val: (userData && userData?.contentionsOnAddedAns) || 0 },
     { id: 4, title: 'Agreements received', val: (userData && userData?.selectionsOnAddedAns) || 0 },
-    { id: 5, title: 'My posts hidden by users', val: (userData && userData?.yourHiddenPostCounter) || 0 },
+    { id: 5, title: 'My posts hidden by users', val: (userData && userData?.feedBackQuestsStatistics?.otherHidingOurQuestsCount) || 0 },
   ];
 
   const othersPosts = [
