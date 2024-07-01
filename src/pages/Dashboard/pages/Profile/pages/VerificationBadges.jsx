@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
 import { LoginSocialFacebook } from './ReactFacebook';
-import { LoginSocialLinkedin } from './ReactLinkedIn';
+// import { LoginSocialLinkedin } from './ReactLinkedIn';
 import { LoginSocialYoutube } from './ReactYoutube';
 import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
@@ -26,6 +26,8 @@ import { badgesTotalLength } from '../../../../../constants/varification-badges'
 import { Button } from '../../../../../components/ui/Button';
 import VerificationBadgeScore from '../../../../../components/summary/VerificationBadgeScore';
 import Privacy from './verification-badges/Privacy';
+import { LoginSocialGithub, LoginSocialLinkedin } from 'reactjs-social-login';
+import Social from './verification-badges/Social';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ const VerificationBadges = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
-  const [isPasswordConfirmation, setIsPasswordConfirmation] = useState();
+  const [isPasswordConfirmation, setIsPasswordConfirmation] = useState(false);
   const legacyPromiseRef = useRef();
   const persistedContants = useSelector(getConstantsValues);
   const getAskPasswordFromRedux = useSelector(getAskPassword);
@@ -136,7 +138,7 @@ const VerificationBadges = () => {
       } else if (provider === 'twitter') {
         id = data.user.uid;
       } else if (provider === 'github') {
-        id = data.user.email;
+        id = data.id;
       } else if (provider === 'youtube') {
         id = data.items[0].id;
       }
@@ -256,15 +258,15 @@ const VerificationBadges = () => {
           />
 
           <Privacy checkLegacyBadge={checkLegacyBadge} handleRemoveBadgePopup={handleRemoveBadgePopup} />
-
+          {/* 
           <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
             Social
-          </h1>
+          </h1> */}
 
           {/* all */}
-          <div className="flex flex-col items-center gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]">
-            {/* Facebook */}
-            {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+          {/* <div className="flex flex-col items-center gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]"> */}
+          {/* Facebook */}
+          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
             <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
               {checkPrimary('facebook') && (
                 <img
@@ -351,8 +353,8 @@ const VerificationBadges = () => {
             )}
           </div> */}
 
-            {/* LinkedIn */}
-            <div className="relative flex items-center gap-[8.5px] opacity-[100%] laptop:gap-2 desktop:gap-5">
+          {/* LinkedIn */}
+          {/* <div className="relative flex items-center gap-[8.5px] opacity-[100%] laptop:gap-2 desktop:gap-5">
               <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
                 {checkPrimary('linkedin') && (
                   <img
@@ -439,6 +441,42 @@ const VerificationBadges = () => {
                   </span>
                 </Button>
               ) : (
+
+                // <LoginSocialLinkedin
+                //   scope="openid,profile,email"
+                //   client_id={import.meta.env.VITE_LINKEDIN_KEY}
+                //   client_secret={import.meta.env.VITE_LINKEDIN_SECRET}
+                //   onResolve={async ({ provider, data }) => {
+                //     if (
+                //       (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
+                //       (checkLegacyBadge() && getAskPasswordFromRedux)
+                //     ) {
+                //       await handleOpenPasswordConfirmation();
+                //     }
+                //     console.log(provider, data);
+                //     setIsLoading(true);
+                //     handleAddBadge(provider, data);
+                //   }}
+                //   redirect_uri={window.location.href}
+                //   onReject={(err) => {
+                //     showToast('error', 'errorAddingBadge');
+                //     setIsLoading(false);
+                //     console.log(err);
+                //   }}
+                // >
+                //   <Button
+                //     variant={checkSocial('linkedin') ? 'verification-badge-remove' : 'submit'}
+                //   // color={checkSocial('linkedin') ? 'red' : 'blue'}
+                //   // disabled={true}
+                //   // color="gray"
+                //   >
+                //     {checkSocial('linkedin') ? 'Remove' : 'Add'}
+                //     <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
+                //       {checkSocial('linkedin') ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
+                //     </span>
+                //   </Button>
+                // </LoginSocialLinkedin>
+
                 <LoginSocialLinkedin
                   // isOnlyGetToken
                   client_id={import.meta.env.VITE_LINKEDIN_KEY}
@@ -457,10 +495,6 @@ const VerificationBadges = () => {
                   redirect_uri={window.location.href}
                   // scope="email,openid,profile,w_member_social"
                   onReject={(err) => {
-                    if (err === 'Popup closed without completing login.') {
-                      setIsLoading(false);
-                      return;
-                    }
                     showToast('error', 'errorAddingBadge');
                     setIsLoading(false);
                     console.log(err);
@@ -480,10 +514,10 @@ const VerificationBadges = () => {
                   </Button>
                 </LoginSocialLinkedin>
               )}
-            </div>
+            </div> */}
 
-            {/* Twitter */}
-            {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+          {/* Twitter */}
+          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
             <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
               {checkPrimary('twitter') && (
                 <img
@@ -582,8 +616,8 @@ const VerificationBadges = () => {
             )}
           </div> */}
 
-            {/* Instagram */}
-            {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+          {/* Instagram */}
+          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
             <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
               {checkPrimary('instagram') && (
                 <img
@@ -669,8 +703,8 @@ const VerificationBadges = () => {
             )}
           </div> */}
 
-            {/* Github */}
-            <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+          {/* Github */}
+          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
               <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
                 {checkPrimary('github') && (
                   <img
@@ -741,29 +775,43 @@ const VerificationBadges = () => {
                   </span>
                 </Button>
               ) : (
-                <Button
-                  variant={checkSocial('github') ? 'verification-badge-remove' : 'submit'}
-                  // color={checkSocial('github') ? 'red' : 'blue'}
-                  onClick={async () => {
+                <LoginSocialGithub
+                  client_id={import.meta.env.VITE_GITHUB_CLIENT_ID}
+                  client_secret={import.meta.env.VITE_GITHUB_CLIENT_SECRET}
+                  onResolve={async ({ provider, data }) => {
                     if (
                       (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
                       (checkLegacyBadge() && getAskPasswordFromRedux)
                     ) {
                       await handleOpenPasswordConfirmation();
                     }
-                    loginWithGithub();
+                    console.log(provider, data);
+                    setIsLoading(true);
+                    handleAddBadge(provider, data);
+                  }}
+                  redirect_uri={window.location.href}
+                  // scope="email,openid,profile,w_member_social"
+                  onReject={(err) => {
+                    showToast('error', 'errorAddingBadge');
+                    setIsLoading(false);
+                    console.log(err);
                   }}
                 >
-                  {checkSocial('github') ? 'Remove' : 'Add'}
-                  <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
-                    {checkSocial('github') ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
-                  </span>
-                </Button>
-              )}
-            </div>
 
-            {/* Youtube  */}
-            {/* <div className="flex items-center gap-[10px] laptop:gap-5">
+                  <Button
+                    variant={checkSocial('github') ? 'verification-badge-remove' : 'submit'}
+                  >
+                    {checkSocial('github') ? 'Remove' : 'Add'}
+                    <span className="pl-1 text-[7px] font-semibold leading-[1px] tablet:pl-[5px] laptop:text-[13px]">
+                      {checkSocial('github') ? '' : `(+${persistedContants?.ACCOUNT_BADGE_ADDED_AMOUNT} FDX)`}
+                    </span>
+                  </Button>
+                </LoginSocialGithub>
+              )}
+            </div> */}
+          {/* {console.log("uri", window.location.href)} */}
+          {/* Youtube  */}
+          {/* <div className="flex items-center gap-[10px] laptop:gap-5">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`}
             alt="Twitter"
@@ -831,8 +879,8 @@ const VerificationBadges = () => {
           )}
         </div> */}
 
-            {/* SoundCloud */}
-            {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
+          {/* SoundCloud */}
+          {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/soundCloud.svg`}
             alt="Sound Cloud"
@@ -884,7 +932,14 @@ const VerificationBadges = () => {
             </Button>
           )}
         </div> */}
-          </div>
+          {/* </div> */}
+          <Social
+            handleRemoveBadgePopup={handleRemoveBadgePopup}
+            handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+            checkLegacyBadge={checkLegacyBadge}
+            checkSocial={checkSocial}
+            checkPrimary={checkPrimary}
+          />
 
           <Web3
             handleRemoveBadgePopup={handleRemoveBadgePopup}

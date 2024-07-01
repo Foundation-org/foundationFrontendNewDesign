@@ -131,6 +131,7 @@ const AddCellPhonePopup = ({ isPopup, title, logo, handleClose, type }) => {
             <PhoneInput
               placeholder="Enter phone number"
               value={phone}
+              defaultCountry="US"
               className="verification_badge_input mb-[10px] mt-1 tablet:mb-5 tablet:mt-[15px]"
               onChange={setPhone}
               style={{ color: '#707175' }}

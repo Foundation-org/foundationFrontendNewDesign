@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PopUp from '../ui/PopUp';
 import { Button } from '../ui/Button';
 import { FaSpinner } from 'react-icons/fa';
@@ -9,18 +9,8 @@ import { addUser } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import showToast from '../ui/Toast';
 
-const LegacyConfirmationPopup = ({
-  isPopup,
-  setIsPopup,
-  title,
-  logo,
-  legacyPromiseRef,
-  login,
-  uuid,
-  setIsLoadingSocial,
-}) => {
+const LegacyConfirmationPopup = ({ isPopup, setIsPopup, title, logo, legacyPromiseRef, login, uuid }) => {
   const handleClose = () => {
-    setIsLoadingSocial && setIsLoadingSocial(false);
     setIsPopup(false);
   };
 

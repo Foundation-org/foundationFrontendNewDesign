@@ -45,7 +45,7 @@ const Topbar = () => {
                   className="h-[10px] w-auto tablet:h-auto"
                 />
                 <span className="w-fit whitespace-nowrap font-poppins text-[10px] font-medium text-[#D0E4F2] tablet:pt-1 tablet:text-[13px] tablet:leading-[13px]">
-                  v 1.14.0
+                  v 1.14.20
                 </span>
               </Link>
             </div>
@@ -55,14 +55,13 @@ const Topbar = () => {
                 <Link
                   key={item.id}
                   to={persistedUserInfo.role === 'guest' && item.id === 1 ? item.signupPath : item.path}
-                  className={`${
-                    item.activePaths?.some((path) => location.pathname === path) ||
-                    location.pathname === `${item.path}/`
+                  className={`${item.activePaths?.some((path) => location.pathname === path) ||
+                      location.pathname === `${item.path}/`
                       ? 'text-white'
                       : persistedTheme === 'dark'
                         ? 'text-[#92959D]'
                         : 'text-[#BEDEF4]'
-                  } flex h-full items-center`}
+                    } flex h-full items-center`}
                   onClick={() => {
                     dispatch(createQuestActions.resetCreateQuest());
                     dispatch(pictureMediaAction.resetToInitialState());
@@ -74,7 +73,7 @@ const Topbar = () => {
                       persistedUserInfo.role === 'guest' && item.id === 1
                         ? item.signupIcon
                         : item.activePaths?.some((path) => location.pathname === path) ||
-                            location.pathname === `${item.path}/`
+                          location.pathname === `${item.path}/`
                           ? item.iconSelected
                           : item.icon
                     }
@@ -93,13 +92,12 @@ const Topbar = () => {
             <Link
               key={item.id}
               to={persistedUserInfo.role === 'guest' && item.id === 1 ? item.signupPath : item.path}
-              className={`${
-                item.activePaths?.some((path) => location.pathname === path) || location.pathname === `${item.path}/`
+              className={`${item.activePaths?.some((path) => location.pathname === path) || location.pathname === `${item.path}/`
                   ? 'text-white'
                   : persistedTheme === 'dark'
                     ? 'text-[#92959D]'
                     : 'text-[#BEDEF4]'
-              } flex h-full items-center`}
+                } flex h-full items-center`}
               onClick={() => {
                 dispatch(createQuestActions.resetCreateQuest());
                 dispatch(pictureMediaAction.resetToInitialState());
@@ -111,7 +109,7 @@ const Topbar = () => {
                   persistedUserInfo.role === 'guest' && item.id === 1
                     ? item.signupIcon
                     : item.activePaths?.some((path) => location.pathname === path) ||
-                        location.pathname === `${item.path}/`
+                      location.pathname === `${item.path}/`
                       ? item.iconSelected
                       : item.icon
                 }
