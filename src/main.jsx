@@ -32,6 +32,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <MetaMaskProvider
     debug={false}
     sdkOptions={{
+      checkInstallationImmediately: false, // This will automatically connect to MetaMask on page load
       dappMetadata: {
         name: 'Foundation',
         url: window.location.href,

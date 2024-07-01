@@ -130,6 +130,8 @@ Button.propTypes = {
     'social-btn',
     'hollow-submit',
     'hollow-submit2',
+    'verification-badge-edit',
+    'verification-badge-remove',
     'submit2',
     'submit-hollow',
     'getintouch',

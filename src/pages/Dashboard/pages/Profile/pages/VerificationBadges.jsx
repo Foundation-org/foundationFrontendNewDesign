@@ -37,7 +37,7 @@ const VerificationBadges = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState();
-  const [isPasswordConfirmation, setIsPasswordConfirmation] = useState();
+  const [isPasswordConfirmation, setIsPasswordConfirmation] = useState(false);
   const legacyPromiseRef = useRef();
   const persistedContants = useSelector(getConstantsValues);
   const getAskPasswordFromRedux = useSelector(getAskPassword);

@@ -65,20 +65,19 @@ const VerificationPopups = ({ isPopup, setIsPopup, title, logo, placeholder, sel
     <div>
       <PopUp open={isPopup} handleClose={handleClose} title={title} logo={logo}>
         <div className="pb-[15px] pt-2 tablet:pb-5 tablet:pt-[30px]">
-          <div className='flex justify-center w-full'>
-
+          <div className="flex w-full justify-center">
             <Button
               variant="social-btn"
-
               onClick={() => {
-                localStorage.setItem('selectedBadge', selectedBadge)
-                window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`
+                localStorage.setItem('selectedBadge', selectedBadge);
+                localStorage.setItem('target-url', `${window.location.href}`);
+                window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
               }}
             >
               <img
                 src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/google.svg`}
                 className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] "
-              />{' '}
+              />
               Continue with Google
             </Button>
           </div>

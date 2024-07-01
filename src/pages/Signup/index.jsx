@@ -1,42 +1,30 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { addUser } from '../../features/auth/authSlice';
 import { referralModalStyle } from '../../constants/styles';
-import { setAskPassword } from '../../features/profile/userSettingSlice';
 import showToast from '../../components/ui/Toast';
-import Typography from '../../components/Typography';
 import SocialLogins from '../../components/SocialLogins';
 import MyModal from './components/Modal';
 import api from '../../services/api/Axios';
 import BasicModal from '../../components/BasicModal';
 import ReferralCode from '../../components/ReferralCode';
 import Loader from './components/Loader';
-import { Button } from '../../components/ui/Button';
 
 export default function Signup() {
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [reTypePassword, setReTypePassword] = useState('');
-  const [provider, setProvider] = useState('');
   const [profile, setProfile] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [resData, setResData] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [referralCode, setReferralCode] = useState(null);
+  const [referralCode, setReferralCode] = useState('');
   const [isReferral, setIsReferral] = useState(false);
   const [isLoadingSocial, setIsLoadingSocial] = useState(false);
   const [isPopup, setIspopup] = useState(false);
   const [socialAccount, setSocialAccount] = useState({ isSocial: false, data: null });
-  const googleRef = useRef(null);
-  const fbRef = useRef(null);
-  const linkedInRef = useRef(null);
-  const githubRef = useRef(null);
-  const instaRef = useRef(null);
   const [clickedButtonName, setClickedButtonName] = useState('');
   const persistedTheme = useSelector((state) => state.utils.theme);
 
@@ -93,65 +81,6 @@ export default function Signup() {
     }
   };
 
-  const handleSignUpSocial = async (data, provider) => {
-    setSocialAccount({ type: provider, data });
-
-    if (provider) {
-      if (provider === 'google') {
-        handleSignUpSocialGuest(data);
-      } else {
-        handleSignUpGuestSocialBadges(data, provider);
-      }
-    } else {
-      handleSignup();
-    }
-    dispatch(setAskPassword(false));
-    return;
-  };
-
-  // Google
-  const handleSignUpSocialGuest = async (data) => {
-    try {
-      data.uuid = localStorage.getItem('uuid');
-      const res = await api.post(`/user/signUpSocial/guestMode`, data);
-      console.log('new', res);
-      if (res.status === 200) {
-        localStorage.setItem('uuid', res.data.uuid);
-        localStorage.setItem('userData', JSON.stringify(res.data));
-        localStorage.removeItem('isGuestMode');
-        dispatch(addUser(res.data));
-        dispatch(setAskPassword(false));
-        navigate('/');
-      }
-    } catch (error) {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
-      setIsLoading(false);
-      setIsLoadingSocial(false);
-    }
-  };
-
-  // Linkedin, Github, Facebook .....
-  const handleSignUpGuestSocialBadges = async (data, provider) => {
-    try {
-      data.uuid = localStorage.getItem('uuid');
-      data.type = provider;
-      const res = await api.post(`/user/signUpGuest/SocialBadges`, { data, type: provider });
-      if (res.status === 200) {
-        localStorage.setItem('uuid', res.data.uuid);
-        localStorage.setItem('userData', JSON.stringify(res.data));
-        localStorage.removeItem('isGuestMode');
-        dispatch(addUser(res.data));
-        dispatch(setAskPassword(false));
-        navigate('/');
-      }
-    } catch (error) {
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
-
-      setIsLoading(false);
-      setIsLoadingSocial(false);
-    }
-  };
-
   return (
     <div className="flex h-screen w-full flex-col bg-blue text-white lg:flex-row dark:bg-black-200">
       {isLoadingSocial && <Loader />}
@@ -175,57 +104,23 @@ export default function Signup() {
       {/* Main Content */}
       <div className="flex h-screen flex-col items-center bg-white md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-bl-[65px] lg:rounded-tl-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
-          <Typography variant="textTitle">
+          <h1 className="text-[18px] font-[700] text-black tablet:text-[35px] tablet:leading-[35px] dark:text-white">
             {location.pathname === '/signup' || location.pathname === '/guest-signup'
               ? 'Create an Account'
               : 'Create Account with Email'}
-          </Typography>
-
+          </h1>
           {(location.pathname === '/signup' || location.pathname === '/guest-signup') && (
             <div className="mt-5 tablet:mt-[45px]">
-              <SocialLogins
-                setProvider={setProvider}
-                setProfile={setProfile}
-                handleSignUpSocial={handleSignUpSocial}
-                setIsLoadingSocial={setIsLoadingSocial}
-                handleReferralOpen={handleReferralOpen}
-                googleRef={googleRef}
-                fbRef={fbRef}
-                linkedInRef={linkedInRef}
-                instaRef={instaRef}
-                githubRef={githubRef}
-                setClickedButtonName={setClickedButtonName}
-                RedirectURL={window.location.href}
-              />
-              <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
-                <Button
-                  variant="auth"
-                  onClick={() => {
-                    if (location.pathname === '/signup') {
-                      navigate('/signup/credentials');
-                    } else {
-                      navigate('/guest-signup/credentials');
-                    }
-                  }}
-                >
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email-login.svg`}
-                    className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] lg:mr-3 "
-                  />
-                  Email
-                </Button>
-              </div>
+              <SocialLogins handleReferralOpen={handleReferralOpen} setClickedButtonName={setClickedButtonName} />
             </div>
           )}
           <Outlet />
           <div className="mt-5 flex gap-3 tablet:mt-14">
-            <Typography variant="textBase" className="text-gray-100 dark:text-gray ">
+            <p className="text-[11.21px] font-[500] text-gray-100 md:text-[22px] dark:text-gray">
               Already have an account?
-            </Typography>
+            </p>
             <Link to="/signin">
-              <Typography variant="textBase" className="text-blue dark:text-white">
-                Sign in
-              </Typography>
+              <p className="text-[11.21px] font-[500] text-blue md:text-[22px] dark:text-white">Sign in</p>
             </Link>
           </div>
         </div>

@@ -1,30 +1,31 @@
+import { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { authSuccess } from '../services/api/authentication';
 import { useNavigate } from 'react-router-dom';
-import api from '../services/api/Axios';
 import { addUser } from '../features/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAskPassword } from '../features/profile/userSettingSlice';
-import { useDispatch } from 'react-redux';
+import api from '../services/api/Axios';
 import showToast from './ui/Toast';
 import LegacyConfirmationPopup from './dialogue-boxes/LegacyConfirmationPopup';
-import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 const Authenticating = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const legacyPromiseRef = useRef();
   const [uuid, setUuid] = useState();
   const queryClient = useQueryClient();
   const persistedUserInfo = useSelector((state) => state.auth.user);
 
+  const [isPasswordConfirmation, setIsPasswordConfirmation] = useState(false);
 
-
-  const [isPasswordConfirmation, setIsPasswordConfirmation] = useState();
-
-  const legacyPromiseRef = useRef();
+  const redirectTo = localStorage.getItem('target-url');
+  const url = new URL(redirectTo);
+  const pathname = url.pathname;
 
   const searchParams = new URLSearchParams(window.location.search);
   const token = searchParams.get('token');
+
   const {
     data: authSuccessResp,
     isLoading,
@@ -39,6 +40,8 @@ const Authenticating = () => {
 
   // Google
   const handleSignUpSocialGuest = async (data) => {
+    if (persistedUserInfo?.role === 'user') return;
+
     try {
       data.uuid = localStorage.getItem('uuid');
       const res = await api.post(`/user/signUpSocial/guestMode`, data);
@@ -51,6 +54,7 @@ const Authenticating = () => {
         navigate('/');
       }
     } catch (error) {
+      console.log('handleSignUpSocialGuestError', error);
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       navigate(pathname);
     }
@@ -58,6 +62,8 @@ const Authenticating = () => {
 
   // Linkedin, Github, Facebook .....
   const handleSignUpGuestSocialBadges = async (data, provider) => {
+    if (persistedUserInfo?.role === 'user') return;
+
     try {
       data.uuid = localStorage.getItem('uuid');
       data.type = provider;
@@ -75,7 +81,8 @@ const Authenticating = () => {
       navigate(pathname);
     }
   };
-  // For signing in with all social Badges 
+
+  // For signing in with all social Badges
   const handleSignInSocial = async (data, provider) => {
     try {
       let res;
@@ -122,18 +129,16 @@ const Authenticating = () => {
         showToast('success', 'badgeAdded');
         queryClient.invalidateQueries(['userInfo']);
       }
-
     } catch (error) {
       console.log(error);
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
-
     } finally {
-      navigate(pathname)
+      navigate(pathname);
     }
   };
 
   const handleAddBadge = async (data, provider) => {
-    console.log("came", provider, data);
+    console.log('came', provider, data);
     try {
       let id;
       if (provider === 'linkedin') {
@@ -164,48 +169,40 @@ const Authenticating = () => {
         queryClient.invalidateQueries(['userInfo']);
       }
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
       if (provider !== 'instagram') {
         showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
       }
     } finally {
       navigate(pathname);
-
     }
   };
-
 
   if (isError) {
     console.log('error', error);
   }
 
-
-  const redirectTo = localStorage.getItem('target-url');
-  const url = new URL(redirectTo);
-  const pathname = url.pathname;
-  if (!isLoading && !isError && isSuccess) {
-
-    console.log(authSuccessResp.data.user, authSuccessResp.data.user.provider);
-    if (pathname === '/signin') {
-      handleSignInSocial(authSuccessResp.data.user, authSuccessResp.data.user.provider)
-    } else if (pathname === '/profile/verification-badges') {
-      if (authSuccessResp.data.user.provider === 'google') {
-        handleAddContactBadge({ provider: authSuccessResp.data.user.provider, data: authSuccessResp.data.user })
+  useEffect(() => {
+    if (!isLoading && !isError && isSuccess) {
+      if (pathname === '/signin') {
+        handleSignInSocial(authSuccessResp.data.user, authSuccessResp.data.user.provider);
+      } else if (pathname === '/profile/verification-badges') {
+        if (authSuccessResp.data.user.provider === 'google') {
+          handleAddContactBadge({ provider: authSuccessResp.data.user.provider, data: authSuccessResp.data.user });
+        } else {
+          handleAddBadge(authSuccessResp.data.user, authSuccessResp.data.user.provider);
+        }
       } else {
-        handleAddBadge(authSuccessResp.data.user, authSuccessResp.data.user.provider)
+        if (authSuccessResp.data.user.provider === 'google') {
+          handleSignUpSocialGuest(authSuccessResp.data.user);
+        } else {
+          handleSignUpGuestSocialBadges(authSuccessResp.data.user, authSuccessResp.data.user.provider);
+        }
       }
+    } else if (isError) {
+      navigate(pathname);
     }
-    else {
-
-      if (authSuccessResp.data.user.provider === 'google') {
-        handleSignUpSocialGuest(authSuccessResp.data.user);
-      } else {
-        handleSignUpGuestSocialBadges(authSuccessResp.data.user, authSuccessResp.data.user.provider);
-      }
-    }
-  } else if (isError) {
-    navigate(pathname);
-  }
+  }, [isLoading, isError, isSuccess]);
 
   const handleOpenPasswordConfirmation = () => {
     setIsPasswordConfirmation(true);
@@ -213,7 +210,6 @@ const Authenticating = () => {
       legacyPromiseRef.current = resolve;
     });
   };
-
 
   return (
     <>
@@ -227,8 +223,11 @@ const Authenticating = () => {
         login={true}
         uuid={uuid}
       />
-      <div>Loading... </div>
-    </>)
+      <div className="flex h-full min-h-screen justify-center bg-white pt-8 text-lg text-[#7C7C7C] dark:bg-black dark:text-[#B8B8B8]">
+        Loading...
+      </div>
+    </>
+  );
 };
 
 export default Authenticating;
