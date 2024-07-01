@@ -17,4 +17,10 @@ export const authMethods = [
     img: 'assets/profile/LinkedIn-2x.png',
     provider: 'linkedin',
   },
+  {
+    id: 4,
+    title: 'Twitter',
+    img: 'assets/profile/Twitter-2x.png',
+    provider: 'twitter',
+  }
 ];

@@ -148,7 +148,7 @@ const Authenticating = () => {
       } else if (provider === 'facebook') {
         id = data.id;
       } else if (provider === 'twitter') {
-        id = data.user.uid;
+        id = data.id;
       } else if (provider === 'github') {
         id = data.id;
       } else if (provider === 'youtube') {
