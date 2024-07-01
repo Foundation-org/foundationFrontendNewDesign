@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Reorder, useDragControls, useMotionValue } from 'framer-motion';
+import { Reorder } from 'framer-motion';
 
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
 
@@ -8,8 +8,6 @@ import Loader from '../../../../../components/ui/Loader';
 import SingleAnswer from '../../../../../components/question-card/options/SingleAnswer';
 import SingleAnswerRankedChoice from '../../../../../components/question-card/options/SingleAnswerRankedChoice';
 import SingleAnswerMultipleChoice from '../../../../../components/question-card/options/SingleAnswerMultipleChoice';
-import { ReorderWrapper } from '../../../../../components/ReorderWrapper';
-import { useRaisedShadow } from '../../../../../components/use-raised-shadow';
 
 const StartTest = ({
   questStartData,
@@ -219,6 +217,7 @@ const StartTest = ({
             {rankedAnswers?.map((item, index) => (
               <SingleAnswerRankedChoice
                 key={item.id}
+                setDragId={setDragId}
                 isDragging={dragId === item.id ? true : false}
                 questStartData={questStartData}
                 id={index}

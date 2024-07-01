@@ -10,17 +10,17 @@ export const ReorderWrapper = ({ dragControls, delay, children }: ReorderIconPro
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const handlePointerDown = (event: React.PointerEvent) => {
-    // event.persist();
-    // timeoutRef.current = setTimeout(() => {
-    //   dragControls.start(event);
-    // }, delay * 1000);
+    event.persist();
+    timeoutRef.current = setTimeout(() => {
+      dragControls.start(event);
+    }, delay * 1000);
   };
 
   const handlePointerUp = () => {
-    // if (timeoutRef.current) {
-    //   clearTimeout(timeoutRef.current);
-    //   timeoutRef.current = null;
-    // }
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
   };
 
   return (
