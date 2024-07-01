@@ -57,6 +57,7 @@ import Ledger from '../pages/Dashboard/pages/Treasury/pages/Ledger';
 // TEST
 import Test from '../components/Test';
 import SignUpPrivacyPolicy from '../pages/Signup/pages/PrivacyPolicy';
+import Authenticating from '../components/Authenticating';
 
 export function Router() {
   const persistedUser = useSelector((state) => state.auth.user);
@@ -84,11 +85,13 @@ export function Router() {
           <Route path="/p/:id" element={<GuestRedirect />} />
           <Route path="/l/:id" element={<GuestRedirect />} />
           <Route path="/treasury/:code" element={<Navigate to="/" state={{ from: '/treasury/:code' }} />} />
+          <Route path="/authenticating" element={<Authenticating />} />
           <Route path="*" element={<Navigate to="/signin" />} />
         </Routes>
       ) : (
         <Routes>
           <Route element={<RequireAuth allowedRoles={[ROLES.User, ROLES.Guest]} />}>
+            <Route path="/authenticating" element={<Authenticating />} />
             <Route path="/term-of-service" element={<TermOfService />} />
             <Route path="/privacy-policy" element={<SignUpPrivacyPolicy />} />
             <Route path="/welcome" element={<Welcome />} />

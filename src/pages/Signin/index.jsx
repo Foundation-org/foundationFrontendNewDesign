@@ -1,163 +1,45 @@
-import { toast } from 'sonner';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { FaSpinner } from 'react-icons/fa';
-import { signIn, userInfo } from '../../services/api/userAuth';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import Button from '../../components/Button';
-import Typography from '../../components/Typography';
-import SocialLogins from '../../components/SocialLogins';
-import ReCAPTCHA from 'react-google-recaptcha';
-import '../../index.css';
-import api from '../../services/api/Axios';
-import { useDispatch } from 'react-redux';
-import { addUser } from '../../features/auth/authSlice';
-import BasicModal from '../../components/BasicModal';
-import ReferralCode from '../../components/ReferralCode';
-import { sendVerificationEmail } from '../../services/api/authentication';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import Loader from '../Signup/components/Loader';
-import { referralModalStyle } from '../../constants/styles';
 import LegacyConfirmationPopup from '../../components/dialogue-boxes/LegacyConfirmationPopup';
-import showToast from '../../components/ui/Toast';
-import { GithubAuthProvider, TwitterAuthProvider, signInWithPopup } from 'firebase/auth';
-import { authentication } from '../Dashboard/pages/Profile/pages/firebase-config';
+import SocialLogins from '../../components/SocialLogins';
+import '../../index.css';
 
 export default function Signin() {
-  const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
-  const { authO } = useParams();
-  const queryClient = useQueryClient();
-  const [provider, setProvider] = useState('');
-  const [profile, setProfile] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [isLoadingSocial, setIsLoadingSocial] = useState(false);
-
   const [uuid, setUuid] = useState();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
-  const [isPasswordConfirmation, setIsPasswordConfirmation] = useState();
+  const [isPasswordConfirmation, setIsPasswordConfirmation] = useState(false);
   const legacyPromiseRef = useRef();
-  const googleRef = useRef(null);
-  const fbRef = useRef(null);
-  const linkedInRef = useRef(null);
-  const githubRef = useRef(null);
-  const instaRef = useRef(null);
   const [clickedButtonName, setClickedButtonName] = useState('');
-
-  const loginWithGithub = () => {
-    const provider = new GithubAuthProvider();
-    signInWithPopup(authentication, provider)
-      .then((data) => {
-        console.log('github data', data);
-        setProvider('github');
-        setProfile(data);
-        handleSignInSocial(data, 'github');
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoadingSocial(false);
-      });
-  };
-  const loginWithTwitter = () => {
-    const provider = new TwitterAuthProvider();
-    console.log(authentication);
-    signInWithPopup(authentication, provider)
-      .then((data) => {
-        console.log('twitter data', data);
-        setProvider('twitter');
-        setProfile(data);
-        handleSignInSocial(data, 'twitter');
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoadingSocial(false);
-      });
-  };
 
   const triggerLogin = async (value) => {
     if (!value) {
       value = clickedButtonName;
     }
-    if (value === 'facebook') {
-      if (fbRef.current) {
-        const facebookButton = fbRef.current.querySelector('div'); // or a more specific selector if needed
-        if (facebookButton) {
-          facebookButton.click();
-          setIsLoadingSocial(true);
-        }
-      }
-    }
     if (value === 'google') {
-      if (googleRef.current) {
-        const facebookButton = googleRef.current.querySelector('div'); // or a more specific selector if needed
-        if (facebookButton) {
-          facebookButton.click();
-          setIsLoadingSocial(true);
-        }
-      }
+      setIsLoadingSocial(true);
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
     }
     if (value === 'linkedin') {
-      if (linkedInRef.current) {
-        const facebookButton = linkedInRef.current.querySelector('div'); // or a more specific selector if needed
-        if (facebookButton) {
-          facebookButton.click();
-          setIsLoadingSocial(true);
-        }
-      }
+      setIsLoadingSocial(true);
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/linkedin`;
     }
     if (value === 'github') {
-      if (githubRef.current) {
-        const facebookButton = githubRef.current.querySelector('div'); // or a more specific selector if needed
-        if (facebookButton) {
-          facebookButton.click();
-          setIsLoadingSocial(true);
-        }
-      }
+      setIsLoadingSocial(true);
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/github`;
+    }
+    if (value === 'facebook') {
+      setIsLoadingSocial(true);
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/facebook`;
     }
     if (value === 'twitter') {
       setIsLoadingSocial(true);
-
-      loginWithTwitter();
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/twitter`;
     }
-  };
-
-  const handleSignInSocial = async (data, provider) => {
-    try {
-      let res;
-      if (provider === 'google') {
-        res = await api.post(`/user/signInUser/social`, {
-          data,
-        });
-      } else {
-        res = await api.post(`/user/signInUser/socialBadges`, { data, type: provider });
-      }
-      if (res.data.isPasswordEncryption) {
-        setUuid(res.data.uuid);
-        await handleOpenPasswordConfirmation();
-      } else {
-        if (res.status === 200) {
-          localStorage.setItem('uuid', res.data.uuid);
-          localStorage.setItem('userData', JSON.stringify(res.data));
-          localStorage.removeItem('isGuestMode');
-          dispatch(addUser(res.data));
-          navigate('/');
-        }
-      }
-    } catch (error) {
-      console.log({ error });
-      showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
-    } finally {
-      setIsLoadingSocial(false);
-    }
-  };
-
-  const handleOpenPasswordConfirmation = () => {
-    setIsPasswordConfirmation(true);
-    return new Promise((resolve) => {
-      legacyPromiseRef.current = resolve;
-    });
   };
 
   return (
@@ -175,53 +57,29 @@ export default function Signin() {
       />
       {isLoadingSocial && <Loader />}
       <div
-        className={`${persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
-          } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
+        className={`${
+          persistedTheme === 'dark' ? 'bg-dark' : 'bg-[#389CE3]'
+        } flex h-[48px] min-h-[48px] w-full items-center justify-center bg-[#202329] lg:hidden`}
       >
         <img src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/logo.svg`} alt="logo" className="h-[10px]" />
       </div>
       <div className="flex h-full flex-col items-center bg-white md:justify-center lg:w-[calc(100%-36.11%)] lg:rounded-br-[65px] lg:rounded-tr-[65px] dark:bg-dark">
         <div className="mt-[17.3px] flex w-[80%] flex-col items-center justify-center md:mt-0 laptop:max-w-[35vw]">
-          <Typography variant="textTitle" className="text-center tablet:text-left">
+          <h1 className="text-center text-[18px] font-[700] text-black tablet:text-left tablet:text-[35px] tablet:leading-[35px] dark:text-white">
             {location.pathname === '/signin' ? 'Login' : 'Login with Email'}
-          </Typography>
+          </h1>
           {location.pathname === '/signin' && (
             <div className="mt-5 tablet:mt-[45px]">
-              <SocialLogins
-                setProvider={setProvider}
-                setProfile={setProfile}
-                handleSignInSocial={handleSignInSocial}
-                setIsLoadingSocial={setIsLoadingSocial}
-                googleRef={googleRef}
-                fbRef={fbRef}
-                linkedInRef={linkedInRef}
-                instaRef={instaRef}
-                githubRef={githubRef}
-                setClickedButtonName={setClickedButtonName}
-                isLogin={true}
-                triggerLogin={triggerLogin}
-                RedirectURL={window.location.href}
-              />
-              <div className="max-w-auto min-w-[145px] lg:min-w-[305px] ">
-                <Button size="login-btn" color="gray" onClick={() => navigate('/signin/credentials')}>
-                  <img
-                    src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/svgs/email-login.svg`}
-                    className="mr-2 h-[22px] w-[22px] md:h-12 md:w-[32px] lg:mr-3 "
-                  />
-                  Email
-                </Button>
-              </div>
+              <SocialLogins setClickedButtonName={setClickedButtonName} isLogin={true} triggerLogin={triggerLogin} />
             </div>
           )}
           <Outlet />
           <div className="mt-5 flex justify-center gap-3 tablet:mt-14">
-            <Typography variant="textBase" className="text-gray-100 dark:text-gray">
+            <p className="text-[11.21px] font-[500] text-gray-100 md:text-[22px] dark:text-gray">
               Don’t have an account?
-            </Typography>
+            </p>
             <Link to={persistedUserInfo && persistedUserInfo.role === 'guest' ? '/guest-signup' : '/signup'}>
-              <Typography variant="textBase" className="text-blue dark:text-white">
-                Sign up
-              </Typography>
+              <p className="text-[11.21px] font-[500] text-blue md:text-[22px] dark:text-white">Sign up</p>
             </Link>
           </div>
         </div>

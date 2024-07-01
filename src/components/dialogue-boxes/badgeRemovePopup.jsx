@@ -1,11 +1,9 @@
 import PopUp from '../ui/PopUp';
 import { Button } from '../ui/Button';
-import { toast } from 'sonner';
 import api from '../../services/api/Axios';
 import { FaSpinner } from 'react-icons/fa';
 import { useQueryClient } from '@tanstack/react-query';
 import showToast from '../ui/Toast';
-import { useDispatch } from 'react-redux';
 
 export default function BadgeRemovePopup({
   handleClose,
@@ -20,7 +18,6 @@ export default function BadgeRemovePopup({
   setIsLoading,
   loading,
 }) {
-  const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
   const handleRemoveBadge = async () => {
@@ -80,10 +77,13 @@ export default function BadgeRemovePopup({
         queryClient.invalidateQueries(['userInfo']);
         handleClose();
         setIsLoading(false);
-        setIsPersonalPopup(false);
+        {
+          badgeType === 'personal' && setIsPersonalPopup(false);
+        }
       }
     } catch (error) {
       setIsLoading(false);
+      console.log('error', error);
       showToast('error', 'error', {}, error.response.data.message.split(':')[1]);
     }
   };
