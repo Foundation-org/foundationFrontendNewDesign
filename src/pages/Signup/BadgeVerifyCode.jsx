@@ -79,12 +79,12 @@ const BadgeVerifyCode = () => {
       });
 
       if (response.status === 200) {
-        showToast('error', 'emailVerified')
+        showToast('success', 'emailVerified')
 
         const data = await response.json();
         dispatch(addUser(data));
         localStorage.setItem('uuid', data.uuid);
-        navigate('/dashboard/profile/verification-badges');
+        navigate('/profile/verification-badges');
       }
     } catch (error) {
       console.log('Error during API request:', error.message);
