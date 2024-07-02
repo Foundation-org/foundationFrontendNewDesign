@@ -74,8 +74,6 @@ const StartTest = ({
     return labelFound[0]?.contend === true;
   }
 
-  console.log('rankedAns', rankedAnswers);
-
   const handleOnDragEnd = (event) => {
     const { active, over } = event;
 
