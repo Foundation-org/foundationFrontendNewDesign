@@ -48,7 +48,7 @@ const renderThumbnails = (children) => {
 
 const renderThumbs = (children) => {
   return children.map((child, index) => (
-    <div key={index} className="thumbItem">
+    <div key={index} className="thumbItem" draggable="false" onMouseDown={(event) => event.preventDefault()}>
       {child}
       {/* <span className="thumbIndex">{index + 1}</span> */} 
     </div>
@@ -64,7 +64,7 @@ export default ({ data }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setShouldEmulateTouch(window.innerWidth <= 744 ? false : true);
+      setShouldEmulateTouch(window.innerWidth > 744);
     };
 
     handleResize();
@@ -73,7 +73,7 @@ export default ({ data }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const openDialogue = (img) => {
+  const openDialogue = (img, event) => {
     if (event.target.closest('.thumbItem')) {
       return;
     }
@@ -115,19 +115,15 @@ export default ({ data }) => {
           data.map((item, index) => (
             <div className="relative" key={index}>
               <div
-                onClick={() => {
-                  openDialogue(index + 1);
-                }}
+                onClick={(event) => openDialogue(index + 1, event)}
+                onTouchStart={(event) => event.stopPropagation()}
+                onMouseDown={(event) => event.stopPropagation()}
               >
                 <img alt={index} src={item} />
               </div>
               {location.pathname === '/post' && (
                 <p
-                  onClick={() => {
-                    if (location.pathname === '/post') {
-                      dispatch(delOption({ id: `index-${index}` }));
-                    }
-                  }}
+                  onClick={() => dispatch(delOption({ id: `index-${index}` }))}
                   className="absolute -right-3 -top-3 flex size-6 items-center justify-center rounded-full bg-[#647785] p-[5px] text-center text-[10px] font-semibold text-white [text-shadow:1px_1px_1px_rgba(0,_0,_0,_0.9)]"
                 >
                   <IoClose className="size-4" />
