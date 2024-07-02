@@ -78,6 +78,7 @@ export const socials = [
   //   disabled: false,
   // },
 
+
   {
     image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/Github-2x.png`,
     title: 'Github',
@@ -87,6 +88,17 @@ export const socials = [
     link: '/auth/github',
     accountName: 'github',
     disabled: false,
+  },
+  {
+    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
+    title: 'Farcaster',
+    ButtonColor: 'submit',
+    ButtonText: 'Add',
+    disabled: false,
+    NoOfButton: 1,
+    type: 'farcaster',
+    accountName: 'Farcaster',
+    badgeType: 'farcaster',
   },
 ];
 
@@ -124,17 +136,18 @@ export const web3 = [
   //   accountName: 'Passkey',
   //   badgeType: 'passkey',
   // },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
-    title: 'Farcaster',
-    ButtonColor: 'submit',
-    ButtonText: 'Add',
-    disabled: false,
-    NoOfButton: 1,
-    type: 'farcaster',
-    accountName: 'Farcaster',
-    badgeType: 'farcaster',
-  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
+  //   title: 'Farcaster',
+  //   ButtonColor: 'submit',
+  //   ButtonText: 'Add',
+  //   disabled: false,
+  //   NoOfButton: 1,
+  //   type: 'farcaster',
+  //   accountName: 'Farcaster',
+  //   badgeType: 'farcaster',
+  // },
+
 ];
 
 export const legacy = [
