@@ -10,9 +10,16 @@ import BasicModal from '../../BasicModal';
 import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
 import ObjectionPopUp from '../../ObjectionPopUp';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 const SingleAnswerRankedChoice = (props) => {
   const id = props.id;
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.dragId });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -210,7 +217,13 @@ const SingleAnswerRankedChoice = (props) => {
   };
 
   return (
-    <div className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]">
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="flex items-center tablet:mr-[52px] tablet:gap-[10px] tablet:pl-[1.75rem]"
+    >
       {/* =============== To Display Badges on Left of Option */}
       {props.addedAnswerUuid ? (
         props.addedAnswerUuid === persistedUserInfo?.uuid || props.addedAnswerUuid === localStorage.getItem('uId') ? (
@@ -240,7 +253,7 @@ const SingleAnswerRankedChoice = (props) => {
         {...props.dragHandleProps}
         className={`${
           props.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
-        } flex w-full touch-none items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
+        } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
       >
         <div className="flex w-full items-center rounded-l-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
           {props.btnText !== 'Results' && (
