@@ -201,7 +201,7 @@ const Lists = () => {
         </div>
       ) : (
         <>
-          {items &&
+          {items.length > 0 &&
             items?.map((categoryItem, categoryIndex) => (
               <div
                 key={categoryItem._id}
