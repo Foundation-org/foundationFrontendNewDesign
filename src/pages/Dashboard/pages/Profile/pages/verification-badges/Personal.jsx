@@ -270,8 +270,8 @@ export default function Personal({
 
   return (
     <>
-      <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
-        Personal
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+        Add Personal Badge and get rewarded.
       </h1>
       {renderPersonalBadgesPopup()}
       {/* <div className="hidden flex-col justify-between rounded-2xl border-[3px] border-[#DEE6F7] py-[17px] tablet:flex tablet:flex-row">
@@ -302,7 +302,7 @@ export default function Personal({
         </div>
       </div> */}
       {/* <div className="flex flex-col items-center gap-[7px] tablet:gap-4 laptop:gap-5"> */}
-      <div className="flex flex-col items-center justify-between gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]">
+      <div className="flex flex-col items-center justify-between gap-[5px] pt-[10px] tablet:gap-4 tablet:pt-[18.73px]">
         {personal.map((item, index) => (
           <PersonalItem
             key={index}

@@ -28,6 +28,7 @@ import VerificationBadgeScore from '../../../../../components/summary/Verificati
 import Privacy from './verification-badges/Privacy';
 import { LoginSocialGithub, LoginSocialLinkedin } from 'reactjs-social-login';
 import Social from './verification-badges/Social';
+import ContentCard from '../../../../../components/ContentCard';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -242,31 +243,86 @@ const VerificationBadges = () => {
       />
       {isLoading && <Loader />}
 
-      {/* Summary Section desktop */}
-      <div className="mx-6 mb-[15px] hidden tablet:block">
-        <VerificationBadgeScore />
-      </div>
-      {/* Summary Section Mobile */}
-      <VerificationBadgeScore isMobile={true}>
-        <div className="relative mb-8 flex flex-col gap-[7px] rounded-b-[13.7px] bg-white pb-[17.57px] pt-2 tablet:mb-0 tablet:gap-4 tablet:rounded-[15px] tablet:py-0 laptop:gap-5">
-          <Contact
+      {/* Summary Section */}
+      <ContentCard
+        icon={
+          persistedUserInfo.role === 'user' ? 'assets/svgs/dashboard/MeBadge.svg' : 'assets/svgs/dashboard/badge.svg'
+        }
+        title="Verification Badge Score"
+        badgeVal={persistedUserInfo?.badges?.length}
+        from={persistedUserInfo?.badges.length}
+        outof={badgesTotalLength}
+      >
+        <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+          Boost your earnings now and in the future by adding more verified badges to your profile.
+        </h1>
+      </ContentCard>
+
+      {/* Contact */}
+      <ContentCard icon="assets/verification-badges/contact.svg" title="Contact">
+        <Contact
+          fetchUser={persistedUserInfo}
+          handleRemoveBadgePopup={handleRemoveBadgePopup}
+          checkLegacyBadge={checkLegacyBadge}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          getAskPassword={getAskPasswordFromRedux}
+        />
+      </ContentCard>
+
+      {/* Privacy */}
+      <ContentCard icon="assets/verification-badges/privacy.svg" title="Privacy">
+        <Privacy checkLegacyBadge={checkLegacyBadge} handleRemoveBadgePopup={handleRemoveBadgePopup} />
+      </ContentCard>
+
+      {/* Social */}
+      <ContentCard icon="assets/verification-badges/social.svg" title="Social">
+        <Social
+          handleRemoveBadgePopup={handleRemoveBadgePopup}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+          checkSocial={checkSocial}
+          checkPrimary={checkPrimary}
+        />
+      </ContentCard>
+
+      {/* Web3 */}
+      <ContentCard icon="assets/verification-badges/web3.svg" title="Web3">
+        <Web3
+          handleRemoveBadgePopup={handleRemoveBadgePopup}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+          getAskPassword={getAskPasswordFromRedux}
+        />
+      </ContentCard>
+
+      {/* Personal */}
+      <ContentCard icon="assets/verification-badges/personal_icon.svg" title="Personal">
+        <Personal
+          fetchUser={persistedUserInfo}
+          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+          checkLegacyBadge={checkLegacyBadge}
+          handlePasskeyConfirmation={handlePasskeyConfirmation}
+          getAskPassword={getAskPasswordFromRedux}
+        />
+      </ContentCard>
+
+      {/* <VerificationBadgeScore isMobile={true}>
+        <div className="relative mb-8 flex flex-col gap-[7px] rounded-b-[13.7px] bg-white pb-[17.57px] pt-2 tablet:mb-0 tablet:gap-4 tablet:rounded-[15px] tablet:py-0 laptop:gap-5"> */}
+      {/* <Legacy
             fetchUser={persistedUserInfo}
             handleRemoveBadgePopup={handleRemoveBadgePopup}
             checkLegacyBadge={checkLegacyBadge}
-            handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
-            getAskPassword={getAskPasswordFromRedux}
-          />
+          /> */}
 
-          <Privacy checkLegacyBadge={checkLegacyBadge} handleRemoveBadgePopup={handleRemoveBadgePopup} />
-          {/* 
+      {/* 
           <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
             Social
           </h1> */}
 
-          {/* all */}
-          {/* <div className="flex flex-col items-center gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]"> */}
-          {/* Facebook */}
-          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+      {/* all */}
+      {/* <div className="flex flex-col items-center gap-[5px] rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:gap-4 tablet:border-[3px] tablet:py-[22px]"> */}
+      {/* Facebook */}
+      {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
             <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
               {checkPrimary('facebook') && (
                 <img
@@ -353,8 +409,8 @@ const VerificationBadges = () => {
             )}
           </div> */}
 
-          {/* LinkedIn */}
-          {/* <div className="relative flex items-center gap-[8.5px] opacity-[100%] laptop:gap-2 desktop:gap-5">
+      {/* LinkedIn */}
+      {/* <div className="relative flex items-center gap-[8.5px] opacity-[100%] laptop:gap-2 desktop:gap-5">
               <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
                 {checkPrimary('linkedin') && (
                   <img
@@ -516,8 +572,8 @@ const VerificationBadges = () => {
               )}
             </div> */}
 
-          {/* Twitter */}
-          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+      {/* Twitter */}
+      {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
             <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
               {checkPrimary('twitter') && (
                 <img
@@ -616,8 +672,8 @@ const VerificationBadges = () => {
             )}
           </div> */}
 
-          {/* Instagram */}
-          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+      {/* Instagram */}
+      {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
             <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
               {checkPrimary('instagram') && (
                 <img
@@ -703,8 +759,8 @@ const VerificationBadges = () => {
             )}
           </div> */}
 
-          {/* Github */}
-          {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
+      {/* Github */}
+      {/* <div className="relative flex items-center gap-[8.5px] laptop:gap-2 desktop:gap-5">
               <div className="absolute -left-5 tablet:-left-[42px] laptop:-left-[33px] desktop:-left-[42px]">
                 {checkPrimary('github') && (
                   <img
@@ -809,9 +865,9 @@ const VerificationBadges = () => {
                 </LoginSocialGithub>
               )}
             </div> */}
-          {/* {console.log("uri", window.location.href)} */}
-          {/* Youtube  */}
-          {/* <div className="flex items-center gap-[10px] laptop:gap-5">
+      {/* {console.log("uri", window.location.href)} */}
+      {/* Youtube  */}
+      {/* <div className="flex items-center gap-[10px] laptop:gap-5">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/youtube.svg`}
             alt="Twitter"
@@ -879,8 +935,8 @@ const VerificationBadges = () => {
           )}
         </div> */}
 
-          {/* SoundCloud */}
-          {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
+      {/* SoundCloud */}
+      {/* <div className="flex items-center gap-[10px] opacity-[60%] laptop:gap-5">
           <img
             src={`${import.meta.env.VITE_S3_IMAGES_PATH}/assets/profile/soundCloud.svg`}
             alt="Sound Cloud"
@@ -932,36 +988,10 @@ const VerificationBadges = () => {
             </Button>
           )}
         </div> */}
-          {/* </div> */}
-          <Social
-            handleRemoveBadgePopup={handleRemoveBadgePopup}
-            handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
-            checkLegacyBadge={checkLegacyBadge}
-            checkSocial={checkSocial}
-            checkPrimary={checkPrimary}
-          />
-
-          <Web3
-            handleRemoveBadgePopup={handleRemoveBadgePopup}
-            handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
-            checkLegacyBadge={checkLegacyBadge}
-            getAskPassword={getAskPasswordFromRedux}
-          />
-          {/* <Legacy
-            fetchUser={persistedUserInfo}
-            handleRemoveBadgePopup={handleRemoveBadgePopup}
-            checkLegacyBadge={checkLegacyBadge}
-          /> */}
-          <Personal
-            fetchUser={persistedUserInfo}
-            handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
-            checkLegacyBadge={checkLegacyBadge}
-            handlePasskeyConfirmation={handlePasskeyConfirmation}
-            getAskPassword={getAskPasswordFromRedux}
-          />
-        </div>
-      </VerificationBadgeScore>
+      {/* </div> */}
     </div>
+    // </VerificationBadgeScore>
+    // </div>
   );
 };
 

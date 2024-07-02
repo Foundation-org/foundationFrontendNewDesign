@@ -33,10 +33,10 @@ const Social = ({
 
   return (
     <>
-      <h1 className="font-Inter text-[9.74px] font-medium text-black tablet:text-[22px] tablet:leading-[18px] dark:text-white">
-        Social
+      <h1 className="text-[12px] font-medium leading-[13.56px] text-[#85898C] tablet:text-[16px] tablet:leading-normal">
+        Add Social Badge to secure your foundation account.
       </h1>
-      <div className="flex flex-col items-center justify-between rounded-[16.068px] border-[#DEE6F7] bg-[#FDFDFD] tablet:border-[3px] tablet:py-[22px]">
+      <div className="flex flex-col items-center justify-between rounded-[16.068px] pt-[10px] tablet:pt-[18.73px]">
         <div className="flex flex-col gap-[5px] tablet:gap-4">
           {socials.map((item, index) => (
             <div
