@@ -44,8 +44,8 @@ export const TopbarItems = [
   // {
   //   id: 2,
   //   title: 'Chat',
-  //   path: '/quest',
-  //   activePaths: ['/quest'],
+  //   path: '/post',
+  //   activePaths: ['/post'],
   //   icon: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/topbar/chat.svg`,
   // },
   {

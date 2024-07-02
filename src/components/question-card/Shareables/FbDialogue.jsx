@@ -58,8 +58,8 @@ const FbDialogue = ({ handleClose, createdBy, img, alt, badgeCount, title, quest
       <div className="my-[15px] flex flex-col items-center justify-center gap-2 tablet:my-5 tablet:py-6 laptop:flex-row laptop:gap-[43px]">
         <FacebookProvider appId={import.meta.env.VITE_FB_APP_ID}>
           <ShareButton
-            href={`https://master.d30vd0vty5w4k4.amplifyapp.com/quest/${id}`}
-            quote="Foundation Quest"
+            href={`https://master.d30vd0vty5w4k4.amplifyapp.com/post/${id}`}
+            quote="Foundation Post"
             className="w-[212px] rounded-[5.56px] bg-gradient-to-r from-[#6BA5CF] to-[#389CE3] px-[9.4px] py-1 text-center text-[10px] font-semibold leading-normal text-white tablet:w-[341px] tablet:rounded-[15px] tablet:px-5 tablet:py-2 tablet:text-[20px] laptop:w-[212px]"
           >
             Share This Post

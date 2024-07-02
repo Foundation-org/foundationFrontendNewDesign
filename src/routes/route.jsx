@@ -105,7 +105,7 @@ export function Router() {
                 <Route path="privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="contact-us" element={<ContactUs />} />
               </Route>
-              <Route path="quest" element={<Quest />}>
+              <Route path="post" element={<Quest />}>
                 <Route path="" element={<LikeDislike />} />
                 <Route path="agree-disagree" element={<AgreeDisagree />} />
                 <Route path="yes-no" element={<YesNo />} />
@@ -143,7 +143,7 @@ export function Router() {
             </Route>
             <Route path="/shared-links/result" element={<SharedLinkResults />} />
             <Route path="/shared-list-link/result" element={<SharedListResults />} />
-            <Route path="/quest/:isFullScreen" element={<Guests />} />
+            <Route path="/post/:isFullScreen" element={<Guests />} />
             <Route path="/p/:id" element={<SingleQuest />} />
             <Route path="/l/:id" element={<PostsByList />} />
             <Route path="/badgeverifycode" element={<BadgeVerifyCode />} />

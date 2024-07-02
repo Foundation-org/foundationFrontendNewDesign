@@ -347,7 +347,7 @@ const ButtonGroup = ({
     if (
       location.pathname.includes('/p/') ||
       location.pathname.includes('/l/') ||
-      location.pathname === '/quest/isfullscreen'
+      location.pathname === '/post/isfullscreen'
     ) {
       return (
         <>

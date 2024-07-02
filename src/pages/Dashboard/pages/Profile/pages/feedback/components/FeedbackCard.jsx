@@ -79,7 +79,7 @@ export const FeedbackCard = ({ innerRef, persistedUserInfo, post }) => {
       <div className="mb-[0.94rem] mr-[14.4px] flex justify-end tablet:mb-6 tablet:mr-[3.44rem]">
         <Button
           variant="submit"
-          onClick={() => navigate('/quest/isfullscreen', { state: { questId: post._id, questType: 'feedback' } })}
+          onClick={() => navigate('/post/isfullscreen', { state: { questId: post._id, questType: 'feedback' } })}
         >
           View
         </Button>
