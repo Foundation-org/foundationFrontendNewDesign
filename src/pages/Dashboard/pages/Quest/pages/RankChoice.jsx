@@ -1,5 +1,4 @@
 import { toast } from 'sonner';
-import { Reorder } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -23,6 +22,9 @@ import {
 } from '../../../../../constants/Values/constants';
 import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
+import { DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
+import { arrayMove, SortableContext } from '@dnd-kit/sortable';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -43,7 +45,14 @@ const RankChoice = () => {
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-  const [dragId, setDragId] = useState(null);
+  const mouseSensor = useSensor(MouseSensor);
+  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 1000,
+      tolerance: 0,
+    },
+  });
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -289,8 +298,15 @@ const RankChoice = () => {
     getPicsMediaStates.picUrl,
   ]);
 
-  const handleReorder = (newOrder) => {
-    dispatch(createQuestAction.drapAddDrop({ newTypedValues: newOrder }));
+  const handleOnDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = optionsValue.findIndex((item) => item.id === active.id);
+      const newIndex = optionsValue.findIndex((item) => item.id === over.id);
+      const newData = arrayMove(optionsValue, oldIndex, newIndex);
+      dispatch(createQuestAction.drapAddDrop({ newTypedValues: newData }));
+    }
   };
 
   return (
@@ -300,43 +316,38 @@ const RankChoice = () => {
       type={'Post'}
       msg={'Participants can arrange these options in their order of preference'}
     >
-      <Reorder.Group
-        onReorder={(newOrder) => handleReorder(newOrder)}
-        values={optionsValue}
-        className="flex flex-col gap-[5px] tablet:gap-[15px]"
+      <DndContext
+        sensors={[touchSensor, mouseSensor, keyboardSensor]}
+        modifiers={[restrictToVerticalAxis]}
+        onDragEnd={handleOnDragEnd}
       >
-        {optionsValue.map((item, index) => (
-          <Reorder.Item
-            value={item}
-            key={item.id}
-            onDrag={() => setDragId(item.id)}
-            onDragEnd={() => setDragId(null)}
-            className="w-full"
-          >
-            <Options
-              isDragging={dragId === item.id ? true : false}
-              key={index}
-              title="RankChoice"
-              id={item.id}
-              allowInput={true}
-              label={`Option ${index + 1} #`}
-              trash={true}
-              dragable={true}
-              handleChange={(value) => handleChange(index, value, optionsValue)}
-              handleOptionSelect={() => handleOptionSelect(index)}
-              typedValue={item.question}
-              isTyping={item?.isTyping}
-              isSelected={item.selected}
-              optionsCount={optionsValue.length}
-              removeOption={removeOption}
-              number={index + 3}
-              optionStatus={optionsValue[index].optionStatus}
-              answerVerification={(value) => answerVerification(item.id, index, value)}
-              handleTab={handleTab}
-            />
-          </Reorder.Item>
-        ))}
-      </Reorder.Group>
+        <div className="flex flex-col gap-[5px] tablet:gap-[15px]">
+          <SortableContext items={optionsValue}>
+            {optionsValue.map((item, index) => (
+              <Options
+                key={item.id}
+                id={item.id}
+                title="RankChoice"
+                allowInput={true}
+                label={`Option ${index + 1} #`}
+                trash={true}
+                dragable={true}
+                handleChange={(value) => handleChange(index, value, optionsValue)}
+                handleOptionSelect={() => handleOptionSelect(index)}
+                typedValue={item.question}
+                isTyping={item?.isTyping}
+                isSelected={item.selected}
+                optionsCount={optionsValue.length}
+                removeOption={removeOption}
+                number={index + 3}
+                optionStatus={optionsValue[index].optionStatus}
+                answerVerification={(value) => answerVerification(item.id, index, value)}
+                handleTab={handleTab}
+              />
+            ))}
+          </SortableContext>
+        </div>
+      </DndContext>
       <Button
         variant="addOption"
         className="ml-[30px] mt-2 tablet:ml-[50px] tablet:mt-[15px]"

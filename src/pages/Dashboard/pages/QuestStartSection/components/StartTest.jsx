@@ -1,14 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { Reorder } from 'framer-motion';
-
 import { getQuestionTitle } from '../../../../../utils/questionCard/SingleQuestCard';
-
 import Loader from '../../../../../components/ui/Loader';
 import SingleAnswer from '../../../../../components/question-card/options/SingleAnswer';
 import SingleAnswerRankedChoice from '../../../../../components/question-card/options/SingleAnswerRankedChoice';
 import SingleAnswerMultipleChoice from '../../../../../components/question-card/options/SingleAnswerMultipleChoice';
-import { DndContext, KeyboardSensor, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
+import { DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
@@ -28,7 +25,6 @@ const StartTest = ({
   postProperties,
 }) => {
   const { isFullScreen } = useParams();
-  const [dragId, setDragId] = useState(null);
   const mouseSensor = useSensor(MouseSensor);
   const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
   const touchSensor = useSensor(TouchSensor, {
@@ -242,9 +238,8 @@ const StartTest = ({
               {rankedAnswers?.map((item, index) => (
                 <SingleAnswerRankedChoice
                   key={item.id}
-                  isDragging={dragId === item.id ? true : false}
-                  questStartData={questStartData}
                   dragId={item.id}
+                  questStartData={questStartData}
                   id={index}
                   item={item}
                   number={index + 1}
@@ -270,48 +265,6 @@ const StartTest = ({
             </SortableContext>
           </DndContext>
         );
-        // return (
-        //   <Reorder.Group
-        //     onReorder={setRankedAnswers}
-        //     values={rankedAnswers}
-        //     className="flex flex-col gap-[5.7px] tablet:gap-[10px]"
-        //   >
-        //     {rankedAnswers?.map((item, index) => (
-        //       <Reorder.Item
-        //         value={item}
-        //         key={item.id}
-        //         onDrag={() => setDragId(item.id)}
-        //         onDragEnd={() => setDragId(null)}
-        //         className="cursor-pointer"
-        //       >
-        //         <SingleAnswerRankedChoice
-        //           isDragging={dragId === item.id ? true : false}
-        //           questStartData={questStartData}
-        //           id={index}
-        //           item={item}
-        //           number={index + 1}
-        //           editable={item.edit}
-        //           deleteable={item.delete}
-        //           answer={item.label}
-        //           addedAnswerUuid={item.uuid}
-        //           answersSelection={answersSelection}
-        //           setAnswerSelection={setAnswerSelection}
-        //           rankedAnswers={rankedAnswers}
-        //           title={getQuestionTitle(questStartData.whichTypeQuestion)}
-        //           checkInfo={false}
-        //           check={findLabelChecked(rankedAnswers, item.label)}
-        //           contend={findLabelContend(rankedAnswers, item.label)}
-        //           handleCheckChange={(check) => handleCheckChange(index, check)}
-        //           handleContendChange={(contend) => handleContendChangeRanked(index, contend)}
-        //           setAddOptionField={setAddOptionField}
-        //           checkOptionStatus={checkOptionStatus}
-        //           setCheckOptionStatus={setCheckOptionStatus}
-        //           postProperties={postProperties}
-        //         />
-        //       </Reorder.Item>
-        //     ))}
-        //   </Reorder.Group>
-        // );
       }
     } else {
       <Loader />;

@@ -1,11 +1,9 @@
-// import { toast } from 'sonner';
 import { useState, useEffect } from 'react';
 import { Tooltip } from '../../../utils/Tooltip';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { resetaddOptionLimit } from '../../../features/quest/utilsSlice';
 import { answerValidation, checkAnswerExist } from '../../../services/api/questsApi';
-
 import BasicModal from '../../BasicModal';
 import DeleteOption from '../../../pages/Dashboard/components/DeleteOption';
 import ContentionIcon from '../../../assets/Quests/ContentionIcon';
@@ -15,11 +13,12 @@ import { CSS } from '@dnd-kit/utilities';
 
 const SingleAnswerRankedChoice = (props) => {
   const id = props.id;
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.dragId });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: props.dragId });
   const style = {
-    transform: CSS.Transform.toString(transform),
     transition,
+    transform: CSS.Transform.toString(transform),
   };
+
   const dispatch = useDispatch();
   const persistedTheme = useSelector((state) => state.utils.theme);
   const persistedUserInfo = useSelector((state) => state.auth.user);
@@ -250,16 +249,15 @@ const SingleAnswerRankedChoice = (props) => {
       )}
       {/* =============== To Display Option */}
       <div
-        {...props.dragHandleProps}
         className={`${
-          props.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
+          isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] bg-white dark:border-[#D9D9D9] dark:bg-[#0D1012]'
         } flex w-full items-center rounded-[4.7px] border tablet:rounded-[10px] tablet:border-[3px]`}
       >
         <div className="flex w-full items-center rounded-l-[4.734px] bg-[#DEE6F7] dark:bg-[#D9D9D9]">
           {props.btnText !== 'Results' && (
             <div
               className={`${
-                props.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+                isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
               } flex h-full w-3 items-center rounded-l-[4.734px] bg-contain bg-center bg-no-repeat px-[3.3px] py-[4.6px] tablet:w-[25px] tablet:rounded-l-[10px] tablet:px-[7px] tablet:py-[10px]`}
               style={{
                 backgroundImage: `url(${
@@ -273,9 +271,7 @@ const SingleAnswerRankedChoice = (props) => {
 
           <div
             className={`${
-              props.isDragging
-                ? 'border-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]'
-                : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+              isDragging ? 'border-[#5FA3D5] bg-[#F2F6FF] dark:bg-[#0D1012]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
             } flex w-full justify-between bg-white dark:bg-[#0D1012]`}
           >
             {props.editable ? (
@@ -287,7 +283,7 @@ const SingleAnswerRankedChoice = (props) => {
                 autoFocus
                 onKeyDown={(e) => e.key === 'Tab' || (e.key === 'Enter' && handleTab())}
                 className={`${
-                  props.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
+                  isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012]' : 'bg-white dark:bg-[#0D1012]'
                 } w-full resize-none rounded-[4.73px] px-2 py-[5.6px] text-[8.52px] font-normal leading-none text-[#435059] outline-none tablet:rounded-[10.949px] tablet:py-3 tablet:pl-[18px] tablet:text-[19px] tablet:leading-[19px] dark:text-[#D3D3D3]`}
               />
             ) : (
@@ -298,7 +294,7 @@ const SingleAnswerRankedChoice = (props) => {
             {props.deleteable && (
               <div
                 className={`${
-                  props.isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012] ' : 'bg-white dark:bg-[#0D1012]'
+                  isDragging ? 'bg-[#F2F6FF] dark:bg-[#0D1012] ' : 'bg-white dark:bg-[#0D1012]'
                 } relative flex items-center rounded-r-[4.7px] text-[0.5rem] font-semibold tablet:rounded-r-[10px] tablet:text-[1rem] laptop:text-[1.25rem] ${
                   props.checkOptionStatus.color
                 }`}
@@ -313,7 +309,7 @@ const SingleAnswerRankedChoice = (props) => {
         </div>
         <div
           className={`${
-            props.isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
+            isDragging ? 'border-[#5FA3D5]' : 'border-[#DEE6F7] dark:border-[#D9D9D9]'
           } flex h-full min-h-[21.7px] w-[35px] items-center justify-center rounded-r-[4.7px] bg-white tablet:h-full tablet:rounded-r-[10px] dark:bg-[#0D1012]`}
         >
           <h1 className="text-[8.52px] font-bold leading-[0px] text-[#22AA69] tablet:text-[19px]">{props.number}</h1>

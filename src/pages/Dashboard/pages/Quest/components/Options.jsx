@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import { Tooltip } from '../../../../../utils/Tooltip';
-// import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { useRef } from 'react';
 
 const Options = ({
-  isDragging,
   id,
   title,
   answer,
@@ -25,6 +25,11 @@ const Options = ({
   handleTab,
   isTyping,
 }) => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
   const persistedTheme = useSelector((state) => state.utils.theme);
   const textareaRef = useRef(null);
 
@@ -36,9 +41,13 @@ const Options = ({
 
   return (
     <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
       className={`${
         label ? 'flex flex-col gap-[13px]' : 'flex flex-row items-center gap-[25px]'
-      } mx-[30px] cursor-grab touch-none tablet:ml-[50px] tablet:mr-[50px]`}
+      } mx-[30px] cursor-grab tablet:ml-[50px] tablet:mr-[50px]`}
     >
       {!allowInput ? (
         <div className="flex w-full justify-between rounded-[10px] bg-white dark:bg-[#0D1012]">

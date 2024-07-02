@@ -1,5 +1,4 @@
 import { toast } from 'sonner';
-import { Reorder } from 'framer-motion';
 import { FaSpinner } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -21,6 +20,9 @@ import * as createQuestAction from '../../../../../features/createQuest/createQu
 import * as pictureMediaAction from '../../../../../features/createQuest/pictureMediaSlice';
 import * as questServices from '../../../../../services/api/questsApi';
 import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
+import { DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
+import { arrayMove, SortableContext } from '@dnd-kit/sortable';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 const MultipleChoice = () => {
   const navigate = useNavigate();
@@ -42,7 +44,14 @@ const MultipleChoice = () => {
   const [changedOption, setChangedOption] = useState(createQuestSlice.changedOption);
   const [loading, setLoading] = useState(false);
   const [hollow, setHollow] = useState(true);
-  const [dragId, setDragId] = useState(null);
+  const mouseSensor = useSensor(MouseSensor);
+  const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: {
+      delay: 1000,
+      tolerance: 0,
+    },
+  });
 
   const { mutateAsync: createQuest } = useMutation({
     mutationFn: createInfoQuest,
@@ -298,8 +307,15 @@ const MultipleChoice = () => {
     getPicsMediaStates.picUrl,
   ]);
 
-  const handleReorder = (newOrder) => {
-    dispatch(createQuestAction.drapAddDrop({ newTypedValues: newOrder }));
+  const handleOnDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = optionsValue.findIndex((item) => item.id === active.id);
+      const newIndex = optionsValue.findIndex((item) => item.id === over.id);
+      const newData = arrayMove(optionsValue, oldIndex, newIndex);
+      dispatch(createQuestAction.drapAddDrop({ newTypedValues: newData }));
+    }
   };
 
   return (
@@ -309,43 +325,38 @@ const MultipleChoice = () => {
       type={'Post'}
       msg={'Participants can select only one option from a list of choices'}
     >
-      <Reorder.Group
-        onReorder={(newOrder) => handleReorder(newOrder)}
-        values={optionsValue}
-        className="flex flex-col gap-[5px] tablet:gap-[15px]"
+      <DndContext
+        sensors={[touchSensor, mouseSensor, keyboardSensor]}
+        modifiers={[restrictToVerticalAxis]}
+        onDragEnd={handleOnDragEnd}
       >
-        {optionsValue.map((item, index) => (
-          <Reorder.Item
-            value={item}
-            key={item.id}
-            onDrag={() => setDragId(item.id)}
-            onDragEnd={() => setDragId(null)}
-            className="w-full"
-          >
-            <Options
-              isDragging={dragId === item.id ? true : false}
-              key={index}
-              id={item.id}
-              title="MultipleChoice"
-              allowInput={true}
-              label={`Option ${index + 1} #`}
-              trash={true}
-              options={false}
-              dragable={true}
-              handleChange={(value) => handleChange(item.id, value, optionsValue)}
-              typedValue={item.question}
-              isTyping={item?.isTyping}
-              isSelected={item.selected}
-              optionsCount={optionsValue.length}
-              removeOption={removeOption}
-              number={index + 3}
-              optionStatus={optionsValue[index].optionStatus}
-              answerVerification={(value) => answerVerification(item.id, index, value)}
-              handleTab={handleTab}
-            />
-          </Reorder.Item>
-        ))}
-      </Reorder.Group>
+        <div className="flex flex-col gap-[5px] tablet:gap-[15px]">
+          <SortableContext items={optionsValue}>
+            {optionsValue.map((item, index) => (
+              <Options
+                key={item.id}
+                id={item.id}
+                title="MultipleChoice"
+                allowInput={true}
+                label={`Option ${index + 1} #`}
+                trash={true}
+                options={false}
+                dragable={true}
+                handleChange={(value) => handleChange(item.id, value, optionsValue)}
+                typedValue={item.question}
+                isTyping={item?.isTyping}
+                isSelected={item.selected}
+                optionsCount={optionsValue.length}
+                removeOption={removeOption}
+                number={index + 3}
+                optionStatus={optionsValue[index].optionStatus}
+                answerVerification={(value) => answerVerification(item.id, index, value)}
+                handleTab={handleTab}
+              />
+            ))}
+          </SortableContext>
+        </div>
+      </DndContext>
       <Button
         variant="addOption"
         className="ml-[30px] mt-2 tablet:ml-[50px] tablet:mt-[15px]"
