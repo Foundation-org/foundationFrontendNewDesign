@@ -14,9 +14,9 @@ import DeleteListPostPopup from '../../../../components/dialogue-boxes/DeleteLis
 import EditListNameDialogue from '../../../../components/dialogue-boxes/EditListNameDialogue';
 import showToast from '../../../../components/ui/Toast';
 import ListItem from './components/list-item';
-import { DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
+import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 const Lists = () => {
   const navigate = useNavigate();
@@ -243,7 +243,8 @@ const Lists = () => {
                   <ul className="space-y-[5.34px] tablet:space-y-[0.69rem]">
                     <DndContext
                       sensors={[touchSensor, mouseSensor, keyboardSensor]}
-                      modifiers={[restrictToVerticalAxis]}
+                      modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+                      collisionDetection={closestCorners}
                       onDragEnd={(e) => {
                         handleOnDragEnd(e, categoryIndex, categoryItem._id);
                       }}

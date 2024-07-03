@@ -22,9 +22,9 @@ import {
 } from '../../../../../constants/Values/constants';
 import { addAdultFilterPopup } from '../../../../../features/quest/utilsSlice';
 import * as filtersActions from '../../../../../features/sidebar/filtersSlice';
-import { DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
+import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 const RankChoice = () => {
   const navigate = useNavigate();
@@ -318,7 +318,8 @@ const RankChoice = () => {
     >
       <DndContext
         sensors={[touchSensor, mouseSensor, keyboardSensor]}
-        modifiers={[restrictToVerticalAxis]}
+        modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+        collisionDetection={closestCorners}
         onDragEnd={handleOnDragEnd}
       >
         <div className="flex flex-col gap-[5px] tablet:gap-[15px]">

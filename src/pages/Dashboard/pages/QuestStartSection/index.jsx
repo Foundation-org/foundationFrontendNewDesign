@@ -130,11 +130,15 @@ const QuestStartSection = () => {
         <div className="block tablet:hidden">
           <SidebarLeft />
         </div>
-        <div className="no-scrollbar mx-auto flex h-full max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)] w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] dark:bg-[#242424]">
+        <div
+          className={`no-scrollbar mx-auto flex h-full w-full max-w-[778px] flex-col overflow-y-hidden bg-[#F2F3F5] tablet:max-h-[calc(100dvh-172px)] tablet:min-h-[calc(100dvh-172px)] laptop:max-h-[calc(100dvh-70px)] laptop:min-h-[calc(100dvh-70px)] dark:bg-[#242424] ${persistedUserInfo.role === 'user' ? 'max-h-[calc(100dvh-134px)] min-h-[calc(100dvh-134px)]' : 'max-h-dvh min-h-dvh'}`}
+        >
           <div className="fixed left-auto right-auto max-w-full laptop:max-w-[calc(100%-662px)] desktop:max-w-[calc(1440px-662px)]">
             <Slider isFetching={isFetching} />
           </div>
-          <div className="no-scrollbar mt-10 flex h-[calc(100dvh-174px)] flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mt-[77.63px] tablet:h-[calc(100dvh-314px)] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full">
+          <div
+            className={`no-scrollbar mt-10 flex flex-col gap-2 overflow-y-auto px-4 pb-[10px] tablet:mt-[77.63px] tablet:h-[calc(100dvh-314px)] tablet:gap-5 tablet:px-6 tablet:pb-5 laptop:h-full ${persistedUserInfo.role === 'user' ? 'h-[calc(100dvh-174px)]' : 'h-[calc(100dvh-131px)]'}`}
+          >
             {content}
             {printEndMessage(data?.pages[0], filterStates.bookmarks, isFetching)}
           </div>

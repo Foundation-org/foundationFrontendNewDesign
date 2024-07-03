@@ -5,9 +5,9 @@ import Loader from '../../../../../components/ui/Loader';
 import SingleAnswer from '../../../../../components/question-card/options/SingleAnswer';
 import SingleAnswerRankedChoice from '../../../../../components/question-card/options/SingleAnswerRankedChoice';
 import SingleAnswerMultipleChoice from '../../../../../components/question-card/options/SingleAnswerMultipleChoice';
-import { DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
+import { closestCorners, DndContext, MouseSensor, TouchSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 const StartTest = ({
   questStartData,
@@ -229,7 +229,8 @@ const StartTest = ({
         return (
           <DndContext
             sensors={[touchSensor, mouseSensor, keyboardSensor]}
-            modifiers={[restrictToVerticalAxis]}
+            modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+            collisionDetection={closestCorners}
             onDragEnd={handleOnDragEnd}
           >
             <SortableContext items={rankedAnswers}>
