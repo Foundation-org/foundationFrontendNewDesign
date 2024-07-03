@@ -135,17 +135,17 @@ export const web3 = [
   //   accountName: 'Passkey',
   //   badgeType: 'passkey',
   // },
-  {
-    image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
-    title: 'Farcaster',
-    ButtonColor: 'submit',
-    ButtonText: 'Add',
-    disabled: false,
-    NoOfButton: 1,
-    type: 'farcaster',
-    accountName: 'Farcaster',
-    badgeType: 'farcaster',
-  },
+  // {
+  //   image: `${import.meta.env.VITE_S3_IMAGES_PATH}/assets/verification-badges/farcaster.svg`,
+  //   title: 'Farcaster',
+  //   ButtonColor: 'submit',
+  //   ButtonText: 'Add',
+  //   disabled: false,
+  //   NoOfButton: 1,
+  //   type: 'farcaster',
+  //   accountName: 'Farcaster',
+  //   badgeType: 'farcaster',
+  // },
 ];
 
 export const legacy = [

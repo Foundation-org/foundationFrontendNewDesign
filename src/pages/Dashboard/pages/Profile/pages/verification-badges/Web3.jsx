@@ -1,5 +1,4 @@
-import { toast } from 'sonner';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { web3 } from '../../../../../../constants/varification-badges';
 import { startRegistration } from '@simplewebauthn/browser';

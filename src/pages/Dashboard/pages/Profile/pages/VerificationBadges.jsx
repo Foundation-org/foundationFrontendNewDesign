@@ -1,19 +1,12 @@
 import { toast } from 'sonner';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../../../Signup/components/Loader';
 import api from '../../../../../services/api/Axios';
-import { LoginSocialFacebook } from './ReactFacebook';
-// import { LoginSocialLinkedin } from './ReactLinkedIn';
-import { LoginSocialYoutube } from './ReactYoutube';
-import VerificationPopups from '../components/VerificationPopups';
 import BadgeRemovePopup from '../../../../../components/dialogue-boxes/badgeRemovePopup';
-import { TwitterAuthProvider, GithubAuthProvider, signInWithPopup } from 'firebase/auth';
-import { authentication } from './firebase-config';
 import Personal from './verification-badges/Personal';
 import Web3 from './verification-badges/Web3';
-import { InstagramLogin } from '@amraneze/react-instagram-login';
 import Contact from './verification-badges/Contact';
 import { useQueryClient } from '@tanstack/react-query';
 import Legacy from './verification-badges/Legacy';
@@ -23,12 +16,10 @@ import { getConstantsValues } from '../../../../../features/constants/constantsS
 import showToast from '../../../../../components/ui/Toast';
 import { getAskPassword } from '../../../../../features/profile/userSettingSlice';
 import { badgesTotalLength } from '../../../../../constants/varification-badges';
-import { Button } from '../../../../../components/ui/Button';
-import VerificationBadgeScore from '../../../../../components/summary/VerificationBadgeScore';
 import Privacy from './verification-badges/Privacy';
-import { LoginSocialGithub, LoginSocialLinkedin } from 'reactjs-social-login';
 import Social from './verification-badges/Social';
 import ContentCard from '../../../../../components/ContentCard';
+import { MetaMaskProvider } from '@metamask/sdk-react';
 
 const VerificationBadges = () => {
   const navigate = useNavigate();
@@ -49,59 +40,59 @@ const VerificationBadges = () => {
 
   const checkLegacyBadge = () => persistedUserInfo?.badges?.some((badge) => (badge?.legacy ? true : false));
 
-  const loginInWithInsta = async (code) => {
-    try {
-      // return
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/user/get-insta-token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', // Set the correct Content-Type
-        },
-        body: JSON.stringify({
-          clientId: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
-          clientSecret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
-          redirectUri: `${import.meta.env.VITE_CLIENT_URL}/profile`,
-          code: code,
-        }),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setIsLoading(true);
-        handleAddBadge('instagram', data);
-      } else {
-        const data = await response.json();
-        console.error('Error fetching Instagram profile:', data);
-      }
-    } catch (error) {
-      console.error('Error fetching Instagram profile:', error.message);
-    }
-  };
+  // const loginInWithInsta = async (code) => {
+  //   try {
+  //     // return
+  //     const response = await fetch(`${import.meta.env.VITE_API_URL}/user/get-insta-token`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json', // Set the correct Content-Type
+  //       },
+  //       body: JSON.stringify({
+  //         clientId: import.meta.env.VITE_INSTAGRAM_CLIENT_ID,
+  //         clientSecret: import.meta.env.VITE_INSTAGRAM_CLIENT_SECRET,
+  //         redirectUri: `${import.meta.env.VITE_CLIENT_URL}/profile`,
+  //         code: code,
+  //       }),
+  //     });
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setIsLoading(true);
+  //       handleAddBadge('instagram', data);
+  //     } else {
+  //       const data = await response.json();
+  //       console.error('Error fetching Instagram profile:', data);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching Instagram profile:', error.message);
+  //   }
+  // };
 
-  const loginWithTwitter = () => {
-    const provider = new TwitterAuthProvider();
-    console.log(authentication);
-    signInWithPopup(authentication, provider)
-      .then((data) => {
-        setIsLoading(true);
-        handleAddBadge('twitter', data);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-      });
-  };
+  // const loginWithTwitter = () => {
+  //   const provider = new TwitterAuthProvider();
+  //   console.log(authentication);
+  //   signInWithPopup(authentication, provider)
+  //     .then((data) => {
+  //       setIsLoading(true);
+  //       handleAddBadge('twitter', data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       setIsLoading(false);
+  //     });
+  // };
 
-  const loginWithGithub = () => {
-    const provider = new GithubAuthProvider();
-    signInWithPopup(authentication, provider)
-      .then((data) => {
-        setIsLoading(true);
-        handleAddBadge('github', data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const loginWithGithub = () => {
+  //   const provider = new GithubAuthProvider();
+  //   signInWithPopup(authentication, provider)
+  //     .then((data) => {
+  //       setIsLoading(true);
+  //       handleAddBadge('github', data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const handleBadgesClose = () => setModalVisible(false);
 
@@ -181,7 +172,6 @@ const VerificationBadges = () => {
   };
 
   const handleRemoveBadgePopup = async (item) => {
-    console.log(item);
     if (
       (checkLegacyBadge() && !localStorage.getItem('legacyHash')) ||
       (checkLegacyBadge() && getAskPasswordFromRedux) ||
@@ -199,6 +189,7 @@ const VerificationBadges = () => {
       legacyPromiseRef.current = resolve;
     });
   };
+
   const handlePasskeyConfirmation = async () => {
     const resp = await fetch(`${import.meta.env.VITE_API_URL}/generate-registration-options`);
     const data = await resp.json();
@@ -287,12 +278,23 @@ const VerificationBadges = () => {
 
       {/* Web3 */}
       <ContentCard icon="assets/verification-badges/web3.svg" title="Web3">
-        <Web3
-          handleRemoveBadgePopup={handleRemoveBadgePopup}
-          handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
-          checkLegacyBadge={checkLegacyBadge}
-          getAskPassword={getAskPasswordFromRedux}
-        />
+        <MetaMaskProvider
+          debug={false}
+          sdkOptions={{
+            checkInstallationImmediately: false, // This will automatically connect to MetaMask on page load
+            dappMetadata: {
+              name: 'Foundation',
+              url: window.location.href,
+            },
+          }}
+        >
+          <Web3
+            handleRemoveBadgePopup={handleRemoveBadgePopup}
+            handleOpenPasswordConfirmation={handleOpenPasswordConfirmation}
+            checkLegacyBadge={checkLegacyBadge}
+            getAskPassword={getAskPasswordFromRedux}
+          />
+        </MetaMaskProvider>
       </ContentCard>
 
       {/* Personal */}
