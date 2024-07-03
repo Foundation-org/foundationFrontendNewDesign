@@ -57,6 +57,14 @@ const CredentialLogin = () => {
       if (capthaToken === '') {
         const resp = await userSignin({ email, password });
         if (resp.status === 200) {
+          if (resp.data.message?.includes('Sent a verification email')) {
+            showToast('success', 'verificationEmailSent');
+
+            setEmail('');
+            setPassword('');
+            setIsLoading(false);
+            return;
+          }
           if (resp.data.isPasswordEncryption) {
             setIsLoading(false);
             setUuid(resp.data.uuid);
@@ -76,6 +84,7 @@ const CredentialLogin = () => {
         showToast('warning', 'recaptaFailed');
       }
     } catch (e) {
+      console.log(e);
       if (e.response.data === 'Wrong Password') {
         showToast('error', 'incorrectTypedPassword');
         setIsLoading(false);
