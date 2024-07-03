@@ -48,7 +48,7 @@ const MultipleChoice = () => {
   const keyboardSensor = useSensor(MouseSensor, { activationConstraint: { distance: 5 } });
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
-      delay: 1000,
+      delay: 500,
       tolerance: 0,
     },
   });
