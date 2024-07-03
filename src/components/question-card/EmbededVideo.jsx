@@ -1,6 +1,6 @@
 // import { toast } from 'sonner';
 import { useState, useEffect, useRef } from 'react';
-import ReactPlayer from 'react-player/lazy';
+import ReactPlayer from 'react-player';
 import { useDispatch, useSelector } from 'react-redux';
 
 // // import { soundcloudUnique, youtubeBaseURLs } from '../../constants/addMedia';
